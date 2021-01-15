@@ -4,7 +4,37 @@ ArrayReturn: android.view.contentcapture.ViewNode#getAutofillOptions():
 
 
 BuilderSetStyle: android.net.IpSecTransform.Builder#buildTunnelModeTransform(java.net.InetAddress, android.net.IpSecManager.SecurityParameterIndex):
-    Builder methods names should use setFoo() / addFoo() / clearFoo() style: method android.net.IpSecTransform.Builder.buildTunnelModeTransform(java.net.InetAddress,android.net.IpSecManager.SecurityParameterIndex)
+    
+BuilderSetStyle: android.net.metrics.RaEvent.Builder#updateDnsslLifetime(long):
+    Builder methods names should use setFoo() / addFoo() / clearFoo() style: method android.net.metrics.RaEvent.Builder.updateDnsslLifetime(long)
+BuilderSetStyle: android.net.metrics.RaEvent.Builder#updatePrefixPreferredLifetime(long):
+    Builder methods names should use setFoo() / addFoo() / clearFoo() style: method android.net.metrics.RaEvent.Builder.updatePrefixPreferredLifetime(long)
+BuilderSetStyle: android.net.metrics.RaEvent.Builder#updatePrefixValidLifetime(long):
+    Builder methods names should use setFoo() / addFoo() / clearFoo() style: method android.net.metrics.RaEvent.Builder.updatePrefixValidLifetime(long)
+BuilderSetStyle: android.net.metrics.RaEvent.Builder#updateRdnssLifetime(long):
+    Builder methods names should use setFoo() / addFoo() / clearFoo() style: method android.net.metrics.RaEvent.Builder.updateRdnssLifetime(long)
+BuilderSetStyle: android.net.metrics.RaEvent.Builder#updateRouteInfoLifetime(long):
+    Builder methods names should use setFoo() / addFoo() / clearFoo() style: method android.net.metrics.RaEvent.Builder.updateRouteInfoLifetime(long)
+BuilderSetStyle: android.net.metrics.RaEvent.Builder#updateRouterLifetime(long):
+    Builder methods names should use setFoo() / addFoo() / clearFoo() style: method android.net.metrics.RaEvent.Builder.updateRouterLifetime(long)
+
+
+EqualsAndHashCode: android.net.metrics.ApfProgramEvent#equals(Object):
+    Must override both equals and hashCode; missing one in android.net.metrics.ApfProgramEvent
+EqualsAndHashCode: android.net.metrics.ApfStats#equals(Object):
+    Must override both equals and hashCode; missing one in android.net.metrics.ApfStats
+EqualsAndHashCode: android.net.metrics.DhcpClientEvent#equals(Object):
+    Must override both equals and hashCode; missing one in android.net.metrics.DhcpClientEvent
+EqualsAndHashCode: android.net.metrics.IpManagerEvent#equals(Object):
+    Must override both equals and hashCode; missing one in android.net.metrics.IpManagerEvent
+EqualsAndHashCode: android.net.metrics.IpReachabilityEvent#equals(Object):
+    Must override both equals and hashCode; missing one in android.net.metrics.IpReachabilityEvent
+EqualsAndHashCode: android.net.metrics.NetworkEvent#equals(Object):
+    Must override both equals and hashCode; missing one in android.net.metrics.NetworkEvent
+EqualsAndHashCode: android.net.metrics.RaEvent#equals(Object):
+    Must override both equals and hashCode; missing one in android.net.metrics.RaEvent
+EqualsAndHashCode: android.net.metrics.ValidationProbeEvent#equals(Object):
+    Must override both equals and hashCode; missing one in android.net.metrics.ValidationProbeEvent
 
 
 GenericException: android.app.prediction.AppPredictor#finalize():
@@ -21,14 +51,56 @@ KotlinKeyword: android.app.Notification#when:
     
 
 
+MissingGetterMatchingBuilder: android.net.metrics.ApfProgramEvent.Builder#setActualLifetime(long):
+    android.net.metrics.ApfProgramEvent does not declare a `getActualLifetime()` method matching method android.net.metrics.ApfProgramEvent.Builder.setActualLifetime(long)
+MissingGetterMatchingBuilder: android.net.metrics.ApfProgramEvent.Builder#setCurrentRas(int):
+    android.net.metrics.ApfProgramEvent does not declare a `getCurrentRas()` method matching method android.net.metrics.ApfProgramEvent.Builder.setCurrentRas(int)
+MissingGetterMatchingBuilder: android.net.metrics.ApfProgramEvent.Builder#setFilteredRas(int):
+    android.net.metrics.ApfProgramEvent does not declare a `getFilteredRas()` method matching method android.net.metrics.ApfProgramEvent.Builder.setFilteredRas(int)
+MissingGetterMatchingBuilder: android.net.metrics.ApfProgramEvent.Builder#setFlags(boolean, boolean):
+    android.net.metrics.ApfProgramEvent does not declare a `isFlags()` method matching method android.net.metrics.ApfProgramEvent.Builder.setFlags(boolean,boolean)
+MissingGetterMatchingBuilder: android.net.metrics.ApfProgramEvent.Builder#setLifetime(long):
+    android.net.metrics.ApfProgramEvent does not declare a `getLifetime()` method matching method android.net.metrics.ApfProgramEvent.Builder.setLifetime(long)
+MissingGetterMatchingBuilder: android.net.metrics.ApfProgramEvent.Builder#setProgramLength(int):
+    android.net.metrics.ApfProgramEvent does not declare a `getProgramLength()` method matching method android.net.metrics.ApfProgramEvent.Builder.setProgramLength(int)
+MissingGetterMatchingBuilder: android.net.metrics.ApfStats.Builder#setDroppedRas(int):
+    android.net.metrics.ApfStats does not declare a `getDroppedRas()` method matching method android.net.metrics.ApfStats.Builder.setDroppedRas(int)
+MissingGetterMatchingBuilder: android.net.metrics.ApfStats.Builder#setDurationMs(long):
+    android.net.metrics.ApfStats does not declare a `getDurationMs()` method matching method android.net.metrics.ApfStats.Builder.setDurationMs(long)
+MissingGetterMatchingBuilder: android.net.metrics.ApfStats.Builder#setMatchingRas(int):
+    android.net.metrics.ApfStats does not declare a `getMatchingRas()` method matching method android.net.metrics.ApfStats.Builder.setMatchingRas(int)
+MissingGetterMatchingBuilder: android.net.metrics.ApfStats.Builder#setMaxProgramSize(int):
+    android.net.metrics.ApfStats does not declare a `getMaxProgramSize()` method matching method android.net.metrics.ApfStats.Builder.setMaxProgramSize(int)
+MissingGetterMatchingBuilder: android.net.metrics.ApfStats.Builder#setParseErrors(int):
+    android.net.metrics.ApfStats does not declare a `getParseErrors()` method matching method android.net.metrics.ApfStats.Builder.setParseErrors(int)
+MissingGetterMatchingBuilder: android.net.metrics.ApfStats.Builder#setProgramUpdates(int):
+    android.net.metrics.ApfStats does not declare a `getProgramUpdates()` method matching method android.net.metrics.ApfStats.Builder.setProgramUpdates(int)
+MissingGetterMatchingBuilder: android.net.metrics.ApfStats.Builder#setProgramUpdatesAll(int):
+    android.net.metrics.ApfStats does not declare a `getProgramUpdatesAll()` method matching method android.net.metrics.ApfStats.Builder.setProgramUpdatesAll(int)
+MissingGetterMatchingBuilder: android.net.metrics.ApfStats.Builder#setProgramUpdatesAllowingMulticast(int):
+    android.net.metrics.ApfStats does not declare a `getProgramUpdatesAllowingMulticast()` method matching method android.net.metrics.ApfStats.Builder.setProgramUpdatesAllowingMulticast(int)
+MissingGetterMatchingBuilder: android.net.metrics.ApfStats.Builder#setReceivedRas(int):
+    android.net.metrics.ApfStats does not declare a `getReceivedRas()` method matching method android.net.metrics.ApfStats.Builder.setReceivedRas(int)
+MissingGetterMatchingBuilder: android.net.metrics.ApfStats.Builder#setZeroLifetimeRas(int):
+    android.net.metrics.ApfStats does not declare a `getZeroLifetimeRas()` method matching method android.net.metrics.ApfStats.Builder.setZeroLifetimeRas(int)
+MissingGetterMatchingBuilder: android.net.metrics.DhcpClientEvent.Builder#setDurationMs(int):
+    android.net.metrics.DhcpClientEvent does not declare a `getDurationMs()` method matching method android.net.metrics.DhcpClientEvent.Builder.setDurationMs(int)
+MissingGetterMatchingBuilder: android.net.metrics.DhcpClientEvent.Builder#setMsg(String):
+    android.net.metrics.DhcpClientEvent does not declare a `getMsg()` method matching method android.net.metrics.DhcpClientEvent.Builder.setMsg(String)
+MissingGetterMatchingBuilder: android.net.metrics.ValidationProbeEvent.Builder#setDurationMs(long):
+    android.net.metrics.ValidationProbeEvent does not declare a `getDurationMs()` method matching method android.net.metrics.ValidationProbeEvent.Builder.setDurationMs(long)
+MissingGetterMatchingBuilder: android.net.metrics.ValidationProbeEvent.Builder#setProbeType(int, boolean):
+    android.net.metrics.ValidationProbeEvent does not declare a `getProbeType()` method matching method android.net.metrics.ValidationProbeEvent.Builder.setProbeType(int,boolean)
+MissingGetterMatchingBuilder: android.net.metrics.ValidationProbeEvent.Builder#setReturnCode(int):
+    android.net.metrics.ValidationProbeEvent does not declare a `getReturnCode()` method matching method android.net.metrics.ValidationProbeEvent.Builder.setReturnCode(int)
 MissingGetterMatchingBuilder: android.security.keystore.KeyGenParameterSpec.Builder#setUid(int):
-    android.security.keystore.KeyGenParameterSpec does not declare a `getUid()` method matching method android.security.keystore.KeyGenParameterSpec.Builder.setUid(int)
+    
 MissingGetterMatchingBuilder: android.service.autofill.Dataset.Builder#setFieldInlinePresentation(android.view.autofill.AutofillId, android.view.autofill.AutofillValue, java.util.regex.Pattern, android.service.autofill.InlinePresentation):
-    android.service.autofill.Dataset does not declare a `getFieldInlinePresentation()` method matching method android.service.autofill.Dataset.Builder.setFieldInlinePresentation(android.view.autofill.AutofillId,android.view.autofill.AutofillValue,java.util.regex.Pattern,android.service.autofill.InlinePresentation)
+    
 MissingGetterMatchingBuilder: android.telecom.CallScreeningService.CallResponse.Builder#setShouldScreenCallViaAudioProcessing(boolean):
-    android.telecom.CallScreeningService.CallResponse does not declare a `shouldScreenCallViaAudioProcessing()` method matching method android.telecom.CallScreeningService.CallResponse.Builder.setShouldScreenCallViaAudioProcessing(boolean)
+    
 MissingGetterMatchingBuilder: android.telephony.mbms.DownloadRequest.Builder#setServiceId(String):
-    android.telephony.mbms.DownloadRequest does not declare a `getServiceId()` method matching method android.telephony.mbms.DownloadRequest.Builder.setServiceId(String)
+    
 
 
 MissingNullability: android.media.soundtrigger.SoundTriggerDetectionService#onUnbind(android.content.Intent) parameter #0:
@@ -39,6 +111,8 @@ MissingNullability: android.media.tv.TvRecordingClient.RecordingCallback#onEvent
     
 MissingNullability: android.media.tv.TvRecordingClient.RecordingCallback#onEvent(String, String, android.os.Bundle) parameter #2:
     
+MissingNullability: android.net.metrics.DhcpClientEvent.Builder#setMsg(String) parameter #0:
+    Missing nullability on parameter `msg` in method `setMsg`
 MissingNullability: android.printservice.recommendation.RecommendationService#attachBaseContext(android.content.Context) parameter #0:
     
 MissingNullability: android.provider.ContactsContract.MetadataSync#CONTENT_URI:
@@ -75,6 +149,36 @@ MissingNullability: android.telephony.mbms.DownloadRequest.Builder#setServiceId(
     
 MissingNullability: android.telephony.mbms.DownloadRequest.Builder#setServiceId(String) parameter #0:
     
+
+
+NotCloseable: android.net.EthernetManager.TetheredInterfaceRequest:
+    Classes that release resources (release()) should implement AutoClosable and CloseGuard: class android.net.EthernetManager.TetheredInterfaceRequest
+
+
+ParcelCreator: android.net.metrics.ApfProgramEvent:
+    Parcelable requires a `CREATOR` field; missing in android.net.metrics.ApfProgramEvent
+ParcelCreator: android.net.metrics.ApfStats:
+    Parcelable requires a `CREATOR` field; missing in android.net.metrics.ApfStats
+ParcelCreator: android.net.metrics.DhcpClientEvent:
+    Parcelable requires a `CREATOR` field; missing in android.net.metrics.DhcpClientEvent
+ParcelCreator: android.net.metrics.DhcpErrorEvent:
+    Parcelable requires a `CREATOR` field; missing in android.net.metrics.DhcpErrorEvent
+ParcelCreator: android.net.metrics.IpConnectivityLog.Event:
+    Parcelable requires a `CREATOR` field; missing in android.net.metrics.IpConnectivityLog.Event
+ParcelCreator: android.net.metrics.IpManagerEvent:
+    Parcelable requires a `CREATOR` field; missing in android.net.metrics.IpManagerEvent
+ParcelCreator: android.net.metrics.IpReachabilityEvent:
+    Parcelable requires a `CREATOR` field; missing in android.net.metrics.IpReachabilityEvent
+ParcelCreator: android.net.metrics.NetworkEvent:
+    Parcelable requires a `CREATOR` field; missing in android.net.metrics.NetworkEvent
+ParcelCreator: android.net.metrics.RaEvent:
+    Parcelable requires a `CREATOR` field; missing in android.net.metrics.RaEvent
+ParcelCreator: android.net.metrics.ValidationProbeEvent:
+    Parcelable requires a `CREATOR` field; missing in android.net.metrics.ValidationProbeEvent
+
+
+ParcelNotFinal: android.net.metrics.IpConnectivityLog.Event:
+    Parcelable classes must be final: android.net.metrics.IpConnectivityLog.Event is not final
 
 
 ProtectedMember: android.printservice.recommendation.RecommendationService#attachBaseContext(android.content.Context):
