@@ -4814,6 +4814,28 @@ public class ConnectivityManager {
         }
     }
 
+    /** @hide */
+    public TestNetworkManager startOrGetTestNetworkManager() {
+        final IBinder tnBinder;
+        try {
+            tnBinder = mService.startOrGetTestNetworkService();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+
+        return new TestNetworkManager(ITestNetworkManager.Stub.asInterface(tnBinder));
+    }
+
+    /** @hide */
+    public VpnManager createVpnManager() {
+        return new VpnManager(mContext, mService);
+    }
+
+    /** @hide */
+    public ConnectivityDiagnosticsManager createDiagnosticsManager() {
+        return new ConnectivityDiagnosticsManager(mContext, mService);
+    }
+
     /**
      * Simulates a Data Stall for the specified Network.
      *
