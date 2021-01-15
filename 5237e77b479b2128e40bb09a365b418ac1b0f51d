@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "456fd42c_1cda5ec5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1387507
+      },
+      "writtenOn": "2021-01-15T22:04:02Z",
+      "side": 1,
+      "message": "Hey, Timi! Thank you for composing this change.\n\nI\u0027m not at all surprised to hear that there are cases where the Global Actions Items don\u0027t display correctly in certain configurations. Could you provide some reference images for before/after this change, so that I can better understand why it\u0027s necessary, and how you tested it?",
+      "revId": "5237e77b479b2128e40bb09a365b418ac1b0f51d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
