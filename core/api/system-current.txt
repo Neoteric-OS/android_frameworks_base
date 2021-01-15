@@ -6034,6 +6034,10 @@ package android.net {
     method @Deprecated public void onUpstreamChanged(@Nullable android.net.Network);
   }
 
+  public final class ConnectivityServicesRegistrar {
+    method public static void registerServiceWrappers();
+  }
+
   public class DnsResolverServiceManager {
     method @NonNull @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public static android.os.IBinder getService(@NonNull android.content.Context);
   }
