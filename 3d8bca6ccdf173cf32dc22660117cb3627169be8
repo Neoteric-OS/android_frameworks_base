@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b214bb1_dcfc3794",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-15T16:11:26Z",
+      "side": 1,
+      "message": "Per discusssion: I don\u0027t think we can do this if the class is @UnsupportedAppUsage",
+      "revId": "3d8bca6ccdf173cf32dc22660117cb3627169be8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "adf160a4_5f5a5ac4",
