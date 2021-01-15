@@ -3045,6 +3045,8 @@
   <public-group type="attr" first-id="0x01010617">
     <public name="canPauseRecording" />
     <!-- attribute definitions go here -->
+    <public name="memtagMode" />
+    <public name="nativeHeapZeroInit" />
   </public-group>
 
   <public-group type="drawable" first-id="0x010800b5">

@@ -53,11 +53,24 @@ public class ProcessInfo implements Parcelable {
      */
     public @ApplicationInfo.GwpAsanMode int gwpAsanMode;
 
+    /**
+     * Indicates if the process has requested Memtag to be enabled (in sync or async mode),
+     * disabled, or left unspecified.
+     */
+    public @ApplicationInfo.MemtagMode int memtagMode;
+
+    /**
+     * Enable automatic zero-initialization of native heap memory allocations.
+     */
+    public boolean nativeHeapZeroInit;
+
     @Deprecated
     public ProcessInfo(@NonNull ProcessInfo orig) {
         this.name = orig.name;
         this.deniedPermissions = orig.deniedPermissions;
         this.gwpAsanMode = orig.gwpAsanMode;
+        this.memtagMode = orig.memtagMode;
+        this.nativeHeapZeroInit = orig.nativeHeapZeroInit;
     }
 
 
@@ -84,12 +97,19 @@ public class ProcessInfo implements Parcelable {
      *   If non-null, these are permissions that are not allowed in this process.
      * @param gwpAsanMode
      *   Indicates if the process has requested GWP-ASan to be enabled, disabled, or left unspecified.
+     * @param memtagMode
+     *   Indicates if the process has requested Memtag to be enabled (in sync or async mode),
+     *   disabled, or left unspecified.
+     * @param nativeHeapZeroInit
+     *   Enable automatic zero-initialization of native heap memory allocations.
      */
     @DataClass.Generated.Member
     public ProcessInfo(
             @NonNull String name,
             @Nullable ArraySet<String> deniedPermissions,
-            @ApplicationInfo.GwpAsanMode int gwpAsanMode) {
+            @ApplicationInfo.GwpAsanMode int gwpAsanMode,
+            @ApplicationInfo.MemtagMode int memtagMode,
+            boolean nativeHeapZeroInit) {
         this.name = name;
         com.android.internal.util.AnnotationValidations.validate(
                 NonNull.class, null, name);
@@ -97,6 +117,10 @@ public class ProcessInfo implements Parcelable {
         this.gwpAsanMode = gwpAsanMode;
         com.android.internal.util.AnnotationValidations.validate(
                 ApplicationInfo.GwpAsanMode.class, null, gwpAsanMode);
+        this.memtagMode = memtagMode;
+        com.android.internal.util.AnnotationValidations.validate(
+                ApplicationInfo.MemtagMode.class, null, memtagMode);
+        this.nativeHeapZeroInit = nativeHeapZeroInit;
 
         // onConstructed(); // You can define this method to get a callback
     }
@@ -119,11 +143,13 @@ public class ProcessInfo implements Parcelable {
         // void parcelFieldName(Parcel dest, int flags) { ... }
 
         byte flg = 0;
+        if (nativeHeapZeroInit) flg |= 0x10;
         if (deniedPermissions != null) flg |= 0x2;
         dest.writeByte(flg);
         dest.writeString(name);
         sParcellingForDeniedPermissions.parcel(deniedPermissions, dest, flags);
         dest.writeInt(gwpAsanMode);
+        dest.writeInt(memtagMode);
     }
 
     @Override
@@ -138,9 +164,11 @@ public class ProcessInfo implements Parcelable {
         // static FieldType unparcelFieldName(Parcel in) { ... }
 
         byte flg = in.readByte();
+        boolean _nativeHeapZeroInit = (flg & 0x10) != 0;
         String _name = in.readString();
         ArraySet<String> _deniedPermissions = sParcellingForDeniedPermissions.unparcel(in);
         int _gwpAsanMode = in.readInt();
+        int _memtagMode = in.readInt();
 
         this.name = _name;
         com.android.internal.util.AnnotationValidations.validate(
@@ -149,6 +177,10 @@ public class ProcessInfo implements Parcelable {
         this.gwpAsanMode = _gwpAsanMode;
         com.android.internal.util.AnnotationValidations.validate(
                 ApplicationInfo.GwpAsanMode.class, null, gwpAsanMode);
+        this.memtagMode = _memtagMode;
+        com.android.internal.util.AnnotationValidations.validate(
+                ApplicationInfo.MemtagMode.class, null, memtagMode);
+        this.nativeHeapZeroInit = _nativeHeapZeroInit;
 
         // onConstructed(); // You can define this method to get a callback
     }
@@ -168,10 +200,10 @@ public class ProcessInfo implements Parcelable {
     };
 
     @DataClass.Generated(
-            time = 1584555730519L,
+            time = 1610749925413L,
             codegenVersion = "1.0.15",
             sourceFile = "frameworks/base/core/java/android/content/pm/ProcessInfo.java",
-            inputSignatures = "public @android.annotation.NonNull java.lang.String name\npublic @android.annotation.Nullable @com.android.internal.util.DataClass.ParcelWith(com.android.internal.util.Parcelling.BuiltIn.ForInternedStringArraySet.class) android.util.ArraySet<java.lang.String> deniedPermissions\npublic @android.content.pm.ApplicationInfo.GwpAsanMode int gwpAsanMode\nclass ProcessInfo extends java.lang.Object implements [android.os.Parcelable]\n@com.android.internal.util.DataClass(genGetters=true, genSetters=false, genParcelable=true, genAidl=false, genBuilder=false)")
+            inputSignatures = "public @android.annotation.NonNull java.lang.String name\npublic @android.annotation.Nullable @com.android.internal.util.DataClass.ParcelWith(com.android.internal.util.Parcelling.BuiltIn.ForInternedStringArraySet.class) android.util.ArraySet<java.lang.String> deniedPermissions\npublic @android.content.pm.ApplicationInfo.GwpAsanMode int gwpAsanMode\npublic @android.content.pm.ApplicationInfo.MemtagMode int memtagMode\npublic  boolean nativeHeapZeroInit\nclass ProcessInfo extends java.lang.Object implements [android.os.Parcelable]\n@com.android.internal.util.DataClass(genGetters=true, genSetters=false, genParcelable=true, genAidl=false, genBuilder=false)")
     @Deprecated
     private void __metadata() {}
 

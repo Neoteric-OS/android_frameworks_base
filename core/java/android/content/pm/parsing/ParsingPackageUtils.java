@@ -1799,6 +1799,9 @@ public class ParsingPackageUtils {
             }
 
             pkg.setGwpAsanMode(sa.getInt(R.styleable.AndroidManifestApplication_gwpAsanMode, -1));
+            pkg.setMemtagMode(sa.getInt(R.styleable.AndroidManifestApplication_memtagMode, -1));
+            pkg.setNativeHeapZeroInit(sa.getBoolean(
+                    R.styleable.AndroidManifestApplication_nativeHeapZeroInit, false));
         } finally {
             sa.recycle();
         }
