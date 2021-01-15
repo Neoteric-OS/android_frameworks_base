@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1efd0760_5385c2d3",
+        "filename": "telephony/java/android/telephony/ims/RcsContactPresenceTuple.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-15T18:59:16Z",
+      "side": 1,
+      "message": "Can we put all RCC.07 (v12) Table 9 service IDs here in a @StringDef and add the annotation to serviceId param in the builder?",
+      "range": {
+        "startLine": 43,
+        "startChar": 31,
+        "endLine": 43,
+        "endChar": 47
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25673eac_f3ffba71",
+        "filename": "telephony/java/android/telephony/ims/RcsContactPresenceTuple.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-15T18:59:16Z",
+      "side": 1,
+      "message": "This is missing \"status\" param description",
+      "range": {
+        "startLine": 227,
+        "startChar": 18,
+        "endLine": 227,
+        "endChar": 27
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bc3ba31_5464a676",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-15T18:59:16Z",
+      "side": 1,
+      "message": "Sorry, we usually make \"unknown\" type variables \"0\", can this be moved to integer 0?",
+      "range": {
+        "startLine": 98,
+        "startChar": 28,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e422ad6_a7a2ce5d",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-15T18:59:16Z",
+      "side": 1,
+      "message": "I believe these builders need to be defined as \"final\"",
+      "range": {
+        "startLine": 180,
+        "startChar": 24,
+        "endLine": 180,
+        "endChar": 39
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc2fdc27_c428e3b3",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-15T18:59:16Z",
+      "side": 1,
+      "message": "nit: can we explicitly define the case when the service id is not there - \"The RcsContactPresenceTuple which has the given service id or {@code null} if the service id does not exist in the list of presence tuples returned from the network\".",
+      "range": {
+        "startLine": 318,
+        "startChar": 15,
+        "endLine": 318,
+        "endChar": 74
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a36aa0f_7c0ae390",
+        "filename": "telephony/java/android/telephony/ims/RcsUceAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-15T18:59:16Z",
+      "side": 1,
+      "message": "Lets keep this as @hide until we expose the rest of options",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 14
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f29b6e75_6bbc53e4",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-15T18:59:16Z",
+      "side": 1,
+      "message": "To clarify the expectation a little here:\n\nNotify the framework that the command associated with this callback has failed.\n\u003cp\u003e\nMust only be called when there was an error generating a SUBSCRIBE request due to an IMS stack error. This is a terminating event, so no other callback event will be expected after this callback.",
+      "range": {
+        "startLine": 198,
+        "startChar": 11,
+        "endLine": 198,
+        "endChar": 90
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ea89053_bd361fe0",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-15T18:59:16Z",
+      "side": 1,
+      "message": "Clarify:\n\nNotify the framework of the response to the SUBSCRIBE request from\n{@link #subscribeForCapabilities(List\u003cUri\u003e, SubscribeResponseCallback)}.\n\u003cp\u003e\nIf the carrier network responds to the SUBSCRIBE request with a 2XX response, then the framework will expect the IMS stack to call {@link #onNotifyCapabilitiesUpdate}, {@link #onResourceTerminated}, and {@link #onTerminated} as required for the subsequent NOTIFY responses to the subscription.",
+      "range": {
+        "startLine": 211,
+        "startChar": 10,
+        "endLine": 212,
+        "endChar": 83
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14a33fea_ebd8ed4d",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-15T18:59:16Z",
+      "side": 1,
+      "message": "Can we be very clear on the expected format of the XML PIDF document:\n\nNotify the framework of the latest XML PIDF documents included in the network response for the requested  contacts\u0027 capabilities requested by the Framework using {@link #requestCapabilities(List, int)}.\n\u003cp\u003e\nThe expected format for the PIDF XML is defined in RFC3861. Each XML document must be a \"application/pidf+xml\" object and start with a root \u003cpresence\u003e element. For NOTIFY responses that contain RLMI information and potentially multiple PIDF XMLs, each PIDF XML should be separated and added as a separate item in the List.",
+      "range": {
+        "startLine": 228,
+        "startChar": 11,
+        "endLine": 230,
+        "endChar": 67
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc408246_5dd1c6a8",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-15T18:59:16Z",
+      "side": 1,
+      "message": "Clarify:\n\nNotify the framework that a resource in the RLMI XML contained in the NOTIFY response for the ongoing SUBSCRIBE dialog has been terminated.\n\u003cp\u003e\nThis will be used to notify the framework that a contact URI that the IMS stack has subscribed to on the Resource List Server has been terminated as well as the reason why. Usually this means that there will not be any capability information for the contact URI that they subscribed for. See RFC 4662 for more information.",
+      "range": {
+        "startLine": 244,
+        "startChar": 11,
+        "endLine": 247,
+        "endChar": 59
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "562b8c87_41bc5b2f",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-15T18:59:16Z",
+      "side": 1,
+      "message": "@link this",
+      "range": {
+        "startLine": 253,
+        "startChar": 54,
+        "endLine": 253,
+        "endChar": 75
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21f7938e_b62794ee",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-15T18:59:16Z",
+      "side": 1,
+      "message": "Clarify: This will mostly be due to the network sending a final NOTIFY response due to the subscription expiring, but this may also happen due to a network error.",
+      "range": {
+        "startLine": 254,
+        "startChar": 32,
+        "endLine": 255,
+        "endChar": 47
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72e4af65_8dd8b045",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-15T18:59:16Z",
+      "side": 1,
+      "message": "This is  no longer the case",
+      "range": {
+        "startLine": 257,
+        "startChar": 11,
+        "endLine": 258,
+        "endChar": 63
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "305624bd_312e7af2",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-15T18:59:16Z",
+      "side": 1,
+      "message": "These docs are out of date, can you use the correct links",
+      "range": {
+        "startLine": 280,
+        "startChar": 7,
+        "endLine": 287,
+        "endChar": 62
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
