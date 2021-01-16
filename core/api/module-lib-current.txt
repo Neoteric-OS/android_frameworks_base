@@ -25,13 +25,18 @@ package android.net {
 package android.net.vcn {
 
   public abstract class VcnGatewayConnectionConfig {
-    ctor public VcnGatewayConnectionConfig(@NonNull java.util.Set<java.lang.Integer>, @NonNull java.util.Set<java.lang.Integer>, @NonNull long[], @IntRange(from=android.net.vcn.VcnGatewayConnectionConfig.MIN_MTU_V6) int);
+    ctor public VcnGatewayConnectionConfig(@NonNull java.util.Set<java.lang.Integer>, @NonNull java.util.Set<java.lang.Integer>, @NonNull long[], @IntRange(from=android.net.vcn.VcnGatewayConnectionConfig.MIN_MTU_V6) int, int);
     method public static void checkValidCapability(int);
     method public static int getDefaultMaxMtu();
     method @NonNull public static long[] getDefaultRetryIntervalsMs();
     method @NonNull public android.os.PersistableBundle toPersistableBundle();
     method public static void validateMaxMtu(@IntRange(from=android.net.vcn.VcnGatewayConnectionConfig.MIN_MTU_V6) int);
     method public static void validateRetryInterval(@Nullable long[]);
+    field public static final int CONFIG_TYPE_IKE = 1; // 0x1
+    field public static final String EXPOSED_CAPABILITIES_KEY = "mExposedCapabilities";
+    field public static final String MAX_MTU_KEY = "mMaxMtu";
+    field public static final String RETRY_INTERVAL_MS_KEY = "mRetryIntervalsMs";
+    field public static final String UNDERLYING_CAPABILITIES_KEY = "mUnderlyingCapabilities";
   }
 
 }

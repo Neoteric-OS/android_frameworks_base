@@ -19,6 +19,7 @@ import static android.net.NetworkCapabilities.NetCapability;
 
 import static com.android.internal.annotations.VisibleForTesting.Visibility;
 
+import android.annotation.IntDef;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -32,6 +33,8 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
 import com.android.server.vcn.util.PersistableBundleUtils;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -142,19 +145,43 @@ public abstract class VcnGatewayConnectionConfig {
         return DEFAULT_RETRY_INTERVALS_MS;
     }
 
-    private static final String EXPOSED_CAPABILITIES_KEY = "mExposedCapabilities";
+    /** @hide */
+    @SystemApi(client = Client.MODULE_LIBRARIES)
+    public static final String EXPOSED_CAPABILITIES_KEY = "mExposedCapabilities";
+
     @NonNull private final Set<Integer> mExposedCapabilities;
 
-    private static final String UNDERLYING_CAPABILITIES_KEY = "mUnderlyingCapabilities";
+    /** @hide */
+    @SystemApi(client = Client.MODULE_LIBRARIES)
+    public static final String UNDERLYING_CAPABILITIES_KEY = "mUnderlyingCapabilities";
+
     @NonNull private final Set<Integer> mUnderlyingCapabilities;
 
     // TODO: Add Ike/ChildSessionParams as a subclass - maybe VcnIkeGatewayConnectionConfig
 
-    private static final String MAX_MTU_KEY = "mMaxMtu";
+    /** @hide */
+    @SystemApi(client = Client.MODULE_LIBRARIES)
+    public static final String MAX_MTU_KEY = "mMaxMtu";
+
     private final int mMaxMtu;
 
-    private static final String RETRY_INTERVAL_MS_KEY = "mRetryIntervalsMs";
+    /** @hide */
+    @SystemApi(client = Client.MODULE_LIBRARIES)
+    public static final String RETRY_INTERVAL_MS_KEY = "mRetryIntervalsMs";
+
     @NonNull private final long[] mRetryIntervalsMs;
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({CONFIG_TYPE_IKE})
+    public @interface ConfigType {}
+
+    /** @hide */
+    @SystemApi(client = Client.MODULE_LIBRARIES)
+    public static final int CONFIG_TYPE_IKE = 1;
+
+    private static final String CONFIG_TYPE_KEY = "mConfigType";
+    private final int mConfigType;
 
     /** @hide */
     @SystemApi(client = Client.MODULE_LIBRARIES)
@@ -162,11 +189,13 @@ public abstract class VcnGatewayConnectionConfig {
             @NonNull Set<Integer> exposedCapabilities,
             @NonNull Set<Integer> underlyingCapabilities,
             @NonNull long[] retryIntervalsMs,
-            @IntRange(from = MIN_MTU_V6) int maxMtu) {
+            @IntRange(from = MIN_MTU_V6) int maxMtu,
+            @ConfigType int configType) {
         mExposedCapabilities = exposedCapabilities;
         mUnderlyingCapabilities = underlyingCapabilities;
         mRetryIntervalsMs = retryIntervalsMs;
         mMaxMtu = maxMtu;
+        mConfigType = configType;
 
         validate();
     }
@@ -291,6 +320,12 @@ public abstract class VcnGatewayConnectionConfig {
         return mMaxMtu;
     }
 
+    /** Retrieves the configuration type @hide */
+    @ConfigType
+    public int getConfigType() {
+        return mConfigType;
+    }
+
     /**
      * Converts this config to a PersistableBundle.
      *
@@ -316,6 +351,8 @@ public abstract class VcnGatewayConnectionConfig {
         result.putLongArray(RETRY_INTERVAL_MS_KEY, mRetryIntervalsMs);
         result.putInt(MAX_MTU_KEY, mMaxMtu);
 
+        result.putInt(CONFIG_TYPE_KEY, mConfigType);
+
         return result;
     }
 
@@ -325,7 +362,8 @@ public abstract class VcnGatewayConnectionConfig {
                 mExposedCapabilities,
                 mUnderlyingCapabilities,
                 Arrays.hashCode(mRetryIntervalsMs),
-                mMaxMtu);
+                mMaxMtu,
+                mConfigType);
     }
 
     @Override
@@ -338,6 +376,7 @@ public abstract class VcnGatewayConnectionConfig {
         return mExposedCapabilities.equals(rhs.mExposedCapabilities)
                 && mUnderlyingCapabilities.equals(rhs.mUnderlyingCapabilities)
                 && Arrays.equals(mRetryIntervalsMs, rhs.mRetryIntervalsMs)
-                && mMaxMtu == rhs.mMaxMtu;
+                && mMaxMtu == rhs.mMaxMtu
+                && mConfigType == rhs.mConfigType;
     }
 }
