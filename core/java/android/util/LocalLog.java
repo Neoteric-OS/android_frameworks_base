@@ -30,7 +30,10 @@ import java.util.Iterator;
 
 /**
  * @hide
+ *
+ * @deprecated This class was moved to {@see com.android.modules.utils.LocalLog} static library.
  */
+@Deprecated
 public final class LocalLog {
 
     private final Deque<String> mLog;

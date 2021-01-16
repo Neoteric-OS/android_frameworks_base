@@ -25,15 +25,14 @@ import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI_AWARE;
 
-import android.net.ConnectivityManager;
 import android.net.ConnectivityMetricsEvent;
 import android.net.metrics.ApfProgramEvent;
 import android.net.metrics.ApfStats;
+import android.net.metrics.ConnectStats;
 import android.net.metrics.DefaultNetworkEvent;
 import android.net.metrics.DhcpClientEvent;
 import android.net.metrics.DhcpErrorEvent;
 import android.net.metrics.DnsEvent;
-import android.net.metrics.ConnectStats;
 import android.net.metrics.IpManagerEvent;
 import android.net.metrics.IpReachabilityEvent;
 import android.net.metrics.NetworkEvent;
@@ -41,12 +40,13 @@ import android.net.metrics.RaEvent;
 import android.net.metrics.ValidationProbeEvent;
 import android.net.metrics.WakeupStats;
 import android.os.Parcelable;
-import android.util.SparseArray;
 import android.util.SparseIntArray;
+
 import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass;
 import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityEvent;
 import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityLog;
 import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.Pair;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +96,7 @@ final public class IpConnectivityEventBuilder {
         stats.connectCount = in.connectCount;
         stats.connectBlockingCount = in.connectBlockingCount;
         stats.ipv6AddrCount = in.ipv6ConnectCount;
-        stats.latenciesMs = in.latencies.toArray();
+        stats.latenciesMs = in.latenciesToArray();
         stats.errnosCounters = toPairArray(in.errnos);
         final IpConnectivityEvent out = buildEvent(in.netId, in.transports, null);
         out.setConnectStatistics(stats);
