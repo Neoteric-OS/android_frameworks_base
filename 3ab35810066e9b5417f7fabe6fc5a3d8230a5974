@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57c7d91d_66351451",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-16T00:24:33Z",
+      "side": 1,
+      "message": "whoops - thanks",
+      "parentUuid": "35bf794f_73476a36",
+      "range": {
+        "startLine": 150,
+        "startChar": 7,
+        "endLine": 150,
+        "endChar": 11
+      },
+      "revId": "3ab35810066e9b5417f7fabe6fc5a3d8230a5974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3139a4d2_13014e32",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-15T07:52:50Z",
       "side": 1,
       "message": "Internal system components; we\u0027re not planning for apps to use this, thus the NETWORK_FACTORY permission.",
+      "range": {
+        "startLine": 152,
+        "startChar": 73,
+        "endLine": 152,
+        "endChar": 84
+      },
+      "revId": "3ab35810066e9b5417f7fabe6fc5a3d8230a5974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fb0e681_7b547ba4",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-16T00:24:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3139a4d2_13014e32",
       "range": {
         "startLine": 152,
         "startChar": 73,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "99a9ef81_3c1965b7",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-16T00:24:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1df60e02_6bd0bae9",
+      "range": {
+        "startLine": 153,
+        "startChar": 26,
+        "endLine": 153,
+        "endChar": 27
+      },
+      "revId": "3ab35810066e9b5417f7fabe6fc5a3d8230a5974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d022abcd_d89e48af",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-01-15T07:52:50Z",
       "side": 1,
       "message": "Listeners and callbacks generally use register/unregister, rather than add/remove.",
+      "range": {
+        "startLine": 179,
+        "startChar": 16,
+        "endLine": 179,
+        "endChar": 19
+      },
+      "revId": "3ab35810066e9b5417f7fabe6fc5a3d8230a5974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab617a7d_426ab4e2",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-16T00:24:33Z",
+      "side": 1,
+      "message": "Per our conversation offline, general API Guidance is to use register/unregister for callbacks and add/remove for listeners\n\nhttps://g3doc.corp.google.com/company/teams/android-api-council/guidelines/index.md?cl\u003dhead#callbacks-accessors",
+      "parentUuid": "d022abcd_d89e48af",
       "range": {
         "startLine": 179,
         "startChar": 16,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aae71b5a_4dfbaff1",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-16T00:24:33Z",
+      "side": 1,
+      "message": "Leaving as-is per general API Guidance",
+      "parentUuid": "b55477e0_cfa71e3f",
+      "range": {
+        "startLine": 502,
+        "startChar": 16,
+        "endLine": 502,
+        "endChar": 19
+      },
+      "revId": "3ab35810066e9b5417f7fabe6fc5a3d8230a5974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa69a14f_69cda768",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-01-15T07:52:50Z",
       "side": 1,
       "message": "Nit: For completeness, we could also do the same for RemoveVcnUnderlyingNetworkPolicyListener",
+      "range": {
+        "startLine": 98,
+        "startChar": 20,
+        "endLine": 98,
+        "endChar": 23
+      },
+      "revId": "3ab35810066e9b5417f7fabe6fc5a3d8230a5974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87115309_8def09a5",
+        "filename": "tests/vcn/java/android/net/vcn/VcnManagerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-16T00:24:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa69a14f_69cda768",
       "range": {
         "startLine": 98,
         "startChar": 20,
