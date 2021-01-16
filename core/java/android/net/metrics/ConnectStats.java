@@ -17,12 +17,13 @@
 package android.net.metrics;
 
 import android.system.OsConstants;
-import android.util.IntArray;
 import android.util.SparseIntArray;
 
 import com.android.internal.util.TokenBucket;
 
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 /**
  * A class that aggregates connect() statistics.
@@ -39,7 +40,7 @@ public class ConnectStats {
     /** How many events resulted in a given errno. */
     public final SparseIntArray errnos = new SparseIntArray();
     /** Latencies of successful blocking connects. TODO: add non-blocking connects latencies. */
-    public final IntArray latencies = new IntArray();
+    public final List<Integer> latencies = new ArrayList<Integer>();
     /** TokenBucket for rate limiting latency recording. */
     public final TokenBucket mLatencyTb;
     /** Maximum number of latency values recorded. */
@@ -133,5 +134,10 @@ public class ConnectStats {
             builder.append(String.format(", %s: %d", errno, count));
         }
         return builder.append(")").toString();
+    }
+
+    /** Returns latencies in int[] format */
+    public int[] latenciesToArray() {
+        return latencies.stream().mapToInt(i -> i).toArray();
     }
 }
