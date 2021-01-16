@@ -171,7 +171,6 @@ import android.security.KeyStore;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArraySet;
-import android.util.LocalLog;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
@@ -192,6 +191,7 @@ import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.LocationPermissionChecker;
 import com.android.internal.util.MessageUtils;
 import com.android.modules.utils.BasicShellCommandHandler;
+import com.android.modules.utils.LocalLog2;
 import com.android.net.module.util.LinkPropertiesUtils.CompareOrUpdateResult;
 import com.android.net.module.util.LinkPropertiesUtils.CompareResult;
 import com.android.server.am.BatteryStatsService;
@@ -639,14 +639,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     // NetworkRequest activity String log entries.
     private static final int MAX_NETWORK_REQUEST_LOGS = 20;
-    private final LocalLog mNetworkRequestInfoLogs = new LocalLog(MAX_NETWORK_REQUEST_LOGS);
+    private final LocalLog2 mNetworkRequestInfoLogs = new LocalLog2(MAX_NETWORK_REQUEST_LOGS);
 
     // NetworkInfo blocked and unblocked String log entries
     private static final int MAX_NETWORK_INFO_LOGS = 40;
-    private final LocalLog mNetworkInfoBlockingLogs = new LocalLog(MAX_NETWORK_INFO_LOGS);
+    private final LocalLog2 mNetworkInfoBlockingLogs = new LocalLog2(MAX_NETWORK_INFO_LOGS);
 
     private static final int MAX_WAKELOCK_LOGS = 20;
-    private final LocalLog mWakelockLogs = new LocalLog(MAX_WAKELOCK_LOGS);
+    private final LocalLog2 mWakelockLogs = new LocalLog2(MAX_WAKELOCK_LOGS);
     private int mTotalWakelockAcquisitions = 0;
     private int mTotalWakelockReleases = 0;
     private long mTotalWakelockDurationMs = 0;
