@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007378984",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1550525?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "376c83b7_493e1bbc",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-18T21:42:21Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 921,
+        "startChar": 0,
+        "endLine": 921,
+        "endChar": 101
+      },
+      "revId": "be68c0ed3bbde817deabd9c5b1e613c73e8e8d64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
