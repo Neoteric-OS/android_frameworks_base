@@ -67,6 +67,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f3d60e4d_c3c143d9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-18T08:46:35Z",
+      "side": 1,
+      "message": "I don\u0027t think you should need this. The only test using this is entirely in one thread and I don\u0027t think it calls (or should call) this when the runner is null.\n\nIn fact, it\u0027s worse than this : if for some reason mVpnRunner is null, then l.1227 is not called and expectStartLegacyVpn will not fail.",
+      "range": {
+        "startLine": 1224,
+        "startChar": 11,
+        "endLine": 1224,
+        "endChar": 37
+      },
+      "revId": "91a0224e3bf1dc5810ee20bda7fee6e170645b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fa2a705_2938c8a0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-18T08:46:35Z",
+      "side": 1,
+      "message": "If my coment on l.1224 is correct, then stopVpnRunnerPrivileged does this already.",
+      "range": {
+        "startLine": 1229,
+        "startChar": 12,
+        "endLine": 1229,
+        "endChar": 30
+      },
+      "revId": "91a0224e3bf1dc5810ee20bda7fee6e170645b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4c5efefe_b52b234e",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 16
