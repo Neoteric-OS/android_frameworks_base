@@ -800,7 +800,7 @@ public class VibratorService extends IVibratorService.Stub
                 Vibration vib = new Vibration(token, effect, attrs, uid, opPkg, reason);
                 if (mProcStatesCache.get(uid, ActivityManager.PROCESS_STATE_IMPORTANT_FOREGROUND)
                         > ActivityManager.PROCESS_STATE_IMPORTANT_FOREGROUND
-                        && !vib.isNotification() && !vib.isRingtone() && !vib.isAlarm()) {
+                        && vib.attrs.getUsageClass() != VibrationAttributes.USAGE_CLASS_ALARM) {
                     Slog.e(TAG, "Ignoring incoming vibration as process with"
                             + " uid= " + uid + " is background,"
                             + " attrs= " + vib.attrs);
