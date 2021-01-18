@@ -6452,6 +6452,16 @@ package android.net {
     method @NonNull public android.net.OemNetworkPreferences.Builder clearNetworkPreference(@NonNull String);
   }
 
+  public class PacProxyManager {
+    method @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_STACK, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void addPacProxyInstalledListener(@NonNull java.util.concurrent.Executor, @NonNull android.net.PacProxyManager.PacProxyInstalledListener) throws java.lang.RuntimeException;
+    method @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_STACK, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void removePacProxyInstalledListener(@NonNull android.net.PacProxyManager.PacProxyInstalledListener) throws java.lang.RuntimeException;
+    method @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_STACK, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void setCurrentProxyScriptUrl(@NonNull android.net.ProxyInfo);
+  }
+
+  public static interface PacProxyManager.PacProxyInstalledListener {
+    method public void onPacProxyInstalled(@NonNull android.net.ProxyInfo);
+  }
+
   public abstract class QosCallback {
     ctor public QosCallback();
     method public void onError(@NonNull android.net.QosCallbackException);
