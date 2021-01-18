@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "701c05a2_895a6545",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-18T21:41:15Z",
+      "side": 1,
+      "message": "Done, changed.",
+      "parentUuid": "d53b8726_899e1305",
+      "range": {
+        "startLine": 126,
+        "startChar": 29,
+        "endLine": 126,
+        "endChar": 38
+      },
+      "revId": "e5661d668456599357c72c5c880328d3582386d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f257f7fb_85ed650b",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-14T19:36:57Z",
       "side": 1,
       "message": "I presume that StateMachine gracefully ignores messages if Handler is null? Scary.",
+      "range": {
+        "startLine": 548,
+        "startChar": 12,
+        "endLine": 548,
+        "endChar": 23
+      },
+      "revId": "e5661d668456599357c72c5c880328d3582386d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57652c83_b1e4b09a",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-18T21:41:15Z",
+      "side": 1,
+      "message": "Yep. It just drops new messages in that case:\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/com/android/internal/util/StateMachine.java;l\u003d1715?q\u003dstatemachine\u0026ss\u003dandroid%2Fplatform%2Fsuperproject",
+      "parentUuid": "f257f7fb_85ed650b",
       "range": {
         "startLine": 548,
         "startChar": 12,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "04fc7b7a_e8657158",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-18T21:41:15Z",
+      "side": 1,
+      "message": "This one is the external-facing/vcn-provided network. We\u0027re shutting down the network before IKE so that we maintain connectivity until the network gets torn down.\n\nThat said, I\u0027ve moved the other cleanup (IpSecTunnelInterface + UnderlyingNetworkTracker) into a common onQuitting() method, which will guarantee that the network stays up (if possible) until the state machine is back in the disconnected state (after graceful teardown, or failing which, the session being killed).",
+      "parentUuid": "e5edd731_029a41f5",
+      "range": {
+        "startLine": 667,
+        "startChar": 0,
+        "endLine": 669,
+        "endChar": 0
+      },
+      "revId": "e5661d668456599357c72c5c880328d3582386d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "10326133_3c08ca47",
         "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
         "patchSetId": 14
@@ -83,6 +155,30 @@
       "writtenOn": "2021-01-14T19:36:57Z",
       "side": 1,
       "message": "I have another idea for what this \"token\" is. It\u0027s a scope identifier.",
+      "range": {
+        "startLine": 720,
+        "startChar": 20,
+        "endLine": 720,
+        "endChar": 25
+      },
+      "revId": "e5661d668456599357c72c5c880328d3582386d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27282631_61d16bf3",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-18T21:41:15Z",
+      "side": 1,
+      "message": "Yep. I\u0027ve filed a bug b/177845765 to track our suggestions, and maybe we change all at once?",
+      "parentUuid": "10326133_3c08ca47",
       "range": {
         "startLine": 720,
         "startChar": 20,
