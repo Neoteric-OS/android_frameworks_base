@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a7c1ddf_d76e809a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-18T08:16:45Z",
+      "side": 1,
+      "message": "LGTM with nits",
+      "revId": "91a0224e3bf1dc5810ee20bda7fee6e170645b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d5efbe1_0fb5d956",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-18T08:16:45Z",
+      "side": 1,
+      "message": "nit: not for this CL.\n\nIIUC this does not protect us from mistakenly trigger startLegacyVpnRunner twice.\nFor example an oversight in the re-start phase.\nAlso this seems like an ad-hoc solution to me.\nIf we have 3 or more events to handle it might be hard to maintain.\n\nSo if put it into dep is not working.\nMaybe we can utilize the ArrayTrackRecord?\ne.g. https://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/libs/net/common/devicetests/com/android/testutils/TestableNetworkStatsProvider.kt;l\u003d36?ss\u003dandroid\u0026q\u003dTestableNetworkStatsProvider",
+      "range": {
+        "startLine": 1211,
+        "startChar": 20,
+        "endLine": 1211,
+        "endChar": 46
+      },
+      "revId": "91a0224e3bf1dc5810ee20bda7fee6e170645b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c5efefe_b52b234e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 7051,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-18T08:16:45Z",
+      "side": 1,
+      "message": "IIUC you want to update this?",
+      "range": {
+        "startLine": 7051,
+        "startChar": 58,
+        "endLine": 7051,
+        "endChar": 70
+      },
+      "revId": "91a0224e3bf1dc5810ee20bda7fee6e170645b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
