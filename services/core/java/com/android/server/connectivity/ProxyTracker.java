@@ -27,11 +27,13 @@ import android.annotation.Nullable;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.PacProxyManager;
 import android.net.Proxy;
 import android.net.ProxyInfo;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Handler;
+import android.os.HandlerExecutor;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -42,6 +44,7 @@ import com.android.net.module.util.ProxyUtils;
 
 import java.util.Collections;
 import java.util.Objects;
+import java.util.concurrent.Executor;
 
 /**
  * A class to handle proxy for ConnectivityService.
@@ -67,7 +70,7 @@ public class ProxyTracker {
     // is not set. Individual networks have their own settings that override this. This member
     // is set through setDefaultProxy, which is called when the default network changes proxies
     // in its LinkProperties, or when ConnectivityService switches to a new default network, or
-    // when PacProxyInstaller resolves the proxy.
+    // when PacProxyManagerService resolves the proxy.
     @Nullable
     @GuardedBy("mProxyLock")
     private volatile ProxyInfo mDefaultProxy = null;
@@ -77,16 +80,33 @@ public class ProxyTracker {
 
     private final Handler mConnectivityServiceHandler;
 
-    // The object responsible for Proxy Auto Configuration (PAC).
-    @NonNull
-    private final PacProxyInstaller mPacProxyInstaller;
+    private PacProxyManager mPacProxyManager;
+
+    private final Executor mExecutor;
 
     public ProxyTracker(@NonNull final Context context,
             @NonNull final Handler connectivityServiceInternalHandler, final int pacChangedEvent) {
         mContext = context;
         mConnectivityServiceHandler = connectivityServiceInternalHandler;
-        mPacProxyInstaller = new PacProxyInstaller(
-                context, connectivityServiceInternalHandler, pacChangedEvent);
+        mPacProxyManager = context.getSystemService(PacProxyManager.class);
+        mExecutor = new HandlerExecutor(mConnectivityServiceHandler);
+        PacProxyManager.PacProxyInstalledCallback mCallback =
+                new PacProxyManager.PacProxyInstalledCallback() {
+                    @Override
+                    public void onPacProxyInstalled(ProxyInfo proxy) {
+                        mConnectivityServiceHandler
+                                .sendMessage(mConnectivityServiceHandler
+                                .obtainMessage(pacChangedEvent, proxy));
+                    }
+
+        };
+        try {
+            mExecutor.execute(() -> {
+                mPacProxyManager.registerPacProxyInstalledCallback(mExecutor, mCallback);
+            });
+        } catch (RuntimeException e) {
+            Log.e(TAG, "Cannot register PacProxyInstalledCallback.");
+        }
     }
 
     // Convert empty ProxyInfo's to null as null-checks are used to determine if proxies are present
@@ -182,7 +202,7 @@ public class ProxyTracker {
 
             if (!TextUtils.isEmpty(pacFileUrl)) {
                 mConnectivityServiceHandler.post(
-                        () -> mPacProxyInstaller.setCurrentProxyScriptUrl(proxyProperties));
+                        () -> mPacProxyManager.setCurrentProxyScriptUrl(proxyProperties));
             }
         }
     }
@@ -226,7 +246,7 @@ public class ProxyTracker {
         final ProxyInfo defaultProxy = getDefaultProxy();
         final ProxyInfo proxyInfo = null != defaultProxy ?
                 defaultProxy : ProxyInfo.buildDirectProxy("", 0, Collections.emptyList());
-        mPacProxyInstaller.setCurrentProxyScriptUrl(proxyInfo);
+        mPacProxyManager.setCurrentProxyScriptUrl(proxyInfo);
 
         if (!shouldSendBroadcast(proxyInfo)) {
             return;
@@ -315,10 +335,10 @@ public class ProxyTracker {
                 return;
             }
 
-            // This call could be coming from the PacProxyInstaller, containing the port of the
+            // This call could be coming from the PacProxyManagerService, containing the port of the
             // local proxy. If this new proxy matches the global proxy then copy this proxy to the
             // global (to get the correct local port), and send a broadcast.
-            // TODO: Switch PacProxyInstaller to have its own message to send back rather than
+            // TODO: Switch PacProxyManagerService to have its own message to send back rather than
             // reusing EVENT_HAS_CHANGED_PROXY and this call to handleApplyDefaultProxy.
             if ((mGlobalProxy != null) && (proxyInfo != null)
                     && (!Uri.EMPTY.equals(proxyInfo.getPacFileUrl()))
