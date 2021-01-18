@@ -6364,6 +6364,17 @@ package android.net {
     ctor public NetworkStats.Entry(@Nullable String, int, int, int, int, int, int, long, long, long, long, long);
   }
 
+  public class PacProxyManager {
+    method public void registerPacProxyInstalledCallback(@NonNull java.util.concurrent.Executor, @NonNull android.net.PacProxyManager.PacProxyInstalledCallback);
+    method public void setCurrentProxyScriptUrl(@NonNull android.net.ProxyInfo);
+    method public void unregisterPacProxyInstalledCallback(@NonNull android.net.PacProxyManager.PacProxyInstalledCallback);
+  }
+
+  public static class PacProxyManager.PacProxyInstalledCallback {
+    ctor public PacProxyManager.PacProxyInstalledCallback();
+    method public void onPacProxyInstalled(@NonNull android.net.ProxyInfo);
+  }
+
   public final class RouteInfo implements android.os.Parcelable {
     ctor public RouteInfo(@Nullable android.net.IpPrefix, @Nullable java.net.InetAddress, @Nullable String, int);
     ctor public RouteInfo(@Nullable android.net.IpPrefix, @Nullable java.net.InetAddress, @Nullable String, int, int);

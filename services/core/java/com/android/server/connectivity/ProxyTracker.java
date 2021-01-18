@@ -27,11 +27,13 @@ import android.annotation.Nullable;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.PacProxyManager;
 import android.net.Proxy;
 import android.net.ProxyInfo;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Handler;
+import android.os.HandlerExecutor;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -42,6 +44,7 @@ import com.android.net.module.util.ProxyUtils;
 
 import java.util.Collections;
 import java.util.Objects;
+import java.util.concurrent.Executor;
 
 /**
  * A class to handle proxy for ConnectivityService.
@@ -78,15 +81,32 @@ public class ProxyTracker {
     private final Handler mConnectivityServiceHandler;
 
     // The object responsible for Proxy Auto Configuration (PAC).
-    @NonNull
-    private final PacProxyInstaller mPacProxyInstaller;
+    //@NonNull
+    //private final PacProxyInstaller mPacProxyInstaller;
+
+    private PacProxyManager mPacProxyManager;
+
+    private final Executor mExecutor;
 
     public ProxyTracker(@NonNull final Context context,
             @NonNull final Handler connectivityServiceInternalHandler, final int pacChangedEvent) {
         mContext = context;
         mConnectivityServiceHandler = connectivityServiceInternalHandler;
-        mPacProxyInstaller = new PacProxyInstaller(
-                context, connectivityServiceInternalHandler, pacChangedEvent);
+        mPacProxyManager = context.getSystemService(PacProxyManager.class);
+        mExecutor = new HandlerExecutor(mConnectivityServiceHandler);
+        PacProxyManager.PacProxyInstalledCallback mCallback =
+                new PacProxyManager.PacProxyInstalledCallback() {
+                    @Override
+                    public void onPacProxyInstalled(ProxyInfo proxy) {
+                        mConnectivityServiceHandler
+                                .sendMessage(mConnectivityServiceHandler
+                                .obtainMessage(pacChangedEvent, proxy));
+                    }
+
+        };
+        mExecutor.execute(() -> {
+            mPacProxyManager.registerPacProxyInstalledCallback(mExecutor, mCallback);
+        });
     }
 
     // Convert empty ProxyInfo's to null as null-checks are used to determine if proxies are present
@@ -182,7 +202,7 @@ public class ProxyTracker {
 
             if (!TextUtils.isEmpty(pacFileUrl)) {
                 mConnectivityServiceHandler.post(
-                        () -> mPacProxyInstaller.setCurrentProxyScriptUrl(proxyProperties));
+                        () -> mPacProxyManager.setCurrentProxyScriptUrl(proxyProperties));
             }
         }
     }
@@ -226,7 +246,7 @@ public class ProxyTracker {
         final ProxyInfo defaultProxy = getDefaultProxy();
         final ProxyInfo proxyInfo = null != defaultProxy ?
                 defaultProxy : ProxyInfo.buildDirectProxy("", 0, Collections.emptyList());
-        mPacProxyInstaller.setCurrentProxyScriptUrl(proxyInfo);
+        mPacProxyManager.setCurrentProxyScriptUrl(proxyInfo);
 
         if (!shouldSendBroadcast(proxyInfo)) {
             return;
