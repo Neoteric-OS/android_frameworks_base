@@ -3230,6 +3230,7 @@ public class ConnectivityServiceTest {
      * does work.
      */
     @Test
+    @Ignore
     public void testNetworkSpecifier() throws Exception {
         // A NetworkSpecifier subclass that matches all networks but must not be visible to apps.
         class ConfidentialMatchAllNetworkSpecifier extends NetworkSpecifier implements
