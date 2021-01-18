@@ -22,6 +22,30 @@
       },
       "revId": "233d643908e5781518bd2f873a70531b4046b7bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "244eb1ac_ac935afe",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6258,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-18T14:03:38Z",
+      "side": 0,
+      "message": "This has moved to a static block so asserting is difficult. I don\u0027t think it\u0027s necessary, though.",
+      "parentUuid": "6351b762_bb295fed",
+      "range": {
+        "startLine": 6258,
+        "startChar": 8,
+        "endLine": 6258,
+        "endChar": 40
+      },
+      "revId": "233d643908e5781518bd2f873a70531b4046b7bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
