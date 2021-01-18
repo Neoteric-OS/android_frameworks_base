@@ -360,7 +360,7 @@ public class ProxyServer extends Thread {
             try {
                 mCallback.setProxyPort(port);
             } catch (RemoteException e) {
-                Log.w(TAG, "Proxy failed to report port to PacProxyInstaller", e);
+                Log.w(TAG, "Proxy failed to report port to PacProxyManagerService", e);
             }
         }
         mPort = port;
@@ -371,7 +371,7 @@ public class ProxyServer extends Thread {
             try {
                 callback.setProxyPort(mPort);
             } catch (RemoteException e) {
-                Log.w(TAG, "Proxy failed to report port to PacProxyInstaller", e);
+                Log.w(TAG, "Proxy failed to report port to PacProxyManagerService", e);
             }
         }
         mCallback = callback;

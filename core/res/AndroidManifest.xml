@@ -1687,6 +1687,10 @@
     <permission android:name="android.permission.OBSERVE_NETWORK_POLICY"
                 android:protectionLevel="signature" />
 
+    <!-- @SystemApi @hide Allows an application to observe PAC proxy changes. -->
+    <permission android:name="android.permission.OBSERVE_PAC_PROXY"
+        android:protectionLevel="signature" />
+
     <!-- @SystemApi @hide Allows applications to register network factory or agent -->
     <permission android:name="android.permission.NETWORK_FACTORY"
                 android:protectionLevel="signature" />
