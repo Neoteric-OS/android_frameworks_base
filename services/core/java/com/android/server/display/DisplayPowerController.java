@@ -1085,7 +1085,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             // If the color fade is totally covering the screen then we can change the backlight
             // level without it being a noticeable jump since any actual content isn't yet visible.
             final boolean isDisplayContentVisible =
-                    mColorFadeEnabled && mPowerState.getColorFadeLevel() == 1.0f;
+                    mColorFadeEnabled ? mPowerState.getColorFadeLevel() == 1.0f : true;
             final boolean brightnessIsTemporary =
                     mAppliedTemporaryBrightness || mAppliedTemporaryAutoBrightnessAdjustment;
             // We only want to animate the brightness if it is between 0.0f and 1.0f.
