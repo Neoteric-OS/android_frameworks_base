@@ -120,6 +120,7 @@ import android.net.NetworkTestResultParcelable;
 import android.net.NetworkUtils;
 import android.net.NetworkWatchlistManager;
 import android.net.PrivateDnsConfigParcel;
+import android.net.PrivateDnsProvider;
 import android.net.ProxyInfo;
 import android.net.RouteInfo;
 import android.net.RouteInfoParcel;
@@ -8663,5 +8664,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         notifyDataStallSuspected(p, network.getNetId());
+    }
+
+    @Override
+    public List<PrivateDnsProvider> getPrivateDnsProviders() {
+        return mDnsManager.getPrivateDnsProviders();
     }
 }

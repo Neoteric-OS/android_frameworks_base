@@ -199,6 +199,7 @@ import android.net.UidRangeParcel;
 import android.net.Uri;
 import android.net.VpnManager;
 import android.net.metrics.IpConnectivityLog;
+import android.net.resolv.aidl.PrivateDnsProviderParamsParcel;
 import android.net.shared.NetworkMonitorUtils;
 import android.net.shared.PrivateDnsConfig;
 import android.net.util.MultinetworkPolicyTracker;
@@ -392,6 +393,8 @@ public class ConnectivityServiceTest {
 
     private ArgumentCaptor<ResolverParamsParcel> mResolverParamsParcelCaptor =
             ArgumentCaptor.forClass(ResolverParamsParcel.class);
+    private ArgumentCaptor<PrivateDnsProviderParamsParcel> mPrivateDnsProviderParamsParcelCaptor =
+            ArgumentCaptor.forClass(PrivateDnsProviderParamsParcel.class);
 
     // This class exists to test bindProcessToNetwork and getBoundNetworkForProcess. These methods
     // do not go through ConnectivityService but talk to netd directly, so they don't automatically
@@ -8773,5 +8776,19 @@ public class ConnectivityServiceTest {
                             getAttributionTag())
             );
         }
+    }
+
+    @Test
+    public void testGetPrivateDnsProviders() throws Exception {
+        reset(mMockDnsResolver);
+
+        mCm.getPrivateDnsProviders();
+
+        verify(mMockDnsResolver, times(1)).getPrivateDnsProviders(
+                mPrivateDnsProviderParamsParcelCaptor.capture());
+        final PrivateDnsProviderParamsParcel params =
+                mPrivateDnsProviderParamsParcelCaptor.getValue();
+        assertEquals(params.locale, IDnsResolver.LOCALE_ANY);
+        reset(mMockDnsResolver);
     }
 }

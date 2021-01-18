@@ -812,6 +812,12 @@ public class ConnectivityManager {
      */
     public static final String PRIVATE_DNS_MODE_PROVIDER_HOSTNAME = "hostname";
     /**
+     * @hide
+     */
+    @SystemApi
+    public static final String PRIVATE_DNS_MODE_PREDEFINED_PROVIDER = "predefined_provider";
+
+    /**
      * The default Private DNS mode.
      *
      * This may change from release to release or may become dependent upon
@@ -4938,5 +4944,22 @@ public class ConnectivityManager {
         final NetworkCapabilities nc = request.networkCapabilities;
         sendRequestForNetwork(nc, networkCallback, 0, BACKGROUND_REQUEST,
                 TYPE_NONE, handler == null ? getDefaultHandler() : new CallbackHandler(handler));
+    }
+
+    /**
+     * Get the predefined private DNS providers.
+     *
+     * @return the list of private DNS provider names that are available.
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
+    @SystemApi
+    @NonNull
+    public List<PrivateDnsProvider> getPrivateDnsProviders() {
+        try {
+            return mService.getPrivateDnsProviders();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 }

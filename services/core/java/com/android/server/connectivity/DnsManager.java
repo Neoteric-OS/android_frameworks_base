@@ -34,9 +34,12 @@ import android.content.Intent;
 import android.net.IDnsResolver;
 import android.net.LinkProperties;
 import android.net.Network;
+import android.net.PrivateDnsProvider;
 import android.net.ResolverOptionsParcel;
 import android.net.ResolverParamsParcel;
 import android.net.Uri;
+import android.net.resolv.aidl.PrivateDnsProviderParamsParcel;
+import android.net.resolv.aidl.PrivateDnsProviderParcel;
 import android.net.shared.PrivateDnsConfig;
 import android.os.Binder;
 import android.os.RemoteException;
@@ -48,12 +51,14 @@ import android.util.Log;
 import android.util.Pair;
 
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -241,6 +246,7 @@ public class DnsManager {
     private final Map<Integer, PrivateDnsValidationStatuses> mPrivateDnsValidationMap;
     private final Map<Integer, LinkProperties> mLinkPropertiesMap;
     private final Map<Integer, int[]> mTransportsMap;
+    private final List<PrivateDnsProvider> mPrivateDnsProviderList;
 
     private int mSampleValidity;
     private int mSuccessThreshold;
@@ -255,6 +261,7 @@ public class DnsManager {
         mPrivateDnsValidationMap = new HashMap<>();
         mLinkPropertiesMap = new HashMap<>();
         mTransportsMap = new HashMap<>();
+        mPrivateDnsProviderList = new ArrayList<>();
 
         // TODO: Create and register ContentObservers to track every setting
         // used herein, posting messages to respond to changes.
@@ -421,6 +428,32 @@ public class DnsManager {
             mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
         } finally {
             Binder.restoreCallingIdentity(ident);
+        }
+    }
+
+    /**
+     * Retrieve the private DNS providers.
+     */
+    public List<PrivateDnsProvider> getPrivateDnsProviders() {
+        // TODO: Cache the last query params to avoid sending binder call every time.
+        final PrivateDnsProviderParcel[] privateDnsProviders;
+        final PrivateDnsProviderParamsParcel params = new PrivateDnsProviderParamsParcel();
+        try {
+            privateDnsProviders = mDnsResolver.getPrivateDnsProviders(params);
+        } catch (RemoteException | ServiceSpecificException e) {
+            Log.e(TAG, "Error get private DNS providers: " + e.getMessage());
+            return List.of();
+        }
+        if (privateDnsProviders == null) {
+            return List.of();
+        }
+        synchronized (mPrivateDnsProviderList) {
+            mPrivateDnsProviderList.clear();
+            for (PrivateDnsProviderParcel privateDnsProvider : privateDnsProviders) {
+                mPrivateDnsProviderList.add(
+                        new PrivateDnsProvider(privateDnsProvider.providerName));
+            }
+            return new ArrayList<PrivateDnsProvider>(mPrivateDnsProviderList);
         }
     }
 

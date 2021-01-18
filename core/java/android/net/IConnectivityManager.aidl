@@ -28,6 +28,7 @@ import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.net.ISocketKeepaliveCallback;
+import android.net.PrivateDnsProvider;
 import android.net.ProxyInfo;
 import android.net.UidRange;
 import android.os.Bundle;
@@ -239,4 +240,6 @@ interface IConnectivityManager
     void unregisterNetworkActivityListener(in INetworkActivityListener l);
 
     boolean isDefaultNetworkActive();
+
+    List<PrivateDnsProvider> getPrivateDnsProviders();
 }

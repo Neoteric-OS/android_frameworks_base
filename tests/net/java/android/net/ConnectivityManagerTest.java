@@ -407,4 +407,12 @@ public class ConnectivityManagerTest {
         }
         fail("expected exception of type " + throwableType);
     }
+
+    @Test
+    public void testGetPrivateDnsProviders() throws Exception {
+        final ConnectivityManager manager = new ConnectivityManager(mCtx, mService);
+
+        manager.getPrivateDnsProviders();
+        verify(mService, times(1)).getPrivateDnsProviders();
+    }
 }

@@ -35,6 +35,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -48,10 +51,15 @@ import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
+import android.net.PrivateDnsProvider;
 import android.net.ResolverOptionsParcel;
 import android.net.ResolverParamsParcel;
 import android.net.RouteInfo;
+import android.net.resolv.aidl.PrivateDnsProviderParamsParcel;
+import android.net.resolv.aidl.PrivateDnsProviderParcel;
 import android.net.shared.PrivateDnsConfig;
+import android.os.RemoteException;
+import android.os.ServiceSpecificException;
 import android.provider.Settings;
 import android.test.mock.MockContentResolver;
 import android.util.SparseArray;
@@ -73,6 +81,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.net.InetAddress;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Tests for {@link DnsManager}.
@@ -84,6 +93,8 @@ import java.util.Arrays;
 @SmallTest
 public class DnsManagerTest {
     static final String TEST_IFACENAME = "test_wlan0";
+    static final String TEST_PROVIDER_NAME_1 = "Google";
+    static final String TEST_PROVIDER_NAME_2 = "Google";
     static final int TEST_NETID = 100;
     static final int TEST_NETID_ALTERNATE = 101;
     static final int TEST_NETID_UNTRACKED = 102;
@@ -420,5 +431,42 @@ public class DnsManagerTest {
         assertFalse(privateDnsCfg.useTls);
         assertEquals("", privateDnsCfg.hostname);
         assertEquals(new InetAddress[0], privateDnsCfg.ips);
+    }
+
+    private PrivateDnsProviderParcel[] makePrivateDnsProviderParcels() {
+        final PrivateDnsProviderParcel[] providers =  new PrivateDnsProviderParcel[2];
+        providers[0] = new PrivateDnsProviderParcel();
+        providers[1] = new PrivateDnsProviderParcel();
+        providers[0].providerName = TEST_PROVIDER_NAME_1;
+        providers[1].providerName = TEST_PROVIDER_NAME_2;
+        return providers;
+    }
+
+    @Test
+    public void testGetPrivateDnsProviders() throws Exception {
+        final PrivateDnsProviderParcel[] providers = makePrivateDnsProviderParcels();
+        doReturn(providers).when(mMockDnsResolver).getPrivateDnsProviders(any());
+        List<PrivateDnsProvider> result = mDnsManager.getPrivateDnsProviders();
+        final ArgumentCaptor<PrivateDnsProviderParamsParcel> paramsParcelCaptor =
+                ArgumentCaptor.forClass(PrivateDnsProviderParamsParcel.class);
+        verify(mMockDnsResolver, times(1)).getPrivateDnsProviders(
+                paramsParcelCaptor.capture());
+        final PrivateDnsProviderParamsParcel params = paramsParcelCaptor.getValue();
+        assertEquals(params.locale, IDnsResolver.LOCALE_ANY);
+        assertEquals(result.size(), 2);
+        final List<PrivateDnsProvider> expectedResult = Arrays.asList(
+                new PrivateDnsProvider(TEST_PROVIDER_NAME_1),
+                new PrivateDnsProvider(TEST_PROVIDER_NAME_2));
+        assertEquals(result, expectedResult);
+
+
+        doThrow(new RemoteException()).when(mMockDnsResolver).getPrivateDnsProviders(any());
+        result = mDnsManager.getPrivateDnsProviders();
+        assertEquals(result.size(), 0);
+
+        doThrow(new ServiceSpecificException(0))
+                .when(mMockDnsResolver).getPrivateDnsProviders(any());
+        result = mDnsManager.getPrivateDnsProviders();
+        assertEquals(result.size(), 0);
     }
 }
