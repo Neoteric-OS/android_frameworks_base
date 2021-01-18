@@ -88,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbe14a4e_13c1f994",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-18T14:02:32Z",
+      "side": 1,
+      "message": "Per above comment, it\u0027s not true that the test is single-threaded.",
+      "parentUuid": "f3d60e4d_c3c143d9",
+      "range": {
+        "startLine": 1224,
+        "startChar": 11,
+        "endLine": 1224,
+        "endChar": 37
+      },
+      "revId": "91a0224e3bf1dc5810ee20bda7fee6e170645b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0fa2a705_2938c8a0",
@@ -101,6 +125,30 @@
       "writtenOn": "2021-01-18T08:46:35Z",
       "side": 1,
       "message": "If my coment on l.1224 is correct, then stopVpnRunnerPrivileged does this already.",
+      "range": {
+        "startLine": 1229,
+        "startChar": 12,
+        "endLine": 1229,
+        "endChar": 30
+      },
+      "revId": "91a0224e3bf1dc5810ee20bda7fee6e170645b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a96cf55f_ae3af827",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-18T14:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fa2a705_2938c8a0",
       "range": {
         "startLine": 1229,
         "startChar": 12,
