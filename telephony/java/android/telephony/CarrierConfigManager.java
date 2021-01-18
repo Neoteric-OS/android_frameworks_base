@@ -4082,6 +4082,14 @@ public class CarrierConfigManager {
      */
     public static final String KEY_USE_ACS_FOR_RCS_BOOL = "use_acs_for_rcs_bool";
 
+    /**
+     * Indicates if only default, ia apns to be used for initial attach
+     *
+     * @hide
+     */
+    public static final String KEY_CONDITIONAL_INITIAL_ATTACH =
+            "conditional_initial_attach_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -4628,6 +4636,7 @@ public class CarrierConfigManager {
         sDefaults.putString(KEY_CALL_COMPOSER_PICTURE_SERVER_URL_STRING, "");
         sDefaults.putBoolean(KEY_USE_LOWER_MTU_VALUE_IF_BOTH_RECEIVED, false);
         sDefaults.putBoolean(KEY_USE_ACS_FOR_RCS_BOOL, false);
+        sDefaults.putBoolean(KEY_CONDITIONAL_INITIAL_ATTACH, false);
     }
 
     /**
