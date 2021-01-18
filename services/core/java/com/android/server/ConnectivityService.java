@@ -1652,7 +1652,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private NetworkCapabilities getNetworkCapabilitiesInternal(NetworkAgentInfo nai) {
         if (nai == null) return null;
         synchronized (nai) {
-            if (nai.networkCapabilities == null) return null;
             return networkCapabilitiesRestrictedForCallerPermissions(
                     nai.networkCapabilities, Binder.getCallingPid(), mDeps.getCallingUid());
         }
@@ -2762,7 +2761,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private boolean isLiveNetworkAgent(NetworkAgentInfo nai, int what) {
-        if (nai.network == null) return false;
         final NetworkAgentInfo officialNai = getNetworkAgentInfoForNetwork(nai.network);
         if (officialNai != null && officialNai.equals(nai)) return true;
         if (officialNai != null || VDBG) {
@@ -7567,10 +7565,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (!networkAgent.everConnected && state == NetworkInfo.State.CONNECTED) {
             networkAgent.everConnected = true;
-
-            if (networkAgent.linkProperties == null) {
-                Log.wtf(TAG, networkAgent.toShortString() + " connected with null LinkProperties");
-            }
 
             // NetworkCapabilities need to be set before sending the private DNS config to
             // NetworkMonitor, otherwise NetworkMonitor cannot determine if validation is required.
