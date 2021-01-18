@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "35f226a2_db51b154",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-18T08:31:05Z",
+      "side": 1,
+      "message": "Ack. Added a TODO.",
+      "parentUuid": "1d5efbe1_0fb5d956",
+      "range": {
+        "startLine": 1211,
+        "startChar": 20,
+        "endLine": 1211,
+        "endChar": 46
+      },
+      "revId": "91a0224e3bf1dc5810ee20bda7fee6e170645b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c5efefe_b52b234e",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-01-18T08:16:45Z",
       "side": 1,
       "message": "IIUC you want to update this?",
+      "range": {
+        "startLine": 7051,
+        "startChar": 58,
+        "endLine": 7051,
+        "endChar": 70
+      },
+      "revId": "91a0224e3bf1dc5810ee20bda7fee6e170645b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae804805_b415c583",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 7051,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-18T08:31:05Z",
+      "side": 1,
+      "message": "Oops. Done.",
+      "parentUuid": "4c5efefe_b52b234e",
       "range": {
         "startLine": 7051,
         "startChar": 58,
