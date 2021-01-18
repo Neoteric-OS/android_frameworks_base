@@ -16,6 +16,8 @@
 
 package com.android.server.connectivity;
 
+import static android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK;
+
 import android.annotation.NonNull;
 import android.annotation.WorkerThread;
 import android.app.AlarmManager;
@@ -27,12 +29,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.net.IPacProxyInstalledListener;
+import android.net.IPacProxyManager;
 import android.net.ProxyInfo;
 import android.net.TrafficStats;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.HandlerExecutor;
 import android.os.HandlerThread;
 import android.os.IBinder;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
@@ -45,6 +51,7 @@ import com.android.internal.util.TrafficStatsConstants;
 import com.android.net.IProxyCallback;
 import com.android.net.IProxyPortListener;
 import com.android.net.IProxyService;
+import com.android.net.module.util.PermissionUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -54,7 +61,7 @@ import java.net.URLConnection;
 /**
  * @hide
  */
-public class PacProxyInstaller {
+public class PacProxyService extends IPacProxyManager.Stub {
     private static final String PAC_PACKAGE = "com.android.pacprocessor";
     private static final String PAC_SERVICE = "com.android.pacprocessor.PacService";
     private static final String PAC_SERVICE_NAME = "com.android.net.IProxyService";
@@ -62,7 +69,7 @@ public class PacProxyInstaller {
     private static final String PROXY_PACKAGE = "com.android.proxyhandler";
     private static final String PROXY_SERVICE = "com.android.proxyhandler.ProxyService";
 
-    private static final String TAG = "PacProxyInstaller";
+    private static final String TAG = "PacProxyService";
 
     private static final String ACTION_PAC_REFRESH = "android.net.proxy.PAC_REFRESH";
 
@@ -90,8 +97,8 @@ public class PacProxyInstaller {
     private volatile boolean mHasSentBroadcast;
     private volatile boolean mHasDownloaded;
 
-    private final Handler mConnectivityHandler;
-    private final int mProxyMessage;
+    private final RemoteCallbackList<IPacProxyInstalledListener>
+            mCallbacks = new RemoteCallbackList<>();
 
     /**
      * Used for locking when setting mProxyService and all references to mCurrentPac.
@@ -150,10 +157,10 @@ public class PacProxyInstaller {
         }
     }
 
-    public PacProxyInstaller(@NonNull Context context, @NonNull Handler handler, int proxyMessage) {
+    public PacProxyService(@NonNull Context context) {
         mContext = context;
         mLastPort = -1;
-        final HandlerThread netThread = new HandlerThread("android.pacproxyinstaller",
+        final HandlerThread netThread = new HandlerThread("android.pacproxyservice",
                 android.os.Process.THREAD_PRIORITY_DEFAULT);
         netThread.start();
         mNetThreadHandler = new Handler(netThread.getLooper());
@@ -162,8 +169,6 @@ public class PacProxyInstaller {
                 context, 0, new Intent(ACTION_PAC_REFRESH), PendingIntent.FLAG_IMMUTABLE);
         context.registerReceiver(new PacRefreshIntentReceiver(),
                 new IntentFilter(ACTION_PAC_REFRESH));
-        mConnectivityHandler = handler;
-        mProxyMessage = proxyMessage;
     }
 
     private AlarmManager getAlarmManager() {
@@ -173,15 +178,33 @@ public class PacProxyInstaller {
         return mAlarmManager;
     }
 
+    @Override
+    public void addListener(IPacProxyInstalledListener listener) {
+        PermissionUtils.enforceAnyPermissionOf(mContext, android.Manifest.permission.NETWORK_STACK,
+                PERMISSION_MAINLINE_NETWORK_STACK);
+        mCallbacks.register(listener);
+    }
+
+    @Override
+    public void removeListener(IPacProxyInstalledListener listener) {
+        PermissionUtils.enforceAnyPermissionOf(mContext, android.Manifest.permission.NETWORK_STACK,
+                PERMISSION_MAINLINE_NETWORK_STACK);
+        mCallbacks.unregister(listener);
+    }
+
     /**
      * Updates the PAC Proxy Installer with current Proxy information. This is called by
-     * the ProxyTracker directly before a broadcast takes place to allow
-     * the PacProxyInstaller to indicate that the broadcast should not be sent and the
-     * PacProxyInstaller will trigger a new broadcast when it is ready.
+     * the ProxyTracker through PacProxyManager before a broadcast takes place to allow
+     * the PacProxyService to indicate that the broadcast should not be sent and the
+     * PacProxyService will trigger a new broadcast when it is ready.
      *
      * @param proxy Proxy information that is about to be broadcast.
      */
+    @Override
     public void setCurrentProxyScriptUrl(@NonNull ProxyInfo proxy) {
+        PermissionUtils.enforceAnyPermissionOf(mContext, android.Manifest.permission.NETWORK_STACK,
+                PERMISSION_MAINLINE_NETWORK_STACK);
+
         synchronized (mBroadcastStateLock) {
             if (!Uri.EMPTY.equals(proxy.getPacFileUrl())) {
                 if (proxy.getPacFileUrl().equals(mPacUrl) && (proxy.getPort() > 0)) return;
@@ -369,8 +392,9 @@ public class PacProxyInstaller {
                 }
             }
         };
-        mContext.bindService(intent, mProxyConnection,
-                Context.BIND_AUTO_CREATE | Context.BIND_NOT_FOREGROUND | Context.BIND_NOT_VISIBLE);
+        mContext.bindService(intent,
+                Context.BIND_AUTO_CREATE | Context.BIND_NOT_FOREGROUND | Context.BIND_NOT_VISIBLE,
+                new HandlerExecutor(mNetThreadHandler), mProxyConnection);
     }
 
     private void unbind() {
@@ -387,9 +411,19 @@ public class PacProxyInstaller {
     }
 
     private void sendPacBroadcast(ProxyInfo proxy) {
-        mConnectivityHandler.sendMessage(mConnectivityHandler.obtainMessage(mProxyMessage, proxy));
+        final int length = mCallbacks.beginBroadcast();
+        for (int i = 0; i < length; i++) {
+            final IPacProxyInstalledListener listener = mCallbacks.getBroadcastItem(i);
+            if (listener != null) {
+                try {
+                    listener.onPacProxyInstalled(proxy);
+                } catch (RemoteException ignored) { }
+            }
+        }
+        mCallbacks.finishBroadcast();
     }
 
+    // This method must be called on mNetThreadHandler.
     private void sendProxyIfNeeded() {
         synchronized (mBroadcastStateLock) {
             if (!mHasDownloaded || (mLastPort == -1)) {
