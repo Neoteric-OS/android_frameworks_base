@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffe6035d_dd0381da",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3725,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60122470_9e31ba92",
+      "range": {
+        "startLine": 3725,
+        "startChar": 4,
+        "endLine": 3725,
+        "endChar": 7
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1cead467_2780737d",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-07T23:30:35Z",
       "side": 1,
       "message": "to simplify (and since this\u0027ll be on BluetoothA2dp) let\u0027s call this getDynamicBufferSupport\n\nand rename the constants to DYNAMIC_BUFFER_SUPPORT_\u003cname\u003e",
+      "range": {
+        "startLine": 3738,
+        "startChar": 52,
+        "endLine": 3738,
+        "endChar": 86
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c9ed40b_b8910d38",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3738,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cead467_2780737d",
       "range": {
         "startLine": 3738,
         "startChar": 52,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61e12b75_47d2bd24",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3767,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28375cd5_ae6e4e21",
+      "range": {
+        "startLine": 3767,
+        "startChar": 52,
+        "endLine": 3767,
+        "endChar": 73
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f3e546d_57fa46af",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-01-07T23:30:35Z",
       "side": 1,
       "message": "what is the unit of the size here? is this millis like in DynamicAudioBuffer\u0027s fields? (or size in bytes?) ...I\u0027m assuming millis too.\n\nwhen moving this to BluetoothA2dp, let\u0027s rename to setBufferMillis, since the dynamic part is implicit - we\u0027re changing it here",
+      "range": {
+        "startLine": 3795,
+        "startChar": 19,
+        "endLine": 3795,
+        "endChar": 44
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "934c74bd_66615dfe",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3795,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f3e546d_57fa46af",
       "range": {
         "startLine": 3795,
         "startChar": 19,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd4ce7ef_8163f5d5",
+        "filename": "core/java/android/bluetooth/DynamicAudioBuffer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0062ec18_23abc95d",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 41
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0bc980c_4bd89fbc",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-01-07T23:30:35Z",
       "side": 1,
       "message": "I think we probably want to think of another name, since this is more a config or info class than a buffer. (buffer kinda implies you could write data into it or read data from it)\n\nwas thinking how about DynamicAudioBufferInfo, but since we will move this to BluetoothA2dp, it\u0027s implicitly about audio, was thinking we could call it DynamicBufferInfo.\n\nbut thinking about it more, especially in relation to setBufferMillis, realized this class is more about the *constraints* of what we can call setBufferMillis with, and the dynamic part is implicit.\n\nso how about BufferConstraint?",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69a332fa_ec548d02",
+        "filename": "core/java/android/bluetooth/DynamicAudioBuffer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0bc980c_4bd89fbc",
       "range": {
         "startLine": 30,
         "startChar": 19,
@@ -162,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "398fd404_82d66d19",
+        "filename": "core/java/android/bluetooth/DynamicAudioBuffer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15ffb6ee_ea13b9e7",
+      "range": {
+        "startLine": 80,
+        "startChar": 15,
+        "endLine": 80,
+        "endChar": 37
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a06c5b2_25eb060e",
@@ -175,6 +343,30 @@
       "writtenOn": "2021-01-07T23:30:35Z",
       "side": 1,
       "message": "the relationship between DynamicBufferCapabilities to DynamicAudioBuffer isn\u0027t very clear to someone who hasn\u0027t read the code yet since they are different terms.\n\nthis is now a collection of BufferConstraint, so how about BufferConstraints?",
+      "range": {
+        "startLine": 38,
+        "startChar": 19,
+        "endLine": 38,
+        "endChar": 49
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9eb8ab48_5d08ad18",
+        "filename": "core/java/android/bluetooth/DynamicAudioBufferCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a06c5b2_25eb060e",
       "range": {
         "startLine": 38,
         "startChar": 19,
@@ -233,6 +425,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "933b7476_670ffdc2",
+        "filename": "core/java/android/bluetooth/DynamicAudioBufferCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "These are mutually exclusive now. But we consider to support at the same time in the future, it will add DYNAMIC_BUFFER_SUPPORT_A2DP_HYBRID_MODE \u003d 3 in the future.",
+      "parentUuid": "68913205_38b14718",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 81
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccab9ea1_0e3b5f07",
+        "filename": "core/java/android/bluetooth/DynamicAudioBufferCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7a6a9a7_26c97484",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 81
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca6d4c04_900fbae0",
         "filename": "core/java/android/bluetooth/DynamicAudioBufferCapabilities.java",
         "patchSetId": 11
@@ -244,6 +484,30 @@
       "writtenOn": "2021-01-07T23:30:35Z",
       "side": 1,
       "message": "don\u0027t need to be public, and can be removed as per the comment below",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 48
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37a94f12_d5867ec9",
+        "filename": "core/java/android/bluetooth/DynamicAudioBufferCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca6d4c04_900fbae0",
       "range": {
         "startLine": 76,
         "startChar": 4,
@@ -277,6 +541,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a00c3aee_48e2a642",
+        "filename": "core/java/android/bluetooth/DynamicAudioBufferCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42525193_4cbe3509",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 52
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05979506_de404f19",
@@ -290,6 +578,30 @@
       "writtenOn": "2021-01-07T23:30:35Z",
       "side": 1,
       "message": "looks like debug info so should not be Log.e, and probably should be removed to avoid logcat spam",
+      "range": {
+        "startLine": 103,
+        "startChar": 9,
+        "endLine": 110,
+        "endChar": 9
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d0a344b_6a01b115",
+        "filename": "core/java/android/bluetooth/DynamicAudioBufferCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05979506_de404f19",
       "range": {
         "startLine": 103,
         "startChar": 9,
@@ -323,6 +635,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "413a4073_255195ca",
+        "filename": "core/java/android/bluetooth/DynamicAudioBufferCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "028aa34a_5388a847",
+      "range": {
+        "startLine": 157,
+        "startChar": 27,
+        "endLine": 157,
+        "endChar": 45
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d922764_fb3dcf70",
@@ -336,6 +672,30 @@
       "writtenOn": "2021-01-07T23:30:35Z",
       "side": 1,
       "message": "codec number is somewhat ambiguous...is it the count of the number of codecs, is it a number associated with a codec?\n\nit looks like it\u0027s also always BluetoothCodecConfig.SOURCE_CODEC_TYPE_MAX, so we should remove and have clients reference BluetoothCodecConfig.SOURCE_CODEC_TYPE_MAX directly instead.",
+      "range": {
+        "startLine": 171,
+        "startChar": 15,
+        "endLine": 171,
+        "endChar": 29
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "430ca403_d76b14c0",
+        "filename": "core/java/android/bluetooth/DynamicAudioBufferCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-18T09:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d922764_fb3dcf70",
       "range": {
         "startLine": 171,
         "startChar": 15,
