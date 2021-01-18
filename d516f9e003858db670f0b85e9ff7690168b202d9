@@ -128,6 +128,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06e03497_8545c220",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-18T14:00:56Z",
+      "side": 1,
+      "message": "The test is not single-threaded, these ConditionVariables are opened on the CS handler thread where LockdownVpnTracker runs. So there has to be some cross-thread waiting primitive here. (In the future this might move to the ConnectivityThread and be driven by networkcallbacks, but the issue is the same, there needs to be some waiting involved.)",
+      "parentUuid": "7088cb19_e50a3a73",
+      "range": {
+        "startLine": 1068,
+        "startChar": 0,
+        "endLine": 1069,
+        "endChar": 77
+      },
+      "revId": "d516f9e003858db670f0b85e9ff7690168b202d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9730b4ce_5987abcb",
@@ -188,6 +212,30 @@
       "writtenOn": "2021-01-18T08:46:35Z",
       "side": 1,
       "message": "Is this absolutely necessary for your test ? I\u0027d like not to depend on this permission any more than we already do, because this will add work when we finally get to make it ignored. Would NETWORK_SETTINGS or NETWORK_STACK serve your purpose here ?\n\n(edit : I see that you\u0027re only moving it from l.6269, but if it\u0027s possible to use some other permission that we don\u0027t intend to ignore as soon as possible, it would still be better)",
+      "range": {
+        "startLine": 1374,
+        "startChar": 36,
+        "endLine": 1374,
+        "endChar": 47
+      },
+      "revId": "d516f9e003858db670f0b85e9ff7690168b202d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fc1620f_cde346bf",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-18T14:00:56Z",
+      "side": 1,
+      "message": "CONTROL_VPN is still the only permission that allows certain calls (e.g., Vpn#setLockdown). But it doesn\u0027t belong here in setUp. Moved to the tests that use it.",
+      "parentUuid": "c6d2f0e6_ec92bb74",
       "range": {
         "startLine": 1374,
         "startChar": 36,
@@ -365,6 +413,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "608f4da0_68a7825c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 6966,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-18T14:00:56Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this is. I think the problem might be that when the callback is sent the VPN is still connected. But the fact that a VPN is connected should only unblock the VPN, not any other network. I\u0027m starting to suspect a bug in isUidBlockedByVpn testNetworkBlockedStatusAlwaysOnVpn is supposed to check that, but I don\u0027t think it has coverage for what happens to non-VPN blocked status when a VPN connects.",
+      "parentUuid": "4196b8f6_49b7f6eb",
+      "range": {
+        "startLine": 6966,
+        "startChar": 8,
+        "endLine": 6966,
+        "endChar": 46
+      },
+      "revId": "d516f9e003858db670f0b85e9ff7690168b202d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "9f79768a_970ed7d6",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 14
@@ -399,6 +471,30 @@
       "writtenOn": "2021-01-18T08:46:35Z",
       "side": 1,
       "message": "nit : you don\u0027t need this pair of braces",
+      "range": {
+        "startLine": 6970,
+        "startChar": 53,
+        "endLine": 6970,
+        "endChar": 54
+      },
+      "revId": "d516f9e003858db670f0b85e9ff7690168b202d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bbd1196_804531a3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 6970,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-18T14:00:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5543bd65_491354a1",
       "range": {
         "startLine": 6970,
         "startChar": 53,
@@ -469,6 +565,30 @@
       "writtenOn": "2021-01-18T08:46:35Z",
       "side": 1,
       "message": "Is this legacy or a bug ? The default network for this app definitely should be the VPN.",
+      "range": {
+        "startLine": 7005,
+        "startChar": 32,
+        "endLine": 7005,
+        "endChar": 41
+      },
+      "revId": "d516f9e003858db670f0b85e9ff7690168b202d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87c0dd85_bf1f0d2a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 7005,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-18T14:00:56Z",
+      "side": 1,
+      "message": "I don\u0027t think getActiveNetworkInfo has ever returned TYPE_VPN, it returns the underlying networks, or the default. There are other tests that check this too, see for example line 6822.",
+      "parentUuid": "32f8a992_fcf8c512",
       "range": {
         "startLine": 7005,
         "startChar": 32,
