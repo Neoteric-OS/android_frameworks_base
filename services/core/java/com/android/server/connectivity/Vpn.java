@@ -67,6 +67,7 @@ import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkProvider;
 import android.net.NetworkRequest;
+import android.net.NetworkStack;
 import android.net.RouteInfo;
 import android.net.UidRange;
 import android.net.UidRangeParcel;
@@ -111,6 +112,7 @@ import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
+import com.android.net.module.util.NetdUtils;
 import com.android.server.DeviceIdleInternal;
 import com.android.server.LocalServices;
 import com.android.server.net.BaseNetworkObserver;
@@ -2488,7 +2490,8 @@ public class Vpn {
                                     address /* unused */,
                                     address /* unused */,
                                     network);
-                    mNms.setInterfaceUp(mTunnelIface.getInterfaceName());
+                    NetworkStack.checkNetworkStackPermission(mContext);
+                    NetdUtils.setInterfaceUp(mNetd, mTunnelIface.getInterfaceName());
 
                     mSession = mIkev2SessionCreator.createIkeSession(
                             mContext,

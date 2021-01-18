@@ -21,6 +21,8 @@ import static android.content.pm.UserInfo.FLAG_MANAGED_PROFILE;
 import static android.content.pm.UserInfo.FLAG_PRIMARY;
 import static android.content.pm.UserInfo.FLAG_RESTRICTED;
 import static android.net.ConnectivityManager.NetworkCallback;
+import static android.net.INetd.IF_STATE_DOWN;
+import static android.net.INetd.IF_STATE_UP;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -60,6 +62,7 @@ import android.net.ConnectivityManager;
 import android.net.INetd;
 import android.net.Ikev2VpnProfile;
 import android.net.InetAddresses;
+import android.net.InterfaceConfigurationParcel;
 import android.net.IpPrefix;
 import android.net.IpSecManager;
 import android.net.IpSecTunnelInterfaceResponse;
@@ -119,6 +122,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -862,15 +866,32 @@ public class VpnTest {
                         eq(AppOpsManager.MODE_IGNORED));
     }
 
-    private NetworkCallback triggerOnAvailableAndGetCallback() {
+    private NetworkCallback triggerOnAvailableAndGetCallback() throws Exception {
         final ArgumentCaptor<NetworkCallback> networkCallbackCaptor =
                 ArgumentCaptor.forClass(NetworkCallback.class);
         verify(mConnectivityManager, timeout(TEST_TIMEOUT_MS))
                 .requestNetwork(any(), networkCallbackCaptor.capture());
 
+        // onAvailable() will trigger onDefaultNetworkChanged(), so NetdUtils#setInterfaceUp will be
+        // invoked. Set the return value of INetd#interfaceGetCfg to prevent NullPointerException.
+        final InterfaceConfigurationParcel config = new InterfaceConfigurationParcel();
+        final String[] flags = new String[] {"flagA", "flagB", IF_STATE_DOWN};
+        config.flags = flags;
+        when(mNetd.interfaceGetCfg(anyString())).thenReturn(config);
         final NetworkCallback cb = networkCallbackCaptor.getValue();
         cb.onAvailable(TEST_NETWORK);
         return cb;
+    }
+
+    private void verifyFlagsAfterSettingInterfaceUp() throws Exception {
+        // Get InterfaceConfigurationParcel by ArgumentCaptor and verify if flags contains
+        // IF_STATE_UP.
+        final ArgumentCaptor<InterfaceConfigurationParcel> config =
+                ArgumentCaptor.forClass(InterfaceConfigurationParcel.class);
+        // Add a timeout for waiting for interfaceSetCfg to be called.
+        verify(mNetd, timeout(TEST_TIMEOUT_MS)).interfaceSetCfg(config.capture());
+        final List<String> listOfFlags = Arrays.asList(config.getValue().flags);
+        assertTrue(listOfFlags.contains(IF_STATE_UP));
     }
 
     @Test
@@ -883,6 +904,8 @@ public class VpnTest {
 
         final Vpn vpn = startLegacyVpn(createVpn(primaryUser.id), (mVpnProfile));
         final NetworkCallback cb = triggerOnAvailableAndGetCallback();
+
+        verifyFlagsAfterSettingInterfaceUp();
 
         // Wait for createIkeSession() to be called before proceeding in order to ensure consistent
         // state
@@ -901,6 +924,8 @@ public class VpnTest {
                 .thenThrow(new IllegalArgumentException());
         final Vpn vpn = startLegacyVpn(createVpn(primaryUser.id), mVpnProfile);
         final NetworkCallback cb = triggerOnAvailableAndGetCallback();
+
+        verifyFlagsAfterSettingInterfaceUp();
 
         // Wait for createIkeSession() to be called before proceeding in order to ensure consistent
         // state
