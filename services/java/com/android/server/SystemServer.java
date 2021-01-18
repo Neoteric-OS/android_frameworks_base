@@ -109,6 +109,7 @@ import com.android.server.camera.CameraServiceProxy;
 import com.android.server.clipboard.ClipboardService;
 import com.android.server.compat.PlatformCompat;
 import com.android.server.compat.PlatformCompatNative;
+import com.android.server.connectivity.PacProxyInstaller;
 import com.android.server.contentcapture.ContentCaptureManagerInternal;
 import com.android.server.coverage.CoverageService;
 import com.android.server.devicepolicy.DevicePolicyManagerService;
@@ -1107,6 +1108,7 @@ public final class SystemServer {
         ConsumerIrService consumerIr = null;
         MmsServiceBroker mmsService = null;
         HardwarePropertiesManagerService hardwarePropertiesService = null;
+        PacProxyInstaller pacPrxoyInstaller = null;
 
         boolean disableSystemTextClassifier = SystemProperties.getBoolean(
                 "config.disable_systemtextclassifier", false);
@@ -1623,6 +1625,15 @@ public final class SystemServer {
                 mSystemServiceManager.startService(ETHERNET_SERVICE_CLASS);
                 t.traceEnd();
             }
+
+            t.traceBegin("StartPacProxyInstaller");
+            try {
+                pacPrxoyInstaller = PacProxyInstaller.create(context);
+                ServiceManager.addService(Context.PAC_PROXY_SERVICE, pacPrxoyInstaller);
+            } catch (Throwable e) {
+                reportWtf("starting PacProxyInstaller Service", e);
+            }
+            t.traceEnd();
 
             t.traceBegin("StartConnectivityService");
             // This has to be called after NetworkManagementService, NetworkStatsService

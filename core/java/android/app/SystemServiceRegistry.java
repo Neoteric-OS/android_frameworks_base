@@ -118,11 +118,13 @@ import android.net.IConnectivityManager;
 import android.net.IEthernetManager;
 import android.net.IIpSecService;
 import android.net.INetworkPolicyManager;
+import android.net.IPacProxyManager;
 import android.net.ITestNetworkManager;
 import android.net.IpSecManager;
 import android.net.NetworkPolicyManager;
 import android.net.NetworkScoreManager;
 import android.net.NetworkWatchlistManager;
+import android.net.PacProxyManager;
 import android.net.TestNetworkManager;
 import android.net.TetheringManager;
 import android.net.VpnManager;
@@ -348,6 +350,15 @@ public final class SystemServiceRegistry {
         // interface by class then we want to redirect over to the new interface instead
         // (which extends it).
         SYSTEM_SERVICE_NAMES.put(android.text.ClipboardManager.class, Context.CLIPBOARD_SERVICE);
+
+        registerService(Context.PAC_PROXY_SERVICE, PacProxyManager.class,
+                new CachedServiceFetcher<PacProxyManager>() {
+            @Override
+            public PacProxyManager createService(ContextImpl ctx) throws ServiceNotFoundException {
+                IBinder b = ServiceManager.getServiceOrThrow(Context.PAC_PROXY_SERVICE);
+                IPacProxyManager service = IPacProxyManager.Stub.asInterface(b);
+                return new PacProxyManager(ctx.getOuterContext(), service);
+            }});
 
         registerService(Context.CONNECTIVITY_SERVICE, ConnectivityManager.class,
                 new StaticApplicationContextServiceFetcher<ConnectivityManager>() {
