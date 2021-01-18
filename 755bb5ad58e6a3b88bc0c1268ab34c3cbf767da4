@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007370893",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1553955?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "60ddc5ff_d8e961df",
+          "description": "Change to \"services/core/java/com/android/server/ConnectivityService.java\"",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/ConnectivityService.java",
+              "range": {
+                "startLine": 3536,
+                "startChar": 54,
+                "endLine": 3536,
+                "endChar": 61
+              },
+              "replacement": "Destroy"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "a88a4ec0_ed0226c7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3536,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-18T11:27:25Z",
+      "side": 1,
+      "message": "Common typo found: \"Destory\" -- should it be \"Destroy\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 3536,
+        "startChar": 54,
+        "endLine": 3536,
+        "endChar": 61
+      },
+      "revId": "755bb5ad58e6a3b88bc0c1268ab34c3cbf767da4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
