@@ -34,6 +34,24 @@
       "parentUuid": "164c22a9_3acfc280",
       "revId": "055fe40290bcddb1dbe1eaad027b0cb0cb9ccf96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b0b6734_aa2dd0b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-01-18T09:15:33Z",
+      "side": 1,
+      "message": "Nat464Xlat is created by NetworkAgentInfo and I don\u0027t see NetworkAgentInfo set \"clatd\" to null for current design.\nI think the only way to trigger binder died is waiting for network to be torn down. i.e. Once there is no one referring to that NetworkAgentInfo, NetworkAgentInfo(including Nat464Xlat) will be collected.\n\nI have another commit(aosp/1547454) which CS registers an unsolicited event listener, maybe we could implement Jean\u0027s suggestion there.",
+      "parentUuid": "6150c696_331401e4",
+      "revId": "055fe40290bcddb1dbe1eaad027b0cb0cb9ccf96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
