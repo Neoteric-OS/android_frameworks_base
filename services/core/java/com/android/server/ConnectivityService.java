@@ -1403,7 +1403,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return null;
     }
 
-    private NetworkState getUnfilteredActiveNetworkState(int uid) {
+    private NetworkAgentInfo getNetworkAgentInfoForUid(int uid) {
         NetworkAgentInfo nai = getDefaultNetworkForUid(uid);
 
         final Network[] networks = getVpnUnderlyingNetworks(uid);
@@ -1419,12 +1419,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 nai = null;
             }
         }
-
-        if (nai != null) {
-            return nai.getNetworkState();
-        } else {
-            return NetworkState.EMPTY;
-        }
+        return nai;
     }
 
     /**
@@ -1439,6 +1434,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (isUidBlockedByVpn(uid, mVpnBlockedUidRanges)) return true;
         final long ident = Binder.clearCallingIdentity();
         try {
+            // If |nc| is null, then we got here to serve a an API call for a legacy type and
+            // there is no network of that type. For compatibility with legacy code, consider the
+            // type BLOCKED instead of DISCONNECTED when background data is restricted.
+            // TODO: if a network isn't connected, don't bother to check whether to return BLOCKED.
+            // Instead, just have filterNetworkInfo do nothing on networks that don't exist, so we
+            // never get here.
             final boolean metered = nc == null ? true : nc.isMetered();
             return mPolicyManager.isUidNetworkingBlocked(uid, metered);
         } finally {
@@ -1477,7 +1478,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 "%s %d(%d) on netId %d", action, nri.mUid, requestId, net.getNetId()));
     }
 
-    private void filterNetworkInfo(@NonNull NetworkInfo networkInfo,
+    /**
+     * Apply any relevant filters to {@link NetworkState} for the given UID. For
+     * example, this may mark the network as {@link DetailedState#BLOCKED} based
+     * on {@link #isNetworkWithCapabilitiesBlocked}.
+     */
+    private NetworkInfo filterNetworkInfo(@NonNull NetworkInfo networkInfo,
             @NonNull NetworkCapabilities nc, int uid, boolean ignoreBlocked) {
         if (isNetworkWithCapabilitiesBlocked(nc, uid, ignoreBlocked)) {
             networkInfo.setDetailedState(DetailedState.BLOCKED, null, null);
@@ -1485,16 +1491,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         networkInfo.setDetailedState(
                 getLegacyLockdownState(networkInfo.getDetailedState()),
                 "" /* reason */, null /* extraInfo */);
+        return networkInfo;
     }
 
-    /**
-     * Apply any relevant filters to {@link NetworkState} for the given UID. For
-     * example, this may mark the network as {@link DetailedState#BLOCKED} based
-     * on {@link #isNetworkWithCapabilitiesBlocked}.
-     */
-    private void filterNetworkStateForUid(NetworkState state, int uid, boolean ignoreBlocked) {
-        if (state == null || state.networkInfo == null || state.linkProperties == null) return;
-        filterNetworkInfo(state.networkInfo, state.networkCapabilities, uid, ignoreBlocked);
+    private NetworkInfo getFilteredNetworkInfo(NetworkAgentInfo nai, int uid,
+            boolean ignoreBlocked) {
+        NetworkInfo networkInfo = new NetworkInfo(nai.networkInfo);
+        return filterNetworkInfo(nai.networkInfo, nai.networkCapabilities, uid, ignoreBlocked);
     }
 
     /**
@@ -1508,10 +1511,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public NetworkInfo getActiveNetworkInfo() {
         enforceAccessPermission();
         final int uid = mDeps.getCallingUid();
-        final NetworkState state = getUnfilteredActiveNetworkState(uid);
-        filterNetworkStateForUid(state, uid, false);
-        maybeLogBlockedNetworkInfo(state.networkInfo, uid);
-        return state.networkInfo;
+        final NetworkAgentInfo nai = getNetworkAgentInfoForUid(uid);
+        if (nai == null) return null;
+        final NetworkInfo networkInfo = getFilteredNetworkInfo(nai, uid, false);
+        maybeLogBlockedNetworkInfo(networkInfo, uid);
+        return networkInfo;
     }
 
     @Override
@@ -1546,9 +1550,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public NetworkInfo getActiveNetworkInfoForUid(int uid, boolean ignoreBlocked) {
         PermissionUtils.enforceNetworkStackPermission(mContext);
-        final NetworkState state = getUnfilteredActiveNetworkState(uid);
-        filterNetworkStateForUid(state, uid, ignoreBlocked);
-        return state.networkInfo;
+        final NetworkAgentInfo nai = getNetworkAgentInfoForUid(uid);
+        if (nai == null) return null;
+        return getFilteredNetworkInfo(nai, uid, ignoreBlocked);
     }
 
     private NetworkInfo getFilteredNetworkInfo(int networkType, int uid) {
@@ -1568,8 +1572,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             info.setIsAvailable(true);
             nc = new NetworkCapabilities();
         }
-        filterNetworkInfo(info, nc, uid, false);
-        return info;
+        return filterNetworkInfo(info, nc, uid, false);
     }
 
     @Override
@@ -1579,11 +1582,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (getVpnUnderlyingNetworks(uid) != null) {
             // A VPN is active, so we may need to return one of its underlying networks. This
             // information is not available in LegacyTypeTracker, so we have to get it from
-            // getUnfilteredActiveNetworkState.
-            final NetworkState state = getUnfilteredActiveNetworkState(uid);
-            if (state.networkInfo != null && state.networkInfo.getType() == networkType) {
-                filterNetworkStateForUid(state, uid, false);
-                return state.networkInfo;
+            // getNetworkAgentInfoForUid.
+            final NetworkAgentInfo nai = getNetworkAgentInfoForUid(uid);
+            if (nai == null) return null;
+            final NetworkInfo networkInfo = getFilteredNetworkInfo(nai, uid, false);
+            if (networkInfo.getType() == networkType) {
+                return networkInfo;
             }
         }
         return getFilteredNetworkInfo(networkType, uid);
@@ -1593,13 +1597,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public NetworkInfo getNetworkInfoForUid(Network network, int uid, boolean ignoreBlocked) {
         enforceAccessPermission();
         final NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(network);
-        if (nai != null) {
-            final NetworkState state = nai.getNetworkState();
-            filterNetworkStateForUid(state, uid, ignoreBlocked);
-            return state.networkInfo;
-        } else {
-            return null;
-        }
+        if (nai == null) return null;
+        return getFilteredNetworkInfo(nai, uid, ignoreBlocked);
     }
 
     @Override
@@ -1627,10 +1626,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return null;
         }
         final int uid = mDeps.getCallingUid();
-        if (!isNetworkWithCapabilitiesBlocked(nai.networkCapabilities, uid, false)) {
-            return nai.network;
+        if (isNetworkWithCapabilitiesBlocked(nai.networkCapabilities, uid, false)) {
+            return null;
         }
-        return null;
+        return nai.network;
     }
 
     @Override
@@ -1719,9 +1718,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public LinkProperties getActiveLinkProperties() {
         enforceAccessPermission();
         final int uid = mDeps.getCallingUid();
-        NetworkState state = getUnfilteredActiveNetworkState(uid);
-        if (state.linkProperties == null) return null;
-        return linkPropertiesRestrictedForCallerPermissions(state.linkProperties,
+        NetworkAgentInfo nai = getNetworkAgentInfoForUid(uid);
+        if (nai == null) return null;
+        return linkPropertiesRestrictedForCallerPermissions(nai.linkProperties,
                 Binder.getCallingPid(), uid);
     }
 
@@ -4648,8 +4647,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!nai.everConnected) {
             return;
         }
-        final NetworkCapabilities nc = getNetworkCapabilitiesInternal(nai);
-        if (isNetworkWithCapabilitiesBlocked(nc, uid, false)) {
+        if (isNetworkWithCapabilitiesBlocked(nai.networkCapabilities, uid, false)) {
             return;
         }
         nai.networkMonitor().forceReevaluation(uid);
