@@ -16,11 +16,15 @@
 
 package com.android.server;
 
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import static android.net.INetd.IF_STATE_DOWN;
+import static android.net.INetd.IF_STATE_UP;
 import static android.system.OsConstants.AF_INET;
 import static android.system.OsConstants.AF_INET6;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
@@ -35,6 +39,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.INetd;
 import android.net.InetAddresses;
+import android.net.InterfaceConfigurationParcel;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecConfig;
 import android.net.IpSecManager;
@@ -58,11 +63,13 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.ArgumentCaptor;
 
 import java.net.Inet4Address;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /** Unit tests for {@link IpSecService}. */
 @SmallTest
@@ -132,6 +139,14 @@ public class IpSecServiceParameterizedTest {
                 return;
             }
             throw new SecurityException("Unavailable permission requested");
+        }
+
+        @Override
+        public int checkCallingOrSelfPermission(String permission) {
+            if (android.Manifest.permission.NETWORK_STACK.equals(permission)) {
+                return PERMISSION_GRANTED;
+            }
+            throw new UnsupportedOperationException();
         }
     };
 
@@ -625,7 +640,11 @@ public class IpSecServiceParameterizedTest {
     }
 
     private IpSecTunnelInterfaceResponse createAndValidateTunnel(
-            String localAddr, String remoteAddr, String pkgName) {
+            String localAddr, String remoteAddr, String pkgName) throws Exception {
+        final InterfaceConfigurationParcel config = new InterfaceConfigurationParcel();
+        final String[] flags = new String[] {"flagA", "flagB", IF_STATE_DOWN};
+        config.flags = flags;
+        when(mMockNetd.interfaceGetCfg(anyString())).thenReturn(config);
         IpSecTunnelInterfaceResponse createTunnelResp =
                 mIpSecService.createTunnelInterface(
                         mSourceAddr, mDestinationAddr, fakeNetwork, new Binder(), pkgName);
@@ -655,7 +674,14 @@ public class IpSecServiceParameterizedTest {
                         anyInt(),
                         anyInt(),
                         anyInt());
-        verify(mNetworkManager).setInterfaceUp(createTunnelResp.interfaceName);
+        // Verify the methods which are called by NetdUtils#setInterfaceUp(), also get
+        // InterfaceConfigurationParcel by ArgumentCaptor and verify if flags contains IF_STATE_UP.
+        verify(mMockNetd).interfaceGetCfg(createTunnelResp.interfaceName);
+        final ArgumentCaptor<InterfaceConfigurationParcel> config =
+                ArgumentCaptor.forClass(InterfaceConfigurationParcel.class);
+        verify(mMockNetd).interfaceSetCfg(config.capture());
+        final List<String> listOfFlags = Arrays.asList(config.getValue().flags);
+        assertTrue(listOfFlags.contains(IF_STATE_UP));
     }
 
     @Test
