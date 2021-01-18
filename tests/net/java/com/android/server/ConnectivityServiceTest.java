@@ -7107,6 +7107,7 @@ public class ConnectivityServiceTest {
 
         mMockVpn.establishForMyUid();
         assertUidRangesUpdatedForMyUid(true);
+        callback.expectAvailableThenValidatedCallbacks(mMockVpn);
         defaultCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
         vpnUidCallback.assertNoCallback();  // vpnUidCallback has NOT_VPN capability.
         assertEquals(mMockVpn.getNetwork(), mCm.getActiveNetwork());
@@ -7116,8 +7117,21 @@ public class ConnectivityServiceTest {
         assertNetworkInfo(TYPE_VPN, DetailedState.CONNECTED);
         assertNetworkInfo(TYPE_WIFI, DetailedState.CONNECTED);
 
+        // Connect another network. It should be blocked.
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(false /* validated */);
+        callback.expectAvailableCallbacksUnvalidated(mCellNetworkAgent);  // BUG, should be blocked.
+        defaultCallback.assertNoCallback();
+        vpnUidCallback.expectAvailableCallbacksUnvalidated(mCellNetworkAgent);
+        mCellNetworkAgent.disconnect();
+        callback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+        defaultCallback.assertNoCallback();
+        vpnUidCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+
         mMockVpn.disconnect();
+        callback.expectCallback(CallbackEntry.LOST, mMockVpn);
         defaultCallback.expectCallback(CallbackEntry.LOST, mMockVpn);
+        vpnUidCallback.assertNoCallback();  // vpnUidCallback has NOT_VPN capability.
         defaultCallback.expectAvailableCallbacksUnvalidatedAndBlocked(mWiFiNetworkAgent);
         assertNull(mCm.getActiveNetwork());
 
