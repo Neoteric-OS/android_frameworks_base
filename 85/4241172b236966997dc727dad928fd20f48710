@@ -1,0 +1,12 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Verified+1: Junyu Lai <junyulai@google.com>
+Autosubmit+1: Junyu Lai <junyulai@google.com>
+Presubmit-Ready+1: Junyu Lai <junyulai@google.com>
+Code-Review+2: Chalard Jean <jchalard@google.com>
+API-Review+1: Chalard Jean <jchalard@google.com>
+Build-Cop-Override+1: Ruslan Tkhakokhov <rthakohov@google.com>
+Submitted-by: Junyu Lai <junyulai@google.com>
+Submitted-at: Tue, 19 Jan 2021 10:24:46 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1553864
+Project: platform/frameworks/base
+Branch: refs/heads/master
