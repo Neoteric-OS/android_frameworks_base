@@ -142,4 +142,12 @@ public final class VcnControlPlaneIkeConfig extends VcnControlPlaneConfig {
                 && Objects.equals(mIkeParams, other.mIkeParams)
                 && Objects.equals(mChildParams, other.mChildParams);
     }
+
+    /** @hide */
+    @Override
+    public VcnControlPlaneConfig copy() {
+        return new VcnControlPlaneIkeConfig(
+                new IkeSessionParams.Builder(mIkeParams).build(),
+                new TunnelModeChildSessionParams.Builder(mChildParams).build());
+    }
 }
