@@ -49,6 +49,54 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "2f35fdc2_8e7c962d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-19T03:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8c18bab_df025ce2",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca01737c_7b32ff1b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-19T03:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b537137_b47b90af",
+      "range": {
+        "startLine": 12,
+        "startChar": 14,
+        "endLine": 12,
+        "endChar": 25
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "01c32b9a_1bad4d93",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d4f6681_19ee2a57",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2233,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-19T03:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bfcbd85_7b24b026",
+      "range": {
+        "startLine": 2233,
+        "startChar": 24,
+        "endLine": 2233,
+        "endChar": 25
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e07b698_35c31a04",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-01-14T01:48:07Z",
       "side": 1,
       "message": "This line should be at previous line.",
+      "range": {
+        "startLine": 2247,
+        "startChar": 12,
+        "endLine": 2247,
+        "endChar": 44
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7659a6b8_d00011eb",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2247,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-19T03:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e07b698_35c31a04",
       "range": {
         "startLine": 2247,
         "startChar": 12,
@@ -133,6 +229,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83cb8887_7f2e70d5",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2284,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-19T03:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "030c67d4_7db885b9",
+      "range": {
+        "startLine": 2284,
+        "startChar": 17,
+        "endLine": 2284,
+        "endChar": 41
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "244d9dc1_391c9824",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2284,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-19T03:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "030c67d4_7db885b9",
+      "range": {
+        "startLine": 2284,
+        "startChar": 17,
+        "endLine": 2284,
+        "endChar": 41
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b2eeb7a_16a92d37",
@@ -146,6 +290,30 @@
       "writtenOn": "2021-01-12T12:59:53Z",
       "side": 1,
       "message": "duplicate.",
+      "range": {
+        "startLine": 2293,
+        "startChar": 28,
+        "endLine": 2293,
+        "endChar": 31
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d15a306_88481e96",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2293,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-19T03:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b2eeb7a_16a92d37",
       "range": {
         "startLine": 2293,
         "startChar": 28,
@@ -179,6 +347,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88afe0e3_b48b5ec8",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2609,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-19T03:20:24Z",
+      "side": 1,
+      "message": "Yes, suppose telephony and wifi will both use this.\nRefer to aosp/1542669",
+      "parentUuid": "bc33b5ff_e9d3a4bc",
+      "range": {
+        "startLine": 2609,
+        "startChar": 23,
+        "endLine": 2609,
+        "endChar": 38
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1eff4e13_a61c46b9",
@@ -192,6 +384,30 @@
       "writtenOn": "2021-01-14T01:48:07Z",
       "side": 1,
       "message": "Why TEST_SSID but not TEST_IMSI?",
+      "range": {
+        "startLine": 318,
+        "startChar": 35,
+        "endLine": 318,
+        "endChar": 44
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bce1a05b_b7d9d3b8",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-19T03:20:24Z",
+      "side": 1,
+      "message": "Oops",
+      "parentUuid": "1eff4e13_a61c46b9",
       "range": {
         "startLine": 318,
         "startChar": 35,
@@ -225,6 +441,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0705f94b_d1347649",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-19T03:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b85ba2c_260fef60",
+      "range": {
+        "startLine": 770,
+        "startChar": 34,
+        "endLine": 770,
+        "endChar": 35
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9b5ae0fb_02bdf1f4",
@@ -238,6 +478,30 @@
       "writtenOn": "2021-01-14T01:48:07Z",
       "side": 1,
       "message": "Same question as I left at line#318.",
+      "range": {
+        "startLine": 876,
+        "startChar": 33,
+        "endLine": 876,
+        "endChar": 42
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bef90d4_3e5bb12f",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-19T03:20:24Z",
+      "side": 1,
+      "message": "Ooops",
+      "parentUuid": "9b5ae0fb_02bdf1f4",
       "range": {
         "startLine": 876,
         "startChar": 33,
