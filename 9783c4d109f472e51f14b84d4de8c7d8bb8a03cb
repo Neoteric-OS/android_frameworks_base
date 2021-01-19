@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "30d4ce53_68acdd95",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-19T17:36:39Z",
+      "side": 1,
+      "message": "initially attempted to limit the scope of locking but sgtm.\n\nDone.",
+      "parentUuid": "143a2889_20bd3324",
+      "range": {
+        "startLine": 162,
+        "startChar": 16,
+        "endLine": 162,
+        "endChar": 42
+      },
+      "revId": "9783c4d109f472e51f14b84d4de8c7d8bb8a03cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a598258_64534cdd",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4204922f_cd4ecedb",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-19T17:36:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a598258_64534cdd",
+      "range": {
+        "startLine": 526,
+        "startChar": 12,
+        "endLine": 526,
+        "endChar": 13
+      },
+      "revId": "9783c4d109f472e51f14b84d4de8c7d8bb8a03cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "795408f5_4e219f6f",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-01-15T07:58:59Z",
       "side": 1,
       "message": "Nit: Suggest adding a comment of why this is valid:\n\n// Remote binder already died; cleanup.",
+      "range": {
+        "startLine": 542,
+        "startChar": 12,
+        "endLine": 542,
+        "endChar": 45
+      },
+      "revId": "9783c4d109f472e51f14b84d4de8c7d8bb8a03cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3eb9ecd9_4eb9e5fa",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-19T17:36:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "795408f5_4e219f6f",
       "range": {
         "startLine": 542,
         "startChar": 12,
