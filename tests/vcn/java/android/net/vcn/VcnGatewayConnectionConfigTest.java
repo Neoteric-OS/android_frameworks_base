@@ -16,11 +16,27 @@
 
 package android.net.vcn;
 
+import static android.net.ipsec.ike.SaProposal.DH_GROUP_2048_BIT_MODP;
+import static android.net.ipsec.ike.SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_12;
+import static android.net.ipsec.ike.SaProposal.PSEUDORANDOM_FUNCTION_AES128_XCBC;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.NetworkCapabilities;
+import android.net.ipsec.ike.ChildSaProposal;
+import android.net.ipsec.ike.IkeFqdnIdentification;
+import android.net.ipsec.ike.IkeSaProposal;
+import android.net.ipsec.ike.IkeSessionParams;
+import android.net.ipsec.ike.SaProposal;
+import android.net.ipsec.ike.TunnelModeChildSessionParams;
+import android.net.ipsec.ike.vcn.VcnControlPlaneIkeConfig;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -50,10 +66,54 @@ public class VcnGatewayConnectionConfigTest {
             };
     public static final int MAX_MTU = 1360;
 
+    public static final VcnControlPlaneConfig CONTROL_PLANE_CONFIG;
+
+    static {
+        IkeSaProposal ikeProposal =
+                new IkeSaProposal.Builder()
+                        .addEncryptionAlgorithm(
+                                ENCRYPTION_ALGORITHM_AES_GCM_12, SaProposal.KEY_LEN_AES_128)
+                        .addDhGroup(DH_GROUP_2048_BIT_MODP)
+                        .addPseudorandomFunction(PSEUDORANDOM_FUNCTION_AES128_XCBC)
+                        .build();
+
+        Context mockContext = mock(Context.class);
+        ConnectivityManager mockConnectManager = mock(ConnectivityManager.class);
+        doReturn(mockConnectManager)
+                .when(mockContext)
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        doReturn(mock(Network.class)).when(mockConnectManager).getActiveNetwork();
+
+        final String serverHostname = "192.0.2.100";
+        final String testLocalId = "test..client.com";
+        final String testRemoteId = "test.server.com";
+        final byte[] psk = "psk".getBytes();
+
+        IkeSessionParams ikeParams =
+                IkeSessionParams.Builder(mockContext)
+                        .setServerHostname(serverHostname)
+                        .addSaProposal(saProposal)
+                        .setLocalIdentification(new IkeFqdnIdentification(testLocalId))
+                        .setRemoteIdentification(new IkeFqdnIdentification(testRemoteId))
+                        .setAuthPsk(psk)
+                        .build();
+
+        ChildSaProposal childProposal =
+                new ChildSaProposal.Builder()
+                        .addEncryptionAlgorithm(
+                                ENCRYPTION_ALGORITHM_AES_GCM_12, SaProposal.KEY_LEN_AES_128)
+                        .build();
+        TunnelModeChildSessionParams childParams =
+                new TunnelModeChildSessionParams.Builder().addSaProposal(childProposal).build();
+
+        CONTROL_PLANE_CONFIG = new VcnControlPlaneIkeConfig(ikeParams, childParams);
+    }
+
     // Public for use in VcnGatewayConnectionTest
     public static VcnGatewayConnectionConfig buildTestConfig() {
         final VcnGatewayConnectionConfig.Builder builder =
                 new VcnGatewayConnectionConfig.Builder()
+                        .setControlPlaneConfig(CONTROL_PLANE_CONFIG)
                         .setRetryInterval(RETRY_INTERVALS_MS)
                         .setMaxMtu(MAX_MTU);
 
@@ -66,6 +126,16 @@ public class VcnGatewayConnectionConfigTest {
         }
 
         return builder.build();
+    }
+
+    @Test
+    public void testBuilderRequiresNonNullControlPlaneConfig() {
+        try {
+            new VcnGatewayConnectionConfig.Builder().setControlPlaneConfig(null).build();
+
+            fail("Expected exception due to invalid control plane config");
+        } catch (IllegalArgumentException e) {
+        }
     }
 
     @Test
@@ -131,6 +201,7 @@ public class VcnGatewayConnectionConfigTest {
             config.requiresUnderlyingCapability(cap);
         }
 
+        assertEquals(CONTROL_PLANE_CONFIG, config.getControlPlaneConfig());
         assertArrayEquals(RETRY_INTERVALS_MS, config.getRetryIntervalsMs());
         assertEquals(MAX_MTU, config.getMaxMtu());
     }

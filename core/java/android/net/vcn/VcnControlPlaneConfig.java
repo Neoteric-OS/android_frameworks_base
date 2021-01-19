@@ -21,8 +21,12 @@ import android.annotation.SystemApi;
 import android.annotation.SystemApi.Client;
 import android.os.PersistableBundle;
 
+import dalvik.system.PathClassLoader;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * This class represents a control plane configuration for a Virtual Carrier Network connection.
@@ -45,6 +49,9 @@ public abstract class VcnControlPlaneConfig {
     private static final String CONFIG_TYPE_KEY = "mConfigType";
     private final int mConfigType;
 
+    private static final String IKE_LIB_PATH =
+            "/apex/com.android.ipsec/javalib/android.net.ipsec.ike.jar";
+
     /**
      * Construct a VcnControlPlaneConfig object.
      *
@@ -53,6 +60,48 @@ public abstract class VcnControlPlaneConfig {
     @SystemApi(client = Client.MODULE_LIBRARIES)
     public VcnControlPlaneConfig(@ConfigType int configType) {
         mConfigType = configType;
+    }
+
+    /**
+     * Constructs a VcnControlPlaneConfig object by deserializing a PersistableBundle.
+     *
+     * @param in the {@link PersistableBundle} containing an {@link VcnControlPlaneConfig} object
+     * @hide
+     */
+    public static VcnControlPlaneConfig fromPersistableBundle(@NonNull PersistableBundle in) {
+        int configType = in.getInt(CONFIG_TYPE_KEY);
+        switch (configType) {
+            case CONFIG_TYPE_IKE:
+                try {
+                    // VCN needs to dynamically load VcnControlPlaneIkeConfig because
+                    // VcnControlPlaneIkeConfig, as part of in IPsec mainline module, is not
+                    // loaded in boot class path as VCN, as part of "framework" jar. This dynamic
+                    // loading and reflection will work on all Android devices because IPsec module
+                    // is a mandatory module since Android R.
+                    PathClassLoader classLoader =
+                            new PathClassLoader(
+                                    IKE_LIB_PATH, VcnControlPlaneConfig.class.getClassLoader());
+                    Class<?> vcnIkeClass =
+                            Class.forName(
+                                    "android.net.ipsec.ike.vcn.VcnControlPlaneIkeConfig",
+                                    true,
+                                    classLoader);
+                    Constructor constructor = vcnIkeClass.getConstructor(PersistableBundle.class);
+
+                    return (VcnControlPlaneConfig) constructor.newInstance(in);
+                } catch (ClassNotFoundException
+                        | NoSuchMethodException
+                        | SecurityException
+                        | IllegalAccessException
+                        | InstantiationException
+                        | InvocationTargetException
+                        | ExceptionInInitializerError e) {
+                    throw new IllegalStateException(
+                            "Failed to load or construct VcnControlPlaneIkeConfig", e);
+                }
+            default:
+                throw new IllegalStateException("Unrecognized configType: " + configType);
+        }
     }
 
     /**
