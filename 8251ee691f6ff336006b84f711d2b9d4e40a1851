@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bac7dc08_15d001e7",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-19T21:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8f7b552_c43fbdb0",
+      "range": {
+        "startLine": 539,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 9
+      },
+      "revId": "8251ee691f6ff336006b84f711d2b9d4e40a1851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06f82b45_1437f588",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-19T18:56:59Z",
       "side": 1,
       "message": "Do we need to unlink?",
+      "range": {
+        "startLine": 555,
+        "startChar": 0,
+        "endLine": 555,
+        "endChar": 67
+      },
+      "revId": "8251ee691f6ff336006b84f711d2b9d4e40a1851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "399fa222_71567074",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-19T21:49:49Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "06f82b45_1437f588",
       "range": {
         "startLine": 555,
         "startChar": 0,
