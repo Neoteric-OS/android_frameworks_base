@@ -471,6 +471,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eba6d427_89adc2b9",
+        "filename": "core/java/android/bluetooth/DynamicAudioBufferCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-19T21:00:27Z",
+      "side": 1,
+      "message": "ok, thanks",
+      "parentUuid": "933b7476_670ffdc2",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 81
+      },
+      "revId": "b09b7d410fbd6cbb7fea64dd7ef0279345602ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca6d4c04_900fbae0",
