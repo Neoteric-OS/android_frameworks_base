@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "516ce72a_7a985a39",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-19T02:17:06Z",
+      "side": 1,
+      "message": "I think it depends on how many users need to convert this.\nIf just NetworkIdentity, then I\u0027ll prefer getLegacyTypeForNetworkStats.\nIf we are expecting the users are more than 1 and they are inevitable, then duplicates the ad-hoc code everywhere might not be what we want. Also, the user experience might be impacted if those modules convert types differently for the same NetworkCapabilities.\nAFAIK there are 3 modules need this convertion:\n  1. ConnectivityService: https://android-review.googlesource.com/c/platform/frameworks/base/+/1535721/6/services/core/java/com/android/server/ConnectivityService.java\n  2. NetworkIdentity(this change)\n  3. BatteryStatsImpl\nWDYT?",
+      "parentUuid": "71977284_bca46314",
+      "range": {
+        "startLine": 187,
+        "startChar": 66,
+        "endLine": 187,
+        "endChar": 85
+      },
+      "revId": "3cae00c00881d607793d29c1fb6d2b8950767359",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b3e20d38_63245dd0",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
