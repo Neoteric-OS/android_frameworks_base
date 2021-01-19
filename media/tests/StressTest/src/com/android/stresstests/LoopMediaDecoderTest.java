@@ -158,7 +158,13 @@ public class LoopMediaDecoderTest {
                 CodecDecoderTest.isDecoderRunPass(cdt, decoder, isAsync, eosType,
                         ifVerify && (!surfaceMode && (numFrames == Integer.MAX_VALUE)), surfaceMode,
                         numFrames, CodecDecoderTest.randomChoice(rand));
-                cdt.mSurface = null;
+                if (surfaceMode) {
+                    CodecTestActivity activity = cdt.mActivityRule.getActivity();
+                    cdt.mSurface = null;
+                    activity.mSurfaceLock.lock();
+                    activity.setSurfaceStatus(false);
+                    activity.mSurfaceLock.unlock();
+                }
             }
             cdt.mCodec.release();
         }

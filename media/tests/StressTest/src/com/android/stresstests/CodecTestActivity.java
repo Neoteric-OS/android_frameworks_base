@@ -26,6 +26,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -38,6 +39,9 @@ public class CodecTestActivity extends Activity implements SurfaceHolder.Callbac
     private Surface mSurface;
     private final Lock mLock = new ReentrantLock();
     private final Condition mCondition = mLock.newCondition();
+    private boolean mIsSurfaceInUse = false;
+    static final Lock mSurfaceLock = new ReentrantLock();
+    private HashMap<Integer, Integer> mThreadRetryCountMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,7 @@ public class CodecTestActivity extends Activity implements SurfaceHolder.Callbac
         Log.v(LOG_TAG, "surface deleted");
         mLock.lock();
         mSurface = null;
+        mIsSurfaceInUse = false;
         mLock.unlock();
     }
 
@@ -84,8 +89,44 @@ public class CodecTestActivity extends Activity implements SurfaceHolder.Callbac
         }
     }
 
+    public void waitTillSurfaceIsFree() throws InterruptedException {
+        int retries = 0;
+        final long mWaitTimeMs = 2000;
+        final int maxRetry = 20;
+        final int threadId = (int) Thread.currentThread().getId();
+        mLock.lock();
+        while ((retries < maxRetry) && mIsSurfaceInUse == true) {
+            // TODO: find a better way for retries
+            mCondition.await(mWaitTimeMs, TimeUnit.MILLISECONDS);
+            if (mThreadRetryCountMap.containsKey(threadId)) {
+                retries = mThreadRetryCountMap.get(threadId);
+            }
+            retries++;
+            mThreadRetryCountMap.put(threadId, retries);
+        }
+        if (mIsSurfaceInUse == true) {
+            mLock.unlock();
+            throw new InterruptedException("Taking too long to reAttach to a Surface.");
+        } else {
+            mIsSurfaceInUse = true;
+            mThreadRetryCountMap.replaceAll((key, value) -> 0);
+            mLock.unlock();
+        }
+    }
+
     public Surface getSurface() {
         return mSurface;
+    }
+
+    public boolean getSurfaceStatus() {
+        return mIsSurfaceInUse;
+    }
+
+    public void setSurfaceStatus(boolean surfaceInUse) {
+        mLock.lock();
+        mIsSurfaceInUse = surfaceInUse;
+        mCondition.signalAll();
+        mLock.unlock();
     }
 
     public void setScreenParams(int width, int height, boolean noStretch) {
