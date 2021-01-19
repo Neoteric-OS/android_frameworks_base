@@ -371,6 +371,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9709726a_fe1a10e9",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2609,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-19T07:43:29Z",
+      "side": 1,
+      "message": "IIUC, the usage in aosp/1542669 is NC.setSubscriberId but no objection.",
+      "parentUuid": "88afe0e3_b48b5ec8",
+      "range": {
+        "startLine": 2609,
+        "startChar": 23,
+        "endLine": 2609,
+        "endChar": 38
+      },
+      "revId": "6d51675ec8f318f4429322ea2fed77668ae15c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1eff4e13_a61c46b9",
