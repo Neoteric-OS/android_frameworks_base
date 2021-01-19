@@ -88,14 +88,19 @@ public class NetworkUtils {
     public native static int bindSocketToNetwork(int socketfd, int netId);
 
     /**
+     * Explicitly binds {@code fd} to the network designated by {@code netId}.  This
+     * overrides any binding via {@link #bindProcessToNetwork}.
+     * @return 0 on success or negative errno on failure.
+     */
+    public static native int bindSocketToNetwork(FileDescriptor fd, int netId);
+
+    /**
      * Protect {@code fd} from VPN connections.  After protecting, data sent through
      * this socket will go directly to the underlying network, so its traffic will not be
      * forwarded through the VPN.
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
-    public static boolean protectFromVpn(FileDescriptor fd) {
-        return protectFromVpn(fd.getInt$());
-    }
+    public static native boolean protectFromVpn(FileDescriptor fd);
 
     /**
      * Protect {@code socketfd} from VPN connections.  After protecting, data sent through
