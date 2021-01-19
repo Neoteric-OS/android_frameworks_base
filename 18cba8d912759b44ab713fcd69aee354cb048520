@@ -35,6 +35,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e585e64_4ebe092b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-01-19T17:57:37Z",
+      "side": 1,
+      "message": "APN type ALL was a mistake. The value can change when we added new APN types like MCX and XCAP. We should never expose this.",
+      "revId": "18cba8d912759b44ab713fcd69aee354cb048520",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81d1008e_a350b295",
