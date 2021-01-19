@@ -517,6 +517,7 @@ abstract class CodecTestBase {
     static final int PER_TEST_TIMEOUT_SMALL_TEST_MS = 60000;
     static final long Q_DEQ_TIMEOUT_US = 5000;
     static final int UNSPECIFIED = 0;
+    static final int NUM_SURFACE = 4;
     static final String INPUT_PREFIX = "/data/local/tmp/StressTestRes-1.0/";
     static final PackageManager PM =
             InstrumentationRegistry.getInstrumentation().getContext().getPackageManager();
@@ -538,7 +539,8 @@ abstract class CodecTestBase {
     OutputManager mOutputBuff;
 
     MediaCodec mCodec;
-    Surface mSurface;
+    Surface[] mSurface = new Surface[NUM_SURFACE];
+    int surfaceIndex;
 
     static {
         codecSelKeyMimeMap.put("vp8", MediaFormat.MIMETYPE_VIDEO_VP8);
@@ -815,11 +817,11 @@ abstract class CodecTestBase {
         // signalEOS flag has nothing to do with configure. We are using this flag to try all
         // available configure apis
         if (signalEOSWithLastFrame) {
-            mCodec.configure(format, mSurface, null,
+            mCodec.configure(format, mSurface[surfaceIndex], null,
                     isEncoder ? MediaCodec.CONFIGURE_FLAG_ENCODE : 0);
         } else {
-            mCodec.configure(format, mSurface, isEncoder ? MediaCodec.CONFIGURE_FLAG_ENCODE : 0,
-                    null);
+            mCodec.configure(format, mSurface[surfaceIndex],
+                    isEncoder ? MediaCodec.CONFIGURE_FLAG_ENCODE : 0, null);
         }
         if (ENABLE_LOGS) {
             Log.v(LOG_TAG, "codec configured");
@@ -1073,15 +1075,15 @@ abstract class CodecTestBase {
 
     public void setUpSurface(CodecTestActivity activity) throws InterruptedException {
         activity.waitTillSurfaceIsCreated();
-        mSurface = activity.getSurface();
-        assertTrue("Surface created is null.", mSurface != null);
-        assertTrue("Surface created is invalid.", mSurface.isValid());
+        mSurface[surfaceIndex] = activity.getSurface();
+        assertTrue("Surface created is null.", mSurface[surfaceIndex] != null);
+        assertTrue("Surface created is invalid.", mSurface[surfaceIndex].isValid());
     }
 
-    public void tearDownSurface() {
-        if (mSurface != null) {
-            mSurface.release();
-            mSurface = null;
+    public void tearDownSurface(int index) {
+        if (mSurface != null && mSurface[index] != null) {
+            mSurface[index].release();
+            mSurface[index] = null;
         }
     }
 }
@@ -1124,7 +1126,7 @@ class CodecDecoderTestBase extends CodecTestBase {
                 }
                 mExtractor.selectTrack(trackID);
                 if (!mIsAudio) {
-                    if (mSurface == null) {
+                    if (mSurface[surfaceIndex] == null) {
                         // COLOR_FormatYUV420Flexible must be supported by all components
                         format.setInteger(MediaFormat.KEY_COLOR_FORMAT, COLOR_FormatYUV420Flexible);
                     } else {
@@ -1246,7 +1248,7 @@ class CodecDecoderTestBase extends CodecTestBase {
             mOutputBuff.saveOutPTS(info.presentationTimeUs);
             mOutputCount++;
         }
-        mCodec.releaseOutputBuffer(bufferIndex, !mIsAudio && mSurface != null);
+        mCodec.releaseOutputBuffer(bufferIndex, !mIsAudio && mSurface[surfaceIndex] != null);
     }
 
     void doWork(ByteBuffer buffer, ArrayList<MediaCodec.BufferInfo> list)

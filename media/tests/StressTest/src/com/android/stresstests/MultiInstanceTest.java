@@ -20,12 +20,15 @@ import android.app.Application;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.os.Debug;
+import android.view.Surface;
 
 import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -88,6 +91,11 @@ public class MultiInstanceTest {
         private final String mReconfigFile;
         private final float mRmsError;
         private final long mRefCRC;
+
+        @Rule
+        public ActivityTestRule<CodecTestActivity> mActivityRule =
+                new ActivityTestRule<>(CodecTestActivity.class);
+
         Debug.MemoryInfo mMemInfoStart;
         Debug.MemoryInfo mMemInfoEnd;
 
@@ -135,7 +143,7 @@ public class MultiInstanceTest {
                     cdt = new CodecDecoderTest(mMime, mTestFile, mRefFile, mReconfigFile, mRmsError,
                             mRefCRC);
                     DecodeParallel dp = new DecodeParallel(cdt, decoder,
-                            CodecDecoderTest.randomChoice(rand));
+                            CodecDecoderTest.randomChoice(rand), false);
                     task.add(dp);
                 }
             }
@@ -150,8 +158,56 @@ public class MultiInstanceTest {
             task.clear();
             pool.shutdown();
         }
-    }
 
+        @LargeTest
+        @Test(timeout = PER_TEST_TIMEOUT_LARGE_TEST_MS)
+        public void testDecodeToSurface()
+                throws IOException, InterruptedException, ExecutionException {
+            CodecDecoderTest cdt = new CodecDecoderTest(mMime, mTestFile, mRefFile, mReconfigFile,
+                    mRmsError, mRefCRC);
+            ArrayList<String> listOfDecoders = cdt.getCodecsList();
+            Assume.assumeTrue("no codecs for mime" + mMime, !listOfDecoders.isEmpty());
+            mActivityRule.getActivity().waitTillSurfacesAreCreated();
+            ArrayList<Surface> surfaces = mActivityRule.getActivity().getSurfaces();
+            for (int i = 0; i < surfaces.size(); i++) {
+                Surface surface = surfaces.get(i);
+                assertTrue("Surface created is null for index:" + i, surface != null);
+                assertTrue("Surface created is invalid for index: " + i, surface.isValid());
+            }
+            cdt.surfaceIndex = 0;
+            cdt.mSurface[cdt.surfaceIndex] = surfaces.get(cdt.surfaceIndex);
+            int cores = Runtime.getRuntime().availableProcessors();
+            int ThreadCount = cores * 2;
+            ExecutorService pool = Executors.newFixedThreadPool(ThreadCount);
+            ArrayList<DecodeParallel> task = new ArrayList<>();
+            for (String decoder : listOfDecoders) {
+                int instances = getMaxSupportedInstances(decoder, mMime);
+                for (int i = 0; i < instances; i++) {
+                    cdt = new CodecDecoderTest(mMime, mTestFile, mRefFile, mReconfigFile, mRmsError,
+                            mRefCRC);
+                    cdt.mActivityRule = mActivityRule;
+                    cdt.surfaceIndex = i % 4;
+                    cdt.mSurface[cdt.surfaceIndex] = surfaces.get(cdt.surfaceIndex);
+                    DecodeParallel dp = new DecodeParallel(cdt, decoder,
+                            CodecDecoderTest.randomChoice(rand), true);
+                    task.add(dp);
+                }
+            }
+            Collections.shuffle(task, rand);
+            List<Future<Void>> resultList = pool.invokeAll(task);
+            OutputManager outBuff = null;
+            for (int i = 0; i < resultList.size(); i++) {
+                resultList.get(i).get();
+                if (i == 0) outBuff = task.get(i).mCdt.mOutputBuff;
+                else assertTrue(outBuff.equals(task.get(i).mCdt.mOutputBuff));
+            }
+            for (int i = 0; i < surfaces.size(); i++) {
+                cdt.tearDownSurface(i);
+            }
+            task.clear();
+            pool.shutdown();
+        }
+    }
     @RunWith(Parameterized.class)
     public static class EncoderTest {
         private final String mMime;
@@ -307,7 +363,8 @@ public class MultiInstanceTest {
                 int compIndex = rand.nextInt(listOfCodecs.size());
                 String compName = listOfCodecs.get(compIndex);
                 DecodeParallel dp =
-                        new DecodeParallel(cdt, compName, CodecDecoderTest.randomChoice(rand));
+                        new DecodeParallel(cdt, compName, CodecDecoderTest.randomChoice(rand),
+                        false);
                 task.add(dp);
                 numInstances++;
             }

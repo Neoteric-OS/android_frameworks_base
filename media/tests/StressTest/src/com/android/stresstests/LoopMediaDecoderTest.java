@@ -154,14 +154,23 @@ public class LoopMediaDecoderTest {
                 boolean surfaceMode = ((rand.nextInt() & 1) == 0);
                 int numFrames = rand.nextInt(mMaxSamples);
                 if ((i & (i - 1)) == 0) numFrames = Integer.MAX_VALUE;
-                if (surfaceMode) cdt.setUpSurface(mActivityRule.getActivity());
+                if (surfaceMode) {
+                    cdt.surfaceIndex = 0;
+                    cdt.setUpSurface(mActivityRule.getActivity());
+                }
                 CodecDecoderTest.isDecoderRunPass(cdt, decoder, isAsync, eosType,
                         ifVerify && (!surfaceMode && (numFrames == Integer.MAX_VALUE)), surfaceMode,
                         numFrames, CodecDecoderTest.randomChoice(rand));
-                cdt.mSurface = null;
+                if (surfaceMode) {
+                    CodecTestActivity activity = cdt.mActivityRule.getActivity();
+                    cdt.mSurface[cdt.surfaceIndex] = null;
+                    activity.mSurfaceLock[cdt.surfaceIndex].lock();
+                    activity.setSurfaceStatus(false, cdt.surfaceIndex);
+                    activity.mSurfaceLock[cdt.surfaceIndex].unlock();
+                }
             }
             cdt.mCodec.release();
         }
-        cdt.tearDownSurface();
+        cdt.tearDownSurface(cdt.surfaceIndex);
     }
 }
