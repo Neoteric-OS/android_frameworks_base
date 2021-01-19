@@ -85,6 +85,24 @@
       "message": "Can you help us understand what the system health implications of this change are, if any?",
       "revId": "17de88981f57fd6d323a1b17da5008e53f053309",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4e3fb59_721a129b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2021-01-19T19:43:33Z",
+      "side": 1,
+      "message": "More SysHealth details: b/171929330, https://docs.google.com/document/d/1EcLQyvI0VjIuBniXy57fHcQRZ1iPb_2qEgJYRCn99Z8/edit?resourcekey\u003d0-RMPtHK7FlcOvxOhe_bFlNw#\n\nCrashy-ness? None, unless there are memory corruption bugs in native code in the Zygote - which is probably good for us to catch anyway. MTE is always disabled in Zygote post-fork unless the app specifically requested it through a manifest flag or compat feature: https://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/jni/com_android_internal_os_Zygote.cpp;l\u003d1813\n\nMemory? Kernel has already reserved 3% DRAM at boot for MTE. ASYNC MTE doesn\u0027t do stack trace collection, so no additional impact from this change.\n\nCPU? See syshealth details or ping me, hardware-dependent and should be discussed off-AOSP.",
+      "parentUuid": "3082071f_e2033ef0",
+      "revId": "17de88981f57fd6d323a1b17da5008e53f053309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
