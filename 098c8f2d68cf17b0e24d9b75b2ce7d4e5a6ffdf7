@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f4cea88_eeceaa62",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2021-01-19T13:18:31Z",
+      "side": 1,
+      "message": "sending a bad argument to dumpstate binder call is the best test for this case. did you try that, with a local change or something?",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "098c8f2d68cf17b0e24d9b75b2ce7d4e5a6ffdf7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
