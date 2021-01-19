@@ -21,6 +21,7 @@ import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
+import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
 import android.system.ErrnoException;
 import android.system.Os;
@@ -380,7 +381,7 @@ public class Network implements Parcelable {
         // Query a property of the underlying socket to ensure that the socket's file descriptor
         // exists, is available to bind to a network and is not closed.
         socket.getReuseAddress();
-        bindSocket(socket.getFileDescriptor$());
+        bindSocket(ParcelFileDescriptor.fromDatagramSocket(socket).getFileDescriptor());
     }
 
     /**
@@ -392,7 +393,7 @@ public class Network implements Parcelable {
         // Query a property of the underlying socket to ensure that the socket's file descriptor
         // exists, is available to bind to a network and is not closed.
         socket.getReuseAddress();
-        bindSocket(socket.getFileDescriptor$());
+        bindSocket(ParcelFileDescriptor.fromSocket(socket).getFileDescriptor());
     }
 
     /**
