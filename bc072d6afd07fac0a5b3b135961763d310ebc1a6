@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8981588_e53d6b39",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-01-19T11:17:34Z",
+      "side": 1,
+      "message": "Yes, removed.",
+      "parentUuid": "9da1d00a_e0ab109b",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 74
+      },
+      "revId": "bc072d6afd07fac0a5b3b135961763d310ebc1a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5bc0d0c2_52bd4cf4",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-19T08:42:16Z",
       "side": 1,
       "message": "Is it possible to use netjniutils::GetNativeFileDescriptor like network_stack_utils_jni.cpp ? jniGetFDFromFileDescriptor is probably not usable from a module.",
+      "range": {
+        "startLine": 128,
+        "startChar": 38,
+        "endLine": 128,
+        "endChar": 64
+      },
+      "revId": "bc072d6afd07fac0a5b3b135961763d310ebc1a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4883ce2e_58f40118",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-01-19T11:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bc0d0c2_52bd4cf4",
       "range": {
         "startLine": 128,
         "startChar": 38,
