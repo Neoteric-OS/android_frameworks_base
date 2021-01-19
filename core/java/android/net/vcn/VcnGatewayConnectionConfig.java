@@ -153,13 +153,14 @@ public final class VcnGatewayConnectionConfig {
                 TimeUnit.MINUTES.toMillis(15)
             };
 
+    private static final String CTRL_PLANE_CONFIG_KEY = "mCtrlPlaneConfig";
+    @NonNull private VcnControlPlaneConfig mCtrlPlaneConfig;
+
     private static final String EXPOSED_CAPABILITIES_KEY = "mExposedCapabilities";
     @NonNull private final SortedSet<Integer> mExposedCapabilities;
 
     private static final String UNDERLYING_CAPABILITIES_KEY = "mUnderlyingCapabilities";
     @NonNull private final SortedSet<Integer> mUnderlyingCapabilities;
-
-    // TODO: Add Ike/ChildSessionParams as a subclass - maybe VcnIkeGatewayConnectionConfig
 
     private static final String MAX_MTU_KEY = "mMaxMtu";
     private final int mMaxMtu;
@@ -169,10 +170,12 @@ public final class VcnGatewayConnectionConfig {
 
     /** Builds a VcnGatewayConnectionConfig with the specified parameters. */
     private VcnGatewayConnectionConfig(
+            @NonNull VcnControlPlaneConfig ctrlPlaneConfig,
             @NonNull Set<Integer> exposedCapabilities,
             @NonNull Set<Integer> underlyingCapabilities,
             @NonNull long[] retryIntervalsMs,
             @IntRange(from = MIN_MTU_V6) int maxMtu) {
+        mCtrlPlaneConfig = ctrlPlaneConfig;
         mExposedCapabilities = new TreeSet(exposedCapabilities);
         mUnderlyingCapabilities = new TreeSet(underlyingCapabilities);
         mRetryIntervalsMs = retryIntervalsMs;
@@ -184,11 +187,16 @@ public final class VcnGatewayConnectionConfig {
     /** @hide */
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     public VcnGatewayConnectionConfig(@NonNull PersistableBundle in) {
+        final PersistableBundle ctrlPlaneConfigBundle =
+                in.getPersistableBundle(CTRL_PLANE_CONFIG_KEY);
+        Objects.requireNonNull(ctrlPlaneConfigBundle, "ctrlPlaneConfigBundle was null");
+
         final PersistableBundle exposedCapsBundle =
                 in.getPersistableBundle(EXPOSED_CAPABILITIES_KEY);
         final PersistableBundle underlyingCapsBundle =
                 in.getPersistableBundle(UNDERLYING_CAPABILITIES_KEY);
 
+        mCtrlPlaneConfig = VcnControlPlaneConfig.fromPersistableBundle(ctrlPlaneConfigBundle);
         mExposedCapabilities = new TreeSet<>(PersistableBundleUtils.toList(
                 exposedCapsBundle, PersistableBundleUtils.INTEGER_DESERIALIZER));
         mUnderlyingCapabilities = new TreeSet<>(PersistableBundleUtils.toList(
@@ -200,6 +208,8 @@ public final class VcnGatewayConnectionConfig {
     }
 
     private void validate() {
+        Objects.requireNonNull(mCtrlPlaneConfig, "control plane config was null");
+
         Preconditions.checkArgument(
                 mExposedCapabilities != null && !mExposedCapabilities.isEmpty(),
                 "exposedCapsBundle was null or empty");
@@ -240,6 +250,16 @@ public final class VcnGatewayConnectionConfig {
                     "Repeating retry interval was too short, must be a minimum of 15 minutes: "
                             + repeatingInterval);
         }
+    }
+
+    /**
+     * Returns control plane configuration.
+     *
+     * @hide
+     */
+    @NonNull
+    public VcnControlPlaneConfig getControlPlaneConfig() {
+        return mCtrlPlaneConfig.copy();
     }
 
     /**
@@ -347,6 +367,7 @@ public final class VcnGatewayConnectionConfig {
     public PersistableBundle toPersistableBundle() {
         final PersistableBundle result = new PersistableBundle();
 
+        final PersistableBundle ctrlPlaneConfigBundle = mCtrlPlaneConfig.toPersistableBundle();
         final PersistableBundle exposedCapsBundle =
                 PersistableBundleUtils.fromList(
                         new ArrayList<>(mExposedCapabilities),
@@ -356,6 +377,7 @@ public final class VcnGatewayConnectionConfig {
                         new ArrayList<>(mUnderlyingCapabilities),
                         PersistableBundleUtils.INTEGER_SERIALIZER);
 
+        result.putPersistableBundle(CTRL_PLANE_CONFIG_KEY, ctrlPlaneConfigBundle);
         result.putPersistableBundle(EXPOSED_CAPABILITIES_KEY, exposedCapsBundle);
         result.putPersistableBundle(UNDERLYING_CAPABILITIES_KEY, underlyingCapsBundle);
         result.putLongArray(RETRY_INTERVAL_MS_KEY, mRetryIntervalsMs);
@@ -392,6 +414,7 @@ public final class VcnGatewayConnectionConfig {
      * @hide
      */
     public static final class Builder {
+        @NonNull private final VcnControlPlaneConfig mCtrlPlaneConfig;
         @NonNull private final Set<Integer> mExposedCapabilities = new ArraySet();
         @NonNull private final Set<Integer> mUnderlyingCapabilities = new ArraySet();
         @NonNull private long[] mRetryIntervalsMs = DEFAULT_RETRY_INTERVALS_MS;
@@ -400,6 +423,18 @@ public final class VcnGatewayConnectionConfig {
         // TODO: (b/175829816) Consider VCN-exposed capabilities that may be transport dependent.
         //       Consider the case where the VCN might only expose MMS on WiFi, but defer to MMS
         //       when on Cell.
+
+        /**
+         * Construct a Builder object.
+         *
+         * @param ctrlPlaneConfig the control plane configuration
+         * @see VcnControlPlaneConfig
+         */
+        public Builder(@NonNull VcnControlPlaneConfig ctrlPlaneConfig) {
+            Objects.requireNonNull(ctrlPlaneConfig, "ctrlPlaneConfig was null");
+
+            mCtrlPlaneConfig = ctrlPlaneConfig;
+        }
 
         /**
          * Add a capability that this VCN Gateway Connection will support.
@@ -543,7 +578,11 @@ public final class VcnGatewayConnectionConfig {
         @NonNull
         public VcnGatewayConnectionConfig build() {
             return new VcnGatewayConnectionConfig(
-                    mExposedCapabilities, mUnderlyingCapabilities, mRetryIntervalsMs, mMaxMtu);
+                    mCtrlPlaneConfig,
+                    mExposedCapabilities,
+                    mUnderlyingCapabilities,
+                    mRetryIntervalsMs,
+                    mMaxMtu);
         }
     }
 }
