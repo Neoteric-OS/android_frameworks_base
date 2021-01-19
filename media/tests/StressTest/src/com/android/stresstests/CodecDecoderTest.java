@@ -41,6 +41,7 @@ import static org.junit.Assert.assertTrue;
 public class CodecDecoderTest extends CodecDecoderTestBase {
     private static final String LOG_TAG = CodecDecoderTest.class.getSimpleName();
     private static final float RMS_ERROR_TOLERANCE = 1.05f;  // 5%
+    private boolean mIsSurfaceInUse = false;
 
     private final String mRefFile;
     private final String mReconfigFile;
@@ -165,7 +166,16 @@ public class CodecDecoderTest extends CodecDecoderTestBase {
         mOutputBuff = new OutputManager();
         if (modeSurface) {
             CodecTestActivity activity = mActivityRule.getActivity();
-            activity.setScreenParams(getWidth(format), getHeight(format), true);
+            activity.mSurfaceLock.lock();
+            mIsSurfaceInUse = activity.getSurfaceStatus();
+            if (mIsSurfaceInUse == false) {
+                activity.setSurfaceStatus(true);
+                activity.setScreenParams(getWidth(format), getHeight(format), true);
+                activity.mSurfaceLock.unlock();
+            } else {
+                activity.mSurfaceLock.unlock();
+                activity.waitTillSurfaceIsFree();
+            }
         }
         assertTrue("codec name act/got: " + mCodec.getName() + '/' + decoder,
                 mCodec.getName().equals(decoder));
@@ -209,7 +219,16 @@ public class CodecDecoderTest extends CodecDecoderTestBase {
         mOutputBuff = new OutputManager();
         if (modeSurface) {
             CodecTestActivity activity = mActivityRule.getActivity();
-            activity.setScreenParams(getWidth(format), getHeight(format), true);
+            activity.mSurfaceLock.lock();
+            mIsSurfaceInUse = activity.getSurfaceStatus();
+            if (mIsSurfaceInUse == false) {
+                activity.setSurfaceStatus(true);
+                activity.setScreenParams(getWidth(format), getHeight(format), true);
+                activity.mSurfaceLock.unlock();
+            } else {
+                activity.mSurfaceLock.unlock();
+                activity.waitTillSurfaceIsFree();
+            }
         }
 
         mExtractor.seekTo(0, mode);
@@ -283,7 +302,16 @@ public class CodecDecoderTest extends CodecDecoderTestBase {
         mOutputBuff = ref;
         if (modeSurface) {
             CodecTestActivity activity = mActivityRule.getActivity();
-            activity.setScreenParams(getWidth(format), getHeight(format), true);
+            activity.mSurfaceLock.lock();
+            mIsSurfaceInUse = activity.getSurfaceStatus();
+            if (mIsSurfaceInUse == false) {
+                activity.setSurfaceStatus(true);
+                activity.setScreenParams(getWidth(format), getHeight(format), true);
+                activity.mSurfaceLock.unlock();
+            } else {
+                activity.mSurfaceLock.unlock();
+                activity.waitTillSurfaceIsFree();
+            }
         }
         mExtractor.seekTo(1000000, MediaExtractor.SEEK_TO_CLOSEST_SYNC);
         configureCodec(format, isAsync, true, false);
@@ -321,6 +349,13 @@ public class CodecDecoderTest extends CodecDecoderTestBase {
         assertTrue(log + " unexpected error", !mAsyncHandle.hasSeenError());
 
         mExtractor.release();
+        if (modeSurface) {
+            CodecTestActivity activity = mActivityRule.getActivity();
+            mSurface = null;
+            activity.mSurfaceLock.lock();
+            activity.setSurfaceStatus(false);
+            activity.mSurfaceLock.unlock();
+        }
         /* test reconfigure codec for new file */
         MediaFormat newFormat = setUpSource(mReconfigFile);
         log = String.format("decoder: %s, input file: %s, mode: %s:: ", decoder,
@@ -328,7 +363,16 @@ public class CodecDecoderTest extends CodecDecoderTestBase {
         reConfigureCodec(newFormat, isAsync, false, false);
         if (modeSurface) {
             CodecTestActivity activity = mActivityRule.getActivity();
-            activity.setScreenParams(getWidth(newFormat), getHeight(newFormat), true);
+            activity.mSurfaceLock.lock();
+            mIsSurfaceInUse = activity.getSurfaceStatus();
+            if (mIsSurfaceInUse == false) {
+                activity.setSurfaceStatus(true);
+                activity.setScreenParams(getWidth(format), getHeight(format), true);
+                activity.mSurfaceLock.unlock();
+            } else {
+                activity.mSurfaceLock.unlock();
+                activity.waitTillSurfaceIsFree();
+            }
         }
         mCodec.start();
         mSaveToMem = false;
@@ -369,12 +413,15 @@ class DecodeParallel implements Callable<Void> {
     private final Random rand = new Random(mSeed);
     CodecDecoderTest mCdt;
     private final String mDecoder;
+    private final boolean mSurfaceMode;
     CodecDecoderTest.Menu mSelector;
 
-    public DecodeParallel(CodecDecoderTest cdt, String decoder, CodecDecoderTest.Menu selector) {
+    public DecodeParallel(CodecDecoderTest cdt, String decoder, CodecDecoderTest.Menu selector,
+            boolean surfaceMode) {
         mCdt = cdt;
         mDecoder = decoder;
         mSelector = selector;
+        mSurfaceMode = surfaceMode;
     }
 
     @Override
@@ -382,12 +429,18 @@ class DecodeParallel implements Callable<Void> {
         final boolean isAsync = ((rand.nextInt() & 1) == 0);
         final boolean eosType = ((rand.nextInt() & 1) == 0);
         final boolean verify = true;
-        final boolean surfaceMode = false;
         final int frames = Integer.MAX_VALUE;
         mCdt.mCodec = MediaCodec.createByCodecName(mDecoder);
-        CodecDecoderTest.isDecoderRunPass(mCdt, mDecoder, isAsync, eosType, verify, surfaceMode,
+        CodecDecoderTest.isDecoderRunPass(mCdt, mDecoder, isAsync, eosType, verify, mSurfaceMode,
                 frames, mSelector);
         mCdt.mCodec.release();
+        if (mSurfaceMode) {
+            CodecTestActivity activity = mCdt.mActivityRule.getActivity();
+            mCdt.mSurface = null;
+            activity.mSurfaceLock.lock();
+            activity.setSurfaceStatus(false);
+            activity.mSurfaceLock.unlock();
+        }
         return null;
     }
 }
