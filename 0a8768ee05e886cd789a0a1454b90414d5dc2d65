@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24f2f2c9_5f4c54dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-01-19T14:25:01Z",
+      "side": 1,
+      "message": "+Jeff Sharkey for API-Review... Jeff, this is 99% similar to the changes you already reviewed in CL:1492140 for the Jetpack. Note also that it introduces _two_ features, one for regular IC and one for direct-access IC (intentional, they are backed by different HAL instances and may not be the same version). Please take a look, thanks!",
+      "revId": "0a8768ee05e886cd789a0a1454b90414d5dc2d65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
