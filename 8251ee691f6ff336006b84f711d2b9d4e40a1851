@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8f7b552_c43fbdb0",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-19T18:56:59Z",
+      "side": 1,
+      "message": "Suggest putting this into the synchronized block to ensure that we always do this concurrently with the put/remove.\n\nI\u0027m not sure what happens if it\u0027s interleaved as:\n\nput()\n                  remove()\nlinkToDeath()\n\n\nPerhaps that\u0027s safe? But in an attempt to avoid all this, moving it into the synchronized block gives us guarantees.",
+      "range": {
+        "startLine": 539,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 9
+      },
+      "revId": "8251ee691f6ff336006b84f711d2b9d4e40a1851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06f82b45_1437f588",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-19T18:56:59Z",
+      "side": 1,
+      "message": "Do we need to unlink?",
+      "range": {
+        "startLine": 555,
+        "startChar": 0,
+        "endLine": 555,
+        "endChar": 67
+      },
+      "revId": "8251ee691f6ff336006b84f711d2b9d4e40a1851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
