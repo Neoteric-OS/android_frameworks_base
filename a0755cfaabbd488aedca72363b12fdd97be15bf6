@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ee2a36f_aac74975",
+        "filename": "telephony/java/android/telephony/ims/RcsContactPresenceTuple.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-19T17:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1efd0760_5385c2d3",
+      "range": {
+        "startLine": 43,
+        "startChar": 31,
+        "endLine": 43,
+        "endChar": 47
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25673eac_f3ffba71",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-15T18:59:16Z",
       "side": 1,
       "message": "This is missing \"status\" param description",
+      "range": {
+        "startLine": 227,
+        "startChar": 18,
+        "endLine": 227,
+        "endChar": 27
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7798ac6f_d0e5f103",
+        "filename": "telephony/java/android/telephony/ims/RcsContactPresenceTuple.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-19T17:47:56Z",
+      "side": 1,
+      "message": "The status is defined in the RFC#3863, 4.1.3 and 4.2.4\nhttps://tools.ietf.org/html/rfc3863#section-4.1.3\nhttps://tools.ietf.org/html/rfc3863#section-4.2.4",
+      "parentUuid": "25673eac_f3ffba71",
       "range": {
         "startLine": 227,
         "startChar": 18,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c31700dc_a7fc495e",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-19T17:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bc3ba31_5464a676",
+      "range": {
+        "startLine": 98,
+        "startChar": 28,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e422ad6_a7a2ce5d",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-01-15T18:59:16Z",
       "side": 1,
       "message": "I believe these builders need to be defined as \"final\"",
+      "range": {
+        "startLine": 180,
+        "startChar": 24,
+        "endLine": 180,
+        "endChar": 39
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aebae0a6_1b9ccd66",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-19T17:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e422ad6_a7a2ce5d",
       "range": {
         "startLine": 180,
         "startChar": 24,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f68b01c0_9d99f75c",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-19T17:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc2fdc27_c428e3b3",
+      "range": {
+        "startLine": 318,
+        "startChar": 15,
+        "endLine": 318,
+        "endChar": 74
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a36aa0f_7c0ae390",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-01-15T18:59:16Z",
       "side": 1,
       "message": "Lets keep this as @hide until we expose the rest of options",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 14
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fa6ad0b_deca7b2c",
+        "filename": "telephony/java/android/telephony/ims/RcsUceAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-19T17:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a36aa0f_7c0ae390",
       "range": {
         "startLine": 58,
         "startChar": 4,
@@ -162,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "654d6dad_7be470e0",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-19T17:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f29b6e75_6bbc53e4",
+      "range": {
+        "startLine": 198,
+        "startChar": 11,
+        "endLine": 198,
+        "endChar": 90
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ea89053_bd361fe0",
@@ -175,6 +343,30 @@
       "writtenOn": "2021-01-15T18:59:16Z",
       "side": 1,
       "message": "Clarify:\n\nNotify the framework of the response to the SUBSCRIBE request from\n{@link #subscribeForCapabilities(List\u003cUri\u003e, SubscribeResponseCallback)}.\n\u003cp\u003e\nIf the carrier network responds to the SUBSCRIBE request with a 2XX response, then the framework will expect the IMS stack to call {@link #onNotifyCapabilitiesUpdate}, {@link #onResourceTerminated}, and {@link #onTerminated} as required for the subsequent NOTIFY responses to the subscription.",
+      "range": {
+        "startLine": 211,
+        "startChar": 10,
+        "endLine": 212,
+        "endChar": 83
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f52f35d_18918974",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-19T17:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ea89053_bd361fe0",
       "range": {
         "startLine": 211,
         "startChar": 10,
@@ -208,6 +400,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e638e1c9_7467f73d",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-19T17:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14a33fea_ebd8ed4d",
+      "range": {
+        "startLine": 228,
+        "startChar": 11,
+        "endLine": 230,
+        "endChar": 67
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc408246_5dd1c6a8",
@@ -221,6 +437,30 @@
       "writtenOn": "2021-01-15T18:59:16Z",
       "side": 1,
       "message": "Clarify:\n\nNotify the framework that a resource in the RLMI XML contained in the NOTIFY response for the ongoing SUBSCRIBE dialog has been terminated.\n\u003cp\u003e\nThis will be used to notify the framework that a contact URI that the IMS stack has subscribed to on the Resource List Server has been terminated as well as the reason why. Usually this means that there will not be any capability information for the contact URI that they subscribed for. See RFC 4662 for more information.",
+      "range": {
+        "startLine": 244,
+        "startChar": 11,
+        "endLine": 247,
+        "endChar": 59
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ae2a632_9495267f",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-19T17:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc408246_5dd1c6a8",
       "range": {
         "startLine": 244,
         "startChar": 11,
@@ -254,6 +494,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b240195_cabfcaa5",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-19T17:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "562b8c87_41bc5b2f",
+      "range": {
+        "startLine": 253,
+        "startChar": 54,
+        "endLine": 253,
+        "endChar": 75
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21f7938e_b62794ee",
@@ -267,6 +531,30 @@
       "writtenOn": "2021-01-15T18:59:16Z",
       "side": 1,
       "message": "Clarify: This will mostly be due to the network sending a final NOTIFY response due to the subscription expiring, but this may also happen due to a network error.",
+      "range": {
+        "startLine": 254,
+        "startChar": 32,
+        "endLine": 255,
+        "endChar": 47
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1df930f0_17cf036b",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-19T17:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21f7938e_b62794ee",
       "range": {
         "startLine": 254,
         "startChar": 32,
@@ -300,6 +588,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "233fbb10_8b4800e0",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-19T17:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72e4af65_8dd8b045",
+      "range": {
+        "startLine": 257,
+        "startChar": 11,
+        "endLine": 258,
+        "endChar": 63
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "305624bd_312e7af2",
@@ -313,6 +625,30 @@
       "writtenOn": "2021-01-15T18:59:16Z",
       "side": 1,
       "message": "These docs are out of date, can you use the correct links",
+      "range": {
+        "startLine": 280,
+        "startChar": 7,
+        "endLine": 287,
+        "endChar": 62
+      },
+      "revId": "a0755cfaabbd488aedca72363b12fdd97be15bf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7342e426_7fdfd10d",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-19T17:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "305624bd_312e7af2",
       "range": {
         "startLine": 280,
         "startChar": 7,
