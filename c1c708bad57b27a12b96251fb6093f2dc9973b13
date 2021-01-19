@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06a0a020_8d43a390",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-19T13:50:08Z",
+      "side": 1,
+      "message": "Generally LGTM but I think can you try to clean up the code a little bit? SUggestions inline.",
+      "revId": "c1c708bad57b27a12b96251fb6093f2dc9973b13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86db9cdd_ab8bd30a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-19T13:50:08Z",
+      "side": 1,
+      "message": "How is this different from mUserIdContext? Should this also change to mUserIdContext?",
+      "range": {
+        "startLine": 1237,
+        "startChar": 49,
+        "endLine": 1237,
+        "endChar": 90
+      },
+      "revId": "c1c708bad57b27a12b96251fb6093f2dc9973b13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ed91e00_d1775094",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1433,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-19T13:50:08Z",
+      "side": 1,
+      "message": "Instead of calling UserManager.get() in some methods and getSystemService(UserManager.class) in others, should we instead have a class member:\n\n    private final UserManager mUserManager;\n\nthat we use everywhere?",
+      "range": {
+        "startLine": 1433,
+        "startChar": 40,
+        "endLine": 1433,
+        "endChar": 54
+      },
+      "revId": "c1c708bad57b27a12b96251fb6093f2dc9973b13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f63b6bc_0d6c5ed0",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-19T13:50:08Z",
+      "side": 1,
+      "message": "Do we need both of these? Are there things that must be done on mUserManager that cannot be done on mUserManagerForContextUser? If not, we should remove one of them. If these are actually both necessary, then add a comment explaining why we need both, and if appropriate, a TODO to delete one of the two.",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 57
+      },
+      "revId": "c1c708bad57b27a12b96251fb6093f2dc9973b13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
