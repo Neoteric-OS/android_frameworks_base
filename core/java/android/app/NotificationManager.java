@@ -953,11 +953,7 @@ public class NotificationManager {
         }
     }
 
-    /**
-     * @hide
-     */
-    @TestApi
-    public ComponentName getEffectsSuppressor() {
+    public @Nullable ComponentName getEffectsSuppressor() {
         INotificationManager service = getService();
         try {
             return service.getEffectsSuppressor();
