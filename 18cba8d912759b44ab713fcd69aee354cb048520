@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6ecfb4c_f50ebd1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-19T15:25:03Z",
+      "side": 1,
+      "message": "I\u0027d recommend working with the Telephony team to review this API in their area.  A brief glance at this CL looks like it\u0027s not very robust as new constants are added in the future, since the API would need to adjust for every new network type.\n\nAn alternative that may would would be using ~0 as the value (assuming that these are bits/flags).",
+      "revId": "18cba8d912759b44ab713fcd69aee354cb048520",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
