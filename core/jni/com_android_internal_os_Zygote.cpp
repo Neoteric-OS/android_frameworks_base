@@ -1559,7 +1559,6 @@ static void isolateAppData(JNIEnv* env, jobjectArray pkg_data_info_list,
     jobjectArray whitelisted_data_info_list, uid_t uid, const char* process_name,
     jstring managed_nice_name, fail_fn_t fail_fn) {
 
-  ensureInAppMountNamespace(fail_fn);
   std::vector<std::string> merged_data_info_list;
   insertPackagesToMergedList(env, merged_data_info_list, pkg_data_info_list,
           process_name, managed_nice_name, fail_fn);
@@ -1710,6 +1709,7 @@ static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids,
   // give a null in same_uid_pkgs and private_volumes so they don't need app data isolation.
   // Isolated process / webview / app zygote should be gated by SELinux and file permission
   // so they can't even traverse CE / DE directories.
+  ensureInAppMountNamespace(fail_fn);
   if (mount_data_dirs) {
     isolateAppData(env, pkg_data_info_list, whitelisted_data_info_list,
             uid, process_name, managed_nice_name, fail_fn);
