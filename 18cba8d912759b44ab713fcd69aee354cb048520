@@ -33,6 +33,29 @@
       "message": "I\u0027d recommend working with the Telephony team to review this API in their area.  A brief glance at this CL looks like it\u0027s not very robust as new constants are added in the future, since the API would need to adjust for every new network type.\n\nAn alternative that may would would be using ~0 as the value (assuming that these are bits/flags).",
       "revId": "18cba8d912759b44ab713fcd69aee354cb048520",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81d1008e_a350b295",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-01-19T16:47:33Z",
+      "side": 1,
+      "message": "An app consuming APN types should just define the list of APN types it supports internally.  If this list ever changes, they\u0027re going to have to make a conscious decision to change their code to handle (or not handle) whatever new APN type is added.  \n\nWe could add a method like getAllApnTypes which can take into account target SDK so that it can return the number of APN types per API version... However there is the risk with an API of that shape that a developer doesn\u0027t even notice that a new APN type was added and is now consuming that when they didn\u0027t want to.",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 89
+      },
+      "revId": "18cba8d912759b44ab713fcd69aee354cb048520",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
