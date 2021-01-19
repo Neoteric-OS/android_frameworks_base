@@ -1,0 +1,8 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Jeff Sharkey <jsharkey@google.com>
+Bypass-Presubmit+1: Jeff Sharkey <jsharkey@google.com>
+Submitted-by: Jeff Sharkey <jsharkey@google.com>
+Submitted-at: Tue, 19 Jan 2021 19:34:21 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1554084
+Project: platform/frameworks/base
+Branch: refs/heads/master
