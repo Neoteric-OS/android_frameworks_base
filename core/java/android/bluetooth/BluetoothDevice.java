@@ -106,7 +106,7 @@ public final class BluetoothDevice implements Parcelable {
      * <p>Sent when a remote device is found during discovery.
      * <p>Always contains the extra fields {@link #EXTRA_DEVICE} and {@link
      * #EXTRA_CLASS}. Can contain the extra fields {@link #EXTRA_NAME} and/or
-     * {@link #EXTRA_RSSI} if they are available.
+     * {@link #EXTRA_RSSI} and/or {@link #EXTRA_IS_SET_MEMBER} if they are available.
      * <p>Requires {@link android.Manifest.permission#BLUETOOTH} and
      * {@link android.Manifest.permission#ACCESS_COARSE_LOCATION} to receive.
      */
@@ -255,6 +255,13 @@ public final class BluetoothDevice implements Parcelable {
      * Bluetooth hardware.
      */
     public static final String EXTRA_RSSI = "android.bluetooth.device.extra.RSSI";
+
+    /**
+    * Used as an bool extra field in {@link #ACTION_FOUND} intents.
+    * It contains the information if device is a set member of a coordinated set or not.
+    */
+    public static final String EXTRA_IS_SET_MEMBER =
+            "android.bluetooth.extra.IS_SET_MEMBER";
 
     /**
      * Used as a Parcelable {@link BluetoothClass} extra field in {@link
