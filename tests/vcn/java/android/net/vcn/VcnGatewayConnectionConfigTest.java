@@ -57,6 +57,9 @@ public class VcnGatewayConnectionConfigTest {
             };
     public static final int MAX_MTU = 1360;
 
+    public static final VcnControlPlaneConfig CONTROL_PLANE_CONFIG =
+            VcnControlPlaneIkeConfigTest.buildTestConfig();
+
     // Public for use in VcnGatewayConnectionTest
     public static VcnGatewayConnectionConfig buildTestConfig() {
         return buildTestConfigWithExposedCaps(EXPOSED_CAPS);
@@ -66,6 +69,7 @@ public class VcnGatewayConnectionConfigTest {
     public static VcnGatewayConnectionConfig buildTestConfigWithExposedCaps(int... exposedCaps) {
         final VcnGatewayConnectionConfig.Builder builder =
                 new VcnGatewayConnectionConfig.Builder()
+                        .setControlPlaneConfig(CONTROL_PLANE_CONFIG)
                         .setRetryInterval(RETRY_INTERVALS_MS)
                         .setMaxMtu(MAX_MTU);
 
@@ -78,6 +82,16 @@ public class VcnGatewayConnectionConfigTest {
         }
 
         return builder.build();
+    }
+
+    @Test
+    public void testBuilderRequiresNonNullControlPlaneConfig() {
+        try {
+            new VcnGatewayConnectionConfig.Builder().setControlPlaneConfig(null).build();
+
+            fail("Expected exception due to invalid control plane config");
+        } catch (IllegalArgumentException e) {
+        }
     }
 
     @Test
@@ -144,6 +158,7 @@ public class VcnGatewayConnectionConfigTest {
         Arrays.sort(underlyingCaps);
         assertArrayEquals(UNDERLYING_CAPS, underlyingCaps);
 
+        assertEquals(CONTROL_PLANE_CONFIG, config.getControlPlaneConfig());
         assertArrayEquals(RETRY_INTERVALS_MS, config.getRetryIntervalsMs());
         assertEquals(MAX_MTU, config.getMaxMtu());
     }
