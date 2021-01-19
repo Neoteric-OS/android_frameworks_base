@@ -16,13 +16,14 @@
 
 package com.android.server;
 
+import static android.net.vcn.VcnManager.NET_CAPABILITY_NOT_VCN_MANAGED;
+
 import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionTrackerCallback;
 import static com.android.server.vcn.VcnTestUtils.setupSystemService;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -30,6 +31,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyBoolean;
 import static org.mockito.Mockito.argThat;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
@@ -39,16 +41,20 @@ import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
+import android.net.NetworkCapabilities.Transport;
+import android.net.TelephonyNetworkSpecifier;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
 import android.net.vcn.VcnConfigTest;
 import android.net.vcn.VcnUnderlyingNetworkPolicy;
+import android.net.wifi.WifiInfo;
 import android.os.IBinder;
 import android.os.ParcelUuid;
 import android.os.PersistableBundle;
@@ -253,7 +259,13 @@ public class VcnManagementServiceTest {
         verify(mConfigReadWriteHelper).readFromDisk();
     }
 
-    private void triggerSubscriptionTrackerCallback(Set<ParcelUuid> activeSubscriptionGroups) {
+    private TelephonySubscriptionSnapshot triggerSubscriptionTrackerCallback(
+            Set<ParcelUuid> activeSubscriptionGroups) {
+        return triggerSubscriptionTrackerCallback(activeSubscriptionGroups, Collections.emptyMap());
+    }
+
+    private TelephonySubscriptionSnapshot triggerSubscriptionTrackerCallback(
+            Set<ParcelUuid> activeSubscriptionGroups, Map<Integer, ParcelUuid> subIdToGroupMap) {
         final TelephonySubscriptionSnapshot snapshot = mock(TelephonySubscriptionSnapshot.class);
         doReturn(activeSubscriptionGroups).when(snapshot).getActiveSubscriptionGroups();
 
@@ -267,8 +279,14 @@ public class VcnManagementServiceTest {
                         argThat(val -> activeSubscriptionGroups.contains(val)),
                         eq(TEST_PACKAGE_NAME));
 
+        doAnswer(invocation -> {
+            return subIdToGroupMap.get(invocation.getArgument(0));
+        }).when(snapshot).getGroupForSubId(anyInt());
+
         final TelephonySubscriptionTrackerCallback cb = getTelephonySubscriptionTrackerCallback();
         cb.onNewSnapshot(snapshot);
+
+        return snapshot;
     }
 
     private TelephonySubscriptionTrackerCallback getTelephonySubscriptionTrackerCallback() {
@@ -496,14 +514,71 @@ public class VcnManagementServiceTest {
         mVcnMgmtSvc.removeVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
     }
 
+    private void setUpVcnSubscription(int subId, ParcelUuid subGroup) {
+        mVcnMgmtSvc.setVcnConfig(subGroup, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
+
+        triggerSubscriptionTrackerCallback(
+                Collections.singleton(subGroup), Collections.singletonMap(subId, subGroup));
+    }
+
+    private void verifyMergedNetworkCapabilities(
+            NetworkCapabilities mergedCapabilities, @Transport int transportType) {
+        assertTrue(mergedCapabilities.hasTransport(transportType));
+        assertFalse(mergedCapabilities.hasCapability(NET_CAPABILITY_NOT_VCN_MANAGED));
+    }
+
     @Test
-    public void testGetUnderlyingNetworkPolicy() throws Exception {
+    public void testGetUnderlyingNetworkPolicyTransportCell() throws Exception {
+        setUpVcnSubscription(TEST_SUBSCRIPTION_ID, TEST_UUID_2);
+
+        NetworkCapabilities nc =
+                new NetworkCapabilities.Builder()
+                        .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                        .setNetworkSpecifier(new TelephonyNetworkSpecifier(TEST_SUBSCRIPTION_ID))
+                        .build();
+
         VcnUnderlyingNetworkPolicy policy =
-                mVcnMgmtSvc.getUnderlyingNetworkPolicy(
-                        new NetworkCapabilities(), new LinkProperties());
+                mVcnMgmtSvc.getUnderlyingNetworkPolicy(nc, new LinkProperties());
 
         assertFalse(policy.isTeardownRequested());
-        assertNotNull(policy.getMergedNetworkCapabilities());
+        verifyMergedNetworkCapabilities(
+                policy.getMergedNetworkCapabilities(), NetworkCapabilities.TRANSPORT_CELLULAR);
+    }
+
+    @Test
+    public void testGetUnderlyingNetworkPolicyTransportWifi() throws Exception {
+        setUpVcnSubscription(TEST_SUBSCRIPTION_ID, TEST_UUID_2);
+
+        WifiInfo wifiInfo = mock(WifiInfo.class);
+        when(wifiInfo.makeCopy(anyBoolean())).thenReturn(wifiInfo);
+        when(mMockDeps.getSubIdForWifiInfo(eq(wifiInfo))).thenReturn(TEST_SUBSCRIPTION_ID);
+        NetworkCapabilities nc =
+                new NetworkCapabilities.Builder()
+                        .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                        .setTransportInfo(wifiInfo)
+                        .build();
+
+        VcnUnderlyingNetworkPolicy policy =
+                mVcnMgmtSvc.getUnderlyingNetworkPolicy(nc, new LinkProperties());
+
+        assertFalse(policy.isTeardownRequested());
+        verifyMergedNetworkCapabilities(
+                policy.getMergedNetworkCapabilities(), NetworkCapabilities.TRANSPORT_WIFI);
+    }
+
+    @Test
+    public void testGetUnderlyingNetworkPolicyNonVcnNetwork() throws Exception {
+        NetworkCapabilities nc =
+                new NetworkCapabilities.Builder()
+                        .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                        .setNetworkSpecifier(new TelephonyNetworkSpecifier(TEST_SUBSCRIPTION_ID))
+                        .build();
+
+        VcnUnderlyingNetworkPolicy policy =
+                mVcnMgmtSvc.getUnderlyingNetworkPolicy(nc, new LinkProperties());
+
+        assertFalse(policy.isTeardownRequested());
+        assertEquals(nc, policy.getMergedNetworkCapabilities());
     }
 
     @Test(expected = SecurityException.class)
