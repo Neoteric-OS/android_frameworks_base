@@ -158,7 +158,7 @@ public class Environment {
         @UnsupportedAppUsage
         public File[] getExternalDirs() {
             final StorageVolume[] volumes = StorageManager.getVolumeList(mUserId,
-                    StorageManager.FLAG_FOR_WRITE);
+                    StorageManager.FLAG_FOR_WRITE | StorageManager.FLAG_EXTERNAL_DIR_ALLOWED);
             final File[] files = new File[volumes.length];
             for (int i = 0; i < volumes.length; i++) {
                 files[i] = volumes[i].getPathFile();

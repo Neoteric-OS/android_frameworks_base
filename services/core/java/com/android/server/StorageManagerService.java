@@ -1506,12 +1506,14 @@ class StorageManagerService extends IStorageManager.Stub
                 Slog.v(TAG, "Found primary storage at " + vol);
                 vol.mountFlags |= VolumeInfo.MOUNT_FLAG_PRIMARY;
                 vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE;
+                vol.mountFlags |= VolumeInfo.MOUNT_FLAG_EXTERNAL_DIR_ALLOWED;
                 mHandler.obtainMessage(H_VOLUME_MOUNT, vol).sendToTarget();
 
             } else if (Objects.equals(privateVol.fsUuid, mPrimaryStorageUuid)) {
                 Slog.v(TAG, "Found primary storage at " + vol);
                 vol.mountFlags |= VolumeInfo.MOUNT_FLAG_PRIMARY;
                 vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE;
+                vol.mountFlags |= VolumeInfo.MOUNT_FLAG_EXTERNAL_DIR_ALLOWED;
                 mHandler.obtainMessage(H_VOLUME_MOUNT, vol).sendToTarget();
             }
 
@@ -1522,12 +1524,14 @@ class StorageManagerService extends IStorageManager.Stub
                 Slog.v(TAG, "Found primary storage at " + vol);
                 vol.mountFlags |= VolumeInfo.MOUNT_FLAG_PRIMARY;
                 vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE;
+                vol.mountFlags |= VolumeInfo.MOUNT_FLAG_EXTERNAL_DIR_ALLOWED;
             }
 
             // Adoptable public disks are visible to apps, since they meet
             // public API requirement of being in a stable location.
             if (vol.disk.isAdoptable()) {
                 vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE;
+                vol.mountFlags |= VolumeInfo.MOUNT_FLAG_EXTERNAL_DIR_ALLOWED;
             }
 
             vol.mountUserId = mCurrentUserId;
@@ -1537,9 +1541,10 @@ class StorageManagerService extends IStorageManager.Stub
             mHandler.obtainMessage(H_VOLUME_MOUNT, vol).sendToTarget();
 
         } else if (vol.type == VolumeInfo.TYPE_STUB) {
-            if (vol.disk.isStubVisible()) {
-                vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE;
+            if (vol.disk.isStubExternalDirAllowed()) {
+                vol.mountFlags |= VolumeInfo.MOUNT_FLAG_EXTERNAL_DIR_ALLOWED;
             }
+            vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE;
             vol.mountUserId = mCurrentUserId;
             mHandler.obtainMessage(H_VOLUME_MOUNT, vol).sendToTarget();
         } else {
@@ -3614,6 +3619,8 @@ class StorageManagerService extends IStorageManager.Stub
         final boolean realState = (flags & StorageManager.FLAG_REAL_STATE) != 0;
         final boolean includeInvisible = (flags & StorageManager.FLAG_INCLUDE_INVISIBLE) != 0;
         final boolean includeRecent = (flags & StorageManager.FLAG_INCLUDE_RECENT) != 0;
+        final boolean isExternalDirAllowed =
+                (flags & StorageManager.FLAG_EXTERNAL_DIR_ALLOWED) != 0;
 
         // Report all volumes as unmounted until we've recorded that user 0 has unlocked. There
         // are no guarantees that callers will see a consistent view of the volume before that
@@ -3667,6 +3674,9 @@ class StorageManagerService extends IStorageManager.Stub
                 } else {
                     match = vol.isVisibleForRead(userId)
                             || (includeInvisible && vol.getPath() != null);
+                }
+                if (match && isExternalDirAllowed) {
+                    match = vol.isExternalDirAllowed(userId);
                 }
                 if (!match) continue;
 
