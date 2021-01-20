@@ -16,6 +16,23 @@
       "message": "(thanks! still LGTM)",
       "revId": "b1d2fe86f7dd1a1896fb55dfce976345096f5c78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65dee4f0_ca0664f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2021-01-20T21:27:17Z",
+      "side": 1,
+      "message": "roosa@, ogunwale@: Can you give us an owner +1?",
+      "revId": "b1d2fe86f7dd1a1896fb55dfce976345096f5c78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
