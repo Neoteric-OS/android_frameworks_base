@@ -1,0 +1,9 @@
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Henry Fang <quxiangfang@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Amy Zhang <amyjojo@google.com>
+Submitted-at: Wed, 20 Jan 2021 21:02:55 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1554520
+Project: platform/frameworks/base
+Branch: refs/heads/master
