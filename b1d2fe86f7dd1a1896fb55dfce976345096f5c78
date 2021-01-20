@@ -33,6 +33,23 @@
       "message": "roosa@, ogunwale@: Can you give us an owner +1?",
       "revId": "b1d2fe86f7dd1a1896fb55dfce976345096f5c78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd3b104b_4251eac9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1079143
+      },
+      "writtenOn": "2021-01-20T22:55:26Z",
+      "side": 1,
+      "message": "Bypassing already failing tests.\nThis CL is touching only OWNERS files and should not affect tests.",
+      "revId": "b1d2fe86f7dd1a1896fb55dfce976345096f5c78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
