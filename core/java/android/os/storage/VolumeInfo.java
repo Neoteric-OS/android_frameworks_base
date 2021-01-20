@@ -100,6 +100,7 @@ public class VolumeInfo implements Parcelable {
 
     public static final int MOUNT_FLAG_PRIMARY = IVold.MOUNT_FLAG_PRIMARY;
     public static final int MOUNT_FLAG_VISIBLE = IVold.MOUNT_FLAG_VISIBLE;
+    public static final int MOUNT_FLAG_EXTERNAL_DIR_ALLOWED = IVold.MOUNT_FLAG_EXTERNAL_DIR_ALLOWED;
 
     private static SparseArray<String> sStateToEnvironment = new SparseArray<>();
     private static ArrayMap<String, String> sEnvironmentToBroadcast = new ArrayMap<>();
@@ -335,6 +336,14 @@ public class VolumeInfo implements Parcelable {
 
     public boolean isVisibleForRead(int userId) {
         return isVisibleForUser(userId);
+    }
+
+    /**
+     * Returns {@code true} if this volume allows external directory to be created for
+     * {@code userId}, {@code false} otherwise.
+     */
+    public boolean isExternalDirAllowed(int userId) {
+        return (mountFlags & MOUNT_FLAG_EXTERNAL_DIR_ALLOWED) != 0 && mountUserId == userId;
     }
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)

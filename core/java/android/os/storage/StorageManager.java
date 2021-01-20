@@ -289,6 +289,8 @@ public class StorageManager {
     public static final int FLAG_INCLUDE_INVISIBLE = 1 << 10;
     /** {@hide} */
     public static final int FLAG_INCLUDE_RECENT = 1 << 11;
+    /** {@hide} */
+    public static final int FLAG_EXTERNAL_DIR_ALLOWED = 1 << 12;
 
     /** {@hide} */
     public static final int FSTRIM_FLAG_DEEP = IVold.FSTRIM_FLAG_DEEP_TRIM;
