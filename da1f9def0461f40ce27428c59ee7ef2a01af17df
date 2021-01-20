@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b35ad3d1_35597e68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2021-01-20T02:04:55Z",
+      "side": 1,
+      "message": "This CL fixes the issue when using test_harness with a GSI@DSU. Request for the owner approval. ",
+      "revId": "da1f9def0461f40ce27428c59ee7ef2a01af17df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
