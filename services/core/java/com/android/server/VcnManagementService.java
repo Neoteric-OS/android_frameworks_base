@@ -288,8 +288,9 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         public Vcn newVcn(
                 @NonNull VcnContext vcnContext,
                 @NonNull ParcelUuid subscriptionGroup,
+                @NonNull TelephonySubscriptionSnapshot snapshot,
                 @NonNull VcnConfig config) {
-            return new Vcn(vcnContext, subscriptionGroup, config);
+            return new Vcn(vcnContext, subscriptionGroup, snapshot, config);
         }
     }
 
@@ -374,24 +375,34 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 // delay)
                 for (Entry<ParcelUuid, Vcn> entry : mVcns.entrySet()) {
                     final VcnConfig config = mConfigs.get(entry.getKey());
-                    if (config == null
-                            || !snapshot.packageHasPermissionsForSubscriptionGroup(
-                                    entry.getKey(), config.getProvisioningPackageName())) {
-                        final ParcelUuid uuidToTeardown = entry.getKey();
-                        final Vcn instanceToTeardown = entry.getValue();
 
-                        mHandler.postDelayed(() -> {
-                            synchronized (mLock) {
-                                // Guard against case where this is run after a old instance was
-                                // torn down, and a new instance was started. Verify to ensure
-                                // correct instance is torn down. This could happen as a result of a
-                                // Carrier App manually removing/adding a VcnConfig.
-                                if (mVcns.get(uuidToTeardown) == instanceToTeardown) {
-                                    mVcns.remove(uuidToTeardown).teardownAsynchronously();
-                                }
-                            }
-                        }, instanceToTeardown, CARRIER_PRIVILEGES_LOST_TEARDOWN_DELAY_MS);
+                    // If the VCN instance should stay up, update it with the new snapshot.
+                    // Otherwise, tear it down.
+                    if (config != null
+                            && snapshot.packageHasPermissionsForSubscriptionGroup(
+                                    entry.getKey(), config.getProvisioningPackageName())) {
+                        entry.getValue().updateSubscriptionSnapshot(mLastSnapshot);
+                        continue;
                     }
+
+                    final ParcelUuid uuidToTeardown = entry.getKey();
+                    final Vcn instanceToTeardown = entry.getValue();
+
+                    mHandler.postDelayed(
+                            () -> {
+                                synchronized (mLock) {
+                                    // Guard against case where this is run after a old instance was
+                                    // torn down, and a new instance was started. Verify to ensure
+                                    // correct instance is torn down. This could happen as a result
+                                    // of a
+                                    // Carrier App manually removing/adding a VcnConfig.
+                                    if (mVcns.get(uuidToTeardown) == instanceToTeardown) {
+                                        mVcns.remove(uuidToTeardown).teardownAsynchronously();
+                                    }
+                                }
+                            },
+                            instanceToTeardown,
+                            CARRIER_PRIVILEGES_LOST_TEARDOWN_DELAY_MS);
                 }
             }
         }
@@ -404,7 +415,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         // TODO(b/176939047): Support multiple VCNs active at the same time, or limit to one active
         //                    VCN.
 
-        final Vcn newInstance = mDeps.newVcn(mVcnContext, subscriptionGroup, config);
+        final Vcn newInstance = mDeps.newVcn(mVcnContext, subscriptionGroup, mLastSnapshot, config);
         mVcns.put(subscriptionGroup, newInstance);
     }
 

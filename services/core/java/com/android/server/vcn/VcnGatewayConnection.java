@@ -61,6 +61,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import com.android.server.vcn.UnderlyingNetworkTracker.UnderlyingNetworkRecord;
 import com.android.server.vcn.UnderlyingNetworkTracker.UnderlyingNetworkTrackerCallback;
 
@@ -361,6 +362,43 @@ public class VcnGatewayConnection extends StateMachine {
      */
     private static final int EVENT_TEARDOWN_TIMEOUT_EXPIRED = 8;
 
+    /**
+     * Sent when this VcnGatewayConnection is notified of a change in TelephonySubscriptions.
+     *
+     * <p>Relevant in all states.
+     *
+     * <p>Upon receipt of this signal, the state machine will notify its UnderlyingNetworkTracker
+     * with the updated TelephonySubscriptionSnapshot if the Gateway is running.
+     *
+     * @param arg1 The "any" token; this signal is always honored.
+     * @param obj @NonNull a EventSubscriptionsChangedInfo containing the most recent
+     *     TelephonySubscriptionSnapshot.
+     */
+    private static final int EVENT_SUBSCRIPTIONS_CHANGED = 9;
+
+    private static class EventSubscriptionsChangedInfo implements EventInfo {
+        @NonNull public final TelephonySubscriptionSnapshot snapshot;
+
+        EventSubscriptionsChangedInfo(@NonNull TelephonySubscriptionSnapshot snapshot) {
+            this.snapshot = Objects.requireNonNull(snapshot);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(snapshot);
+        }
+
+        @Override
+        public boolean equals(@Nullable Object other) {
+            if (!(other instanceof EventSubscriptionsChangedInfo)) {
+                return false;
+            }
+
+            final EventSubscriptionsChangedInfo that = (EventSubscriptionsChangedInfo) other;
+            return snapshot.equals(that.snapshot);
+        }
+    }
+
     @NonNull private final DisconnectedState mDisconnectedState = new DisconnectedState();
     @NonNull private final DisconnectingState mDisconnectingState = new DisconnectingState();
     @NonNull private final ConnectingState mConnectingState = new ConnectingState();
@@ -452,13 +490,15 @@ public class VcnGatewayConnection extends StateMachine {
     public VcnGatewayConnection(
             @NonNull VcnContext vcnContext,
             @NonNull ParcelUuid subscriptionGroup,
+            @NonNull TelephonySubscriptionSnapshot snapshot,
             @NonNull VcnGatewayConnectionConfig connectionConfig) {
-        this(vcnContext, subscriptionGroup, connectionConfig, new Dependencies());
+        this(vcnContext, subscriptionGroup, snapshot, connectionConfig, new Dependencies());
     }
 
     private VcnGatewayConnection(
             @NonNull VcnContext vcnContext,
             @NonNull ParcelUuid subscriptionGroup,
+            @NonNull TelephonySubscriptionSnapshot snapshot,
             @NonNull VcnGatewayConnectionConfig connectionConfig,
             @NonNull Dependencies deps) {
         super(TAG, Objects.requireNonNull(vcnContext, "Missing vcnContext").getLooper());
@@ -473,6 +513,7 @@ public class VcnGatewayConnection extends StateMachine {
                 mDeps.newUnderlyingNetworkTracker(
                         mVcnContext,
                         subscriptionGroup,
+                        Objects.requireNonNull(snapshot, "Missing snapshot"),
                         mConnectionConfig.getAllUnderlyingCapabilities(),
                         mUnderlyingNetworkTrackerCallback);
         mIpSecManager = mVcnContext.getContext().getSystemService(IpSecManager.class);
@@ -523,6 +564,21 @@ public class VcnGatewayConnection extends StateMachine {
 
         // TODO: Notify VcnInstance (via callbacks) of permanent teardown of this tunnel, since this
         // is also called asynchronously when a NetworkAgent becomes unwanted
+    }
+
+    /**
+     * Notify this Gateway that subscriptions have changed.
+     *
+     * <p>This snapshot should be used to update any keepalive requests necessary for potential
+     * underlying Networks in this Gateway's subscription group.
+     */
+    public void updateSubscriptionSnapshot(@NonNull TelephonySubscriptionSnapshot snapshot) {
+        Objects.requireNonNull(snapshot, "Missing snapshot");
+
+        sendMessage(
+                EVENT_SUBSCRIPTIONS_CHANGED,
+                TOKEN_ANY,
+                new EventSubscriptionsChangedInfo(snapshot));
     }
 
     private class VcnUnderlyingNetworkTrackerCallback implements UnderlyingNetworkTrackerCallback {
@@ -609,7 +665,18 @@ public class VcnGatewayConnection extends StateMachine {
      */
     private class DisconnectedState extends BaseState {
         @Override
-        protected void processStateMsg(Message msg) {}
+        protected void processStateMsg(Message msg) {
+            switch (msg.what) {
+                case EVENT_SUBSCRIPTIONS_CHANGED:
+                    EventSubscriptionsChangedInfo info = (EventSubscriptionsChangedInfo) msg.obj;
+                    if (mIsRunning) {
+                        mUnderlyingNetworkTracker.updateSubscriptionSnapshot(info.snapshot);
+                    }
+                    break;
+                default:
+                    Slog.e(TAG, "Received unexpected msg type: " + msg.what);
+            }
+        }
     }
 
     private abstract class ActiveBaseState extends BaseState {}
@@ -622,7 +689,18 @@ public class VcnGatewayConnection extends StateMachine {
      */
     private class DisconnectingState extends ActiveBaseState {
         @Override
-        protected void processStateMsg(Message msg) {}
+        protected void processStateMsg(Message msg) {
+            switch (msg.what) {
+                case EVENT_SUBSCRIPTIONS_CHANGED:
+                    EventSubscriptionsChangedInfo info = (EventSubscriptionsChangedInfo) msg.obj;
+                    if (mIsRunning) {
+                        mUnderlyingNetworkTracker.updateSubscriptionSnapshot(info.snapshot);
+                    }
+                    break;
+                default:
+                    Slog.e(TAG, "Received unexpected msg type: " + msg.what);
+            }
+        }
     }
 
     /**
@@ -633,7 +711,18 @@ public class VcnGatewayConnection extends StateMachine {
      */
     private class ConnectingState extends ActiveBaseState {
         @Override
-        protected void processStateMsg(Message msg) {}
+        protected void processStateMsg(Message msg) {
+            switch (msg.what) {
+                case EVENT_SUBSCRIPTIONS_CHANGED:
+                    EventSubscriptionsChangedInfo info = (EventSubscriptionsChangedInfo) msg.obj;
+                    if (mIsRunning) {
+                        mUnderlyingNetworkTracker.updateSubscriptionSnapshot(info.snapshot);
+                    }
+                    break;
+                default:
+                    Slog.e(TAG, "Received unexpected msg type: " + msg.what);
+            }
+        }
     }
 
     private abstract class ConnectedStateBase extends ActiveBaseState {}
@@ -646,7 +735,18 @@ public class VcnGatewayConnection extends StateMachine {
      */
     class ConnectedState extends ConnectedStateBase {
         @Override
-        protected void processStateMsg(Message msg) {}
+        protected void processStateMsg(Message msg) {
+            switch (msg.what) {
+                case EVENT_SUBSCRIPTIONS_CHANGED:
+                    EventSubscriptionsChangedInfo info = (EventSubscriptionsChangedInfo) msg.obj;
+                    if (mIsRunning) {
+                        mUnderlyingNetworkTracker.updateSubscriptionSnapshot(info.snapshot);
+                    }
+                    break;
+                default:
+                    Slog.e(TAG, "Received unexpected msg type: " + msg.what);
+            }
+        }
     }
 
     /**
@@ -656,7 +756,18 @@ public class VcnGatewayConnection extends StateMachine {
      */
     class RetryTimeoutState extends ActiveBaseState {
         @Override
-        protected void processStateMsg(Message msg) {}
+        protected void processStateMsg(Message msg) {
+            switch (msg.what) {
+                case EVENT_SUBSCRIPTIONS_CHANGED:
+                    EventSubscriptionsChangedInfo info = (EventSubscriptionsChangedInfo) msg.obj;
+                    if (mIsRunning) {
+                        mUnderlyingNetworkTracker.updateSubscriptionSnapshot(info.snapshot);
+                    }
+                    break;
+                default:
+                    Slog.e(TAG, "Received unexpected msg type: " + msg.what);
+            }
+        }
     }
 
     // TODO: Remove this when migrating to new NetworkAgent API
@@ -790,10 +901,15 @@ public class VcnGatewayConnection extends StateMachine {
         public UnderlyingNetworkTracker newUnderlyingNetworkTracker(
                 VcnContext vcnContext,
                 ParcelUuid subscriptionGroup,
+                TelephonySubscriptionSnapshot snapshot,
                 Set<Integer> requiredUnderlyingNetworkCapabilities,
                 UnderlyingNetworkTrackerCallback callback) {
             return new UnderlyingNetworkTracker(
-                    vcnContext, subscriptionGroup, requiredUnderlyingNetworkCapabilities, callback);
+                    vcnContext,
+                    subscriptionGroup,
+                    snapshot,
+                    requiredUnderlyingNetworkCapabilities,
+                    callback);
         }
 
         /** Builds a new IkeSession. */
