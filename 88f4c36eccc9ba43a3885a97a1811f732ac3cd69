@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c54b6171_6c87560b",
+        "filename": "core/java/android/net/util/MultinetworkPolicyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-20T15:39:38Z",
+      "side": 1,
+      "message": "That would create two different context but we have to use same context to register and unregister the receiver. Otherwise, it will get exception when unregistering receiver with different context.",
+      "parentUuid": "941ba0e5_bbae555b",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 42
+      },
+      "revId": "88f4c36eccc9ba43a3885a97a1811f732ac3cd69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "edda7627_d885d0f3",
         "filename": "core/java/android/net/util/MultinetworkPolicyTracker.java",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-20T11:24:48Z",
       "side": 1,
       "message": "How about registerReceiverForAllUsers ?\nWould you still need the all users context to unregister it?",
+      "range": {
+        "startLine": 120,
+        "startChar": 24,
+        "endLine": 120,
+        "endChar": 40
+      },
+      "revId": "88f4c36eccc9ba43a3885a97a1811f732ac3cd69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05fb0485_5664d7dc",
+        "filename": "core/java/android/net/util/MultinetworkPolicyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-20T15:39:38Z",
+      "side": 1,
+      "message": "registerReceiverForAllUsers declares caller should have INTERACT_ACROSS_USERS_FULL permission but mainline module can\u0027t grant it because it\u0027s signature. But I\u0027m not sure it really needs the permission for using, I don\u0027t see the permission check in ContextImpl.java. So Using registerReceiverForAllUsers should be fine and simple(one line change) but we need to be aware of the permission part. Will update accordingly.",
+      "parentUuid": "edda7627_d885d0f3",
       "range": {
         "startLine": 120,
         "startChar": 24,
