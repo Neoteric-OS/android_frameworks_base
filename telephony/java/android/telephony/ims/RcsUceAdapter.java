@@ -484,7 +484,8 @@ public class RcsUceAdapter {
      * @hide
      */
     @SystemApi
-    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    @RequiresPermission(allOf = {Manifest.permission.ACCESS_USER_CAPABILITY_EXCHANGE,
+            Manifest.permission.READ_CONTACTS})
     public void requestCapabilities(@NonNull List<Uri> contactNumbers,
             @NonNull @CallbackExecutor Executor executor,
             @NonNull CapabilitiesCallback c) throws ImsException {
@@ -571,7 +572,8 @@ public class RcsUceAdapter {
      * @hide
      */
     @SystemApi
-    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    @RequiresPermission(allOf = {Manifest.permission.ACCESS_USER_CAPABILITY_EXCHANGE,
+            Manifest.permission.READ_CONTACTS})
     public void requestAvailability(@NonNull Uri contactNumber,
             @NonNull @CallbackExecutor Executor executor,
             @NonNull CapabilitiesCallback c) throws ImsException {

@@ -2354,6 +2354,13 @@
     <permission android:name="android.permission.BIND_GBA_SERVICE"
         android:protectionLevel="signature" />
 
+    <!-- Required for an Application to access APIs related to RCS User Capability Exchange.
+         <p>Protection level: signature|privileged
+         @SystemApi
+         @hide -->
+    <permission android:name="android.permission.ACCESS_USER_CAPABILITY_EXCHANGE"
+        android:protectionLevel="signature|privileged" />
+
     <!-- ================================== -->
     <!-- Permissions for sdcard interaction -->
     <!-- ================================== -->
