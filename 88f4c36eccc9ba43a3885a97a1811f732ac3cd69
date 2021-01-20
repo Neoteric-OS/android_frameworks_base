@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "941ba0e5_bbae555b",
+        "filename": "core/java/android/net/util/MultinetworkPolicyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-20T11:24:48Z",
+      "side": 1,
+      "message": "Since this is only needed in 2 places and not used often, I\u0027m not sure storing a property is justified; maybe just creating the context when calling register / unregister would be enough ?",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 42
+      },
+      "revId": "88f4c36eccc9ba43a3885a97a1811f732ac3cd69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edda7627_d885d0f3",
+        "filename": "core/java/android/net/util/MultinetworkPolicyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-20T11:24:48Z",
+      "side": 1,
+      "message": "How about registerReceiverForAllUsers ?\nWould you still need the all users context to unregister it?",
+      "range": {
+        "startLine": 120,
+        "startChar": 24,
+        "endLine": 120,
+        "endChar": 40
+      },
+      "revId": "88f4c36eccc9ba43a3885a97a1811f732ac3cd69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
