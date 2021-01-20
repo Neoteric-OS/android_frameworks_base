@@ -42,6 +42,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.NetworkScoreManager;
+import android.net.vcn.VcnTransportInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
@@ -164,6 +165,7 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
             if (rssi < -55) return 3;
             return 4;
         }).when(mMockWm).calculateSignalLevel(anyInt());
+        when(mMockWm.getMaxSignalLevel()).thenReturn(4);
 
         mSignalStrength = mock(SignalStrength.class);
         mServiceState = mock(ServiceState.class);
@@ -268,6 +270,14 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
             NetworkCapabilities.TRANSPORT_CELLULAR, true, true);
     }
 
+    public void setConnectivityViaBroadcastForVcn(
+            int networkType, boolean validated, boolean isConnected, VcnTransportInfo info) {
+        mNetCapabilities.setTransportInfo(info);
+        setConnectivityCommon(networkType, validated, isConnected);
+        Intent i = new Intent(ConnectivityManager.INET_CONDITION_ACTION);
+        mNetworkController.onReceive(mContext, i);
+    }
+
     public void setConnectivityViaBroadcast(
         int networkType, boolean validated, boolean isConnected) {
         setConnectivityCommon(networkType, validated, isConnected);
@@ -289,6 +299,30 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
                 mNetworkCallback.onLost(mock(Network.class));
             }
         }
+    }
+
+    public void setConnectivityViaCallbackInWifiTrackerForVcn(
+            int networkType, boolean validated, boolean isConnected, VcnTransportInfo info) {
+        mNetCapabilities.setTransportInfo(info);
+        setConnectivityCommon(networkType, validated, isConnected);
+        if (networkType == NetworkCapabilities.TRANSPORT_CELLULAR) {
+            if (isConnected) {
+                mNetworkCallback.onCapabilitiesChanged(
+                        mock(Network.class), new NetworkCapabilities(mNetCapabilities));
+            } else {
+                mNetworkCallback.onLost(mock(Network.class));
+            }
+        }
+    }
+
+    public void setConnectivityViaDefaultCallbackInWifiTracker(
+            int networkType, boolean validated, boolean isConnected, WifiInfo wifiInfo) {
+        if (networkType == NetworkCapabilities.TRANSPORT_WIFI) {
+            mNetCapabilities.setTransportInfo(wifiInfo);
+        }
+        setConnectivityCommon(networkType, validated, isConnected);
+        mDefaultCallbackInWifiTracker.onCapabilitiesChanged(
+                mock(Network.class), new NetworkCapabilities(mNetCapabilities));
     }
 
     private void setConnectivityCommon(
@@ -443,6 +477,26 @@ public class NetworkControllerBaseTest extends SysuiTestCase {
         int state = icon == -1 ? 0
                 : SignalDrawable.getState(icon, CellSignalStrength.getNumSignalStrengthLevels(),
                         !inet);
+        assertEquals("Signal icon in status bar", state, iconState.icon);
+        assertEquals("Data icon in status bar", typeIcon, (int) typeIconArg.getValue());
+        assertEquals("Visibility in status bar", visible, iconState.visible);
+    }
+
+    protected void verifyLastMobileDataIndicatorsForVcn(boolean visible, int level, int typeIcon,
+            boolean inet) {
+        ArgumentCaptor<IconState> iconArg = ArgumentCaptor.forClass(IconState.class);
+        ArgumentCaptor<Integer> typeIconArg = ArgumentCaptor.forClass(Integer.class);
+
+        verify(mCallbackHandler, Mockito.atLeastOnce()).setMobileDataIndicators(
+                iconArg.capture(),
+                any(),
+                typeIconArg.capture(),
+                anyInt(), anyBoolean(), anyBoolean(),
+                any(CharSequence.class), any(CharSequence.class), any(),
+                anyBoolean(), anyInt(), anyBoolean());
+        IconState iconState = iconArg.getValue();
+        int state = SignalDrawable.getState(
+                level, CellSignalStrength.getNumSignalStrengthLevels(), !inet);
         assertEquals("Signal icon in status bar", state, iconState.icon);
         assertEquals("Data icon in status bar", typeIcon, (int) typeIconArg.getValue());
         assertEquals("Visibility in status bar", visible, iconState.visible);

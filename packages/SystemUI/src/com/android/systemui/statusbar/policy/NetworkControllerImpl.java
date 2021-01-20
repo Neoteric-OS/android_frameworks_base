@@ -57,6 +57,10 @@ import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.settingslib.Utils;
+import com.android.settingslib.mobile.MobileMappings.Config;
+import com.android.settingslib.mobile.MobileStatusTracker.SubscriptionDefaults;
+import com.android.settingslib.mobile.TelephonyIcons;
 import com.android.settingslib.net.DataUsageController;
 import com.android.systemui.DemoMode;
 import com.android.systemui.Dumpable;
@@ -850,9 +854,17 @@ public class NetworkControllerImpl extends BroadcastReceiver
         for (NetworkCapabilities nc :
                 mConnectivityManager.getDefaultNetworkCapabilitiesForUser(mCurrentUserId)) {
             for (int transportType : nc.getTransportTypes()) {
-                mConnectedTransports.set(transportType);
-                if (nc.hasCapability(NET_CAPABILITY_VALIDATED)) {
-                    mValidatedTransports.set(transportType);
+                if (transportType == NetworkCapabilities.TRANSPORT_CELLULAR
+                        && Utils.tryGetWifiInfoForVcn(nc) != null) {
+                    mConnectedTransports.set(NetworkCapabilities.TRANSPORT_WIFI);
+                    if (nc.hasCapability(NET_CAPABILITY_VALIDATED)) {
+                        mValidatedTransports.set(NetworkCapabilities.TRANSPORT_WIFI);
+                    }
+                } else {
+                    mConnectedTransports.set(transportType);
+                    if (nc.hasCapability(NET_CAPABILITY_VALIDATED)) {
+                        mValidatedTransports.set(transportType);
+                    }
                 }
             }
         }
