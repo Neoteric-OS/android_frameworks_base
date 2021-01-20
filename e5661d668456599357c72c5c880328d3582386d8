@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72c68a14_98865f02",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-20T02:08:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "57652c83_b1e4b09a",
+      "range": {
+        "startLine": 548,
+        "startChar": 12,
+        "endLine": 548,
+        "endChar": 23
+      },
+      "revId": "e5661d668456599357c72c5c880328d3582386d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5edd731_029a41f5",
@@ -142,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f64956e_0a0c5f9b",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-20T02:08:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "04fc7b7a_e8657158",
+      "range": {
+        "startLine": 667,
+        "startChar": 0,
+        "endLine": 669,
+        "endChar": 0
+      },
+      "revId": "e5661d668456599357c72c5c880328d3582386d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "10326133_3c08ca47",
@@ -179,6 +227,30 @@
       "side": 1,
       "message": "Yep. I\u0027ve filed a bug b/177845765 to track our suggestions, and maybe we change all at once?",
       "parentUuid": "10326133_3c08ca47",
+      "range": {
+        "startLine": 720,
+        "startChar": 20,
+        "endLine": 720,
+        "endChar": 25
+      },
+      "revId": "e5661d668456599357c72c5c880328d3582386d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "875e3d1d_7ac80fdd",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-20T02:08:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "27282631_61d16bf3",
       "range": {
         "startLine": 720,
         "startChar": 20,
