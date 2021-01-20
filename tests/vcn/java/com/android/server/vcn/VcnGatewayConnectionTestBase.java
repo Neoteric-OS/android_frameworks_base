@@ -40,14 +40,17 @@ import android.os.ParcelUuid;
 import android.os.test.TestLooper;
 
 import com.android.server.IpSecService;
+import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 
 import org.junit.Before;
 import org.mockito.ArgumentCaptor;
 
+import java.util.Collections;
 import java.util.UUID;
 
 public class VcnGatewayConnectionTestBase {
     protected static final ParcelUuid TEST_SUB_GRP = new ParcelUuid(UUID.randomUUID());
+    protected static final int TEST_SUB_ID = 5;
     protected static final int TEST_IPSEC_TUNNEL_RESOURCE_ID = 1;
     protected static final String TEST_IPSEC_TUNNEL_IFACE = "IPSEC_IFACE";
     protected static final UnderlyingNetworkRecord TEST_UNDERLYING_NETWORK_RECORD_1 =
@@ -62,6 +65,10 @@ public class VcnGatewayConnectionTestBase {
                     new NetworkCapabilities(),
                     new LinkProperties(),
                     false /* blocked */);
+
+    protected static final TelephonySubscriptionSnapshot TEST_SUBSCRIPTION_SNAPSHOT =
+            new TelephonySubscriptionSnapshot(
+                    Collections.singletonMap(TEST_SUB_ID, TEST_SUB_GRP), Collections.EMPTY_MAP);
 
     @NonNull protected final Context mContext;
     @NonNull protected final TestLooper mTestLooper;
@@ -94,7 +101,7 @@ public class VcnGatewayConnectionTestBase {
 
         doReturn(mUnderlyingNetworkTracker)
                 .when(mDeps)
-                .newUnderlyingNetworkTracker(any(), any(), any(), any());
+                .newUnderlyingNetworkTracker(any(), any(), any(), any(), any());
     }
 
     @Before
@@ -109,7 +116,9 @@ public class VcnGatewayConnectionTestBase {
         mMockIkeSession = mock(VcnIkeSession.class);
         doReturn(mMockIkeSession).when(mDeps).newIkeSession(any(), any(), any(), any(), any());
 
-        mGatewayConnection = new VcnGatewayConnection(mVcnContext, TEST_SUB_GRP, mConfig, mDeps);
+        mGatewayConnection =
+                new VcnGatewayConnection(
+                        mVcnContext, TEST_SUB_GRP, TEST_SUBSCRIPTION_SNAPSHOT, mConfig, mDeps);
     }
 
     protected IkeSessionCallback getIkeSessionCallback() {
