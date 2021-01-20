@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42b286b3_9ded4235",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-01-20T01:40:02Z",
+      "side": 1,
+      "message": "Sending to Lorenzo for review since the implementation CL aosp/1453999 is assigned to Lorenzo.",
+      "revId": "a5b92c5985d7fb2e12ed75aee6c8a7544ce1c27f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
