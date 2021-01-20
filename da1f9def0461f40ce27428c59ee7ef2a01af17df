@@ -16,6 +16,46 @@
       "message": "This CL fixes the issue when using test_harness with a GSI@DSU. Request for the owner approval. ",
       "revId": "da1f9def0461f40ce27428c59ee7ef2a01af17df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d1e34ee_b9684b6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-20T04:25:15Z",
+      "side": 1,
+      "message": "Hmm, this doesn\u0027t seem like a generally faithful implementation of the described APIs.  Please see this comment where adelva@ describes that there should be an ability to persist data across reboots:\n\nhttps://buganizer.corp.google.com/issues/175078763#comment8",
+      "revId": "da1f9def0461f40ce27428c59ee7ef2a01af17df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cda8d7f_667d5d8a",
+        "filename": "services/core/java/com/android/server/PersistentDataBlockService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-20T04:25:15Z",
+      "side": 1,
+      "message": "getBoolean?",
+      "range": {
+        "startLine": 149,
+        "startChar": 41,
+        "endLine": 149,
+        "endChar": 47
+      },
+      "revId": "da1f9def0461f40ce27428c59ee7ef2a01af17df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
