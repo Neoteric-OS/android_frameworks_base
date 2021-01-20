@@ -64,6 +64,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1effb1c1_86700f84",
+        "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-20T06:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5826db2c_f2c8f36e",
+      "range": {
+        "startLine": 946,
+        "startChar": 35,
+        "endLine": 946,
+        "endChar": 44
+      },
+      "revId": "216c18e347775528a28e4678fa339706cefa3574",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fcedbfd_a5a3ef63",
+        "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-20T06:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96cbcb31_79021420",
+      "range": {
+        "startLine": 946,
+        "startChar": 50,
+        "endLine": 946,
+        "endChar": 54
+      },
+      "revId": "216c18e347775528a28e4678fa339706cefa3574",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1df587d2_7c38e23c",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-01-19T21:00:27Z",
       "side": 1,
       "message": "constraints on buffering length in milliseconds",
+      "range": {
+        "startLine": 25,
+        "startChar": 20,
+        "endLine": 25,
+        "endChar": 60
+      },
+      "revId": "216c18e347775528a28e4678fa339706cefa3574",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b759884_efba4dd1",
+        "filename": "core/java/android/bluetooth/BufferConstraint.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-20T06:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1df587d2_7c38e23c",
       "range": {
         "startLine": 25,
         "startChar": 20,
@@ -110,6 +182,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be7d4d25_57ac6d74",
+        "filename": "core/java/android/bluetooth/BufferConstraint.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-20T06:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99c23f0b_f4ec9886",
+      "range": {
+        "startLine": 91,
+        "startChar": 15,
+        "endLine": 91,
+        "endChar": 31
+      },
+      "revId": "216c18e347775528a28e4678fa339706cefa3574",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72052acb_d1ac85fa",
@@ -123,6 +219,30 @@
       "writtenOn": "2021-01-19T21:00:27Z",
       "side": 1,
       "message": "nit: update to reflect class purpose now...something like:\n\nA parcelable collection of buffer constraints by codec type.",
+      "range": {
+        "startLine": 32,
+        "startChar": 3,
+        "endLine": 32,
+        "endChar": 46
+      },
+      "revId": "216c18e347775528a28e4678fa339706cefa3574",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae6f55fe_7943e451",
+        "filename": "core/java/android/bluetooth/BufferConstraints.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-20T06:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72052acb_d1ac85fa",
       "range": {
         "startLine": 32,
         "startChar": 3,
@@ -156,6 +276,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f430975_189c241a",
+        "filename": "core/java/android/bluetooth/BufferConstraints.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-20T06:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a187a578_c7902e80",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 7
+      },
+      "revId": "216c18e347775528a28e4678fa339706cefa3574",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5364c820_4a3c2010",
@@ -169,6 +313,30 @@
       "writtenOn": "2021-01-19T21:00:27Z",
       "side": 1,
       "message": "do we have an intdef of codecs we can annotate here?",
+      "range": {
+        "startLine": 93,
+        "startChar": 47,
+        "endLine": 93,
+        "endChar": 56
+      },
+      "revId": "216c18e347775528a28e4678fa339706cefa3574",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e0765e7_9be1f1d2",
+        "filename": "core/java/android/bluetooth/BufferConstraints.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-20T06:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5364c820_4a3c2010",
       "range": {
         "startLine": 93,
         "startChar": 47,
@@ -202,6 +370,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60a84504_c0207888",
+        "filename": "core/java/android/bluetooth/BufferConstraints.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-20T06:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3d3ec6d_e7d3f8c1",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 5
+      },
+      "revId": "216c18e347775528a28e4678fa339706cefa3574",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "24998831_5a37231c",
@@ -215,6 +407,30 @@
       "writtenOn": "2021-01-19T21:00:27Z",
       "side": 1,
       "message": "nit: unused now so lets remove",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 5
+      },
+      "revId": "216c18e347775528a28e4678fa339706cefa3574",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a816cb7_0582130b",
+        "filename": "core/java/android/bluetooth/BufferConstraints.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1322546
+      },
+      "writtenOn": "2021-01-20T06:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24998831_5a37231c",
       "range": {
         "startLine": 108,
         "startChar": 4,
