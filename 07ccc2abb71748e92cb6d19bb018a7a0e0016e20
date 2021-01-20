@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aae09289_763035d9",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowProviderServerBasedImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2021-01-20T22:32:55Z",
+      "side": 1,
+      "message": "Both can probably be DeviceConfig ?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 75
+      },
+      "revId": "07ccc2abb71748e92cb6d19bb018a7a0e0016e20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
