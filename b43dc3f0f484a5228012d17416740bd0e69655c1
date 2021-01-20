@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a01c3198_410cc908",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-20T02:42:20Z",
+      "side": 1,
+      "message": "Sorry, just realized that there is no @param for pidfXmls, can you add this description to the @param for pidfXmls?",
+      "range": {
+        "startLine": 242,
+        "startChar": 10,
+        "endLine": 246,
+        "endChar": 92
+      },
+      "revId": "b43dc3f0f484a5228012d17416740bd0e69655c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e700b8ca_20ea79b4",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-20T02:42:20Z",
+      "side": 1,
+      "message": "SOrry, i just realized that this does not include a @param for uriTerminatedReason. Can you add a description for what each Pair\u003cUri, String\u003e in the list should be as part of the description.(the URI should be the contact UR and the String in the pair should be the terminated reason).",
+      "revId": "b43dc3f0f484a5228012d17416740bd0e69655c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09ca7825_f6d7d795",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-20T02:42:20Z",
+      "side": 1,
+      "message": "can you clarify with: \"in the case that this operation did not succeed\"? onCommandError should only be called in the case of error",
+      "range": {
+        "startLine": 297,
+        "startChar": 61,
+        "endLine": 298,
+        "endChar": 27
+      },
+      "revId": "b43dc3f0f484a5228012d17416740bd0e69655c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
