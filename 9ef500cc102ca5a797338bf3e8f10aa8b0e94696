@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9b667e7_11db006d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-20T16:19:18Z",
+      "side": 1,
+      "message": "Per inline comment, if we start using throw routes extensively, the fact that getRoutes() returns throw routes as well as unicast could be confusing. I wonder if we\u0027re better off adding a mExcludedRoutes member and getExcludedRoutes() method, so the two are clearly separate? After all an excluded route is basically the exact opposite of a unicast route.\n\nThe cons of such an approach, of course, are that the current behaviour is actually the way the kernel thinks. As an example of why this might matter, I\u0027m not sure it\u0027s possible to add a throw route and a unicast route to the same table with the same address and prefix length. The code currently goes to some lengths to figure out if a route is an \"update\" of an existing route or not, and behaves differently. That would be more difficult with getExcludedRoutes.\n\nAnd of course, today we have unreachable routes as well, and those aren\u0027t excluded, they\u0027re different again.\n\nPerhaps we should keep things as they are internally, but also add convenience getExcludedRoutes() and getUnicastRoutes(), and advise users to use these?\n\nOr, you could argue that the current behaviour isn\u0027t too bad after all, because generally exclude routes will always be subsets of unicast routes, and this only happens for VPNs anyway, and most app aren\u0027t really going to care at all.",
+      "revId": "9ef500cc102ca5a797338bf3e8f10aa8b0e94696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c03ed3c_9281ecf0",
+        "filename": "core/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 25431,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-20T16:19:18Z",
+      "side": 1,
+      "message": "Why does this method need to be public? An application can already do \"getType() \u003d\u003d RTN_UNICAST\", right?",
+      "range": {
+        "startLine": 25431,
+        "startChar": 4,
+        "endLine": 25431,
+        "endChar": 38
+      },
+      "revId": "9ef500cc102ca5a797338bf3e8f10aa8b0e94696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1c4b86d_ff915e46",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-20T16:19:18Z",
+      "side": 1,
+      "message": "Pass in mRoutes.size() here?",
+      "range": {
+        "startLine": 700,
+        "startChar": 56,
+        "endLine": 700,
+        "endChar": 58
+      },
+      "revId": "9ef500cc102ca5a797338bf3e8f10aa8b0e94696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0495c078_091117d1",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-20T16:19:18Z",
+      "side": 1,
+      "message": "After thinking about this change for a bit, I\u0027m actually not sure this is what we want. Even for advanced users, I think there is is the long term potential for confusion or bugs if we include throw routes in getRoutes like this. I wonder if it would be better to add a separate getExcludedRoutes method that returns only the throw routes?",
+      "range": {
+        "startLine": 766,
+        "startChar": 0,
+        "endLine": 772,
+        "endChar": 5
+      },
+      "revId": "9ef500cc102ca5a797338bf3e8f10aa8b0e94696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7d3c9f2_b12e5df5",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-20T16:19:18Z",
+      "side": 1,
+      "message": "If we add lots of routes, users may be surprised if these methods return false on a route with a prefix length of 0. Perhaps we should update the documentation of these methods to say that they only consider unicast routes?",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 39
+      },
+      "revId": "9ef500cc102ca5a797338bf3e8f10aa8b0e94696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
