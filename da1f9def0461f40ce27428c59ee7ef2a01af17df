@@ -35,6 +35,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "264d1e0b_a9ab587c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-20T04:26:27Z",
+      "side": 1,
+      "message": "Also howardsoc@ please note that self-CR+2 is discouraged; please find someone familiar with this feature who can provide an actual review.  Marking CR-1 until someone else reviews.",
+      "revId": "da1f9def0461f40ce27428c59ee7ef2a01af17df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0cda8d7f_667d5d8a",
