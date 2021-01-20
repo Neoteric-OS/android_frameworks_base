@@ -292,8 +292,9 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         public Vcn newVcn(
                 @NonNull VcnContext vcnContext,
                 @NonNull ParcelUuid subscriptionGroup,
+                @NonNull TelephonySubscriptionSnapshot snapshot,
                 @NonNull VcnConfig config) {
-            return new Vcn(vcnContext, subscriptionGroup, config);
+            return new Vcn(vcnContext, subscriptionGroup, snapshot, config);
         }
 
         /** Gets the subId indicated by the given {@link WifiInfo}. */
@@ -384,6 +385,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 // delay)
                 for (Entry<ParcelUuid, Vcn> entry : mVcns.entrySet()) {
                     final VcnConfig config = mConfigs.get(entry.getKey());
+
                     if (config == null
                             || !snapshot.packageHasPermissionsForSubscriptionGroup(
                                     entry.getKey(), config.getProvisioningPackageName())) {
@@ -401,6 +403,9 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                                 }
                             }
                         }, instanceToTeardown, CARRIER_PRIVILEGES_LOST_TEARDOWN_DELAY_MS);
+                    } else {
+                        // If this VCN's status has not changed, update it with the new snapshot
+                        entry.getValue().updateSubscriptionSnapshot(mLastSnapshot);
                     }
                 }
             }
@@ -414,7 +419,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         // TODO(b/176939047): Support multiple VCNs active at the same time, or limit to one active
         //                    VCN.
 
-        final Vcn newInstance = mDeps.newVcn(mVcnContext, subscriptionGroup, config);
+        final Vcn newInstance = mDeps.newVcn(mVcnContext, subscriptionGroup, mLastSnapshot, config);
         mVcns.put(subscriptionGroup, newInstance);
     }
 
