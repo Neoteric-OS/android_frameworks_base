@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d451659e_fc8b97f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2021-01-20T18:51:16Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "e34de31d9948539a13b82fe8e4ec3f372809a44c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86a92da8_a649fdf6",
+        "filename": "core/tests/coretests/src/android/view/textservice/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2021-01-20T18:51:16Z",
+      "side": 1,
+      "message": "Just curious, but can we include services/core/java/com/android/server/textservices/OWNERS for consistency?",
+      "range": {
+        "startLine": 3,
+        "startChar": 8,
+        "endLine": 3,
+        "endChar": 50
+      },
+      "revId": "e34de31d9948539a13b82fe8e4ec3f372809a44c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
