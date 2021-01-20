@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7873dee8_f518a22a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-20T11:57:47Z",
+      "side": 1,
+      "message": "Ran out of brain power today while reviewing the tests, so these are not done ; hopefully the review is still useful",
+      "revId": "dcb2af16668857d3349753ce7a7a27d7d1d7f58c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b30cda0_12d3b66e",
+        "filename": "core/api/current.txt",
+        "patchSetId": 17
+      },
+      "lineNbr": 24879,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-20T11:57:47Z",
+      "side": 1,
+      "message": "I don\u0027t think we want a new synchronous API. We\u0027ve been trying to move everybody out of it for a long time. If they don\u0027t want to be blamed, let them use the asynchronous APIs.",
+      "range": {
+        "startLine": 24879,
+        "startChar": 0,
+        "endLine": 24879,
+        "endChar": 215
+      },
+      "revId": "dcb2af16668857d3349753ce7a7a27d7d1d7f58c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c63f6244_3cbfc15d",
+        "filename": "core/api/current.txt",
+        "patchSetId": 17
+      },
+      "lineNbr": 24953,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-20T11:57:47Z",
+      "side": 1,
+      "message": "Do we need to say this, or is it fine to just say INCLUDE_LOCATION_SENSITIVE_INFORMATION ?\nISTM that if the goal is to say this is about being blamed or not blamed, we should simply apply the flag across the board (including for the owner UID in NetworkCapabilities for example which you patch already seems to do, or the location sensitive fields in LinkProperties.).",
+      "range": {
+        "startLine": 24953,
+        "startChar": 61,
+        "endLine": 24953,
+        "endChar": 78
+      },
+      "revId": "dcb2af16668857d3349753ce7a7a27d7d1d7f58c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2316fe88_f0206860",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3425,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-20T11:57:47Z",
+      "side": 1,
+      "message": "I think we don\u0027t need this (at least we don\u0027t need it now). Having capabilities set by default in NC is a design choice that we regret, so I\u0027d rather we don\u0027t mimic it.",
+      "range": {
+        "startLine": 3425,
+        "startChar": 0,
+        "endLine": 3425,
+        "endChar": 58
+      },
+      "revId": "dcb2af16668857d3349753ce7a7a27d7d1d7f58c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "022b7f3b_202e5a43",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-20T11:57:47Z",
+      "side": 1,
+      "message": "Maybe NetworkCallbacks.DEFAULT_FLAGS, as this is generically named so a bit more qualification wouldn\u0027t hurt",
+      "range": {
+        "startLine": 958,
+        "startChar": 62,
+        "endLine": 958,
+        "endChar": 75
+      },
+      "revId": "dcb2af16668857d3349753ce7a7a27d7d1d7f58c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53e680b2_643baac0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1573,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-20T11:57:47Z",
+      "side": 1,
+      "message": "final (you don\u0027t need to update the code you\u0027re not touching, but please don\u0027t add new mutable stuff if not absolutely necessary)",
+      "range": {
+        "startLine": 1573,
+        "startChar": 8,
+        "endLine": 1573,
+        "endChar": 27
+      },
+      "revId": "dcb2af16668857d3349753ce7a7a27d7d1d7f58c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb0ca1df_a3b71706",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1731,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-20T11:57:47Z",
+      "side": 1,
+      "message": "\u0027remove\u0027 sounds like negative voice to me ; `remove` or `!remove` is harder to understand than `keep` or `!keep`. Can we use \"keep\" or some equivalent ?",
+      "range": {
+        "startLine": 1731,
+        "startChar": 54,
+        "endLine": 1731,
+        "endChar": 59
+      },
+      "revId": "dcb2af16668857d3349753ce7a7a27d7d1d7f58c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7238dfb_b2a7840f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 7070,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-20T11:57:47Z",
+      "side": 1,
+      "message": "You\u0027ll need to do this for the LP too",
+      "range": {
+        "startLine": 7070,
+        "startChar": 37,
+        "endLine": 7070,
+        "endChar": 51
+      },
+      "revId": "dcb2af16668857d3349753ce7a7a27d7d1d7f58c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "270b5c84_3712c959",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 7822,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-20T11:57:47Z",
+      "side": 1,
+      "message": "false /* removeLocationSensitiveInfoInTransportInfo */",
+      "range": {
+        "startLine": 7822,
+        "startChar": 24,
+        "endLine": 7822,
+        "endChar": 29
+      },
+      "revId": "dcb2af16668857d3349753ce7a7a27d7d1d7f58c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
