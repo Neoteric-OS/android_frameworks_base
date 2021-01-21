@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ba270db_f7bd05b8",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-21T16:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acc1235_2b186f3f",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 64
+      },
+      "revId": "223b24c163ec06428f4d08da819a66a5f775dfc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "067f6500_1468aa2a",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22bc722a_7e995451",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-21T16:42:48Z",
+      "side": 1,
+      "message": "Ack. TODO added.",
+      "parentUuid": "067f6500_1468aa2a",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 63
+      },
+      "revId": "223b24c163ec06428f4d08da819a66a5f775dfc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6029ef71_650420b9",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-01-14T01:48:52Z",
       "side": 1,
       "message": "Is there any test verifying the SSID you set?",
+      "range": {
+        "startLine": 1964,
+        "startChar": 8,
+        "endLine": 1964,
+        "endChar": 47
+      },
+      "revId": "223b24c163ec06428f4d08da819a66a5f775dfc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22f24017_996f64b4",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1964,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-21T16:42:48Z",
+      "side": 1,
+      "message": "If we don\u0027t set this, anything depends on SSID inside Networkidentity will simply fail.\nPrecisely it is \ncom.android.server.net.NetworkPolicyManagerServiceTest#testNetworkPolicyAppliedCycleLastMonth\nBut I glad you asked.\nI\u0027ve found the oversight in NetworkStatsServiceTest where the recording and querying both use empty SSID so they all pass.\nAfter fix the query part, these tests will exercise the change in this CL:\ncom.android.server.net.NetworkStatsServiceTest#testRegisterUsageCallback\ncom.android.server.net.NetworkStatsServiceTest#testUidRemovedIsMoved\ncom.android.server.net.NetworkStatsServiceTest#testForegroundBackground\ncom.android.server.net.NetworkStatsServiceTest#testStatsRebootPersist\ncom.android.server.net.NetworkStatsServiceTest#testNetworkStatsWifi\ncom.android.server.net.NetworkStatsServiceTest#testMetered\ncom.android.server.net.NetworkStatsServiceTest#testStatsProviderUpdateStats\ncom.android.server.net.NetworkStatsServiceTest#testSummaryForAllUid",
+      "parentUuid": "6029ef71_650420b9",
       "range": {
         "startLine": 1964,
         "startChar": 8,
