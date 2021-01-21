@@ -104,6 +104,30 @@
       },
       "revId": "da8e844bbb05e3f8012683ce8e6cf283f5657095",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9232aa8_e930a76c",
+        "filename": "core/java/android/uwb/AngleOfArrivalMeasurement.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2021-01-21T17:43:28Z",
+      "side": 1,
+      "message": "Sounds good, done!",
+      "parentUuid": "423df16d_22d00ee6",
+      "range": {
+        "startLine": 58,
+        "startChar": 28,
+        "endLine": 58,
+        "endChar": 54
+      },
+      "revId": "da8e844bbb05e3f8012683ce8e6cf283f5657095",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
