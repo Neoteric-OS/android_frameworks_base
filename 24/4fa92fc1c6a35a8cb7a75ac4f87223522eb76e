@@ -1,0 +1,11 @@
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Narayan Kamath <narayan@google.com>
+Code-Review+2: Andrei-Valentin Onea <andreionea@google.com>
+Code-Review+2: Pedro Loureiro <pedroql@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: satayev <satayev@google.com>
+Submitted-at: Thu, 21 Jan 2021 14:13:41 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1546085
+Project: platform/frameworks/base
+Branch: refs/heads/master
