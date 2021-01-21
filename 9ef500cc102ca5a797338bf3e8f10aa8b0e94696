@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "36a405ad_897bd85c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-01-21T20:56:58Z",
+      "side": 1,
+      "message": "\u003ePerhaps we should keep things as they are internally, but also add convenience getExcludedRoutes() and getUnicastRoutes(), and advise users to use these?\n\nWill `getExcludedRoutes` and `getUnicastRoutes` methods be actually useful?\nDon\u0027t we have to look at all routes to see the full picture?\n\nAs an example:\nLet\u0027s say a certain destination is covered by one of the routes returned by `getUnicastRoutes`.\nThis actually doesn\u0027t tell us anything, because there might be more specific RTN_THROW or RTN_UNREACHABLE route. And we need to call `getExcludedRoutes` to check that.",
+      "parentUuid": "b9b667e7_11db006d",
+      "revId": "9ef500cc102ca5a797338bf3e8f10aa8b0e94696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c03ed3c_9281ecf0",
         "filename": "core/api/current.txt",
         "patchSetId": 3
@@ -31,6 +49,30 @@
       "writtenOn": "2021-01-20T16:19:18Z",
       "side": 1,
       "message": "Why does this method need to be public? An application can already do \"getType() \u003d\u003d RTN_UNICAST\", right?",
+      "range": {
+        "startLine": 25431,
+        "startChar": 4,
+        "endLine": 25431,
+        "endChar": 38
+      },
+      "revId": "9ef500cc102ca5a797338bf3e8f10aa8b0e94696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "688f0a90_796ec4dd",
+        "filename": "core/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 25431,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-01-21T20:56:58Z",
+      "side": 1,
+      "message": "Yes, apps can already do \"getType() \u003d\u003d RTN_UNICAST\".\nI thought about adding this as a convenience method\n\nhiding for now",
+      "parentUuid": "5c03ed3c_9281ecf0",
       "range": {
         "startLine": 25431,
         "startChar": 4,
@@ -54,6 +96,30 @@
       "writtenOn": "2021-01-20T16:19:18Z",
       "side": 1,
       "message": "Pass in mRoutes.size() here?",
+      "range": {
+        "startLine": 700,
+        "startChar": 56,
+        "endLine": 700,
+        "endChar": 58
+      },
+      "revId": "9ef500cc102ca5a797338bf3e8f10aa8b0e94696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49b233b2_933c9947",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-01-21T20:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1c4b86d_ff915e46",
       "range": {
         "startLine": 700,
         "startChar": 56,
@@ -89,6 +155,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7620d60e_6a4be79f",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-01-21T20:56:58Z",
+      "side": 1,
+      "message": "Adding separate `getExcludedRoutes` method and return only unicast routes in `getRoutes` is possible. (We\u0027ll need to also add something like `getAllExcludedRoutes` as a counterpart to `getAllRoutes`)\n\nBut I think this might encourage clients to simply ignore those excluded routes. This will lead to incorrect behavior in some cases.\nTo handle excluded routes correctly clients will need to always call both `getRoutes` and `getExcludedRoutes` anyway.\n\nHaving one method that returns all routes will be more convenient and will encourage clients not to ignore excluded routes.\n\nAlso, since throw routes in `getRoutes` are gated on target sdk S, documentation for S will mention this change and app developers will be aware of this.",
+      "parentUuid": "0495c078_091117d1",
+      "range": {
+        "startLine": 766,
+        "startChar": 0,
+        "endLine": 772,
+        "endChar": 5
+      },
+      "revId": "9ef500cc102ca5a797338bf3e8f10aa8b0e94696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b7d3c9f2_b12e5df5",
         "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
         "patchSetId": 3
@@ -100,6 +190,30 @@
       "writtenOn": "2021-01-20T16:19:18Z",
       "side": 1,
       "message": "If we add lots of routes, users may be surprised if these methods return false on a route with a prefix length of 0. Perhaps we should update the documentation of these methods to say that they only consider unicast routes?",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 39
+      },
+      "revId": "9ef500cc102ca5a797338bf3e8f10aa8b0e94696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b97728ed_09990497",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-01-21T20:56:58Z",
+      "side": 1,
+      "message": "updated documentation",
+      "parentUuid": "b7d3c9f2_b12e5df5",
       "range": {
         "startLine": 333,
         "startChar": 0,
