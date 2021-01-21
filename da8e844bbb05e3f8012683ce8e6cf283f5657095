@@ -80,6 +80,30 @@
       },
       "revId": "da8e844bbb05e3f8012683ce8e6cf283f5657095",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "423df16d_22d00ee6",
+        "filename": "core/java/android/uwb/AngleOfArrivalMeasurement.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-21T01:29:28Z",
+      "side": 1,
+      "message": "yeah let\u0027s go with the even shorter option, good idea :)",
+      "parentUuid": "86eace8d_d491313f",
+      "range": {
+        "startLine": 58,
+        "startChar": 28,
+        "endLine": 58,
+        "endChar": 54
+      },
+      "revId": "da8e844bbb05e3f8012683ce8e6cf283f5657095",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
