@@ -16,6 +16,23 @@
       "message": "Please help review this change,thks!!!",
       "revId": "0368fa0157f1ebfa5c4db0733a379bd7e7e9f2d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cc6a1aa_b2a02b27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2021-01-21T16:56:47Z",
+      "side": 1,
+      "message": "@Jing, PTAL?",
+      "revId": "0368fa0157f1ebfa5c4db0733a379bd7e7e9f2d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
