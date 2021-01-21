@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ca4d84a_a5ba515b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2021-01-21T15:07:50Z",
+      "side": 1,
+      "message": "Can you add a paragraph why, and how this fixes the test?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 79
+      },
+      "revId": "caa96e7d82f3f1090bc128836dcf54549e240e90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f6ab9ee_beceb584",
+        "filename": "cmds/sm/src/com/android/commands/sm/Sm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2021-01-21T15:07:50Z",
+      "side": 1,
+      "message": "This isn\u0027t actually returning an error; should it throw instead?\n\nHow does the caller detect this situtation?",
+      "range": {
+        "startLine": 265,
+        "startChar": 12,
+        "endLine": 265,
+        "endChar": 18
+      },
+      "revId": "caa96e7d82f3f1090bc128836dcf54549e240e90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
