@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac5c62e3_0b6dfd1a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2021-01-21T11:13:27Z",
+      "side": 1,
+      "message": "Please add the following line:\nMerged-In: I6f11642abe544c7df265ed7e2ad466d47796e7f9",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "66ce7569d0721efb4a4d1272ab3f33a9bef811ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
