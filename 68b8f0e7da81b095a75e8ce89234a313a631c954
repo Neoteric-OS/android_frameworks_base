@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1460fe0_05a1619d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-21T05:49:15Z",
+      "side": 1,
+      "message": "LGTM in principle, except should we be using something different from jniGetFDFromFileDescriptor?",
+      "revId": "68b8f0e7da81b095a75e8ce89234a313a631c954",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eaffdea4_b93370e7",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-21T05:49:15Z",
+      "side": 1,
+      "message": "Should we be using this method? The comment at:\n\nhttps://source.corp.google.com/aosp-master/frameworks/libs/net/common/native/netjniutils/netjniutils.cpp\n\nsays:\n\n  // Older libnativehelper_compat_c++ versions had a jniGetFdFromFileDescriptor method, but this\n  // was removed in S to replace it with the NDK API in libnativehelper.\n  // The code is copied here instead. This code can be removed once R is not supported anymore.\n\nGiven that this code is S+, should we use the NDK API in libnativehelper instead? Seems like maybe we should statically link to libnativehelper and call AFileDescriptor_getFD?",
+      "range": {
+        "startLine": 132,
+        "startChar": 55,
+        "endLine": 132,
+        "endChar": 81
+      },
+      "revId": "68b8f0e7da81b095a75e8ce89234a313a631c954",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
