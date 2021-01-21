@@ -22,6 +22,30 @@
       },
       "revId": "ea0b864a1a6e8cbcb019b99c3cdd5c4b99e2c43c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28d36159_b7ce512b",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2021-01-21T15:00:56Z",
+      "side": 1,
+      "message": "And make setEnabledOverlayPackages return a Set instead of a List? Unless there\u0027s performance gains to go with a List, I\u0027d prefer a Set as there\u0027s no inherent order between the affected packages.",
+      "parentUuid": "fe93e8d2_9b1d5ad3",
+      "range": {
+        "startLine": 1396,
+        "startChar": 15,
+        "endLine": 1401,
+        "endChar": 17
+      },
+      "revId": "ea0b864a1a6e8cbcb019b99c3cdd5c4b99e2c43c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
