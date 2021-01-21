@@ -8263,6 +8263,38 @@ public class ConnectivityService extends IConnectivityManager.Stub
             super(looper);
         }
 
+        // Iterate key set of a Bundle to construct a PersistableBundle.
+        private static void putAll(@NonNull Bundle src, @NonNull PersistableBundle dst) {
+            for (String key : src.keySet()) {
+                final Object value = src.get(key);
+                if (value instanceof String) {
+                    dst.putString(key, (String) value);
+                } else if (value instanceof Integer) {
+                    dst.putInt(key, (Integer) value);
+                } else if (value instanceof Long) {
+                    dst.putLong(key, (Long) value);
+                } else if (value instanceof Double) {
+                    dst.putDouble(key, (Double) value);
+                } else if (value instanceof Boolean) {
+                    dst.putBoolean(key, (Boolean) value);
+                } else if (value instanceof String[]) {
+                    dst.putStringArray(key, (String[]) value);
+                } else if (value instanceof int[]) {
+                    dst.putIntArray(key, (int[]) value);
+                } else if (value instanceof long[]) {
+                    dst.putLongArray(key, (long[]) value);
+                } else if (value instanceof double[]) {
+                    dst.putDoubleArray(key, (double[]) value);
+                } else if (value instanceof boolean[]) {
+                    dst.putBooleanArray(key, (boolean[]) value);
+                } else if (value instanceof PersistableBundle) {
+                    dst.putAll((PersistableBundle) value);
+                } else {
+                    throw new IllegalArgumentException("Unsupported type " + value.getClass());
+                }
+            }
+        }
+
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -8285,7 +8317,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     // PersistableBundle and converts it to the Bundle in the incoming Message. If
                     // {@link NetworkMonitorCallbacks#notifyNetworkTested} is called, msg.data will
                     // not be set. This is also safe, as msg.getData() will return an empty Bundle.
-                    final PersistableBundle extras = new PersistableBundle(msg.getData());
+                    final PersistableBundle extras = new PersistableBundle();
+                    putAll(msg.getData(), extras);
                     handleNetworkTestedWithExtras(reportEvent, extras);
                     break;
                 }
@@ -8296,7 +8329,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     // This is safe because NetworkMonitorCallbacks#notifyDataStallSuspected
                     // receives a PersistableBundle and converts it to the Bundle in the incoming
                     // Message.
-                    final PersistableBundle extras = new PersistableBundle(msg.getData());
+                    final PersistableBundle extras = new PersistableBundle();
+                    putAll(msg.getData(), extras);
                     handleDataStallSuspected(nai, (long) msg.obj, msg.arg1, extras);
                     break;
                 }
