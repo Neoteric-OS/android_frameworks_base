@@ -93,6 +93,30 @@
       },
       "revId": "88f4c36eccc9ba43a3885a97a1811f732ac3cd69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa76b098_c0d10f2f",
+        "filename": "core/java/android/net/util/MultinetworkPolicyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-21T06:16:47Z",
+      "side": 1,
+      "message": "Oops, I just found the permission check is in UserController#handleIncomingUser. We can\u0027t register a receiver w/ UserHandle.ALL w/o INTERACT_ACROSS_USERS_FULL permission, otherwise it will get SecurityException with permssion denial problem. So we need to either fix the permission problem or find the alternative way.",
+      "parentUuid": "05fb0485_5664d7dc",
+      "range": {
+        "startLine": 120,
+        "startChar": 24,
+        "endLine": 120,
+        "endChar": 40
+      },
+      "revId": "88f4c36eccc9ba43a3885a97a1811f732ac3cd69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
