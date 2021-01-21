@@ -1175,6 +1175,7 @@ public final class BluetoothDevice implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
     public boolean createBond(int transport) {
         return createBondOutOfBand(transport, null);
     }
@@ -1190,22 +1191,23 @@ public final class BluetoothDevice implements Parcelable {
      * <p>Android system services will handle the necessary user interactions
      * to confirm and complete the bonding process.
      *
-     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}.
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_PRIVILEGED}.
      *
      * @param transport - Transport to use
-     * @param oobData - Out Of Band data
+     * @param remoteOobData - Out Of Band data or null
      * @return false on immediate error, true if bonding will begin
      * @hide
      */
-    public boolean createBondOutOfBand(int transport, OobData oobData) {
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    public boolean createBondOutOfBand(int transport, @Nullable OobData remoteOobData) {
         final IBluetooth service = sService;
         if (service == null) {
             Log.w(TAG, "BT not enabled, createBondOutOfBand failed");
             return false;
         }
         try {
-            BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-            return service.createBond(this, transport, oobData, adapter.getOpPackageName());
+            return service.createBond(this, transport, remoteOobData, BluetoothAdapter.getDefaultAdapter().getOpPackageName());
         } catch (RemoteException e) {
             Log.e(TAG, "", e);
         }
@@ -1232,27 +1234,6 @@ public final class BluetoothDevice implements Parcelable {
         } catch (RemoteException e) {
             Log.e(TAG, "", e);
         }
-        return false;
-    }
-
-    /**
-     * Set the Out Of Band data for a remote device to be used later
-     * in the pairing mechanism. Users can obtain this data through other
-     * trusted channels
-     *
-     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}.
-     *
-     * @param hash Simple Secure pairing hash
-     * @param randomizer The random key obtained using OOB
-     * @return false on error; true otherwise
-     * @hide
-     */
-    public boolean setDeviceOutOfBandData(byte[] hash, byte[] randomizer) {
-        //TODO(BT)
-      /*
-      try {
-        return sService.setDeviceOutOfBandData(this, hash, randomizer);
-      } catch (RemoteException e) {Log.e(TAG, "", e);} */
         return false;
     }
 
