@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe93e8d2_9b1d5ad3",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2021-01-21T14:56:51Z",
+      "side": 1,
+      "message": "We should make a follow up change to pass pendingChanges into setEnabledOverlayPackages rather than call setEnabledOverlayPackages once for each target package.",
+      "range": {
+        "startLine": 1396,
+        "startChar": 15,
+        "endLine": 1401,
+        "endChar": 17
+      },
+      "revId": "ea0b864a1a6e8cbcb019b99c3cdd5c4b99e2c43c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
