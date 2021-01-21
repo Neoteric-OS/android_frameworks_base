@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bed2453_a7a9013a",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-21T16:42:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "516ce72a_7a985a39",
+      "range": {
+        "startLine": 187,
+        "startChar": 66,
+        "endLine": 187,
+        "endChar": 85
+      },
+      "revId": "3cae00c00881d607793d29c1fb6d2b8950767359",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3e20d38_63245dd0",
@@ -78,6 +102,30 @@
       "writtenOn": "2021-01-15T13:58:42Z",
       "side": 1,
       "message": "Note that this is *not* the same as NetworkInfo#isConnected. That method will return false for a network that is currently suspended, but nai.everConnected will return true.\n\nWhether this is fixing a bug, adding a bug, or neither depends on what the caller wants to do with the result. I\u0027m not sure we have enough information here to decide. But if we audit all the callers of getAllNetworkState (I think there are only 2 or 3) then this might be correct. Did you do that? If so, you should probably mention that in the commit message instead of saying \"So the callers don\u0027t need to reference to NetworkInfo.isConnected() anymore.\"",
+      "range": {
+        "startLine": 1757,
+        "startChar": 27,
+        "endLine": 1757,
+        "endChar": 48
+      },
+      "revId": "3cae00c00881d607793d29c1fb6d2b8950767359",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14390478_4ce545c1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-21T16:42:01Z",
+      "side": 1,
+      "message": "Done.\nThe callers are:\n  1. NSS: to decide what to record\n  2. NPMS: to decide iptables rules.\n  3. 3rd-party app calls from UnsupportedAppUsage\nI think this is bug fix for 1 \u0026 2.\nAs for 3, discussed with Jean before, we think this is an improvement where the caller should not rely on this API to get a CONNECTING networks. The network by definition is a connected network to us.",
+      "parentUuid": "b3e20d38_63245dd0",
       "range": {
         "startLine": 1757,
         "startChar": 27,

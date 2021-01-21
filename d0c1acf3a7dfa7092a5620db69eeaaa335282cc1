@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de6ca916_66f38fb6",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1910,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-21T16:42:01Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "74da30ba_38a63b02",
+      "range": {
+        "startLine": 1910,
+        "startChar": 62,
+        "endLine": 1910,
+        "endChar": 76
+      },
+      "revId": "d0c1acf3a7dfa7092a5620db69eeaaa335282cc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f91bee33_51615da3",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-15T13:58:42Z",
       "side": 0,
       "message": "This also looks like it might have been a bug that this CL is fixing.",
+      "range": {
+        "startLine": 1992,
+        "startChar": 62,
+        "endLine": 1992,
+        "endChar": 76
+      },
+      "revId": "d0c1acf3a7dfa7092a5620db69eeaaa335282cc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41abd023_91f5bf76",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1992,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-21T16:42:01Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f91bee33_51615da3",
       "range": {
         "startLine": 1992,
         "startChar": 62,
