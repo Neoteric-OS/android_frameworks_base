@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75f532d6_aeb8bb2e",
+        "filename": "core/api/current.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 36058,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-21T16:37:12Z",
+      "side": 1,
+      "message": "See feedback from AOSP thread here about avoiding Calendar due to pitfalls; using something like Instant or ZonedDateTime are more robust alternatives.\n\nSince this CL is in the platform, those more modern classes should be available to use.\n\nYour AOSP comment mentioned that other classes might be using Calendar already, but I just grepped around frameworks/base/identity/ and don\u0027t see any usages.",
+      "range": {
+        "startLine": 36058,
+        "startChar": 107,
+        "endLine": 36058,
+        "endChar": 132
+      },
+      "revId": "9f906693a1a16bb5182139cd39380595a6227e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d33c2550_c5289b3d",
+        "filename": "core/api/current.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 36088,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-21T16:37:12Z",
+      "side": 1,
+      "message": "Just to clarify, are these versions being delivered through the FeatureInfo object returned from PackageManager?  (If so, awesome.)\n\nIf those version constants are exactly describing what is supported by a particular level, is this object simply converting those javadoc\u0027ed behaviors into helpful accessor methods for developers to check against?  (If so, I think we\u0027d recommend this helper capabilities object only live in Jetpack.)\n\nIf the answers to these questions are somehow dynamic/nuanced and not tied to the FEATURE_VERSION, then they likely do belong in the public API.\n\nAlso, I tried looking at the implementation of these APIs, and they appear to all be throwing UnsupportedOperationException.  We really don\u0027t like merging APIs that aren\u0027t backed by an implementation, since API council has standardized on saying that all new APIs need tests to verify they\u0027re working.",
+      "range": {
+        "startLine": 36086,
+        "startChar": 0,
+        "endLine": 36088,
+        "endChar": 0
+      },
+      "revId": "9f906693a1a16bb5182139cd39380595a6227e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
