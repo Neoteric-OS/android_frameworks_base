@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f05765ae_ccb523f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-01-21T14:48:15Z",
+      "side": 1,
+      "message": "For future API councilors: Approving a new and deprecated API since it\u0027s required to implement legacy behavior within the mainline module. There are other ways of handling this, but all of them seem significantly more complicated and less palatable than just introducing this deprecated method.",
+      "revId": "4ee7e55df04d9b6fca20db6ff78ff69ac06eadf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5217c68b_e527c0e5",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1453,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-01-21T14:48:15Z",
+      "side": 1,
+      "message": "nit: you can drop these docs, they\u0027re automatically generated if you leave the method empty since you\u0027re overriding a method with documentation",
+      "revId": "4ee7e55df04d9b6fca20db6ff78ff69ac06eadf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c2f3368_d88beedd",
+        "filename": "core/java/android/content/ContextWrapper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-01-21T14:48:15Z",
+      "side": 1,
+      "message": "Same comment as on ContextImpl",
+      "revId": "4ee7e55df04d9b6fca20db6ff78ff69ac06eadf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
