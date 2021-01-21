@@ -117,6 +117,30 @@
       },
       "revId": "88f4c36eccc9ba43a3885a97a1811f732ac3cd69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b9c7f2b_a8bc1e3c",
+        "filename": "core/java/android/net/util/MultinetworkPolicyTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-21T07:04:59Z",
+      "side": 1,
+      "message": "After discussed with Remi offline, Connnectivity mainline is in the system_server process which means it has all permissions. So no permission problem here.",
+      "parentUuid": "aa76b098_c0d10f2f",
+      "range": {
+        "startLine": 120,
+        "startChar": 24,
+        "endLine": 120,
+        "endChar": 40
+      },
+      "revId": "88f4c36eccc9ba43a3885a97a1811f732ac3cd69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
