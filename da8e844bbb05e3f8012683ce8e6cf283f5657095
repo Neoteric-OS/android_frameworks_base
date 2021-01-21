@@ -16,6 +16,46 @@
       "message": "Friendly ping!",
       "revId": "da8e844bbb05e3f8012683ce8e6cf283f5657095",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04091edb_83648198",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-21T00:27:20Z",
+      "side": 1,
+      "message": "overall looks great, only 1 minor nit :)",
+      "revId": "da8e844bbb05e3f8012683ce8e6cf283f5657095",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f69b9ec_14b36280",
+        "filename": "core/java/android/uwb/AngleOfArrivalMeasurement.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-21T00:27:20Z",
+      "side": 1,
+      "message": "given these are in a measurement class, would it make sense to drop measurement from the variable names?\n\ngetAzimuthAngle() \u0026 getAltitudeAngle()?",
+      "range": {
+        "startLine": 58,
+        "startChar": 28,
+        "endLine": 58,
+        "endChar": 54
+      },
+      "revId": "da8e844bbb05e3f8012683ce8e6cf283f5657095",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
