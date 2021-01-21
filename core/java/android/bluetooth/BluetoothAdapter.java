@@ -3012,6 +3012,36 @@ public final class BluetoothAdapter {
     }
 
     /**
+     * Fetches the out of band data from the bluetooth host stack.
+     *
+     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}
+     *
+     * @param transport - provide type of transport (e.g. LE or Classic)
+     *
+     * @return {@link OobData} populated with values or null if a failure occurred
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    @Nullable
+    public OobData getLocalOutOfBandData(int transport) {
+        if (!isEnabled()) {
+            if (DBG) {
+                Log.d(TAG, "getLocalOutOfBandData(): Adapter isn't enabled!");
+            }
+            return null;
+        }
+        try {
+            return mService.getLocalOutOfBandData(transport);
+        } catch (RemoteException e) {
+            Log.e(TAG, "", e);
+        }
+        return null;
+    }
+
+
+    /**
      * Enable control of the Bluetooth Adapter for a single application.
      *
      * <p>Some applications need to use Bluetooth for short periods of time to
