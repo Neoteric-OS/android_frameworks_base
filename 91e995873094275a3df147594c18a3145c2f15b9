@@ -16,6 +16,23 @@
       "message": "Hi. I\u0027m adding you as reviewers based on the file owners list. I would appreciate to get your review on this commit. It fixes an issue with the seekbar for streams with a minimal volume of 1 or higher. Currently the seekbar gets created with a minimum of 0, that leads to a bad experience because if the slider is set to 0 and the user closes and re-opens it, it automatically gets set to 1. To fix this this patch sets the minimum of the seekbar according to the minimal volume for the appropriate stream, returned from mAudioManager. I tried to keep the code close to the maximum stream value setup.",
       "revId": "91e995873094275a3df147594c18a3145c2f15b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28662fc7_ba6c196b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1238792
+      },
+      "writtenOn": "2021-01-21T15:54:38Z",
+      "side": 1,
+      "message": "Thank your for your change! We really appreciate it! However framework preferences are deprecated and we don\u0027t invest in them anymore. I would recommend migrating to androidx.preference that are in a better state. Now even though this change might seem trivial we can\u0027t be sure who relied on the default value of min. So given it is deprecated and the change might be risky I would vote for keeping it as it is.",
+      "revId": "91e995873094275a3df147594c18a3145c2f15b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
