@@ -16,6 +16,23 @@
       "message": "Clean cherry pick of master cl",
       "revId": "9e1f4ec8c3304972c69d816eeeb09ba8dfafa6dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e66f1e72_d4cf11db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1326377
+      },
+      "writtenOn": "2021-01-21T00:35:15Z",
+      "side": 1,
+      "message": "\u003e Patch Set 1: API-Review+1 Code-Review+2\n\u003e \n\u003e By voting Code-Review+2 the following files are now code-owner approved by Todd Kennedy:\n\u003e * core/api/current.txt\n\u003e * core/java/android/provider/Settings.java\n\u003e \n\nThanks!",
+      "revId": "9e1f4ec8c3304972c69d816eeeb09ba8dfafa6dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
