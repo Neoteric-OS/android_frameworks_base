@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1caa9fc1_fbdff392",
+        "filename": "core/tests/bugreports/src/com/android/os/bugreports/tests/BugreportManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2021-01-22T12:09:12Z",
+      "side": 1,
+      "message": "use waitTillDoneOrTimeout?",
+      "range": {
+        "startLine": 203,
+        "startChar": 8,
+        "endLine": 203,
+        "endChar": 20
+      },
+      "revId": "8efbdfbc767d52406081c3d208886cbe3e42b5d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
