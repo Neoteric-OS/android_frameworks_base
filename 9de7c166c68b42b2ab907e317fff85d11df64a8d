@@ -1,0 +1,134 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007502447",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1397951?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c0ead622_3c0a464b",
+        "filename": "services/core/java/com/android/server/hdmi/DelayedMessageBuffer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-22T06:39:46Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 111
+      },
+      "revId": "9de7c166c68b42b2ab907e317fff85d11df64a8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007502447",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1397951?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a5ca8c04_d7bb2b58",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-22T06:39:46Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 458,
+        "startChar": 0,
+        "endLine": 458,
+        "endChar": 105
+      },
+      "revId": "9de7c166c68b42b2ab907e317fff85d11df64a8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007502447",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1397951?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1530e8f3_a33152ba",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-22T06:39:46Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 473,
+        "startChar": 0,
+        "endLine": 473,
+        "endChar": 111
+      },
+      "revId": "9de7c166c68b42b2ab907e317fff85d11df64a8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007502447",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1397951?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8bfe6b26_25672325",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-22T06:39:46Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1086,
+        "startChar": 0,
+        "endLine": 1086,
+        "endChar": 102
+      },
+      "revId": "9de7c166c68b42b2ab907e317fff85d11df64a8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007502447",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1397951?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "54255cd8_7032a9d6",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-22T06:39:46Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1152,
+        "startChar": 0,
+        "endLine": 1152,
+        "endChar": 102
+      },
+      "revId": "9de7c166c68b42b2ab907e317fff85d11df64a8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
