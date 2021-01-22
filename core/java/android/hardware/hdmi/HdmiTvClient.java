@@ -169,6 +169,23 @@ public final class HdmiTvClient extends HdmiClient {
     }
 
     /**
+     * Get the list of the HDMI input port configuration.
+     *
+     * <p>This returns an empty list when the current device does not have HDMI input.
+     *
+     * @return a list of {@link HdmiPortInfo}
+     */
+    @NonNull
+    public List<HdmiPortInfo> getPortInfo() {
+        try {
+            return mService.getPortInfo();
+        } catch (RemoteException e) {
+            Log.e("TAG", "Failed to call getPortInfo():", e);
+            return Collections.<HdmiPortInfo>emptyList();
+        }
+    }
+
+    /**
      * Sets system audio mode.
      *
      * @param enabled set to {@code true} to enable the mode; otherwise {@code false}
