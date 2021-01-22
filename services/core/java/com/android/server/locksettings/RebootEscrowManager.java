@@ -133,8 +133,8 @@ class RebootEscrowManager {
             mKeyStoreManager = new RebootEscrowKeyStoreManager();
 
             RebootEscrowProviderInterface rebootEscrowProvider = null;
-            if (DeviceConfig.getBoolean(DeviceConfig.NAMESPACE_OTA,
-                    "server_based_ror_enabled", false)) {
+            // TODO(xunchang) add implementation for server based ror.
+            if (serverBasedResumeOnReboot()) {
                 rebootEscrowProvider = new RebootEscrowProviderServerBasedImpl(context, mStorage);
             } else {
                 rebootEscrowProvider = new RebootEscrowProviderHalImpl();
@@ -145,6 +145,11 @@ class RebootEscrowManager {
             } else {
                 mRebootEscrowProvider = null;
             }
+        }
+
+        private boolean serverBasedResumeOnReboot() {
+            return DeviceConfig.getBoolean(DeviceConfig.NAMESPACE_OTA,
+                    "server_based_ror_enabled", false);
         }
 
         public Context getContext() {
@@ -169,7 +174,15 @@ class RebootEscrowManager {
         }
 
         public void reportMetric(boolean success) {
-            FrameworkStatsLog.write(FrameworkStatsLog.REBOOT_ESCROW_RECOVERY_REPORTED, success);
+            int service_type = serverBasedResumeOnReboot() ?
+                    FrameworkStatsLog.REBOOT_ESCROW_RECOVERY_REPORTED__TYPE__SERVER_BASED :
+                    FrameworkStatsLog.REBOOT_ESCROW_RECOVERY_REPORTED__TYPE__HAL;
+            int vbmeta_digest_status =
+                    FrameworkStatsLog.REBOOT_ESCROW_RECOVERY_REPORTED__VBMETA_DIGEST_STATUS__MATCH_EXPECTED_SLOT;
+            // TODO(xunchang) calculate the duration for reboot->unlock, and get the state for
+            // vbmeta digest.
+            FrameworkStatsLog.write(FrameworkStatsLog.REBOOT_ESCROW_RECOVERY_REPORTED, success,
+                    service_type, 0, vbmeta_digest_status);
         }
 
         public RebootEscrowEventLog getEventLog() {
