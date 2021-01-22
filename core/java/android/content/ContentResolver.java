@@ -64,7 +64,6 @@ import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.storage.StorageManager;
-import android.system.Int32Ref;
 import android.text.TextUtils;
 import android.util.EventLog;
 import android.util.Log;
@@ -4040,13 +4039,13 @@ public abstract class ContentResolver implements ContentInterface {
         // Convert to Point, since that's what the API is defined as
         final Bundle opts = new Bundle();
         opts.putParcelable(EXTRA_SIZE, Point.convert(size));
-        final Int32Ref orientation = new Int32Ref(0);
+        int orientation = 0;
 
         Bitmap bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(() -> {
             final AssetFileDescriptor afd = content.openTypedAssetFile(uri, "image/*", opts,
                     signal);
             final Bundle extras = afd.getExtras();
-            orientation.value = (extras != null) ? extras.getInt(EXTRA_ORIENTATION, 0) : 0;
+            orientation = (extras != null) ? extras.getInt(EXTRA_ORIENTATION, 0) : 0;
             return afd;
         }), (ImageDecoder decoder, ImageInfo info, Source source) -> {
                 decoder.setAllocator(allocator);
@@ -4067,12 +4066,12 @@ public abstract class ContentResolver implements ContentInterface {
         // Transform the bitmap if requested. We use a side-channel to
         // communicate the orientation, since EXIF thumbnails don't contain
         // the rotation flags of the original image.
-        if (orientation.value != 0) {
+        if (orientation != 0) {
             final int width = bitmap.getWidth();
             final int height = bitmap.getHeight();
 
             final Matrix m = new Matrix();
-            m.setRotate(orientation.value, width / 2, height / 2);
+            m.setRotate(orientation, width / 2, height / 2);
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, m, false);
         }
 
