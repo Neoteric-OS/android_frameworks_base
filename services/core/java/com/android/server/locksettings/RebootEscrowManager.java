@@ -62,6 +62,8 @@ class RebootEscrowManager {
     @VisibleForTesting
     public static final String REBOOT_ESCROW_ARMED_KEY = "reboot_escrow_armed_count";
 
+    static final String REBOOT_ESCROW_KEY_ARMED_TIMESTAMP = "reboot_escrow_key_stored_timestamp";
+
     /**
      * Number of boots until we consider the escrow data to be stale for the purposes of metrics.
      * <p>
@@ -148,6 +150,11 @@ class RebootEscrowManager {
             return null;
         }
 
+        private boolean serverBasedResumeOnReboot() {
+            return DeviceConfig.getBoolean(DeviceConfig.NAMESPACE_OTA,
+                    "server_based_ror_enabled", false);
+        }
+
         public Context getContext() {
             return mContext;
         }
@@ -175,8 +182,23 @@ class RebootEscrowManager {
                     0);
         }
 
-        public void reportMetric(boolean success) {
-            FrameworkStatsLog.write(FrameworkStatsLog.REBOOT_ESCROW_RECOVERY_REPORTED, success);
+        public void reportMetric(boolean success, long armedTimestamp) {
+            int serviceType = serverBasedResumeOnReboot()
+                    ? FrameworkStatsLog.REBOOT_ESCROW_RECOVERY_REPORTED__TYPE__SERVER_BASED
+                    : FrameworkStatsLog.REBOOT_ESCROW_RECOVERY_REPORTED__TYPE__HAL;
+            long rebootEscrowDurationInSeconds = -1;
+            if (armedTimestamp != -1) {
+                rebootEscrowDurationInSeconds =
+                        (System.currentTimeMillis() - armedTimestamp) / 1000;
+            }
+
+            // TODO(b/179105110) design error code; and report the true value for other fields.
+            int attemptCount = 1;
+            int vbmetaDigestStatus = FrameworkStatsLog
+                    .REBOOT_ESCROW_RECOVERY_REPORTED__VBMETA_DIGEST_STATUS__MATCH_EXPECTED_SLOT;
+            FrameworkStatsLog.write(FrameworkStatsLog.REBOOT_ESCROW_RECOVERY_REPORTED, success,
+                    0 /* error code */, serviceType, attemptCount,
+                    (int) rebootEscrowDurationInSeconds, vbmetaDigestStatus);
         }
 
         public RebootEscrowEventLog getEventLog() {
@@ -243,9 +265,13 @@ class RebootEscrowManager {
         int previousBootCount = mStorage.getInt(REBOOT_ESCROW_ARMED_KEY, -1, USER_SYSTEM);
         mStorage.removeKey(REBOOT_ESCROW_ARMED_KEY, USER_SYSTEM);
 
+        long armedTimestamp = mStorage.getLong(REBOOT_ESCROW_KEY_ARMED_TIMESTAMP, -1,
+                USER_SYSTEM);
+        mStorage.removeKey(REBOOT_ESCROW_KEY_ARMED_TIMESTAMP, USER_SYSTEM);
+
         int bootCountDelta = mInjector.getBootCount() - previousBootCount;
         if (success || (previousBootCount != -1 && bootCountDelta <= BOOT_COUNT_TOLERANCE)) {
-            mInjector.reportMetric(success);
+            mInjector.reportMetric(success, armedTimestamp);
         }
     }
 
@@ -401,6 +427,8 @@ class RebootEscrowManager {
         boolean armedRebootEscrow = rebootEscrowProvider.storeRebootEscrowKey(escrowKey, kk);
         if (armedRebootEscrow) {
             mStorage.setInt(REBOOT_ESCROW_ARMED_KEY, mInjector.getBootCount(), USER_SYSTEM);
+            mStorage.setLong(REBOOT_ESCROW_KEY_ARMED_TIMESTAMP, System.currentTimeMillis(),
+                    USER_SYSTEM);
             mEventLog.addEntry(RebootEscrowEvent.SET_ARMED_STATUS);
         }
 

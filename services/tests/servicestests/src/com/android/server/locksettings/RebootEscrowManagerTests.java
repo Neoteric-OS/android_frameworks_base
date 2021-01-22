@@ -106,7 +106,7 @@ public class RebootEscrowManagerTests {
     public interface MockableRebootEscrowInjected {
         int getBootCount();
 
-        void reportMetric(boolean success);
+        void reportMetric(boolean success, long armedTimestamp);
     }
 
     static class MockInjector extends RebootEscrowManager.Injector {
@@ -175,8 +175,8 @@ public class RebootEscrowManagerTests {
         }
 
         @Override
-        public void reportMetric(boolean success) {
-            mInjected.reportMetric(success);
+        public void reportMetric(boolean success, long armedTimestamp) {
+            mInjected.reportMetric(success, armedTimestamp);
         }
     }
 
@@ -398,7 +398,7 @@ public class RebootEscrowManagerTests {
 
         when(mInjected.getBootCount()).thenReturn(1);
         ArgumentCaptor<Boolean> metricsSuccessCaptor = ArgumentCaptor.forClass(Boolean.class);
-        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture());
+        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture(), anyLong());
         when(mRebootEscrow.retrieveKey()).thenAnswer(invocation -> keyByteCaptor.getValue());
 
         mService.loadRebootEscrowDataIfAvailable();
@@ -431,7 +431,7 @@ public class RebootEscrowManagerTests {
         // pretend reboot happens here
         when(mInjected.getBootCount()).thenReturn(1);
         ArgumentCaptor<Boolean> metricsSuccessCaptor = ArgumentCaptor.forClass(Boolean.class);
-        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture());
+        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture(), anyLong());
 
         when(mServiceConnection.unwrap(any(), anyLong()))
                 .thenAnswer(invocation -> invocation.getArgument(0));
@@ -468,7 +468,7 @@ public class RebootEscrowManagerTests {
 
         mService.loadRebootEscrowDataIfAvailable();
         verify(mRebootEscrow).retrieveKey();
-        verify(mInjected, never()).reportMetric(anyBoolean());
+        verify(mInjected, never()).reportMetric(anyBoolean(), anyLong());
     }
 
     @Test
@@ -494,7 +494,7 @@ public class RebootEscrowManagerTests {
         when(mRebootEscrow.retrieveKey()).thenReturn(new byte[32]);
 
         mService.loadRebootEscrowDataIfAvailable();
-        verify(mInjected, never()).reportMetric(anyBoolean());
+        verify(mInjected, never()).reportMetric(anyBoolean(), anyLong());
     }
 
     @Test
@@ -528,7 +528,7 @@ public class RebootEscrowManagerTests {
         when(mRebootEscrow.retrieveKey()).thenAnswer(invocation -> keyByteCaptor.getValue());
 
         mService.loadRebootEscrowDataIfAvailable();
-        verify(mInjected).reportMetric(eq(true));
+        verify(mInjected).reportMetric(eq(true), anyLong());
     }
 
     @Test
@@ -555,7 +555,7 @@ public class RebootEscrowManagerTests {
 
         when(mInjected.getBootCount()).thenReturn(1);
         ArgumentCaptor<Boolean> metricsSuccessCaptor = ArgumentCaptor.forClass(Boolean.class);
-        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture());
+        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture(), anyLong());
         when(mRebootEscrow.retrieveKey()).thenAnswer(invocation -> new byte[32]);
         mService.loadRebootEscrowDataIfAvailable();
         verify(mRebootEscrow).retrieveKey();
