@@ -16,20 +16,24 @@
 
 package com.android.server.vcn;
 
+
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import android.annotation.NonNull;
-import android.content.Context;
 import android.net.NetworkCapabilities;
 import android.net.vcn.VcnGatewayConnectionConfigTest;
 import android.os.ParcelUuid;
-import android.os.test.TestLooper;
 import android.telephony.SubscriptionInfo;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -41,7 +45,7 @@ import java.util.UUID;
 /** Tests for TelephonySubscriptionTracker */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class VcnGatewayConnectionTest {
+public class VcnGatewayConnectionTest extends VcnGatewayConnectionTestBase {
     private static final ParcelUuid TEST_PARCEL_UUID = new ParcelUuid(UUID.randomUUID());
     private static final int TEST_SIM_SLOT_INDEX = 1;
     private static final int TEST_SUBSCRIPTION_ID_1 = 2;
@@ -57,16 +61,23 @@ public class VcnGatewayConnectionTest {
         TEST_SUBID_TO_GROUP_MAP = Collections.unmodifiableMap(subIdToGroupMap);
     }
 
-    @NonNull private final Context mContext;
-    @NonNull private final TestLooper mTestLooper;
-    @NonNull private final VcnNetworkProvider mVcnNetworkProvider;
-    @NonNull private final VcnGatewayConnection.Dependencies mDeps;
+    @NonNull private final TelephonySubscriptionSnapshot mSubscriptionSnapshot;
+
+    @NonNull private VcnGatewayConnection mVcnGatewayConnection;
 
     public VcnGatewayConnectionTest() {
-        mContext = mock(Context.class);
-        mTestLooper = new TestLooper();
-        mVcnNetworkProvider = mock(VcnNetworkProvider.class);
-        mDeps = mock(VcnGatewayConnection.Dependencies.class);
+        super();
+
+        mSubscriptionSnapshot = mock(TelephonySubscriptionSnapshot.class);
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        super.setUp();
+
+        mVcnGatewayConnection =
+                new VcnGatewayConnection(
+                        mVcnContext, TEST_PARCEL_UUID, mSubscriptionSnapshot, mConfig, mDeps);
     }
 
     @Test
@@ -78,5 +89,14 @@ public class VcnGatewayConnectionTest {
         for (int exposedCapability : VcnGatewayConnectionConfigTest.EXPOSED_CAPS) {
             assertTrue(caps.hasCapability(exposedCapability));
         }
+    }
+
+    @Test
+    public void testSubscriptionSnapshotUpdateNotifiesUnderlyingNetworkTracker() {
+        final TelephonySubscriptionSnapshot updatedSnapshot =
+                mock(TelephonySubscriptionSnapshot.class);
+        mVcnGatewayConnection.updateSubscriptionSnapshot(updatedSnapshot);
+
+        verify(mUnderlyingNetworkTracker).updateSubscriptionSnapshot(eq(updatedSnapshot));
     }
 }
