@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62d4f284_8912e6f5",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2021-01-22T22:51:06Z",
+      "side": 1,
+      "message": "Assuming that at some point we want zero-init to be the default in apps (probably gated on sdk version), won\u0027t we need a 3-way switch here (on, off, default)?",
+      "revId": "30fffc57abe38d13648cb32878b0aed426540adf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb2d0b62_bb827dec",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1816,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2021-01-22T22:51:06Z",
+      "side": 1,
+      "message": "update comment",
+      "range": {
+        "startLine": 1811,
+        "startChar": 0,
+        "endLine": 1816,
+        "endChar": 0
+      },
+      "revId": "30fffc57abe38d13648cb32878b0aed426540adf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71302386_94f3928e",
+        "filename": "core/res/res/values/attrs_manifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1837,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2021-01-22T22:51:06Z",
+      "side": 1,
+      "message": "tabs? (and elsewhere)",
+      "range": {
+        "startLine": 1837,
+        "startChar": 0,
+        "endLine": 1837,
+        "endChar": 1
+      },
+      "revId": "30fffc57abe38d13648cb32878b0aed426540adf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
