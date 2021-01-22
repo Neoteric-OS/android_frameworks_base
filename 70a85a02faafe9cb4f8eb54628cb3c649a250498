@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73c05fd6_d024f6aa",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-22T13:26:40Z",
+      "side": 1,
+      "message": "I forgot to make this function private 2 months ago, sorry about this. New code should no longer get to call this, and this patch makes this code the only caller in the entire code base. Besides, NetworkAgent is part of the mainline module, so you can\u0027t do this in S, even in the interest of expediency.\n\nPlease use the modern NetworkAgent API instead. It is easier to use and has less bugs.",
+      "range": {
+        "startLine": 657,
+        "startChar": 30,
+        "endLine": 657,
+        "endChar": 45
+      },
+      "revId": "70a85a02faafe9cb4f8eb54628cb3c649a250498",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
