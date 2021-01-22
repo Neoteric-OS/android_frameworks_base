@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a48230c0_88f405cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-22T03:15:15Z",
+      "side": 1,
+      "message": "Hi Remi, \n\nPlease review my initial implementation of Passpoint T\u0026C. It works for me, but you might have additional requirements or require some changes. Once the implementation looks good, I can work on unit-tests.\n\nThanks!",
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
