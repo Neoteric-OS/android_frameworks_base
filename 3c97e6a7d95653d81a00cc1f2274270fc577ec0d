@@ -51,6 +51,23 @@
       "message": "Oops, re-readf the commit ",
       "revId": "3c97e6a7d95653d81a00cc1f2274270fc577ec0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "035f23a1_be2d09a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1096946
+      },
+      "writtenOn": "2021-01-22T18:20:51Z",
+      "side": 1,
+      "message": "thanks! :) ",
+      "revId": "3c97e6a7d95653d81a00cc1f2274270fc577ec0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
