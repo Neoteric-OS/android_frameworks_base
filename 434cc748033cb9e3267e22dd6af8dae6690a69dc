@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "26866784_ac7c5ab4",
+        "filename": "core/java/android/graphics/fonts/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2021-01-22T18:08:37Z",
+      "side": 1,
+      "message": "Oops, sorry yes. Fixed.",
+      "parentUuid": "0926e694_94a2c68b",
+      "range": {
+        "startLine": 1,
+        "startChar": 9,
+        "endLine": 1,
+        "endChar": 13
+      },
+      "revId": "434cc748033cb9e3267e22dd6af8dae6690a69dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "981cb3ba_ae5114ef",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-01-22T11:10:20Z",
       "side": 1,
       "message": "/graphics",
+      "range": {
+        "startLine": 1,
+        "startChar": 9,
+        "endLine": 1,
+        "endChar": 13
+      },
+      "revId": "434cc748033cb9e3267e22dd6af8dae6690a69dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5640b4e_d3f1cffc",
+        "filename": "core/java/com/android/internal/graphics/fonts/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2021-01-22T18:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "981cb3ba_ae5114ef",
       "range": {
         "startLine": 1,
         "startChar": 9,
