@@ -43,7 +43,7 @@ public abstract class Violation extends Throwable {
 
     @Override
     public synchronized Throwable initCause(Throwable cause) {
-        mHashCodeValid = false;
+        mHashCodeValid = cause == null;
         return super.initCause(cause);
     }
 

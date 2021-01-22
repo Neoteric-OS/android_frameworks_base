@@ -1923,11 +1923,6 @@ public final class StrictMode {
         public void report(String message, Throwable allocationSite) {
             onVmPolicyViolation(new LeakedClosableViolation(message, allocationSite));
         }
-
-        @Override
-        public void report(String message) {
-            onVmPolicyViolation(new LeakedClosableViolation(message));
-        }
     }
 
     /** Called from Parcel.writeNoException() */
