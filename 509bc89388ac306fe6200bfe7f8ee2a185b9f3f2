@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b137696_eef90fb8",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkNotificationManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1706779
+      },
+      "writtenOn": "2021-01-22T14:30:32Z",
+      "side": 1,
+      "message": "I\u0027m guessing you can\u0027t pull this into AOSP yet, because DevFlags doesn\u0027t exist on the AOSP version of Notification.",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 5
+      },
+      "revId": "509bc89388ac306fe6200bfe7f8ee2a185b9f3f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
