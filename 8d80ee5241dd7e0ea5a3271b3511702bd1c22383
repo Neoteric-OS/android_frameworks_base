@@ -22,6 +22,52 @@
       },
       "revId": "8d80ee5241dd7e0ea5a3271b3511702bd1c22383",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d20efa78_709b443c",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-22T23:31:21Z",
+      "side": 1,
+      "message": "if the underlying network changes during a disconnect, is it not safe to say that the connection needs to be killed on that old underlying network and then bought back up on the new network? Not 100% clear to me how this is \"supposed\" to play out. In the \"null\" case, kill is kind of obvious, but in the non-null case, things get weird.",
+      "range": {
+        "startLine": 806,
+        "startChar": 20,
+        "endLine": 806,
+        "endChar": 94
+      },
+      "revId": "8d80ee5241dd7e0ea5a3271b3511702bd1c22383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a5bff42_ef92f2d8",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-22T23:31:21Z",
+      "side": 1,
+      "message": "Why are we keeping an mNextToken? That worries me.",
+      "range": {
+        "startLine": 1044,
+        "startChar": 8,
+        "endLine": 1044,
+        "endChar": 18
+      },
+      "revId": "8d80ee5241dd7e0ea5a3271b3511702bd1c22383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
