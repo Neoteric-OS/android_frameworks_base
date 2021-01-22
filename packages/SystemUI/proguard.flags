@@ -16,7 +16,6 @@
 }
 
 -keep class com.android.systemui.recents.OverviewProxyRecentsImpl
--keep class com.android.systemui.statusbar.car.CarStatusBar
 -keep class com.android.systemui.statusbar.phone.StatusBar
 -keep class com.android.systemui.statusbar.tv.TvStatusBar
 -keep class com.android.systemui.car.CarSystemUIFactory
