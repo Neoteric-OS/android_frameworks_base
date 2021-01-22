@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68634377_871d09d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-22T02:10:50Z",
+      "side": 1,
+      "message": "ACK. Thanks for your understanding and approving.",
+      "parentUuid": "f05765ae_ccb523f5",
+      "revId": "4ee7e55df04d9b6fca20db6ff78ff69ac06eadf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5217c68b_e527c0e5",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec45deb3_1385b6d9",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1453,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-22T02:10:50Z",
+      "side": 1,
+      "message": "I\u0027d follow the style like other methods. However, w/o these docs, checkstyle_hook would complain with errors when uploading commit. I have tried to put single line docs like patchset3, but I didn\u0027t know whether it\u0027s acceptable style that no one has added this kind of comment in Context. Eventually, I added full docs here.\n\n    ERRORS:\n      [platform/frameworks/base] core/java/android/content/ContextWrapper.java:620: Must include both @java.lang.Deprecated annotation and @deprecated Javadoc tag with description.\n      [platform/frameworks/base] core/java/android/app/ContextImpl.java:1431: Must include both @java.lang.Deprecated annotation and @deprecated Javadoc tag with description.",
+      "parentUuid": "5217c68b_e527c0e5",
+      "revId": "4ee7e55df04d9b6fca20db6ff78ff69ac06eadf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1c2f3368_d88beedd",
@@ -48,6 +84,24 @@
       "writtenOn": "2021-01-21T14:48:15Z",
       "side": 1,
       "message": "Same comment as on ContextImpl",
+      "revId": "4ee7e55df04d9b6fca20db6ff78ff69ac06eadf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "334b237e_37444f94",
+        "filename": "core/java/android/content/ContextWrapper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-22T02:10:50Z",
+      "side": 1,
+      "message": "Same style error here.",
+      "parentUuid": "1c2f3368_d88beedd",
       "revId": "4ee7e55df04d9b6fca20db6ff78ff69ac06eadf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
