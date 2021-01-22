@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Alisher Alikhodjaev <alisher@google.com>
+Code-Review+1: Jeff Sharkey <jsharkey@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+API-Review+1: Zach Johnson <zachoverflow@google.com>
+Submitted-by: Jack Yu <jackcwyu@google.com>
+Submitted-at: Fri, 22 Jan 2021 02:58:26 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1531801
+Project: platform/frameworks/base
+Branch: refs/heads/master
