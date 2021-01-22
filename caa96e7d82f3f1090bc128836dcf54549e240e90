@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b2740c6_ad595677",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1061218
+      },
+      "writtenOn": "2021-01-22T10:12:31Z",
+      "side": 1,
+      "message": "Added, but this doesn\u0027t fix the test actually, as data and obb dirs are not mounted, the unmount will just fail, but this CL gives a message to dev that the flag is off so this command is no-op.",
+      "parentUuid": "5ca4d84a_a5ba515b",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 79
+      },
+      "revId": "caa96e7d82f3f1090bc128836dcf54549e240e90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f6ab9ee_beceb584",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-21T15:07:50Z",
       "side": 1,
       "message": "This isn\u0027t actually returning an error; should it throw instead?\n\nHow does the caller detect this situtation?",
+      "range": {
+        "startLine": 265,
+        "startChar": 12,
+        "endLine": 265,
+        "endChar": 18
+      },
+      "revId": "caa96e7d82f3f1090bc128836dcf54549e240e90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c01771e9_cf1c2100",
+        "filename": "cmds/sm/src/com/android/commands/sm/Sm.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1061218
+      },
+      "writtenOn": "2021-01-22T10:12:31Z",
+      "side": 1,
+      "message": "Now throwing exception.\nBut for caller, which is shell, maybe it should check the console output.",
+      "parentUuid": "7f6ab9ee_beceb584",
       "range": {
         "startLine": 265,
         "startChar": 12,
