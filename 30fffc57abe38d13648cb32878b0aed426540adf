@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec6c5dae_ea0bcb5e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2021-01-22T22:51:33Z",
+      "side": 1,
+      "message": "smoreland - fyi, we\u0027re adding manifest and compat features for heap zero-init.",
+      "revId": "30fffc57abe38d13648cb32878b0aed426540adf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62d4f284_8912e6f5",
