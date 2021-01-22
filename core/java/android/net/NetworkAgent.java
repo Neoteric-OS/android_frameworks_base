@@ -804,7 +804,13 @@ public abstract class NetworkAgent {
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public final void sendNetworkInfo(NetworkInfo networkInfo) {
-        queueOrSendNetworkInfo(new NetworkInfo(networkInfo));
+        Objects.requireNonNull(networkInfo);
+        // TODO: throw regardless of state.
+        final NetworkInfo ni = new NetworkInfo(networkInfo);
+        if (ni.getDetailedState() != NetworkInfo.DetailedState.DISCONNECTED) {
+            throw new UnsupportedOperationException("Legacy NetworkAgents no longer supported");
+        }
+        queueOrSendNetworkInfo(ni);
     }
 
     private void queueOrSendNetworkInfo(NetworkInfo networkInfo) {
