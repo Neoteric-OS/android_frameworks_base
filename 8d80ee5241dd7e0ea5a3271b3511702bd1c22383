@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f33f82a3_328deac9",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-22T22:32:40Z",
+      "side": 1,
+      "message": "If the underlying network is null and you call kill() here, what event moves this from Disconnecting -\u003e Disconnected?\n\nI see DISCONNECT_REQUESTED below, and that checks for NETWORK_LOST. What other case does this handle?",
+      "range": {
+        "startLine": 792,
+        "startChar": 16,
+        "endLine": 792,
+        "endChar": 27
+      },
+      "revId": "8d80ee5241dd7e0ea5a3271b3511702bd1c22383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
