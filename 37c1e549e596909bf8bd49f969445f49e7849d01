@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007516134",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1542748?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "69e1fbb6_653c5183",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-22T15:51:20Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(WifiManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 201,
+        "startChar": 45,
+        "endLine": 201,
+        "endChar": 84
+      },
+      "revId": "37c1e549e596909bf8bd49f969445f49e7849d01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
