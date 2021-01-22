@@ -1765,6 +1765,14 @@ public final class NetworkCapabilities implements Parcelable {
         return 0;
     }
 
+    private void writeArraySet(Parcel in, @Nullable ArraySet<? extends Object> val) {
+        final int size = (val != null) ? val.size() : -1;
+        in.writeInt(size);
+        for (int i = 0; i < size; i++) {
+            in.writeValue(val.valueAt(i));
+        }
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(mNetworkCapabilities);
@@ -1775,7 +1783,7 @@ public final class NetworkCapabilities implements Parcelable {
         dest.writeParcelable((Parcelable) mNetworkSpecifier, flags);
         dest.writeParcelable((Parcelable) mTransportInfo, flags);
         dest.writeInt(mSignalStrength);
-        dest.writeArraySet(mUids);
+        writeArraySet(dest, mUids);
         dest.writeString(mSSID);
         dest.writeBoolean(mPrivateDnsBroken);
         dest.writeIntArray(getAdministratorUids());
@@ -1798,7 +1806,7 @@ public final class NetworkCapabilities implements Parcelable {
                 netCap.mNetworkSpecifier = in.readParcelable(null);
                 netCap.mTransportInfo = in.readParcelable(null);
                 netCap.mSignalStrength = in.readInt();
-                netCap.mUids = (ArraySet<UidRange>) in.readArraySet(
+                netCap.mUids = (ArraySet<UidRange>) readArraySet(in,
                         null /* ClassLoader, null for default */);
                 netCap.mSSID = in.readString();
                 netCap.mPrivateDnsBroken = in.readBoolean();
@@ -1811,6 +1819,20 @@ public final class NetworkCapabilities implements Parcelable {
             @Override
             public NetworkCapabilities[] newArray(int size) {
                 return new NetworkCapabilities[size];
+            }
+
+            private @Nullable ArraySet<? extends Object> readArraySet(Parcel in,
+                    @Nullable ClassLoader loader) {
+                final int size = in.readInt();
+                if (size < 0) {
+                    return null;
+                }
+                final ArraySet<Object> result = new ArraySet<>(size);
+                for (int i = 0; i < size; i++) {
+                    Object value = in.readValue(loader);
+                    result.append(value);
+                }
+                return result;
             }
         };
 
