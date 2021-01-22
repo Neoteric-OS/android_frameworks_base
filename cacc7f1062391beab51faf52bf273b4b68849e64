@@ -16,6 +16,24 @@
       "message": "Do we want to limit usage of this permission? If yes, we need a CTS test similar to https://source.corp.google.com/android/cts/tests/tests/wifi/src/android/net/wifi/cts/WifiManagerTest.java;rcl\u003d42270a22cf9382a6ee1f7f8f048a02b0d5d149cd;l\u003d1483",
       "revId": "cacc7f1062391beab51faf52bf273b4b68849e64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45f82d5e_6960ac66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2021-01-22T15:47:03Z",
+      "side": 1,
+      "message": "I don\u0027t see a strong reason to do that at this point. The reason it was introduced is that there are other system components (other than Settings) who need this. Unlike for provisioning there is no \"natural number\" of users of this permission.",
+      "parentUuid": "50bb4773_5ea7969d",
+      "revId": "cacc7f1062391beab51faf52bf273b4b68849e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
