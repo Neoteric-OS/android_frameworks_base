@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "342b0ffd_64886e5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2021-01-22T01:58:07Z",
+      "side": 1,
+      "message": "Amith, can you take an owner look?\n\nThank you.",
+      "revId": "434cc748033cb9e3267e22dd6af8dae6690a69dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
