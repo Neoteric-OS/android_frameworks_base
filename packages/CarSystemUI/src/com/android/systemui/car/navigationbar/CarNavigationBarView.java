@@ -59,16 +59,16 @@ public class CarNavigationBarView extends LinearLayout {
         if (mNotificationsButton != null) {
             mNotificationsButton.setOnClickListener(this::onNotificationsClick);
         }
-        View mStatusIcons = findViewById(R.id.statusIcons);
-        if (mStatusIcons != null) {
+        View statusIcons = findViewById(R.id.statusIcons);
+        if (statusIcons != null) {
             // Attach the controllers for Status icons such as wifi and bluetooth if the standard
             // container is in the view.
-            StatusBarIconController.DarkIconManager mDarkIconManager =
+            StatusBarIconController.DarkIconManager darkIconManager =
                     new StatusBarIconController.DarkIconManager(
-                            mStatusIcons.findViewById(R.id.statusIcons),
+                            statusIcons.findViewById(R.id.statusIcons),
                             Dependency.get(CommandQueue.class));
-            mDarkIconManager.setShouldLog(true);
-            Dependency.get(StatusBarIconController.class).addIconGroup(mDarkIconManager);
+            darkIconManager.setShouldLog(true);
+            Dependency.get(StatusBarIconController.class).addIconGroup(darkIconManager);
         }
         // Needs to be clickable so that it will receive ACTION_MOVE events.
         setClickable(true);
