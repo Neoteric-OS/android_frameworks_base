@@ -1048,6 +1048,9 @@
   <java-symbol type="string" name="wifi_available_sign_in" />
   <java-symbol type="string" name="network_available_sign_in" />
   <java-symbol type="string" name="network_available_sign_in_detailed" />
+  <java-symbol type="string" name="mobile_network_available_no_internet" />
+  <java-symbol type="string" name="mobile_network_available_no_internet_detailed" />
+  <java-symbol type="string" name="mobile_network_available_no_internet_detailed_unknown_carrier" />
   <java-symbol type="string" name="network_switch_metered" />
   <java-symbol type="string" name="network_switch_metered_detail" />
   <java-symbol type="string" name="network_switch_metered_toast" />
