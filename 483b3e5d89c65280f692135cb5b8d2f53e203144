@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e077a8c9_a811aeee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T16:53:49Z",
+      "side": 1,
+      "message": "LGTM but I don\u0027t have context to review the permission part.\nSomeone else needs to look at it.",
+      "revId": "483b3e5d89c65280f692135cb5b8d2f53e203144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
