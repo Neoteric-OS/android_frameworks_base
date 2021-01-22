@@ -52,6 +52,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eff8aa53_711ec376",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2021-01-22T06:30:01Z",
+      "side": 1,
+      "message": "Hi Jeff, \n\nThanks for the reply. This CL is cherry-picked from the +1ed ag/13253574. It can fix the b/175078763 which makes ATP test suspension. The test case can finish with this fix. The followed https://android-review.googlesource.com/q/topic:%22cow_pdb%22+(status:open%20OR%20status:merged) will provide a general implementation. ",
+      "revId": "da1f9def0461f40ce27428c59ee7ef2a01af17df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0cda8d7f_667d5d8a",
