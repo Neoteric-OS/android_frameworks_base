@@ -16,6 +16,236 @@
       "message": "Hi Remi, \n\nPlease review my initial implementation of Passpoint T\u0026C. It works for me, but you might have additional requirements or require some changes. Once the implementation looks good, I can work on unit-tests.\n\nThanks!",
       "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dcd1acd_3d5b012e",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 6001,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-22T14:15:49Z",
+      "side": 1,
+      "message": "NA \u003d\u003d NetworkAgent is hard to understand without knowing the context of how the CaptivePortalData is built; which should not be carried over to the API I think.\nI can think of CPD_SOURCE_OTHER, or DATA_SOURCE_OTHER, but there may be better suggestions.",
+      "range": {
+        "startLine": 6001,
+        "startChar": 34,
+        "endLine": 6001,
+        "endChar": 37
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1729d1d_1c55cc5b",
+        "filename": "core/java/android/net/CaptivePortalData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-22T14:15:49Z",
+      "side": 1,
+      "message": "How about replacing with setUserPortalUrl(userPortalUrl, NA_SOURCE_OTHER), to make sure it all goes through the same endpoints ? (also for setVenueInfoUrl)",
+      "range": {
+        "startLine": 156,
+        "startChar": 12,
+        "endLine": 156,
+        "endChar": 43
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca12ef4c_2049713e",
+        "filename": "core/java/android/net/CaptivePortalData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-22T14:15:49Z",
+      "side": 1,
+      "message": "Why not use the int to store directly ? It would be easier to evolve later",
+      "range": {
+        "startLine": 313,
+        "startChar": 15,
+        "endLine": 313,
+        "endChar": 41
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "345ebc9b_3edf3067",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-22T14:15:49Z",
+      "side": 1,
+      "message": "I think this is a boolean ? In that case maybe EXTRA_IS_TERMS_AND_CONDITIONS ?",
+      "range": {
+        "startLine": 276,
+        "startChar": 31,
+        "endLine": 276,
+        "endChar": 62
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8f8b5ad_237f5f61",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3364,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-22T14:15:49Z",
+      "side": 1,
+      "message": "Considering that this is already 45 chars, that\u0027s going to be tough for translators in many languages.\n\nDid this string go through UX writers ? I\u0027m not very comfortable with saying \"Accept...\" because the platform is pushing the user to accept, even though we don\u0027t know the content of the T\u0026Cs; I\u0027d at least replace it with \"Review\".\nPersonally I\u0027d prefer something like \"Network has terms and conditions\" (title) / \"Review and connect to Android Cafe Wi-Fi\" (details); but I\u0027m not a UX writer.\nIf UX review takes a while I think we can still merge with a reasonable temporary string though.",
+      "range": {
+        "startLine": 3364,
+        "startChar": 138,
+        "endLine": 3364,
+        "endChar": 151
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c59486f_cbb8a4c8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2859,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-22T14:15:49Z",
+      "side": 1,
+      "message": "Also check whether nai.networkAgentPortalData is null to be safe",
+      "range": {
+        "startLine": 2859,
+        "startChar": 32,
+        "endLine": 2859,
+        "endChar": 54
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab6f7a9c_4bf762be",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2860,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-22T14:15:49Z",
+      "side": 1,
+      "message": "This is read from one source (ConnectivityService), while the signal to show the notification comes from another (NetworkMonitor). Technically that\u0027s racy: between the time that NetworkMonitor decided to show a portal, and the time this was updated, the NetworkAgentInfo may have changed.\n\nIdeally this should be added to INetworkMonitorCallbacks.showProvisioningNotification, with something like INetworkMonitorCallback#showProvisioningNotificationWithExtra(android.net.networkstack.aidl.ProvisioningNotificationInfo)\n\nThat said updating the AIDL interface and maintaining the two endpoints is expensive, so considering that the network agent data should be available at that point and shouldn\u0027t change with the current use-cases, maybe we can live with this...\nMaybe at least add a comment to explain the tradeoff.",
+      "range": {
+        "startLine": 2860,
+        "startChar": 62,
+        "endLine": 2860,
+        "endChar": 92
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90368a6e_898720ca",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6163,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-22T14:15:49Z",
+      "side": 1,
+      "message": "Also set the source to what it was",
+      "range": {
+        "startLine": 6163,
+        "startChar": 76,
+        "endLine": 6163,
+        "endChar": 78
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "653c26f3_44b95385",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6173,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-22T14:15:49Z",
+      "side": 1,
+      "message": "Looks like the same condition twice ?",
+      "range": {
+        "startLine": 6173,
+        "startChar": 19,
+        "endLine": 6173,
+        "endChar": 90
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d78e58a7_2414b0dc",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkNotificationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-22T14:15:49Z",
+      "side": 1,
+      "message": "This could be empty for non-wifi networks that don\u0027t have an SSID; maybe just use an empty string for details in case \"name\" is empty ?",
+      "range": {
+        "startLine": 264,
+        "startChar": 28,
+        "endLine": 264,
+        "endChar": 32
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
