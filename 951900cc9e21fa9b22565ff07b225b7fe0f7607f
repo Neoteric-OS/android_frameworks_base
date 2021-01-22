@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00e74dfd_96fb708d",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2021-01-22T21:38:28Z",
+      "side": 1,
+      "message": "I just realized that there is a potential issue with this approach. Since system services are persistent, if an package update happens that provides GmsCore or other provider app the service, it would not be available until reboot. I wonder if it\u0027s easier to just do the look up at prep time since we don\u0027t expect it to happen frequently ?",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 98
+      },
+      "revId": "951900cc9e21fa9b22565ff07b225b7fe0f7607f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
