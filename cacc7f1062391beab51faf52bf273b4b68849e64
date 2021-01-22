@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50bb4773_5ea7969d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-22T06:57:45Z",
+      "side": 1,
+      "message": "Do we want to limit usage of this permission? If yes, we need a CTS test similar to https://source.corp.google.com/android/cts/tests/tests/wifi/src/android/net/wifi/cts/WifiManagerTest.java;rcl\u003d42270a22cf9382a6ee1f7f8f048a02b0d5d149cd;l\u003d1483",
+      "revId": "cacc7f1062391beab51faf52bf273b4b68849e64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
