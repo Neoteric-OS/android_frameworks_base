@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfcf46a4_2d4d1e80",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5393,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T16:30:10Z",
+      "side": 1,
+      "message": "Please set topic for all CLs that move this logic.\nThis is needed to prove we are refactoring them instead of copying the code.",
+      "range": {
+        "startLine": 5391,
+        "startChar": 27,
+        "endLine": 5393,
+        "endChar": 87
+      },
+      "revId": "77e1a38f51d99359a82d03123d945e5c1c36707a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
