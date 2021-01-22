@@ -1859,12 +1859,12 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     /**
      * Collect all ifaces from a {@link NetworkState} into the given set.
      */
-    private static void collectIfaces(ArraySet<String> ifaces, LinkProperties lp) {
-        final String baseIface = lp.getInterfaceName();
+    private static void collectIfaces(ArraySet<String> ifaces, NetworkState state) {
+        final String baseIface = state.linkProperties.getInterfaceName();
         if (baseIface != null) {
             ifaces.add(baseIface);
         }
-        for (LinkProperties stackedLink : lp.getStackedLinks()) {
+        for (LinkProperties stackedLink : state.linkProperties.getStackedLinks()) {
             final String stackedIface = stackedLink.getInterfaceName();
             if (stackedIface != null) {
                 ifaces.add(stackedIface);
@@ -1943,15 +1943,9 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         if (LOGV) Slog.v(TAG, "updateNetworkRulesNL()");
         Trace.traceBegin(TRACE_TAG_NETWORK, "updateNetworkRulesNL");
 
-        final Network[] allNetworks;
-        final NetworkCapabilities[] allCaps;
+        final NetworkState[] states;
         try {
-            allNetworks = mConnManager.getAllNetworks();
-            allCaps = new NetworkCapabilities[allNetworks.length];
-            for (int i = 0; i < allNetworks.length; i++) {
-                allCaps[i] = mConnManager.getNetworkCapabilities(allNetworks[i],
-                        "android" /* callingPackageName */);
-            }
+            states = defeatNullable(mConnManager.getAllNetworkState());
         } catch (RemoteException e) {
             // ignored; service lives in system_server
             return;
@@ -1960,19 +1954,19 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         // First, generate identities of all connected networks so we can
         // quickly compare them against all defined policies below.
         mNetIdToSubId.clear();
-        final ArrayMap<Network, NetworkIdentity> identified = new ArrayMap<>();
-        for (int i = 0; i < allNetworks.length; i++) {
-            final Network network = allNetworks[i];
-            final NetworkCapabilities nc = allCaps[i];
-            if (nc != null) {
-                mNetIdToSubId.put(network.netId, parseSubId(nc));
+        final ArrayMap<NetworkState, NetworkIdentity> identified = new ArrayMap<>();
+        for (NetworkState state : states) {
+            if (state.network != null) {
+                mNetIdToSubId.put(state.network.netId, parseSubId(state));
             }
-            // Policies matched by NPMS only match by subscriber ID or by ssid. Thus subtype
-            // in the object created here is never used and its value doesn't matter, so use
-            // NETWORK_TYPE_UNKNOWN.
-            final NetworkIdentity ident = NetworkIdentity.buildNetworkIdentity(mContext, network,
-                    true, TelephonyManager.NETWORK_TYPE_UNKNOWN /* subType */);
-            identified.put(network, ident);
+            if (state.networkInfo != null && state.networkInfo.isConnected()) {
+                // Policies matched by NPMS only match by subscriber ID or by ssid. Thus subtype
+                // in the object created here is never used and its value doesn't matter, so use
+                // NETWORK_TYPE_UNKNOWN.
+                final NetworkIdentity ident = NetworkIdentity.buildNetworkIdentity(mContext, state,
+                        true, TelephonyManager.NETWORK_TYPE_UNKNOWN /* subType */);
+                identified.put(state, ident);
+            }
         }
 
         final ArraySet<String> newMeteredIfaces = new ArraySet<>();
@@ -1988,14 +1982,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             matchingIfaces.clear();
             for (int j = identified.size() - 1; j >= 0; j--) {
                 if (policy.template.matches(identified.valueAt(j))) {
-                    final LinkProperties lp;
-                    try {
-                        lp = mConnManager.getLinkProperties(identified.keyAt(j));
-                    } catch (RemoteException e) {
-                        // Ignored - service lives in the system server.
-                        return;
-                    }
-                    collectIfaces(matchingIfaces, lp);
+                    collectIfaces(matchingIfaces, identified.keyAt(j));
                 }
             }
 
@@ -5580,11 +5567,16 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         }
     }
 
-    private int parseSubId(NetworkCapabilities nc) {
-        if (nc == null || !nc.hasTransport(TRANSPORT_CELLULAR)) return INVALID_SUBSCRIPTION_ID;
-        NetworkSpecifier spec = nc.getNetworkSpecifier();
-        return (spec instanceof TelephonyNetworkSpecifier)
-                ? ((TelephonyNetworkSpecifier) spec).getSubscriptionId() : INVALID_SUBSCRIPTION_ID;
+    private int parseSubId(NetworkState state) {
+        int subId = INVALID_SUBSCRIPTION_ID;
+        if (state != null && state.networkCapabilities != null
+                && state.networkCapabilities.hasTransport(TRANSPORT_CELLULAR)) {
+            NetworkSpecifier spec = state.networkCapabilities.getNetworkSpecifier();
+            if (spec instanceof TelephonyNetworkSpecifier) {
+                subId = ((TelephonyNetworkSpecifier) spec).getSubscriptionId();
+            }
+        }
+        return subId;
     }
 
     @GuardedBy("mNetworkPoliciesSecondLock")
