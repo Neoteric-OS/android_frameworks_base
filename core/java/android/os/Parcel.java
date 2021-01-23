@@ -464,6 +464,10 @@ public final class Parcel {
                 }
             }
         }
+
+        // Calling "destroy()" now is better than until inside "finalize()"
+        // because it can avoid the nondeterminacy of GC/"finalize()"
+        destroy();
     }
 
     /**
@@ -3551,7 +3555,8 @@ public final class Parcel {
                 Log.w(TAG, "Client did not call Parcel.recycle()", mStack);
             }
         }
-        destroy();
+        // ATTENTION:
+        // We intentionally do NOT call "destroy()" here to avoid risk of possible race condition!
     }
 
     /* package */ void readMapInternal(@NonNull Map outVal, int N,
