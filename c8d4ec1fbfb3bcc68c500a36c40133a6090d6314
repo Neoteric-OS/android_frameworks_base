@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a352284b_c9030034",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 6001,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-23T03:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dcd1acd_3d5b012e",
+      "range": {
+        "startLine": 6001,
+        "startChar": 34,
+        "endLine": 6001,
+        "endChar": 37
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f1729d1d_1c55cc5b",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-01-22T14:15:49Z",
       "side": 1,
       "message": "How about replacing with setUserPortalUrl(userPortalUrl, NA_SOURCE_OTHER), to make sure it all goes through the same endpoints ? (also for setVenueInfoUrl)",
+      "range": {
+        "startLine": 156,
+        "startChar": 12,
+        "endLine": 156,
+        "endChar": 43
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73b2dd3c_75c7a70a",
+        "filename": "core/java/android/net/CaptivePortalData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-23T03:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1729d1d_1c55cc5b",
       "range": {
         "startLine": 156,
         "startChar": 12,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "05f7119e_b1530967",
+        "filename": "core/java/android/net/CaptivePortalData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-23T03:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca12ef4c_2049713e",
+      "range": {
+        "startLine": 313,
+        "startChar": 15,
+        "endLine": 313,
+        "endChar": 41
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "345ebc9b_3edf3067",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-01-22T14:15:49Z",
       "side": 1,
       "message": "I think this is a boolean ? In that case maybe EXTRA_IS_TERMS_AND_CONDITIONS ?",
+      "range": {
+        "startLine": 276,
+        "startChar": 31,
+        "endLine": 276,
+        "endChar": 62
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "387ee4a8_9a993478",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-23T03:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "345ebc9b_3edf3067",
       "range": {
         "startLine": 276,
         "startChar": 31,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d24b3a3_e829fdae",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3364,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-23T03:49:02Z",
+      "side": 1,
+      "message": "It\u0027s waiting for UX review and I will update once reviewed. Added your suggestions to b/162785447.\n\nAccepting your suggestion for now.",
+      "parentUuid": "f8f8b5ad_237f5f61",
+      "range": {
+        "startLine": 3364,
+        "startChar": 138,
+        "endLine": 3364,
+        "endChar": 151
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1c59486f_cbb8a4c8",
@@ -146,6 +266,30 @@
       "writtenOn": "2021-01-22T14:15:49Z",
       "side": 1,
       "message": "Also check whether nai.networkAgentPortalData is null to be safe",
+      "range": {
+        "startLine": 2859,
+        "startChar": 32,
+        "endLine": 2859,
+        "endChar": 54
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba080bbc_d8e9eae5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2859,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-23T03:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c59486f_cbb8a4c8",
       "range": {
         "startLine": 2859,
         "startChar": 32,
@@ -181,6 +325,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b04f0934_21a6bdab",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2860,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-23T03:49:02Z",
+      "side": 1,
+      "message": "Ack, will add a tests once the CLs stabilize and will keep this comment unresolved until then.",
+      "parentUuid": "ab6f7a9c_4bf762be",
+      "range": {
+        "startLine": 2860,
+        "startChar": 62,
+        "endLine": 2860,
+        "endChar": 92
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "90368a6e_898720ca",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -192,6 +360,30 @@
       "writtenOn": "2021-01-22T14:15:49Z",
       "side": 1,
       "message": "Also set the source to what it was",
+      "range": {
+        "startLine": 6163,
+        "startChar": 76,
+        "endLine": 6163,
+        "endChar": 78
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb3b4e7a_10410deb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6163,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-23T03:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90368a6e_898720ca",
       "range": {
         "startLine": 6163,
         "startChar": 76,
@@ -225,6 +417,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94e51fce_bfb42244",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6173,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-23T03:49:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "653c26f3_44b95385",
+      "range": {
+        "startLine": 6173,
+        "startChar": 19,
+        "endLine": 6173,
+        "endChar": 90
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d78e58a7_2414b0dc",
@@ -238,6 +454,30 @@
       "writtenOn": "2021-01-22T14:15:49Z",
       "side": 1,
       "message": "This could be empty for non-wifi networks that don\u0027t have an SSID; maybe just use an empty string for details in case \"name\" is empty ?",
+      "range": {
+        "startLine": 264,
+        "startChar": 28,
+        "endLine": 264,
+        "endChar": 32
+      },
+      "revId": "c8d4ec1fbfb3bcc68c500a36c40133a6090d6314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4c6fde2_9ce459f9",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkNotificationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-01-23T03:49:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d78e58a7_2414b0dc",
       "range": {
         "startLine": 264,
         "startChar": 28,
