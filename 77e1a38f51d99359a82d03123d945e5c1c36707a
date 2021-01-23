@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "119c7641_65de3b74",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5381,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-23T13:24:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81e30221_c638b4e8",
+      "range": {
+        "startLine": 5381,
+        "startChar": 8,
+        "endLine": 5381,
+        "endChar": 12
+      },
+      "revId": "77e1a38f51d99359a82d03123d945e5c1c36707a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfcf46a4_2d4d1e80",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-22T16:30:10Z",
       "side": 1,
       "message": "Please set topic for all CLs that move this logic.\nThis is needed to prove we are refactoring them instead of copying the code.",
+      "range": {
+        "startLine": 5391,
+        "startChar": 27,
+        "endLine": 5393,
+        "endChar": 87
+      },
+      "revId": "77e1a38f51d99359a82d03123d945e5c1c36707a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a5a0d53_6d2832eb",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5393,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-23T13:24:01Z",
+      "side": 1,
+      "message": "Just like I commented on aosp/1536313, binding large of commits with same topic will make submitting code more complicated. So I don\u0027t think we should do that. Moreover, we are avoding copy/paste problem so that we add the NetworkPolicyUtils to centralize the usage of isUidNetworkingBlocked() and NPMS should refer to there as well. This is definetely refactoring, I don\u0027t understand why you think it\u0027s copying the code.",
+      "parentUuid": "cfcf46a4_2d4d1e80",
       "range": {
         "startLine": 5391,
         "startChar": 27,
