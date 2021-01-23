@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a338551_4449b482",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1294681
+      },
+      "writtenOn": "2021-01-23T04:44:53Z",
+      "side": 1,
+      "message": "Hi Chad,\n\nI think I already know the answer, but while I\u0027m here any interest in being an owner of the SigningDetailsTest?",
+      "revId": "4a29ca566b4f44b040067a7f99bf06561688e6f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
