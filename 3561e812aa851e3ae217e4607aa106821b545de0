@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "374310d4_aa7b07a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:42:38Z",
+      "side": 1,
+      "message": "Didn\u0027t get around to reviewing tests yet",
+      "revId": "3561e812aa851e3ae217e4607aa106821b545de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee49eaf8_7c3d1143",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:42:38Z",
+      "side": 1,
+      "message": "Suggest using an else block to show the mutual exclusion, instead of relying on the continue.\n\nif (...) {\n    // delayed shutdown\n} else {\n    // update snapshot\n}",
+      "range": {
+        "startLine": 378,
+        "startChar": 0,
+        "endLine": 405,
+        "endChar": 71
+      },
+      "revId": "3561e812aa851e3ae217e4607aa106821b545de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "753a164c_fb00942e",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:42:38Z",
+      "side": 1,
+      "message": "Suggest mIsRunning for consistency with VcnGatewayConnection",
+      "range": {
+        "startLine": 68,
+        "startChar": 20,
+        "endLine": 68,
+        "endChar": 31
+      },
+      "revId": "3561e812aa851e3ae217e4607aa106821b545de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98af65d4_e17b6ef6",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:42:38Z",
+      "side": 1,
+      "message": "Is this for testing? If so, suggest using @VisibleForTesting(visibility \u003d Visibility.PRIVATE)",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 187,
+        "endChar": 22
+      },
+      "revId": "3561e812aa851e3ae217e4607aa106821b545de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25869e2a_87f568a3",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:42:38Z",
+      "side": 1,
+      "message": "Not strictly required for this change, but eventually we\u0027ll need to cache this. Any chance you could just add the caching layer here?",
+      "range": {
+        "startLine": 516,
+        "startChar": 24,
+        "endLine": 516,
+        "endChar": 77
+      },
+      "revId": "3561e812aa851e3ae217e4607aa106821b545de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ecb4acb_466db368",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:42:38Z",
+      "side": 1,
+      "message": "In an attempt to prevent conflicts, let\u0027s hold off on updating individual states.\n\nMaybe add a todo above the declaration of the event, and file a bug?",
+      "range": {
+        "startLine": 692,
+        "startChar": 0,
+        "endLine": 703,
+        "endChar": 9
+      },
+      "revId": "3561e812aa851e3ae217e4607aa106821b545de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
