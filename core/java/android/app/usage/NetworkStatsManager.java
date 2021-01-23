@@ -28,9 +28,12 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.DataUsageRequest;
 import android.net.INetworkStatsService;
+import android.net.Network;
 import android.net.NetworkIdentity;
 import android.net.NetworkStack;
+import android.net.NetworkStateSnapshot;
 import android.net.NetworkTemplate;
+import android.net.VpnInfo;
 import android.net.netstats.provider.INetworkStatsProviderCallback;
 import android.net.netstats.provider.NetworkStatsProvider;
 import android.os.Binder;
@@ -48,6 +51,7 @@ import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -631,6 +635,52 @@ public class NetworkStatsManager {
                         + NetworkIdentity.scrubSubscriberId(subscriberId) + "'.");
         }
         return template;
+    }
+
+    /**
+     *  Notify {@code NetworkStatsService} about network status changed.
+     *
+     *  This is called by {@code ConnectivityService} to notify {@code NetworkStatsService}
+     *  about network state changes and VPN state changes for data accounting purpose.
+     *
+     *  To avoid races that attribute data usage to wrong network, such as new network with
+     *  the same interface after SIM hot-swap, this function will not return until
+     *  {@code NetworkStatsService} finish its work of retrieving traffic statistics from
+     *  all data sources. In other words, {@code ConnectivityService} will be blocked to
+     *  prevent any lower-layer operations such as destroy network.
+     *
+     *  Note that {@code NetworkStatsService} MUST NOT invoke any synchronous call to
+     *  {@code ConnectivityService} during the invocation of this function call, since the main
+     *  thread of {@code ConnectivityService} has been blocked. To do so would lead to
+     *  serious deadlock problems.
+     *
+     * @param defaultNetworks the list of default networks.
+     * @param networkStateSnapshots the snapshots of all network states.
+     * @param activeIface the current active interface.
+     *                    See {@link ConnectivityManager#getActiveLinkProperties}.
+     * @param vpnInfos the list of all VPNs.
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK)
+    public void notifyNetworkStatusChanged(
+            @Nullable List<Network> defaultNetworks,
+            @NonNull List<NetworkStateSnapshot> networkStateSnapshots,
+            @Nullable String activeIface,
+            @NonNull List<VpnInfo> vpnInfos) {
+        try {
+            Objects.requireNonNull(networkStateSnapshots);
+            Objects.requireNonNull(vpnInfos);
+            // TODO: Change internal namings after the name is decided.
+            mService.forceUpdateIfaces(
+                    defaultNetworks != null ? defaultNetworks.toArray(new Network[0]) : null,
+                    networkStateSnapshots.toArray(new NetworkStateSnapshot[0]), activeIface,
+                    vpnInfos.toArray(new VpnInfo[0]));
+        } catch (RemoteException e) {
+            if (DBG) Log.d(TAG, "Remote exception when notifyNetworkStatusChanged");
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     private static class CallbackHandler extends Handler {
