@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "52463d24_f1da1aa3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2021-01-23T22:04:47Z",
+      "side": 1,
+      "message": "I don\u0027t know... but in general routes on their own aren\u0027t all that useful, because you don\u0027t know if they\u0027ll actually match.  There\u0027s many types of routes... blackhole, unreachable, unicast, unicast via gw, throw, ...  It would seem weird to return each set separately...\n\nIt seems to me natural that you either return a specific route for a specific destination (and don\u0027t include a subnet prefix length, because that would be wrong), or you return at least the full routing table (and that\u0027s still ignoring the presence of multiple tables and rules)\n\n(That said I have no idea how this stuff is actually used)",
+      "parentUuid": "36a405ad_897bd85c",
+      "revId": "9ef500cc102ca5a797338bf3e8f10aa8b0e94696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c03ed3c_9281ecf0",
         "filename": "core/api/current.txt",
         "patchSetId": 3
@@ -73,6 +91,30 @@
       "side": 1,
       "message": "Yes, apps can already do \"getType() \u003d\u003d RTN_UNICAST\".\nI thought about adding this as a convenience method\n\nhiding for now",
       "parentUuid": "5c03ed3c_9281ecf0",
+      "range": {
+        "startLine": 25431,
+        "startChar": 4,
+        "endLine": 25431,
+        "endChar": 38
+      },
+      "revId": "9ef500cc102ca5a797338bf3e8f10aa8b0e94696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b03eea3_5cc556f6",
+        "filename": "core/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 25431,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2021-01-23T22:04:47Z",
+      "side": 1,
+      "message": "(imho trivial methods like this should be public...)",
+      "parentUuid": "688f0a90_796ec4dd",
       "range": {
         "startLine": 25431,
         "startChar": 4,
