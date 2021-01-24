@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007556195",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1550598?revision\u003d6",
+      "fixSuggestions": [
+        {
+          "fixId": "5e4c6b12_601b0930",
+          "description": "Change to \"telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+              "range": {
+                "startLine": 269,
+                "startChar": 19,
+                "endLine": 269,
+                "endChar": 26
+              },
+              "replacement": "the"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "aeda5d2e_772b28c9",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-24T05:40:42Z",
+      "side": 1,
+      "message": "Common typo found: \"the the\" -- should it be \"the\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 269,
+        "startChar": 19,
+        "endLine": 269,
+        "endChar": 26
+      },
+      "revId": "249fa231cd66c73cf041530ae0eb4f295fa6ad7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
