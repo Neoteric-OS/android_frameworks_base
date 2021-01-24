@@ -19,7 +19,10 @@ package com.android.mediastresstest;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
+import android.opengl.GLES20;
 import android.util.Log;
+import android.util.Pair;
+import android.view.Surface;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,10 +36,19 @@ import static org.junit.Assert.assertTrue;
 
 public class CodecEncoderTest extends CodecEncoderTestBase {
     private static final String LOG_TAG = CodecEncoderTest.class.getSimpleName();
+    private static final int[] testRGB0 = new int[]{47, 147, 220};
+    private static final int[] testRGB1 = new int[]{255, 201, 14};
+
     private final int[] mBitrates;
     private final int[] mEncParamList1;
     private final int[] mEncParamList2;
     public ArrayList<MediaFormat> mFormats;
+
+    private int mLatency;
+    private boolean mReviseLatency;
+    private boolean mSurfaceMode;
+    private Surface mInpSurface;
+    private EGLWindowSurface mEGLWindowInpSurface;
 
     public enum Menu {
         ENCODE,
@@ -57,6 +69,8 @@ public class CodecEncoderTest extends CodecEncoderTestBase {
         mEncParamList1 = encoderInfo1;
         mEncParamList2 = encoderInfo2;
         mFormats = new ArrayList<>();
+        mLatency = mMaxBFrames;
+        mReviseLatency = false;
     }
 
     void dequeueOutput(int bufferIndex, MediaCodec.BufferInfo info) {
@@ -91,6 +105,20 @@ public class CodecEncoderTest extends CodecEncoderTestBase {
             {MediaFormat.MIMETYPE_VIDEO_AV1, new int[]{256000}, new int[]{176, 352},
                     new int[]{144, 240}},
     });
+
+    void configureCodec(MediaFormat format, boolean isAsync, boolean signalEOSWithLastFrame,
+            boolean isEncoder) {
+        super.configureCodec(format, isAsync, signalEOSWithLastFrame, true);
+        if (mSurfaceMode) {
+            if (mCodec.getInputFormat().containsKey(MediaFormat.KEY_LATENCY)) {
+                mReviseLatency = true;
+                mLatency = mCodec.getInputFormat().getInteger(MediaFormat.KEY_LATENCY);
+            }
+            mInpSurface = mCodec.createInputSurface();
+            assertTrue("Surface is not valid", mInpSurface.isValid());
+            mEGLWindowInpSurface = new EGLWindowSurface(mInpSurface);
+        }
+    }
 
     void setUpSource() throws IOException {
         setUpSource(mInputFile);
@@ -161,10 +189,139 @@ public class CodecEncoderTest extends CodecEncoderTestBase {
         }
     }
 
-    public void encode(String encoder, boolean isAsync, boolean eosType, int frameLimit,
-            byte[] inputData) throws IOException, InterruptedException {
+    private long computePresentationTime(int frameIndex) {
+        return frameIndex * 1000000L / mFrameRate;
+    }
+
+    private void generateSurfaceFrame(int frameIndex) {
+        frameIndex %= 8;
+
+        int startX, startY;
+        if (frameIndex < 4) {
+            // (0,0) is bottom-left in GL
+            startX = frameIndex * (mWidth / 4);
+            startY = mHeight / 2;
+        } else {
+            startX = (7 - frameIndex) * (mWidth / 4);
+            startY = 0;
+        }
+
+        GLES20.glDisable(GLES20.GL_SCISSOR_TEST);
+        GLES20.glClearColor(testRGB0[0] / 255.0f, testRGB0[1] / 255.0f, testRGB0[2] / 255.0f, 1.0f);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+        GLES20.glEnable(GLES20.GL_SCISSOR_TEST);
+        GLES20.glScissor(startX, startY, mWidth / 4, mHeight / 2);
+        GLES20.glClearColor(testRGB1[0] / 255.0f, testRGB1[1] / 255.0f, testRGB1[2] / 255.0f, 1.0f);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+    }
+
+    void doWork(int frameLimit) throws InterruptedException, IOException {
+        int frameCount = 0;
+        if (mIsCodecInAsyncMode) {
+            // dequeue output after inputEOS is expected to be done in waitForAllOutputs()
+            while (!mAsyncHandle.hasSeenError() && !mSawInputEOS) {
+                int retry = 0;
+                while (mReviseLatency) {
+                    if (mAsyncHandle.hasOutputFormatChanged()) {
+                        mReviseLatency = false;
+                        int actualLatency = mAsyncHandle.getOutputFormat()
+                                .getInteger(MediaFormat.KEY_LATENCY, mLatency);
+                        if (mLatency < actualLatency) {
+                            mLatency = actualLatency;
+                            return;
+                        }
+                    } else {
+                        if (retry > 10) throw new InterruptedException(
+                                "did not receive output format changed for encoder");
+                        Thread.sleep(Q_DEQ_TIMEOUT_US / 1000);
+                        retry ++;
+                    }
+                }
+                if (mSurfaceMode && (mInputCount - mOutputCount <= mLatency)) {
+                    if (frameCount < frameLimit) {
+                        long pts = mInputOffsetPts + computePresentationTime(mInputCount);
+                        mEGLWindowInpSurface.makeCurrent();
+                        generateSurfaceFrame(mInputCount);
+                        mEGLWindowInpSurface.setPresentationTime(pts * 1000);
+                        if (ENABLE_LOGS) Log.d(LOG_TAG, "inputSurface swapBuffers");
+                        mEGLWindowInpSurface.swapBuffers();
+                        mOutputBuff.saveInPTS(pts);
+                        mInputCount++;
+                        frameCount++;
+                    } else {
+                        mCodec.signalEndOfInputStream();
+                        mSawInputEOS = true;
+                    }
+                    continue;
+                }
+                Pair<Integer, MediaCodec.BufferInfo> element = mAsyncHandle.getWork();
+                if (element != null) {
+                    int bufferID = element.first;
+                    MediaCodec.BufferInfo info = element.second;
+                    if (info != null) {
+                        // <id, info> corresponds to output callback. Handle it accordingly
+                        dequeueOutput(bufferID, info);
+                    } else {
+                        // <id, null> corresponds to input callback. Handle it accordingly
+                        if (frameCount < frameLimit) {
+                            enqueueInput(bufferID);
+                            frameCount++;
+                        } else {
+                            enqueueEOS(bufferID);
+                        }
+                    }
+                }
+            }
+        } else {
+            MediaCodec.BufferInfo outInfo = new MediaCodec.BufferInfo();
+            // dequeue output after inputEOS is expected to be done in waitForAllOutputs()
+            while (!mSawInputEOS) {
+                if (mSurfaceMode) {
+                    if (mInputCount - mOutputCount <= mLatency) {
+                        if (frameCount < frameLimit) {
+                            long pts = mInputOffsetPts + computePresentationTime(mInputCount);
+                            mEGLWindowInpSurface.makeCurrent();
+                            generateSurfaceFrame(mInputCount);
+                            mEGLWindowInpSurface.setPresentationTime(pts * 1000);
+                            if (ENABLE_LOGS) Log.d(LOG_TAG, "inputSurface swapBuffers");
+                            mEGLWindowInpSurface.swapBuffers();
+                            mOutputBuff.saveInPTS(pts);
+                            mInputCount++;
+                            frameCount++;
+                        } else {
+                            mCodec.signalEndOfInputStream();
+                            mSawInputEOS = true;
+                        }
+                        continue;
+                    }
+                } else {
+                    int inputBufferId = mCodec.dequeueInputBuffer(Q_DEQ_TIMEOUT_US);
+                    if (inputBufferId != -1) {
+                        if (frameCount < frameLimit) {
+                            enqueueInput(inputBufferId);
+                            frameCount++;
+                        } else {
+                            enqueueEOS(inputBufferId);
+                        }
+                    }
+                }
+                int outputBufferId = mCodec.dequeueOutputBuffer(outInfo, Q_DEQ_TIMEOUT_US);
+                if (outputBufferId >= 0) {
+                    dequeueOutput(outputBufferId, outInfo);
+                } else if (outputBufferId == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
+                    mOutFormat = mCodec.getOutputFormat();
+                    mLatency = mOutFormat.getInteger(MediaFormat.KEY_LATENCY, mLatency);
+                    mSignalledOutFormatChanged = true;
+                }
+            }
+        }
+    }
+
+    public void encode(String encoder, boolean isAsync, boolean eosType, boolean modeSurface,
+            int frameLimit, byte[] inputData) throws IOException, InterruptedException {
+        mSurfaceMode = !mIsAudio && modeSurface;
         setUpParams(Integer.MAX_VALUE);
-        mInputData = inputData;
+        if (!mSurfaceMode) mInputData = inputData;
         mSaveToMem = false;
         mOutputBuff = new OutputManager();
         assertTrue("codec name act/got: " + mCodec.getName() + '/' + encoder,
@@ -183,14 +340,24 @@ public class CodecEncoderTest extends CodecEncoderTestBase {
             doWork(frameLimit);
             queueEOS();
             waitForAllOutputs();
+            if (mSurfaceMode) {
+                mEGLWindowInpSurface.release();
+                mInpSurface.release();
+                mInpSurface = null;
+            }
             mCodec.reset();
             checkErrorAndVerifyPTS(log);
         }
     }
 
-    public void flushAndEncode(String encoder, boolean isAsync, int frameLimit, byte[] inputData)
-            throws IOException, InterruptedException {
+    public void flushAndEncode(String encoder, boolean isAsync, boolean modeSurface, int frameLimit,
+            byte[] inputData) throws IOException, InterruptedException {
+        // TODO: flush don't set all flags required e.g. mEndOfStreamSent from
+        //  GraphicBufferSource due to which unable to submit input after flush
+        // mSurfaceMode = !mIsAudio && modeSurface;
+        mSurfaceMode = false;
         setUpParams(1);
+        if (!mSurfaceMode) mInputData = inputData;
         mInputData = inputData;
         mSaveToMem = false;
         mOutputBuff = new OutputManager();
@@ -225,13 +392,20 @@ public class CodecEncoderTest extends CodecEncoderTestBase {
         doWork(frameLimit);
         queueEOS();
         waitForAllOutputs();
+        if (mSurfaceMode) {
+            mEGLWindowInpSurface.release();
+            mInpSurface.release();
+            mInpSurface = null;
+        }
         mCodec.reset();
         checkErrorAndVerifyPTS(log);
     }
 
-    public void reconfigure(String encoder, boolean isAsync, int frameLimit, byte[] inputData)
-            throws IOException, InterruptedException {
+    public void reconfigure(String encoder, boolean isAsync, boolean modeSurface, int frameLimit,
+            byte[] inputData) throws IOException, InterruptedException {
+        mSurfaceMode = !mIsAudio && modeSurface;
         setUpParams(2);
+        if (!mSurfaceMode) mInputData = inputData;
         mInputData = inputData;
         MediaFormat format = mFormats.get(0);
         initParams(format);
@@ -283,19 +457,24 @@ public class CodecEncoderTest extends CodecEncoderTestBase {
             mCodec.reset();
             checkErrorAndVerifyPTS(log);
         }
+        if (mSurfaceMode) {
+            mEGLWindowInpSurface.release();
+            mInpSurface.release();
+            mInpSurface = null;
+        }
     }
 
     public static void isEncoderRunPass(CodecEncoderTest cet, String encoder, boolean isAsync,
-            boolean eosType, int frames, Menu lunch, byte[] inputData)
+            boolean eosType, boolean modeSurface, int frames, Menu lunch, byte[] inputData)
             throws IOException, InterruptedException {
         do {
             try {
                 if (lunch == Menu.ENCODE)
-                    cet.encode(encoder, isAsync, eosType, frames, inputData);
+                    cet.encode(encoder, isAsync, eosType, modeSurface, frames, inputData);
                 else if (lunch == Menu.FLUSH)
-                    cet.flushAndEncode(encoder, isAsync, frames, inputData);
+                    cet.flushAndEncode(encoder, isAsync, modeSurface, frames, inputData);
                 else if (lunch == Menu.RECONFIGURE)
-                    cet.reconfigure(encoder, isAsync, frames, inputData);
+                    cet.reconfigure(encoder, isAsync, modeSurface, frames, inputData);
                 break;
             } catch (MediaCodec.CodecException e) {
                 if (e.isTransient()) Thread.sleep(1000);
@@ -308,6 +487,7 @@ public class CodecEncoderTest extends CodecEncoderTestBase {
 class EncodeParallel implements Callable<Void> {
     private final long mSeed = 0x12b9b0a1;  // random seed
     private final Random rand = new Random(mSeed);
+    private final int mMaxSamples = 1000;
     CodecEncoderTest mCet;
     private final String mEncoder;
     CodecEncoderTest.Menu mSelector;
@@ -325,9 +505,11 @@ class EncodeParallel implements Callable<Void> {
     public Void call() throws IOException, InterruptedException {
         final boolean isAsync = ((rand.nextInt() & 1) == 0);
         final boolean eosType = ((rand.nextInt() & 1) == 0);
-        final int frames = Integer.MAX_VALUE;
+        final boolean modeSurface = ((rand.nextInt() & 1) == 0);
+        int frames = rand.nextInt(Integer.MAX_VALUE);
+        if (modeSurface) frames = Math.min(mMaxSamples, frames);
         mCet.mCodec = MediaCodec.createByCodecName(mEncoder);
-        CodecEncoderTest.isEncoderRunPass(mCet, mEncoder, isAsync, eosType, frames,
+        CodecEncoderTest.isEncoderRunPass(mCet, mEncoder, isAsync, eosType, modeSurface, frames,
                 mSelector, mInputData);
         mCet.mCodec.release();
         return null;
