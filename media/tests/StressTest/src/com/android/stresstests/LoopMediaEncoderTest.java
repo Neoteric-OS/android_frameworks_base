@@ -147,10 +147,11 @@ public class LoopMediaEncoderTest {
             for (int i = 1; i <= mMaxIterations; i++) {
                 boolean isAsync = ((rand.nextInt() & 1) == 0);
                 boolean eosType = ((rand.nextInt() & 1) == 0);
+                boolean surfaceMode = !cet.mIsAudio && ((rand.nextInt() & 1) == 0);
                 int numFrames = rand.nextInt(mMaxSamples);
-                if ((i & (i - 1)) == 0) numFrames = Integer.MAX_VALUE;
-                CodecEncoderTest.isEncoderRunPass(cet, encoder, isAsync, eosType, numFrames,
-                        CodecEncoderTest.randomChoice(rand), inputData);
+                if (!surfaceMode && (i & (i - 1)) == 0) numFrames = Integer.MAX_VALUE;
+                CodecEncoderTest.isEncoderRunPass(cet, encoder, isAsync, eosType, surfaceMode,
+                        numFrames, CodecEncoderTest.randomChoice(rand), inputData);
             }
             cet.mCodec.release();
         }
