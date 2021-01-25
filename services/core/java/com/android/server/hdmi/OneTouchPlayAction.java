@@ -142,7 +142,7 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
         mCallbacks.add(callback);
     }
 
-    private void invokeCallback(int result) {
+    protected void invokeCallback(int result) {
         try {
             for (IHdmiControlCallback callback : mCallbacks) {
                 callback.onComplete(result);

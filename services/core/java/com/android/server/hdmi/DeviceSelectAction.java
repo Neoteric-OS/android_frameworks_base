@@ -21,8 +21,8 @@ import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.HdmiTvClient;
 import android.hardware.hdmi.IHdmiControlCallback;
 import android.hardware.tv.cec.V1_0.SendMessageResult;
-import android.os.RemoteException;
 import android.util.Slog;
+
 import com.android.server.hdmi.HdmiControlService.SendMessageCallback;
 
 /**
@@ -59,7 +59,6 @@ final class DeviceSelectAction extends HdmiCecFeatureAction {
     private static final int STATE_WAIT_FOR_DEVICE_POWER_ON = 3;
 
     private final HdmiDeviceInfo mTarget;
-    private final IHdmiControlCallback mCallback;
     private final HdmiCecMessage mGivePowerStatus;
 
     private int mPowerStatusCounter = 0;
@@ -73,8 +72,7 @@ final class DeviceSelectAction extends HdmiCecFeatureAction {
      */
     public DeviceSelectAction(HdmiCecLocalDeviceTv source,
             HdmiDeviceInfo target, IHdmiControlCallback callback) {
-        super(source);
-        mCallback = callback;
+        super(source, callback);
         mTarget = target;
         mGivePowerStatus = HdmiCecMessageBuilder.buildGiveDevicePowerStatus(
                 getSourceAddress(), getTargetAddress());
@@ -198,17 +196,6 @@ final class DeviceSelectAction extends HdmiCecFeatureAction {
                 mPowerStatusCounter++;
                 queryDevicePowerStatus();
                 break;
-        }
-    }
-
-    private void invokeCallback(int result) {
-        if (mCallback == null) {
-            return;
-        }
-        try {
-            mCallback.onComplete(result);
-        } catch (RemoteException e) {
-            Slog.e(TAG, "Callback failed:" + e);
         }
     }
 }

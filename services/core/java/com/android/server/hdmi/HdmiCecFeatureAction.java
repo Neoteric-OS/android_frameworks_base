@@ -15,9 +15,12 @@
  */
 package com.android.server.hdmi;
 
+import android.annotation.Nullable;
+import android.hardware.hdmi.IHdmiControlCallback;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.RemoteException;
 import android.util.Pair;
 import android.util.Slog;
 
@@ -61,7 +64,14 @@ abstract class HdmiCecFeatureAction {
 
     private ArrayList<Pair<HdmiCecFeatureAction, Runnable>> mOnFinishedCallbacks;
 
+    @Nullable final IHdmiControlCallback mCallback;
+
     HdmiCecFeatureAction(HdmiCecLocalDevice source) {
+        this(source, null);
+    }
+
+    HdmiCecFeatureAction(HdmiCecLocalDevice source, IHdmiControlCallback callback) {
+        mCallback = callback;
         mSource = source;
         mService = mSource.getService();
         mActionTimer = createActionTimer(mService.getServiceLooper());
@@ -281,5 +291,21 @@ abstract class HdmiCecFeatureAction {
             mOnFinishedCallbacks = new ArrayList<>();
         }
         mOnFinishedCallbacks.add(Pair.create(action, runnable));
+    }
+
+    protected void invokeCallback(int result) {
+        if (mCallback == null) {
+            return;
+        }
+        try {
+            mCallback.onComplete(result);
+        } catch (RemoteException e) {
+            Slog.e(TAG, "Callback failed:" + e);
+        }
+    }
+
+    protected void finishWithCallback(int returnCode) {
+        invokeCallback(returnCode);
+        finish();
     }
 }
