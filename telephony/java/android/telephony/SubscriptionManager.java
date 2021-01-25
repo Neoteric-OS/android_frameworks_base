@@ -75,6 +75,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
@@ -2449,8 +2450,9 @@ public class SubscriptionManager {
         // Check if resources for this context and subId already exist in the resource cache.
         // Resources that use the root locale are not cached.
         Pair<Context, Integer> cacheKey = null;
+        Context appContext = getApplicationContext(context);
         if (isValidSubscriptionId(subId) && !useRootLocale) {
-            cacheKey = Pair.create(context, subId);
+            cacheKey = Pair.create(appContext, subId);
             if (sResourcesCache.containsKey(cacheKey)) {
                 // Cache hit. Use cached Resources.
                 return sResourcesCache.get(cacheKey);
@@ -2458,7 +2460,7 @@ public class SubscriptionManager {
         }
 
         final SubscriptionInfo subInfo =
-                SubscriptionManager.from(context).getActiveSubscriptionInfo(subId);
+                SubscriptionManager.from(appContext).getActiveSubscriptionInfo(subId);
 
         Configuration overrideConfig = new Configuration();
         if (subInfo != null) {
@@ -2476,7 +2478,7 @@ public class SubscriptionManager {
         // Note that if the original context configuration changes, the resources here will also
         // change for all values except those overridden by newConfig (e.g. if the device has an
         // orientation change).
-        Context newContext = context.createConfigurationContext(overrideConfig);
+        Context newContext = appContext.createConfigurationContext(overrideConfig);
         Resources res = newContext.getResources();
 
         if (cacheKey != null) {
@@ -2484,6 +2486,19 @@ public class SubscriptionManager {
             sResourcesCache.put(cacheKey, res);
         }
         return res;
+    }
+
+    private static Context getApplicationContext(Context context) {
+        if (context == null) {
+            return null;
+        }
+        Context appContext = context.getApplicationContext();
+        if (appContext != null) {
+            if (!Objects.equals(context.getAttributionTag(), appContext.getAttributionTag())) {
+                appContext = appContext.createAttributionContext(context.getAttributionTag());
+            }
+        }
+        return appContext;
     }
 
     /**

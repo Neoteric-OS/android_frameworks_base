@@ -2764,51 +2764,56 @@ public final class BluetoothAdapter {
             return false;
         }
 
+        Context appContext = context.getApplicationContext();
+        if (appContext == null) {
+            return false;
+        }
+
         if (profile == BluetoothProfile.HEADSET) {
-            BluetoothHeadset headset = new BluetoothHeadset(context, listener);
+            BluetoothHeadset headset = new BluetoothHeadset(appContext, listener);
             return true;
         } else if (profile == BluetoothProfile.A2DP) {
-            BluetoothA2dp a2dp = new BluetoothA2dp(context, listener);
+            BluetoothA2dp a2dp = new BluetoothA2dp(appContext, listener);
             return true;
         } else if (profile == BluetoothProfile.A2DP_SINK) {
-            BluetoothA2dpSink a2dpSink = new BluetoothA2dpSink(context, listener);
+            BluetoothA2dpSink a2dpSink = new BluetoothA2dpSink(appContext, listener);
             return true;
         } else if (profile == BluetoothProfile.AVRCP_CONTROLLER) {
-            BluetoothAvrcpController avrcp = new BluetoothAvrcpController(context, listener);
+            BluetoothAvrcpController avrcp = new BluetoothAvrcpController(appContext, listener);
             return true;
         } else if (profile == BluetoothProfile.HID_HOST) {
-            BluetoothHidHost iDev = new BluetoothHidHost(context, listener);
+            BluetoothHidHost iDev = new BluetoothHidHost(appContext, listener);
             return true;
         } else if (profile == BluetoothProfile.PAN) {
-            BluetoothPan pan = new BluetoothPan(context, listener);
+            BluetoothPan pan = new BluetoothPan(appContext, listener);
             return true;
         } else if (profile == BluetoothProfile.PBAP) {
-            BluetoothPbap pbap = new BluetoothPbap(context, listener);
+            BluetoothPbap pbap = new BluetoothPbap(appContext, listener);
             return true;
         } else if (profile == BluetoothProfile.HEALTH) {
             Log.e(TAG, "getProfileProxy(): BluetoothHealth is deprecated");
             return false;
         } else if (profile == BluetoothProfile.MAP) {
-            BluetoothMap map = new BluetoothMap(context, listener);
+            BluetoothMap map = new BluetoothMap(appContext, listener);
             return true;
         } else if (profile == BluetoothProfile.HEADSET_CLIENT) {
-            BluetoothHeadsetClient headsetClient = new BluetoothHeadsetClient(context, listener);
+            BluetoothHeadsetClient headsetClient = new BluetoothHeadsetClient(appContext, listener);
             return true;
         } else if (profile == BluetoothProfile.SAP) {
-            BluetoothSap sap = new BluetoothSap(context, listener);
+            BluetoothSap sap = new BluetoothSap(appContext, listener);
             return true;
         } else if (profile == BluetoothProfile.PBAP_CLIENT) {
-            BluetoothPbapClient pbapClient = new BluetoothPbapClient(context, listener);
+            BluetoothPbapClient pbapClient = new BluetoothPbapClient(appContext, listener);
             return true;
         } else if (profile == BluetoothProfile.MAP_CLIENT) {
-            BluetoothMapClient mapClient = new BluetoothMapClient(context, listener);
+            BluetoothMapClient mapClient = new BluetoothMapClient(appContext, listener);
             return true;
         } else if (profile == BluetoothProfile.HID_DEVICE) {
-            BluetoothHidDevice hidDevice = new BluetoothHidDevice(context, listener);
+            BluetoothHidDevice hidDevice = new BluetoothHidDevice(appContext, listener);
             return true;
         } else if (profile == BluetoothProfile.HEARING_AID) {
             if (isHearingAidProfileSupported()) {
-                BluetoothHearingAid hearingAid = new BluetoothHearingAid(context, listener);
+                BluetoothHearingAid hearingAid = new BluetoothHearingAid(appContext, listener);
                 return true;
             }
             return false;
