@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbb8cc11_1e1ab050",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-25T18:24:00Z",
+      "side": 1,
+      "message": "Looks good, just a few more things including feedback from API council in a few places",
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "385592ce_ba156437",
+        "filename": "telephony/java/android/telephony/ims/RcsContactPresenceTuple.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-25T18:24:00Z",
+      "side": 1,
+      "message": "nit: \"The service ID used to indicate that MMTEL service is available.\n\u003cp\u003e\nSee the GSMA RCC.07 specification for more information.\"\n\nCan you also fix the comments below?",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 35
+      },
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50dee72a_76fe2c2c",
+        "filename": "telephony/java/android/telephony/ims/RcsContactPresenceTuple.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-25T18:24:00Z",
+      "side": 1,
+      "message": "Why are these @hide? We can probably make them @SystemApi",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6e0b52b_5b17a9a2",
+        "filename": "telephony/java/android/telephony/ims/RcsContactPresenceTuple.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-25T18:24:00Z",
+      "side": 1,
+      "message": "nit: \"See RFC3865 for more information\"",
+      "range": {
+        "startLine": 329,
+        "startChar": 76,
+        "endLine": 329,
+        "endChar": 92
+      },
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c8d81f4_a631515b",
+        "filename": "telephony/java/android/telephony/ims/RcsUceAdapter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-25T18:24:00Z",
+      "side": 1,
+      "message": "The API council doesnt like this wording because it sounds like \"is the network available\".\n\nCan we change the name here to: \"requestAvailability\"",
+      "range": {
+        "startLine": 573,
+        "startChar": 16,
+        "endLine": 573,
+        "endChar": 42
+      },
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8084751c_17134911",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-25T18:24:00Z",
+      "side": 1,
+      "message": "can this also be changed to \"sipCode\"",
+      "range": {
+        "startLine": 154,
+        "startChar": 67,
+        "endLine": 154,
+        "endChar": 71
+      },
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "facaea23_aea43326",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-25T18:24:00Z",
+      "side": 1,
+      "message": "\"sipCode\"",
+      "range": {
+        "startLine": 190,
+        "startChar": 35,
+        "endLine": 190,
+        "endChar": 39
+      },
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0c5e7f8_8d5964dd",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-25T18:24:00Z",
+      "side": 1,
+      "message": "API council feedback: Should be \"sipCode\" here, can you rename?",
+      "range": {
+        "startLine": 234,
+        "startChar": 67,
+        "endLine": 234,
+        "endChar": 71
+      },
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
