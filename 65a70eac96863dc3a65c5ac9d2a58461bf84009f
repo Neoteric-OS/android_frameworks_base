@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a49d2bf5_9de9a7e8",
+        "filename": "telephony/java/android/telephony/ims/RcsContactPresenceTuple.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-25T20:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "385592ce_ba156437",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 35
+      },
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "50dee72a_76fe2c2c",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-01-25T18:24:00Z",
       "side": 1,
       "message": "Why are these @hide? We can probably make them @SystemApi",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a585f6ad_dde3abfd",
+        "filename": "telephony/java/android/telephony/ims/RcsContactPresenceTuple.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-25T20:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50dee72a_76fe2c2c",
       "range": {
         "startLine": 49,
         "startChar": 8,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1149459b_2cfc6b0c",
+        "filename": "telephony/java/android/telephony/ims/RcsContactPresenceTuple.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-25T20:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6e0b52b_5b17a9a2",
+      "range": {
+        "startLine": 329,
+        "startChar": 76,
+        "endLine": 329,
+        "endChar": 92
+      },
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c8d81f4_a631515b",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-01-25T18:24:00Z",
       "side": 1,
       "message": "The API council doesnt like this wording because it sounds like \"is the network available\".\n\nCan we change the name here to: \"requestAvailability\"",
+      "range": {
+        "startLine": 573,
+        "startChar": 16,
+        "endLine": 573,
+        "endChar": 42
+      },
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20243f7b_dd9a432f",
+        "filename": "telephony/java/android/telephony/ims/RcsUceAdapter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-25T20:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c8d81f4_a631515b",
       "range": {
         "startLine": 573,
         "startChar": 16,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "254e5733_6ae57f66",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-25T20:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8084751c_17134911",
+      "range": {
+        "startLine": 154,
+        "startChar": 67,
+        "endLine": 154,
+        "endChar": 71
+      },
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "facaea23_aea43326",
@@ -156,6 +276,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "52178ca1_1acea311",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-25T20:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "facaea23_aea43326",
+      "range": {
+        "startLine": 190,
+        "startChar": 35,
+        "endLine": 190,
+        "endChar": 39
+      },
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0c5e7f8_8d5964dd",
@@ -169,6 +313,30 @@
       "writtenOn": "2021-01-25T18:24:00Z",
       "side": 1,
       "message": "API council feedback: Should be \"sipCode\" here, can you rename?",
+      "range": {
+        "startLine": 234,
+        "startChar": 67,
+        "endLine": 234,
+        "endChar": 71
+      },
+      "revId": "65a70eac96863dc3a65c5ac9d2a58461bf84009f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdaddde7_2d8108a5",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-25T20:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0c5e7f8_8d5964dd",
       "range": {
         "startLine": 234,
         "startChar": 67,
