@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86448c79_e8e61d8e",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-25T09:41:08Z",
+      "side": 1,
+      "message": "Can you make this:\n\n  private \u003cT extends Parcelable\u003e void writeArraySet(Parcel in, @Nullable ArraySet\u003cT\u003e val)\n\nusing writeParcelable ? This should be more efficient than using writeValue for each value (which adds an extra value for the type)",
+      "range": {
+        "startLine": 1768,
+        "startChar": 4,
+        "endLine": 1768,
+        "endChar": 83
+      },
+      "revId": "37e0e42060a6a12926e2a405273dd9bb4e278526",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "baaa293c_51d136c7",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1824,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-25T09:41:08Z",
+      "side": 1,
+      "message": "Similarly, probably rename this to readParcelableArraySet and specialize it for parcelables",
+      "range": {
+        "startLine": 1824,
+        "startChar": 57,
+        "endLine": 1824,
+        "endChar": 69
+      },
+      "revId": "37e0e42060a6a12926e2a405273dd9bb4e278526",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
