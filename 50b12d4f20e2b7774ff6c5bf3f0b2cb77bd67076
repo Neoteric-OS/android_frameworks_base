@@ -34,6 +34,23 @@
       "parentUuid": "a7a2105d_60a63bdc",
       "revId": "50b12d4f20e2b7774ff6c5bf3f0b2cb77bd67076",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95af7f8c_90d17ba5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-25T13:45:11Z",
+      "side": 1,
+      "message": "Gah. +jreck for real this time.",
+      "revId": "50b12d4f20e2b7774ff6c5bf3f0b2cb77bd67076",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
