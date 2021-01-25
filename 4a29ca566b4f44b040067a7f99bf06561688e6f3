@@ -39,6 +39,30 @@
       },
       "revId": "4a29ca566b4f44b040067a7f99bf06561688e6f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d6b75d1_b250745e",
+        "filename": "core/tests/coretests/src/android/content/pm/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1294681
+      },
+      "writtenOn": "2021-01-25T19:27:36Z",
+      "side": 1,
+      "message": "Since this is signing related Chad would be the best (and probably only) option for another owner.\n\n@Chad, sorry for all the buses; my way of saying thanks for NIAP :)",
+      "parentUuid": "d332d468_5267d71c",
+      "range": {
+        "startLine": 2,
+        "startChar": 35,
+        "endLine": 2,
+        "endChar": 55
+      },
+      "revId": "4a29ca566b4f44b040067a7f99bf06561688e6f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
