@@ -206,7 +206,7 @@ public class NetworkDiagnostics {
         }
 
         for (RouteInfo route : mLinkProperties.getRoutes()) {
-            if (route.hasGateway()) {
+            if (route.isUnicast() && route.hasGateway()) {
                 InetAddress gateway = route.getGateway();
                 prepareIcmpMeasurement(gateway);
                 if (route.isIPv6Default()) {
