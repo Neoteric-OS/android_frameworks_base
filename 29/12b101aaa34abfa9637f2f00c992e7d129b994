@@ -1,0 +1,15 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Open-Source-Licensing+1: Anish Khan <mkhan3@zebra.corp-partner.google.com>
+Verified+1: Anish Khan <mkhan3@zebra.corp-partner.google.com>
+Code-Review+1: Anish Khan <mkhan3@zebra.corp-partner.google.com>
+Code-Review+1: Nikita Ioffe <ioffe@google.com>
+Code-Review+2: Paul Crowley <paulcrowley@google.com>
+Code-Review+1: Jeff Sharkey <jsharkey@google.com>
+Lint+2: Anish Khan <mkhan3@zebra.corp-partner.google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Nikita Ioffe <ioffe@google.com>
+Submitted-at: Mon, 25 Jan 2021 21:44:31 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1559104
+Project: platform/frameworks/base
+Branch: refs/heads/master
