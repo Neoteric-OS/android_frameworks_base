@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e93176f6_690e2329",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1005967
+      },
+      "writtenOn": "2021-01-25T21:56:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure if that ever happens, and we can do the three way switch at that time, I think (it would be a @Nullable Boolean). Right now it would only make the code more complex.",
+      "parentUuid": "62d4f284_8912e6f5",
+      "revId": "30fffc57abe38d13648cb32878b0aed426540adf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cb2d0b62_bb827dec",
         "filename": "core/jni/com_android_internal_os_Zygote.cpp",
         "patchSetId": 2
