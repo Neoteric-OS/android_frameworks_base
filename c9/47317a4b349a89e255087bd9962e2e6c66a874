@@ -1,0 +1,10 @@
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Code-Review+2: Chalard Jean <jchalard@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+API-Review+1: Chalard Jean <jchalard@google.com>
+Submitted-by: Daniel Bright <dbright@google.com>
+Submitted-at: Mon, 25 Jan 2021 18:03:30 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1510591
+Project: platform/frameworks/base
+Branch: refs/heads/master
