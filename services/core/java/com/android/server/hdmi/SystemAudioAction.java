@@ -21,8 +21,7 @@ import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.IHdmiControlCallback;
 import android.hardware.tv.cec.V1_0.SendMessageResult;
-import android.os.RemoteException;
-import android.util.Slog;
+
 import java.util.List;
 
 /**
@@ -193,18 +192,5 @@ abstract class SystemAudioAction extends HdmiCecFeatureAction {
                 handleSendSystemAudioModeRequestTimeout();
                 return;
         }
-    }
-
-    // TODO: if IHdmiControlCallback is general to other FeatureAction,
-    //       move it into FeatureAction.
-    protected void finishWithCallback(int returnCode) {
-        if (mCallback != null) {
-            try {
-                mCallback.onComplete(returnCode);
-            } catch (RemoteException e) {
-                Slog.e(TAG, "Failed to invoke callback.", e);
-            }
-        }
-        finish();
     }
 }

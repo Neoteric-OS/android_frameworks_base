@@ -20,7 +20,6 @@ import android.annotation.Nullable;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.IHdmiControlCallback;
-import android.os.RemoteException;
 import android.util.Slog;
 
 import com.android.server.hdmi.HdmiControlService.SendMessageCallback;
@@ -147,11 +146,6 @@ final class RoutingControlAction extends HdmiCecFeatureAction {
                 mCurrentRoutingPath));
     }
 
-    private void finishWithCallback(int result) {
-        invokeCallback(result);
-        finish();
-    }
-
     @Override
     public void handleTimerEvent(int timeoutState) {
         if (mState != timeoutState || mState == STATE_NONE) {
@@ -198,17 +192,6 @@ final class RoutingControlAction extends HdmiCecFeatureAction {
             updateActiveInput();
             sendSetStreamPath();
             finishWithCallback(HdmiControlManager.RESULT_SUCCESS);
-        }
-    }
-
-    private void invokeCallback(int result) {
-        if (mCallback == null) {
-            return;
-        }
-        try {
-            mCallback.onComplete(result);
-        } catch (RemoteException e) {
-            // Do nothing.
         }
     }
 }

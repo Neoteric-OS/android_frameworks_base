@@ -20,8 +20,7 @@ import android.annotation.Nullable;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.IHdmiControlCallback;
 import android.hardware.tv.cec.V1_0.SendMessageResult;
-import android.os.RemoteException;
-import android.util.Slog;
+
 import com.android.server.hdmi.HdmiControlService.SendMessageCallback;
 
 /**
@@ -95,17 +94,6 @@ final class SystemAudioStatusAction extends HdmiCecFeatureAction {
             sendUserControlPressedAndReleased(mAvrAddress, HdmiCecKeycode.CEC_KEYCODE_MUTE);
         }
         finishWithCallback(HdmiControlManager.RESULT_SUCCESS);
-    }
-
-    private void finishWithCallback(int returnCode) {
-        if (mCallback != null) {
-            try {
-                mCallback.onComplete(returnCode);
-            } catch (RemoteException e) {
-                Slog.e(TAG, "Failed to invoke callback.", e);
-            }
-        }
-        finish();
     }
 
     @Override
