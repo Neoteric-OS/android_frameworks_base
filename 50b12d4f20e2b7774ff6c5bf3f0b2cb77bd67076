@@ -51,6 +51,23 @@
       "message": "Gah. +jreck for real this time.",
       "revId": "50b12d4f20e2b7774ff6c5bf3f0b2cb77bd67076",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "109cdc25_c4d91be3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-25T15:41:33Z",
+      "side": 1,
+      "message": "Ack, thanks. LGTM, but maybe give John some time to chime in if he disagrees?",
+      "revId": "50b12d4f20e2b7774ff6c5bf3f0b2cb77bd67076",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
