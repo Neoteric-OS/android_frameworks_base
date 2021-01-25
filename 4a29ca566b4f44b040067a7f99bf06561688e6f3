@@ -16,6 +16,29 @@
       "message": "Hi Chad,\n\nI think I already know the answer, but while I\u0027m here any interest in being an owner of the SigningDetailsTest?",
       "revId": "4a29ca566b4f44b040067a7f99bf06561688e6f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d332d468_5267d71c",
+        "filename": "core/tests/coretests/src/android/content/pm/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-25T19:20:03Z",
+      "side": 1,
+      "message": "Could you help suggest at least one additional owner?  Perhaps cbrubaker@ and/or vishwath@?",
+      "range": {
+        "startLine": 2,
+        "startChar": 35,
+        "endLine": 2,
+        "endChar": 55
+      },
+      "revId": "4a29ca566b4f44b040067a7f99bf06561688e6f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
