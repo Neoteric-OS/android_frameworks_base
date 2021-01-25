@@ -1,0 +1,8 @@
+Presubmit-Ready+1: Robin Lee <rgl@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Build-Cop-Override+1: Chaoyang Fan <chaoyangf@google.com>
+Submitted-by: Robin Lee <rgl@google.com>
+Submitted-at: Mon, 25 Jan 2021 19:34:13 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1559778
+Project: platform/frameworks/base
+Branch: refs/heads/master
