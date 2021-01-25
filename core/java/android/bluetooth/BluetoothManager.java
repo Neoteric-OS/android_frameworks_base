@@ -106,8 +106,7 @@ public final class BluetoothManager {
      * @param device Remote bluetooth device.
      * @param profile GATT or GATT_SERVER
      * @return State of the profile connection. One of {@link BluetoothProfile#STATE_CONNECTED},
-     * {@link BluetoothProfile#STATE_CONNECTING}, {@link BluetoothProfile#STATE_DISCONNECTED},
-     * {@link BluetoothProfile#STATE_DISCONNECTING}
+     * {@link BluetoothProfile#STATE_DISCONNECTED}
      */
     @RequiresPermission(Manifest.permission.BLUETOOTH)
     public int getConnectionState(BluetoothDevice device, int profile) {
