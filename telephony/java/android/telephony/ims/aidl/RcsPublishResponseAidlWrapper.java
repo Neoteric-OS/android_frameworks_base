@@ -48,4 +48,14 @@ public class RcsPublishResponseAidlWrapper implements PublishResponseCallback {
         } catch (RemoteException e) {
         }
     }
+
+    @Override
+    public void onNetworkResponse(int code, String reasonPhrase, int reasonHeaderCause,
+            String reasonHeaderText) throws ImsException {
+        try {
+            mResponseBinder.onNetworkRespHeader(code, reasonPhrase, reasonHeaderCause,
+                    reasonHeaderText);
+        } catch (RemoteException e) {
+        }
+    }
 }

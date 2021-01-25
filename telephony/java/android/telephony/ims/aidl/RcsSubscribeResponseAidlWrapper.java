@@ -56,6 +56,16 @@ public class RcsSubscribeResponseAidlWrapper implements SubscribeResponseCallbac
     }
 
     @Override
+    public void onNetworkResponse(int code, String reasonPhrase, int reasonHeaderCause,
+            String reasonHeaderText) throws ImsException {
+        try {
+            mResponseBinder.onNetworkRespHeader(code, reasonPhrase, reasonHeaderCause,
+                    reasonHeaderText);
+        } catch (RemoteException e) {
+        }
+    }
+
+    @Override
     public void onNotifyCapabilitiesUpdate(List<String> pidfXmls) throws ImsException {
         try {
             mResponseBinder.onNotifyCapabilitiesUpdate(pidfXmls);
