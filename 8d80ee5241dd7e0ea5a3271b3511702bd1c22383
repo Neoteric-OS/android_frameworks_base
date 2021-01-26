@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "43d63fe6_cfc94373",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-26T02:25:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "38d7b944_353daaaa",
+      "range": {
+        "startLine": 792,
+        "startChar": 16,
+        "endLine": 792,
+        "endChar": 27
+      },
+      "revId": "8d80ee5241dd7e0ea5a3271b3511702bd1c22383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d20efa78_709b443c",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Maybe; the old network may still be alive (eg cell -\u003e wifi), so we **should** try to allow a clean close. But if it fails after a few seconds, we kill it.",
       "parentUuid": "d20efa78_709b443c",
+      "range": {
+        "startLine": 806,
+        "startChar": 20,
+        "endLine": 806,
+        "endChar": 94
+      },
+      "revId": "8d80ee5241dd7e0ea5a3271b3511702bd1c22383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "855a5fb3_2902ac0f",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-26T02:25:27Z",
+      "side": 1,
+      "message": "Ah, gotcha.",
+      "parentUuid": "5135af59_1bdf6979",
       "range": {
         "startLine": 806,
         "startChar": 20,
