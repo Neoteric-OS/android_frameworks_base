@@ -19,9 +19,11 @@ package com.android.server.hdmi;
 import static com.android.internal.os.RoSystemProperties.PROPERTY_HDMI_IS_DEVICE_HDMI_CEC_SWITCH;
 
 import android.hardware.hdmi.HdmiControlManager;
+import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.HdmiPortInfo;
 import android.hardware.hdmi.IHdmiControlCallback;
 import android.os.SystemProperties;
+import android.provider.Settings.Global;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
@@ -41,6 +43,9 @@ abstract class HdmiCecLocalDeviceSource extends HdmiCecLocalDevice {
     // Indicate if current device is Active Source or not
     @VisibleForTesting
     protected boolean mIsActiveSource = false;
+
+    // Indicate if one touch play is enabled
+    protected boolean mOneTouchPlayEnabed = false;
 
     // Device has cec switch functionality or not.
     // Default is false.
@@ -72,6 +77,11 @@ abstract class HdmiCecLocalDeviceSource extends HdmiCecLocalDevice {
 
     protected HdmiCecLocalDeviceSource(HdmiControlService service, int deviceType) {
         super(service, deviceType);
+
+        mOneTouchPlayEnabed = service.readBooleanSetting(
+                Global.HDMI_CONTROL_ONE_TOUCH_PLAY_ENABLED, true);
+        service.writeBooleanSetting(
+                Global.HDMI_CONTROL_ONE_TOUCH_PLAY_ENABLED, mOneTouchPlayEnabed);
     }
 
     @Override
@@ -100,6 +110,10 @@ abstract class HdmiCecLocalDeviceSource extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     void oneTouchPlay(IHdmiControlCallback callback) {
         assertRunOnServiceThread();
+        if (!mOneTouchPlayEnabed) {
+            Slog.e(TAG, "oneTouchPlay disabled!");
+            return;
+        }
         List<OneTouchPlayAction> actions = getActions(OneTouchPlayAction.class);
         if (!actions.isEmpty()) {
             Slog.i(TAG, "oneTouchPlay already in progress");
@@ -226,6 +240,12 @@ abstract class HdmiCecLocalDeviceSource extends HdmiCecLocalDevice {
     void setIsActiveSource(boolean on) {
         assertRunOnServiceThread();
         mIsActiveSource = on;
+    }
+
+    @ServiceThreadOnly
+    void setOneTouchPlay(boolean on) {
+        assertRunOnServiceThread();
+        mOneTouchPlayEnabed = on;
     }
 
     protected void wakeUpIfActiveSource() {
