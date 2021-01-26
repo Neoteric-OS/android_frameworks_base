@@ -34,6 +34,29 @@
       "parentUuid": "f157affc_75b41b08",
       "revId": "ce0a53ea6cb6b58656ab5c473e1b59bc4cbf8ad5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e92e4f74_54deca16",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 6105,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-26T22:33:56Z",
+      "side": 1,
+      "message": "This should not be exposed to apps. Can you make it SystemApi(client\u003dMODULE_LIBRARIES) instead?",
+      "range": {
+        "startLine": 6105,
+        "startChar": 22,
+        "endLine": 6105,
+        "endChar": 35
+      },
+      "revId": "ce0a53ea6cb6b58656ab5c473e1b59bc4cbf8ad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
