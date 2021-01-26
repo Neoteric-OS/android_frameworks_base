@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a3d9e7d_cb4a1f0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-01-26T07:53:23Z",
+      "side": 1,
+      "message": "Wifi module can access the API.\nVerify+1",
+      "revId": "7d820d2c79085ff6907445ce3a7d83625f150ab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
