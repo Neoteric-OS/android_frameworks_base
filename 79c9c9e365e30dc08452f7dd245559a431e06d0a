@@ -16,6 +16,24 @@
       "message": "This CL itself looks fine to me.\nBut I\u0027m wondering what the impact is if we allow multiple functions settable.\nSome Apps (e.g. Settings UI) rely on those function flags.\nWe may need the corresponding owner to review if there is any impact to them in advance.\nOr at least they should be notified so as to be aware of this change if they meet any regression issue after this CL merged.\nAlso we may need to review through USB Framework to evaluate all the dependent code that refers to those flags.",
       "revId": "79c9c9e365e30dc08452f7dd245559a431e06d0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6eac1b6_1685c8a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-26T05:12:06Z",
+      "side": 1,
+      "message": "As far as I can tell, the only user of FUNCTION_NCM in the tree is tethering, which is code our team maintains. We\u0027re aware of the implications to that code.\n\nAre you concerned that if the something enables FUNCTION_NCM and FUNCTION_RNDIS at the same time, there may be some code that receives the USB broadcast and behaves incorrectly? For example, code that does:\n\n    if (functions \u003d\u003d FUNCTION_RNDIS) {\n        ...\n\ninstead of doing:\n\n    if ((functions \u0026 FUNCTION_RNDIS) !\u003d 0) {\n        ...\n\n?",
+      "parentUuid": "6f967107_55e7645c",
+      "revId": "79c9c9e365e30dc08452f7dd245559a431e06d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
