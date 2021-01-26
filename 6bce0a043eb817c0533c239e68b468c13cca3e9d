@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caebc7f4_2a74e06a",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-26T17:41:37Z",
+      "side": 1,
+      "message": "add \"final\" as well",
+      "range": {
+        "startLine": 115,
+        "startChar": 11,
+        "endLine": 115,
+        "endChar": 23
+      },
+      "revId": "6bce0a043eb817c0533c239e68b468c13cca3e9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
