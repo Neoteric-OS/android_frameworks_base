@@ -34,6 +34,24 @@
       "parentUuid": "6f967107_55e7645c",
       "revId": "79c9c9e365e30dc08452f7dd245559a431e06d0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ed2896f_1db02cbf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1330244
+      },
+      "writtenOn": "2021-01-26T05:43:51Z",
+      "side": 1,
+      "message": "Yes, that\u0027s one of the example.\nNCM shall be no problem, but RNDIS has been used for such a long time and some referring code might be out of our own memory.\nOf course the code like that would be a potential bug, and it might be another strategy just to merge the code and drive all the potential bugs discovered.\nMaybe let me check the code search today, and if no obvious error, it shall be fine to go ahead.",
+      "parentUuid": "a6eac1b6_1685c8a5",
+      "revId": "79c9c9e365e30dc08452f7dd245559a431e06d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
