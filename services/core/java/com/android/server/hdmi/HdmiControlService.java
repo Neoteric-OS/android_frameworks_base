@@ -667,6 +667,8 @@ public class HdmiControlService extends SystemService {
                 Global.HDMI_CONTROL_VOLUME_CONTROL_ENABLED,
                 Global.HDMI_CONTROL_AUTO_WAKEUP_ENABLED,
                 Global.HDMI_CONTROL_AUTO_DEVICE_OFF_ENABLED,
+                Global.HDMI_CONTROL_ONE_TOUCH_PLAY_ENABLED,
+                Global.HDMI_CONTROL_AUTO_LANGUAGE_CHANGE_ENABLED,
                 Global.HDMI_SYSTEM_AUDIO_CONTROL_ENABLED,
                 Global.MHL_INPUT_SWITCHING_ENABLED,
                 Global.MHL_POWER_CHARGE_ENABLED,
@@ -710,6 +712,20 @@ public class HdmiControlService extends SystemService {
                         }
                     }
                     // No need to propagate to HAL.
+                    break;
+                case Global.HDMI_CONTROL_ONE_TOUCH_PLAY_ENABLED:
+                    for (int type : mLocalDevices) {
+                        HdmiCecLocalDevice localDevice = mCecController.getLocalDevice(type);
+                        if (localDevice != null
+                            && localDevice instanceof HdmiCecLocalDeviceSource) {
+                            ((HdmiCecLocalDeviceSource)localDevice).setOneTouchPlay(enabled);
+                        }
+                    }
+                    break;
+                case Global.HDMI_CONTROL_AUTO_LANGUAGE_CHANGE_ENABLED:
+                    if (isPlaybackDevice() && (playback() != null)) {
+                        playback().setAutoLanguageChange(enabled);
+                    }
                     break;
                 case Global.HDMI_SYSTEM_AUDIO_CONTROL_ENABLED:
                     if (isTvDeviceEnabled()) {
