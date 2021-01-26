@@ -1202,6 +1202,8 @@ android.bluetooth.IBluetoothSocketManager
 android.bluetooth.IBluetoothStateChangeCallback$Stub$Proxy
 android.bluetooth.IBluetoothStateChangeCallback$Stub
 android.bluetooth.IBluetoothStateChangeCallback
+android.bluetooth.IBluetoothVolumeControl
+android.bluetooth.IBluetoothVolumeControl$Stub
 android.bluetooth.OobData$1
 android.bluetooth.OobData
 android.bluetooth.UidTraffic$1
