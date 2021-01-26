@@ -57,6 +57,7 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
 
     // If true, turn off TV upon standby. False by default.
     private boolean mAutoTvOff;
+    private boolean mAutoLanguageChange;
 
     // Local active port number used for Routing Control.
     // Default 0 means HOME is the current active path. Temp solution only.
@@ -79,6 +80,11 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
         // The option is false by default. Update settings db as well to have the right
         // initial setting on UI.
         mService.writeBooleanSetting(Global.HDMI_CONTROL_AUTO_DEVICE_OFF_ENABLED, mAutoTvOff);
+
+        mAutoLanguageChange = mService.readBooleanSetting(
+                Global.HDMI_CONTROL_AUTO_LANGUAGE_CHANGE_ENABLED, SET_MENU_LANGUAGE);
+        mService.writeBooleanSetting(Global.HDMI_CONTROL_AUTO_LANGUAGE_CHANGE_ENABLED,
+                mAutoLanguageChange);
 
         mPlaybackDeviceActionOnRoutingControl = SystemProperties.get(
                 Constants.PLAYBACK_DEVICE_ACTION_ON_ROUTING_CONTROL,
@@ -209,6 +215,16 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
     }
 
     @ServiceThreadOnly
+    void setAutoLanguageChange(boolean on) {
+        assertRunOnServiceThread();
+        mAutoLanguageChange = on;
+        if (mAutoLanguageChange) {
+            mService.sendCecCommand(HdmiCecMessageBuilder.buildGetMenuLanguageCommand(
+                mAddress, Constants.ADDR_TV));
+        }
+    }
+
+    @ServiceThreadOnly
     @VisibleForTesting
     void setIsActiveSource(boolean on) {
         assertRunOnServiceThread();
@@ -292,7 +308,8 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
     @ServiceThreadOnly
     protected boolean handleSetMenuLanguage(HdmiCecMessage message) {
         assertRunOnServiceThread();
-        if (!SET_MENU_LANGUAGE) {
+        if (!mAutoLanguageChange) {
+            Slog.e(TAG, "handleSetMenuLanguage cec not enabled!");
             return false;
         }
 
@@ -438,6 +455,8 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
         super.dump(pw);
         pw.println("mIsActiveSource: " + mIsActiveSource);
         pw.println("mAutoTvOff:" + mAutoTvOff);
+        pw.println("mOneTouchPlayEnabed:" + mOneTouchPlayEnabed);
+        pw.println("mAutoLanguageChange:" + mAutoLanguageChange);
     }
 
     // Wrapper interface over PowerManager.WakeLock
