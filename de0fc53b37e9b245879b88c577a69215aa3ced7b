@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e959df1_417277f7",
+        "filename": "core/res/res/xml/time_zones_by_country.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2021-01-26T08:58:41Z",
+      "side": 1,
+      "message": "This one should be moved beneath Moscow.",
+      "range": {
+        "startLine": 1079,
+        "startChar": 31,
+        "endLine": 1079,
+        "endChar": 40
+      },
+      "revId": "de0fc53b37e9b245879b88c577a69215aa3ced7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
