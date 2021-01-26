@@ -33,6 +33,24 @@
       "message": "Thank your for your change! We really appreciate it! However framework preferences are deprecated and we don\u0027t invest in them anymore. I would recommend migrating to androidx.preference that are in a better state. Now even though this change might seem trivial we can\u0027t be sure who relied on the default value of min. So given it is deprecated and the change might be risky I would vote for keeping it as it is.",
       "revId": "91e995873094275a3df147594c18a3145c2f15b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bb581e8_cd94afa2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1634819
+      },
+      "writtenOn": "2021-01-26T23:51:06Z",
+      "side": 1,
+      "message": "Thanks for the review, i appreciate it. (:\nI understand your point and will think about a different solution.",
+      "parentUuid": "28662fc7_ba6c196b",
+      "revId": "91e995873094275a3df147594c18a3145c2f15b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
