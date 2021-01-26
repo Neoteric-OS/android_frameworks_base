@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d66ec6a_4c4178dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-26T11:47:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b214bb1_dcfc3794",
+      "revId": "3d8bca6ccdf173cf32dc22660117cb3627169be8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "adf160a4_5f5a5ac4",
@@ -55,6 +73,30 @@
       "side": 1,
       "message": "Did you have answer for this?",
       "parentUuid": "adf160a4_5f5a5ac4",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 33
+      },
+      "revId": "3d8bca6ccdf173cf32dc22660117cb3627169be8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbd02c77_28cf5c6d",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-26T11:47:08Z",
+      "side": 1,
+      "message": "No.\nSee if the patch works for you.",
+      "parentUuid": "cb852d73_2098b335",
       "range": {
         "startLine": 32,
         "startChar": 13,
