@@ -9123,6 +9123,16 @@ package android.bluetooth {
     field public static final int TYPE_SCO = 2; // 0x2
   }
 
+  public final class BluetoothVolumeControl implements java.lang.AutoCloseable android.bluetooth.BluetoothProfile {
+    method public void close();
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public boolean connect(@Nullable android.bluetooth.BluetoothDevice);
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public boolean disconnect(@Nullable android.bluetooth.BluetoothDevice);
+    method protected void finalize();
+    method @NonNull @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public java.util.List<android.bluetooth.BluetoothDevice> getConnectedDevices();
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public int getConnectionState(@Nullable android.bluetooth.BluetoothDevice);
+    method @NonNull @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public java.util.List<android.bluetooth.BluetoothDevice> getDevicesMatchingConnectionStates(@NonNull int[]);
+  }
+
 }
 
 package android.bluetooth.le {
