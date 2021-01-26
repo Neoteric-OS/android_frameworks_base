@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d046859_56ba2822",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-26T21:29:39Z",
+      "side": 1,
+      "message": "ack",
+      "parentUuid": "374310d4_aa7b07a0",
+      "revId": "3561e812aa851e3ae217e4607aa106821b545de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee49eaf8_7c3d1143",
@@ -41,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1f47dad_9805819c",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-26T21:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee49eaf8_7c3d1143",
+      "range": {
+        "startLine": 378,
+        "startChar": 0,
+        "endLine": 405,
+        "endChar": 71
+      },
+      "revId": "3561e812aa851e3ae217e4607aa106821b545de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "753a164c_fb00942e",
@@ -54,6 +96,30 @@
       "writtenOn": "2021-01-23T00:42:38Z",
       "side": 1,
       "message": "Suggest mIsRunning for consistency with VcnGatewayConnection",
+      "range": {
+        "startLine": 68,
+        "startChar": 20,
+        "endLine": 68,
+        "endChar": 31
+      },
+      "revId": "3561e812aa851e3ae217e4607aa106821b545de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc389132_e428b9f1",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-26T21:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "753a164c_fb00942e",
       "range": {
         "startLine": 68,
         "startChar": 20,
@@ -89,6 +155,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f2cdf9de_e236493a",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-26T21:29:39Z",
+      "side": 1,
+      "message": "This is needed so that VcnConnectionGateway can forward the updated snapshot from VcnManagementService, in which case I don\u0027t think the annotation is necessary. Thoughts?",
+      "parentUuid": "98af65d4_e17b6ef6",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 187,
+        "endChar": 22
+      },
+      "revId": "3561e812aa851e3ae217e4607aa106821b545de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "25869e2a_87f568a3",
         "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
         "patchSetId": 1
@@ -100,6 +190,30 @@
       "writtenOn": "2021-01-23T00:42:38Z",
       "side": 1,
       "message": "Not strictly required for this change, but eventually we\u0027ll need to cache this. Any chance you could just add the caching layer here?",
+      "range": {
+        "startLine": 516,
+        "startChar": 24,
+        "endLine": 516,
+        "endChar": 77
+      },
+      "revId": "3561e812aa851e3ae217e4607aa106821b545de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a5517d5_4eeec33b",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-26T21:29:39Z",
+      "side": 1,
+      "message": "Sure - avoided it initially because it didn\u0027t seem necessary.\n\nDone.",
+      "parentUuid": "25869e2a_87f568a3",
       "range": {
         "startLine": 516,
         "startChar": 24,
@@ -123,6 +237,30 @@
       "writtenOn": "2021-01-23T00:42:38Z",
       "side": 1,
       "message": "In an attempt to prevent conflicts, let\u0027s hold off on updating individual states.\n\nMaybe add a todo above the declaration of the event, and file a bug?",
+      "range": {
+        "startLine": 692,
+        "startChar": 0,
+        "endLine": 703,
+        "endChar": 9
+      },
+      "revId": "3561e812aa851e3ae217e4607aa106821b545de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81898bf6_5679e3fc",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-26T21:29:39Z",
+      "side": 1,
+      "message": "Filed b/178426520 and will implement once VcnGatewayConnection is stable\n\nDone.",
+      "parentUuid": "1ecb4acb_466db368",
       "range": {
         "startLine": 692,
         "startChar": 0,
