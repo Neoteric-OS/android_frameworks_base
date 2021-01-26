@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "38d7b944_353daaaa",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-26T00:28:19Z",
+      "side": 1,
+      "message": "Killing an IKE session will immediately trigger a SESSION_CLOSED event. The StateMachine documentation notes that calling transitionTo in a enter() method may result in undefined behavior, so I figured we can reuse the same codepath as everything else (as if NETWORK_LOST was triggered).\n\nAdded comment.",
+      "parentUuid": "f33f82a3_328deac9",
+      "range": {
+        "startLine": 792,
+        "startChar": 16,
+        "endLine": 792,
+        "endChar": 27
+      },
+      "revId": "8d80ee5241dd7e0ea5a3271b3511702bd1c22383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d20efa78_709b443c",
         "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
         "patchSetId": 10
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5135af59_1bdf6979",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-26T00:28:19Z",
+      "side": 1,
+      "message": "Maybe; the old network may still be alive (eg cell -\u003e wifi), so we **should** try to allow a clean close. But if it fails after a few seconds, we kill it.",
+      "parentUuid": "d20efa78_709b443c",
+      "range": {
+        "startLine": 806,
+        "startChar": 20,
+        "endLine": 806,
+        "endChar": 94
+      },
+      "revId": "8d80ee5241dd7e0ea5a3271b3511702bd1c22383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9a5bff42_ef92f2d8",
         "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
         "patchSetId": 10
@@ -60,6 +108,30 @@
       "writtenOn": "2021-01-22T23:31:21Z",
       "side": 1,
       "message": "Why are we keeping an mNextToken? That worries me.",
+      "range": {
+        "startLine": 1044,
+        "startChar": 8,
+        "endLine": 1044,
+        "endChar": 18
+      },
+      "revId": "8d80ee5241dd7e0ea5a3271b3511702bd1c22383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eafc6b69_4b06bdd3",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-26T00:28:19Z",
+      "side": 1,
+      "message": "Removed; holdover from parallel tunnel migration that didn\u0027t work quite as well as we hoped.",
+      "parentUuid": "9a5bff42_ef92f2d8",
       "range": {
         "startLine": 1044,
         "startChar": 8,
