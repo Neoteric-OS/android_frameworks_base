@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b8e728c_2bc119d2",
+        "filename": "tests/vcn/java/com/android/server/vcn/UnderlyingNetworkTrackerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-27T01:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5de0993e_a0e4bca4",
+      "range": {
+        "startLine": 81,
+        "startChar": 20,
+        "endLine": 81,
+        "endChar": 73
+      },
+      "revId": "ec72d3b25ad22a998c6065021a7b045c44a8d06f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab3b2e34_207d9d32",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-23T00:15:07Z",
       "side": 1,
       "message": "Nit: This could be Collections.singleton(NET_CAPABILITY_INTERNET)",
+      "range": {
+        "startLine": 131,
+        "startChar": 24,
+        "endLine": 131,
+        "endChar": 61
+      },
+      "revId": "ec72d3b25ad22a998c6065021a7b045c44a8d06f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32f01cf5_f7b59cd5",
+        "filename": "tests/vcn/java/com/android/server/vcn/UnderlyingNetworkTrackerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-27T01:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab3b2e34_207d9d32",
       "range": {
         "startLine": 131,
         "startChar": 24,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a1a8be42_967e3c5f",
+        "filename": "tests/vcn/java/com/android/server/vcn/UnderlyingNetworkTrackerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-27T01:03:33Z",
+      "side": 1,
+      "message": "ack - I\u0027ll keep an eye out for the utility class",
+      "parentUuid": "90742a2c_32e8c197",
+      "range": {
+        "startLine": 141,
+        "startChar": 17,
+        "endLine": 141,
+        "endChar": 35
+      },
+      "revId": "ec72d3b25ad22a998c6065021a7b045c44a8d06f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dd131ffc_1952bbeb",
         "filename": "tests/vcn/java/com/android/server/vcn/UnderlyingNetworkTrackerTest.java",
         "patchSetId": 4
@@ -83,6 +155,30 @@
       "writtenOn": "2021-01-23T00:15:07Z",
       "side": 1,
       "message": "Nit: verifyOnAvailableAndGetCallback()",
+      "range": {
+        "startLine": 242,
+        "startChar": 35,
+        "endLine": 242,
+        "endChar": 52
+      },
+      "revId": "ec72d3b25ad22a998c6065021a7b045c44a8d06f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "267c75e7_a7a79ae4",
+        "filename": "tests/vcn/java/com/android/server/vcn/UnderlyingNetworkTrackerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-27T01:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd131ffc_1952bbeb",
       "range": {
         "startLine": 242,
         "startChar": 35,
@@ -106,6 +202,30 @@
       "writtenOn": "2021-01-23T00:15:07Z",
       "side": 1,
       "message": "Nit, since verify() is already called in onSelectedUnderlyingNetworkChanged, you can use verifyNoMoreInteractions() to ensure that nothing else was called.",
+      "range": {
+        "startLine": 351,
+        "startChar": 8,
+        "endLine": 351,
+        "endChar": 33
+      },
+      "revId": "ec72d3b25ad22a998c6065021a7b045c44a8d06f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8c77b66_c767a615",
+        "filename": "tests/vcn/java/com/android/server/vcn/UnderlyingNetworkTrackerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-27T01:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02b25578_b6e73eb2",
       "range": {
         "startLine": 351,
         "startChar": 8,
