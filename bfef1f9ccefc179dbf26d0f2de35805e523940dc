@@ -16,6 +16,24 @@
       "message": "Can you add docs to this? Even just a \"See fatal_count for documentation\" is fine\n\nThis would address the following feedback:\n\u003e Please document fatal_window_seconds",
       "revId": "bfef1f9ccefc179dbf26d0f2de35805e523940dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55a7e373_ed184b1a",
+        "filename": "core/sysprop/WatchdogProperties.sysprop",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1345812
+      },
+      "writtenOn": "2021-01-27T13:59:20Z",
+      "side": 1,
+      "message": "Done. Thank you for the reminder.",
+      "parentUuid": "f793c45a_5432daed",
+      "revId": "bfef1f9ccefc179dbf26d0f2de35805e523940dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
