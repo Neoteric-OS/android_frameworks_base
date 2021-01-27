@@ -22,6 +22,30 @@
       },
       "revId": "58c9526e3bbfb361faf3d3e29784792de27ce9ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebb5fd28_5180495f",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-01-27T18:35:46Z",
+      "side": 1,
+      "message": "Thanks for pointing out. Yes we don\u0027t want to change the service provider when RoR has started (as we enter the danger zone). As we might expose some hacky ways to set a fake service for gts tests. So we will accept such edge cases. We anticipate the case to be rare, and caller can choose to reboot the device without resume.\n\nThe other option I thought about, is to clear the mRebootEscrowProvider when clearRebootEscrowIfNeeded is called. Not entirely sure if it\u0027s necessary.",
+      "parentUuid": "958cec1e_0abed7e5",
+      "range": {
+        "startLine": 165,
+        "startChar": 35,
+        "endLine": 165,
+        "endChar": 45
+      },
+      "revId": "58c9526e3bbfb361faf3d3e29784792de27ce9ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
