@@ -111,4 +111,21 @@ public class SystemConfigManager {
             return Collections.emptyMap();
         }
     }
+
+    /**
+     * Get uids which contain given permission in system configuration.
+     *
+     * @param permissionName The permission contains in system configuration.
+     * @return The uids contain given permission in system configuration.
+     */
+    @RequiresPermission(Manifest.permission.GET_RUNTIME_PERMISSIONS)
+    @NonNull
+    public int[] getSystemPermissionUids(@NonNull String permissionName) {
+        try {
+            return mInterface.getSystemPermissionUids(permissionName);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Caught remote exception");
+            return new int[0];
+        }
+    }
 }
