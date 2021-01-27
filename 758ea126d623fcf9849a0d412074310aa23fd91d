@@ -22,6 +22,30 @@
       },
       "revId": "758ea126d623fcf9849a0d412074310aa23fd91d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f850ce3a_f74e2543",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2253,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-27T10:49:15Z",
+      "side": 1,
+      "message": "From l.1625, we are indeed combine things.\nBut in this function it just happens to be a no-op function.\nThus, I think we might still want to keep the naming.\nReopen if disagreed.",
+      "parentUuid": "75956ac6_17fd169b",
+      "range": {
+        "startLine": 2253,
+        "startChar": 17,
+        "endLine": 2253,
+        "endChar": 36
+      },
+      "revId": "758ea126d623fcf9849a0d412074310aa23fd91d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
