@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "958cec1e_0abed7e5",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-01-27T11:52:41Z",
+      "side": 1,
+      "message": "Does this work reliably though? You are still saving the instance in a field, so if gmscore updates between two invocations of getRebootEscrowProvider(), the second time you will return a stale reference?",
+      "range": {
+        "startLine": 165,
+        "startChar": 35,
+        "endLine": 165,
+        "endChar": 45
+      },
+      "revId": "58c9526e3bbfb361faf3d3e29784792de27ce9ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
