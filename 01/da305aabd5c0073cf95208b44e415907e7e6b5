@@ -1,0 +1,13 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Verified+1: Ethan Hsu <ethan.hsu%zebra.com@gtempaccount.com>
+Code-Review+1: Ethan Hsu <ethan.hsu%zebra.com@gtempaccount.com>
+Code-Review+2: Paul Crowley <paulcrowley@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Autosubmit+1: Paul Crowley <paulcrowley@google.com>
+DrNo-Review+1: Hung-ying Tyan <tyanh@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Wed, 27 Jan 2021 07:25:43 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1560409
+Project: platform/frameworks/base
+Branch: refs/heads/android11-gsi
