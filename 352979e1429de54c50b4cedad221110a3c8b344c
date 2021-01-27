@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0194536d_6243c7c7",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 41909,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-27T22:42:14Z",
+      "side": 1,
+      "message": "Public methods must use READ_PRECISE_PHONE_STATE instead of READ_PRIVILEGED..",
+      "range": {
+        "startLine": 41909,
+        "startChar": 51,
+        "endLine": 41909,
+        "endChar": 78
+      },
+      "revId": "352979e1429de54c50b4cedad221110a3c8b344c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bb489ca_627a5ee6",
+        "filename": "telephony/java/android/telephony/ims/ImsRcsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-27T22:42:14Z",
+      "side": 1,
+      "message": "No need to throw an ImsException for the remove case. we can fail silently",
+      "range": {
+        "startLine": 374,
+        "startChar": 61,
+        "endLine": 374,
+        "endChar": 81
+      },
+      "revId": "352979e1429de54c50b4cedad221110a3c8b344c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42510184_0cc41b24",
+        "filename": "telephony/java/android/telephony/ims/ImsRcsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-27T22:42:14Z",
+      "side": 1,
+      "message": "This is out of date, you can remove this as it is referenced by the interface",
+      "range": {
+        "startLine": 407,
+        "startChar": 70,
+        "endLine": 409,
+        "endChar": 63
+      },
+      "revId": "352979e1429de54c50b4cedad221110a3c8b344c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ee501c0_47ea74aa",
+        "filename": "telephony/java/android/telephony/ims/feature/RcsFeature.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-27T22:42:14Z",
+      "side": 1,
+      "message": "can you also modify docs of CapabilityChangeRequest to not be MMTEL centric (remove MMTEL specific interfaces and include refs to RCS?)",
+      "range": {
+        "startLine": 373,
+        "startChar": 51,
+        "endLine": 373,
+        "endChar": 74
+      },
+      "revId": "352979e1429de54c50b4cedad221110a3c8b344c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
