@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a028baa_d0fa8f78",
+        "filename": "telephony/java/android/telephony/ims/RcsContactPresenceTuple.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-27T19:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeb6c62a_23a6fd9e",
+      "range": {
+        "startLine": 369,
+        "startChar": 7,
+        "endLine": 369,
+        "endChar": 53
+      },
+      "revId": "4aac5e99cc1f578ae523612328cdef197d17b4e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0cad19b_fad48098",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73486481_83951179",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-27T19:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0cad19b_fad48098",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 53
+      },
+      "revId": "4aac5e99cc1f578ae523612328cdef197d17b4e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ffbe5e0_0b73ca39",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-01-27T17:42:16Z",
       "side": 1,
       "message": "Why are you suppressing this lint?  It\u0027s there for a reason.",
+      "range": {
+        "startLine": 205,
+        "startChar": 7,
+        "endLine": 205,
+        "endChar": 53
+      },
+      "revId": "4aac5e99cc1f578ae523612328cdef197d17b4e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8470f260_2118b047",
+        "filename": "telephony/java/android/telephony/ims/RcsContactUceCapability.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-01-27T19:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ffbe5e0_0b73ca39",
       "range": {
         "startLine": 205,
         "startChar": 7,
