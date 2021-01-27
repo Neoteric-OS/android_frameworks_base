@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75956ac6_17fd169b",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2253,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-01-27T10:22:11Z",
+      "side": 1,
+      "message": "nit: It doesn\u0027t combine anything, it just does a check.\nWhat about naming it to something like checkSubscriberId?",
+      "range": {
+        "startLine": 2253,
+        "startChar": 17,
+        "endLine": 2253,
+        "endChar": 36
+      },
+      "revId": "758ea126d623fcf9849a0d412074310aa23fd91d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
