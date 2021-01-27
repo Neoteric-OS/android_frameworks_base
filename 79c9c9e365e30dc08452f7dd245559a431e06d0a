@@ -52,6 +52,24 @@
       "parentUuid": "a6eac1b6_1685c8a5",
       "revId": "79c9c9e365e30dc08452f7dd245559a431e06d0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38a29b3a_5bba807f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1330244
+      },
+      "writtenOn": "2021-01-27T03:14:17Z",
+      "side": 1,
+      "message": "So far, only unit tests and MetricsLogger will refer to FUNCTION_RNDIS.\nThe first 2 of below code may need to be modified.\nBut that shall not impact essential functions.\n\n(Unit Test)\nhttp://cs/android/frameworks/base/tests/UsbTests/src/com/android/server/usb/UsbHandlerTest.java;l\u003d180?q\u003dFUNCTION_RNDIS%20p:android\n\n(MetricsLogger)\nhttp://cs/android/frameworks/base/services/usb/java/com/android/server/usb/UsbDeviceManager.java;l\u003d2230?q\u003dFUNCTION_RNDIS%20p:android\n\n(Unit Tests in Settings are fine)\nhttp://cs/android/packages/apps/Settings/tests/robotests/src/com/android/settings/connecteddevice/usb/UsbDetailsFunctionsControllerTest.java;l\u003d133?q\u003dFUNCTION_RNDIS%20p:android\n\nhttp://cs/android/packages/apps/Settings/tests/robotests/src/com/android/settings/connecteddevice/usb/UsbBackendTest.java;l\u003d192?q\u003dFUNCTION_RNDIS%20p:android",
+      "parentUuid": "7ed2896f_1db02cbf",
+      "revId": "79c9c9e365e30dc08452f7dd245559a431e06d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
