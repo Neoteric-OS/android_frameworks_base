@@ -380,7 +380,13 @@ public class Network implements Parcelable {
         // Query a property of the underlying socket to ensure that the socket's file descriptor
         // exists, is available to bind to a network and is not closed.
         socket.getReuseAddress();
-        bindSocket(socket.getFileDescriptor$());
+        verifySocket(socket.getInetAddress());
+        final int err = NetworkUtils.bindSocketToNetworkWithDatagramSocket(socket, netId);
+        if (err != 0) {
+            // bindSocketToNetworkWithDatagramSocket returns negative errno.
+            throw new ErrnoException("Binding socket to network " + netId, -err)
+                    .rethrowAsSocketException();
+        }
     }
 
     /**
@@ -392,7 +398,21 @@ public class Network implements Parcelable {
         // Query a property of the underlying socket to ensure that the socket's file descriptor
         // exists, is available to bind to a network and is not closed.
         socket.getReuseAddress();
-        bindSocket(socket.getFileDescriptor$());
+        verifySocket(socket.getInetAddress());
+        final int err = NetworkUtils.bindSocketToNetworkWithSocket(socket, netId);
+        if (err != 0) {
+            // bindSocketToNetworkWithSocket returns negative errno.
+            throw new ErrnoException("Binding socket to network " + netId, -err)
+                    .rethrowAsSocketException();
+        }
+    }
+
+    private void verifySocket(InetAddress inetPeer) throws SocketException {
+        if (inetPeer != null && !inetPeer.isAnyLocalAddress()) {
+            // Apparently, the kernel doesn't update a connected UDP socket's
+            // routing upon mark changes.
+            throw new SocketException("Socket is connected");
+        }
     }
 
     /**
@@ -405,11 +425,7 @@ public class Network implements Parcelable {
         try {
             final SocketAddress peer = Os.getpeername(fd);
             final InetAddress inetPeer = ((InetSocketAddress) peer).getAddress();
-            if (!inetPeer.isAnyLocalAddress()) {
-                // Apparently, the kernel doesn't update a connected UDP socket's
-                // routing upon mark changes.
-                throw new SocketException("Socket is connected");
-            }
+            verifySocket(inetPeer);
         } catch (ErrnoException e) {
             // getpeername() failed.
             if (e.errno != OsConstants.ENOTCONN) {

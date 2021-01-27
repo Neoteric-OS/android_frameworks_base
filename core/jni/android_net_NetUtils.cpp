@@ -123,6 +123,31 @@ static jint android_net_utils_bindSocketToNetwork(JNIEnv *env, jobject thiz, jin
     return setNetworkForSocket(netId, socket);
 }
 
+static jint android_net_utils_bindSocketToNetworkWithSocket(JNIEnv *env, jobject thiz,
+                                                            jobject socket, jint netId) {
+    jclass socketClass = env->FindClass("java/net/Socket");
+    jclass datagramSocketClass = env->FindClass("java/net/DatagramSocket");
+    jclass klass = nullptr;
+    if (env->IsInstanceOf(socket, socketClass)) {
+        klass = socketClass;
+    } else if (env->IsInstanceOf(socket, datagramSocketClass)) {
+        klass = datagramSocketClass;
+    }
+    if (klass == nullptr) {
+        ALOGD("bindSocketToNetworkWithSocket: get socket class fail");
+        return ENOTSUP;
+    }
+    // Find getFileDescriptor$() method id.
+    jmethodID method = env->GetMethodID(klass, "getFileDescriptor$", "()Ljava/io/FileDescriptor;");
+    if (method == nullptr) {
+        ALOGD("bindSocketToNetworkWithSocket: get getFileDescriptor$ method fail");
+        return ENOTSUP;
+    }
+    // Get FileDescriptor.
+    jobject fd = env->CallObjectMethod(socket, method);
+    return setNetworkForSocket(netId, jniGetFDFromFileDescriptor(env, fd));
+}
+
 static jboolean android_net_utils_protectFromVpn(JNIEnv *env, jobject thiz, jint socket)
 {
     return (jboolean) !protectFromVpn(socket);
@@ -272,6 +297,8 @@ static const JNINativeMethod gNetworkUtilMethods[] = {
     { "getBoundNetworkForProcess", "()I", (void*) android_net_utils_getBoundNetworkForProcess },
     { "bindProcessToNetworkForHostResolution", "(I)Z", (void*) android_net_utils_bindProcessToNetworkForHostResolution },
     { "bindSocketToNetwork", "(II)I", (void*) android_net_utils_bindSocketToNetwork },
+    { "bindSocketToNetworkWithSocket", "(Ljava/net/Socket;I)I", (void*) android_net_utils_bindSocketToNetworkWithSocket },
+    { "bindSocketToNetworkWithDatagramSocket", "(Ljava/net/DatagramSocket;I)I", (void*) android_net_utils_bindSocketToNetworkWithSocket },
     { "protectFromVpn", "(I)Z", (void*)android_net_utils_protectFromVpn },
     { "queryUserAccess", "(II)Z", (void*)android_net_utils_queryUserAccess },
     { "attachDropAllBPFFilter", "(Ljava/io/FileDescriptor;)V", (void*) android_net_utils_attachDropAllBPFFilter },

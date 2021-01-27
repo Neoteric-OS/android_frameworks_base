@@ -26,8 +26,10 @@ import com.android.net.module.util.Inet4AddressUtils;
 
 import java.io.FileDescriptor;
 import java.math.BigInteger;
+import java.net.DatagramSocket;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Locale;
@@ -86,6 +88,21 @@ public class NetworkUtils {
      * @return 0 on success or negative errno on failure.
      */
     public native static int bindSocketToNetwork(int socketfd, int netId);
+
+    /**
+     * Explicitly binds {@code socket} to the network designated by {@code netId}.  This
+     * overrides any binding via {@link #bindProcessToNetwork}.
+     * @return 0 on success or negative errno on failure.
+     */
+    public static native int bindSocketToNetworkWithSocket(Socket socket, int netId);
+
+    /**
+     * Explicitly binds {@code socket} to the network designated by {@code netId}.  This
+     * overrides any binding via {@link #bindProcessToNetwork}.
+     * @return 0 on success or negative errno on failure.
+     */
+    public static native int bindSocketToNetworkWithDatagramSocket(DatagramSocket socket,
+            int netId);
 
     /**
      * Protect {@code fd} from VPN connections.  After protecting, data sent through
