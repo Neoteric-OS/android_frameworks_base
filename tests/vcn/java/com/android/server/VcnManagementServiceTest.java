@@ -609,4 +609,23 @@ public class VcnManagementServiceTest {
 
         verify(vcnInstance).updateSubscriptionSnapshot(eq(snapshot));
     }
+
+    @Test
+    public void testVcnConfigAdditionUpdatesPolicyListener() throws Exception {
+        mVcnMgmtSvc.addVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+
+        mVcnMgmtSvc.setVcnConfig(TEST_UUID_2, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
+
+        verify(mMockPolicyListener).onPolicyChanged();
+    }
+
+    @Test
+    public void testVcnConfigRemovalUpdatesPolicyListener() throws Exception {
+        mVcnMgmtSvc.setVcnConfig(TEST_UUID_2, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
+        mVcnMgmtSvc.addVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+
+        mVcnMgmtSvc.clearVcnConfig(TEST_UUID_2);
+
+        verify(mMockPolicyListener).onPolicyChanged();
+    }
 }

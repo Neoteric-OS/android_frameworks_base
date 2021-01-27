@@ -411,6 +411,13 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     }
 
     @GuardedBy("mLock")
+    private void refreshAllPolicyListenersLocked() {
+        for (final PolicyListenerBinderDeath policyListener : mRegisteredPolicyListeners.values()) {
+            Binder.withCleanCallingIdentity(() -> policyListener.mListener.onPolicyChanged());
+        }
+    }
+
+    @GuardedBy("mLock")
     private void startVcnLocked(@NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config) {
         Slog.v(TAG, "Starting VCN config for subGrp: " + subscriptionGroup);
 
@@ -419,6 +426,10 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         final Vcn newInstance = mDeps.newVcn(mVcnContext, subscriptionGroup, mLastSnapshot, config);
         mVcns.put(subscriptionGroup, newInstance);
+
+        // Now that a new VCN has started, notify all registered listeners to refresh their
+        // UnderlyingNetworkPolicy.
+        refreshAllPolicyListenersLocked();
     }
 
     @GuardedBy("mLock")
@@ -486,6 +497,10 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 }
 
                 writeConfigsToDiskLocked();
+
+                // Now that the VCN is removed, notify all registered listeners to refresh their
+                // UnderlyingNetworkPolicy.
+                refreshAllPolicyListenersLocked();
             }
         });
     }
