@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "490dc95d_d1b69dca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1067098
+      },
+      "writtenOn": "2021-01-27T19:54:52Z",
+      "side": 1,
+      "message": "Let\u0027s move the review to ag/13417707 for now to resolve the internal conflicts.",
+      "revId": "8bd49e2480df1c173029d0680572f97b6635ac19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
