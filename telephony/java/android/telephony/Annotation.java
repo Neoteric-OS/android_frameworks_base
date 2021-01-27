@@ -125,6 +125,8 @@ public class Annotation {
             ApnSetting.TYPE_EMERGENCY,
             ApnSetting.TYPE_MCX,
             ApnSetting.TYPE_XCAP,
+            ApnSetting.TYPE_VSIM,
+            ApnSetting.TYPE_BIP,
             // ApnSetting.TYPE_ENTERPRISE
     })
     @Retention(RetentionPolicy.SOURCE)

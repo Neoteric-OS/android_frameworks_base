@@ -22,7 +22,7 @@ import android.annotation.StringDef;
 import android.annotation.SystemApi;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.hardware.radio.V1_5.ApnTypes;
+import android.hardware.radio.V1_6.ApnTypes;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -114,11 +114,15 @@ public class ApnSetting implements Parcelable {
     public static final int TYPE_MCX = ApnTypes.MCX;
     /** APN type for XCAP. */
     public static final int TYPE_XCAP = ApnTypes.XCAP;
+    /** APN type for VSIM. */
+    public static final int TYPE_VSIM = ApnTypes.VSIM;
+    /** APN type for BIP. */
+    public static final int TYPE_BIP = ApnTypes.BIP;
     /**
      * APN type for ENTERPRISE.
      * @hide
      */
-    public static final int TYPE_ENTERPRISE = TYPE_XCAP << 1;
+    public static final int TYPE_ENTERPRISE = TYPE_BIP << 1;
 
     /** @hide */
     @IntDef(flag = true, prefix = {"TYPE_"}, value = {
@@ -134,6 +138,8 @@ public class ApnSetting implements Parcelable {
             TYPE_EMERGENCY,
             TYPE_MCX,
             TYPE_XCAP,
+            TYPE_VSIM,
+            TYPE_BIP,
             TYPE_ENTERPRISE,
     })
     @Retention(RetentionPolicy.SOURCE)
@@ -174,6 +180,8 @@ public class ApnSetting implements Parcelable {
             TYPE_MMS_STRING,
             TYPE_SUPL_STRING,
             TYPE_XCAP_STRING,
+            TYPE_VSIM_STRING,
+            TYPE_BIP_STRING,
             TYPE_ENTERPRISE_STRING,
     }, prefix = "TYPE_", suffix = "_STRING")
     @Retention(RetentionPolicy.SOURCE)
@@ -316,11 +324,24 @@ public class ApnSetting implements Parcelable {
     public static final String TYPE_XCAP_STRING = "xcap";
 
     /**
+     * APN type for VSIM
+     *
+     * @hide
+     */
+    public static final String TYPE_VSIM_STRING = "vsim";
+
+    /**
+     * APN type for BIP
+     *
+     * @hide
+     */
+    public static final String TYPE_BIP_STRING = "bip";
+
+    /**
      * APN type for ENTERPRISE traffic.
      * @hide
      */
     public static final String TYPE_ENTERPRISE_STRING = "enterprise";
-
 
     /** @hide */
     @IntDef(prefix = { "AUTH_TYPE_" }, value = {
@@ -400,6 +421,8 @@ public class ApnSetting implements Parcelable {
         APN_TYPE_STRING_MAP.put(TYPE_EMERGENCY_STRING, TYPE_EMERGENCY);
         APN_TYPE_STRING_MAP.put(TYPE_MCX_STRING, TYPE_MCX);
         APN_TYPE_STRING_MAP.put(TYPE_XCAP_STRING, TYPE_XCAP);
+        APN_TYPE_STRING_MAP.put(TYPE_VSIM_STRING, TYPE_VSIM);
+        APN_TYPE_STRING_MAP.put(TYPE_BIP_STRING, TYPE_BIP);
         APN_TYPE_STRING_MAP.put(TYPE_ENTERPRISE_STRING, TYPE_ENTERPRISE);
 
         APN_TYPE_INT_MAP = new ArrayMap<>();
@@ -415,6 +438,8 @@ public class ApnSetting implements Parcelable {
         APN_TYPE_INT_MAP.put(TYPE_EMERGENCY, TYPE_EMERGENCY_STRING);
         APN_TYPE_INT_MAP.put(TYPE_MCX, TYPE_MCX_STRING);
         APN_TYPE_INT_MAP.put(TYPE_XCAP, TYPE_XCAP_STRING);
+        APN_TYPE_INT_MAP.put(TYPE_VSIM, TYPE_VSIM_STRING);
+        APN_TYPE_INT_MAP.put(TYPE_BIP, TYPE_BIP_STRING);
         APN_TYPE_INT_MAP.put(TYPE_ENTERPRISE, TYPE_ENTERPRISE_STRING);
 
         PROTOCOL_STRING_MAP = new ArrayMap<>();
@@ -2194,7 +2219,7 @@ public class ApnSetting implements Parcelable {
         public ApnSetting build() {
             if ((mApnTypeBitmask & (TYPE_DEFAULT | TYPE_MMS | TYPE_SUPL | TYPE_DUN | TYPE_HIPRI
                     | TYPE_FOTA | TYPE_IMS | TYPE_CBS | TYPE_IA | TYPE_EMERGENCY | TYPE_MCX
-                    | TYPE_XCAP | TYPE_ENTERPRISE)) == 0
+                    | TYPE_XCAP | TYPE_ENTERPRISE | TYPE_VSIM | TYPE_BIP)) == 0
                 || TextUtils.isEmpty(mApnName) || TextUtils.isEmpty(mEntryName)) {
                 return null;
             }

@@ -301,6 +301,7 @@ package android.net {
     method public boolean hasTransport(int);
     method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkCapabilities> CREATOR;
+    field public static final int NET_CAPABILITY_BIP = 31; // 0x1f
     field public static final int NET_CAPABILITY_CAPTIVE_PORTAL = 17; // 0x11
     field public static final int NET_CAPABILITY_CBS = 5; // 0x5
     field public static final int NET_CAPABILITY_DUN = 2; // 0x2
@@ -324,6 +325,7 @@ package android.net {
     field public static final int NET_CAPABILITY_TEMPORARILY_NOT_METERED = 25; // 0x19
     field public static final int NET_CAPABILITY_TRUSTED = 14; // 0xe
     field public static final int NET_CAPABILITY_VALIDATED = 16; // 0x10
+    field public static final int NET_CAPABILITY_VSIM = 30; // 0x1e
     field public static final int NET_CAPABILITY_WIFI_P2P = 6; // 0x6
     field public static final int NET_CAPABILITY_XCAP = 9; // 0x9
     field public static final int SIGNAL_STRENGTH_UNSPECIFIED = -2147483648; // 0x80000000
