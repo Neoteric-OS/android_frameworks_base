@@ -16,6 +16,8 @@
 
 package com.android.server;
 
+import static android.system.OsConstants.O_RDONLY;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +32,7 @@ import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.storage.StorageManager;
 import android.provider.Downloads;
+import android.system.Os;
 import android.text.TextUtils;
 import android.util.AtomicFile;
 import android.util.EventLog;
@@ -46,14 +49,19 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -116,6 +124,10 @@ public class BootReceiver extends BroadcastReceiver {
     private static final String METRIC_SYSTEM_SERVER = "shutdown_system_server";
     private static final String METRIC_SHUTDOWN_TIME_START = "begin_shutdown";
 
+    // Location of ftrace pipe for notifications from kernel memory tools like KFENCE and KASAN.
+    private static final String ERROR_REPORT_TRACE_PIPE =
+            "/sys/kernel/tracing/instances/bootreceiver/trace_pipe";
+
     @Override
     public void onReceive(final Context context, Intent intent) {
         // Log boot events in the background to avoid blocking the main thread with I/O
@@ -143,6 +155,145 @@ public class BootReceiver extends BroadcastReceiver {
 
             }
         }.start();
+
+        /*
+         * Polling thread to watch for memory tool error reports.
+         * We read from /sys/kernel/tracing/instances/bootreceiver/trace_pipe (set up by the
+         * system), which will print an ftrace event when a memory corruption is detected in the
+         * kernel.
+         * When an error is detected, run the dmesg shell command and process its output.
+         */
+        new Thread() {
+            @Override
+            public void run() {
+                Slog.i(TAG, "Started a thread to watch " + ERROR_REPORT_TRACE_PIPE);
+                File reportsFile = new File(ERROR_REPORT_TRACE_PIPE);
+                if (!reportsFile.exists()) {
+                    Slog.e(TAG, ERROR_REPORT_TRACE_PIPE + " does not exist.");
+                    return;
+                }
+                try {
+                    final FileDescriptor fd = Os.open(ERROR_REPORT_TRACE_PIPE, O_RDONLY, 0600);
+                    final int bufferSize = 1024;
+                    byte[] traceBuffer = new byte[bufferSize];
+
+                    while (true) {
+                        /*
+                         * Read from the tracing pipe set up to monitor the error_report_end events.
+                         * The read blocks until there is data in the pipe. When a tracing event
+                         * occurs, the kernel writes a short (~100 bytes) line to the pipe, e.g.:
+                         *      [004] d..1   285.322307: error_report_end: [kfence] ffffff8938a05000
+                         * The buffer size we use for reading should be enough to read the whole
+                         * line, but to be on the safe side we read until the buffer contains a '\n'
+                         * character. In the unlikely case of a very buggy kernel the buffer may
+                         * contain multiple tracing events that cannot be attributed to particular
+                         * error reports. In that case the latest error report residing in dmesg is
+                         * picked.
+                         */
+                        int nbytes = Os.read(fd, traceBuffer, 0, bufferSize);
+                        if (nbytes > 0) {
+                            boolean newline = false;
+                            for (int i = 0; i < nbytes; i++) {
+                                if (traceBuffer[i] == '\n') {
+                                    newline = true;
+                                }
+                            }
+                            if (!newline) continue;
+                            List<String> dmesgLines = new ArrayList<String>();
+                            Process p = Runtime.getRuntime().exec("dmesg");
+                            BufferedReader reader = new BufferedReader(
+                                    new InputStreamReader(p.getInputStream()));
+                            String line = null;
+                            while ((line = reader.readLine()) != null) {
+                                dmesgLines.add(line);
+                            }
+                            processDmesg(context, dmesgLines);
+                        }
+                    }
+                } catch (Exception e) {
+                    Slog.e(TAG, "Error polling for reports", e);
+                    return;
+                }
+            }
+        }.start();
+    }
+
+    /*
+     * Search dmesg output for the last error report from KFENCE or KASAN and copy it to Dropbox.
+     *
+     * Example report printed by the kernel (redacted to fit into 100 column limit):
+     *   [   69.236673] [ T6006]c7   6006  =========================================================
+     *   [   69.245688] [ T6006]c7   6006  BUG: KFENCE: out-of-bounds in kfence_handle_page_fault
+     *   [   69.245688] [ T6006]c7   6006
+     *   [   69.257816] [ T6006]c7   6006  Out-of-bounds access at 0xffffffca75c45000 (...)
+     *   [   69.267102] [ T6006]c7   6006   kfence_handle_page_fault+0x1bc/0x208
+     *   [   69.273536] [ T6006]c7   6006   __do_kernel_fault+0xa8/0x11c
+     *   ...
+     *   [   69.355427] [ T6006]c7   6006  kfence-#2 [0xffffffca75c46f30-0xffffffca75c46fff, ...
+     *   [   69.366938] [ T6006]c7   6006   __d_alloc+0x3c/0x1b4
+     *   [   69.371946] [ T6006]c7   6006   d_alloc_parallel+0x48/0x538
+     *   [   69.377578] [ T6006]c7   6006   __lookup_slow+0x60/0x15c
+     *   ...
+     *   [   69.547684] [ T6006]c7   6006  CPU: 7 PID: 6006 Comm: sh Tainted: G S       C O      ...
+     *   [   69.558923] [ T6006]c7   6006  Hardware name: <REDACTED>
+     *   [   69.567059] [ T6006]c7   6006  =========================================================
+     *
+     *   We rely on the kernel printing task/CPU ID for every log line (CONFIG_PRINTK_CALLER=y).
+     *   E.g. for the above report the task ID is T6006. Report lines may interleave with lines
+     *   printed by other kernel tasks, which will have different task IDs, so in order to collect
+     *   the report we:
+     *    - find that last occurrence of the "BUG: " line in the kernel log, parse it to obtain the
+     *      task ID and the tool name;
+     *    - scan the rest of dmesg output and pick every line that has the same task ID, until we
+     *      encounter a horizontal ruler, i.e.:
+     *      [   69.567059] [ T6006]c7   6006  ======================================================
+     *    - add that line to the error report, unless it contains "Comm: " or "Hardware name: "
+     *      (these denote that the line may contain sensitive information).
+     */
+    private void processDmesg(Context ctx, List<String> lines) throws IOException {
+        ArrayList<String> report = new ArrayList<String>();
+        /*
+         * Only SYSTEM_KASAN_ERROR_REPORT and SYSTEM_KFENCE_ERROR_REPORT are supported at the
+         * moment.
+         */
+        final String[] bugTypes = new String[] { "KASAN", "KFENCE" };
+        final String tsRegex = "^\\[[^]]+\\] ";
+        String bugRegex = tsRegex + "\\[([^]]+)\\].*BUG: (" + String.join("|", bugTypes) + "):";
+        Pattern bugPattern = Pattern.compile(bugRegex);
+        int start = -1;
+        String task = "";
+        String tool = "";
+        for (int i = lines.size() - 1; i > 0; i--) {
+            String line = lines.get(i);
+            Matcher m = bugPattern.matcher(line);
+            if (m.find()) {
+                task = m.group(1);
+                tool = m.group(2);
+                start = i;
+                break;
+            }
+        }
+        if (start == -1) {
+            Slog.w(TAG, "Could not find report in dmesg.");
+            return;
+        }
+        String reportRegex = tsRegex + "\\[" + task + "\\].*";
+        Pattern reportPattern = Pattern.compile(reportRegex);
+        for (int i = start; i < lines.size(); i++) {
+            String line = lines.get(i);
+            Matcher m = reportPattern.matcher(line);
+            if (m.matches()) {
+                if (line.contains(" Comm: ") || line.contains("Hardware name: ")) continue;
+                if (line.contains("================================")) break;
+                report.add(line);
+            }
+        }
+
+        final String reportTag = "SYSTEM_" + tool + "_ERROR_REPORT";
+        final DropBoxManager db = ctx.getSystemService(DropBoxManager.class);
+        final String headers = getCurrentBootHeaders();
+        final String reportText = headers + String.join("\n", report);
+        addTextToDropBox(db, reportTag, reportText, "/dev/kmsg", LOG_SIZE);
     }
 
     private void removeOldUpdatePackages(Context context) {
