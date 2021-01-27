@@ -208,6 +208,8 @@ public final class NetworkCapabilities implements Parcelable {
             NET_CAPABILITY_OEM_PRIVATE,
             NET_CAPABILITY_VEHICLE_INTERNAL,
             NET_CAPABILITY_NOT_VCN_MANAGED,
+            NET_CAPABILITY_VSIM,
+            NET_CAPABILITY_BIP,
             NET_CAPABILITY_ENTERPRISE,
     })
     public @interface NetCapability { }
@@ -420,13 +422,25 @@ public final class NetworkCapabilities implements Parcelable {
     public static final int NET_CAPABILITY_NOT_VCN_MANAGED = 28;
 
     /**
+     * Indicates that this network has ability to access the carrier's Virtual Sim service.
+     * @hide
+     */
+    public static final int NET_CAPABILITY_VSIM = 29;
+
+    /**
+     * Indicates that this network has ability to support Bearer Independent Protol.
+     * @hide
+     */
+    public static final int NET_CAPABILITY_BIP = 30;
+
+    /**
      * Indicates that this network is intended for enterprise use.
      * <p>
      * 5G URSP rules may indicate that all data should use a connection dedicated for enterprise
      * use. If the enterprise capability is requested, all enterprise traffic will be routed over
      * the connection with this capability.
      */
-    public static final int NET_CAPABILITY_ENTERPRISE = 29;
+    public static final int NET_CAPABILITY_ENTERPRISE = 31;
 
     private static final int MIN_NET_CAPABILITY = NET_CAPABILITY_MMS;
     private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_ENTERPRISE;
@@ -478,7 +492,8 @@ public final class NetworkCapabilities implements Parcelable {
      */
     @VisibleForTesting
     /* package */ static final long RESTRICTED_CAPABILITIES =
-            (1 << NET_CAPABILITY_CBS)
+            (1 << NET_CAPABILITY_BIP)
+            | (1 << NET_CAPABILITY_CBS)
             | (1 << NET_CAPABILITY_DUN)
             | (1 << NET_CAPABILITY_EIMS)
             | (1 << NET_CAPABILITY_FOTA)
@@ -487,6 +502,7 @@ public final class NetworkCapabilities implements Parcelable {
             | (1 << NET_CAPABILITY_MCX)
             | (1 << NET_CAPABILITY_RCS)
             | (1 << NET_CAPABILITY_VEHICLE_INTERNAL)
+            | (1 << NET_CAPABILITY_VSIM)
             | (1 << NET_CAPABILITY_XCAP)
             | (1 << NET_CAPABILITY_ENTERPRISE);
 
@@ -2069,6 +2085,8 @@ public final class NetworkCapabilities implements Parcelable {
             case NET_CAPABILITY_OEM_PRIVATE:          return "OEM_PRIVATE";
             case NET_CAPABILITY_VEHICLE_INTERNAL:     return "VEHICLE_INTERNAL";
             case NET_CAPABILITY_NOT_VCN_MANAGED:      return "NOT_VCN_MANAGED";
+            case NET_CAPABILITY_BIP:                  return "BIP";
+            case NET_CAPABILITY_VSIM:                 return "VSIM";
             case NET_CAPABILITY_ENTERPRISE:           return "ENTERPRISE";
             default:                                  return Integer.toString(capability);
         }
