@@ -153,6 +153,10 @@ public class PhoneConstants {
     public static final String APN_TYPE_MCX = ApnSetting.TYPE_MCX_STRING;
     /** APN type for XCAP */
     public static final String APN_TYPE_XCAP = ApnSetting.TYPE_XCAP_STRING;
+    /** APN type for VSIM */
+    public static final String APN_TYPE_VSIM = ApnSetting.TYPE_VSIM_STRING;
+    /** APN type for BIP */
+    public static final String APN_TYPE_BIP = ApnSetting.TYPE_BIP_STRING;
     /** Array of all APN types */
     public static final String[] APN_TYPES = {APN_TYPE_DEFAULT,
             APN_TYPE_MMS,
@@ -166,6 +170,8 @@ public class PhoneConstants {
             APN_TYPE_EMERGENCY,
             APN_TYPE_MCX,
             APN_TYPE_XCAP,
+            APN_TYPE_VSIM,
+            APN_TYPE_BIP,
     };
 
     public static final int RIL_CARD_MAX_APPS    = 8;

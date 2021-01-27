@@ -205,6 +205,8 @@ public final class NetworkCapabilities implements Parcelable {
             NET_CAPABILITY_OEM_PRIVATE,
             NET_CAPABILITY_VEHICLE_INTERNAL,
             NET_CAPABILITY_NOT_VCN_MANAGED,
+            NET_CAPABILITY_VSIM,
+            NET_CAPABILITY_BIP,
     })
     public @interface NetCapability { }
 
@@ -415,8 +417,20 @@ public final class NetworkCapabilities implements Parcelable {
     @SystemApi
     public static final int NET_CAPABILITY_NOT_VCN_MANAGED = 28;
 
+    /**
+     * Indicates that this network has ability to access the carrier's Virtual Sim service.
+     * @hide
+     */
+    public static final int NET_CAPABILITY_VSIM = 29;
+
+    /**
+     * Indicates that this network has ability to support Bearer Independent Protol.
+     * @hide
+     */
+    public static final int NET_CAPABILITY_BIP = 30;
+
     private static final int MIN_NET_CAPABILITY = NET_CAPABILITY_MMS;
-    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_NOT_VCN_MANAGED;
+    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_BIP;
 
     /**
      * Network capabilities that are expected to be mutable, i.e., can change while a particular
@@ -465,7 +479,8 @@ public final class NetworkCapabilities implements Parcelable {
      */
     @VisibleForTesting
     /* package */ static final long RESTRICTED_CAPABILITIES =
-            (1 << NET_CAPABILITY_CBS)
+            (1 << NET_CAPABILITY_BIP)
+            | (1 << NET_CAPABILITY_CBS)
             | (1 << NET_CAPABILITY_DUN)
             | (1 << NET_CAPABILITY_EIMS)
             | (1 << NET_CAPABILITY_FOTA)
@@ -474,6 +489,7 @@ public final class NetworkCapabilities implements Parcelable {
             | (1 << NET_CAPABILITY_MCX)
             | (1 << NET_CAPABILITY_RCS)
             | (1 << NET_CAPABILITY_VEHICLE_INTERNAL)
+            | (1 << NET_CAPABILITY_VSIM)
             | (1 << NET_CAPABILITY_XCAP);
 
     /**
@@ -2030,6 +2046,8 @@ public final class NetworkCapabilities implements Parcelable {
             case NET_CAPABILITY_OEM_PRIVATE:          return "OEM_PRIVATE";
             case NET_CAPABILITY_VEHICLE_INTERNAL:     return "NET_CAPABILITY_VEHICLE_INTERNAL";
             case NET_CAPABILITY_NOT_VCN_MANAGED:      return "NOT_VCN_MANAGED";
+            case NET_CAPABILITY_BIP:                  return "BIP";
+            case NET_CAPABILITY_VSIM:                 return "VSIM";
             default:                                  return Integer.toString(capability);
         }
     }
