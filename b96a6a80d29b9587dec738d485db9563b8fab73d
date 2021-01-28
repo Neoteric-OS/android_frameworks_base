@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007715185",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1501983?revision\u003d18",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f7a60d9f_6ecd2678",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-28T23:52:23Z",
+      "side": 1,
+      "message": "Wrong casing for \"sEnableClatOnCellular\". static final variables should be ALL_UPPERCASE.",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 54
+      },
+      "revId": "b96a6a80d29b9587dec738d485db9563b8fab73d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
