@@ -377,9 +377,9 @@ public final class ConnectivityController extends RestrictingController implemen
         // A restricted job that's out of quota MUST use an unmetered network.
         if (jobStatus.getEffectiveStandbyBucket() == RESTRICTED_INDEX
                 && !jobStatus.isConstraintSatisfied(JobStatus.CONSTRAINT_WITHIN_QUOTA)) {
-            required = new NetworkCapabilities(
+            required = new NetworkCapabilities.Builder(
                     jobStatus.getJob().getRequiredNetwork().networkCapabilities)
-                    .addCapability(NET_CAPABILITY_NOT_METERED);
+                    .addCapability(NET_CAPABILITY_NOT_METERED).build();
         } else {
             required = jobStatus.getJob().getRequiredNetwork().networkCapabilities;
         }
@@ -395,9 +395,9 @@ public final class ConnectivityController extends RestrictingController implemen
         }
 
         // See if we match after relaxing any unmetered request
-        final NetworkCapabilities relaxed = new NetworkCapabilities(
+        final NetworkCapabilities relaxed = new NetworkCapabilities.Builder(
                 jobStatus.getJob().getRequiredNetwork().networkCapabilities)
-                        .removeCapability(NET_CAPABILITY_NOT_METERED);
+                        .removeCapability(NET_CAPABILITY_NOT_METERED).build();
         if (relaxed.satisfiedByNetworkCapabilities(capabilities)) {
             // TODO: treat this as "maybe" response; need to check quotas
             return jobStatus.getFractionRunTime() > constants.CONN_PREFETCH_RELAX_FRAC;

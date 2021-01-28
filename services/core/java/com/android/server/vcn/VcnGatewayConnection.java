@@ -16,10 +16,6 @@
 
 package com.android.server.vcn;
 
-import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_CONGESTED;
-import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED;
-import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
-
 import static com.android.server.VcnManagementService.VDBG;
 
 import android.annotation.NonNull;
@@ -963,18 +959,17 @@ public class VcnGatewayConnection extends StateMachine {
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     static NetworkCapabilities buildNetworkCapabilities(
             @NonNull VcnGatewayConnectionConfig gatewayConnectionConfig) {
-        final NetworkCapabilities caps = new NetworkCapabilities();
-
-        caps.addTransportType(TRANSPORT_CELLULAR);
-        caps.addCapability(NET_CAPABILITY_NOT_CONGESTED);
-        caps.addCapability(NET_CAPABILITY_NOT_SUSPENDED);
+        final NetworkCapabilities.Builder builder = new NetworkCapabilities.Builder()
+                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_CONGESTED)
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED);
 
         // Add exposed capabilities
         for (int cap : gatewayConnectionConfig.getAllExposedCapabilities()) {
-            caps.addCapability(cap);
+            builder.addCapability(cap);
         }
 
-        return caps;
+        return builder.build();
     }
 
     private static LinkProperties buildConnectedLinkProperties(
