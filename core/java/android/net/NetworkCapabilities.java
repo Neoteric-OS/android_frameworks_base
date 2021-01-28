@@ -1144,6 +1144,7 @@ public final class NetworkCapabilities implements Parcelable {
      * Value indicating that link bandwidth is unspecified.
      * @hide
      */
+    @SystemApi
     public static final int LINK_BANDWIDTH_UNSPECIFIED = 0;
 
     /**
@@ -2057,6 +2058,7 @@ public final class NetworkCapabilities implements Parcelable {
      * @return {@code true} if {@code mPrivateDnsBroken} is set when private DNS is broken.
      * @hide
      */
+    @SystemApi
     public boolean isPrivateDnsBroken() {
         return mPrivateDnsBroken;
     }
@@ -2298,6 +2300,62 @@ public final class NetworkCapabilities implements Parcelable {
             return this;
         }
 
+        /**
+         * Completely clears the contents of this object, removing even the capabilities that are
+         * set by default when the object is constructed.
+         * @return this builder
+         */
+        @NonNull
+        public Builder clearAll() {
+            mCaps.clearAll();
+            return this;
+        }
+        /**
+         * Sets (or clears) the given capability on this {@link NetworkCapabilities}
+         * instance.
+         *
+         * @param capability the capability
+         * @return this builder
+         */
+        @NonNull
+        public Builder setCapability(@NetCapability int capability, boolean value) {
+            mCaps.setCapability(capability, value);
+            return this;
+        }
+
+        /**
+         * Tests for the presence of a capability on this instance.
+         *
+         * @param capability the capabilities to be tested for.
+         * @return {@code true} if set on this instance.
+         */
+        @NonNull
+        public boolean hasCapability(@NetCapability int capability) {
+            return mCaps.hasCapability(capability);
+        }
+
+        /**
+         * Deduces that all the capabilities it provides are typically provided by restricted
+         * networks or not.
+         *
+         * @return {@code true} if the network should be restricted.
+         */
+        public boolean deduceRestrictedCapability() {
+            return mCaps.deduceRestrictedCapability();
+        }
+
+        /**
+         * Combine a set of Capabilities to this one.  Useful for coming up with the complete set.
+         * <p>
+         * Note that this method may break an invariant of having a particular capability in either
+         * wanted or unwanted lists but never in both.  Requests that have the same capability in
+         * both lists will never be satisfied.
+         * @param NetworkCapabilities
+         */
+        @NonNull
+        public void combineCapabilities(@NonNull NetworkCapabilities nc) {
+            mCaps.combineCapabilities(nc);
+        }
         /**
          * Sets the owner UID.
          *
