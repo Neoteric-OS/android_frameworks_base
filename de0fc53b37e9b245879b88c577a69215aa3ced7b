@@ -46,6 +46,30 @@
       },
       "revId": "de0fc53b37e9b245879b88c577a69215aa3ced7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e1b9c2a_565fbe42",
+        "filename": "core/res/res/xml/time_zones_by_country.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1054481
+      },
+      "writtenOn": "2021-01-28T00:56:02Z",
+      "side": 1,
+      "message": "DONE. PTAL thanks.",
+      "parentUuid": "e728344c_bc27da79",
+      "range": {
+        "startLine": 1079,
+        "startChar": 31,
+        "endLine": 1079,
+        "endChar": 40
+      },
+      "revId": "de0fc53b37e9b245879b88c577a69215aa3ced7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
