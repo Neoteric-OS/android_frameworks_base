@@ -685,7 +685,8 @@ public class UserManagerService extends IUserManager.Stub {
      * Removes any pre-created users from the system. Should be invoked after OTAs, to ensure
      * pre-created users are not stale. New pre-created pool can be re-created after the update.
      */
-    void cleanupPreCreatedUsers() {
+    @Override
+    public void cleanupPreCreatedUsers() {
         final ArrayList<UserInfo> preCreatedUsers;
         synchronized (mUsersLock) {
             final int userSize = mUsers.size();

@@ -65,6 +65,7 @@ interface IUserManager {
     boolean isUserOfType(int userId, in String userType);
     @UnsupportedAppUsage
     UserInfo getUserInfo(int userId);
+    void cleanupPreCreatedUsers();
     String getUserAccount(int userId);
     void setUserAccount(int userId, String accountName);
     long getUserCreationTime(int userId);
