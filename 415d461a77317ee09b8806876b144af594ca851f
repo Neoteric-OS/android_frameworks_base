@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb1f2ac4_50feee26",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1491633
+      },
+      "writtenOn": "2021-01-28T15:22:44Z",
+      "side": 1,
+      "message": "More info on this could be found here \nhttps://docs.google.com/document/d/1W8ea_IOITWxbG4s2nGlcQF52GEkRheJxOYZnqQg4a-M/edit?usp\u003dsharing\u0026resourcekey\u003d0-4sw1OqRl2NJCjuphsPe3Sw",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "415d461a77317ee09b8806876b144af594ca851f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
