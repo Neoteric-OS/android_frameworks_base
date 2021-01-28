@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0635fc9_b6cc4c16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T04:20:07Z",
+      "side": 1,
+      "message": "Not sure if this patch will be used eventually, but if it is, then it is ready.",
+      "revId": "e9ac3587bbb07d95a530d1480980b14dcfcf0145",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
