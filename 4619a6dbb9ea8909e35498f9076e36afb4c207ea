@@ -34,6 +34,24 @@
       "parentUuid": "3f42824d_c7f22e59",
       "revId": "4619a6dbb9ea8909e35498f9076e36afb4c207ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c152745_669f0cbb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2021-01-28T02:30:30Z",
+      "side": 1,
+      "message": "I\u0027ve updated the UTC. Please check it.\nThanks.",
+      "parentUuid": "9a41f4e9_d01fd9c3",
+      "revId": "4619a6dbb9ea8909e35498f9076e36afb4c207ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
