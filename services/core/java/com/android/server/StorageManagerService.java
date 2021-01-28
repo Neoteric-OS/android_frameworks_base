@@ -2779,6 +2779,12 @@ class StorageManagerService extends IStorageManager.Stub
                     return;
                 }
             }
+
+            final long token = Binder.clearCallingIdentity();
+            if (StorageManager.isFileEncryptedNativeOrEmulated()) {
+                LocalServices.getService(UserManagerInternal.class).cleanupPreCreatedUsers();
+            }
+            Binder.restoreCallingIdentity(token);
         }
 
         try {

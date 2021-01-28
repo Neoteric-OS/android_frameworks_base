@@ -5121,6 +5121,11 @@ public class UserManagerService extends IUserManager.Stub {
         }
 
         @Override
+        public void cleanupPreCreatedUsers() {
+            UserManagerService.this.cleanupPreCreatedUsers();
+        }
+
+        @Override
         public @NonNull List<UserInfo> getUsers(boolean excludePartial, boolean excludeDying,
                 boolean excludePreCreated) {
             return UserManagerService.this.getUsersInternal(excludePartial, excludeDying,
