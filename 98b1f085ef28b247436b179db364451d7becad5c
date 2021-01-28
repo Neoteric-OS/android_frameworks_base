@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac68f174_72b0cb19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2021-01-28T17:58:54Z",
+      "side": 1,
+      "message": "Would it be good to start this in sc-dev?",
+      "revId": "98b1f085ef28b247436b179db364451d7becad5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
