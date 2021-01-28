@@ -16,6 +16,24 @@
       "message": "com.android.internal.telephony.TelephonyRegistryTest#testNotifyCellLocationForSubscriberByUserSwitched fails with this. Can you please fix that?\n\njava.lang.AssertionError: expected:\u003c[-1,-1,-1]\u003e but was:\u003cnull\u003e\njava.lang.AssertionError: expected:\u003c[-1,-1,-1]\u003e but was:\u003cnull\u003e\n\tat org.junit.Assert.fail(Assert.java:88)\n\tat org.junit.Assert.failNotEquals(Assert.java:834)\n\tat org.junit.Assert.assertEquals(Assert.java:118)\n\tat org.junit.Assert.assertEquals(Assert.java:144)\n\tat com.android.internal.telephony.TelephonyRegistryTest.testNotifyCellLocationForSubscriberByUserSwitched(TelephonyRegistryTest.java:555)",
       "revId": "4619a6dbb9ea8909e35498f9076e36afb4c207ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a41f4e9_d01fd9c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2021-01-28T01:38:52Z",
+      "side": 1,
+      "message": "Sure. Btw is it no sim case?",
+      "parentUuid": "3f42824d_c7f22e59",
+      "revId": "4619a6dbb9ea8909e35498f9076e36afb4c207ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
