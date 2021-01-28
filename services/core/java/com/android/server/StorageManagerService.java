@@ -2745,7 +2745,8 @@ class StorageManagerService extends IStorageManager.Stub
             mMoveTargetUuid = volumeUuid;
 
             // We need all the users unlocked to move their primary storage
-            final List<UserInfo> users = mContext.getSystemService(UserManager.class).getUsers();
+            final List<UserInfo> users = mContext.getSystemService(UserManager.class).getUsers(true,
+                    true, false/*don't skip pre-created*/);
             for (UserInfo user : users) {
                 if (StorageManager.isFileEncryptedNativeOrEmulated()
                         && !isUserKeyUnlocked(user.id)) {
