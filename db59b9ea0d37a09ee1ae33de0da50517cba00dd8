@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56c60223_d5cea704",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-28T03:35:52Z",
+      "side": 1,
+      "message": "redundant because setVcnConfig() already wraps in a Binder.withCleanCallingIdentity(), but this also future-proofs the call",
+      "range": {
+        "startLine": 418,
+        "startChar": 12,
+        "endLine": 418,
+        "endChar": 43
+      },
+      "revId": "db59b9ea0d37a09ee1ae33de0da50517cba00dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
