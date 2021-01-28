@@ -216,8 +216,11 @@ class RebootEscrowManager {
         // generated before reboot. Note that we will clear the escrow key even if the keystore key
         // is null.
         SecretKey kk = mKeyStoreManager.getKeyStoreEncryptionKey();
+        if (kk == null) {
+            Slog.i(TAG, "Failed to load the key for resume on reboot from key store.");
+        }
         RebootEscrowKey escrowKey = getAndClearRebootEscrowKey(kk);
-        if (kk == null || escrowKey == null) {
+        if (escrowKey == null) {
             Slog.w(TAG, "Had reboot escrow data for users, but no key; removing escrow storage.");
             for (UserInfo user : users) {
                 mStorage.removeRebootEscrow(user.id);

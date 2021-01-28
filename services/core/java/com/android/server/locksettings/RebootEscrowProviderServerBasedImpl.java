@@ -132,6 +132,11 @@ class RebootEscrowProviderServerBasedImpl implements RebootEscrowProviderInterfa
             Slog.w(TAG, "Failed to read reboot escrow server blob from storage");
             return null;
         }
+        if (decryptionKey == null) {
+            Slog.w(TAG, "Failed to decrypt the escrow key; decryption key from keystore is"
+                    + " null.");
+            return null;
+        }
 
         try {
             byte[] escrowKeyBytes = unwrapServerBlob(serverBlob, decryptionKey);
