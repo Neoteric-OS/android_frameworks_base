@@ -2779,6 +2779,10 @@ class StorageManagerService extends IStorageManager.Stub
                     return;
                 }
             }
+
+            if (StorageManager.isFileEncryptedNativeOrEmulated()) {
+                mContext.getSystemService(UserManager.class).cleanupPreCreatedUsers();
+            }
         }
 
         try {

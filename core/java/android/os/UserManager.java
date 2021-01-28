@@ -3300,6 +3300,18 @@ public class UserManager {
     }
 
     /**
+     * Remove any pre-created users from the system.
+     * @hide
+     */
+    public void cleanupPreCreatedUsers() {
+        try {
+            mService.cleanupPreCreatedUsers();
+        } catch (RemoteException re) {
+            throw re.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * @return the user's account name, null if not found.
      * @hide
      */
