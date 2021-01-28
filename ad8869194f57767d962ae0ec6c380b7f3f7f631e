@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3fb1327_46d845ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2021-01-28T16:41:50Z",
+      "side": 1,
+      "message": "Nit: do -\u003e does",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "ad8869194f57767d962ae0ec6c380b7f3f7f631e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "953119a6_b1aea11a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2021-01-28T16:41:50Z",
+      "side": 1,
+      "message": "Nit: staled -\u003e stale",
+      "range": {
+        "startLine": 11,
+        "startChar": 19,
+        "endLine": 11,
+        "endChar": 25
+      },
+      "revId": "ad8869194f57767d962ae0ec6c380b7f3f7f631e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c0d77bb_f1553854",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2021-01-28T16:41:50Z",
+      "side": 1,
+      "message": "Here is a suggestion for a bit more clarity / justification, since partners may come here first to find out about something they initially think is a bug (if they haven\u0027t caught it in the docs):\n\nBefore this change, if an NITZ time signal was available, it would be given priority over an NTP-derived time.\n\nAfter this change, if an NTP time signal is available, it will be given priority over an NITZ-derived time.\n\nThis change modifies the default configuration of the system time detector. It can be modified by partners altering the configuration directly or by use of a build-time config overlay. The configuration can not be influenced by users currently.\n\nThis change is being made because we have had reports over the years of NITZ information being incorrect or inaccurate. Responsibility for sending correct NITZ time lies with carriers and can even vary from cell to cell on the same network. We assume NTP will be more consistent and reliable, so we are modifying the default.",
+      "revId": "ad8869194f57767d962ae0ec6c380b7f3f7f631e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a945c83_51e8f8e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2021-01-28T16:41:50Z",
+      "side": 1,
+      "message": "Not necessary for the initial check-in, but regarding tests: we should have a testing story for partners / carriers wanting to test/confirm that NITZ signals are still used when NTP is unavailable. Silencing NTP is a little more difficult than silencing NITZ.\n\nPerhaps:\n\nadb shell dumpsys time_detector? \nturn off wifi + cell data plan?\nsystem property to disable NTP or change the priority order?\n\nSomething new with:\n\"adb shell time_detector cmd\" to alter priority or disable NTP might also work.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "ad8869194f57767d962ae0ec6c380b7f3f7f631e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
