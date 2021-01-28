@@ -16,6 +16,24 @@
       "message": "Yohei - I assume you\u0027d want to keep OWNERS for the autofill files in inputmethodservice, so didn\u0027t change that.",
       "revId": "2e7bb7733a001f88faf75501ccae521c474aca05",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68cd2677_9d315cbd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2021-01-28T20:43:35Z",
+      "side": 1,
+      "message": "I\u0027m fine with opening up the ownership of *InlineSuggestion* to autofill folks to see how it goes, as this is a two-way door that we can revisit at any time when we find something that isn\u0027t working as expected.\n\nOther IME reviewers, do you have any concern?",
+      "parentUuid": "da37ccc1_9fb862f0",
+      "revId": "2e7bb7733a001f88faf75501ccae521c474aca05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
