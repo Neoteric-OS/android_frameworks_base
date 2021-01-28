@@ -16,7 +16,6 @@
 
 package com.android.server.connectivity;
 
-import static android.net.NetworkCapabilities.MAX_TRANSPORT;
 import static android.net.NetworkCapabilities.TRANSPORT_BLUETOOTH;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_ETHERNET;
@@ -25,15 +24,14 @@ import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI_AWARE;
 
-import android.net.ConnectivityManager;
 import android.net.ConnectivityMetricsEvent;
 import android.net.metrics.ApfProgramEvent;
 import android.net.metrics.ApfStats;
+import android.net.metrics.ConnectStats;
 import android.net.metrics.DefaultNetworkEvent;
 import android.net.metrics.DhcpClientEvent;
 import android.net.metrics.DhcpErrorEvent;
 import android.net.metrics.DnsEvent;
-import android.net.metrics.ConnectStats;
 import android.net.metrics.IpManagerEvent;
 import android.net.metrics.IpReachabilityEvent;
 import android.net.metrics.NetworkEvent;
@@ -41,12 +39,13 @@ import android.net.metrics.RaEvent;
 import android.net.metrics.ValidationProbeEvent;
 import android.net.metrics.WakeupStats;
 import android.os.Parcelable;
-import android.util.SparseArray;
 import android.util.SparseIntArray;
+
 import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass;
 import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityEvent;
 import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityLog;
 import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.Pair;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -374,7 +373,7 @@ final public class IpConnectivityEventBuilder {
         return IpConnectivityLogClass.UNKNOWN;
     }
 
-    private static final int[] TRANSPORT_LINKLAYER_MAP = new int[MAX_TRANSPORT + 1];
+    private static final int[] TRANSPORT_LINKLAYER_MAP = new int[TRANSPORT_LOWPAN + 2];
     static {
         TRANSPORT_LINKLAYER_MAP[TRANSPORT_CELLULAR]   = IpConnectivityLogClass.CELLULAR;
         TRANSPORT_LINKLAYER_MAP[TRANSPORT_WIFI]       = IpConnectivityLogClass.WIFI;

@@ -202,12 +202,12 @@ public class Vcn extends Handler {
 
     private boolean requestSatisfiedByGatewayConnectionConfig(
             @NonNull NetworkRequest request, @NonNull VcnGatewayConnectionConfig config) {
-        final NetworkCapabilities configCaps = new NetworkCapabilities();
+        final NetworkCapabilities.Builder builder = new NetworkCapabilities.Builder();
         for (int cap : config.getAllExposedCapabilities()) {
-            configCaps.addCapability(cap);
+            builder.addCapability(cap);
         }
 
-        return request.networkCapabilities.satisfiedByNetworkCapabilities(configCaps);
+        return request.networkCapabilities.satisfiedByNetworkCapabilities(builder.build());
     }
 
     private String getLogTag() {
