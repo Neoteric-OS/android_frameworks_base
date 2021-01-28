@@ -8012,6 +8012,9 @@ public class AudioService extends IAudioService.Stub
         public void postDisplaySafeVolumeWarning(int flags) {
             if (mController == null)
                 return;
+            if ((flags & AudioManager.FLAG_SHOW_UI) == 0) {
+                flags = flags | AudioManager.FLAG_SHOW_UI;
+            }
             try {
                 mController.displaySafeVolumeWarning(flags);
             } catch (RemoteException e) {
