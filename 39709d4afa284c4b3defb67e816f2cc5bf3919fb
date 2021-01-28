@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d5ab822_d7b24302",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-28T05:29:15Z",
+      "side": 1,
+      "message": "Sorry for the confusion. Actually what I meant with this was that this would be a final boolean class member, and as such, initialized in the constructor. If you have time, maybe do that for now, then we can think about how to unit test this code in our next sync.",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 43
+      },
+      "revId": "39709d4afa284c4b3defb67e816f2cc5bf3919fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35809745_3b5c2b92",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-28T05:29:15Z",
+      "side": 1,
+      "message": "This should not be an error log (Log.e), since it is 100% WAI on these devices that clatd be disabled.\n\nAlso this method is called all the time, so it probably shouldn\u0027t log.\n\nIf it does log, then it shouldn\u0027t log \"Android\" since this is Android code. Maybe it could say something like \"Software 464xlat disabled on cellular due to vendor property\".",
+      "range": {
+        "startLine": 141,
+        "startChar": 12,
+        "endLine": 141,
+        "endChar": 51
+      },
+      "revId": "39709d4afa284c4b3defb67e816f2cc5bf3919fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
