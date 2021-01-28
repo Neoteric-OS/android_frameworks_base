@@ -16,6 +16,24 @@
       "message": "I\u0027m confused by this change. I thought the plan was to have NetworkAgents pass in the subscriber ID as part of their NetworkCapabilities. And the code here:\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1542630/12/services/core/java/com/android/server/ConnectivityService.java#6559\n\nensures that if a NetworkAgent changes the subscription ID passed in via the NetworkCapabilities, then the change will be ignored. Why would we have that code if the NetworkAgents are not going to set the subscriber ID in the NetworkCapabilities?",
       "revId": "8d1d02b6ff5841349fb8d42066d7d53f0cff2b48",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdd5b728_6cce52cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-28T13:28:06Z",
+      "side": 1,
+      "message": "That\u0027s the original plan.\nBut IIRC after meeting we don\u0027t want to change telephony code.\nBut we do want to have a class that carries the IMSI so we can pass it to NetworkStatsService.\nSo we set it within our code.\n\nBut maybe I\u0027m not following this correctly.\n+Jean to input.",
+      "parentUuid": "c7640091_dab754c3",
+      "revId": "8d1d02b6ff5841349fb8d42066d7d53f0cff2b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
