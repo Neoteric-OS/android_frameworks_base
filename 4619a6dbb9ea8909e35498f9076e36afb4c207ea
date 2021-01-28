@@ -52,6 +52,24 @@
       "parentUuid": "9a41f4e9_d01fd9c3",
       "revId": "4619a6dbb9ea8909e35498f9076e36afb4c207ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89acfb0f_b08daa34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2021-01-28T19:15:17Z",
+      "side": 1,
+      "message": "Our unit tests typically do not assume anything about SIM presence -- they should work the same regardless of whether SIM is present or not. Does this one rely on SIM?",
+      "parentUuid": "7c152745_669f0cbb",
+      "revId": "4619a6dbb9ea8909e35498f9076e36afb4c207ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
