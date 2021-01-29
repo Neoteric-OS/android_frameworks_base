@@ -179,6 +179,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "245248bf_02b5c84f",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T08:48:09Z",
+      "side": 1,
+      "message": "Ahh, in which case i\u0027d just make it public, similar to teardown(). It\u0027s the primary API, and meant for general use.\n\nWe don\u0027t have any uses outside of VcnGatewayConnection right now, but it\u0027s also a statement of public interface (similar to constructor \u0026 teardown)",
+      "parentUuid": "f2cdf9de_e236493a",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 187,
+        "endChar": 22
+      },
+      "revId": "3561e812aa851e3ae217e4607aa106821b545de0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "25869e2a_87f568a3",
         "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
         "patchSetId": 1

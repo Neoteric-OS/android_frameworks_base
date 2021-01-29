@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1213ddb3_d714c2cd",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T08:48:09Z",
+      "side": 1,
+      "message": "Tiniest of nits: I\u0027d usually put VcnConfig first; it\u0027s the \"more important\" piece of information. (the first two are the invariants, the next two are variable, but it being prioritized makes it ever so slightly more readable)",
+      "range": {
+        "startLine": 97,
+        "startChar": 21,
+        "endLine": 97,
+        "endChar": 50
+      },
+      "revId": "a09bde0e32b64dbaf2e8a7a9c35c0cbcdab94d6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "767375cc_2c4f95e0",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T08:48:09Z",
+      "side": 1,
+      "message": "Is there any case in which we want to not immediately pass the subscriptionSnapshot to the UnderlyingNetworkTracker?\n\nSimilarly, do we handle this differently in any state? or are there any ordering requirements? (i think we can probably just update the global here, at most reposting a runnable to the front of the queue)",
+      "range": {
+        "startLine": 589,
+        "startChar": 8,
+        "endLine": 589,
+        "endChar": 20
+      },
+      "revId": "a09bde0e32b64dbaf2e8a7a9c35c0cbcdab94d6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f238a5f_31350609",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T08:48:09Z",
+      "side": 1,
+      "message": "We\u0027d still need this to trigger an update of exposed network\u0027s NetworkCapabilities, but we wouldn\u0027t need to pass the snapshot in the info; we can just pull from mSnapshot.",
+      "range": {
+        "startLine": 590,
+        "startChar": 16,
+        "endLine": 590,
+        "endChar": 43
+      },
+      "revId": "a09bde0e32b64dbaf2e8a7a9c35c0cbcdab94d6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
