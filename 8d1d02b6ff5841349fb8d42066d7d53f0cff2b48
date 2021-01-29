@@ -34,6 +34,24 @@
       "parentUuid": "c7640091_dab754c3",
       "revId": "8d1d02b6ff5841349fb8d42066d7d53f0cff2b48",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba2eb9b2_47b5558f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-29T13:32:02Z",
+      "side": 1,
+      "message": "I think for backward compatibility we do need this change in any case. This is also what WiFi has been counting on.",
+      "parentUuid": "bdd5b728_6cce52cf",
+      "revId": "8d1d02b6ff5841349fb8d42066d7d53f0cff2b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
