@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2375b9ca_ff18edd2",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-29T04:54:37Z",
+      "side": 1,
+      "message": "This is incorrect because it does not consider the passed-in userId argument. It tells you whether the userId used when creating mUserIdContext can have a restricted profile.\n\n1. If you don\u0027t actually need the passed-in userId, you should delete the userId parameter.\n2. If you do need the passed-in userId, then you have to leave the code as is.\n\nWhether #1 or #2 is true depends on the rest of the code.",
+      "range": {
+        "startLine": 1239,
+        "startChar": 19,
+        "endLine": 1239,
+        "endChar": 59
+      },
+      "revId": "3814cc2ab4d5fcba1fd554b88aa6c752b1e2f5a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
