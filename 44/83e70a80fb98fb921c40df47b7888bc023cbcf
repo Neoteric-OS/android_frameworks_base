@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+1: Almaz Mingaleev <mingaleev@google.com>
+Code-Review+2: Neil Fuller <nfuller@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Autosubmit+1: wonil <wonil@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 29 Jan 2021 00:32:11 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1556142
+Project: platform/frameworks/base
+Branch: refs/heads/oreo-dev
