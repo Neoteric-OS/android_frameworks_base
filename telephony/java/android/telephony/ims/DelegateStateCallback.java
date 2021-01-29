@@ -18,6 +18,7 @@ package android.telephony.ims;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.telephony.ims.stub.SipDelegate;
 import android.telephony.ims.stub.SipTransportImplBase;
@@ -52,6 +53,7 @@ public interface DelegateStateCallback {
      *    implementing this feature elsewhere. If all features of this {@link SipDelegate} are
      *    denied, this method should still be called.
      */
+    @SuppressLint("NullableCollection")  // TODO(b/154763999): Mark deniedTags @Nonnull
     void onCreated(@NonNull SipDelegate delegate, @Nullable Set<FeatureTagState> deniedTags);
 
     /**
