@@ -107,6 +107,14 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
                 mAddress, mService.getPhysicalAddress(), mDeviceType));
         mService.sendCecCommand(HdmiCecMessageBuilder.buildDeviceVendorIdCommand(
                 mAddress, mService.getVendorId()));
+        // Ask tv to broadcast its vendor id so that we could make specific compat solution work.
+        mService.sendCecCommand(HdmiCecMessageBuilder.buildGiveDeviceVendorIdCommand(
+                mAddress, Constants.ADDR_TV));
+        if (mAutoLanguageChange) {
+            // If the device supports set menu language, then ask tv to provide its language.
+            mService.sendCecCommand(HdmiCecMessageBuilder.buildGetMenuLanguageCommand(
+                mAddress, Constants.ADDR_TV));
+        }
         // Actively send out an OSD name to the TV to update the TV panel in case the TV
         // does not query the OSD name on time. This is not a required behavior by the spec.
         // It is used for some TVs that need the OSD name update but don't query it themselves.
@@ -316,7 +324,9 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
         try {
             String iso3Language = new String(message.getParams(), 0, 3, "US-ASCII");
             Locale currentLocale = mService.getContext().getResources().getConfiguration().locale;
-            if (currentLocale.getISO3Language().equals(iso3Language)) {
+            String curIso3Language = mService.localeToMenuLanguage(currentLocale);
+            HdmiLogger.debug("handleSetMenuLanguage " + iso3Language + " cur:" + curIso3Language);
+            if (curIso3Language.equals(iso3Language)) {
                 // Do not switch language if the new language is the same as the current one.
                 // This helps avoid accidental country variant switching from en_US to en_AU
                 // due to the limitation of CEC. See the warning below.
@@ -328,7 +338,7 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
             final List<LocaleInfo> localeInfos = LocalePicker.getAllAssetLocales(
                     mService.getContext(), false);
             for (LocaleInfo localeInfo : localeInfos) {
-                if (localeInfo.getLocale().getISO3Language().equals(iso3Language)) {
+                if (mService.localeToMenuLanguage(localeInfo.getLocale()).equals(iso3Language)) {
                     // WARNING: CEC adopts ISO/FDIS-2 for language code, while Android requires
                     // additional country variant to pinpoint the locale. This keeps the right
                     // locale from being chosen. 'eng' in the CEC command, for instance,
