@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3db3acfb_2aacf734",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060227
+      },
+      "writtenOn": "2021-01-29T18:26:32Z",
+      "side": 1,
+      "message": "+2 for docs-only change. By the way, this CL qualifies you for the \"1-bit bugfix\" badge (go/1bbf), if you\u0027re interested (01000100 -\u003e 01000110).",
+      "revId": "1b9358bfe686eabe75936364c67598a6193d0331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
