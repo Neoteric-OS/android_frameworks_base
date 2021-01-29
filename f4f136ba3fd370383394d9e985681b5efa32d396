@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e6c31ee_9c6139df",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2605,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-01-29T21:19:47Z",
+      "side": 1,
+      "message": "FEATURE_IMS is defined as public and refers to an API which is primarily @SystemApi.   I\u0027m curious why this one is considered a system API as well?",
+      "range": {
+        "startLine": 2605,
+        "startChar": 4,
+        "endLine": 2605,
+        "endChar": 14
+      },
+      "revId": "f4f136ba3fd370383394d9e985681b5efa32d396",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
