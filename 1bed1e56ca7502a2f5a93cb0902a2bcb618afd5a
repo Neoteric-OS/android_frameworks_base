@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17e680b0_0134c33d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1122434
+      },
+      "writtenOn": "2021-01-29T01:18:14Z",
+      "side": 1,
+      "message": "AOSP cherrypick of ag/12662650",
+      "revId": "1bed1e56ca7502a2f5a93cb0902a2bcb618afd5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
