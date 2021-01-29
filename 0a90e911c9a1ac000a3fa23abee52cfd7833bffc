@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d9f38aee_f1ed5b72",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 23
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-29T04:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d36ab57_ffc613ce",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "0a90e911c9a1ac000a3fa23abee52cfd7833bffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c69df681_099d2bbf",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 23
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-28T14:05:55Z",
       "side": 1,
       "message": "...this is a bugfix leftover from a previous patch right ?",
+      "range": {
+        "startLine": 3443,
+        "startChar": 0,
+        "endLine": 3447,
+        "endChar": 17
+      },
+      "revId": "0a90e911c9a1ac000a3fa23abee52cfd7833bffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1d00cc9_ef1559d7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 3447,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-29T04:05:57Z",
+      "side": 1,
+      "message": "It looks like a minor change to just make sure we only do this for request TYPES.",
+      "parentUuid": "c69df681_099d2bbf",
       "range": {
         "startLine": 3443,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5175ce2_edf468b4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 5545,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-29T04:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "010258b1_ee68c5ed",
+      "range": {
+        "startLine": 5545,
+        "startChar": 16,
+        "endLine": 5545,
+        "endChar": 17
+      },
+      "revId": "0a90e911c9a1ac000a3fa23abee52cfd7833bffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6fe3092f_58a4df95",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-01-28T14:05:55Z",
       "side": 1,
       "message": "fallback",
+      "range": {
+        "startLine": 7247,
+        "startChar": 15,
+        "endLine": 7247,
+        "endChar": 30
+      },
+      "revId": "0a90e911c9a1ac000a3fa23abee52cfd7833bffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cca2179_9c0356e2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7247,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-29T04:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fe3092f_58a4df95",
       "range": {
         "startLine": 7247,
         "startChar": 15,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6de7df04_945e15cc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7249,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-29T04:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e05ad148_73e69063",
+      "range": {
+        "startLine": 7249,
+        "startChar": 12,
+        "endLine": 7249,
+        "endChar": 43
+      },
+      "revId": "0a90e911c9a1ac000a3fa23abee52cfd7833bffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "01f94fec_f7b82ab1",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-01-28T14:05:55Z",
       "side": 1,
       "message": "You\u0027ll need to do this, because if a VPN is up and has this network at its default it will need to update its properties.",
+      "range": {
+        "startLine": 7265,
+        "startChar": 0,
+        "endLine": 7268,
+        "endChar": 9
+      },
+      "revId": "0a90e911c9a1ac000a3fa23abee52cfd7833bffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d91b5d19_a845529c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7268,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-29T04:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01f94fec_f7b82ab1",
       "range": {
         "startLine": 7265,
         "startChar": 0,
@@ -164,6 +308,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a9977c2e_d9fa40cc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7297,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-29T04:05:57Z",
+      "side": 1,
+      "message": "Hi Jean, could you elaborate a bit more here? Are you saying I should replace \"OEM\" with \"s/OEM //\" or are you saying that I should change this string to use %s string formatting? Thanks!",
+      "parentUuid": "c2c8cecb_cc68fee4",
+      "range": {
+        "startLine": 7297,
+        "startChar": 29,
+        "endLine": 7297,
+        "endChar": 32
+      },
+      "revId": "0a90e911c9a1ac000a3fa23abee52cfd7833bffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "84156f56_1d4ebe32",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 23
@@ -175,6 +343,30 @@
       "writtenOn": "2021-01-28T14:05:55Z",
       "side": 1,
       "message": "Shouldn\u0027t this throw ? It\u0027s a programming error isn\u0027t it ?",
+      "range": {
+        "startLine": 7305,
+        "startChar": 16,
+        "endLine": 7305,
+        "endChar": 22
+      },
+      "revId": "0a90e911c9a1ac000a3fa23abee52cfd7833bffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18b44c01_0d258ff9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7305,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-29T04:05:57Z",
+      "side": 1,
+      "message": "Yep, good point.",
+      "parentUuid": "84156f56_1d4ebe32",
       "range": {
         "startLine": 7305,
         "startChar": 16,
@@ -198,6 +390,30 @@
       "writtenOn": "2021-01-28T14:05:55Z",
       "side": 1,
       "message": "else {\n  same thing with the dummy network.\n}\n\nYou\u0027ll need to add a constant for the network, but with aosp/1554974 in that can just be\n\n  final Network DUMMY_NETWORK \u003d new Network(INetd::DUMMY_NET_ID);",
+      "range": {
+        "startLine": 7311,
+        "startChar": 12,
+        "endLine": 7311,
+        "endChar": 13
+      },
+      "revId": "0a90e911c9a1ac000a3fa23abee52cfd7833bffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da2d42cc_71bd63f4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7311,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-29T04:05:57Z",
+      "side": 1,
+      "message": "Yes, this is awesome. Thanks again for getting that CL in. I agree I\u0027ll have to account for this, but I don\u0027t think I\u0027ll be able to account for it here since this will only occur if there is a NetworkReassignment.RequestReassignment to process. This won\u0027t happen for those networks that never find a satisfier. I\u0027ll have to add something a bit further up the stack when we are doing a rematch to create a NetworkReassignment.RequestReassignment for INetd::DUMMY_NET_ID if no match is found so that it flows into here.\n\nThis will probably require a bit more thought as to how to best handle but seems quite manageable.",
+      "parentUuid": "41ce09ff_6d506541",
       "range": {
         "startLine": 7311,
         "startChar": 12,
