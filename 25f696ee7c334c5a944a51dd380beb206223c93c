@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2aff817_33e3135a",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 6284,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-29T07:13:45Z",
+      "side": 1,
+      "message": "Went through this one today with Jean: we thought considering the current usages they can be replaced by \"\u003e 0\" instead",
+      "range": {
+        "startLine": 6284,
+        "startChar": 34,
+        "endLine": 6284,
+        "endChar": 60
+      },
+      "revId": "25f696ee7c334c5a944a51dd380beb206223c93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf5cad5b_3193b776",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 6299,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-29T07:13:45Z",
+      "side": 1,
+      "message": "This should probably not be an API. We need to sync with Jean on this; it\u0027s probably better to keep if out of this CL for now.",
+      "range": {
+        "startLine": 6299,
+        "startChar": 26,
+        "endLine": 6299,
+        "endChar": 52
+      },
+      "revId": "25f696ee7c334c5a944a51dd380beb206223c93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3f1c606_21b46ab2",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 6300,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-29T07:13:45Z",
+      "side": 1,
+      "message": "I couldn\u0027t find usages of this; is there one ?",
+      "range": {
+        "startLine": 6300,
+        "startChar": 35,
+        "endLine": 6300,
+        "endChar": 48
+      },
+      "revId": "25f696ee7c334c5a944a51dd380beb206223c93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "240f9f42_f70a76b7",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 6304,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-29T07:13:45Z",
+      "side": 1,
+      "message": "addCapability / removeCapability should be enough for this",
+      "range": {
+        "startLine": 6304,
+        "startChar": 67,
+        "endLine": 6304,
+        "endChar": 80
+      },
+      "revId": "25f696ee7c334c5a944a51dd380beb206223c93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1dc7e58f_179774be",
+        "filename": "services/core/java/com/android/server/connectivity/IpConnectivityEventBuilder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-29T07:13:45Z",
+      "side": 1,
+      "message": "Why TRANSPORT_LOWPAN + 2 ?\nCan this be replaced with SparseIntArray ?",
+      "range": {
+        "startLine": 376,
+        "startChar": 65,
+        "endLine": 376,
+        "endChar": 85
+      },
+      "revId": "25f696ee7c334c5a944a51dd380beb206223c93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
