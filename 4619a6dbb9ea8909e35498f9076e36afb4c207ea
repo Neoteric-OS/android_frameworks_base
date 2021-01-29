@@ -70,6 +70,24 @@
       "parentUuid": "7c152745_669f0cbb",
       "revId": "4619a6dbb9ea8909e35498f9076e36afb4c207ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d146834a_e404da9e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2021-01-29T00:23:02Z",
+      "side": 1,
+      "message": "No. Updated UTC works normally regardless of SIM.",
+      "parentUuid": "89acfb0f_b08daa34",
+      "revId": "4619a6dbb9ea8909e35498f9076e36afb4c207ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
