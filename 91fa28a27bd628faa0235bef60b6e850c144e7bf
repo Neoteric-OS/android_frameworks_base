@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "381fdfa2_e01afb1e",
+        "filename": "core/java/android/os/UserManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3306,
+      "author": {
+        "id": 1010465
+      },
+      "writtenOn": "2021-01-29T18:23:33Z",
+      "side": 1,
+      "message": "expand UserManagerInternal rather than exposing this in UserManager.",
+      "range": {
+        "startLine": 3306,
+        "startChar": 16,
+        "endLine": 3306,
+        "endChar": 38
+      },
+      "revId": "91fa28a27bd628faa0235bef60b6e850c144e7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2aaf1d42_0c665514",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1010465
+      },
+      "writtenOn": "2021-01-29T18:23:33Z",
+      "side": 1,
+      "message": "why do you need this for shell?",
+      "range": {
+        "startLine": 68,
+        "startChar": 54,
+        "endLine": 68,
+        "endChar": 70
+      },
+      "revId": "91fa28a27bd628faa0235bef60b6e850c144e7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1870c381_5a6af5a4",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2783,
+      "author": {
+        "id": 1010465
+      },
+      "writtenOn": "2021-01-29T18:23:33Z",
+      "side": 1,
+      "message": "use Binder.clearCallingIdentity() here and restoreCallingIdentity after L2785 instead of adding the permission to the shell",
+      "range": {
+        "startLine": 2783,
+        "startChar": 11,
+        "endLine": 2783,
+        "endChar": 12
+      },
+      "revId": "91fa28a27bd628faa0235bef60b6e850c144e7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef8cb480_8373c54b",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1010465
+      },
+      "writtenOn": "2021-01-29T18:23:33Z",
+      "side": 1,
+      "message": "as this is exposed to outside, it should have permission check",
+      "range": {
+        "startLine": 690,
+        "startChar": 8,
+        "endLine": 690,
+        "endChar": 11
+      },
+      "revId": "91fa28a27bd628faa0235bef60b6e850c144e7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
