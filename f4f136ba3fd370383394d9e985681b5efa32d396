@@ -22,6 +22,30 @@
       },
       "revId": "f4f136ba3fd370383394d9e985681b5efa32d396",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a4ded2e_71a49c2e",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2605,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-29T21:41:25Z",
+      "side": 1,
+      "message": "Looking at the API surfaces involved, all of the API surfaces that are user facing were @SystemApi...\n\nFEATURE_IMS has some public api surfaces, such as ImsMmTelManager APIs designed for diagnostic apps to use... I can make this public as well, but it would link to @hide APIs...",
+      "parentUuid": "9e6c31ee_9c6139df",
+      "range": {
+        "startLine": 2605,
+        "startChar": 4,
+        "endLine": 2605,
+        "endChar": 14
+      },
+      "revId": "f4f136ba3fd370383394d9e985681b5efa32d396",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
