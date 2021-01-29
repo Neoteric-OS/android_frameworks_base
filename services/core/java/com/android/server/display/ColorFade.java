@@ -28,6 +28,8 @@ import android.opengl.EGLSurface;
 import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 import android.os.IBinder;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.Slog;
 import android.view.Display;
 import android.view.DisplayInfo;
@@ -106,8 +108,9 @@ final class ColorFade {
     private final float mProjMatrix[] = new float[16];
     private final int[] mGLBuffers = new int[2];
     private int mTexCoordLoc, mVertexLoc, mTexUnitLoc, mProjMatrixLoc, mTexMatrixLoc;
-    private int mOpacityLoc, mGammaLoc;
+    private int mOpacityLoc, mGammaLoc, mForceWhite;
     private int mProgram;
+    private static Context sContext;
 
     // Vertex and corresponding texture coordinates.
     // We have 4 2D vertices, so 8 elements.  The vertices form a quad.
@@ -136,6 +139,12 @@ final class ColorFade {
         mDisplayManagerInternal = LocalServices.getService(DisplayManagerInternal.class);
     }
 
+    public static boolean isInvertColorsEnable() {
+        return Settings.Secure.getIntForUser(sContext.getContentResolver(),
+                        Settings.Secure.ACCESSIBILITY_DISPLAY_INVERSION_ENABLED,
+                        0, UserHandle.USER_CURRENT) != 0;
+    }
+
     /**
      * Warms up the color fade in preparation for turning on or off.
      * This method prepares a GL context, and captures a screen shot.
@@ -149,6 +158,7 @@ final class ColorFade {
         }
 
         mMode = mode;
+        sContext = context;
 
         // Get the display size and layer stack.
         // This is not expected to change while the color fade surface is showing.
@@ -254,6 +264,7 @@ final class ColorFade {
 
         mOpacityLoc = GLES20.glGetUniformLocation(mProgram, "opacity");
         mGammaLoc = GLES20.glGetUniformLocation(mProgram, "gamma");
+        mForceWhite = GLES20.glGetUniformLocation(mProgram, "forceWhite");
         mTexUnitLoc = GLES20.glGetUniformLocation(mProgram, "texUnit");
 
         GLES20.glUseProgram(mProgram);
@@ -402,7 +413,26 @@ final class ColorFade {
             double sign = cos < 0 ? -1 : 1;
             float opacity = (float) -Math.pow(one_minus_level, 2) + 1;
             float gamma = (float) ((0.5d * sign * Math.pow(cos, 2) + 0.5d) * 0.9d + 0.1d);
-            drawFaded(opacity, 1.f / gamma);
+            boolean forceWhite = false;
+            if (isInvertColorsEnable()) {
+
+                //Ignore opacity value and force create a white image for color invertion mode
+                if (opacity != 0) {
+                    opacity = 1.f / opacity;
+                    forceWhite = false;
+                } else {
+                    forceWhite = true;
+                }
+
+                if (gamma != 0) {
+                    gamma = 1.f / gamma;
+                }
+
+                if (DEBUG) {
+                    Slog.d(TAG, "Color invertion is enabled");
+                }
+            }
+            drawFaded(opacity, 1.f / gamma, forceWhite);
             if (checkGlErrors("drawFrame")) {
                 return false;
             }
@@ -414,9 +444,10 @@ final class ColorFade {
         return showSurface(1.0f);
     }
 
-    private void drawFaded(float opacity, float gamma) {
+    private void drawFaded(float opacity, float gamma, boolean forceWhite) {
         if (DEBUG) {
-            Slog.d(TAG, "drawFaded: opacity=" + opacity + ", gamma=" + gamma);
+            Slog.d(TAG, "drawFaded: opacity=" + opacity + ", gamma=" + gamma 
+                   + ", forceWhite=" + forceWhite);
         }
         // Use shaders
         GLES20.glUseProgram(mProgram);
@@ -426,6 +457,7 @@ final class ColorFade {
         GLES20.glUniformMatrix4fv(mTexMatrixLoc, 1, false, mTexMatrix, 0);
         GLES20.glUniform1f(mOpacityLoc, opacity);
         GLES20.glUniform1f(mGammaLoc, gamma);
+	GLES20.glUniform1i(mForceWhite, forceWhite ? 1 : 0);
 
         // Use textures
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
