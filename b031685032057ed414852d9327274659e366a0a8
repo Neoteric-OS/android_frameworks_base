@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2f41b16_e2a8650f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1626367
+      },
+      "writtenOn": "2021-01-29T07:04:53Z",
+      "side": 1,
+      "message": "Hi, Is java getExtension interface will be supported on Android S?",
+      "revId": "b031685032057ed414852d9327274659e366a0a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
