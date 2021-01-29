@@ -33,6 +33,23 @@
       "message": "could you run the following tests on your end?\n\nandroid.app.usage.UsageStatsTest\nandroid.app.usage.cts.UsageStatsTest\ncom.android.server.usage.UsageStatsDatabaseTest\n",
       "revId": "f740b56f0e6896367be1cf70d63ef3ff291300fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b5ad113_4698ab99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1167564
+      },
+      "writtenOn": "2021-01-29T14:17:34Z",
+      "side": 1,
+      "message": "All tests passed.\n* android.app.usage.cts.UsageStatsTest\n   * pass: 28, ignored: 1\n* android.app.usage.UsageStatsTest\n   * all pass\n* com.android.server.usage.UsageStatsDatabaseTest\n   * all pass",
+      "revId": "f740b56f0e6896367be1cf70d63ef3ff291300fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
