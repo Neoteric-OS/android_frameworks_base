@@ -145,7 +145,11 @@ public final class HdmiAudioSystemClient extends HdmiClient {
      */
     // TODO(b/110094868): unhide and add @SystemApi for Q
     public void setSystemAudioMode(boolean state, @NonNull SetSystemAudioModeCallback callback) {
-        // TODO(amyjojo): implement this when needed.
+        try {
+            mService.setSystemAudioMode(state, getCallbackWrapper(callback));
+        } catch (RemoteException e) {
+            Log.d(TAG, "Failed to set System Audio Mode");
+        }
     }
 
     /**
@@ -163,5 +167,14 @@ public final class HdmiAudioSystemClient extends HdmiClient {
         } catch (RemoteException e) {
             Log.d(TAG, "Failed to set System Audio Mode on for Audio Only source");
         }
+    }
+
+    private IHdmiControlCallback getCallbackWrapper(final SetSystemAudioModeCallback callback) {
+        return new IHdmiControlCallback.Stub() {
+            @Override
+            public void onComplete(int result) {
+                callback.onComplete(result);
+            }
+        };
     }
 }
