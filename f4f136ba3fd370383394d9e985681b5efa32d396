@@ -46,6 +46,30 @@
       },
       "revId": "f4f136ba3fd370383394d9e985681b5efa32d396",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b854e95d_809fe356",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2605,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-01-29T21:51:15Z",
+      "side": 1,
+      "message": "I don\u0027t actually have owners +2 in this file anyways, so I\u0027ll defer to one of the PackageManager owners to weigh in on the visibility of this feature tag.",
+      "parentUuid": "7a4ded2e_71a49c2e",
+      "range": {
+        "startLine": 2605,
+        "startChar": 4,
+        "endLine": 2605,
+        "endChar": 14
+      },
+      "revId": "f4f136ba3fd370383394d9e985681b5efa32d396",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
