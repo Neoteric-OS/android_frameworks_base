@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007729846",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1566053?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bd6438e2_322dbdae",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-29T09:24:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 327,
+        "endChar": 102
+      },
+      "revId": "3f05a18479306929fff85ee0b2146e1abc7f1657",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
