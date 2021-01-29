@@ -34,6 +34,24 @@
       "parentUuid": "da37ccc1_9fb862f0",
       "revId": "2e7bb7733a001f88faf75501ccae521c474aca05",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b94045a5_149f8477",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1315793
+      },
+      "writtenOn": "2021-01-29T11:45:53Z",
+      "side": 1,
+      "message": "+1, I\u0027m fine with no concern.",
+      "parentUuid": "68cd2677_9d315cbd",
+      "revId": "2e7bb7733a001f88faf75501ccae521c474aca05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
