@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+1: Tianjie Xu <xunchang@google.com>
+Code-Review+2: Jiachen Zhao <zhaojiac@google.com>
+Code-Review+2: Jeff Sharkey <jsharkey@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Tianjie Xu <xunchang@google.com>
+Submitted-at: Fri, 29 Jan 2021 21:20:19 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1564532
+Project: platform/frameworks/base
+Branch: refs/heads/master
