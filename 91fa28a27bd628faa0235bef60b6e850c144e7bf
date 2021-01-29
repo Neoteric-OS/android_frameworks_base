@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "494a110e_095a3b2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-29T21:15:49Z",
+      "side": 1,
+      "message": "Hm, this idea of \"pre-created users\" is not something I\u0027m familiar with; has the larger multi-user team been involved with its design?\n\nThe Settings UI should already have logic that ensures that all CE keys are provided and unlocked before a move can be initiated.",
+      "revId": "91fa28a27bd628faa0235bef60b6e850c144e7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "381fdfa2_e01afb1e",
