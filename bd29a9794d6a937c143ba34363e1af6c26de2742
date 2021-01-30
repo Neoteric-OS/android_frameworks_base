@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f80e366_0f1e2111",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1891,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-30T01:15:02Z",
+      "side": 1,
+      "message": "Done in FUI21",
+      "parentUuid": "2c371245_4079b8f6",
+      "range": {
+        "startLine": 1891,
+        "startChar": 64,
+        "endLine": 1891,
+        "endChar": 81
+      },
+      "revId": "bd29a9794d6a937c143ba34363e1af6c26de2742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b32171a_48ae5880",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-28T07:38:54Z",
       "side": 1,
       "message": "Nit: any reason this doesn\u0027t use Objects.equals as well?",
+      "range": {
+        "startLine": 2242,
+        "startChar": 8,
+        "endLine": 2242,
+        "endChar": 79
+      },
+      "revId": "bd29a9794d6a937c143ba34363e1af6c26de2742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cc70231_93647d21",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2242,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-30T01:15:02Z",
+      "side": 1,
+      "message": "If the NC in the request did not specify the subscriberId, the NC of the network should be able to satisfy that, right?",
+      "parentUuid": "1b32171a_48ae5880",
       "range": {
         "startLine": 2242,
         "startChar": 8,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c4d86f5_4f91ca51",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2251,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-30T01:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f96722c_df6d2176",
+      "range": {
+        "startLine": 2251,
+        "startChar": 70,
+        "endLine": 2251,
+        "endChar": 87
+      },
+      "revId": "bd29a9794d6a937c143ba34363e1af6c26de2742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b1d7364_d0c8c905",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-01-28T07:38:54Z",
       "side": 1,
       "message": "Why else if? On S we should test all three, right? Shouldn\u0027t this be:\n\n        if (isAtLeastS()) {\n            netCap.setSubscriberId(TEST_IMSI);\n        }\n        if (isAtLeastR()) {\n            netCap.setOwnerUid(123);\n            netCap.setAdministratorUids(new int[] {5, 11});\n        }",
+      "range": {
+        "startLine": 312,
+        "startChar": 8,
+        "endLine": 312,
+        "endChar": 34
+      },
+      "revId": "bd29a9794d6a937c143ba34363e1af6c26de2742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20ce65d4_cd748f12",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-30T01:15:02Z",
+      "side": 1,
+      "message": "Ooops",
+      "parentUuid": "4b1d7364_d0c8c905",
       "range": {
         "startLine": 312,
         "startChar": 8,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc60dd5c_7b4b086a",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-30T01:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27fb5511_4e014292",
+      "range": {
+        "startLine": 631,
+        "startChar": 0,
+        "endLine": 633,
+        "endChar": 59
+      },
+      "revId": "bd29a9794d6a937c143ba34363e1af6c26de2742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b34878df_7588aa4f",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-01-28T07:38:54Z",
       "side": 1,
       "message": "@Test @IgnoreUpTo(Build.VERSION_CODES.R)",
+      "range": {
+        "startLine": 873,
+        "startChar": 4,
+        "endLine": 873,
+        "endChar": 9
+      },
+      "revId": "bd29a9794d6a937c143ba34363e1af6c26de2742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aab5bf80_87e75228",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-30T01:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b34878df_7588aa4f",
       "range": {
         "startLine": 873,
         "startChar": 4,
@@ -162,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da0fc51c_03097a66",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-30T01:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d2d34f2_23b45f9d",
+      "range": {
+        "startLine": 1041,
+        "startChar": 16,
+        "endLine": 1041,
+        "endChar": 43
+      },
+      "revId": "bd29a9794d6a937c143ba34363e1af6c26de2742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "307bf03a_cf3a5b6b",
@@ -175,6 +343,30 @@
       "writtenOn": "2021-01-28T07:38:54Z",
       "side": 1,
       "message": "Do you need an isAtLeastS here?",
+      "range": {
+        "startLine": 1060,
+        "startChar": 8,
+        "endLine": 1060,
+        "endChar": 54
+      },
+      "revId": "bd29a9794d6a937c143ba34363e1af6c26de2742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91aae9b5_a9050f05",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-30T01:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "307bf03a_cf3a5b6b",
       "range": {
         "startLine": 1060,
         "startChar": 8,
