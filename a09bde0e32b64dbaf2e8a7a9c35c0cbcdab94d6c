@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f9dedf4_5981863b",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-30T00:40:13Z",
+      "side": 1,
+      "message": "Initially grouped together because subscriptionGroup and snapshot seem logically connected.\n\nDone.",
+      "parentUuid": "1213ddb3_d714c2cd",
+      "range": {
+        "startLine": 97,
+        "startChar": 21,
+        "endLine": 97,
+        "endChar": 50
+      },
+      "revId": "a09bde0e32b64dbaf2e8a7a9c35c0cbcdab94d6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "767375cc_2c4f95e0",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11d178c4_cee84eeb",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-30T00:40:13Z",
+      "side": 1,
+      "message": "per our discussion offline, added locking and directly set mLastSnapshot in this method. Still send a message for EVENT_SUBSCRIPTIONS_CHANGED for future work to update the NetworkCapabilities.\n\nDone.",
+      "parentUuid": "767375cc_2c4f95e0",
+      "range": {
+        "startLine": 589,
+        "startChar": 8,
+        "endLine": 589,
+        "endChar": 20
+      },
+      "revId": "a09bde0e32b64dbaf2e8a7a9c35c0cbcdab94d6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f238a5f_31350609",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-01-29T08:48:09Z",
       "side": 1,
       "message": "We\u0027d still need this to trigger an update of exposed network\u0027s NetworkCapabilities, but we wouldn\u0027t need to pass the snapshot in the info; we can just pull from mSnapshot.",
+      "range": {
+        "startLine": 590,
+        "startChar": 16,
+        "endLine": 590,
+        "endChar": 43
+      },
+      "revId": "a09bde0e32b64dbaf2e8a7a9c35c0cbcdab94d6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfbff6ce_38ef0e3b",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-30T00:40:13Z",
+      "side": 1,
+      "message": "Per our discussion offline, will send a message with no obj and instead access mLastSnapshot directly when handling the event.\n\nDone.",
+      "parentUuid": "2f238a5f_31350609",
       "range": {
         "startLine": 590,
         "startChar": 16,
