@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e6a867c_17284f64",
+        "filename": "packages/SystemUI/src/com/android/systemui/screenshot/SaveImageInBackgroundTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1319385
+      },
+      "writtenOn": "2021-01-30T05:09:02Z",
+      "side": 1,
+      "message": "Interesting. We had another method to get package name but sometimes it gets totally another app (!?), so we switched to TaskStackChangeListener. Not sure if you have same problem?\n\nhttps://github.com/LineageOS/android_frameworks_base/commit/94b70411e3b104ac307a51b60ec853dd12f80888",
+      "revId": "0f2186205fb5b0e17be73c9d1d6e0f07af53dbcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
