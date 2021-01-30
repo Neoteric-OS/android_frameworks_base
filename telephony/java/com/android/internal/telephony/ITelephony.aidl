@@ -2388,6 +2388,16 @@ interface ITelephony {
     int removeContactFromEab(int subId, String contacts);
 
     /**
+     * Check whether the device supports RCS User Capability Exchange or not.
+     */
+    boolean getDeviceUceEnabled();
+
+    /*
+     * Set the device supports RCS User Capability Exchange.
+     */
+     void setDeviceUceEnabled(boolean isEnabled);
+
+    /**
      * Set a SignalStrengthUpdateRequest to receive notification when Signal Strength breach the
      * specified thresholds.
      */
