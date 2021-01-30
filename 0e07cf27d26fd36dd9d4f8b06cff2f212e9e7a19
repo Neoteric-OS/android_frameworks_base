@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a94724f7_e5ccf153",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-01-30T00:04:21Z",
+      "side": 1,
+      "message": "Nit: it\u0027ll be better to do this in the Handler thread here",
+      "revId": "0e07cf27d26fd36dd9d4f8b06cff2f212e9e7a19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
