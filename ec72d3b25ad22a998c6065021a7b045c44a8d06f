@@ -142,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a3dfeee_8d69f520",
+        "filename": "tests/vcn/java/com/android/server/vcn/UnderlyingNetworkTrackerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-30T00:38:21Z",
+      "side": 1,
+      "message": "updated to use the util class\n\nDone.",
+      "parentUuid": "a1a8be42_967e3c5f",
+      "range": {
+        "startLine": 141,
+        "startChar": 17,
+        "endLine": 141,
+        "endChar": 35
+      },
+      "revId": "ec72d3b25ad22a998c6065021a7b045c44a8d06f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd131ffc_1952bbeb",
