@@ -832,6 +832,10 @@ public class LockSettingsService extends ILockSettings.Stub {
         mSpManager.initWeaverService();
         getAuthSecretHal();
         mDeviceProvisionedObserver.onSystemReady();
+    }
+
+    @Override // binder interface
+    public void loadEscrowData() {
         mRebootEscrowManager.loadRebootEscrowDataIfAvailable();
         // TODO: maybe skip this for split system user mode.
         mStorage.prefetchUser(UserHandle.USER_SYSTEM);

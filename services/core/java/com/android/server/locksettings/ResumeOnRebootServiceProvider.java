@@ -77,7 +77,8 @@ public class ResumeOnRebootServiceProvider {
         }
 
         List<ResolveInfo> resolvedIntents =
-                mPackageManager.queryIntentServices(intent, PackageManager.MATCH_SYSTEM_ONLY);
+                mPackageManager.queryIntentServices(intent, PackageManager.GET_SERVICES);
+                        //PackageManager.MATCH_SYSTEM_ONLY);
         for (ResolveInfo resolvedInfo : resolvedIntents) {
             if (resolvedInfo.serviceInfo != null
                     && PROVIDER_REQUIRED_PERMISSION.equals(resolvedInfo.serviceInfo.permission)) {
