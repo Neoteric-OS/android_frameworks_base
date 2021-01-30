@@ -2330,6 +2330,7 @@ public final class SystemServer {
         final WindowManagerService windowManagerF = wm;
         final ConnectivityManager connectivityF = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final ILockSettings lockSettingsF = lockSettings;
 
         // We now tell the activity manager it is okay to run third party
         // code.  It will call back into us once it has gotten to the state
@@ -2490,6 +2491,17 @@ public final class SystemServer {
                         });
             } catch (Throwable e) {
                 reportWtf("starting Tethering", e);
+            }
+            t.traceEnd();
+
+            t.traceBegin("LoadEscrowData");
+            try {
+                if (lockSettingsF != null) {
+                    lockSettingsF.loadEscrowData();
+                }
+            } catch (Throwable e) {
+                // Non-fatal for the boot process.
+                Slog.w("Failed to load escrow data", e);
             }
             t.traceEnd();
 

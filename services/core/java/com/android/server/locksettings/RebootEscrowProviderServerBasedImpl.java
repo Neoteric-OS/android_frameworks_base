@@ -35,10 +35,14 @@ import javax.crypto.SecretKey;
  * encrypt & decrypt the blob.
  */
 class RebootEscrowProviderServerBasedImpl implements RebootEscrowProviderInterface {
-    private static final String TAG = "RebootEscrowProvider";
+    private static final String TAG = "RebootEscrowProviderServerBased";
 
     // Timeout for service binding
     private static final long DEFAULT_SERVICE_TIMEOUT_IN_SECONDS = 10;
+
+    private static final int DEFAULT_UNWRAP_RETRY_COUNT = 3;
+
+    private static final int DEFAULT_UNWRAP_RETRY_INTERVAL_SECONDS = 30;
 
     /**
      * Use the default lifetime of 10 minutes. The lifetime covers the following activities:
@@ -97,6 +101,31 @@ class RebootEscrowProviderServerBasedImpl implements RebootEscrowProviderInterfa
         return mInjector.getServiceConnection() != null;
     }
 
+    private byte[] unwrapWithRemoteService(ResumeOnRebootServiceConnection serviceConnection,
+            byte[] decryptedServerBlob) throws TimeoutException, RemoteException, IOException {
+        final int retryLimit = DeviceConfig.getInt(DeviceConfig.NAMESPACE_OTA,
+                "server_based_unwrap_retry_count", DEFAULT_UNWRAP_RETRY_COUNT);
+        final int retryInterval = DeviceConfig.getInt(DeviceConfig.NAMESPACE_OTA,
+                "server_based_unwrap_retry_interval_seconds",
+                DEFAULT_UNWRAP_RETRY_INTERVAL_SECONDS);
+
+        int retryCount = 0;
+        while (retryCount < retryLimit) {
+            try {
+                return serviceConnection.unwrap(decryptedServerBlob,
+                        mInjector.getServiceTimeoutInSeconds());
+            } catch (IOException e) {
+                Slog.i(TAG, "Failed to unwrap server blob, attempt number: " + retryCount, e);
+                retryCount += 1;
+                try {
+                    Thread.sleep(retryInterval * 1000);
+                } catch (InterruptedException ignored) {
+                }
+            }
+        }
+        throw new IOException("Failed to unwrap server blob after " + retryCount + " tries.");
+    }
+
     private byte[] unwrapServerBlob(byte[] serverBlob, SecretKey decryptionKey) throws
             TimeoutException, RemoteException, IOException {
         ResumeOnRebootServiceConnection serviceConnection = mInjector.getServiceConnection();
@@ -116,8 +145,7 @@ class RebootEscrowProviderServerBasedImpl implements RebootEscrowProviderInterfa
         // Ask the server connection service to decrypt the inner layer, to get the reboot
         // escrow key (k_s).
         serviceConnection.bindToService(mInjector.getServiceTimeoutInSeconds());
-        byte[] escrowKeyBytes = serviceConnection.unwrap(decryptedBlob,
-                mInjector.getServiceTimeoutInSeconds());
+        byte[] escrowKeyBytes = unwrapWithRemoteService(serviceConnection, decryptedBlob);
         serviceConnection.unbindService();
 
         return escrowKeyBytes;
@@ -133,6 +161,7 @@ class RebootEscrowProviderServerBasedImpl implements RebootEscrowProviderInterfa
             return null;
         }
 
+        Slog.i(TAG, "Loaded reboot escrow server blob from storage");
         try {
             byte[] escrowKeyBytes = unwrapServerBlob(serverBlob, decryptionKey);
             if (escrowKeyBytes == null) {
