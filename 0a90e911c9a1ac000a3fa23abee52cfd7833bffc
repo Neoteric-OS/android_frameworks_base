@@ -330,6 +330,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "df54e06c_af9f7103",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7297,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-31T00:19:21Z",
+      "side": 1,
+      "message": "Got it, sed syntax. Done.",
+      "parentUuid": "a9977c2e_d9fa40cc",
+      "range": {
+        "startLine": 7297,
+        "startChar": 29,
+        "endLine": 7297,
+        "endChar": 32
+      },
+      "revId": "0a90e911c9a1ac000a3fa23abee52cfd7833bffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84156f56_1d4ebe32",
@@ -424,6 +448,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "845ba625_bb8e1da6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7311,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-31T00:19:21Z",
+      "side": 1,
+      "message": "Does this CL https://r.android.com/1554976 need to be merged before I can access INetd.DUMMY_NET_ID? It\u0027s currently not resolving in CS.\n\nFor the time being, I can use a constant until the new constant is available in CS. I\u0027ll resolve this now and I can address in a follow-up patch.",
+      "parentUuid": "da2d42cc_71bd63f4",
+      "range": {
+        "startLine": 7311,
+        "startChar": 12,
+        "endLine": 7311,
+        "endChar": 13
+      },
+      "revId": "0a90e911c9a1ac000a3fa23abee52cfd7833bffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "beb0083b_339f67d0",
@@ -437,6 +485,30 @@
       "writtenOn": "2021-01-28T14:05:55Z",
       "side": 1,
       "message": "Likewise, as we\u0027ll need to remove the setup killing traffic.",
+      "range": {
+        "startLine": 7316,
+        "startChar": 12,
+        "endLine": 7316,
+        "endChar": 13
+      },
+      "revId": "0a90e911c9a1ac000a3fa23abee52cfd7833bffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16d3bc33_575555c1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7316,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-31T00:19:21Z",
+      "side": 1,
+      "message": "Done. I ended up reusing the satisfier logic which allows us to piggyback on all the logic that determines how and when to call this code.",
+      "parentUuid": "beb0083b_339f67d0",
       "range": {
         "startLine": 7316,
         "startChar": 12,
