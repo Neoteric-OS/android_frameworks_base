@@ -70,6 +70,24 @@
       "parentUuid": "7ed2896f_1db02cbf",
       "revId": "79c9c9e365e30dc08452f7dd245559a431e06d0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2723e5af_61dc1b21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-31T14:58:03Z",
+      "side": 1,
+      "message": "aosp/1565204 uploaded for the UsbHandler unit test.\n\nThe metrics don\u0027t seem to be maintained any more. The last addition to the constants in metrics_constants.proto seems to have been in Q. Do you still use them?",
+      "parentUuid": "38a29b3a_5bba807f",
+      "revId": "79c9c9e365e30dc08452f7dd245559a431e06d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
