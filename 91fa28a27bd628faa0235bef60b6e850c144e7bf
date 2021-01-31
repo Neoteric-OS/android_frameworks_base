@@ -35,6 +35,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3c1d6d8_e743f16b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2021-01-31T19:53:35Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be abandoned in favor of https://android-review.googlesource.com/c/platform/frameworks/base/+/1563680 ? Or is this CL fixing the TODO added on the latter?",
+      "revId": "91fa28a27bd628faa0235bef60b6e850c144e7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "381fdfa2_e01afb1e",
