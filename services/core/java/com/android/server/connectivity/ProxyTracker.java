@@ -81,6 +81,10 @@ public class ProxyTracker {
     @NonNull
     private final PacProxyInstaller mPacProxyInstaller;
 
+    // The current PAC Url.
+    @NonNull
+    private volatile Uri mPacUrl = Uri.EMPTY;
+
     public ProxyTracker(@NonNull final Context context,
             @NonNull final Handler connectivityServiceInternalHandler, final int pacChangedEvent) {
         mContext = context;
@@ -245,10 +249,15 @@ public class ProxyTracker {
     }
 
     private boolean shouldSendBroadcast(ProxyInfo proxy) {
-        if (Uri.EMPTY.equals(proxy.getPacFileUrl())) return false;
-        if (proxy.getPacFileUrl().equals(proxy.getPacFileUrl())
+        if (Uri.EMPTY.equals(proxy.getPacFileUrl())) {
+            mPacUrl = Uri.EMPTY;
+            return true;
+        }
+        if (proxy.getPacFileUrl().equals(mPacUrl)
                 && (proxy.getPort() > 0)) return true;
-        return true;
+
+        mPacUrl = proxy.getPacFileUrl();
+        return false;
     }
 
     /**
