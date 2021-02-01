@@ -47,6 +47,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dd1ecf5_cc2cfd39",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T10:28:03Z",
+      "side": 1,
+      "message": "This method supports the combinations used by the test. When the test adds more combinations we can always update this method. Tweaked the error message accordingly.",
+      "parentUuid": "ffd76f1d_e485c9e5",
+      "range": {
+        "startLine": 1289,
+        "startChar": 16,
+        "endLine": 1289,
+        "endChar": 25
+      },
+      "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6aeb8493_8129c379",
@@ -60,6 +84,30 @@
       "writtenOn": "2021-02-01T08:46:43Z",
       "side": 1,
       "message": "Maybe say why do we need this?\nIIUC RULE_REJECT_METERED should not affect non-metered network.",
+      "range": {
+        "startLine": 1298,
+        "startChar": 16,
+        "endLine": 1299,
+        "endChar": 57
+      },
+      "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7be1b95_58cdc644",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T10:28:03Z",
+      "side": 1,
+      "message": "There\u0027s already a comment about this on line 1286. Do you want one here as well?",
+      "parentUuid": "6aeb8493_8129c379",
       "range": {
         "startLine": 1298,
         "startChar": 16,
@@ -95,6 +143,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9ce48d83_33753d3f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T10:28:03Z",
+      "side": 1,
+      "message": "Good question. I\u0027m not sure what RULE_ALLOW_METERED means or how it\u0027s different from !RULE_ALLOW_METERED. Do you know?",
+      "parentUuid": "30f0fd20_385e44ac",
+      "range": {
+        "startLine": 1302,
+        "startChar": 17,
+        "endLine": 1302,
+        "endChar": 35
+      },
+      "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fc49bc5f_d516c367",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
@@ -106,6 +178,24 @@
       "writtenOn": "2021-02-01T08:46:43Z",
       "side": 1,
       "message": "IIUC there is a missing case, which is uidrule \u003d RULE_ALLOW_METERED with setRestrictBackgroundChanged true. And it should fail the test before addressing above comment.",
+      "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2679f602_b64dde11",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6931,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T10:28:03Z",
+      "side": 1,
+      "message": "Thanks. I don\u0027t know what this should do though. Since you originally wrote this test, can you suggest what this should do?",
+      "parentUuid": "fc49bc5f_d516c367",
       "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
