@@ -40,11 +40,14 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
     // standby mode, and do not accept the command until their power status becomes 'ON'.
     // For a workaround, we send <Give Device Power Status> commands periodically to make sure
     // the device switches its status to 'ON'. Then we send additional <Active Source>.
-    private static final int STATE_WAITING_FOR_REPORT_POWER_STATUS = 1;
+    private static final int STATE_WAITING_FOR_REPORT_POWER_STATUS = 0;
 
     // The maximum number of times we send <Give Device Power Status> before we give up.
-    // We wait up to RESPONSE_TIMEOUT_MS * LOOP_COUNTER_MAX = 20 seconds.
-    private static final int LOOP_COUNTER_MAX = 10;
+    // We wait up to RESPONSE_TIMEOUT_MS * (LOOP_COUNTER_MAX + 1) = 2 seconds.
+    // No need to continueously observe tv's power status.
+    private static final int LOOP_COUNTER_MAX = 0;
+    // Time for tv to respond the power status.
+    private static final int OTP_TIMEOUT_MS = 4000;
 
     private final int mTargetAddress;
 
@@ -72,7 +75,7 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
         sendCommand(HdmiCecMessageBuilder.buildTextViewOn(getSourceAddress(), mTargetAddress));
         broadcastActiveSource();
         queryDevicePowerStatus();
-        addTimer(mState, HdmiConfig.TIMEOUT_MS);
+        addTimer(mState, OTP_TIMEOUT_MS);
         return true;
     }
 
@@ -106,9 +109,10 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
         }
         if (cmd.getOpcode() == Constants.MESSAGE_REPORT_POWER_STATUS) {
             int status = cmd.getParams()[0];
-            if (status == HdmiControlManager.POWER_STATUS_ON) {
-                broadcastActiveSource();
-                finishWithCallback(HdmiControlManager.RESULT_SUCCESS);
+            if (status == HdmiControlManager.POWER_STATUS_ON
+                || status == HdmiControlManager.POWER_STATUS_TRANSIENT_TO_ON) {
+                invokeCallback(HdmiControlManager.RESULT_SUCCESS);
+                finish();
             }
             return true;
         }
