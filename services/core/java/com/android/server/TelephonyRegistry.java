@@ -79,7 +79,6 @@ import android.telephony.emergency.EmergencyNumber;
 import android.telephony.ims.ImsReasonInfo;
 import android.util.ArrayMap;
 import android.util.ArraySet;
-import android.util.LocalLog;
 import android.util.Pair;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -93,6 +92,7 @@ import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.IndentingPrintWriter;
+import com.android.modules.utils.LocalLog;
 import com.android.server.am.BatteryStatsService;
 
 import java.io.FileDescriptor;

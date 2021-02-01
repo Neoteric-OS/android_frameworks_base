@@ -31,7 +31,6 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.service.contentcapture.ContentCaptureService;
 import android.service.contentcapture.SnapshotData;
-import android.util.LocalLog;
 import android.util.Slog;
 import android.view.contentcapture.ContentCaptureContext;
 import android.view.contentcapture.ContentCaptureSessionId;
@@ -40,6 +39,7 @@ import android.view.contentcapture.MainContentCaptureSession;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.os.IResultReceiver;
 import com.android.internal.util.Preconditions;
+import com.android.modules.utils.LocalLog;
 
 import java.io.PrintWriter;
 

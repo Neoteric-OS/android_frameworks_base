@@ -63,7 +63,6 @@ import android.service.autofill.UserData;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.DebugUtils;
-import android.util.LocalLog;
 import android.util.Pair;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -77,6 +76,7 @@ import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
+import com.android.modules.utils.LocalLog;
 import com.android.server.LocalServices;
 import com.android.server.autofill.AutofillManagerService.AutofillCompatState;
 import com.android.server.autofill.AutofillManagerService.DisabledInfoCache;
@@ -90,6 +90,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+
 /**
  * Bridge between the {@code system_server}'s {@link AutofillManagerService} and the
  * app's {@link IAutoFillService} implementation.

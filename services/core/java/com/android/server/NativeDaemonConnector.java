@@ -25,12 +25,13 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
-import android.util.LocalLog;
 import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
+import com.android.modules.utils.LocalLog;
 import com.android.server.power.ShutdownThread;
+
 import com.google.android.collect.Lists;
 
 import java.io.FileDescriptor;
@@ -40,13 +41,13 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.LinkedList;
+import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.LinkedList;
-import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Generic connector class for interfacing with a native daemon which uses the

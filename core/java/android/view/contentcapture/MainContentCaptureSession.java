@@ -43,13 +43,13 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.IBinder.DeathRecipient;
 import android.os.RemoteException;
-import android.util.LocalLog;
 import android.util.Log;
 import android.util.TimeUtils;
 import android.view.autofill.AutofillId;
 import android.view.contentcapture.ViewNode.ViewStructureImpl;
 
 import com.android.internal.os.IResultReceiver;
+import com.android.modules.utils.LocalLog;
 
 import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
