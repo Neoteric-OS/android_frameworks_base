@@ -2995,9 +2995,7 @@ public final class SmsManager {
      *  {@link SmsManager#PREMIUM_SMS_CONSENT_ASK_USER},
      *  {@link SmsManager#PREMIUM_SMS_CONSENT_NEVER_ALLOW}, or
      *  {@link SmsManager#PREMIUM_SMS_CONSENT_ALWAYS_ALLOW}
-     * @hide
      */
-    @SystemApi
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public @PremiumSmsConsent int getPremiumSmsConsent(@NonNull String packageName) {
         int permission = 0;
