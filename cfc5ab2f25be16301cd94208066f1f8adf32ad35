@@ -90,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "54af5406_90347138",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-01T10:49:06Z",
+      "side": 1,
+      "message": "Still prefer to use bitmask to mock the result.\nIf we do that,\n  1. we don\u0027t have to modify it every time when we use new combinations in the test.\n  2. It\u0027ll be clear, we won\u0027t have strange mock such as RULE_REJECT_METERED that touches non-meter network mock.\n\nAgreeed that we could address this in follow-up CL.",
+      "parentUuid": "2dd1ecf5_cc2cfd39",
+      "range": {
+        "startLine": 1289,
+        "startChar": 16,
+        "endLine": 1289,
+        "endChar": 25
+      },
+      "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6aeb8493_8129c379",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
@@ -184,6 +208,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3b674368_a9646647",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-01T10:49:06Z",
+      "side": 1,
+      "message": "if ALLOW_METERED is set, it will ignore the data saver switch and always allow background traffic.\n\nAgreed to address this in follow-up CL.",
+      "parentUuid": "9ce48d83_33753d3f",
+      "range": {
+        "startLine": 1302,
+        "startChar": 17,
+        "endLine": 1302,
+        "endChar": 35
+      },
+      "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fc49bc5f_d516c367",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
@@ -213,6 +261,24 @@
       "side": 1,
       "message": "Thanks. I don\u0027t know what this should do though. Since you originally wrote this test, can you suggest what this should do?",
       "parentUuid": "fc49bc5f_d516c367",
+      "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33a69bdc_c3f1483f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6931,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-01T10:49:06Z",
+      "side": 1,
+      "message": "should be a case that enable the data saver, set rule to ALLOW_METERED, and the network should not be blocked.\n\nAgreed to address this in follow-up CL.",
+      "parentUuid": "2679f602_b64dde11",
       "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
