@@ -6285,6 +6285,7 @@ package android.net {
     method @NonNull public int[] getAdministratorUids();
     method @Nullable public String getSsid();
     method @NonNull public int[] getTransportTypes();
+    method public boolean isPrivateDnsBroken();
     method public boolean satisfiedByNetworkCapabilities(@Nullable android.net.NetworkCapabilities);
     field public static final int NET_CAPABILITY_OEM_PAID = 22; // 0x16
     field public static final int NET_CAPABILITY_OEM_PRIVATE = 26; // 0x1a
@@ -6298,6 +6299,8 @@ package android.net {
     method @NonNull public android.net.NetworkCapabilities.Builder addCapability(int);
     method @NonNull public android.net.NetworkCapabilities.Builder addTransportType(int);
     method @NonNull public android.net.NetworkCapabilities build();
+    method @NonNull public android.net.NetworkCapabilities.Builder clearAll();
+    method @NonNull public void combineCapabilities(@NonNull android.net.NetworkCapabilities);
     method @NonNull public android.net.NetworkCapabilities.Builder removeCapability(int);
     method @NonNull public android.net.NetworkCapabilities.Builder removeTransportType(int);
     method @NonNull @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY) public android.net.NetworkCapabilities.Builder setAdministratorUids(@NonNull int[]);

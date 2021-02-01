@@ -16,7 +16,6 @@
 
 package com.android.server.job.controllers;
 
-import static android.net.NetworkCapabilities.LINK_BANDWIDTH_UNSPECIFIED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_CONGESTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 
@@ -325,7 +324,7 @@ public final class ConnectivityController extends RestrictingController implemen
         if (downloadBytes != JobInfo.NETWORK_BYTES_UNKNOWN) {
             final long bandwidth = capabilities.getLinkDownstreamBandwidthKbps();
             // If we don't know the bandwidth, all we can do is hope the job finishes in time.
-            if (bandwidth != LINK_BANDWIDTH_UNSPECIFIED) {
+            if (bandwidth > 0) {
                 // Divide by 8 to convert bits to bytes.
                 final long estimatedMillis = ((downloadBytes * DateUtils.SECOND_IN_MILLIS)
                         / (DataUnit.KIBIBYTES.toBytes(bandwidth) / 8));
@@ -343,7 +342,7 @@ public final class ConnectivityController extends RestrictingController implemen
         if (uploadBytes != JobInfo.NETWORK_BYTES_UNKNOWN) {
             final long bandwidth = capabilities.getLinkUpstreamBandwidthKbps();
             // If we don't know the bandwidth, all we can do is hope the job finishes in time.
-            if (bandwidth != LINK_BANDWIDTH_UNSPECIFIED) {
+            if (bandwidth > 0) {
                 // Divide by 8 to convert bits to bytes.
                 final long estimatedMillis = ((uploadBytes * DateUtils.SECOND_IN_MILLIS)
                         / (DataUnit.KIBIBYTES.toBytes(bandwidth) / 8));
@@ -377,9 +376,9 @@ public final class ConnectivityController extends RestrictingController implemen
         // A restricted job that's out of quota MUST use an unmetered network.
         if (jobStatus.getEffectiveStandbyBucket() == RESTRICTED_INDEX
                 && !jobStatus.isConstraintSatisfied(JobStatus.CONSTRAINT_WITHIN_QUOTA)) {
-            required = new NetworkCapabilities(
+            required = new NetworkCapabilities.Builder(
                     jobStatus.getJob().getRequiredNetwork().networkCapabilities)
-                    .addCapability(NET_CAPABILITY_NOT_METERED);
+                    .addCapability(NET_CAPABILITY_NOT_METERED).build();
         } else {
             required = jobStatus.getJob().getRequiredNetwork().networkCapabilities;
         }
@@ -395,9 +394,9 @@ public final class ConnectivityController extends RestrictingController implemen
         }
 
         // See if we match after relaxing any unmetered request
-        final NetworkCapabilities relaxed = new NetworkCapabilities(
+        final NetworkCapabilities relaxed = new NetworkCapabilities.Builder(
                 jobStatus.getJob().getRequiredNetwork().networkCapabilities)
-                        .removeCapability(NET_CAPABILITY_NOT_METERED);
+                        .removeCapability(NET_CAPABILITY_NOT_METERED).build();
         if (relaxed.satisfiedByNetworkCapabilities(capabilities)) {
             // TODO: treat this as "maybe" response; need to check quotas
             return jobStatus.getFractionRunTime() > constants.CONN_PREFETCH_RELAX_FRAC;
