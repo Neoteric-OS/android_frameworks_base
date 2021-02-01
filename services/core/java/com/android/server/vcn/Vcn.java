@@ -82,6 +82,14 @@ public class Vcn extends Handler {
     /** Triggers an immediate teardown of the entire Vcn, including GatewayConnections. */
     private static final int MSG_CMD_TEARDOWN = MSG_CMD_BASE;
 
+    /**
+     * Causes this VCN to immediately enter Safemode.
+     *
+     * <p>Upon entering Safemode, the VCN will unregister its RequestListener, tear down all of its
+     * VcnGatewayConnections, and notify VcnManagementService that it is in Safemode.
+     */
+    private static final int MSG_CMD_ENTER_SAFEMODE = MSG_CMD_BASE + 1;
+
     @NonNull private final VcnContext mVcnContext;
     @NonNull private final ParcelUuid mSubscriptionGroup;
     @NonNull private final Dependencies mDeps;
