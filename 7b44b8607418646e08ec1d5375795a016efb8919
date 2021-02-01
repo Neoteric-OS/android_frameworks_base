@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5d6b498_0f8a9a6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-02-01T11:34:10Z",
+      "side": 1,
+      "message": "Hello @Keun-young, Thank you for your review! I\u0027ve fixed all your comments.",
+      "revId": "7b44b8607418646e08ec1d5375795a016efb8919",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
