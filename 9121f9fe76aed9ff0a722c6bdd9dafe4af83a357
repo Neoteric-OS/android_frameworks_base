@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32330330_64f8b980",
+        "filename": "core/java/android/hardware/hdmi/HdmiAudioSystemClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2021-02-01T14:50:23Z",
+      "side": 1,
+      "message": "As it stands this will be a no-op. HdmiControlService will attempt a call of HdmiLocalDeviceTv#changeSystemAudioMode. But this would only apply for devices that have an instance of a local device with type TV.\n\nIn turn, this would only work on a device that is a TV and an audio system which is not a device combination that currently exists.\n\nI assume this should rather result in logic similar to SystemAudioActionFromTv, but just from the soundbar standpoint, notifying the audio source that system audio mode has been disabled.",
+      "range": {
+        "startLine": 149,
+        "startChar": 12,
+        "endLine": 149,
+        "endChar": 39
+      },
+      "revId": "9121f9fe76aed9ff0a722c6bdd9dafe4af83a357",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
