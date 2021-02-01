@@ -70,6 +70,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9215ecf9_957a6599",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-02-01T11:41:07Z",
+      "side": 1,
+      "message": "\u003e Or is this CL fixing the TODO added on the latter?\n\nIt is supposed to be a proper fix of the bug 178725371. If this CL is approved, this one https://android-review.googlesource.com/c/platform/frameworks/base/+/1563680 will be abandoned (and vice versa).",
+      "parentUuid": "d3c1d6d8_e743f16b",
+      "revId": "91fa28a27bd628faa0235bef60b6e850c144e7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "381fdfa2_e01afb1e",
