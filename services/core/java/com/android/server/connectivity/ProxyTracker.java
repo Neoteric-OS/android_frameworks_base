@@ -245,10 +245,10 @@ public class ProxyTracker {
     }
 
     private boolean shouldSendBroadcast(ProxyInfo proxy) {
-        if (Uri.EMPTY.equals(proxy.getPacFileUrl())) return false;
+        if (Uri.EMPTY.equals(proxy.getPacFileUrl())) return true;
         if (proxy.getPacFileUrl().equals(proxy.getPacFileUrl())
                 && (proxy.getPort() > 0)) return true;
-        return true;
+        return false;
     }
 
     /**
