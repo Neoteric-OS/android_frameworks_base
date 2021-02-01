@@ -93,6 +93,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd12400c_24bdf735",
+        "filename": "core/java/android/os/UserManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3306,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-02-01T11:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "381fdfa2_e01afb1e",
+      "range": {
+        "startLine": 3306,
+        "startChar": 16,
+        "endLine": 3306,
+        "endChar": 38
+      },
+      "revId": "91fa28a27bd628faa0235bef60b6e850c144e7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2aaf1d42_0c665514",
@@ -200,6 +224,30 @@
       "writtenOn": "2021-01-29T18:23:33Z",
       "side": 1,
       "message": "as this is exposed to outside, it should have permission check",
+      "range": {
+        "startLine": 690,
+        "startChar": 8,
+        "endLine": 690,
+        "endChar": 11
+      },
+      "revId": "91fa28a27bd628faa0235bef60b6e850c144e7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ffe65c0_686f07c5",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-02-01T11:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef8cb480_8373c54b",
       "range": {
         "startLine": 690,
         "startChar": 8,
