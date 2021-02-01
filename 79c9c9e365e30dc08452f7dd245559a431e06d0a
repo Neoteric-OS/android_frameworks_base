@@ -88,6 +88,24 @@
       "parentUuid": "38a29b3a_5bba807f",
       "revId": "79c9c9e365e30dc08452f7dd245559a431e06d0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "794ad38f_1a31ffbc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1330244
+      },
+      "writtenOn": "2021-02-01T14:56:49Z",
+      "side": 1,
+      "message": "Thanks for the CL.\nAs for the metrics, it seems included at 2018.Jan, and we have not yet checked whether it\u0027s still valid.\nWe will have an internal discussion and follow up.",
+      "parentUuid": "2723e5af_61dc1b21",
+      "revId": "79c9c9e365e30dc08452f7dd245559a431e06d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
