@@ -162,11 +162,19 @@ abstract class HdmiCecLocalDeviceSource extends HdmiCecLocalDevice {
         int physicalAddress = HdmiUtils.twoBytesToInt(message.getParams());
         // If current device is the target path, set to Active Source.
         // If the path is under the current device, should switch
-        if (physicalAddress == mService.getPhysicalAddress() && mService.isPlaybackDevice()) {
-            setAndBroadcastActiveSource(message, physicalAddress);
-        }
+        setActiveState(message, physicalAddress);
         switchInputOnReceivingNewActivePath(physicalAddress);
         return true;
+    }
+
+    protected void setActiveState(HdmiCecMessage message, int physicalAddress) {
+        if (mService.isPlaybackDevice()) {
+            if (physicalAddress == mService.getPhysicalAddress()) {
+                setAndBroadcastActiveSource(message, physicalAddress);
+            } else {
+                setIsActiveSource(false);
+            }
+        }
     }
 
     @Override
@@ -179,10 +187,8 @@ abstract class HdmiCecLocalDeviceSource extends HdmiCecLocalDevice {
         }
         int newPath = HdmiUtils.twoBytesToInt(message.getParams(), 2);
         // if the current device is a pure playback device
-        if (!mIsSwitchDevice
-                && newPath == mService.getPhysicalAddress()
-                && mService.isPlaybackDevice()) {
-            setAndBroadcastActiveSource(message, newPath);
+        if (!mIsSwitchDevice) {
+            setActiveState(message, newPath);
         }
         handleRoutingChangeAndInformation(newPath, message);
         return true;
@@ -198,10 +204,8 @@ abstract class HdmiCecLocalDeviceSource extends HdmiCecLocalDevice {
         }
         int physicalAddress = HdmiUtils.twoBytesToInt(message.getParams());
         // if the current device is a pure playback device
-        if (!mIsSwitchDevice
-                && physicalAddress == mService.getPhysicalAddress()
-                && mService.isPlaybackDevice()) {
-            setAndBroadcastActiveSource(message, physicalAddress);
+        if (!mIsSwitchDevice) {
+            setActiveState(message, physicalAddress);
         }
         handleRoutingChangeAndInformation(physicalAddress, message);
         return true;
