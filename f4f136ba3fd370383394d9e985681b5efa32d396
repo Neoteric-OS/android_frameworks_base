@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "619e5825_37610d8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-01T21:24:49Z",
+      "side": 1,
+      "message": "Hm, thanks for sending this API; could you help connect this back to a feature that\u0027s been approved for SC?  The linked bug doesn\u0027t appear to be on any SC hotlists.  😞",
+      "revId": "f4f136ba3fd370383394d9e985681b5efa32d396",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e6c31ee_9c6139df",
