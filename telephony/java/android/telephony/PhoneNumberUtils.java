@@ -1563,7 +1563,7 @@ public class PhoneNumberUtils {
 
         PhoneNumberUtil util = PhoneNumberUtil.getInstance();
         try {
-            PhoneNumber phoneNumber = util.parse(rawPhoneNumber, defaultCountryIso);
+            PhoneNumber phoneNumber = util.parse(rawPhoneNumber, defaultCountryIso.toUpperCase());
             if (util.isValidNumber(phoneNumber)) {
                 return util.format(phoneNumber, formatIdentifier);
             }
