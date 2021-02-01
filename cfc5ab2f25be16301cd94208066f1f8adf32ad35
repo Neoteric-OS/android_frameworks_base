@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1619f600_d2bb5212",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-01T10:46:18Z",
+      "side": 1,
+      "message": "LGTM assuming the comments are going to be addressed in follow-up commits.",
+      "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ee492e3_311f7f0c",
