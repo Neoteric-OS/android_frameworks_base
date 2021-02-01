@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13939bc7_090e221e",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-01T23:48:12Z",
+      "side": 1,
+      "message": "Suggest \"notify\"",
+      "range": {
+        "startLine": 424,
+        "startChar": 8,
+        "endLine": 424,
+        "endChar": 15
+      },
+      "revId": "ae37408dddd992a1b69e462c5443188e7fc32958",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
