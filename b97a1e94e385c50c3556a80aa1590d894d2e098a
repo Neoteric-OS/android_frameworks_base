@@ -1,0 +1,1278 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770255",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2669fd3e_c82d62c4",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 6309,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "This file contains a set of conflict markers.If this is a false alarm, add IGNORE_MERGE_CONFLICT_CHECK\u003d\u003d\u003creason\u003e to your commit message.",
+      "range": {
+        "startLine": 6309,
+        "startChar": 1,
+        "endLine": 6309,
+        "endChar": 7
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "40aac049_800bc87c",
+        "filename": "core/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "969c291c_8a6eb390",
+        "filename": "core/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1cd83e29_0d0e809a",
+        "filename": "core/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ffa3b376_5ff734a4",
+        "filename": "core/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "fda48aee_9f64ccbc",
+        "filename": "core/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f751a7de_01474ea8",
+        "filename": "packages/Connectivity/framework/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 130,
+        "startChar": 61,
+        "endLine": 130,
+        "endChar": 70
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e1c2ae07_34ece368",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "3c46db47_6d2941ea",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "52b6a505_b5aba38d",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "05d8f88c_828e4f07",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1b14e790_83d23176",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "06f8c453_7d0cef76",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6eaf80e0_37b20967",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "402bd0f4_549ab459",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9f856864_7d39c04d",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "11e684ca_543aefa4",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "991cb9a4_b59720c8",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6c990411_81e9eb2b",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "462a36a2_f4000251",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "741d6291_b262a28e",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "db938059_b7ec510c",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9f0b1f8c_187e4621",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5af3b59c_5673d9bf",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8b50b1e6_7ff0b9ad",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "872ea200_5194195b",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bdf3a71c_8019f0a3",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 249,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f9249720_fd4cdc9e",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "65adee75_0b63ef19",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 259,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b9a0d232_3ae51412",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 279,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "44ee1b39_6bdcbf3b",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "91bf8005_b5917ace",
+        "filename": "packages/Connectivity/framework/api/lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 317,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "21dfa4ab_466540a8",
+        "filename": "packages/Connectivity/framework/api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 378,
+        "startChar": 55,
+        "endLine": 378,
+        "endChar": 64
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "456a85d4_53064d93",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "be8708d8_2ad7d51c",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "677d87cd_f477f40d",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "99521ea9_dce6e814",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d71251ed_0ad01ff6",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9de58dc6_e28e2e28",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "be5ba831_6e128e9f",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "96e27645_09e69b7e",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "dd5cf2cc_8ba27dde",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6d0b1a42_d6ae2e66",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "4800fead_1ad52c24",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e45ac311_57c39fc8",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d9fb9714_1f50d300",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "3edf198d_0c9f764b",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bdea9760_bc36671c",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007770254",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552658?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "002475ff_5d2e1521",
+        "filename": "packages/Connectivity/framework/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T05:38:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 4
+      },
+      "revId": "b97a1e94e385c50c3556a80aa1590d894d2e098a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
