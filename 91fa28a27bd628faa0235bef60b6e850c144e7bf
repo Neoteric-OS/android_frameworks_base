@@ -116,6 +116,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f474d6e_835f41dc",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-02-01T09:14:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aaf1d42_0c665514",
+      "range": {
+        "startLine": 68,
+        "startChar": 54,
+        "endLine": 68,
+        "endChar": 70
+      },
+      "revId": "91fa28a27bd628faa0235bef60b6e850c144e7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1870c381_5a6af5a4",
@@ -129,6 +153,30 @@
       "writtenOn": "2021-01-29T18:23:33Z",
       "side": 1,
       "message": "use Binder.clearCallingIdentity() here and restoreCallingIdentity after L2785 instead of adding the permission to the shell",
+      "range": {
+        "startLine": 2783,
+        "startChar": 11,
+        "endLine": 2783,
+        "endChar": 12
+      },
+      "revId": "91fa28a27bd628faa0235bef60b6e850c144e7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c70ba8c_b8e5c9a9",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2783,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-02-01T09:14:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1870c381_5a6af5a4",
       "range": {
         "startLine": 2783,
         "startChar": 11,
