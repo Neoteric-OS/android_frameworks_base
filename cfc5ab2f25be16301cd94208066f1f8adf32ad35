@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4c36b0d4_ab92e53c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T13:43:33Z",
+      "side": 1,
+      "message": "I agree that updateUidnetworkingBlocked is not a good name, but neither of those names seems much better. setIsUidNetworkingBlocked, maybe?",
+      "parentUuid": "5ee492e3_311f7f0c",
+      "range": {
+        "startLine": 1284,
+        "startChar": 17,
+        "endLine": 1284,
+        "endChar": 43
+      },
+      "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ffd76f1d_e485c9e5",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
