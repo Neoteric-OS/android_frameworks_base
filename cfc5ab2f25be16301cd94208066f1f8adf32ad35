@@ -112,6 +112,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "691416b7_dae5a227",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T13:41:10Z",
+      "side": 1,
+      "message": "Done in aosp/1567460 . PTAL.",
+      "parentUuid": "54af5406_90347138",
+      "range": {
+        "startLine": 1289,
+        "startChar": 16,
+        "endLine": 1289,
+        "endChar": 25
+      },
+      "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6aeb8493_8129c379",
@@ -230,6 +254,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dac142fd_33dcb274",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T13:41:10Z",
+      "side": 1,
+      "message": "Done in aosp/1567460 , I think.",
+      "parentUuid": "3b674368_a9646647",
+      "range": {
+        "startLine": 1302,
+        "startChar": 17,
+        "endLine": 1302,
+        "endChar": 35
+      },
+      "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc49bc5f_d516c367",
@@ -279,6 +327,24 @@
       "side": 1,
       "message": "should be a case that enable the data saver, set rule to ALLOW_METERED, and the network should not be blocked.\n\nAgreed to address this in follow-up CL.",
       "parentUuid": "2679f602_b64dde11",
+      "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea1f5beb_ce0324ae",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6931,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T13:41:10Z",
+      "side": 1,
+      "message": "Done in aosp/1567460 , I think.",
+      "parentUuid": "33a69bdc_c3f1483f",
       "revId": "cfc5ab2f25be16301cd94208066f1f8adf32ad35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
