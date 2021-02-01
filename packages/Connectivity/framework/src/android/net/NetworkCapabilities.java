@@ -2064,6 +2064,7 @@ public final class NetworkCapabilities implements Parcelable {
      * @return {@code true} if {@code mPrivateDnsBroken} is set when private DNS is broken.
      * @hide
      */
+    @SystemApi
     public boolean isPrivateDnsBroken() {
         return mPrivateDnsBroken;
     }
@@ -2303,6 +2304,30 @@ public final class NetworkCapabilities implements Parcelable {
         public Builder removeCapability(@NetCapability final int capability) {
             mCaps.setCapability(capability, false);
             return this;
+        }
+
+        /**
+         * Completely clears the contents of this object, removing even the capabilities that are
+         * set by default when the object is constructed.
+         * @return this builder
+         */
+        @NonNull
+        public Builder clearAll() {
+            mCaps.clearAll();
+            return this;
+        }
+
+        /**
+         * Combine a set of Capabilities to this one.  Useful for coming up with the complete set.
+         * <p>
+         * Note that this method may break an invariant of having a particular capability in either
+         * wanted or unwanted lists but never in both.  Requests that have the same capability in
+         * both lists will never be satisfied.
+         * @param NetworkCapabilities
+         */
+        @NonNull
+        public void combineCapabilities(@NonNull NetworkCapabilities nc) {
+            mCaps.combineCapabilities(nc);
         }
 
         /**
