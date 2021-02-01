@@ -87,7 +87,7 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
 
         mPlaybackDeviceActionOnRoutingControl = SystemProperties.get(
                 Constants.PLAYBACK_DEVICE_ACTION_ON_ROUTING_CONTROL,
-                Constants.PLAYBACK_DEVICE_ACTION_ON_ROUTING_CONTROL_NONE);
+                Constants.PLAYBACK_DEVICE_ACTION_ON_ROUTING_CONTROL_WAKE_UP_AND_SEND_ACTIVE_SOURCE);
 
         mPowerStateChangeOnActiveSourceLost = SystemProperties.get(
                 Constants.POWER_STATE_CHANGE_ON_ACTIVE_SOURCE_LOST,
@@ -400,22 +400,23 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
     @ServiceThreadOnly
     protected boolean handleRoutingChange(HdmiCecMessage message) {
         assertRunOnServiceThread();
-        int physicalAddress = HdmiUtils.twoBytesToInt(message.getParams(), 2);
-        handleRoutingChangeAndInformation(physicalAddress, message);
-        return true;
+        // process logic of routing change should be the same with set stream path.
+        return super.handleRoutingChange(message);
     }
 
     @Override
     @ServiceThreadOnly
     protected boolean handleRoutingInformation(HdmiCecMessage message) {
         assertRunOnServiceThread();
-        int physicalAddress = HdmiUtils.twoBytesToInt(message.getParams());
-        handleRoutingChangeAndInformation(physicalAddress, message);
-        return true;
+        // process logic of routing change should be the same with set stream path.
+        return super.handleRoutingInformation(message);
     }
 
     @Override
     protected void handleRoutingChangeAndInformation(int physicalAddress, HdmiCecMessage message) {
+        if (isRoutingControlFeatureEnabled()) {
+            return;
+        }
         if (physicalAddress != mService.getPhysicalAddress()) {
             return; // Do nothing.
         }
