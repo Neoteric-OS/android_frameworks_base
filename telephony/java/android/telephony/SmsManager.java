@@ -292,30 +292,20 @@ public final class SmsManager {
     @Retention(RetentionPolicy.SOURCE)
     public @interface PremiumSmsConsent {}
 
-    /** Premium SMS Consent for the package is unknown. This indicates that the user
-     *  has not set a permission for this package, because this package has never tried
-     *  to send a premium SMS.
-     * @hide
+    /**
+     * Premium SMS Consent for the package is unknown. This indicates that the user
+     * has not set a permission for this package, because this package has never tried
+     * to send a premium SMS.
      */
-    @SystemApi
     public static final int PREMIUM_SMS_CONSENT_UNKNOWN = 0;
 
-    /** Default premium SMS Consent (ask user for each premium SMS sent).
-     * @hide
-     */
-    @SystemApi
+    /** Default premium SMS Consent (ask user for each premium SMS sent). */
     public static final int PREMIUM_SMS_CONSENT_ASK_USER = 1;
 
-    /** Premium SMS Consent when the owner has denied the app from sending premium SMS.
-     * @hide
-     */
-    @SystemApi
+    /** Premium SMS Consent when the owner has denied the app from sending premium SMS. */
     public static final int PREMIUM_SMS_CONSENT_NEVER_ALLOW = 2;
 
-    /** Premium SMS Consent when the owner has allowed the app to send premium SMS.
-     * @hide
-     */
-    @SystemApi
+    /** Premium SMS Consent when the owner has allowed the app to send premium SMS. */
     public static final int PREMIUM_SMS_CONSENT_ALWAYS_ALLOW = 3;
 
     // result of asking the user for a subscription to perform an operation.
@@ -2984,6 +2974,21 @@ public final class SmsManager {
             throw new RuntimeException(ex);
         }
         return false;
+    }
+
+    /**
+     * Gets the premium SMS permission for the calling package. If the package has never
+     * been seen before, the default {@link SmsManager#PREMIUM_SMS_CONSENT_UNKNOWN}
+     * will be returned.
+     * @param context Context of the application to check
+     * @return one of {@link SmsManager#PREMIUM_SMS_CONSENT_UNKNOWN},
+     *  {@link SmsManager#PREMIUM_SMS_CONSENT_ASK_USER},
+     *  {@link SmsManager#PREMIUM_SMS_CONSENT_NEVER_ALLOW}, or
+     *  {@link SmsManager#PREMIUM_SMS_CONSENT_ALWAYS_ALLOW}
+     */
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public @PremiumSmsConsent int getPremiumSmsConsent(@NonNull Context context) {
+        return getPremiumSmsConsent(context.getPackageName());
     }
 
     /**
