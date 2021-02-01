@@ -16,6 +16,24 @@
       "message": "Nit: it\u0027ll be better to do this in the Handler thread here",
       "revId": "0e07cf27d26fd36dd9d4f8b06cff2f212e9e7a19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ebfbd3a_c05543b4",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-01T21:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a94724f7_e5ccf153",
+      "revId": "0e07cf27d26fd36dd9d4f8b06cff2f212e9e7a19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
