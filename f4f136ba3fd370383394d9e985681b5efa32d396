@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a571b93_347b4df0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-02-01T23:45:36Z",
+      "side": 1,
+      "message": "Sure, i can link directly to feature bug as well: b/149426399",
+      "parentUuid": "619e5825_37610d8a",
+      "revId": "f4f136ba3fd370383394d9e985681b5efa32d396",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e6c31ee_9c6139df",
