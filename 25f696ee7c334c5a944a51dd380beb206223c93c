@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8598d5e8_3922ee3e",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 6284,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-02-01T13:48:06Z",
+      "side": 1,
+      "message": "Done, replace the relative usage as  \"\u003e 0\".",
+      "parentUuid": "e2aff817_33e3135a",
+      "range": {
+        "startLine": 6284,
+        "startChar": 34,
+        "endLine": 6284,
+        "endChar": 60
+      },
+      "revId": "25f696ee7c334c5a944a51dd380beb206223c93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf5cad5b_3193b776",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-29T07:13:45Z",
       "side": 1,
       "message": "This should probably not be an API. We need to sync with Jean on this; it\u0027s probably better to keep if out of this CL for now.",
+      "range": {
+        "startLine": 6299,
+        "startChar": 26,
+        "endLine": 6299,
+        "endChar": 52
+      },
+      "revId": "25f696ee7c334c5a944a51dd380beb206223c93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f2108f5_9ee0d34d",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 6299,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-02-01T13:48:06Z",
+      "side": 1,
+      "message": "keep original design, Done.\nOnce we have idea and then replace.",
+      "parentUuid": "bf5cad5b_3193b776",
       "range": {
         "startLine": 6299,
         "startChar": 26,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f53f1731_637bdae8",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 6300,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-02-01T13:48:06Z",
+      "side": 1,
+      "message": "yes, here is the link\nhttps://source.corp.google.com/aosp-master/frameworks/opt/telephony/src/java/com/android/internal/telephony/dataconnection/DataConnection.java;l\u003d1682?q\u003dsrc%2Fjava%2Fcom%2Fandroid%2Finternal%2Ftelephony%2Fdataconnection%2FDataConnection.java\u0026sq\u003dpackage:aosp-master",
+      "parentUuid": "a3f1c606_21b46ab2",
+      "range": {
+        "startLine": 6300,
+        "startChar": 35,
+        "endLine": 6300,
+        "endChar": 48
+      },
+      "revId": "25f696ee7c334c5a944a51dd380beb206223c93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "240f9f42_f70a76b7",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b625bee2_bf587afe",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 6304,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-02-01T13:48:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "240f9f42_f70a76b7",
+      "range": {
+        "startLine": 6304,
+        "startChar": 67,
+        "endLine": 6304,
+        "endChar": 80
+      },
+      "revId": "25f696ee7c334c5a944a51dd380beb206223c93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1dc7e58f_179774be",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-01-29T07:13:45Z",
       "side": 1,
       "message": "Why TRANSPORT_LOWPAN + 2 ?\nCan this be replaced with SparseIntArray ?",
+      "range": {
+        "startLine": 376,
+        "startChar": 65,
+        "endLine": 376,
+        "endChar": 85
+      },
+      "revId": "25f696ee7c334c5a944a51dd380beb206223c93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29b18cb5_41407c7d",
+        "filename": "services/core/java/com/android/server/connectivity/IpConnectivityEventBuilder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-02-01T13:48:06Z",
+      "side": 1,
+      "message": "replaced with SparseIntArray",
+      "parentUuid": "1dc7e58f_179774be",
       "range": {
         "startLine": 376,
         "startChar": 65,
