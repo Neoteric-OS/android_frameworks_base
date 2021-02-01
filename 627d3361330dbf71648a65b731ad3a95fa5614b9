@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ead0edf2_bae067d2",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T08:15:36Z",
+      "side": 1,
+      "message": "You should document what happens if it isn\u0027t. Presumably the code will throw an exception. If it doesn\u0027t, then it probably should :-)",
+      "range": {
+        "startLine": 799,
+        "startChar": 88,
+        "endLine": 799,
+        "endChar": 89
+      },
+      "revId": "627d3361330dbf71648a65b731ad3a95fa5614b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
