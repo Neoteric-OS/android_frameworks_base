@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bb32528_ddd8faea",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-02T07:27:12Z",
+      "side": 1,
+      "message": "Added testing for Vcn -\u003e VcnGatewayConnection and VcnGatewayConnection -\u003e UnderlyingNetworkTracker.\n\nDone",
+      "parentUuid": "cf507908_f8a4702f",
+      "range": {
+        "startLine": 603,
+        "startChar": 16,
+        "endLine": 603,
+        "endChar": 57
+      },
+      "revId": "75909b2cfdaa7a36e2d051c83f5b1e022cf4e714",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "034b804a_62a15120",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-01T23:35:59Z",
       "side": 1,
       "message": "Nit: initial",
+      "range": {
+        "startLine": 181,
+        "startChar": 18,
+        "endLine": 181,
+        "endChar": 26
+      },
+      "revId": "75909b2cfdaa7a36e2d051c83f5b1e022cf4e714",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "751adf60_1bfe4b3c",
+        "filename": "tests/vcn/java/com/android/server/vcn/UnderlyingNetworkTrackerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-02T07:27:12Z",
+      "side": 1,
+      "message": "whoops - good catch\n\nDone",
+      "parentUuid": "034b804a_62a15120",
       "range": {
         "startLine": 181,
         "startChar": 18,
