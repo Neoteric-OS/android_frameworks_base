@@ -6253,13 +6253,18 @@ package android.app {
     method public java.util.Set<java.lang.String> getAllowedDataTypes();
     method public CharSequence[] getChoices();
     method public static java.util.Map<java.lang.String,android.net.Uri> getDataResultsFromIntent(android.content.Intent, String);
+    method public static boolean getDisallowEmoji(@NonNull android.os.Bundle);
     method public int getEditChoicesBeforeSending();
     method public android.os.Bundle getExtras();
+    method public static int getInputActionType(@NonNull android.os.Bundle);
     method public CharSequence getLabel();
     method public String getResultKey();
     method public static android.os.Bundle getResultsFromIntent(android.content.Intent);
     method public static int getResultsSource(android.content.Intent);
     method public boolean isDataOnly();
+    method public static void setDisallowEmoji(@NonNull android.os.Bundle, boolean);
+    method public static void setInputActionType(@NonNull android.os.Bundle, int);
+    method @NonNull public static void setInputActionTypeExtra(@NonNull android.content.Intent, int);
     method public static void setResultsSource(android.content.Intent, int);
     method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.app.RemoteInput> CREATOR;
@@ -6267,6 +6272,10 @@ package android.app {
     field public static final int EDIT_CHOICES_BEFORE_SENDING_DISABLED = 1; // 0x1
     field public static final int EDIT_CHOICES_BEFORE_SENDING_ENABLED = 2; // 0x2
     field public static final String EXTRA_RESULTS_DATA = "android.remoteinput.resultsData";
+    field public static final int INPUT_ACTION_TYPE_DONE = 2; // 0x2
+    field public static final int INPUT_ACTION_TYPE_GO = 3; // 0x3
+    field public static final int INPUT_ACTION_TYPE_SEARCH = 1; // 0x1
+    field public static final int INPUT_ACTION_TYPE_SEND = 0; // 0x0
     field public static final String RESULTS_CLIP_LABEL = "android.remoteinput.results";
     field public static final int SOURCE_CHOICE = 1; // 0x1
     field public static final int SOURCE_FREE_FORM_INPUT = 0; // 0x0

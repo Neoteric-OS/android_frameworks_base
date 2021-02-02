@@ -115,6 +115,106 @@ public final class RemoteInput implements Parcelable {
     // Default value for flags integer
     private static final int DEFAULT_FLAGS = FLAG_ALLOW_FREE_FORM_INPUT;
 
+    private static final String EXTRA_DISALLOW_EMOJI =
+            "android.support.wearable.input.extra.DISALLOW_EMOJI";
+
+    private static final String EXTRA_INPUT_ACTION_TYPE =
+            "android.support.wearable.input.extra.INPUT_ACTION_TYPE";
+
+    /** Send action type.  */
+    public static final int INPUT_ACTION_TYPE_SEND = 0;
+
+    /** Search action type.  */
+    public static final int INPUT_ACTION_TYPE_SEARCH = 1;
+
+    /** Done action type.  */
+    public static final int INPUT_ACTION_TYPE_DONE = 2;
+
+    /** Go action type.  */
+    public static final int INPUT_ACTION_TYPE_GO = 3;
+
+    /**
+     * Add a {@code boolean} value to the given {@link Bundle} that can be added with {@link
+     * RemoteInput#Build#addExtras}, to specify whether emoji-only option (e.g. the Draw Emoji
+     * option) is set not to be shown.
+     *
+     * By setting this value to true, the Draw Emoji option will not be shown. Otherwise, the
+     * Draw Emoji option will be shown as long as the {@link RemoteInput} allows free form input.
+     *
+     *
+     * @param bundle The bundle holding extras.
+     * @param disallowEmoji The boolean value to be added.
+     */
+    public static void setDisallowEmoji(@NonNull Bundle bundle, boolean disallowEmoji) {
+        bundle.putBoolean(EXTRA_DISALLOW_EMOJI, disallowEmoji);
+    }
+
+    /**
+     * Returns the {@code boolean} extra specifying whether emoji-only option (e.g. the Draw Emoji
+     * option) is set not to be shown.
+     *
+     * If this value is true, the Draw Emoji option will not be shown. Otherwise, the Draw Emoji
+     * option will be shown as long as the {@link RemoteInput} allows free form input.
+     *
+     * @param bundle The bundle holding extras.
+     * @return the value of an item or false if no value was found.
+     */
+    public static boolean getDisallowEmoji(@NonNull Bundle bundle) {
+        return bundle.getBoolean(EXTRA_DISALLOW_EMOJI);
+    }
+
+    /**
+     * Adds {@code int} value to the given {@link Bundle} that can be added with {@link
+     * RemoteInput#Build#addExtras}, to specify the action type of the RemoteInput session (e.g.
+     * "send" or "search").
+     *
+     * @param bundle The bundle holding extras.
+     * @param inputActionType The array of {@link RemoteInput} to be added.
+     */
+    public static void setInputActionType(
+            @NonNull Bundle bundle,
+            @InputActionType int inputActionType
+    ) {
+        bundle.putInt(EXTRA_INPUT_ACTION_TYPE, inputActionType);
+    }
+
+    /**
+     * Adds {@code int} value to the given {@link Intent} that specifies the action type of
+     * the RemoteInput session (e.g. "send" or "search").
+     *
+     * @param intent The intent holding extras.
+     * @param inputActionType The array of {@link RemoteInput} to be added.
+     */
+    @NonNull
+    public static void setInputActionTypeExtra(
+            @NonNull Intent intent,
+            @InputActionType int inputActionType
+    ) {
+        intent.putExtra(EXTRA_INPUT_ACTION_TYPE, inputActionType);
+    }
+
+    /**
+     * Returns the {@code int} extra specifying the action type of the RemoteInput session (e.g.
+     * "send" or "search"). The default action type is "send".
+     *
+     * @param bundle The bundle holding extras.
+     * @return the value of an item or default value {@link #INPUT_ACTION_TYPE_SEND} if no value was
+     * found.
+     */
+    @InputActionType
+    public static int getInputActionType(@NonNull Bundle bundle) {
+        return bundle.getInt(EXTRA_INPUT_ACTION_TYPE, INPUT_ACTION_TYPE_SEND);
+    }
+
+    /** @hide The action type operation for a given {@link RemoteInput} session. */
+    @IntDef({
+            INPUT_ACTION_TYPE_SEND,
+            INPUT_ACTION_TYPE_SEARCH,
+            INPUT_ACTION_TYPE_DONE,
+            INPUT_ACTION_TYPE_GO
+    })
+    public @interface InputActionType {}
+
     private final String mResultKey;
     private final CharSequence mLabel;
     private final CharSequence[] mChoices;
