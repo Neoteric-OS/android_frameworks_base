@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b492204_97baebff",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1995,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-02T23:44:12Z",
+      "side": 1,
+      "message": "Hi Grace, \nDo you think it makes sense to do this in CallsManager where the extra is queried from the PhoneAccount?\nEg. right now it is:\n               call.setVisibleToInCallService(phoneAccountExtras !\u003d null\n                        \u0026\u0026 phoneAccountExtras.getBoolean(\n                        PhoneAccount.EXTRA_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE, false));\n\nCould become:\n\n               call.setVisibleToInCallService(phoneAccountExtras !\u003d null\n                        \u0026\u0026 phoneAccountExtras.getBoolean(\n                        PhoneAccount.EXTRA_ADD_SELF_MANAGED_CALLS_TO_INCALLSERVICE, true));",
+      "range": {
+        "startLine": 1995,
+        "startChar": 29,
+        "endLine": 1995,
+        "endChar": 74
+      },
+      "revId": "8b22bb4bce23637ee83ae5cd1541aa1bc71cc876",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
