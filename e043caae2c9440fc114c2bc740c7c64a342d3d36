@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45819d84_cd286101",
+        "filename": "telephony/java/android/telephony/ims/aidl/RcsPublishResponseAidlWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-02-02T22:30:30Z",
+      "side": 1,
+      "message": "Sorry, i just noticed that these RemoteExceptions are caught and never re-thrown as ImsExceptions with code CODE_ERROR_SERVICE_UNAVAILABLE. Can you add this for all methods in here?",
+      "range": {
+        "startLine": 58,
+        "startChar": 17,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "e043caae2c9440fc114c2bc740c7c64a342d3d36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cffe2368_d99bb80d",
+        "filename": "telephony/java/android/telephony/ims/aidl/RcsSubscribeResponseAidlWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-02-02T22:30:30Z",
+      "side": 1,
+      "message": "Same as above, can this throw as ImsException with CODE_ERROR_SERVICE_UNAVAILABLE instead of failing silently?\n\nSame with others",
+      "range": {
+        "startLine": 64,
+        "startChar": 17,
+        "endLine": 64,
+        "endChar": 32
+      },
+      "revId": "e043caae2c9440fc114c2bc740c7c64a342d3d36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
