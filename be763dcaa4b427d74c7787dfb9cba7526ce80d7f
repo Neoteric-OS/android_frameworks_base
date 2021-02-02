@@ -39,6 +39,30 @@
       },
       "revId": "be763dcaa4b427d74c7787dfb9cba7526ce80d7f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52cc26b7_e04c47fb",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-02T15:18:20Z",
+      "side": 1,
+      "message": "Done\nMake a defensive copy which is unmodifiable.",
+      "parentUuid": "d5760b55_0c858370",
+      "range": {
+        "startLine": 53,
+        "startChar": 32,
+        "endLine": 53,
+        "endChar": 48
+      },
+      "revId": "be763dcaa4b427d74c7787dfb9cba7526ce80d7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
