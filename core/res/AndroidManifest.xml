@@ -2183,9 +2183,9 @@
     <permission android:name="android.permission.READ_ACTIVE_EMERGENCY_SESSION"
         android:protectionLevel="signature" />
 
-    <!-- Allows listen permission to always reported signal strength.
+    <!-- Allows listen permission to always reported system signal strength.
          @hide Used internally. -->
-    <permission android:name="android.permission.LISTEN_ALWAYS_REPORTED_SIGNAL_STRENGTH"
+    <permission android:name="android.permission.ALWAYS_REPORTED_SYSTEM_SIGNAL_STRENGTH"
         android:protectionLevel="signature" />
 
     <!-- @SystemApi Protects the ability to register any PhoneAccount with
