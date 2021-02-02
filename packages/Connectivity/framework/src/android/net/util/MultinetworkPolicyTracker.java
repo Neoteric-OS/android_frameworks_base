@@ -40,6 +40,8 @@ import com.android.internal.annotations.VisibleForTesting;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.RejectedExecutionException;
 
 /**
  * A class to encapsulate management of the "Smart Networking" capability of
@@ -73,6 +75,31 @@ public class MultinetworkPolicyTracker {
     private volatile int mMeteredMultipathPreference;
     private int mActiveSubId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
+    private static class PhoneStateListenerExecutor implements Executor {
+        @NonNull
+        private final Handler mHandler;
+
+        PhoneStateListenerExecutor(@NonNull Handler handler) {
+            mHandler = handler;
+        }
+        @Override
+        public void execute(Runnable command) {
+            if (!mHandler.post(command)) {
+                throw new RejectedExecutionException(mHandler + " is shutting down");
+            }
+        }
+    }
+
+    @VisibleForTesting
+    protected class ActiveDataSubscriptionIdChangedListener extends PhoneStateListener
+            implements PhoneStateListener.ActiveDataSubscriptionIdChangedListener {
+        @Override
+        public void onActiveDataSubscriptionIdChanged(int subId) {
+            mActiveSubId = subId;
+            reevaluateInternal();
+        }
+    }
+
     public MultinetworkPolicyTracker(Context ctx, Handler handler) {
         this(ctx, handler, null);
     }
@@ -93,14 +120,9 @@ public class MultinetworkPolicyTracker {
             }
         };
 
-        ctx.getSystemService(TelephonyManager.class).listen(
-                new PhoneStateListener(handler.getLooper()) {
-            @Override
-            public void onActiveDataSubscriptionIdChanged(int subId) {
-                mActiveSubId = subId;
-                reevaluateInternal();
-            }
-        }, PhoneStateListener.LISTEN_ACTIVE_DATA_SUBSCRIPTION_ID_CHANGE);
+        ctx.getSystemService(TelephonyManager.class).registerPhoneStateListener(
+                new PhoneStateListenerExecutor(handler),
+                new ActiveDataSubscriptionIdChangedListener());
 
         updateAvoidBadWifi();
         updateMeteredMultipathPreference();
