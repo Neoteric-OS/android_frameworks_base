@@ -22,6 +22,30 @@
       },
       "revId": "b37cfd856175c4061aa2e8ff8f51c04100d270a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04c18920_98817240",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-02-02T01:00:51Z",
+      "side": 1,
+      "message": "+1\n\nI\u0027m trying to understand why this need to be exposed as @SystemApi. Could you point me to the code block where ConnectivityService uses this? Unfortunately, these rules got a bit ugly with the recent addition of restricted mode. I\u0027d really like to explore a way to better way to deal with it.",
+      "parentUuid": "aecdb98f_51624f2c",
+      "range": {
+        "startLine": 127,
+        "startChar": 28,
+        "endLine": 127,
+        "endChar": 42
+      },
+      "revId": "b37cfd856175c4061aa2e8ff8f51c04100d270a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
