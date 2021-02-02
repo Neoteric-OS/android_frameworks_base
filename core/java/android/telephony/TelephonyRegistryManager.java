@@ -25,9 +25,6 @@ import android.compat.annotation.EnabledAfter;
 import android.content.Context;
 import android.os.Binder;
 import android.os.Build;
-import android.os.Handler;
-import android.os.HandlerExecutor;
-import android.os.Looper;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.telephony.Annotation.CallState;
@@ -837,10 +834,6 @@ public class TelephonyRegistryManager {
             eventList.add(PhoneStateListener.EVENT_SIGNAL_STRENGTHS_CHANGED);
         }
 
-        if (listener instanceof PhoneStateListener.AlwaysReportedSignalStrengthChangedListener) {
-            eventList.add(PhoneStateListener.EVENT_ALWAYS_REPORTED_SIGNAL_STRENGTH_CHANGED);
-        }
-
         if (listener instanceof PhoneStateListener.CellInfoChangedListener) {
             eventList.add(PhoneStateListener.EVENT_CELL_INFO_CHANGED);
         }
@@ -970,10 +963,6 @@ public class TelephonyRegistryManager {
 
         if ((eventMask & PhoneStateListener.LISTEN_SIGNAL_STRENGTHS) != 0) {
             eventList.add(PhoneStateListener.EVENT_SIGNAL_STRENGTHS_CHANGED);
-        }
-
-        if ((eventMask & PhoneStateListener.LISTEN_ALWAYS_REPORTED_SIGNAL_STRENGTH) != 0) {
-            eventList.add(PhoneStateListener.EVENT_ALWAYS_REPORTED_SIGNAL_STRENGTH_CHANGED);
         }
 
         if ((eventMask & PhoneStateListener.LISTEN_CELL_INFO) != 0) {

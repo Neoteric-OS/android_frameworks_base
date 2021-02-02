@@ -232,18 +232,18 @@ public class PhoneStateListener {
     @Deprecated
     public static final int LISTEN_SIGNAL_STRENGTHS                         = 0x00000100;
 
-    /**
-     * Listen for changes of the network signal strengths (cellular) always reported from modem,
-     * even in some situations such as the screen of the device is off.
-     *
-     * @see #onSignalStrengthsChanged
-     *
-     * @hide
-     * @deprecated Use {@link AlwaysReportedSignalStrengthChangedListener} instead.
-     */
-    @Deprecated
-    @RequiresPermission(android.Manifest.permission.LISTEN_ALWAYS_REPORTED_SIGNAL_STRENGTH)
-    public static final int LISTEN_ALWAYS_REPORTED_SIGNAL_STRENGTH          = 0x00000200;
+//    /**
+//     * Listen for changes of the network signal strengths (cellular) always reported from modem,
+//     * even in some situations such as the screen of the device is off.
+//     *
+//     * @see #onSignalStrengthsChanged
+//     *
+//     * @hide
+//     * @deprecated Use {@link AlwaysReportedSignalStrengthChangedListener} instead.
+//     */
+//    @Deprecated
+//    @RequiresPermission(android.Manifest.permission.LISTEN_ALWAYS_REPORTED_SIGNAL_STRENGTH)
+//    public static final int LISTEN_ALWAYS_REPORTED_SIGNAL_STRENGTH          = 0x00000200;
 
     /**
      * Listen for changes to observed cell info.
@@ -1031,7 +1031,6 @@ public class PhoneStateListener {
             EVENT_DATA_CONNECTION_STATE_CHANGED,
             EVENT_DATA_ACTIVITY_CHANGED,
             EVENT_SIGNAL_STRENGTHS_CHANGED,
-            EVENT_ALWAYS_REPORTED_SIGNAL_STRENGTH_CHANGED,
             EVENT_CELL_INFO_CHANGED,
             EVENT_PRECISE_CALL_STATE_CHANGED,
             EVENT_PRECISE_DATA_CONNECTION_STATE_CHANGED,

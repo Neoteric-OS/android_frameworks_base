@@ -17,6 +17,8 @@
 package android.telephony;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
@@ -64,10 +66,12 @@ public final class SignalStrengthUpdateRequest implements Parcelable {
     private final IBinder mLiveToken;
 
     private SignalStrengthUpdateRequest(
-            @NonNull List<SignalThresholdInfo> signalThresholdInfos,
+            @Nullable List<SignalThresholdInfo> signalThresholdInfos,
             boolean isReportingRequestedWhileIdle,
             boolean isSystemThresholdReportingRequestedWhileIdle) {
-        validate(signalThresholdInfos);
+        if (!isSystemThresholdReportingRequestedWhileIdle) {
+            validate(signalThresholdInfos);
+        }
 
         mSignalThresholdInfos = signalThresholdInfos;
         mIsReportingRequestedWhileIdle = isReportingRequestedWhileIdle;
@@ -131,6 +135,7 @@ public final class SignalStrengthUpdateRequest implements Parcelable {
          * @return the builder to facilitate the chaining
          * @hide
          */
+        @RequiresPermission(android.Manifest.permission.LISTEN_ALWAYS_REPORTED_SIGNAL_STRENGTH)
         public @NonNull Builder setSystemThresholdReportingRequestedWhileIdle(
                 boolean isSystemThresholdReportingRequestedWhileIdle) {
             mIsSystemThresholdReportingRequestedWhileIdle =
