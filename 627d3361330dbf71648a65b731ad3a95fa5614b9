@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6df83bf2_6e41a3b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-02T02:36:58Z",
+      "side": 1,
+      "message": "Changed it to @SystemApi. Iwlan (system app) also needs to use it so @SystemApi(client\u003dMODULE_LIBRARIES) will be too restrictive",
+      "parentUuid": "3b1c315c_91618a95",
+      "revId": "627d3361330dbf71648a65b731ad3a95fa5614b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ead0edf2_bae067d2",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-02-01T08:15:36Z",
       "side": 1,
       "message": "You should document what happens if it isn\u0027t. Presumably the code will throw an exception. If it doesn\u0027t, then it probably should :-)",
+      "range": {
+        "startLine": 799,
+        "startChar": 88,
+        "endLine": 799,
+        "endChar": 89
+      },
+      "revId": "627d3361330dbf71648a65b731ad3a95fa5614b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5efc6f04_4bb8bb0d",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-02T02:36:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ead0edf2_bae067d2",
       "range": {
         "startLine": 799,
         "startChar": 88,
