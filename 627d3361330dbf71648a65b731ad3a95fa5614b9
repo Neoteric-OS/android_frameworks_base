@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9f489bb_3a27323c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-02T07:48:23Z",
+      "side": 1,
+      "message": "Does the IWLAN client need to support MOBIKE?",
+      "parentUuid": "6df83bf2_6e41a3b0",
+      "revId": "627d3361330dbf71648a65b731ad3a95fa5614b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ead0edf2_bae067d2",

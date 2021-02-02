@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc09a028_343d02a7",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-02T07:48:23Z",
+      "side": 1,
+      "message": "This should document what exception will be thrown.",
+      "range": {
+        "startLine": 803,
+        "startChar": 38,
+        "endLine": 803,
+        "endChar": 51
+      },
+      "revId": "49be7ae117fa57e8cc078c3ba37f277d8b9db8f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
