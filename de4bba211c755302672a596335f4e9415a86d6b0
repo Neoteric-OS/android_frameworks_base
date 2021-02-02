@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5370f82_2f35f214",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-02T08:33:30Z",
+      "side": 1,
+      "message": "Nit: Register/Unregister, or Add/Remove",
+      "range": {
+        "startLine": 162,
+        "startChar": 35,
+        "endLine": 162,
+        "endChar": 38
+      },
+      "revId": "de4bba211c755302672a596335f4e9415a86d6b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
