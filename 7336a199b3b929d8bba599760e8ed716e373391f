@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94b0169e_05936fb5",
+        "filename": "core/java/android/inputmethodservice/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2021-02-02T15:28:42Z",
+      "side": 1,
+      "message": "could you remove this?",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 42
+      },
+      "revId": "7336a199b3b929d8bba599760e8ed716e373391f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0f4ea22_d99a1240",
+        "filename": "core/java/android/view/inputmethod/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2021-02-02T15:28:42Z",
+      "side": 1,
+      "message": "dito",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 42
+      },
+      "revId": "7336a199b3b929d8bba599760e8ed716e373391f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
