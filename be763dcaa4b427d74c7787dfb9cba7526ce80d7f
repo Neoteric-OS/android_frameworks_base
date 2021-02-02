@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be3a4479_5b77f071",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-02T14:25:37Z",
+      "side": 1,
+      "message": "LGTM but the list should be a defensive copy.",
+      "revId": "be763dcaa4b427d74c7787dfb9cba7526ce80d7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5760b55_0c858370",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-02T14:25:37Z",
+      "side": 1,
+      "message": "This should be a defensive copy because otherwise the caller can cause the list to be modified after this object has been constructed (potentially even on a different thread). This is almost never done on purpose, and almost always very painful to debug.",
+      "range": {
+        "startLine": 53,
+        "startChar": 32,
+        "endLine": 53,
+        "endChar": 48
+      },
+      "revId": "be763dcaa4b427d74c7787dfb9cba7526ce80d7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
