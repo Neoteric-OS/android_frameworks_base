@@ -40661,10 +40661,6 @@ package android.telephony {
     method @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) public void onActiveDataSubscriptionIdChanged(int);
   }
 
-  public static interface PhoneStateListener.AlwaysReportedSignalStrengthChangedListener {
-    method @RequiresPermission("android.permission.LISTEN_ALWAYS_REPORTED_SIGNAL_STRENGTH") public void onSignalStrengthsChanged(@NonNull android.telephony.SignalStrength);
-  }
-
   public static interface PhoneStateListener.BarringInfoChangedListener {
     method @RequiresPermission(allOf={android.Manifest.permission.READ_PRECISE_PHONE_STATE, android.Manifest.permission.ACCESS_FINE_LOCATION}) public void onBarringInfoChanged(@NonNull android.telephony.BarringInfo);
   }

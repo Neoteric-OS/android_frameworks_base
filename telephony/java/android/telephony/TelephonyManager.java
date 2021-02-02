@@ -120,12 +120,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
@@ -11742,26 +11740,6 @@ public class TelephonyManager {
             Log.e(TAG, "Error calling ITelephony#isManualNetworkSelectionAllowed", e);
         }
         return true;
-    }
-
-    /**
-     * Enable or disable signal strength changes from radio will always be reported in any
-     * condition (e.g. screen is off). This is only allowed for System caller.
-     *
-     * @param isEnabled {@code true} for enabling; {@code false} for disabling.
-     * @hide
-     */
-    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
-    public void setAlwaysReportSignalStrength(boolean isEnabled) {
-        try {
-            ITelephony telephony = getITelephony();
-            if (telephony != null) {
-                telephony.setAlwaysReportSignalStrength(getSubId(), isEnabled);
-            }
-        } catch (RemoteException ex) {
-            Log.e(TAG, "setAlwaysReportSignalStrength RemoteException", ex);
-            ex.rethrowAsRuntimeException();
-        }
     }
 
     /**
