@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c980e57_e9ed34ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-02T15:36:49Z",
+      "side": 1,
+      "message": "a",
+      "revId": "755356f449deef172d291515350949437275b67a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffa10ad9_0b7a955f",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-02T15:36:49Z",
+      "side": 1,
+      "message": "I don\u0027t think you necessarily need this. But why not.",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 61
+      },
+      "revId": "755356f449deef172d291515350949437275b67a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
