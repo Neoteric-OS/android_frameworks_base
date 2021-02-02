@@ -46,6 +46,30 @@
       },
       "revId": "b37cfd856175c4061aa2e8ff8f51c04100d270a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0e627c4_1fcb7590",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-02-02T02:15:10Z",
+      "side": 1,
+      "message": "This is used for aosp/1536731 and ConnectivityService. In aosp/1536731, I add a new utility class NetworkPolicyUtils and move some common parameters and methods here. And NetworkPolicyUtils can use formal or system api only, so I need to expose some NetworkPolicyManager API here.",
+      "parentUuid": "04c18920_98817240",
+      "range": {
+        "startLine": 127,
+        "startChar": 28,
+        "endLine": 127,
+        "endChar": 42
+      },
+      "revId": "b37cfd856175c4061aa2e8ff8f51c04100d270a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
