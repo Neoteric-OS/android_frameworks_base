@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "272cda8a_22cdc7b5",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-02T07:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f43cc629_d10e5970",
+      "range": {
+        "startLine": 61,
+        "startChar": 27,
+        "endLine": 61,
+        "endChar": 38
+      },
+      "revId": "a78e4b53a8fefc3074623b7da058c6b402c61dc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "26f4686c_b06772b6",
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5426afb6_57e70d0d",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-02T07:26:13Z",
+      "side": 1,
+      "message": "I *think* this is allowed as I don\u0027t see any linter errors when compiling locally. Thoughts?",
+      "parentUuid": "26f4686c_b06772b6",
+      "range": {
+        "startLine": 165,
+        "startChar": 13,
+        "endLine": 165,
+        "endChar": 18
+      },
+      "revId": "a78e4b53a8fefc3074623b7da058c6b402c61dc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fdd8c54a_ad9ba83f",
         "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
         "patchSetId": 10
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-01T23:31:39Z",
       "side": 1,
       "message": "Do we need to update the underlying network tracker here too?",
+      "range": {
+        "startLine": 572,
+        "startChar": 0,
+        "endLine": 572,
+        "endChar": 37
+      },
+      "revId": "a78e4b53a8fefc3074623b7da058c6b402c61dc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f64d320_4cb67404",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-02T07:26:13Z",
+      "side": 1,
+      "message": "Idk how I missed this :|\n\nDone",
+      "parentUuid": "fdd8c54a_ad9ba83f",
       "range": {
         "startLine": 572,
         "startChar": 0,
