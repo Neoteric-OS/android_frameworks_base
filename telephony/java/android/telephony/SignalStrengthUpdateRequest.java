@@ -17,6 +17,8 @@
 package android.telephony;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
@@ -66,10 +68,15 @@ public final class SignalStrengthUpdateRequest implements Parcelable {
     private final IBinder mLiveToken;
 
     private SignalStrengthUpdateRequest(
-            @NonNull List<SignalThresholdInfo> signalThresholdInfos,
+            @Nullable List<SignalThresholdInfo> signalThresholdInfos,
             boolean isReportingRequestedWhileIdle,
             boolean isSystemThresholdReportingRequestedWhileIdle) {
-        validate(signalThresholdInfos);
+        // System app (like Bluetooth) can specify the request to report system thresholds while
+        // device is idle (with permission protection). In this case, the request doesn't need to
+        // provide a non-empty list of SignalThresholdInfo which is only asked for public apps.
+        if (!isSystemThresholdReportingRequestedWhileIdle) {
+            validate(signalThresholdInfos);
+        }
 
         mSignalThresholdInfos = signalThresholdInfos;
         mIsReportingRequestedWhileIdle = isReportingRequestedWhileIdle;
@@ -135,6 +142,7 @@ public final class SignalStrengthUpdateRequest implements Parcelable {
          * @return the builder to facilitate the chaining
          * @hide
          */
+        @RequiresPermission(android.Manifest.permission.ALWAYS_REPORTED_SYSTEM_SIGNAL_STRENGTH)
         public @NonNull Builder setSystemThresholdReportingRequestedWhileIdle(
                 boolean isSystemThresholdReportingRequestedWhileIdle) {
             mIsSystemThresholdReportingRequestedWhileIdle =
