@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43740f32_83210b95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1364773
+      },
+      "writtenOn": "2021-02-02T06:40:56Z",
+      "side": 1,
+      "message": "system_server\u0027s main thread name is wrong because of BinderIncrementalService.\n",
+      "revId": "bb4cb2127c1fb32ae6ebc2986b32d91c93729bcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
