@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3918ae48_73c6a69a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-03T03:49:23Z",
+      "side": 1,
+      "message": "mNoServiceNetwork\n\n  // Sentinel NAI used to direct apps with default networks that should have no\n  // connectivity to a network with no service.\n  // This NAI should never be matched against, nor should any public API ever\n  // return the associated network. For this reason, this NAI is not in the list\n  // of available NAIs.\n  // some comments on specifically where in the code we use it (compute network reassigment,\n  // and the makeDefaultForApps)",
+      "range": {
+        "startLine": 1221,
+        "startChar": 8,
+        "endLine": 1221,
+        "endChar": 28
+      },
+      "revId": "842d93e515cb3c6759b65ee59a4a9d6cde71fd9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10341d87_21c6a251",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 4957,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-03T03:49:23Z",
+      "side": 1,
+      "message": "Refer to the comment in patch aosp/1566351 and possibly add a TODO",
+      "range": {
+        "startLine": 4957,
+        "startChar": 53,
+        "endLine": 4957,
+        "endChar": 61
+      },
+      "revId": "842d93e515cb3c6759b65ee59a4a9d6cde71fd9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb694174_7e2d1a4d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 5527,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-03T03:49:23Z",
+      "side": 1,
+      "message": "// The network currently satisfying this NRI. Only one request in an NRI can have a satisfier. For non-multilayer requests, only REQUEST-type requests can have a satisfier.",
+      "range": {
+        "startLine": 5526,
+        "startChar": 8,
+        "endLine": 5527,
+        "endChar": 33
+      },
+      "revId": "842d93e515cb3c6759b65ee59a4a9d6cde71fd9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20f712c2_f86f389b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 6082,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-03T03:49:23Z",
+      "side": 1,
+      "message": "NonFallback",
+      "range": {
+        "startLine": 6082,
+        "startChar": 22,
+        "endLine": 6082,
+        "endChar": 32
+      },
+      "revId": "842d93e515cb3c6759b65ee59a4a9d6cde71fd9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fc96b0b_a0f13dab",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 6114,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-03T03:49:23Z",
+      "side": 1,
+      "message": "Let\u0027s try INetd.DUMMY_NET_ID ?\n (also rename)",
+      "range": {
+        "startLine": 6114,
+        "startChar": 50,
+        "endLine": 6114,
+        "endChar": 54
+      },
+      "revId": "842d93e515cb3c6759b65ee59a4a9d6cde71fd9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a58a40b_dc0bab34",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 7325,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-03T03:49:23Z",
+      "side": 1,
+      "message": "Maybe swap old and new",
+      "range": {
+        "startLine": 7324,
+        "startChar": 46,
+        "endLine": 7325,
+        "endChar": 47
+      },
+      "revId": "842d93e515cb3c6759b65ee59a4a9d6cde71fd9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b873a35_1e442d86",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 7334,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-03T03:49:23Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 7331,
+        "startChar": 38,
+        "endLine": 7334,
+        "endChar": 13
+      },
+      "revId": "842d93e515cb3c6759b65ee59a4a9d6cde71fd9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d26a4cf_b39d975f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 7487,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-03T03:49:23Z",
+      "side": 1,
+      "message": "Is this easier to understand (and functionally equivalent) if we say this as :\n\n  if (null !\u003d newSatisfier \u0026\u0026 mNoServiceNetwork !\u003d newSatisfier)",
+      "range": {
+        "startLine": 7487,
+        "startChar": 8,
+        "endLine": 7487,
+        "endChar": 57
+      },
+      "revId": "842d93e515cb3c6759b65ee59a4a9d6cde71fd9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09c2cc5b_0d366bcd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 7489,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-03T03:49:23Z",
+      "side": 1,
+      "message": "Likewise",
+      "range": {
+        "startLine": 7489,
+        "startChar": 16,
+        "endLine": 7489,
+        "endChar": 40
+      },
+      "revId": "842d93e515cb3c6759b65ee59a4a9d6cde71fd9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
