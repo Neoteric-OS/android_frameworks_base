@@ -70,6 +70,30 @@
       },
       "revId": "b37cfd856175c4061aa2e8ff8f51c04100d270a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fb1d5e6_a71fa51c",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-02-03T02:00:01Z",
+      "side": 1,
+      "message": "Thanks for providing the details about where we are using this. If we expose isUidNetworkingBlocked() as an API, then we don\u0027t have to expose all these rules. I feel that\u0027s a better approach because that will give us freedom to modify how these rules are used but I\u0027d be curious to know if there are other benefits with https://r.android.com/1536731 over exposing isUidNetworkingBlocked() directly.\n\nExposing isUidNetworkingBlocked() means that we still have to expose the concept of uidRules as @SystemApi, so other option I\u0027m thinking about is creating a new callback which tells ConnectivityService the blocked status of an uid on any network, it\u0027s status on metered network and a tag/reason for logging. This way we can provide the info that ConnectivityService needs without having to expose the details about how the network status of an uid is tracked internally.",
+      "parentUuid": "b0e627c4_1fcb7590",
+      "range": {
+        "startLine": 127,
+        "startChar": 28,
+        "endLine": 127,
+        "endChar": 42
+      },
+      "revId": "b37cfd856175c4061aa2e8ff8f51c04100d270a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
