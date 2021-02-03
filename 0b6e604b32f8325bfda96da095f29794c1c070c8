@@ -22,6 +22,30 @@
       },
       "revId": "0b6e604b32f8325bfda96da095f29794c1c070c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "176c6e5e_e1e136d1",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2021-02-03T02:00:04Z",
+      "side": 1,
+      "message": "I don\u0027t believe the change in dependencies is necessary since getNat464Xlat() in ConnectivityServiceTest already exists.\n\n    private Nat464Xlat getNat464Xlat(NetworkAgentWrapper mna) {\n        return mService.getNetworkAgentInfoForNetwork(mna.getNetwork()).clatd;\n    }",
+      "parentUuid": "9b769c25_07ddaa8f",
+      "range": {
+        "startLine": 124,
+        "startChar": 29,
+        "endLine": 124,
+        "endChar": 41
+      },
+      "revId": "0b6e604b32f8325bfda96da095f29794c1c070c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
