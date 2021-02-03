@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Todd Kennedy <toddke@google.com>
+Code-Review+2: Songchun Fan <schfan@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Songchun Fan <schfan@google.com>
+Submitted-at: Wed, 03 Feb 2021 18:54:01 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1569742
+Project: platform/frameworks/base
+Branch: refs/heads/master
