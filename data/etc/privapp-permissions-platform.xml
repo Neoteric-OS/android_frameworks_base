@@ -149,6 +149,14 @@ applications that come with the platform
         <permission name="android.permission.GET_ACCOUNTS_PRIVILEGED"/>
     </privapp-permissions>
 
+    <!-- STOPSHIP do not submit this! -->
+    <privapp-permissions package="com.google.android.sample.rcsclient">
+        <permission name="android.permission.MODIFY_PHONE_STATE"/>
+        <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
+        <permission name="android.permission.ACCESS_NETWORK_STATE"/>
+        <permission name="android.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS"/>
+    </privapp-permissions>
+
     <privapp-permissions package="com.android.phone">
         <permission name="android.permission.ACCESS_IMS_CALL_SERVICE"/>
         <permission name="android.permission.BIND_CARRIER_MESSAGING_SERVICE"/>
