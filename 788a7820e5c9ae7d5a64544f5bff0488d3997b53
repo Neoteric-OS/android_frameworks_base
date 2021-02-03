@@ -16,6 +16,52 @@
       "message": "CL complete - requires API review.",
       "revId": "788a7820e5c9ae7d5a64544f5bff0488d3997b53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70f25171_acf88559",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-03T22:04:53Z",
+      "side": 1,
+      "message": "Ints can\u0027t be null (I hope).",
+      "range": {
+        "startLine": 183,
+        "startChar": 17,
+        "endLine": 183,
+        "endChar": 24
+      },
+      "revId": "788a7820e5c9ae7d5a64544f5bff0488d3997b53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc191397_5c5e8b52",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsCapabilityExchangeImplBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-03T22:04:53Z",
+      "side": 1,
+      "message": "Don\u0027t need.",
+      "range": {
+        "startLine": 291,
+        "startChar": 15,
+        "endLine": 291,
+        "endChar": 24
+      },
+      "revId": "788a7820e5c9ae7d5a64544f5bff0488d3997b53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
