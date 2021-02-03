@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab3d1302_d62ea7d0",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2504,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-03T16:13:31Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "49d26da8_9c8b1309",
+      "range": {
+        "startLine": 2504,
+        "startChar": 20,
+        "endLine": 2504,
+        "endChar": 71
+      },
+      "revId": "f6fe6f406d25c7d8253bedf5f5570d781f7fa632",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "436a8b74_21cad64e",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-03T07:08:20Z",
       "side": 1,
       "message": "I don\u0027t think you need these fake flags in this test",
+      "range": {
+        "startLine": 886,
+        "startChar": 45,
+        "endLine": 886,
+        "endChar": 62
+      },
+      "revId": "f6fe6f406d25c7d8253bedf5f5570d781f7fa632",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43d99b07_52c01a81",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-03T16:13:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "436a8b74_21cad64e",
       "range": {
         "startLine": 886,
         "startChar": 45,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ad9f4be_a3f03f91",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-03T16:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "188e69cb_4e8da599",
+      "range": {
+        "startLine": 887,
+        "startChar": 23,
+        "endLine": 887,
+        "endChar": 28
+      },
+      "revId": "f6fe6f406d25c7d8253bedf5f5570d781f7fa632",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "102dd3d5_9a58ebf8",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-02-03T07:08:20Z",
       "side": 1,
       "message": "Can we make this both a bit more generic by changing the signature to :\n\n  private void verifyInterfaceSetCfgWithFlags(String flag)",
+      "range": {
+        "startLine": 894,
+        "startChar": 17,
+        "endLine": 894,
+        "endChar": 51
+      },
+      "revId": "f6fe6f406d25c7d8253bedf5f5570d781f7fa632",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e77af601_568dd035",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-03T16:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "102dd3d5_9a58ebf8",
       "range": {
         "startLine": 894,
         "startChar": 17,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a69ecd1_27bcf0d3",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-03T16:13:31Z",
+      "side": 1,
+      "message": "I see, thanks.\n\nRemoved.",
+      "parentUuid": "0f479e87_a8829ab3",
+      "range": {
+        "startLine": 895,
+        "startChar": 8,
+        "endLine": 896,
+        "endChar": 23
+      },
+      "revId": "f6fe6f406d25c7d8253bedf5f5570d781f7fa632",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "513302ca_bf1cbe9d",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-02-03T07:08:20Z",
       "side": 1,
       "message": "Captors are easy to write but very difficult to read. You write the code once and read it multiple times. Whenever possible, instead use argThat(). Here, it should be easy.",
+      "range": {
+        "startLine": 897,
+        "startChar": 14,
+        "endLine": 897,
+        "endChar": 28
+      },
+      "revId": "f6fe6f406d25c7d8253bedf5f5570d781f7fa632",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07f608d4_3c61971b",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-03T16:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "513302ca_bf1cbe9d",
       "range": {
         "startLine": 897,
         "startChar": 14,
