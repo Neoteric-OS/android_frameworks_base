@@ -16,6 +16,8 @@
 
 package android.net;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
 import static com.android.internal.annotations.VisibleForTesting.Visibility.PRIVATE;
 
 import android.annotation.IntDef;
@@ -205,6 +207,7 @@ public final class NetworkCapabilities implements Parcelable {
             NET_CAPABILITY_OEM_PRIVATE,
             NET_CAPABILITY_VEHICLE_INTERNAL,
             NET_CAPABILITY_NOT_VCN_MANAGED,
+            NET_CAPABILITY_ENTERPRISE,
     })
     public @interface NetCapability { }
 
@@ -415,8 +418,15 @@ public final class NetworkCapabilities implements Parcelable {
     @SystemApi
     public static final int NET_CAPABILITY_NOT_VCN_MANAGED = 28;
 
+    /**
+     * Indicates that this network is intended for enterprise use.
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static final int NET_CAPABILITY_ENTERPRISE = 29;
+
     private static final int MIN_NET_CAPABILITY = NET_CAPABILITY_MMS;
-    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_NOT_VCN_MANAGED;
+    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_ENTERPRISE;
 
     /**
      * Network capabilities that are expected to be mutable, i.e., can change while a particular
@@ -474,7 +484,8 @@ public final class NetworkCapabilities implements Parcelable {
             | (1 << NET_CAPABILITY_MCX)
             | (1 << NET_CAPABILITY_RCS)
             | (1 << NET_CAPABILITY_VEHICLE_INTERNAL)
-            | (1 << NET_CAPABILITY_XCAP);
+            | (1 << NET_CAPABILITY_XCAP)
+            | (1 << NET_CAPABILITY_ENTERPRISE);
 
     /**
      * Capabilities that force network to be restricted.
@@ -844,7 +855,7 @@ public final class NetworkCapabilities implements Parcelable {
      *
      * @hide
      */
-    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @SystemApi(client = MODULE_LIBRARIES)
     public static final int TRANSPORT_TEST = 7;
 
     /** @hide */
@@ -2030,6 +2041,7 @@ public final class NetworkCapabilities implements Parcelable {
             case NET_CAPABILITY_OEM_PRIVATE:          return "OEM_PRIVATE";
             case NET_CAPABILITY_VEHICLE_INTERNAL:     return "NET_CAPABILITY_VEHICLE_INTERNAL";
             case NET_CAPABILITY_NOT_VCN_MANAGED:      return "NOT_VCN_MANAGED";
+            case NET_CAPABILITY_ENTERPRISE:           return "NET_CAPABILITY_ENTERPRISE";
             default:                                  return Integer.toString(capability);
         }
     }

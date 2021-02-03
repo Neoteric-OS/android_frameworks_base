@@ -33,6 +33,7 @@ package android.net {
   }
 
   public final class NetworkCapabilities implements android.os.Parcelable {
+    field public static final int NET_CAPABILITY_ENTERPRISE = 29; // 0x1d
     field public static final int TRANSPORT_TEST = 7; // 0x7
   }
 
