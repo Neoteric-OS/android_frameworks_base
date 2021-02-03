@@ -275,4 +275,7 @@ interface IWifiManager
     void setAutoWakeupEnabled(boolean enable);
 
     boolean isAutoWakeupEnabled();
+
+    boolean blackListWifiDevice (String packageName, String address, boolean enabled);
+
 }

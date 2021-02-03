@@ -3454,6 +3454,14 @@ public class WifiManager {
         }
     }
 
+    public boolean blackListWifiDevice(String address, boolean enabled) {
+        try {
+            return mService.blackListWifiDevice(mContext.getOpPackageName(), address, enabled);
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
     /**
      * Enable/Disable TDLS on a specific local route.
      *
