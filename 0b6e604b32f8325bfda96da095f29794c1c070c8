@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b769c25_07ddaa8f",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-03T00:54:23Z",
+      "side": 1,
+      "message": "Per discussion, we could test as follows:\n\n1. Make this method, and shouldStartClat below, non-static.\n2. In Nat464XlatTest (e.g., assertShouldStartClat), instead of just calling these statically, call makeNat464Xlat and call the method on the resulting object.\n3. Add a method to ConnectivityService.Dependencies called makeNat464Xlat:\n\n    public Nat464Xlat makeNat464Xlat() {\n        return new Nat464Xlat();\n    }\n\nand replace all calls to \"new Nat464Xlat\" with calls to that method.\n4. Add some simple tests to Nat464XlatTest that check that if the property is false the device never starts. I think we can do that by adding a \"protected boolean isCellular464XlatEnabled\" to Nat464Xlat that just returns the system property, and subclass it in Nat464XlatTest with something that can return false.",
+      "range": {
+        "startLine": 124,
+        "startChar": 29,
+        "endLine": 124,
+        "endChar": 41
+      },
+      "revId": "0b6e604b32f8325bfda96da095f29794c1c070c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
