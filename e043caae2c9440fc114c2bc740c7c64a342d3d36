@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbd57a56_badd9058",
+        "filename": "telephony/java/android/telephony/ims/aidl/RcsPublishResponseAidlWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-02-03T07:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45819d84_cd286101",
+      "range": {
+        "startLine": 58,
+        "startChar": 17,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "e043caae2c9440fc114c2bc740c7c64a342d3d36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cffe2368_d99bb80d",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-02T22:30:30Z",
       "side": 1,
       "message": "Same as above, can this throw as ImsException with CODE_ERROR_SERVICE_UNAVAILABLE instead of failing silently?\n\nSame with others",
+      "range": {
+        "startLine": 64,
+        "startChar": 17,
+        "endLine": 64,
+        "endChar": 32
+      },
+      "revId": "e043caae2c9440fc114c2bc740c7c64a342d3d36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4a81825_b74cbf5b",
+        "filename": "telephony/java/android/telephony/ims/aidl/RcsSubscribeResponseAidlWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-02-03T07:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cffe2368_d99bb80d",
       "range": {
         "startLine": 64,
         "startChar": 17,
