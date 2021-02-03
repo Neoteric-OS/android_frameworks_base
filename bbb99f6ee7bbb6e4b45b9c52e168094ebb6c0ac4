@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc2156a6_d46647c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-03T09:32:47Z",
+      "side": 1,
+      "message": "LGTM overall but deferring to Jean for API review",
+      "revId": "bbb99f6ee7bbb6e4b45b9c52e168094ebb6c0ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

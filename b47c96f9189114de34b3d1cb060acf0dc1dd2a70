@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71fb5184_5ac4a345",
+        "filename": "services/core/java/com/android/server/connectivity/IpConnectivityEventBuilder.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-03T09:32:47Z",
+      "side": 1,
+      "message": "this returns 0 if no key is found, which happens to match IpConnectivityLogClass.UNKNOWN, but we\u0027d probably miss it if we were looking for usages of UNKNOWN (or changing the value of the constant would break it).\n\nHow about:\nTRANSPORT_LINKLAYER_MAP.get(t, IpConnectivityLogClass.UNKNOWN)",
+      "range": {
+        "startLine": 363,
+        "startChar": 23,
+        "endLine": 363,
+        "endChar": 54
+      },
+      "revId": "b47c96f9189114de34b3d1cb060acf0dc1dd2a70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
