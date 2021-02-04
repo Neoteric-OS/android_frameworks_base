@@ -34,7 +34,7 @@ public final class UserHandle implements Parcelable {
     /**
      * @hide Range of uids allocated for a user.
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public static final int PER_USER_RANGE = 100000;
 
     /** @hide A user id to indicate all users on the device */

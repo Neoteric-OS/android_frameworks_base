@@ -7598,6 +7598,7 @@ package android.os {
     method public static android.os.UserHandle of(int);
     field @NonNull public static final android.os.UserHandle ALL;
     field @NonNull public static final android.os.UserHandle CURRENT;
+    field public static final int PER_USER_RANGE = 100000; // 0x186a0
     field @NonNull public static final android.os.UserHandle SYSTEM;
   }
 
