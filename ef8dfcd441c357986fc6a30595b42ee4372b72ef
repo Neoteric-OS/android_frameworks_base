@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "482749ba_daf9643e",
+        "filename": "core/java/android/content/ContentResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4043,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-04T03:53:56Z",
+      "side": 1,
+      "message": "If you\u0027re doing this to move away from using Int32Ref, you should probably use AtomicInteger instead (it\u0027s the same, but Java standard so you don\u0027t have to worry about the Int64Ref going the same way as Int32Ref)",
+      "range": {
+        "startLine": 4043,
+        "startChar": 14,
+        "endLine": 4043,
+        "endChar": 22
+      },
+      "revId": "ef8dfcd441c357986fc6a30595b42ee4372b72ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6709a67c_fb2c5ca5",
+        "filename": "core/java/android/net/LocalSocketImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-04T03:53:56Z",
+      "side": 1,
+      "message": "Just return here and remove the local",
+      "range": {
+        "startLine": 70,
+        "startChar": 16,
+        "endLine": 70,
+        "endChar": 21
+      },
+      "revId": "ef8dfcd441c357986fc6a30595b42ee4372b72ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20475e49_106f3bcc",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-04T03:53:56Z",
+      "side": 1,
+      "message": "final int result \u003d Os.ioctlInt\n\nLikewise below",
+      "range": {
+        "startLine": 309,
+        "startChar": 8,
+        "endLine": 309,
+        "endChar": 14
+      },
+      "revId": "ef8dfcd441c357986fc6a30595b42ee4372b72ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
