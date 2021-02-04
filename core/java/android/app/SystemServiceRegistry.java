@@ -361,13 +361,13 @@ public final class SystemServiceRegistry {
             }});
 
         registerService(Context.VPN_MANAGER_SERVICE, VpnManager.class,
-            new CachedServiceFetcher<VpnManager>() {
-                @Override
-                public VpnManager createService(ContextImpl ctx) throws ServiceNotFoundException {
-                    IBinder b = ServiceManager.getService(Context.VPN_MANAGER_SERVICE);
-                    IVpnManager service = IVpnManager.Stub.asInterface(b);
-                    return new VpnManager(ctx, service);
-                }});
+                new CachedServiceFetcher<VpnManager>() {
+            @Override
+            public VpnManager createService(ContextImpl ctx) throws ServiceNotFoundException {
+                IBinder b = ServiceManager.getService(Context.VPN_MANAGER_SERVICE);
+                IVpnManager service = IVpnManager.Stub.asInterface(b);
+                return new VpnManager(ctx, service);
+            }});
 
         registerService(Context.VCN_MANAGEMENT_SERVICE, VcnManager.class,
                 new CachedServiceFetcher<VcnManager>() {
