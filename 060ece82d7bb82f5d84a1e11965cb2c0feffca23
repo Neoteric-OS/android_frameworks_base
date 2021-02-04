@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d8d0c39_ad1b51eb",
+        "filename": "services/core/jni/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1623038
+      },
+      "writtenOn": "2021-02-04T01:11:05Z",
+      "side": 1,
+      "message": "not sure what the convention here is but i\u0027d just follow the pattern above and avoid wildcards.  there should only be the one file:\ncom_android_server_am_BatteryStatsService.cpp",
+      "revId": "060ece82d7bb82f5d84a1e11965cb2c0feffca23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
