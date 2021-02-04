@@ -158,7 +158,6 @@ public class RcsCapabilityExchangeImplBase {
 
     /**
      * Interface used by the framework to respond to OPTIONS requests.
-     * @hide
      */
     public interface OptionsResponseCallback {
         /**
@@ -376,7 +375,6 @@ public class RcsCapabilityExchangeImplBase {
      * @param contactUri The URI of the remote user that we wish to get the capabilities of.
      * @param myCapabilities The capabilities of this device to send to the remote user.
      * @param callback The callback of this request which is sent from the remote user.
-     * @hide
      */
     // executor used is defined in the constructor.
     @SuppressLint("ExecutorRegistration")
