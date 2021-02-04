@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "009a2d1f_6b0de3db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2021-02-04T23:27:59Z",
+      "side": 1,
+      "message": "I was also thinking of adding a mallopt() to get the current mode - it\u0027s not possible to determine if you\u0027re in TBI or NONE mode on non-MTE devices. Not a problem here, but both can be left as follow-ups if necessary.",
+      "parentUuid": "c206b52d_fc785e18",
+      "revId": "e0e1317a326db41a76c4bc69b9e65f5f3ea94b29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f0d2aae_d8f56b0a",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-02-04T23:19:05Z",
       "side": 1,
       "message": "this should not happen in practice, but you can move the PR_TAGGED_ADDR_ENABLE check outside of this block to be on the safe side, and also simplify the logic a little.",
+      "revId": "e0e1317a326db41a76c4bc69b9e65f5f3ea94b29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69e6d6c5_d92925cf",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2539,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2021-02-04T23:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f0d2aae_d8f56b0a",
       "revId": "e0e1317a326db41a76c4bc69b9e65f5f3ea94b29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
