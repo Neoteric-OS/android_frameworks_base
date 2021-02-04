@@ -27,7 +27,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.UserInfo;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
-import android.net.IConnectivityManager;
+import android.net.IVpnManager;
 import android.net.Network;
 import android.net.NetworkRequest;
 import android.os.Handler;
@@ -75,7 +75,7 @@ public class SecurityControllerImpl extends CurrentUserTracker implements Securi
 
     private final Context mContext;
     private final ConnectivityManager mConnectivityManager;
-    private final IConnectivityManager mConnectivityManagerService;
+    private final IVpnManager mVpnManagerService;
     private final DevicePolicyManager mDevicePolicyManager;
     private final PackageManager mPackageManager;
     private final UserManager mUserManager;
@@ -107,8 +107,8 @@ public class SecurityControllerImpl extends CurrentUserTracker implements Securi
                 context.getSystemService(Context.DEVICE_POLICY_SERVICE);
         mConnectivityManager = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        mConnectivityManagerService = IConnectivityManager.Stub.asInterface(
-                ServiceManager.getService(Context.CONNECTIVITY_SERVICE));
+        mVpnManagerService = IVpnManager.Stub.asInterface(
+                ServiceManager.getService(Context.VPN_MANAGER_SERVICE));
         mPackageManager = context.getPackageManager();
         mUserManager = (UserManager) context.getSystemService(Context.USER_SERVICE);
         mBgExecutor = bgExecutor;
@@ -348,13 +348,13 @@ public class SecurityControllerImpl extends CurrentUserTracker implements Securi
         SparseArray<VpnConfig> vpns = new SparseArray<>();
         try {
             for (UserInfo user : mUserManager.getUsers()) {
-                VpnConfig cfg = mConnectivityManagerService.getVpnConfig(user.id);
+                VpnConfig cfg = mVpnManagerService.getVpnConfig(user.id);
                 if (cfg == null) {
                     continue;
                 } else if (cfg.legacy) {
                     // Legacy VPNs should do nothing if the network is disconnected. Third-party
                     // VPN warnings need to continue as traffic can still go to the app.
-                    LegacyVpnInfo legacyVpn = mConnectivityManagerService.getLegacyVpnInfo(user.id);
+                    LegacyVpnInfo legacyVpn = mVpnManagerService.getLegacyVpnInfo(user.id);
                     if (legacyVpn == null || legacyVpn.state != LegacyVpnInfo.STATE_CONNECTED) {
                         continue;
                     }
