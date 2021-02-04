@@ -9664,10 +9664,7 @@ public class PackageManagerService extends IPackageManager.Stub
         //       first boot, as they do not have profile data.
         boolean causeFirstBoot = isFirstBoot() || mIsPreNUpgrade;
 
-        // We need to re-extract after a pruned cache, as AoT-ed files will be out of date.
-        boolean causePrunedCache = VMRuntime.didPruneDalvikCache();
-
-        if (!causeUpgrade && !causeFirstBoot && !causePrunedCache) {
+        if (!causeUpgrade && !causeFirstBoot) {
             return;
         }
 
@@ -9684,8 +9681,7 @@ public class PackageManagerService extends IPackageManager.Stub
 
         final long startTime = System.nanoTime();
         final int[] stats = performDexOptUpgrade(pkgs, mIsPreNUpgrade /* showDialog */,
-                    causeFirstBoot ? REASON_FIRST_BOOT : REASON_BOOT,
-                    false /* bootComplete */);
+                    REASON_FIRST_BOOT, false /* bootComplete */);
 
         final int elapsedTimeSeconds =
                 (int) TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - startTime);
