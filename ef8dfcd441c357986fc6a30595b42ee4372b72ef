@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bd717a4_d288d79a",
+        "filename": "core/java/android/content/ContentResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4043,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-04T05:12:48Z",
+      "side": 1,
+      "message": "If that\u0027s their suggestion, I have no objection. You could pitch the AtomicInteger idea to Daulet (on top of the advantage I mentioned above it is also 32 bits so it\u0027s closer to the current code and won\u0027t do a cast on L.4070), maybe he\u0027ll like it as a drop-in solution to avoid using a Libcore class.\nBut I don\u0027t feel strongly either way at all.",
+      "parentUuid": "8539c859_5c8bfd67",
+      "range": {
+        "startLine": 4043,
+        "startChar": 14,
+        "endLine": 4043,
+        "endChar": 22
+      },
+      "revId": "ef8dfcd441c357986fc6a30595b42ee4372b72ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6709a67c_fb2c5ca5",
