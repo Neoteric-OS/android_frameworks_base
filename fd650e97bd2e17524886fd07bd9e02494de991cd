@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e867171_0ba3d0b9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-02-04T19:02:09Z",
+      "side": 1,
+      "message": "Ack. Since these are used inside system_server, does not really matter currently. But, yeah, we should still use the right flags.\n\nDone.",
+      "parentUuid": "29eaef1d_7771ba03",
+      "range": {
+        "startLine": 1031,
+        "startChar": 78,
+        "endLine": 1031,
+        "endChar": 87
+      },
+      "revId": "fd650e97bd2e17524886fd07bd9e02494de991cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ac8bd9e_bfac1d72",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebd0ceb8_aecc7eb9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-02-04T19:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ac8bd9e_bfac1d72",
+      "range": {
+        "startLine": 1291,
+        "startChar": 58,
+        "endLine": 1291,
+        "endChar": 67
+      },
+      "revId": "fd650e97bd2e17524886fd07bd9e02494de991cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61db2d76_be411ad5",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-04T14:52:28Z",
       "side": 1,
       "message": "true ? (though it doesn\u0027t affect the output)\nOr maybe you want to check that it doesn\u0027t in which case you\u0027ll want to write a new test :)",
+      "range": {
+        "startLine": 8324,
+        "startChar": 24,
+        "endLine": 8324,
+        "endChar": 29
+      },
+      "revId": "fd650e97bd2e17524886fd07bd9e02494de991cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c972f5e_2aa9f30f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 8324,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-02-04T19:02:09Z",
+      "side": 1,
+      "message": "Made it true for now.\n\nGating the owner uid based on this flag is still a TBD based on the comment in ConnectivityService.",
+      "parentUuid": "61db2d76_be411ad5",
       "range": {
         "startLine": 8324,
         "startChar": 24,
