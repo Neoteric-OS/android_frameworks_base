@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a46ef4eb_b0d1642d",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-04T04:35:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4a00d09_c191a6a8",
+      "range": {
+        "startLine": 47,
+        "startChar": 45,
+        "endLine": 47,
+        "endChar": 47
+      },
+      "revId": "bc732221481cf958dd4c398714ccdc47a57ae103",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03997d68_df1e9fa1",
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d1973118_420d3104",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-04T04:35:16Z",
+      "side": 1,
+      "message": "Changed in aosp/1569842 to allow for multiple VcnGatewayConnections to be brought up - Thoughts on keeping as-is since it\u0027s changed later in the CL stack?\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/changes/42/1569842/7/tests/vcn/java/com/android/server/vcn/VcnTest.java#93",
+      "parentUuid": "03997d68_df1e9fa1",
+      "range": {
+        "startLine": 82,
+        "startChar": 16,
+        "endLine": 85,
+        "endChar": 33
+      },
+      "revId": "bc732221481cf958dd4c398714ccdc47a57ae103",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c0687969_94b12103",
         "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
         "patchSetId": 12
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-04T02:12:30Z",
       "side": 1,
       "message": "Nit, would suggest breaking this out into a helper method to clarify what it does:\n\ntriggerStartVcnGatewayConnection()",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 50
+      },
+      "revId": "bc732221481cf958dd4c398714ccdc47a57ae103",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52a1735e_d2388be2",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-04T04:35:16Z",
+      "side": 1,
+      "message": "I think this ended up a lot cleaner in aosp/1569842 (link below) - Thoughts?\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/changes/42/1569842/7/tests/vcn/java/com/android/server/vcn/VcnTest.java#119",
+      "parentUuid": "c0687969_94b12103",
       "range": {
         "startLine": 110,
         "startChar": 0,
