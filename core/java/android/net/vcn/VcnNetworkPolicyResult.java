@@ -17,6 +17,7 @@
 package android.net.vcn;
 
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.net.NetworkCapabilities;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -33,6 +34,7 @@ import java.util.Objects;
  *
  * @hide
  */
+@SystemApi
 public final class VcnNetworkPolicyResult implements Parcelable {
     private final boolean mIsTearDownRequested;
     private final NetworkCapabilities mNetworkCapabilities;

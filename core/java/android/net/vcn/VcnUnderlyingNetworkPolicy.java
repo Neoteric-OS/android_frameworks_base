@@ -28,7 +28,20 @@ import java.util.Objects;
  *
  * <p>Transports that are bringing up networks capable of acting as a VCN's underlying network
  * should query for policy state upon major capability changes (e.g. changing of TRUSTED bit), and
- * when prompted by VcnManagementService via VcnUnderlyingNetworkPolicyListener.
+ * when prompted via {@link VcnManager.VcnUnderlyingNetworkPolicyListener}.
+ *
+ * <p>VcnUnderlyingNetworkPolicy exists because it is useful to return two values for {@link
+ * VcnManager#getUnderlyingNetworkPolicy(NetworkCapabilities, LinkProperties)}:
+ *
+ * <ul>
+ *   <li>the {@link VcnManager}-mandated {@link NetworkCapabilities} for the caller, and
+ *   <li>whether the caller must restart this {@link android.net.Network}
+ * </ul>
+ *
+ * <p>By combining these signals into a single return object, callers are able to use a single
+ * Binder call to determine whether they must restart and their NetworkCapabilities if a restart is
+ * not required. This structure also gives flexibility to remove the polled Binder call entirely at
+ * some point in the future.
  *
  * @hide
  */
@@ -51,8 +64,10 @@ public final class VcnUnderlyingNetworkPolicy implements Parcelable {
     }
 
     /**
-     * Returns whether this Carrier VCN policy policy indicates that the underlying Network should
-     * be torn down.
+     * Returns whether this Carrier VCN policy indicates that the underlying Network should be torn
+     * down.
+     *
+     * @hide
      */
     public boolean isTeardownRequested() {
         return mIsTearDownRequested;
@@ -61,6 +76,8 @@ public final class VcnUnderlyingNetworkPolicy implements Parcelable {
     /**
      * Returns the NetworkCapabilities with Carrier VCN policy bits merged into the provided
      * capabilities.
+     *
+     * @hide
      */
     @NonNull
     public NetworkCapabilities getMergedNetworkCapabilities() {
