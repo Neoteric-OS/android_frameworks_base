@@ -16,6 +16,24 @@
       "message": "not sure what the convention here is but i\u0027d just follow the pattern above and avoid wildcards.  there should only be the one file:\ncom_android_server_am_BatteryStatsService.cpp",
       "revId": "060ece82d7bb82f5d84a1e11965cb2c0feffca23",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f7a8ddf_7b6c9c07",
+        "filename": "services/core/jni/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1409782
+      },
+      "writtenOn": "2021-02-04T01:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d8d0c39_ad1b51eb",
+      "revId": "060ece82d7bb82f5d84a1e11965cb2c0feffca23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
