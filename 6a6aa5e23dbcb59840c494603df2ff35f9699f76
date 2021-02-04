@@ -16,6 +16,23 @@
       "message": "Changes to NetworkAgent.java LGTM.",
       "revId": "6a6aa5e23dbcb59840c494603df2ff35f9699f76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89dcab9b_0ad2d05b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1099348
+      },
+      "writtenOn": "2021-02-04T15:46:06Z",
+      "side": 1,
+      "message": "LSC approval",
+      "revId": "6a6aa5e23dbcb59840c494603df2ff35f9699f76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
