@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c206b52d_fc785e18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1005967
+      },
+      "writtenOn": "2021-02-04T23:19:05Z",
+      "side": 1,
+      "message": "I wonder if we should have another zygote flag value to keep the current setting.",
+      "revId": "e0e1317a326db41a76c4bc69b9e65f5f3ea94b29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f0d2aae_d8f56b0a",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2539,
+      "author": {
+        "id": 1005967
+      },
+      "writtenOn": "2021-02-04T23:19:05Z",
+      "side": 1,
+      "message": "this should not happen in practice, but you can move the PR_TAGGED_ADDR_ENABLE check outside of this block to be on the safe side, and also simplify the logic a little.",
+      "revId": "e0e1317a326db41a76c4bc69b9e65f5f3ea94b29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
