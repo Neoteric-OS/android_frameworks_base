@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4a00d09_c191a6a8",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T02:12:30Z",
+      "side": 1,
+      "message": "Suggest using 0 to simulate an \"Unsatisfied NetworkRequest\" to ensure bringup, regardless of what VCN score we end up settling on.",
+      "range": {
+        "startLine": 47,
+        "startChar": 45,
+        "endLine": 47,
+        "endChar": 47
+      },
+      "revId": "bc732221481cf958dd4c398714ccdc47a57ae103",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03997d68_df1e9fa1",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T02:12:30Z",
+      "side": 1,
+      "message": "Nit, you can also use VcnConfigTest.buildTestConfig()",
+      "range": {
+        "startLine": 82,
+        "startChar": 16,
+        "endLine": 85,
+        "endChar": 33
+      },
+      "revId": "bc732221481cf958dd4c398714ccdc47a57ae103",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0687969_94b12103",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T02:12:30Z",
+      "side": 1,
+      "message": "Nit, would suggest breaking this out into a helper method to clarify what it does:\n\ntriggerStartVcnGatewayConnection()",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 50
+      },
+      "revId": "bc732221481cf958dd4c398714ccdc47a57ae103",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
