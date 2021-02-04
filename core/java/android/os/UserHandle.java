@@ -295,6 +295,15 @@ public final class UserHandle implements Parcelable {
     }
 
     /**
+     * Refer to {@link #getUid(UserIdInt, AppIdInt)}.
+     * @hide
+     */
+    @SystemApi
+    public static int getUid(@NonNull UserHandle userHandle, @AppIdInt int appId) {
+        return getUid(userHandle.getIdentifier(), appId);
+    }
+
+    /**
      * Returns the app id (or base uid) for a given uid, stripping out the user id from it.
      * @hide
      */
