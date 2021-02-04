@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8539c859_5c8bfd67",
+        "filename": "core/java/android/content/ContentResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4043,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2021-02-04T05:04:18Z",
+      "side": 1,
+      "message": "This change was proposed/made by Libcore team. I checked how it is being used within the code and seems like Int64Ref/Int32Ref has similar properties / methods thus easily interchangeable.\n\nAlso this initial change was proposed by Daulet in aosp/1558550 (which I took over and created this CL).\n\nSo what it is going to be?",
+      "parentUuid": "482749ba_daf9643e",
+      "range": {
+        "startLine": 4043,
+        "startChar": 14,
+        "endLine": 4043,
+        "endChar": 22
+      },
+      "revId": "ef8dfcd441c357986fc6a30595b42ee4372b72ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6709a67c_fb2c5ca5",
         "filename": "core/java/android/net/LocalSocketImpl.java",
         "patchSetId": 4
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-04T03:53:56Z",
       "side": 1,
       "message": "Just return here and remove the local",
+      "range": {
+        "startLine": 70,
+        "startChar": 16,
+        "endLine": 70,
+        "endChar": 21
+      },
+      "revId": "ef8dfcd441c357986fc6a30595b42ee4372b72ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70519951_d6e6bcc2",
+        "filename": "core/java/android/net/LocalSocketImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2021-02-04T05:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6709a67c_fb2c5ca5",
       "range": {
         "startLine": 70,
         "startChar": 16,
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-04T03:53:56Z",
       "side": 1,
       "message": "final int result \u003d Os.ioctlInt\n\nLikewise below",
+      "range": {
+        "startLine": 309,
+        "startChar": 8,
+        "endLine": 309,
+        "endChar": 14
+      },
+      "revId": "ef8dfcd441c357986fc6a30595b42ee4372b72ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67038bb4_c015f26e",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2021-02-04T05:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20475e49_106f3bcc",
       "range": {
         "startLine": 309,
         "startChar": 8,
