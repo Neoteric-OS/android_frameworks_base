@@ -22,7 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.net.IConnectivityManager;
+import android.net.IVpnManager;
 import android.net.VpnManager;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -48,7 +48,7 @@ public class ConfirmDialog extends AlertActivity
 
     private String mPackage;
 
-    private IConnectivityManager mService;
+    private IVpnManager mService;
 
     public ConfirmDialog() {
         this(VpnManager.TYPE_VPN_SERVICE);
@@ -62,8 +62,8 @@ public class ConfirmDialog extends AlertActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPackage = getCallingPackage();
-        mService = IConnectivityManager.Stub.asInterface(
-                ServiceManager.getService(Context.CONNECTIVITY_SERVICE));
+        mService = IVpnManager.Stub.asInterface(
+                ServiceManager.getService(Context.VPN_MANAGER_SERVICE));
 
         if (prepareVpn()) {
             setResult(RESULT_OK);
