@@ -19,6 +19,7 @@ import static java.util.Objects.requireNonNull;
 
 import android.annotation.NonNull;
 import android.annotation.RequiresPermission;
+import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.content.Context;
 import android.net.LinkProperties;
@@ -65,10 +66,12 @@ import java.util.concurrent.Executor;
  *
  * @hide
  */
+@SystemApi
 @SystemService(Context.VCN_MANAGEMENT_SERVICE)
 public class VcnManager {
     @NonNull private static final String TAG = VcnManager.class.getSimpleName();
 
+    /** @hide */
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     public static final Map<
                     VcnUnderlyingNetworkPolicyListener, VcnUnderlyingNetworkPolicyListenerBinder>
@@ -171,6 +174,7 @@ public class VcnManager {
      *
      * @hide
      */
+    @SystemApi
     public interface VcnUnderlyingNetworkPolicyListener {
         /**
          * Notifies the implementation that the VCN's underlying Network policy has changed.
@@ -192,6 +196,7 @@ public class VcnManager {
      *     already registered
      * @hide
      */
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
     public void addVcnUnderlyingNetworkPolicyListener(
             @NonNull Executor executor, @NonNull VcnUnderlyingNetworkPolicyListener listener) {
@@ -221,6 +226,7 @@ public class VcnManager {
      * @param listener the VcnUnderlyingNetworkPolicyListener that will be removed
      * @hide
      */
+    @SystemApi
     public void removeVcnUnderlyingNetworkPolicyListener(
             @NonNull VcnUnderlyingNetworkPolicyListener listener) {
         requireNonNull(listener, "listener must not be null");
@@ -254,6 +260,7 @@ public class VcnManager {
      * @return the VcnUnderlyingNetworkPolicy to be used for this Network.
      * @hide
      */
+    @SystemApi
     @NonNull
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
     public VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(
@@ -360,7 +367,8 @@ public class VcnManager {
      *
      * @hide
      */
-    private static class VcnUnderlyingNetworkPolicyListenerBinder
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public static class VcnUnderlyingNetworkPolicyListenerBinder
             extends IVcnUnderlyingNetworkPolicyListener.Stub {
         @NonNull private final Executor mExecutor;
         @NonNull private final VcnUnderlyingNetworkPolicyListener mListener;
