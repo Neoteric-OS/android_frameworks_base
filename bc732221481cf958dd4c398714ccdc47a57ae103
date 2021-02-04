@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3227f47_25e23230",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T05:19:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d1973118_420d3104",
+      "range": {
+        "startLine": 82,
+        "startChar": 16,
+        "endLine": 85,
+        "endChar": 33
+      },
+      "revId": "bc732221481cf958dd4c398714ccdc47a57ae103",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0687969_94b12103",
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "I think this ended up a lot cleaner in aosp/1569842 (link below) - Thoughts?\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/changes/42/1569842/7/tests/vcn/java/com/android/server/vcn/VcnTest.java#119",
       "parentUuid": "c0687969_94b12103",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 50
+      },
+      "revId": "bc732221481cf958dd4c398714ccdc47a57ae103",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61f36463_cddf3be4",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T05:19:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "52a1735e_d2388be2",
       "range": {
         "startLine": 110,
         "startChar": 0,
