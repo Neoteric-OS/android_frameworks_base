@@ -21,6 +21,7 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
+import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.content.Context;
 import android.net.LinkProperties;
@@ -69,6 +70,7 @@ import java.util.concurrent.Executor;
  *
  * @hide
  */
+@SystemApi
 @SystemService(Context.VCN_MANAGEMENT_SERVICE)
 public class VcnManager {
     @NonNull private static final String TAG = VcnManager.class.getSimpleName();
@@ -180,19 +182,20 @@ public class VcnManager {
         }
     }
 
-    // TODO: make VcnUnderlyingNetworkPolicyListener @SystemApi
     /**
      * VcnUnderlyingNetworkPolicyListener is the interface through which internal system components
      * can register to receive updates for VCN-underlying Network policies from the System Server.
      *
      * @hide
      */
+    @SystemApi
     public interface VcnUnderlyingNetworkPolicyListener {
         /**
          * Notifies the implementation that the VCN's underlying Network policy has changed.
          *
          * <p>After receiving this callback, implementations MUST poll VcnManager for the updated
-         * VcnUnderlyingNetworkPolicy via VcnManager#getUnderlyingNetworkPolicy.
+         * VcnUnderlyingNetworkPolicy via {@link
+         * VcnManager#getUnderlyingNetworkPolicy(NetworkCapabilities, LinkProperties)}.
          */
         void onPolicyChanged();
     }
@@ -208,6 +211,7 @@ public class VcnManager {
      *     already registered
      * @hide
      */
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
     public void addVcnUnderlyingNetworkPolicyListener(
             @NonNull Executor executor, @NonNull VcnUnderlyingNetworkPolicyListener listener) {
@@ -237,6 +241,7 @@ public class VcnManager {
      * @param listener the VcnUnderlyingNetworkPolicyListener that will be removed
      * @hide
      */
+    @SystemApi
     public void removeVcnUnderlyingNetworkPolicyListener(
             @NonNull VcnUnderlyingNetworkPolicyListener listener) {
         requireNonNull(listener, "listener must not be null");
@@ -270,6 +275,7 @@ public class VcnManager {
      * @return the VcnUnderlyingNetworkPolicy to be used for this Network.
      * @hide
      */
+    @SystemApi
     @NonNull
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
     public VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(
@@ -435,7 +441,8 @@ public class VcnManager {
      *
      * @hide
      */
-    private static class VcnUnderlyingNetworkPolicyListenerBinder
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public static class VcnUnderlyingNetworkPolicyListenerBinder
             extends IVcnUnderlyingNetworkPolicyListener.Stub {
         @NonNull private final Executor mExecutor;
         @NonNull private final VcnUnderlyingNetworkPolicyListener mListener;
