@@ -16,6 +16,23 @@
       "message": "I don\u0027t think this is something we want to expose directly but deferring to Amith since he\u0027s the knower of all things multi-user.",
       "revId": "9efc081e3553d7a17f9d8a18f43b4f3c2fdaeebc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50c3abdd_e438c3ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-04T21:53:01Z",
+      "side": 1,
+      "message": "Yes, I also strongly agree that this is an implementation detail that should not be exposed.\n\nIf you need to modify/combine UIDs and user IDs, I think we\u0027d be open to considering new tailored UserHandle methods instead.",
+      "revId": "9efc081e3553d7a17f9d8a18f43b4f3c2fdaeebc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
