@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e5f8f03_71e3e18b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-04T08:19:50Z",
+      "side": 1,
+      "message": "I can think of actually one: on first-boot, it may be that no packages have been optimized (eg preopt at build time was disabled), and that\u0027s a different situation than OTA where we have odex files in /data that could be up-to-date.\n\nDo we want to include another pm.dexopt.post-ota reason?",
+      "range": {
+        "startLine": 9,
+        "startChar": 36,
+        "endLine": 9,
+        "endChar": 53
+      },
+      "revId": "6b3e76a26cd67c2b3f454e43e35e81f8b9b366e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
