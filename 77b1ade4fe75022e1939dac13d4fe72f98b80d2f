@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e89f82d_baef2dbb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2021-02-04T19:10:29Z",
+      "side": 1,
+      "message": "Does this mean all tests will be able to link again the MODULE_LIBRARIES API? I guess that\u0027s ok?\n\nWe should get a second opinion :)",
+      "revId": "77b1ade4fe75022e1939dac13d4fe72f98b80d2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
