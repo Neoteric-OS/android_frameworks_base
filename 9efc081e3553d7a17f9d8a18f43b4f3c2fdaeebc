@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b8f1e8f_9a8ab002",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-02-04T16:02:55Z",
+      "side": 1,
+      "message": "I don\u0027t think this is something we want to expose directly but deferring to Amith since he\u0027s the knower of all things multi-user.",
+      "revId": "9efc081e3553d7a17f9d8a18f43b4f3c2fdaeebc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
