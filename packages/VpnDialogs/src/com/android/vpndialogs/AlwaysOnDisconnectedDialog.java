@@ -24,7 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.IConnectivityManager;
+import android.net.IVpnManager;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -45,7 +45,7 @@ public class AlwaysOnDisconnectedDialog extends AlertActivity
 
     private static final String TAG = "VpnDisconnected";
 
-    private IConnectivityManager mService;
+    private IVpnManager mService;
     private int mUserId;
     private String mVpnPackage;
 
@@ -53,8 +53,8 @@ public class AlwaysOnDisconnectedDialog extends AlertActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mService = IConnectivityManager.Stub.asInterface(
-                ServiceManager.getService(Context.CONNECTIVITY_SERVICE));
+        mService = IVpnManager.Stub.asInterface(
+                ServiceManager.getService(Context.VPN_MANAGER_SERVICE));
         mUserId = UserHandle.myUserId();
         mVpnPackage = getAlwaysOnVpnPackage();
         if (mVpnPackage == null) {

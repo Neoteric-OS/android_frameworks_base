@@ -18,7 +18,7 @@ package com.android.vpndialogs;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.net.IConnectivityManager;
+import android.net.IVpnManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -41,7 +41,7 @@ public class ManageDialog extends AlertActivity implements
 
     private VpnConfig mConfig;
 
-    private IConnectivityManager mService;
+    private IVpnManager mService;
 
     private TextView mDuration;
     private TextView mDataTransmitted;
@@ -56,8 +56,8 @@ public class ManageDialog extends AlertActivity implements
 
         try {
 
-            mService = IConnectivityManager.Stub.asInterface(
-                    ServiceManager.getService(Context.CONNECTIVITY_SERVICE));
+            mService = IVpnManager.Stub.asInterface(
+                    ServiceManager.getService(Context.VPN_MANAGER_SERVICE));
 
             mConfig = mService.getVpnConfig(UserHandle.myUserId());
 
