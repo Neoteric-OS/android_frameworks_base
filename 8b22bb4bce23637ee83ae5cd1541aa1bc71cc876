@@ -22,6 +22,30 @@
       },
       "revId": "8b22bb4bce23637ee83ae5cd1541aa1bc71cc876",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67516855_8051e9cc",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1995,
+      "author": {
+        "id": 1570596
+      },
+      "writtenOn": "2021-02-04T01:02:35Z",
+      "side": 1,
+      "message": "I did it in another Telecomm cl in the same topic. This is only a double check to make sure the default value is true.",
+      "parentUuid": "4b492204_97baebff",
+      "range": {
+        "startLine": 1995,
+        "startChar": 29,
+        "endLine": 1995,
+        "endChar": 74
+      },
+      "revId": "8b22bb4bce23637ee83ae5cd1541aa1bc71cc876",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
