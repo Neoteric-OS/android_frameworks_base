@@ -1,3 +1,12 @@
+package {
+    // http://go/android-license-faq
+    // A large-scale-change added 'default_applicable_licenses' to import
+    // the below license kinds from "frameworks_base_license":
+    //   SPDX-license-identifier-Apache-2.0
+    //   SPDX-license-identifier-MIT
+    default_applicable_licenses: ["frameworks_base_license"],
+}
+
 java_library_host {
     name: "preload",
     srcs: [

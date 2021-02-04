@@ -1,6 +1,16 @@
 // Copyright 2011 The Android Open Source Project
 //
 
+package {
+    // http://go/android-license-faq
+    // A large-scale-change added 'default_applicable_licenses' to import
+    // the below license kinds from "frameworks_base_license":
+    //   SPDX-license-identifier-Apache-2.0
+    //   SPDX-license-identifier-MIT
+    //   SPDX-license-identifier-Unicode-DFS
+    default_applicable_licenses: ["frameworks_base_license"],
+}
+
 sh_binary {
     name: "settings",
     src: "settings",
