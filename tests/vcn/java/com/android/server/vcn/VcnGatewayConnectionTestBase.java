@@ -22,6 +22,7 @@ import static com.android.server.vcn.VcnTestUtils.setupIpSecManager;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -97,6 +98,7 @@ public class VcnGatewayConnectionTestBase {
     @NonNull protected final VcnWakeLock mWakeLock;
     @NonNull protected final WakeupMessage mTeardownTimeoutAlarm;
     @NonNull protected final WakeupMessage mDisconnectRequestAlarm;
+    @NonNull protected final WakeupMessage mSafemodeTimeoutAlarm;
 
     @NonNull protected final IpSecService mIpSecSvc;
 
@@ -115,6 +117,7 @@ public class VcnGatewayConnectionTestBase {
         mWakeLock = mock(VcnWakeLock.class);
         mTeardownTimeoutAlarm = mock(WakeupMessage.class);
         mDisconnectRequestAlarm = mock(WakeupMessage.class);
+        mSafemodeTimeoutAlarm = mock(WakeupMessage.class);
 
         mIpSecSvc = mock(IpSecService.class);
         setupIpSecManager(mContext, mIpSecSvc);
@@ -146,6 +149,13 @@ public class VcnGatewayConnectionTestBase {
                         eq(mVcnContext),
                         any(),
                         eq(VcnGatewayConnection.DISCONNECT_REQUEST_ALARM),
+                        any());
+        doReturn(mSafemodeTimeoutAlarm)
+                .when(mDeps)
+                .newWakeupMessage(
+                        eq(mVcnContext),
+                        any(),
+                        eq(VcnGatewayConnection.SAFEMODE_TIMEOUT_ALARM),
                         any());
         doReturn(ELAPSED_REAL_TIME).when(mDeps).getElapsedRealTime();
     }
@@ -213,7 +223,7 @@ public class VcnGatewayConnectionTestBase {
         ArgumentCaptor<Runnable> runnableCaptor = ArgumentCaptor.forClass(Runnable.class);
         verify(mDeps).newWakeupMessage(eq(mVcnContext), any(), eq(tag), runnableCaptor.capture());
 
-        verify(mDeps).getElapsedRealTime();
+        verify(mDeps, atLeastOnce()).getElapsedRealTime();
         verify(msg).schedule(ELAPSED_REAL_TIME + delayInMillis);
         verify(msg, expectCanceled ? times(1) : never()).cancel();
 
@@ -234,6 +244,15 @@ public class VcnGatewayConnectionTestBase {
                 mDisconnectRequestAlarm,
                 TimeUnit.SECONDS.toMillis(
                         VcnGatewayConnection.NETWORK_LOSS_DISCONNECT_TIMEOUT_SECONDS),
+                expectCanceled);
+    }
+
+    protected Runnable verifySafemodeTimeoutAlarm(boolean expectCanceled) {
+        return verifyWakeupMessageCreatedAndScheduled(
+                VcnGatewayConnection.SAFEMODE_TIMEOUT_ALARM,
+                mSafemodeTimeoutAlarm,
+                TimeUnit.SECONDS.toMillis(
+                        VcnGatewayConnection.SAFEMODE_TIMEOUT_SECONDS),
                 expectCanceled);
     }
 }
