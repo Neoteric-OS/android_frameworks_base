@@ -18,8 +18,11 @@ package android.net;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.net.vcn.VcnNetworkSpecifier;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.android.internal.util.ArrayUtils;
 
 /**
  * NetworkSpecifier object for cellular network request. Apps should use the
@@ -102,7 +105,14 @@ public final class TelephonyNetworkSpecifier extends NetworkSpecifier implements
         // Although the only caller, NetworkCapabilities, already handled the case of
         // MatchAllNetworkSpecifier, we do it again here in case the API will be used by others.
         // TODO(b/154959809): consider implementing bi-directional specifier instead.
-        return equals(other) || other instanceof MatchAllNetworkSpecifier;
+
+        final boolean isSatisfiedByVcnNetworkSpecifier =
+                other instanceof VcnNetworkSpecifier
+                        && ArrayUtils.contains(((VcnNetworkSpecifier) other).getSubIds(), mSubId);
+
+        return equals(other)
+                || other instanceof MatchAllNetworkSpecifier
+                || isSatisfiedByVcnNetworkSpecifier;
     }
 
 
