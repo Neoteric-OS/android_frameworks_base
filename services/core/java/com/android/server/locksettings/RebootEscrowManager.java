@@ -21,6 +21,7 @@ import android.annotation.NonNull;
 import android.annotation.UserIdInt;
 import android.content.Context;
 import android.content.pm.UserInfo;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.os.UserManager;
 import android.provider.DeviceConfig;
@@ -74,6 +75,10 @@ class RebootEscrowManager {
      * getting to the escrow restore code.
      */
     private static final int BOOT_COUNT_TOLERANCE = 5;
+
+    private static final int DEFAULT_UNWRAP_RETRY_COUNT = 3;
+
+    private static final int DEFAULT_UNWRAP_RETRY_INTERVAL_SECONDS = 30;
 
     /**
      * Logs events for later debugging in bugreports.
@@ -199,7 +204,18 @@ class RebootEscrowManager {
         mKeyStoreManager = injector.getKeyStoreManager();
     }
 
-    void loadRebootEscrowDataIfAvailable() {
+    private void onGetRebootEscrowKeyFailed(List<UserInfo> users) {
+        Slog.w(TAG, "Had reboot escrow data for users, but no key; removing escrow storage.");
+        for (UserInfo user : users) {
+            mStorage.removeRebootEscrow(user.id);
+        }
+
+        // Clear the old key in keystore.
+        mKeyStoreManager.clearKeyStoreEncryptionKey();
+        onEscrowRestoreComplete(false);
+    }
+
+    void loadRebootEscrowDataIfAvailable(Handler retryHandler) {
         List<UserInfo> users = mUserManager.getUsers();
         List<UserInfo> rebootEscrowUsers = new ArrayList<>();
         for (UserInfo user : users) {
@@ -212,17 +228,48 @@ class RebootEscrowManager {
             return;
         }
 
+        loadRebootEscrowDataWithRetry(retryHandler, 0, users, rebootEscrowUsers);
+    }
+
+    void scheduleLoadRebootEscrowDataRetry(Handler retryHandler, int attemptNumber,
+            List<UserInfo> users, List<UserInfo> rebootEscrowUsers) {
+        final int retryLimit = DeviceConfig.getInt(DeviceConfig.NAMESPACE_OTA,
+                "server_based_unwrap_retry_count", DEFAULT_UNWRAP_RETRY_COUNT);
+        final int retryInterval = DeviceConfig.getInt(DeviceConfig.NAMESPACE_OTA,
+                "server_based_unwrap_retry_interval_seconds",
+                DEFAULT_UNWRAP_RETRY_INTERVAL_SECONDS);
+
+        if (retryHandler != null && attemptNumber < retryLimit) {
+            Slog.i(TAG, "Scheduling loadRebootEscrowData retry number: " + attemptNumber);
+
+            retryHandler.postDelayed(
+                    () -> loadRebootEscrowDataWithRetry(retryHandler, attemptNumber, users,
+                            rebootEscrowUsers),
+                    retryInterval * 1000);
+            return;
+        }
+
+        Slog.w(TAG, "Failed to load reboot escrow data after " + attemptNumber + " attempts");
+        onGetRebootEscrowKeyFailed(users);
+    }
+
+    void loadRebootEscrowDataWithRetry(Handler retryHandler, int attemptNumber,
+            List<UserInfo> users, List<UserInfo> rebootEscrowUsers) {
         // Fetch the key from keystore to decrypt the escrow data & escrow key; this key is
         // generated before reboot. Note that we will clear the escrow key even if the keystore key
         // is null.
         SecretKey kk = mKeyStoreManager.getKeyStoreEncryptionKey();
-        RebootEscrowKey escrowKey = getAndClearRebootEscrowKey(kk);
+        RebootEscrowKey escrowKey;
+        try {
+            escrowKey = getAndClearRebootEscrowKey(kk);
+        } catch (IOException e) {
+            scheduleLoadRebootEscrowDataRetry(retryHandler, attemptNumber + 1, users,
+                    rebootEscrowUsers);
+            return;
+        }
+
         if (kk == null || escrowKey == null) {
-            Slog.w(TAG, "Had reboot escrow data for users, but no key; removing escrow storage.");
-            for (UserInfo user : users) {
-                mStorage.removeRebootEscrow(user.id);
-            }
-            onEscrowRestoreComplete(false);
+            onGetRebootEscrowKeyFailed(users);
             return;
         }
 
@@ -249,7 +296,7 @@ class RebootEscrowManager {
         }
     }
 
-    private RebootEscrowKey getAndClearRebootEscrowKey(SecretKey kk) {
+    private RebootEscrowKey getAndClearRebootEscrowKey(SecretKey kk) throws IOException {
         RebootEscrowProviderInterface rebootEscrowProvider = mInjector.getRebootEscrowProvider();
         if (rebootEscrowProvider == null) {
             Slog.w(TAG,
