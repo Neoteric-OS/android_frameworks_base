@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb01a3ef_67b95c61",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 6006,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-05T01:54:22Z",
+      "side": 1,
+      "message": "getUserPortalUrlSource ? Since setUserPortalUrl has a source argument",
+      "range": {
+        "startLine": 6006,
+        "startChar": 22,
+        "endLine": 6006,
+        "endChar": 52
+      },
+      "revId": "39eb75cc1fc65f75a2b19823e7fa74a284917a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d9401a0_5317a028",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 6028,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-05T01:54:22Z",
+      "side": 1,
+      "message": "I\u0027m thinking maybe this is not necessary, since you can do setUserPortalUrl(url, PASSPOINT)",
+      "range": {
+        "startLine": 6028,
+        "startChar": 65,
+        "endLine": 6028,
+        "endChar": 89
+      },
+      "revId": "39eb75cc1fc65f75a2b19823e7fa74a284917a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72514a5d_f73bcce2",
+        "filename": "packages/Connectivity/framework/src/android/net/CaptivePortalData.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-05T01:54:22Z",
+      "side": 1,
+      "message": "Source should always be PASSPOINT here I guess ?\nBut I think just having the method below would be enough",
+      "range": {
+        "startLine": 241,
+        "startChar": 79,
+        "endLine": 241,
+        "endChar": 85
+      },
+      "revId": "39eb75cc1fc65f75a2b19823e7fa74a284917a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3363627_cb225349",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkNotificationManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-05T01:54:22Z",
+      "side": 1,
+      "message": "Would it be possible to use the portal data from the LinkProperties ? It would be better to avoid limiting the feature to the NetworkAgent data (in case we add support in the capport data, which could be done with a mainline update)",
+      "range": {
+        "startLine": 165,
+        "startChar": 46,
+        "endLine": 165,
+        "endChar": 68
+      },
+      "revId": "39eb75cc1fc65f75a2b19823e7fa74a284917a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1872df7_9d412ef8",
+        "filename": "tests/net/common/java/android/net/CaptivePortalDataTest.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-05T01:54:22Z",
+      "side": 1,
+      "message": "Also test parceling with dataFromPasspoint",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "39eb75cc1fc65f75a2b19823e7fa74a284917a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3521e23_dbbdc958",
+        "filename": "tests/net/common/java/android/net/CaptivePortalDataTest.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-05T01:54:22Z",
+      "side": 1,
+      "message": "Can you also add tests for the new getters ?\nAs trivial as it seems, mainline releases require 100% API coverage so...",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 5
+      },
+      "revId": "39eb75cc1fc65f75a2b19823e7fa74a284917a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
