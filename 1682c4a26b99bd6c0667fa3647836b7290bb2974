@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2c100455_e65848c0",
+        "filename": "core/java/android/app/NativeTombstoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-05T22:51:16Z",
+      "side": 1,
+      "message": "It might be Okay as the Android permission model is based on UID. So if they are two apps but sharing the same UID, it should be fine. And anyway, they\u0027ll be able to filter the unnecessary ones with the process name etc.",
+      "parentUuid": "25e2ed5b_dc5a4252",
+      "revId": "1682c4a26b99bd6c0667fa3647836b7290bb2974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8d55f6d5_f93d77e9",
         "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
         "patchSetId": 1
