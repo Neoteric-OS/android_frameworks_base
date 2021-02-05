@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64a93ec4_c3496f94",
+        "filename": "core/java/android/print/PrintAttributes.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2021-02-05T19:12:33Z",
+      "side": 1,
+      "message": "These are new APIs. You need to do \"make update-api -j\" to update the API definitions which should be checked in with this CL.",
+      "range": {
+        "startLine": 639,
+        "startChar": 38,
+        "endLine": 639,
+        "endChar": 44
+      },
+      "revId": "d02d6a4f2ebb2f0511e189309338ae72e112c4c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
