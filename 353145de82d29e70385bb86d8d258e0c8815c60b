@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22e6870c_6bf97356",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T06:33:52Z",
+      "side": 1,
+      "message": "Is this needed somewhere?\nCan you help to point out?",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 57
+      },
+      "revId": "353145de82d29e70385bb86d8d258e0c8815c60b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
