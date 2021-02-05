@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1012b771_93065873",
+        "filename": "core/java/android/app/NativeTombstoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-05T22:38:23Z",
+      "side": 1,
+      "message": "Maybe not to change the getHistoricalProcessExitReasons(). \n\nAs there are fields \u0027pid/uid\u0027 in the tombstone proto, we may associate it with each ApplicationExitInfo record. \n\nSo the procedure would be like this: an app process crashed and restarted. The system_server gets notified and checks if there is a tombstone file for that crash, via the NativeTombstoneManager API, searches the returned tombstone files and compares the pid/uid, and then creates the ApplicationExitInfo record internally. The subsequent app process will be able to call getHistoricalProcessExitReasons() to get the most recent crash record, and then call ApplicationExitInfo.getTraceInputStream(), which will return the FileDescriptor that NativeTombstoneManager holds.",
+      "parentUuid": "52dc9eaf_10f10720",
+      "revId": "1682c4a26b99bd6c0667fa3647836b7290bb2974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8d55f6d5_f93d77e9",
         "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
         "patchSetId": 1
@@ -108,6 +126,30 @@
       "side": 1,
       "message": "Do we actually want system apps to be accessing their own tombstones? We already have crash reporting infrastructure available in the platform.",
       "parentUuid": "8d55f6d5_f93d77e9",
+      "range": {
+        "startLine": 258,
+        "startChar": 13,
+        "endLine": 258,
+        "endChar": 41
+      },
+      "revId": "1682c4a26b99bd6c0667fa3647836b7290bb2974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0702bc5_168f0971",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-05T22:38:23Z",
+      "side": 1,
+      "message": "Hm, yeah the existing infrastructure may be sufficient..",
+      "parentUuid": "e0b542ff_566aed1f",
       "range": {
         "startLine": 258,
         "startChar": 13,
