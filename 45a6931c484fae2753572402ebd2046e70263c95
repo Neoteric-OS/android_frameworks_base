@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a6c31aa_3e468243",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T10:43:06Z",
+      "side": 1,
+      "message": "LGTM. Feel free to address comments in a follow-up.",
+      "revId": "45a6931c484fae2753572402ebd2046e70263c95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a71d39e_65d17a25",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T10:43:06Z",
+      "side": 1,
+      "message": "Do you need these? If you don\u0027t do anything, then asUserContext will just delegate those method calls to mContext. And in the latest code, lines 218 and 219 already do both of these:\n\nhttps://source.corp.google.com/aosp-master/frameworks/base/tests/net/java/com/android/server/connectivity/VpnTest.java;l\u003d218\n\n        when(mContext.getSystemServiceName(UserManager.class))\n                .thenReturn(Context.USER_SERVICE);\n        when(mContext.getSystemService(eq(Context.USER_SERVICE))).thenReturn(mUserManager);\n\n\nIf you cherry-pick aosp/1570920 (or sync) and remove these two lines, does the test pass? If so, remove them.\n\nDoesn\u0027t need to be in this CL.",
+      "range": {
+        "startLine": 1142,
+        "startChar": 0,
+        "endLine": 1145,
+        "endChar": 42
+      },
+      "revId": "45a6931c484fae2753572402ebd2046e70263c95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
