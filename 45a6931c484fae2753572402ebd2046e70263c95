@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "035567a8_74462d8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T10:44:59Z",
+      "side": 1,
+      "message": "Also, can you fix these lines that I just merged today?\n\n        // TODO(b/175883995): once these tests have been updated for the changes to the UserManager\n        // API, remove this ad-hoc setup code and use setMockedUsers(primaryUser) again.\n        // setMockedUsers(primaryUser);\n        final ArrayList\u003cUserInfo\u003e users \u003d new ArrayList\u003c\u003e();\n        users.add(primaryUser);\n        when(mUserManager.getAliveUsers()).thenReturn(users);\n        when(mUserManager.getUserInfo(primaryUser.id)).thenReturn(primaryUser);\n        when(mUserManager.canHaveRestrictedProfile()).thenReturn(false);\n\nyou can replace all of them with just:\n\n        setMockedUsers(primaryUser);\n\nAgain feel free to do that in a follow-up CL.",
+      "revId": "45a6931c484fae2753572402ebd2046e70263c95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a71d39e_65d17a25",
