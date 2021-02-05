@@ -33,6 +33,24 @@
       "message": "Yes, I also strongly agree that this is an implementation detail that should not be exposed.\n\nIf you need to modify/combine UIDs and user IDs, I think we\u0027d be open to considering new tailored UserHandle methods instead.",
       "revId": "9efc081e3553d7a17f9d8a18f43b4f3c2fdaeebc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe6f31c3_12e7cebd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-05T02:06:22Z",
+      "side": 1,
+      "message": "I see.\nI uploaded another commit(aosp/1574869) to create a new method.\nSee if it works for you.",
+      "parentUuid": "50c3abdd_e438c3ef",
+      "revId": "9efc081e3553d7a17f9d8a18f43b4f3c2fdaeebc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
