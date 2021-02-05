@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51b7fb72_a3865605",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 6006,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-02-05T03:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb01a3ef_67b95c61",
+      "range": {
+        "startLine": 6006,
+        "startChar": 22,
+        "endLine": 6006,
+        "endChar": 52
+      },
+      "revId": "39eb75cc1fc65f75a2b19823e7fa74a284917a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d9401a0_5317a028",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-05T01:54:22Z",
       "side": 1,
       "message": "I\u0027m thinking maybe this is not necessary, since you can do setUserPortalUrl(url, PASSPOINT)",
+      "range": {
+        "startLine": 6028,
+        "startChar": 65,
+        "endLine": 6028,
+        "endChar": 89
+      },
+      "revId": "39eb75cc1fc65f75a2b19823e7fa74a284917a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d35f1539_a8257cf0",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 6028,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-02-05T03:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d9401a0_5317a028",
       "range": {
         "startLine": 6028,
         "startChar": 65,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5eb35002_894a0969",
+        "filename": "packages/Connectivity/framework/src/android/net/CaptivePortalData.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-02-05T03:37:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "72514a5d_f73bcce2",
+      "range": {
+        "startLine": 241,
+        "startChar": 79,
+        "endLine": 241,
+        "endChar": 85
+      },
+      "revId": "39eb75cc1fc65f75a2b19823e7fa74a284917a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3363627_cb225349",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ed93fc6_cb0a3dfa",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkNotificationManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-02-05T03:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3363627_cb225349",
+      "range": {
+        "startLine": 165,
+        "startChar": 46,
+        "endLine": 165,
+        "endChar": 68
+      },
+      "revId": "39eb75cc1fc65f75a2b19823e7fa74a284917a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1872df7_9d412ef8",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-02-05T01:54:22Z",
       "side": 1,
       "message": "Also test parceling with dataFromPasspoint",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "39eb75cc1fc65f75a2b19823e7fa74a284917a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "059bf5c0_2fdace8f",
+        "filename": "tests/net/common/java/android/net/CaptivePortalDataTest.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1480931
+      },
+      "writtenOn": "2021-02-05T03:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1872df7_9d412ef8",
       "range": {
         "startLine": 75,
         "startChar": 8,
