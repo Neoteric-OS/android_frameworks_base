@@ -43,6 +43,9 @@ public final class UidRange implements Parcelable {
         stop  = stopUid;
     }
 
+    /**
+     * Create a UidRange for given user id.
+     */
     public static UidRange createForUser(int userId) {
         final Range<Integer> uidRange = UserHandle.getUidRangeForUser(UserHandle.of(userId));
         return new UidRange(uidRange.getLower(), uidRange.getUpper());
@@ -58,6 +61,9 @@ public final class UidRange implements Parcelable {
         return stop / PER_USER_RANGE;
     }
 
+    /**
+     * Check if the given uid is contained by the range of this object.
+     */
     public boolean contains(int uid) {
         return start <= uid && uid <= stop;
     }
@@ -70,7 +76,8 @@ public final class UidRange implements Parcelable {
     }
 
     /**
-     * @return {@code true} if this range contains every UID contained by the {@param other} range.
+     * @param other A UidRange to check if it is contained by the range of this object.
+     * @return {@code true} if this range contains every UID contained by the other range.
      */
     public boolean containsRange(UidRange other) {
         return start <= other.start && other.stop <= stop;
@@ -116,7 +123,7 @@ public final class UidRange implements Parcelable {
     }
 
     public static final @android.annotation.NonNull Creator<UidRange> CREATOR =
-        new Creator<UidRange>() {
+            new Creator<UidRange>() {
             @Override
             public UidRange createFromParcel(Parcel in) {
                 int start = in.readInt();
