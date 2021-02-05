@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16e16a1d_022fffe8",
+        "filename": "core/java/android/app/NativeTombstone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-05T20:20:31Z",
+      "side": 1,
+      "message": "Do we need to add something here to tell the developer how to parse this tombstone ?",
+      "revId": "1682c4a26b99bd6c0667fa3647836b7290bb2974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "147df8d0_5ae25199",
+        "filename": "core/java/android/app/NativeTombstoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-05T20:20:31Z",
+      "side": 1,
+      "message": "A nice to have thing: There is a similar API in R, https://developer.android.com/reference/android/app/ApplicationExitInfo?hl\u003den#getTraceInputStream(), it only returns the ANR traces now. Maybe we could hook them up later to return the tombstone traces as well.",
+      "revId": "1682c4a26b99bd6c0667fa3647836b7290bb2974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d55f6d5_f93d77e9",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-05T20:20:31Z",
+      "side": 1,
+      "message": "Maybe we should also allow system apps to access this API? i.e., com.android.bluetooth",
+      "range": {
+        "startLine": 258,
+        "startChar": 13,
+        "endLine": 258,
+        "endChar": 41
+      },
+      "revId": "1682c4a26b99bd6c0667fa3647836b7290bb2974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
