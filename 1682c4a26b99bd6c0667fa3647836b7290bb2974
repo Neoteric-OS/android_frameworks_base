@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3c9a8b1b_d8878a0a",
+        "filename": "core/java/android/app/NativeTombstone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-05T22:22:32Z",
+      "side": 1,
+      "message": "Yeah, I assume we don\u0027t want to link directly to the gitiles proto definition, since that means we can never move it, so I need to figure out how to create a stable redirect link that points to the tombstone proto definition.",
+      "parentUuid": "16e16a1d_022fffe8",
+      "revId": "1682c4a26b99bd6c0667fa3647836b7290bb2974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "147df8d0_5ae25199",
         "filename": "core/java/android/app/NativeTombstoneManager.java",
         "patchSetId": 1
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "52dc9eaf_10f10720",
+        "filename": "core/java/android/app/NativeTombstoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-05T22:22:32Z",
+      "side": 1,
+      "message": "That was my original plan, but I\u0027m not sure we can provide all of the fields that ApplicationExitInfo provides (getImportance and getProcessStateSummary primarily, and getPss/getRss as well, although it looks like the javadoc for those allows us to return 0 for those.)\n\nThe semantics of packageName in getHistoricalProcessExitReasons would be different as well: I don\u0027t think we can differentiate between packages in the same UID (we don\u0027t know the package name!).\n\nGiven that, do you think we should implement this in ApplicationExitInfo?",
+      "parentUuid": "147df8d0_5ae25199",
+      "revId": "1682c4a26b99bd6c0667fa3647836b7290bb2974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8d55f6d5_f93d77e9",
         "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
         "patchSetId": 1
@@ -48,6 +84,30 @@
       "writtenOn": "2021-02-05T20:20:31Z",
       "side": 1,
       "message": "Maybe we should also allow system apps to access this API? i.e., com.android.bluetooth",
+      "range": {
+        "startLine": 258,
+        "startChar": 13,
+        "endLine": 258,
+        "endChar": 41
+      },
+      "revId": "1682c4a26b99bd6c0667fa3647836b7290bb2974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0b542ff_566aed1f",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-05T22:22:32Z",
+      "side": 1,
+      "message": "Do we actually want system apps to be accessing their own tombstones? We already have crash reporting infrastructure available in the platform.",
+      "parentUuid": "8d55f6d5_f93d77e9",
       "range": {
         "startLine": 258,
         "startChar": 13,
