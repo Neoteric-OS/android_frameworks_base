@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import android.net.vcn.VcnNetworkSpecifier;
 import android.net.wifi.WifiNetworkSpecifier;
 import android.telephony.SubscriptionManager;
 
@@ -95,19 +96,30 @@ public class TelephonyNetworkSpecifierTest {
         final TelephonyNetworkSpecifier tns2 = new TelephonyNetworkSpecifier.Builder()
                 .setSubscriptionId(TEST_SUBID)
                 .build();
+        final TelephonyNetworkSpecifier tns3 = new TelephonyNetworkSpecifier.Builder()
+                .setSubscriptionId(TEST_SUBID + 1)
+                .build();
+        final TelephonyNetworkSpecifier tns4 = new TelephonyNetworkSpecifier.Builder()
+                .setSubscriptionId(TEST_SUBID + 2)
+                .build();
         final WifiNetworkSpecifier wns = new WifiNetworkSpecifier.Builder()
                 .setSsid(TEST_SSID)
                 .build();
+        final VcnNetworkSpecifier vns =
+                new VcnNetworkSpecifier(new int[] {TEST_SUBID, TEST_SUBID + 1});
         final MatchAllNetworkSpecifier mans = new MatchAllNetworkSpecifier();
 
         // Test equality
         assertEquals(tns1, tns2);
         assertTrue(tns1.canBeSatisfiedBy(tns1));
         assertTrue(tns1.canBeSatisfiedBy(tns2));
+        assertTrue(tns1.canBeSatisfiedBy(vns));
+        assertTrue(tns3.canBeSatisfiedBy(vns));
 
         // Test other edge cases.
         assertFalse(tns1.canBeSatisfiedBy(null));
         assertFalse(tns1.canBeSatisfiedBy(wns));
         assertTrue(tns1.canBeSatisfiedBy(mans));
+        assertFalse(tns4.canBeSatisfiedBy(vns));
     }
 }
