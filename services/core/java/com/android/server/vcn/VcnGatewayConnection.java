@@ -52,6 +52,7 @@ import android.net.ipsec.ike.IkeSessionParams;
 import android.net.ipsec.ike.exceptions.IkeException;
 import android.net.ipsec.ike.exceptions.IkeProtocolException;
 import android.net.vcn.VcnGatewayConnectionConfig;
+import android.net.vcn.VcnNetworkSpecifier;
 import android.net.vcn.VcnTransportInfo;
 import android.net.wifi.WifiInfo;
 import android.os.Handler;
@@ -63,6 +64,7 @@ import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
+import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
@@ -74,6 +76,7 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -1010,8 +1013,8 @@ public class VcnGatewayConnection extends StateMachine {
                 @NonNull IpSecTunnelInterface tunnelIface,
                 @NonNull NetworkAgent agent,
                 @NonNull VcnChildSessionConfiguration childConfig) {
-            final NetworkCapabilities caps =
-                    buildNetworkCapabilities(mConnectionConfig, mUnderlying);
+            final NetworkCapabilities caps = buildNetworkCapabilities(
+                    mConnectionConfig, mUnderlying, mLastSnapshot, mSubscriptionGroup);
             final LinkProperties lp =
                     buildConnectedLinkProperties(mConnectionConfig, tunnelIface, childConfig);
 
@@ -1022,8 +1025,8 @@ public class VcnGatewayConnection extends StateMachine {
         protected NetworkAgent buildNetworkAgent(
                 @NonNull IpSecTunnelInterface tunnelIface,
                 @NonNull VcnChildSessionConfiguration childConfig) {
-            final NetworkCapabilities caps =
-                    buildNetworkCapabilities(mConnectionConfig, mUnderlying);
+            final NetworkCapabilities caps = buildNetworkCapabilities(
+                    mConnectionConfig, mUnderlying, mLastSnapshot, mSubscriptionGroup);
             final LinkProperties lp =
                     buildConnectedLinkProperties(mConnectionConfig, tunnelIface, childConfig);
 
@@ -1271,7 +1274,9 @@ public class VcnGatewayConnection extends StateMachine {
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     static NetworkCapabilities buildNetworkCapabilities(
             @NonNull VcnGatewayConnectionConfig gatewayConnectionConfig,
-            @Nullable UnderlyingNetworkRecord underlying) {
+            @Nullable UnderlyingNetworkRecord underlying,
+            @NonNull TelephonySubscriptionSnapshot snapshot,
+            @NonNull ParcelUuid subscriptionGroup) {
         final NetworkCapabilities.Builder builder = new NetworkCapabilities.Builder();
 
         builder.addTransportType(TRANSPORT_CELLULAR);
@@ -1327,7 +1332,9 @@ public class VcnGatewayConnection extends StateMachine {
             }
         }
 
-        // TODO: Make a VcnNetworkSpecifier, and match all underlying subscription IDs.
+        final int[] subIds = ArrayUtils.convertToIntArray(
+                new ArrayList<>(snapshot.getAllSubIdsInGroup(subscriptionGroup)));
+        builder.setNetworkSpecifier(new VcnNetworkSpecifier(subIds));
 
         return builder.build();
     }
