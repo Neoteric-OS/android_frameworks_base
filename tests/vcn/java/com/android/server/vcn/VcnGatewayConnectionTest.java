@@ -24,7 +24,9 @@ import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -33,6 +35,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.vcn.VcnGatewayConnectionConfigTest;
+import android.net.vcn.VcnNetworkSpecifier;
 import android.net.vcn.VcnTransportInfo;
 import android.net.wifi.WifiInfo;
 import android.os.ParcelUuid;
@@ -85,6 +88,8 @@ public class VcnGatewayConnectionTest extends VcnGatewayConnectionTestBase {
     }
 
     private void verifyBuildNetworkCapabilitiesCommon(int transportType) {
+        doReturn(TEST_SUBSCRIPTION_ID_1).when(mDeps).getSubIdForWifiInfo(any());
+
         final NetworkCapabilities underlyingCaps = new NetworkCapabilities();
         underlyingCaps.addTransportType(transportType);
         underlyingCaps.addCapability(NET_CAPABILITY_NOT_METERED);
@@ -104,7 +109,7 @@ public class VcnGatewayConnectionTest extends VcnGatewayConnectionTestBase {
                         new Network(0), underlyingCaps, new LinkProperties(), false);
         final NetworkCapabilities vcnCaps =
                 VcnGatewayConnection.buildNetworkCapabilities(
-                        VcnGatewayConnectionConfigTest.buildTestConfig(), record);
+                        VcnGatewayConnectionConfigTest.buildTestConfig(), record, mDeps);
 
         assertTrue(vcnCaps.hasTransport(TRANSPORT_CELLULAR));
         assertTrue(vcnCaps.hasCapability(NET_CAPABILITY_NOT_METERED));
@@ -118,6 +123,10 @@ public class VcnGatewayConnectionTest extends VcnGatewayConnectionTestBase {
         } else if (transportType == TRANSPORT_CELLULAR) {
             assertEquals(TEST_SUBSCRIPTION_ID_1, info.getSubId());
         }
+
+        assertTrue(vcnCaps.getNetworkSpecifier() instanceof VcnNetworkSpecifier);
+        final VcnNetworkSpecifier specifier = (VcnNetworkSpecifier) vcnCaps.getNetworkSpecifier();
+        assertArrayEquals(new int[] {TEST_SUBSCRIPTION_ID_1}, specifier.getSubIds());
     }
 
     @Test
