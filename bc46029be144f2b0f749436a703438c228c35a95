@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e36a6357_d795743e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2021-02-05T18:05:19Z",
+      "side": 1,
+      "message": "commented on internal change; this method does not need to be exposed. it can be implemented in the connectivity manager",
+      "revId": "bc46029be144f2b0f749436a703438c228c35a95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
