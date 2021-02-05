@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "25e2ed5b_dc5a4252",
+        "filename": "core/java/android/app/NativeTombstoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-05T22:44:59Z",
+      "side": 1,
+      "message": "Right, but if they provide a package name to getHistoricalProcessExitReasons, we might give them native tombstones generated from other apps with the same UID. Maybe that\u0027s okay? I\u0027ll move over to integrating with getHistoricalProcessExitReasons.",
+      "parentUuid": "1012b771_93065873",
+      "revId": "1682c4a26b99bd6c0667fa3647836b7290bb2974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8d55f6d5_f93d77e9",
         "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
         "patchSetId": 1
