@@ -22,6 +22,30 @@
       },
       "revId": "6b3e76a26cd67c2b3f454e43e35e81f8b9b366e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e374831e_678438a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-02-05T01:56:22Z",
+      "side": 1,
+      "message": "Good point. Done. I name it first-boot-ota to keep it consistent with the others.",
+      "parentUuid": "8e5f8f03_71e3e18b",
+      "range": {
+        "startLine": 9,
+        "startChar": 36,
+        "endLine": 9,
+        "endChar": 53
+      },
+      "revId": "6b3e76a26cd67c2b3f454e43e35e81f8b9b366e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
