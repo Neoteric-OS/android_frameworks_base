@@ -60,6 +60,7 @@ interface ILockSettings {
     void reportSuccessfulBiometricUnlock(boolean isStrongBiometric, int userId);
     void scheduleNonStrongBiometricIdleTimeout(int userId);
     void systemReady();
+    void loadEscrowData();
     void userPresent(int userId);
     int getStrongAuthForUser(int userId);
     boolean hasPendingEscrowToken(int userId);
