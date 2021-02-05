@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a3db868_4ee537b2",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 5102,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-05T01:32:07Z",
+      "side": 1,
+      "message": "- Let\u0027s make the listener nullable, because I think some OEMs might not care when it\u0027s done.\n- Order should be : preference, executor, listener",
+      "range": {
+        "startLine": 5100,
+        "startChar": 41,
+        "endLine": 5102,
+        "endChar": 59
+      },
+      "revId": "2df49af80e88a7624425efc00c7e2f6ed4ec2c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcf5d459_355c611b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 2637,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-05T01:32:07Z",
+      "side": 1,
+      "message": "per-app",
+      "range": {
+        "startLine": 2637,
+        "startChar": 26,
+        "endLine": 2637,
+        "endChar": 29
+      },
+      "revId": "2df49af80e88a7624425efc00c7e2f6ed4ec2c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "233a3777_e8e6d530",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 2779,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-05T01:32:07Z",
+      "side": 1,
+      "message": "per-app (for all of them)",
+      "range": {
+        "startLine": 2779,
+        "startChar": 27,
+        "endLine": 2779,
+        "endChar": 30
+      },
+      "revId": "2df49af80e88a7624425efc00c7e2f6ed4ec2c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcdf47cd_836aa31f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 5722,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-05T01:32:07Z",
+      "side": 1,
+      "message": "(r) instead of doing the copy yourself\n\nAlso maybe add a small comment mentioning this is a defensive copy to avoid the sender modifying the list being reflected in the return value of this method",
+      "range": {
+        "startLine": 5722,
+        "startChar": 69,
+        "endLine": 5722,
+        "endChar": 71
+      },
+      "revId": "2df49af80e88a7624425efc00c7e2f6ed4ec2c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2980e11b_049a95ee",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 9307,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-05T01:32:07Z",
+      "side": 1,
+      "message": "UnsupportedOperationException",
+      "range": {
+        "startLine": 9307,
+        "startChar": 22,
+        "endLine": 9307,
+        "endChar": 43
+      },
+      "revId": "2df49af80e88a7624425efc00c7e2f6ed4ec2c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44fd6157_5225373e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 9312,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-05T01:32:07Z",
+      "side": 1,
+      "message": "Reviewed up to here",
+      "range": {
+        "startLine": 9312,
+        "startChar": 4,
+        "endLine": 9312,
+        "endChar": 7
+      },
+      "revId": "2df49af80e88a7624425efc00c7e2f6ed4ec2c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
