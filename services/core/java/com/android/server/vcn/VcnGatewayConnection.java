@@ -52,6 +52,7 @@ import android.net.ipsec.ike.IkeSessionParams;
 import android.net.ipsec.ike.exceptions.IkeException;
 import android.net.ipsec.ike.exceptions.IkeProtocolException;
 import android.net.vcn.VcnGatewayConnectionConfig;
+import android.net.vcn.VcnNetworkSpecifier;
 import android.net.vcn.VcnTransportInfo;
 import android.net.wifi.WifiInfo;
 import android.os.Handler;
@@ -1010,8 +1011,8 @@ public class VcnGatewayConnection extends StateMachine {
                 @NonNull IpSecTunnelInterface tunnelIface,
                 @NonNull NetworkAgent agent,
                 @NonNull VcnChildSessionConfiguration childConfig) {
-            final NetworkCapabilities caps =
-                    buildNetworkCapabilities(mConnectionConfig, mUnderlying);
+            final NetworkCapabilities caps = buildNetworkCapabilities(
+                    mConnectionConfig, mUnderlying, mLastSnapshot, mSubscriptionGroup);
             final LinkProperties lp =
                     buildConnectedLinkProperties(mConnectionConfig, tunnelIface, childConfig);
 
@@ -1022,8 +1023,8 @@ public class VcnGatewayConnection extends StateMachine {
         protected NetworkAgent buildNetworkAgent(
                 @NonNull IpSecTunnelInterface tunnelIface,
                 @NonNull VcnChildSessionConfiguration childConfig) {
-            final NetworkCapabilities caps =
-                    buildNetworkCapabilities(mConnectionConfig, mUnderlying);
+            final NetworkCapabilities caps = buildNetworkCapabilities(
+                    mConnectionConfig, mUnderlying, mLastSnapshot, mSubscriptionGroup);
             final LinkProperties lp =
                     buildConnectedLinkProperties(mConnectionConfig, tunnelIface, childConfig);
 
@@ -1271,7 +1272,9 @@ public class VcnGatewayConnection extends StateMachine {
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     static NetworkCapabilities buildNetworkCapabilities(
             @NonNull VcnGatewayConnectionConfig gatewayConnectionConfig,
-            @Nullable UnderlyingNetworkRecord underlying) {
+            @Nullable UnderlyingNetworkRecord underlying,
+            @NonNull TelephonySubscriptionSnapshot snapshot,
+            @NonNull ParcelUuid subscriptionGroup) {
         final NetworkCapabilities.Builder builder = new NetworkCapabilities.Builder();
 
         builder.addTransportType(TRANSPORT_CELLULAR);
@@ -1313,12 +1316,18 @@ public class VcnGatewayConnection extends StateMachine {
             if (underlyingCaps.hasTransport(TRANSPORT_WIFI)
                     && underlyingCaps.getTransportInfo() instanceof WifiInfo) {
                 final WifiInfo wifiInfo = (WifiInfo) underlyingCaps.getTransportInfo();
+                final int subId = mDeps.getSubIdForWifiInfo(wifiInfo);
+
                 builder.setTransportInfo(new VcnTransportInfo(wifiInfo));
+                builder.setNetworkSpecifier(new VcnNetworkSpecifier(new int[] {subId}));
             } else if (underlyingCaps.hasTransport(TRANSPORT_CELLULAR)
                     && underlyingCaps.getNetworkSpecifier() instanceof TelephonyNetworkSpecifier) {
                 final TelephonyNetworkSpecifier telNetSpecifier =
                         (TelephonyNetworkSpecifier) underlyingCaps.getNetworkSpecifier();
-                builder.setTransportInfo(new VcnTransportInfo(telNetSpecifier.getSubscriptionId()));
+                final int subId = telNetSpecifier.getSubscriptionId();
+
+                builder.setTransportInfo(new VcnTransportInfo(subId));
+                builder.setNetworkSpecifier(new VcnNetworkSpecifier(new int[] {subId}));
             } else {
                 Slog.wtf(
                         TAG,
@@ -1326,8 +1335,6 @@ public class VcnGatewayConnection extends StateMachine {
                                 + " non-null underlying network");
             }
         }
-
-        // TODO: Make a VcnNetworkSpecifier, and match all underlying subscription IDs.
 
         return builder.build();
     }
@@ -1521,6 +1528,12 @@ public class VcnGatewayConnection extends StateMachine {
                     childSessionParams,
                     ikeSessionCallback,
                     childSessionCallback);
+        }
+
+        /** Gets the subId indicated by the given {@link WifiInfo}. */
+        public int getSubIdForWifiInfo(@NonNull WifiInfo wifiInfo) {
+            // TODO(b/178501049): use the subId indicated by WifiInfo#getSubscriptionId
+            return SubscriptionManager.INVALID_SUBSCRIPTION_ID;
         }
     }
 
