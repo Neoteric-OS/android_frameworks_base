@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7445233_6a200da8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-05T06:24:08Z",
+      "side": 1,
+      "message": "Found some missed updates in latest patchset but basically LGTM.\nNeeds API review though.",
+      "revId": "deff7fb64bfd33fad2a9296f8e91605520ea48dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "faf08c89_6f6ac82a",
+        "filename": "packages/Connectivity/framework/src/android/net/CaptivePortalData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-05T06:24:08Z",
+      "side": 1,
+      "message": "Rename to mUserPortalUrlSource ?",
+      "range": {
+        "startLine": 167,
+        "startChar": 12,
+        "endLine": 167,
+        "endChar": 37
+      },
+      "revId": "deff7fb64bfd33fad2a9296f8e91605520ea48dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55af9d10_ffd169c7",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkNotificationManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-05T06:24:08Z",
+      "side": 1,
+      "message": "linkProperties.getCaptivePortalData()",
+      "range": {
+        "startLine": 167,
+        "startChar": 27,
+        "endLine": 167,
+        "endChar": 49
+      },
+      "revId": "deff7fb64bfd33fad2a9296f8e91605520ea48dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "735c2e48_c81d4096",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkNotificationManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-05T06:24:08Z",
+      "side": 1,
+      "message": "Note this can still be null if WifiInfo.sanitizeSsid returns null in the condition above (if networkCapabilities.getSsid was null)\nI guess it\u0027s fine since it was already used this way before, but if using an empty String here is to make sure it\u0027s never null, this is missing the case above.",
+      "range": {
+        "startLine": 177,
+        "startChar": 19,
+        "endLine": 177,
+        "endChar": 21
+      },
+      "revId": "deff7fb64bfd33fad2a9296f8e91605520ea48dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
