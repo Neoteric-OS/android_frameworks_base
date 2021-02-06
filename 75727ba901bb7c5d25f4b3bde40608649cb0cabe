@@ -16,6 +16,23 @@
       "message": "Cherry pick from internal to AOSP",
       "revId": "75727ba901bb7c5d25f4b3bde40608649cb0cabe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebe3bf11_079b5659",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-06T02:42:18Z",
+      "side": 1,
+      "message": "This is a continuous review from ag/13237755",
+      "revId": "75727ba901bb7c5d25f4b3bde40608649cb0cabe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
