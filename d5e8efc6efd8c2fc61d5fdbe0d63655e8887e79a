@@ -1,0 +1,464 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81f78b41_23da5d1c",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 5087,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "I think the general advice is to have two methods for stuff that can succeed or fail :\n• onComplete()\n• onError(OemNetworkPreferenceException)\n\nAlso, you\u0027ll need a way to let the client know which of their calls completed. The most common way to do this is to key on the listener – the listener will only ever be called once. Ideally, you\u0027d refuse using the same listener twice, and the simplest (and efficient) way to do this is to simply store a volatile boolean somewhere in the object to say it\u0027s already been used, only client-side (after all, you can\u0027t compromise security with this and the system server doesn\u0027t care if you shoot yourself in the foot). But in this case as usage is so simple, you could also not enforce it and describe in documentation that clients should avoid reusing the listeners so they can\u0027t confuse the callbacks across their calls.\nOther ways to do this involve returning generating nonce tokens for clients to figure out what call this was, but I think that\u0027d be way overkill here.\n\nI think I\u0027d just go with the documentation option with no enforcement. If you want to go the extra mile, implement the scheme with volatile boolean.",
+      "range": {
+        "startLine": 5087,
+        "startChar": 8,
+        "endLine": 5087,
+        "endChar": 81
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d29b6e2_feb4a054",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 5099,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "As this is the big entry point, maybe we want to beef up the documentation with :\n• Details what it does exactly. Try to describe it in the light of concrete automotive use cases, rather than a generic mechanism to direct app traffic to any desired network (in an effort to avoid attracting attention from parties looking to violate network neutrality and user privacy)\n• One example of typical usage, to support the explanation\n• A description of error modes (what can be thrown, what errors come through the listener)\n• Guarantees of listener calls (e.g. the listener is guaranteed to be called exactly once, unless security exception is thrown or something)",
+      "range": {
+        "startLine": 5099,
+        "startChar": 4,
+        "endLine": 5099,
+        "endChar": 7
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cfb3681_979236d1",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 5109,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "Making the listener nullable requires you don\u0027t call it when it\u0027s null :)\n\nI guess ideally if it\u0027s null you just don\u0027t create the proxy object, and you do the null check in the system server side.",
+      "range": {
+        "startLine": 5109,
+        "startChar": 47,
+        "endLine": 5109,
+        "endChar": 55
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4edb5bbc_df20500a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9330,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "Do we have a timeline, a draft patch ? I\u0027m a bit nervous submitting this without those checks.",
+      "range": {
+        "startLine": 9330,
+        "startChar": 39,
+        "endLine": 9330,
+        "endChar": 86
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d53b81ce_617f31aa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9335,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "Catching NPE is really a niche case – why specifically do you need to do this here ?\n\nIt may be reasonable to want to never throw and always report errors through the listener, but then you want to catch Exception instead.\nAlso, usually we do have at least some exceptions that can just be thrown synchronously from this kind of method. SecurityException is a good example of these – any party trying to call this without appropriate permisions should be sent SE synchronously. NPE, if in a reaction to an illegal null argument, is another common thing (this is already what the current patchset is doing as l.9326 will behave like this).",
+      "range": {
+        "startLine": 9335,
+        "startChar": 47,
+        "endLine": 9335,
+        "endChar": 67
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9ba511a_c4aa39ef",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9339,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "This is a bit baroque usage. I understand you can\u0027t just remotely pass any exception – the client may not have those classes in their app space. But if we have a good idea of what kind of errors we may send there, it is relatively common practice to have a short list of possible specific exceptions in the boot class path, and make the listener take an exception as an argument. If you choose to do so, you need to\n• Have a short list of exceptions that can be thrown, and describe them in documentation\n• Possibly pass ServiceSpecificException with a message if you catch an exception you didn\u0027t expect",
+      "range": {
+        "startLine": 9339,
+        "startChar": 43,
+        "endLine": 9339,
+        "endChar": 76
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1114adf_b4c2a9dc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9360,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "ISTM you created this class only to provide a namespace for the relevant methods. There is nothing wrong with that (in fact I like the separation, and it will make it easier to move out if it becomes big), but then you probably should make all methods static (the instance creation here brings nothing).",
+      "range": {
+        "startLine": 9360,
+        "startChar": 20,
+        "endLine": 9360,
+        "endChar": 50
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "715f344f_f8104551",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9362,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "Do you want to leave a TODO here for persistence ?",
+      "range": {
+        "startLine": 9362,
+        "startChar": 47,
+        "endLine": 9362,
+        "endChar": 48
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6140cad4_70c5226d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9367,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "This will crash the system server and therefore soft restart the device. You\u0027re running on the handler thread here.\n\nIf we never expect an exception here, then I think you have two choices :\n• Don\u0027t catch the exception and let the system server crash and the device reboot. This is often the right choice for a completely unexpected exception.\n• Or if you prefer the system to ignore instead of crashing (which sounds reasonable here), remove this and replace loge in l.9364 with log.wtf, so we learn about it. This won\u0027t crash the system server, but will report the issue to us.",
+      "range": {
+        "startLine": 9367,
+        "startChar": 12,
+        "endLine": 9367,
+        "endChar": 20
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f54d779f_e207dc0d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9373,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "As this method strongly deals with state that must only ever be touched on the handler thread (or everything goes really bad), suggest calling ensureRunningOnConnectivityServiceThread so we know if we messed up. Either do it here or in both callees below.",
+      "range": {
+        "startLine": 9373,
+        "startChar": 17,
+        "endLine": 9373,
+        "endChar": 61
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "936006f1_569b4502",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9381,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "IIUC you need to do this because handleRemoveNetworkRequest will modify mDefaultNetworkRequests, throwing ConcurrentModificationException. If so please either :\n• Add a comment here to explain that\n• Don\u0027t remove from the ArraySet in handleRemoveNetworkRequest (after all it\u0027s only ever expected to be called for defaults from this method) and at the end of this method clear() and add(mDefaultRequest).",
+      "range": {
+        "startLine": 9380,
+        "startChar": 8,
+        "endLine": 9381,
+        "endChar": 74
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3df39f6e_e16c7574",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9389,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "add ?\n(\"update\" sounds like it will also remove the others)",
+      "range": {
+        "startLine": 9389,
+        "startChar": 17,
+        "endLine": 9389,
+        "endChar": 23
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f12a83b3_2369a588",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9400,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "Can this be a static class ? I don\u0027t think it should be using anything from the parent ref. Given that it only has one entry point, maybe you want to pass a dependencies object to that entry point, that would let you call createInternetRequest. Presumably this can also help in testing.",
+      "range": {
+        "startLine": 9400,
+        "startChar": 4,
+        "endLine": 9400,
+        "endChar": 9
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5669647_c4754434",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9404,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "Almost always, prefer SparseArray\u003cT\u003e to Map\u003cInteger, T\u003e",
+      "range": {
+        "startLine": 9404,
+        "startChar": 18,
+        "endLine": 9404,
+        "endChar": 45
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8265c588_a1a9d595",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9431,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "nit : ISTM this code would be marginally clearer if this was just a set of Integer, with the UidRange creation left for later as it\u0027s an implementation detail of netd.",
+      "range": {
+        "startLine": 9431,
+        "startChar": 44,
+        "endLine": 9431,
+        "endChar": 66
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65c69a80_8034f98f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9433,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "Intuitiviely this looks like the kind of thing we would want to report to the listener, but in fact it\u0027s expected as it\u0027s expected to be fine passing non-installed packages and the system will watch for installation of one of those. Suggest adding a comment about this here.",
+      "range": {
+        "startLine": 9433,
+        "startChar": 20,
+        "endLine": 9433,
+        "endChar": 28
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b57f55aa_aa45717f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9445,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "Do we actually need this constant ?\n\nConsidering this does nothing at all and the actual way to clear a preference is to send a new OemNetworkPreferences object that doesn\u0027t contain it, any usage of this is, in fact, a misunderstanding of the API.",
+      "range": {
+        "startLine": 9445,
+        "startChar": 43,
+        "endLine": 9445,
+        "endChar": 73
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4edd1aa2_588c1855",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9450,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "I think here you want a TRACK_DEFAULT request instead of a new copy of the default request.",
+      "range": {
+        "startLine": 9450,
+        "startChar": 33,
+        "endLine": 9450,
+        "endChar": 53
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9668c769_9aae84c2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9464,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "space either here or at the start of the next string",
+      "range": {
+        "startLine": 9464,
+        "startChar": 91,
+        "endLine": 9464,
+        "endChar": 93
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46736ebb_13579346",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9473,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:33:26Z",
+      "side": 1,
+      "message": "nit : final",
+      "range": {
+        "startLine": 9473,
+        "startChar": 12,
+        "endLine": 9473,
+        "endChar": 31
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
