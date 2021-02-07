@@ -29,6 +29,7 @@ import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.vcn.IVcnManagementService;
+import android.net.vcn.IVcnStatusCallback;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
 import android.net.vcn.VcnUnderlyingNetworkPolicy;
@@ -167,6 +168,11 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @GuardedBy("mLock")
     @NonNull
     private final Map<IBinder, PolicyListenerBinderDeath> mRegisteredPolicyListeners =
+            new ArrayMap<>();
+
+    @GuardedBy("mLock")
+    @NonNull
+    private final Map<IBinder, VcnStatusCallbackBinderDeath> mRegisteredStatusCallbacks =
             new ArrayMap<>();
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
@@ -577,7 +583,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 android.Manifest.permission.NETWORK_FACTORY,
                 "Must have permission NETWORK_FACTORY to register a policy listener");
 
-        PolicyListenerBinderDeath listenerBinderDeath = new PolicyListenerBinderDeath(listener);
+        final PolicyListenerBinderDeath listenerBinderDeath =
+                new PolicyListenerBinderDeath(listener);
 
         synchronized (mLock) {
             mRegisteredPolicyListeners.put(listener.asBinder(), listenerBinderDeath);
@@ -599,7 +606,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         requireNonNull(listener, "listener was null");
 
         synchronized (mLock) {
-            PolicyListenerBinderDeath listenerBinderDeath =
+            final PolicyListenerBinderDeath listenerBinderDeath =
                     mRegisteredPolicyListeners.remove(listener.asBinder());
 
             if (listenerBinderDeath != null) {
@@ -657,6 +664,73 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         }
 
         return new VcnUnderlyingNetworkPolicy(false /* isTearDownRequested */, networkCapabilities);
+    }
+
+    /** Binder death recipient used to remove registered VcnStatusCallbacks. */
+    private class VcnStatusCallbackBinderDeath implements Binder.DeathRecipient {
+        @NonNull private final ParcelUuid mSubGroup;
+        @NonNull private final IVcnStatusCallback mCallback;
+        @NonNull private final String mPkgName;
+
+        private VcnStatusCallbackBinderDeath(
+                @NonNull ParcelUuid subGroup,
+                @NonNull IVcnStatusCallback callback,
+                @NonNull String pkgName) {
+            mSubGroup = subGroup;
+            mCallback = callback;
+            mPkgName = pkgName;
+        }
+
+        @Override
+        public void binderDied() {
+            Log.e(TAG, "app died without unregistering VcnStatusCallback");
+            unregisterVcnStatusCallback(mCallback);
+        }
+    }
+
+    /** Registers the provided callback for receiving VCN status updates. */
+    @Override
+    public void registerVcnStatusCallback(
+            @NonNull ParcelUuid subGroup,
+            @NonNull IVcnStatusCallback callback,
+            @NonNull String opPkgName) {
+        requireNonNull(subGroup, "subGroup must not be null");
+        requireNonNull(callback, "callback must not be null");
+        requireNonNull(opPkgName, "opPkgName must not be null");
+
+        final IBinder iBinder = callback.asBinder();
+        final VcnStatusCallbackBinderDeath callbackBinderDeath =
+                new VcnStatusCallbackBinderDeath(subGroup, callback, opPkgName);
+        synchronized (mLock) {
+            if (mRegisteredStatusCallbacks.containsKey(iBinder)) {
+                throw new IllegalArgumentException();
+            }
+
+            mRegisteredStatusCallbacks.put(iBinder, callbackBinderDeath);
+        }
+
+        try {
+            iBinder.linkToDeath(callbackBinderDeath, 0 /* flags */);
+        } catch (RemoteException e) {
+            // Remote binder already died - cleanup registered Callback
+            callbackBinderDeath.binderDied();
+        }
+    }
+
+    /** Unregisters the provided callback from receiving future VCN status updates. */
+    @Override
+    public void unregisterVcnStatusCallback(@NonNull IVcnStatusCallback callback) {
+        requireNonNull(callback, "callback must not be null");
+
+        final IBinder iBinder = callback.asBinder();
+        synchronized (mLock) {
+            VcnStatusCallbackBinderDeath callbackBinderDeath =
+                    mRegisteredStatusCallbacks.remove(iBinder);
+
+            if (callbackBinderDeath != null) {
+                iBinder.unlinkToDeath(callbackBinderDeath, 0 /* flags */);
+            }
+        }
     }
 
     /** Callback for signalling when a Vcn has entered Safemode. */
