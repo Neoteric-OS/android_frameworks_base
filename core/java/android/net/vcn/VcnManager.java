@@ -28,8 +28,10 @@ import android.os.RemoteException;
 import android.os.ServiceSpecificException;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.annotations.VisibleForTesting.Visibility;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
@@ -67,10 +69,13 @@ import java.util.concurrent.Executor;
 public class VcnManager {
     @NonNull private static final String TAG = VcnManager.class.getSimpleName();
 
-    @VisibleForTesting
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
     public static final Map<
                     VcnUnderlyingNetworkPolicyListener, VcnUnderlyingNetworkPolicyListenerBinder>
             REGISTERED_POLICY_LISTENERS = new ConcurrentHashMap<>();
+
+    private static final Map<VcnStatusCallback, VcnStatusCallbackBinder>
+            REGISTERED_STATUS_CALLBACKS = new ConcurrentHashMap<>();
 
     @NonNull private final Context mContext;
     @NonNull private final IVcnManagementService mService;
@@ -86,6 +91,16 @@ public class VcnManager {
     public VcnManager(@NonNull Context ctx, @NonNull IVcnManagementService service) {
         mContext = requireNonNull(ctx, "missing context");
         mService = requireNonNull(service, "missing service");
+    }
+
+    /**
+     * Get all currently registered VcnStatusCallbacks.
+     *
+     * @hide
+     */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public static Map<VcnStatusCallback, VcnStatusCallbackBinder> getAllStatusCallbacks() {
+        return Collections.unmodifiableMap(REGISTERED_STATUS_CALLBACKS);
     }
 
     // TODO: Make setVcnConfig(), clearVcnConfig() Public API
@@ -254,6 +269,91 @@ public class VcnManager {
         }
     }
 
+    // TODO: make VcnStatusCallback @SystemApi
+    /**
+     * VcnStatusCallback is the interface for Carrier apps to receive updates for their VCNs.
+     *
+     * <p>VcnStatusCallbacks may be registered before {@link VcnConfig}s are provided for a
+     * subscription group.
+     *
+     * @hide
+     */
+    public interface VcnStatusCallback {
+        /**
+         * Invoked when the VCN corresponding to this Callback's subscription group enters Safemode.
+         *
+         * <p>A VCN will enter Safemode if it is unable to establish a connection, or if an
+         * established connection drops.
+         *
+         * <p>If the VCN owner wants the VCN to exit Safemode, it must provide new {@link
+         * VcnConfig}s via {@link #setVcnConfig(ParcelUuid, VcnConfig)}.
+         */
+        void onEnteredSafemode();
+    }
+
+    /**
+     * Registers the given callback to receive status updates for the specified subscription.
+     *
+     * <p>Callbacks can be registered for a subscription before {@link VcnConfig}s are set for it.
+     *
+     * <p>A {@link VcnStatusCallback} must be registered for at most one subscription.
+     *
+     * <p>A {@link VcnStatusCallback} will only be invoked if the registering package has carrier
+     * privileges for the specified subscription.
+     *
+     * @param subscriptionGroup The subscription group to match for callbacks
+     * @param executor The {@link Executor} to be used for invoking callbacks
+     * @param callback The VcnStatusCallback to be registered
+     * @throws IllegalArgumentException if callback is already registered with VcnManager
+     * @hide
+     */
+    public void registerVcnStatusCallback(
+            @NonNull ParcelUuid subscriptionGroup,
+            @NonNull Executor executor,
+            @NonNull VcnStatusCallback callback) {
+        requireNonNull(subscriptionGroup, "subscriptionGroup must not be null");
+        requireNonNull(executor, "executor must not be null");
+        requireNonNull(callback, "callback must not be null");
+
+        VcnStatusCallbackBinder binder = new VcnStatusCallbackBinder(executor, callback);
+        if (REGISTERED_STATUS_CALLBACKS.putIfAbsent(callback, binder) != null) {
+            throw new IllegalArgumentException(
+                    "Attempting to register a callback that is already in use");
+        }
+
+        try {
+            mService.registerVcnStatusCallback(
+                    subscriptionGroup, binder, mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            REGISTERED_STATUS_CALLBACKS.remove(callback);
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Unregisters the given callback.
+     *
+     * <p>Once unregistered, the callback will stop receiving status updates for the subscription it
+     * was registered with.
+     *
+     * @param callback The callback to be unregistered
+     * @hide
+     */
+    public void unregisterVcnStatusCallback(@NonNull VcnStatusCallback callback) {
+        requireNonNull(callback, "callback must not be null");
+
+        VcnStatusCallbackBinder binder = REGISTERED_STATUS_CALLBACKS.remove(callback);
+        if (binder == null) {
+            return;
+        }
+
+        try {
+            mService.unregisterVcnStatusCallback(binder);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     /**
      * Binder wrapper for added VcnUnderlyingNetworkPolicyListeners to receive signals from System
      * Server.
@@ -274,6 +374,27 @@ public class VcnManager {
         @Override
         public void onPolicyChanged() {
             mExecutor.execute(() -> mListener.onPolicyChanged());
+        }
+    }
+
+    /**
+     * Binder wrapper for VcnStatusCallbacks to receive signals from VcnManagementService.
+     *
+     * @hide
+     */
+    public static class VcnStatusCallbackBinder extends IVcnStatusCallback.Stub {
+        @NonNull private final Executor mExecutor;
+        @NonNull private final VcnStatusCallback mCallback;
+
+        private VcnStatusCallbackBinder(
+                @NonNull Executor executor, @NonNull VcnStatusCallback callback) {
+            mExecutor = executor;
+            mCallback = callback;
+        }
+
+        @Override
+        public void onEnteredSafemode() {
+            mExecutor.execute(() -> mCallback.onEnteredSafemode());
         }
     }
 }
