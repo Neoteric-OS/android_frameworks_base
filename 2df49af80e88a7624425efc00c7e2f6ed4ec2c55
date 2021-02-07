@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74aa6a9d_a200d714",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 5102,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a3db868_4ee537b2",
+      "range": {
+        "startLine": 5100,
+        "startChar": 41,
+        "endLine": 5102,
+        "endChar": 59
+      },
+      "revId": "2df49af80e88a7624425efc00c7e2f6ed4ec2c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bcf5d459_355c611b",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-05T01:32:07Z",
       "side": 1,
       "message": "per-app",
+      "range": {
+        "startLine": 2637,
+        "startChar": 26,
+        "endLine": 2637,
+        "endChar": 29
+      },
+      "revId": "2df49af80e88a7624425efc00c7e2f6ed4ec2c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ac632c5_3505d7c3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 2637,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcf5d459_355c611b",
       "range": {
         "startLine": 2637,
         "startChar": 26,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b5b1419_509d3e67",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 2779,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "233a3777_e8e6d530",
+      "range": {
+        "startLine": 2779,
+        "startChar": 27,
+        "endLine": 2779,
+        "endChar": 30
+      },
+      "revId": "2df49af80e88a7624425efc00c7e2f6ed4ec2c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bcdf47cd_836aa31f",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-02-05T01:32:07Z",
       "side": 1,
       "message": "(r) instead of doing the copy yourself\n\nAlso maybe add a small comment mentioning this is a defensive copy to avoid the sender modifying the list being reflected in the return value of this method",
+      "range": {
+        "startLine": 5722,
+        "startChar": 69,
+        "endLine": 5722,
+        "endChar": 71
+      },
+      "revId": "2df49af80e88a7624425efc00c7e2f6ed4ec2c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af4b737b_6db58aae",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 5722,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcdf47cd_836aa31f",
       "range": {
         "startLine": 5722,
         "startChar": 69,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eae4767e_a2f16804",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 9307,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2980e11b_049a95ee",
+      "range": {
+        "startLine": 9307,
+        "startChar": 22,
+        "endLine": 9307,
+        "endChar": 43
+      },
+      "revId": "2df49af80e88a7624425efc00c7e2f6ed4ec2c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44fd6157_5225373e",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-02-05T01:32:07Z",
       "side": 1,
       "message": "Reviewed up to here",
+      "range": {
+        "startLine": 9312,
+        "startChar": 4,
+        "endLine": 9312,
+        "endChar": 7
+      },
+      "revId": "2df49af80e88a7624425efc00c7e2f6ed4ec2c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36d81326_6f703a0f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 9312,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Marking done since it looks like the rest of this file was reviewed.",
+      "parentUuid": "44fd6157_5225373e",
       "range": {
         "startLine": 9312,
         "startChar": 4,

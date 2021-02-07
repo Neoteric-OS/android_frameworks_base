@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "58d346ac_72edcd76",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 5087,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Resolution deferred until addressing comment on Patch #41: ConnectivityService l.9367.",
+      "parentUuid": "81f78b41_23da5d1c",
+      "range": {
+        "startLine": 5087,
+        "startChar": 8,
+        "endLine": 5087,
+        "endChar": 81
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d29b6e2_feb4a054",
         "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
         "patchSetId": 41
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "487d88ff_77da61eb",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 5099,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Resolution deferred until addressing comment on Patch #41: ConnectivityService l.9367.\n\nMost comments have been added except for the listener section due to the above.",
+      "parentUuid": "2d29b6e2_feb4a054",
+      "range": {
+        "startLine": 5099,
+        "startChar": 4,
+        "endLine": 5099,
+        "endChar": 7
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5cfb3681_979236d1",
         "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
         "patchSetId": 41
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-06T04:33:26Z",
       "side": 1,
       "message": "Making the listener nullable requires you don\u0027t call it when it\u0027s null :)\n\nI guess ideally if it\u0027s null you just don\u0027t create the proxy object, and you do the null check in the system server side.",
+      "range": {
+        "startLine": 5109,
+        "startChar": 47,
+        "endLine": 5109,
+        "endChar": 55
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b69ac188_5b21cc1e",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 5109,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Ahh yes, sounds good. Thanks.",
+      "parentUuid": "5cfb3681_979236d1",
       "range": {
         "startLine": 5109,
         "startChar": 47,
@@ -140,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76fc5d7b_08b9c4bb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9335,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "The thought here was to communicate all exceptions to the caller when possible over the listener. On l.9326 in this patch, that\u0027s only outside the try/catch since if the listener is null, there is nothing to communicate back to. That said, that code is removed in the latest patch since listener is now nullable. \n\nTo that end, I updated to catch exception however I am open to modifying if you think it makes sense.",
+      "parentUuid": "d53b81ce_617f31aa",
+      "range": {
+        "startLine": 9335,
+        "startChar": 47,
+        "endLine": 9335,
+        "endChar": 67
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d9ba511a_c4aa39ef",
@@ -153,6 +249,30 @@
       "writtenOn": "2021-02-06T04:33:26Z",
       "side": 1,
       "message": "This is a bit baroque usage. I understand you can\u0027t just remotely pass any exception – the client may not have those classes in their app space. But if we have a good idea of what kind of errors we may send there, it is relatively common practice to have a short list of possible specific exceptions in the boot class path, and make the listener take an exception as an argument. If you choose to do so, you need to\n• Have a short list of exceptions that can be thrown, and describe them in documentation\n• Possibly pass ServiceSpecificException with a message if you catch an exception you didn\u0027t expect",
+      "range": {
+        "startLine": 9339,
+        "startChar": 43,
+        "endLine": 9339,
+        "endChar": 76
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d000bcd1_c67f772d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9339,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Resolution deferred until addressing comment on Patch #41: ConnectivityService l.9367.",
+      "parentUuid": "d9ba511a_c4aa39ef",
       "range": {
         "startLine": 9339,
         "startChar": 43,
@@ -186,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb8211be_b372b577",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9360,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Thanks Jean and agree on the separation. Looks like there is a comment on l.9400 on the same therefore resolving this comment to continue the discussion there.",
+      "parentUuid": "c1114adf_b4c2a9dc",
+      "range": {
+        "startLine": 9360,
+        "startChar": 20,
+        "endLine": 9360,
+        "endChar": 50
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "715f344f_f8104551",
@@ -199,6 +343,30 @@
       "writtenOn": "2021-02-06T04:33:26Z",
       "side": 1,
       "message": "Do you want to leave a TODO here for persistence ?",
+      "range": {
+        "startLine": 9362,
+        "startChar": 47,
+        "endLine": 9362,
+        "endChar": 48
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd84985c_9c1e73b5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9362,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "715f344f_f8104551",
       "range": {
         "startLine": 9362,
         "startChar": 47,
@@ -234,6 +402,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b595a762_89f82402",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9367,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "I\u0027m starting to second guess the listener at this point. If I remember correctly, we didn\u0027t have it in the original design but added it after my feedback. I think my main concern at the time was communicating success/failure scenarios to API callers. It seems though however that the standard practice in much of Android is to crash the system server which is notification enough of a failure scenario. I.e., \"Don\u0027t catch the exception...\" as you listed above.\n\nI\u0027m strongly considering removing the listener all together from the API as I am not seeing the same value in it as I did initially. If I do, I\u0027ll go ahead and remove this `catch` all together along with the rest of the listener code which seems to ultimately result in cleaner, more consistent code with the rest of the ConnectivityService APIs.\n\nLet me know what you think as based off of that, it\u0027ll help in knowing with how to proceed with the rest of the open \u0027listener\u0027 based comments. Thanks!",
+      "parentUuid": "6140cad4_70c5226d",
+      "range": {
+        "startLine": 9367,
+        "startChar": 12,
+        "endLine": 9367,
+        "endChar": 20
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f54d779f_e207dc0d",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 41
@@ -245,6 +437,30 @@
       "writtenOn": "2021-02-06T04:33:26Z",
       "side": 1,
       "message": "As this method strongly deals with state that must only ever be touched on the handler thread (or everything goes really bad), suggest calling ensureRunningOnConnectivityServiceThread so we know if we messed up. Either do it here or in both callees below.",
+      "range": {
+        "startLine": 9373,
+        "startChar": 17,
+        "endLine": 9373,
+        "endChar": 61
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5e29000_b8e82766",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9373,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "I actually have this in l.9353 in this patch. It seemed to be consistent with other handlers. That said, should I move that check to this method or have the check in both spots?",
+      "parentUuid": "f54d779f_e207dc0d",
       "range": {
         "startLine": 9373,
         "startChar": 17,
@@ -278,6 +494,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "839fb5c2_697fcc6b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9381,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "I initially went with your second approach (remove elements at the end of this method) which you can see if curious in earlier patches. I ended up opting for the first approach in the end since I believe it to be cleaner. IMO, handleRemoveNetworkRequest() should ideally handle all the remove logic so to that end, I\u0027ll go with your first suggestion and add a comment. Thanks!",
+      "parentUuid": "936006f1_569b4502",
+      "range": {
+        "startLine": 9380,
+        "startChar": 8,
+        "endLine": 9381,
+        "endChar": 74
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3df39f6e_e16c7574",
@@ -291,6 +531,30 @@
       "writtenOn": "2021-02-06T04:33:26Z",
       "side": 1,
       "message": "add ?\n(\"update\" sounds like it will also remove the others)",
+      "range": {
+        "startLine": 9389,
+        "startChar": 17,
+        "endLine": 9389,
+        "endChar": 23
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fa70ca8_f9291f6d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9389,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3df39f6e_e16c7574",
       "range": {
         "startLine": 9389,
         "startChar": 17,
@@ -326,6 +590,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "afe465a1_0d6305b9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9400,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "I initially considered this approach by passing in the two dependencies which end up being:\n - PackageManager\n - ConnectivityService\n\nThe reason I opted not to do this is that I wasn\u0027t a fan of the Circular dependency between ConnectivityService \u003c-\u003e OemNetworkRequestFactory. One could argue this is already the case however as OemNetworkRequestFactory is an inner class, I was more inclined to create an instance vs going the static route.\n\nThat said, I am not entirely opposed to the static route.\n\nThoughts?",
+      "parentUuid": "f12a83b3_2369a588",
+      "range": {
+        "startLine": 9400,
+        "startChar": 4,
+        "endLine": 9400,
+        "endChar": 9
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f5669647_c4754434",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 41
@@ -337,6 +625,30 @@
       "writtenOn": "2021-02-06T04:33:26Z",
       "side": 1,
       "message": "Almost always, prefer SparseArray\u003cT\u003e to Map\u003cInteger, T\u003e",
+      "range": {
+        "startLine": 9404,
+        "startChar": 18,
+        "endLine": 9404,
+        "endChar": 45
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff348dd8_9033ca7e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9404,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5669647_c4754434",
       "range": {
         "startLine": 9404,
         "startChar": 18,
@@ -370,6 +682,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e6006ad_1bd63644",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9431,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Yes, agreed. I deferred it until we update the NetworkCapabilities object which is arguably cleaner as you mentioned.",
+      "parentUuid": "8265c588_a1a9d595",
+      "range": {
+        "startLine": 9431,
+        "startChar": 44,
+        "endLine": 9431,
+        "endChar": 66
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65c69a80_8034f98f",
@@ -383,6 +719,30 @@
       "writtenOn": "2021-02-06T04:33:26Z",
       "side": 1,
       "message": "Intuitiviely this looks like the kind of thing we would want to report to the listener, but in fact it\u0027s expected as it\u0027s expected to be fine passing non-installed packages and the system will watch for installation of one of those. Suggest adding a comment about this here.",
+      "range": {
+        "startLine": 9433,
+        "startChar": 20,
+        "endLine": 9433,
+        "endChar": 28
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8061acd_8009bcc3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9433,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65c69a80_8034f98f",
       "range": {
         "startLine": 9433,
         "startChar": 20,
@@ -418,6 +778,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e5bd346b_441e509a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9445,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "This is in place to handle the scenario where an API caller mistakingly didn\u0027t initialize \u0027int preference\u0027 since:\n\n  OemNetworkPreferences.OEM_NETWORK_PREFERENCE_DEFAULT \u003d 0\n\nIt\u0027s a defensive mechanism for when developers make mistakes and forget to initialize this value and what the behavior should be in that case. On that note, I figured this would be the \u0027best\u0027 (IMO) behavior to have for that scenario.\n\nThoughts? Would a comment help either here or maybe even more so where this IntDef is defined explaining why this value is here?",
+      "parentUuid": "b57f55aa_aa45717f",
+      "range": {
+        "startLine": 9445,
+        "startChar": 43,
+        "endLine": 9445,
+        "endChar": 73
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4edd1aa2_588c1855",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 41
@@ -429,6 +813,30 @@
       "writtenOn": "2021-02-06T04:33:26Z",
       "side": 1,
       "message": "I think here you want a TRACK_DEFAULT request instead of a new copy of the default request.",
+      "range": {
+        "startLine": 9450,
+        "startChar": 33,
+        "endLine": 9450,
+        "endChar": 53
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "837dde13_58122220",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9450,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "TRACK_DEFAULT seems to ultimately use createDefaultNetworkCapabilitiesForUid() which doesn\u0027t seem to make as much sense since we are going to set the uids right after this call to something else. I\u0027ll leave as-is but if I am missing something please feel free to reopen.",
+      "parentUuid": "4edd1aa2_588c1855",
       "range": {
         "startLine": 9450,
         "startChar": 33,
@@ -462,6 +870,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63097883_5e107f51",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9464,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9668c769_9aae84c2",
+      "range": {
+        "startLine": 9464,
+        "startChar": 91,
+        "endLine": 9464,
+        "endChar": 93
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "46736ebb_13579346",
@@ -475,6 +907,30 @@
       "writtenOn": "2021-02-06T04:33:26Z",
       "side": 1,
       "message": "nit : final",
+      "range": {
+        "startLine": 9473,
+        "startChar": 12,
+        "endLine": 9473,
+        "endChar": 31
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bbf41e2_439cb4c9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9473,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46736ebb_13579346",
       "range": {
         "startLine": 9473,
         "startChar": 12,
