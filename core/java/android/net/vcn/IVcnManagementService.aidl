@@ -33,4 +33,7 @@ interface IVcnManagementService {
     void addVcnUnderlyingNetworkPolicyListener(in IVcnUnderlyingNetworkPolicyListener listener);
     void removeVcnUnderlyingNetworkPolicyListener(in IVcnUnderlyingNetworkPolicyListener listener);
     VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(in NetworkCapabilities nc, in LinkProperties lp);
+    
+    void registerVcnStatusCallback(in ParcelUuid subscriptionGroup, in IVcnStatusCallback callback, in String opPkgName);
+    void unregisterVcnStatusCallback(in IVcnStatusCallback callback);
 }

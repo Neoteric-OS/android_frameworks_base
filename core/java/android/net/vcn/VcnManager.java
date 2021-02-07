@@ -72,6 +72,9 @@ public class VcnManager {
                     VcnUnderlyingNetworkPolicyListener, VcnUnderlyingNetworkPolicyListenerBinder>
             REGISTERED_POLICY_LISTENERS = new ConcurrentHashMap<>();
 
+    private static final Map<VcnStatusCallback, VcnStatusCallbackBinder>
+            REGISTERED_STATUS_CALLBACKS = new ConcurrentHashMap<>();
+
     @NonNull private final Context mContext;
     @NonNull private final IVcnManagementService mService;
 
@@ -254,6 +257,67 @@ public class VcnManager {
         }
     }
 
+    // TODO: make VcnStatusCallback @SystemApi
+    /**
+     * VcnStatusCallback is the interface for Carrier apps to receive updates for their VCNs.
+     *
+     * <p>VcnStatusCallbacks may be registered before {@link VcnConfig}s are provided for a
+     * subscription group.
+     *
+     * @hide
+     */
+    public interface VcnStatusCallback {
+        /**
+         * Invoked when the VCN corresponding to this Callback's subscription group enters Safemode.
+         *
+         * <p>A VCN will enter Safemode if it is unable to establish a connection, or if an
+         * established connection drops.
+         *
+         * <p>If the VCN owner wants the VCN to exit Safemode, it must provide new {@link
+         * VcnConfig}s via {@link #setVcnConfig(ParcelUuid, VcnConfig)}.
+         */
+        void onEnteredSafemode();
+    }
+
+    /**
+     * Registers the given callback to receive status updates for the specified subscription.
+     *
+     * <p>Callbacks can be registered for a subscription before {@link VcnConfig}s are set for it.
+     *
+     * <p>A {@link VcnStatusCallback} must be registered for at most one subscription.
+     *
+     * <p>A {@link VcnStatusCallback} will only be invoked if the registering package has carrier
+     * privileges for the specified subscription.
+     *
+     * @param subscriptionGroup The subscription group to match for callbacks
+     * @param executor The {@link Executor} to be used for invoking callbacks
+     * @param callback The VcnStatusCallback to be registered
+     * @throws IllegalArgumentException if callback is already registered with VcnManager
+     * @hide
+     */
+    public void registerVcnStatusCallback(
+            @NonNull ParcelUuid subscriptionGroup,
+            @NonNull Executor executor,
+            @NonNull VcnStatusCallback callback) {
+        requireNonNull(subscriptionGroup, "subscriptionGroup must not be null");
+        requireNonNull(executor, "executor must not be null");
+        requireNonNull(callback, "callback must not be null");
+
+        VcnStatusCallbackBinder binder = new VcnStatusCallbackBinder(executor, callback);
+        if (REGISTERED_STATUS_CALLBACKS.putIfAbsent(callback, binder) != null) {
+            throw new IllegalArgumentException(
+                    "Attempting to add a callback that is already in use");
+        }
+
+        try {
+            mService.registerVcnStatusCallback(
+                    subscriptionGroup, binder, mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            REGISTERED_STATUS_CALLBACKS.remove(listener);
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     /**
      * Binder wrapper for added VcnUnderlyingNetworkPolicyListeners to receive signals from System
      * Server.
@@ -274,6 +338,26 @@ public class VcnManager {
         @Override
         public void onPolicyChanged() {
             mExecutor.execute(() -> mListener.onPolicyChanged());
+        }
+    }
+
+    /**
+     * Binder wrapper for VcnStatusCallbacks to receive signals from VcnManagementService.
+     *
+     * @hide
+     */
+    public static class VcnStatusCallbackBinder extends IvcnStatusCallback.Stub {
+        @NonNull private final Executor mExecutor;
+        @NonNull private final VcnStatusCallback mCallback;
+
+        private VcnStatusCallbackBinder(
+                @NonNull Executor executor, @NonNull VcnStatusCallback callback) {
+            mCallback = callback;
+        }
+
+        @Override
+        public void onEnteredSafemode() {
+            mExecutor.execute(() -> callback.onEnteredSafemode());
         }
     }
 }
