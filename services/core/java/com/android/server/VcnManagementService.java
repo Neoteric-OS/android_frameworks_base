@@ -659,6 +659,16 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         return new VcnUnderlyingNetworkPolicy(false /* isTearDownRequested */, networkCapabilities);
     }
 
+    /** @hide */
+    public void registerVcnStatusCallback(
+            @NonNull ParcelUuid subscriptionGroup,
+            @NonNull IVcnStatusCallback callback,
+            @NonNull String opPkgName) {
+        requireNonNull(subscriptionGroup, "subscriptionGroup must not be null");
+        requireNonNull(callback, "callback must not be null");
+        requireNonNull(opPkgName, "opPkgName must not be null");
+    }
+
     /** Callback for signalling when a Vcn has entered Safemode. */
     public interface VcnSafemodeCallback {
         /** Called by a Vcn to signal that it has entered Safemode. */
