@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f34c64ae_f8bcad3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-07T20:15:37Z",
+      "side": 1,
+      "message": "Added bc I like VcnManagementService\u0027s approach to exposing internal structures better. Can be merged post-IC if needed",
+      "revId": "2bea46411e2b7c8d9cb455a1358ab30272d17202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
