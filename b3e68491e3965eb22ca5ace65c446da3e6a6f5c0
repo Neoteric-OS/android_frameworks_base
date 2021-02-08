@@ -16,6 +16,23 @@
       "message": "Ping.",
       "revId": "b3e68491e3965eb22ca5ace65c446da3e6a6f5c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36c5e6b3_034be54d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2021-02-08T19:37:01Z",
+      "side": 1,
+      "message": "lajos@ - friendly ping",
+      "revId": "b3e68491e3965eb22ca5ace65c446da3e6a6f5c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
