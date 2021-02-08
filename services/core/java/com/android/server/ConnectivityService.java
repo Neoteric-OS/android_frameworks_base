@@ -7276,7 +7276,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             @Nullable final NetworkAgentInfo oldDefaultNetwork,
             @Nullable final NetworkAgentInfo newDefaultNetwork) {
         if (DBG) {
-            log("Switching to new default network for: " + nri + " using " + newDefaultNetwork);
+            log("Switching to new default network for: " + nri + " using "
+                    + newDefaultNetwork.toShortString());
         }
 
         // Fix up the NetworkCapabilities of any networks that have this network as underlying.
