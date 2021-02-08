@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7658ada5_a9b5ae9f",
+        "filename": "keystore/java/android/security/keystore/AndroidKeyStoreProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-08T02:30:43Z",
+      "side": 1,
+      "message": "We don\u0027t need this any more. The only thing that we should toggle on isInstalled() is wether to use the old or the new load parameter. Also please use the conversion function in KeyProperties. This will throw an exception if an unknown uid is used.",
+      "range": {
+        "startLine": 445,
+        "startChar": 13,
+        "endLine": 447,
+        "endChar": 13
+      },
+      "revId": "d824d699151133946c4d2c3151aa727610c9e040",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
