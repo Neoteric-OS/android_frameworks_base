@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a9f4d16_4a7fdecd",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkNotificationManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-08T05:58:53Z",
+      "side": 0,
+      "message": "Curious : why did you need to remove this ?",
+      "range": {
+        "startLine": 128,
+        "startChar": 31,
+        "endLine": 128,
+        "endChar": 36
+      },
+      "revId": "0db5d441ad620d1a1f53b16c2cd0f462fe600827",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
