@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Amith Yamasani <yamasani@google.com>
+Code-Review+2: Remi NGUYEN VAN <reminv@google.com>
+API-Review+1: Amith Yamasani <yamasani@google.com>
+Presubmit-Verified+1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Chiachang Wang <chiachangwang@google.com>
+Submitted-at: Mon, 08 Feb 2021 03:56:37 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1573942
+Project: platform/frameworks/base
+Branch: refs/heads/master
