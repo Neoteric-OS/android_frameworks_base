@@ -326,6 +326,7 @@ filegroup {
         ":platform-compat-native-aidl",
 
         // AIDL sources from external directories
+        ":android.system.keystore2-java-source",
         ":credstore_aidl",
         ":dumpstate_aidl",
         ":framework_native_aidl",
@@ -484,7 +485,6 @@ java_library {
         "android.hardware.vibrator-V1.3-java",
         "android.security.apc-java",
         "android.security.authorization-java",
-        "android.system.keystore2-java",
         "android.system.suspend.control.internal-java",
         "devicepolicyprotosnano",
 
