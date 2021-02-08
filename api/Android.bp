@@ -48,6 +48,7 @@ genrule {
         ":framework-wifi{.public.api.txt}",
         ":i18n.module.public.api{.public.api.txt}",
         ":non-updatable-current.txt",
+        ":service-art{.public.api.txt}",
     ],
     out: ["current.txt"],
     tools: ["metalava"],
