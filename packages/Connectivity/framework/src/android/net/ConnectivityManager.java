@@ -1092,7 +1092,7 @@ public class ConnectivityManager {
     }
 
     /** @hide TODO: remove when callers have migrated to VpnManager. */
-    public List<String> getVpnLockdownWhitelist(int userId) {
+    public List<String> getVpnLockdownAllowlist(int userId) {
         return getVpnManager().getVpnLockdownAllowlist(userId);
     }
 
