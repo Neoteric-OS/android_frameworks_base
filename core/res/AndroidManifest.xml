@@ -5126,6 +5126,12 @@
          @hide  <p>Not for use by third-party applications.</p> -->
     <permission android:name="android.permission.OVERRIDE_COMPAT_CHANGE_CONFIG"
                 android:protectionLevel="signature|privileged" />
+    <!-- @SystemApi Allows an app to override compat change configs that are explicitly marked as
+        Overridable. Those configs are expected to be less security critical and can therefore
+        be overridden on release builds.
+        @hide -->
+    <permission android:name="android.permission.OVERRIDE_OVERRIDABLE_COMPAT_CHANGES"
+                android:protectionLevel="signature|privileged" />
 
     <!-- Allows input events to be monitored. Very dangerous!  @hide -->
     <permission android:name="android.permission.MONITOR_INPUT"

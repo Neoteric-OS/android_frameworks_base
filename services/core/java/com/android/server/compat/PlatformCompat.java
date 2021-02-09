@@ -18,6 +18,7 @@ package com.android.server.compat;
 
 import static android.Manifest.permission.LOG_COMPAT_CHANGE;
 import static android.Manifest.permission.OVERRIDE_COMPAT_CHANGE_CONFIG;
+import static android.Manifest.permission.OVERRIDE_OVERRIDABLE_COMPAT_CHANGES;
 import static android.Manifest.permission.READ_COMPAT_CHANGE_CONFIG;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.os.Process.SYSTEM_UID;
@@ -184,7 +185,8 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     @Override
     public void setOverridesFromInstaller(CompatibilityOverrideConfig overrides,
             String packageName) {
-        checkCompatChangeOverridePermission();
+        checkCompatChangeOverrideOverridablePermission();
+        checkAllOverridesOverridable(overrides);
         mCompatConfig.addOverrides(overrides, packageName);
         killPackage(packageName);
     }
@@ -380,6 +382,26 @@ public class PlatformCompat extends IPlatformCompat.Stub {
         if (mContext.checkCallingOrSelfPermission(OVERRIDE_COMPAT_CHANGE_CONFIG)
                 != PERMISSION_GRANTED) {
             throw new SecurityException("Cannot override compat change");
+        }
+    }
+
+    private void checkCompatChangeOverrideOverridablePermission() {
+        // Don't check for permissions within the system process
+        if (Binder.getCallingUid() == SYSTEM_UID) {
+            return;
+        }
+        if (mContext.checkCallingOrSelfPermission(OVERRIDE_OVERRIDABLE_COMPAT_CHANGES)
+                != PERMISSION_GRANTED) {
+            throw new SecurityException("Cannot override compat change");
+        }
+    }
+
+    private void checkAllOverridesOverridable(CompatibilityOverrideConfig overrides) {
+        for (Long changeId : overrides.overrides.keySet()) {
+            if (!mCompatConfig.isOverridable(changeId)) {
+                throw new SecurityException("Only change ids marked as Overridable can be "
+                        + "overridden.");
+            }
         }
     }
 

@@ -39,7 +39,7 @@ import java.util.Map;
 @SystemApi
 public final class CompatChanges {
     private static final ChangeIdStateCache QUERY_CACHE = new ChangeIdStateCache();
-    private CompatChanges() {}
+    public CompatChanges() {}
 
     /**
      * Query if a given compatibility change is enabled for the current process. This method is
@@ -104,11 +104,10 @@ public final class CompatChanges {
      *
      * @param packageName The package name of the app in question.
      * @param overrides A map from changeId to the override applied for this change id.
-     * @hide
      */
-    @RequiresPermission(android.Manifest.permission.OVERRIDE_COMPAT_CHANGE_CONFIG)
-    public static void setPackageOverride(String packageName,
-            Map<Long, PackageOverride> overrides) {
+    @RequiresPermission(android.Manifest.permission.OVERRIDE_OVERRIDABLE_COMPAT_CHANGES)
+    public void setPackageOverride(@NonNull String packageName,
+            @NonNull Map<Long, PackageOverride> overrides) {
         IPlatformCompat platformCompat = IPlatformCompat.Stub.asInterface(
                 ServiceManager.getService(Context.PLATFORM_COMPAT_SERVICE));
         CompatibilityOverrideConfig config = new CompatibilityOverrideConfig(overrides);

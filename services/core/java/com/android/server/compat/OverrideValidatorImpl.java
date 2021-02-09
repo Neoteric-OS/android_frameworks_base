@@ -16,6 +16,9 @@
 
 package com.android.server.compat;
 
+import static android.Manifest.permission.OVERRIDE_OVERRIDABLE_COMPAT_CHANGES;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
 import static com.android.internal.compat.OverrideAllowedState.ALLOWED;
 import static com.android.internal.compat.OverrideAllowedState.DEFERRED_VERIFICATION;
 import static com.android.internal.compat.OverrideAllowedState.DISABLED_NON_TARGET_SDK;
@@ -69,8 +72,17 @@ public class OverrideValidatorImpl extends IOverrideValidator.Stub {
         mForceNonDebuggableFinalBuild = false;
     }
 
+    OverrideAllowedState getOverrideAllowedStateForRecheck(long changeId, String packageName) {
+        return getOverrideAllowedStateInternal(changeId, packageName, true);
+    }
+
     @Override
     public OverrideAllowedState getOverrideAllowedState(long changeId, String packageName) {
+        return getOverrideAllowedStateInternal(changeId, packageName, false);
+    }
+
+    private OverrideAllowedState getOverrideAllowedStateInternal(long changeId, String packageName,
+            boolean isRecheck) {
         if (mCompatConfig.isLoggingOnly(changeId)) {
             return new OverrideAllowedState(LOGGING_ONLY_CHANGE, -1, -1);
         }
@@ -98,6 +110,15 @@ public class OverrideValidatorImpl extends IOverrideValidator.Stub {
             applicationInfo = packageManager.getApplicationInfo(packageName, 0);
         } catch (NameNotFoundException e) {
             return new OverrideAllowedState(DEFERRED_VERIFICATION, -1, -1);
+        }
+        // If the change is annotated as @Overridable, apps with the specific permission can
+        // set the override even on production builds. When rechecking the override, e.g. during an
+        // app update we can bypass this check, as it wouldn't have been here in the first place.
+        if (mCompatConfig.isOverridable(changeId)
+                && (isRecheck
+                        || mContext.checkCallingOrSelfPermission(
+                                OVERRIDE_OVERRIDABLE_COMPAT_CHANGES) == PERMISSION_GRANTED)) {
+            return new OverrideAllowedState(ALLOWED, -1, -1);
         }
         int appTargetSdk = applicationInfo.targetSdkVersion;
         // Only allow overriding debuggable apps.
@@ -130,5 +151,4 @@ public class OverrideValidatorImpl extends IOverrideValidator.Stub {
     void forceNonDebuggableFinalForTest(boolean value) {
         mForceNonDebuggableFinalBuild = value;
     }
-
 }
