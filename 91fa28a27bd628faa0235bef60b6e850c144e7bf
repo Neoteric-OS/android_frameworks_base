@@ -229,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bde6fed2_23114f55",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2783,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2021-02-09T16:11:15Z",
+      "side": 1,
+      "message": "It\u0027s even better to use withCleanCallingIdentity(() -\u003e ...), although I\u0027m not sure in which release that method was added",
+      "parentUuid": "2c70ba8c_b8e5c9a9",
+      "range": {
+        "startLine": 2783,
+        "startChar": 11,
+        "endLine": 2783,
+        "endChar": 12
+      },
+      "revId": "91fa28a27bd628faa0235bef60b6e850c144e7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef8cb480_8373c54b",
