@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6221bf40_379f5279",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1387063
+      },
+      "writtenOn": "2021-02-09T02:48:26Z",
+      "side": 1,
+      "message": "Hi Tyler,\nCan you help to review this change in API ? Thanks.",
+      "revId": "a1d09cf07e6f99921f7cdfc189ce2d9887770d45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "670e7caa_7245fe33",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2453,
+      "author": {
+        "id": 1387063
+      },
+      "writtenOn": "2021-02-09T02:48:26Z",
+      "side": 1,
+      "message": "Although app context could be better for this case, however it might be better to add this information to the JavaDoc.",
+      "range": {
+        "startLine": 2453,
+        "startChar": 8,
+        "endLine": 2453,
+        "endChar": 60
+      },
+      "revId": "a1d09cf07e6f99921f7cdfc189ce2d9887770d45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
