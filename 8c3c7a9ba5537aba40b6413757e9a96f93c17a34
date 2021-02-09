@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bfc6d1d_a6218267",
+        "filename": "core/java/android/app/ApplicationExitInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-09T23:54:36Z",
+      "side": 1,
+      "message": "(responded below)",
+      "parentUuid": "c549cbf2_7b041291",
+      "range": {
+        "startLine": 164,
+        "startChar": 28,
+        "endLine": 164,
+        "endChar": 58
+      },
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7eda72e7_b5acf971",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-09T22:08:22Z",
       "side": 1,
       "message": "Wondering who is the owner of this FD and make sure it\u0027ll be closed? If the caller didn\u0027t call getTraceInputStream(), the FD will remain open...",
+      "range": {
+        "startLine": 444,
+        "startChar": 33,
+        "endLine": 444,
+        "endChar": 52
+      },
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c3b6b1b_f36a07ae",
+        "filename": "core/java/android/app/ApplicationExitInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-09T23:54:36Z",
+      "side": 1,
+      "message": "It\u0027ll get closed by the finalizer of ParcelFileDescriptor (but that\u0027ll trigger CloseGuard, I guess? Maybe we should add a finalizer to ApplicationExitInfo to manually close the PFD to silence that?)",
+      "parentUuid": "7eda72e7_b5acf971",
       "range": {
         "startLine": 444,
         "startChar": 33,
@@ -64,6 +112,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56c00a89_b33b7146",
+        "filename": "core/java/android/app/ApplicationExitInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-09T23:54:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0dda873f_a414698a",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a40b974e_0b1a36a3",
@@ -83,6 +149,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a71cec61_4cca5832",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-09T23:54:36Z",
+      "side": 1,
+      "message": "I think there are 2 problems with this:\n\n1. the lifetimes of REASON_CRASH_NATIVE and the proto tombstone aren\u0027t the same: there\u0027s a window at the beginning of the crash where we\u0027ll have a REASON_CRASH_NATIVE, but no proto tombstone yet. If an app that forks a child and waits for it to return and then notices that it crashed, getHistoricalProcessExitReasons might give them a REASON_CRASH_NATIVE report without a proto tombstone, which will then gain one if it calls later. If other things crash, the proto tombstones can get deleted by other things crashing, which means the same REASON_CRASH_NATIVE can go from not having a proto tombstone to having one, back to not having one.\n\n2. there\u0027s a potential mismatch there: if the PID gets reused, we might attach the proto tombstone to the wrong crash (but that should be extremely rare). \n\nI think the most common use of apps using the proto tombstones is going to be an app searching only for proto tombstones to upload to their crash reporting, so it\u0027s probably better for us to separate them out more clearly?",
+      "parentUuid": "a40b974e_0b1a36a3",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8dc864b6_cbc42abe",
         "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
         "patchSetId": 2
@@ -94,6 +178,24 @@
       "writtenOn": "2021-02-09T22:08:22Z",
       "side": 1,
       "message": "Just a question, if an app is holding a readonly FD to this proto file (it gets via our new API ), will this function call cause any negative impact ?",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ed636b7_5bbdba95",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-09T23:54:36Z",
+      "side": 1,
+      "message": "The file will become 0-length, so if they\u0027re reading the file, it\u0027ll get truncated. There\u0027s a potential crash if they have the file mmapped and they read from memory.\n\nHowever, this only gets called via the app getting uninstalled or `am clear-exit-info`, so it shouldn\u0027t actually happen?",
+      "parentUuid": "8dc864b6_cbc42abe",
       "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
