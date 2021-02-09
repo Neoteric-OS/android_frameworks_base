@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "106f146d_45ca04d8",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3988,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-02-09T19:19:36Z",
+      "side": 1,
+      "message": "Let\u0027s use a colon here rather than a pipe - there are a few other CC keys that have formats like key:value,value,value so let\u0027s align with those.",
+      "range": {
+        "startLine": 3988,
+        "startChar": 38,
+        "endLine": 3988,
+        "endChar": 39
+      },
+      "revId": "e19484578c912fa8058a90dc54e11b9e4b7834a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bd899d7_79b22c75",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3988,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-02-09T19:19:36Z",
+      "side": 1,
+      "message": "Nit: \"hash\"",
+      "range": {
+        "startLine": 3988,
+        "startChar": 16,
+        "endLine": 3988,
+        "endChar": 24
+      },
+      "revId": "e19484578c912fa8058a90dc54e11b9e4b7834a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
