@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "212f11ce_8648e349",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-02-09T14:01:35Z",
+      "side": 0,
+      "message": "Hm, I think the constant you need is RULE_NONE?",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 64,
+        "endChar": 12
+      },
+      "revId": "830e1e9576b4f9e4a3b1a21ee95821ceb6ad60ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

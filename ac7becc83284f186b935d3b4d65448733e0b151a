@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05aad73c_4ed9614a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-02-09T14:01:35Z",
+      "side": 1,
+      "message": "It is preferable if we can avoid exposing uidRules as @SystemApi but if we can\u0027t implement new callbacks due to resource constraints, then I think we can go with the current approach. If I can get some free time later in the week, I can look into adding blocked/unblocked callbacks that we discussed earlier.",
+      "revId": "ac7becc83284f186b935d3b4d65448733e0b151a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70c59e95_0361ad6f",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-02-09T14:01:35Z",
+      "side": 1,
+      "message": "Can we get update the method and parameter names so that this API is consistent with the previous one?",
+      "range": {
+        "startLine": 481,
+        "startChar": 19,
+        "endLine": 481,
+        "endChar": 44
+      },
+      "revId": "ac7becc83284f186b935d3b4d65448733e0b151a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09892b10_f48f371f",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-02-09T14:01:35Z",
+      "side": 1,
+      "message": "-\u003e Blocked so that this is consistent with previous APIs.",
+      "range": {
+        "startLine": 498,
+        "startChar": 24,
+        "endLine": 498,
+        "endChar": 34
+      },
+      "revId": "ac7becc83284f186b935d3b4d65448733e0b151a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
