@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9328bfa_4ce9b258",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-09T19:21:47Z",
+      "side": 1,
+      "message": "The actual bug was a combination of the NOT_VCN_MANAGED being added, and that masked the fact that the VCN was not started up.",
+      "parentUuid": "f5acae77_27de87ee",
+      "range": {
+        "startLine": 13,
+        "startChar": 23,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "3c84ec80625170e4340f260d875fd423b9fc8939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f8af5bac_afdec6f1",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-09T07:13:08Z",
       "side": 1,
       "message": "may be worth adding a comment to explain this case - it\u0027s slightly less clear to me than the NOT_VCN_MANAGED bit",
+      "range": {
+        "startLine": 668,
+        "startChar": 8,
+        "endLine": 670,
+        "endChar": 9
+      },
+      "revId": "3c84ec80625170e4340f260d875fd423b9fc8939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59d24f16_359f4499",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-09T19:21:47Z",
+      "side": 1,
+      "message": "The comment\u0027s in l.656; tracing the setting of the boolean should be clear enough.\n\nI strongly prefer to not have duplicate comments :)",
+      "parentUuid": "f8af5bac_afdec6f1",
       "range": {
         "startLine": 668,
         "startChar": 8,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b0ee222_623a4cbe",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-09T19:21:47Z",
+      "side": 1,
+      "message": "I\u0027ve actually removed this since; it\u0027s not particularly necessary, since the mocking will fail, or the verification of the network capabilities will fail.",
+      "parentUuid": "7b100c22_d3da7b5a",
+      "range": {
+        "startLine": 612,
+        "startChar": 8,
+        "endLine": 612,
+        "endChar": 56
+      },
+      "revId": "3c84ec80625170e4340f260d875fd423b9fc8939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "24b79013_46a91489",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25b0adab_8ea35c6e",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-09T19:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24b79013_46a91489",
+      "range": {
+        "startLine": 558,
+        "startChar": 4,
+        "endLine": 660,
+        "endChar": 5
+      },
+      "revId": "3c84ec80625170e4340f260d875fd423b9fc8939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8ba441e_70096710",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-02-09T07:13:08Z",
       "side": 1,
       "message": "thoughts on also starting a VCN in this test to make sure that it passes due to \u0027not matching\u0027 instead of \u0027no VCNs to match\u0027?",
+      "range": {
+        "startLine": 663,
+        "startChar": 16,
+        "endLine": 663,
+        "endChar": 59
+      },
+      "revId": "3c84ec80625170e4340f260d875fd423b9fc8939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "997244f7_fca804ef",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-09T19:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8ba441e_70096710",
       "range": {
         "startLine": 663,
         "startChar": 16,
