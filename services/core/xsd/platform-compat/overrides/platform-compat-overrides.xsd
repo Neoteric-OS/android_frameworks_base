@@ -32,6 +32,7 @@
         <xs:attribute type="xs:long" name="minVersionCode" />
         <xs:attribute type="xs:long" name="maxVersionCode" />
         <xs:attribute type="xs:boolean" name="enabled" use="required" />
+        <xs:attribute type="xs:int" name="creatorUid" />
     </xs:complexType>
 
     <xs:complexType name="change-overrides">

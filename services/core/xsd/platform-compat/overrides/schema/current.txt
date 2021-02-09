@@ -43,10 +43,12 @@ package com.android.server.compat.overrides {
 
   public class RawOverrideValue {
     ctor public RawOverrideValue();
+    method public int getCreatorUid();
     method public boolean getEnabled();
     method public long getMaxVersionCode();
     method public long getMinVersionCode();
     method public String getPackageName();
+    method public void setCreatorUid(int);
     method public void setEnabled(boolean);
     method public void setMaxVersionCode(long);
     method public void setMinVersionCode(long);

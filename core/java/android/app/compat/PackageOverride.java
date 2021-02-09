@@ -17,8 +17,10 @@
 package android.app.compat;
 
 import android.annotation.IntDef;
+import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.os.Parcel;
-import android.os.Parcelable;
+import android.os.Process;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -32,15 +34,16 @@ import java.lang.annotation.RetentionPolicy;
  *
  * @hide
  */
-public class PackageOverride implements Parcelable {
+@SystemApi
+public final class PackageOverride {
 
+    /** @hide */
     @IntDef({
             VALUE_UNDEFINED,
             VALUE_ENABLED,
             VALUE_DISABLED
     })
     @Retention(RetentionPolicy.SOURCE)
-    /** @hide */
     public @interface EvaluatedOverride {
     }
 
@@ -66,17 +69,16 @@ public class PackageOverride implements Parcelable {
     private final long mMinVersionCode;
     private final long mMaxVersionCode;
     private final boolean mEnabled;
+    private final int mCreatorUid;
 
     private PackageOverride(long minVersionCode,
             long maxVersionCode,
-            boolean enabled) {
+            boolean enabled,
+            int creatorUid) {
         this.mMinVersionCode = minVersionCode;
         this.mMaxVersionCode = maxVersionCode;
         this.mEnabled = enabled;
-    }
-
-    private PackageOverride(Parcel in) {
-        this(in.readLong(), in.readLong(), in.readBoolean());
+        this.mCreatorUid = creatorUid;
     }
 
     /**
@@ -114,22 +116,26 @@ public class PackageOverride implements Parcelable {
     }
 
     /** Returns the enabled value for the override. */
-    public boolean getEnabled() {
+    public boolean isEnabled() {
         return mEnabled;
     }
 
-    /** @hide */
-    @Override
-    public int describeContents() {
-        return 0;
+    /** @hide Returns the uid of the package that set the override. */
+    public int getCreatorUid() {
+        return mCreatorUid;
     }
 
     /** @hide */
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest) {
         dest.writeLong(mMinVersionCode);
         dest.writeLong(mMaxVersionCode);
         dest.writeBoolean(mEnabled);
+        dest.writeInt(mCreatorUid);
+    }
+
+    /** @hide */
+    public static PackageOverride createFromParcel(Parcel in) {
+        return new PackageOverride(in.readLong(), in.readLong(), in.readBoolean(), in.readInt());
     }
 
     /** @hide */
@@ -141,34 +147,21 @@ public class PackageOverride implements Parcelable {
         return String.format("[%d,%d,%b]", mMinVersionCode, mMaxVersionCode, mEnabled);
     }
 
-    /** @hide */
-    public static final Creator<PackageOverride> CREATOR =
-            new Creator<PackageOverride>() {
-
-                @Override
-                public PackageOverride createFromParcel(Parcel in) {
-                    return new PackageOverride(in);
-                }
-
-                @Override
-                public PackageOverride[] newArray(int size) {
-                    return new PackageOverride[size];
-                }
-            };
-
     /**
      * Builder to construct a PackageOverride.
      */
-    public static class Builder {
+    public static final class Builder {
         private long mMinVersionCode = Long.MIN_VALUE;
         private long mMaxVersionCode = Long.MAX_VALUE;
         private boolean mEnabled;
+        private int mCreatorUid = Process.myUid();
 
         /**
          * Sets the minimum version code the override should apply from.
          *
          * default value: {@code Long.MIN_VALUE}.
          */
+        @NonNull
         public Builder setMinVersionCode(long minVersionCode) {
             mMinVersionCode = minVersionCode;
             return this;
@@ -179,6 +172,7 @@ public class PackageOverride implements Parcelable {
          *
          * default value: {@code Long.MAX_VALUE}.
          */
+        @NonNull
         public Builder setMaxVersionCode(long maxVersionCode) {
             mMaxVersionCode = maxVersionCode;
             return this;
@@ -189,8 +183,22 @@ public class PackageOverride implements Parcelable {
          *
          * default value: {@code false}.
          */
+        @NonNull
         public Builder setEnabled(boolean enabled) {
             mEnabled = enabled;
+            return this;
+        }
+
+        /**
+         * Sets the creator UID of the override. This is for internal use only.
+         *
+         * default value: Process.myUid()
+         *
+         * @hide
+         */
+        @NonNull
+        public Builder setCreatorUid(int creatorUid) {
+            mCreatorUid = creatorUid;
             return this;
         }
 
@@ -200,12 +208,13 @@ public class PackageOverride implements Parcelable {
          * @throws IllegalArgumentException if {@code minVersionCode} is larger than
          *                                  {@code maxVersionCode}.
          */
+        @NonNull
         public PackageOverride build() {
             if (mMinVersionCode > mMaxVersionCode) {
                 throw new IllegalArgumentException("minVersionCode must not be larger than "
                         + "maxVersionCode");
             }
-            return new PackageOverride(mMinVersionCode, mMaxVersionCode, mEnabled);
+            return new PackageOverride(mMinVersionCode, mMaxVersionCode, mEnabled, mCreatorUid);
         }
     };
 }

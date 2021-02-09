@@ -259,6 +259,37 @@ public class CompatConfigTest {
     }
 
     @Test
+    public void testInstallerCanSetOverrides() throws Exception {
+        final long changeId = 1234L;
+        final int installerUid = 23;
+        CompatConfig compatConfig = CompatConfigBuilder.create(mBuildClassifier, mContext)
+                .addOverridableChangeWithId(1234L)
+                .build();
+        ApplicationInfo applicationInfo = ApplicationInfoBuilder.create()
+                .withPackageName("com.some.package")
+                .build();
+        PackageManager packageManager = mock(PackageManager.class);
+        when(mContext.getPackageManager()).thenReturn(packageManager);
+        when(packageManager.getApplicationInfo(eq("com.some.package"), anyInt()))
+                .thenReturn(applicationInfo);
+
+        // Force the validator to prevent overriding the change by using a user build.
+        when(mBuildClassifier.isDebuggableBuild()).thenReturn(false);
+        when(mBuildClassifier.isFinalBuild()).thenReturn(true);
+
+        CompatibilityOverrideConfig config = new CompatibilityOverrideConfig(
+                Collections.singletonMap(1234L,
+                        new PackageOverride.Builder()
+                                .setMaxVersionCode(99L)
+                                .setEnabled(true)
+                                .setCreatorUid(installerUid)
+                                .build()));
+
+        compatConfig.addOverrides(config, "com.some.package");
+        assertThat(compatConfig.isChangeEnabled(1234L, applicationInfo)).isTrue();
+    }
+
+    @Test
     public void testApplyDeferredOverridesAfterInstallingApp() throws Exception {
         ApplicationInfo applicationInfo = ApplicationInfoBuilder.create()
                 .withPackageName("com.notinstalled.foo")
@@ -610,9 +641,20 @@ public class CompatConfigTest {
                                 .build());
         when(mPackageManager.getApplicationInfo(eq("bar.baz"), anyInt()))
                 .thenThrow(new NameNotFoundException());
-
-        compatConfig.addOverride(1L, "foo.bar", true);
-        compatConfig.addOverride(2L, "bar.baz", false);
+        compatConfig.addOverrides(
+                new CompatibilityOverrideConfig(
+                        Collections.singletonMap(
+                                1L,
+                                new PackageOverride.Builder()
+                                        .setEnabled(true).setCreatorUid(23).build())),
+                "foo.bar");
+        compatConfig.addOverrides(
+                new CompatibilityOverrideConfig(
+                        Collections.singletonMap(
+                                2L,
+                                new PackageOverride.Builder()
+                                        .setEnabled(false).setCreatorUid(23).build())),
+                "bar.baz");
 
         assertThat(readFile(overridesFile)).isEqualTo("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                 + "<overrides>\n"
@@ -624,7 +666,7 @@ public class CompatConfigTest {
                 + "        <raw>\n"
                 + "            <raw-override-value packageName=\"foo.bar\" "
                 + "minVersionCode=\"-9223372036854775808\" "
-                + "maxVersionCode=\"9223372036854775807\" enabled=\"true\">\n"
+                + "maxVersionCode=\"9223372036854775807\" enabled=\"true\" creatorUid=\"23\">\n"
                 + "            </raw-override-value>\n"
                 + "        </raw>\n"
                 + "    </change-overrides>\n"
@@ -634,7 +676,7 @@ public class CompatConfigTest {
                 + "        <raw>\n"
                 + "            <raw-override-value packageName=\"bar.baz\" "
                 + "minVersionCode=\"-9223372036854775808\" "
-                + "maxVersionCode=\"9223372036854775807\" enabled=\"false\">\n"
+                + "maxVersionCode=\"9223372036854775807\" enabled=\"false\" creatorUid=\"23\">\n"
                 + "            </raw-override-value>\n"
                 + "        </raw>\n"
                 + "    </change-overrides>\n"
@@ -656,6 +698,7 @@ public class CompatConfigTest {
                         .setMinVersionCode(99L)
                         .setMaxVersionCode(101L)
                         .setEnabled(true)
+                        .setCreatorUid(23)
                         .build())), "foo.bar");
 
         assertThat(readFile(overridesFile)).isEqualTo("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
@@ -665,7 +708,8 @@ public class CompatConfigTest {
                 + "        </validated>\n"
                 + "        <raw>\n"
                 + "            <raw-override-value packageName=\"foo.bar\" "
-                + "minVersionCode=\"99\" maxVersionCode=\"101\" enabled=\"true\">\n"
+                + "minVersionCode=\"99\" maxVersionCode=\"101\" enabled=\"true\" "
+                + "creatorUid=\"23\">\n"
                 + "            </raw-override-value>\n"
                 + "        </raw>\n"
                 + "    </change-overrides>\n"
