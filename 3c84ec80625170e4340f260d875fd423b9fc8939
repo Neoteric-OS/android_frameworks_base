@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbb8460b_897dfd7c",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-09T21:42:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "59d24f16_359f4499",
+      "range": {
+        "startLine": 668,
+        "startChar": 8,
+        "endLine": 670,
+        "endChar": 9
+      },
+      "revId": "3c84ec80625170e4340f260d875fd423b9fc8939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b100c22_d3da7b5a",
