@@ -16,6 +16,23 @@
       "message": "Hello @Keun-young, Thank you for your review! I\u0027ve fixed all your comments.",
       "revId": "7b44b8607418646e08ec1d5375795a016efb8919",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14137a17_65892de1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-02-09T14:36:01Z",
+      "side": 1,
+      "message": "Please, let me know if any action is expected from my side?",
+      "revId": "7b44b8607418646e08ec1d5375795a016efb8919",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
