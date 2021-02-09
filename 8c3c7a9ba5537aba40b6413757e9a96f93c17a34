@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c549cbf2_7b041291",
+        "filename": "core/java/android/app/ApplicationExitInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-09T22:08:22Z",
+      "side": 1,
+      "message": "If we have this one, seems there will be two ApplicationExitInfo records per native crash: this one and the REASON_CRASH_NATIVE. Maybe we can just reuse the REASON_CRASH_NATIVE?",
+      "range": {
+        "startLine": 164,
+        "startChar": 28,
+        "endLine": 164,
+        "endChar": 58
+      },
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7eda72e7_b5acf971",
+        "filename": "core/java/android/app/ApplicationExitInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-09T22:08:22Z",
+      "side": 1,
+      "message": "Wondering who is the owner of this FD and make sure it\u0027ll be closed? If the caller didn\u0027t call getTraceInputStream(), the FD will remain open...",
+      "range": {
+        "startLine": 444,
+        "startChar": 33,
+        "endLine": 444,
+        "endChar": 52
+      },
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dda873f_a414698a",
+        "filename": "core/java/android/app/ApplicationExitInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-09T22:08:22Z",
+      "side": 1,
+      "message": "Maybe we\u0027d need to update the doc to mention it could return the tombstone starting from S?",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a40b974e_0b1a36a3",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-09T22:08:22Z",
+      "side": 1,
+      "message": "Instead of adding a new ApplicationExitInfo record, since the \"output\" should have included the records with native crashes, maybe we could just check if there is a record in the \u0027output\u0027 with REASON_CRASH_NATIVE, and its UID/PID matches with one of the records in the mTombstones, if yes, call `setNativeTombstonePfd` on that one",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dc864b6_cbc42abe",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-09T22:08:22Z",
+      "side": 1,
+      "message": "Just a question, if an app is holding a readonly FD to this proto file (it gets via our new API ), will this function call cause any negative impact ?",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
