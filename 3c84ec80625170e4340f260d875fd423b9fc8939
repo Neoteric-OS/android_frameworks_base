@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5acae77_27de87ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-09T07:13:08Z",
+      "side": 1,
+      "message": "looks like there were 2ish bugs:\n- tests were originally written when NOT_VCN_MANAGED was a default capability, and not updated when that changed\n- tests were not correctly updated when the check to Vcn#isActive was added (which would have revealed the bug)",
+      "range": {
+        "startLine": 13,
+        "startChar": 23,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "3c84ec80625170e4340f260d875fd423b9fc8939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8af5bac_afdec6f1",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-09T07:13:08Z",
+      "side": 1,
+      "message": "may be worth adding a comment to explain this case - it\u0027s slightly less clear to me than the NOT_VCN_MANAGED bit",
+      "range": {
+        "startLine": 668,
+        "startChar": 8,
+        "endLine": 670,
+        "endChar": 9
+      },
+      "revId": "3c84ec80625170e4340f260d875fd423b9fc8939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b100c22_d3da7b5a",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-09T07:13:08Z",
+      "side": 1,
+      "message": "should we be verifying this for all #getUnderlyingNetworkPolicy tests?",
+      "range": {
+        "startLine": 612,
+        "startChar": 8,
+        "endLine": 612,
+        "endChar": 56
+      },
+      "revId": "3c84ec80625170e4340f260d875fd423b9fc8939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24b79013_46a91489",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-09T07:13:08Z",
+      "side": 1,
+      "message": "these tests seem fairly similar - thoughts on refactoring to something like below?\n\n```\ntestGetUnderlyingNetworkPolicy\u003cTransport\u003e() {\n  // set up VCN\n  // set up NetworkCapabilities for \u003ctransport\u003e\n\n  verifyGetUnderlyingNetworkCapabilities(\n      NetworkCapabilities, expectedTransport, expectVcnManaged, expectRestricted);\n}\n```",
+      "range": {
+        "startLine": 558,
+        "startChar": 4,
+        "endLine": 660,
+        "endChar": 5
+      },
+      "revId": "3c84ec80625170e4340f260d875fd423b9fc8939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8ba441e_70096710",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-09T07:13:08Z",
+      "side": 1,
+      "message": "thoughts on also starting a VCN in this test to make sure that it passes due to \u0027not matching\u0027 instead of \u0027no VCNs to match\u0027?",
+      "range": {
+        "startLine": 663,
+        "startChar": 16,
+        "endLine": 663,
+        "endChar": 59
+      },
+      "revId": "3c84ec80625170e4340f260d875fd423b9fc8939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
