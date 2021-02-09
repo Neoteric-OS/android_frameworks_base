@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff22e445_5c394460",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 21
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-02-09T12:48:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "054481c4_0249ff31",
+      "range": {
+        "startLine": 9,
+        "startChar": 60,
+        "endLine": 9,
+        "endChar": 68
+      },
+      "revId": "01042b109cb29a18a19e72435f5ef3f24f4f0ec2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08431146_b5843473",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "676c75a8_18620316",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 21
+      },
+      "lineNbr": 6305,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-02-09T12:48:26Z",
+      "side": 1,
+      "message": "thanks, done",
+      "parentUuid": "08431146_b5843473",
+      "range": {
+        "startLine": 6305,
+        "startChar": 32,
+        "endLine": 6305,
+        "endChar": 51
+      },
+      "revId": "01042b109cb29a18a19e72435f5ef3f24f4f0ec2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ea42a3a_dbd3aa1e",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-08T06:51:06Z",
       "side": 1,
       "message": "You need to update this documentation, as mPrivateDnsBroken is not @SystemApi. Suggested rewording is simply :\n\n  @return {@code true} if private DNS is broken on this network.",
+      "range": {
+        "startLine": 2086,
+        "startChar": 28,
+        "endLine": 2086,
+        "endChar": 56
+      },
+      "revId": "01042b109cb29a18a19e72435f5ef3f24f4f0ec2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2033dbb5_68aa109d",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 2086,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-02-09T12:48:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ea42a3a_dbd3aa1e",
       "range": {
         "startLine": 2086,
         "startChar": 28,
