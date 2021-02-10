@@ -32,8 +32,6 @@ import java.util.Objects;
  *
  * <p>A {@link VcnControlPlaneConfig} object can be shared by multiple {@link
  * VcnGatewayConnectionConfig}(s) if they will used for connecting with the same remote endpoint.
- *
- * @hide
  */
 public abstract class VcnControlPlaneConfig {
     /** @hide */

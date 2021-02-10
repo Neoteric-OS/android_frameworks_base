@@ -31,8 +31,6 @@ import java.util.Objects;
  *
  * <p>This class is an extension of the {@link VcnControlPlaneConfig}, containing IKEv2-specific
  * configuration, authentication and authorization parameters.
- *
- * @hide
  */
 public final class VcnControlPlaneIkeConfig extends VcnControlPlaneConfig {
     private static final String IKE_PARAMS_KEY = "mIkeParams";
