@@ -22,6 +22,30 @@
       },
       "revId": "d02d6a4f2ebb2f0511e189309338ae72e112c4c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b20fe7c5_9e411b14",
+        "filename": "core/java/android/print/PrintAttributes.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1842516
+      },
+      "writtenOn": "2021-02-10T18:04:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "64a93ec4_c3496f94",
+      "range": {
+        "startLine": 639,
+        "startChar": 38,
+        "endLine": 639,
+        "endChar": 44
+      },
+      "revId": "d02d6a4f2ebb2f0511e189309338ae72e112c4c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
