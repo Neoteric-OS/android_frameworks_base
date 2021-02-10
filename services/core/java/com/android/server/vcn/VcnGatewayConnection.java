@@ -563,6 +563,8 @@ public class VcnGatewayConnection extends StateMachine {
         }
 
         mUnderlyingNetworkTracker.teardown();
+
+        mGatewayStatusCallback.onQuit();
     }
 
     /**
