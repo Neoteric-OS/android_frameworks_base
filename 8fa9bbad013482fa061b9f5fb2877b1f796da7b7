@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba2af8bb_33c25149",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2021-02-10T12:07:02Z",
+      "side": 1,
+      "message": "This change seems to be a squashed cherry-pick of these two changes:\n- https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/13415396\n- https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/13463873\n\nIs this on purpose?\n",
+      "revId": "8fa9bbad013482fa061b9f5fb2877b1f796da7b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
