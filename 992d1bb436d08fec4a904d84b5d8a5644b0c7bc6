@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04e619cf_af392641",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431413
+      },
+      "writtenOn": "2021-02-10T00:34:40Z",
+      "side": 1,
+      "message": "This should not be needed in the topic as this does not depend on proto_logging",
+      "revId": "992d1bb436d08fec4a904d84b5d8a5644b0c7bc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
