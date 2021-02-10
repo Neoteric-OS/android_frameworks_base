@@ -175,6 +175,30 @@
       },
       "revId": "ad8869194f57767d962ae0ec6c380b7f3f7f631e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ee05c94_3edf57e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2021-02-10T15:30:38Z",
+      "side": 1,
+      "message": "Callback is just there to give the strategy what it needs while keeping it (mostly) divorced from hard-to-mock (or complex) framework class interactions.\n\nI don\u0027t think you need to go near the strategy to change what the environment returns. You already have \"autoOriginPriorities()\", which isolates the strategy from how the value is determined. Providing it changes in thread-safe way, the strategy shouldn\u0027t care. It might be worth stating for our own benefit that the value can change from one call to the next, and check that the strategy impl doesn\u0027t assume consistency between calls.\n\nThat said, I can see why you are having trouble. It\u0027s one to discuss in person, I think. The service / service test is probably going to need to be rearranged to make it easier.",
+      "parentUuid": "585b8f04_1ecbf01e",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "ad8869194f57767d962ae0ec6c380b7f3f7f631e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
