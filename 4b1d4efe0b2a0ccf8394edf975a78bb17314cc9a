@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac0e42c2_5f29d34c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 48
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-10T15:38:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e667414e_3d6fab7e",
+      "range": {
+        "startLine": 1283,
+        "startChar": 27,
+        "endLine": 1283,
+        "endChar": 47
+      },
+      "revId": "4b1d4efe0b2a0ccf8394edf975a78bb17314cc9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "74eefa00_095ff3fb",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-10T09:18:41Z",
       "side": 1,
       "message": "I think Roshan went out of his way to make sure there isn\u0027t a way to forget passing the attribution tag by not supplying a constructor like this. Can you please not add one, and instead pass null /* attributionTags */ in the new call site ?",
+      "range": {
+        "startLine": 5670,
+        "startChar": 8,
+        "endLine": 5672,
+        "endChar": 64
+      },
+      "revId": "4b1d4efe0b2a0ccf8394edf975a78bb17314cc9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77ac249a_22c15a89",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 48
+      },
+      "lineNbr": 5672,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-10T15:38:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74eefa00_095ff3fb",
       "range": {
         "startLine": 5670,
         "startChar": 8,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d8c647f_69914c5c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 48
+      },
+      "lineNbr": 9365,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-10T15:38:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "669cb9e9_431b8ae0",
+      "range": {
+        "startLine": 9365,
+        "startChar": 17,
+        "endLine": 9365,
+        "endChar": 60
+      },
+      "revId": "4b1d4efe0b2a0ccf8394edf975a78bb17314cc9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73a1a368_3d5d4118",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-02-10T09:18:41Z",
       "side": 1,
       "message": "I think this will fit on the previous line",
+      "range": {
+        "startLine": 9366,
+        "startChar": 20,
+        "endLine": 9366,
+        "endChar": 21
+      },
+      "revId": "4b1d4efe0b2a0ccf8394edf975a78bb17314cc9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91686c07_7591646a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 48
+      },
+      "lineNbr": 9366,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-10T15:38:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73a1a368_3d5d4118",
       "range": {
         "startLine": 9366,
         "startChar": 20,
