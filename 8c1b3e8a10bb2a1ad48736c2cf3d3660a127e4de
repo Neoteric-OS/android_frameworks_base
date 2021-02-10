@@ -16,6 +16,24 @@
       "message": "Suggest: change NetworkAgentInfo to pass in a dependencies object.\n\n    class ConnectivityService {\n...\n        public static class Dependencies {\n            public boolean getCellular464XlatEnabled() {\n                return NetworkProperties.cellular_464xlat_enabled().orElse(false);\n            }\n        }\n...\n    }\n\n    class Nat464Xlat {\n        private final Dependencies mDeps;\n\n        public Nat464Xlat(NetworkAgentInfo nai, INetd netd, IDnsResolver dnsResolver,\n                INetworkManagementService nmService, ConnectivityService.Dependencies deps) {\n            mEnableClatOnCellular \u003d mDeps.getCellular464XlatEnabled();\n        }\n\n    class ConnectivityServiceTest {\n\n       public void makeDependencies() {\n            doReturn(true).when(mDependencies).getCellular464XlatEnabled();\n       }\n\n       public testWith464XlatEnabled() {\n            // do stuff and check that 464xlat does something. we already have these tests, no need to add any more\n       }\n\n        public testWith464XlatDisable() {\n            doReturn(false).when(mDependencies).getCellular464XlatEnabled();\n            // do stuff and have a simple check that 464xlat does nothing at all when it should otherwise start\n        }\n    }",
       "revId": "8c1b3e8a10bb2a1ad48736c2cf3d3660a127e4de",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74c0600d_b92b1c1f",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2021-02-10T19:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6d261ed_8a6c58ff",
+      "revId": "8c1b3e8a10bb2a1ad48736c2cf3d3660a127e4de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
