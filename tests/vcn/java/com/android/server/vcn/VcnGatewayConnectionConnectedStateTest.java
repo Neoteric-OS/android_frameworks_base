@@ -194,4 +194,22 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
         assertEquals(mGatewayConnection.mRetryTimeoutState, mGatewayConnection.getCurrentState());
         verify(mIkeSession).close();
     }
+
+    @Test
+    public void testTeardown() throws Exception {
+        mGatewayConnection.teardownAsynchronously();
+        mTestLooper.dispatchAll();
+
+        assertEquals(mGatewayConnection.mDisconnectingState, mGatewayConnection.getCurrentState());
+        assertFalse(mGatewayConnection.isRunning());
+    }
+
+    @Test
+    public void testNonTeardownDisconnectRequest() throws Exception {
+        mGatewayConnection.sendDisconnectRequested("TEST", false);
+        mTestLooper.dispatchAll();
+
+        assertEquals(mGatewayConnection.mDisconnectingState, mGatewayConnection.getCurrentState());
+        assertTrue(mGatewayConnection.isRunning());
+    }
 }
