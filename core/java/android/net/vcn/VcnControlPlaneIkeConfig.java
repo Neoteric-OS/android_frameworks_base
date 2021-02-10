@@ -33,8 +33,6 @@ import java.util.Objects;
  * configuration, authentication and authorization parameters.
  *
  * @see VcnControlPlaneConfig
- *
- * @hide
  */
 public final class VcnControlPlaneIkeConfig extends VcnControlPlaneConfig {
     private static final String IKE_PARAMS_KEY = "mIkeParams";
