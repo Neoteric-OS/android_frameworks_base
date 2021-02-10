@@ -251,6 +251,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "046e08f8_257f606e",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-10T01:57:27Z",
+      "side": 1,
+      "message": "\u003e \u003e If the app forks a child process, the system_server wouldn\u0027t be aware of that because all the managed processes are supposed to be forked via zygote (or app zygote). I\u0027m not sure if we should support this case here, but for previous release, crash reports from the child processes are not supported via the public API, so I\u0027d prefer to ignore the child process thing because a) it\u0027s a grey area that it does work but we don\u0027t formally support it\n\u003e \n\u003e We can\u0027t really tell the difference from the native crash side, and it seems unfortunate to not report crashes that we have the capability to do so.\n\u003e \nWell, I agree with you here, we may need to clearly tell this in the doc that we do support the crash report of child processes in this case.\n\u003e \u003e b) parent process should be able to debug the child process IIRC.\n\u003e \n\u003e The main point of this is to make it so that people don\u0027t have to rewrite crash dumping logic, since the mitigations that exist currently/are in the process of being added (scudo info, gwp-asan, MTE, PAC/BTI) can give more useful crash information than just a stacktrace, and it\u0027s going to be hard for third parties to keep up with improvements in the platform.\n\u003e \nACK.\n\u003e \u003e For the case that the proto tombstone could be gone because it\u0027s deleted by other crashes, just for confirmation, as here we\u0027re holding a r/w fd to that file, it should remain there even if it\u0027s \"unlinked\" by the tombstoned ? And if it\u0027s really gone, I think the race condition here also applies to the REASON_CRASH_NATIVE_STRUCTURED ?\n\u003e \n\u003e tombstoned will only unlink the tombstone when it\u0027s about to replace it with another one, but the data will stay intact until all fds to it are closed, yes. We\u0027ll wipe out the entry in NativeTombstoneManager once this happens, so subsequent calls to get crashes will no longer return the proto tombstone. But I think that behavior is less strange than a REASON_CRASH_NATIVE only sometimes having proto tombstones.\n\u003e \nQuestion: for a normal app crash (without the child process), we should be able to get the proto tombstones as long as the process is gone, right? If it\u0027s a child process who is crashing, there won\u0027t be a record with REASON_CRASH_NATIVE as of now, because system_server gets the notification of such a crash via the zygote - if the app child process crashes, zygote won\u0027t be aware of this.\n\u003e \u003e Currently the typically use case is that, app crashes and restarts, and at the beginning of the start, it\u0027ll call the API to see what caused the last crash, it\u0027ll extract whatever information the API returns and do its own crash reporting. Having two distinct records (REASON_CRASH_NATIVE_STRUCTURED and REASON_CRASH_NATIVE) for a single crash would be a little bit confusing IMO.\n\u003e \n\u003e How about adding an overload of getHistoricalProcessExitReasons, with a flags argument that defines whether you want the text tombstone or the proto tombstone?\n\u003e \nIs there a text version tombstone available via this API ? The REASON_CRASH_NATIVE doesn\u0027t have the tombstone trace as of now...\n\u003e (I guess at that point, that\u0027s not really any different from the original CL that added a separate service...)",
+      "parentUuid": "8798c82d_0288f980",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8dc864b6_cbc42abe",
         "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
         "patchSetId": 2
@@ -334,6 +352,24 @@
       "side": 1,
       "message": "(Also, the mmap crash would only happen if they cast the InputStream to a FileInputStream and retrieve the fd from that, which we could probably call unsupported behavior)",
       "parentUuid": "bab26ef5_4149f3ab",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6348d02a_334c1ead",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-10T01:57:27Z",
+      "side": 1,
+      "message": "Yeah, but at least GMS apps are still actively using this mechanism :P",
+      "parentUuid": "cac33af1_24412636",
       "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
