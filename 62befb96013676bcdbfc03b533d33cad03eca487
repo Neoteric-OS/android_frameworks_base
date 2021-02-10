@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4c8ca34_6d8425b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T09:37:31Z",
+      "side": 1,
+      "message": "I am confused by the structure of this patch and I don\u0027t think it works. The callbacks registered with registerDefaultNetworkCallback still need to send the correct arguments to other callbacks than onAvailable and onLost, notably onCapabilitiesChanged and onLinkPropertiesChanged. I don\u0027t think this patch achieves that. In fact, if tests haven\u0027t caught this, we need to write tests to cover it.\n\nHere is what the design doc said about TRACK DEFAULT (redacted a bit to remove parts that were excluded by comments) :\n\u003c\u003c\u003c\u003c\nExisting : when apps call registerDefaultNetworkCallback, this calls CS#requestNetwork with a null set of capabilities. This in turn files a request with type TRACK_DEFAULT and the same set of capabilities as the default request.\n\nTRACK_DEFAULT requests will need to be updated to track the correct network. We will need to overhaul how this works ; we should move creation of the TRACK_DEFAULT request to the CS thread and update all tracked requests when the policy is updated. It\u0027s a relatively big change.\n\u003e\u003e\u003e\u003e\n\nI think the only realistic way to make TRACK_DEFAULT work is to make sure that when an app files a TRACK_DEFAULT request, it copies the relevant default request for the UID. Then the machinery should take care of them as a matter of course. The trouble, as described by the text above, is that whenever the OEM preferences are updated we need to update all the TRACK_DEFAULT requests.\n",
+      "revId": "62befb96013676bcdbfc03b533d33cad03eca487",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93644526_5dd7626d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6234,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T09:37:31Z",
+      "side": 1,
+      "message": "I don\u0027t understand why you need to query this. In principle, there could be a default multilayer request for a non-restricted network, and we should still call the callbacks.",
+      "range": {
+        "startLine": 6234,
+        "startChar": 15,
+        "endLine": 6234,
+        "endChar": 71
+      },
+      "revId": "62befb96013676bcdbfc03b533d33cad03eca487",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
