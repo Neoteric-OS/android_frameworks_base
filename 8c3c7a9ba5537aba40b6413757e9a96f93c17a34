@@ -287,6 +287,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c168546b_a7ccb3d7",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-10T02:48:42Z",
+      "side": 1,
+      "message": "\u003e \u003e Question: for a normal app crash (without the child process), we should be able to get the proto tombstones as long as the process is gone, right? If it\u0027s a child process who is crashing, there won\u0027t be a record with REASON_CRASH_NATIVE as of now, because system_server gets the notification of such a crash via the zygote - if the app child process crashes, zygote won\u0027t be aware of this.\n\u003e \n\u003e Correct. It\u0027s actually possible for us to get tombstones before the process is gone, because we support a non-fatal debugging signal that dumps a tombstone and then continues. You just have to wait a bit for the tombstone to get linked onto disk and then system_server to notice that the tombstone was added, since we handle this somewhat asynchronously in the signal handler (we let the process continue once we\u0027ve dumped its thread registers and copied its memory via fork, since unwinding can take some time).\n\u003e \nCool. So I guess for the case of normal app crashes (not the child process crash), the REASON_CRASH_NATIVE should be able to come with the proto tombstone. So the REASON_CRASH_NATIVE_STRUCTURED is really covering the part of child process crash... Thus I\u0027d guess that we could still combine them together as REASON_CRASH_NATIVE ?  Or, your concern is that, after a long time, the tombstone file could have been gone, so the REASON_CRASH_NATIVE will come with no proto tombstone? I guess it\u0027s in fact the same: if we go with the approach of having both REASON_CRASH_NATIVE and REASON_CRASH_NATIVE_STRUCTURED, the caller app will be able to see the crash with REASON_CRASH_NATIVE always, but not always the REASON_CRASH_NATIVE_STRUCTURED as it could have been deleted.\n\u003e \u003e Is there a text version tombstone available via this API ? The REASON_CRASH_NATIVE doesn\u0027t have the tombstone trace as of now...\n\u003e \n\u003e We could translate the proto to text: byte-identical text tombstones can be generated from the protobuf. The code to do so for we capture the protobuf tombstone and then translate it into text for /data/tombstones and logcat).\nGood. Sounds like the translation could be done via a dedicated utility class ?",
+      "parentUuid": "703cfae2_13c20019",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8dc864b6_cbc42abe",
         "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
         "patchSetId": 2
@@ -406,6 +424,24 @@
       "side": 1,
       "message": "welp.\n\nI guess that means we shouldn\u0027t purge until the entire user-id is removed?",
       "parentUuid": "6348d02a_334c1ead",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5ee44d0_2c22abc0",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-10T02:48:42Z",
+      "side": 1,
+      "message": "Yeah sounds we\u0027d need to do that",
+      "parentUuid": "1a64a9c8_307de83e",
       "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
