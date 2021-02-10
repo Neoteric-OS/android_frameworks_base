@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Christoffer Quist Adamsen <christofferqa@google.com>
+Code-Review+2: Michael Wright <michaelwr@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Søren Gjesse <sgjesse@google.com>
+Submitted-at: Wed, 10 Feb 2021 15:20:58 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1580529
+Project: platform/frameworks/base
+Branch: refs/heads/master
