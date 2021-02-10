@@ -318,6 +318,24 @@
       "parentUuid": "b92d4adf_0de56308",
       "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cac33af1_24412636",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-10T01:17:07Z",
+      "side": 1,
+      "message": "(Also, the mmap crash would only happen if they cast the InputStream to a FileInputStream and retrieve the fd from that, which we could probably call unsupported behavior)",
+      "parentUuid": "bab26ef5_4149f3ab",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
