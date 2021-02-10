@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06801609_c22cf095",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2021-02-10T15:08:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3fb1327_46d845ce",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "ad8869194f57767d962ae0ec6c380b7f3f7f631e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "953119a6_b1aea11a",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-28T16:41:50Z",
       "side": 1,
       "message": "Nit: staled -\u003e stale",
+      "range": {
+        "startLine": 11,
+        "startChar": 19,
+        "endLine": 11,
+        "endChar": 25
+      },
+      "revId": "ad8869194f57767d962ae0ec6c380b7f3f7f631e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dde139e_a97d2f0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2021-02-10T15:08:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "953119a6_b1aea11a",
       "range": {
         "startLine": 11,
         "startChar": 19,
@@ -64,6 +112,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "081b577e_c6bc36d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2021-02-10T15:08:02Z",
+      "side": 1,
+      "message": "Thanks, added.",
+      "parentUuid": "1c0d77bb_f1553854",
+      "revId": "ad8869194f57767d962ae0ec6c380b7f3f7f631e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a945c83_51e8f8e1",
@@ -77,6 +143,30 @@
       "writtenOn": "2021-01-28T16:41:50Z",
       "side": 1,
       "message": "Not necessary for the initial check-in, but regarding tests: we should have a testing story for partners / carriers wanting to test/confirm that NITZ signals are still used when NTP is unavailable. Silencing NTP is a little more difficult than silencing NITZ.\n\nPerhaps:\n\nadb shell dumpsys time_detector? \nturn off wifi + cell data plan?\nsystem property to disable NTP or change the priority order?\n\nSomething new with:\n\"adb shell time_detector cmd\" to alter priority or disable NTP might also work.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "ad8869194f57767d962ae0ec6c380b7f3f7f631e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "585b8f04_1ecbf01e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2021-02-10T15:08:02Z",
+      "side": 1,
+      "message": "I\u0027ve added Testing plan section.\nShell command sounds good, but as of now I can\u0027t see clean way of passing it to TimeDetectorStrategyCallbackImpl. I\u0027m not sure if customisation of priorities should be exposed in Callback interface.",
+      "parentUuid": "7a945c83_51e8f8e1",
       "range": {
         "startLine": 14,
         "startChar": 0,
