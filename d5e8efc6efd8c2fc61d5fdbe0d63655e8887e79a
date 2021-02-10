@@ -684,6 +684,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0d61e7f_e3fc4ecd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9400,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T02:41:33Z",
+      "side": 1,
+      "message": "Let\u0027s keep this as an internal class.",
+      "parentUuid": "afe465a1_0d6305b9",
+      "range": {
+        "startLine": 9400,
+        "startChar": 4,
+        "endLine": 9400,
+        "endChar": 9
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f5669647_c4754434",
@@ -862,6 +886,30 @@
       "side": 1,
       "message": "This is in place to handle the scenario where an API caller mistakingly didn\u0027t initialize \u0027int preference\u0027 since:\n\n  OemNetworkPreferences.OEM_NETWORK_PREFERENCE_DEFAULT \u003d 0\n\nIt\u0027s a defensive mechanism for when developers make mistakes and forget to initialize this value and what the behavior should be in that case. On that note, I figured this would be the \u0027best\u0027 (IMO) behavior to have for that scenario.\n\nThoughts? Would a comment help either here or maybe even more so where this IntDef is defined explaining why this value is here?",
       "parentUuid": "b57f55aa_aa45717f",
+      "range": {
+        "startLine": 9445,
+        "startChar": 43,
+        "endLine": 9445,
+        "endChar": 73
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92db4578_deef7f7d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9445,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T02:41:33Z",
+      "side": 1,
+      "message": "Let\u0027s throw them IllegalArgumentException in the original call when this happens, and change the name of the constant from _DEFAULT to _UNINITIALIZED",
+      "parentUuid": "e5bd346b_441e509a",
       "range": {
         "startLine": 9445,
         "startChar": 43,
