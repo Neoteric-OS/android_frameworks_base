@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e0be614_3b364743",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2021-02-10T13:24:26Z",
+      "side": 1,
+      "message": "Looking at presubmits currently running (https://android-build.googleplex.com/builds/treetop/android-review/1569020?ref\u003dCOMMENT\u0026revision\u003d14\u0026revisionAttempt\u003d1\u0026attemptKey\u003dpresubmit-1), there\u0027s already a merge conflict in `core/java/android/content/ContentResolver.java` in `sc-dev` downstream (https://android-build.googleplex.com/builds/pending/P19665382/aosp_cf_x86_64_phone-userdebug/latest/view/logs/git.log), so we\u0027ll need to merge the `sc-dev` changes first.",
+      "revId": "80f8c777e1b8ba12cdb040fd3e52f08ffe0cecae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
