@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee895583_f6adfdc9",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 5087,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-10T06:15:51Z",
+      "side": 1,
+      "message": "ack. Changed to onComplete() as discussed.",
+      "parentUuid": "3f940969_f6b2d3a4",
+      "range": {
+        "startLine": 5087,
+        "startChar": 8,
+        "endLine": 5087,
+        "endChar": 81
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d29b6e2_feb4a054",
@@ -109,6 +133,30 @@
       "side": 1,
       "message": "Resolution deferred until addressing comment on Patch #41: ConnectivityService l.9367.\n\nMost comments have been added except for the listener section due to the above.",
       "parentUuid": "2d29b6e2_feb4a054",
+      "range": {
+        "startLine": 5099,
+        "startChar": 4,
+        "endLine": 5099,
+        "endChar": 7
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5a7974e_e1e85a5e",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 5099,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-10T06:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "487d88ff_77da61eb",
       "range": {
         "startLine": 5099,
         "startChar": 4,
@@ -307,6 +355,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9453811_162f1cba",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9339,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-10T06:15:51Z",
+      "side": 1,
+      "message": "Now obsolete as this code has been removed with the entire try/catch.",
+      "parentUuid": "d000bcd1_c67f772d",
+      "range": {
+        "startLine": 9339,
+        "startChar": 43,
+        "endLine": 9339,
+        "endChar": 76
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c1114adf_b4c2a9dc",
@@ -472,6 +544,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d49012ee_e15d91d1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9367,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-10T06:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "264f99aa_a8c86dc4",
+      "range": {
+        "startLine": 9367,
+        "startChar": 12,
+        "endLine": 9367,
+        "endChar": 20
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f54d779f_e207dc0d",
@@ -533,6 +629,30 @@
       "side": 1,
       "message": "I tend to put the checks in the helper methods that update state. There is very strong precedent in CS that all methods called handle* must be called on the handler thread, so I\u0027m not too worried about those even with the check. But some future careless developer could call updateDefaultNetworks on some other thread, that\u0027s why I suggested it.\n\nLet\u0027s move the one that\u0027s in handle* and move it here",
       "parentUuid": "d5e29000_b8e82766",
+      "range": {
+        "startLine": 9373,
+        "startChar": 17,
+        "endLine": 9373,
+        "endChar": 61
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1c89bc3_0c931431",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9373,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-10T06:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1e1b416_11dd6126",
       "range": {
         "startLine": 9373,
         "startChar": 17,
@@ -910,6 +1030,30 @@
       "side": 1,
       "message": "Let\u0027s throw them IllegalArgumentException in the original call when this happens, and change the name of the constant from _DEFAULT to _UNINITIALIZED",
       "parentUuid": "e5bd346b_441e509a",
+      "range": {
+        "startLine": 9445,
+        "startChar": 43,
+        "endLine": 9445,
+        "endChar": 73
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d06571a8_93f8aebd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9445,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-10T06:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92db4578_deef7f7d",
       "range": {
         "startLine": 9445,
         "startChar": 43,
