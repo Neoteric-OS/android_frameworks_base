@@ -168,6 +168,8 @@ public class VcnGatewayConnection extends StateMachine {
     private static final String DISCONNECT_REASON_INTERNAL_ERROR = "Uncaught exception: ";
     private static final String DISCONNECT_REASON_UNDERLYING_NETWORK_LOST =
             "Underlying Network lost";
+    private static final String DISCONNECT_REASON_NETWORK_AGENT_UNWANTED =
+            "NetworkAgent was unwanted";
     private static final String DISCONNECT_REASON_TEARDOWN = "teardown() called on VcnTunnel";
     private static final int TOKEN_ALL = Integer.MIN_VALUE;
 
@@ -379,13 +381,16 @@ public class VcnGatewayConnection extends StateMachine {
         /** The reason why the disconnect was requested. */
         @NonNull public final String reason;
 
-        EventDisconnectRequestedInfo(@NonNull String reason) {
+        public final boolean shouldTeardown;
+
+        EventDisconnectRequestedInfo(@NonNull String reason, boolean shouldTeardown) {
             this.reason = Objects.requireNonNull(reason);
+            this.shouldTeardown = shouldTeardown;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(reason);
+            return Objects.hash(reason, shouldTeardown);
         }
 
         @Override
@@ -395,7 +400,7 @@ public class VcnGatewayConnection extends StateMachine {
             }
 
             final EventDisconnectRequestedInfo rhs = (EventDisconnectRequestedInfo) other;
-            return reason.equals(rhs.reason);
+            return reason.equals(rhs.reason) && shouldTeardown == rhs.shouldTeardown;
         }
     }
 
@@ -622,10 +627,7 @@ public class VcnGatewayConnection extends StateMachine {
      * <p>Once torn down, this VcnTunnel CANNOT be started again.
      */
     public void teardownAsynchronously() {
-        sendMessageAndAcquireWakeLock(
-                EVENT_DISCONNECT_REQUESTED,
-                TOKEN_ALL,
-                new EventDisconnectRequestedInfo(DISCONNECT_REASON_TEARDOWN));
+        sendDisconnectRequestedAndAcquireWakelock(DISCONNECT_REASON_TEARDOWN, true);
 
         // TODO: Notify VcnInstance (via callbacks) of permanent teardown of this tunnel, since this
         // is also called asynchronously when a NetworkAgent becomes unwanted
@@ -892,7 +894,7 @@ public class VcnGatewayConnection extends StateMachine {
                         TOKEN_ALL,
                         0 /* arg2 */,
                         new EventDisconnectRequestedInfo(
-                                DISCONNECT_REASON_UNDERLYING_NETWORK_LOST));
+                                DISCONNECT_REASON_UNDERLYING_NETWORK_LOST, false));
         mDisconnectRequestAlarm =
                 createScheduledAlarm(
                         DISCONNECT_REQUEST_ALARM,
@@ -1041,11 +1043,8 @@ public class VcnGatewayConnection extends StateMachine {
                 enterState();
             } catch (Exception e) {
                 Slog.wtf(TAG, "Uncaught exception", e);
-                sendMessageAndAcquireWakeLock(
-                        EVENT_DISCONNECT_REQUESTED,
-                        TOKEN_ALL,
-                        new EventDisconnectRequestedInfo(
-                                DISCONNECT_REASON_INTERNAL_ERROR + e.toString()));
+                sendDisconnectRequestedAndAcquireWakelock(
+                        DISCONNECT_REASON_INTERNAL_ERROR + e.toString(), true);
             }
         }
 
@@ -1083,11 +1082,8 @@ public class VcnGatewayConnection extends StateMachine {
                 processStateMsg(msg);
             } catch (Exception e) {
                 Slog.wtf(TAG, "Uncaught exception", e);
-                sendMessageAndAcquireWakeLock(
-                        EVENT_DISCONNECT_REQUESTED,
-                        TOKEN_ALL,
-                        new EventDisconnectRequestedInfo(
-                                DISCONNECT_REASON_INTERNAL_ERROR + e.toString()));
+                sendDisconnectRequestedAndAcquireWakelock(
+                        DISCONNECT_REASON_INTERNAL_ERROR + e.toString(), true);
             }
 
             // Attempt to release the WakeLock - only possible if the Handler queue is empty
@@ -1104,11 +1100,8 @@ public class VcnGatewayConnection extends StateMachine {
                 exitState();
             } catch (Exception e) {
                 Slog.wtf(TAG, "Uncaught exception", e);
-                sendMessageAndAcquireWakeLock(
-                        EVENT_DISCONNECT_REQUESTED,
-                        TOKEN_ALL,
-                        new EventDisconnectRequestedInfo(
-                                DISCONNECT_REASON_INTERNAL_ERROR + e.toString()));
+                sendDisconnectRequestedAndAcquireWakelock(
+                        DISCONNECT_REASON_INTERNAL_ERROR + e.toString(), true);
             }
         }
 
@@ -1141,11 +1134,11 @@ public class VcnGatewayConnection extends StateMachine {
             }
         }
 
-        protected void handleDisconnectRequested(String msg) {
+        protected void handleDisconnectRequested(EventDisconnectRequestedInfo info) {
             // TODO(b/180526152): notify VcnStatusCallback for Network loss
 
-            Slog.v(TAG, "Tearing down. Cause: " + msg);
-            mIsRunning = false;
+            Slog.v(TAG, "Tearing down. Cause: " + info.reason);
+            mIsRunning = !info.shouldTeardown;
 
             teardownNetwork();
 
@@ -1200,9 +1193,11 @@ public class VcnGatewayConnection extends StateMachine {
                     }
                     break;
                 case EVENT_DISCONNECT_REQUESTED:
-                    mIsRunning = false;
+                    if (((EventDisconnectRequestedInfo) msg.obj).shouldTeardown) {
+                        mIsRunning = false;
 
-                    quitNow();
+                        quitNow();
+                    }
                     break;
                 default:
                     logUnhandledMessage(msg);
@@ -1284,10 +1279,11 @@ public class VcnGatewayConnection extends StateMachine {
 
                     break;
                 case EVENT_DISCONNECT_REQUESTED:
+                    EventDisconnectRequestedInfo info = ((EventDisconnectRequestedInfo) msg.obj);
+                    mIsRunning = !info.shouldTeardown;
                     teardownNetwork();
 
-                    String reason = ((EventDisconnectRequestedInfo) msg.obj).reason;
-                    if (reason.equals(DISCONNECT_REASON_UNDERLYING_NETWORK_LOST)) {
+                    if (info.reason.equals(DISCONNECT_REASON_UNDERLYING_NETWORK_LOST)) {
                         // TODO(b/180526152): notify VcnStatusCallback for Network loss
 
                         // Will trigger EVENT_SESSION_CLOSED immediately.
@@ -1391,7 +1387,7 @@ public class VcnGatewayConnection extends StateMachine {
                     transitionTo(mConnectedState);
                     break;
                 case EVENT_DISCONNECT_REQUESTED:
-                    handleDisconnectRequested(((EventDisconnectRequestedInfo) msg.obj).reason);
+                    handleDisconnectRequested((EventDisconnectRequestedInfo) msg.obj);
                     break;
                 case EVENT_SAFE_MODE_TIMEOUT_EXCEEDED:
                     mGatewayStatusCallback.onEnteredSafeMode();
@@ -1438,6 +1434,7 @@ public class VcnGatewayConnection extends StateMachine {
                             mVcnContext.getVcnNetworkProvider()) {
                         @Override
                         public void unwanted() {
+                            Slog.d(TAG, "NetworkAgent was unwanted");
                             teardownAsynchronously();
                         }
 
@@ -1577,7 +1574,7 @@ public class VcnGatewayConnection extends StateMachine {
                     setupInterfaceAndNetworkAgent(mCurrentToken, mTunnelIface, mChildConfig);
                     break;
                 case EVENT_DISCONNECT_REQUESTED:
-                    handleDisconnectRequested(((EventDisconnectRequestedInfo) msg.obj).reason);
+                    handleDisconnectRequested((EventDisconnectRequestedInfo) msg.obj);
                     break;
                 case EVENT_SAFE_MODE_TIMEOUT_EXCEEDED:
                     mGatewayStatusCallback.onEnteredSafeMode();
@@ -1682,7 +1679,7 @@ public class VcnGatewayConnection extends StateMachine {
                     transitionTo(mConnectingState);
                     break;
                 case EVENT_DISCONNECT_REQUESTED:
-                    handleDisconnectRequested(((EventDisconnectRequestedInfo) msg.obj).reason);
+                    handleDisconnectRequested((EventDisconnectRequestedInfo) msg.obj);
                     break;
                 case EVENT_SAFE_MODE_TIMEOUT_EXCEEDED:
                     mGatewayStatusCallback.onEnteredSafeMode();
@@ -1922,6 +1919,14 @@ public class VcnGatewayConnection extends StateMachine {
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     void setIkeSession(@Nullable VcnIkeSession session) {
         mIkeSession = session;
+    }
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    void sendDisconnectRequestedAndAcquireWakelock(String reason, boolean shouldTeardown) {
+        sendMessageAndAcquireWakeLock(
+                EVENT_DISCONNECT_REQUESTED,
+                TOKEN_ALL,
+                new EventDisconnectRequestedInfo(reason, shouldTeardown));
     }
 
     private IkeSessionParams buildIkeParams() {
