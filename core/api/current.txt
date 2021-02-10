@@ -26092,6 +26092,19 @@ package android.net.sip {
 
 }
 
+package android.net.vcn {
+
+  public abstract class VcnControlPlaneConfig {
+  }
+
+  public final class VcnControlPlaneIkeConfig extends android.net.vcn.VcnControlPlaneConfig {
+    ctor public VcnControlPlaneIkeConfig(@NonNull android.net.ipsec.ike.IkeSessionParams, @NonNull android.net.ipsec.ike.TunnelModeChildSessionParams);
+    method @NonNull public android.net.ipsec.ike.TunnelModeChildSessionParams getChildSessionParams();
+    method @NonNull public android.net.ipsec.ike.IkeSessionParams getIkeSessionParams();
+  }
+
+}
+
 package android.nfc {
 
   public class FormatException extends java.lang.Exception {

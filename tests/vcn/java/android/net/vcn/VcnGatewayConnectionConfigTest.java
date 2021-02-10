@@ -92,7 +92,7 @@ public class VcnGatewayConnectionConfigTest {
             new VcnGatewayConnectionConfig.Builder(null).build();
 
             fail("Expected exception due to invalid control plane config");
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException e) {
         }
     }
 
