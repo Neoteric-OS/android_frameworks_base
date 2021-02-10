@@ -5871,7 +5871,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // changes don't alter request matching.
         if (reqType == NetworkRequest.Type.TRACK_SYSTEM_DEFAULT &&
                 (!networkCapabilities.equalRequestableCapabilities(defaultNc))) {
-            Log.wtf(TAG, "TRACK_SYSTEM_DEFAULT capabilities don't match default request: "
+            throw new IllegalStateException(
+                    "TRACK_SYSTEM_DEFAULT capabilities don't match default request: "
                     + networkCapabilities + " vs. " + defaultNc);
         }
 
