@@ -16,6 +16,24 @@
       "message": "I\u0027m happy with the config change, and it\u0027s easy to revert so let\u0027s land it.\n\nI think there will need to be a follow up for improving testing if partners want to confirm that NITZ is still used under some conditions.",
       "revId": "d2dda0e8d3f51fe598ee3869914e1f583ea86fc3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cefb2fd_42f8d54f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2021-02-10T15:35:35Z",
+      "side": 1,
+      "message": "Thanks, I will add it to the bug(and leave it open).",
+      "parentUuid": "754a6a98_b2cb215e",
+      "revId": "d2dda0e8d3f51fe598ee3869914e1f583ea86fc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
