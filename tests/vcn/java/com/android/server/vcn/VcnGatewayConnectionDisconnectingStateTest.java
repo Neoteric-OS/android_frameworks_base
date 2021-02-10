@@ -19,6 +19,8 @@ package com.android.server.vcn;
 import static com.android.server.vcn.VcnGatewayConnection.TEARDOWN_TIMEOUT_SECONDS;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 
 import androidx.test.filters.SmallTest;
@@ -67,5 +69,15 @@ public class VcnGatewayConnectionDisconnectingStateTest extends VcnGatewayConnec
 
         // Should do nothing; already tearing down.
         assertEquals(mGatewayConnection.mDisconnectingState, mGatewayConnection.getCurrentState());
+        assertFalse(mGatewayConnection.isRunning());
+    }
+
+    @Test
+    public void testNonTeardownDisconnectRequest() throws Exception {
+        mGatewayConnection.sendDisconnectRequested("TEST", false);
+        mTestLooper.dispatchAll();
+
+        assertEquals(mGatewayConnection.mDisconnectingState, mGatewayConnection.getCurrentState());
+        assertTrue(mGatewayConnection.isRunning());
     }
 }
