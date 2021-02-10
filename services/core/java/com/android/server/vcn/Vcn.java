@@ -16,6 +16,8 @@
 
 package com.android.server.vcn;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED;
+
 import static com.android.server.VcnManagementService.VDBG;
 
 import android.annotation.NonNull;
@@ -81,6 +83,13 @@ public class Vcn extends Handler {
      * @param obj TelephonySubscriptionSnapshot
      */
     private static final int MSG_EVENT_SUBSCRIPTIONS_CHANGED = MSG_EVENT_BASE + 2;
+
+    /**
+     * A GatewayConnection owned by this VCN quit.
+     *
+     * @param obj VcnGatewayConnectionConfig
+     */
+    private static final int MSG_EVENT_GATEWAY_CONNECTION_QUIT = MSG_EVENT_BASE + 3;
 
     /** Triggers an immediate teardown of the entire Vcn, including GatewayConnections. */
     private static final int MSG_CMD_TEARDOWN = MSG_CMD_BASE;
@@ -213,6 +222,9 @@ public class Vcn extends Handler {
             case MSG_EVENT_SUBSCRIPTIONS_CHANGED:
                 handleSubscriptionsChanged((TelephonySubscriptionSnapshot) msg.obj);
                 break;
+            case MSG_EVENT_GATEWAY_CONNECTION_QUIT:
+                handleGatewayConnectionQuit((VcnGatewayConnectionConfig) msg.obj);
+                break;
             case MSG_CMD_TEARDOWN:
                 handleTeardown();
                 break;
@@ -294,10 +306,19 @@ public class Vcn extends Handler {
                                 mSubscriptionGroup,
                                 mLastSnapshot,
                                 gatewayConnectionConfig,
-                                new VcnGatewayStatusCallbackImpl());
+                                new VcnGatewayStatusCallbackImpl(gatewayConnectionConfig));
                 mVcnGatewayConnections.put(gatewayConnectionConfig, vcnGatewayConnection);
             }
         }
+    }
+
+    private void handleGatewayConnectionQuit(VcnGatewayConnectionConfig config) {
+        Slog.v(getLogTag(), "VcnGatewayConnection quit: " + config);
+        mVcnGatewayConnections.remove(config);
+
+        // Trigger a re-evaluation of all NetworkRequests (to make sure any that can be satisfied
+        // start a new GatewayConnection)
+        mVcnContext.getVcnNetworkProvider().resendAllRequests(mRequestListener);
     }
 
     private void handleSubscriptionsChanged(@NonNull TelephonySubscriptionSnapshot snapshot) {
@@ -313,6 +334,7 @@ public class Vcn extends Handler {
     private boolean requestSatisfiedByGatewayConnectionConfig(
             @NonNull NetworkRequest request, @NonNull VcnGatewayConnectionConfig config) {
         final NetworkCapabilities.Builder builder = new NetworkCapabilities.Builder();
+        builder.addCapability(NET_CAPABILITY_NOT_VCN_MANAGED);
         for (int cap : config.getAllExposedCapabilities()) {
             builder.addCapability(cap);
         }
@@ -335,11 +357,25 @@ public class Vcn extends Handler {
     /** Callback used for passing status signals from a VcnGatewayConnection to its managing Vcn. */
     @VisibleForTesting(visibility = Visibility.PACKAGE)
     public interface VcnGatewayStatusCallback {
+        /** Called by a VcnGatewayConnection to indicate that it has fully torn down. */
+        void onQuit();
+
         /** Called by a VcnGatewayConnection to indicate that it has entered Safemode. */
         void onEnteredSafemode();
     }
 
     private class VcnGatewayStatusCallbackImpl implements VcnGatewayStatusCallback {
+        public final VcnGatewayConnectionConfig mGatewayConnectionConfig;
+
+        VcnGatewayStatusCallbackImpl(VcnGatewayConnectionConfig gatewayConnectionConfig) {
+            mGatewayConnectionConfig = gatewayConnectionConfig;
+        }
+
+        @Override
+        public void onQuit() {
+            sendMessage(obtainMessage(MSG_EVENT_GATEWAY_CONNECTION_QUIT, mGatewayConnectionConfig));
+        }
+
         @Override
         public void onEnteredSafemode() {
             sendMessage(obtainMessage(MSG_CMD_ENTER_SAFEMODE));
