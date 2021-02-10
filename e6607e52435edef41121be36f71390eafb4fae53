@@ -45,6 +45,54 @@
       },
       "revId": "e6607e52435edef41121be36f71390eafb4fae53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b256af29_ae582236",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-02-10T03:47:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7748094_98850cd2",
+      "range": {
+        "startLine": 623,
+        "startChar": 18,
+        "endLine": 623,
+        "endChar": 22
+      },
+      "revId": "e6607e52435edef41121be36f71390eafb4fae53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48988152_ed4c6729",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-02-10T03:47:09Z",
+      "side": 1,
+      "message": "Thanks for reminding me about this. \n\nI added a new value for POST_BOOT and deprecated the old value. The worse we can have when reading the data is a value that changes meaning over time.",
+      "parentUuid": "1fce9121_f945d8ea",
+      "range": {
+        "startLine": 623,
+        "startChar": 33,
+        "endLine": 623,
+        "endChar": 61
+      },
+      "revId": "e6607e52435edef41121be36f71390eafb4fae53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
