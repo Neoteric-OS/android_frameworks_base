@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e667414e_3d6fab7e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 48
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T09:18:41Z",
+      "side": 1,
+      "message": "It\u0027s fine having a helper for this but then please call it in l.1280",
+      "range": {
+        "startLine": 1283,
+        "startChar": 27,
+        "endLine": 1283,
+        "endChar": 47
+      },
+      "revId": "4b1d4efe0b2a0ccf8394edf975a78bb17314cc9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74eefa00_095ff3fb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 48
+      },
+      "lineNbr": 5672,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T09:18:41Z",
+      "side": 1,
+      "message": "I think Roshan went out of his way to make sure there isn\u0027t a way to forget passing the attribution tag by not supplying a constructor like this. Can you please not add one, and instead pass null /* attributionTags */ in the new call site ?",
+      "range": {
+        "startLine": 5670,
+        "startChar": 8,
+        "endLine": 5672,
+        "endChar": 64
+      },
+      "revId": "4b1d4efe0b2a0ccf8394edf975a78bb17314cc9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "669cb9e9_431b8ae0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 48
+      },
+      "lineNbr": 9365,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T09:18:41Z",
+      "side": 1,
+      "message": "DBG is tre by default, maybe you just want something like\n\n  \"set OEM network preferences :\"",
+      "range": {
+        "startLine": 9365,
+        "startChar": 17,
+        "endLine": 9365,
+        "endChar": 60
+      },
+      "revId": "4b1d4efe0b2a0ccf8394edf975a78bb17314cc9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73a1a368_3d5d4118",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 48
+      },
+      "lineNbr": 9366,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T09:18:41Z",
+      "side": 1,
+      "message": "I think this will fit on the previous line",
+      "range": {
+        "startLine": 9366,
+        "startChar": 20,
+        "endLine": 9366,
+        "endChar": 21
+      },
+      "revId": "4b1d4efe0b2a0ccf8394edf975a78bb17314cc9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
