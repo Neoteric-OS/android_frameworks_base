@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f56aa403_d84a9322",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-02-10T15:01:07Z",
+      "side": 1,
+      "message": "Fixed LinkProperties test, retrying presubmit",
+      "revId": "33d49789649a175826432ff8e9f07aa4f04ad7da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
