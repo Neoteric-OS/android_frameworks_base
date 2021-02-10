@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ca48c577_62a52751",
+        "filename": "core/java/android/app/ApplicationExitInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-10T00:44:21Z",
+      "side": 1,
+      "message": "We probably can\u0027t rely on the GC, the FD table could have been busted before the GC occurrs. So I guess we\u0027d probably also need to do a \"lazy\" getter, like the mAppTraceRetriever, only when the app calls getTraceInputStream(), we\u0027ll pass such a FD to it, and it\u0027ll become the caller\u0027s responsibility to close it",
+      "parentUuid": "8c3b6b1b_f36a07ae",
+      "range": {
+        "startLine": 444,
+        "startChar": 33,
+        "endLine": 444,
+        "endChar": 52
+      },
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0dda873f_a414698a",
         "filename": "core/java/android/app/ApplicationExitInfo.java",
         "patchSetId": 2
@@ -167,6 +191,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f8adb097_a7ccbb3d",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-10T00:44:21Z",
+      "side": 1,
+      "message": "If the app forks a child process, the system_server wouldn\u0027t be aware of that because all the managed processes are supposed to be forked via zygote (or app zygote). I\u0027m not sure if we should support this case here, but for previous release, crash reports from the child processes are not supported via the public API, so I\u0027d prefer to ignore the child process thing because a) it\u0027s a grey area that it does work but we don\u0027t formally support it b) parent process should be able to debug the child process IIRC.\n\nFor the case that the proto tombstone could be gone because it\u0027s deleted by other crashes, just for confirmation, as here we\u0027re holding a r/w fd to that file, it should remain there even if it\u0027s \"unlinked\" by the tombstoned ? And if it\u0027s really gone, I think the race condition here also applies to the REASON_CRASH_NATIVE_STRUCTURED ?\n\nFor the PID reuse, I guess we can compare the timestamp to further narrow it down?\n\nCurrently the typically use case is that, app crashes and restarts, and at the beginning of the start, it\u0027ll call the API to see what caused the last crash, it\u0027ll extract whatever information the API returns and do its own crash reporting. Having two distinct records (REASON_CRASH_NATIVE_STRUCTURED and REASON_CRASH_NATIVE) for a single crash would be a little bit confusing IMO.",
+      "parentUuid": "a71cec61_4cca5832",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8dc864b6_cbc42abe",
         "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
         "patchSetId": 2
@@ -196,6 +238,24 @@
       "side": 1,
       "message": "The file will become 0-length, so if they\u0027re reading the file, it\u0027ll get truncated. There\u0027s a potential crash if they have the file mmapped and they read from memory.\n\nHowever, this only gets called via the app getting uninstalled or `am clear-exit-info`, so it shouldn\u0027t actually happen?",
       "parentUuid": "8dc864b6_cbc42abe",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b92d4adf_0de56308",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-10T00:44:21Z",
+      "side": 1,
+      "message": "It\u0027ll also be called in purgePackage() and purgeUser(). Technically it might be risky - for example if one of the package is removed, but there is another package sharing the same UID, it has the crash reporting thing running, but the content of the proto tombstone could be gone ?",
+      "parentUuid": "0ed636b7_5bbdba95",
       "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
