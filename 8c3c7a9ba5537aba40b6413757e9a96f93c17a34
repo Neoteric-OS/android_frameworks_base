@@ -269,6 +269,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "703cfae2_13c20019",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-10T02:18:08Z",
+      "side": 1,
+      "message": "\u003e Question: for a normal app crash (without the child process), we should be able to get the proto tombstones as long as the process is gone, right? If it\u0027s a child process who is crashing, there won\u0027t be a record with REASON_CRASH_NATIVE as of now, because system_server gets the notification of such a crash via the zygote - if the app child process crashes, zygote won\u0027t be aware of this.\n\nCorrect. It\u0027s actually possible for us to get tombstones before the process is gone, because we support a non-fatal debugging signal that dumps a tombstone and then continues. You just have to wait a bit for the tombstone to get linked onto disk and then system_server to notice that the tombstone was added, since we handle this somewhat asynchronously in the signal handler (we let the process continue once we\u0027ve dumped its thread registers and copied its memory via fork, since unwinding can take some time).\n\n\u003e Is there a text version tombstone available via this API ? The REASON_CRASH_NATIVE doesn\u0027t have the tombstone trace as of now...\n\nWe could translate the proto to text: byte-identical text tombstones can be generated from the protobuf. The code to do so for we capture the protobuf tombstone and then translate it into text for /data/tombstones and logcat).",
+      "parentUuid": "046e08f8_257f606e",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8dc864b6_cbc42abe",
         "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
         "patchSetId": 2
@@ -370,6 +388,24 @@
       "side": 1,
       "message": "Yeah, but at least GMS apps are still actively using this mechanism :P",
       "parentUuid": "cac33af1_24412636",
+      "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a64a9c8_307de83e",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-10T02:18:08Z",
+      "side": 1,
+      "message": "welp.\n\nI guess that means we shouldn\u0027t purge until the entire user-id is removed?",
+      "parentUuid": "6348d02a_334c1ead",
       "revId": "8c3c7a9ba5537aba40b6413757e9a96f93c17a34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
