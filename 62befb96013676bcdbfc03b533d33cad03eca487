@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06c9c8d0_19d58128",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-10T22:57:51Z",
+      "side": 1,
+      "message": "Yes, very good point. The onAvailable and onLost are covered in the rematch but what about onCapabilitiesChanged? To that end, that\u0027s actually covered in notifyNetworkCallbacks() on l.8319 in patch 7. The reason I am confident in this is actually due to test failures when I was verifying these changes.\n\nIf you look at this new test in a follow-up CL, you\u0027ll see that we are calling this existing test method: \n defaultNetworkCallback.expectAvailableThenValidatedCallbacks(mEthernetNetworkAgent);\n\nhttps://r.android.com/c/platform/frameworks/base/+/1579208/12/tests/net/java/com/android/server/ConnectivityServiceTest.java#9882\n\nI originally only had changes in the onAvailable and onLost portions of code and this test failed because it also checked for \u0027validated\u0027 which looks to come from the onCapabilitiesChanged event. I then had to modify notifyNetworkCallbacks() on l.8319 which allowed this code to fire for onCapabilitiesChanged (as well as other events) and after that the test passed.\n\nThat said, it looks like what I have is working from what I can tell and the complexity doesn\u0027t seem to bad (IMO). Happy to discuss more but it looks like the above is covered.",
+      "parentUuid": "d4c8ca34_6d8425b8",
+      "revId": "62befb96013676bcdbfc03b533d33cad03eca487",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93644526_5dd7626d",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-02-10T09:37:31Z",
       "side": 1,
       "message": "I don\u0027t understand why you need to query this. In principle, there could be a default multilayer request for a non-restricted network, and we should still call the callbacks.",
+      "range": {
+        "startLine": 6234,
+        "startChar": 15,
+        "endLine": 6234,
+        "endChar": 71
+      },
+      "revId": "62befb96013676bcdbfc03b533d33cad03eca487",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d43d711b_a4da325d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6234,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-10T22:57:51Z",
+      "side": 1,
+      "message": "Yes, good point. This is currently the only situation where an app\u0027s default network callback won\u0027t fire. \n\nConsider OEM_PAID preference:\n \n unmetered -\u003e oem_paid (restricted) -\u003e default network\n\nFor both the unmetered and default networks, the apps own TRACK_DEFAULT callbacks will trigger on their own with no intervention by this code. Therefore in those cases, AFAIK we don\u0027t need/want to send a callback as it would be an additional one.\n\nThe only situation therefore we have to account for is restricted networks which won\u0027t trigger for TRACK_DEFAULT.\n\nNow, we could have increased the complexity here to try and generalize this code, however the increased complexity outweighed (IMO) the benefit considering I don\u0027t imagine the above changing anytime soon and if it does, it would be better to adjust then once we have the concrete requirements available therefore I opted to reduce the complexity and handle the one scenario where TRACK_DEFAULT requests won\u0027t fire on their own.",
+      "parentUuid": "93644526_5dd7626d",
       "range": {
         "startLine": 6234,
         "startChar": 15,
