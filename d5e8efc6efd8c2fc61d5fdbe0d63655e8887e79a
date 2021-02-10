@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3f940969_f6b2d3a4",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 5087,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T00:33:00Z",
+      "side": 1,
+      "message": "Sync\u0027d offline : we decided to have this listener only have one method : onComplete() with no arguments. Rationale :\n• There is no possible asynchronous error today\n• We don\u0027t foresee any asynchronous error in the future\n• If there is, then we\u0027ll extend this with onComplete(Exception) and deprecate the no-arg version",
+      "parentUuid": "58d346ac_72edcd76",
+      "range": {
+        "startLine": 5087,
+        "startChar": 8,
+        "endLine": 5087,
+        "endChar": 81
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d29b6e2_feb4a054",
         "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
         "patchSetId": 41
@@ -426,6 +450,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "264f99aa_a8c86dc4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9367,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T00:33:00Z",
+      "side": 1,
+      "message": "I think the main value of the listener, rather than provide errors (which of course is also valuable), is to tell the caller when the work is done. This will prove invaluable in tests at least – otherwise you don\u0027t know when it\u0027s okay to test. But also for regular callers, it may be really useful to know when the requested change has been applied as this is an asynchronous API.\n\nResolution : keep it with only onComplete() method without arguments.",
+      "parentUuid": "b595a762_89f82402",
+      "range": {
+        "startLine": 9367,
+        "startChar": 12,
+        "endLine": 9367,
+        "endChar": 20
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f54d779f_e207dc0d",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 41
@@ -461,6 +509,30 @@
       "side": 1,
       "message": "I actually have this in l.9353 in this patch. It seemed to be consistent with other handlers. That said, should I move that check to this method or have the check in both spots?",
       "parentUuid": "f54d779f_e207dc0d",
+      "range": {
+        "startLine": 9373,
+        "startChar": 17,
+        "endLine": 9373,
+        "endChar": 61
+      },
+      "revId": "d5e8efc6efd8c2fc61d5fdbe0d63655e8887e79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1e1b416_11dd6126",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 41
+      },
+      "lineNbr": 9373,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T00:33:00Z",
+      "side": 1,
+      "message": "I tend to put the checks in the helper methods that update state. There is very strong precedent in CS that all methods called handle* must be called on the handler thread, so I\u0027m not too worried about those even with the check. But some future careless developer could call updateDefaultNetworks on some other thread, that\u0027s why I suggested it.\n\nLet\u0027s move the one that\u0027s in handle* and move it here",
+      "parentUuid": "d5e29000_b8e82766",
       "range": {
         "startLine": 9373,
         "startChar": 17,

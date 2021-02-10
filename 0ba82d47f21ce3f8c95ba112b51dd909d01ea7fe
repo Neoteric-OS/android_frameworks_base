@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9073b558_21917220",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 5695,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T00:33:00Z",
+      "side": 1,
+      "message": "You could have just inlined it 😊\n\nDoesn\u0027t matter",
+      "range": {
+        "startLine": 5695,
+        "startChar": 39,
+        "endLine": 5695,
+        "endChar": 51
+      },
+      "revId": "0ba82d47f21ce3f8c95ba112b51dd909d01ea7fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c45ebd17_66f756c1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 9280,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T00:33:00Z",
+      "side": 1,
+      "message": "nullable",
+      "range": {
+        "startLine": 9280,
+        "startChar": 13,
+        "endLine": 9280,
+        "endChar": 20
+      },
+      "revId": "0ba82d47f21ce3f8c95ba112b51dd909d01ea7fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbf9ca7d_02bb3ebb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 9282,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T00:33:00Z",
+      "side": 1,
+      "message": "Let\u0027s move this out of the try (or just remove the try{})",
+      "range": {
+        "startLine": 9282,
+        "startChar": 12,
+        "endLine": 9282,
+        "endChar": 35
+      },
+      "revId": "0ba82d47f21ce3f8c95ba112b51dd909d01ea7fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dd603e2_7b69b756",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 9306,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T00:33:00Z",
+      "side": 1,
+      "message": "Let\u0027s remove the try() block as it can only crash for programming errors on our side",
+      "range": {
+        "startLine": 9306,
+        "startChar": 12,
+        "endLine": 9306,
+        "endChar": 52
+      },
+      "revId": "0ba82d47f21ce3f8c95ba112b51dd909d01ea7fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
