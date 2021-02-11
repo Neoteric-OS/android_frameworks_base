@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8bbf820_eab16276",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5065,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-02-11T22:56:08Z",
+      "side": 1,
+      "message": "I don\u0027t have any context into the storage issue here, so I cannot speak to that. But regarding the user code:\n\nWhen does this storage code get exercised? Does this mean that cleanupPreCreatedUsers() can now be called even not during boot-up? Is that safe? I believe this method is currently only called at boot, and perhaps relies on that assumption.\nIn particular, what if someone is trying to upgrade a pre-created user into a full user at the same time? Might we wind up *slating* the pre-create for removal, then upgrading it, and only then removing it (thereby destroying a regular user!)?\n\nAny thoughts Felipe?",
+      "range": {
+        "startLine": 5065,
+        "startChar": 36,
+        "endLine": 5065,
+        "endChar": 58
+      },
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
