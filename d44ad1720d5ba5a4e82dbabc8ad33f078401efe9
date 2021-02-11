@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0a39667_e9a82f50",
+        "filename": "core/java/android/net/vcn/VcnControlPlaneConfig.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-11T23:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "927f4a6c_8919b48d",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 3
+      },
+      "revId": "d44ad1720d5ba5a4e82dbabc8ad33f078401efe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0636104f_0b600a7d",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bce6f04d_d0132082",
+        "filename": "core/java/android/net/vcn/VcnControlPlaneIkeConfig.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-11T23:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0636104f_0b600a7d",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 3
+      },
+      "revId": "d44ad1720d5ba5a4e82dbabc8ad33f078401efe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2ab9dfe_6873509f",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-11T21:16:28Z",
       "side": 1,
       "message": "Nit Constructor; we aren\u0027t using a builder",
+      "range": {
+        "startLine": 110,
+        "startChar": 20,
+        "endLine": 110,
+        "endChar": 27
+      },
+      "revId": "d44ad1720d5ba5a4e82dbabc8ad33f078401efe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7758b7a2_89a31fdd",
+        "filename": "tests/vcn/java/android/net/vcn/VcnControlPlaneIkeConfigTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-11T23:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2ab9dfe_6873509f",
       "range": {
         "startLine": 110,
         "startChar": 20,
