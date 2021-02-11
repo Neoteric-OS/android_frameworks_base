@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e390e52_c9696063",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2021-02-11T16:48:25Z",
+      "side": 1,
+      "message": "LGTM, but we\u0027ll need approval from the maintainers of these services.",
+      "revId": "647590306e3d381af1118cdf9d5a06761ad70ffe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bb987c8_4e92be70",
+        "filename": "services/core/java/android/os/UserManagerInternal.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2021-02-11T16:48:25Z",
+      "side": 1,
+      "message": "optional / nit: I\u0027d call it removeAllPreCreatedUsers(), so it\u0027s consistent with removeAllUsers() above.",
+      "range": {
+        "startLine": 149,
+        "startChar": 25,
+        "endLine": 149,
+        "endChar": 47
+      },
+      "revId": "647590306e3d381af1118cdf9d5a06761ad70ffe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
