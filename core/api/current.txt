@@ -36243,6 +36243,7 @@ package android.security.keystore {
 
   public final class KeyGenParameterSpec implements java.security.spec.AlgorithmParameterSpec {
     method @Nullable public java.security.spec.AlgorithmParameterSpec getAlgorithmParameterSpec();
+    method @Nullable public String getAttestKeyAlias();
     method public byte[] getAttestationChallenge();
     method @NonNull public String[] getBlockModes();
     method @NonNull public java.util.Date getCertificateNotAfter();
@@ -36277,6 +36278,7 @@ package android.security.keystore {
     ctor public KeyGenParameterSpec.Builder(@NonNull String, int);
     method @NonNull public android.security.keystore.KeyGenParameterSpec build();
     method public android.security.keystore.KeyGenParameterSpec.Builder setAlgorithmParameterSpec(@NonNull java.security.spec.AlgorithmParameterSpec);
+    method @NonNull public android.security.keystore.KeyGenParameterSpec.Builder setAttestKeyAlias(@Nullable String);
     method @NonNull public android.security.keystore.KeyGenParameterSpec.Builder setAttestationChallenge(byte[]);
     method @NonNull public android.security.keystore.KeyGenParameterSpec.Builder setBlockModes(java.lang.String...);
     method @NonNull public android.security.keystore.KeyGenParameterSpec.Builder setCertificateNotAfter(@NonNull java.util.Date);
@@ -36374,6 +36376,7 @@ package android.security.keystore {
     field public static final int ORIGIN_SECURELY_IMPORTED = 8; // 0x8
     field public static final int ORIGIN_UNKNOWN = 4; // 0x4
     field public static final int PURPOSE_AGREE_KEY = 64; // 0x40
+    field public static final int PURPOSE_ATTEST_KEY = 128; // 0x80
     field public static final int PURPOSE_DECRYPT = 2; // 0x2
     field public static final int PURPOSE_ENCRYPT = 1; // 0x1
     field public static final int PURPOSE_SIGN = 4; // 0x4
