@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9db12de0_be220f09",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-11T08:17:03Z",
+      "side": 1,
+      "message": "This isn\u0027t always true: system server jars could be used by other packages in theory, but we\u0027ll always want to optimize for the system server use case, so we\u0027ll always want the class loader context of these jars to be the one used by system server.",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "cc934d36bf686992a465c5b1b0dbd22f538afd87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53bd7d5c_abb3a377",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-11T08:17:03Z",
+      "side": 1,
+      "message": "can you expand on what \"latest context\" means here?",
+      "range": {
+        "startLine": 238,
+        "startChar": 50,
+        "endLine": 238,
+        "endChar": 65
+      },
+      "revId": "cc934d36bf686992a465c5b1b0dbd22f538afd87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c4076af_a2f209a9",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-11T08:17:03Z",
+      "side": 1,
+      "message": "does this always return true for SYSTEM_SERVER_CLASSPATH jars, and false otherwise?\n\nCan you add a helper method IsSystemServerJar? Any chance you can do a check there that it is also in SYSTEM_SERVER_CLASSPATH ?",
+      "range": {
+        "startLine": 241,
+        "startChar": 39,
+        "endLine": 242,
+        "endChar": 57
+      },
+      "revId": "cc934d36bf686992a465c5b1b0dbd22f538afd87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
