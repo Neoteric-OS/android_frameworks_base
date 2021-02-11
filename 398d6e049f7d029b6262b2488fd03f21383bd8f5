@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06644f3a_7924fb9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-02-11T19:26:14Z",
+      "side": 1,
+      "message": "There was some bug (mwachens@) may know related to this, but simply, it needs a way to avoid being backwards incompatible.",
+      "revId": "398d6e049f7d029b6262b2488fd03f21383bd8f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
