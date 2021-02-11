@@ -206,6 +206,15 @@ public class DexManager {
             }
 
             if (searchResult.mOutcome != DEX_SEARCH_NOT_FOUND) {
+                // We only record system server jar files when the loading process is system server.
+                // We do account for arbitrary apps loading the files and changing their CLC.
+                if (isSystemServer(searchResult.mOwningPackageName)
+                        && !isSystemServer(loadingAppInfo.packageName)) {
+                    Slog.d(TAG, "Not recording dex use for system server path "
+                            + dexPath + " loaded from " + loadingAppInfo.packageName);
+                    continue;
+                }
+
                 // TODO(calin): extend isUsedByOtherApps check to detect the cases where
                 // different apps share the same runtime. In that case we should not mark the dex
                 // file as isUsedByOtherApps. Currently this is a safe approximation.
@@ -215,7 +224,7 @@ public class DexManager {
                         searchResult.mOutcome == DEX_SEARCH_FOUND_SPLIT;
 
                 if (primaryOrSplit && !isUsedByOtherApps
-                        && !PLATFORM_PACKAGE_NAME.equals(searchResult.mOwningPackageName)) {
+                        && !isSystemServer(searchResult.mOwningPackageName)) {
                     // If the dex file is the primary apk (or a split) and not isUsedByOtherApps
                     // do not record it. This case does not bring any new usable information
                     // and can be safely skipped.
@@ -232,15 +241,22 @@ public class DexManager {
                 }
 
                 String classLoaderContext = mapping.getValue();
+
+                // Overwrite the class loader context for system server (instead of merging it).
+                // System server jars can only change contexts in between OTAs and are otherwise
+                // stable. So it is ok to take the latest context all the time which is the most
+                // up to date context (e.g. after OTA). This will prevent context merging which
+                // could lead to the context being variable and thus making dexopt impossible.
+
+                boolean overwriteCLC = isSystemServer(searchResult.mOwningPackageName);
                 if (classLoaderContext != null
                         && VMRuntime.isValidClassLoaderContext(classLoaderContext)) {
                     // Record dex file usage. If the current usage is a new pattern (e.g. new
                     // secondary, or UsedByOtherApps), record will return true and we trigger an
                     // async write to disk to make sure we don't loose the data in case of a reboot.
-
                     if (mPackageDexUsage.record(searchResult.mOwningPackageName,
                             dexPath, loaderUserId, loaderIsa, primaryOrSplit,
-                            loadingAppInfo.packageName, classLoaderContext)) {
+                            loadingAppInfo.packageName, classLoaderContext, overwriteCLC)) {
                         mPackageDexUsage.maybeWriteAsync();
                     }
                 }
@@ -474,7 +490,7 @@ public class DexManager {
      *         because they don't need to be compiled)..
      */
     public boolean dexoptSecondaryDex(DexoptOptions options) {
-        if (PLATFORM_PACKAGE_NAME.equals(options.getPackageName())) {
+        if (isSystemServer(options.getPackageName())) {
             // We could easily redirect to #dexoptSystemServer in this case. But there should be
             // no-one calling this method directly for system server.
             // As such we prefer to abort in this case.
@@ -534,7 +550,7 @@ public class DexManager {
      * <p>PackageDexOptimizer.DEX_OPT_PERFORMED if all dexopt operations succeeded.
      */
     public int dexoptSystemServer(DexoptOptions options) {
-        if (!PLATFORM_PACKAGE_NAME.equals(options.getPackageName())) {
+        if (!isSystemServer(options.getPackageName())) {
             Slog.wtf(TAG, "Non system server package used when trying to dexopt system server:"
                     + options.getPackageName());
             return PackageDexOptimizer.DEX_OPT_FAILED;
@@ -662,7 +678,7 @@ public class DexManager {
             // Special handle system server files.
             // We don't need an installd call because we have permissions to check if the file
             // exists.
-            if (PLATFORM_PACKAGE_NAME.equals(packageName)) {
+            if (isSystemServer(packageName)) {
                 if (!Files.exists(Paths.get(dexPath))) {
                     if (DEBUG) {
                         Slog.w(TAG, "A dex file previously loaded by System Server does not exist "
@@ -739,7 +755,8 @@ public class DexManager {
             boolean newUpdate = mPackageDexUsage.record(searchResult.mOwningPackageName,
                     dexPath, userId, isa, /*primaryOrSplit*/ false,
                     loadingPackage,
-                    PackageDexUsage.VARIABLE_CLASS_LOADER_CONTEXT);
+                    PackageDexUsage.VARIABLE_CLASS_LOADER_CONTEXT,
+                    /*overwriteCLC*/ false);
             update |= newUpdate;
         }
         if (update) {
@@ -809,7 +826,7 @@ public class DexManager {
         // Note: We don't have any way to detect which code paths are actually
         // owned by system server. We can only assume that such paths are on
         // system partitions.
-        if (PLATFORM_PACKAGE_NAME.equals(loadingAppInfo.packageName)) {
+        if (isSystemServer(loadingAppInfo.packageName)) {
             if (isSystemServerDexPathSupportedForOdex(dexPath)) {
                 // We record system server dex files as secondary dex files.
                 // The reason is that we only record the class loader context for secondary dex
@@ -840,6 +857,11 @@ public class DexManager {
         // Cache miss. The cache is updated during installs and uninstalls,
         // so if we get here we're pretty sure the dex path does not exist.
         return new DexSearchResult(null, DEX_SEARCH_NOT_FOUND);
+    }
+
+    /** Returns true if this is the system server package .*/
+    private static boolean isSystemServer(String packageName) {
+        return PLATFORM_PACKAGE_NAME.equals(packageName);
     }
 
     private static <K,V> V putIfAbsent(Map<K,V> map, K key, V newValue) {
