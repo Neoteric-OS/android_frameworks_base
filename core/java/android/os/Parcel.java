@@ -270,6 +270,7 @@ public final class Parcel {
     private static final int EX_UNSUPPORTED_OPERATION = -7;
     private static final int EX_SERVICE_SPECIFIC = -8;
     private static final int EX_PARCELABLE = -9;
+    private static final int EX_REMOTE = -10;
     /** @hide */
     public static final int EX_HAS_NOTED_APPOPS_REPLY_HEADER = -127; // special; see below
     private static final int EX_HAS_STRICTMODE_REPLY_HEADER = -128;  // special; see below
@@ -2135,10 +2136,9 @@ public final class Parcel {
     /**
      * Special function for writing an exception result at the header of
      * a parcel, to be used when returning an exception from a transaction.
-     * Note that this currently only supports a few exception types; any other
-     * exception will be re-thrown by this function as a RuntimeException
-     * (to be caught by the system's last-resort exception handling when
-     * dispatching a transaction).
+     * Note that this currently only directly supports a few exception types,
+     * any other exception is indirectly supported by automatically converting
+     * to a directly supported exception.
      *
      * <p>The supported exception types are:
      * <ul>
@@ -2160,15 +2160,18 @@ public final class Parcel {
         AppOpsManager.prefixParcelWithAppOpsIfNeeded(this);
 
         int code = getExceptionCode(e);
+
+        final boolean convert = (code == 0);
+        if (convert) {
+            // We not only need not but also should not create a conversion
+            // exception object because we expect the following "writeStackTrace(e)"
+            // invoke is still on the original exception object.
+            code = EX_REMOTE;
+        }
+
         writeInt(code);
         StrictMode.clearGatheredViolations();
-        if (code == 0) {
-            if (e instanceof RuntimeException) {
-                throw (RuntimeException) e;
-            }
-            throw new RuntimeException(e);
-        }
-        writeString(e.getMessage());
+        writeString(convert ? e.toString() : e.getMessage());
         final long timeNow = sParcelExceptionStackTrace ? SystemClock.elapsedRealtime() : 0;
         if (sParcelExceptionStackTrace && (timeNow - sLastWriteExceptionStackTrace
                 > WRITE_EXCEPTION_STACK_TRACE_THRESHOLD_MS)) {
@@ -2218,6 +2221,8 @@ public final class Parcel {
             code = EX_UNSUPPORTED_OPERATION;
         } else if (e instanceof ServiceSpecificException) {
             code = EX_SERVICE_SPECIFIC;
+        } else if (e instanceof RemoteException) {
+            code = EX_REMOTE;
         }
         return code;
     }
@@ -2396,6 +2401,8 @@ public final class Parcel {
                 return new UnsupportedOperationException(msg);
             case EX_SERVICE_SPECIFIC:
                 return new ServiceSpecificException(readInt(), msg);
+            case EX_REMOTE:
+                return new RemoteException(msg);
             default:
                 return null;
         }
