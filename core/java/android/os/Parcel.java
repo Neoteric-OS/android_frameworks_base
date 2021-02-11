@@ -270,6 +270,7 @@ public final class Parcel {
     private static final int EX_UNSUPPORTED_OPERATION = -7;
     private static final int EX_SERVICE_SPECIFIC = -8;
     private static final int EX_PARCELABLE = -9;
+    private static final int EX_UNKNOWN = -10;
     /** @hide */
     public static final int EX_HAS_NOTED_APPOPS_REPLY_HEADER = -127; // special; see below
     private static final int EX_HAS_STRICTMODE_REPLY_HEADER = -128;  // special; see below
@@ -2135,10 +2136,9 @@ public final class Parcel {
     /**
      * Special function for writing an exception result at the header of
      * a parcel, to be used when returning an exception from a transaction.
-     * Note that this currently only supports a few exception types; any other
-     * exception will be re-thrown by this function as a RuntimeException
-     * (to be caught by the system's last-resort exception handling when
-     * dispatching a transaction).
+     * Note that this currently only directly supports a few exception types,
+     * any other exception is indirectly supported by automatically converting
+     * to UnknownException.
      *
      * <p>The supported exception types are:
      * <ul>
@@ -2149,6 +2149,7 @@ public final class Parcel {
      * <li>{@link SecurityException}
      * <li>{@link UnsupportedOperationException}
      * <li>{@link NetworkOnMainThreadException}
+     * <li>{@link UnknownException}
      * </ul>
      *
      * @param e The Exception to be written.
@@ -2160,14 +2161,13 @@ public final class Parcel {
         AppOpsManager.prefixParcelWithAppOpsIfNeeded(this);
 
         int code = getExceptionCode(e);
+        if (code == 0) {
+            e    = new UnknownException(e.toString(), e);
+            code = EX_UNKNOWN;
+        }
+
         writeInt(code);
         StrictMode.clearGatheredViolations();
-        if (code == 0) {
-            if (e instanceof RuntimeException) {
-                throw (RuntimeException) e;
-            }
-            throw new RuntimeException(e);
-        }
         writeString(e.getMessage());
         final long timeNow = sParcelExceptionStackTrace ? SystemClock.elapsedRealtime() : 0;
         if (sParcelExceptionStackTrace && (timeNow - sLastWriteExceptionStackTrace
@@ -2218,6 +2218,8 @@ public final class Parcel {
             code = EX_UNSUPPORTED_OPERATION;
         } else if (e instanceof ServiceSpecificException) {
             code = EX_SERVICE_SPECIFIC;
+        } else if (e instanceof UnknownException) {
+            code = EX_UNKNOWN;
         }
         return code;
     }
@@ -2396,6 +2398,8 @@ public final class Parcel {
                 return new UnsupportedOperationException(msg);
             case EX_SERVICE_SPECIFIC:
                 return new ServiceSpecificException(readInt(), msg);
+			case EX_UNKNOWN:
+                return new UnknownException(msg);
             default:
                 return null;
         }

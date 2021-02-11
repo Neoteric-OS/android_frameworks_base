@@ -30823,6 +30823,11 @@ package android.os {
     ctor public TransactionTooLargeException(String);
   }
 
+  public class UnknownException extends android.util.AndroidRuntimeException {
+    ctor public UnknownException(@Nullable String);
+    ctor public UnknownException(@Nullable String, @Nullable Throwable);
+  }
+
   public final class UserHandle implements android.os.Parcelable {
     ctor public UserHandle(android.os.Parcel);
     method public int describeContents();

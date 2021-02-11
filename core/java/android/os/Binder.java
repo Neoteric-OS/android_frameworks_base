@@ -86,8 +86,13 @@ public class Binder implements IBinder {
     public static final boolean CHECK_PARCEL_SIZE = false;
     static final String TAG = "Binder";
 
-    /** @hide */
-    public static boolean LOG_RUNTIME_EXCEPTION = false; // DO NOT SUBMIT WITH TRUE
+    /**
+     * Currently, exception stack trace is ususally not returned to the client side
+     * for performance purpose, but this makes bug-shooting very hard.
+     * So, we should at least print it here in service side.
+     * @hide
+     */
+    public static boolean LOG_RUNTIME_EXCEPTION = true;
 
     /**
      * Value to represents that a calling work source is not set.
