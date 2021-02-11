@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fef6e4c2_7c62a21b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-11T21:12:59Z",
+      "side": 1,
+      "message": "LGTM, but see notes inline about getting developer attention during the build() process.",
+      "revId": "c5342125d4961f98dae7cc0a0fd1e705351c606c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffa21eb7_f6fe5864",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-11T21:12:59Z",
+      "side": 1,
+      "message": "nit: #",
+      "range": {
+        "startLine": 816,
+        "startChar": 19,
+        "endLine": 816,
+        "endChar": 20
+      },
+      "revId": "c5342125d4961f98dae7cc0a0fd1e705351c606c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32ca6868_36aef43f",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-11T21:12:59Z",
+      "side": 1,
+      "message": "Should the build() method throw an IllegalArgumentException when the builder is in this invalid state?\n\nThat makes it a bit more robust, instead of quietly ignoring.",
+      "range": {
+        "startLine": 1633,
+        "startChar": 11,
+        "endLine": 1633,
+        "endChar": 18
+      },
+      "revId": "c5342125d4961f98dae7cc0a0fd1e705351c606c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
