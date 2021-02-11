@@ -236,6 +236,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
     private final boolean mUnlockedDeviceRequired;
     private final boolean mIsStrongBoxBacked;
     private final int mMaxUsageCount;
+    private final String mAttestKeyAlias;
 
     private KeyProtection(
             Date keyValidityStart,
@@ -258,7 +259,8 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
             boolean userConfirmationRequired,
             boolean unlockedDeviceRequired,
             boolean isStrongBoxBacked,
-            int maxUsageCount) {
+            int maxUsageCount,
+            String attestKeyAlias) {
         mKeyValidityStart = Utils.cloneIfNotNull(keyValidityStart);
         mKeyValidityForOriginationEnd = Utils.cloneIfNotNull(keyValidityForOriginationEnd);
         mKeyValidityForConsumptionEnd = Utils.cloneIfNotNull(keyValidityForConsumptionEnd);
@@ -282,6 +284,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
         mUnlockedDeviceRequired = unlockedDeviceRequired;
         mIsStrongBoxBacked = isStrongBoxBacked;
         mMaxUsageCount = maxUsageCount;
+        mAttestKeyAlias = attestKeyAlias;
     }
 
     /**
@@ -562,6 +565,18 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
     }
 
     /**
+     * Returns the alias of the attestation key that will be used to sign the attestation
+     * certificate of the imported key.  Note that an attestation certificate will only be
+     * generated if an attestation challenge is set.
+     *
+     * @see Builder#setAttestKeyAlias(String)
+     */
+    @Nullable
+    public String getAttestKeyAlias() {
+        return mAttestKeyAlias;
+    }
+
+    /**
      * Builder of {@link KeyProtection} instances.
      */
     public final static class Builder {
@@ -588,7 +603,8 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
         private long mBoundToSecureUserId = GateKeeper.INVALID_SECURE_USER_ID;
         private boolean mCriticalToDeviceEncryption = false;
         private boolean mIsStrongBoxBacked = false;
-        private  int mMaxUsageCount = KeyProperties.UNRESTRICTED_USAGE_COUNT;
+        private int mMaxUsageCount = KeyProperties.UNRESTRICTED_USAGE_COUNT;
+        private String mAttestKeyAlias = null;
 
         /**
          * Creates a new instance of the {@code Builder}.
@@ -1096,6 +1112,27 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
         }
 
         /**
+         * Sets the alias of the attestation key that will be used to sign the attestation
+         * certificate for the generated key pair, if an attestation challenge is set with {@link
+         * #setAttestationChallenge}.  If an attestKeyAlias is set but no challenge, {@link
+         * java.security.KeyStore#setEntry} will throw {@link java.security.KeyStoreException}.
+         *
+         * <p>If the attestKeyAlias is set to null (the default), Android Keystore will select an
+         * appropriate system-provided attestation signing key.  If not null, the alias must
+         * reference an Android Keystore Key that was created with {@link
+         * android.security.keystore.KeyProperties#PURPOSE_ATTEST_KEY}, or key import will throw
+         * {@link java.security.KeyStoreException}.
+         *
+         * @param attestKeyAlias the alias of the attestation key to be used to sign the
+         *        attestation certificate.
+         */
+        @NonNull
+        public Builder setAttestKeyAlias(@Nullable String attestKeyAlias) {
+            mAttestKeyAlias = attestKeyAlias;
+            return this;
+        }
+
+        /**
          * Builds an instance of {@link KeyProtection}.
          *
          * @throws IllegalArgumentException if a required field is missing
@@ -1123,7 +1160,8 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
                     mUserConfirmationRequired,
                     mUnlockedDeviceRequired,
                     mIsStrongBoxBacked,
-                    mMaxUsageCount);
+                    mMaxUsageCount,
+                    mAttestKeyAlias);
         }
     }
 }
