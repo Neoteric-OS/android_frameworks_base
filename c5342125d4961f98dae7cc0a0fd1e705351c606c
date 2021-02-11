@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bb6f1a9_5ac12e3f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-11T21:14:07Z",
+      "side": 1,
+      "message": "Also confirmed via IM that this bug is blocking SC work, which is why I\u0027ve OWNERS+1\u0027ed it.  It sounds like sswillden@ will get the correct bug numbers blocking configured internally when he\u0027s back later today.\n\nI\u0027ll defer CR+2 to the core security team which is more familiar with this feature area.",
+      "revId": "c5342125d4961f98dae7cc0a0fd1e705351c606c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ffa21eb7_f6fe5864",
