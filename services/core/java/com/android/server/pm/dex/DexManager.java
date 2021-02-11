@@ -232,15 +232,22 @@ public class DexManager {
                 }
 
                 String classLoaderContext = mapping.getValue();
+
+                // Overwrite the class loader context for system server (instead of merging it).
+                // System server jars can only change contexts in between OTAs and are otherwise
+                // stable. So it is ok to take the latest context all the time, instead of trying
+                // to merge, which will lead to the context being variable and thus making dexopt
+                // impossible.
+                boolean overwriteCLC = PLATFORM_PACKAGE_NAME.equals(
+                        searchResult.mOwningPackageName);
                 if (classLoaderContext != null
                         && VMRuntime.isValidClassLoaderContext(classLoaderContext)) {
                     // Record dex file usage. If the current usage is a new pattern (e.g. new
                     // secondary, or UsedByOtherApps), record will return true and we trigger an
                     // async write to disk to make sure we don't loose the data in case of a reboot.
-
                     if (mPackageDexUsage.record(searchResult.mOwningPackageName,
                             dexPath, loaderUserId, loaderIsa, primaryOrSplit,
-                            loadingAppInfo.packageName, classLoaderContext)) {
+                            loadingAppInfo.packageName, classLoaderContext, overwriteCLC)) {
                         mPackageDexUsage.maybeWriteAsync();
                     }
                 }
@@ -739,7 +746,8 @@ public class DexManager {
             boolean newUpdate = mPackageDexUsage.record(searchResult.mOwningPackageName,
                     dexPath, userId, isa, /*primaryOrSplit*/ false,
                     loadingPackage,
-                    PackageDexUsage.VARIABLE_CLASS_LOADER_CONTEXT);
+                    PackageDexUsage.VARIABLE_CLASS_LOADER_CONTEXT,
+                    /*overwriteCLC*/ false);
             update |= newUpdate;
         }
         if (update) {

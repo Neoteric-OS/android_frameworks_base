@@ -522,6 +522,28 @@ public class DexManagerTests {
     }
 
     @Test
+    public void testSystemServerOverwritesContext() {
+        // Record bar secondaries with the default PathClassLoader.
+        List<String> secondaries = mSystemServerJar.getSecondaryDexPaths();
+
+        notifyDexLoad(mSystemServerJar, secondaries, mUser0);
+        PackageUseInfo pui = getPackageUseInfo(mSystemServerJar);
+        assertSecondaryUse(mSystemServerJar, pui, secondaries, /*isUsedByOtherApps*/false, mUser0);
+
+        // Record bar secondaries again with a different class loader. This will change the context.
+        notifyDexLoad(mFooUser0, secondaries, mUser0);
+
+        pui = getPackageUseInfo(mSystemServerJar);
+        // We expect that all the contexts to be updated according to the last notify.
+        List<String> fooDexes = new ArrayList<>(mFooUser0.getBaseAndSplitDexPaths());
+        String[] expectedContexts = DexoptUtils.processContextForDexLoad(
+                Arrays.asList(mFooUser0.mClassLoader),
+                Arrays.asList(String.join(File.pathSeparator, fooDexes)));
+        assertSecondaryUse(mFooUser0, pui, secondaries, /*isUsedByOtherApps*/false, mUser0,
+                expectedContexts);
+    }
+
+    @Test
     public void testNotifyUnsupportedClassLoaderDoesNotChangeExisting() {
         List<String> secondaries = mBarUser0.getSecondaryDexPaths();
 
@@ -601,6 +623,22 @@ public class DexManagerTests {
         notifyDexLoad(mSystemServerJar, dexFiles, mUser0);
         PackageUseInfo pui = getPackageUseInfo(mSystemServerJar);
         assertIsUsedByOtherApps(mSystemServerJar, pui, false);
+    }
+
+    @Test
+    public void testNotifySystemServerUse_updateContext() {
+        List<String> dexFiles = new ArrayList<String>();
+        dexFiles.add("/system/framework/foo");
+        notifyDexLoad(mSystemServerJar, dexFiles, mUser0);
+        PackageUseInfo pui = getPackageUseInfo(mSystemServerJar);
+        assertIsUsedByOtherApps(mSystemServerJar, pui, false);
+
+//        List<String> classpath = new ArrayList<>();
+//        classpath.add("/system/framework/new-lib");
+//        notifyDexLoad(mSystemServerJar, dexFiles, mUser0);
+//        PackageUseInfo pui = getPackageUseInfo(mSystemServerJar);
+//        assertIsUsedByOtherApps(mSystemServerJar, pui, false);
+        assertSecondaryUse(mSystemServerJar, pui, dexFiles, false, mUser0);
     }
 
     @Test
