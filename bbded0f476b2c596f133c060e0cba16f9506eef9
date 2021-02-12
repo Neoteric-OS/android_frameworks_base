@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0972ead0_7dc0f7ed",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-12T08:49:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this - in this context \"the files\" is any file? Not just system server jar?\n\nIf \"the files\" means system server jars, what does \"do account\" means?",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 93
+      },
+      "revId": "bbded0f476b2c596f133c060e0cba16f9506eef9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99750bb9_75dd670b",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-12T08:49:41Z",
+      "side": 1,
+      "message": "So this line means we found the jar is owned by system server? I\u0027m curious how and where did we decide that?",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 211,
+        "endChar": 67
+      },
+      "revId": "bbded0f476b2c596f133c060e0cba16f9506eef9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3b9e9f6_5ba0f4df",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-12T08:49:41Z",
+      "side": 1,
+      "message": "does adding \"(stored in the classLoaderContext variable)\" makes sense here?",
+      "range": {
+        "startLine": 247,
+        "startChar": 65,
+        "endLine": 247,
+        "endChar": 66
+      },
+      "revId": "bbded0f476b2c596f133c060e0cba16f9506eef9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
