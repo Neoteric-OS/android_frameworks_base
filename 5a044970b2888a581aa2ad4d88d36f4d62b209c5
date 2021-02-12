@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7fba31a_36776ac8",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T07:25:53Z",
+      "side": 1,
+      "message": "Does this actually work? In the unit tests, when ConnectivityService is instantiated and constructs one of these NetworkAgentInfo objects, it will always do \"new ConnectivityService.Dependencies()\".\n\nBut I think you need it to actually return the mDependencies member of ConnectivityService, no? Because in the test, that is the object on which you do \"doReturn(true).when(mDependencies).getCellular464XlatEnabled()\".\n\nPerhaps you could just add a \"ConnectivityService.Dependencies deps\" parameter to the constructor here, and have ConnectivityService pass mDeps when calling it?",
+      "range": {
+        "startLine": 360,
+        "startChar": 12,
+        "endLine": 360,
+        "endChar": 50
+      },
+      "revId": "5a044970b2888a581aa2ad4d88d36f4d62b209c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e59ad2d2_bcbf4c40",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 9356,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T07:25:53Z",
+      "side": 1,
+      "message": "Can you make this a bit more realistic? Suggest:\n\n        final LinkProperties cellLp \u003d new LinkProperties();\n        cellLp.setInterfaceName(MOBILE_IFNAME);\n        cellLp.addLinkAddress(new LinkAddress(\"2001:db8:1::1/64\"));\n        cellLp.addRoute(new RouteInfo(new IpPrefix(\"::/0\"),  null, MOBILE_IFNAME);\n        mCellNetworkAgent \u003d new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);",
+      "range": {
+        "startLine": 9356,
+        "startChar": 8,
+        "endLine": 9356,
+        "endChar": 76
+      },
+      "revId": "5a044970b2888a581aa2ad4d88d36f4d62b209c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72be0a5e_59a41041",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 9362,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T07:25:53Z",
+      "side": 1,
+      "message": "... and here too? Suggest:\n\n        final int cellNetId \u003d mCellNetworkAgent.getNetwork().netId;\n\n        waitForIdle();\n        verify(mMockDnsResolver, never()).startPrefix64Discovery(cellNetId);\n        // Technically cannot happen because prefix discovery cannot succeed if it is not started.\n        verify(mMockNetd, never()).clatdStart(anyString(), anyString());\n\n        Nat464Xlat clat \u003d getNat464Xlat(mCellNetworkAgent);\n        assertTrue(\"Nat464Xlat was not IDLE\", !clat.isStarted());",
+      "range": {
+        "startLine": 9361,
+        "startChar": 0,
+        "endLine": 9362,
+        "endChar": 65
+      },
+      "revId": "5a044970b2888a581aa2ad4d88d36f4d62b209c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec931486_5e5553d3",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T07:25:53Z",
+      "side": 1,
+      "message": "isCellular464XlatEnabled",
+      "range": {
+        "startLine": 77,
+        "startChar": 38,
+        "endLine": 77,
+        "endChar": 50
+      },
+      "revId": "5a044970b2888a581aa2ad4d88d36f4d62b209c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5c3546b_9f7a35b7",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T07:25:53Z",
+      "side": 1,
+      "message": "Suggest also:\n\n        verify(mNms, never()).registerObserver(eq(nat));\n        verify(mNetd, never()).clatdStart(anyString(), anyString());",
+      "range": {
+        "startLine": 528,
+        "startChar": 4,
+        "endLine": 528,
+        "endChar": 5
+      },
+      "revId": "5a044970b2888a581aa2ad4d88d36f4d62b209c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
