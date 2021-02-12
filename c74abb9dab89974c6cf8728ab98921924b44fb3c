@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a28c8316_b65e50e7",
+        "filename": "core/java/android/os/UnknownException.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-02-12T18:56:51Z",
+      "side": 1,
+      "message": "also - would it be better for this to extend RemoteException? Far more clients would handle this (though not necessarily correctly, it would only cause flake-\u003ebreak, not new real breakages).",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 61
+      },
+      "revId": "c74abb9dab89974c6cf8728ab98921924b44fb3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
