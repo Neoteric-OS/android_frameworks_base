@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddbfecb1_44153b64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-02-12T18:45:20Z",
+      "side": 1,
+      "message": "Traced the breakage back to the original CL. NetworkRequest.deduceNotVcnManagedCapability() is what\u0027s causing the issue.",
+      "revId": "c02c76e68a480bce81a513fbd12b930f73eb221a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
