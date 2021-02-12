@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d14b0a7_37ea0ccc",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-02-12T18:55:20Z",
+      "side": 0,
+      "message": "this is almost certainly related to performance? so we couldn\u0027t merge this as is. I\u0027ll run presubmit though - to see if anything breaks. The concern for a while here has been that clients who don\u0027t handle exceptions will start failing. Even if those situations aren\u0027t covered by presubmit, we don\u0027t have full coverage.\n\nParticularly, this could be bad for app compat when exceptions are returned to apps, since it could break those apps.",
+      "range": {
+        "startLine": 90,
+        "startChar": 60,
+        "endLine": 90,
+        "endChar": 83
+      },
+      "revId": "f67a99fe60b91b82e3e939fc28a35503c3c40a1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
