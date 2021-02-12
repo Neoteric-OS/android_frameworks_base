@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de793a92_88610676",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2021-02-12T23:35:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7fba31a_36776ac8",
+      "range": {
+        "startLine": 360,
+        "startChar": 12,
+        "endLine": 360,
+        "endChar": 50
+      },
+      "revId": "5a044970b2888a581aa2ad4d88d36f4d62b209c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e59ad2d2_bcbf4c40",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5408740_629bbecc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 9356,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2021-02-12T23:35:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e59ad2d2_bcbf4c40",
+      "range": {
+        "startLine": 9356,
+        "startChar": 8,
+        "endLine": 9356,
+        "endChar": 76
+      },
+      "revId": "5a044970b2888a581aa2ad4d88d36f4d62b209c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72be0a5e_59a41041",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-12T07:25:53Z",
       "side": 1,
       "message": "... and here too? Suggest:\n\n        final int cellNetId \u003d mCellNetworkAgent.getNetwork().netId;\n\n        waitForIdle();\n        verify(mMockDnsResolver, never()).startPrefix64Discovery(cellNetId);\n        // Technically cannot happen because prefix discovery cannot succeed if it is not started.\n        verify(mMockNetd, never()).clatdStart(anyString(), anyString());\n\n        Nat464Xlat clat \u003d getNat464Xlat(mCellNetworkAgent);\n        assertTrue(\"Nat464Xlat was not IDLE\", !clat.isStarted());",
+      "range": {
+        "startLine": 9361,
+        "startChar": 0,
+        "endLine": 9362,
+        "endChar": 65
+      },
+      "revId": "5a044970b2888a581aa2ad4d88d36f4d62b209c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4177ba50_f0122006",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 9362,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2021-02-12T23:35:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72be0a5e_59a41041",
       "range": {
         "startLine": 9361,
         "startChar": 0,
@@ -106,6 +178,30 @@
       "writtenOn": "2021-02-12T07:25:53Z",
       "side": 1,
       "message": "Suggest also:\n\n        verify(mNms, never()).registerObserver(eq(nat));\n        verify(mNetd, never()).clatdStart(anyString(), anyString());",
+      "range": {
+        "startLine": 528,
+        "startChar": 4,
+        "endLine": 528,
+        "endChar": 5
+      },
+      "revId": "5a044970b2888a581aa2ad4d88d36f4d62b209c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90317de5_23f7b758",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2021-02-12T23:35:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5c3546b_9f7a35b7",
       "range": {
         "startLine": 528,
         "startChar": 4,
