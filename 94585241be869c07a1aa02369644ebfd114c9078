@@ -33,6 +33,24 @@
       "message": "APP_OP_MANAGE_CREDENTIALS is actually 104: http://cs/android/frameworks/proto_logging/stats/enums/app/enums.proto?l\u003d214\u0026rcl\u003d8e05a1bda4198a32a75aa6ec44ad96cad65e1d91",
       "revId": "94585241be869c07a1aa02369644ebfd114c9078",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28d1bfdf_64d8859e",
+        "filename": "core/java/android/app/AppOpsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-02-12T21:51:27Z",
+      "side": 1,
+      "message": "Done, changed to AppProtoEnums.APP_OP_MANAGE_CREDENTIALS which is 104 from aosp/1587026. Just to confirm, it\u0027s OK for OP_XX to not be consecutive?",
+      "parentUuid": "c56d85e2_442ad837",
+      "revId": "94585241be869c07a1aa02369644ebfd114c9078",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
