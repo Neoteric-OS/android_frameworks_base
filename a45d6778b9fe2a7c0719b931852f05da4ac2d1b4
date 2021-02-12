@@ -16,6 +16,52 @@
       "message": "Thanks Hunter - resolved the comments.",
       "revId": "a45d6778b9fe2a7c0719b931852f05da4ac2d1b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b608cdd_0ca64eca",
+        "filename": "telephony/java/android/telephony/UiccAccessRule.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-02-12T23:29:35Z",
+      "side": 1,
+      "message": "Nit: no need for @hide on these two private variables. @hide is just to keep java-public things out of the associated SDK (in this case the system SDK), but java-private isn\u0027t part of any SDK.",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 12
+      },
+      "revId": "a45d6778b9fe2a7c0719b931852f05da4ac2d1b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a757379_3bc9abcb",
+        "filename": "telephony/java/android/telephony/UiccAccessRule.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-02-12T23:29:35Z",
+      "side": 1,
+      "message": "Nit: this can be pulled out of the if/else to avoid repeated calculations in this inner loop:\nbyte[] certificateHash \u003d IccUtils.hexStringToBytes(splitStr[0])",
+      "range": {
+        "startLine": 136,
+        "startChar": 28,
+        "endLine": 136,
+        "endChar": 70
+      },
+      "revId": "a45d6778b9fe2a7c0719b931852f05da4ac2d1b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
