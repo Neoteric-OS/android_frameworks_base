@@ -93,6 +93,10 @@
 
 #include "nativebridge/native_bridge.h"
 
+#if defined(__BIONIC__)
+extern "C" void android_reset_stack_guards();
+#endif
+
 namespace {
 
 // TODO (chriswailes): Add a function to initialize native Zygote data.
@@ -1981,6 +1985,7 @@ void zygote::ZygoteFailure(JNIEnv* env,
 
 // Utility routine to fork a process from the zygote.
 NO_PAC_FUNC
+NO_STACK_PROTECTOR
 pid_t zygote::ForkCommon(JNIEnv* env, bool is_system_server,
                          const std::vector<int>& fds_to_close,
                          const std::vector<int>& fds_to_ignore,
@@ -2034,6 +2039,11 @@ pid_t zygote::ForkCommon(JNIEnv* env, bool is_system_server,
       setpriority(PRIO_PROCESS, 0, PROCESS_PRIORITY_MIN);
     }
 
+#if defined(__BIONIC__)
+    // Reset the stack guard for the new process.
+    android_reset_stack_guards();
+#endif
+
     // The child process.
     PAuthKeyChange(env);
     PreApplicationInit();
@@ -2068,6 +2078,7 @@ static void com_android_internal_os_Zygote_nativePreApplicationInit(JNIEnv*, jcl
 }
 
 NO_PAC_FUNC
+NO_STACK_PROTECTOR
 static jint com_android_internal_os_Zygote_nativeForkAndSpecialize(
         JNIEnv* env, jclass, jint uid, jint gid, jintArray gids, jint runtime_flags,
         jobjectArray rlimits, jint mount_external, jstring se_info, jstring nice_name,
@@ -2118,6 +2129,7 @@ static jint com_android_internal_os_Zygote_nativeForkAndSpecialize(
 }
 
 NO_PAC_FUNC
+NO_STACK_PROTECTOR
 static jint com_android_internal_os_Zygote_nativeForkSystemServer(
         JNIEnv* env, jclass, uid_t uid, gid_t gid, jintArray gids,
         jint runtime_flags, jobjectArray rlimits, jlong permitted_capabilities,
@@ -2190,6 +2202,7 @@ static jint com_android_internal_os_Zygote_nativeForkSystemServer(
  * @return child pid in the parent, 0 in the child
  */
 NO_PAC_FUNC
+NO_STACK_PROTECTOR
 static jint com_android_internal_os_Zygote_nativeForkApp(JNIEnv* env,
                                                          jclass,
                                                          jint read_pipe_fd,
@@ -2205,6 +2218,7 @@ static jint com_android_internal_os_Zygote_nativeForkApp(JNIEnv* env,
 }
 
 NO_PAC_FUNC
+NO_STACK_PROTECTOR
 int zygote::forkApp(JNIEnv* env,
                     int read_pipe_fd,
                     int write_pipe_fd,

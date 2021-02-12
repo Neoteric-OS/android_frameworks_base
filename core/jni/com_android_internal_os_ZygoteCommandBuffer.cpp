@@ -366,6 +366,7 @@ void com_android_internal_os_ZygoteCommandBuffer_nativeReadFullyAndReset(JNIEnv*
 // For every fork command after the first, we check that the requested uid is at
 // least minUid.
 NO_PAC_FUNC
+NO_STACK_PROTECTOR
 jboolean com_android_internal_os_ZygoteCommandBuffer_nativeForkRepeatedly(
             JNIEnv* env,
             jclass,
