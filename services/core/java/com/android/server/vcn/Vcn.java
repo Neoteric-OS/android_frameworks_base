@@ -30,7 +30,7 @@ import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
-import com.android.server.VcnManagementService.VcnSafeModeCallback;
+import com.android.server.VcnManagementService.VcnCallback;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 
 import java.util.Collections;
@@ -97,7 +97,7 @@ public class Vcn extends Handler {
     @NonNull private final ParcelUuid mSubscriptionGroup;
     @NonNull private final Dependencies mDeps;
     @NonNull private final VcnNetworkRequestListener mRequestListener;
-    @NonNull private final VcnSafeModeCallback mVcnSafeModeCallback;
+    @NonNull private final VcnCallback mVcnCallback;
 
     @NonNull
     private final Map<VcnGatewayConnectionConfig, VcnGatewayConnection> mVcnGatewayConnections =
@@ -125,14 +125,8 @@ public class Vcn extends Handler {
             @NonNull ParcelUuid subscriptionGroup,
             @NonNull VcnConfig config,
             @NonNull TelephonySubscriptionSnapshot snapshot,
-            @NonNull VcnSafeModeCallback vcnSafeModeCallback) {
-        this(
-                vcnContext,
-                subscriptionGroup,
-                config,
-                snapshot,
-                vcnSafeModeCallback,
-                new Dependencies());
+            @NonNull VcnCallback vcnCallback) {
+        this(vcnContext, subscriptionGroup, config, snapshot, vcnCallback, new Dependencies());
     }
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
@@ -141,13 +135,12 @@ public class Vcn extends Handler {
             @NonNull ParcelUuid subscriptionGroup,
             @NonNull VcnConfig config,
             @NonNull TelephonySubscriptionSnapshot snapshot,
-            @NonNull VcnSafeModeCallback vcnSafeModeCallback,
+            @NonNull VcnCallback vcnCallback,
             @NonNull Dependencies deps) {
         super(Objects.requireNonNull(vcnContext, "Missing vcnContext").getLooper());
         mVcnContext = vcnContext;
         mSubscriptionGroup = Objects.requireNonNull(subscriptionGroup, "Missing subscriptionGroup");
-        mVcnSafeModeCallback =
-                Objects.requireNonNull(vcnSafeModeCallback, "Missing vcnSafeModeCallback");
+        mVcnSafemodeCallback = Objects.requireNonNull(vcnCallback, "Missing vcnCallback");
         mDeps = Objects.requireNonNull(deps, "Missing deps");
         mRequestListener = new VcnNetworkRequestListener();
 
@@ -336,7 +329,13 @@ public class Vcn extends Handler {
     @VisibleForTesting(visibility = Visibility.PACKAGE)
     public interface VcnGatewayStatusCallback {
         /** Called by a VcnGatewayConnection to indicate that it has entered safe mode. */
-        void onEnteredSafeMode();
+        void onEnteredSafemode();
+
+        /** Callback by a VcnGatewayConnection to indicate that an error occurred. */
+        void onGatewayConnectionError(
+                @NonNull int[] gatewayNetworkCapabilities,
+                @GatewayConnectionError int errorType,
+                @Nullable String message);
     }
 
     private class VcnGatewayStatusCallbackImpl implements VcnGatewayStatusCallback {
@@ -344,6 +343,12 @@ public class Vcn extends Handler {
         public void onEnteredSafeMode() {
             sendMessage(obtainMessage(MSG_CMD_ENTER_SAFE_MODE));
         }
+
+        @Override
+        public void onGatewayConnectionError(
+                @NonNull int[] gatewayNetworkCapabilities,
+                @GatewayConnectionError int errorType,
+                @Nullable String message) {}
     }
 
     /** External dependencies used by Vcn, for injection in tests */

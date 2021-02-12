@@ -33,6 +33,7 @@ import android.net.vcn.IVcnManagementService;
 import android.net.vcn.IVcnStatusCallback;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
+import android.net.vcn.VcnManager.GatewayConnectionError;
 import android.net.vcn.VcnUnderlyingNetworkPolicy;
 import android.net.wifi.WifiInfo;
 import android.os.Binder;
@@ -303,8 +304,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 @NonNull ParcelUuid subscriptionGroup,
                 @NonNull VcnConfig config,
                 @NonNull TelephonySubscriptionSnapshot snapshot,
-                @NonNull VcnSafeModeCallback safeModeCallback) {
-            return new Vcn(vcnContext, subscriptionGroup, config, snapshot, safeModeCallback);
+                @NonNull VcnCallback vcnCallback) {
+            return new Vcn(vcnContext, subscriptionGroup, config, snapshot, vcnCallback);
         }
 
         /** Gets the subId indicated by the given {@link WifiInfo}. */
@@ -772,18 +773,44 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         }
     }
 
-    /** Callback for signalling when a Vcn has entered safe mode. */
-    public interface VcnSafeModeCallback {
+    /** Callback for Vcn signals sent up to VcnManagementService. */
+    public interface VcnCallback {
         /** Called by a Vcn to signal that it has entered safe mode. */
         void onEnteredSafeMode();
+
+        /** Called by a Vcn to signal that an error occurred. */
+        void onGatewayConnectionError(
+                @NonNull int[] gatewayNetworkCapabilities,
+                @GatewayConnectionError int errorType,
+                @Nullable String message);
     }
 
-    /** VcnSafeModeCallback is used by Vcns to notify VcnManagementService on entering safe mode. */
-    private class VcnSafeModeCallbackImpl implements VcnSafeModeCallback {
+    /** VcnCallbackImpl for Vcn signals sent up to VcnManagementService. */
+    private class VcnCallbackImpl implements VcnCallback {
         @NonNull private final ParcelUuid mSubGroup;
 
-        private VcnSafeModeCallbackImpl(@NonNull final ParcelUuid subGroup) {
+        private VcnCallbackImpl(@NonNull final ParcelUuid subGroup) {
             mSubGroup = Objects.requireNonNull(subGroup, "Missing subGroup");
+        }
+
+        private boolean isCallbackPermissioned(@NonNull VcnStatusCallbackInfo cbInfo) {
+            if (!mSubGroup.equals(cbInfo.mSubGroup)) {
+                return false;
+            }
+
+            if (!mLastSnapshot.packageHasPermissionsForSubscriptionGroup(
+                    mSubGroup, cbInfo.mPkgName)) {
+                return false;
+            }
+
+            if (!mLocationPermissionChecker.checkLocationPermission(
+                    cbInfo.mPkgName,
+                    "VcnStatusCallback" /* featureId */,
+                    cbInfo.mUid,
+                    null /* message */)) {
+                return false;
+            }
+            return true;
         }
 
         @Override
@@ -798,23 +825,36 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
                 // Notify all registered StatusCallbacks for this subGroup
                 for (VcnStatusCallbackInfo cbInfo : mRegisteredStatusCallbacks.values()) {
-                    if (!mSubGroup.equals(cbInfo.mSubGroup)) {
-                        continue;
-                    }
-                    if (!mLastSnapshot.packageHasPermissionsForSubscriptionGroup(
-                            mSubGroup, cbInfo.mPkgName)) {
-                        continue;
-                    }
-
-                    if (!mLocationPermissionChecker.checkLocationPermission(
-                            cbInfo.mPkgName,
-                            "VcnStatusCallback" /* featureId */,
-                            cbInfo.mUid,
-                            null /* message */)) {
+                    if (!isCallbackPermissioned(cbInfo)) {
                         continue;
                     }
 
                     Binder.withCleanCallingIdentity(() -> cbInfo.mCallback.onEnteredSafeMode());
+                }
+            }
+        }
+
+        @Override
+        public void onGatewayConnectionError(
+                @NonNull int[] gatewayNetworkCapabilities,
+                @GatewayConnectionError int errorType,
+                @Nullable String message) {
+            synchronized (mLock) {
+                // Ignore if this subscription group doesn't exist anymore
+                if (!mVcns.containsKey(mSubGroup)) {
+                    return;
+                }
+
+                // Notify all registered StatusCallbacks for this subGroup
+                for (VcnStatusCallbackInfo cbInfo : mRegisteredStatusCallbacks.values()) {
+                    if (!isCallbackPermissioned(cbInfo)) {
+                        continue;
+                    }
+
+                    Binder.withCleanCallingIdentity(
+                            () ->
+                                    cbInfo.mCallback.onGatewayConnectionError(
+                                            gatewayNetworkCapabilities, errorType, message));
                 }
             }
         }
