@@ -16,6 +16,24 @@
       "message": "There was some bug (mwachens@) may know related to this, but simply, it needs a way to avoid being backwards incompatible.",
       "revId": "398d6e049f7d029b6262b2488fd03f21383bd8f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1ed73b6_d023538a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1377660
+      },
+      "writtenOn": "2021-02-12T11:07:10Z",
+      "side": 1,
+      "message": "Thanks Steven.\n\n1) do u think the newly class UnknownException should be public to app developer? I think it might be better to keep it as \"@hide\", to prevent app developer from possibly abusing that exception class.\n\n2) sorry, I did not see any \"backwards incompatible\" issue, except that in old days some issue were actually concealed while this fix may help to expose them.",
+      "parentUuid": "06644f3a_7924fb9d",
+      "revId": "398d6e049f7d029b6262b2488fd03f21383bd8f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
