@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "177dbe4d_ef35a0ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-12T22:55:33Z",
+      "side": 1,
+      "message": "Sorry for the late. Mostly LGTM now, just a few comments",
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4308b2a1_c7a097c8",
+        "filename": "core/java/android/app/ApplicationExitInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-12T22:55:33Z",
+      "side": 1,
+      "message": "{@link Build.VERSION_CODES#S}",
+      "range": {
+        "startLine": 613,
+        "startChar": 80,
+        "endLine": 613,
+        "endChar": 81
+      },
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f795fa8_084ef6b4",
+        "filename": "core/java/android/app/ApplicationExitInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-12T22:55:33Z",
+      "side": 1,
+      "message": "Maybe \"tombstone traces\"?",
+      "range": {
+        "startLine": 614,
+        "startChar": 7,
+        "endLine": 614,
+        "endChar": 13
+      },
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "621f0b68_15954c4e",
+        "filename": "core/java/android/app/ApplicationExitInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-12T22:55:33Z",
+      "side": 1,
+      "message": "Maybe rephrase it to \"overwritten by newer crashes\" ?",
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09ea78c0_5b18527c",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-12T22:55:33Z",
+      "side": 1,
+      "message": "nit: mTombstones.size() will be evaluated in every loop, maybe cache it into a local variable?",
+      "range": {
+        "startLine": 254,
+        "startChar": 36,
+        "endLine": 254,
+        "endChar": 54
+      },
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48b0d218_86afded2",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-12T22:55:33Z",
+      "side": 1,
+      "message": "nit: use int index to iterate the ArrayList\u003c\u003e would yield a better performance in Java",
+      "range": {
+        "startLine": 262,
+        "startChar": 29,
+        "endLine": 262,
+        "endChar": 66
+      },
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "082adc0e_716a74de",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-12T22:55:33Z",
+      "side": 1,
+      "message": "nit: Maybe add an extra check \"exitInfo.getReason() \u003d\u003d REASON_CRASH_NATIVE\" ?",
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "711f3d10_1a9d6e45",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-12T22:55:33Z",
+      "side": 1,
+      "message": "Maybe my understanding is wrong. Here we are jumping to line 253, thus the for loop in line 254 will start over again, and then we\u0027ll run all the way to here again... Seems to be a dead loop?",
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48f6815b_0b08b27e",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-12T22:55:33Z",
+      "side": 1,
+      "message": "The API will return the list of records sorted in the order from most recent to least recent. So maybe we\u0027d need to do a sorting here",
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
