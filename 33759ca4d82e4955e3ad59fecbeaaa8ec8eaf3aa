@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "599a9304_364e6c38",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-02-12T15:07:13Z",
+      "side": 1,
+      "message": "I would expand a bit more here and specifically mention\n- the word \"shared\" makes it sound like anyone could know/derive the key... maybe point out that only the other party and ourselves knows it.. in particular I would point out that even if there were an active eavesdropper (\"Eve\") they don\u0027t have enough information to derive it. This would really help explain the awesomeness of key agreement!\n- what we\u0027re deriving could be used with e.g. AES encryption.. maybe even include a line such as `SecretKeySpec sessionEncryptionKey \u003d new SecretKeySpec(derivedKey, \"AES\")` at the end to drive home the point?\n- talk about info and salt parameters? I would perhaps just mention that this is usually prescribed by a higher level protocol but maybe it would be nice to explain what they are and how they are different from each other?\n\nMaybe it\u0027ll get too wordy/detailed with mentioning all this though. Thoughts?",
+      "range": {
+        "startLine": 259,
+        "startChar": 48,
+        "endLine": 259,
+        "endChar": 58
+      },
+      "revId": "33759ca4d82e4955e3ad59fecbeaaa8ec8eaf3aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
