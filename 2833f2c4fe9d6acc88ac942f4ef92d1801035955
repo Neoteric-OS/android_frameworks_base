@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "861aba6c_c2e640e4",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1321491
+      },
+      "writtenOn": "2021-02-12T23:22:10Z",
+      "side": 1,
+      "message": "Should this instead return mIsServiceEnabled? And then a private helper can do the device config reading?",
+      "range": {
+        "startLine": 576,
+        "startChar": 4,
+        "endLine": 576,
+        "endChar": 49
+      },
+      "revId": "2833f2c4fe9d6acc88ac942f4ef92d1801035955",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
