@@ -2402,6 +2402,20 @@ interface ITelephony {
      */
      void setDeviceUceEnabled(boolean isEnabled);
 
+     /**
+      * Override the existing UCE capabilities and potentially generate a new PUBLISH to the network
+      * Note: This is designed for a SHELL command only.
+      * @return a String containing the new caps or null if the command was incorrect.
+      */
+     String uceOverridePublishCaps(int subId, String operation, String capabilties);
+
+   /**
+    * Returns the last PIDF XML sent to the network during the last PUBLISH or "none" if the
+    * device does not have an active PUBLISH.
+    * Note: This is designed for a SHELL command only.
+    */
+    String uceGetLastPidfXml(int subId);
+
     /**
      * Set a SignalStrengthUpdateRequest to receive notification when Signal Strength breach the
      * specified thresholds.
