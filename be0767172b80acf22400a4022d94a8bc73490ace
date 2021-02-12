@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "175010e9_7011c9ef",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-02-12T12:05:35Z",
+      "side": 1,
+      "message": "Mainly because the API entry point (which takes these flags) that clients use is in ConnectivityManager and also ConnectivityService does care about at least one flag: https://r.android.com/c/platform/frameworks/base/+/1586726/2/services/core/java/com/android/server/ConnectivityService.java#1428 (Although I\u0027m not actually sure if this conditional currently is at the right place or if it is supposed to ignore only networkpolicy restrictions).",
+      "parentUuid": "51544387_2f58cba5",
+      "range": {
+        "startLine": 824,
+        "startChar": 0,
+        "endLine": 837,
+        "endChar": 45
+      },
+      "revId": "be0767172b80acf22400a4022d94a8bc73490ace",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7be71a1c_f79472a3",
         "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-12T09:37:28Z",
       "side": 1,
       "message": "What is the asynchronous way of getting this information? Generally speaking, we shouldn\u0027t be adding any new APIs to ConnectivityManager that are only synchronous, they should all be callback-based. Otherwise there is no way for the caller to know when to call the synchronous method, and callers are forced to either resort to polling or to call the method when some other callback or broadcast is received (which makes it difficult or impossible to avoid races).\n\nCurrently the way to find out if networking is blocked is to implement the onBlockedStatusChanged callback in ConnectivityManager.NetworkCallback. That is synthesized internally by ConnectivityService in response to a notification from NetworkPolicyManagementService that the UID rules have changed. The calculation is done by calling the static NetworkPolicyManagerService.isUidNetworkingBlockedInternal method that returns the blocked status given the rules.\n\nDoes the current UID rules listener pass enough information for CS to continue to do this? Presumably yes, since this information is encoded in the rules? If so, then we can do something similar here too: any time the rules change, CS looks at all its the NetworkRequests, calls the static method with all the information it has, and calls the CALLBACK_BLK_CHANGED callback with the result. Currently the callback only contains a boolean (blocked/not blocked), but it could change to pass a bitmask of BLOCKED_REASON_xxx constants which could replace the FLAG_IGNORE_BLOCKED_REASON_xxx constants that you have in this CL.",
+      "range": {
+        "startLine": 1116,
+        "startChar": 12,
+        "endLine": 1116,
+        "endChar": 60
+      },
+      "revId": "be0767172b80acf22400a4022d94a8bc73490ace",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38e318b3_f0bd6b43",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-02-12T12:05:35Z",
+      "side": 1,
+      "message": "Currently there isn\u0027t any asynchronous way of getting this. As JobScheduler always calls the synchronous methods, so the asynchronous way of getting it wasn\u0027t necessary right now. I can add the callback as you suggested but there won\u0027t be any client using it for now, unless we update JobScheduler to start using the asynchronous callbacks which sounds like something we need to do.",
+      "parentUuid": "7be71a1c_f79472a3",
       "range": {
         "startLine": 1116,
         "startChar": 12,

@@ -39,6 +39,30 @@
       },
       "revId": "270690da001b7e407a38484430fe00ee68243eef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d58a7870_81ad83e8",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-02-12T12:05:35Z",
+      "side": 1,
+      "message": "Looks like we need to fix JobScheduler before this because the only reason for adding this is because of JobScheduler.",
+      "parentUuid": "bbc0b1e3_a20f7559",
+      "range": {
+        "startLine": 1363,
+        "startChar": 11,
+        "endLine": 1363,
+        "endChar": 22
+      },
+      "revId": "270690da001b7e407a38484430fe00ee68243eef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
