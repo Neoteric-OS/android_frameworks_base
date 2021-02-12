@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01d49aed_852188c4",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T02:48:54Z",
+      "side": 1,
+      "message": "I don\u0027t see any reason for these three to be nullable. Can we annotate them with @NonNull and use Objects.requireNonNull on them?\n\nIf the reason why we these are non-null is because we might want to convert NetworkState.EMPTY to a NetworkStateSnapshot, let\u0027s just ensure we never do that. I don\u0027t think the code as is will ever do it, and I think I\u0027m close to removing all usage of NetworkState within CS anyway.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 33
+      },
+      "revId": "1452c7bdbec765db8f1d3ef49a06792f7cdf37bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26a7544e_4a65bbd1",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T02:48:54Z",
+      "side": 1,
+      "message": "Would shorten to just legacyType. This class is already specific to networking.",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "1452c7bdbec765db8f1d3ef49a06792f7cdf37bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebcab501_293fc06e",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T02:48:54Z",
+      "side": 1,
+      "message": "Suggest using the same order as you do above for the fields.",
+      "range": {
+        "startLine": 42,
+        "startChar": 32,
+        "endLine": 44,
+        "endChar": 41
+      },
+      "revId": "1452c7bdbec765db8f1d3ef49a06792f7cdf37bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2df8b579_b3726e2b",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T02:48:54Z",
+      "side": 1,
+      "message": "Do we really need this? If the reason we have it is because NetworkAgentInfo.getNetworkState returns a NetworkState, then maybe we can we add a new getNetworkStateSnapshot instead? I\u0027d really like ConnectivityService not to use NetworkState internally at all.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 60
+      },
+      "revId": "1452c7bdbec765db8f1d3ef49a06792f7cdf37bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c7903b0_b72a694a",
+        "filename": "tests/net/common/java/android/net/NetworkStateSnapshotTest.kt",
+        "patchSetId": 17
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T02:48:54Z",
+      "side": 1,
+      "message": "These should be non-null.",
+      "range": {
+        "startLine": 82,
+        "startChar": 60,
+        "endLine": 82,
+        "endChar": 76
+      },
+      "revId": "1452c7bdbec765db8f1d3ef49a06792f7cdf37bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
