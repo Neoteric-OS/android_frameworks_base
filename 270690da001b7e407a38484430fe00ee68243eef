@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "10c7f2ae_bfe58e08",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-02-12T19:24:34Z",
+      "side": 1,
+      "message": "Does this need to be noted?",
+      "range": {
+        "startLine": 469,
+        "startChar": 7,
+        "endLine": 470,
+        "endChar": 80
+      },
+      "revId": "270690da001b7e407a38484430fe00ee68243eef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bbc0b1e3_a20f7559",
         "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
         "patchSetId": 2
@@ -55,6 +78,30 @@
       "side": 1,
       "message": "Looks like we need to fix JobScheduler before this because the only reason for adding this is because of JobScheduler.",
       "parentUuid": "bbc0b1e3_a20f7559",
+      "range": {
+        "startLine": 1363,
+        "startChar": 11,
+        "endLine": 1363,
+        "endChar": 22
+      },
+      "revId": "270690da001b7e407a38484430fe00ee68243eef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "834dba87_93b661b4",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-02-12T19:24:34Z",
+      "side": 1,
+      "message": "Out of curiousity, why should JS be running jobs for a suspended network?",
+      "parentUuid": "d58a7870_81ad83e8",
       "range": {
         "startLine": 1363,
         "startChar": 11,

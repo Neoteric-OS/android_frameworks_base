@@ -93,6 +93,30 @@
       },
       "revId": "be0767172b80acf22400a4022d94a8bc73490ace",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4af53fb5_b4ac3550",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-02-12T19:24:34Z",
+      "side": 1,
+      "message": "Lorenzo, I filed http://b/165835257 a few months ago to get the asynchronous callback to replace this.",
+      "parentUuid": "38e318b3_f0bd6b43",
+      "range": {
+        "startLine": 1116,
+        "startChar": 12,
+        "endLine": 1116,
+        "endChar": 60
+      },
+      "revId": "be0767172b80acf22400a4022d94a8bc73490ace",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
