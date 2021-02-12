@@ -22,6 +22,10 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+import static android.net.vcn.VcnManager.GATEWAY_CONNECTION_ERROR_AUTHENTICATION_FAILED;
+import static android.net.vcn.VcnManager.GATEWAY_CONNECTION_ERROR_DNS_FAILURE;
+import static android.net.vcn.VcnManager.GATEWAY_CONNECTION_ERROR_INTERNAL_FAILURE;
+import static android.net.vcn.VcnManager.GATEWAY_CONNECTION_ERROR_SESSION_DIED;
 
 import static com.android.server.VcnManagementService.VDBG;
 
@@ -52,7 +56,9 @@ import android.net.ipsec.ike.IkeSession;
 import android.net.ipsec.ike.IkeSessionCallback;
 import android.net.ipsec.ike.IkeSessionConfiguration;
 import android.net.ipsec.ike.IkeSessionParams;
+import android.net.ipsec.ike.exceptions.AuthenticationFailedException;
 import android.net.ipsec.ike.exceptions.IkeException;
+import android.net.ipsec.ike.exceptions.IkeInternalException;
 import android.net.ipsec.ike.exceptions.IkeProtocolException;
 import android.net.vcn.VcnGatewayConnectionConfig;
 import android.net.vcn.VcnTransportInfo;
@@ -81,6 +87,7 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -951,15 +958,45 @@ public class VcnGatewayConnection extends StateMachine {
         removeEqualMessages(EVENT_SAFE_MODE_TIMEOUT_EXCEEDED);
     }
 
-    private void sessionLost(int token, @Nullable Exception exception) {
+    private void sessionLostWithoutCallback(int token, @Nullable Exception exception) {
         sendMessageAndAcquireWakeLock(
                 EVENT_SESSION_LOST, token, new EventSessionLostInfo(exception));
     }
 
+    private void sessionLost(int token, @Nullable Exception exception) {
+        // Only notify mGatewayStatusCallback if the session was lost with an error
+        if (exception != null) {
+            mGatewayStatusCallback.onGatewayConnectionError(
+                    mConnectionConfig.getRequiredUnderlyingCapabilities(),
+                    GATEWAY_CONNECTION_ERROR_INTERNAL_FAILURE,
+                    "Gateway Connection lost with error: " + exception.getMessage());
+        }
+
+        sessionLostWithoutCallback(token, exception);
+    }
+
     private void sessionClosed(int token, @Nullable Exception exception) {
+        final int errorType;
+        if (exception instanceof AuthenticationFailedException) {
+            errorType = GATEWAY_CONNECTION_ERROR_AUTHENTICATION_FAILED;
+        } else if (exception == null) {
+            errorType = GATEWAY_CONNECTION_ERROR_SESSION_DIED;
+        } else if (exception instanceof IkeInternalException
+                && exception.getCause() instanceof UnknownHostException) {
+            errorType = GATEWAY_CONNECTION_ERROR_DNS_FAILURE;
+        } else {
+            errorType = GATEWAY_CONNECTION_ERROR_INTERNAL_FAILURE;
+        }
+        final String msg =
+                exception != null
+                        ? "Gateway Connection lost with error: " + exception.getMessage()
+                        : null;
+        mGatewayStatusCallback.onGatewayConnectionError(
+                mConnectionConfig.getRequiredUnderlyingCapabilities(), errorType, msg);
+
         // SESSION_LOST MUST be sent before SESSION_CLOSED to ensure that the SM moves to the
         // Disconnecting state.
-        sessionLost(token, exception);
+        sessionLostWithoutCallback(token, exception);
         sendMessageAndAcquireWakeLock(EVENT_SESSION_CLOSED, token);
     }
 
