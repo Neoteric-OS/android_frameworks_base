@@ -81,6 +81,30 @@
       },
       "revId": "62befb96013676bcdbfc03b533d33cad03eca487",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98615d50_86034f7b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6234,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-12T19:42:49Z",
+      "side": 1,
+      "message": "Jean and I synced offline and decided to abandon this particular approach and go with something else. \n\nNamely, if an app files a TRACK_DEFAULT request, we\u0027ll check if that\u0027s currently being tracked by a per-app default and if so, we\u0027ll create a duplicate request that mirrors the per-app default request except that the requestorId and messenger of the original TRACK_DEFAULT request will be used.\n\nThe idea here is that all the existing plumbing will continue to work as-is. We\u0027ll also have to do this again when the network preference policy changes.",
+      "parentUuid": "d43d711b_a4da325d",
+      "range": {
+        "startLine": 6234,
+        "startChar": 15,
+        "endLine": 6234,
+        "endChar": 71
+      },
+      "revId": "62befb96013676bcdbfc03b533d33cad03eca487",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
