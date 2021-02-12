@@ -236,6 +236,31 @@ import javax.security.auth.x500.X500Principal;
  * keyStore.load(null);
  * key = (SecretKey) keyStore.getKey("key2", null);
  * }</pre>
+ *
+ * <p><h3 id="example:ecdh">Example: EC key for ECDH key agreement</h3>
+ * This example illustrates how to generate an elliptic curve key pair, used to establish a shared
+ * secret with another party using ECDH key agreement.
+ * <pre> {@code
+ * KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(
+ *         KeyProperties.KEY_ALGORITHM_EC, "AndroidKeyStore");
+ * keyPairGenerator.initialize(
+ *         new KeyGenParameterSpec.Builder(
+ *             "eckeypair",
+ *             KeyProperties.PURPOSE_AGREE_KEY)
+ *             .build());
+ * KeyPair keyPair = keyPairGenerator.generateKeyPair();
+ *
+ * // Create a shared secret based on our private key and the other party's public key.
+ * KeyAgreement keyAgreement = KeyAgreement.getInstance("ECDH", "AndroidKeyStore");
+ * keyAgreement.init(keyPair.getPrivate());
+ * keyAgreement.doPhase(otherPartyPublicKey, true);
+ * byte[] sharedSecret = keyAgreement.generateSecret();
+ *
+ * // Use a key derivation function to create a shared key for communication with the other party.
+ * // This example uses the Tink library.
+ * byte[] derivedKey = com.google.crypto.tink.subtle.Hkdf.computeHkdf(
+ *         "HmacSha256", sharedSecret, salt, info, 32);
+ * }
  */
 public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAuthArgs {
 
