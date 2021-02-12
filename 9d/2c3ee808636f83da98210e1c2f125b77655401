@@ -1,0 +1,9 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Remi NGUYEN VAN <reminv@google.com>
+Autosubmit+1: Lorenzo Colitti <lorenzo@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Fri, 12 Feb 2021 04:03:10 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1585567
+Project: platform/frameworks/base
+Branch: refs/heads/master
