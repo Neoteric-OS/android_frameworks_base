@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fcad9f8_41db8cb9",
+        "filename": "core/java/android/hardware/location/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1074038
+      },
+      "writtenOn": "2021-02-12T17:43:38Z",
+      "side": 1,
+      "message": "Sorry Wei, realized this could be placed on a single line instead.",
+      "range": {
+        "startLine": 9,
+        "startChar": 9,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "8b97ec79577fa5bb31bbd911cc20a29e2c4c584a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
