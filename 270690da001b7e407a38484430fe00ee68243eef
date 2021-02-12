@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a2d6dd5_4bfc6d96",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T09:37:28Z",
+      "side": 1,
+      "message": "No objection to adding this sort of capability to CM but I don\u0027t think we should add new NetworkInfo-based or new synchonous-only APIs. See inline comments.",
+      "revId": "270690da001b7e407a38484430fe00ee68243eef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbc0b1e3_a20f7559",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T09:37:28Z",
+      "side": 1,
+      "message": "Can we avoid adding a method that returns a NetworkInfo? NetworkInfo has been deprecated since Q and the legacy APIs that use it are extremely error-prone; a recent example is b/172870110. There\u0027s also b/179501234 to wean the JobScheduler off NetworkInfo-based APIs entirely.\n\nI don\u0027t think JS actually does much of anything with the NetworkInfo it gets; the only thing it does is called isConnected() which can be misleading (and in fact that\u0027s one of the two causes of b/172870110 : isConnected returns false when the network is suspended).",
+      "range": {
+        "startLine": 1363,
+        "startChar": 11,
+        "endLine": 1363,
+        "endChar": 22
+      },
+      "revId": "270690da001b7e407a38484430fe00ee68243eef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

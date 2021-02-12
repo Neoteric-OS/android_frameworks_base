@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51544387_2f58cba5",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T09:37:28Z",
+      "side": 1,
+      "message": "Out of curiosity, why are these in ConnectivityManager instead of NetworkPolicyManager? ISTM that the NPM code is what decides which flag(s) have meaning and which do not, and in any case, ConnectivityManager and ConnectivityService don\u0027t do much with these ints except pass them straight back to NetworkPolicyManager / NetworkPolicyManagerInternal.",
+      "range": {
+        "startLine": 824,
+        "startChar": 0,
+        "endLine": 837,
+        "endChar": 45
+      },
+      "revId": "be0767172b80acf22400a4022d94a8bc73490ace",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7be71a1c_f79472a3",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T09:37:28Z",
+      "side": 1,
+      "message": "What is the asynchronous way of getting this information? Generally speaking, we shouldn\u0027t be adding any new APIs to ConnectivityManager that are only synchronous, they should all be callback-based. Otherwise there is no way for the caller to know when to call the synchronous method, and callers are forced to either resort to polling or to call the method when some other callback or broadcast is received (which makes it difficult or impossible to avoid races).\n\nCurrently the way to find out if networking is blocked is to implement the onBlockedStatusChanged callback in ConnectivityManager.NetworkCallback. That is synthesized internally by ConnectivityService in response to a notification from NetworkPolicyManagementService that the UID rules have changed. The calculation is done by calling the static NetworkPolicyManagerService.isUidNetworkingBlockedInternal method that returns the blocked status given the rules.\n\nDoes the current UID rules listener pass enough information for CS to continue to do this? Presumably yes, since this information is encoded in the rules? If so, then we can do something similar here too: any time the rules change, CS looks at all its the NetworkRequests, calls the static method with all the information it has, and calls the CALLBACK_BLK_CHANGED callback with the result. Currently the callback only contains a boolean (blocked/not blocked), but it could change to pass a bitmask of BLOCKED_REASON_xxx constants which could replace the FLAG_IGNORE_BLOCKED_REASON_xxx constants that you have in this CL.",
+      "range": {
+        "startLine": 1116,
+        "startChar": 12,
+        "endLine": 1116,
+        "endChar": 60
+      },
+      "revId": "be0767172b80acf22400a4022d94a8bc73490ace",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
