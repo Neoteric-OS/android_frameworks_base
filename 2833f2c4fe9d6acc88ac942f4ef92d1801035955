@@ -22,6 +22,30 @@
       },
       "revId": "2833f2c4fe9d6acc88ac942f4ef92d1801035955",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8951386c_8adee9b8",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-13T00:27:05Z",
+      "side": 1,
+      "message": "I\u0027d like the API to be static for ease of access so other components in system server can check it without access to the service instance directly.",
+      "parentUuid": "861aba6c_c2e640e4",
+      "range": {
+        "startLine": 576,
+        "startChar": 4,
+        "endLine": 576,
+        "endChar": 49
+      },
+      "revId": "2833f2c4fe9d6acc88ac942f4ef92d1801035955",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
