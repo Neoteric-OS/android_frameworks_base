@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0545e72_c04747b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-02-13T18:33:06Z",
+      "side": 1,
+      "message": "(Copying over reason for skipping TH): TH was complaining about a merge conflict, however this CL was a cherry-pick of internal change ag/13044249 so it shouldn\u0027t merge back to internal. Due to shuffling of file locations in internal tree, it was not possible to use Merged-In clause to skip the automerging, so I will manually skip the merge conflict once automerger attempts to merge this to sc-dev.\n\n",
+      "revId": "fd4c56d4d3ddcd3bb097e22d1316c919801e41ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
