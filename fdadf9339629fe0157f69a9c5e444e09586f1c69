@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a12700b_3eecadcf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-02-13T18:44:13Z",
+      "side": 1,
+      "message": "Can you link this change with a bug id?",
+      "revId": "fdadf9339629fe0157f69a9c5e444e09586f1c69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
