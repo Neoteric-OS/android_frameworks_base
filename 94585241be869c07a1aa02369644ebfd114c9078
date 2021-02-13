@@ -51,6 +51,24 @@
       "parentUuid": "c56d85e2_442ad837",
       "revId": "94585241be869c07a1aa02369644ebfd114c9078",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ede046a_8a09aadb",
+        "filename": "core/java/android/app/AppOpsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2021-02-13T00:01:21Z",
+      "side": 1,
+      "message": "As you may have seen in AppProtoEnums, it is actually consecutive. Just that the constant for 103 wasn\u0027t placed in the right place in AppOpsManager which made this confusing.",
+      "parentUuid": "28d1bfdf_64d8859e",
+      "revId": "94585241be869c07a1aa02369644ebfd114c9078",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
