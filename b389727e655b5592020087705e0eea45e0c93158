@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ef00ee9_b5f4dae2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6831,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T03:33:11Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to add this considering this is already the last thing processBroadcastForVpn does",
+      "range": {
+        "startLine": 6831,
+        "startChar": 8,
+        "endLine": 6831,
+        "endChar": 19
+      },
+      "revId": "b389727e655b5592020087705e0eea45e0c93158",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
