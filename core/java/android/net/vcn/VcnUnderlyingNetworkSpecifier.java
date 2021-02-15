@@ -16,7 +16,10 @@
 
 package android.net.vcn;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.net.NetworkSpecifier;
 import android.net.TelephonyNetworkSpecifier;
 import android.os.Parcel;
@@ -36,6 +39,7 @@ import java.util.Objects;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 public final class VcnUnderlyingNetworkSpecifier extends NetworkSpecifier implements Parcelable {
     @NonNull private final int[] mSubIds;
 
@@ -44,6 +48,7 @@ public final class VcnUnderlyingNetworkSpecifier extends NetworkSpecifier implem
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES) // for testing purposes
     public VcnUnderlyingNetworkSpecifier(@NonNull int[] subIds) {
         mSubIds = Objects.requireNonNull(subIds, "subIds were null");
     }
