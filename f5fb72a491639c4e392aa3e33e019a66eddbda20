@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2037eca3_0db1a2db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 35
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T07:00:24Z",
+      "side": 1,
+      "message": "Maybe these tests are better set in an OemNetworkPreferenceTest.java file.",
+      "revId": "f5fb72a491639c4e392aa3e33e019a66eddbda20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fdb3b9d_28d105b2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 9356,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T07:00:24Z",
+      "side": 1,
+      "message": "nit : double space",
+      "range": {
+        "startLine": 9356,
+        "startChar": 83,
+        "endLine": 9356,
+        "endChar": 85
+      },
+      "revId": "f5fb72a491639c4e392aa3e33e019a66eddbda20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae18a07b_4dfaaf52",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 9379,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T07:00:24Z",
+      "side": 1,
+      "message": "Can we have a constant for this and the UID below ?",
+      "range": {
+        "startLine": 9379,
+        "startChar": 40,
+        "endLine": 9379,
+        "endChar": 64
+      },
+      "revId": "f5fb72a491639c4e392aa3e33e019a66eddbda20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa6e858b_2deeda3e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 9406,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T07:00:24Z",
+      "side": 1,
+      "message": "This test is not wrong, but a bit overspecified maybe ? It checks the specific implementation of the OEM_PAID preference, not its behavior.",
+      "range": {
+        "startLine": 9406,
+        "startChar": 16,
+        "endLine": 9406,
+        "endChar": 61
+      },
+      "revId": "f5fb72a491639c4e392aa3e33e019a66eddbda20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65446a5d_4a112a0f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 9542,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T07:00:24Z",
+      "side": 1,
+      "message": "Maybe you want some more helper methods to limit duplication.",
+      "range": {
+        "startLine": 9536,
+        "startChar": 1,
+        "endLine": 9542,
+        "endChar": 70
+      },
+      "revId": "f5fb72a491639c4e392aa3e33e019a66eddbda20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
