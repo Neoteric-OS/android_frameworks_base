@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "344c30d7_56587aeb",
+        "filename": "telephony/java/android/telephony/UiccAccessRule.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1145478
+      },
+      "writtenOn": "2021-02-15T17:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b608cdd_0ca64eca",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 12
+      },
+      "revId": "a45d6778b9fe2a7c0719b931852f05da4ac2d1b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a757379_3bc9abcb",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-12T23:29:35Z",
       "side": 1,
       "message": "Nit: this can be pulled out of the if/else to avoid repeated calculations in this inner loop:\nbyte[] certificateHash \u003d IccUtils.hexStringToBytes(splitStr[0])",
+      "range": {
+        "startLine": 136,
+        "startChar": 28,
+        "endLine": 136,
+        "endChar": 70
+      },
+      "revId": "a45d6778b9fe2a7c0719b931852f05da4ac2d1b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a205427_7839bfbb",
+        "filename": "telephony/java/android/telephony/UiccAccessRule.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1145478
+      },
+      "writtenOn": "2021-02-15T17:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a757379_3bc9abcb",
       "range": {
         "startLine": 136,
         "startChar": 28,
