@@ -22,6 +22,30 @@
       },
       "revId": "33759ca4d82e4955e3ad59fecbeaaa8ec8eaf3aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cb79d9d_616d9d53",
+        "filename": "keystore/java/android/security/keystore/KeyGenParameterSpec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2021-02-15T10:17:15Z",
+      "side": 1,
+      "message": "Done, after offline discussion.",
+      "parentUuid": "599a9304_364e6c38",
+      "range": {
+        "startLine": 259,
+        "startChar": 48,
+        "endLine": 259,
+        "endChar": 58
+      },
+      "revId": "33759ca4d82e4955e3ad59fecbeaaa8ec8eaf3aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
