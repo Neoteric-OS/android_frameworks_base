@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcda87a5_1c76ba32",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-15T08:41:46Z",
+      "side": 1,
+      "message": "Nit: \"I\" in cover messages makes me a bit uncomfortable because the person is not very relevant from the point of view of someone looking at the git log\n(Also \"code search\" a bit, as it\u0027s now publicly available, but is a third-party service from the git log point of view)",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "c0f4c88a424b4dd2835471d9df933283fe015b73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
