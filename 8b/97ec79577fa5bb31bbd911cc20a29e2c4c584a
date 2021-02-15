@@ -1,0 +1,10 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Wei Wang <weiwa@google.com>
+Autosubmit+1: Anthony Stange <stange@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Mon, 15 Feb 2021 21:45:00 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1587271
+Project: platform/frameworks/base
+Branch: refs/heads/master
