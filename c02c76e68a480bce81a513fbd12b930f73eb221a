@@ -16,6 +16,23 @@
       "message": "Traced the breakage back to the original CL. NetworkRequest.deduceNotVcnManagedCapability() is what\u0027s causing the issue.",
       "revId": "c02c76e68a480bce81a513fbd12b930f73eb221a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad9019eb_d46f0a2e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-15T10:36:09Z",
+      "side": 1,
+      "message": "LGTM, but given that this is in a topic, maybe a fix forward would be better?",
+      "revId": "c02c76e68a480bce81a513fbd12b930f73eb221a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
