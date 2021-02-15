@@ -30,6 +30,8 @@
 #include <utils/misc.h>
 #include <signal.h>
 #include <time.h>
+#include <utils/Vector.h>
+#include <utils/KeyedVector.h>
 
 #include <cutils/atomic.h>
 #include <cutils/properties.h>
@@ -575,8 +577,116 @@ void BootAnimation::findBootAnimationFile() {
     }
 }
 
+void BootAnimation::enableWaitForInput()
+{
+    mWaitForInput = true;
+}
+
+//add [s]
+void BootAnimation::getPowerManager() {
+    if (mPowerManager == 0) {
+        sp<IBinder> binder = defaultServiceManager()->checkService(String16("power"));
+        if (binder == 0) {
+            SLOGD("BootAnimation cannot connect to power manager service");
+        } else {
+            mPowerManager = interface_cast<IPowerManager>(binder);
+        }
+    }
+}
+
+void BootAnimation::openInputDevice()
+{
+    int fd;
+    char devname[4096];
+    char *filename;
+    char const *dirname = "/dev/input";
+    DIR *dir;
+    struct dirent *de;
+    int devCount = 0;
+    dir = opendir(dirname);
+    if(dir == NULL) {
+        SLOGE("BootAnimation::openInputDevice cannot open %s %s", dirname, strerror(errno));
+        return;
+    }
+    strcpy(devname, dirname);
+    filename = devname + strlen(devname);
+    *filename++ = '/';
+    while((de = readdir(dir))) {
+        if(de->d_name[0] == '.' &&
+           (de->d_name[1] == '\0' ||
+            (de->d_name[1] == '.' && de->d_name[2] == '\0')))
+            continue;
+        strcpy(filename, de->d_name);
+        fd= open("/dev/input/event0", O_NONBLOCK);
+        if (fd< 0) {
+            SLOGE("BootAnimation::openInputDevice cannot open %s %s", filename, strerror(errno));
+        }else{
+            mInputFds.add(devCount, fd);
+            devCount++;
+        }
+    }
+    closedir(dir);
+}
+
+void BootAnimation::closeInputDevice()
+{
+    while(mInputFds.size() > 0)
+    {
+        close(mInputFds.valueAt(mInputFds.size() - 1));
+        mInputFds.removeItemsAt(mInputFds.size() - 1);
+    }
+}
+
+bool BootAnimation::checkInput()
+{
+    SLOGD("BootAnimation::checkInput()");
+    int readSize;
+    struct local_input_event inputEvent;
+    //read input
+    for(int i = 0; i < mInputFds.size(); i++) {
+        readSize = read(mInputFds.valueAt(i), &inputEvent, sizeof(inputEvent));
+        if (readSize == sizeof(inputEvent)) {
+            SLOGD("BootAnimation::checkInput() inputEvent.type %d inputEvent.code  %d",
+                    inputEvent.type, inputEvent.code );
+            //check the code to see if it was button event
+            if(inputEvent.type == 0x01)     //type is EV_KEY
+            {
+                mQuiescentCanceled = true;
+                SLOGD("BootAnimation should start now");
+                getPowerManager();
+                if (mPowerManager != 0) {
+                    status_t status = mPowerManager->endQuiescent();
+                    SLOGD("mPowerManager->endQuiescent() status %d", status);
+                    mCancelQuiescentSent = true;
+                }
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+//add [e]
+
 bool BootAnimation::threadLoop() {
-    bool result;
+    bool result = false;
+    if (mWaitForInput) {
+        //prepare for checking input
+        openInputDevice();
+
+        //run loop checking input
+        while( true ) {
+            if (checkInput()) {
+                SLOGD("BootAnimation break loop");
+                break;
+            }
+            checkExit();
+            if (exitPending()) {
+                goto exitThreadLoop;
+            }
+        }
+    }
+
     // We have no bootanimation file, so we use the stock android logo
     // animation.
     if (mZipFileName.isEmpty()) {
@@ -586,6 +696,8 @@ bool BootAnimation::threadLoop() {
     }
 
     mCallbacks->shutdown();
+exitThreadLoop:
+    closeInputDevice();
     eglMakeCurrent(mDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
     eglDestroyContext(mDisplay, mContext);
     eglDestroySurface(mDisplay, mSurface);
@@ -671,7 +783,16 @@ void BootAnimation::checkExit() {
     property_get(EXIT_PROP_NAME, value, "0");
     int exitnow = atoi(value);
     if (exitnow) {
+        SLOGD("BootAnimation exit now");
         requestExit();
+    }
+    if (mQuiescentCanceled && !mCancelQuiescentSent) {
+        getPowerManager();
+        if (mPowerManager != 0) {
+            status_t status = mPowerManager->endQuiescent();
+            SLOGD("mPowerManager->endQuiescent() status %d", status);
+            mCancelQuiescentSent = true;
+        }
     }
 }
 

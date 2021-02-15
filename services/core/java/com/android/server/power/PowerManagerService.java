@@ -3710,6 +3710,20 @@ public final class PowerManagerService extends SystemService
         }
     }
 
+    //add [s]
+    private void endQuiescentInternal() {
+        Slog.d(TAG, "endQuiescentInternal");
+        synchronized (mLock) {
+            mDirty |= DIRTY_QUIESCENT;
+            if (mSystemReady) {
+                updatePowerStateLocked();
+            } else {
+                sQuiescent = false;
+            }
+        }
+    }
+    //add [e]
+
     /**
      * Low-level function turn the device off immediately, without trying
      * to be clean.  Most people should use {@link ShutdownThread} for a clean shutdown.
@@ -5358,6 +5372,23 @@ public final class PowerManagerService extends SystemService
                 Binder.restoreCallingIdentity(ident);
             }
         }
+
+        //add [s]
+        @Override // binder call
+        public void endQuiescent() {
+            //TODO implement permission check
+            //mContext.enforceCallingOrSelfPermission(
+            //        android.Manifest.permission.DEVICE_POWER, null);
+            Slog.d(TAG, "endQuiescent binder");
+            final int uid = Binder.getCallingUid();
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                endQuiescentInternal();
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
+        }
+        //add [e]
 
         @Override // Binder call
         protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {

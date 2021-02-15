@@ -39,13 +39,22 @@ int main()
 
     bool noBootAnimation = bootAnimationDisabled();
     ALOGI_IF(noBootAnimation,  "boot animation disabled");
-    if (!noBootAnimation) {
+    //change [s]
+    //if (!noBootAnimation) {
+    if (true) {
+    //change [e]
 
         sp<ProcessState> proc(ProcessState::self());
         ProcessState::self()->startThreadPool();
 
         // create the boot animation object (may take up to 200ms for 2MB zip)
         sp<BootAnimation> boot = new BootAnimation(audioplay::createAnimationCallbacks());
+
+        //add [s]
+        if (noBootAnimation) {
+            boot->enableWaitForInput();
+        }
+        //add [e]
 
         waitForSurfaceFlinger();
 
