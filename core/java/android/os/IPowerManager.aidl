@@ -97,4 +97,7 @@ interface IPowerManager
 
     // Forces the system to suspend even if there are held wakelocks.
     boolean forceSuspend();
+
+    // Force stop quiescent mode
+    oneway void endQuiescent();
 }

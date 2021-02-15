@@ -33,6 +33,9 @@
 #include <EGL/egl.h>
 #include <GLES/gl.h>
 
+#include <powermanager/IPowerManager.h>
+#include <binder/IServiceManager.h>
+
 class SkBitmap;
 
 namespace android {
@@ -134,6 +137,8 @@ public:
 
     sp<SurfaceComposerClient> session() const;
 
+    void enableWaitForInput();
+
 private:
     virtual bool        threadLoop();
     virtual status_t    readyToRun();
@@ -219,6 +224,22 @@ private:
     Animation* mAnimation = nullptr;
     std::unique_ptr<DisplayEventReceiver> mDisplayEventReceiver;
     sp<Looper> mLooper;
+
+    void getPowerManager();
+    sp<IPowerManager> mPowerManager;
+    bool        mQuiescentCanceled = false;
+    bool        mCancelQuiescentSent = false;
+    bool        mWaitForInput = false;
+    bool        checkInput();
+    void        openInputDevice();
+    void        closeInputDevice();
+    KeyedVector<int32_t, int> mInputFds;
+    struct local_input_event{
+        struct timeval time;
+        uint16_t type;
+        uint16_t code;
+        int32_t value;
+    };
 };
 
 // ---------------------------------------------------------------------------
