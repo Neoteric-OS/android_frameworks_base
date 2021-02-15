@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c3e6070_d5e96ed3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T12:02:35Z",
+      "side": 1,
+      "message": "No strong objection from me especially after Junyu\u0027s +2. All my comments are nits.",
+      "revId": "3d59b4ace76c00bf5f477471f4131bce1010588d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f01da79_bf5b9d5a",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T12:02:35Z",
+      "side": 1,
+      "message": "If the actual values don\u0027t matter, maybe we want to make them \u003d\u003d to the capability ?\nNo strong opinion.",
+      "range": {
+        "startLine": 53,
+        "startChar": 39,
+        "endLine": 53,
+        "endChar": 42
+      },
+      "revId": "3d59b4ace76c00bf5f477471f4131bce1010588d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad77d08c_ccbb731c",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T12:02:35Z",
+      "side": 1,
+      "message": "Do you want to have a small function to return something readable ? In this patch it will show 0, 1 or 2, and if you implement my suggestion above it will be even worse",
+      "range": {
+        "startLine": 124,
+        "startChar": 47,
+        "endLine": 124,
+        "endChar": 58
+      },
+      "revId": "3d59b4ace76c00bf5f477471f4131bce1010588d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f82614c0_d4a0d87b",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T12:02:35Z",
+      "side": 1,
+      "message": "Should this not be OEM_ANY ? ISTM that if we\u0027re matching on the subscriber, whether this in an OEM managed network is irrelevant.",
+      "range": {
+        "startLine": 1387,
+        "startChar": 26,
+        "endLine": 1387,
+        "endChar": 34
+      },
+      "revId": "3d59b4ace76c00bf5f477471f4131bce1010588d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a779dac9_cde674a8",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T12:02:35Z",
+      "side": 1,
+      "message": "Likewise, can OEM networks be subject to policy cycles ?",
+      "range": {
+        "startLine": 1618,
+        "startChar": 16,
+        "endLine": 1618,
+        "endChar": 24
+      },
+      "revId": "3d59b4ace76c00bf5f477471f4131bce1010588d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
