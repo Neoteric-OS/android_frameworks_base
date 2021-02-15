@@ -73,6 +73,17 @@ package android.net {
 
 }
 
+package android.net.vcn {
+
+  public final class VcnNetworkRequestSpecifier extends android.net.NetworkSpecifier implements android.os.Parcelable {
+    ctor public VcnNetworkRequestSpecifier(@NonNull int[]);
+    method public int describeContents();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.vcn.VcnNetworkRequestSpecifier> CREATOR;
+  }
+
+}
+
 package android.os {
 
   public class Binder implements android.os.IBinder {
