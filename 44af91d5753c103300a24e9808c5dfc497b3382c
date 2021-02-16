@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c228df51_c571e097",
+        "filename": "telephony/java/android/telephony/ims/stub/CapabilityExchangeEventListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-02-16T21:23:30Z",
+      "side": 1,
+      "message": "Added isBlocked boolean to success API",
+      "parentUuid": "736c7d07_53306c26",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 52
+      },
+      "revId": "44af91d5753c103300a24e9808c5dfc497b3382c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca435253_90436e0b",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-16T18:25:44Z",
       "side": 1,
       "message": "device",
+      "range": {
+        "startLine": 94,
+        "startChar": 62,
+        "endLine": 94,
+        "endChar": 68
+      },
+      "revId": "44af91d5753c103300a24e9808c5dfc497b3382c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9245a50b_03b4a11a",
+        "filename": "telephony/java/android/telephony/ims/stub/CapabilityExchangeEventListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-02-16T21:23:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca435253_90436e0b",
       "range": {
         "startLine": 94,
         "startChar": 62,
