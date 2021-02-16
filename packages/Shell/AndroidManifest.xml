@@ -348,6 +348,7 @@
     <!-- Permission needed for CTS test - WifiManagerTest -->
     <uses-permission android:name="android.permission.WIFI_ACCESS_COEX_UNSAFE_CHANNELS" />
     <uses-permission android:name="android.permission.WIFI_UPDATE_COEX_UNSAFE_CHANNELS" />
+    <uses-permission android:name="android.permission.MANAGE_WIFI_COUNTRY_CODE" />
 
     <!-- Permission required for CTS test - CtsSensorPrivacyTestCases -->
     <uses-permission android:name="android.permission.MANAGE_SENSOR_PRIVACY" />
