@@ -292,6 +292,7 @@ public class VcnManager {
      *
      * @hide
      */
+    @SystemApi
     public static final int GATEWAY_CONNECTION_ERROR_INTERNAL_FAILURE = 1;
 
     /**
@@ -300,6 +301,7 @@ public class VcnManager {
      *
      * @hide
      */
+    @SystemApi
     public static final int GATEWAY_CONNECTION_ERROR_AUTHENTICATION_FAILED = 2;
 
     /**
@@ -310,6 +312,7 @@ public class VcnManager {
      *
      * @hide
      */
+    @SystemApi
     public static final int GATEWAY_CONNECTION_ERROR_GATEWAY_CONNECTION_DIED = 3;
 
     /**
@@ -318,6 +321,7 @@ public class VcnManager {
      *
      * @hide
      */
+    @SystemApi
     public static final int GATEWAY_CONNECTION_ERROR_DNS_FAILURE = 4;
 
     // TODO: make VcnStatusCallback @SystemApi
@@ -329,6 +333,7 @@ public class VcnManager {
      *
      * @hide
      */
+    @SystemApi
     public abstract static class VcnStatusCallback {
         private VcnStatusCallbackBinder mCbBinder;
 
@@ -341,7 +346,10 @@ public class VcnManager {
          *
          * <p>A VCN-configuring app may opt to exit safe mode by (re)setting the VCN configuration
          * via {@link #setVcnConfig(ParcelUuid, VcnConfig)}.
+         *
+         * @hide
          */
+        @SystemApi
         public abstract void onEnteredSafeMode();
 
         /**
@@ -356,7 +364,9 @@ public class VcnManager {
          * @param errorType the {@link GatewayConnectionError} type that occurred
          * @param message a description of the error that occurred, or null if no description is
          *     provided
+         * @hide
          */
+        @SystemApi
         public abstract void onGatewayConnectionError(
                 @NonNull int[] gatewayNetworkCapabilities,
                 @GatewayConnectionError int errorType,
@@ -378,7 +388,6 @@ public class VcnManager {
      * @param executor The {@link Executor} to be used for invoking callbacks
      * @param callback The VcnStatusCallback to be registered
      * @throws IllegalStateException if callback is currently registered with VcnManager
-     * @hide
      */
     public void registerVcnStatusCallback(
             @NonNull ParcelUuid subscriptionGroup,
@@ -409,7 +418,6 @@ public class VcnManager {
      * was registered with.
      *
      * @param callback The callback to be unregistered
-     * @hide
      */
     public void unregisterVcnStatusCallback(@NonNull VcnStatusCallback callback) {
         requireNonNull(callback, "callback must not be null");
