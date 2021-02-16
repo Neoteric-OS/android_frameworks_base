@@ -414,6 +414,13 @@ public class Utils {
                 != 0;
     }
 
+    /** Returns if storage manager is activated, which in practice means storage manager config
+     * enable_automatic_storage_management is set to true **/
+    public static boolean isAutomaticStorageManagerAvailable(Context context) {
+        return Settings.Secure.getInt(context.getContentResolver(),
+                Settings.Secure.AUTOMATIC_STORAGE_MANAGER_AVAILABLE, 0) != 0;
+    }
+
     /**
      * get that {@link AudioManager#getMode()} is in ringing/call/communication(VoIP) status.
      */

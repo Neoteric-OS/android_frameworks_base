@@ -8561,6 +8561,16 @@ public final class Settings {
                 "cross_profile_calendar_enabled";
 
         /**
+         * Whether or not the automatic storage manager is available on device which corresponds
+         * to the value of the StorageManager config enable_automatic_storage_management
+         *
+         * @hide
+         */
+        public static final String AUTOMATIC_STORAGE_MANAGER_AVAILABLE =
+                "automatic_storage_manager_available";
+
+
+        /**
          * Whether or not the automatic storage manager is enabled and should run on the device.
          *
          * @hide
