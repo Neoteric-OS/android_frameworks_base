@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32014bdb_6e664242",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 3806,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-16T12:53:59Z",
+      "side": 1,
+      "message": "handle",
+      "range": {
+        "startLine": 3806,
+        "startChar": 17,
+        "endLine": 3806,
+        "endChar": 22
+      },
+      "revId": "78238eeb30a680477b70c2b9792201df2113e458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b5aaae4_b924e21b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 5156,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-16T12:53:59Z",
+      "side": 1,
+      "message": "...and here you can just get r.get(0). The comment (l.6924) in callCallbackForRequest already explains this in detail and uses .get(0). That will even let you migrate that comment here but simplify the code over there.",
+      "range": {
+        "startLine": 5156,
+        "startChar": 41,
+        "endLine": 5156,
+        "endChar": 45
+      },
+      "revId": "78238eeb30a680477b70c2b9792201df2113e458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d66a862d_58cf3a5e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 5197,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-16T12:53:59Z",
+      "side": 1,
+      "message": "Okay so in the light of the comments above you do need this constructor, but musn\u0027t this always be nri.mNetworkRequestForCallback ?\nIIUC this creates a new NRI to replace an old one and will take its place. If that\u0027s the case, the argument is both unnecessary and confusing.",
+      "range": {
+        "startLine": 5197,
+        "startChar": 12,
+        "endLine": 5197,
+        "endChar": 60
+      },
+      "revId": "78238eeb30a680477b70c2b9792201df2113e458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63ea43e5_0e4f85f3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 5756,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-16T12:53:59Z",
+      "side": 1,
+      "message": "I hope we can eventually remove this code, but if not, don\u0027t you think\n\n  if (isPerAppDefaultRequest(nri)) {\n    nris.add(nri);\n  }\n\n...is simpler ?\nWe do have a return-early policy that tends to apply to continues and breaks too, but the intent is to reduce nesting and the number of cases a developer needs to keep in their mind as they read the code sequentially.\n\nNo very strong opinion though.",
+      "range": {
+        "startLine": 5753,
+        "startChar": 11,
+        "endLine": 5756,
+        "endChar": 26
+      },
+      "revId": "78238eeb30a680477b70c2b9792201df2113e458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "024541cf_1c9e8b6d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 8898,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-16T12:53:59Z",
+      "side": 1,
+      "message": "Since it is now obvious that this method must run on the handler thread, suggest calling ensureRunning at its start",
+      "range": {
+        "startLine": 8898,
+        "startChar": 8,
+        "endLine": 8898,
+        "endChar": 14
+      },
+      "revId": "78238eeb30a680477b70c2b9792201df2113e458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
