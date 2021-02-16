@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d5a0228_f2105658",
+        "filename": "core/java/android/net/UidRange.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-16T11:39:41Z",
+      "side": 1,
+      "message": "I thought we had decided that UidRange would be inside the module? I suppose we can always move it back.",
+      "revId": "f8f49ac2bd6a6d40dd13f48ea09174f26a79b46d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
