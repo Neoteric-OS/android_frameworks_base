@@ -183,6 +183,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "974ce4e1_44342949",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 5669,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T23:31:51Z",
+      "side": 1,
+      "message": "Yes, that\u0027s a very good point. Done.",
+      "parentUuid": "33acc940_7d28046c",
+      "range": {
+        "startLine": 5655,
+        "startChar": 0,
+        "endLine": 5669,
+        "endChar": 9
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9b7c099e_4b519aca",
@@ -244,6 +268,30 @@
       "side": 1,
       "message": "Your analysis is right and my explanation lacking. I was thinking copy() would do this work of removing the NOT_VPN flag and resetting the uid.\n\nAll requests tracking a default have this in common ; they have their own UID instead of the UID of the real default NRI (the one in mDefaultRequests), and they don\u0027t have NOT_VPN. In fact, that\u0027s also true of the multi-layer track-defaults, that\u0027s what they also should do.\n\nSo in my mind, copy(defaultReq) would look like :\n\n  private NetworkRequest copy(defaultReq, uid) {\n    final NR nr \u003d new NR(defaultReq);\n    nr.networkCapabilities.removeCapability(NET_CAPABILITY_NOT_VPN);\n    nr.networkCapabilities.setSingleUid(uid);\n    return nr;\n  }\n\nIn fact, that should even be used in requestNetwork instead of createDefaultNetworkCapabilitiesForUid. Today it looks almost incidental that the existing TRACK_DEFAULT work, they just have a custom function returning tailor-made caps that lets them share fate with the default request, but it would be much clearer if l.5368 (in PS4) was to call copy(mDefaultRequest, uid).\n\nWould this solve you concern ?",
       "parentUuid": "dedcdefe_b7e6fa82",
+      "range": {
+        "startLine": 5981,
+        "startChar": 19,
+        "endLine": 5981,
+        "endChar": 68
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c7bb0b0_e4603b21",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 5981,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T23:31:51Z",
+      "side": 1,
+      "message": "Ok yes, that works. Good suggestion and I went ahead and made the update as well as for requestNetwork() as you mentioned. I was also able to remove isPerAppDefaultTrackingUid() after this so good call.",
+      "parentUuid": "a6c9e066_fa1869e2",
       "range": {
         "startLine": 5981,
         "startChar": 19,
@@ -809,6 +857,30 @@
       "side": 1,
       "message": "Ah-ha ! So it\u0027s the other way around. I thought this was checking before the requests have been filed, but IIUC from your comment, we come here after the new default requests (that correspond to the new policy) have been filed. That makes sense, now that I think about it.\n\nWell then you have the reverse problem.\n\n- A policy is installed making Google Maps go on the OEM_PAID network.\n- Google Maps files a TRACK_DEFAULT.\n- A new policy in installed where Google Maps is not present.\n\nIn this case, this won\u0027t match – Google Maps\u0027 request should track the regular default network. And so we won\u0027t include it in the returned list, we won\u0027t update its TRACK_DEFAULT, and it will continue to believe its default network is the OEM_PAID network.\n\nNo ?",
       "parentUuid": "a2545acf_2668ab1c",
+      "range": {
+        "startLine": 9587,
+        "startChar": 50,
+        "endLine": 9587,
+        "endChar": 100
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9459dfae_b3ad6bfc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9587,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T23:31:51Z",
+      "side": 1,
+      "message": "Yep, you got it on when we are making these checks.\n\nAs for the scenario you mentioned, this is actually covered a couple lines up in l.9577 where we include all currently tracked requests:\n\n            // Include this nri if it is currently being tracked.\n            if (null !\u003d nri.mNetworkRequestForCallback) {\n                defaultCallbackRequests.add(nri);\n                continue;\n            }\n\nI\u0027ll update that particular check to read better after our most recent changes. Let me know what you think.",
+      "parentUuid": "9d98f60c_8a785ae8",
       "range": {
         "startLine": 9587,
         "startChar": 50,

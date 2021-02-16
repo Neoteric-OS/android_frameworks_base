@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2352544c_a9232925",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 3806,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T23:31:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32014bdb_6e664242",
+      "range": {
+        "startLine": 3806,
+        "startChar": 17,
+        "endLine": 3806,
+        "endChar": 22
+      },
+      "revId": "78238eeb30a680477b70c2b9792201df2113e458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b5aaae4_b924e21b",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-16T12:53:59Z",
       "side": 1,
       "message": "...and here you can just get r.get(0). The comment (l.6924) in callCallbackForRequest already explains this in detail and uses .get(0). That will even let you migrate that comment here but simplify the code over there.",
+      "range": {
+        "startLine": 5156,
+        "startChar": 41,
+        "endLine": 5156,
+        "endChar": 45
+      },
+      "revId": "78238eeb30a680477b70c2b9792201df2113e458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d62f2af8_cc05c8ff",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 5156,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T23:31:51Z",
+      "side": 1,
+      "message": "I was actually able to pretty seamlessly incorporate this into the downstream constructors which worked out since I was able to reuse them later on to simplify the logic in getNriToRegister() in l.5443.\n\nDue to this change, I was able to get rid of that comment in l.6924 altogether since it no longer really made sense.",
+      "parentUuid": "2b5aaae4_b924e21b",
       "range": {
         "startLine": 5156,
         "startChar": 41,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02f0e6cd_a760e35b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 5197,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T23:31:51Z",
+      "side": 1,
+      "message": "Unfortunately, we still need this constructor since we don\u0027t currently have a constructor that exposes mPid or mUid (I\u0027m guessing we don\u0027t want to change that?). Also, we don\u0027t have a constructor that includes all both mPendingIntent and mMessenger/mBinder. \n\nI thought the above was the safest way to ensure the correct values were set while also not having to change the way we are calling the existing constructors in a bunch of other spots.\n\nThat said, I was able to simplify this Constructor now based off of your suggestion for nri.mNetworkRequestForCallback. In fact, making that changes has simplified code in a bunch of spots. It also helped me find a bug at l.8964 where I was checking the incorrect value for mNetworkRequestForCallback so thanks for suggesting the above! It would explain why a new unit test I am working on was having issues.\n\nI\u0027ll resolve this for now but feel free to reopen if you want to discuss further.",
+      "parentUuid": "d66a862d_58cf3a5e",
+      "range": {
+        "startLine": 5197,
+        "startChar": 12,
+        "endLine": 5197,
+        "endChar": 60
+      },
+      "revId": "78238eeb30a680477b70c2b9792201df2113e458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "63ea43e5_0e4f85f3",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca5c06a5_fb06fac0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 5756,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T23:31:51Z",
+      "side": 1,
+      "message": "Yeah, understood on the thought process for the if statement. I agree on the readability. I thought the consistency was worth it in this case but similar to you, not a very strong opinion.\n\nIt\u0027s all a moot point however since after looking into it, removing the code was possible so I went ahead and did that which looks to be the best outcode,",
+      "parentUuid": "63ea43e5_0e4f85f3",
+      "range": {
+        "startLine": 5753,
+        "startChar": 11,
+        "endLine": 5756,
+        "endChar": 26
+      },
+      "revId": "78238eeb30a680477b70c2b9792201df2113e458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "024541cf_1c9e8b6d",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-02-16T12:53:59Z",
       "side": 1,
       "message": "Since it is now obvious that this method must run on the handler thread, suggest calling ensureRunning at its start",
+      "range": {
+        "startLine": 8898,
+        "startChar": 8,
+        "endLine": 8898,
+        "endChar": 14
+      },
+      "revId": "78238eeb30a680477b70c2b9792201df2113e458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af8cef56_cf4af056",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 8898,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T23:31:51Z",
+      "side": 1,
+      "message": "Done. I moved the ensureRunningOnConnectivityServiceThread() from the parent method since the only other child method was already doing the same.",
+      "parentUuid": "024541cf_1c9e8b6d",
       "range": {
         "startLine": 8898,
         "startChar": 8,
