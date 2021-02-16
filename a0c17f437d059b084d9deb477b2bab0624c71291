@@ -119,6 +119,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74f1f7e3_b6c9cb79",
+        "filename": "core/java/android/net/vcn/VcnControlPlaneConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-16T21:01:30Z",
+      "side": 1,
+      "message": "done b/180414042",
+      "parentUuid": "8d1bf506_f7aa1e06",
+      "range": {
+        "startLine": 74,
+        "startChar": 27,
+        "endLine": 74,
+        "endChar": 51
+      },
+      "revId": "a0c17f437d059b084d9deb477b2bab0624c71291",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e46f4ce0_90896908",
