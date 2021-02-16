@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffd08008_7138a63c",
+        "filename": "core/java/android/app/ApplicationExitInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-16T21:29:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4308b2a1_c7a097c8",
+      "range": {
+        "startLine": 613,
+        "startChar": 80,
+        "endLine": 613,
+        "endChar": 81
+      },
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f795fa8_084ef6b4",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-12T22:55:33Z",
       "side": 1,
       "message": "Maybe \"tombstone traces\"?",
+      "range": {
+        "startLine": 614,
+        "startChar": 7,
+        "endLine": 614,
+        "endChar": 13
+      },
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07bf0913_6358038f",
+        "filename": "core/java/android/app/ApplicationExitInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-16T21:29:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f795fa8_084ef6b4",
       "range": {
         "startLine": 614,
         "startChar": 7,
@@ -81,6 +129,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b86c5a2_bbe622d7",
+        "filename": "core/java/android/app/ApplicationExitInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-16T21:29:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "621f0b68_15954c4e",
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09ea78c0_5b18527c",
@@ -94,6 +160,30 @@
       "writtenOn": "2021-02-12T22:55:33Z",
       "side": 1,
       "message": "nit: mTombstones.size() will be evaluated in every loop, maybe cache it into a local variable?",
+      "range": {
+        "startLine": 254,
+        "startChar": 36,
+        "endLine": 254,
+        "endChar": 54
+      },
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d1544d6_a2bee819",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-16T21:29:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09ea78c0_5b18527c",
       "range": {
         "startLine": 254,
         "startChar": 36,
@@ -127,6 +217,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fabcc73e_fef3c589",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-16T21:29:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48b0d218_86afded2",
+      "range": {
+        "startLine": 262,
+        "startChar": 29,
+        "endLine": 262,
+        "endChar": 66
+      },
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "082adc0e_716a74de",
@@ -140,6 +254,24 @@
       "writtenOn": "2021-02-12T22:55:33Z",
       "side": 1,
       "message": "nit: Maybe add an extra check \"exitInfo.getReason() \u003d\u003d REASON_CRASH_NATIVE\" ?",
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc08e130_2e756e8c",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-16T21:29:55Z",
+      "side": 1,
+      "message": "Added to TombstoneFile::matches.",
+      "parentUuid": "082adc0e_716a74de",
       "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -161,6 +293,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fedfe547_5e3931a6",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-16T21:29:55Z",
+      "side": 1,
+      "message": "The label is marking the loop, not the place we\u0027re jumping to: https://ideone.com/MQaZQ9\n\n(I hate this syntax)",
+      "parentUuid": "711f3d10_1a9d6e45",
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48f6815b_0b08b27e",
@@ -174,6 +324,24 @@
       "writtenOn": "2021-02-12T22:55:33Z",
       "side": 1,
       "message": "The API will return the list of records sorted in the order from most recent to least recent. So maybe we\u0027d need to do a sorting here",
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5e2e7d1_48154e7d",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-16T21:29:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48f6815b_0b08b27e",
       "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
