@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d43f99d_66a70e8a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 9356,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fdb3b9d_28d105b2",
+      "range": {
+        "startLine": 9356,
+        "startChar": 83,
+        "endLine": 9356,
+        "endChar": 85
+      },
+      "revId": "f5fb72a491639c4e392aa3e33e019a66eddbda20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae18a07b_4dfaaf52",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-15T07:00:24Z",
       "side": 1,
       "message": "Can we have a constant for this and the UID below ?",
+      "range": {
+        "startLine": 9379,
+        "startChar": 40,
+        "endLine": 9379,
+        "endChar": 64
+      },
+      "revId": "f5fb72a491639c4e392aa3e33e019a66eddbda20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "765ab51a_255fad6a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 9379,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae18a07b_4dfaaf52",
       "range": {
         "startLine": 9379,
         "startChar": 40,
@@ -89,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "62bec4a9_8daeb176",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 9406,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:26Z",
+      "side": 1,
+      "message": "I think that\u0027s ok in this case? \n\nI.e., the factory will return a different output based off of the input pref which this test is validating which will also fail if someone goes and changes that in the future (it\u0027s actually already caught some issues I had as part of updates).\n\nLet me know if you think it is a sticking point as I am open to changing it.",
+      "parentUuid": "fa6e858b_2deeda3e",
+      "range": {
+        "startLine": 9406,
+        "startChar": 16,
+        "endLine": 9406,
+        "endChar": 61
+      },
+      "revId": "f5fb72a491639c4e392aa3e33e019a66eddbda20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65446a5d_4a112a0f",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 35
@@ -100,6 +172,30 @@
       "writtenOn": "2021-02-15T07:00:24Z",
       "side": 1,
       "message": "Maybe you want some more helper methods to limit duplication.",
+      "range": {
+        "startLine": 9536,
+        "startChar": 1,
+        "endLine": 9542,
+        "endChar": 70
+      },
+      "revId": "f5fb72a491639c4e392aa3e33e019a66eddbda20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef6765b4_e7c39a2c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 9542,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:26Z",
+      "side": 1,
+      "message": "After adding the constants you suggested in the other comment, these blocks reduced by a couple lines each. I am not seeing a clear way for any further optimizations but feel free to reopen if any thoughts come to mind.",
+      "parentUuid": "65446a5d_4a112a0f",
       "range": {
         "startLine": 9536,
         "startChar": 1,
