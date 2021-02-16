@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10362754_f18f1ed4",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-16T00:19:31Z",
+      "side": 1,
+      "message": "Does this need to be proxied to the Handler? afaict this just needs to be piped to VcnManagementService, so I don\u0027t think so",
+      "range": {
+        "startLine": 354,
+        "startChar": 12,
+        "endLine": 354,
+        "endChar": 91
+      },
+      "revId": "3c0212cff9a5b7179646c20d7149ffd36a82ae76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42264418_e176fffe",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-16T00:19:31Z",
+      "side": 1,
+      "message": "currently only notify callback for onClosedExceptionally(Exception). Should we be notifying callback for onClosed() as well?",
+      "range": {
+        "startLine": 968,
+        "startChar": 12,
+        "endLine": 968,
+        "endChar": 29
+      },
+      "revId": "3c0212cff9a5b7179646c20d7149ffd36a82ae76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
