@@ -372,8 +372,6 @@ public class VcnManager {
     /**
      * Value indicating that the VCN for the subscription group is not configured, or that the
      * callback is not privileged for it.
-     *
-     * @hide
      */
     public static final int VCN_STATUS_CODE_NOT_CONFIGURED = 0;
 
@@ -382,15 +380,11 @@ public class VcnManager {
      *
      * <p>A VCN is inactive if a profile is present for the subscription group, but it is not
      * privileged.
-     *
-     * @hide
      */
     public static final int VCN_STATUS_CODE_INACTIVE = 1;
 
     /**
      * Value indicating that the VCN for the subscription group is active.
-     *
-     * @hide
      */
     public static final int VCN_STATUS_CODE_ACTIVE = 2;
 
@@ -405,8 +399,6 @@ public class VcnManager {
      * {@link VcnConfig} via {@link #setVcnConfig(ParcelUuid, VcnConfig)}. In order for the VCN to
      * successfully exit Safe Mode, the new {@link VcnConfig} must be different than the previously
      * provided configs.
-     *
-     * @hide
      */
     public static final int VCN_STATUS_CODE_SAFE_MODE = 3;
 
@@ -421,8 +413,6 @@ public class VcnManager {
 
     /**
      * Value indicating that an internal failure occurred in this Gateway Connection.
-     *
-     * @hide
      */
     public static final int VCN_ERROR_CODE_INTERNAL_ERROR = 0;
 
@@ -430,8 +420,6 @@ public class VcnManager {
      * Value indicating that an error with this Gateway Connection's configuration occurred.
      *
      * <p>For example, this error code will be returned after authentication failures.
-     *
-     * @hide
      */
     public static final int VCN_ERROR_CODE_CONFIG_ERROR = 1;
 
@@ -441,19 +429,14 @@ public class VcnManager {
      * <p>For example, this error code will be returned if an underlying {@link android.net.Network}
      * for this Gateway Connection is lost, or if an error occurs while resolving the connection
      * endpoint address.
-     *
-     * @hide
      */
     public static final int VCN_ERROR_CODE_NETWORK_ERROR = 2;
 
-    // TODO: make VcnStatusCallback @SystemApi
     /**
      * VcnStatusCallback is the interface for Carrier apps to receive updates for their VCNs.
      *
      * <p>VcnStatusCallbacks may be registered before {@link VcnConfig}s are provided for a
      * subscription group.
-     *
-     * @hide
      */
     public abstract static class VcnStatusCallback {
         private VcnStatusCallbackBinder mCbBinder;
@@ -481,15 +464,16 @@ public class VcnManager {
         public abstract void onVcnStatusChanged(@VcnStatusCode int statusCode);
 
         /**
-         * Invoked when a VCN Gateway Connection corresponding to this callback's subscription
+         * Invoked when a VCN Gateway Connection corresponding to this callback's subscription group
          * encounters an error.
          *
-         * @param networkCapabilities an array of underlying NetworkCapabilities for the Gateway
-         *     Connection that encountered the error for identification purposes. These will be a
-         *     sorted list with no duplicates, matching one of the {@link
+         * @param networkCapabilities an array of NetworkCapabilities.NET_CAPABILITY_* capabilities
+         *     for the Gateway Connection that encountered the error, for identification purposes.
+         *     These will be a sorted list with no duplicates and will match {@link
+         *     VcnGatewayConnectionConfig#getRequiredUnderlyingCapabilities()} for one of the {@link
          *     VcnGatewayConnectionConfig}s set in the {@link VcnConfig} for this subscription
          *     group.
-         * @param errorCode {@link VcnErrorCode} to indicate the error that occurred
+         * @param errorCode the code to indicate the error that occurred
          * @param detail Throwable to provide additional information about the error, or {@code
          *     null} if none
          */
@@ -510,6 +494,10 @@ public class VcnManager {
      * <p>A {@link VcnStatusCallback} will only be invoked if the registering package has carrier
      * privileges for the specified subscription at the time of invocation.
      *
+     * <p>A {@link VcnStatusCallback} is eligible to begin receiving callbacks once it is registered
+     * and there is a VCN active for its specified subscription group (this may happen after the
+     * callback is registered).
+     *
      * <p>{@link VcnStatusCallback#onVcnStatusChanged(int)} will be invoked on registration with the
      * current status for the specified subscription group's VCN. If the registrant is not
      * privileged for this subscription group, {@link #VCN_STATUS_CODE_NOT_CONFIGURED} will be
@@ -519,7 +507,6 @@ public class VcnManager {
      * @param executor The {@link Executor} to be used for invoking callbacks
      * @param callback The VcnStatusCallback to be registered
      * @throws IllegalStateException if callback is currently registered with VcnManager
-     * @hide
      */
     public void registerVcnStatusCallback(
             @NonNull ParcelUuid subscriptionGroup,
@@ -552,7 +539,6 @@ public class VcnManager {
      * was registered with.
      *
      * @param callback The callback to be unregistered
-     * @hide
      */
     public void unregisterVcnStatusCallback(@NonNull VcnStatusCallback callback) {
         requireNonNull(callback, "callback must not be null");
