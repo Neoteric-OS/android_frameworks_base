@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8d1bf506_f7aa1e06",
+        "filename": "core/java/android/net/vcn/VcnControlPlaneConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-16T19:57:54Z",
+      "side": 1,
+      "message": "It\u0027s very hard to guarantee that we can always be backwards compatible, but it\u0027s even more difficult to conclude that we *should* be. I think it\u0027s worth spending a little more time to refine the strategy here. I think the compatibility story is one of Jean\u0027s (justifiable) concerns about persistence. It\u0027s hard to get right. Can you file a bug to ensure that we have a \"safe\" way forward, even if it\u0027s failing to load a config and sending a broadcast that carrier apps can listen to...",
+      "parentUuid": "13cf11c6_e4320e50",
+      "range": {
+        "startLine": 74,
+        "startChar": 27,
+        "endLine": 74,
+        "endChar": 51
+      },
+      "revId": "a0c17f437d059b084d9deb477b2bab0624c71291",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e46f4ce0_90896908",
         "filename": "core/java/android/net/vcn/VcnControlPlaneConfig.java",
         "patchSetId": 15
@@ -226,6 +250,30 @@
       "side": 1,
       "message": "We can check the keySet() and log a warning if there is an unexpected key. Filed a bug (b/180414042) to also do that and in the IKE library.",
       "parentUuid": "a9ce15ff_a6ca7088",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 16
+      },
+      "revId": "a0c17f437d059b084d9deb477b2bab0624c71291",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "924dd8c3_0c723d8b",
+        "filename": "core/java/android/net/vcn/VcnControlPlaneIkeConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-16T19:57:54Z",
+      "side": 1,
+      "message": "See other comment about the compatibility story... I think we can use that bug to work out a complete answer.",
+      "parentUuid": "260fb08b_4ca181c9",
       "range": {
         "startLine": 76,
         "startChar": 8,
