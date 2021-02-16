@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6912cefb_ee5d0be6",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-16T23:16:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af463836_6d2ddf97",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 9
+      },
+      "revId": "2833f2c4fe9d6acc88ac942f4ef92d1801035955",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82a9b47d_a67ac421",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-13T02:43:07Z",
       "side": 1,
       "message": "Do we need to break after this ?",
+      "range": {
+        "startLine": 482,
+        "startChar": 16,
+        "endLine": 482,
+        "endChar": 62
+      },
+      "revId": "2833f2c4fe9d6acc88ac942f4ef92d1801035955",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8bea033_defef639",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-16T23:16:42Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "82a9b47d_a67ac421",
       "range": {
         "startLine": 482,
         "startChar": 16,
