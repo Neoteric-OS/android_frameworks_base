@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7462dc93_80914098",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T11:29:35Z",
+      "side": 1,
+      "message": "If we have a nice method, suggest just making this positive-conditional.\n\nhttp://go/tott-530",
+      "range": {
+        "startLine": 826,
+        "startChar": 24,
+        "endLine": 826,
+        "endChar": 25
+      },
+      "revId": "3c0212cff9a5b7179646c20d7149ffd36a82ae76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b59de52_085725ab",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T11:29:35Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 848,
+        "startChar": 24,
+        "endLine": 848,
+        "endChar": 25
+      },
+      "revId": "3c0212cff9a5b7179646c20d7149ffd36a82ae76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "10362754_f18f1ed4",
         "filename": "services/core/java/com/android/server/vcn/Vcn.java",
         "patchSetId": 10
@@ -14,6 +60,30 @@
       "writtenOn": "2021-02-16T00:19:31Z",
       "side": 1,
       "message": "Does this need to be proxied to the Handler? afaict this just needs to be piped to VcnManagementService, so I don\u0027t think so",
+      "range": {
+        "startLine": 354,
+        "startChar": 12,
+        "endLine": 354,
+        "endChar": 91
+      },
+      "revId": "3c0212cff9a5b7179646c20d7149ffd36a82ae76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d53befc9_75c1d168",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T11:29:35Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s fine.",
+      "parentUuid": "10362754_f18f1ed4",
       "range": {
         "startLine": 354,
         "startChar": 12,
@@ -42,6 +112,99 @@
         "startChar": 12,
         "endLine": 968,
         "endChar": 29
+      },
+      "revId": "3c0212cff9a5b7179646c20d7149ffd36a82ae76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9a8302f_a62ad581",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T11:29:35Z",
+      "side": 1,
+      "message": "No, this is right; we only notify for exceptions. It\u0027s error callbacks afterall 😊",
+      "parentUuid": "42264418_e176fffe",
+      "range": {
+        "startLine": 968,
+        "startChar": 12,
+        "endLine": 968,
+        "endChar": 29
+      },
+      "revId": "3c0212cff9a5b7179646c20d7149ffd36a82ae76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28d2d554_805c98eb",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T11:29:35Z",
+      "side": 1,
+      "message": "Suggest a comment that all authentication and DNS failures are sent through IkeSession.onClosedExceptionally(), which calls sessionClosed.",
+      "range": {
+        "startLine": 971,
+        "startChar": 20,
+        "endLine": 971,
+        "endChar": 61
+      },
+      "revId": "3c0212cff9a5b7179646c20d7149ffd36a82ae76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af88eb94_12ff3007",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T11:29:35Z",
+      "side": 1,
+      "message": "Question. Do you know if there are special Identity exceptions?",
+      "range": {
+        "startLine": 980,
+        "startChar": 33,
+        "endLine": 980,
+        "endChar": 62
+      },
+      "revId": "3c0212cff9a5b7179646c20d7149ffd36a82ae76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc07523c_22941fee",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T11:29:35Z",
+      "side": 1,
+      "message": "Nit, usually this should come first. instanceof does do null checking nicely, but it helps in reading",
+      "range": {
+        "startLine": 982,
+        "startChar": 19,
+        "endLine": 982,
+        "endChar": 36
       },
       "revId": "3c0212cff9a5b7179646c20d7149ffd36a82ae76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
