@@ -159,6 +159,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb4234f4_f2a322f5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 9406,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T23:31:58Z",
+      "side": 1,
+      "message": "Going to close this one out but feel free to reopen for further discussion.",
+      "parentUuid": "62bec4a9_8daeb176",
+      "range": {
+        "startLine": 9406,
+        "startChar": 16,
+        "endLine": 9406,
+        "endChar": 61
+      },
+      "revId": "f5fb72a491639c4e392aa3e33e019a66eddbda20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65446a5d_4a112a0f",
