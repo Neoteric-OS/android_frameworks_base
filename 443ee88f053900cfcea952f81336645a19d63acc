@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ce79661_c5a5610c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 3659,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dd72374_cefee333",
+      "range": {
+        "startLine": 3659,
+        "startChar": 17,
+        "endLine": 3659,
+        "endChar": 18
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27e3392b_ae5adf26",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-15T11:38:52Z",
       "side": 1,
       "message": "Instead of creating overhead objects like this can we have removeNetworkRequest(NRI) that would be called both here and in the loop below ?",
+      "range": {
+        "startLine": 3852,
+        "startChar": 30,
+        "endLine": 3852,
+        "endChar": 56
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d66aa3d_b6b4f3a1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 3852,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27e3392b_ae5adf26",
       "range": {
         "startLine": 3852,
         "startChar": 30,
@@ -89,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "65d22b9d_f6970217",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 5669,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "tl;dr, if I overwrite mRequests to match the per-app default request that tracks this UID, how do I send callbacks back to the registering app if I don\u0027t have the original network request to use?\n\nI think there may be a challenge with this approach but let me explain.\n\nAssume we have a TRACK_DEFAULT request with no per-app policy set. In this case, this member mNetworkRequestForCallback is null and we have a single NetworkRequest in mRequests for the TRACK_DEFAULT request with the correct UID on the NRI, etc.\n\nNow if a per-app policy is set that includes this TRACK_DEFAULT request\u0027s UID, we are then going to update this TRACK_DEFAULT request and overwrite mRequests with the List of network requests that match the per-app default that is tracking this uid.\n\nNow if I overwrite the mRequest object, wouldn\u0027t we lose the original network request for TRACK_DEFAULT? If I don\u0027t have that, I have no way (AFAIK) to communicate back with the original application since ConnectivityManager will be using the original NetworkRequest on its end to key off of for callbacks. Therefore I need to save a reference to the original Network request for sending callbacks on.\n\nLet me know what you think, but the above was what I was thinking.",
+      "parentUuid": "13cc5761_a7715289",
+      "range": {
+        "startLine": 5655,
+        "startChar": 0,
+        "endLine": 5669,
+        "endChar": 9
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9b7c099e_4b519aca",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 13
@@ -100,6 +172,30 @@
       "writtenOn": "2021-02-15T11:38:52Z",
       "side": 1,
       "message": "I don\u0027t think we should need this clause (things should work smoothly including for the default request).\nWhile you\u0027re at it, I think it\u0027s a more readable if the check for the type is done at the level above :\n\n  final nri;\n  if (TRACK_DEFAULT \u003d\u003d type) {\n    nri \u003d new NRI(trackDefaultRequests(uid, package), msgr, binder, tag)\n  } else {\n    nri \u003d new NRI(req, msgr, binder, tag)\n  }\n\n  private List\u003cNetworkRequest\u003e trackDefaultRequest(uid, packageName) {\n    NRI defaultReq \u003d findDefaultReqForUid();\n    return new NRI(..., copy(defaultReq)... )\n  }\n\n...this eliminates the additional NRI allocation and the new constructor for NRI (which you might still need for the update though, not sure)",
+      "range": {
+        "startLine": 5981,
+        "startChar": 19,
+        "endLine": 5981,
+        "endChar": 68
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dedcdefe_b7e6fa82",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 5981,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "I am not sure we want to copy the tracking default\u0027s NetworkRequests for all TRACK_DEFAULT?\n\nI.e., you have this being called for all TRACK_DEFAULT:\n\n  private List\u003cNetworkRequest\u003e trackDefaultRequest(uid, packageName) {\n    NRI defaultReq \u003d findDefaultReqForUid();\n    return new NRI(..., copy(defaultReq)... )\n  }\n\nHowever that would copy the default request\u0027s items which are not the same as TRACK_DEFAULT since TRACK_DEFAULT uses this method which will have different NetworkRequest items vs the default request (particular the VPN removal and uid):\n\n   private static NetworkCapabilities createDefaultNetworkCapabilitiesForUid(int uid) {\n        final NetworkCapabilities netCap \u003d new NetworkCapabilities();\n        netCap.addCapability(NET_CAPABILITY_INTERNET);\n        netCap.removeCapability(NET_CAPABILITY_NOT_VPN);\n        netCap.setSingleUid(uid);\n        return netCap;\n    }\n\nTherefore the isPerAppDefaultTrackingUid(nr.getRequestorUid() check makes sure we don\u0027t overwrite that behavior. \n\nAlso, I need to use the new Constructor here since it is the only one that sets the mNetworkRequestForCallback which I need for callbacks. TBH, I actually made most of the changes you originally suggested (minus removal of that check) but then my unit tests started failing and I realized that I still needed this constructor.\n\nThat said, as we have another comment thread specifically on `mNetworkRequestForCallback`, my suggestion would be to resolve that thread and based off of that, we can revisit the above.",
+      "parentUuid": "9b7c099e_4b519aca",
       "range": {
         "startLine": 5981,
         "startChar": 19,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd532b5f_70d4e075",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6284,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "Yeah, I was wondering about this but didn\u0027t find any guidance after a cursory look. Thanks for clearing that one up.",
+      "parentUuid": "4f2220eb_2bcfdf57",
+      "range": {
+        "startLine": 6284,
+        "startChar": 17,
+        "endLine": 6284,
+        "endChar": 23
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a26afa93_be65eb20",
@@ -146,6 +266,30 @@
       "writtenOn": "2021-02-15T11:38:52Z",
       "side": 1,
       "message": "Instead of doing all this (expensive) filtering, could we not just say in l.6320 :\n\n  if (nri !\u003d mDefaultRequest \u0026\u0026 appliesToUid(uid)) return nri;",
+      "range": {
+        "startLine": 6305,
+        "startChar": 38,
+        "endLine": 6305,
+        "endChar": 62
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df72f195_35fed503",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6305,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a26afa93_be65eb20",
       "range": {
         "startLine": 6305,
         "startChar": 38,
@@ -179,6 +323,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78ae527b_0bd925c1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6319,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aab2fd6_68285704",
+      "range": {
+        "startLine": 6319,
+        "startChar": 15,
+        "endLine": 6319,
+        "endChar": 19
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de1cf5e3_d7e637fe",
@@ -192,6 +360,30 @@
       "writtenOn": "2021-02-15T11:38:52Z",
       "side": 1,
       "message": "If you just return mDefaultRequest here if there is no other match, you can simplify the callers by not making it a special case. This works together with my comment in l.6305",
+      "range": {
+        "startLine": 6324,
+        "startChar": 15,
+        "endLine": 6324,
+        "endChar": 19
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cbf4d6e_dd3461fb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6324,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de1cf5e3_d7e637fe",
       "range": {
         "startLine": 6324,
         "startChar": 15,
@@ -225,6 +417,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "30dc849c_36aa09f0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6341,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "Yep, good call.",
+      "parentUuid": "1fea466b_68683bab",
+      "range": {
+        "startLine": 6341,
+        "startChar": 19,
+        "endLine": 6341,
+        "endChar": 27
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d065838_869ef332",
@@ -238,6 +454,30 @@
       "writtenOn": "2021-02-15T11:38:52Z",
       "side": 1,
       "message": "Since this will return a fresh list anyway, how about returning it instead of creating an empty one just to add everything to it ?",
+      "range": {
+        "startLine": 6343,
+        "startChar": 24,
+        "endLine": 6343,
+        "endChar": 49
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14bb18ef_72023e85",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6343,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d065838_869ef332",
       "range": {
         "startLine": 6343,
         "startChar": 24,
@@ -271,6 +511,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23d16437_93d97276",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6357,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12a2d5c2_99e918f7",
+      "range": {
+        "startLine": 6357,
+        "startChar": 46,
+        "endLine": 6357,
+        "endChar": 56
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19fdccb9_64a3b9bd",
@@ -284,6 +548,30 @@
       "writtenOn": "2021-02-15T11:38:52Z",
       "side": 1,
       "message": "Mutating an argument like this is a fairly dangerous thing to do (and very non-idiomatic Java)",
+      "range": {
+        "startLine": 9558,
+        "startChar": 8,
+        "endLine": 9558,
+        "endChar": 12
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "154dfb82_7db04b21",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9558,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "Yes, absolutely right. Updating.",
+      "parentUuid": "19fdccb9_64a3b9bd",
       "range": {
         "startLine": 9558,
         "startChar": 8,
@@ -340,6 +628,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ee67b9b_4b690740",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9574,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4d244be_286d4dca",
+      "range": {
+        "startLine": 9574,
+        "startChar": 42,
+        "endLine": 9574,
+        "endChar": 48
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f49850f_8b2d9347",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9574,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "I added a comment to help explain but in essence, for a multilayer requests, since we key off of NetworkRequest, it is possible to have the same NRI mapped multiple times for each of its NetworkRequest objects.",
+      "parentUuid": "a4cc70c9_3010ca36",
+      "range": {
+        "startLine": 9574,
+        "startChar": 51,
+        "endLine": 9574,
+        "endChar": 59
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b5cc750_926e83ca",
@@ -353,6 +689,30 @@
       "writtenOn": "2021-02-15T11:38:52Z",
       "side": 1,
       "message": "Um no, you do need to update them all. Let\u0027s posit the following scenario :\n\n- Google Maps files a TRACK_DEFAULT\n- Later, a policy starts applying to Google Maps\n\n...we need to update its TRACK_DEFAULT to the new one.\n\nThankfully in this case, it just means simpler code, as you can just remove l.9585~9588. I also discuss in another comment how to reduce l.9577~9584 to a simple check. In the end, I think this method can be as simple as :\n\n  new List\u003c\u003e\n  for (nri in mNetworkRequests) {\n    if (nri.tracksDefault) add()\n  }\n  return\n\n(which the stream API would let you write in a readable one-liner, but you can\u0027t do that)",
+      "range": {
+        "startLine": 9587,
+        "startChar": 50,
+        "endLine": 9587,
+        "endChar": 100
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2545acf_2668ab1c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9587,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "For the scenario you propose I believe we are good. Assuming I am understanding this correctly, I also added a unit test to validate this flow (app files TRACK_DEFAULT then policy changes after).\n\nThis check makes sure that the given UID is tracked by a per-app default before we make any changes to it. Therefore, if Google maps had a TRACK_DEFAULT active, the boolean would return True in which case it would be updated.\n\nLet me know what you think.",
+      "parentUuid": "4b5cc750_926e83ca",
       "range": {
         "startLine": 9587,
         "startChar": 50,
@@ -386,6 +746,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff3811b2_96bab1cc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9608,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "Yes, good catch and thanks for sharing.",
+      "parentUuid": "a4a08e2e_afd62411",
+      "range": {
+        "startLine": 9608,
+        "startChar": 37,
+        "endLine": 9608,
+        "endChar": 88
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43762fc0_091239a8",
@@ -399,6 +783,30 @@
       "writtenOn": "2021-02-15T11:38:52Z",
       "side": 1,
       "message": "If it doesn\u0027t matter functionally whether you\u0027re using an ArrayList or an ArraySet, then use ArrayList as it doesn\u0027t have to check whether the element is already there – every add() is doing to compute a hashcode, binary search the array, call equals() etc.",
+      "range": {
+        "startLine": 9643,
+        "startChar": 18,
+        "endLine": 9643,
+        "endChar": 26
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7d02ac8_20bf57ee",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9643,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:35:33Z",
+      "side": 1,
+      "message": "Yes, agreed. In this case, my thought process was that this method should only ever return a distinct set of NRIs and I wanted to communicate/enforce that in the method signature.\n\nI am open to changing it but the above was my rationale and when considering the increased computational cost, it seemed reasonable as this API should be fairly low volume.\n\nThoughts?",
+      "parentUuid": "43762fc0_091239a8",
       "range": {
         "startLine": 9643,
         "startChar": 18,
