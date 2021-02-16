@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "524066ae_779077ba",
+        "filename": "core/java/android/net/vcn/VcnControlPlaneConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-16T19:05:09Z",
+      "side": 1,
+      "message": "I think we need a class so that by providing implementation in #toPersistableBundle in the base class, we can make sure all subclass have their config type stored in the PersistableBundle, and thus #fromPersistableBundle can know which subclass to construct.",
+      "parentUuid": "8b4d11e6_7324e9a0",
+      "range": {
+        "startLine": 41,
+        "startChar": 16,
+        "endLine": 41,
+        "endChar": 21
+      },
+      "revId": "a0c17f437d059b084d9deb477b2bab0624c71291",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8205c055_b508dfc2",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-13T00:17:31Z",
       "side": 1,
       "message": "Think about what this should do on upgrade... Will we have default keys, will we return an error that\u0027s different from just \"this wasn\u0027t complete\"? etc...",
+      "range": {
+        "startLine": 74,
+        "startChar": 27,
+        "endLine": 74,
+        "endChar": 51
+      },
+      "revId": "a0c17f437d059b084d9deb477b2bab0624c71291",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13cf11c6_e4320e50",
+        "filename": "core/java/android/net/vcn/VcnControlPlaneConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-16T19:05:09Z",
+      "side": 1,
+      "message": "I don\u0027t think we should make any changes that will break the backward compatibility. I think we can have a change detector unit test where we manually build a PersistableBundle based on the S format, and make sure we can always construct a VcnControlPlaneConfig from it in all the future releases.\n\nThoughts?",
+      "parentUuid": "8205c055_b508dfc2",
       "range": {
         "startLine": 74,
         "startChar": 27,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b21e5b8c_90dd2946",
+        "filename": "core/java/android/net/vcn/VcnControlPlaneConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-16T19:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e46f4ce0_90896908",
+      "range": {
+        "startLine": 94,
+        "startChar": 15,
+        "endLine": 94,
+        "endChar": 28
+      },
+      "revId": "a0c17f437d059b084d9deb477b2bab0624c71291",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aacc53b9_15176998",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "654474e2_48ddea40",
+        "filename": "core/java/android/net/vcn/VcnControlPlaneIkeConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-16T19:05:09Z",
+      "side": 1,
+      "message": "VpnManager takes a PlatformVpnProfile. It is possible to make IkeControlPlaneConfig extends PlatformVpnProfile. But we already have the API class Ikev2VpnProfile, and thus IkeControlPlaneConfig will be a duplicate API.\n\nSo I think unless we are going to deprecate Ikev2VpnProfile, we cannot benefit from defining a VpnControlPlaneConfig and use it in VpnManager",
+      "parentUuid": "aacc53b9_15176998",
+      "range": {
+        "startLine": 39,
+        "startChar": 19,
+        "endLine": 39,
+        "endChar": 43
+      },
+      "revId": "a0c17f437d059b084d9deb477b2bab0624c71291",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9ce15ff_a6ca7088",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-02-13T00:17:31Z",
       "side": 1,
       "message": "what happens on downgrade? Do we throw keys away? Does it generate a warning?...",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 16
+      },
+      "revId": "a0c17f437d059b084d9deb477b2bab0624c71291",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "260fb08b_4ca181c9",
+        "filename": "core/java/android/net/vcn/VcnControlPlaneIkeConfig.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-16T19:05:09Z",
+      "side": 1,
+      "message": "We can check the keySet() and log a warning if there is an unexpected key. Filed a bug (b/180414042) to also do that and in the IKE library.",
+      "parentUuid": "a9ce15ff_a6ca7088",
       "range": {
         "startLine": 76,
         "startChar": 8,
