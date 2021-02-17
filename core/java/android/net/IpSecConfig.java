@@ -39,6 +39,12 @@ public final class IpSecConfig implements Parcelable {
     // Preventing this from being null simplifies Java->Native binder
     private String mDestinationAddress = "";
 
+    // Preventing this from being null simplifies Java->Native binder
+    private String mNewSourceAddress = "";
+
+    // Preventing this from being null simplifies Java->Native binder
+    private String mNewDestinationAddress = "";
+
     // The underlying Network that represents the "gateway" Network
     // for outbound packets. It may also be used to select packets.
     private Network mNetwork;
@@ -86,6 +92,39 @@ public final class IpSecConfig implements Parcelable {
     /** Set the destination IP address for this IPsec transform */
     public void setDestinationAddress(String destinationAddress) {
         mDestinationAddress = destinationAddress;
+    }
+
+    private void throwIfNotTunnelMode() {
+        if (mMode != IpSecTransform.MODE_TUNNEL) {
+            throw new UnsupportedOperationException("This is not a tunnel mode transform");
+        }
+    }
+
+    /** Start migrating this transform to new source and destination addresses */
+    public void startMigration(String newSourceAddress, String newDestinationAddress) {
+        throwIfNotTunnelMode();
+        mNewSourceAddress = newSourceAddress;
+        mNewDestinationAddress = newDestinationAddress;
+    }
+
+    /** Cancel the migration. */
+    public void cancelMigration() {
+        throwIfNotTunnelMode();
+        mNewSourceAddress = "";
+        mNewDestinationAddress = "";
+    }
+
+    /** Finish migration and update addresses. */
+    public void finishMigration() {
+        mSourceAddress = mNewSourceAddress;
+        mDestinationAddress = mNewDestinationAddress;
+        mNewSourceAddress = "";
+        mNewDestinationAddress = "";
+    }
+
+    /** Return if this transform is going to be migrated. */
+    public boolean isMigrating() {
+        return !mNewSourceAddress.equals("");
     }
 
     /** Set the SPI by resource ID */
@@ -170,6 +209,14 @@ public final class IpSecConfig implements Parcelable {
         return mDestinationAddress;
     }
 
+    public String getNewSourceAddress() {
+        return mNewSourceAddress;
+    }
+
+    public String getNewDestinationAddress() {
+        return mNewDestinationAddress;
+    }
+
     public IpSecAlgorithm getEncryption() {
         return mEncryption;
     }
@@ -226,6 +273,8 @@ public final class IpSecConfig implements Parcelable {
         out.writeInt(mMode);
         out.writeString(mSourceAddress);
         out.writeString(mDestinationAddress);
+        out.writeString(mNewSourceAddress);
+        out.writeString(mNewDestinationAddress);
         out.writeParcelable(mNetwork, flags);
         out.writeInt(mSpiResourceId);
         out.writeParcelable(mEncryption, flags);
@@ -249,6 +298,8 @@ public final class IpSecConfig implements Parcelable {
         mMode = c.mMode;
         mSourceAddress = c.mSourceAddress;
         mDestinationAddress = c.mDestinationAddress;
+        mNewSourceAddress = c.mNewSourceAddress;
+        mNewDestinationAddress = c.mNewDestinationAddress;
         mNetwork = c.mNetwork;
         mSpiResourceId = c.mSpiResourceId;
         mEncryption = c.mEncryption;
@@ -267,6 +318,8 @@ public final class IpSecConfig implements Parcelable {
         mMode = in.readInt();
         mSourceAddress = in.readString();
         mDestinationAddress = in.readString();
+        mNewSourceAddress = in.readString();
+        mNewDestinationAddress = in.readString();
         mNetwork = (Network) in.readParcelable(Network.class.getClassLoader());
         mSpiResourceId = in.readInt();
         mEncryption =
@@ -294,6 +347,10 @@ public final class IpSecConfig implements Parcelable {
                 .append(mSourceAddress)
                 .append(", mDestinationAddress=")
                 .append(mDestinationAddress)
+                .append(", mNewSourceAddress=")
+                .append(mNewSourceAddress)
+                .append(", mNewDestinationAddress=")
+                .append(mNewDestinationAddress)
                 .append(", mNetwork=")
                 .append(mNetwork)
                 .append(", mEncapType=")
@@ -341,6 +398,8 @@ public final class IpSecConfig implements Parcelable {
         return (mMode == rhs.mMode
                 && mSourceAddress.equals(rhs.mSourceAddress)
                 && mDestinationAddress.equals(rhs.mDestinationAddress)
+                && mNewSourceAddress.equals(rhs.mNewSourceAddress)
+                && mNewDestinationAddress.equals(rhs.mNewDestinationAddress)
                 && ((mNetwork != null && mNetwork.equals(rhs.mNetwork))
                         || (mNetwork == rhs.mNetwork))
                 && mEncapType == rhs.mEncapType

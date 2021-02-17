@@ -20,8 +20,10 @@ import static com.android.testutils.ParcelUtils.assertParcelSane;
 import static com.android.testutils.ParcelUtils.assertParcelingIsLossless;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import androidx.test.filters.SmallTest;
 
@@ -33,6 +35,10 @@ import org.junit.runners.JUnit4;
 @SmallTest
 @RunWith(JUnit4.class)
 public class IpSecConfigTest {
+    private static final String SRC_ADDRESS = "0.0.0.0";
+    private static final String DST_ADDRESS = "1.2.3.4";
+    private static final String NEW_SRC_ADDRESS = "2001:db8:2::1";
+    private static final String NEW_DST_ADDRESS = "2001:db8:2::2";
 
     @Test
     public void testDefaults() throws Exception {
@@ -40,6 +46,8 @@ public class IpSecConfigTest {
         assertEquals(IpSecTransform.MODE_TRANSPORT, c.getMode());
         assertEquals("", c.getSourceAddress());
         assertEquals("", c.getDestinationAddress());
+        assertEquals("", c.getNewSourceAddress());
+        assertEquals("", c.getNewDestinationAddress());
         assertNull(c.getNetwork());
         assertEquals(IpSecTransform.ENCAP_NONE, c.getEncapType());
         assertEquals(IpSecManager.INVALID_RESOURCE_ID, c.getEncapSocketResourceId());
@@ -54,8 +62,8 @@ public class IpSecConfigTest {
     private IpSecConfig getSampleConfig() {
         IpSecConfig c = new IpSecConfig();
         c.setMode(IpSecTransform.MODE_TUNNEL);
-        c.setSourceAddress("0.0.0.0");
-        c.setDestinationAddress("1.2.3.4");
+        c.setSourceAddress(SRC_ADDRESS);
+        c.setDestinationAddress(DST_ADDRESS);
         c.setSpiResourceId(1984);
         c.setEncryption(
                 new IpSecAlgorithm(
@@ -98,6 +106,43 @@ public class IpSecConfigTest {
         assertParcelingIsLossless(new IpSecConfig());
 
         IpSecConfig c = getSampleConfig();
-        assertParcelSane(c, 15);
+        assertParcelSane(c, 17);
+    }
+
+    private IpSecConfig createAndMigrateIpSecConfig() {
+        final IpSecConfig config = getSampleConfig();
+        config.startMigration(NEW_SRC_ADDRESS, NEW_DST_ADDRESS);
+        assertTrue(config.isMigrating());
+
+        return config;
+    }
+
+    @Test
+    public void testCopyConstructorWhenMigrationStarted() {
+        final IpSecConfig original = createAndMigrateIpSecConfig();
+        final IpSecConfig copy = new IpSecConfig(original);
+
+        assertEquals(original, copy);
+        assertNotSame(original, copy);
+    }
+
+    @Test
+    public void testStartAndFinishMigration() {
+        final IpSecConfig config = createAndMigrateIpSecConfig();
+
+        config.finishMigration();
+        assertFalse(config.isMigrating());
+        assertEquals(NEW_SRC_ADDRESS, config.getSourceAddress());
+        assertEquals(NEW_DST_ADDRESS, config.getDestinationAddress());
+    }
+
+    @Test
+    public void testStartAndCancelMigration() {
+        final IpSecConfig config = createAndMigrateIpSecConfig();
+
+        config.cancelMigration();
+        assertFalse(config.isMigrating());
+        assertEquals(SRC_ADDRESS, config.getSourceAddress());
+        assertEquals(DST_ADDRESS, config.getDestinationAddress());
     }
 }

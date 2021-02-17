@@ -93,6 +93,68 @@ public final class IpSecTransform implements AutoCloseable {
         mResourceId = INVALID_RESOURCE_ID;
     }
 
+    private void throwIfNotTunnelMode() {
+        if (mConfig.getMode() != MODE_TUNNEL) {
+            throw new UnsupportedOperationException("This is not a tunnel mode transform");
+        }
+    }
+
+    /**
+     * Starts migrating this tunnel mode transform to new source/destination addresses.
+     *
+     * <p>This call only marks this transform as "going to be migrated". The actual migration
+     * happens when this transform is applied to an {@link IpSecManager#IpSecTunnelInterface}.
+     *
+     * <p>This call only applies to tunnel mode transform. Otherwise it will throw {@code
+     * UnsupportedOperationException}.
+     *
+     * @see {@link IpSecManager#IpSecTunnelInterface#setUnderlyingNetwork(Network)}
+     * @param newSourceAddress the new source address
+     * @param newDestinationAddress the new destination address
+     * @hide
+     */
+    // TODO: b/169169973 Require FEATURE_IPSEC_MIGRATE
+    @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
+    public void startMigration(
+            @NonNull InetAddress newSourceAddress, @NonNull InetAddress newDestinationAddress) {
+        try {
+            throwIfNotTunnelMode();
+
+            final IIpSecService svc = getIpSecService();
+            svc.startTransformMigration(
+                    mResourceId,
+                    newSourceAddress.getHostAddress(),
+                    newDestinationAddress.getHostAddress(),
+                    mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
+     * Cancel the migration of this transform.
+     *
+     * <p>This call allows canceling transform migration before this transform is applied and
+     * migrated.
+     *
+     * <p>This call only applies to tunnel mode transform. Otherwise it will throw {@code
+     * UnsupportedOperationException}.
+     *
+     * @hide
+     */
+    // TODO: b/169169973 Require FEATURE_IPSEC_MIGRATE
+    @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
+    public void cancelMigration() {
+        try {
+            throwIfNotTunnelMode();
+
+            final IIpSecService svc = getIpSecService();
+            svc.cancelTransformMigration(mResourceId, mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+    }
+
     private IIpSecService getIpSecService() {
         IBinder b = ServiceManager.getService(android.content.Context.IPSEC_SERVICE);
         if (b == null) {
