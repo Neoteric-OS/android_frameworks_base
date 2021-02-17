@@ -16,6 +16,24 @@
       "message": "TreeHugger says this doesn\u0027t compile :\n\nincompatible types: List\u003cConnectivityService.NetworkRequestInfo\u003e cannot be converted to ArraySet\u003cConnectivityService.NetworkRequestInfo\u003e",
       "revId": "0d55a491d21f3993bc4a4f814c5befd8f6bf34a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bc464d8_01607ea7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 40
+      },
+      "lineNbr": 9490,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-17T17:17:14Z",
+      "side": 1,
+      "message": "Very odd, can\u0027t explain how that happened since I ran the tests locally without issues but whatever the case, thank you for addressing.",
+      "parentUuid": "cb9de46a_05790624",
+      "revId": "0d55a491d21f3993bc4a4f814c5befd8f6bf34a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
