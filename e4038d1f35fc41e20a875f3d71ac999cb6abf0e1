@@ -281,6 +281,30 @@
       },
       "revId": "e4038d1f35fc41e20a875f3d71ac999cb6abf0e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e521aa9_ab9c8f4a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 5843,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-17T02:25:44Z",
+      "side": 1,
+      "message": "Changing back as per our offline discussion.",
+      "parentUuid": "821fa127_7e044fdf",
+      "range": {
+        "startLine": 5843,
+        "startChar": 20,
+        "endLine": 5843,
+        "endChar": 38
+      },
+      "revId": "e4038d1f35fc41e20a875f3d71ac999cb6abf0e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
