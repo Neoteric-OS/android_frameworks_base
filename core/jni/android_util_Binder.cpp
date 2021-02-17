@@ -1136,7 +1136,9 @@ static jobject android_os_BinderInternal_getContextObject(JNIEnv* env, jobject c
 
 static void android_os_BinderInternal_joinThreadPool(JNIEnv* env, jobject clazz)
 {
+    //获取0号handle值对应的Ibiner对象，即ServiceManager的BbBinder对象
     sp<IBinder> b = ProcessState::self()->getContextObject(NULL);
+    //使用IPCThreadState与Binder驱动设备通信，最终是使用ioctl系统调用与driver进行数据交互
     android::IPCThreadState::self()->joinThreadPool();
 }
 
@@ -1149,6 +1151,7 @@ static void android_os_BinderInternal_disableBackgroundScheduling(JNIEnv* env,
 static void android_os_BinderInternal_setMaxThreads(JNIEnv* env,
         jobject clazz, jint maxThreads)
 {
+    //修改线程池的最大线程数，默认为15个，SystemService中修改为了31个
     ProcessState::self()->setThreadPoolMaxThreadCount(maxThreads);
 }
 
