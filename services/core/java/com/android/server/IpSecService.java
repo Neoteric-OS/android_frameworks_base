@@ -1721,6 +1721,36 @@ public class IpSecService extends IIpSecService.Stub {
         return new IpSecTransformResponse(IpSecManager.Status.OK, resourceId);
     }
 
+    /** Mark the transform as "going to be migrated". */
+    @Override
+    public synchronized void startTransformMigration(
+            int transformId,
+            String newSourceAddress,
+            String newDestinationAddress,
+            String callingPackage) {
+
+        enforceTunnelFeatureAndPermissions(callingPackage);
+
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+        TransformRecord transformInfo =
+                userRecord.mTransformRecords.getResourceOrThrow(transformId);
+        IpSecConfig c = transformInfo.getConfig();
+        c.startMigration(newSourceAddress, newDestinationAddress);
+    }
+
+    /** Cancel the migration of the transform. */
+    @Override
+    public synchronized void cancelTransformMigration(int transformId, String callingPackage) {
+
+        enforceTunnelFeatureAndPermissions(callingPackage);
+
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+        TransformRecord transformInfo =
+                userRecord.mTransformRecords.getResourceOrThrow(transformId);
+        IpSecConfig c = transformInfo.getConfig();
+        c.cancelMigration();
+    }
+
     /**
      * Delete a transport mode transform that was previously allocated by + registered with the
      * system server. If this is called on an inactive (or non-existent) transform, it will not
@@ -1784,12 +1814,14 @@ public class IpSecService extends IIpSecService.Stub {
 
     /**
      * Apply an active tunnel mode transform to a TunnelInterface, which will apply the IPsec
-     * security association as a correspondent policy to the provided interface
+     * security association as a correspondent policy to the provided interface.
+     *
+     * <p>If needed, migrate the IPsec security association to new source/destination addresses.
      */
     @Override
     public synchronized void applyTunnelModeTransform(
-            int tunnelResourceId, int direction,
-            int transformResourceId, String callingPackage) throws RemoteException {
+            int tunnelResourceId, int direction, int transformResourceId, String callingPackage)
+            throws RemoteException {
         enforceTunnelFeatureAndPermissions(callingPackage);
         checkDirection(direction);
 
@@ -1807,6 +1839,7 @@ public class IpSecService extends IIpSecService.Stub {
 
         // Get config and check that to-be-applied transform has the correct mode
         IpSecConfig c = transformInfo.getConfig();
+
         Preconditions.checkArgument(
                 c.getMode() == IpSecTransform.MODE_TUNNEL,
                 "Transform mode was not Tunnel mode; cannot be applied to a tunnel interface");
@@ -1870,6 +1903,22 @@ public class IpSecService extends IIpSecService.Stub {
 
             // Update SA with tunnel mark (ikey or okey based on direction)
             createOrUpdateTransform(c, transformResourceId, spiRecord, socketRecord);
+
+            if (c.isMigrating()) {
+                mSrvConfig
+                        .getNetdInstance()
+                        .ipSecMigrate(
+                                Binder.getCallingUid(),
+                                getFamily(c.getNewSourceAddress()),
+                                direction,
+                                c.getSourceAddress(),
+                                c.getDestinationAddress(),
+                                c.getNewSourceAddress(),
+                                c.getNewDestinationAddress(),
+                                c.getXfrmInterfaceId());
+
+                c.finishMigration();
+            }
         } catch (ServiceSpecificException e) {
             if (e.errorCode == EINVAL) {
                 throw new IllegalArgumentException(e.toString());

@@ -30,6 +30,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -115,6 +116,9 @@ public class IpSecServiceParameterizedTest {
         0x7A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7F
     };
+
+    private static final String NEW_SRC_ADDRESS = "2001:db8:2::1";
+    private static final String NEW_DST_ADDRESS = "2001:db8:2::2";
 
     AppOpsManager mMockAppOps = mock(AppOpsManager.class);
     ConnectivityManager mMockConnectivityMgr = mock(ConnectivityManager.class);
@@ -339,8 +343,8 @@ public class IpSecServiceParameterizedTest {
                 .ipSecAddSecurityAssociation(
                         eq(mUid),
                         eq(config.getMode()),
-                        eq(config.getSourceAddress()),
-                        eq(config.getDestinationAddress()),
+                        eq(mSourceAddr),
+                        eq(mDestinationAddr),
                         eq((config.getNetwork() != null) ? config.getNetwork().netId : 0),
                         eq(TEST_SPI),
                         eq(0),
@@ -807,11 +811,26 @@ public class IpSecServiceParameterizedTest {
         verifyApplyTunnelModeTransformCommon(true);
     }
 
-    public void verifyApplyTunnelModeTransformCommon(boolean closeSpiBeforeApply) throws Exception {
-        IpSecConfig ipSecConfig = new IpSecConfig();
+    @Test
+    public void testApplyAndMigrateTunnelModeTransform() throws Exception {
+        verifyApplyAndMigrateTunnelModeTransformCommon(false);
+    }
+
+    @Test
+    public void testApplyAndMigrateTunnelModeTransformReleasedSpi() throws Exception {
+        verifyApplyAndMigrateTunnelModeTransformCommon(true);
+    }
+
+    public int verifyApplyTunnelModeTransformCommon(
+            IpSecConfig ipSecConfig, boolean closeSpiBeforeApply, boolean isMigrating)
+            throws Exception {
         ipSecConfig.setMode(IpSecTransform.MODE_TUNNEL);
         addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);
         addAuthAndCryptToIpSecConfig(ipSecConfig);
+
+        if (isMigrating) {
+            ipSecConfig.startMigration(NEW_SRC_ADDRESS, NEW_DST_ADDRESS);
+        }
 
         IpSecTransformResponse createTransformResp =
                 mIpSecService.createTransform(ipSecConfig, new Binder(), BLESSED_PACKAGE);
@@ -843,8 +862,44 @@ public class IpSecServiceParameterizedTest {
 
         ipSecConfig.setXfrmInterfaceId(tunnelResourceId);
         verifyTransformNetdCalledForCreatingSA(ipSecConfig, createTransformResp);
+
+        if (isMigrating) {
+            verify(mMockNetd)
+                    .ipSecMigrate(
+                            eq(mUid),
+                            eq(AF_INET6),
+                            eq(IpSecManager.DIRECTION_OUT),
+                            anyString(),
+                            anyString(),
+                            eq(NEW_SRC_ADDRESS),
+                            eq(NEW_DST_ADDRESS),
+                            eq(tunnelResourceId));
+        } else {
+            verify(mMockNetd, never())
+                    .ipSecMigrate(
+                            anyInt(),
+                            anyInt(),
+                            anyInt(),
+                            anyString(),
+                            anyString(),
+                            anyString(),
+                            anyString(),
+                            anyInt());
+        }
+
+        return tunnelResourceId;
     }
 
+    public void verifyApplyTunnelModeTransformCommon(boolean closeSpiBeforeApply) throws Exception {
+        verifyApplyTunnelModeTransformCommon(
+                new IpSecConfig(), closeSpiBeforeApply, false /* isMigrating */);
+    }
+
+    public void verifyApplyAndMigrateTunnelModeTransformCommon(boolean closeSpiBeforeApply)
+            throws Exception {
+        verifyApplyTunnelModeTransformCommon(
+                new IpSecConfig(), closeSpiBeforeApply, true /* isMigrating */);
+    }
 
     @Test
     public void testApplyTunnelModeTransformWithClosedSpi() throws Exception {
