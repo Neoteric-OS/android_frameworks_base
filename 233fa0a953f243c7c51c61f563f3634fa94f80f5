@@ -311,6 +311,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e20d8423_17153990",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-17T23:18:29Z",
+      "side": 1,
+      "message": "I see. Never used this syntax :P",
+      "parentUuid": "fedfe547_5e3931a6",
+      "revId": "233fa0a953f243c7c51c61f563f3634fa94f80f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48f6815b_0b08b27e",

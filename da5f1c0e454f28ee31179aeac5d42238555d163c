@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e36e2f1_090bcc58",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-17T23:18:29Z",
+      "side": 1,
+      "message": "Maybe the logic is reversed? It should be sorted from most recent to least recent, meaning the timestamp should be sorted in descend order",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 294,
+        "endChar": 33
+      },
+      "revId": "da5f1c0e454f28ee31179aeac5d42238555d163c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
