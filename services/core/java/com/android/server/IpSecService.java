@@ -36,6 +36,7 @@ import android.net.InetAddresses;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecConfig;
 import android.net.IpSecManager;
+import android.net.IpSecMigrateInfoParcel;
 import android.net.IpSecSpiResponse;
 import android.net.IpSecTransform;
 import android.net.IpSecTransformResponse;
@@ -588,14 +589,19 @@ public class IpSecService extends IIpSecService.Stub {
     }
 
     /**
-     * Tracks an SA in the kernel, and manages cleanup paths. Once a TransformRecord is
-     * created, the SpiRecord that originally tracked the SAs will reliquish the
-     * responsibility of freeing the underlying SA to this class via the mOwnedByTransform flag.
+     * Tracks an SA in the kernel, and manages cleanup paths. Once a TransformRecord is created, the
+     * SpiRecord that originally tracked the SAs will reliquish the responsibility of freeing the
+     * underlying SA to this class via the mOwnedByTransform flag.
+     *
+     * <p>This class is not thread-safe, and expects that that users of this class will ensure
+     * synchronization and thread safety by holding the IpSecService.this instance lock
      */
     private final class TransformRecord extends OwnedResourceRecord {
         private final IpSecConfig mConfig;
         private final SpiRecord mSpi;
         private final EncapSocketRecord mSocket;
+        private String mNewSourceAddress = "";
+        private String mNewDestinationAddress = "";
 
         TransformRecord(
                 int resourceId, IpSecConfig config, SpiRecord spi, EncapSocketRecord socket) {
@@ -617,6 +623,47 @@ public class IpSecService extends IIpSecService.Stub {
 
         public EncapSocketRecord getSocketRecord() {
             return mSocket;
+        }
+
+        @GuardedBy("IpSecService.this")
+        public String getNewSourceAddress() {
+            return mNewSourceAddress;
+        }
+
+        @GuardedBy("IpSecService.this")
+        public String getNewDestinationAddress() {
+            return mNewDestinationAddress;
+        }
+
+        private void throwIfNotTunnelMode() {
+            if (mConfig.getMode() != MODE_TUNNEL) {
+                throw new UnsupportedOperationException("This is not a tunnel mode transform");
+            }
+        }
+
+        /** Start migrating this transform to new source and destination addresses */
+        @GuardedBy("IpSecService.this")
+        public void startMigration(String newSourceAddress, String newDestinationAddress) {
+            throwIfNotTunnelMode();
+            mNewSourceAddress = newSourceAddress;
+            mNewDestinationAddress = newDestinationAddress;
+        }
+
+        /** Finish migration and update addresses. */
+        @GuardedBy("IpSecService.this")
+        public void finishMigration() {
+            throwIfNotTunnelMode();
+            mConfig.setSourceAddress(mNewSourceAddress);
+            mConfig.setDestinationAddress(mNewDestinationAddress);
+            mNewSourceAddress = "";
+            mNewDestinationAddress = "";
+        }
+
+        /** Return if this transform is going to be migrated. */
+        @GuardedBy("IpSecService.this")
+        public boolean isMigrating() {
+            throwIfNotTunnelMode();
+            return !mNewSourceAddress.equals("");
         }
 
         /** always guarded by IpSecService#this */
@@ -1720,6 +1767,21 @@ public class IpSecService extends IIpSecService.Stub {
         return new IpSecTransformResponse(IpSecManager.Status.OK, resourceId);
     }
 
+    /** Mark the transform as "going to be migrated". */
+    @Override
+    public synchronized void migrateTransform(
+            int transformId,
+            String newSourceAddress,
+            String newDestinationAddress,
+            String callingPackage) {
+        enforceTunnelFeatureAndPermissions(callingPackage);
+
+        UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
+        TransformRecord transformInfo =
+                userRecord.mTransformRecords.getResourceOrThrow(transformId);
+        transformInfo.startMigration(newSourceAddress, newDestinationAddress);
+    }
+
     /**
      * Delete a transport mode transform that was previously allocated by + registered with the
      * system server. If this is called on an inactive (or non-existent) transform, it will not
@@ -1783,7 +1845,9 @@ public class IpSecService extends IIpSecService.Stub {
 
     /**
      * Apply an active tunnel mode transform to a TunnelInterface, which will apply the IPsec
-     * security association as a correspondent policy to the provided interface
+     * security association as a correspondent policy to the provided interface.
+     *
+     * <p>If needed, migrate the IPsec security association to new source/destination addresses.
      */
     @Override
     public synchronized void applyTunnelModeTransform(
@@ -1869,6 +1933,22 @@ public class IpSecService extends IIpSecService.Stub {
 
             // Update SA with tunnel mark (ikey or okey based on direction)
             createOrUpdateTransform(c, transformResourceId, spiRecord, socketRecord);
+
+            if (transformInfo.isMigrating()) {
+                final IpSecMigrateInfoParcel migrateInfo = new IpSecMigrateInfoParcel();
+                migrateInfo.transformId = Binder.getCallingUid();
+                migrateInfo.selAddrFamily = getFamily(transformInfo.getNewSourceAddress());
+                migrateInfo.direction = direction;
+                migrateInfo.oldSourceAddress = c.getSourceAddress();
+                migrateInfo.oldDestinationAddress = c.getDestinationAddress();
+                migrateInfo.newSourceAddress = transformInfo.getNewSourceAddress();
+                migrateInfo.newDestinationAddress = transformInfo.getNewDestinationAddress();
+                migrateInfo.interfaceId = c.getXfrmInterfaceId();
+                migrateInfo.underlyingNetId = (c.getNetwork() != null) ? c.getNetwork().netId : 0;
+
+                mSrvConfig.getNetdInstance().ipSecMigrate(migrateInfo);
+                transformInfo.finishMigration();
+            }
         } catch (ServiceSpecificException e) {
             if (e.errorCode == EINVAL) {
                 throw new IllegalArgumentException(e.toString());

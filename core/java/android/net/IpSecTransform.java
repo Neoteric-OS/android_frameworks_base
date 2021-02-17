@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.InetAddress;
+import java.util.Objects;
 
 /**
  * This class represents a transform, which roughly corresponds to an IPsec Security Association.
@@ -91,6 +92,39 @@ public final class IpSecTransform implements AutoCloseable {
         mContext = context;
         mConfig = new IpSecConfig(config);
         mResourceId = INVALID_RESOURCE_ID;
+    }
+
+    /**
+     * Starts migrating this tunnel mode transform to new source/destination addresses.
+     *
+     * <p>This call only marks this transform as "going to be migrated". The actual migration
+     * happens when this transform is applied to an {@link IpSecManager#IpSecTunnelInterface}.
+     *
+     * <p>This call only applies to tunnel mode transform. Otherwise it will throw {@code
+     * UnsupportedOperationException}.
+     *
+     * @see {@link IpSecManager#IpSecTunnelInterface#setUnderlyingNetwork(Network)}
+     * @param newSourceAddress the new source address
+     * @param newDestinationAddress the new destination address
+     * @hide
+     */
+    // TODO: b/169169973 Require FEATURE_IPSEC_MIGRATE
+    @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
+    public void migrate(
+            @NonNull InetAddress newSourceAddress, @NonNull InetAddress newDestinationAddress) {
+        try {
+            Objects.requireNonNull(newSourceAddress, "newSourceAddress was null");
+            Objects.requireNonNull(newDestinationAddress, "newDestinationAddress was null");
+
+            final IIpSecService svc = getIpSecService();
+            svc.migrateTransform(
+                    mResourceId,
+                    newSourceAddress.getHostAddress(),
+                    newDestinationAddress.getHostAddress(),
+                    mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
     }
 
     private IIpSecService getIpSecService() {
