@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6580e99_c77a22e6",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1565997
+      },
+      "writtenOn": "2021-02-17T01:23:57Z",
+      "side": 1,
+      "message": "In an earlier PS on ag/13237755, Junyu and I discussed using the NetworkCapabilities.NET_CAPABILITY_OEM_* values rather than locally defined constants. Junyu and I agreed to use a bitfield to represent the \"OEM managed\" state after Junyu expressed concern that it\u0027s possible more OEM NetworkCapabilities _could_ be added in the future, and it\u0027s possible that a given network could have more than one of the capabilities.\n\nSince a given network could have multiple OEM capabilities, using the NetworkCapbilities.NET_CAPABILITY_OEM_* values as our constants wouldn\u0027t allow us to bitwise-or the values together in a bitfield. I could create a static map of NetworkCapabilities values mapped to local bitfield values, but I think that would add unnecessary complexity.",
+      "parentUuid": "9f01da79_bf5b9d5a",
+      "range": {
+        "startLine": 53,
+        "startChar": 39,
+        "endLine": 53,
+        "endChar": 42
+      },
+      "revId": "3d59b4ace76c00bf5f477471f4131bce1010588d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad77d08c_ccbb731c",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15a9bc2c_9720248f",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1565997
+      },
+      "writtenOn": "2021-02-17T01:23:57Z",
+      "side": 1,
+      "message": "That is a good idea. I\u0027ll put something together.",
+      "parentUuid": "ad77d08c_ccbb731c",
+      "range": {
+        "startLine": 124,
+        "startChar": 47,
+        "endLine": 124,
+        "endChar": 58
+      },
+      "revId": "3d59b4ace76c00bf5f477471f4131bce1010588d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f82614c0_d4a0d87b",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-02-15T12:02:35Z",
       "side": 1,
       "message": "Should this not be OEM_ANY ? ISTM that if we\u0027re matching on the subscriber, whether this in an OEM managed network is irrelevant.",
+      "range": {
+        "startLine": 1387,
+        "startChar": 26,
+        "endLine": 1387,
+        "endChar": 34
+      },
+      "revId": "3d59b4ace76c00bf5f477471f4131bce1010588d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f0305fb_6acf62cb",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1565997
+      },
+      "writtenOn": "2021-02-17T01:23:57Z",
+      "side": 1,
+      "message": "Discussed in our meeting earlier - OEM_ANY wouldn\u0027t be appropriate for a NetworkIdentity. OEM_NONE is used to construct probeIdent under the assumption that the NetworkTemplate passed to us was constructed with one of the builder functions in NetworkTemplate, which default to OEM_MANAGED_ALL, which ignores the OEM managed state. OEM_NONE may be misleading here, and I should add a comment explaining that any valid integer value would really work, but we need to pass a valid value for the NetworkIdentity constructor.\n\nTODO for me - add a comment",
+      "parentUuid": "f82614c0_d4a0d87b",
       "range": {
         "startLine": 1387,
         "startChar": 26,
