@@ -16,6 +16,24 @@
       "message": "Can you link this change with a bug id?",
       "revId": "fdadf9339629fe0157f69a9c5e444e09586f1c69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5644c537_f1ca26dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-17T22:40:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a12700b_3eecadcf",
+      "revId": "fdadf9339629fe0157f69a9c5e444e09586f1c69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
