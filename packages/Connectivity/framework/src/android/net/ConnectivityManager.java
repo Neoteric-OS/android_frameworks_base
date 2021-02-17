@@ -1070,58 +1070,6 @@ public class ConnectivityManager {
     }
 
     /**
-     * Calls VpnManager#isAlwaysOnVpnPackageSupportedForUser.
-     * @deprecated TODO: remove when callers have migrated to VpnManager.
-     * @hide
-     */
-    @Deprecated
-    public boolean isAlwaysOnVpnPackageSupportedForUser(int userId, @Nullable String vpnPackage) {
-        return getVpnManager().isAlwaysOnVpnPackageSupportedForUser(userId, vpnPackage);
-    }
-
-    /**
-    * Calls VpnManager#setAlwaysOnVpnPackageForUser.
-     * @deprecated TODO: remove when callers have migrated to VpnManager.
-     * @hide
-     */
-    @Deprecated
-    public boolean setAlwaysOnVpnPackageForUser(int userId, @Nullable String vpnPackage,
-            boolean lockdownEnabled, @Nullable List<String> lockdownAllowlist) {
-        return getVpnManager().setAlwaysOnVpnPackageForUser(userId, vpnPackage, lockdownEnabled,
-                lockdownAllowlist);
-    }
-
-    /**
-     * Calls VpnManager#getAlwaysOnVpnPackageForUser.
-     * @deprecated TODO: remove when callers have migrated to VpnManager.
-     * @hide
-     */
-    @Deprecated
-    public String getAlwaysOnVpnPackageForUser(int userId) {
-        return getVpnManager().getAlwaysOnVpnPackageForUser(userId);
-    }
-
-    /**
-     * Calls VpnManager#isVpnLockdownEnabled.
-     * @deprecated TODO: remove when callers have migrated to VpnManager.
-     * @hide
-     */
-    @Deprecated
-    public boolean isVpnLockdownEnabled(int userId) {
-        return getVpnManager().isVpnLockdownEnabled(userId);
-    }
-
-    /**
-     * Calls VpnManager#getVpnLockdownAllowlist.
-     * @deprecated TODO: remove when callers have migrated to VpnManager.
-     * @hide
-     */
-    @Deprecated
-    public List<String> getVpnLockdownAllowlist(int userId) {
-        return getVpnManager().getVpnLockdownAllowlist(userId);
-    }
-
-    /**
      * Adds or removes a requirement for given UID ranges to use the VPN.
      *
      * If set to {@code true}, informs the system that the UIDs in the specified ranges must not
@@ -3164,16 +3112,6 @@ public class ConnectivityManager {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
-    }
-
-    /**
-     * Calls VpnManager#updateLockdownVpn.
-     * @deprecated TODO: remove when callers have migrated to VpnManager.
-     * @hide
-     */
-    @Deprecated
-    public boolean updateLockdownVpn() {
-        return getVpnManager().updateLockdownVpn();
     }
 
     /**
