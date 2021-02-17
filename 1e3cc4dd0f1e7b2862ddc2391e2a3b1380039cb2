@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b7c1c21_5de28979",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 9468,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T02:41:45Z",
+      "side": 1,
+      "message": "unused ?",
+      "range": {
+        "startLine": 9468,
+        "startChar": 0,
+        "endLine": 9468,
+        "endChar": 40
+      },
+      "revId": "1e3cc4dd0f1e7b2862ddc2391e2a3b1380039cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "480b3699_42a804bc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 9500,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T02:41:45Z",
+      "side": 1,
+      "message": "and VALIDATED",
+      "range": {
+        "startLine": 9500,
+        "startChar": 78,
+        "endLine": 9500,
+        "endChar": 79
+      },
+      "revId": "1e3cc4dd0f1e7b2862ddc2391e2a3b1380039cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a3982b8_61a35cef",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 9503,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T02:41:45Z",
+      "side": 1,
+      "message": "Do you think you can take an AI to make this last request a TRACK_DEFAULT and see if it breaks anything, and if not, then make it a TRACK_DEFAULT ?\n\nIIRC, the only substantial difference between REQUEST and TRACK_DEFAULT is that the latter is not sent to factories, which this one shouldn\u0027t be.",
+      "range": {
+        "startLine": 9503,
+        "startChar": 36,
+        "endLine": 9503,
+        "endChar": 45
+      },
+      "revId": "1e3cc4dd0f1e7b2862ddc2391e2a3b1380039cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cace000_bb48f2dc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 9528,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T02:41:45Z",
+      "side": 1,
+      "message": "here you do need to test we also have VALIDATED.",
+      "range": {
+        "startLine": 9528,
+        "startChar": 78,
+        "endLine": 9528,
+        "endChar": 79
+      },
+      "revId": "1e3cc4dd0f1e7b2862ddc2391e2a3b1380039cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf95aa8f_8cee03b6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 9576,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T02:41:45Z",
+      "side": 1,
+      "message": "Maybe you also want to\n\n assertFalse(mRequests.get(0).hasCapability(NET_CAPABILITY_OEM_PAID));",
+      "range": {
+        "startLine": 9576,
+        "startChar": 78,
+        "endLine": 9576,
+        "endChar": 79
+      },
+      "revId": "1e3cc4dd0f1e7b2862ddc2391e2a3b1380039cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
