@@ -159,6 +159,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "762d0a57_a27fe7fa",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1565997
+      },
+      "writtenOn": "2021-02-17T20:21:43Z",
+      "side": 1,
+      "message": "Added comment.",
+      "parentUuid": "6f0305fb_6acf62cb",
+      "range": {
+        "startLine": 1387,
+        "startChar": 26,
+        "endLine": 1387,
+        "endChar": 34
+      },
+      "revId": "3d59b4ace76c00bf5f477471f4131bce1010588d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a779dac9_cde674a8",
@@ -172,6 +196,30 @@
       "writtenOn": "2021-02-15T12:02:35Z",
       "side": 1,
       "message": "Likewise, can OEM networks be subject to policy cycles ?",
+      "range": {
+        "startLine": 1618,
+        "startChar": 16,
+        "endLine": 1618,
+        "endChar": 24
+      },
+      "revId": "3d59b4ace76c00bf5f477471f4131bce1010588d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a6e9f04_4ec9f235",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1565997
+      },
+      "writtenOn": "2021-02-17T20:21:43Z",
+      "side": 1,
+      "message": "I added a comment to the other location that OEM_NONE is used, but I\u0027m wondering if it might be more appropriate to create a private helper \"createProbeIdent\" in NetworkPolicyManagerService (such that the documentation for what this probeIdent means can be in one place).\n\nLet me know what you think.",
+      "parentUuid": "a779dac9_cde674a8",
       "range": {
         "startLine": 1618,
         "startChar": 16,

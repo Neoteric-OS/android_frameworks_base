@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab72de12_a8f005b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1565997
+      },
+      "writtenOn": "2021-02-17T20:21:43Z",
+      "side": 1,
+      "message": "+yanmin@ for netstats.proto\n\nCherry pick from ag/13237755",
+      "revId": "a3335555f32af2cc2cea0a9fecaa0ad4878f2364",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
