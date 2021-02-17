@@ -30,11 +30,11 @@ import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.vcn.IVcnManagementService;
+import android.net.vcn.IVcnNetworkPolicyListener;
 import android.net.vcn.IVcnStatusCallback;
-import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
 import android.net.vcn.VcnManager.VcnErrorCode;
-import android.net.vcn.VcnUnderlyingNetworkPolicy;
+import android.net.vcn.VcnNetworkPolicyResult;
 import android.net.wifi.WifiInfo;
 import android.os.Binder;
 import android.os.Handler;
@@ -174,7 +174,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
     @GuardedBy("mLock")
     @NonNull
-    private final Map<IBinder, PolicyListenerBinderDeath> mRegisteredPolicyListeners =
+    private final Map<IBinder, VcnNetworkPolicyListenerInfo> mRegisteredNetworkPolicyListeners =
             new ArrayMap<>();
 
     @GuardedBy("mLock")
@@ -446,8 +446,9 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
     @GuardedBy("mLock")
     private void notifyAllPolicyListenersLocked() {
-        for (final PolicyListenerBinderDeath policyListener : mRegisteredPolicyListeners.values()) {
-            Binder.withCleanCallingIdentity(() -> policyListener.mListener.onPolicyChanged());
+        for (final VcnNetworkPolicyListenerInfo policyInfo :
+                mRegisteredNetworkPolicyListeners.values()) {
+            Binder.withCleanCallingIdentity(() -> policyInfo.mListener.onPolicyChanged());
         }
     }
 
@@ -575,70 +576,70 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         }
     }
 
-    /** Binder death recipient used to remove a registered policy listener. */
-    private class PolicyListenerBinderDeath implements Binder.DeathRecipient {
-        @NonNull private final IVcnUnderlyingNetworkPolicyListener mListener;
+    /** Binder death recipient used to remove a registered VcnNetworkPolicyListener. */
+    private class VcnNetworkPolicyListenerInfo implements Binder.DeathRecipient {
+        @NonNull private final IVcnNetworkPolicyListener mListener;
 
-        PolicyListenerBinderDeath(@NonNull IVcnUnderlyingNetworkPolicyListener listener) {
+        VcnNetworkPolicyListenerInfo(@NonNull IVcnNetworkPolicyListener listener) {
             mListener = listener;
         }
 
         @Override
         public void binderDied() {
-            Log.e(TAG, "app died without removing VcnUnderlyingNetworkPolicyListener");
-            removeVcnUnderlyingNetworkPolicyListener(mListener);
+            Log.e(TAG, "app died without removing VcnNetworkPolicyListener");
+            removeVcnNetworkPolicyListener(mListener);
         }
     }
 
-    /** Adds the provided listener for receiving VcnUnderlyingNetworkPolicy updates. */
-    @GuardedBy("mLock")
+    /** Adds the provided listener for receiving VcnNetworkPolicyListener updates. */
     @Override
-    public void addVcnUnderlyingNetworkPolicyListener(
-            @NonNull IVcnUnderlyingNetworkPolicyListener listener) {
+    public void addVcnNetworkPolicyListener(@NonNull IVcnNetworkPolicyListener listener) {
         requireNonNull(listener, "listener was null");
 
         mContext.enforceCallingOrSelfPermission(
                 android.Manifest.permission.NETWORK_FACTORY,
                 "Must have permission NETWORK_FACTORY to register a policy listener");
 
-        PolicyListenerBinderDeath listenerBinderDeath = new PolicyListenerBinderDeath(listener);
+        final IBinder listenerBinder = listener.asBinder();
+        final VcnNetworkPolicyListenerInfo listenerInfo =
+                new VcnNetworkPolicyListenerInfo(listener);
+        try {
+            listenerBinder.linkToDeath(listenerInfo, 0 /* flags */);
+        } catch (RemoteException e) {
+            // Remote binder already died
+            return;
+        }
 
         synchronized (mLock) {
-            mRegisteredPolicyListeners.put(listener.asBinder(), listenerBinderDeath);
-
-            try {
-                listener.asBinder().linkToDeath(listenerBinderDeath, 0 /* flags */);
-            } catch (RemoteException e) {
-                // Remote binder already died - cleanup registered Listener
-                listenerBinderDeath.binderDied();
-            }
+            mRegisteredNetworkPolicyListeners.put(listenerBinder, listenerInfo);
         }
     }
 
     /** Removes the provided listener from receiving VcnUnderlyingNetworkPolicy updates. */
-    @GuardedBy("mLock")
     @Override
-    public void removeVcnUnderlyingNetworkPolicyListener(
-            @NonNull IVcnUnderlyingNetworkPolicyListener listener) {
+    public void removeVcnNetworkPolicyListener(@NonNull IVcnNetworkPolicyListener listener) {
         requireNonNull(listener, "listener was null");
 
+        final IBinder listenerBinder = listener.asBinder();
         synchronized (mLock) {
-            PolicyListenerBinderDeath listenerBinderDeath =
-                    mRegisteredPolicyListeners.remove(listener.asBinder());
+            final VcnNetworkPolicyListenerInfo listenerInfo =
+                    mRegisteredNetworkPolicyListeners.remove(listenerBinder);
 
-            if (listenerBinderDeath != null) {
-                listener.asBinder().unlinkToDeath(listenerBinderDeath, 0 /* flags */);
+            if (listenerInfo != null) {
+                listenerBinder.unlinkToDeath(listenerInfo, 0 /* flags */);
             }
         }
     }
 
     /**
-     * Gets the UnderlyingNetworkPolicy as determined by the provided NetworkCapabilities and
-     * LinkProperties.
+     * Applies the VCN Network policy based on the provided NetworkCapabilities and LinkProperties.
+     *
+     * @return the VcnNetworkPolicyResult from applying the VCN Network policy to the given
+     *     parameters
      */
     @NonNull
     @Override
-    public VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(
+    public VcnNetworkPolicyResult applyVcnNetworkPolicy(
             @NonNull NetworkCapabilities networkCapabilities,
             @NonNull LinkProperties linkProperties) {
         requireNonNull(networkCapabilities, "networkCapabilities was null");
@@ -693,7 +694,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             networkCapabilities.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
         }
 
-        return new VcnUnderlyingNetworkPolicy(false /* isTearDownRequested */, networkCapabilities);
+        return new VcnNetworkPolicyResult(false /* isTearDownRequested */, networkCapabilities);
     }
 
     /** Binder death recipient used to remove registered VcnStatusCallbacks. */

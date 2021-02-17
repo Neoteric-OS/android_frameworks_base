@@ -55,11 +55,11 @@ import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
 import android.net.NetworkCapabilities.Transport;
 import android.net.TelephonyNetworkSpecifier;
+import android.net.vcn.IVcnNetworkPolicyListener;
 import android.net.vcn.IVcnStatusCallback;
-import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
 import android.net.vcn.VcnConfigTest;
-import android.net.vcn.VcnUnderlyingNetworkPolicy;
+import android.net.vcn.VcnNetworkPolicyResult;
 import android.net.wifi.WifiInfo;
 import android.os.IBinder;
 import android.os.ParcelUuid;
@@ -161,8 +161,8 @@ public class VcnManagementServiceTest {
 
     private final VcnManagementService mVcnMgmtSvc;
 
-    private final IVcnUnderlyingNetworkPolicyListener mMockPolicyListener =
-            mock(IVcnUnderlyingNetworkPolicyListener.class);
+    private final IVcnNetworkPolicyListener mMockVcnNetworkPolicyListener =
+            mock(IVcnNetworkPolicyListener.class);
     private final IVcnStatusCallback mMockStatusCallback = mock(IVcnStatusCallback.class);
     private final IBinder mMockIBinder = mock(IBinder.class);
 
@@ -218,7 +218,7 @@ public class VcnManagementServiceTest {
         setupMockedCarrierPrivilege(true);
         mVcnMgmtSvc = new VcnManagementService(mMockContext, mMockDeps);
 
-        doReturn(mMockIBinder).when(mMockPolicyListener).asBinder();
+        doReturn(mMockIBinder).when(mMockVcnNetworkPolicyListener).asBinder();
         doReturn(mMockIBinder).when(mMockStatusCallback).asBinder();
 
         // Make sure the profiles are loaded.
@@ -337,7 +337,7 @@ public class VcnManagementServiceTest {
     public void testTelephonyNetworkTrackerCallbackStopsInstances() throws Exception {
         final TelephonySubscriptionTrackerCallback cb = getTelephonySubscriptionTrackerCallback();
         final Vcn vcn = startAndGetVcnInstance(TEST_UUID_2);
-        mVcnMgmtSvc.addVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+        mVcnMgmtSvc.addVcnNetworkPolicyListener(mMockVcnNetworkPolicyListener);
 
         triggerSubscriptionTrackerCbAndGetSnapshot(Collections.emptySet());
 
@@ -345,7 +345,7 @@ public class VcnManagementServiceTest {
         mTestLooper.moveTimeForward(VcnManagementService.CARRIER_PRIVILEGES_LOST_TEARDOWN_DELAY_MS);
         mTestLooper.dispatchAll();
         verify(vcn).teardownAsynchronously();
-        verify(mMockPolicyListener).onPolicyChanged();
+        verify(mMockVcnNetworkPolicyListener).onPolicyChanged();
     }
 
     @Test
@@ -416,7 +416,7 @@ public class VcnManagementServiceTest {
             mVcnMgmtSvc.setVcnConfig(TEST_UUID_1, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
             fail("Expected security exception for non system user");
         } catch (SecurityException expected) {
-            verify(mMockPolicyListener, never()).onPolicyChanged();
+            verify(mMockVcnNetworkPolicyListener, never()).onPolicyChanged();
         }
     }
 
@@ -428,7 +428,7 @@ public class VcnManagementServiceTest {
             mVcnMgmtSvc.setVcnConfig(TEST_UUID_1, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
             fail("Expected security exception for missing carrier privileges");
         } catch (SecurityException expected) {
-            verify(mMockPolicyListener, never()).onPolicyChanged();
+            verify(mMockVcnNetworkPolicyListener, never()).onPolicyChanged();
         }
     }
 
@@ -438,7 +438,7 @@ public class VcnManagementServiceTest {
             mVcnMgmtSvc.setVcnConfig(TEST_UUID_1, TEST_VCN_CONFIG, "IncorrectPackage");
             fail("Expected exception due to mismatched packages in config and method call");
         } catch (IllegalArgumentException expected) {
-            verify(mMockPolicyListener, never()).onPolicyChanged();
+            verify(mMockVcnNetworkPolicyListener, never()).onPolicyChanged();
         }
     }
 
@@ -521,32 +521,32 @@ public class VcnManagementServiceTest {
     }
 
     @Test
-    public void testAddVcnUnderlyingNetworkPolicyListener() throws Exception {
-        mVcnMgmtSvc.addVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+    public void testAddVcnNetworkPolicyListener() throws Exception {
+        mVcnMgmtSvc.addVcnNetworkPolicyListener(mMockVcnNetworkPolicyListener);
 
         verify(mMockIBinder).linkToDeath(any(), anyInt());
     }
 
     @Test(expected = SecurityException.class)
-    public void testAddVcnUnderlyingNetworkPolicyListenerInvalidPermission() {
+    public void testAddVcnNetworkPolicyListenerInvalidPermission() {
         doThrow(new SecurityException())
                 .when(mMockContext)
                 .enforceCallingOrSelfPermission(
                         eq(android.Manifest.permission.NETWORK_FACTORY), any());
 
-        mVcnMgmtSvc.addVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+        mVcnMgmtSvc.addVcnNetworkPolicyListener(mMockVcnNetworkPolicyListener);
     }
 
     @Test
-    public void testRemoveVcnUnderlyingNetworkPolicyListener() {
-        mVcnMgmtSvc.addVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+    public void testRemoveVcnNetworkPolicyListener() {
+        mVcnMgmtSvc.addVcnNetworkPolicyListener(mMockVcnNetworkPolicyListener);
 
-        mVcnMgmtSvc.removeVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+        mVcnMgmtSvc.removeVcnNetworkPolicyListener(mMockVcnNetworkPolicyListener);
     }
 
     @Test
-    public void testRemoveVcnUnderlyingNetworkPolicyListenerNeverRegistered() {
-        mVcnMgmtSvc.removeVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+    public void testRemoveVcnNetworkPolicyListenerNeverRegistered() {
+        mVcnMgmtSvc.removeVcnNetworkPolicyListener(mMockVcnNetworkPolicyListener);
     }
 
     private void setUpVcnSubscription(int subId, ParcelUuid subGroup) {
@@ -578,7 +578,7 @@ public class VcnManagementServiceTest {
         doReturn(isVcnActive).when(vcn).isActive();
     }
 
-    private VcnUnderlyingNetworkPolicy startVcnAndGetPolicyForTransport(
+    private VcnNetworkPolicyResult startVcnAndGetPolicyResultForTransport(
             int subId, ParcelUuid subGrp, boolean isVcnActive, int transport) {
         setupSubscriptionAndStartVcn(subId, subGrp, isVcnActive);
 
@@ -600,13 +600,13 @@ public class VcnManagementServiceTest {
             throw new IllegalArgumentException("Unknown transport");
         }
 
-        return mVcnMgmtSvc.getUnderlyingNetworkPolicy(ncBuilder.build(), new LinkProperties());
+        return mVcnMgmtSvc.applyVcnNetworkPolicy(ncBuilder.build(), new LinkProperties());
     }
 
     @Test
-    public void testGetUnderlyingNetworkPolicyCellular() throws Exception {
-        final VcnUnderlyingNetworkPolicy policy =
-                startVcnAndGetPolicyForTransport(
+    public void testApplyVcnNetworkPolicyCellular() throws Exception {
+        final VcnNetworkPolicyResult policy =
+                startVcnAndGetPolicyResultForTransport(
                         TEST_SUBSCRIPTION_ID, TEST_UUID_2, true /* isActive */, TRANSPORT_CELLULAR);
 
         assertFalse(policy.isTeardownRequested());
@@ -618,9 +618,9 @@ public class VcnManagementServiceTest {
     }
 
     @Test
-    public void testGetUnderlyingNetworkPolicyCellular_safeMode() throws Exception {
-        final VcnUnderlyingNetworkPolicy policy =
-                startVcnAndGetPolicyForTransport(
+    public void testApplyVcnNetworkPolicyCellular_safeMode() throws Exception {
+        final VcnNetworkPolicyResult policy =
+                startVcnAndGetPolicyResultForTransport(
                         TEST_SUBSCRIPTION_ID,
                         TEST_UUID_2,
                         false /* isActive */,
@@ -635,9 +635,9 @@ public class VcnManagementServiceTest {
     }
 
     @Test
-    public void testGetUnderlyingNetworkPolicyWifi() throws Exception {
-        final VcnUnderlyingNetworkPolicy policy =
-                startVcnAndGetPolicyForTransport(
+    public void testApplyVcnNetworkPolicyWifi() throws Exception {
+        final VcnNetworkPolicyResult policy =
+                startVcnAndGetPolicyResultForTransport(
                         TEST_SUBSCRIPTION_ID, TEST_UUID_2, true /* isActive */, TRANSPORT_WIFI);
 
         assertFalse(policy.isTeardownRequested());
@@ -649,9 +649,9 @@ public class VcnManagementServiceTest {
     }
 
     @Test
-    public void testGetUnderlyingNetworkPolicyVcnWifi_safeMode() throws Exception {
-        final VcnUnderlyingNetworkPolicy policy =
-                startVcnAndGetPolicyForTransport(
+    public void testApplyVcnNetworkPolicyVcnWifi_safeMode() throws Exception {
+        final VcnNetworkPolicyResult policy =
+                startVcnAndGetPolicyResultForTransport(
                         TEST_SUBSCRIPTION_ID, TEST_UUID_2, false /* isActive */, TRANSPORT_WIFI);
 
         assertFalse(policy.isTeardownRequested());
@@ -663,7 +663,7 @@ public class VcnManagementServiceTest {
     }
 
     @Test
-    public void testGetUnderlyingNetworkPolicyNonVcnNetwork() throws Exception {
+    public void testApplyVcnNetworkPolicyNonVcnNetwork() throws Exception {
         setupSubscriptionAndStartVcn(TEST_SUBSCRIPTION_ID, TEST_UUID_1, true /* isActive */);
 
         NetworkCapabilities nc =
@@ -673,21 +673,20 @@ public class VcnManagementServiceTest {
                         .setNetworkSpecifier(new TelephonyNetworkSpecifier(TEST_SUBSCRIPTION_ID_2))
                         .build();
 
-        VcnUnderlyingNetworkPolicy policy =
-                mVcnMgmtSvc.getUnderlyingNetworkPolicy(nc, new LinkProperties());
+        VcnNetworkPolicyResult policy = mVcnMgmtSvc.applyVcnNetworkPolicy(nc, new LinkProperties());
 
         assertFalse(policy.isTeardownRequested());
         assertEquals(nc, policy.getMergedNetworkCapabilities());
     }
 
     @Test(expected = SecurityException.class)
-    public void testGetUnderlyingNetworkPolicyInvalidPermission() {
+    public void testApplyVcnNetworkPolicyInvalidPermission() {
         doThrow(new SecurityException())
                 .when(mMockContext)
                 .enforceCallingOrSelfPermission(
                         eq(android.Manifest.permission.NETWORK_FACTORY), any());
 
-        mVcnMgmtSvc.getUnderlyingNetworkPolicy(new NetworkCapabilities(), new LinkProperties());
+        mVcnMgmtSvc.applyVcnNetworkPolicy(new NetworkCapabilities(), new LinkProperties());
     }
 
     @Test
@@ -704,21 +703,21 @@ public class VcnManagementServiceTest {
 
     @Test
     public void testAddNewVcnUpdatesPolicyListener() throws Exception {
-        mVcnMgmtSvc.addVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+        mVcnMgmtSvc.addVcnNetworkPolicyListener(mMockVcnNetworkPolicyListener);
 
         mVcnMgmtSvc.setVcnConfig(TEST_UUID_2, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
 
-        verify(mMockPolicyListener).onPolicyChanged();
+        verify(mMockVcnNetworkPolicyListener).onPolicyChanged();
     }
 
     @Test
     public void testRemoveVcnUpdatesPolicyListener() throws Exception {
         mVcnMgmtSvc.setVcnConfig(TEST_UUID_2, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
-        mVcnMgmtSvc.addVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+        mVcnMgmtSvc.addVcnNetworkPolicyListener(mMockVcnNetworkPolicyListener);
 
         mVcnMgmtSvc.clearVcnConfig(TEST_UUID_2);
 
-        verify(mMockPolicyListener).onPolicyChanged();
+        verify(mMockVcnNetworkPolicyListener).onPolicyChanged();
     }
 
     private void verifyVcnCallback(
@@ -732,12 +731,12 @@ public class VcnManagementServiceTest {
                         eq(snapshot),
                         mVcnCallbackCaptor.capture());
 
-        mVcnMgmtSvc.addVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+        mVcnMgmtSvc.addVcnNetworkPolicyListener(mMockVcnNetworkPolicyListener);
 
         VcnCallback vcnCallback = mVcnCallbackCaptor.getValue();
         vcnCallback.onEnteredSafeMode();
 
-        verify(mMockPolicyListener).onPolicyChanged();
+        verify(mMockVcnNetworkPolicyListener).onPolicyChanged();
     }
 
     @Test
