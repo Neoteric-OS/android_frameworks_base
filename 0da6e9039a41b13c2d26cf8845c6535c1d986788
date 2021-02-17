@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5702628f_fd85bb75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-17T19:39:42Z",
+      "side": 1,
+      "message": "Presubmit seemed to fail due to device boot failures. Not sure if related since other devices are passing, so retrying presubmit",
+      "revId": "0da6e9039a41b13c2d26cf8845c6535c1d986788",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
