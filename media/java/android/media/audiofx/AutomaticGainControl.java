@@ -33,7 +33,7 @@ import android.util.Log;
  * {@link android.media.AudioRecord#getAudioSessionId()} on the AudioRecord instance.
  * <p>On some devices, an AGC can be inserted by default in the capture path by the platform
  * according to the {@link android.media.MediaRecorder.AudioSource} used. The application should
- * call AutomaticGainControl.getEnable() after creating the AGC to check the default AGC activation
+ * call AutomaticGainControl.getEnabled() after creating the AGC to check the default AGC activation
  * state on a particular AudioRecord session.
  * <p>See {@link android.media.audiofx.AudioEffect} class for more details on
  * controlling audio effects.
