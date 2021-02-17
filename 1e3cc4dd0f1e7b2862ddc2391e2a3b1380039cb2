@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0469665a_43e18cad",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 9468,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-17T02:46:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b7c1c21_5de28979",
+      "range": {
+        "startLine": 9468,
+        "startChar": 0,
+        "endLine": 9468,
+        "endChar": 40
+      },
+      "revId": "1e3cc4dd0f1e7b2862ddc2391e2a3b1380039cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "480b3699_42a804bc",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-17T02:41:45Z",
       "side": 1,
       "message": "and VALIDATED",
+      "range": {
+        "startLine": 9500,
+        "startChar": 78,
+        "endLine": 9500,
+        "endChar": 79
+      },
+      "revId": "1e3cc4dd0f1e7b2862ddc2391e2a3b1380039cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78b70ada_555bc2f0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 9500,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-17T02:46:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "480b3699_42a804bc",
       "range": {
         "startLine": 9500,
         "startChar": 78,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1525e86e_091403e2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 9503,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-17T02:46:32Z",
+      "side": 1,
+      "message": "Done http://b/180452284.",
+      "parentUuid": "2a3982b8_61a35cef",
+      "range": {
+        "startLine": 9503,
+        "startChar": 36,
+        "endLine": 9503,
+        "endChar": 45
+      },
+      "revId": "1e3cc4dd0f1e7b2862ddc2391e2a3b1380039cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7cace000_bb48f2dc",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b744aaa8_6e25b054",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 9528,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-17T02:46:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cace000_bb48f2dc",
+      "range": {
+        "startLine": 9528,
+        "startChar": 78,
+        "endLine": 9528,
+        "endChar": 79
+      },
+      "revId": "1e3cc4dd0f1e7b2862ddc2391e2a3b1380039cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf95aa8f_8cee03b6",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-02-17T02:41:45Z",
       "side": 1,
       "message": "Maybe you also want to\n\n assertFalse(mRequests.get(0).hasCapability(NET_CAPABILITY_OEM_PAID));",
+      "range": {
+        "startLine": 9576,
+        "startChar": 78,
+        "endLine": 9576,
+        "endChar": 79
+      },
+      "revId": "1e3cc4dd0f1e7b2862ddc2391e2a3b1380039cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "481790e3_bedd7351",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 9576,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-17T02:46:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf95aa8f_8cee03b6",
       "range": {
         "startLine": 9576,
         "startChar": 78,
