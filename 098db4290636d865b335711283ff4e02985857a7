@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bab9eed_4f8164db",
+        "filename": "telephony/java/android/telephony/ims/stub/CapabilityExchangeEventListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2021-02-17T18:18:16Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 62,
+        "startChar": 19,
+        "endLine": 62,
+        "endChar": 50
+      },
+      "revId": "098db4290636d865b335711283ff4e02985857a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
