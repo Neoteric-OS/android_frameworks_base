@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1795f6ea_89ff29af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T12:30:05Z",
+      "side": 1,
+      "message": "Maybe a better way would be to use NetworkWatchlistManager in ConnectivityManager and skip going through ConnectivityService, but that wouldn\u0027t change that we need to expose this somehow.",
+      "revId": "9855b6b594533a97a32c184bbad98b73be073686",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
