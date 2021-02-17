@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "075ca6c4_f6a365fe",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3724,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T00:35:28Z",
+      "side": 1,
+      "message": "As we discussed offline, this is an optimization for a low-volume API call, so maybe remove this as getPerAppDefaultTrackedNri will always return the right value for any NR.",
+      "range": {
+        "startLine": 3723,
+        "startChar": 39,
+        "endLine": 3724,
+        "endChar": 50
+      },
+      "revId": "e4038d1f35fc41e20a875f3d71ac999cb6abf0e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ab9820c_5fc52a8b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 5215,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T00:35:28Z",
+      "side": 1,
+      "message": "will fit on a line",
+      "range": {
+        "startLine": 5214,
+        "startChar": 43,
+        "endLine": 5215,
+        "endChar": 20
+      },
+      "revId": "e4038d1f35fc41e20a875f3d71ac999cb6abf0e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30c553fa_a5c8b28e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 5811,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T00:35:28Z",
+      "side": 1,
+      "message": "copyDefaultNetworkCapabilitiesForUid ?",
+      "range": {
+        "startLine": 5811,
+        "startChar": 32,
+        "endLine": 5811,
+        "endChar": 61
+      },
+      "revId": "e4038d1f35fc41e20a875f3d71ac999cb6abf0e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6abd4f1_e00a57a7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 5829,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T00:35:28Z",
+      "side": 1,
+      "message": "getNriForAppRequest",
+      "range": {
+        "startLine": 5829,
+        "startChar": 31,
+        "endLine": 5829,
+        "endChar": 57
+      },
+      "revId": "e4038d1f35fc41e20a875f3d71ac999cb6abf0e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41220b7c_04ed1043",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 5831,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T00:35:28Z",
+      "side": 1,
+      "message": "Since the latter test is always sufficient, maybe we don\u0027t need to do this test at all.",
+      "range": {
+        "startLine": 5831,
+        "startChar": 16,
+        "endLine": 5831,
+        "endChar": 43
+      },
+      "revId": "e4038d1f35fc41e20a875f3d71ac999cb6abf0e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41e361ee_6d390c52",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 5843,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T00:35:28Z",
+      "side": 1,
+      "message": "isNriTrackingDefault ?",
+      "range": {
+        "startLine": 5843,
+        "startChar": 20,
+        "endLine": 5843,
+        "endChar": 38
+      },
+      "revId": "e4038d1f35fc41e20a875f3d71ac999cb6abf0e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
