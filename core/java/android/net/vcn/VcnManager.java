@@ -266,6 +266,114 @@ public class VcnManager {
         }
     }
 
+    // TODO: make VcnNetworkPolicyListener @SystemApi
+    /**
+     * VcnNetworkPolicyListener is the interface through which internal system components can
+     * register to receive updates for VCN-underlying Network policies from the System Server.
+     *
+     * @hide
+     */
+    public abstract class VcnNetworkPolicyListener {
+        private VcnNetworkPolicyListenerBinder mListenerBinder;
+
+        /**
+         * Notifies the implementation that the VCN's underlying Network policy has changed.
+         *
+         * <p>After receiving this callback, implementations should get the current {@link
+         * VcnNetworkPolicyResult} via {@link #applyVcnNetworkPolicy(NetworkCapabilities,
+         * LinkProperties)}.
+         */
+        public abstract void onPolicyChanged();
+    }
+
+    /**
+     * Add a listener for VCN-underlying Network policy updates.
+     *
+     * @param executor the Executor that will be used for invoking all calls to the specified
+     *     Listener
+     * @param listener the VcnNetworkPolicyListener to be added
+     * @throws SecurityException if the caller does not have permission NETWORK_FACTORY
+     * @throws IllegalStateException if the specified VcnNetworkPolicyListener is already registered
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
+    public void addVcnNetworkPolicyListener(
+            @NonNull Executor executor, @NonNull VcnNetworkPolicyListener listener) {
+        requireNonNull(executor, "executor must not be null");
+        requireNonNull(listener, "listener must not be null");
+
+        synchronized (listener) {
+            if (listener.mListenerBinder != null) {
+                throw new IllegalStateException("listener is already registered with VcnManager");
+            }
+            listener.mListenerBinder = new VcnNetworkPolicyListenerBinder(executor, listener);
+
+            try {
+                mService.addVcnNetworkPolicyListener(listener.mListenerBinder);
+            } catch (RemoteException e) {
+                listener.mListenerBinder = null;
+                throw e.rethrowFromSystemServer();
+            }
+        }
+    }
+
+    /**
+     * Remove the specified VcnNetworkPolicyListener from VcnManager.
+     *
+     * <p>If the specified listener is not currently registered, this is a no-op.
+     *
+     * @param listener the VcnNetworkPolicyListener that will be removed
+     * @hide
+     */
+    public void removeVcnNetworkPolicyListener(@NonNull VcnNetworkPolicyListener listener) {
+        requireNonNull(listener, "listener must not be null");
+
+        synchronized (listener) {
+            if (listener.mListenerBinder == null) {
+                // no Binder attached to this listener, so it's not currently registered
+                return;
+            }
+
+            try {
+                mService.removeVcnNetworkPolicyListener(listener.mListenerBinder);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            } finally {
+                listener.mListenerBinder = null;
+            }
+        }
+    }
+
+    /**
+     * Applies the network policy for a {@link android.net.Network} with the given parameters.
+     *
+     * <p>Prior to a new NetworkAgent being registered, or upon notification that Carrier VCN policy
+     * may have changed via {@link VcnNetworkPolicyListener#onPolicyChanged()}, a Network Provider
+     * MUST poll for the updated Network policy based on that Network's capabilities and properties.
+     *
+     * @param networkCapabilities the NetworkCapabilities to be used in determining the Network
+     *     policy result for this Network.
+     * @param linkProperties the LinkProperties to be used in determining the Network policy result
+     *     for this Network.
+     * @throws SecurityException if the caller does not have permission NETWORK_FACTORY
+     * @return the {@link VcnNetworkPolicyResult} to be used for this Network.
+     * @hide
+     */
+    @NonNull
+    @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
+    public VcnNetworkPolicyResult applyVcnNetworkPolicy(
+            @NonNull NetworkCapabilities networkCapabilities,
+            @NonNull LinkProperties linkProperties) {
+        requireNonNull(networkCapabilities, "networkCapabilities must not be null");
+        requireNonNull(linkProperties, "linkProperties must not be null");
+
+        try {
+            return mService.applyVcnNetworkPolicy(networkCapabilities, linkProperties);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
@@ -427,6 +535,28 @@ public class VcnManager {
 
         private VcnUnderlyingNetworkPolicyListenerBinder(
                 Executor executor, VcnUnderlyingNetworkPolicyListener listener) {
+            mExecutor = executor;
+            mListener = listener;
+        }
+
+        @Override
+        public void onPolicyChanged() {
+            Binder.withCleanCallingIdentity(
+                    () -> mExecutor.execute(() -> mListener.onPolicyChanged()));
+        }
+    }
+
+    /**
+     * Binder wrapper for added VcnNetworkPolicyListeners to receive signals from System Server.
+     *
+     * @hide
+     */
+    private static class VcnNetworkPolicyListenerBinder extends IVcnNetworkPolicyListener.Stub {
+        @NonNull private final Executor mExecutor;
+        @NonNull private final VcnNetworkPolicyListener mListener;
+
+        private VcnNetworkPolicyListenerBinder(
+                Executor executor, VcnNetworkPolicyListener listener) {
             mExecutor = executor;
             mListener = listener;
         }
