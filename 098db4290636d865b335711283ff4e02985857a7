@@ -22,6 +22,30 @@
       },
       "revId": "098db4290636d865b335711283ff4e02985857a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee064079_c84dd915",
+        "filename": "telephony/java/android/telephony/ims/stub/CapabilityExchangeEventListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-02-17T18:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bab9eed_4f8164db",
+      "range": {
+        "startLine": 62,
+        "startChar": 19,
+        "endLine": 62,
+        "endChar": 50
+      },
+      "revId": "098db4290636d865b335711283ff4e02985857a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
