@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5fd7848_4ed951c3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-17T08:19:23Z",
+      "side": 1,
+      "message": "Per discussion: this 20s timeout is non-zero cost (3s, or \u003e 15% of the test runtime), and at risk of being flaky. Instead of polling with a timeout, can we instead call waitForIdle on whatever threads we need to call it on, and then check the queue length?",
+      "range": {
+        "startLine": 1051,
+        "startChar": 44,
+        "endLine": 1051,
+        "endChar": 71
+      },
+      "revId": "eaa347e2400f639533b872647fad4c2fe836ed48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
