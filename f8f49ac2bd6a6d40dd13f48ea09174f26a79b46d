@@ -16,6 +16,24 @@
       "message": "I thought we had decided that UidRange would be inside the module? I suppose we can always move it back.",
       "revId": "f8f49ac2bd6a6d40dd13f48ea09174f26a79b46d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "935f0216_e22b21d5",
+        "filename": "core/java/android/net/UidRange.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-17T03:09:42Z",
+      "side": 1,
+      "message": "Yes it should be inside the module, but I think it needs a bit more work before being migrated (dependencies on it from outside of the module). I\u0027m moving the .aidl out together with the class for now so they can be moved back together when UidRange is ready.",
+      "parentUuid": "6d5a0228_f2105658",
+      "revId": "f8f49ac2bd6a6d40dd13f48ea09174f26a79b46d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
