@@ -16,6 +16,23 @@
       "message": "commented on internal change; this method does not need to be exposed. it can be implemented in the connectivity manager",
       "revId": "bc46029be144f2b0f749436a703438c228c35a95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89e54127_bcbc6cee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T12:22:54Z",
+      "side": 1,
+      "message": "Settings can\u0027t be updated through mainline, so exposing this would mean using an older API. I don\u0027t think this should be exposed. Instead it should move to a static lib.\n",
+      "revId": "bc46029be144f2b0f749436a703438c228c35a95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
