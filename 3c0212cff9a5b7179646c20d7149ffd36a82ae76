@@ -307,6 +307,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3ea774a_dbb1fa81",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-17T21:59:01Z",
+      "side": 1,
+      "message": "per our discussion offline, this is the closest we have to specific auth identity errors.\n\nMarking resolved.",
+      "parentUuid": "a3235e2e_981e7776",
+      "range": {
+        "startLine": 980,
+        "startChar": 33,
+        "endLine": 980,
+        "endChar": 62
+      },
+      "revId": "3c0212cff9a5b7179646c20d7149ffd36a82ae76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc07523c_22941fee",
