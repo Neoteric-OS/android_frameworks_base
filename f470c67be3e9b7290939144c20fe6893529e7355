@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c4de3b2_6df5f446",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1377660
+      },
+      "writtenOn": "2021-02-17T16:56:38Z",
+      "side": 1,
+      "message": "@Steven, please help to review the updated patches again if you have time.  please note the topic includes totally 3 changes.",
+      "revId": "f470c67be3e9b7290939144c20fe6893529e7355",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
