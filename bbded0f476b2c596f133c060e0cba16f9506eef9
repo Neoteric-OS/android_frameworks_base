@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b63060c_3711b19c",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-02-17T06:20:35Z",
+      "side": 1,
+      "message": "nvm, I dropped this. The logic I was trying to capture here is already in searchDexFile.\n\n(the idea was that we should not try to record possible system server dex paths if they are loaded by other apps - because we should always optimize for the system server use. However, we already have that filter).",
+      "parentUuid": "0972ead0_7dc0f7ed",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 93
+      },
+      "revId": "bbded0f476b2c596f133c060e0cba16f9506eef9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99750bb9_75dd670b",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae607d1d_0a7da7af",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-02-17T06:20:35Z",
+      "side": 1,
+      "message": "see isSystemServerDexPathSupportedForOdex() method.",
+      "parentUuid": "99750bb9_75dd670b",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 211,
+        "endChar": 67
+      },
+      "revId": "bbded0f476b2c596f133c060e0cba16f9506eef9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3b9e9f6_5ba0f4df",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-12T08:49:41Z",
       "side": 1,
       "message": "does adding \"(stored in the classLoaderContext variable)\" makes sense here?",
+      "range": {
+        "startLine": 247,
+        "startChar": 65,
+        "endLine": 247,
+        "endChar": 66
+      },
+      "revId": "bbded0f476b2c596f133c060e0cba16f9506eef9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23e177ea_576a078f",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-02-17T06:20:35Z",
+      "side": 1,
+      "message": "not really, but I slightly rephrased for clarity.",
+      "parentUuid": "a3b9e9f6_5ba0f4df",
       "range": {
         "startLine": 247,
         "startChar": 65,
