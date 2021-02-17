@@ -891,6 +891,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9f2a8c3_a84fe402",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9587,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T02:26:36Z",
+      "side": 1,
+      "message": "Resolved offline",
+      "parentUuid": "9459dfae_b3ad6bfc",
+      "range": {
+        "startLine": 9587,
+        "startChar": 50,
+        "endLine": 9587,
+        "endChar": 100
+      },
+      "revId": "443ee88f053900cfcea952f81336645a19d63acc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a4a08e2e_afd62411",
