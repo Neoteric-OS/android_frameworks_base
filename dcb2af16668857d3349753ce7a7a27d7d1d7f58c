@@ -245,6 +245,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "75557533_823ae224",
+        "filename": "core/api/current.txt",
+        "patchSetId": 17
+      },
+      "lineNbr": 24953,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-02-18T22:26:41Z",
+      "side": 1,
+      "message": "Note: I have uploaded aosp/1595396 for the alternative path proposed here where the flag covers all location sensitive data in NetworkCapabilities.",
+      "parentUuid": "57a39516_6eba469e",
+      "range": {
+        "startLine": 24953,
+        "startChar": 61,
+        "endLine": 24953,
+        "endChar": 78
+      },
+      "revId": "dcb2af16668857d3349753ce7a7a27d7d1d7f58c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2316fe88_f0206860",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 17
