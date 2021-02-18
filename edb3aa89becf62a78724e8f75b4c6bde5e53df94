@@ -16,6 +16,24 @@
       "message": "do you need Merged-In to avoid merge conflict with ag/13437107?",
       "revId": "edb3aa89becf62a78724e8f75b4c6bde5e53df94",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8784de5_21886b00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2021-02-18T23:57:36Z",
+      "side": 1,
+      "message": "Yes thank you. You just saved me several hours of presubmit time.",
+      "parentUuid": "c7ee75dd_55ee09f5",
+      "revId": "edb3aa89becf62a78724e8f75b4c6bde5e53df94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
