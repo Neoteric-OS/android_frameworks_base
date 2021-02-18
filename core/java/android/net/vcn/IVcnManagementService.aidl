@@ -17,6 +17,7 @@
 package android.net.vcn;
 
 import android.net.LinkProperties;
+import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.vcn.IVcnStatusCallback;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
@@ -33,7 +34,7 @@ interface IVcnManagementService {
 
     void addVcnUnderlyingNetworkPolicyListener(in IVcnUnderlyingNetworkPolicyListener listener);
     void removeVcnUnderlyingNetworkPolicyListener(in IVcnUnderlyingNetworkPolicyListener listener);
-    VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(in NetworkCapabilities nc, in LinkProperties lp);
+    VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(in Network network, in NetworkCapabilities nc, in LinkProperties lp);
 
     void registerVcnStatusCallback(in ParcelUuid subscriptionGroup, in IVcnStatusCallback callback, in String opPkgName);
     void unregisterVcnStatusCallback(in IVcnStatusCallback callback);

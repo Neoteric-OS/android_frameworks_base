@@ -27,6 +27,7 @@ import android.app.AppOpsManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
+import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.vcn.IVcnManagementService;
@@ -639,6 +640,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @NonNull
     @Override
     public VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(
+            @Nullable Network network,
             @NonNull NetworkCapabilities networkCapabilities,
             @NonNull LinkProperties linkProperties) {
         requireNonNull(networkCapabilities, "networkCapabilities was null");

@@ -600,7 +600,8 @@ public class VcnManagementServiceTest {
             throw new IllegalArgumentException("Unknown transport");
         }
 
-        return mVcnMgmtSvc.getUnderlyingNetworkPolicy(ncBuilder.build(), new LinkProperties());
+        return mVcnMgmtSvc.getUnderlyingNetworkPolicy(
+                null /* network */, ncBuilder.build(), new LinkProperties());
     }
 
     @Test
@@ -674,7 +675,8 @@ public class VcnManagementServiceTest {
                         .build();
 
         VcnUnderlyingNetworkPolicy policy =
-                mVcnMgmtSvc.getUnderlyingNetworkPolicy(nc, new LinkProperties());
+                mVcnMgmtSvc.getUnderlyingNetworkPolicy(
+                        null /* network */, nc, new LinkProperties());
 
         assertFalse(policy.isTeardownRequested());
         assertEquals(nc, policy.getMergedNetworkCapabilities());
@@ -687,7 +689,8 @@ public class VcnManagementServiceTest {
                 .enforceCallingOrSelfPermission(
                         eq(android.Manifest.permission.NETWORK_FACTORY), any());
 
-        mVcnMgmtSvc.getUnderlyingNetworkPolicy(new NetworkCapabilities(), new LinkProperties());
+        mVcnMgmtSvc.getUnderlyingNetworkPolicy(
+                null /* network */, new NetworkCapabilities(), new LinkProperties());
     }
 
     @Test

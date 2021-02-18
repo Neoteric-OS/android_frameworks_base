@@ -126,14 +126,14 @@ public class VcnManagerTest {
     public void testGetUnderlyingNetworkPolicy() throws Exception {
         NetworkCapabilities nc = new NetworkCapabilities();
         LinkProperties lp = new LinkProperties();
-        when(mMockVcnManagementService.getUnderlyingNetworkPolicy(eq(nc), eq(lp)))
+        when(mMockVcnManagementService.getUnderlyingNetworkPolicy(any(), eq(nc), eq(lp)))
                 .thenReturn(new VcnUnderlyingNetworkPolicy(false /* isTearDownRequested */, nc));
 
         VcnUnderlyingNetworkPolicy policy = mVcnManager.getUnderlyingNetworkPolicy(nc, lp);
 
         assertFalse(policy.isTeardownRequested());
         assertEquals(nc, policy.getMergedNetworkCapabilities());
-        verify(mMockVcnManagementService).getUnderlyingNetworkPolicy(eq(nc), eq(lp));
+        verify(mMockVcnManagementService).getUnderlyingNetworkPolicy(any(), eq(nc), eq(lp));
     }
 
     @Test(expected = NullPointerException.class)

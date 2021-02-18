@@ -25,6 +25,7 @@ import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.content.Context;
 import android.net.LinkProperties;
+import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.os.Binder;
 import android.os.ParcelUuid;
@@ -222,11 +223,19 @@ public class VcnManager {
     public VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(
             @NonNull NetworkCapabilities networkCapabilities,
             @NonNull LinkProperties linkProperties) {
+        return getUnderlyingNetworkPolicy(null /* network */, networkCapabilities, linkProperties);
+    }
+
+    private VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(
+            @Nullable Network network,
+            @NonNull NetworkCapabilities networkCapabilities,
+            @NonNull LinkProperties linkProperties) {
         requireNonNull(networkCapabilities, "networkCapabilities must not be null");
         requireNonNull(linkProperties, "linkProperties must not be null");
 
         try {
-            return mService.getUnderlyingNetworkPolicy(networkCapabilities, linkProperties);
+            return mService.getUnderlyingNetworkPolicy(
+                    network, networkCapabilities, linkProperties);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -323,6 +332,9 @@ public class VcnManager {
      * may have changed via {@link VcnNetworkPolicyListener#onPolicyChanged()}, a Network Provider
      * MUST poll for the updated Network policy based on that Network's capabilities and properties.
      *
+     * @param network the Network for which the VCN Network policy result is being generated for, or
+     *     {@code null} if the Network has not been registered with {@link
+     *     android.net.ConnectivityManager} yet.
      * @param networkCapabilities the NetworkCapabilities to be used in determining the Network
      *     policy result for this Network.
      * @param linkProperties the LinkProperties to be used in determining the Network policy result
@@ -335,13 +347,14 @@ public class VcnManager {
     @SystemApi
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
     public VcnNetworkPolicyResult applyVcnNetworkPolicy(
+            @Nullable Network network,
             @NonNull NetworkCapabilities networkCapabilities,
             @NonNull LinkProperties linkProperties) {
         requireNonNull(networkCapabilities, "networkCapabilities must not be null");
         requireNonNull(linkProperties, "linkProperties must not be null");
 
         final VcnUnderlyingNetworkPolicy policy =
-                getUnderlyingNetworkPolicy(networkCapabilities, linkProperties);
+                getUnderlyingNetworkPolicy(network, networkCapabilities, linkProperties);
         return new VcnNetworkPolicyResult(
                 policy.isTeardownRequested(), policy.getMergedNetworkCapabilities());
     }
