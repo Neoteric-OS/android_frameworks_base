@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a050621_85aaaf5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-02-18T22:27:13Z",
+      "side": 1,
+      "message": "This is an alternative proposal for aosp/1534585 if we want to gate all location sensitive data in NetworkCapabilities (not just TransportInfo).",
+      "revId": "2f1295734b7f96f40aa98f7f1bcb402075a4acc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
