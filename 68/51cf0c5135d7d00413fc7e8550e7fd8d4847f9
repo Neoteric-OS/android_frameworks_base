@@ -1,0 +1,11 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+2: Becca Milman <beccamilman@google.com>
+Code-Review+1: rvrolyk <rvrolyk@google.com>
+Verified+1: Jiashen Wang <jiashenwang@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Submitted-by: Jiashen Wang <jiashenwang@google.com>
+Submitted-at: Thu, 18 Feb 2021 01:04:28 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1562338
+Project: platform/frameworks/base
+Branch: refs/heads/master
