@@ -33,6 +33,23 @@
       "message": "hello Sirs.\n\nAnyone who can help me to review this change?\n\nThanks~",
       "revId": "78f92efce189063381b61a79930b310245c69234",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e939ad5_4d5d9d68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1839379
+      },
+      "writtenOn": "2021-02-18T02:16:45Z",
+      "side": 1,
+      "message": "update",
+      "revId": "78f92efce189063381b61a79930b310245c69234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
