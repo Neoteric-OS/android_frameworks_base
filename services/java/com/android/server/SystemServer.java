@@ -599,6 +599,11 @@ public final class SystemServer {
             BinderInternal.disableBackgroundScheduling(true);
 
             // Increase the number of binder threads in system_server
+            //此处明为设置binder线程池的最大线程数，实则调用了ProcessState::self（）
+            //先对ProcessState进行初始化创建，再修改其最大线程数
+            //在ProcessState的构造函数中，调用openDriver（）打开`“/dev/binder“`binder设备驱动
+            //并使用mmap申请1M大小的内存空间用来进行数据传输
+            //在通过ioctl系统调用设置binder的最大线程数
             BinderInternal.setMaxThreads(sMaxBinderThreads);
 
             // Prepare the main looper thread (this thread).
