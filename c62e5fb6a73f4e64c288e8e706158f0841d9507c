@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f760bc0_a795e7d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-02-18T17:38:33Z",
+      "side": 1,
+      "message": "Hi Lorenzo, Jean,\nFriendly ping\n\nPlease review this and other CLs related to VPN excluded routes:\nhttps://android-review.googlesource.com/q/topic:vpn",
+      "revId": "c62e5fb6a73f4e64c288e8e706158f0841d9507c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
