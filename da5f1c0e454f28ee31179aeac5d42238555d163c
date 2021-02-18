@@ -22,6 +22,30 @@
       },
       "revId": "da5f1c0e454f28ee31179aeac5d42238555d163c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16f95be7_b4831213",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-18T08:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e36e2f1_090bcc58",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 294,
+        "endChar": 33
+      },
+      "revId": "da5f1c0e454f28ee31179aeac5d42238555d163c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
