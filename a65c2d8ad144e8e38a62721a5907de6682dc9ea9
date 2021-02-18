@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59bf02e6_c3706d82",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-18T02:08:31Z",
+      "side": 1,
+      "message": "Nit: Can this be a RuntimeException.class.getSimpleName();?",
+      "range": {
+        "startLine": 972,
+        "startChar": 20,
+        "endLine": 972,
+        "endChar": 48
+      },
+      "revId": "a65c2d8ad144e8e38a62721a5907de6682dc9ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bde5b3f_c2037944",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-18T02:08:31Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 994,
+        "startChar": 29,
+        "endLine": 994,
+        "endChar": 51
+      },
+      "revId": "a65c2d8ad144e8e38a62721a5907de6682dc9ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
