@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4def047_2de3e103",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-18T14:55:20Z",
+      "side": 1,
+      "message": "Thanks! With how isSystemServerDexPathSupportedForOdex is being called, I think I understand better now. However I suggest expanding the high-level comment of \"isSystemServerDexPathSupportedForOdex\" from \"Check if the dexPath belongs to system server.\" to \"Check if the path can be loaded by system server\" ?",
+      "parentUuid": "ae607d1d_0a7da7af",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 211,
+        "endChar": 67
+      },
+      "revId": "bbded0f476b2c596f133c060e0cba16f9506eef9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3b9e9f6_5ba0f4df",

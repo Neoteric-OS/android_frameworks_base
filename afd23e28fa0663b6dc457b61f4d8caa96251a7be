@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5b7cead_68ca865d",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-18T14:55:20Z",
+      "side": 1,
+      "message": "We expect system server jars to only change contexts in between OTAs?",
+      "range": {
+        "startLine": 237,
+        "startChar": 19,
+        "endLine": 237,
+        "endChar": 78
+      },
+      "revId": "afd23e28fa0663b6dc457b61f4d8caa96251a7be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26340fab_857faf92",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-18T14:55:20Z",
+      "side": 1,
+      "message": "nit: simpler?",
+      "range": {
+        "startLine": 239,
+        "startChar": 89,
+        "endLine": 240,
+        "endChar": 25
+      },
+      "revId": "afd23e28fa0663b6dc457b61f4d8caa96251a7be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44a9d6e6_dc6ede6c",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-18T14:55:20Z",
+      "side": 1,
+      "message": "avoid?",
+      "range": {
+        "startLine": 241,
+        "startChar": 57,
+        "endLine": 241,
+        "endChar": 65
+      },
+      "revId": "afd23e28fa0663b6dc457b61f4d8caa96251a7be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23c1eb18_c5489b59",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-18T14:55:20Z",
+      "side": 1,
+      "message": "non-optimal ?",
+      "range": {
+        "startLine": 242,
+        "startChar": 79,
+        "endLine": 242,
+        "endChar": 89
+      },
+      "revId": "afd23e28fa0663b6dc457b61f4d8caa96251a7be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
