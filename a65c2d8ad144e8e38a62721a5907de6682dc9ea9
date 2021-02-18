@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8219473_54dce572",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-18T03:06:18Z",
+      "side": 1,
+      "message": "ack - filed b/180556279 to look at this post IC.",
+      "parentUuid": "df128d2b_319cf961",
+      "range": {
+        "startLine": 817,
+        "startChar": 44,
+        "endLine": 817,
+        "endChar": 67
+      },
+      "revId": "a65c2d8ad144e8e38a62721a5907de6682dc9ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59bf02e6_c3706d82",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "224b1f54_78b7cec2",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-18T03:06:18Z",
+      "side": 1,
+      "message": "this will be changed post-IC to use ServiceSpecificException per b/180521637.\n\nUpdated to RuntimeException.class.getName() in aosp/1593102",
+      "parentUuid": "59bf02e6_c3706d82",
+      "range": {
+        "startLine": 972,
+        "startChar": 20,
+        "endLine": 972,
+        "endChar": 48
+      },
+      "revId": "a65c2d8ad144e8e38a62721a5907de6682dc9ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8bde5b3f_c2037944",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-18T02:08:31Z",
       "side": 1,
       "message": "Ditto",
+      "range": {
+        "startLine": 994,
+        "startChar": 29,
+        "endLine": 994,
+        "endChar": 51
+      },
+      "revId": "a65c2d8ad144e8e38a62721a5907de6682dc9ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "783fc551_037be6ca",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-18T03:06:18Z",
+      "side": 1,
+      "message": "updated in aosp/1593102",
+      "parentUuid": "8bde5b3f_c2037944",
       "range": {
         "startLine": 994,
         "startChar": 29,
