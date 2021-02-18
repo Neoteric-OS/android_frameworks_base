@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "df128d2b_319cf961",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-18T02:55:04Z",
+      "side": 1,
+      "message": "I believe we don\u0027t need location permission for the callbacks here. Please file a bug to see if we can remove it from these callbacks. I think this is a shipstopper.",
+      "range": {
+        "startLine": 817,
+        "startChar": 44,
+        "endLine": 817,
+        "endChar": 67
+      },
+      "revId": "a65c2d8ad144e8e38a62721a5907de6682dc9ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "59bf02e6_c3706d82",
         "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
         "patchSetId": 23
