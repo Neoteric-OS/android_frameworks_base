@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "838c78ef_84b29901",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-18T03:16:54Z",
+      "side": 1,
+      "message": "nit: maybe add line break?",
+      "range": {
+        "startLine": 9,
+        "startChar": 65,
+        "endLine": 9,
+        "endChar": 77
+      },
+      "revId": "d0842b48f8e5d16b87d93a04a06b55172805f479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc5ae0ae_6d49355d",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-18T03:16:54Z",
+      "side": 1,
+      "message": "Suggest to separate this to a follow-up CL as an improvement of logging.",
+      "range": {
+        "startLine": 133,
+        "startChar": 18,
+        "endLine": 133,
+        "endChar": 36
+      },
+      "revId": "d0842b48f8e5d16b87d93a04a06b55172805f479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0724d9e6_f4ddf2e1",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-18T03:16:54Z",
+      "side": 1,
+      "message": "IIUC this is already covered by Invalid(1073741824), right?",
+      "range": {
+        "startLine": 134,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 29
+      },
+      "revId": "d0842b48f8e5d16b87d93a04a06b55172805f479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e873fc16_4882d137",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-18T03:16:54Z",
+      "side": 1,
+      "message": "IIUC this can be inside appendOemManagedStringToStringBuilder.",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 9
+      },
+      "revId": "d0842b48f8e5d16b87d93a04a06b55172805f479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2d72a9e_8aba2559",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-18T03:16:54Z",
+      "side": 1,
+      "message": "I don\u0027t really see why you\u0027ll need 2 functions instead of 1.\nSuggest to merge all these into getOemManagedNames and maybe name it getOemManagedString",
+      "range": {
+        "startLine": 156,
+        "startChar": 24,
+        "endLine": 156,
+        "endChar": 61
+      },
+      "revId": "d0842b48f8e5d16b87d93a04a06b55172805f479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
