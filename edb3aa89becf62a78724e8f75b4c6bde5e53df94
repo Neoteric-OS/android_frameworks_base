@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7ee75dd_55ee09f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1088076
+      },
+      "writtenOn": "2021-02-18T23:54:14Z",
+      "side": 1,
+      "message": "do you need Merged-In to avoid merge conflict with ag/13437107?",
+      "revId": "edb3aa89becf62a78724e8f75b4c6bde5e53df94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
