@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc1877cb_c4708969",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1565997
+      },
+      "writtenOn": "2021-02-18T04:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "838c78ef_84b29901",
+      "range": {
+        "startLine": 9,
+        "startChar": 65,
+        "endLine": 9,
+        "endChar": 77
+      },
+      "revId": "d0842b48f8e5d16b87d93a04a06b55172805f479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc5ae0ae_6d49355d",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-18T03:16:54Z",
       "side": 1,
       "message": "Suggest to separate this to a follow-up CL as an improvement of logging.",
+      "range": {
+        "startLine": 133,
+        "startChar": 18,
+        "endLine": 133,
+        "endChar": 36
+      },
+      "revId": "d0842b48f8e5d16b87d93a04a06b55172805f479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebbe5b64_bec2dbca",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1565997
+      },
+      "writtenOn": "2021-02-18T04:34:28Z",
+      "side": 1,
+      "message": "Will do. b/180557699 to track.",
+      "parentUuid": "cc5ae0ae_6d49355d",
       "range": {
         "startLine": 133,
         "startChar": 18,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a039963_0ab0ef43",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1565997
+      },
+      "writtenOn": "2021-02-18T04:34:28Z",
+      "side": 1,
+      "message": "My intention was to catch any NetworkTemplate.OEM_MANAGED_* values here, but you\u0027re right that they\u0027d be covered by the invalid check later. I\u0027ll remove this bit in a follow up CL.",
+      "parentUuid": "0724d9e6_f4ddf2e1",
+      "range": {
+        "startLine": 134,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 29
+      },
+      "revId": "d0842b48f8e5d16b87d93a04a06b55172805f479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e873fc16_4882d137",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5505e14a_e0787137",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1565997
+      },
+      "writtenOn": "2021-02-18T04:34:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e873fc16_4882d137",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 9
+      },
+      "revId": "d0842b48f8e5d16b87d93a04a06b55172805f479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2d72a9e_8aba2559",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-02-18T03:16:54Z",
       "side": 1,
       "message": "I don\u0027t really see why you\u0027ll need 2 functions instead of 1.\nSuggest to merge all these into getOemManagedNames and maybe name it getOemManagedString",
+      "range": {
+        "startLine": 156,
+        "startChar": 24,
+        "endLine": 156,
+        "endChar": 61
+      },
+      "revId": "d0842b48f8e5d16b87d93a04a06b55172805f479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8da85f92_06be3811",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1565997
+      },
+      "writtenOn": "2021-02-18T04:34:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2d72a9e_8aba2559",
       "range": {
         "startLine": 156,
         "startChar": 24,
