@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccc87816_7a04198e",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-02-18T23:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5b7cead_68ca865d",
+      "range": {
+        "startLine": 237,
+        "startChar": 19,
+        "endLine": 237,
+        "endChar": 78
+      },
+      "revId": "afd23e28fa0663b6dc457b61f4d8caa96251a7be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "26340fab_857faf92",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-18T14:55:20Z",
       "side": 1,
       "message": "nit: simpler?",
+      "range": {
+        "startLine": 239,
+        "startChar": 89,
+        "endLine": 240,
+        "endChar": 25
+      },
+      "revId": "afd23e28fa0663b6dc457b61f4d8caa96251a7be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3340966_3a07a220",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-02-18T23:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26340fab_857faf92",
       "range": {
         "startLine": 239,
         "startChar": 89,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd5c7f27_e16f76bb",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-02-18T23:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44a9d6e6_dc6ede6c",
+      "range": {
+        "startLine": 241,
+        "startChar": 57,
+        "endLine": 241,
+        "endChar": 65
+      },
+      "revId": "afd23e28fa0663b6dc457b61f4d8caa96251a7be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "23c1eb18_c5489b59",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-02-18T14:55:20Z",
       "side": 1,
       "message": "non-optimal ?",
+      "range": {
+        "startLine": 242,
+        "startChar": 79,
+        "endLine": 242,
+        "endChar": 89
+      },
+      "revId": "afd23e28fa0663b6dc457b61f4d8caa96251a7be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33abbc80_ee836f99",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-02-18T23:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23c1eb18_c5489b59",
       "range": {
         "startLine": 242,
         "startChar": 79,
