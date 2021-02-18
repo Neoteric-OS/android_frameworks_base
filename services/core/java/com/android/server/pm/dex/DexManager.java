@@ -166,12 +166,14 @@ public class DexManager {
      *     the class loader context that was used to load them.
      * @param loaderIsa the ISA of the app loading the dex files
      * @param loaderUserId the user id which runs the code loading the dex files
+     * @param loaderIsIsolatedProcess whether or not the loading process is isolated.
      */
     public void notifyDexLoad(ApplicationInfo loadingAppInfo,
-            Map<String, String> classLoaderContextMap, String loaderIsa, int loaderUserId) {
+            Map<String, String> classLoaderContextMap, String loaderIsa, int loaderUserId,
+            boolean loaderIsIsolatedProcess) {
         try {
             notifyDexLoadInternal(loadingAppInfo, classLoaderContextMap, loaderIsa,
-                    loaderUserId);
+                    loaderUserId, loaderIsIsolatedProcess);
         } catch (Exception e) {
             Slog.w(TAG, "Exception while notifying dex load for package " +
                     loadingAppInfo.packageName, e);
@@ -181,7 +183,7 @@ public class DexManager {
     @VisibleForTesting
     /*package*/ void notifyDexLoadInternal(ApplicationInfo loadingAppInfo,
             Map<String, String> classLoaderContextMap, String loaderIsa,
-            int loaderUserId) {
+            int loaderUserId, boolean loaderIsIsolatedProcess) {
         if (classLoaderContextMap == null) {
             return;
         }
@@ -202,15 +204,22 @@ public class DexManager {
 
             if (DEBUG) {
                 Slog.i(TAG, loadingAppInfo.packageName
-                    + " loads from " + searchResult + " : " + loaderUserId + " : " + dexPath);
+                        + " (isolatedProcess=" + loaderIsIsolatedProcess
+                        + ") loads from " + searchResult + " : " + loaderUserId + " : " + dexPath);
             }
 
             if (searchResult.mOutcome != DEX_SEARCH_NOT_FOUND) {
                 // TODO(calin): extend isUsedByOtherApps check to detect the cases where
                 // different apps share the same runtime. In that case we should not mark the dex
                 // file as isUsedByOtherApps. Currently this is a safe approximation.
-                boolean isUsedByOtherApps = !loadingAppInfo.packageName.equals(
-                        searchResult.mOwningPackageName);
+                //
+                // Note that we also mark the apk as being used by others if the loader process
+                // is isolated. This is because isolated processes are sandboxed and can only read
+                // world readable files, so they need world readable optimization files. A prime
+                // example of such a package is webview.
+                boolean isUsedByOtherApps =
+                        !loadingAppInfo.packageName.equals(searchResult.mOwningPackageName)
+                        || loaderIsIsolatedProcess;
                 boolean primaryOrSplit = searchResult.mOutcome == DEX_SEARCH_FOUND_PRIMARY ||
                         searchResult.mOutcome == DEX_SEARCH_FOUND_SPLIT;
 
@@ -249,7 +258,8 @@ public class DexManager {
                     // async write to disk to make sure we don't loose the data in case of a reboot.
                     if (mPackageDexUsage.record(searchResult.mOwningPackageName,
                             dexPath, loaderUserId, loaderIsa, primaryOrSplit,
-                            loadingAppInfo.packageName, classLoaderContext, overwriteCLC)) {
+                            loadingAppInfo.packageName, classLoaderContext, overwriteCLC,
+                            loaderIsIsolatedProcess)) {
                         mPackageDexUsage.maybeWriteAsync();
                     }
                 }
@@ -749,7 +759,8 @@ public class DexManager {
                     dexPath, userId, isa, /*primaryOrSplit*/ false,
                     loadingPackage,
                     PackageDexUsage.VARIABLE_CLASS_LOADER_CONTEXT,
-                    /*overwriteCLC*/ false);
+                    /*overwriteCLC=*/ false,
+                    /*loaderIsIsolatedProcess=*/ false);
             update |= newUpdate;
         }
         if (update) {

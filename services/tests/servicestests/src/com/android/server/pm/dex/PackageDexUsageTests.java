@@ -660,7 +660,8 @@ public class PackageDexUsageTests {
         return mPackageDexUsage.record(testData.mPackageName, testData.mDexFile,
                 testData.mOwnerUserId, testData.mLoaderIsa,
                 testData.mPrimaryOrSplit, testData.mUsedBy, testData.mClassLoaderContext,
-                testData.mOverwriteCLC);
+                testData.mOverwriteCLC,
+                /*loaderIsIsolatedProcess=*/ false);
     }
 
     private boolean record(PackageDexUsage packageDexUsage, TestData testData, Set<String> users) {
@@ -669,7 +670,8 @@ public class PackageDexUsageTests {
             result = result && packageDexUsage.record(testData.mPackageName, testData.mDexFile,
                     testData.mOwnerUserId, testData.mLoaderIsa,
                     testData.mPrimaryOrSplit, user, testData.mClassLoaderContext,
-                    testData.mOverwriteCLC);
+                    testData.mOverwriteCLC,
+                    /*loaderIsIsolatedProcess=*/ false);
         }
         return result;
     }

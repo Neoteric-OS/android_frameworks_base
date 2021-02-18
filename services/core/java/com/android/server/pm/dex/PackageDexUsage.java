@@ -117,12 +117,14 @@ public class PackageDexUsage extends AbstractStatsBase<Void> {
      *        than {@param owningPackageName}.
      * @param overwriteCLC if true, the class loader context will be overwritten instead of being
      *        merged
+     * @param loaderIsIsolatedProcess whether or not the loading process is isolated
      * @return true if the dex load constitutes new information, or false if this information
      *         has been seen before.
      */
     /* package */ boolean record(String owningPackageName, String dexPath, int ownerUserId,
             String loaderIsa, boolean primaryOrSplit,
-            String loadingPackageName, String classLoaderContext, boolean overwriteCLC) {
+            String loadingPackageName, String classLoaderContext, boolean overwriteCLC,
+            boolean loaderIsIsolatedProcess) {
         if (!PackageManagerServiceUtils.checkISA(loaderIsa)) {
             throw new IllegalArgumentException("loaderIsa " + loaderIsa + " is unsupported");
         }
@@ -134,7 +136,10 @@ public class PackageDexUsage extends AbstractStatsBase<Void> {
             return false;
         }
 
-        boolean isUsedByOtherApps = !owningPackageName.equals(loadingPackageName);
+        // Loads from isolated proceses are also marked as usedByOthers in order to prevent profile
+        // based optimizations.
+        boolean isUsedByOtherApps = !owningPackageName.equals(loadingPackageName)
+                || loaderIsIsolatedProcess;
 
         synchronized (mPackageUseInfoMap) {
             PackageUseInfo packageUseInfo = mPackageUseInfoMap.get(owningPackageName);
