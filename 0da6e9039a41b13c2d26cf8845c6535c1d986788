@@ -16,6 +16,23 @@
       "message": "Presubmit seemed to fail due to device boot failures. Not sure if related since other devices are passing, so retrying presubmit",
       "revId": "0da6e9039a41b13c2d26cf8845c6535c1d986788",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8325250_236483a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-18T02:23:38Z",
+      "side": 1,
+      "message": "Presubmit logcat seems to indicate package events are hitting before user unlock occurs. Added a quick check in http://aosp/1593100 and added both this CL and that one into a topic. Retrying presubmit",
+      "revId": "0da6e9039a41b13c2d26cf8845c6535c1d986788",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
