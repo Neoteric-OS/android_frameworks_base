@@ -50,6 +50,23 @@
       "message": "please help submit the change",
       "revId": "c4b1a4f5a63e54e3ce1940b9651c56ced320e274",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ae8ab84_3e1052ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1422811
+      },
+      "writtenOn": "2021-02-19T01:50:58Z",
+      "side": 1,
+      "message": "fixed",
+      "revId": "c4b1a4f5a63e54e3ce1940b9651c56ced320e274",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
