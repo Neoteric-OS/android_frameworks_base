@@ -16,6 +16,23 @@
       "message": "\u003e Patch Set 3: Code-Review+2\n\u003e \n\u003e By voting Code-Review+2 the following files are now code-owner approved by Phil Weaver:\n\u003e * services/accessibility/java/com/android/server/accessibility/AccessibilityManagerService.java\n\u003e \n\nHi Phil, I cann\u0027t access to the status link, could you please have a look at it. It\u0027s any other unrelated issue? Thanks!\n\nTreeHugger finished with: 87 passed, 3 failed, 1 warning, 10 skipped.",
       "revId": "8f22ff722ee4dc110f39c4815af9c44b6e5e588d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ac185b8_d8e3f579",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1092253
+      },
+      "writtenOn": "2021-02-19T19:12:07Z",
+      "side": 1,
+      "message": "It\u0027s not unusual to need a few presubmit tries to land a CL unfortunately.",
+      "revId": "8f22ff722ee4dc110f39c4815af9c44b6e5e588d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
