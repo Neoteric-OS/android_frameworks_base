@@ -91,6 +91,7 @@ import android.net.IConnectivityManager;
 import android.net.IDnsResolver;
 import android.net.INetd;
 import android.net.INetworkActivityListener;
+import android.net.INetworkAgent;
 import android.net.INetworkManagementEventObserver;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
@@ -182,7 +183,6 @@ import android.util.Pair;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 
-import com.android.connectivity.aidl.INetworkAgent;
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
