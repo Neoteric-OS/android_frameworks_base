@@ -34,10 +34,12 @@ import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
+import android.app.AppOpsManager;
 import android.app.PendingIntent;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.IpSecManager.UdpEncapsulationSocket;
 import android.net.SocketKeepalive.Callback;
 import android.net.TetheringManager.StartTetheringCallback;
@@ -2315,11 +2317,10 @@ public class ConnectivityManager {
      * services.jar, possibly in com.android.server.net. */
 
     /** {@hide} */
-    public static final void enforceChangePermission(Context context,
-            String callingPkg, String callingAttributionTag) {
+    public static final void enforceChangePermission(@NonNull Context context,
+            @Nullable String callingPkg, @Nullable String callingAttributionTag) {
         int uid = Binder.getCallingUid();
-        checkAndNoteChangeNetworkStateOperation(context, uid, callingPkg,
-                callingAttributionTag, true /* throwException */);
+        checkAndNoteChangeNetworkStateOperation(context, uid, callingPkg, callingAttributionTag);
     }
 
     /**
@@ -2330,10 +2331,32 @@ public class ConnectivityManager {
      */
     // TODO: Remove method and replace with direct call once R code is pushed to AOSP
     private static boolean checkAndNoteChangeNetworkStateOperation(@NonNull Context context,
-            int uid, @NonNull String callingPackage, @Nullable String callingAttributionTag,
-            boolean throwException) {
-        return Settings.checkAndNoteChangeNetworkStateOperation(context, uid, callingPackage,
-                throwException);
+            int uid, @Nullable String callingPackage, @Nullable String callingAttributionTag) {
+        if (context.checkCallingOrSelfPermission(android.Manifest.permission.CHANGE_NETWORK_STATE)
+                == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+
+        if (callingPackage == null) {
+            return false;
+        }
+
+        final AppOpsManager appOpsMgr = context.getSystemService(AppOpsManager.class);
+        final int mode = appOpsMgr.noteOpNoThrow(AppOpsManager.OPSTR_WRITE_SETTINGS, uid,
+                callingPackage, callingAttributionTag, null /* message */);
+
+        if (mode == AppOpsManager.MODE_ALLOWED) {
+            return true;
+        }
+
+        if ((mode == AppOpsManager.MODE_DEFAULT) && (context.checkCallingOrSelfPermission(
+                android.Manifest.permission.WRITE_SETTINGS) == PackageManager.PERMISSION_GRANTED)) {
+            return true;
+        }
+
+        throw new SecurityException(callingPackage + " was not granted either of these permissions:"
+                + android.Manifest.permission.CHANGE_NETWORK_STATE + ","
+                + android.Manifest.permission.WRITE_SETTINGS + "." );
     }
 
     /**
