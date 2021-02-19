@@ -33,6 +33,23 @@
       "message": "Is this flaky test or a real fail?",
       "revId": "aaad5deb32e3818cc67859996ac872a0d7a394a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7cecfe4_73c0cb92",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2021-02-19T16:12:18Z",
+      "side": 1,
+      "message": "It was a real failure caused by unrelated changes. It should pass now...",
+      "revId": "aaad5deb32e3818cc67859996ac872a0d7a394a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
