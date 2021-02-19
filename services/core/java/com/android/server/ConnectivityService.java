@@ -121,7 +121,6 @@ import android.net.NetworkStackClient;
 import android.net.NetworkState;
 import android.net.NetworkTestResultParcelable;
 import android.net.NetworkUtils;
-import android.net.NetworkWatchlistManager;
 import android.net.OemNetworkPreferences;
 import android.net.PrivateDnsConfigParcel;
 import android.net.ProxyInfo;
@@ -8029,17 +8028,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         Settings.Global.putString(mContext.getContentResolver(),
                 Settings.Global.NETWORK_AVOID_BAD_WIFI, null);
-    }
-
-    @Override
-    public byte[] getNetworkWatchlistConfigHash() {
-        NetworkWatchlistManager nwm = mContext.getSystemService(NetworkWatchlistManager.class);
-        if (nwm == null) {
-            loge("Unable to get NetworkWatchlistManager");
-            return null;
-        }
-        // Redirect it to network watchlist service to access watchlist file and calculate hash.
-        return nwm.getWatchlistConfigHash();
     }
 
     private void logNetworkEvent(NetworkAgentInfo nai, int evtype) {

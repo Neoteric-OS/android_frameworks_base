@@ -186,8 +186,6 @@ interface IConnectivityManager
 
     String getCaptivePortalServerUrl();
 
-    byte[] getNetworkWatchlistConfigHash();
-
     int getConnectionOwnerUid(in ConnectionInfo connectionInfo);
 
     void registerConnectivityDiagnosticsCallback(in IConnectivityDiagnosticsCallback callback,

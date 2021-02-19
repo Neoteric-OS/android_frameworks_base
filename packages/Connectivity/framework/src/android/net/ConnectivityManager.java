@@ -4773,12 +4773,14 @@ public class ConnectivityManager {
      */
     @Nullable
     public byte[] getNetworkWatchlistConfigHash() {
-        try {
-            return mService.getNetworkWatchlistConfigHash();
-        } catch (RemoteException e) {
-            Log.e(TAG, "Unable to get watchlist config hash");
-            throw e.rethrowFromSystemServer();
+        final NetworkWatchlistManager nwm =
+                mContext.getSystemService(NetworkWatchlistManager.class);
+        if (nwm == null) {
+            Log.e(TAG, "Unable to get NetworkWatchlistManager");
+            return null;
         }
+        // Redirect it to network watchlist service to access watchlist file and calculate hash.
+        return nwm.getWatchlistConfigHash();
     }
 
     /**
