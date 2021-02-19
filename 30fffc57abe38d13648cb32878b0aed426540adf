@@ -76,6 +76,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f372514_a27ab9ba",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1816,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2021-02-19T22:05:36Z",
+      "side": 1,
+      "message": "Can be done in follow up, as this is a CP.",
+      "parentUuid": "cb2d0b62_bb827dec",
+      "range": {
+        "startLine": 1811,
+        "startChar": 0,
+        "endLine": 1816,
+        "endChar": 0
+      },
+      "revId": "30fffc57abe38d13648cb32878b0aed426540adf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "71302386_94f3928e",
