@@ -362,6 +362,86 @@ public class VcnManager {
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
+        VCN_STATUS_CODE_ABSENT,
+        VCN_STATUS_CODE_INACTIVE,
+        VCN_STATUS_CODE_ACTIVE,
+        VCN_STATUS_CODE_SAFE_MODE
+    })
+    public @interface VcnStatusCode {}
+
+    /**
+     * Value indicating that the {@link VcnStatusCallback}'s subscription group does not match any
+     * existing VCNs, or that the callback is not permissioned for any existing VCNs.
+     *
+     * <p>This value will be returned if:
+     *
+     * <ul>
+     *   <li>upon registering the {@link VcnStatusCallback}, the subscription group does not match
+     *       any existing VCNs or the callback is not permissioned for any existing VCNs, or
+     *   <li>some time after registration, the callback registrant loses permissions (carrier
+     *       privileges) for the subscription group
+     * </ul>
+     *
+     * @hide
+     */
+    public static final int VCN_STATUS_CODE_ABSENT = 0;
+
+    /**
+     * Value indicating that the VCN matching the {@link VcnStatusCallback}'s subscription group is
+     * inactive.
+     *
+     * <p>This value will be returned if a VCN that is either active or in Safe Mode becomes
+     * inactive. This generally happens after {@link #clearVcnConfig(ParcelUuid)} is called for the
+     * subscription group.
+     *
+     * @hide
+     */
+    public static final int VCN_STATUS_CODE_INACTIVE = 1;
+
+    /**
+     * Value indicating that the VCN matching the {@link VcnStatusCallback}'s subscription group is
+     * active.
+     *
+     * <p>This value will be returned if:
+     *
+     * <ul>
+     *   <li>a {@link VcnConfig} is provided for the subscription group which starts a VCN, or
+     *   <li>the callback registrant gains carrier privileges for the subscription group (which
+     *       already has a VCN active)
+     * </ul>
+     *
+     * @hide
+     */
+    public static final int VCN_STATUS_CODE_ACTIVE = 2;
+
+    /**
+     * Value indicating that the VCN matching the {@link VcnStatusCallback}'s subscription group is
+     * in Safe Mode.
+     *
+     * <p>This value will be returned if:
+     *
+     * <ul>
+     *   <li>the VCN for the subscription group enters Safe Mode, or
+     *   <li>the callback registrant gains carrier privileges for the subscription group (which
+     *       already has a VCN in Safe Mode)
+     * </ul>
+     *
+     * <p>A VCN will be put into Safe Mode if any of the gateway connections were unable to
+     * establish a connection within a system-determined timeout (while underlying networks were
+     * available).
+     *
+     * <p>Once a VCN is in Safe Mode, a VCN-configuring Carrier app may exit it by setting a new
+     * {@link VcnConfig} via {@link #setVcnConfig(ParcelUuid, VcnConfig)}. In order for the VCN to
+     * successfully exit Safe Mode, the new {@link VcnConfig} must be different than the previously
+     * provided configs.
+     *
+     * @hide
+     */
+    public static final int VCN_STATUS_CODE_SAFE_MODE = 3;
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({
         VCN_ERROR_CODE_INTERNAL_ERROR,
         VCN_ERROR_CODE_CONFIG_ERROR,
         VCN_ERROR_CODE_NETWORK_ERROR
@@ -414,10 +494,22 @@ public class VcnManager {
          * establish a connection within a system-determined timeout (while underlying networks were
          * available).
          *
-         * <p>A VCN-configuring app may opt to exit safe mode by (re)setting the VCN configuration
-         * via {@link #setVcnConfig(ParcelUuid, VcnConfig)}.
+         * <p>Once a VCN is in Safe Mode, a VCN-configuring Carrier app may exit it by setting a new
+         * {@link VcnConfig} via {@link #setVcnConfig(ParcelUuid, VcnConfig)}. In order for the VCN
+         * to successfully exit Safe Mode, the new {@link VcnConfig} must be different than the
+         * previously provided configs.
+         *
+         * @hide
          */
-        public abstract void onEnteredSafeMode();
+        public void onEnteredSafeMode() {}
+
+        /**
+         * Invoked when status of the VCN for this callback's subscription group changes.
+         *
+         * @param statusCode the code for the status change encountered by this {@link
+         *     VcnStatusCallback}'s subscription group.
+         */
+        public abstract void onVcnStatusChanged(@VcnStatusCode int statusCode);
 
         /**
          * Invoked when a VCN Gateway Connection corresponding to this callback's subscription
@@ -448,6 +540,11 @@ public class VcnManager {
      *
      * <p>A {@link VcnStatusCallback} will only be invoked if the registering package has carrier
      * privileges for the specified subscription at the time of invocation.
+     *
+     * <p>{@link VcnStatusCallback#onVcnStatusChanged(int)} will be invoked on registration with the
+     * current status for the specified subscription group's VCN. If there is no known VCN for this
+     * subscription group, or the registrant is not permissioned for this VCN, {@link
+     * #VCN_STATUS_CODE_ABSENT} will be returned.
      *
      * @param subscriptionGroup The subscription group to match for callbacks
      * @param executor The {@link Executor} to be used for invoking callbacks
@@ -550,6 +647,12 @@ public class VcnManager {
         public void onEnteredSafeMode() {
             Binder.withCleanCallingIdentity(
                     () -> mExecutor.execute(() -> mCallback.onEnteredSafeMode()));
+        }
+
+        @Override
+        public void onVcnStatusChanged(@VcnStatusCode int statusCode) {
+            Binder.withCleanCallingIdentity(
+                    () -> mExecutor.execute(() -> mCallback.onVcnStatusChanged(statusCode)));
         }
 
         // TODO(b/180521637): use ServiceSpecificException for safer Exception 'parceling'
