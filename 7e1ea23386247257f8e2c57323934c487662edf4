@@ -16,6 +16,24 @@
       "message": "new code who dis\n\nOn a bit more serious note, the Android.bp part of the change looks good, but changes to Android.bp files don\u0027t generally require review from the build team.",
       "revId": "7e1ea23386247257f8e2c57323934c487662edf4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4044b6bc_f480b109",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-19T16:34:10Z",
+      "side": 1,
+      "message": "Thanks. I was blindly following gerrit advice about required OWNERS approvals.\n\nThe relevant OWNERS file says:\nper-file Android.bp \u003d file:platform/build/soong:/OWNERS\n\nThat\u0027s presumably how you ended up on the list.\n\nAFAICT, I still need a +1 from you.",
+      "parentUuid": "a8a23010_4d9bce6f",
+      "revId": "7e1ea23386247257f8e2c57323934c487662edf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
