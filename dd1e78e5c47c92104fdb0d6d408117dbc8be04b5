@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a1c9913_21ecf1e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-19T02:22:46Z",
+      "side": 1,
+      "message": "Added lberki@ as Android.bp owner and jjaggi@ for AndroidRuntime.cpp .\n\nI\u0027m currently assuming that chriswailes will look at the bulk of this.",
+      "revId": "dd1e78e5c47c92104fdb0d6d408117dbc8be04b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
