@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8a23010_4d9bce6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1066075
+      },
+      "writtenOn": "2021-02-19T10:28:06Z",
+      "side": 1,
+      "message": "new code who dis\n\nOn a bit more serious note, the Android.bp part of the change looks good, but changes to Android.bp files don\u0027t generally require review from the build team.",
+      "revId": "7e1ea23386247257f8e2c57323934c487662edf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
