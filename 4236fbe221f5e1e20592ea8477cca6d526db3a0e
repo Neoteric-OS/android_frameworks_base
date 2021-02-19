@@ -22,6 +22,30 @@
       },
       "revId": "4236fbe221f5e1e20592ea8477cca6d526db3a0e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "404c84a6_6dae68fe",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkPolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-19T00:20:42Z",
+      "side": 1,
+      "message": "if we delegate this then we either need to:\na) define a private constructor that takes VcnNetworkPolicyResult\nb) read a VcnNetworkPolicyResult in createFromParcel() and call the existing constructor",
+      "parentUuid": "11860998_1023fd68",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 86
+      },
+      "revId": "4236fbe221f5e1e20592ea8477cca6d526db3a0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
