@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f46380f4_28b297ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-19T05:03:26Z",
+      "side": 1,
+      "message": "Oh right this is out of date. Updated to setHttpProxyConfiguration",
+      "parentUuid": "55c4cac5_d19760bd",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 40
+      },
+      "revId": "9b7f58e8d39927269113c126c8861bced72fe345",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0d18855_a2f891f6",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-19T04:49:43Z",
       "side": 1,
       "message": "This is true for the initial setup code when the app is being started, but is it also true for updateHttpProxy? That\u0027s called by setAllHttpProxy which I think can happen at any time.",
+      "range": {
+        "startLine": 17,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 58
+      },
+      "revId": "9b7f58e8d39927269113c126c8861bced72fe345",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "227e8ffa_716ee6d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-19T05:03:26Z",
+      "side": 1,
+      "message": "updateHttpProxy already called getDefaultProxy before: in that method, this changes just does:\n - ConnectivityManager.from -\u003e context.getSystemService\n - setHttpProxySystemProperty -\u003e setHttpProxyConfiguration\n\nSo behavior of updateHttpProxy doesn\u0027t change",
+      "parentUuid": "e0d18855_a2f891f6",
       "range": {
         "startLine": 17,
         "startChar": 26,
@@ -94,6 +142,30 @@
       "writtenOn": "2021-02-19T04:49:43Z",
       "side": 1,
       "message": "Is there a reason we can\u0027t just do:\n\n    final ConnectivityManager cm \u003d appContext.getSystemService(ConnectivityManager.class);\n    if (cm !\u003d null) {\n        Proxy.setHttpProxyConfiguration(cm.getDefaultProxy());\n    }",
+      "range": {
+        "startLine": 6589,
+        "startChar": 0,
+        "endLine": 6593,
+        "endChar": 0
+      },
+      "revId": "9b7f58e8d39927269113c126c8861bced72fe345",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c202299b_3984b613",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 6593,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-19T05:03:26Z",
+      "side": 1,
+      "message": "Now it should work, since getSystemService doesn\u0027t cache null for ConnectivityManager anymore.\nI can have a change to update it but I\u0027m not sure it\u0027s worth it (also introduces risk if that\u0027s reverted for example).",
+      "parentUuid": "25efb5d2_036e16d4",
       "range": {
         "startLine": 6589,
         "startChar": 0,
