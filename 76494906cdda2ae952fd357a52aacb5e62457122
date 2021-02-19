@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef0b5ba5_9904924d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-19T08:04:03Z",
+      "side": 1,
+      "message": "Renaming LGTM, but if many of our AIDL files (e.g., IConnectivityManager) are already in android.net, then why not put these in android.net (e.g., android.net.INetworkAgent) as well?",
+      "revId": "76494906cdda2ae952fd357a52aacb5e62457122",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
