@@ -1,0 +1,12 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Code-Review+1: Daniel Norman <danielnorman@google.com>
+Code-Review+2: Chris Fries <cfries@google.com>
+Presubmit-Verified-1: Treehugger Robot <treehugger-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Build-Cop-Override+1: Patrick Tu <patricktu@google.com>
+Bypass-Presubmit+1: Josh Gao <jmgao@google.com>
+Submitted-by: Josh Gao <jmgao@google.com>
+Submitted-at: Fri, 19 Feb 2021 05:02:15 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1595395
+Project: platform/frameworks/base
+Branch: refs/heads/master
