@@ -401,7 +401,7 @@ java_library_static {
         // NOTE: The below can be removed once the prebuilt stub contains IKE.
         "sdk_system_current_android.net.ipsec.ike",
     ],
-    static_libs: ["art.module.public.api.stubs"],
+    static_libs: ["stable.art.module.platform.api.stubs"],
     dist: {
         dir: "apistubs/android/module-lib",
     },
