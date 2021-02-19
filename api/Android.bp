@@ -242,3 +242,25 @@ genrule {
     out: ["combined-removed-dex.txt"],
     cmd: "$(location gen_combined_removed_dex.sh) $(location metalava) $(genDir) $(in) > $(out)",
 }
+
+genrule {
+    name: "services-system-server-current.txt",
+    srcs: [
+        ":service-permission{.system-server.api.txt}",
+        ":non-updatable-system-server-current.txt",
+    ],
+    out: ["system-server-current.txt"],
+    tools: ["metalava"],
+    cmd: "$(location metalava) --no-banner --format=v2 $(in) --api $(out)",
+}
+
+genrule {
+    name: "services-system-server-removed.txt",
+    srcs: [
+        ":service-permission{.system-server.removed-api.txt}",
+        ":non-updatable-system-server-removed.txt",
+    ],
+    out: ["system-server-removed.txt"],
+    tools: ["metalava"],
+    cmd: "$(location metalava) --no-banner --format=v2 $(in) --api $(out)",
+}
