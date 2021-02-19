@@ -41,6 +41,8 @@ import android.net.QosFilter;
 import android.net.QosFilterParcelable;
 import android.net.QosSession;
 import android.net.TcpKeepalivePacketData;
+import android.net.internal.aidl.INetworkAgent;
+import android.net.internal.aidl.INetworkAgentRegistry;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.INetworkManagementService;
@@ -51,8 +53,6 @@ import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 
-import com.android.connectivity.aidl.INetworkAgent;
-import com.android.connectivity.aidl.INetworkAgentRegistry;
 import com.android.internal.util.WakeupMessage;
 import com.android.server.ConnectivityService;
 

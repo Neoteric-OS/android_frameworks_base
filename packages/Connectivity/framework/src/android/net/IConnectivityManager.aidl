@@ -34,6 +34,7 @@ import android.net.OemNetworkPreferences;
 import android.net.ProxyInfo;
 import android.net.UidRange;
 import android.net.QosSocketInfo;
+import android.net.internal.aidl.INetworkAgent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.INetworkActivityListener;
@@ -41,8 +42,6 @@ import android.os.Messenger;
 import android.os.ParcelFileDescriptor;
 import android.os.PersistableBundle;
 import android.os.ResultReceiver;
-
-import com.android.connectivity.aidl.INetworkAgent;
 
 /**
  * Interface that answers queries about, and allows changing, the

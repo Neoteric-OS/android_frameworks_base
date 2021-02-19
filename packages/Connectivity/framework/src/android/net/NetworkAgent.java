@@ -24,6 +24,8 @@ import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
+import android.net.internal.aidl.INetworkAgent;
+import android.net.internal.aidl.INetworkAgentRegistry;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.ConditionVariable;
@@ -34,8 +36,6 @@ import android.os.RemoteException;
 import android.telephony.data.EpsBearerQosSessionAttributes;
 import android.util.Log;
 
-import com.android.connectivity.aidl.INetworkAgent;
-import com.android.connectivity.aidl.INetworkAgentRegistry;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Protocol;
 
