@@ -46,6 +46,30 @@
       },
       "revId": "4236fbe221f5e1e20592ea8477cca6d526db3a0e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5975fe09_524e4f39",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkPolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-19T00:49:20Z",
+      "side": 1,
+      "message": "apologies - was previously trying to optimize for speed + minimal diffbase as this is all temporary until everything VcnUnderlyingNetworkPolicy* is removed.\n\nDelegated parceling to VcnNetworkPolicyResult and defined new private constructor.",
+      "parentUuid": "404c84a6_6dae68fe",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 86
+      },
+      "revId": "4236fbe221f5e1e20592ea8477cca6d526db3a0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
