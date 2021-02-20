@@ -3987,6 +3987,31 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 break;
             }
+            case KeyEvent.KEYCODE_STEM_1: {
+                boolean isWakeup = !mDefaultDisplayPolicy.isAwake();
+                result &= ~ACTION_PASS_TO_USER;
+                isWakeKey = false;
+                if (down) {
+                    wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromPowerKey,
+                            PowerManager.WAKE_REASON_WAKE_KEY, "android.policy:KEY");
+                    if (mContext.getPackageManager().hasSystemFeature("droidlogic.software.netflix")) {
+                        final HdmiControl hdmiControl = getHdmiControl();
+                        if (hdmiControl != null) {
+                            Slog.i(TAG, "netflix key do one touch play");
+                            hdmiControl.turnOnTv();
+                        }
+                        Log.i(TAG, "Netflix startup, isWakeup: " + isWakeup);
+                        boolean isPowerOn = isWakeup;  //false for netflixButton, true for powerOnFromNetflixButton
+                        Intent i = new Intent("com.netflix.action.NETFLIX_KEY_START");
+                        i.setPackage("com.netflix.ninja");
+                        i.putExtra("power_on", isPowerOn);  //”power_on” Boolean Extra must be presented
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        mContext.startActivity(i);
+
+                    }
+                }
+                break;
+            }
         }
 
         // Intercept the Accessibility keychord for TV (DPAD_DOWN + Back) before the keyevent is
