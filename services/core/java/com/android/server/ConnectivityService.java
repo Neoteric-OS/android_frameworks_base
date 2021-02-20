@@ -1201,7 +1201,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mUserAllContext.registerReceiver(mIntentReceiver, intentFilter,
                 null /* broadcastPermission */, mHandler);
 
-        mNetworkActivityTracker = new LegacyNetworkActivityTracker(mContext, mHandler, mNMS, mNetd);
+        mNetworkActivityTracker = new LegacyNetworkActivityTracker(mContext, mHandler, mNetd);
 
         mNetdCallback = new NetdCallback();
         try {
@@ -1235,12 +1235,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mDnsManager = new DnsManager(mContext, mDnsResolver);
         registerPrivateDnsSettingsCallbacks();
 
-        mNoServiceNetwork =  new NetworkAgentInfo(null,
+        mNoServiceNetwork = new NetworkAgentInfo(null,
                 new Network(NO_SERVICE_NET_ID),
                 new NetworkInfo(TYPE_NONE, 0, "", ""),
                 new LinkProperties(), new NetworkCapabilities(), 0, mContext,
                 null, new NetworkAgentConfig(), this, null,
-                null, null, 0, INVALID_UID,
+                null, 0, INVALID_UID,
                 mQosCallbackTracker);
     }
 
@@ -6026,7 +6026,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkAgentInfo nai = new NetworkAgentInfo(na,
                 new Network(mNetIdManager.reserveNetId()), new NetworkInfo(networkInfo), lp, nc,
                 currentScore, mContext, mTrackerHandler, new NetworkAgentConfig(networkAgentConfig),
-                this, mNetd, mDnsResolver, mNMS, providerId, uid, mQosCallbackTracker);
+                this, mNetd, mDnsResolver, providerId, uid, mQosCallbackTracker);
 
         // Make sure the LinkProperties and NetworkCapabilities reflect what the agent info says.
         processCapabilitiesFromAgent(nai, nc);
@@ -8707,7 +8707,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         LegacyNetworkActivityTracker(@NonNull Context context, @NonNull Handler handler,
-                @NonNull INetworkManagementService nms, @NonNull INetd netd) {
+                @NonNull INetd netd) {
             mContext = context;
             mNetd = netd;
             mHandler = handler;
