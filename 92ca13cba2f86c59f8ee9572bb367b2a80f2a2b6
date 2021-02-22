@@ -1,0 +1,278 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcc9d550_e9356248",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-22T18:43:49Z",
+      "side": 1,
+      "message": "This function is called forkChildren but there are several types of child processes it isn\u0027t used to handle.  I\u0027d suggest a name like forkAppProcess or forkSimpleApp.",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cc105df_da6af0a4",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-22T18:43:49Z",
+      "side": 1,
+      "message": "This call can be removed as the USAP name was set on line 697.  This is the only current call to setAppProcessName, so maybe the function should be removed?",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6ac22b8_bf9b816e",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-22T18:43:49Z",
+      "side": 1,
+      "message": "Maybe create a LOG_TAG_USAP constant?",
+      "range": {
+        "startLine": 761,
+        "startChar": 26,
+        "endLine": 761,
+        "endChar": 32
+      },
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00e51608_59920fbb",
+        "filename": "core/java/com/android/internal/os/ZygoteArguments.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-22T18:43:49Z",
+      "side": 1,
+      "message": "Typo?",
+      "range": {
+        "startLine": 240,
+        "startChar": 6,
+        "endLine": 240,
+        "endChar": 7
+      },
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ea2f244_e4b51912",
+        "filename": "core/java/com/android/internal/os/ZygoteArguments.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-22T18:43:49Z",
+      "side": 1,
+      "message": "Maybe turn this into:\n\nif (argCount \u003e curArg) {\n  if (mBootComplete) throw new Illegal....\n  if (mAbiListQuery || mPidQuery) throw new Illegal...\n}\n\nif (expectRuntimeArgs) {\n  ...\n}",
+      "range": {
+        "startLine": 500,
+        "startChar": 8,
+        "endLine": 533,
+        "endChar": 9
+      },
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3d5243c_c22dfae3",
+        "filename": "core/java/com/android/internal/os/ZygoteCommandBuffer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-22T18:43:49Z",
+      "side": 1,
+      "message": "Should we instead make Zyogte.TAG package private and re-use it instead?",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 47
+      },
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e141526_b36daad2",
+        "filename": "core/java/com/android/internal/os/ZygoteCommandBuffer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-22T18:43:49Z",
+      "side": 1,
+      "message": "This behavior feels like it belongs in the Zygote instead of a helper object.  Is there a reason that this logic is here instead?",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bea4390_8b7bd486",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-22T18:43:49Z",
+      "side": 1,
+      "message": "I\u0027ve seen more `while (true)` than `for (;;)` in the codebase but I\u0027m fine with either.",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fccd434_97519f3b",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-22T18:43:49Z",
+      "side": 1,
+      "message": "This whole loop seems odd to me.  The main goal appears to be a read of a single word with a timeout.  I suspect that the overhead from four polls and reads would outweigh any possible time spent blocked on a read for 4 bytes.\n\nIt seems to me that getting rid of the loop and doing a single read would be better.  And if we are really  something that was written as a Java int I would imagine it would be written to the buffer atomically.",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "983a01ba_907ecf17",
+        "filename": "core/java/com/android/internal/os/ZygoteServer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-22T18:43:49Z",
+      "side": 1,
+      "message": "It might help readability if this were put into a temporary variable or if there was a /*paramname*/ comment added.",
+      "range": {
+        "startLine": 551,
+        "startChar": 40,
+        "endLine": 552,
+        "endChar": 85
+      },
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57527c25_bfb71878",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2410,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-22T18:43:49Z",
+      "side": 1,
+      "message": "Should we make AddUsapTableEntry increment the pool count?",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5438a3ad_3213af65",
+        "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-22T18:43:49Z",
+      "side": 1,
+      "message": "`while (true)`?",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7817778d_1d7260e9",
+        "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-22T18:43:49Z",
+      "side": 1,
+      "message": "if () {\n\n} else if () {\n\n} else {}?\n\nI think that might be easier to read, but it\u0027s mostly a style preference.",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 83
+      },
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a9cb01f_e2857d3f",
+        "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-22T18:43:49Z",
+      "side": 1,
+      "message": "I feel that this should be in the Zygote class and make use of the command buffer object.  What is the reason for it being located here instead?",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
