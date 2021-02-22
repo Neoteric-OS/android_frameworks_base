@@ -16,6 +16,23 @@
       "message": "I lost my +2 after fixing the comments. Could you +2 again?",
       "revId": "2b8622c5549186b938a3c2b29e348eba416e7777",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ba76c91_1229e459",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-02-22T22:24:52Z",
+      "side": 1,
+      "message": "Could you ptal at my lost +2 votes :)",
+      "revId": "2b8622c5549186b938a3c2b29e348eba416e7777",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
