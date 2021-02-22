@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8124eebd_a8ed9e42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-22T16:19:28Z",
+      "side": 1,
+      "message": "Hiya,\n\nThis is the next step, which allows the installer package to set overrides on a given package. It\u0027s a little hacky, because we have to keep the original calling uid around to validate this after reinstall. Open to suggestions on how to improve this.\n\nCheers,\nBen",
+      "revId": "8044d9f00bfc8dc5b02635a11aa6d3ace70486df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
