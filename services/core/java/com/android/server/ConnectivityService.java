@@ -2190,7 +2190,32 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void enforceChangePermission(String callingPkg, String callingAttributionTag) {
-        ConnectivityManager.enforceChangePermission(mContext, callingPkg, callingAttributionTag);
+        if (mContext.checkCallingOrSelfPermission(android.Manifest.permission.CHANGE_NETWORK_STATE)
+                == PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        if (callingPkg == null) {
+            throw new SecurityException("Calling package name is null.");
+        }
+
+        final AppOpsManager appOpsMgr = mContext.getSystemService(AppOpsManager.class);
+        final int uid = mDeps.getCallingUid();
+        final int mode = appOpsMgr.noteOpNoThrow(AppOpsManager.OPSTR_WRITE_SETTINGS, uid,
+                callingPkg, callingAttributionTag, null /* message */);
+
+        if (mode == AppOpsManager.MODE_ALLOWED) {
+            return;
+        }
+
+        if ((mode == AppOpsManager.MODE_DEFAULT) && (mContext.checkCallingOrSelfPermission(
+                android.Manifest.permission.WRITE_SETTINGS) == PackageManager.PERMISSION_GRANTED)) {
+            return;
+        }
+
+        throw new SecurityException(callingPkg + " was not granted either of these permissions:"
+                + android.Manifest.permission.CHANGE_NETWORK_STATE + ","
+                + android.Manifest.permission.WRITE_SETTINGS + ".");
     }
 
     private void enforceSettingsPermission() {
