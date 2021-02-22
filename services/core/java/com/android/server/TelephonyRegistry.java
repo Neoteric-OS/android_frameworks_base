@@ -2437,7 +2437,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                 mAllowedNetworkTypesList = allowedNetworkTypesList;
 
                 for (Record r : mRecords) {
-                    if (r.matchPhoneStateListenerEvent(
+                    if (r.matchTelephonyCallbackEvent(
                             TelephonyCallback.EVENT_ALLOWED_NETWORK_TYPE_LIST_CHANGED)
                             && idMatch(r.subId, subId, phoneId)) {
                         try {
