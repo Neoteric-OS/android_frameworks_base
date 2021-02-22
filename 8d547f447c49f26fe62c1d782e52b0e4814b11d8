@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96fd3688_e3c09669",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 33
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-22T15:40:00Z",
+      "side": 1,
+      "message": "Merge conflict in sc-dev and master because aosp/1513051 hasn\u0027t made it through the automerger yet.\n\nhttps://googleplex-android-review.git.corp.google.com/q/%2522Remove+ArrayUtils+usage+in+connectivity+classes%2522",
+      "revId": "8d547f447c49f26fe62c1d782e52b0e4814b11d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
