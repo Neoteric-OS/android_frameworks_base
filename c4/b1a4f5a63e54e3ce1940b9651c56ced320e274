@@ -1,0 +1,13 @@
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Open-Source-Licensing+1: liu xiaoyu <liuxiaoyu7@xiaomi.com>
+Verified+1: liu xiaoyu <liuxiaoyu7@xiaomi.com>
+Code-Review+1: liu xiaoyu <liuxiaoyu7@xiaomi.com>
+Code-Review+2: Eric Laurent <elaurent@google.com>
+Lint+2: liu xiaoyu <liuxiaoyu7@xiaomi.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-by: Eric Laurent <elaurent@google.com>
+Submitted-at: Mon, 22 Feb 2021 13:47:08 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1563295
+Project: platform/frameworks/base
+Branch: refs/heads/master
