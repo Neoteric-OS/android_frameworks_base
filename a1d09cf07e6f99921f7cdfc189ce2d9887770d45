@@ -39,6 +39,30 @@
       },
       "revId": "a1d09cf07e6f99921f7cdfc189ce2d9887770d45",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8411a6c2_5d451c5c",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2453,
+      "author": {
+        "id": 1423906
+      },
+      "writtenOn": "2021-02-22T02:02:45Z",
+      "side": 1,
+      "message": "yeah, bonian, but now here this API is self-handled.\nso APP can pass any contextes, we don\u0027t need to add addtional info@line#2441",
+      "parentUuid": "670e7caa_7245fe33",
+      "range": {
+        "startLine": 2453,
+        "startChar": 8,
+        "endLine": 2453,
+        "endChar": 60
+      },
+      "revId": "a1d09cf07e6f99921f7cdfc189ce2d9887770d45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
