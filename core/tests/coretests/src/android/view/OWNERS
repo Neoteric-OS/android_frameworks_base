@@ -9,3 +9,6 @@ per-file *Focus* = file:/services/core/java/com/android/server/wm/OWNERS
 per-file *Insets* = file:/services/core/java/com/android/server/wm/OWNERS
 per-file *View* = file:/services/core/java/com/android/server/wm/OWNERS
 per-file *Visibility* = file:/services/core/java/com/android/server/wm/OWNERS
+
+# Scroll Capture (Long Screenshots) Bug component: 801322
+per-file *ScrollCapture*.java = mrenouf@google.com,mrcasey@google.com

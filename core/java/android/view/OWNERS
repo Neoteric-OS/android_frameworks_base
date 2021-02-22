@@ -77,3 +77,7 @@ per-file SyncRtSurfaceTransactionApplier.java = file:/services/core/java/com/and
 per-file ViewRootInsetsControllerHost.java = file:/services/core/java/com/android/server/wm/OWNERS
 per-file Window*.java = file:/services/core/java/com/android/server/wm/OWNERS
 per-file Window*.aidl = file:/services/core/java/com/android/server/wm/OWNERS
+
+# Scroll Capture (Long Screenshots)
+per-file *ScrollCapture*.java = mrenouf@google.com,mrcasey@google.com
+per-file *CaptureHelper.java =  mrenouf@google.com,mrcasey@google.com

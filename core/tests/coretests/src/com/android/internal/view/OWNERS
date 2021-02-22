@@ -1,0 +1,2 @@
+# Scroll Capture (Long Screenshots) Bug component: 801322
+per-file *CaptureHelper*.java = mrenouf@google.com,mrcasey@google.com

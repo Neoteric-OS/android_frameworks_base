@@ -18,3 +18,7 @@ per-file AppearanceRegion = file:/services/core/java/com/android/server/wm/OWNER
 per-file BaseIWIndow.java = file:/services/core/java/com/android/server/wm/OWNERS
 per-file RotationPolicy.java = file:/services/core/java/com/android/server/wm/OWNERS
 per-file WindowManagerPolicyThread.java = file:/services/core/java/com/android/server/wm/OWNERS
+
+# Scroll Capture (Long Screenshots) Bug component: 801322
+per-file *ScrollCapture*.java = mrenouf@google.com,mrcasey@google.com
+per-file *CaptureHelper.java =  mrenouf@google.com,mrcasey@google.com
