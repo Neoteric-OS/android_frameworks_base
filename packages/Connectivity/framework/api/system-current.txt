@@ -265,7 +265,7 @@ package android.net {
   }
 
   public final class NetworkCapabilities implements android.os.Parcelable {
-    ctor public NetworkCapabilities(@Nullable android.net.NetworkCapabilities, boolean);
+    ctor public NetworkCapabilities(@Nullable android.net.NetworkCapabilities, long);
     method @NonNull public int[] getAdministratorUids();
     method @Nullable public String getSsid();
     method @NonNull public int[] getTransportTypes();
@@ -439,8 +439,13 @@ package android.net {
   }
 
   public interface TransportInfo {
-    method public default boolean hasLocationSensitiveFields();
-    method @NonNull public default android.net.TransportInfo makeCopy(boolean);
+    method public default long getRequiredRedactions();
+    method @NonNull public default android.net.TransportInfo makeCopy(long);
+    field public static final long REDACTION_ACCESS_FINE_LOCATION = 1L; // 0x1L
+    field public static final long REDACTION_ALL = -1L; // 0xffffffffffffffffL
+    field public static final long REDACTION_LOCAL_MAC_ADDRESS = 2L; // 0x2L
+    field public static final long REDACTION_NETWORK_SETTINGS = 4L; // 0x4L
+    field public static final long REDACTION_NONE = 0L; // 0x0L
   }
 
 }
