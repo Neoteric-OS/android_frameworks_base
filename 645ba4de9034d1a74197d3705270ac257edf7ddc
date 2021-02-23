@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1bdc8449_968cb492",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-23T13:20:38Z",
+      "side": 1,
+      "message": "Maybe the API name is not right. The Binder.getCallingUid isn\u0027t in all cases the right caller. In particular if you perform a recheck as part of app update you come from a different call path.",
+      "parentUuid": "8e08466f_3e1bb4a5",
+      "revId": "645ba4de9034d1a74197d3705270ac257edf7ddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72088d25_6d0fe69c",
         "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
         "patchSetId": 2
@@ -48,6 +66,30 @@
       "writtenOn": "2021-02-23T13:13:47Z",
       "side": 1,
       "message": "On second thought, maybe you could just add a mContext.checkCallingPermission(...) with a new permission (similar to OVERRIDE_COMPAT_CHANGE_CONFIG)",
+      "range": {
+        "startLine": 107,
+        "startChar": 19,
+        "endLine": 107,
+        "endChar": 33
+      },
+      "revId": "645ba4de9034d1a74197d3705270ac257edf7ddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1dda4175_f7f24033",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-23T13:20:38Z",
+      "side": 1,
+      "message": "Yeah, I am open to that as well. I suppose the main goal is to block other overriders like adb and settings to take control.",
+      "parentUuid": "72088d25_6d0fe69c",
       "range": {
         "startLine": 107,
         "startChar": 19,
