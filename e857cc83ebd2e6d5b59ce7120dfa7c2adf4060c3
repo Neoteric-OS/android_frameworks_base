@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008384298",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1563432?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8ac03483_e44f4b64",
+        "filename": "services/core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-23T15:25:31Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 101
+      },
+      "revId": "e857cc83ebd2e6d5b59ce7120dfa7c2adf4060c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
