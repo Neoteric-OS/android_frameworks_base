@@ -314,6 +314,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "21210dc2_5da7ee2a",
+        "filename": "core/java/com/android/internal/os/ZygoteCommandBuffer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T23:25:42Z",
+      "side": 1,
+      "message": "We could certainly merge all of the buffer management code into Zygote, but I think that would be worse. I started out with NativeCommandBuffer as a POD, which didn\u0027t seem good. Maybe it\u0027s worth thinking about changing this into applyRepeatedly and pass it a function that does the forking. But that also sounds a bit messy.\n\nCertainly most of the actual code here has to do with buffer and socket management.\n\nThe problem is that this serves two purposes: It implements a native command argument buffer that\u0027s used throughout, and it has this rather special purpose function to fork apps. They must closely share a ton of state for this scheme to work, but they otherwise don\u0027t fit that well.",
+      "parentUuid": "ef93b12d_9ada8b0b",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "9bea4390_8b7bd486",
         "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
         "patchSetId": 14
