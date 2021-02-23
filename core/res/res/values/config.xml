@@ -7141,4 +7141,8 @@
     <string name="identity_check_settings_action"></string>
     <!-- Package for opening identity check settings page [CHAR LIMIT=NONE] [DO NOT TRANSLATE] -->
     <string name="identity_check_settings_package_name">com\u002eandroid\u002esettings</string>
+
+    <!-- Override the screen brightness while the dream is showing.
+         Default value matches BRIGHTNESS_OVERRIDE_NONE. -->
+    <item name="config_defaultDreamScreenBrightness" format="float" type="dimen">-1.0</item>
 </resources>

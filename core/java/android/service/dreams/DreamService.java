@@ -1673,6 +1673,13 @@ public class DreamService extends Service implements Window.Callback {
                     );
         lp.layoutInDisplayCutoutMode =
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
+
+        final float defaultDreamScreenBrightness = getResources().getFloat(
+                com.android.internal.R.dimen.config_defaultDreamScreenBrightness);
+        if (defaultDreamScreenBrightness >= 0) {
+            lp.screenBrightness = defaultDreamScreenBrightness;
+        }
+
         mWindow.setAttributes(lp);
         // Workaround: Currently low-profile and in-window system bar backgrounds don't go
         // along well. Dreams usually don't need such bars anyways, so disable them by default.
