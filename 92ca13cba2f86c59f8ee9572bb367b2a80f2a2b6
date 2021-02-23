@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "46af37c4_2d0959dc",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T03:06:30Z",
+      "side": 1,
+      "message": "I like forkSimpleApps(). The plural is important. I\u0027ll change it to that.",
+      "parentUuid": "fcc9d550_e9356248",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1cc105df_da6af0a4",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a1dc052_6b6fb26e",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T03:06:30Z",
+      "side": 1,
+      "message": "Got rid of the call. There still seem to be callers in ZygoteConnection, so I\u0027ll have to leave the function for now.",
+      "parentUuid": "1cc105df_da6af0a4",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6ac22b8_bf9b816e",
@@ -48,6 +84,30 @@
       "writtenOn": "2021-02-22T18:43:49Z",
       "side": 1,
       "message": "Maybe create a LOG_TAG_USAP constant?",
+      "range": {
+        "startLine": 761,
+        "startChar": 26,
+        "endLine": 761,
+        "endChar": 32
+      },
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e143c49_f13c0bc7",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T03:06:30Z",
+      "side": 1,
+      "message": "Added to my future cleanups list.",
+      "parentUuid": "d6ac22b8_bf9b816e",
       "range": {
         "startLine": 761,
         "startChar": 26,
@@ -81,6 +141,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72ec6bde_6b616762",
+        "filename": "core/java/com/android/internal/os/ZygoteArguments.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T03:06:30Z",
+      "side": 1,
+      "message": "Indeed. Fixed.",
+      "parentUuid": "00e51608_59920fbb",
+      "range": {
+        "startLine": 240,
+        "startChar": 6,
+        "endLine": 240,
+        "endChar": 7
+      },
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ea2f244_e4b51912",
@@ -94,6 +178,30 @@
       "writtenOn": "2021-02-22T18:43:49Z",
       "side": 1,
       "message": "Maybe turn this into:\n\nif (argCount \u003e curArg) {\n  if (mBootComplete) throw new Illegal....\n  if (mAbiListQuery || mPidQuery) throw new Illegal...\n}\n\nif (expectRuntimeArgs) {\n  ...\n}",
+      "range": {
+        "startLine": 500,
+        "startChar": 8,
+        "endLine": 533,
+        "endChar": 9
+      },
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "602283ae_c06ef58c",
+        "filename": "core/java/com/android/internal/os/ZygoteArguments.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T03:06:30Z",
+      "side": 1,
+      "message": "Added to my future cleanups list.",
+      "parentUuid": "2ea2f244_e4b51912",
       "range": {
         "startLine": 500,
         "startChar": 8,
@@ -127,6 +235,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73f95e0c_f47297d1",
+        "filename": "core/java/com/android/internal/os/ZygoteCommandBuffer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T03:06:30Z",
+      "side": 1,
+      "message": "Actually, it doesn\u0027t appear to be used, so it\u0027s even easier. There are uses in ZygoteConnection that could be handled that way, but there are enough that it may not be worth it.",
+      "parentUuid": "b3d5243c_c22dfae3",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 47
+      },
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e141526_b36daad2",
@@ -140,6 +272,24 @@
       "writtenOn": "2021-02-22T18:43:49Z",
       "side": 1,
       "message": "This behavior feels like it belongs in the Zygote instead of a helper object.  Is there a reason that this logic is here instead?",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4b32be4_bc17eded",
+        "filename": "core/java/com/android/internal/os/ZygoteCommandBuffer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T03:06:30Z",
+      "side": 1,
+      "message": "At some level, I agree with you. It is a little weird that we draw the boundaries differently depending on how commands are executed. And I\u0027ve thought about doing as you suggest. But I think the alternative is likely to be worse, with wider interfaces. The ZygoteCommandBuffer data structure was really designed primarily to support this method. To separate this out, we\u0027d basically have to export the core NativeCommandBuffer data structure so that it\u0027s accessible from the Zygote native implementation. And even then, isSimpleForkCommand would seem out of place.\n\nAnd in a strong sense, it is really an operation on a ZygoteCommandBuffer.\n\nI changed the heading comment for the class to make this model a little clearer.",
+      "parentUuid": "6e141526_b36daad2",
       "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -161,6 +311,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb0e7e41_f4e83fda",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T03:06:30Z",
+      "side": 1,
+      "message": "Changed it. The only reason to prefer for(;;) seems to be style compliance, so ...",
+      "parentUuid": "9bea4390_8b7bd486",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0fccd434_97519f3b",
@@ -178,6 +346,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "608f56f1_438ee75a",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T03:06:30Z",
+      "side": 1,
+      "message": "I agree. But I believe this is only executed in the --invoke-with case. Do we have good tests for that? I don\u0027t want to do this in the present CL. I\u0027ll add it to a list of future cleanups.",
+      "parentUuid": "0fccd434_97519f3b",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "983a01ba_907ecf17",
@@ -191,6 +377,30 @@
       "writtenOn": "2021-02-22T18:43:49Z",
       "side": 1,
       "message": "It might help readability if this were put into a temporary variable or if there was a /*paramname*/ comment added.",
+      "range": {
+        "startLine": 551,
+        "startChar": 40,
+        "endLine": 552,
+        "endChar": 85
+      },
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dfdc452_68ca4851",
+        "filename": "core/java/com/android/internal/os/ZygoteServer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T03:06:30Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "983a01ba_907ecf17",
       "range": {
         "startLine": 551,
         "startChar": 40,
@@ -220,6 +430,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "dd6ba983_3d66e6c3",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2410,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T03:06:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57527c25_bfb71878",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "5438a3ad_3213af65",
         "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
         "patchSetId": 14
@@ -231,6 +459,24 @@
       "writtenOn": "2021-02-22T18:43:49Z",
       "side": 1,
       "message": "`while (true)`?",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5209d3e_2b912356",
+        "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T03:06:30Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "5438a3ad_3213af65",
       "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -258,6 +504,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6151aaa_5cf49804",
+        "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T03:06:30Z",
+      "side": 1,
+      "message": "I cleaned it up a bit, maybe slightly differently than you intended.",
+      "parentUuid": "7817778d_1d7260e9",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 83
+      },
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a9cb01f_e2857d3f",
@@ -271,6 +541,24 @@
       "writtenOn": "2021-02-22T18:43:49Z",
       "side": 1,
       "message": "I feel that this should be in the Zygote class and make use of the command buffer object.  What is the reason for it being located here instead?",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3a396a3_5281b75e",
+        "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-23T03:06:30Z",
+      "side": 1,
+      "message": "I attempted to address this in the Java file comment.",
+      "parentUuid": "3a9cb01f_e2857d3f",
       "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
