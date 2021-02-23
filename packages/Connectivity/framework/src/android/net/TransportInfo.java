@@ -16,8 +16,12 @@
 
 package android.net;
 
+import android.annotation.LongDef;
 import android.annotation.NonNull;
 import android.annotation.SystemApi;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * A container for transport-specific capabilities which is returned by
@@ -29,35 +33,111 @@ import android.annotation.SystemApi;
 public interface TransportInfo {
 
     /**
-     * Create a copy of a {@link TransportInfo} that will preserve location sensitive fields that
-     * were set based on the permissions of the process that originally received it.
+     * Mechanism to support redaction of fields in TransportInfo that are guarded by specific
+     * app permissions.
+     **/
+    /**
+     * Don't redact any fields since the receiving app holds all the necessary permissions.
      *
-     * <p>By default {@link TransportInfo} does not preserve such fields during parceling, as
-     * they should not be shared outside of the process that receives them without appropriate
-     * checks.
+     * @hide
+     */
+    @SystemApi
+    long REDACTION_NONE = 0;
+
+    /**
+     * Redact any fields that needs {@link android.Manifest.permission#ACCESS_FINE_LOCATION}
+     * permission since the receiving app does not hold this permission or the location toggle
+     * is off.
      *
-     * @param parcelLocationSensitiveFields Whether the location sensitive fields should be kept
-     *                                      when parceling
-     * @return Copy of this instance.
+     * @see android.Manifest.permission#ACCESS_FINE_LOCATION
+     * @hide
+     */
+    @SystemApi
+    long REDACTION_ACCESS_FINE_LOCATION = 1 << 0;
+
+    /**
+     * Redact any fields that needs {@link android.Manifest.permission#LOCAL_MAC_ADDRESS}
+     * permission since the receiving app does not hold this permission.
+     *
+     * @see android.Manifest.permission#LOCAL_MAC_ADDRESS
+     * @hide
+     */
+    @SystemApi
+    long REDACTION_LOCAL_MAC_ADDRESS = 1 << 1;
+
+    /**
+     *
+     * Redact any fields that needs {@link android.Manifest.permission#NETWORK_SETTINGS}
+     * permission since the receiving app does not hold this permission.
+     *
+     * @see android.Manifest.permission#NETWORK_SETTINGS
+     * @hide
+     */
+    @SystemApi
+    long REDACTION_NETWORK_SETTINGS = 1 << 2;
+
+    /**
+     * Constant to use for redacting all the fields.
+     * @hide
+     */
+    @SystemApi
+    long REDACTION_ALL = -1L;
+
+    /** @hide */
+    @LongDef(flag = true, prefix = { "REDACTION_" }, value = {
+            REDACTION_NONE,
+            REDACTION_ACCESS_FINE_LOCATION,
+            REDACTION_LOCAL_MAC_ADDRESS,
+            REDACTION_NETWORK_SETTINGS,
+            REDACTION_ALL
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface RedactionType {}
+
+    /**
+     * Create a copy of a {@link TransportInfo} with some fields redacted based on the permissions
+     * held by the receiving app.
+     *
+     * <p>
+     * Usage by connectivity stack:
+     * <ul>
+     * <li> Connectivity stack will invoke {@link #getRequiredRedactions()} to find the list
+     * of redactions that are required by this {@link TransportInfo} instance.</li>
+     * <li> Connectivity stack then loops through each bit in the bitmask returned and checks if the
+     * receiving app holds the corresponding permission.
+     * <ul>
+     * <li> If the app holds the corresponding permission, the bit is cleared from the
+     * |redactions| bitmask. </li>
+     * <li> If the app does not hold the corresponding permission, the bit is retained in the
+     * |redactions| bitmask. </li>
+     * </ul>
+     * <li> Connectivity stack then invokes {@link #makeCopy(long)} with the necessary |redactions|
+     * to create a copy to send to the corresponding app. </li>
+     * </ul>
+     * </p>
+     *
+     * @param redactions bitmask of |REDACTION_| constants that correspond to the
+     *                   redactions that needs to be performed on this instance.
+     * @return Copy of this instance with the necessary redactions.
      * @hide
      */
     @SystemApi
     @NonNull
-    default TransportInfo makeCopy(boolean parcelLocationSensitiveFields) {
+    default TransportInfo makeCopy(@RedactionType long redactions) {
         return this;
     }
 
     /**
-     * Returns whether this TransportInfo type has location sensitive fields or not (helps
-     * to determine whether to perform a location permission check or not before sending to
-     * apps).
+     * Returns a bitmask of |REDACTION_| constants which indicate the necessary redactions
+     * (based on the permissions held by the receiving app) to be performed on this
+     * TransportInfo.
      *
-     * @return {@code true} if this instance contains location sensitive info, {@code false}
-     * otherwise.
+     * @return bitmask of |REDACTION_| constants.
+     * @see #makeCopy(int)
      * @hide
      */
     @SystemApi
-    default boolean hasLocationSensitiveFields() {
-        return false;
+    default @RedactionType long getRequiredRedactions() {
+        return REDACTION_NONE;
     }
 }

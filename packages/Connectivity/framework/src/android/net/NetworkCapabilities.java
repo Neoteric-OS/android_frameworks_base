@@ -77,32 +77,34 @@ public final class NetworkCapabilities implements Parcelable {
     private String mRequestorPackageName;
 
     /**
-     * Indicates whether parceling should preserve fields that are set based on permissions of
-     * the process receiving the {@link NetworkCapabilities}.
+     * Indicates what fields should be redacted from the {@link android.net.TransportInfo} instance.
      */
-    private final boolean mParcelLocationSensitiveFields;
+    private final @TransportInfo.RedactionType long mTransportInfoRedactions;
 
     public NetworkCapabilities() {
-        mParcelLocationSensitiveFields = false;
+        mTransportInfoRedactions = TransportInfo.REDACTION_ALL;
         clearAll();
         mNetworkCapabilities = DEFAULT_CAPABILITIES;
     }
 
     public NetworkCapabilities(NetworkCapabilities nc) {
-        this(nc, false /* parcelLocationSensitiveFields */);
+        this(nc, TransportInfo.REDACTION_ALL);
     }
 
     /**
      * Make a copy of NetworkCapabilities.
      *
      * @param nc Original NetworkCapabilities
-     * @param parcelLocationSensitiveFields Whether to parcel location sensitive data or not.
+     * @param transportInfoRedactions bitmask of |REDACTION_| constants that correspond to
+     *                                the redactions that needs to be performed on the
+     *                                associated {@link #getTransportInfo()} instance.
      * @hide
      */
     @SystemApi
     public NetworkCapabilities(
-            @Nullable NetworkCapabilities nc, boolean parcelLocationSensitiveFields) {
-        mParcelLocationSensitiveFields = parcelLocationSensitiveFields;
+            @Nullable NetworkCapabilities nc,
+            @TransportInfo.RedactionType long transportInfoRedactions) {
+        mTransportInfoRedactions = transportInfoRedactions;
         if (nc != null) {
             set(nc);
         }
@@ -116,9 +118,9 @@ public final class NetworkCapabilities implements Parcelable {
     public void clearAll() {
         // Ensures that the internal copies maintained by the connectivity stack does not set
         // this bit.
-        if (mParcelLocationSensitiveFields) {
+        if (mTransportInfoRedactions != TransportInfo.REDACTION_ALL) {
             throw new UnsupportedOperationException(
-                    "Cannot clear NetworkCapabilities when parcelLocationSensitiveFields is set");
+                    "Cannot clear NetworkCapabilities when mTransportInfoRedactions is set");
         }
         mNetworkCapabilities = mTransportTypes = mUnwantedNetworkCapabilities = 0;
         mLinkUpBandwidthKbps = mLinkDownBandwidthKbps = LINK_BANDWIDTH_UNSPECIFIED;
@@ -147,7 +149,7 @@ public final class NetworkCapabilities implements Parcelable {
         mLinkDownBandwidthKbps = nc.mLinkDownBandwidthKbps;
         mNetworkSpecifier = nc.mNetworkSpecifier;
         if (nc.getTransportInfo() != null) {
-            setTransportInfo(nc.getTransportInfo().makeCopy(mParcelLocationSensitiveFields));
+            setTransportInfo(nc.getTransportInfo().makeCopy(mTransportInfoRedactions));
         } else {
             setTransportInfo(null);
         }

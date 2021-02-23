@@ -345,18 +345,18 @@ public class NetworkCapabilitiesTest {
     }
 
     @Test
-    public void testParcelNetworkCapabilitiesWithLocationSensitiveFields() {
+    public void testParcelNetworkCapabilitiesWithNoRedactions() {
         assumeTrue(isAtLeastS());
 
         final NetworkCapabilities netCap = createNetworkCapabilitiesWithWifiInfo();
-        final NetworkCapabilities netCapWithLocationSensitiveFields =
-                new NetworkCapabilities(netCap, true);
+        final NetworkCapabilities netCapWithNoRedactions =
+                new NetworkCapabilities(netCap, TransportInfo.REDACTION_NONE);
 
-        assertParcelingIsLossless(netCapWithLocationSensitiveFields);
-        testParcelSane(netCapWithLocationSensitiveFields);
+        assertParcelingIsLossless(netCapWithNoRedactions);
+        testParcelSane(netCapWithNoRedactions);
 
-        assertEquals(netCapWithLocationSensitiveFields,
-                parcelingRoundTrip(netCapWithLocationSensitiveFields));
+        assertEquals(netCapWithNoRedactions,
+                parcelingRoundTrip(netCapWithNoRedactions));
     }
 
     @Test
@@ -365,7 +365,7 @@ public class NetworkCapabilitiesTest {
 
         final NetworkCapabilities netCap = createNetworkCapabilitiesWithWifiInfo();
         final NetworkCapabilities netCapWithoutLocationSensitiveFields =
-                new NetworkCapabilities(netCap, false);
+                new NetworkCapabilities(netCap, TransportInfo.REDACTION_ACCESS_FINE_LOCATION);
 
         final NetworkCapabilities sanitizedNetCap =
                 new NetworkCapabilities(netCapWithoutLocationSensitiveFields);
@@ -956,18 +956,7 @@ public class NetworkCapabilitiesTest {
     }
 
     private class TestTransportInfo implements TransportInfo {
-        TestTransportInfo() {
-        }
-
-        @Override
-        public TransportInfo makeCopy(boolean parcelLocationSensitiveFields) {
-            return this;
-        }
-
-        @Override
-        public boolean hasLocationSensitiveFields() {
-            return false;
-        }
+        TestTransportInfo() { }
     }
 
     @Test @IgnoreUpTo(Build.VERSION_CODES.Q)
