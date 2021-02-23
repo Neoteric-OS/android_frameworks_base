@@ -1690,7 +1690,7 @@ final class ActivityManagerShellCommand extends ShellCommand {
 
         pw.println("Hanging the system...");
         pw.flush();
-        mInterface.hang(new Binder(), allowRestart);
+        mInterface.hang(getShellCallback().getShellCallbackBinder(), allowRestart);
         return 0;
     }
 
