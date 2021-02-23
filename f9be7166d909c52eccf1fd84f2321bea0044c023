@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c20dea4d_2deb1949",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003403
+      },
+      "writtenOn": "2021-02-23T19:21:55Z",
+      "side": 1,
+      "message": "If you can\u0027t find any other OWNERS feel free to re-add, but I assume there\u0027s someone closer to the problem than me",
+      "revId": "f9be7166d909c52eccf1fd84f2321bea0044c023",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
