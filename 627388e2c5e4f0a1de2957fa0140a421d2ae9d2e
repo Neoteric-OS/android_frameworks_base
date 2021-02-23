@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2d159f4_5207617a",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-23T02:00:50Z",
+      "side": 1,
+      "message": "nit \"D\"",
+      "range": {
+        "startLine": 384,
+        "startChar": 39,
+        "endLine": 384,
+        "endChar": 40
+      },
+      "revId": "627388e2c5e4f0a1de2957fa0140a421d2ae9d2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07167c1a_917b163c",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-23T02:00:50Z",
+      "side": 1,
+      "message": "nit, I am loving the style where a comment is added to say what this \"true\" is.",
+      "range": {
+        "startLine": 630,
+        "startChar": 78,
+        "endLine": 630,
+        "endChar": 82
+      },
+      "revId": "627388e2c5e4f0a1de2957fa0140a421d2ae9d2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f2ed429_47b7e572",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-23T02:00:50Z",
+      "side": 1,
+      "message": "Can you refresh my memory on why mIsRunning isn\u0027t strictly a function of the current state and the current message being processed (as in, what case requires it to be tracked separately/explicitly)? I ask because it\u0027s kind of error-prone, so I\u0027d like to see if there\u0027s a cleaner way, and we probably talked about this but I have forgotten (so it\u0027s not super obvious).",
+      "range": {
+        "startLine": 1141,
+        "startChar": 12,
+        "endLine": 1141,
+        "endChar": 22
+      },
+      "revId": "627388e2c5e4f0a1de2957fa0140a421d2ae9d2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec98ea7f_1bdea7dc",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionRetryTimeoutStateTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-23T02:00:50Z",
+      "side": 1,
+      "message": "Why null here? That\u0027s the signal for SafeMode? There just ain\u0027t no more states? Would it be helpful/more robust to have a \"null\" state that represents safe mode? (and which has no exit)?",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 18
+      },
+      "revId": "627388e2c5e4f0a1de2957fa0140a421d2ae9d2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
