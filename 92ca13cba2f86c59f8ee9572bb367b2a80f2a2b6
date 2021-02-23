@@ -296,6 +296,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "ef93b12d_9ada8b0b",
+        "filename": "core/java/com/android/internal/os/ZygoteCommandBuffer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-23T20:21:47Z",
+      "side": 1,
+      "message": "I would still strongly prefer this logic be in the Zygote class, but not enough to continue pressing the issue beyond this comment.  I think that keeping all of the logic related to forking new processes in the same place is important, even if it means turning the native ZygoteCommandBuffer object into a POD.\n\nWe\u0027re trading conceptual locality for encapsulation of a single object that is used by a single method/function.",
+      "parentUuid": "d4b32be4_bc17eded",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "9bea4390_8b7bd486",
         "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
         "patchSetId": 14
@@ -360,6 +378,24 @@
       "side": 1,
       "message": "I agree. But I believe this is only executed in the --invoke-with case. Do we have good tests for that? I don\u0027t want to do this in the present CL. I\u0027ll add it to a list of future cleanups.",
       "parentUuid": "0fccd434_97519f3b",
+      "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2df3248_1843db42",
+        "filename": "core/java/com/android/internal/os/ZygoteConnection.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-23T20:21:47Z",
+      "side": 1,
+      "message": "I believe that the JVMTI tests use `--invoke-with`.  Alex would know for sure.",
+      "parentUuid": "608f56f1_438ee75a",
       "revId": "92ca13cba2f86c59f8ee9572bb367b2a80f2a2b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
