@@ -8646,13 +8646,18 @@ public class ConnectivityServiceTest {
             int callerUid, boolean includeLocationSensitiveInfo,
             boolean shouldMakeCopyWithLocationSensitiveFieldsParcelable) {
         final WifiInfo wifiInfo = mock(WifiInfo.class);
-        when(wifiInfo.hasLocationSensitiveFields()).thenReturn(true);
+        when(wifiInfo.getRequiredRedactions())
+                .thenReturn(TransportInfo.REDACTION_ACCESS_FINE_LOCATION);
         final NetworkCapabilities netCap = new NetworkCapabilities().setTransportInfo(wifiInfo);
 
         mService.createWithLocationInfoSanitizedIfNecessaryWhenParceled(
                 netCap, includeLocationSensitiveInfo, callerUid,
                 mContext.getPackageName(), getAttributionTag());
-        verify(wifiInfo).makeCopy(eq(shouldMakeCopyWithLocationSensitiveFieldsParcelable));
+        if (shouldMakeCopyWithLocationSensitiveFieldsParcelable) {
+            verify(wifiInfo).makeCopy(TransportInfo.REDACTION_NONE);
+        } else {
+            verify(wifiInfo).makeCopy(TransportInfo.REDACTION_ACCESS_FINE_LOCATION);
+        }
     }
 
     @Test
@@ -8798,6 +8803,43 @@ public class ConnectivityServiceTest {
         verifyWifiInfoCopyNetCapsPermission(myUid,
                 true /* includeLocationSensitiveInfo */,
                 false /* shouldMakeCopyWithLocationSensitiveFieldsParcelable */);
+    }
+
+    @Test
+    public void testCreateForCallerWithLocalMacAddressSanitizedWithLocalMacAddressPermission()
+            throws Exception {
+        mServiceContext.setPermission(Manifest.permission.LOCAL_MAC_ADDRESS, PERMISSION_GRANTED);
+
+        final WifiInfo wifiInfo = mock(WifiInfo.class);
+        when(wifiInfo.getRequiredRedactions())
+                .thenReturn(TransportInfo.REDACTION_ACCESS_FINE_LOCATION
+                        | TransportInfo.REDACTION_LOCAL_MAC_ADDRESS);
+        final NetworkCapabilities netCap = new NetworkCapabilities().setTransportInfo(wifiInfo);
+
+        mService.createWithLocationInfoSanitizedIfNecessaryWhenParceled(
+                netCap, false /* includeLocationSensitiveInfoInTransportInfo */, Process.myUid(),
+                mContext.getPackageName(), getAttributionTag());
+        // don't redact MAC_ADDRESS fields, only location sensitive fields.
+        verify(wifiInfo).makeCopy(TransportInfo.REDACTION_ACCESS_FINE_LOCATION);
+    }
+
+    @Test
+    public void testCreateForCallerWithLocalMacAddressSanitizedWithoutLocalMacAddressPermission()
+            throws Exception {
+        mServiceContext.setPermission(Manifest.permission.LOCAL_MAC_ADDRESS, PERMISSION_DENIED);
+
+        final WifiInfo wifiInfo = mock(WifiInfo.class);
+        when(wifiInfo.getRequiredRedactions())
+                .thenReturn(TransportInfo.REDACTION_ACCESS_FINE_LOCATION
+                        | TransportInfo.REDACTION_LOCAL_MAC_ADDRESS);
+        final NetworkCapabilities netCap = new NetworkCapabilities().setTransportInfo(wifiInfo);
+
+        mService.createWithLocationInfoSanitizedIfNecessaryWhenParceled(
+                netCap, false /* includeLocationSensitiveInfoInTransportInfo */, Process.myUid(),
+                mContext.getPackageName(), getAttributionTag());
+        // redact both MAC_ADDRESS & location sensitive fields.
+        verify(wifiInfo).makeCopy(TransportInfo.REDACTION_ACCESS_FINE_LOCATION
+                | TransportInfo.REDACTION_LOCAL_MAC_ADDRESS);
     }
 
     private void setupConnectionOwnerUid(int vpnOwnerUid, @VpnManager.VpnType int vpnType)
