@@ -19,6 +19,7 @@ package android.net;
 import static com.android.internal.annotations.VisibleForTesting.Visibility.PRIVATE;
 
 import android.annotation.IntDef;
+import android.annotation.LongDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
@@ -63,6 +64,68 @@ import java.util.StringJoiner;
 public final class NetworkCapabilities implements Parcelable {
     private static final String TAG = "NetworkCapabilities";
 
+    /**
+     * Mechanism to support redaction of fields in TransportInfo that are guarded by specific
+     * app permissions.
+     **/
+    /**
+     * Don't redact any fields since the receiving app holds all the necessary permissions.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final long REDACTION_NONE = 0;
+
+    /**
+     * Redact any fields that needs {@link android.Manifest.permission#ACCESS_FINE_LOCATION}
+     * permission since the receiving app does not hold this permission or the location toggle
+     * is off.
+     *
+     * @see android.Manifest.permission#ACCESS_FINE_LOCATION
+     * @hide
+     */
+    @SystemApi
+    public static final long REDACTION_ACCESS_FINE_LOCATION = 1 << 0;
+
+    /**
+     * Redact any fields that needs {@link android.Manifest.permission#LOCAL_MAC_ADDRESS}
+     * permission since the receiving app does not hold this permission.
+     *
+     * @see android.Manifest.permission#LOCAL_MAC_ADDRESS
+     * @hide
+     */
+    @SystemApi
+    public static final long REDACTION_LOCAL_MAC_ADDRESS = 1 << 1;
+
+    /**
+     *
+     * Redact any fields that needs {@link android.Manifest.permission#NETWORK_SETTINGS}
+     * permission since the receiving app does not hold this permission.
+     *
+     * @see android.Manifest.permission#NETWORK_SETTINGS
+     * @hide
+     */
+    @SystemApi
+    public static final long REDACTION_NETWORK_SETTINGS = 1 << 2;
+
+    /**
+     * Redact all fields in this object that require any relevant permission.
+     * @hide
+     */
+    @SystemApi
+    public static final long REDACTION_ALL = -1L;
+
+    /** @hide */
+    @LongDef(flag = true, prefix = { "REDACTION_" }, value = {
+            REDACTION_NONE,
+            REDACTION_ACCESS_FINE_LOCATION,
+            REDACTION_LOCAL_MAC_ADDRESS,
+            REDACTION_NETWORK_SETTINGS,
+            REDACTION_ALL
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface RedactionType {}
+
     // Set to true when private DNS is broken.
     private boolean mPrivateDnsBroken;
 
@@ -77,32 +140,31 @@ public final class NetworkCapabilities implements Parcelable {
     private String mRequestorPackageName;
 
     /**
-     * Indicates whether parceling should preserve fields that are set based on permissions of
-     * the process receiving the {@link NetworkCapabilities}.
+     * Indicates what fields should be redacted from the {@link android.net.TransportInfo} instance.
      */
-    private final boolean mParcelLocationSensitiveFields;
+    private final @RedactionType long mRedactions;
 
     public NetworkCapabilities() {
-        mParcelLocationSensitiveFields = false;
+        mRedactions = REDACTION_ALL;
         clearAll();
         mNetworkCapabilities = DEFAULT_CAPABILITIES;
     }
 
     public NetworkCapabilities(NetworkCapabilities nc) {
-        this(nc, false /* parcelLocationSensitiveFields */);
+        this(nc, REDACTION_ALL);
     }
 
     /**
      * Make a copy of NetworkCapabilities.
      *
      * @param nc Original NetworkCapabilities
-     * @param parcelLocationSensitiveFields Whether to parcel location sensitive data or not.
+     * @param redactions bitmask of redactions that needs to be performed on this new instance of
+     *                   {@link NetworkCapabilities}.
      * @hide
      */
     @SystemApi
-    public NetworkCapabilities(
-            @Nullable NetworkCapabilities nc, boolean parcelLocationSensitiveFields) {
-        mParcelLocationSensitiveFields = parcelLocationSensitiveFields;
+    public NetworkCapabilities(@Nullable NetworkCapabilities nc, @RedactionType long redactions) {
+        mRedactions = redactions;
         if (nc != null) {
             set(nc);
         }
@@ -116,9 +178,9 @@ public final class NetworkCapabilities implements Parcelable {
     public void clearAll() {
         // Ensures that the internal copies maintained by the connectivity stack does not set
         // this bit.
-        if (mParcelLocationSensitiveFields) {
+        if (mRedactions != REDACTION_ALL) {
             throw new UnsupportedOperationException(
-                    "Cannot clear NetworkCapabilities when parcelLocationSensitiveFields is set");
+                    "Cannot clear NetworkCapabilities when mRedactions is set");
         }
         mNetworkCapabilities = mTransportTypes = mUnwantedNetworkCapabilities = 0;
         mLinkUpBandwidthKbps = mLinkDownBandwidthKbps = LINK_BANDWIDTH_UNSPECIFIED;
@@ -148,7 +210,7 @@ public final class NetworkCapabilities implements Parcelable {
         mLinkDownBandwidthKbps = nc.mLinkDownBandwidthKbps;
         mNetworkSpecifier = nc.mNetworkSpecifier;
         if (nc.getTransportInfo() != null) {
-            setTransportInfo(nc.getTransportInfo().makeCopy(mParcelLocationSensitiveFields));
+            setTransportInfo(nc.getTransportInfo().makeCopy(mRedactions));
         } else {
             setTransportInfo(null);
         }
@@ -2335,6 +2397,23 @@ public final class NetworkCapabilities implements Parcelable {
         if (!Objects.equals(mSubIds, nc.mSubIds)) {
             throw new IllegalStateException("Can't combine two subscription ID sets");
         }
+    }
+
+    /**
+     * Returns a bitmask of all the applicable redactions (based on the permissions held by the
+     * receiving app) to be performed on this TransportInfo.
+     *
+     * @return bitmask of redactions applicable on this instance.
+     * @hide
+     */
+    public @RedactionType long getApplicableRedactions() {
+        // Currently, there are no fields redacted in NetworkCapabilities itself, so we just
+        // passthrough the redactions required by the embedded TransportInfo. If this changes
+        // in the future, modify this method.
+        if (mTransportInfo == null) {
+            return NetworkCapabilities.REDACTION_NONE;
+        }
+        return mTransportInfo.getApplicableRedactions();
     }
 
     /**
