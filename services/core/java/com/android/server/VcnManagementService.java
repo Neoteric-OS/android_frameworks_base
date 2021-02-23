@@ -32,12 +32,12 @@ import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.vcn.IVcnManagementService;
+import android.net.vcn.IVcnNetworkPolicyListener;
 import android.net.vcn.IVcnStatusCallback;
-import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
 import android.net.vcn.VcnManager;
 import android.net.vcn.VcnManager.VcnErrorCode;
-import android.net.vcn.VcnUnderlyingNetworkPolicy;
+import android.net.vcn.VcnNetworkPolicyResult;
 import android.net.wifi.WifiInfo;
 import android.os.Binder;
 import android.os.Handler;
@@ -580,24 +580,23 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
     /** Binder death recipient used to remove a registered policy listener. */
     private class PolicyListenerBinderDeath implements Binder.DeathRecipient {
-        @NonNull private final IVcnUnderlyingNetworkPolicyListener mListener;
+        @NonNull private final IVcnNetworkPolicyListener mListener;
 
-        PolicyListenerBinderDeath(@NonNull IVcnUnderlyingNetworkPolicyListener listener) {
+        PolicyListenerBinderDeath(@NonNull IVcnNetworkPolicyListener listener) {
             mListener = listener;
         }
 
         @Override
         public void binderDied() {
-            Log.e(TAG, "app died without removing VcnUnderlyingNetworkPolicyListener");
-            removeVcnUnderlyingNetworkPolicyListener(mListener);
+            Log.e(TAG, "app died without removing VcnNetworkPolicyListener");
+            removeVcnNetworkPolicyListener(mListener);
         }
     }
 
-    /** Adds the provided listener for receiving VcnUnderlyingNetworkPolicy updates. */
+    /** Adds the provided listener for receiving VcnNetworkPolicyListener updates. */
     @GuardedBy("mLock")
     @Override
-    public void addVcnUnderlyingNetworkPolicyListener(
-            @NonNull IVcnUnderlyingNetworkPolicyListener listener) {
+    public void addVcnNetworkPolicyListener(@NonNull IVcnNetworkPolicyListener listener) {
         requireNonNull(listener, "listener was null");
 
         mContext.enforceCallingOrSelfPermission(
@@ -618,11 +617,10 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         }
     }
 
-    /** Removes the provided listener from receiving VcnUnderlyingNetworkPolicy updates. */
+    /** Removes the provided listener from receiving VcnNetworkPolicyListener updates. */
     @GuardedBy("mLock")
     @Override
-    public void removeVcnUnderlyingNetworkPolicyListener(
-            @NonNull IVcnUnderlyingNetworkPolicyListener listener) {
+    public void removeVcnNetworkPolicyListener(@NonNull IVcnNetworkPolicyListener listener) {
         requireNonNull(listener, "listener was null");
 
         synchronized (mLock) {
@@ -636,12 +634,12 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     }
 
     /**
-     * Gets the UnderlyingNetworkPolicy as determined by the provided NetworkCapabilities and
+     * Gets the VcnNetworkPolicyResult as determined by the provided NetworkCapabilities and
      * LinkProperties.
      */
     @NonNull
     @Override
-    public VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(
+    public VcnNetworkPolicyResult applyVcnNetworkPolicy(
             @NonNull NetworkCapabilities networkCapabilities,
             @NonNull LinkProperties linkProperties) {
         requireNonNull(networkCapabilities, "networkCapabilities was null");
@@ -696,7 +694,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             networkCapabilities.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
         }
 
-        return new VcnUnderlyingNetworkPolicy(false /* isTearDownRequested */, networkCapabilities);
+        return new VcnNetworkPolicyResult(false /* isTearDownRequested */, networkCapabilities);
     }
 
     /** Binder death recipient used to remove registered VcnStatusCallbacks. */

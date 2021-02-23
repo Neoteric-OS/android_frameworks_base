@@ -73,7 +73,7 @@ import java.util.concurrent.Executor;
 public class VcnManager {
     @NonNull private static final String TAG = VcnManager.class.getSimpleName();
 
-    private static final Map<VcnNetworkPolicyListener, VcnUnderlyingNetworkPolicyListenerBinder>
+    private static final Map<VcnNetworkPolicyListener, VcnNetworkPolicyListenerBinder>
             REGISTERED_POLICY_LISTENERS = new ConcurrentHashMap<>();
 
     @NonNull private final Context mContext;
@@ -99,7 +99,7 @@ public class VcnManager {
      */
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     @NonNull
-    public static Map<VcnNetworkPolicyListener, VcnUnderlyingNetworkPolicyListenerBinder>
+    public static Map<VcnNetworkPolicyListener, VcnNetworkPolicyListenerBinder>
             getAllPolicyListeners() {
         return Collections.unmodifiableMap(REGISTERED_POLICY_LISTENERS);
     }
@@ -161,77 +161,6 @@ public class VcnManager {
         }
     }
 
-    // TODO(b/180537630): remove all VcnUnderlyingNetworkPolicyListener refs once Telephony is using
-    // the new VcnNetworkPolicyListener API
-    /**
-     * VcnUnderlyingNetworkPolicyListener is the interface through which internal system components
-     * can register to receive updates for VCN-underlying Network policies from the System Server.
-     *
-     * @hide
-     */
-    public interface VcnUnderlyingNetworkPolicyListener extends VcnNetworkPolicyListener {}
-
-    /**
-     * Add a listener for VCN-underlying network policy updates.
-     *
-     * @param executor the Executor that will be used for invoking all calls to the specified
-     *     Listener
-     * @param listener the VcnUnderlyingNetworkPolicyListener to be added
-     * @throws SecurityException if the caller does not have permission NETWORK_FACTORY
-     * @throws IllegalStateException if the specified VcnUnderlyingNetworkPolicyListener is already
-     *     registered
-     * @hide
-     */
-    @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
-    public void addVcnUnderlyingNetworkPolicyListener(
-            @NonNull Executor executor, @NonNull VcnUnderlyingNetworkPolicyListener listener) {
-        addVcnNetworkPolicyListener(executor, listener);
-    }
-
-    /**
-     * Remove the specified VcnUnderlyingNetworkPolicyListener from VcnManager.
-     *
-     * <p>If the specified listener is not currently registered, this is a no-op.
-     *
-     * @param listener the VcnUnderlyingNetworkPolicyListener that will be removed
-     * @hide
-     */
-    public void removeVcnUnderlyingNetworkPolicyListener(
-            @NonNull VcnUnderlyingNetworkPolicyListener listener) {
-        removeVcnNetworkPolicyListener(listener);
-    }
-
-    /**
-     * Queries the underlying network policy for a network with the given parameters.
-     *
-     * <p>Prior to a new NetworkAgent being registered, or upon notification that Carrier VCN policy
-     * may have changed via {@link VcnUnderlyingNetworkPolicyListener#onPolicyChanged()}, a Network
-     * Provider MUST poll for the updated Network policy based on that Network's capabilities and
-     * properties.
-     *
-     * @param networkCapabilities the NetworkCapabilities to be used in determining the Network
-     *     policy for this Network.
-     * @param linkProperties the LinkProperties to be used in determining the Network policy for
-     *     this Network.
-     * @throws SecurityException if the caller does not have permission NETWORK_FACTORY
-     * @return the VcnUnderlyingNetworkPolicy to be used for this Network.
-     * @hide
-     */
-    @NonNull
-    @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
-    public VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(
-            @NonNull NetworkCapabilities networkCapabilities,
-            @NonNull LinkProperties linkProperties) {
-        requireNonNull(networkCapabilities, "networkCapabilities must not be null");
-        requireNonNull(linkProperties, "linkProperties must not be null");
-
-        try {
-            return mService.getUnderlyingNetworkPolicy(networkCapabilities, linkProperties);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
-    }
-
     /**
      * VcnNetworkPolicyListener is the interface through which internal system components (e.g.
      * Network Factories) can register to receive updates for VCN-underlying Network policies from
@@ -277,14 +206,14 @@ public class VcnManager {
         requireNonNull(executor, "executor must not be null");
         requireNonNull(listener, "listener must not be null");
 
-        VcnUnderlyingNetworkPolicyListenerBinder binder =
-                new VcnUnderlyingNetworkPolicyListenerBinder(executor, listener);
+        VcnNetworkPolicyListenerBinder binder =
+                new VcnNetworkPolicyListenerBinder(executor, listener);
         if (REGISTERED_POLICY_LISTENERS.putIfAbsent(listener, binder) != null) {
             throw new IllegalStateException("listener is already registered with VcnManager");
         }
 
         try {
-            mService.addVcnUnderlyingNetworkPolicyListener(binder);
+            mService.addVcnNetworkPolicyListener(binder);
         } catch (RemoteException e) {
             REGISTERED_POLICY_LISTENERS.remove(listener);
             throw e.rethrowFromSystemServer();
@@ -303,14 +232,13 @@ public class VcnManager {
     public void removeVcnNetworkPolicyListener(@NonNull VcnNetworkPolicyListener listener) {
         requireNonNull(listener, "listener must not be null");
 
-        VcnUnderlyingNetworkPolicyListenerBinder binder =
-                REGISTERED_POLICY_LISTENERS.remove(listener);
+        VcnNetworkPolicyListenerBinder binder = REGISTERED_POLICY_LISTENERS.remove(listener);
         if (binder == null) {
             return;
         }
 
         try {
-            mService.removeVcnUnderlyingNetworkPolicyListener(binder);
+            mService.removeVcnNetworkPolicyListener(binder);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -340,10 +268,11 @@ public class VcnManager {
         requireNonNull(networkCapabilities, "networkCapabilities must not be null");
         requireNonNull(linkProperties, "linkProperties must not be null");
 
-        final VcnUnderlyingNetworkPolicy policy =
-                getUnderlyingNetworkPolicy(networkCapabilities, linkProperties);
-        return new VcnNetworkPolicyResult(
-                policy.isTeardownRequested(), policy.getMergedNetworkCapabilities());
+        try {
+            return mService.applyVcnNetworkPolicy(networkCapabilities, linkProperties);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /** @hide */
@@ -536,12 +465,11 @@ public class VcnManager {
      *
      * @hide
      */
-    private static class VcnUnderlyingNetworkPolicyListenerBinder
-            extends IVcnUnderlyingNetworkPolicyListener.Stub {
+    private static class VcnNetworkPolicyListenerBinder extends IVcnNetworkPolicyListener.Stub {
         @NonNull private final Executor mExecutor;
         @NonNull private final VcnNetworkPolicyListener mListener;
 
-        private VcnUnderlyingNetworkPolicyListenerBinder(
+        private VcnNetworkPolicyListenerBinder(
                 Executor executor, VcnNetworkPolicyListener listener) {
             mExecutor = executor;
             mListener = listener;

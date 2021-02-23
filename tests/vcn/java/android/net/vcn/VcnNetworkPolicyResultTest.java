@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The Android Open Source Project
+ * Copyright (C) 2021 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,12 +25,11 @@ import android.net.NetworkCapabilities;
 
 import org.junit.Test;
 
-public class VcnUnderlyingNetworkPolicyTest {
-    private static final VcnUnderlyingNetworkPolicy DEFAULT_NETWORK_POLICY =
-            new VcnUnderlyingNetworkPolicy(
-                    false /* isTearDownRequested */, new NetworkCapabilities());
-    private static final VcnUnderlyingNetworkPolicy SAMPLE_NETWORK_POLICY =
-            new VcnUnderlyingNetworkPolicy(
+public class VcnNetworkPolicyResultTest {
+    private static final VcnNetworkPolicyResult DEFAULT_NETWORK_POLICY =
+            new VcnNetworkPolicyResult(false /* isTearDownRequested */, new NetworkCapabilities());
+    private static final VcnNetworkPolicyResult SAMPLE_NETWORK_POLICY =
+            new VcnNetworkPolicyResult(
                     true /* isTearDownRequested */,
                     new NetworkCapabilities.Builder()
                             .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
@@ -46,6 +45,6 @@ public class VcnUnderlyingNetworkPolicyTest {
 
     @Test
     public void testParcelUnparcel() {
-        assertParcelSane(SAMPLE_NETWORK_POLICY, 1);
+        assertParcelSane(SAMPLE_NETWORK_POLICY, 2 /* fieldCount */);
     }
 }
