@@ -17,4 +17,6 @@
 package android.net.vcn;
 
 /** @hide */
-parcelable VcnUnderlyingNetworkPolicy;
+interface IVcnNetworkPolicyListener {
+    void onPolicyChanged();
+}

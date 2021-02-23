@@ -35,9 +35,9 @@ import static org.mockito.Mockito.when;
 import android.content.Context;
 import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
+import android.net.vcn.VcnManager.VcnNetworkPolicyListener;
 import android.net.vcn.VcnManager.VcnStatusCallback;
 import android.net.vcn.VcnManager.VcnStatusCallbackBinder;
-import android.net.vcn.VcnManager.VcnUnderlyingNetworkPolicyListener;
 import android.os.ParcelUuid;
 
 import org.junit.Before;
@@ -56,7 +56,7 @@ public class VcnManagerTest {
     private static final Executor INLINE_EXECUTOR = Runnable::run;
 
     private IVcnManagementService mMockVcnManagementService;
-    private VcnUnderlyingNetworkPolicyListener mMockPolicyListener;
+    private VcnNetworkPolicyListener mMockPolicyListener;
     private VcnStatusCallback mMockStatusCallback;
 
     private Context mContext;
@@ -65,7 +65,7 @@ public class VcnManagerTest {
     @Before
     public void setUp() {
         mMockVcnManagementService = mock(IVcnManagementService.class);
-        mMockPolicyListener = mock(VcnUnderlyingNetworkPolicyListener.class);
+        mMockPolicyListener = mock(VcnNetworkPolicyListener.class);
         mMockStatusCallback = mock(VcnStatusCallback.class);
 
         mContext = getContext();
@@ -73,79 +73,77 @@ public class VcnManagerTest {
     }
 
     @Test
-    public void testAddVcnUnderlyingNetworkPolicyListener() throws Exception {
-        mVcnManager.addVcnUnderlyingNetworkPolicyListener(INLINE_EXECUTOR, mMockPolicyListener);
+    public void testAddVcnNetworkPolicyListener() throws Exception {
+        mVcnManager.addVcnNetworkPolicyListener(INLINE_EXECUTOR, mMockPolicyListener);
 
-        ArgumentCaptor<IVcnUnderlyingNetworkPolicyListener> captor =
-                ArgumentCaptor.forClass(IVcnUnderlyingNetworkPolicyListener.class);
-        verify(mMockVcnManagementService).addVcnUnderlyingNetworkPolicyListener(captor.capture());
+        ArgumentCaptor<IVcnNetworkPolicyListener> captor =
+                ArgumentCaptor.forClass(IVcnNetworkPolicyListener.class);
+        verify(mMockVcnManagementService).addVcnNetworkPolicyListener(captor.capture());
 
         assertTrue(VcnManager.getAllPolicyListeners().containsKey(mMockPolicyListener));
 
-        IVcnUnderlyingNetworkPolicyListener listenerWrapper = captor.getValue();
+        IVcnNetworkPolicyListener listenerWrapper = captor.getValue();
         listenerWrapper.onPolicyChanged();
         verify(mMockPolicyListener).onPolicyChanged();
     }
 
     @Test
-    public void testRemoveVcnUnderlyingNetworkPolicyListener() throws Exception {
-        mVcnManager.addVcnUnderlyingNetworkPolicyListener(INLINE_EXECUTOR, mMockPolicyListener);
+    public void testRemoveVcnNetworkPolicyListener() throws Exception {
+        mVcnManager.addVcnNetworkPolicyListener(INLINE_EXECUTOR, mMockPolicyListener);
 
-        mVcnManager.removeVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+        mVcnManager.removeVcnNetworkPolicyListener(mMockPolicyListener);
 
         assertFalse(VcnManager.getAllPolicyListeners().containsKey(mMockPolicyListener));
         verify(mMockVcnManagementService)
-                .addVcnUnderlyingNetworkPolicyListener(
-                        any(IVcnUnderlyingNetworkPolicyListener.class));
+                .addVcnNetworkPolicyListener(any(IVcnNetworkPolicyListener.class));
     }
 
     @Test
-    public void testRemoveVcnUnderlyingNetworkPolicyListenerUnknownListener() throws Exception {
-        mVcnManager.removeVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+    public void testRemoveVcnNetworkPolicyListenerUnknownListener() throws Exception {
+        mVcnManager.removeVcnNetworkPolicyListener(mMockPolicyListener);
 
         assertFalse(VcnManager.getAllPolicyListeners().containsKey(mMockPolicyListener));
         verify(mMockVcnManagementService, never())
-                .addVcnUnderlyingNetworkPolicyListener(
-                        any(IVcnUnderlyingNetworkPolicyListener.class));
+                .addVcnNetworkPolicyListener(any(IVcnNetworkPolicyListener.class));
     }
 
     @Test(expected = NullPointerException.class)
-    public void testAddVcnUnderlyingNetworkPolicyListenerNullExecutor() throws Exception {
-        mVcnManager.addVcnUnderlyingNetworkPolicyListener(null, mMockPolicyListener);
+    public void testAddVcnNetworkPolicyListenerNullExecutor() throws Exception {
+        mVcnManager.addVcnNetworkPolicyListener(null, mMockPolicyListener);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testAddVcnUnderlyingNetworkPolicyListenerNullListener() throws Exception {
-        mVcnManager.addVcnUnderlyingNetworkPolicyListener(INLINE_EXECUTOR, null);
+    public void testAddVcnNetworkPolicyListenerNullListener() throws Exception {
+        mVcnManager.addVcnNetworkPolicyListener(INLINE_EXECUTOR, null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testRemoveVcnUnderlyingNetworkPolicyListenerNullListener() {
-        mVcnManager.removeVcnUnderlyingNetworkPolicyListener(null);
+    public void testRemoveVcnNetworkPolicyListenerNullListener() {
+        mVcnManager.removeVcnNetworkPolicyListener(null);
     }
 
     @Test
-    public void testGetUnderlyingNetworkPolicy() throws Exception {
+    public void testApplyVcnNetworkPolicy() throws Exception {
         NetworkCapabilities nc = new NetworkCapabilities();
         LinkProperties lp = new LinkProperties();
-        when(mMockVcnManagementService.getUnderlyingNetworkPolicy(eq(nc), eq(lp)))
-                .thenReturn(new VcnUnderlyingNetworkPolicy(false /* isTearDownRequested */, nc));
+        when(mMockVcnManagementService.applyVcnNetworkPolicy(eq(nc), eq(lp)))
+                .thenReturn(new VcnNetworkPolicyResult(false /* isTearDownRequested */, nc));
 
-        VcnUnderlyingNetworkPolicy policy = mVcnManager.getUnderlyingNetworkPolicy(nc, lp);
+        VcnNetworkPolicyResult policy = mVcnManager.applyVcnNetworkPolicy(nc, lp);
 
         assertFalse(policy.isTeardownRequested());
-        assertEquals(nc, policy.getMergedNetworkCapabilities());
-        verify(mMockVcnManagementService).getUnderlyingNetworkPolicy(eq(nc), eq(lp));
+        assertEquals(nc, policy.getNetworkCapabilities());
+        verify(mMockVcnManagementService).applyVcnNetworkPolicy(eq(nc), eq(lp));
     }
 
     @Test(expected = NullPointerException.class)
-    public void testGetUnderlyingNetworkPolicyNullNetworkCapabilities() throws Exception {
-        mVcnManager.getUnderlyingNetworkPolicy(null, new LinkProperties());
+    public void testApplyVcnNetworkPolicyNullNetworkCapabilities() throws Exception {
+        mVcnManager.applyVcnNetworkPolicy(null, new LinkProperties());
     }
 
     @Test(expected = NullPointerException.class)
-    public void testGetUnderlyingNetworkPolicyNullLinkProperties() throws Exception {
-        mVcnManager.getUnderlyingNetworkPolicy(new NetworkCapabilities(), null);
+    public void testApplyVcnNetworkPolicyNullLinkProperties() throws Exception {
+        mVcnManager.applyVcnNetworkPolicy(new NetworkCapabilities(), null);
     }
 
     @Test
