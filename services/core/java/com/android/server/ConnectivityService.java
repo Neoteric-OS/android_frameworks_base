@@ -1791,15 +1791,50 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return newNc;
     }
 
-    private boolean hasLocationPermission(int callerUid, @NonNull String callerPkgName,
-            @Nullable String callingAttributionTag) {
-        final long token = Binder.clearCallingIdentity();
-        try {
-            return mLocationPermissionChecker.checkLocationPermission(
-                    callerPkgName, callingAttributionTag, callerUid, null /* message */);
-        } finally {
-            Binder.restoreCallingIdentity(token);
+    /**
+     * Wrapper used to cache the location permission check result performed for the corresponding
+     * app. This avoid performing multiple permission checks for different fields in
+     * NetworkCapabilities.
+     */
+    private class LocationPermissionCheckerWrapper {
+        private final int mCallingUid;
+        @NonNull private final String mCallingPackageName;
+        @Nullable private final String mCallingAttributionTag;
+
+        private Boolean mHasLocationPermission = null;
+
+        LocationPermissionCheckerWrapper(int callingUid, @NonNull String callingPackageName,
+                @Nullable String callingAttributionTag) {
+            mCallingUid = callingUid;
+            mCallingPackageName = callingPackageName;
+            mCallingAttributionTag = callingAttributionTag;
         }
+
+        private boolean hasLocationPermissionInternal() {
+            final long token = Binder.clearCallingIdentity();
+            try {
+                return mLocationPermissionChecker.checkLocationPermission(
+                        mCallingPackageName, mCallingAttributionTag, mCallingUid,
+                        null /* message */);
+            } finally {
+                Binder.restoreCallingIdentity(token);
+            }
+        }
+
+        /**
+         * Returns whether the app holds location permission or not (might return cached result
+         * if the permission was already checked before).
+         *
+         * @return
+         */
+        public boolean hasLocationPermission() {
+            if (mHasLocationPermission == null) {
+                // If there is no cached result, perform the location check now.
+                mHasLocationPermission = hasLocationPermissionInternal();
+            }
+            return mHasLocationPermission;
+        }
+
     }
 
     private boolean isTargetSdkAtleast(
@@ -1815,6 +1850,39 @@ public class ConnectivityService extends IConnectivityManager.Stub
             Log.e(TAG, "Unknown package name");
             return false;
         }
+    }
+
+    /**
+     * Use the provided |transportInfoRequiredRedactions| to check the receiving app's
+     * permissions and clear/set the corresponding bit in the returned bitmask. The bitmask
+     * returned will be send to the associated TransportInfo to ensure the necessary redactions
+     * are performed.
+     */
+    private @TransportInfo.RedactionType long retrieveTransportInfoRedactions(
+            @TransportInfo.RedactionType long transportInfoRequiredRedactions,
+            @NonNull LocationPermissionCheckerWrapper locationPermissionCheckerWrapper,
+            boolean includeLocationSensitiveInfo, int callingUid) {
+        long transportInfoRedactions = transportInfoRequiredRedactions;
+        if ((transportInfoRedactions
+                & TransportInfo.REDACTION_ACCESS_FINE_LOCATION) != 0) {
+            if (includeLocationSensitiveInfo
+                    && locationPermissionCheckerWrapper.hasLocationPermission()) {
+                transportInfoRedactions &= ~TransportInfo.REDACTION_ACCESS_FINE_LOCATION;
+            }
+        }
+        if ((transportInfoRedactions
+                & TransportInfo.REDACTION_LOCAL_MAC_ADDRESS) != 0) {
+            if (checkLocalMacAddressPermission(callingUid)) {
+                transportInfoRedactions &= ~TransportInfo.REDACTION_LOCAL_MAC_ADDRESS;
+            }
+        }
+        if ((transportInfoRedactions
+                & TransportInfo.REDACTION_NETWORK_SETTINGS) != 0) {
+            if (checkSettingsPermission(-1, callingUid)) {
+                transportInfoRedactions &= ~TransportInfo.REDACTION_LOCAL_MAC_ADDRESS;
+            }
+        }
+        return transportInfoRedactions;
     }
 
     @VisibleForTesting
@@ -1840,13 +1908,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkCapabilities newNc;
         // Avoid doing location permission check if the transport info has no location sensitive
         // data.
-        if (nc.getTransportInfo() != null && nc.getTransportInfo().hasLocationSensitiveFields()
-                && includeLocationSensitiveInfo) {
-            hasLocationPermission =
-                    hasLocationPermission(callerUid, callerPkgName, callingAttributionTag);
-            newNc = new NetworkCapabilities(nc, hasLocationPermission);
+        LocationPermissionCheckerWrapper locationPermissionCheckerWrapper =
+                new LocationPermissionCheckerWrapper(callerUid, callerPkgName,
+                        callingAttributionTag);
+
+        if (nc.getTransportInfo() != null) {
+            final long transportInfoRedactions = retrieveTransportInfoRedactions(
+                    nc.getTransportInfo().getRequiredRedactions(),
+                    locationPermissionCheckerWrapper, includeLocationSensitiveInfo, callerUid);
+            newNc = new NetworkCapabilities(nc, transportInfoRedactions);
         } else {
-            newNc = new NetworkCapabilities(nc, false /* parcelLocationSensitiveFields */);
+            newNc = new NetworkCapabilities(nc, TransportInfo.REDACTION_ALL);
         }
         // Reset owner uid if not destined for the owner app.
         if (callerUid != nc.getOwnerUid()) {
@@ -1865,13 +1937,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             newNc.setOwnerUid(INVALID_UID);
             return newNc;
         }
-        if (hasLocationPermission == null) {
-            // Location permission not checked yet, check now for masking owner UID.
-            hasLocationPermission =
-                    hasLocationPermission(callerUid, callerPkgName, callingAttributionTag);
-        }
         // Reset owner uid if the app has no location permission.
-        if (!hasLocationPermission) {
+        if (!locationPermissionCheckerWrapper.hasLocationPermission()) {
             newNc.setOwnerUid(INVALID_UID);
         }
         return newNc;
@@ -2342,6 +2409,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void enforceKeepalivePermission() {
         mContext.enforceCallingOrSelfPermission(KeepaliveTracker.PERMISSION, "ConnectivityService");
     }
+
+    private boolean checkLocalMacAddressPermission(int uid) {
+        return PERMISSION_GRANTED == mContext.checkPermission(
+                Manifest.permission.LOCAL_MAC_ADDRESS, -1 /* pid */, uid);
+    }
+
 
     // Public because it's used by mLockdownTracker.
     public void sendConnectedBroadcast(NetworkInfo info) {
