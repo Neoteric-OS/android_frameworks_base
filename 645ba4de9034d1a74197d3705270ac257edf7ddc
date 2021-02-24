@@ -180,6 +180,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2624324b_490f1eec",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-24T17:48:35Z",
+      "side": 1,
+      "message": "There are two things:\na) What\u0027s the benefit of storing the boolean over the uid? In that case, we could also just assume that the override got here because the original caller was allowed to and not recheck in the future.\n\nb) There is a case where an app gets updated by a different installer (as happened in the CTS tests). Storing a uid we can recheck, but storing a boolean we cannot. Now this is a bit of an edge case",
+      "parentUuid": "1fbaa5f8_6b521a86",
+      "revId": "645ba4de9034d1a74197d3705270ac257edf7ddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72088d25_6d0fe69c",
         "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
         "patchSetId": 2
