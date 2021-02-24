@@ -288,11 +288,101 @@ public class IccUtils {
         // (e.g. the adnStringFieldToString has done this for a long time on Android). Also there's
         // already a precedent in SMS applications to ignore the UCS-2/UTF-16 distinction.
         byte[] alphaTagBytes = alphaTag.getBytes(StandardCharsets.UTF_16BE);
-        byte[] ret = new byte[alphaTagBytes.length + 1];
-        // 0x80 tags the remaining bytes as UCS-2
+        byte[] ret = null;
+        int dstOffset = 0;
+        short temp = 0, min = (short) 0x7fff, max = 0, baseAddr = 0;
+
+        Rlog.d(LOG_TAG, "alphaTag string:" + alphaTag + ", its length:" + alphaTag.length()
+                + ", alphaTagBytes length:" + alphaTagBytes.length);
+
+        /** The Alpha Field coding for UCS2 is described in Technical Specification number 11.11
+         * (TS 11.11).
+         * format 1: '0x80', 'char 1', 'char 1', 'char 2', 'char 2', ...
+         * format 2: '0x81', N, BP, 'char 1', 'char 2', ...
+         * format 3: '0x82', N, BP, BP, 'char 1', 'char 2', ...
+         * N is the number of UCS2 characters
+         * BP is a Base Pointer for the UCS2.
+         *  if MSB (most significant bit) is 0, the remaining 7 bits contain GSM default alphabet.
+         *  if MSB is one, the remaining 7 bits are offset value added to BP.
+         */
+
+        // Use '0x81' or '0x82' only if the number of UCS2 characters is more than 2.
+        if (alphaTagBytes.length > 2) {
+            for (int index = 0; index < alphaTagBytes.length; index += 2) {
+                // check alphaTagBytes octec is zero or not.
+                if (alphaTagBytes[index] != 0) {
+                    temp = (short) (((alphaTagBytes[index] << 8) & 0xff00)
+                            | (alphaTagBytes[index + 1] & 0xff));
+                    // Cannot process UCS2 page for range 8000 to FFFF
+                    if (temp < 0) {
+                        // set max to min + 130 so that it will check the next.
+                        max = (short) (min + 129);
+                        break;
+                    }
+
+                    if (min > temp) {
+                        min = temp;
+                    }
+
+                    if (max < temp) {
+                        max = temp;
+                    }
+                }
+            }
+        } else {
+            Rlog.d(LOG_TAG, "alphaTagBytes length is less than or equal to 2, "
+                    + "so stringToAdnStringField '0x80'");
+            // 0x80 tags the remaining bytes as UCS-2
+            ret = new byte[alphaTagBytes.length + 1];
+            ret[0] = (byte) 0x80;
+            System.arraycopy(alphaTagBytes, 0, ret, 1, alphaTagBytes.length);
+            return ret;
+        }
+
+        // If all characters can fit in half page (128 bytes)
+        if (max >= min && max - min < 128) {
+            if (((byte) (min & 0x80)) == ((byte) (max & 0x80))) {
+                ret = new byte[(alphaTagBytes.length / 2) + 3];
+                ret[dstOffset++] = (byte) 0x81;
+                ret[dstOffset++] = (byte) (alphaTagBytes.length / 2);
+                ret[dstOffset++] = (byte) ((min >> 7) & 0xff);
+                baseAddr = (short) (min & 0x7f80);
+                Rlog.d(LOG_TAG, "stringToAdnStringField '0x81' - baseAddr:0x"
+                        + Integer.toHexString(baseAddr & 0xffff));
+            } else {
+                ret = new byte[(alphaTagBytes.length / 2) + 4];
+                ret[dstOffset++] = (byte) 0x82;
+                ret[dstOffset++] = (byte) (alphaTagBytes.length / 2);
+                ret[dstOffset++] = (byte) ((min >> 8) & 0xff);
+                ret[dstOffset++] = (byte) (min & 0xff);
+                baseAddr = min;
+                Rlog.d(LOG_TAG, "stringToAdnStringField '0x82' - baseAddr:0x"
+                        + Integer.toHexString(baseAddr & 0xffff));
+            }
+
+            for (int index = 0; index < alphaTagBytes.length; index += 2) {
+                // Although alphaTag is included to UCS2 format, it can have GSM7bit characters.
+                // So save it with MSB '0'.
+                if (alphaTagBytes[index] == 0) {
+                    ret[dstOffset++] = (byte) (alphaTagBytes[index] | 0x7f);
+                } else {
+                    // Save word with MSB '1'.
+                    // The difference between data and base address should be less than 128 (0x80)
+                    // except data is min itself case.
+                    temp = (short) (((short) (((alphaTagBytes[index] << 8) & 0xff00)
+                            | (alphaTagBytes[index + 1]) & 0xff)) - baseAddr);
+                    ret[dstOffset++] = (byte) (temp | 0x80);
+                }
+            }
+
+            return ret;
+        }
+
+        // If '0x81' and '0x82' formats are not possible, MUST use '0x80'.
+        Rlog.d(LOG_TAG, "stringToAdnStringField '0x80'");
+        ret = new byte[alphaTagBytes.length + 1];
         ret[0] = (byte) 0x80;
         System.arraycopy(alphaTagBytes, 0, ret, 1, alphaTagBytes.length);
-
         return ret;
     }
 
@@ -362,7 +452,7 @@ public class IccUtils {
         }
 
         boolean isucs2 = false;
-        char base = '\0';
+        short baseAddr = 0;
         int len = 0;
 
         if (length >= 3 && data[offset] == (byte) 0x81) {
@@ -370,7 +460,7 @@ public class IccUtils {
             if (len > length - 3)
                 len = length - 3;
 
-            base = (char) ((data[offset + 2] & 0xFF) << 7);
+            baseAddr = (short) ((data[offset + 2] << 7) & 0x7f80);
             offset += 3;
             isucs2 = true;
         } else if (length >= 4 && data[offset] == (byte) 0x82) {
@@ -378,8 +468,8 @@ public class IccUtils {
             if (len > length - 4)
                 len = length - 4;
 
-            base = (char) (((data[offset + 2] & 0xFF) << 8) |
-                    (data[offset + 3] & 0xFF));
+            baseAddr = (short) (((data[offset + 2] << 8)
+                    | data[offset + 3]) & 0xffff);
             offset += 4;
             isucs2 = true;
         }
@@ -391,22 +481,19 @@ public class IccUtils {
                 // UCS2 subset case
 
                 if (data[offset] < 0) {
-                    ret.append((char) (base + (data[offset] & 0x7F)));
-                    offset++;
-                    len--;
+                    short decodedUtf16 = (short) (baseAddr + (data[offset] & 0x7F));
+                    byte[] utf16 = new byte[2];
+                    utf16[0] = (byte) ((decodedUtf16 >> 8) & 0xff);
+                    utf16[1] = (byte) (decodedUtf16 & 0xff);
+                    String utf16Text = new String(utf16, StandardCharsets.UTF_16BE);
+                    ret.append(utf16Text);
+                } else {
+                    // GSM character set case
+                    ret.append((char) (data[offset] & 0x7F));
                 }
 
-                // GSM character set case
-
-                int count = 0;
-                while (count < len && data[offset + count] >= 0)
-                    count++;
-
-                ret.append(GsmAlphabet.gsm8BitUnpackedToString(data,
-                        offset, count));
-
-                offset += count;
-                len -= count;
+                offset++;
+                len--;
             }
 
             return ret.toString();
