@@ -162,6 +162,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1fbaa5f8_6b521a86",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-24T17:12:07Z",
+      "side": 1,
+      "message": "So, the first time the override is added, the call path will go through OverridevalidatorImpl ; the second time it will be through CompatConfig.recheckOverrides (and currently that eventually ends up in the same place).\nWhat if instead of storing the uid that made the initial override call, we just store a boolean that remembers whether the initial caller was the installer itself (or had the adequate permission)?",
+      "parentUuid": "86d726d0_570680e5",
+      "revId": "645ba4de9034d1a74197d3705270ac257edf7ddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72088d25_6d0fe69c",
         "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
         "patchSetId": 2
