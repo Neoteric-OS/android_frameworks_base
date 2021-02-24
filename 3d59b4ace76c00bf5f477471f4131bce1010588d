@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "95d58de1_b2ed465f",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-24T03:30:36Z",
+      "side": 1,
+      "message": "Fair enough",
+      "parentUuid": "a6580e99_c77a22e6",
+      "range": {
+        "startLine": 53,
+        "startChar": 39,
+        "endLine": 53,
+        "endChar": 42
+      },
+      "revId": "3d59b4ace76c00bf5f477471f4131bce1010588d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad77d08c_ccbb731c",
@@ -220,6 +244,30 @@
       "side": 1,
       "message": "I added a comment to the other location that OEM_NONE is used, but I\u0027m wondering if it might be more appropriate to create a private helper \"createProbeIdent\" in NetworkPolicyManagerService (such that the documentation for what this probeIdent means can be in one place).\n\nLet me know what you think.",
       "parentUuid": "a779dac9_cde674a8",
+      "range": {
+        "startLine": 1618,
+        "startChar": 16,
+        "endLine": 1618,
+        "endChar": 24
+      },
+      "revId": "3d59b4ace76c00bf5f477471f4131bce1010588d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8db5275_569874ff",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-24T03:30:36Z",
+      "side": 1,
+      "message": "Let\u0027s check this patch in as is and keep that as a TODO in the coming weeks.\n\nMy main concern is that this value may, in fact, be incorrect. It doesn\u0027t really help to say, like your comment at the top of the file, that it doesn\u0027t matter because the query is done with _ALL anyway. If some other query is implemented later it will fully expect this field to be filled in correctly, then the comment becomes incorrect without anyone ever noticing. We should just not put incorrect values in the NetworkStats database, no matter whether we have code depending on its correctness today.\n\nNow, I believe in fact the correct value of this can be deduced from the subscriberId. For any given subscription, either it\u0027s an OEM subscription or it\u0027s not. I don\u0027t know if OEMs have different subscriptions for OEM_PAID vs OEM_PRIVATE networks – if they don\u0027t, then we have another problem, and I don\u0027t know how they manage that in the first place. But they likely do, in which case we should have code to deduce this value from the subscriber ID.\n\nBut I\u0027m not sure how we\u0027re supposed to get this info. SubscriptionManager would be an obvious place to look for, but the code that brings up the OEM networks is only in Auto, so it\u0027s code I\u0027ve never seen. I don\u0027t expect SubscriptionManager has any way today to let us find out about this (but do check). An alternative would be to query networks to find the one that matches this subscription and see if it has OEM_PAID and/or OEM_PRIVATE. But you can\u0027t do this with the lock held, and it won\u0027t work when the network is not connected, so anything in SubscriptionManager would probably be preferable.",
+      "parentUuid": "8a6e9f04_4ec9f235",
       "range": {
         "startLine": 1618,
         "startChar": 16,
