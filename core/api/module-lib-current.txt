@@ -33,6 +33,7 @@ package android.net {
   }
 
   public final class NetworkCapabilities implements android.os.Parcelable {
+    method @NonNull @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS) public java.util.Set<android.util.Range<java.lang.Integer>> getUids();
     field public static final int TRANSPORT_TEST = 7; // 0x7
   }
 

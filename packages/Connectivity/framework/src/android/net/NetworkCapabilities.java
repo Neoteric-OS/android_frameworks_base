@@ -1454,10 +1454,14 @@ public final class NetworkCapabilities implements Parcelable {
     /**
      * Get the list of UIDs this network applies to.
      * This returns a copy of the set so that callers can't modify the original object.
+     *
+     * @return the list of UIDs this network applies to
      * @hide
      */
-    public @Nullable Set<Range<Integer>> getUids() {
-        if (mUids == null) return null;
+    @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public @NonNull Set<Range<Integer>> getUids() {
+        if (mUids == null) return new ArraySet<>();
 
         return UidRange.convertToIntRanges(mUids);
     }
@@ -2537,6 +2541,19 @@ public final class NetworkCapabilities implements Parcelable {
         @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
         public Builder setRequestorPackageName(@Nullable final String packageName) {
             mCaps.setRequestorPackageName(packageName);
+            return this;
+        }
+
+        /**
+         * Set the list of UIDs this network applies to.
+         *
+         * @param uids the list of UIDs this network applies to.
+         * @return this builder
+         */
+        @NonNull
+        @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
+        public Builder setUids(@Nullable Set<Range<Integer>> uids) {
+            mCaps.setUids(uids);
             return this;
         }
 
