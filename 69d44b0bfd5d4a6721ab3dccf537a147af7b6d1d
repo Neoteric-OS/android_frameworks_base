@@ -69,6 +69,63 @@
       "parentUuid": "4c66cb83_0c2838c5",
       "revId": "69d44b0bfd5d4a6721ab3dccf537a147af7b6d1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3a0d008_642ff9fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-24T10:54:56Z",
+      "side": 1,
+      "message": "You already got +2 from Chris, so feel free to ignore - but for better attribution of performance / memory impact of the native loop, it\u0027d be nice to separate this CL into two: one that refactors the code so that it makes it possible to have a native loop, and one that implements the native loop. WDYT?",
+      "revId": "69d44b0bfd5d4a6721ab3dccf537a147af7b6d1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2862db7f_3890a3be",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-24T10:54:56Z",
+      "side": 1,
+      "message": "Add a comment?",
+      "range": {
+        "startLine": 410,
+        "startChar": 0,
+        "endLine": 412,
+        "endChar": 9
+      },
+      "revId": "69d44b0bfd5d4a6721ab3dccf537a147af7b6d1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb9b1238_38a4f0f0",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-24T10:54:56Z",
+      "side": 1,
+      "message": "It looks like a lot of these (somewhat related) changes could be in their own CL.",
+      "revId": "69d44b0bfd5d4a6721ab3dccf537a147af7b6d1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
