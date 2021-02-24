@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "483fb459_99c110ae",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-24T16:50:26Z",
+      "side": 1,
+      "message": "I\u0027d prefer not to have this method, and use a permission check on the caller instead.",
+      "parentUuid": "2e4e682a_7be26507",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 5
+      },
+      "revId": "645ba4de9034d1a74197d3705270ac257edf7ddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8e08466f_3e1bb4a5",
         "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
         "patchSetId": 2
@@ -96,6 +120,24 @@
       "side": 1,
       "message": "Maybe the API name is not right. The Binder.getCallingUid isn\u0027t in all cases the right caller. In particular if you perform a recheck as part of app update you come from a different call path.",
       "parentUuid": "8e08466f_3e1bb4a5",
+      "revId": "645ba4de9034d1a74197d3705270ac257edf7ddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1f8129a_251cae51",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-24T16:50:26Z",
+      "side": 1,
+      "message": "What would that call path be? I\u0027d still prefer we restrict what sort of callers can do this.",
+      "parentUuid": "1bdc8449_968cb492",
       "revId": "645ba4de9034d1a74197d3705270ac257edf7ddc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
