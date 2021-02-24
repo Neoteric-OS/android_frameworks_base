@@ -144,6 +144,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "86d726d0_570680e5",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-24T16:54:58Z",
+      "side": 1,
+      "message": "Everything goes out of the window if we use a separate permission check, things become a lot simpler from there.\n\nThe callpath I am thinking of is:\n\nInstaller package sets override on installed package -\u003e callingUid is worked through, all good.\nOverride is stored.\nApp gets updated and recheck override is triggered.\nNow in order to validate again that the original caller is allowed to set those overrides we need the original caller, but they didn\u0027t trigger the recheck, so we need to store their uid somewhere and inject it into here.",
+      "parentUuid": "b1f8129a_251cae51",
+      "revId": "645ba4de9034d1a74197d3705270ac257edf7ddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72088d25_6d0fe69c",
         "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
         "patchSetId": 2
