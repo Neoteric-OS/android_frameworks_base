@@ -210,7 +210,7 @@ public class Vpn {
     protected NetworkAgent mNetworkAgent;
     private final Looper mLooper;
     @VisibleForTesting
-    protected final NetworkCapabilities mNetworkCapabilities;
+    protected NetworkCapabilities mNetworkCapabilities;
     private final SystemServices mSystemServices;
     private final Ikev2SessionCreator mIkev2SessionCreator;
     private final UserManager mUserManager;
@@ -439,11 +439,11 @@ public class Vpn {
         mLegacyState = LegacyVpnInfo.STATE_DISCONNECTED;
         mNetworkInfo = new NetworkInfo(ConnectivityManager.TYPE_VPN, 0 /* subtype */, NETWORKTYPE,
                 "" /* subtypeName */);
-        mNetworkCapabilities = new NetworkCapabilities();
-        mNetworkCapabilities.addTransportType(NetworkCapabilities.TRANSPORT_VPN);
-        mNetworkCapabilities.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN);
-        mNetworkCapabilities.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
-        mNetworkCapabilities.setTransportInfo(new VpnTransportInfo(VpnManager.TYPE_VPN_NONE));
+        mNetworkCapabilities = new NetworkCapabilities.Builder()
+                .addTransportType(NetworkCapabilities.TRANSPORT_VPN)
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED)
+                .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN)
+                .setTransportInfo(new VpnTransportInfo(VpnManager.TYPE_VPN_NONE)).build();
 
         loadAlwaysOnPackage(keyStore);
     }
@@ -504,8 +504,9 @@ public class Vpn {
     }
 
     private void resetNetworkCapabilities() {
-        mNetworkCapabilities.setUids(null);
-        mNetworkCapabilities.setTransportInfo(new VpnTransportInfo(VpnManager.TYPE_VPN_NONE));
+        mNetworkCapabilities = new NetworkCapabilities.Builder(mNetworkCapabilities)
+                .setUids(null)
+                .setTransportInfo(new VpnTransportInfo(VpnManager.TYPE_VPN_NONE)).build();
     }
 
     /**
@@ -1213,6 +1214,20 @@ public class Vpn {
     private void agentConnect() {
         LinkProperties lp = makeLinkProperties();
 
+        mLegacyState = LegacyVpnInfo.STATE_CONNECTING;
+        updateState(DetailedState.CONNECTING, "agentConnect");
+
+        NetworkAgentConfig networkAgentConfig = new NetworkAgentConfig();
+        networkAgentConfig.allowBypass = mConfig.allowBypass && !mLockdown;
+
+        final NetworkCapabilities.Builder ncBuilder =
+                new NetworkCapabilities.Builder(mNetworkCapabilities)
+                        .setOwnerUid(mOwnerUID)
+                        .setAdministratorUids(new int[] {mOwnerUID})
+                        .setUids(createUserAndRestrictedProfilesRanges(mUserId,
+                                mConfig.allowedApplications, mConfig.disallowedApplications))
+                        .setTransportInfo(new VpnTransportInfo(getActiveVpnType()));
+
         // VPN either provide a default route (IPv4 or IPv6 or both), or they are a split tunnel
         // that falls back to the default network, which by definition provides INTERNET (unless
         // there is no default network, in which case none of this matters in any sense).
@@ -1221,29 +1236,17 @@ public class Vpn {
         // registered with registerDefaultNetworkCallback. This in turn protects the invariant
         // that an app calling ConnectivityManager#bindProcessToNetwork(getDefaultNetwork())
         // behaves the same as when it uses the default network.
-        mNetworkCapabilities.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
-
-        mLegacyState = LegacyVpnInfo.STATE_CONNECTING;
-        updateState(DetailedState.CONNECTING, "agentConnect");
-
-        NetworkAgentConfig networkAgentConfig = new NetworkAgentConfig();
-        networkAgentConfig.allowBypass = mConfig.allowBypass && !mLockdown;
-
-        mNetworkCapabilities.setOwnerUid(mOwnerUID);
-        mNetworkCapabilities.setAdministratorUids(new int[] {mOwnerUID});
-        mNetworkCapabilities.setUids(createUserAndRestrictedProfilesRanges(mUserId,
-                mConfig.allowedApplications, mConfig.disallowedApplications));
-
-        mNetworkCapabilities.setTransportInfo(new VpnTransportInfo(getActiveVpnType()));
+        ncBuilder.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
 
         // Only apps targeting Q and above can explicitly declare themselves as metered.
         // These VPNs are assumed metered unless they state otherwise.
         if (mIsPackageTargetingAtLeastQ && mConfig.isMetered) {
-            mNetworkCapabilities.removeCapability(NET_CAPABILITY_NOT_METERED);
+            ncBuilder.removeCapability(NET_CAPABILITY_NOT_METERED);
         } else {
-            mNetworkCapabilities.addCapability(NET_CAPABILITY_NOT_METERED);
+            ncBuilder.addCapability(NET_CAPABILITY_NOT_METERED);
         }
 
+        mNetworkCapabilities = ncBuilder.build();
         mNetworkAgent = new NetworkAgent(mContext, mLooper, NETWORKTYPE /* logtag */,
                 mNetworkCapabilities, lp, VPN_DEFAULT_SCORE, networkAgentConfig, mNetworkProvider) {
             @Override
@@ -1408,7 +1411,8 @@ public class Vpn {
             // restore old state
             mConfig = oldConfig;
             mConnection = oldConnection;
-            mNetworkCapabilities.setUids(oldUsers);
+            mNetworkCapabilities = new NetworkCapabilities.Builder(mNetworkCapabilities)
+                    .setUids(oldUsers).build();
             mNetworkAgent = oldNetworkAgent;
             mInterface = oldInterface;
             throw e;
@@ -1558,7 +1562,8 @@ public class Vpn {
                     try {
                         addUserToRanges(existingRanges, userId, mConfig.allowedApplications,
                                 mConfig.disallowedApplications);
-                        mNetworkCapabilities.setUids(existingRanges);
+                        mNetworkCapabilities = new NetworkCapabilities.Builder(mNetworkCapabilities)
+                                .setUids(existingRanges).build();
                     } catch (Exception e) {
                         Log.wtf(TAG, "Failed to add restricted user to owner", e);
                     }
@@ -1587,7 +1592,8 @@ public class Vpn {
                         final List<Range<Integer>> removedRanges =
                                 uidRangesForUser(userId, existingRanges);
                         existingRanges.removeAll(removedRanges);
-                        mNetworkCapabilities.setUids(existingRanges);
+                        mNetworkCapabilities = new NetworkCapabilities.Builder(mNetworkCapabilities)
+                                .setUids(existingRanges).build();
                     } catch (Exception e) {
                         Log.wtf(TAG, "Failed to remove restricted user to owner", e);
                     }
@@ -1868,7 +1874,16 @@ public class Vpn {
         if (!isRunningLocked()) {
             return false;
         }
-        return mNetworkCapabilities.appliesToUid(uid);
+        final Set<Range<Integer>> ncUids = mNetworkCapabilities.getUids();
+
+        if (ncUids == null) return true;
+
+        for (Range<Integer> range : ncUids) {
+            if (range.contains(uid)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
