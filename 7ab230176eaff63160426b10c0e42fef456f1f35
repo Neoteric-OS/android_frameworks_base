@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008407916",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1595399?revision\u003d7",
+      "fixSuggestions": [
+        {
+          "fixId": "59023fe3_93af06ed",
+          "description": "Change to \"services/core/java/com/android/server/pm/dex/PackageDexUsage.java\"",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/pm/dex/PackageDexUsage.java",
+              "range": {
+                "startLine": 139,
+                "startChar": 31,
+                "endLine": 139,
+                "endChar": 39
+              },
+              "replacement": "processes"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "96eeda90_eb7f957c",
+        "filename": "services/core/java/com/android/server/pm/dex/PackageDexUsage.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-24T03:09:21Z",
+      "side": 1,
+      "message": "Common typo found: \"proceses\" -- should it be \"processes\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 139,
+        "startChar": 31,
+        "endLine": 139,
+        "endChar": 39
+      },
+      "revId": "7ab230176eaff63160426b10c0e42fef456f1f35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
