@@ -16,6 +16,23 @@
       "message": "Jorim or Wale - Could you please +2 the AndroidRuntime.cpp change?\n\nLukasz - I may need your Android +2 again? It doesn\u0027t seem to stick even if the owned file is unchanged? That seems like a misfeature.\n\nThe presubmit failures look thoroughly unrelated. Since a basically identical CL passed, I may override.",
       "revId": "69d44b0bfd5d4a6721ab3dccf537a147af7b6d1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dc33e0c_a07af44f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-24T05:32:00Z",
+      "side": 1,
+      "message": "Replacing Lukacs with Colin, since the OWNERs for Android.bp changed in the interim. Lukacs had previously approved that change.",
+      "revId": "69d44b0bfd5d4a6721ab3dccf537a147af7b6d1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
