@@ -53,6 +53,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CBS;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_EIMS;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_ENTERPRISE;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_FOREGROUND;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_FOTA;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_IA;
@@ -163,6 +164,7 @@ import android.net.CaptivePortalData;
 import android.net.ConnectionInfo;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.net.ConnectivityManager.OnCompleteListener;
 import android.net.ConnectivityManager.PacketKeepalive;
 import android.net.ConnectivityManager.PacketKeepaliveCallback;
 import android.net.ConnectivityManager.TooManyRequestsException;
@@ -1396,6 +1398,17 @@ public class ConnectivityServiceTest {
         when(mDeps.getCallingUid()).thenReturn(uid);
         try {
             mCm.registerNetworkCallback(request, callback);
+            waitForIdle();
+        } finally {
+            returnRealCallingUid();
+        }
+    }
+
+    private void registerDefaultNetworkCallbackAsUid(@NonNull final NetworkCallback callback,
+            final int uid) {
+        when(mDeps.getCallingUid()).thenReturn(uid);
+        try {
+            mCm.registerDefaultNetworkCallback(callback);
             waitForIdle();
         } finally {
             returnRealCallingUid();
@@ -10345,5 +10358,214 @@ public class ConnectivityServiceTest {
 
     private UidRange createUidRange(int userId) {
         return UidRange.createForUser(UserHandle.of(userId));
+    }
+
+    private UidRangeParcel[] uidRangeFor(final UserHandle handle) {
+        final int lower = handle.getIdentifier() * 10_000;
+        return new UidRangeParcel[] { new UidRangeParcel(lower, lower + 10_000 - 1) };
+    }
+
+    private static class TestOnCompleteListener implements OnCompleteListener {
+        final class OnComplete {}
+        final ArrayTrackRecord<OnComplete>.ReadHead mHistory =
+                new ArrayTrackRecord<OnComplete>().newReadHead();
+
+        @Override
+        public void onComplete() {
+            mHistory.add(new OnComplete());
+        }
+
+        public void expectOnComplete() {
+            mHistory.poll(TIMEOUT_MS, it -> true);
+        }
+    }
+
+    @Test
+    public void testEnterpriseSliceUpDown() throws Exception {
+        final UserHandle testHandle = UserHandle.of(2);
+        final TestOnCompleteListener listener = new TestOnCompleteListener();
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+
+        final TestNetworkCallback systemCb = new TestNetworkCallback();
+        final TestNetworkCallback generalCb = new TestNetworkCallback();
+        final TestNetworkCallback appCb = new TestNetworkCallback();
+
+        mServiceContext.setPermission(Manifest.permission.NETWORK_SETTINGS, PERMISSION_GRANTED);
+
+        final Handler handler = new Handler(ConnectivityThread.getInstanceLooper());
+        mCm.registerSystemDefaultNetworkCallback(systemCb, handler);
+        mCm.registerDefaultNetworkCallback(generalCb);
+        registerDefaultNetworkCallbackAsUid(appCb, 20103);
+
+        systemCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        generalCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        appCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+
+        mCm.setEnterpriseSlice(testHandle, true, r -> r.run(), listener);
+        listener.expectOnComplete();
+
+        verify(mMockNetd, never()).networkAddUidRanges(any(), any());
+
+        // The slice is not ready yet.
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        appCb.assertNoCallback();
+
+        final NetworkCapabilities sliceNc = new NetworkCapabilities();
+        sliceNc.addCapability(NET_CAPABILITY_ENTERPRISE);
+        sliceNc.removeCapability(NET_CAPABILITY_NOT_RESTRICTED);
+        final TestNetworkAgentWrapper sliceAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR,
+                new LinkProperties(), sliceNc);
+        sliceAgent.connect(false);
+
+        appCb.expectAvailableCallbacksUnvalidated(sliceAgent);
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        verify(mMockNetd, times(1)).networkSetPermissionForNetwork(sliceAgent.getNetwork().netId,
+                INetd.PERMISSION_SYSTEM);
+        verify(mMockNetd, times(1)).networkAddUidRanges(sliceAgent.getNetwork().netId,
+                uidRangeFor(testHandle));
+        reset(mMockNetd);
+
+        sliceAgent.setNetworkValid(true);
+        appCb.expectCapabilitiesWith(NET_CAPABILITY_ENTERPRISE, sliceAgent);
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+
+        // When the agent disconnects, test that the sliced app falls back to the default
+        // network.
+        sliceAgent.disconnect();
+        appCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        verify(mMockNetd, times(1)).networkDestroy(sliceAgent.getNetwork().netId);
+        reset(mMockNetd);
+
+        mCellNetworkAgent.disconnect();
+        systemCb.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+        generalCb.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+        appCb.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+        verify(mMockNetd, times(1)).networkDestroy(mCellNetworkAgent.getNetwork().netId);
+    }
+
+    @Test
+    public void testEnterpriseSliceNotGenerallyAvailable() throws Exception {
+        final UserHandle testHandle = UserHandle.of(2);
+        final TestOnCompleteListener listener = new TestOnCompleteListener();
+        final TestNetworkCallback systemCb = new TestNetworkCallback();
+        final TestNetworkCallback generalCb = new TestNetworkCallback();
+        final TestNetworkCallback appCb = new TestNetworkCallback();
+
+        mServiceContext.setPermission(Manifest.permission.NETWORK_SETTINGS,
+                PERMISSION_GRANTED);
+
+        final Handler handler = new Handler(ConnectivityThread.getInstanceLooper());
+        mCm.registerSystemDefaultNetworkCallback(systemCb, handler);
+        mCm.registerDefaultNetworkCallback(generalCb);
+        registerDefaultNetworkCallbackAsUid(appCb, 20103);
+
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        appCb.assertNoCallback();
+
+        mCm.setEnterpriseSlice(testHandle, true, r -> r.run(), listener);
+        listener.expectOnComplete();
+        verify(mMockNetd, never()).networkAddUidRanges(any(), any());
+
+        // Nothing happens yet
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        appCb.assertNoCallback();
+
+        final NetworkCapabilities sliceNc = new NetworkCapabilities();
+        sliceNc.addCapability(NET_CAPABILITY_ENTERPRISE);
+        sliceNc.removeCapability(NET_CAPABILITY_NOT_RESTRICTED);
+        final TestNetworkAgentWrapper sliceAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR,
+                new LinkProperties(), sliceNc);
+        sliceAgent.connect(false);
+
+        appCb.expectAvailableCallbacksUnvalidated(sliceAgent);
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        verify(mMockNetd, times(1)).networkSetPermissionForNetwork(sliceAgent.getNetwork().netId,
+                INetd.PERMISSION_SYSTEM);
+        verify(mMockNetd, times(1)).networkAddUidRanges(sliceAgent.getNetwork().netId,
+                uidRangeFor(testHandle));
+        reset(mMockNetd);
+
+        sliceAgent.setNetworkValid(true);
+        appCb.expectCapabilitiesThat(sliceAgent, nc -> nc.hasCapability(NET_CAPABILITY_ENTERPRISE)
+                && !nc.hasCapability(NET_CAPABILITY_NOT_RESTRICTED));
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        verify(mMockNetd, never()).networkAddUidRanges(any(), any());
+        reset(mMockNetd);
+
+        // When the agent disconnects, test that the sliced app falls back to the default
+        // network.
+        sliceAgent.disconnect();
+        appCb.expectCallback(CallbackEntry.LOST, sliceAgent);
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        verify(mMockNetd, times(1)).networkDestroy(sliceAgent.getNetwork().netId);
+        reset(mMockNetd);
+
+        mCellNetworkAgent.disconnect();
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        appCb.assertNoCallback();
+        verify(mMockNetd, times(1)).networkDestroy(mCellNetworkAgent.getNetwork().netId);
+    }
+
+    @Test
+    public void testSetEnterpriseSlice() throws Exception {
+        final UserHandle testHandle = UserHandle.of(2);
+        final TestOnCompleteListener listener = new TestOnCompleteListener();
+        // Connect both a regular cell agent and an enterprise slice first.
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+
+        final NetworkCapabilities sliceNc = new NetworkCapabilities();
+        sliceNc.addCapability(NET_CAPABILITY_ENTERPRISE);
+        sliceNc.removeCapability(NET_CAPABILITY_NOT_RESTRICTED);
+        final TestNetworkAgentWrapper sliceAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR,
+                new LinkProperties(), sliceNc);
+        sliceAgent.connect(true);
+
+        mCm.setEnterpriseSlice(testHandle, true, r -> r.run(), listener);
+        listener.expectOnComplete();
+        verify(mMockNetd, times(1)).networkSetPermissionForNetwork(sliceAgent.getNetwork().netId,
+                INetd.PERMISSION_SYSTEM);
+        verify(mMockNetd, times(1)).networkAddUidRanges(sliceAgent.getNetwork().netId,
+                uidRangeFor(testHandle));
+
+        final TestNetworkCallback systemCb = new TestNetworkCallback();
+        final TestNetworkCallback generalCb = new TestNetworkCallback();
+        final TestNetworkCallback appCb = new TestNetworkCallback();
+
+        mServiceContext.setPermission(Manifest.permission.NETWORK_SETTINGS,
+                PERMISSION_GRANTED);
+
+        final Handler handler = new Handler(ConnectivityThread.getInstanceLooper());
+        mCm.registerSystemDefaultNetworkCallback(systemCb, handler);
+        mCm.registerDefaultNetworkCallback(generalCb);
+        registerDefaultNetworkCallbackAsUid(appCb, 20103);
+
+        systemCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        generalCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        appCb.expectAvailableCallbacksValidated(sliceAgent);
+
+        mCm.setEnterpriseSlice(testHandle, true, r -> r.run(), listener);
+
+        appCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        listener.expectOnComplete();
+        verify(mMockNetd, times(1)).networkRemoveUidRanges(sliceAgent.getNetwork().netId,
+                uidRangeFor(testHandle));
+
+        sliceAgent.disconnect();
+        mCellNetworkAgent.disconnect();
     }
 }
