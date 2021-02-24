@@ -33,6 +33,24 @@
       "message": "Replacing Lukacs with Colin, since the OWNERs for Android.bp changed in the interim. Lukacs had previously approved that change.",
       "revId": "69d44b0bfd5d4a6721ab3dccf537a147af7b6d1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c66cb83_0c2838c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2021-02-24T06:27:13Z",
+      "side": 1,
+      "message": "The suggest owners tool is being misleading here.  Lukács is still an owner, it\u0027s just showing a random 5 owners, not the exhaustive set.  It\u0027s also always suggesting owners from the per-file rule for Android.bp, but the folder-level owners are also sufficient, and better reviewers in this case.  An owner approval on AndroidRuntime.cpp will also cover Android.bp.",
+      "parentUuid": "9dc33e0c_a07af44f",
+      "revId": "69d44b0bfd5d4a6721ab3dccf537a147af7b6d1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
