@@ -16,6 +16,23 @@
       "message": "Changes to tests lgtm",
       "revId": "0c76165ff34eaf170d470a97a1e51e73679d3e56",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d3702c4_1ebbcea3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 35
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-24T01:39:33Z",
+      "side": 1,
+      "message": "Patchset #25 LGTM.\n\nRemi, could you look at the changes between PS25 and PS35, which I made?",
+      "revId": "0c76165ff34eaf170d470a97a1e51e73679d3e56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
