@@ -22,12 +22,18 @@ import android.annotation.NonNull;
 import android.net.ipsec.ike.IkeSaProposal;
 import android.net.ipsec.ike.IkeSessionParams;
 import android.net.ipsec.ike.IkeSessionParams.IkeAuthConfig;
+import android.net.ipsec.ike.IkeSessionParams.IkeAuthDigitalSignLocalConfig;
+import android.net.ipsec.ike.IkeSessionParams.IkeAuthDigitalSignRemoteConfig;
 import android.net.ipsec.ike.IkeSessionParams.IkeAuthPskConfig;
 import android.os.PersistableBundle;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.server.vcn.util.PersistableBundleUtils;
 
+import java.security.PrivateKey;
+import java.security.cert.CertificateEncodingException;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -145,6 +151,14 @@ public final class IkeSessionParamsUtils {
                 IkeAuthPskConfig config = (IkeAuthPskConfig) authConfig;
                 return IkeAuthPskConfigUtils.toPersistableBundle(
                         config, createPersistableBundle(IKE_AUTH_METHOD_PSK));
+            } else if (authConfig instanceof IkeAuthDigitalSignLocalConfig) {
+                IkeAuthDigitalSignLocalConfig config = (IkeAuthDigitalSignLocalConfig) authConfig;
+                return IkeAuthDigitalSignConfigUtils.toPersistableBundle(
+                        config, createPersistableBundle(IKE_AUTH_METHOD_PUB_KEY_SIGNATURE));
+            } else if (authConfig instanceof IkeAuthDigitalSignRemoteConfig) {
+                IkeAuthDigitalSignRemoteConfig config = (IkeAuthDigitalSignRemoteConfig) authConfig;
+                return IkeAuthDigitalSignConfigUtils.toPersistableBundle(
+                        config, createPersistableBundle(IKE_AUTH_METHOD_PUB_KEY_SIGNATURE));
             } else {
                 throw new IllegalStateException("Invalid IkeAuthConfig subclass");
             }
@@ -175,6 +189,15 @@ public final class IkeSessionParamsUtils {
                                         + remoteMethodType);
                     }
                     IkeAuthPskConfigUtils.setBuilderByReadingPersistableBundle(
+                            localAuth, remoteAuth, builder);
+                    break;
+                case IKE_AUTH_METHOD_PUB_KEY_SIGNATURE:
+                    if (remoteMethodType != IKE_AUTH_METHOD_PUB_KEY_SIGNATURE) {
+                        throw new IllegalArgumentException(
+                                "Expect remote auth method to be digital signature based, but was "
+                                        + remoteMethodType);
+                    }
+                    IkeAuthDigitalSignConfigUtils.setBuilderByReadingPersistableBundle(
                             localAuth, remoteAuth, builder);
                     break;
                 default:
@@ -211,6 +234,100 @@ public final class IkeSessionParamsUtils {
                 throw new IllegalArgumentException("Local PSK and remote PSK are different");
             }
             builder.setAuthPsk(localPsk);
+        }
+    }
+
+    private static class IkeAuthDigitalSignConfigUtils {
+        private static final String END_CERT_KEY = "END_CERT_KEY";
+        private static final String INTERMEDIATE_CERTS_KEY = "INTERMEDIATE_CERTS_KEY";
+        private static final String PRIVATE_KEY_KEY = "PRIVATE_KEY_KEY";
+        private static final String TRUST_CERT_KEY = "TRUST_CERT_KEY";
+
+        @NonNull
+        public static PersistableBundle toPersistableBundle(
+                @NonNull IkeAuthDigitalSignLocalConfig config, @NonNull PersistableBundle result) {
+            try {
+                result.putPersistableBundle(
+                        END_CERT_KEY,
+                        PersistableBundleUtils.fromByteArray(
+                                config.getClientEndCertificate().getEncoded()));
+
+                final List<X509Certificate> certList = config.getIntermediateCertificates();
+                final List<byte[]> encodedCertList = new ArrayList<>(certList.size());
+                for (X509Certificate cert : certList) {
+                    encodedCertList.add(cert.getEncoded());
+                }
+
+                final PersistableBundle certsBundle =
+                        PersistableBundleUtils.fromList(
+                                encodedCertList, PersistableBundleUtils::fromByteArray);
+                result.putPersistableBundle(INTERMEDIATE_CERTS_KEY, certsBundle);
+            } catch (CertificateEncodingException e) {
+                throw new IllegalArgumentException("Fail to encode certificate");
+            }
+
+            // TODO: b/170670506 Consider putting PrivateKey in Android KeyStore
+            result.putPersistableBundle(
+                    PRIVATE_KEY_KEY,
+                    PersistableBundleUtils.fromByteArray(config.getPrivateKey().getEncoded()));
+            return result;
+        }
+
+        @NonNull
+        public static PersistableBundle toPersistableBundle(
+                @NonNull IkeAuthDigitalSignRemoteConfig config, @NonNull PersistableBundle result) {
+            try {
+                X509Certificate caCert = config.getRemoteCaCert();
+                if (caCert != null) {
+                    result.putPersistableBundle(
+                            TRUST_CERT_KEY,
+                            PersistableBundleUtils.fromByteArray(caCert.getEncoded()));
+                }
+            } catch (CertificateEncodingException e) {
+                throw new IllegalArgumentException("Fail to encode the certificate");
+            }
+
+            return result;
+        }
+
+        public static void setBuilderByReadingPersistableBundle(
+                @NonNull PersistableBundle localAuth,
+                @NonNull PersistableBundle remoteAuth,
+                @NonNull IkeSessionParams.Builder builder) {
+            // Deserialize localAuth
+            final PersistableBundle endCertBundle = localAuth.getPersistableBundle(END_CERT_KEY);
+            Objects.requireNonNull(endCertBundle, "End cert was null");
+            final byte[] encodedCert = PersistableBundleUtils.toByteArray(endCertBundle);
+            final X509Certificate endCert = CertUtils.certificateFromByteArray(encodedCert);
+
+            final PersistableBundle certsBundle =
+                    localAuth.getPersistableBundle(INTERMEDIATE_CERTS_KEY);
+            Objects.requireNonNull(certsBundle, "Intermediate certs was null");
+            final List<byte[]> encodedCertList =
+                    PersistableBundleUtils.toList(certsBundle, PersistableBundleUtils::toByteArray);
+            final List<X509Certificate> certList = new ArrayList<>(encodedCertList.size());
+            for (byte[] encoded : encodedCertList) {
+                certList.add(CertUtils.certificateFromByteArray(encoded));
+            }
+
+            final PersistableBundle privateKeyBundle =
+                    localAuth.getPersistableBundle(PRIVATE_KEY_KEY);
+            Objects.requireNonNull(privateKeyBundle, "PrivateKey bundle was null");
+            final PrivateKey privateKey =
+                    CertUtils.privateKeyFromByteArray(
+                            PersistableBundleUtils.toByteArray(privateKeyBundle));
+
+            // Deserialize remoteAuth
+            final PersistableBundle trustCertBundle =
+                    remoteAuth.getPersistableBundle(TRUST_CERT_KEY);
+
+            X509Certificate caCert = null;
+            if (trustCertBundle != null) {
+                final byte[] encodedCaCert = PersistableBundleUtils.toByteArray(trustCertBundle);
+                caCert = CertUtils.certificateFromByteArray(encodedCaCert);
+            }
+
+            builder.setAuthDigitalSignature(caCert, endCert, certList, privateKey);
         }
     }
 }
