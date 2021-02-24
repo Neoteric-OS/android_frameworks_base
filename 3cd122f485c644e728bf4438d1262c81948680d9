@@ -16,6 +16,24 @@
       "message": "Did this forget to update the USAP path, or am I missing something? It seems that setAllowNetworkingForProcess() is only called in forkAndSpecialize(), not in specializeAppProcess ...",
       "revId": "3cd122f485c644e728bf4438d1262c81948680d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca9a5871_78ab4cb5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-02-24T17:20:00Z",
+      "side": 1,
+      "message": "If this is to allow the applications that we are specializing into to use AF_INET sockets, then yes, this appears to be needed in the specializeAppProcess.",
+      "parentUuid": "b49686da_6a701f7f",
+      "revId": "3cd122f485c644e728bf4438d1262c81948680d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
