@@ -198,6 +198,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "32c98f57_300a4838",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-24T18:52:05Z",
+      "side": 1,
+      "message": "What\u0027s the use case for re-checking? If you have to re-check upon update, I don\u0027t see any reason to ever store overrides beyond the current version.\n\nI don\u0027t like the idea of sending over the UID in the call in this case, as it can be easily spoofed, and I\u0027d quite frankly prefer not to store any extra information.\n\nIf the use case you have in mind is more complex, feel free to reach out off-CL in either chat or e-mail.",
+      "parentUuid": "2624324b_490f1eec",
+      "revId": "645ba4de9034d1a74197d3705270ac257edf7ddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72088d25_6d0fe69c",
         "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
         "patchSetId": 2
