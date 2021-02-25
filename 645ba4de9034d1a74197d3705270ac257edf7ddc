@@ -234,6 +234,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7cd7aa87_078dc08c",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-25T14:56:50Z",
+      "side": 1,
+      "message": "Re-check is not for going from debuggable to release (I actually kind of regret adding a test for that transition, since it\u0027s technically impossible). The re-check logic is for these cases:\n- app install, in which case overrides added pre-install get validated against the policy\n- app update, in which case existing changes could be invalidated if the targetSdk of the app is greater than the ones for specific compat changes\n- app uninstall, in which case existing changes become \u0027deferred\u0027 (i.e. to be re-checked on app install)\n\nThe question is how do we treat this new override mechanism; the way I see it, the extension to the existing policy is that a change id can ALSO be overridden if:\n- it has the @Overridable annotation\n- the caller has a - as of yet unnamed - permission when calling into the compat framework to be allowed to override\n- the override satisfies all the other existing constraints (except those related to the app\u0027s or operating system\u0027s debuggability)\n\nWhat I am recommending is that at override time, we save those two first conditions (really, the \u0026\u0026 of them); on recheck, the change is that you pass initial policy gate if `os.isdebuggable || app.isdebuggable || override_was_added_by_privileged_caller_on_overridable_change` (excuse the very weak pseudocode).",
+      "parentUuid": "cb687c19_b7b91b98",
+      "revId": "645ba4de9034d1a74197d3705270ac257edf7ddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72088d25_6d0fe69c",
         "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
         "patchSetId": 2

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "990713cf_68596b9a",
+        "filename": "core/java/android/app/compat/CompatChanges.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-25T14:56:50Z",
+      "side": 1,
+      "message": "this change is not safe, as we\u0027ve already shipped mainline modules that use the static method",
+      "range": {
+        "startLine": 109,
+        "startChar": 3,
+        "endLine": 111,
+        "endChar": 0
+      },
+      "revId": "06e0facb2be08fc9a0236634f2037da90cd58d3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
