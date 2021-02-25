@@ -216,6 +216,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cb687c19_b7b91b98",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-25T12:40:42Z",
+      "side": 1,
+      "message": "Rechecking is a pre-existing concept in the code (I believe to catch going from debuggable to release apk). So in order to pass that check we need something to prove that this is a legit override. We could pass a boolean to say that this is a recheck and allow all overridable changes to go through under the premise that they would have been previously rejected if not allowed. wdyt?\n\nRe spoofing: I see your concern in general, but in this specific case the call goes system_server -\u003e system_server, so not sure how one would spoof that in the middle. I believe the only other user of IOverrideValidator is Settings and that\u0027s \u0027just\u0027 to show in the UI whether the change can be manipulated. It will eventually get checked again internally when the user tries to toggle. We could add a method to impl only and not expose on the aidl. Would that make things easier?",
+      "parentUuid": "32c98f57_300a4838",
+      "revId": "645ba4de9034d1a74197d3705270ac257edf7ddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72088d25_6d0fe69c",
         "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
         "patchSetId": 2
