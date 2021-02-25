@@ -53,7 +53,7 @@ class RebootEscrowProviderServerBasedImpl implements RebootEscrowProviderInterfa
     private byte[] mServerBlob;
 
     static class Injector {
-        private ResumeOnRebootServiceConnection mServiceConnection = null;
+        private ResumeOnRebootServiceConnection mServiceConnection;
 
         Injector(Context context) {
             mServiceConnection = new ResumeOnRebootServiceProvider(context).getServiceConnection();
@@ -118,8 +118,14 @@ class RebootEscrowProviderServerBasedImpl implements RebootEscrowProviderInterfa
         // Ask the server connection service to decrypt the inner layer, to get the reboot
         // escrow key (k_s).
         serviceConnection.bindToService(mInjector.getServiceTimeoutInSeconds());
-        byte[] escrowKeyBytes = serviceConnection.unwrap(decryptedBlob,
-                mInjector.getServiceTimeoutInSeconds());
+        byte[] escrowKeyBytes;
+        try {
+            escrowKeyBytes = serviceConnection.unwrap(decryptedBlob,
+                    mInjector.getServiceTimeoutInSeconds());
+        } catch (IllegalStateException e) {
+            throw new RemoteException("Failed to unwrap blob", e, true /* enableSuppression */,
+                    true /* writableStackTrace */);
+        }
         serviceConnection.unbindService();
 
         return escrowKeyBytes;
@@ -177,8 +183,15 @@ class RebootEscrowProviderServerBasedImpl implements RebootEscrowProviderInterfa
 
         serviceConnection.bindToService(mInjector.getServiceTimeoutInSeconds());
         // Ask the server connection service to encrypt the reboot escrow key.
-        byte[] serverEncryptedBlob = serviceConnection.wrapBlob(escrowKeyBytes,
-                mInjector.getServerBlobLifetimeInMillis(), mInjector.getServiceTimeoutInSeconds());
+        byte[] serverEncryptedBlob;
+        try {
+            serverEncryptedBlob = serviceConnection.wrapBlob(escrowKeyBytes,
+                    mInjector.getServerBlobLifetimeInMillis(),
+                    mInjector.getServiceTimeoutInSeconds());
+        } catch (IllegalStateException e) {
+            throw new RemoteException("Failed to wrap bytes", e, true /* enableSuppression */,
+                    true /* writableStackTrace */);
+        }
         serviceConnection.unbindService();
 
         if (serverEncryptedBlob == null) {
