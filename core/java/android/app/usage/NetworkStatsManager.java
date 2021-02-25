@@ -623,7 +623,10 @@ public class NetworkStatsManager {
                         : NetworkTemplate.buildTemplateMobileAll(subscriberId);
                 break;
             case ConnectivityManager.TYPE_WIFI:
-                template = NetworkTemplate.buildTemplateWifiWildcard();
+                template = subscriberId == null
+                        ? NetworkTemplate.buildTemplateWifiWildcard()
+                        : NetworkTemplate.buildTemplateWifi(NetworkTemplate.NETWORKID_ALL,
+                                subscriberId);
                 break;
             default:
                 throw new IllegalArgumentException("Cannot create template for network type "
