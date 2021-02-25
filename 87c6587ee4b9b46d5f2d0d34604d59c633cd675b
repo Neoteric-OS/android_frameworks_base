@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e6d8473_96a51ce6",
+        "filename": "services/core/java/com/android/server/apphibernation/GlobalLevelState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1321491
+      },
+      "writtenOn": "2021-02-25T20:29:20Z",
+      "side": 1,
+      "message": "Is this preferred over String.format?",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "87c6587ee4b9b46d5f2d0d34604d59c633cd675b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
