@@ -59,6 +59,7 @@ import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -4976,6 +4977,22 @@ public class ConnectivityManager {
     }
 
     /**
+     * Listener for operations that can complete.
+     *
+     * This is used for APIs that should notify their user of completion like
+     * setOemNetworkPreference or setNetworkPreferenceForUser.
+     *
+     * @hide
+     */
+    // TODO : @SystemApi, and replace OnSetOemNetworkPreferenceListener with this.
+    public interface OnCompleteListener {
+        /**
+         * Called when the operation successfully completes.
+         */
+        void onComplete();
+    }
+
+    /**
      * Used by automotive devices to set the network preferences used to direct traffic at an
      * application level as per the given OemNetworkPreferences. An example use-case would be an
      * automotive OEM wanting to provide connectivity for applications critical to the usage of a
@@ -5014,6 +5031,48 @@ public class ConnectivityManager {
             mService.setOemNetworkPreference(preference, listenerInternal);
         } catch (RemoteException e) {
             Log.e(TAG, "setOemNetworkPreference() failed for preference: " + preference.toString());
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Request that a user profile is put by default on a network offering a given capability.
+     *
+     * If such a network is not available, the apps in the profile will use the default network
+     * instead, if available.
+     *
+     * @param profile the profile concerned.
+     * @param capability the capability by which to know the network, or 0 to request the profile
+     *                   is put on the system default network
+     * @param executor an executor to execute the listener on. Optional if listener is null.
+     * @param listener an optional listener to listen for completion of the operation.
+     * @throws IllegalArgumentException if {@code profile} is not a valid user profile.
+     * @throws SecurityException if missing the appropriate permissions.
+     * @hide
+     */
+    // TODO : @SystemApi
+    @RequiresPermission(android.Manifest.permission.NETWORK_STACK)
+    public void setNetworkPreferenceForUser(@NonNull final UserHandle profile, final int capability,
+            @Nullable @CallbackExecutor final Executor executor,
+            @Nullable final OnCompleteListener listener) {
+        Objects.requireNonNull(profile, "profile can't be null");
+        if (null != listener) {
+            Objects.requireNonNull(executor, "Pass a non-null executor, or a null listener");
+        }
+        final IOnCompleteListener proxy;
+        if (null == listener) {
+            proxy = null;
+        } else {
+            proxy = new IOnCompleteListener.Stub() {
+                @Override
+                public void onComplete() {
+                    executor.execute(listener::onComplete);
+                }
+            };
+        }
+        try {
+            mService.setNetworkPreferenceForUser(profile, capability, proxy);
+        } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
     }
