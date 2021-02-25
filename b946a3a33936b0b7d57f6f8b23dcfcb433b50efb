@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12cf8038_8e0d9fbe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-02-25T13:54:39Z",
+      "side": 1,
+      "message": "Good timing for doing this :) Do we want to do the same for preloaded-classes?",
+      "revId": "b946a3a33936b0b7d57f6f8b23dcfcb433b50efb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
