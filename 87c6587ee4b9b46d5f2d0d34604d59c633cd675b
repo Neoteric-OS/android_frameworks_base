@@ -22,6 +22,30 @@
       },
       "revId": "87c6587ee4b9b46d5f2d0d34604d59c633cd675b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98d02b14_447cb711",
+        "filename": "services/core/java/com/android/server/apphibernation/GlobalLevelState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-25T21:19:26Z",
+      "side": 1,
+      "message": "Honestly, this is what the Android Studio IDE auto-generated as a suggestion, so I just took it. Personally, I do think it\u0027s a bit easier to read and visualize like this than a String.format but I\u0027m open to either",
+      "parentUuid": "2e6d8473_96a51ce6",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "87c6587ee4b9b46d5f2d0d34604d59c633cd675b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
