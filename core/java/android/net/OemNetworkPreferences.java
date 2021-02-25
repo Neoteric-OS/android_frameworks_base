@@ -64,6 +64,14 @@ public final class OemNetworkPreferences implements Parcelable {
     @NonNull
     private final Bundle mNetworkMappings;
 
+    /**
+     * Return whether this object is empty.
+     * @hide
+     */
+    public boolean isEmpty() {
+        return mNetworkMappings.keySet().size() == 0;
+    }
+
     @NonNull
     public Map<String, Integer> getNetworkPreferences() {
         return convertToUnmodifiableMap(mNetworkMappings);
