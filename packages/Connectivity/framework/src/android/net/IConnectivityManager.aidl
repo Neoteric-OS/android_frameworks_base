@@ -20,6 +20,7 @@ import android.app.PendingIntent;
 import android.net.ConnectionInfo;
 import android.net.ConnectivityDiagnosticsManager;
 import android.net.IConnectivityDiagnosticsCallback;
+import android.net.IOnCompleteListener;
 import android.net.IOnSetOemNetworkPreferenceListener;
 import android.net.INetworkActivityListener;
 import android.net.IQosCallback;
@@ -41,6 +42,7 @@ import android.os.Messenger;
 import android.os.ParcelFileDescriptor;
 import android.os.PersistableBundle;
 import android.os.ResultReceiver;
+import android.os.UserHandle;
 
 import com.android.connectivity.aidl.INetworkAgent;
 
@@ -212,4 +214,7 @@ interface IConnectivityManager
 
     void setOemNetworkPreference(in OemNetworkPreferences preference,
             in IOnSetOemNetworkPreferenceListener listener);
+
+    void setNetworkPreferenceForUser(in UserHandle profile, int capability,
+            in IOnCompleteListener listener);
 }
