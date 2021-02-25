@@ -46,6 +46,30 @@
       },
       "revId": "87c6587ee4b9b46d5f2d0d34604d59c633cd675b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b885e63_c5ec8fc2",
+        "filename": "services/core/java/com/android/server/apphibernation/GlobalLevelState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1321491
+      },
+      "writtenOn": "2021-02-25T21:28:44Z",
+      "side": 1,
+      "message": "Gotcha, I forgot what the guidance was. https://source.android.com/setup/contribute/code-style says it\u0027s fine, and http://go/android-for-java#heading\u003dh.uzpxq446qdti recommends avoiding String.format outside of debug logs.",
+      "parentUuid": "98d02b14_447cb711",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "87c6587ee4b9b46d5f2d0d34604d59c633cd675b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
