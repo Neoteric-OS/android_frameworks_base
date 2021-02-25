@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d6d46cd_fa0d71b3",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-25T00:34:45Z",
+      "side": 1,
+      "message": "probably need to leave TELEPHONY in here, no?",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 43
+      },
+      "revId": "d6feab6f9484314a08e1f7776a1ec7df5f1c76c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1bf36ed_0918cb4b",
+        "filename": "core/java/android/os/BugreportParams.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-25T00:34:45Z",
+      "side": 1,
+      "message": "urgent isn\u0027t particularly meaningful here. Maybe this is an opportunity to enhance the docstring a little bit (I\u0027d like the bikeshed to be green, please).\n\nI think just removing the words \"few\" and \"urgent\" to say \"only includes sections used for analysis of telephony/wifi/...\"\n\nMaybe also worth saying that in earlier versions this was equivalent to MODE_TELEPHONY.",
+      "range": {
+        "startLine": 93,
+        "startChar": 80,
+        "endLine": 93,
+        "endChar": 86
+      },
+      "revId": "d6feab6f9484314a08e1f7776a1ec7df5f1c76c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
