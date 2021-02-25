@@ -252,6 +252,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "39357b9f_8ee1c350",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-25T15:07:37Z",
+      "side": 1,
+      "message": "Okay. That makes sense.\nDo we really need to save anything in that case? Can\u0027t we take that fact that the override is here as proof that the original caller had the required permission?",
+      "parentUuid": "7cd7aa87_078dc08c",
+      "revId": "645ba4de9034d1a74197d3705270ac257edf7ddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72088d25_6d0fe69c",
         "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
         "patchSetId": 2
