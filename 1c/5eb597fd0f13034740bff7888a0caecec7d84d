@@ -1,0 +1,12 @@
+Code-Review+2: John Reck <jreck@google.com>
+Code-Review+1: Minkyoung Kim <sleepigmk@gmail.com>
+Autosubmit+1: John Reck <jreck@google.com>
+Open-Source-Licensing+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Lint+1: Lint 🤖 <ayeaye-gerrit@google.com>
+Presubmit-Verified+2: Treehugger Robot <treehugger-gerrit@google.com>
+Verified+1: Minkyoung Kim <sleepigmk@gmail.com>
+Submitted-by: Treehugger Robot <treehugger-gerrit@google.com>
+Submitted-at: Thu, 25 Feb 2021 14:11:57 +0000
+Reviewed-on: https://android-review.googlesource.com/c/platform/frameworks/base/+/1577205
+Project: platform/frameworks/base
+Branch: refs/heads/master
