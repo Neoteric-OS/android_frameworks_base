@@ -25,13 +25,23 @@ import android.net.ipsec.ike.IkeSessionParams;
 import android.net.ipsec.ike.SaProposal;
 import android.os.PersistableBundle;
 
+import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.security.interfaces.RSAPrivateKey;
+import java.util.Base64;
+import java.util.stream.Collectors;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -66,6 +76,49 @@ public class IkeSessionParamsUtilsTest {
     @Test
     public void testIkeSessionParamsWithPskEncodeDecodeIsLossLess() throws Exception {
         final IkeSessionParams params = createBuilderMinimum().setAuthPsk("psk".getBytes()).build();
+        verifyPersistableBundleEncodeDecodeIsLossless(params);
+    }
+
+    private static InputStream openAssetsFile(String fileName) throws Exception {
+        return InstrumentationRegistry.getContext().getResources().getAssets().open(fileName);
+    }
+
+    private static X509Certificate createCertFromPemFile(String fileName) throws Exception {
+        final CertificateFactory factory = CertificateFactory.getInstance("X.509");
+        return (X509Certificate) factory.generateCertificate(openAssetsFile(fileName));
+    }
+
+    private static RSAPrivateKey createRsaPrivateKeyFromKeyFile(String fileName) throws Exception {
+        final String newLineChar = "\n";
+        final String pemTypePrivateKey = "-----(BEGIN|END) PRIVATE KEY-----";
+
+        final String pemText =
+                new BufferedReader(
+                                new InputStreamReader(
+                                        openAssetsFile(fileName), StandardCharsets.UTF_8))
+                        .lines()
+                        .collect(Collectors.joining(newLineChar));
+
+        final byte[] certificateBytes =
+                Base64.getDecoder()
+                        .decode(
+                                pemText.replaceAll(pemTypePrivateKey, "")
+                                        .replaceAll(newLineChar, "")
+                                        .getBytes(StandardCharsets.UTF_8));
+        return (RSAPrivateKey) CertUtils.privateKeyFromByteArray(certificateBytes);
+    }
+
+    @Test
+    public void testIkeSessionParamsWithDigitalSignAuth() throws Exception {
+        final X509Certificate serverCaCert = createCertFromPemFile("self-signed-ca.pem");
+        final X509Certificate clientEndCert = createCertFromPemFile("client-end-cert.pem");
+        final RSAPrivateKey clientPrivateKey =
+                createRsaPrivateKeyFromKeyFile("client-private-key.key");
+
+        final IkeSessionParams params =
+                createBuilderMinimum()
+                        .setAuthDigitalSignature(serverCaCert, clientEndCert, clientPrivateKey)
+                        .build();
         verifyPersistableBundleEncodeDecodeIsLossless(params);
     }
 }
