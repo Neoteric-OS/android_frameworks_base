@@ -270,6 +270,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7ca64e2d_2cf84fb3",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-25T15:50:35Z",
+      "side": 1,
+      "message": "You could _probably_ manage that; not sure what weird scenarios we could concoct - i.e. if an override is added pre-install, or overrides are only applicable to versions outside the app\u0027s current version, and then it gets updated, etc.",
+      "parentUuid": "39357b9f_8ee1c350",
+      "revId": "645ba4de9034d1a74197d3705270ac257edf7ddc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72088d25_6d0fe69c",
         "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
         "patchSetId": 2
