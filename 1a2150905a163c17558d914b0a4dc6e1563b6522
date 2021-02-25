@@ -50,6 +50,23 @@
       "message": "carry over owner+1 from internal review",
       "revId": "1a2150905a163c17558d914b0a4dc6e1563b6522",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62ea7bfd_1e645cd6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2021-02-25T22:15:46Z",
+      "side": 1,
+      "message": "Friendly ping yanmin@ - I think you\u0027re the last owner.",
+      "revId": "1a2150905a163c17558d914b0a4dc6e1563b6522",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
