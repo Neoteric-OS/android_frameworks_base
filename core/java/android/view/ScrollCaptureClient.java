@@ -41,6 +41,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class ScrollCaptureClient extends IScrollCaptureClient.Stub {
 
+	// TEST TEST TEST
+
     private static final String TAG = "ScrollCaptureClient";
     private static final int DEFAULT_TIMEOUT = 1000;
 

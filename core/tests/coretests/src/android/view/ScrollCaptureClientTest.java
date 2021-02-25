@@ -53,6 +53,8 @@ import org.mockito.stubbing.Answer;
 @RunWith(AndroidJUnit4.class)
 public class ScrollCaptureClientTest {
 
+    // TEST TEST TEST
+
     private final Point mPositionInWindow = new Point(1, 2);
     private final Rect mLocalVisibleRect = new Rect(2, 3, 4, 5);
     private final Rect mScrollBounds = new Rect(3, 4, 5, 6);

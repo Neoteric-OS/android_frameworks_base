@@ -50,6 +50,8 @@ import java.util.Random;
 
 public class ScrollViewCaptureHelperTest {
 
+    // TEST TEST TEST
+
     private FrameLayout mParent;
     private ScrollView mTarget;
     private LinearLayout mContent;

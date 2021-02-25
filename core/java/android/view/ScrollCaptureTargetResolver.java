@@ -78,6 +78,8 @@ public class ScrollCaptureTargetResolver {
         return r.width() * r.height();
     }
 
+    private static final boolean TEST = true;
+ 
     private static boolean nullOrEmpty(Rect r) {
         return r == null || r.isEmpty();
     }

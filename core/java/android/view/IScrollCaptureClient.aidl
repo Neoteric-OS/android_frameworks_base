@@ -28,6 +28,8 @@ import android.view.Surface;
    */
 interface IScrollCaptureClient {
 
+    /* TEST TEST TEST */
+
     /**
      * Informs the client that it has been selected for scroll capture and should prepare to
      * to begin handling capture requests.
