@@ -16,6 +16,9 @@
 
 package android.net.vcn.persistablebundleutils;
 
+import static android.system.OsConstants.AF_INET;
+import static android.system.OsConstants.AF_INET6;
+
 import static org.junit.Assert.assertEquals;
 
 import android.net.InetAddresses;
@@ -35,6 +38,8 @@ import org.junit.runner.RunWith;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.security.cert.CertificateFactory;
@@ -118,6 +123,23 @@ public class IkeSessionParamsUtilsTest {
         final IkeSessionParams params =
                 createBuilderMinimum()
                         .setAuthDigitalSignature(serverCaCert, clientEndCert, clientPrivateKey)
+                        .build();
+        verifyPersistableBundleEncodeDecodeIsLossless(params);
+    }
+
+    @Test
+    public void testIkeSessionParamsWithConfigRequests() throws Exception {
+        final Inet4Address ipv4Address =
+                (Inet4Address) InetAddresses.parseNumericAddress("192.0.2.100");
+        final Inet6Address ipv6Address =
+                (Inet6Address) InetAddresses.parseNumericAddress("2001:db8::1");
+
+        final IkeSessionParams params =
+                createBuilderMinimum()
+                        .addPcscfServerRequest(AF_INET)
+                        .addPcscfServerRequest(AF_INET6)
+                        .addPcscfServerRequest(ipv4Address)
+                        .addPcscfServerRequest(ipv6Address)
                         .build();
         verifyPersistableBundleEncodeDecodeIsLossless(params);
     }
