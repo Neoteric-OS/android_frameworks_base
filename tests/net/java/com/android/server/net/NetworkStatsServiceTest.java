@@ -152,6 +152,8 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
     private static final String TEST_SSID = "AndroidAP";
 
     private static NetworkTemplate sTemplateWifi = buildTemplateWifi(TEST_SSID);
+    private static NetworkTemplate sTemplateCarrierWifi1 =
+            buildTemplateWifi(NetworkTemplate.WIFI_NETWORKID_ALL, IMSI_1);
     private static NetworkTemplate sTemplateImsi1 = buildTemplateMobileAll(IMSI_1);
     private static NetworkTemplate sTemplateImsi2 = buildTemplateMobileAll(IMSI_2);
 
@@ -298,7 +300,53 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
     }
 
     @Test
-    public void testNetworkStatsWifi() throws Exception {
+    public void testNetworkStatsCarrierWifi() throws Exception {
+        // pretend that wifi network comes online; service should ask about full
+        // network state, and poll any existing interfaces before updating.
+        expectDefaultSettings();
+        NetworkStateSnapshot[] states = new NetworkStateSnapshot[] {
+                buildWifiState(true, TEST_IFACE, IMSI_1)};
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(buildEmptyStats());
+
+        mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states),
+                new UnderlyingNetworkInfo[0]);
+
+        // verify service has empty history for carrier merged wifi
+        assertNetworkTotal(sTemplateCarrierWifi1, 0L, 0L, 0L, 0L, 0);
+
+        // modify some number on wifi, and trigger poll event
+        incrementCurrentTime(HOUR_IN_MILLIS);
+        expectDefaultSettings();
+        expectNetworkStatsSummary(new NetworkStats(getElapsedRealtime(), 1)
+                .insertEntry(TEST_IFACE, 1024L, 1L, 2048L, 2L));
+        expectNetworkStatsUidDetail(buildEmptyStats());
+        forcePollAndWaitForIdle();
+
+        // verify service recorded history
+        assertNetworkTotal(sTemplateCarrierWifi1, 1024L, 1L, 2048L, 2L, 0);
+
+        // verify service recorded history for wifi with SSID filter
+        assertNetworkTotal(sTemplateWifi,  1024L, 1L, 2048L, 2L, 0);
+
+
+        // and bump forward again, with counters going higher. this is
+        // important, since polling should correctly subtract last snapshot.
+        incrementCurrentTime(DAY_IN_MILLIS);
+        expectDefaultSettings();
+        expectNetworkStatsSummary(new NetworkStats(getElapsedRealtime(), 1)
+                .insertEntry(TEST_IFACE, 4096L, 4L, 8192L, 8L));
+        expectNetworkStatsUidDetail(buildEmptyStats());
+        forcePollAndWaitForIdle();
+
+        // verify service recorded history
+        assertNetworkTotal(sTemplateCarrierWifi1, 4096L, 4L, 8192L, 8L, 0);
+        // verify service recorded history for wifi with SSID filter
+        assertNetworkTotal(sTemplateWifi, 4096L, 4L, 8192L, 8L, 0);
+    }
+
+    @Test
+    public void testNetworkStatsNonCarrierWifi() throws Exception {
         // pretend that wifi network comes online; service should ask about full
         // network state, and poll any existing interfaces before updating.
         expectDefaultSettings();
@@ -311,6 +359,8 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
 
         // verify service has empty history for wifi
         assertNetworkTotal(sTemplateWifi, 0L, 0L, 0L, 0L, 0);
+        // verify service has empty history for carrier merged wifi
+        assertNetworkTotal(sTemplateCarrierWifi1, 0L, 0L, 0L, 0L, 0);
 
         // modify some number on wifi, and trigger poll event
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -322,6 +372,9 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
 
         // verify service recorded history
         assertNetworkTotal(sTemplateWifi, 1024L, 1L, 2048L, 2L, 0);
+        // verify service has empty history for carrier wifi since current network is non carrier
+        // wifi
+        assertNetworkTotal(sTemplateCarrierWifi1, 0L, 0L, 0L, 0L, 0);
 
 
         // and bump forward again, with counters going higher. this is
@@ -335,7 +388,9 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
 
         // verify service recorded history
         assertNetworkTotal(sTemplateWifi, 4096L, 4L, 8192L, 8L, 0);
-
+        // verify service has empty history for carrier wifi since current network is non carrier
+        // wifi
+        assertNetworkTotal(sTemplateCarrierWifi1, 0L, 0L, 0L, 0L, 0);
     }
 
     @Test
@@ -1661,10 +1716,15 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
     }
 
     private static NetworkStateSnapshot buildWifiState() {
-        return buildWifiState(false, TEST_IFACE);
+        return buildWifiState(false, TEST_IFACE, null);
     }
 
     private static NetworkStateSnapshot buildWifiState(boolean isMetered, @NonNull String iface) {
+        return buildWifiState(isMetered, iface, null);
+    }
+
+    private static NetworkStateSnapshot buildWifiState(boolean isMetered, @NonNull String iface,
+            String subscriberId) {
         final LinkProperties prop = new LinkProperties();
         prop.setInterfaceName(iface);
         final NetworkCapabilities capabilities = new NetworkCapabilities();
@@ -1672,7 +1732,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         capabilities.setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING, true);
         capabilities.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
         capabilities.setSSID(TEST_SSID);
-        return new NetworkStateSnapshot(WIFI_NETWORK, capabilities, prop, null, TYPE_WIFI);
+        return new NetworkStateSnapshot(WIFI_NETWORK, capabilities, prop, subscriberId, TYPE_WIFI);
     }
 
     private static NetworkStateSnapshot buildMobile3gState(String subscriberId) {
