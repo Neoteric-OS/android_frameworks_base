@@ -10858,6 +10858,8 @@ public class ConnectivityServiceTest {
     @Test
     public void testSetPreferenceForUserOnOff() throws Exception {
         final UserHandle testHandle = UserHandle.of(2);
+        doReturn(true).when(mUserManager).isManagedProfile();
+
         final TestOnCompleteListener listener = new TestOnCompleteListener();
         // Connect both a regular cell agent and an enterprise slice first.
         mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
