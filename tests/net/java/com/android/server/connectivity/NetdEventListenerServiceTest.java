@@ -26,18 +26,13 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.system.OsConstants;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.util.Base64;
 
 import androidx.test.runner.AndroidJUnit4;
-
-import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityEvent;
-import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityLog;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +42,6 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
@@ -498,29 +492,6 @@ public class NetdEventListenerServiceTest {
                 mService.list(pw);
             }
         }).start();
-    }
-
-    // TODO: instead of comparing textpb to textpb, parse textpb and compare proto to proto.
-    String flushStatistics() throws Exception {
-        IpConnectivityMetrics metricsService =
-                new IpConnectivityMetrics(mock(Context.class), (ctx) -> 2000);
-        metricsService.mNetdListener = mService;
-
-        StringWriter buffer = new StringWriter();
-        PrintWriter writer = new PrintWriter(buffer);
-        metricsService.impl.dump(null, writer, new String[]{"flush"});
-        byte[] bytes = Base64.decode(buffer.toString(), Base64.DEFAULT);
-        IpConnectivityLog log = IpConnectivityLog.parseFrom(bytes);
-        for (IpConnectivityEvent ev : log.events) {
-            if (ev.getConnectStatistics() == null) {
-                continue;
-            }
-            // Sort repeated fields of connect() events arriving in non-deterministic order.
-            Arrays.sort(ev.getConnectStatistics().latenciesMs);
-            Arrays.sort(ev.getConnectStatistics().errnosCounters,
-                    Comparator.comparingInt((p) -> p.key));
-        }
-        return log.toString();
     }
 
     String[] listNetdEvent() throws Exception {

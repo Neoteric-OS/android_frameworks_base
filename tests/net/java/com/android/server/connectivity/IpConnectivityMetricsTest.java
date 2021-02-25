@@ -51,7 +51,6 @@ import android.util.Base64;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.android.internal.util.BitUtils;
-import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -124,22 +123,6 @@ public class IpConnectivityMetricsTest {
         assertEquals("", output2);
     }
 
-    private void logDefaultNetworkEvent(long timeMs, NetworkAgentInfo nai,
-            NetworkAgentInfo oldNai) {
-        final Network network = (nai != null) ? nai.network() : null;
-        final int score = (nai != null) ? nai.getCurrentScore() : 0;
-        final boolean validated = (nai != null) ? nai.lastValidated : false;
-        final LinkProperties lp = (nai != null) ? nai.linkProperties : null;
-        final NetworkCapabilities nc = (nai != null) ? nai.networkCapabilities : null;
-
-        final Network prevNetwork = (oldNai != null) ? oldNai.network() : null;
-        final int prevScore = (oldNai != null) ? oldNai.getCurrentScore() : 0;
-        final LinkProperties prevLp = (oldNai != null) ? oldNai.linkProperties : null;
-        final NetworkCapabilities prevNc = (oldNai != null) ? oldNai.networkCapabilities : null;
-
-        mService.mDefaultNetworkMetrics.logDefaultNetworkEvent(timeMs, network, score, validated,
-                lp, nc, prevNetwork, prevScore, prevLp, prevNc);
-    }
     @Test
     public void testDefaultNetworkEvents() throws Exception {
         final long cell = BitUtils.packBits(new int[]{NetworkCapabilities.TRANSPORT_CELLULAR});

@@ -3043,9 +3043,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 log(nai.toShortString() + " validation " + (valid ? "passed" : "failed") + logMsg);
             }
             if (valid != nai.lastValidated) {
-                if (wasDefault) {
-                    mMetricsLog.logDefaultNetworkValidity(valid);
-                }
                 final int oldScore = nai.getCurrentScore();
                 nai.lastValidated = valid;
                 nai.everValidated |= valid;
@@ -3471,9 +3468,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // if there is a fallback. Taken together, the two form a X -> 0, 0 -> Y sequence
             // whose timestamps tell how long it takes to recover a default network.
             long now = SystemClock.elapsedRealtime();
-            mMetricsLog.logDefaultNetworkEvent(null, 0, false,
-                    null /* lp */, null /* nc */, nai.network, nai.getCurrentScore(),
-                    nai.linkProperties, nai.networkCapabilities);
         }
         notifyIfacesChangedForNetworkStats();
         // TODO - we shouldn't send CALLBACK_LOST to requests that can be satisfied
@@ -7127,9 +7121,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 ? oldDefaultNetwork.linkProperties : null;
         final NetworkCapabilities prevNc = (oldDefaultNetwork != null)
                 ? oldDefaultNetwork.networkCapabilities : null;
-
-        mMetricsLog.logDefaultNetworkEvent(network, score, validated, lp, nc,
-                prevNetwork, prevScore, prevLp, prevNc);
     }
 
     private void makeDefaultForApps(@NonNull final NetworkRequestInfo nri,

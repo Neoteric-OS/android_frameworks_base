@@ -32,11 +32,6 @@ interface IIpConnectivityMetrics {
      */
     int logEvent(in ConnectivityMetricsEvent event);
 
-    void logDefaultNetworkValidity(boolean valid);
-    void logDefaultNetworkEvent(in Network defaultNetwork, int score, boolean validated,
-            in LinkProperties lp, in NetworkCapabilities nc, in Network previousDefaultNetwork,
-            int previousScore, in LinkProperties previousLp, in NetworkCapabilities previousNc);
-
     /**
      * Callback can be registered by DevicePolicyManager or NetworkWatchlistService only.
      * @return status {@code true} if registering/unregistering of the callback was successful,

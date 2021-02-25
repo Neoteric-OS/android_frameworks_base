@@ -718,7 +718,6 @@ gensrcs {
         "&& $(location soong_zip) -jar -o $(out) -C $(genDir)/$(in) -D $(genDir)/$(in)",
 
     srcs: [
-        ":ipconnectivity-proto-src",
         ":libstats_atom_enum_protos",
         ":libtombstone_proto-src",
         "core/proto/**/*.proto",
@@ -746,7 +745,6 @@ gensrcs {
         "  $(in)",
 
     srcs: [
-        ":ipconnectivity-proto-src",
         ":libstats_atom_enum_protos",
         "core/proto/**/*.proto",
         "libs/incident/**/*.proto",
@@ -862,7 +860,6 @@ java_library {
 java_library_host {
     name: "platformprotos",
     srcs: [
-        ":ipconnectivity-proto-src",
         ":libstats_atom_enum_protos",
         ":libstats_internal_protos",
         ":statsd_internal_protos",
@@ -897,7 +894,6 @@ java_library {
     ],
     sdk_version: "9",
     srcs: [
-        ":ipconnectivity-proto-src",
         ":libstats_atom_enum_protos",
         "core/proto/**/*.proto",
         "libs/incident/proto/android/os/**/*.proto",
@@ -913,7 +909,6 @@ java_library {
     },
 
     srcs: [
-        ":ipconnectivity-proto-src",
         ":libstats_atom_enum_protos",
         "core/proto/**/*.proto",
         "libs/incident/proto/android/os/**/*.proto",
@@ -947,7 +942,6 @@ cc_defaults {
     ],
 
     srcs: [
-        ":ipconnectivity-proto-src",
         ":libstats_atom_enum_protos",
         "core/proto/**/*.proto",
     ],
