@@ -29,10 +29,12 @@ import java.util.Deque;
 import java.util.Iterator;
 
 /**
+ * @deprecated use {@link com.android.modules.utils.LocalLog} instead.
+ *
  * @hide
  */
-public final class LocalLog {
-
+@Deprecated
+public class LocalLog {
     private final Deque<String> mLog;
     private final int mMaxLines;
 
