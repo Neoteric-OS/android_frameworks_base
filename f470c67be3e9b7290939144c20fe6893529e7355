@@ -85,6 +85,23 @@
       "message": "it still didn\u0027t take. Maybe a race w/ the config changes here?",
       "revId": "f470c67be3e9b7290939144c20fe6893529e7355",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "278ee4a9_5212b972",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-02-25T22:35:39Z",
+      "side": 1,
+      "message": "Yes - this breaks at least a few devices to boot. Probably getting this turned on would have to be a multi stage process, where the issue is logged, and where it is gradually enabled (or manually disabled in many places).",
+      "revId": "f470c67be3e9b7290939144c20fe6893529e7355",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
