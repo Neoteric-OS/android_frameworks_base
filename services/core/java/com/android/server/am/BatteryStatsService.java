@@ -67,6 +67,7 @@ import com.android.internal.util.DumpUtils;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.ParseUtils;
 import com.android.server.LocalServices;
+import com.android.server.connectivity.DataConnectionStats;
 import com.android.server.net.BaseNetworkObserver;
 
 import java.io.File;
@@ -100,6 +101,7 @@ public final class BatteryStatsService extends IBatteryStats.Stub
     private final BatteryStatsImpl.UserInfoProvider mUserManagerUserInfoProvider;
     private final Context mContext;
     private final BatteryExternalStatsWorker mWorker;
+    private final Handler mHandler;
 
     private native void getLowPowerStats(RpmStats rpmStats);
     private native int getPlatformLowPowerStats(ByteBuffer outBuffer);
@@ -217,6 +219,7 @@ public final class BatteryStatsService extends IBatteryStats.Stub
     BatteryStatsService(Context context, File systemDir, Handler handler) {
         // BatteryStatsImpl expects the ActivityManagerService handler, so pass that one through.
         mContext = context;
+        mHandler = handler;
         mUserManagerUserInfoProvider = new BatteryStatsImpl.UserInfoProvider() {
             private UserManagerInternal umi;
             @Override
@@ -249,6 +252,8 @@ public final class BatteryStatsService extends IBatteryStats.Stub
         } catch (RemoteException e) {
             Slog.e(TAG, "Could not register INetworkManagement event observer " + e);
         }
+        final DataConnectionStats dataConnectionStats = new DataConnectionStats(mContext, mHandler);
+        dataConnectionStats.startMonitoring();
         mStats.systemServicesReady(mContext);
     }
 
