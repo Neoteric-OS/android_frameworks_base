@@ -22,6 +22,30 @@
       },
       "revId": "9553369220abf3600e8e6ca564d9a5fe0d61b9a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "864547f0_af76a5c1",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-25T00:29:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5080f964_d4930051",
+      "range": {
+        "startLine": 517,
+        "startChar": 4,
+        "endLine": 517,
+        "endChar": 31
+      },
+      "revId": "9553369220abf3600e8e6ca564d9a5fe0d61b9a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
