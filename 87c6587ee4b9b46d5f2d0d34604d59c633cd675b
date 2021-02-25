@@ -70,6 +70,30 @@
       },
       "revId": "87c6587ee4b9b46d5f2d0d34604d59c633cd675b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "515c095c_3daad3c1",
+        "filename": "services/core/java/com/android/server/apphibernation/GlobalLevelState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-25T21:42:09Z",
+      "side": 1,
+      "message": "Thanks for the resources! Don\u0027t think I saw the latter section before. Seems like it should be fine to leave \"+\" concatenation here.",
+      "parentUuid": "5b885e63_c5ec8fc2",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "87c6587ee4b9b46d5f2d0d34604d59c633cd675b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
