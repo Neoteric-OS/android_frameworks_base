@@ -70,6 +70,30 @@
       },
       "revId": "06e0facb2be08fc9a0236634f2037da90cd58d3a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78bd0b53_226f35e6",
+        "filename": "core/java/android/app/compat/CompatChanges.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-25T15:30:11Z",
+      "side": 1,
+      "message": "I guess to allow easier testing by callers of the API? They can provide mock CompatChanges to validate that the right thing is called. (unless we can provide static shadows for robolectric, not super familiar with what\u0027s the best practice here).",
+      "parentUuid": "52337a35_fc63c632",
+      "range": {
+        "startLine": 109,
+        "startChar": 3,
+        "endLine": 111,
+        "endChar": 0
+      },
+      "revId": "06e0facb2be08fc9a0236634f2037da90cd58d3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
