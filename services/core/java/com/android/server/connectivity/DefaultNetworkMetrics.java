@@ -25,7 +25,6 @@ import android.os.SystemClock;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.BitUtils;
 import com.android.internal.util.RingBuffer;
-import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityEvent;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -81,24 +80,6 @@ public class DefaultNetworkMetrics {
             mLastValidationTimeMs = timeMs;
         }
         printEvent(localTimeMs, pw, mCurrentDefaultNetwork);
-    }
-
-    /**
-     * Convert events in the ring buffer to a list of IpConnectivityEvent protos
-     */
-    public synchronized List<IpConnectivityEvent> listEventsAsProto() {
-        List<IpConnectivityEvent> list = new ArrayList<>();
-        for (DefaultNetworkEvent ev : mEventsLog.toArray()) {
-            list.add(IpConnectivityEventBuilder.toProto(ev));
-        }
-        return list;
-    }
-
-    public synchronized void flushEvents(List<IpConnectivityEvent> out) {
-        for (DefaultNetworkEvent ev : mEvents) {
-            out.add(IpConnectivityEventBuilder.toProto(ev));
-        }
-        mEvents.clear();
     }
 
     public synchronized void logDefaultNetworkValidity(long timeMs, boolean isValid) {

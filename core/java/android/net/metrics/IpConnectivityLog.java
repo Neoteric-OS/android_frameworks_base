@@ -179,11 +179,6 @@ public class IpConnectivityLog {
         if (!checkLoggerService()) {
             return false;
         }
-        try {
-            mService.logDefaultNetworkValidity(valid);
-        } catch (RemoteException ignored) {
-            // Only called within the system server.
-        }
         return true;
     }
 
@@ -208,12 +203,6 @@ public class IpConnectivityLog {
             @Nullable LinkProperties previousLp, @Nullable NetworkCapabilities previousNc) {
         if (!checkLoggerService()) {
             return false;
-        }
-        try {
-            mService.logDefaultNetworkEvent(defaultNetwork, score, validated, lp, nc,
-                    previousDefaultNetwork, previousScore, previousLp, previousNc);
-        } catch (RemoteException ignored) {
-            // Only called within the system server.
         }
         return true;
     }

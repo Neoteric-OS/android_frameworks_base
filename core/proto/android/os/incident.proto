@@ -60,7 +60,6 @@ import "frameworks/base/core/proto/android/util/log.proto";
 import "frameworks/base/core/proto/android/util/textdump.proto";
 import "frameworks/base/core/proto/android/privacy.proto";
 import "frameworks/base/core/proto/android/section.proto";
-import "frameworks/base/proto/src/ipconnectivity.proto";
 import "frameworks/proto_logging/stats/enums/service/usb.proto";
 
 package android.os;
@@ -483,11 +482,6 @@ message IncidentProto {
     optional CpuUsageProto process_cpu_usage = 3047 [
         (section).type = SECTION_DUMPSYS,
         (section).args = "cpuinfo --proto"
-    ];
-
-    optional .clearcut.connectivity.IpConnectivityLog ip_connectivity_metrics = 3049 [
-        (section).type = SECTION_DUMPSYS,
-        (section).args = "connmetrics --proto"
     ];
 
     optional com.android.server.BluetoothManagerServiceDumpProto bluetooth_manager = 3050 [
