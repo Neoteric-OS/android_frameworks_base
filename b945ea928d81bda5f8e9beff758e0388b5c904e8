@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02a40bbf_5c091916",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-26T08:34:25Z",
+      "side": 1,
+      "message": "Nit: Bundle",
+      "range": {
+        "startLine": 7,
+        "startChar": 37,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "b945ea928d81bda5f8e9beff758e0388b5c904e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4df0e9bc_f92b013d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-26T08:34:25Z",
+      "side": 1,
+      "message": "This doesn\u0027t really explain why this is a good solution compared to other solutions (adding an API, any other way to organize the code, etc)",
+      "range": {
+        "startLine": 10,
+        "startChar": 54,
+        "endLine": 10,
+        "endChar": 58
+      },
+      "revId": "b945ea928d81bda5f8e9beff758e0388b5c904e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "929ccd61_962bd95d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8205,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-26T08:34:25Z",
+      "side": 1,
+      "message": "Much of this method is unnecessary since it\u0027s used for bundles that have known keys: EVENT_NETWORK_TESTED and EVENT_DATA_STALL_SUSPECTED are both sent by ConnectivityService, so they could build a PersistableBundle directly.\n\nYou could put it in the ConnectivityReportEvent for EVENT_NETWORK_TESTED, and another obj for EVENT_DATA_STALL_SUSPECTED I think.",
+      "range": {
+        "startLine": 8205,
+        "startChar": 17,
+        "endLine": 8205,
+        "endChar": 23
+      },
+      "revId": "b945ea928d81bda5f8e9beff758e0388b5c904e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
