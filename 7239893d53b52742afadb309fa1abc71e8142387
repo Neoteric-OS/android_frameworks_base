@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76ed6b17_a40f0198",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1593864
+      },
+      "writtenOn": "2021-02-26T02:24:58Z",
+      "side": 1,
+      "message": "remove depend change 1550654",
+      "revId": "7239893d53b52742afadb309fa1abc71e8142387",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
