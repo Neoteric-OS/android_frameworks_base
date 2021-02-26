@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3aa0cb28_9153abc9",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-26T23:37:18Z",
+      "side": 1,
+      "message": "We\u0027ve been using teardown as a single word, so for consistency, i\u0027d prefer keeping it the single-word version.",
+      "parentUuid": "d2d159f4_5207617a",
+      "range": {
+        "startLine": 384,
+        "startChar": 39,
+        "endLine": 384,
+        "endChar": 40
+      },
+      "revId": "627388e2c5e4f0a1de2957fa0140a421d2ae9d2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "07167c1a_917b163c",
         "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
         "patchSetId": 8
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-23T02:00:50Z",
       "side": 1,
       "message": "nit, I am loving the style where a comment is added to say what this \"true\" is.",
+      "range": {
+        "startLine": 630,
+        "startChar": 78,
+        "endLine": 630,
+        "endChar": 82
+      },
+      "revId": "627388e2c5e4f0a1de2957fa0140a421d2ae9d2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3754a01e_81bf21f0",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-26T23:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07167c1a_917b163c",
       "range": {
         "startLine": 630,
         "startChar": 78,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b20c9301_3381eb6c",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-26T23:37:18Z",
+      "side": 1,
+      "message": "This is a way to reuse some of the same codepaths for the disconnecting and disconnected states; we could have subclasses that differ in just the \"next\" state behavior, but that also adds more layers of indirection.\n\nWe\u0027d need at least 2 (additional) shell states:\n  - DisconnectingExiting extends DisconnectingState\n  - DisconnectingRetry extends DisconnectingState\n\nAdditionally, that makes switching from a DisconnectingRetry to DisconnectingExiting more complex, in that we\u0027d have to audit the enter() and exit() methods of the states to avoid double-closing, or resetting teardown timeout alarms. (or we can mix the inheritence and parent-child-state patterns, which would make for a readability nightmare)",
+      "parentUuid": "8f2ed429_47b7e572",
+      "range": {
+        "startLine": 1141,
+        "startChar": 12,
+        "endLine": 1141,
+        "endChar": 22
+      },
+      "revId": "627388e2c5e4f0a1de2957fa0140a421d2ae9d2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ec98ea7f_1bdea7dc",
         "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionRetryTimeoutStateTest.java",
         "patchSetId": 8
@@ -83,6 +155,30 @@
       "writtenOn": "2021-02-23T02:00:50Z",
       "side": 1,
       "message": "Why null here? That\u0027s the signal for SafeMode? There just ain\u0027t no more states? Would it be helpful/more robust to have a \"null\" state that represents safe mode? (and which has no exit)?",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 18
+      },
+      "revId": "627388e2c5e4f0a1de2957fa0140a421d2ae9d2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0804dfd0_71463423",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionRetryTimeoutStateTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-26T23:37:18Z",
+      "side": 1,
+      "message": "Null is state machine has quit; so just making sure that both the isRunning state and state machine state match.",
+      "parentUuid": "ec98ea7f_1bdea7dc",
       "range": {
         "startLine": 108,
         "startChar": 8,
