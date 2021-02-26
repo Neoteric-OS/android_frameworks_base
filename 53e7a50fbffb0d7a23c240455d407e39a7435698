@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6382900_e7946601",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5079,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2021-02-26T19:46:24Z",
+      "side": 1,
+      "message": "\"make update-api\" reported compilation error if using UserHandle. If you make the API actually SystemApi@ or public one I guess you would hit the same error. If so, I am not sure why a UserHandle can be passed as a param of the API.",
+      "range": {
+        "startLine": 5079,
+        "startChar": 59,
+        "endLine": 5079,
+        "endChar": 69
+      },
+      "revId": "53e7a50fbffb0d7a23c240455d407e39a7435698",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
