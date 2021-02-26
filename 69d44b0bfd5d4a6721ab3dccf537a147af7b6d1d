@@ -106,6 +106,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a18e625d_99397458",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-26T05:50:53Z",
+      "side": 1,
+      "message": "It\u0027s also possible to use aosp/1608914 or similar to just disable the native fork loop, while leaving the remaining infrastructure in place.",
+      "parentUuid": "da086391_a6bdd307",
+      "revId": "69d44b0bfd5d4a6721ab3dccf537a147af7b6d1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2862db7f_3890a3be",
