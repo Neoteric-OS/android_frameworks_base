@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebc63149_3be89638",
+        "filename": "core/java/android/util/LocalLog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-26T09:50:07Z",
+      "side": 1,
+      "message": "We should delete this class at the same time. Right now we end up with two copies in the framework, in different packages. I recommend creating a java library for framework that jarjars the com.android.modules copy into android.util. See b/181021108",
+      "range": {
+        "startLine": 36,
+        "startChar": 11,
+        "endLine": 37,
+        "endChar": 29
+      },
+      "revId": "fd58e15e456448945fb5bee45695e8482d9f64f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
