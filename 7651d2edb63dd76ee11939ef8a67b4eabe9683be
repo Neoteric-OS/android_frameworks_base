@@ -16,6 +16,24 @@
       "message": "Could you try using/adapting UserManagerInternal.getUsers()? Permission is going into Mainline so every method call into other services will need to be API, and adding an isUserToBeRemovedAtBoot() doesn\u0027t sounds like a good API to me.",
       "revId": "7651d2edb63dd76ee11939ef8a67b4eabe9683be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ef220ef_e9119fe1",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4657,
+      "author": {
+        "id": 1815205
+      },
+      "writtenOn": "2021-02-26T13:00:47Z",
+      "side": 1,
+      "message": "Thanks for the feedback. Please see the previous comments where this was discussed.",
+      "parentUuid": "ab029511_af35ee94",
+      "revId": "7651d2edb63dd76ee11939ef8a67b4eabe9683be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
