@@ -33,6 +33,24 @@
       "message": "FYI, protologtool-tests is properly running in presubmit with this change:\n\nFrom the TH results of this run:\nhttps://android-build.googleplex.com/builds/tests/view?invocationId\u003dI84100007677693670\u0026testResultId\u003dTR76017991229424408",
       "revId": "f9be7166d909c52eccf1fd84f2321bea0044c023",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dfdd92b_18eebbc1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121894
+      },
+      "writtenOn": "2021-02-26T21:53:42Z",
+      "side": 1,
+      "message": "friendly ping everyone. I really don\u0027t know who is the real owner of that target.",
+      "parentUuid": "8280e2e3_55e8e97f",
+      "revId": "f9be7166d909c52eccf1fd84f2321bea0044c023",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
