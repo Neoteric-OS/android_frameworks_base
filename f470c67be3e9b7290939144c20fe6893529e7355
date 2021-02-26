@@ -102,6 +102,24 @@
       "message": "Yes - this breaks at least a few devices to boot. Probably getting this turned on would have to be a multi stage process, where the issue is logged, and where it is gradually enabled (or manually disabled in many places).",
       "revId": "f470c67be3e9b7290939144c20fe6893529e7355",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b354c3bb_4edb43b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1377660
+      },
+      "writtenOn": "2021-02-26T12:39:11Z",
+      "side": 1,
+      "message": "It is a good thing, because this actually helps to find out old bugs in those codes which seemed to be working well in old days, and some may even be very serious potential issue, but was simply never aware of.  Certainly, those are their bugs, NOT binder\u0027s bugs.  However, we can help to make them fixed ASAP.\n\n(1) To identify/locate the ill/problematic code quickly, I just upload a new \"patch set 6\", which will dump the stack trace in client side and in service side.\n    Please run TH again with the new patch set.\n\n(2) I do not have permission to see the TH result, could you please help to upload the TH result log so that I can see them?\n\n(3) for easy-to-fix bug, I can help to upload the fix patch;\n    for hard-to-fix bug, can I file a ticket to ask the related component owner to fix?",
+      "parentUuid": "278ee4a9_5212b972",
+      "revId": "f470c67be3e9b7290939144c20fe6893529e7355",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
