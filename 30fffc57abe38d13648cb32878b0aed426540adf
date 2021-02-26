@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1c08025_9e95fd7b",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1005967
+      },
+      "writtenOn": "2021-02-26T20:11:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e93176f6_690e2329",
+      "revId": "30fffc57abe38d13648cb32878b0aed426540adf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb2d0b62_bb827dec",
@@ -113,6 +131,30 @@
       "writtenOn": "2021-01-22T22:51:06Z",
       "side": 1,
       "message": "tabs? (and elsewhere)",
+      "range": {
+        "startLine": 1837,
+        "startChar": 0,
+        "endLine": 1837,
+        "endChar": 1
+      },
+      "revId": "30fffc57abe38d13648cb32878b0aed426540adf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c8b13dc_889ce479",
+        "filename": "core/res/res/values/attrs_manifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1837,
+      "author": {
+        "id": 1005967
+      },
+      "writtenOn": "2021-02-26T20:11:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "71302386_94f3928e",
       "range": {
         "startLine": 1837,
         "startChar": 0,
