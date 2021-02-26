@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008492875",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1584584?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2f05fee3_09d40539",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-26T11:41:49Z",
+      "side": 1,
+      "message": "Verbose debugging should only be enabled in local builds; see https://source.android.com/setup/contribute/code-style#log-sparingly for more details.",
+      "range": {
+        "startLine": 90,
+        "startChar": 50,
+        "endLine": 90,
+        "endChar": 82
+      },
+      "revId": "652ba74f7dc899b48c6be398d1a66879dc2b7c7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
