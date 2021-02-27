@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8b3b40d_bea43217",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-27T01:28:12Z",
+      "side": 1,
+      "message": "This commit handles ConfigRequest in a different way from the way we did in IPsec module.",
+      "revId": "a205916dcfe6b15df8acc23e92c28d7d110334eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
