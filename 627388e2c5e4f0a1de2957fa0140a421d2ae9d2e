@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba3aaecc_c8c46d46",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-27T00:39:56Z",
+      "side": 1,
+      "message": "teardown is a noun. tearDown is the verb. Since it\u0027s a verb here, that\u0027s why the suggestion.\n\nshouldInitiateTeardown -\u003e noun\nneedsTeardown -\u003e noun\nshouldTearDown -\u003e verb\n\nI think what you\u0027re saying is that we haven\u0027t done it this way so far...\n\nAh, but I think we\u0027re going to rename this to shouldQuit()",
+      "parentUuid": "3aa0cb28_9153abc9",
+      "range": {
+        "startLine": 384,
+        "startChar": 39,
+        "endLine": 384,
+        "endChar": 40
+      },
+      "revId": "627388e2c5e4f0a1de2957fa0140a421d2ae9d2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07167c1a_917b163c",
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "Null is state machine has quit; so just making sure that both the isRunning state and state machine state match.",
       "parentUuid": "ec98ea7f_1bdea7dc",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 18
+      },
+      "revId": "627388e2c5e4f0a1de2957fa0140a421d2ae9d2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dcd67f2_65fac0dc",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionRetryTimeoutStateTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-27T00:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0804dfd0_71463423",
       "range": {
         "startLine": 108,
         "startChar": 8,
