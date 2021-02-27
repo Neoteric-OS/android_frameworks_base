@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d5cb63d_ead551f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-27T01:27:10Z",
+      "side": 1,
+      "message": "This commit handles EapMethodConfig in a different way from the way we did in IPsec module.",
+      "revId": "256b5961f03c9732c4d1f91bd36ffe02f9e85416",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
