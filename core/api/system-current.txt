@@ -1593,6 +1593,36 @@ package android.bluetooth {
     method @RequiresPermission(android.Manifest.permission.SEND_SMS) public boolean sendMessage(@NonNull android.bluetooth.BluetoothDevice, @NonNull java.util.Collection<android.net.Uri>, @NonNull String, @Nullable android.app.PendingIntent, @Nullable android.app.PendingIntent);
   }
 
+  public class BluetoothMcpService {
+  }
+
+  public final class BluetoothMcsMediaControlRequest implements android.os.Parcelable {
+    ctor public BluetoothMcsMediaControlRequest(int, int);
+    method public int describeContents();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.bluetooth.BluetoothMcsMediaControlRequest> CREATOR;
+  }
+
+  public final class BluetoothMcsSearchRequest implements android.os.Parcelable {
+    method public int describeContents();
+    method @NonNull public String getStringArg();
+    method public int getType();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.bluetooth.BluetoothMcsSearchRequest> CREATOR;
+  }
+
+  public static final class BluetoothMcsSearchRequest.Types {
+    field public static final int ALBUM_NAME = 3; // 0x3
+    field public static final int ARTIST_NAME = 2; // 0x2
+    field public static final int EARLIEST_YEAR = 5; // 0x5
+    field public static final int GENRE = 7; // 0x7
+    field public static final int GROUP_NAME = 4; // 0x4
+    field public static final int LATEST_YEAR = 6; // 0x6
+    field public static final int ONLY_GROUPS = 9; // 0x9
+    field public static final int ONLY_TRACKS = 8; // 0x8
+    field public static final int TRACK_NAME = 1; // 0x1
+  }
+
   public final class BluetoothPan implements android.bluetooth.BluetoothProfile {
     method @NonNull @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public java.util.List<android.bluetooth.BluetoothDevice> getConnectedDevices();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public int getConnectionState(@NonNull android.bluetooth.BluetoothDevice);
@@ -1644,6 +1674,7 @@ package android.bluetooth {
     field @NonNull public static final android.os.ParcelUuid BASE_UUID;
     field @NonNull public static final android.os.ParcelUuid BNEP;
     field @NonNull public static final android.os.ParcelUuid DIP;
+    field @NonNull public static final java.util.UUID GENERIC_MEDIA_CONTROL;
     field @NonNull public static final android.os.ParcelUuid HEARING_AID;
     field @NonNull public static final android.os.ParcelUuid HFP;
     field @NonNull public static final android.os.ParcelUuid HFP_AG;
@@ -1654,6 +1685,7 @@ package android.bluetooth {
     field @NonNull public static final android.os.ParcelUuid LE_AUDIO;
     field @NonNull public static final android.os.ParcelUuid MAP;
     field @NonNull public static final android.os.ParcelUuid MAS;
+    field @NonNull public static final java.util.UUID MEDIA_CONTROL;
     field @NonNull public static final android.os.ParcelUuid MNS;
     field @NonNull public static final android.os.ParcelUuid NAP;
     field @NonNull public static final android.os.ParcelUuid OBEX_OBJECT_PUSH;
