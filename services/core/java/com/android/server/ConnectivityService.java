@@ -7234,13 +7234,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static class NetworkReassignment {
         static class RequestReassignment {
             @NonNull public final NetworkRequestInfo mNetworkRequestInfo;
-            @NonNull public final NetworkRequest mOldNetworkRequest;
-            @NonNull public final NetworkRequest mNewNetworkRequest;
+            @Nullable public final NetworkRequest mOldNetworkRequest;
+            @Nullable public final NetworkRequest mNewNetworkRequest;
             @Nullable public final NetworkAgentInfo mOldNetwork;
             @Nullable public final NetworkAgentInfo mNewNetwork;
             RequestReassignment(@NonNull final NetworkRequestInfo networkRequestInfo,
-                    @NonNull final NetworkRequest oldNetworkRequest,
-                    @NonNull final NetworkRequest newNetworkRequest,
+                    @Nullable final NetworkRequest oldNetworkRequest,
+                    @Nullable final NetworkRequest newNetworkRequest,
                     @Nullable final NetworkAgentInfo oldNetwork,
                     @Nullable final NetworkAgentInfo newNetwork) {
                 mNetworkRequestInfo = networkRequestInfo;
@@ -7320,14 +7320,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void updateSatisfiersForRematchRequest(@NonNull final NetworkRequestInfo nri,
-            @NonNull final NetworkRequest previousRequest,
-            @NonNull final NetworkRequest newRequest,
+            @Nullable final NetworkRequest previousRequest,
+            @Nullable final NetworkRequest newRequest,
             @Nullable final NetworkAgentInfo previousSatisfier,
             @Nullable final NetworkAgentInfo newSatisfier,
             final long now) {
         if (null != newSatisfier && mNoServiceNetwork != newSatisfier) {
             if (VDBG) log("rematch for " + newSatisfier.toShortString());
-            if (null != previousSatisfier && mNoServiceNetwork != previousSatisfier) {
+            if (null != previousRequest && null != previousSatisfier
+                    && mNoServiceNetwork != previousSatisfier) {
                 if (VDBG || DDBG) {
                     log("   accepting network in place of " + previousSatisfier.toShortString());
                 }
@@ -7350,7 +7351,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 Log.wtf(TAG, "BUG: " + newSatisfier.toShortString() + " already has "
                         + newRequest);
             }
-        } else if (null != previousSatisfier) {
+        } else if (null != previousRequest && null != previousSatisfier) {
             if (DBG) {
                 log("Network " + previousSatisfier.toShortString() + " stopped satisfying"
                         + " request " + previousRequest.requestId);
