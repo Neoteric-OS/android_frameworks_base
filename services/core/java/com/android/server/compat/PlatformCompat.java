@@ -66,11 +66,13 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     private final Context mContext;
     private final ChangeReporter mChangeReporter;
     private final CompatConfig mCompatConfig;
+    private final AndroidBuildClassifier mBuildClassifier;
 
     public PlatformCompat(Context context) {
         mContext = context;
         mChangeReporter = new ChangeReporter(ChangeReporter.SOURCE_SYSTEM_SERVER);
-        mCompatConfig = CompatConfig.create(new AndroidBuildClassifier(), mContext);
+        mBuildClassifier = new AndroidBuildClassifier();
+        mCompatConfig = CompatConfig.create(mBuildClassifier, mContext);
     }
 
     @VisibleForTesting
@@ -392,7 +394,8 @@ public class PlatformCompat extends IPlatformCompat.Stub {
             return false;
         }
         if (change.getEnableSinceTargetSdk() > 0) {
-            return change.getEnableSinceTargetSdk() >= Build.VERSION_CODES.Q;
+            return change.getEnableSinceTargetSdk() >= Build.VERSION_CODES.Q
+                && change.getEnableSinceTargetSdk() <= mBuildClassifier.platformTargetSdk();
         }
         return true;
     }
