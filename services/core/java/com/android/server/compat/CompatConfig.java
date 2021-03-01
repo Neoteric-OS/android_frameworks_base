@@ -73,26 +73,28 @@ final class CompatConfig {
     private final LongSparseArray<CompatChange> mChanges = new LongSparseArray<>();
 
     private final OverrideValidatorImpl mOverrideValidator;
+    private final AndroidBuildClassifier mAndroidBuildClassifier;
     private Context mContext;
     private File mOverridesFile;
 
     @VisibleForTesting
     CompatConfig(AndroidBuildClassifier androidBuildClassifier, Context context) {
         mOverrideValidator = new OverrideValidatorImpl(androidBuildClassifier, context, this);
+        mAndroidBuildClassifier = androidBuildClassifier;
         mContext = context;
     }
 
     static CompatConfig create(AndroidBuildClassifier androidBuildClassifier, Context context) {
         CompatConfig config = new CompatConfig(androidBuildClassifier, context);
         config.initConfigFromLib(Environment.buildPath(
-                Environment.getRootDirectory(), "etc", "compatconfig"));
+                Environment.getRootDirectory(), "etc", "compatconfig"), false);
         config.initConfigFromLib(Environment.buildPath(
-                Environment.getRootDirectory(), "system_ext", "etc", "compatconfig"));
+                Environment.getRootDirectory(), "system_ext", "etc", "compatconfig"), false);
 
         List<ApexManager.ActiveApexInfo> apexes = ApexManager.getInstance().getActiveApexInfos();
         for (ApexManager.ActiveApexInfo apex : apexes) {
             config.initConfigFromLib(Environment.buildPath(
-                    apex.apexDirectory, "etc", "compatconfig"));
+                    apex.apexDirectory, "etc", "compatconfig"), true);
         }
         File overridesFile = new File(APP_COMPAT_DATA_DIR, OVERRIDES_FILE);
         config.initOverrides(overridesFile);
@@ -133,7 +135,7 @@ final class CompatConfig {
         synchronized (mChanges) {
             for (int i = 0; i < mChanges.size(); ++i) {
                 CompatChange c = mChanges.valueAt(i);
-                if (!c.isEnabled(app)) {
+                if (!c.isEnabled(app, mAndroidBuildClassifier)) {
                     disabled.add(c.getId());
                 }
             }
@@ -175,7 +177,7 @@ final class CompatConfig {
                 // we know nothing about this change: default behaviour is enabled.
                 return true;
             }
-            return c.isEnabled(app);
+            return c.isEnabled(app, mAndroidBuildClassifier);
         }
     }
 
@@ -250,7 +252,7 @@ final class CompatConfig {
             CompatChange c = mChanges.get(changeId);
             if (c == null) {
                 alreadyKnown = false;
-                c = new CompatChange(changeId);
+                c = new CompatChange(changeId, false);
                 addChange(c);
             }
             c.addPackageOverride(packageName, overrides, allowedState, mContext);
@@ -298,6 +300,16 @@ final class CompatConfig {
         synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
             return c != null && c.getDisabled();
+        }
+    }
+
+    /**
+     * Returns whether the change is from an APEX.
+     */
+    boolean isFromApex(long changeId) {
+        synchronized (mChanges) {
+            CompatChange c = mChanges.get(changeId);
+            return c != null && c.getFromApex();
         }
     }
 
@@ -418,7 +430,7 @@ final class CompatConfig {
             CompatChange c = mChanges.get(changeId);
             if (c == null) {
                 alreadyKnown = false;
-                c = new CompatChange(changeId);
+                c = new CompatChange(changeId, false);
                 addChange(c);
             }
             c.registerListener(listener);
@@ -475,7 +487,7 @@ final class CompatConfig {
         synchronized (mChanges) {
             for (int i = 0; i < mChanges.size(); ++i) {
                 CompatChange c = mChanges.valueAt(i);
-                if (c.isEnabled(applicationInfo)) {
+                if (c.isEnabled(applicationInfo, mAndroidBuildClassifier)) {
                     enabled.add(c.getId());
                 } else {
                     disabled.add(c.getId());
@@ -501,7 +513,7 @@ final class CompatConfig {
         }
     }
 
-    void initConfigFromLib(File libraryDir) {
+    void initConfigFromLib(File libraryDir, boolean isApex) {
         if (!libraryDir.exists() || !libraryDir.isDirectory()) {
             Slog.d(TAG, "No directory " + libraryDir + ", skipping");
             return;
@@ -509,16 +521,16 @@ final class CompatConfig {
         for (File f : libraryDir.listFiles()) {
             Slog.d(TAG, "Found a config file: " + f.getPath());
             //TODO(b/138222363): Handle duplicate ids across config files.
-            readConfig(f);
+            readConfig(f, isApex);
         }
     }
 
-    private void readConfig(File configFile) {
+    private void readConfig(File configFile, boolean isApex) {
         try (InputStream in = new BufferedInputStream(new FileInputStream(configFile))) {
             Config config = com.android.server.compat.config.XmlParser.read(in);
             for (Change change : config.getCompatChange()) {
                 Slog.d(TAG, "Adding: " + change.toString());
-                addChange(new CompatChange(change));
+                addChange(new CompatChange(change, isApex));
             }
         } catch (IOException | DatatypeConfigurationException | XmlPullParserException e) {
             Slog.e(TAG, "Encountered an error while reading/parsing compat config file", e);

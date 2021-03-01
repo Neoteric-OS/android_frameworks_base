@@ -117,6 +117,7 @@ public class PlatformCompatTest {
 
     @Test
     public void testListUIChanges() {
+        when(mBuildClassifier.platformTargetSdk()).thenReturn(30);
         mCompatConfig = CompatConfigBuilder.create(mBuildClassifier, mContext)
                 .addEnabledChangeWithId(1L)
                 .addDisabledChangeWithIdAndName(2L, "change2")
@@ -125,6 +126,7 @@ public class PlatformCompatTest {
                 .addEnableSinceSdkChangeWithId(Build.VERSION_CODES.Q, 5L)
                 .addEnableSinceSdkChangeWithId(Build.VERSION_CODES.R, 6L)
                 .addLoggingOnlyChangeWithId(7L)
+                .addEnableSinceSdkChangeWithId(31, 8L)
                 .build();
         mPlatformCompat = new PlatformCompat(mContext, mCompatConfig);
         assertThat(mPlatformCompat.listUIChanges()).asList().containsExactly(
