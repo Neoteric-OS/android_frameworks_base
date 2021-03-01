@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4684d246_1e5e5c32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 37
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-01T05:55:40Z",
+      "side": 1,
+      "message": "Diff with patchset 25 LGTM",
+      "revId": "59d473e1c9b9b6387ea29b078d29a1730537148b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4294914c_397dfec2",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 37
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-01T05:55:40Z",
+      "side": 1,
+      "message": "Could the two paths use the same code, with a parameter that\u0027s times(0) or times(1) ?\nThe tests methods can also call assertIdle or assertStarting at the end themselves",
+      "range": {
+        "startLine": 532,
+        "startChar": 10,
+        "endLine": 532,
+        "endChar": 14
+      },
+      "revId": "59d473e1c9b9b6387ea29b078d29a1730537148b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
