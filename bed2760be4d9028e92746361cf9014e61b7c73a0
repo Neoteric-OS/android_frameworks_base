@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec3a432b_79f1a30b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7244,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-01T22:36:49Z",
+      "side": 1,
+      "message": "Why not this?\n\n    final NetworkRequest requestToShow \u003d null !\u003d mNewNetworkRequest ? mNewNetworkRequest : mNetworkRequestInfo.mRequests.get(0);\n\nIf mNewNetwork is not null, then mNewNetworkRequest should also not be null and this looks to be the same more or less as what you have?",
+      "range": {
+        "startLine": 7236,
+        "startChar": 16,
+        "endLine": 7244,
+        "endChar": 17
+      },
+      "revId": "bed2760be4d9028e92746361cf9014e61b7c73a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
