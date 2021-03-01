@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e8234fc_1ad64cba",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3473,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-01T10:35:05Z",
+      "side": 1,
+      "message": "Not necessary anymore ?",
+      "range": {
+        "startLine": 3469,
+        "startChar": 0,
+        "endLine": 3473,
+        "endChar": 53
+      },
+      "revId": "7c162ff7f288aed1c25e6243d2530ebd17645026",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2648bc82_47209e9b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7126,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-01T10:35:05Z",
+      "side": 1,
+      "message": "Can this be removed too ?",
+      "range": {
+        "startLine": 7110,
+        "startChar": 0,
+        "endLine": 7126,
+        "endChar": 63
+      },
+      "revId": "7c162ff7f288aed1c25e6243d2530ebd17645026",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
