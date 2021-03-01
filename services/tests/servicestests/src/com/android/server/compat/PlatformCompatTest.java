@@ -78,7 +78,7 @@ public class PlatformCompatTest {
         when(mPackageManager.getApplicationInfo(eq(PACKAGE_NAME), anyInt()))
             .thenThrow(new PackageManager.NameNotFoundException());
         mCompatConfig = new CompatConfig(mBuildClassifier, mContext);
-        mPlatformCompat = new PlatformCompat(mContext, mCompatConfig);
+        mPlatformCompat = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier);
         // Assume userdebug/eng non-final build
         mCompatConfig.forceNonDebuggableFinalForTest(false);
         when(mBuildClassifier.isDebuggableBuild()).thenReturn(true);
@@ -99,7 +99,7 @@ public class PlatformCompatTest {
                 .addLoggingOnlyChangeWithId(7L)
                 .addOverridableChangeWithId(8L)
                 .build();
-        mPlatformCompat = new PlatformCompat(mContext, mCompatConfig);
+        mPlatformCompat = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier);
         assertThat(mPlatformCompat.listAllChanges()).asList().containsExactly(
                 new CompatibilityChangeInfo(1L, "", -1, -1, false, false, "", false),
                 new CompatibilityChangeInfo(2L, "change2", -1, -1, true, false, "", false),
@@ -117,6 +117,7 @@ public class PlatformCompatTest {
 
     @Test
     public void testListUIChanges() {
+        when(mBuildClassifier.platformTargetSdk()).thenReturn(30);
         mCompatConfig = CompatConfigBuilder.create(mBuildClassifier, mContext)
                 .addEnabledChangeWithId(1L)
                 .addDisabledChangeWithIdAndName(2L, "change2")
@@ -125,8 +126,9 @@ public class PlatformCompatTest {
                 .addEnableSinceSdkChangeWithId(Build.VERSION_CODES.Q, 5L)
                 .addEnableSinceSdkChangeWithId(Build.VERSION_CODES.R, 6L)
                 .addLoggingOnlyChangeWithId(7L)
+                .addEnableSinceSdkChangeWithId(31, 8L)
                 .build();
-        mPlatformCompat = new PlatformCompat(mContext, mCompatConfig);
+        mPlatformCompat = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier);
         assertThat(mPlatformCompat.listUIChanges()).asList().containsExactly(
                 new CompatibilityChangeInfo(1L, "", -1, -1, false, false, "", false),
                 new CompatibilityChangeInfo(2L, "change2", -1, -1, true, false, "", false),
@@ -144,7 +146,7 @@ public class PlatformCompatTest {
                 .addEnableAfterSdkChangeWithId(Build.VERSION_CODES.O, 3L)
                 .build();
         mCompatConfig.forceNonDebuggableFinalForTest(true);
-        mPlatformCompat = new PlatformCompat(mContext, mCompatConfig);
+        mPlatformCompat = new PlatformCompat(mContext, mCompatConfig, mBuildClassifier);
 
         // Before adding overrides.
         assertThat(mPlatformCompat.isChangeEnabledByPackageName(1, PACKAGE_NAME, 0)).isTrue();
