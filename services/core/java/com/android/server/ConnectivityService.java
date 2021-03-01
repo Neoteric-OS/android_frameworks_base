@@ -7179,7 +7179,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         toUidRangeStableParcels(nri.getUids()));
             }
         } catch (RemoteException | ServiceSpecificException e) {
-            loge("Exception setting OEM network preference default network", e);
+            loge("Exception setting app default network", e);
         }
     }
 
@@ -9054,7 +9054,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         final ArraySet<NetworkRequestInfo> nris =
                 new OemNetworkRequestFactory().createNrisFromOemNetworkPreferences(preference);
-        updateDefaultNetworksForOemNetworkPreference(nris);
+        updateDefaultNetworks(nris);
         mOemNetworkPreferences = preference;
         // TODO http://b/176496396 persist data to shared preferences.
 
@@ -9067,8 +9067,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void updateDefaultNetworksForOemNetworkPreference(
-            @NonNull final Set<NetworkRequestInfo> nris) {
+    private void updateDefaultNetworks(@NonNull final Set<NetworkRequestInfo> nris) {
         // Pass in a defensive copy as this collection will be updated on remove.
         handleRemoveNetworkRequests(new ArraySet<>(mDefaultNetworkRequests));
         addPerAppDefaultNetworkRequests(nris);
@@ -9153,6 +9152,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return callbackRequestsToRegister;
     }
 
+    private void setNetworkRequestUids(@NonNull final List<NetworkRequest> requests,
+            @NonNull final Set<UidRange> uids) {
+        final Set<UidRange> ranges = new ArraySet<>();
+        for (final UidRange range : uids) {
+            ranges.add(range);
+        }
+        for (final NetworkRequest req : requests) {
+            req.networkCapabilities.setUids(ranges);
+        }
+    }
+
     /**
      * Class used to generate {@link NetworkRequestInfo} based off of {@link OemNetworkPreferences}.
      */
@@ -9229,7 +9239,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             + " called with invalid preference of " + preference);
             }
 
-            setOemNetworkRequestUids(requests, uids);
+            final ArraySet ranges = new ArraySet<Integer>();
+            for (final int uid : uids) {
+                ranges.add(new UidRange(uid, uid));
+            }
+            setNetworkRequestUids(requests, ranges);
             return new NetworkRequestInfo(requests);
         }
 
@@ -9261,17 +9275,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             netCap.addCapability(NET_CAPABILITY_INTERNET);
             netCap.setRequestorUidAndPackageName(Process.myUid(), mContext.getPackageName());
             return netCap;
-        }
-
-        private void setOemNetworkRequestUids(@NonNull final List<NetworkRequest> requests,
-                @NonNull final Set<Integer> uids) {
-            final Set<UidRange> ranges = new ArraySet<>();
-            for (final int uid : uids) {
-                ranges.add(new UidRange(uid, uid));
-            }
-            for (final NetworkRequest req : requests) {
-                req.networkCapabilities.setUids(ranges);
-            }
         }
     }
 }
