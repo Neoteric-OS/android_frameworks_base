@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "33d6c9f2_e937b59f",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-01T18:10:01Z",
+      "side": 1,
+      "message": "Done in next CL",
+      "parentUuid": "d157f9d5_2bba5093",
+      "range": {
+        "startLine": 497,
+        "startChar": 20,
+        "endLine": 497,
+        "endChar": 30
+      },
+      "revId": "dd18e130822062f86c91a8c9015424e0107944cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "187c355e_b71baaa6",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-27T00:39:56Z",
       "side": 1,
       "message": "in a future patchset, this should be renamed to shouldQuit.",
+      "range": {
+        "startLine": 1144,
+        "startChar": 31,
+        "endLine": 1144,
+        "endChar": 45
+      },
+      "revId": "dd18e130822062f86c91a8c9015424e0107944cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99dea01f_7e2f4aad",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-01T18:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "187c355e_b71baaa6",
       "range": {
         "startLine": 1144,
         "startChar": 31,

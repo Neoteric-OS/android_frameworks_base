@@ -166,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c86d5e6_f4b20f34",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-01T18:10:01Z",
+      "side": 1,
+      "message": "Closing per offline conversations.",
+      "parentUuid": "b20c9301_3381eb6c",
+      "range": {
+        "startLine": 1141,
+        "startChar": 12,
+        "endLine": 1141,
+        "endChar": 22
+      },
+      "revId": "627388e2c5e4f0a1de2957fa0140a421d2ae9d2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec98ea7f_1bdea7dc",
