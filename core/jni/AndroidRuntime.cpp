@@ -630,6 +630,12 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote, bool p
     char saveResolvedClassesDelayMsOptsBuf[
             sizeof("-Xps-save-resolved-classes-delay-ms:")-1 + PROPERTY_VALUE_MAX];
     char madviseRandomOptsBuf[sizeof("-XX:MadviseRandomAccess:")-1 + PROPERTY_VALUE_MAX];
+    char madviseWillNeedFileSizeVdex[
+            sizeof("-XMadviseWillNeedVdexFileSize:")-1 + PROPERTY_VALUE_MAX];
+    char madviseWillNeedFileSizeOdex[
+            sizeof("-XMadviseWillNeedOdexFileSize:")-1 + PROPERTY_VALUE_MAX];
+    char madviseWillNeedFileSizeArt[
+            sizeof("-XMadviseWillNeedArtFileSize:")-1 + PROPERTY_VALUE_MAX];
     char gctypeOptsBuf[sizeof("-Xgc:")-1 + PROPERTY_VALUE_MAX];
     char backgroundgcOptsBuf[sizeof("-XX:BackgroundGC=")-1 + PROPERTY_VALUE_MAX];
     char heaptargetutilizationOptsBuf[sizeof("-XX:HeapTargetUtilization=")-1 + PROPERTY_VALUE_MAX];
@@ -836,6 +842,24 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote, bool p
      * Madvise related options.
      */
     parseRuntimeOption("dalvik.vm.madvise-random", madviseRandomOptsBuf, "-XX:MadviseRandomAccess:");
+
+    /*
+     * The default values are set to "0" so no madvising is done
+     */
+    parseRuntimeOption("persist.runtime.madvise.vdexfile.size",
+                       madviseWillNeedFileSizeVdex,
+                       "-XMadviseWillNeedVdexFileSize:",
+                       "0");
+
+    parseRuntimeOption("persist.runtime.madvise.odexfile.size",
+                       madviseWillNeedFileSizeOdex,
+                       "-XMadviseWillNeedOdexFileSize:",
+                       "0");
+
+    parseRuntimeOption("persist.runtime.madvise.artfile.size",
+                       madviseWillNeedFileSizeArt,
+                       "-XMadviseWillNeedArtFileSize:",
+                       "0");
 
     /*
      * Profile related options.
