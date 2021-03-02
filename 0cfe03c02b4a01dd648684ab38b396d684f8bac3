@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e532ed4_ab271b21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T14:16:46Z",
+      "side": 1,
+      "message": "not finished but there are some comments.",
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d640f4bd_97a0bf3b",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T14:16:46Z",
+      "side": 1,
+      "message": "IIUC this doesn\u0027t belong to this CL?",
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "adddc6cb_94673c52",
@@ -72,6 +106,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f29fff2e_8b83e4ba",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5274,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T14:16:46Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "384a0ae4_d68c897d",
+      "range": {
+        "startLine": 5274,
+        "startChar": 25,
+        "endLine": 5274,
+        "endChar": 41
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b4d42670_9008da44",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -95,6 +153,122 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "43e80cec_3868edbf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9050,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T14:16:46Z",
+      "side": 1,
+      "message": "+1\nOr is it possible to mix-in a NetworkCapabilities object?\nLike what we did for nai.declaredCapabilities",
+      "parentUuid": "b4d42670_9008da44",
+      "range": {
+        "startLine": 9050,
+        "startChar": 22,
+        "endLine": 9050,
+        "endChar": 32
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7384fa82_53161906",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9061,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T14:16:46Z",
+      "side": 1,
+      "message": "I can understand this feature is per-profile.\nBut why this is limited to a work profile?\nWhat about a corp-owned device that has no work profile?",
+      "range": {
+        "startLine": 9061,
+        "startChar": 16,
+        "endLine": 9061,
+        "endChar": 32
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "443f9313_7b280235",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9069,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T14:16:46Z",
+      "side": 1,
+      "message": "Is it better to move it outside of the if condition?\nFor comments here I\u0027ll expect that explains why the exception is thrown.",
+      "range": {
+        "startLine": 9065,
+        "startChar": 12,
+        "endLine": 9069,
+        "endChar": 71
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ef65b11_4c7c9297",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9071,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T14:16:46Z",
+      "side": 1,
+      "message": "To me the \"network preferences for a user\" and \"OEM network preferences\" are super confusing. But I don\u0027t have a good suggestion now.\nI can imagine someone will get this exception and confused. Is it better if we add comments here to redirect them to see the javadoc of the conflict one?",
+      "range": {
+        "startLine": 9070,
+        "startChar": 55,
+        "endLine": 9071,
+        "endChar": 46
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3c5ee8e_e22c9fcd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9087,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T14:16:46Z",
+      "side": 1,
+      "message": "static and @VisibleForTesting?",
+      "range": {
+        "startLine": 9087,
+        "startChar": 11,
+        "endLine": 9087,
+        "endChar": 12
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b1f3c2bf_a379f1ea",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -111,6 +285,29 @@
         "startChar": 12,
         "endLine": 9088,
         "endChar": 28
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06817452_e43da21e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9088,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T14:16:46Z",
+      "side": 1,
+      "message": "1. Question: Why this is false for uids.size !\u003d 1?\nFor ranges such as 1-100, 101-200, they can be all for the same user, right?\n\nOr are they needs to be exactly cover range of one user?\nIf so the 12345-112344 will pass the test but they are for different user, isn\u0027t it?\n\n\n2. do we want to test this function?",
+      "range": {
+        "startLine": 9088,
+        "startChar": 37,
+        "endLine": 9088,
+        "endChar": 42
       },
       "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
