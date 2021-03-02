@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b57ea094_8beaee92",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5017,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T08:29:07Z",
+      "side": 1,
+      "message": "Consider this is a generic class to provide status update for APIs.\nDo we need to fill it with result(e.g. true/fals) and reason (e.g.exceptions)?\nFor example it is possible that other API fails with specific reason.",
+      "range": {
+        "startLine": 5017,
+        "startChar": 24,
+        "endLine": 5017,
+        "endChar": 25
+      },
+      "revId": "c23dec1ff6137e51b2e0b552b99bf4048f64180a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "efd2a82d_a6268615",
         "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
         "patchSetId": 3
@@ -14,6 +37,30 @@
       "writtenOn": "2021-03-02T06:12:03Z",
       "side": 1,
       "message": "Stupid Question: not quite understand this.",
+      "range": {
+        "startLine": 5064,
+        "startChar": 4,
+        "endLine": 5064,
+        "endChar": 93
+      },
+      "revId": "c23dec1ff6137e51b2e0b552b99bf4048f64180a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b19cb53b_af9af809",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5064,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T08:29:07Z",
+      "side": 1,
+      "message": "Now I understand.\nPlease ignore if no need to make this doc more clear.",
+      "parentUuid": "efd2a82d_a6268615",
       "range": {
         "startLine": 5064,
         "startChar": 4,
@@ -42,6 +89,29 @@
         "startChar": 19,
         "endLine": 5080,
         "endChar": 36
+      },
+      "revId": "c23dec1ff6137e51b2e0b552b99bf4048f64180a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcaba727_c3defe68",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5095,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T08:29:07Z",
+      "side": 1,
+      "message": "It looks weired to me that some errors are passed via exception but the success is passed via callback.\nTo me they should be unified.\nNo strong opinion since it might be an overkill for simple argument check like this.",
+      "range": {
+        "startLine": 5095,
+        "startChar": 16,
+        "endLine": 5095,
+        "endChar": 17
       },
       "revId": "c23dec1ff6137e51b2e0b552b99bf4048f64180a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
