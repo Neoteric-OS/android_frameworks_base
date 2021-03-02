@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b10d5b8_05f88649",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-02T13:22:22Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d9f2a9a_3d028f5a",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-02T13:22:22Z",
+      "side": 1,
+      "message": "This should say what a \"default network\" is. The comment in the ConnectivityService code that creates this list is:\n\n     * Returns the list of all interfaces that could be used by network traffic\n     * that does not explicitly specify a network.\n\n. While incorrect (it\u0027s networks not interfaces - you can blame me for that) you can probably use a similar wording here, and say: \"The list of all networks that could be used by network traffic that does not explicitly select a network. \"",
+      "range": {
+        "startLine": 652,
+        "startChar": 58,
+        "endLine": 652,
+        "endChar": 59
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "704bbc1b_0e6acb99",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-02T13:22:22Z",
+      "side": 1,
+      "message": "a list of {@link NetworkSnapshots}, one for each network that is currently connected.",
+      "range": {
+        "startLine": 653,
+        "startChar": 36,
+        "endLine": 653,
+        "endChar": 72
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f719a4e_389fa114",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-02T13:22:22Z",
+      "side": 1,
+      "message": "Might want to note what this does. Is it only used to determine on which network future calls to {@link TrafficStats#incrementOperationCount} apply to? If so, would say that here.",
+      "range": {
+        "startLine": 654,
+        "startChar": 26,
+        "endLine": 654,
+        "endChar": 54
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "479bc071_8d9853f4",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-02T13:22:22Z",
+      "side": 1,
+      "message": "I would suggest not mentioning this here since it\u0027s not a public API and is also deprecated.",
+      "range": {
+        "startLine": 655,
+        "startChar": 37,
+        "endLine": 655,
+        "endChar": 80
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b37cc092_4bc2c08b",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-02T13:22:22Z",
+      "side": 1,
+      "message": "Technically speaking the system server does not have PERMISSION_MAINLINE_NETWORK_STACK. This will work because the system UID always passes all permissions checks.\n\nIt would be more correct to say anyOf(PERMISSION_NETWORK_STACK, NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK).",
+      "range": {
+        "startLine": 662,
+        "startChar": 37,
+        "endLine": 662,
+        "endChar": 70
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e59f3f13_a26a0df1",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-02T13:22:22Z",
+      "side": 1,
+      "message": "Can you rename this to notifyNetworkStatus? Doesn\u0027t need to be in this CL but shouldn\u0027t be hard to do this in a follow-up",
+      "range": {
+        "startLine": 672,
+        "startChar": 0,
+        "endLine": 673,
+        "endChar": 38
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e9b50a7_021fd115",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-02T13:22:22Z",
+      "side": 1,
+      "message": "Nit: this can\u0027t actually happen except when the system server crashes, so there\u0027s no need for this debug log.",
+      "range": {
+        "startLine": 677,
+        "startChar": 12,
+        "endLine": 677,
+        "endChar": 84
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ca92c5b_ce8d49ff",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-02T13:22:22Z",
+      "side": 1,
+      "message": "N",
+      "range": {
+        "startLine": 382,
+        "startChar": 59,
+        "endLine": 382,
+        "endChar": 60
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
