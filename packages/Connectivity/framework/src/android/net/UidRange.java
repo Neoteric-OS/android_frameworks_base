@@ -60,6 +60,7 @@ public final class UidRange implements Parcelable {
         return stop / PER_USER_RANGE;
     }
 
+    /** Returns whether the UidRange contains the specified UID. */
     public boolean contains(int uid) {
         return start <= uid && uid <= stop;
     }
@@ -72,7 +73,7 @@ public final class UidRange implements Parcelable {
     }
 
     /**
-     * @return {@code true} if this range contains every UID contained by the {@param other} range.
+     * @return {@code true} if this range contains every UID contained by the {@code other} range.
      */
     public boolean containsRange(UidRange other) {
         return start <= other.start && other.stop <= stop;
@@ -118,18 +119,18 @@ public final class UidRange implements Parcelable {
     }
 
     public static final @android.annotation.NonNull Creator<UidRange> CREATOR =
-        new Creator<UidRange>() {
-            @Override
-            public UidRange createFromParcel(Parcel in) {
-                int start = in.readInt();
-                int stop = in.readInt();
+            new Creator<UidRange>() {
+        @Override
+        public UidRange createFromParcel(Parcel in) {
+            int start = in.readInt();
+            int stop = in.readInt();
 
-                return new UidRange(start, stop);
-            }
-            @Override
-            public UidRange[] newArray(int size) {
-                return new UidRange[size];
-            }
+            return new UidRange(start, stop);
+        }
+        @Override
+        public UidRange[] newArray(int size) {
+            return new UidRange[size];
+        }
     };
 
     /**
