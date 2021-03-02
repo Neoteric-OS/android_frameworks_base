@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adddc6cb_94673c52",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-02T03:02:45Z",
+      "side": 1,
+      "message": "Is this @hide necessary since it is already at the class level?",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 12
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "182fe2ad_40a0175d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-02T03:02:45Z",
+      "side": 1,
+      "message": "Could you inline this?\n\n    netCap.setUids(Collections.Singleton(uids));",
+      "range": {
+        "startLine": 1269,
+        "startChar": 0,
+        "endLine": 1271,
+        "endChar": 31
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "384a0ae4_d68c897d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5274,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-02T03:02:45Z",
+      "side": 1,
+      "message": "could this just be?\n\n    nri.getSatisfier()\n\nThen you wouldn\u0027t need to change the constructor signature. It looks like the only two places this is being used you have updated to have this behavior?",
+      "range": {
+        "startLine": 5274,
+        "startChar": 25,
+        "endLine": 5274,
+        "endChar": 41
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4d42670_9008da44",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9050,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-02T03:02:45Z",
+      "side": 1,
+      "message": "From an API perspective, how easy would it be to change this to a List? Although today it only allows for the enterprise capability, that\u0027s quite possible to change? If so, we would want to extend that for \u0027n\u0027 capabilities, each with their own request evaluated in order before falling back to the system default network?\n\nE.g., if you had a list of 2 requests:\n\n    if 1 is available use it\n    else if 2 is available use it\n    else use the system default\n\nAnd so on and so forth (perhaps cap it at some arbitrary number)...\n\nIt show be fairly trivial to implement now that multilayered network requests are complete? Now of course, that\u0027s assuming you are ok with this behavior which may not be the case however if so, it would make this API more flexible.",
+      "range": {
+        "startLine": 9050,
+        "startChar": 22,
+        "endLine": 9050,
+        "endChar": 32
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1f3c2bf_a379f1ea",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9088,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-02T03:02:45Z",
+      "side": 1,
+      "message": "nit; since you are comparing against a getter, you would be safe to put it in front, e.g. this won\u0027t set the value of uids.size():\n\n     uids.size() !\u003d 1\n\nNow if it wasn\u0027t a getter, i.e. uids.size then I\u0027d have it reversed as you do now.\n\nIt\u0027s not a huge deal either way.",
+      "range": {
+        "startLine": 9088,
+        "startChar": 12,
+        "endLine": 9088,
+        "endChar": 28
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81204979_41f066dd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9103,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-02T03:02:45Z",
+      "side": 1,
+      "message": "This is where you could feasibly loop over the capabilities if you wanted to support more than 1.",
+      "range": {
+        "startLine": 9103,
+        "startChar": 12,
+        "endLine": 9103,
+        "endChar": 90
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdcf836a_29409fb3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9126,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-02T03:02:45Z",
+      "side": 1,
+      "message": "nit; if statement with all code in a new method for readability?\n\n     validateNetworkPreferenceForUserCapabilities()",
+      "range": {
+        "startLine": 9126,
+        "startChar": 8,
+        "endLine": 9126,
+        "endChar": 46
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60a402c2_a0044e93",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9141,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-02T03:02:45Z",
+      "side": 1,
+      "message": "Looks like you are updating a member variable here but haven\u0027t yet confirmed you are on the handler thread?\n\n    ensureRunningOnConnectivityServiceThread();",
+      "range": {
+        "startLine": 9141,
+        "startChar": 8,
+        "endLine": 9141,
+        "endChar": 34
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff19d1d5_c4e561e7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9184,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-02T03:02:45Z",
+      "side": 1,
+      "message": "Perhaps encapsulate in a method since this looks to be duplicate (or close to) of l.9065?",
+      "range": {
+        "startLine": 9178,
+        "startChar": 12,
+        "endLine": 9184,
+        "endChar": 66
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a87bdb1_ab0e11cb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9220,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-02T03:02:45Z",
+      "side": 1,
+      "message": "Perhaps encapsulate in a method since this looks to be duplicate (or close to) of l.9115?",
+      "range": {
+        "startLine": 9211,
+        "startChar": 8,
+        "endLine": 9220,
+        "endChar": 9
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
