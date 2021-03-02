@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4af66561_cafb8785",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T06:12:42Z",
+      "side": 1,
+      "message": "For for lack of context: what is enterprise slicing?\ndo we have gdoc or somewhere that explain it?",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfd4dd75_1c06e481",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10677,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T06:12:42Z",
+      "side": 1,
+      "message": "Stupid question: what does this mean?\nI don\u0027t see you create or delete user profile in this test?\nMaybe put a short description as javadoc for each test?",
+      "range": {
+        "startLine": 10677,
+        "startChar": 37,
+        "endLine": 10677,
+        "endChar": 43
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "678f8398_b9743dfc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10694,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T06:12:42Z",
+      "side": 1,
+      "message": "Question: they are all register default network callback but just different UID, right? maybe describe what\u0027s the difference between them?",
+      "range": {
+        "startLine": 10693,
+        "startChar": 5,
+        "endLine": 10694,
+        "endChar": 59
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55cc4d54_5f3e48c2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10700,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T06:12:42Z",
+      "side": 1,
+      "message": "Stupid Question: where can I find this API?\nI do code search but it returned nothing.",
+      "range": {
+        "startLine": 10700,
+        "startChar": 12,
+        "endLine": 10700,
+        "endChar": 39
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9935c46e_e9e365e5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10704,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T06:12:42Z",
+      "side": 1,
+      "message": "Question: why do we want to do this?",
+      "range": {
+        "startLine": 10704,
+        "startChar": 11,
+        "endLine": 10704,
+        "endChar": 53
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "519e0271_0fc961f9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10705,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T06:12:42Z",
+      "side": 1,
+      "message": "Stupid Question: what rule and what range?",
+      "range": {
+        "startLine": 10705,
+        "startChar": 11,
+        "endLine": 10705,
+        "endChar": 20
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51a41b20_17bcc204",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10706,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T06:12:42Z",
+      "side": 1,
+      "message": "Question: what\u0027s the original state before moving?",
+      "range": {
+        "startLine": 10706,
+        "startChar": 58,
+        "endLine": 10706,
+        "endChar": 63
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
