@@ -16,6 +16,24 @@
       "message": "nit: Add ownership for ConfigurationController",
       "revId": "6e6d5e049b8c9d446542ed6b82cacc83aef17afd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "057c6605_b4402bf5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1381465
+      },
+      "writtenOn": "2021-03-02T06:29:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb1ed230_dcc1cd05",
+      "revId": "6e6d5e049b8c9d446542ed6b82cacc83aef17afd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
