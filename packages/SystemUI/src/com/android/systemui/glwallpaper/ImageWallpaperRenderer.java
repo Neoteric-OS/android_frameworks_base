@@ -46,6 +46,7 @@ public class ImageWallpaperRenderer implements GLWallpaperRenderer {
     private final ImageGLWallpaper mWallpaper;
     private final Rect mSurfaceSize = new Rect();
     private final WallpaperTexture mTexture;
+    private static final AtomicInteger mRefCount = new AtomicInteger();
 
     public ImageWallpaperRenderer(Context context) {
         final WallpaperManager wpm = context.getSystemService(WallpaperManager.class);
@@ -109,7 +110,6 @@ public class ImageWallpaperRenderer implements GLWallpaperRenderer {
     }
 
     static class WallpaperTexture {
-        private final AtomicInteger mRefCount;
         private final Rect mDimensions;
         private final WallpaperManager mWallpaperManager;
         private Bitmap mBitmap;
@@ -117,7 +117,6 @@ public class ImageWallpaperRenderer implements GLWallpaperRenderer {
 
         private WallpaperTexture(WallpaperManager wallpaperManager) {
             mWallpaperManager = wallpaperManager;
-            mRefCount = new AtomicInteger();
             mDimensions = new Rect();
         }
 
