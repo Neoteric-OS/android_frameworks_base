@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0837741_333b5f4a",
+        "filename": "core/java/android/os/Build.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1290,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2021-03-02T15:06:23Z",
+      "side": 1,
+      "message": "Can you expand the docs here to help public API developers understand what the implications of this are?  In particular, I believe this indicates that a user can gain root access via local shell, that any running application can have a debugger attached regardless of their \"debuggable\" attribute declaration, and that SELinux can be downgraded into the \"permissive\" mode.",
+      "range": {
+        "startLine": 1290,
+        "startChar": 0,
+        "endLine": 1290,
+        "endChar": 93
+      },
+      "revId": "9102ed836c69e80101112cbd608f0c95017abb1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
