@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": false,
       "key": {
         "uuid": "25511144_ba8b324d",
         "filename": "/PATCHSET_LEVEL",
@@ -14,8 +15,25 @@
       "side": 1,
       "message": "Is there a reason this isn\u0027t public API?",
       "revId": "db34c6c311d480d031050d98732dda1be0e87344",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef7f4633_394cd286",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-02T02:54:05Z",
+      "side": 1,
+      "message": "Made public in latest patchset",
+      "parentUuid": "25511144_ba8b324d",
+      "revId": "db34c6c311d480d031050d98732dda1be0e87344",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
