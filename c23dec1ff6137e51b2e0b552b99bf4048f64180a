@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efd2a82d_a6268615",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5064,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T06:12:03Z",
+      "side": 1,
+      "message": "Stupid Question: not quite understand this.",
+      "range": {
+        "startLine": 5064,
+        "startChar": 4,
+        "endLine": 5064,
+        "endChar": 93
+      },
+      "revId": "c23dec1ff6137e51b2e0b552b99bf4048f64180a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e28df908_8d402ae0",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5080,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T06:12:03Z",
+      "side": 1,
+      "message": "I can imagine we\u0027ll have other kind of network preference to set.\nThus I think this naming is not too great.\nInstead of taking this generic term. maybe name it more speicfic?\ne.g. setDefaultNetworkCapabilitiesForUser?\nNo strong opinion.",
+      "range": {
+        "startLine": 5080,
+        "startChar": 19,
+        "endLine": 5080,
+        "endChar": 36
+      },
+      "revId": "c23dec1ff6137e51b2e0b552b99bf4048f64180a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
