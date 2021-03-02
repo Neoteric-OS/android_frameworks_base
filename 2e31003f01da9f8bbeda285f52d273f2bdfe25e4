@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1272ca57_7eba2967",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T13:27:30Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "2e31003f01da9f8bbeda285f52d273f2bdfe25e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d447eaa3_215d1f8e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T13:27:30Z",
+      "side": 1,
+      "message": "IIUC we only have 2 callers.\nIs it better if we just make a defensive copy inside this function?\nIIUC in getFilteredNetworkInfoForType we already make one, so not sure if this is a good idea.\nIf so we might be able to remove the needs of this comment.",
+      "range": {
+        "startLine": 1484,
+        "startChar": 0,
+        "endLine": 1485,
+        "endChar": 36
+      },
+      "revId": "2e31003f01da9f8bbeda285f52d273f2bdfe25e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "834c03d2_4a0f7e08",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1486,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T13:27:30Z",
+      "side": 1,
+      "message": "nit: @NonNull",
+      "range": {
+        "startLine": 1486,
+        "startChar": 6,
+        "endLine": 1486,
+        "endChar": 7
+      },
+      "revId": "2e31003f01da9f8bbeda285f52d273f2bdfe25e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc47e9dc_7b7155fc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T13:27:30Z",
+      "side": 1,
+      "message": "It took me a while to understand why you refactor these 2 functions like this.\nmaybe getFilterNetworkInfo \u0026 getFilteredNetworkInfoForNai only if you think it is better? \nNo strong opinion.",
+      "range": {
+        "startLine": 1498,
+        "startChar": 24,
+        "endLine": 1498,
+        "endChar": 46
+      },
+      "revId": "2e31003f01da9f8bbeda285f52d273f2bdfe25e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
