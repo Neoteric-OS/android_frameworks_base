@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "f440346a_7ba32866",
         "filename": "services/core/java/com/android/server/hdmi/Constants.java",
@@ -20,10 +21,10 @@
         "endChar": 78
       },
       "revId": "c5d32c735ced149811e6d3cc2b5b6205c75b9d3d",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "b6729b53_7f4ae89b",
         "filename": "services/core/java/com/android/server/hdmi/Constants.java",
@@ -44,10 +45,34 @@
         "endChar": 78
       },
       "revId": "c5d32c735ced149811e6d3cc2b5b6205c75b9d3d",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad6c9a59_e6ce0026",
+        "filename": "services/core/java/com/android/server/hdmi/Constants.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2021-03-02T09:31:28Z",
+      "side": 1,
+      "message": "Okay, We will separate all DDP atmos related part to other CL.",
+      "parentUuid": "f440346a_7ba32866",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 409,
+        "endChar": 78
+      },
+      "revId": "c5d32c735ced149811e6d3cc2b5b6205c75b9d3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "c881837c_76f457fa",
         "filename": "services/core/java/com/android/server/hdmi/SystemAudioAction.java",
@@ -67,10 +92,10 @@
         "endChar": 0
       },
       "revId": "c5d32c735ced149811e6d3cc2b5b6205c75b9d3d",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "cf17ce87_5f45abf6",
         "filename": "services/core/java/com/android/server/hdmi/SystemAudioAction.java",
@@ -91,10 +116,34 @@
         "endChar": 0
       },
       "revId": "c5d32c735ced149811e6d3cc2b5b6205c75b9d3d",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ac87d6f_e6886c30",
+        "filename": "services/core/java/com/android/server/hdmi/SystemAudioAction.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2021-03-02T09:31:28Z",
+      "side": 1,
+      "message": "We\u0027re not sure how to do this.\nI think we can add sadConfig.xml and parse with ShortAudioDescriptorXmlParser in HdmiUtils\nHowever, currently there\u0027s no API in HdmiUtils for TV to get SADs from xml.\nDo we need to add getSupportedShortAudioDescriptorsFromConfig() in HdmiCecLocalDeviceTv.java same as in HdmiCecLocalDeviceAudioSystem.java?",
+      "parentUuid": "c881837c_76f457fa",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "c5d32c735ced149811e6d3cc2b5b6205c75b9d3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "f7358752_af07409a",
         "filename": "services/core/java/com/android/server/hdmi/SystemAudioAutoInitiationAction.java",
@@ -114,10 +163,10 @@
         "endChar": 20
       },
       "revId": "c5d32c735ced149811e6d3cc2b5b6205c75b9d3d",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "bf24b2a3_a89f4cf0",
         "filename": "services/core/java/com/android/server/hdmi/SystemAudioAutoInitiationAction.java",
@@ -138,8 +187,31 @@
         "endChar": 20
       },
       "revId": "c5d32c735ced149811e6d3cc2b5b6205c75b9d3d",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fd30e8d_78fa1614",
+        "filename": "services/core/java/com/android/server/hdmi/SystemAudioAutoInitiationAction.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2021-03-02T09:31:28Z",
+      "side": 1,
+      "message": "Original idea is to send \u003cRequest Short Audio Descriptor\u003e whenever SAM is set to ON.\nI think we can discard this part since we\u0027ve add sendRequestShortAudioDescriptor in tv().setSystemAudioMode().",
+      "parentUuid": "f7358752_af07409a",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 20
+      },
+      "revId": "c5d32c735ced149811e6d3cc2b5b6205c75b9d3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

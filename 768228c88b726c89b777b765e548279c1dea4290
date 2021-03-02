@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c31adce_327b9846",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2021-03-02T09:31:28Z",
+      "side": 1,
+      "message": "We should remove aosp/1302439 from the topic, and merge this one first.",
+      "revId": "768228c88b726c89b777b765e548279c1dea4290",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
