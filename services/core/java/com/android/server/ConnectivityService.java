@@ -3831,7 +3831,24 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 removeListenRequestFromNetworks(req);
             }
         }
-        mDefaultNetworkRequests.remove(nri);
+        if (mDefaultNetworkRequests.remove(nri)) {
+            // If this request was one of the defaults, then the UID rules need to be updated
+            // WARNING : if the app(s) for which this network request is the default are doing
+            // traffic, this will kill their connected sockets, even if an equivalent request
+            // is going to be reinstated right away ; unconnected traffic will go on the default
+            // until the new default is set, which will happen very soon.
+            // TODO : The only way out of this is to diff old defaults and new defaults, and only
+            // remove ranges for those requests that won't have a replacement
+            final NetworkAgentInfo satisfier = nri.getSatisfier();
+            if (null != satisfier) {
+                try {
+                    mNetd.networkRemoveUidRanges(satisfier.network.getNetId(),
+                            toUidRangeStableParcels(nri.getUids()));
+                } catch (RemoteException e) {
+                    loge("Exception setting network preference default network", e);
+                }
+            }
+        }
         mNetworkRequestCounter.decrementCount(nri.mUid);
         mNetworkRequestInfoLogs.log("RELEASE " + nri);
 
@@ -4484,11 +4501,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     final Pair<OemNetworkPreferences, IOnSetOemNetworkPreferenceListener> arg =
                             (Pair<OemNetworkPreferences,
                                     IOnSetOemNetworkPreferenceListener>) msg.obj;
-                    try {
-                        handleSetOemNetworkPreference(arg.first, arg.second);
-                    } catch (RemoteException e) {
-                        loge("handleMessage.EVENT_SET_OEM_NETWORK_PREFERENCE failed", e);
-                    }
+                    handleSetOemNetworkPreference(arg.first, arg.second);
                     break;
                 case EVENT_REPORT_NETWORK_ACTIVITY:
                     mNetworkActivityTracker.handleReportNetworkActivity();
@@ -5031,10 +5044,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void onUserAdded(UserHandle user) {
         mPermissionMonitor.onUserAdded(user);
+        if (mOemNetworkPreferences.getNetworkPreferences().size() > 0) {
+            handleSetOemNetworkPreference(mOemNetworkPreferences, null);
+        }
     }
 
     private void onUserRemoved(UserHandle user) {
         mPermissionMonitor.onUserRemoved(user);
+        if (mOemNetworkPreferences.getNetworkPreferences().size() > 0) {
+            handleSetOemNetworkPreference(mOemNetworkPreferences, null);
+        }
     }
 
     private BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
@@ -9033,7 +9052,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void handleSetOemNetworkPreference(
             @NonNull final OemNetworkPreferences preference,
-            @NonNull final IOnSetOemNetworkPreferenceListener listener) throws RemoteException {
+            @Nullable final IOnSetOemNetworkPreferenceListener listener) {
         Objects.requireNonNull(preference, "OemNetworkPreferences must be non-null");
         if (DBG) {
             log("set OEM network preferences :" + preference.toString());
@@ -9045,7 +9064,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // TODO http://b/176496396 persist data to shared preferences.
 
         if (null != listener) {
-            listener.onComplete();
+            try {
+                listener.onComplete();
+            } catch (RemoteException e) {
+                loge("Can't send onComplete in handleSetOemNetworkPreference", e);
+            }
         }
     }
 
@@ -9163,6 +9186,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 @NonNull final OemNetworkPreferences preference) {
             final SparseArray<Set<Integer>> uids = new SparseArray<>();
             final PackageManager pm = mContext.getPackageManager();
+            final List<UserHandle> users =
+                    mContext.getSystemService(UserManager.class).getUserHandles(true);
+            if (null == users || users.size() == 0) {
+                if (VDBG || DDBG) {
+                    log("No users currently available for setting the OEM network preference.");
+                }
+                return uids;
+            }
             for (final Map.Entry<String, Integer> entry :
                     preference.getNetworkPreferences().entrySet()) {
                 @OemNetworkPreferences.OemNetworkPreference final int pref = entry.getValue();
@@ -9171,7 +9202,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     if (!uids.contains(pref)) {
                         uids.put(pref, new ArraySet<>());
                     }
-                    uids.get(pref).add(uid);
+                    for (final UserHandle ui : users) {
+                        // Add the rules for all users as this policy is device wide.
+                        uids.get(pref).add(UserHandle.getUid(ui, uid));
+                    }
                 } catch (PackageManager.NameNotFoundException e) {
                     // Although this may seem like an error scenario, it is ok that uninstalled
                     // packages are sent on a network preference as the system will watch for
