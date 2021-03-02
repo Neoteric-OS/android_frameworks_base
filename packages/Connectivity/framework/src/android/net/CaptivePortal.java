@@ -163,9 +163,5 @@ public class CaptivePortal implements Parcelable {
      */
     @SystemApi
     public void logEvent(int eventId, @NonNull String packageName) {
-        try {
-            ICaptivePortal.Stub.asInterface(mBinder).logEvent(eventId, packageName);
-        } catch (RemoteException e) {
-        }
     }
 }
