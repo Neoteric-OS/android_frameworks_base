@@ -2292,9 +2292,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     /** {@inheritDoc} */
     @Override
-    public StartingSurface addSplashScreen(IBinder appToken, String packageName, int theme,
-            CompatibilityInfo compatInfo, CharSequence nonLocalizedLabel, int labelRes, int icon,
-            int logo, int windowFlags, Configuration overrideConfig, int displayId) {
+    public StartingSurface addSplashScreen(IBinder appToken, int userId, String packageName,
+            int theme, CompatibilityInfo compatInfo, CharSequence nonLocalizedLabel, int labelRes,
+            int icon, int logo, int windowFlags, Configuration overrideConfig, int displayId) {
         if (!SHOW_SPLASH_SCREENS) {
             return null;
         }
@@ -2320,8 +2320,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             context = displayContext;
 
             if (theme != context.getThemeResId() || labelRes != 0) {
+                final UserHandle userHandle = UserHandle.of(userId);
                 try {
-                    context = context.createPackageContext(packageName, CONTEXT_RESTRICTED);
+                    context = context.createPackageContextAsUser(packageName, CONTEXT_RESTRICTED,
+                            userHandle);
                     context.setTheme(theme);
                 } catch (PackageManager.NameNotFoundException e) {
                     // Ignore
