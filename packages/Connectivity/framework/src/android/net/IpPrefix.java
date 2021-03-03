@@ -30,8 +30,12 @@ import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * This class represents an IP prefix, i.e., a contiguous block of IP addresses aligned on a
@@ -203,6 +207,7 @@ public final class IpPrefix implements Parcelable {
      * @param otherPrefix the prefix to test
      * @hide
      */
+    @SystemApi
     public boolean containsPrefix(@NonNull IpPrefix otherPrefix) {
         if (otherPrefix.getPrefixLength() < prefixLength) return false;
         final byte[] otherAddress = otherPrefix.getRawAddress();
@@ -300,4 +305,80 @@ public final class IpPrefix implements Parcelable {
                     return new IpPrefix[size];
                 }
             };
+
+    /**
+     * Returns the collection of prefixes that comprise the result of subtracting {@code other}
+     * prefix from this prefix.
+     *
+     * <p>For example, for the prefix 0.0.0.0/0, subtracting the prefix 0.0.0.0/4 will return the
+     * prefixes that combined make up the difference:
+     *
+     * <ul>
+     *   <li>128.0.0.0/1
+     *   <li>64.0.0.0/2
+     *   <li>32.0.0.0/3
+     *   <li>16.0.0.0/4
+     * </ul>
+     *
+     * @hide
+     */
+    @SystemApi
+    @NonNull
+    public Collection<IpPrefix> subtractPrefix(@NonNull IpPrefix other) {
+        Collection<IpPrefix> result = new ArrayList<>();
+
+        final Queue<IpPrefix> workingSet = new LinkedList<>();
+        workingSet.add(this);
+
+        while (!workingSet.isEmpty()) {
+            IpPrefix current = workingSet.poll();
+
+            if (current.containsPrefix(other)) {
+                if (current.equals(other)) {
+                    // Current prefix precisely matches the other prefix,
+                    // then the rest of workingSet is a part of result
+                    result.addAll(workingSet);
+                    break;
+                } else {
+                    // Current prefix contains the other prefix, but is not equal to it,
+                    // split current prefix to try to match subprefixes with {@code other}
+                    workingSet.addAll(getSubsetPrefixes(current));
+                }
+            } else {
+                // Current prefix doesn't overlap with other prefix, then it's a part of result
+                result.add(current);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Returns the two prefixes that comprise the given prefix.
+     *
+     * <p>For example, for the prefix 192.0.2.0/24, this will return the two prefixes that combined
+     * make up the current prefix:
+     *
+     * <ul>
+     *   <li>192.0.2.0/25
+     *   <li>192.0.2.128/25
+     * </ul>
+     *
+     * @hide
+     */
+    @SystemApi
+    @NonNull
+    public static Collection<IpPrefix> getSubsetPrefixes(@NonNull IpPrefix prefix) {
+        final Collection<IpPrefix> result = new ArrayList<>(2);
+
+        final int currentPrefixLen = prefix.getPrefixLength();
+        result.add(new IpPrefix(prefix.getAddress(), currentPrefixLen + 1));
+
+        final byte[] other = prefix.getRawAddress();
+        other[currentPrefixLen / 8] =
+                (byte) (other[currentPrefixLen / 8] ^ (0x80 >> (currentPrefixLen % 8)));
+        result.add(new IpPrefix(other, currentPrefixLen + 1));
+
+        return result;
+    }
 }
