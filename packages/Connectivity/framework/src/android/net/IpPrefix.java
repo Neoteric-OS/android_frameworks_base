@@ -30,8 +30,12 @@ import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * This class represents an IP prefix, i.e., a contiguous block of IP addresses aligned on a
@@ -203,6 +207,7 @@ public final class IpPrefix implements Parcelable {
      * @param otherPrefix the prefix to test
      * @hide
      */
+    @SystemApi
     public boolean containsPrefix(@NonNull IpPrefix otherPrefix) {
         if (otherPrefix.getPrefixLength() < prefixLength) return false;
         final byte[] otherAddress = otherPrefix.getRawAddress();
@@ -300,4 +305,63 @@ public final class IpPrefix implements Parcelable {
                     return new IpPrefix[size];
                 }
             };
+
+    /**
+     * @hide
+     */
+    @SystemApi
+    @NonNull
+    public Collection<IpPrefix> subtractPrefix(@NonNull IpPrefix other) {
+        Collection<IpPrefix> result = new ArrayList<>();
+
+        final Queue<IpPrefix> workingSet = new LinkedList<>();
+        workingSet.add(this);
+
+        while (!workingSet.isEmpty()) {
+            IpPrefix current = workingSet.poll();
+
+            if (current.containsPrefix(other)) {
+                if (current.equals(other)) {
+                    result.addAll(workingSet);
+                    break;
+                } else {
+                    workingSet.addAll(getSubsetPrefixes(current));
+                }
+            } else {
+                // prefix doesn't overlap with other prefix, then it's a part of result
+                result.add(current);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Returns the two prefixes that comprise the given prefix.
+     *
+     * <p>For example, for the prefix 192.0.2.0/24, this will return the two prefixes that combined
+     * make up the current prefix:
+     *
+     * <ul>
+     *   <li>192.0.2.0/25
+     *   <li>192.0.2.128/25
+     * </ul>
+     *
+     * @hide
+     */
+    @SystemApi
+    @NonNull
+    public static Collection<IpPrefix> getSubsetPrefixes(@NonNull IpPrefix prefix) {
+        final Collection<IpPrefix> result = new ArrayList<>(2);
+
+        final int currentPrefixLen = prefix.getPrefixLength();
+        result.add(new IpPrefix(prefix.getAddress(), currentPrefixLen + 1));
+
+        final byte[] other = prefix.getRawAddress();
+        other[currentPrefixLen / 8] =
+                (byte) (other[currentPrefixLen / 8] ^ (0x80 >> (currentPrefixLen % 8)));
+        result.add(new IpPrefix(other, currentPrefixLen + 1));
+
+        return result;
+    }
 }
