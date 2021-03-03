@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b341adf2_7adb5825",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "It does. This patch is the only user of this method. It\u0027s used to check that OEM preferences and per-profile preferences are not set at the same time.",
+      "parentUuid": "d640f4bd_97a0bf3b",
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "adddc6cb_94673c52",
@@ -58,6 +76,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "291874fd_087bcf75",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "It\u0027s necessary to hide this method from SystemApi.",
+      "parentUuid": "adddc6cb_94673c52",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 12
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "182fe2ad_40a0175d",
@@ -71,6 +113,30 @@
       "writtenOn": "2021-03-02T03:02:45Z",
       "side": 1,
       "message": "Could you inline this?\n\n    netCap.setUids(Collections.Singleton(uids));",
+      "range": {
+        "startLine": 1269,
+        "startChar": 0,
+        "endLine": 1271,
+        "endChar": 31
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5c40e9c_b1edc102",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "182fe2ad_40a0175d",
       "range": {
         "startLine": 1269,
         "startChar": 0,
@@ -118,6 +184,30 @@
       "side": 1,
       "message": "+1",
       "parentUuid": "384a0ae4_d68c897d",
+      "range": {
+        "startLine": 5274,
+        "startChar": 25,
+        "endLine": 5274,
+        "endChar": 41
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "351097cb_73b599fe",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5274,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "Good call – in fact I noticed that too after I sent the patch and had a mental note to do it. Done.",
+      "parentUuid": "f29fff2e_8b83e4ba",
       "range": {
         "startLine": 5274,
         "startChar": 25,
@@ -177,6 +267,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f31d3693_bfe18261",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9050,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "Flexibility and generality are explicitly non-goals for this API. We want this to be as narrow as possible because the potential for abuse is very concerning.\n\nThe ability to fallback or not to the default network is kind of up in the air. I suspect we will have requests for it and the API should be extensible to support that use case, so I favor having an enum-style int like for OemPreferences.\n\nImmediately, fallback is the only behavior that makes sense because the slice can only be available on 5G whose coverage is spotty at the moment, so no fallback means most of the time the apps in the work profile would get no networking.\n\nI\u0027ll consult again with my API sponsor.",
+      "parentUuid": "43e80cec_3868edbf",
+      "range": {
+        "startLine": 9050,
+        "startChar": 22,
+        "endLine": 9050,
+        "endChar": 32
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7384fa82_53161906",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -188,6 +302,30 @@
       "writtenOn": "2021-03-02T14:16:46Z",
       "side": 1,
       "message": "I can understand this feature is per-profile.\nBut why this is limited to a work profile?\nWhat about a corp-owned device that has no work profile?",
+      "range": {
+        "startLine": 9061,
+        "startChar": 16,
+        "endLine": 9061,
+        "endChar": 32
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d503dfb3_96b43929",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9061,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "I think this is explicitly out of the supported cases. But I\u0027ll be checking again with Robert tomorrow.",
+      "parentUuid": "7384fa82_53161906",
       "range": {
         "startLine": 9061,
         "startChar": 16,
@@ -221,6 +359,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a480efe_2db21fb0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9069,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "443f9313_7b280235",
+      "range": {
+        "startLine": 9065,
+        "startChar": 12,
+        "endLine": 9069,
+        "endChar": 71
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ef65b11_4c7c9297",
@@ -244,6 +406,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e2b94d0_f1dc71ac",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9071,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "Changed the message to include the exact name of the methods. This should help debugging.",
+      "parentUuid": "1ef65b11_4c7c9297",
+      "range": {
+        "startLine": 9070,
+        "startChar": 55,
+        "endLine": 9071,
+        "endChar": 46
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3c5ee8e_e22c9fcd",
@@ -257,6 +443,30 @@
       "writtenOn": "2021-03-02T14:16:46Z",
       "side": 1,
       "message": "static and @VisibleForTesting?",
+      "range": {
+        "startLine": 9087,
+        "startChar": 11,
+        "endLine": 9087,
+        "endChar": 12
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "453d093d_14d2fd44",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9087,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "static : done\n\nvisible for testing : why ? It\u0027s private and not used in tests.",
+      "parentUuid": "e3c5ee8e_e22c9fcd",
       "range": {
         "startLine": 9087,
         "startChar": 11,
@@ -315,6 +525,54 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "b9e82819_f0fc0bc9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9088,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "Safe yes, but I tend to just always put the constant first :) I guess what I\u0027m trying to say is, I don\u0027t see what\u0027s better if I say it in the reverse order",
+      "parentUuid": "b1f3c2bf_a379f1ea",
+      "range": {
+        "startLine": 9088,
+        "startChar": 12,
+        "endLine": 9088,
+        "endChar": 28
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0def7050_e9dfa000",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9088,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "1. It needs to cover exactly one user, and the full user range.\n\n2. In the great scheme of things, considering our overall goals, do you really think it\u0027s worth our engineering time and cumulative presubmit time to write a test for a three-line method that does two additions and is only there to detect egregious mistakes in another function right below it ? If you think it is I\u0027ll do it. But my estimate is : it\u0027s not worth anybody\u0027s time.",
+      "parentUuid": "06817452_e43da21e",
+      "range": {
+        "startLine": 9088,
+        "startChar": 37,
+        "endLine": 9088,
+        "endChar": 42
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "81204979_41f066dd",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -326,6 +584,30 @@
       "writtenOn": "2021-03-02T03:02:45Z",
       "side": 1,
       "message": "This is where you could feasibly loop over the capabilities if you wanted to support more than 1.",
+      "range": {
+        "startLine": 9103,
+        "startChar": 12,
+        "endLine": 9103,
+        "endChar": 90
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2eda8b6_e86f1a83",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9103,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "Yes, but I don\u0027t think we want to support more than 1.",
+      "parentUuid": "81204979_41f066dd",
       "range": {
         "startLine": 9103,
         "startChar": 12,
@@ -359,6 +641,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aecfcf6b_68d3c03a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9126,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdcf836a_29409fb3",
+      "range": {
+        "startLine": 9126,
+        "startChar": 8,
+        "endLine": 9126,
+        "endChar": 46
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60a402c2_a0044e93",
@@ -372,6 +678,30 @@
       "writtenOn": "2021-03-02T03:02:45Z",
       "side": 1,
       "message": "Looks like you are updating a member variable here but haven\u0027t yet confirmed you are on the handler thread?\n\n    ensureRunningOnConnectivityServiceThread();",
+      "range": {
+        "startLine": 9141,
+        "startChar": 8,
+        "endLine": 9141,
+        "endChar": 34
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c4adc57_727d4ae0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9141,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "Our handle* methods don\u0027t usually do that (remember that it\u0027s not free) because all authors and reviewers know full well that handle* methods must be called only on the handler thread. You might remember we discussed this before ; that\u0027s the reason we decided not to have handleSetOemNetworkPreference call ensureRunningOnConnectivityServiceThread.\n\nBut I don\u0027t feel strongly, so if you do please reopen the comment and I\u0027ll add it.",
+      "parentUuid": "60a402c2_a0044e93",
       "range": {
         "startLine": 9141,
         "startChar": 8,
@@ -405,6 +735,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8a43e8f_a8e39715",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9184,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff19d1d5_c4e561e7",
+      "range": {
+        "startLine": 9178,
+        "startChar": 12,
+        "endLine": 9184,
+        "endChar": 66
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a87bdb1_ab0e11cb",
@@ -418,6 +772,30 @@
       "writtenOn": "2021-03-02T03:02:45Z",
       "side": 1,
       "message": "Perhaps encapsulate in a method since this looks to be duplicate (or close to) of l.9115?",
+      "range": {
+        "startLine": 9211,
+        "startChar": 8,
+        "endLine": 9220,
+        "endChar": 9
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3979ea01_eeda18e4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9220,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:53:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure how to factorize this. They test a different member, the wtf message is different (and needs to be for us to distinguish), and the return can\u0027t be factored away.\n\nDo you have any suggestion of how to factorize this ?",
+      "parentUuid": "1a87bdb1_ab0e11cb",
       "range": {
         "startLine": 9211,
         "startChar": 8,
