@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88a82272_0518e27a",
+        "filename": "core/java/android/app/PendingIntent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2021-03-03T17:56:01Z",
+      "side": 1,
+      "message": "Use a proper brace block even for single-statement bodies:\n\n  if (other \u003d\u003d null) {\n      return false;\n  }",
+      "range": {
+        "startLine": 1189,
+        "startChar": 0,
+        "endLine": 1189,
+        "endChar": 40
+      },
+      "revId": "8b636e18d16f3913155a9cf83601cac642caf1f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75fd8665_7dd5c2b1",
+        "filename": "core/java/android/app/PendingIntent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2021-03-03T17:56:01Z",
+      "side": 1,
+      "message": "GET_INTENT_SENDER_INTENT is currently a signature-only permission.  How do you intend this to function when the caller is a mainline module?",
+      "range": {
+        "startLine": 1191,
+        "startChar": 48,
+        "endLine": 1191,
+        "endChar": 72
+      },
+      "revId": "8b636e18d16f3913155a9cf83601cac642caf1f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
