@@ -19,6 +19,7 @@ package android.telephony.ims;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.os.Build;
 import android.os.Parcel;
@@ -46,6 +47,8 @@ public final class SipMessage implements Parcelable {
     private final String mStartLine;
     private final String mHeaderSection;
     private final byte[] mContent;
+    private final String mViaBranchParam;
+    private final String mCallIdParam;
 
     /**
      * Represents a partially encoded SIP message.
@@ -63,6 +66,9 @@ public final class SipMessage implements Parcelable {
         mStartLine = startLine;
         mHeaderSection = headerSection;
         mContent = content;
+
+        mViaBranchParam = SipMessageParsingUtils.getTransactionId(mHeaderSection);
+        mCallIdParam = SipMessageParsingUtils.getCallId(mHeaderSection);
     }
 
     /**
@@ -73,6 +79,8 @@ public final class SipMessage implements Parcelable {
         mHeaderSection = source.readString();
         mContent = new byte[source.readInt()];
         source.readByteArray(mContent);
+        mViaBranchParam = source.readString();
+        mCallIdParam = source.readString();
     }
 
     /**
@@ -97,6 +105,22 @@ public final class SipMessage implements Parcelable {
         return mContent;
     }
 
+    /**
+     * @return the branch parameter enclosed in the Via header key's value. See RFC 3261 section
+     * 20.42 for more information on the Via header.
+     */
+    public @Nullable String getViaBranchParameter() {
+        return mViaBranchParam;
+    }
+
+    /**
+     * @return the value associated with the call-id header of this SIP message. See RFC 3261
+     * section 20.8 for more information on the call-id header.
+     */
+    public @Nullable String getCallIdParameter() {
+        return mCallIdParam;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -108,6 +132,8 @@ public final class SipMessage implements Parcelable {
         dest.writeString(mHeaderSection);
         dest.writeInt(mContent.length);
         dest.writeByteArray(mContent);
+        dest.writeString(mViaBranchParam);
+        dest.writeString(mCallIdParam);
     }
 
     public static final @NonNull Creator<SipMessage> CREATOR = new Creator<SipMessage>() {
