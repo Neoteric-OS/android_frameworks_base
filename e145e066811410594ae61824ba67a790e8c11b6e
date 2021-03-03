@@ -22,6 +22,30 @@
       },
       "revId": "e145e066811410594ae61824ba67a790e8c11b6e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef351fa8_c87240e5",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionConnectedStateTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-03T06:02:02Z",
+      "side": 1,
+      "message": "Once per direction. Since it\u0027s harmless, it saves some minor logic of adding a special signal for updating the network before applying the transforms.",
+      "parentUuid": "49f1c2d4_e35393b1",
+      "range": {
+        "startLine": 147,
+        "startChar": 32,
+        "endLine": 147,
+        "endChar": 33
+      },
+      "revId": "e145e066811410594ae61824ba67a790e8c11b6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
