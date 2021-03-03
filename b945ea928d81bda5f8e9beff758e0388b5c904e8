@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8feadc2_0526bf75",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-03-03T02:22:07Z",
+      "side": 1,
+      "message": "Commit message has been rewritten.",
+      "parentUuid": "02a40bbf_5c091916",
+      "range": {
+        "startLine": 7,
+        "startChar": 37,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "b945ea928d81bda5f8e9beff758e0388b5c904e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4df0e9bc_f92b013d",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cbe3059_a3c0b833",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-03-03T02:22:07Z",
+      "side": 1,
+      "message": "Commit message has been rewritten.",
+      "parentUuid": "4df0e9bc_f92b013d",
+      "range": {
+        "startLine": 10,
+        "startChar": 54,
+        "endLine": 10,
+        "endChar": 58
+      },
+      "revId": "b945ea928d81bda5f8e9beff758e0388b5c904e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "929ccd61_962bd95d",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-26T08:34:25Z",
       "side": 1,
       "message": "Much of this method is unnecessary since it\u0027s used for bundles that have known keys: EVENT_NETWORK_TESTED and EVENT_DATA_STALL_SUSPECTED are both sent by ConnectivityService, so they could build a PersistableBundle directly.\n\nYou could put it in the ConnectivityReportEvent for EVENT_NETWORK_TESTED, and another obj for EVENT_DATA_STALL_SUSPECTED I think.",
+      "range": {
+        "startLine": 8205,
+        "startChar": 17,
+        "endLine": 8205,
+        "endChar": 23
+      },
+      "revId": "b945ea928d81bda5f8e9beff758e0388b5c904e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4a1fe32_34b94fe4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8205,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-03-03T02:22:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "929ccd61_962bd95d",
       "range": {
         "startLine": 8205,
         "startChar": 17,
