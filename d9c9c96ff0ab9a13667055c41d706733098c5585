@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64342fbd_9efde3ed",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-03T03:41:47Z",
+      "side": 1,
+      "message": "Done, thanks for writing up this.",
+      "parentUuid": "6d9f2a9a_3d028f5a",
+      "range": {
+        "startLine": 652,
+        "startChar": 58,
+        "endLine": 652,
+        "endChar": 59
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "704bbc1b_0e6acb99",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-02T13:22:22Z",
       "side": 1,
       "message": "a list of {@link NetworkSnapshots}, one for each network that is currently connected.",
+      "range": {
+        "startLine": 653,
+        "startChar": 36,
+        "endLine": 653,
+        "endChar": 72
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f2f51aa_16433f4c",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-03T03:41:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "704bbc1b_0e6acb99",
       "range": {
         "startLine": 653,
         "startChar": 36,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a93980c3_599babe7",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-03T03:41:47Z",
+      "side": 1,
+      "message": "Done, but not sure how to describe more about the active interface clearly.\nSince it is the default network of the caller uid, or the first underlying network of a VPN that applies to the caller uid.\nSee if this works for you.",
+      "parentUuid": "7f719a4e_389fa114",
+      "range": {
+        "startLine": 654,
+        "startChar": 26,
+        "endLine": 654,
+        "endChar": 54
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "479bc071_8d9853f4",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-03-02T13:22:22Z",
       "side": 1,
       "message": "I would suggest not mentioning this here since it\u0027s not a public API and is also deprecated.",
+      "range": {
+        "startLine": 655,
+        "startChar": 37,
+        "endLine": 655,
+        "endChar": 80
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5327ad9f_ae6c6a4d",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-03T03:41:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "479bc071_8d9853f4",
       "range": {
         "startLine": 655,
         "startChar": 37,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e323e8d5_912499aa",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-03T03:41:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b37cc092_4bc2c08b",
+      "range": {
+        "startLine": 662,
+        "startChar": 37,
+        "endLine": 662,
+        "endChar": 70
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e59f3f13_a26a0df1",
@@ -146,6 +266,30 @@
       "writtenOn": "2021-03-02T13:22:22Z",
       "side": 1,
       "message": "Can you rename this to notifyNetworkStatus? Doesn\u0027t need to be in this CL but shouldn\u0027t be hard to do this in a follow-up",
+      "range": {
+        "startLine": 672,
+        "startChar": 0,
+        "endLine": 673,
+        "endChar": 38
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2ed8d09_816306c3",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-03T03:41:47Z",
+      "side": 1,
+      "message": "Yes, that is why I wrote this todo here.",
+      "parentUuid": "e59f3f13_a26a0df1",
       "range": {
         "startLine": 672,
         "startChar": 0,
@@ -179,6 +323,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad723ae6_d2c0a3fc",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-03T03:41:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e9b50a7_021fd115",
+      "range": {
+        "startLine": 677,
+        "startChar": 12,
+        "endLine": 677,
+        "endChar": 84
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ca92c5b_ce8d49ff",
@@ -192,6 +360,30 @@
       "writtenOn": "2021-03-02T13:22:22Z",
       "side": 1,
       "message": "N",
+      "range": {
+        "startLine": 382,
+        "startChar": 59,
+        "endLine": 382,
+        "endChar": 60
+      },
+      "revId": "d9c9c96ff0ab9a13667055c41d706733098c5585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2190361_82c6b9e8",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-03T03:41:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ca92c5b_ce8d49ff",
       "range": {
         "startLine": 382,
         "startChar": 59,
