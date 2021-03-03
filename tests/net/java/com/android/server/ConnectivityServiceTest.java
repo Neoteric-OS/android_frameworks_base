@@ -102,6 +102,7 @@ import static com.android.testutils.ConcurrentUtils.await;
 import static com.android.testutils.ConcurrentUtils.durationOf;
 import static com.android.testutils.ExceptionUtils.ignoreExceptions;
 import static com.android.testutils.HandlerUtils.waitForIdleSerialExecutor;
+import static com.android.testutils.MiscAsserts.assertContainsAll;
 import static com.android.testutils.MiscAsserts.assertContainsExactly;
 import static com.android.testutils.MiscAsserts.assertEmpty;
 import static com.android.testutils.MiscAsserts.assertLength;
@@ -202,6 +203,7 @@ import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
 import android.net.NetworkStack;
 import android.net.NetworkStackClient;
+import android.net.NetworkStateSnapshot;
 import android.net.NetworkTestResultParcelable;
 import android.net.OemNetworkPreferences;
 import android.net.ProxyInfo;
@@ -1658,6 +1660,7 @@ public class ConnectivityServiceTest {
         assertNull(mCm.getActiveNetworkForUid(Process.myUid()));
         // Test getAllNetworks()
         assertEmpty(mCm.getAllNetworks());
+        assertEmpty(mCm.getAllNetworkStateSnapshot());
     }
 
     /**
@@ -10653,5 +10656,86 @@ public class ConnectivityServiceTest {
                 mService.mNoServiceNetwork.network());
 
         // default NCs will be unregistered in tearDown
+    }
+
+    @Test
+    public void testGetAllNetworkStateSnapshot() throws Exception {
+        verifyNoNetwork();
+
+        // Setup test cellular network with specified LinkProperties and NetworkCapabilities,
+        // verify the content of the snapshot matches.
+        final LinkProperties testLp = new LinkProperties();
+        final LinkAddress myIpv4Addr = new LinkAddress(InetAddress.getByName("192.0.2.129"), 25);
+        final LinkAddress myIpv6Addr = new LinkAddress(InetAddress.getByName("2001:db8::1"), 64);
+        testLp.setInterfaceName("test01");
+        testLp.addLinkAddress(myIpv4Addr);
+        testLp.addLinkAddress(myIpv6Addr);
+        testLp.addRoute(new RouteInfo(InetAddress.getByName("fe80::1234")));
+        testLp.addRoute(new RouteInfo(InetAddress.getByName("192.0.2.254")));
+        testLp.addRoute(new RouteInfo(myIpv4Addr, null));
+        testLp.addRoute(new RouteInfo(myIpv6Addr, null));
+        final NetworkCapabilities testNc = new NetworkCapabilities.Builder().addTransportType(
+                TRANSPORT_CELLULAR).addCapability(NET_CAPABILITY_MMS).build();
+
+        final TestNetworkCallback cellCb = new TestNetworkCallback();
+        mCm.requestNetwork(new NetworkRequest.Builder().addCapability(NET_CAPABILITY_MMS).build(),
+                cellCb);
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR, testLp, testNc);
+        mCellNetworkAgent.connect(true);
+        cellCb.expectAvailableCallbacksUnvalidated(mCellNetworkAgent);
+        List<NetworkStateSnapshot> snapshots = mCm.getAllNetworkStateSnapshot();
+        assertLength(1, snapshots);
+
+        // For verification, mix-in the capabilities added by the test agent and
+        // ConnectivityService.
+        testNc.addCapability(NET_CAPABILITY_INTERNET).addCapability(
+                NET_CAPABILITY_FOREGROUND).addCapability(NET_CAPABILITY_VALIDATED);
+        // Compose the expected cellular snapshot for verification.
+        final NetworkStateSnapshot cellSnapshot = new NetworkStateSnapshot(
+                mCellNetworkAgent.getNetwork(), mCellNetworkAgent.getNetworkCapabilities(), testLp,
+                null, ConnectivityManager.TYPE_MOBILE);
+        assertEquals(cellSnapshot, snapshots.get(0));
+
+        // Connect wifi and verify the snapshots.
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(true);
+        waitForIdle();
+        // Compose the expected wifi snapshot for verification.
+        final NetworkCapabilities wifiNc = new NetworkCapabilities(
+                mWiFiNetworkAgent.getNetworkCapabilities());
+        wifiNc.addCapability(NET_CAPABILITY_NOT_ROAMING).addCapability(
+                NET_CAPABILITY_FOREGROUND).addCapability(NET_CAPABILITY_VALIDATED);
+        final NetworkStateSnapshot wifiSnapshot = new NetworkStateSnapshot(
+                mWiFiNetworkAgent.getNetwork(), wifiNc, new LinkProperties(), null,
+                ConnectivityManager.TYPE_WIFI);
+
+        snapshots = mCm.getAllNetworkStateSnapshot();
+        assertLength(2, snapshots);
+        assertContainsAll(snapshots, cellSnapshot, wifiSnapshot);
+
+        // Set cellular as suspended, verify the snapshots will not contain suspended networks.
+        mCellNetworkAgent.suspend();
+        waitForIdle();
+        snapshots = mCm.getAllNetworkStateSnapshot();
+        assertLength(1, snapshots);
+        assertEquals(wifiSnapshot, snapshots.get(0));
+
+        // Disconnect wifi, verify the snapshots contain nothing.
+        mWiFiNetworkAgent.disconnect();
+        waitForIdle();
+        snapshots = mCm.getAllNetworkStateSnapshot();
+        assertEquals(mCellNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+        assertLength(0, snapshots);
+
+        mCellNetworkAgent.resume();
+        waitForIdle();
+        snapshots = mCm.getAllNetworkStateSnapshot();
+        assertLength(1, snapshots);
+        assertEquals(cellSnapshot, snapshots.get(0));
+
+        mCellNetworkAgent.disconnect();
+        waitForIdle();
+        verifyNoNetwork();
+        mCm.unregisterNetworkCallback(cellCb);
     }
 }

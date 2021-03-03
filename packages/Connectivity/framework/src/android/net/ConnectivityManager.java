@@ -1259,6 +1259,22 @@ public class ConnectivityManager {
     }
 
     /**
+     * Return a list of {@link NetworkStateSnapshot}s, one for each network that is currently
+     * connected.
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    @NonNull
+    public List<NetworkStateSnapshot> getAllNetworkStateSnapshot() {
+        try {
+            return mService.getAllNetworkStateSnapshot();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Returns the {@link Network} object currently serving a given type, or
      * null if the given type is not connected.
      *
