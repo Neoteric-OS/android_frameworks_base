@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ad3293c_bf03ad3e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T15:52:49Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94a09082_2d361dae",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1959,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T15:52:49Z",
+      "side": 1,
+      "message": "Actually I think \"return\" is fine. This really cannot happen, CS and NPMS are in the same process and RemoteException cannot be thrown. You could even throw new IllegalStateException if you wanted. I think you can keep the code as simple as it was before:\n\n    final List\u003cNetworkStateSnapshot\u003e snapshots;\n    try {\n        snapshots \u003d mConnManager.getAllNetworkStateSnapshot();\n    } catch (RemoteException e) {\n        // Cannot happen, service lives in system_server.\n        return;\n    }",
+      "range": {
+        "startLine": 1959,
+        "startChar": 12,
+        "endLine": 1959,
+        "endChar": 46
+      },
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f429d62_5446a8d1",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1968,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T15:52:49Z",
+      "side": 1,
+      "message": "This can never be null",
+      "range": {
+        "startLine": 1968,
+        "startChar": 16,
+        "endLine": 1968,
+        "endChar": 40
+      },
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7110a33b_d9aaa4d3",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5606,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T15:52:49Z",
+      "side": 1,
+      "message": "If this is @NonNull, then why is there a null check?\n- If it cannot be null, remove the null check.\n- If it can be null, annotate as @Nullable.\n\nFrom the rest of this CL it looks like this cannot actually be null unless getAllNetworkStateSnapshot contains a null (which cannot happen due to how CS is imlpemented).\n\nUp to you to decide whether you want to check for null or not. As long you only do a null check iff it\u0027s @nullable, LGTM either way.",
+      "range": {
+        "startLine": 5606,
+        "startChar": 28,
+        "endLine": 5606,
+        "endChar": 35
+      },
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79356f24_49f94e02",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5608,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T15:52:49Z",
+      "side": 1,
+      "message": "snapshot.networkCapabilities can never be null.",
+      "range": {
+        "startLine": 5608,
+        "startChar": 32,
+        "endLine": 5608,
+        "endChar": 68
+      },
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15298069_d45f1be4",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T15:52:49Z",
+      "side": 1,
+      "message": "Consider the shorter and simpler:\n\n    snapshots \u003d List.of(buildWifi());",
+      "range": {
+        "startLine": 1089,
+        "startChar": 0,
+        "endLine": 1090,
+        "endChar": 35
+      },
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6ccb652_42d4631d",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T15:52:49Z",
+      "side": 1,
+      "message": "List.of()",
+      "range": {
+        "startLine": 1355,
+        "startChar": 20,
+        "endLine": 1356,
+        "endChar": 35
+      },
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cb3029e_02e4045f",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2071,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T15:52:49Z",
+      "side": 1,
+      "message": "List.of(",
+      "range": {
+        "startLine": 2071,
+        "startChar": 47,
+        "endLine": 2071,
+        "endChar": 65
+      },
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
