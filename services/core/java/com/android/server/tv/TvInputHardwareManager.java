@@ -119,6 +119,8 @@ class TvInputHardwareManager implements TvInputHal.Callback {
 
     private final Object mLock = new Object();
 
+    private boolean isSkipSetAudioPortGain = false;
+
     public TvInputHardwareManager(Context context, Listener listener) {
         mContext = context;
         mListener = listener;
@@ -562,6 +564,10 @@ class TvInputHardwareManager implements TvInputHal.Callback {
                 Slog.w(TAG, "Unrecognized intent: " + intent);
                 return;
         }
+        if(intent.getBooleanExtra("isSkipSetAudioPortGain", false) == true){
+            isSkipSetAudioPortGain = true;
+            Slog.d(TAG, "mVolumeReceiver onReceive isSkipSetAudioPortGain=" + isSkipSetAudioPortGain);
+        }
         synchronized (mLock) {
             for (int i = 0; i < mConnections.size(); ++i) {
                 TvInputHardwareImpl hardwareImpl = mConnections.valueAt(i).getHardwareImplLocked();
@@ -570,6 +576,13 @@ class TvInputHardwareManager implements TvInputHal.Callback {
                 }
             }
         }
+        if(isSkipSetAudioPortGain == true){
+            isSkipSetAudioPortGain = false;
+        }
+    }
+
+    private boolean getSkipSetAudioPortGain() {
+        return isSkipSetAudioPortGain;
     }
 
     private float getMediaStreamVolume() {
@@ -1055,10 +1068,10 @@ class TvInputHardwareManager implements TvInputHal.Callback {
                         new AudioPortConfig[] { sourceConfig },
                         sinkConfigs.toArray(new AudioPortConfig[sinkConfigs.size()]));
                 mAudioPatch = audioPatchArray[0];
-                if (sourceGainConfig != null) {
+                if (sourceGainConfig != null && getSkipSetAudioPortGain() == false) {
                     mAudioManager.setAudioPortGain(mAudioSource, sourceGainConfig);
                 }
-            }
+             }
         }
 
         @Override

@@ -6358,6 +6358,7 @@ public class AudioService extends IAudioService.Stub
                 Intent intent = new Intent(AudioManager.STREAM_MUTE_CHANGED_ACTION);
                 intent.putExtra(AudioManager.EXTRA_VOLUME_STREAM_TYPE, mStreamType);
                 intent.putExtra(AudioManager.EXTRA_STREAM_VOLUME_MUTED, state);
+                intent.putExtra("isSkipSetAudioPortGain", true);
                 sendBroadcastToAll(intent);
             }
             return changed;
