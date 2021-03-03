@@ -291,6 +291,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ff257ed9_8e03dccc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9050,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-03T22:59:23Z",
+      "side": 1,
+      "message": "Ok I see. Makes sense. That said, maybe the naming of \u0027capability\u0027 is a bit confusing since based off of that, it seemed like you were passing a NetworkCapability directly (at least that\u0027s what I assumed) vs an Enum/@IntDef.\n\nOn that note, nit to change the name of the param but feel free to close this out from my perspective if not.",
+      "parentUuid": "f31d3693_bfe18261",
+      "range": {
+        "startLine": 9050,
+        "startChar": 22,
+        "endLine": 9050,
+        "endChar": 32
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7384fa82_53161906",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -712,6 +736,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11c915d0_9d9e0741",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9141,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-03T22:59:23Z",
+      "side": 1,
+      "message": "Oh yes, that\u0027s right and it appears you are already validating further downstream in non-\"handler\" add/remove so this should be fine,",
+      "parentUuid": "3c4adc57_727d4ae0",
+      "range": {
+        "startLine": 9141,
+        "startChar": 8,
+        "endLine": 9141,
+        "endChar": 34
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff19d1d5_c4e561e7",
@@ -796,6 +844,30 @@
       "side": 1,
       "message": "I\u0027m not sure how to factorize this. They test a different member, the wtf message is different (and needs to be for us to distinguish), and the return can\u0027t be factored away.\n\nDo you have any suggestion of how to factorize this ?",
       "parentUuid": "1a87bdb1_ab0e11cb",
+      "range": {
+        "startLine": 9211,
+        "startChar": 8,
+        "endLine": 9220,
+        "endChar": 9
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "287387b9_ec20cb10",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9220,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-03T22:59:23Z",
+      "side": 1,
+      "message": "Maybe this?\n\n\n    // YOUR EXISTING COMMENTS HERE\n    boolean isValidPreferencesState(Collection otherPrefs, String errorMsg) {\n        if(otherPrefs.size() !\u003d 0) {\n            logwtf(errorMsg);\n            return false;\n        }\n        return true;\n    }\n\n    ...\n\n    // DO THE SAME WITH THE OTHER MESSAGE BUT WITH DIFFERENT PARAMS.\n    String errorMsg \u003d \n    if(!isValidPreferencesState(mProfileNetworkPreferences.preferences, \"handleSetOemPreference, but per-profile network preferences not empty\")) {\n        return;\n    }\n\nYou could then get rid of the isEmpty() on the preference objects.\n\nIt\u0027s a nit but could clean things up a bit.",
+      "parentUuid": "3979ea01_eeda18e4",
       "range": {
         "startLine": 9211,
         "startChar": 8,

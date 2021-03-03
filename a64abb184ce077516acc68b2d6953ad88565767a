@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae50138a_4ef8f838",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5288,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-03T22:59:23Z",
+      "side": 1,
+      "message": "nit but may be safer to use the getter vs directly accessing it.",
+      "range": {
+        "startLine": 5288,
+        "startChar": 29,
+        "endLine": 5288,
+        "endChar": 39
+      },
+      "revId": "a64abb184ce077516acc68b2d6953ad88565767a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
