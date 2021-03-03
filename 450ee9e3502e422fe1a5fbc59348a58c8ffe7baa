@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0965a79d_5da4bc6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T11:00:36Z",
+      "side": 1,
+      "message": "Reworded.",
+      "parentUuid": "4af66561_cafb8785",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfd4dd75_1c06e481",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-02T06:12:42Z",
       "side": 1,
       "message": "Stupid question: what does this mean?\nI don\u0027t see you create or delete user profile in this test?\nMaybe put a short description as javadoc for each test?",
+      "range": {
+        "startLine": 10677,
+        "startChar": 37,
+        "endLine": 10677,
+        "endChar": 43
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ac65eb4_fa7c365e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10677,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T11:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfd4dd75_1c06e481",
       "range": {
         "startLine": 10677,
         "startChar": 37,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18958411_72d68ccb",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10694,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T11:00:36Z",
+      "side": 1,
+      "message": "Yes. I\u0027m not sure how to make it clearer ; methods are called Xxx and XxxAsUid, and the difference is that the latter is done as the uid passed as an argument. Would you like to suggest a clearer wording ? I can\u0027t think of one.",
+      "parentUuid": "678f8398_b9743dfc",
+      "range": {
+        "startLine": 10693,
+        "startChar": 5,
+        "endLine": 10694,
+        "endChar": 59
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55cc4d54_5f3e48c2",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-03-02T06:12:42Z",
       "side": 1,
       "message": "Stupid Question: where can I find this API?\nI do code search but it returned nothing.",
+      "range": {
+        "startLine": 10700,
+        "startChar": 12,
+        "endLine": 10700,
+        "endChar": 39
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "695a2815_b61afb0c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10700,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T11:00:36Z",
+      "side": 1,
+      "message": "It\u0027s in the next patch. This patch has the tests first to explain the expected behavior. Of course it can\u0027t be checked in alone, but that doesn\u0027t matter.",
+      "parentUuid": "55cc4d54_5f3e48c2",
       "range": {
         "startLine": 10700,
         "startChar": 12,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e0c8aa4_abf54202",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10704,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T11:00:36Z",
+      "side": 1,
+      "message": "I\u0027m just describing here how the feature works. The reason I am writing the comment is that a reader may think the code might not set UID ranges when the default network for the profile is different from the system default. That\u0027s not the way it works, because it\u0027s vastly easier to always have the rules when the preference is active rather than handling specially the case where the per-profile network is the same as the default.\n\nAdded some to the comment, please see if you like it",
+      "parentUuid": "9935c46e_e9e365e5",
+      "range": {
+        "startLine": 10704,
+        "startChar": 11,
+        "endLine": 10704,
+        "endChar": 53
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "519e0271_0fc961f9",
@@ -139,6 +259,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab8de9d7_8a6abb01",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10705,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T11:00:36Z",
+      "side": 1,
+      "message": "Routing rules (added that to the comment). The range is the one in the method call, do you really think I need to clarify that ? The method name is \"networkAddUidRanges\", I struggle to see how to make it clearer that\u0027s the range I\u0027m speaking about ; any suggestion welcome.",
+      "parentUuid": "519e0271_0fc961f9",
+      "range": {
+        "startLine": 10705,
+        "startChar": 11,
+        "endLine": 10705,
+        "endChar": 20
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51a41b20_17bcc204",
@@ -152,6 +296,30 @@
       "writtenOn": "2021-03-02T06:12:42Z",
       "side": 1,
       "message": "Question: what\u0027s the original state before moving?",
+      "range": {
+        "startLine": 10706,
+        "startChar": 58,
+        "endLine": 10706,
+        "endChar": 63
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "765a7df6_3c7faf75",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10706,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T11:00:36Z",
+      "side": 1,
+      "message": "In this case there used to be no setting for this range. Calling setNetworkPreferenceForUser inl.10700 is what conjures it into existence, and then the range is moved through the UID-specific rules.\n\nHere again I really struggle to make it clearer. Do you have any suggestion of a better wording ?",
+      "parentUuid": "51a41b20_17bcc204",
       "range": {
         "startLine": 10706,
         "startChar": 58,
