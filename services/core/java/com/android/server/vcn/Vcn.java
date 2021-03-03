@@ -293,7 +293,7 @@ public class Vcn extends Handler {
             if (isRequestSatisfiedByGatewayConnectionConfig(request, gatewayConnectionConfig)) {
                 Slog.v(
                         getLogTag(),
-                        "Bringing up new VcnGatewayConnection for request " + request.requestId);
+                        "Bringing up new VcnGatewayConnection for request " + request);
 
                 final VcnGatewayConnection vcnGatewayConnection =
                         mDeps.newVcnGatewayConnection(
