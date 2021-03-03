@@ -1931,6 +1931,69 @@
         <enum name="KEYCODE_THUMBS_UP" value="286" />
         <enum name="KEYCODE_THUMBS_DOWN" value="287" />
         <enum name="KEYCODE_PROFILE_SWITCH" value="288" />
+
+        <enum name="KEYCODE_5IN1_ENTER" value="424" />
+        <enum name="KEYCODE_TCL_EPG" value="4001" />
+        <enum name="KEYCODE_TCL_QUICK_MENU" value="4020" />
+        <enum name="KEYCODE_TCL_ZOOM" value="4034" />
+        <enum name="KEYCODE_TCL_RF_LINK_STOP" value="4035" />
+        <enum name="KEYCODE_TCL_AUDIO" value="4036" />
+        <enum name="KEYCODE_TCL_RC_RF_UNCONNECT" value="4048" />
+        <enum name="KEYCODE_TCL_RF_LINK_S" value="4052" />
+        <enum name="KEYCODE_TCL_RF_LINK_F" value="4053" />
+        <enum name="KEYCODE_TCL_NUMBER" value="4056" />
+        <enum name="KEYCODE_TCL_USB_MEDIA" value="4057" />
+        <enum name="KEYCODE_TCL_NETFLIX" value="4062" />
+        <enum name="KEYCODE_TCL_YOUTUBE" value="4065" />
+        <enum name="KEYCODE_TCL_HULU" value="4066" />
+        <enum name="KEYCODE_TCL_SET" value="4077" />
+        <enum name="KEYCODE_TCL_LAST_CHANNEL" value="4081" />
+        <enum name="KEYCODE_TCL_LANG" value="4084" />
+        <enum name="KEYCODE_TCL_TEXT" value="4086" />
+        <enum name="KEYCODE_TCL_LIST" value="4090" />
+        <enum name="KEYCODE_TCL_LINE_TV" value="4093" />
+        <enum name="KEYCODE_TCL_EXIT" value="4095" />
+        <enum name="KEYCODE_TCL_IQIYI" value="4096" />
+        <enum name="KEYCODE_TCL_DISNEY" value="4097" />
+        <enum name="KEYCODE_TCL_TOT" value="4098" />
+        <enum name="KEYCODE_TCL_PRIMEVIDEO" value="4099" />
+        <enum name="KEYCODE_TCL_OKKO" value="4100" />
+        <enum name="KEYCODE_TCL_HD" value="4101" />
+        <enum name="KEYCODE_TCL_ZEE" value="4102" />
+        <enum name="KEYCODE_TCL_FPTPLAYER" value="4103" />
+        <enum name="KEYCODE_TCL_SOURCE_NEXT" value="4104" />
+        <enum name="KEYCODE_TCL_SOURCE_PREVIOUS" value="4105" />
+        <enum name="KEYCODE_TCL_11" value="4119" />
+        <enum name="KEYCODE_TCL_12" value="4120" />
+        <enum name="KEYCODE_TCL_3_LINE_INPUT" value="4121" />
+        <enum name="KEYCODE_TCL_BML" value="4122" />
+        <enum name="KEYCODE_TCL_TERMINAL" value="4123" />
+        <enum name="KEYCODE_TCL_BS" value="4124" />
+        <enum name="KEYCODE_TCL_CS" value="4125" />
+        <enum name="KEYCODE_TCL_RECORD_LIST" value="4126" />
+        <enum name="KEYCODE_TCL_SCHEDULE_LIST" value="4128" />
+        <enum name="KEYCODE_TCL_BUG_REPORT" value="4129" />
+        <enum name="KEYCODE_TCL_FREEVIEW_PLAY" value="4130" />
+        <enum name="KEYCODE_TCL_SATELLITE_BS_CS" value="4131" />
+        <enum name="KEYCODE_TCL_BS_CS_4K" value="4132" />
+        <enum name="KEYCODE_TCL_U_NEXT" value="4133" />
+        <enum name="KEYCODE_TCL_ABEMA" value="4134" />
+        <enum name="KEYCODE_TCL_GALAVIEW" value="4135" />
+        <enum name="KEYCODE_TCL_STAN" value="4136" />
+        <enum name="KEYCODE_TCL_DASHBOARD" value="4137" />
+        <enum name="KEYCODE_TCL_WATCHLIST" value="4138" />
+        <enum name="KEYCODE_TCL_GLOBAL_PLAY" value="4503" />
+        <enum name="KEYCODE_TCL_CMP" value="4504" />
+        <enum name="KEYCODE_TCL_VGA" value="4505" />
+        <enum name="KEYCODE_TCL_AV1" value="4506" />
+        <enum name="KEYCODE_TCL_HDMI1" value="4507" />
+        <enum name="KEYCODE_TCL_HDMI2" value="4508" />
+        <enum name="KEYCODE_TCL_HDMI3" value="4509" />
+        <enum name="KEYCODE_TCL_TV_ON" value="4510" />
+        <enum name="KEYCODE_TCL_TV_OFF" value="4511" />
+        <enum name="KEYCODE_TCL_TCL_HDMI4" value="4512" />
+        <enum name="KEYCODE_TCL_TCL_AV2" value="4513" />
+        <enum name="KEYCODE_TCL_MOUSE_KEY" value="4558" />
     </attr>
 
     <!-- ***************************************************************** -->
