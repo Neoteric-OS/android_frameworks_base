@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5e8be7a_3f9bbd7c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 8274,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-03T08:27:21Z",
+      "side": 1,
+      "message": "Nit: just reportEvent would work, but no need to respin for that if TH is happy",
+      "range": {
+        "startLine": 8274,
+        "startChar": 50,
+        "endLine": 8274,
+        "endChar": 82
+      },
+      "revId": "121267c6d18ceabb14ce4a739868148af6e67fd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
