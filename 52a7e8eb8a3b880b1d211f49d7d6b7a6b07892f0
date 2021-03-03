@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee8d55ec_383347a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-03-03T17:34:47Z",
+      "side": 1,
+      "message": "Android.bp adds net-tests-utils for HandlerUtils.",
+      "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
