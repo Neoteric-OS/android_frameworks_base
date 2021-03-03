@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49f1c2d4_e35393b1",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionConnectedStateTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-03T03:24:06Z",
+      "side": 1,
+      "message": "Why twice? Is it possible to stimulate an incremental all?",
+      "range": {
+        "startLine": 147,
+        "startChar": 32,
+        "endLine": 147,
+        "endChar": 33
+      },
+      "revId": "e145e066811410594ae61824ba67a790e8c11b6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
