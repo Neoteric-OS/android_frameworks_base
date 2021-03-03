@@ -1167,10 +1167,11 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
     private static boolean updateCapabilityChange(SparseBooleanArray lastValues, boolean newValue,
             Network network) {
-        final boolean lastValue = lastValues.get(network.netId, false);
-        final boolean changed = (lastValue != newValue) || lastValues.indexOfKey(network.netId) < 0;
+        final boolean lastValue = lastValues.get(network.getNetId(), false);
+        final boolean changed = (lastValue != newValue)
+                || lastValues.indexOfKey(network.getNetId()) < 0;
         if (changed) {
-            lastValues.put(network.netId, newValue);
+            lastValues.put(network.getNetId(), newValue);
         }
         return changed;
     }
@@ -1193,7 +1194,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                         mNetworkRoaming, newRoaming, network);
 
                 if (meteredChanged || roamingChanged) {
-                    mLogger.meterednessChanged(network.netId, newMetered);
+                    mLogger.meterednessChanged(network.getNetId(), newMetered);
                     updateNetworkRulesNL();
                 }
             }
@@ -1966,7 +1967,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         final ArrayMap<NetworkState, NetworkIdentity> identified = new ArrayMap<>();
         for (NetworkState state : states) {
             if (state.network != null) {
-                mNetIdToSubId.put(state.network.netId, parseSubId(state));
+                mNetIdToSubId.put(state.network.getNetId(), parseSubId(state));
             }
 
             // Policies matched by NPMS only match by subscriber ID or by ssid. Thus subtype
@@ -5625,7 +5626,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
     @GuardedBy("mNetworkPoliciesSecondLock")
     private int getSubIdLocked(Network network) {
-        return mNetIdToSubId.get(network.netId, INVALID_SUBSCRIPTION_ID);
+        return mNetIdToSubId.get(network.getNetId(), INVALID_SUBSCRIPTION_ID);
     }
 
     @GuardedBy("mNetworkPoliciesSecondLock")

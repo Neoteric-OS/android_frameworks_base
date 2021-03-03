@@ -345,7 +345,7 @@ public class LingerMonitorTest {
 
     void verifyNotification(NetworkAgentInfo from, NetworkAgentInfo to) {
         verifyNoToast();
-        verify(mNotifier, times(1)).showNotification(eq(from.network.netId),
+        verify(mNotifier, times(1)).showNotification(eq(from.network.getNetId()),
                 eq(NotificationType.NETWORK_SWITCH), eq(from), eq(to), any(), eq(true));
     }
 

@@ -4488,7 +4488,7 @@ public class ConnectivityManager {
      */
     @Deprecated
     public static boolean setProcessDefaultNetwork(@Nullable Network network) {
-        int netId = (network == null) ? NETID_UNSET : network.netId;
+        int netId = (network == null) ? NETID_UNSET : network.getNetId();
         boolean isSameNetId = (netId == NetworkUtils.getBoundNetworkForProcess());
 
         if (netId != NETID_UNSET) {

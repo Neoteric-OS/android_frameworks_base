@@ -62,7 +62,7 @@ public class TestNetworkManager {
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public void teardownTestNetwork(@NonNull Network network) {
         try {
-            mService.teardownTestNetwork(network.netId);
+            mService.teardownTestNetwork(network.getNetId());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

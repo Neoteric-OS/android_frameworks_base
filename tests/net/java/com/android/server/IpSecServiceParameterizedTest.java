@@ -341,7 +341,7 @@ public class IpSecServiceParameterizedTest {
                         eq(config.getMode()),
                         eq(config.getSourceAddress()),
                         eq(config.getDestinationAddress()),
-                        eq((config.getNetwork() != null) ? config.getNetwork().netId : 0),
+                        eq((config.getNetwork() != null) ? config.getNetwork().getNetId() : 0),
                         eq(TEST_SPI),
                         eq(0),
                         eq(0),
