@@ -824,13 +824,14 @@ public class KeyEvent extends InputEvent implements Parcelable {
      * consuming content. May be consumed by system to set account globally.
      */
     public static final int KEYCODE_PROFILE_SWITCH = 288;
-
+    /** Key code constant: Turn on the switch of the remote control mouse. */
+    public static final int KEYCODE_MOUSE_KEY = 4558;
     /**
      * Integer value of the last KEYCODE. Increases as new keycodes are added to KeyEvent.
      * @hide
      */
     @TestApi
-    public static final int LAST_KEYCODE = KEYCODE_PROFILE_SWITCH;
+    public static final int LAST_KEYCODE = KEYCODE_MOUSE_KEY;
 
     // NOTE: If you add a new keycode here you must also add it to:
     //  isSystem()
