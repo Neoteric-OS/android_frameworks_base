@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008635232",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1615382?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ba89589e_ea1ebb13",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1728,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-03T22:14:11Z",
+      "side": 1,
+      "message": "TODO statements should not reference a specific human; consider using a bug number instead; see https://source.android.com/setup/contribute/code-style#use-todo-comments for more details.",
+      "range": {
+        "startLine": 1728,
+        "startChar": 11,
+        "endLine": 1728,
+        "endChar": 20
+      },
+      "revId": "3adb5f2b65c561d79df1fcc53ab4dafbbf22a14e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008635232",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1615382?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "85d0acd6_6d3949b4",
+        "filename": "core/jni/fd_utils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-03T22:14:11Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 150,
+        "startChar": 62,
+        "endLine": 150,
+        "endChar": 71
+      },
+      "revId": "3adb5f2b65c561d79df1fcc53ab4dafbbf22a14e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
