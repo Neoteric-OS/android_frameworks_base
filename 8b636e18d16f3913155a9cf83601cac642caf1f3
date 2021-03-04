@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f851cd1e_acdd9014",
+        "filename": "core/java/android/app/PendingIntent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-04T05:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88a82272_0518e27a",
+      "range": {
+        "startLine": 1189,
+        "startChar": 0,
+        "endLine": 1189,
+        "endChar": 40
+      },
+      "revId": "8b636e18d16f3913155a9cf83601cac642caf1f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75fd8665_7dd5c2b1",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-03T17:56:01Z",
       "side": 1,
       "message": "GET_INTENT_SENDER_INTENT is currently a signature-only permission.  How do you intend this to function when the caller is a mainline module?",
+      "range": {
+        "startLine": 1191,
+        "startChar": 48,
+        "endLine": 1191,
+        "endChar": 72
+      },
+      "revId": "8b636e18d16f3913155a9cf83601cac642caf1f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98548a33_99e49b55",
+        "filename": "core/java/android/app/PendingIntent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-04T05:42:18Z",
+      "side": 1,
+      "message": "As discussed in chat, the connectivity mainline module would run in the system_server process so would have the required permissions.\nAnother option would be to use in-process APIs (like ActivityManagerInternal.intentFilterEquals(PendingIntent, PendingIntent)), and adding ActivityManagerInternal to LocalManagerRegistry (JobScheduler still uses the @hide LocalServices.getService). But this adds more infrastructure to maintain and is much harder to test.\n\nConsidering that there is no performance problems as this API isn\u0027t even called when booting a fresh S device (tested with a counter), the current proposal feels like a good tradeoff.\n\nNote that the change moved to ag/13746426 due to the merge conflicts in AOSP.",
+      "parentUuid": "75fd8665_7dd5c2b1",
       "range": {
         "startLine": 1191,
         "startChar": 48,
