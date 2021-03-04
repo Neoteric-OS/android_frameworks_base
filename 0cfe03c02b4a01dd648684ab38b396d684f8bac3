@@ -501,6 +501,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7be257ca_73fba727",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9087,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T03:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "453d093d_14d2fd44",
+      "range": {
+        "startLine": 9087,
+        "startChar": 11,
+        "endLine": 9087,
+        "endChar": 12
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b1f3c2bf_a379f1ea",
@@ -585,6 +609,30 @@
       "side": 1,
       "message": "1. It needs to cover exactly one user, and the full user range.\n\n2. In the great scheme of things, considering our overall goals, do you really think it\u0027s worth our engineering time and cumulative presubmit time to write a test for a three-line method that does two additions and is only there to detect egregious mistakes in another function right below it ? If you think it is I\u0027ll do it. But my estimate is : it\u0027s not worth anybody\u0027s time.",
       "parentUuid": "06817452_e43da21e",
+      "range": {
+        "startLine": 9088,
+        "startChar": 37,
+        "endLine": 9088,
+        "endChar": 42
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d0e4ad1_9a52da58",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9088,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T03:59:00Z",
+      "side": 1,
+      "message": "I understand.\nBut if it is a right thing to do, I think we could at least show the direction for future developers who seeing this. Thus:\nIs it better to name it like isExactSingleUser,\nand adding todo in it for checking borders?\n\nDoesn\u0027t have to do that in this CL if it is considered blocking your progress.",
+      "parentUuid": "0def7050_e9dfa000",
       "range": {
         "startLine": 9088,
         "startChar": 37,

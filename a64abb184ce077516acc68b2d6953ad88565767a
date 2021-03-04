@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71a4cf3f_b4c6fef6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T03:59:00Z",
+      "side": 1,
+      "message": "LGTM with nit that can be ignored.",
+      "revId": "a64abb184ce077516acc68b2d6953ad88565767a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae50138a_4ef8f838",
