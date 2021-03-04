@@ -1,0 +1,858 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665090",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "b79e8197_66ac4b27",
+          "description": "Change to \"core/java/android/provider/BluetoothMapContract.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/provider/BluetoothMapContract.java",
+              "range": {
+                "startLine": 586,
+                "startChar": 12,
+                "endLine": 586,
+                "endChar": 23
+              },
+              "replacement": "milliseconds"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "f3c52b41_ee8f989b",
+        "filename": "core/java/android/provider/BluetoothMapContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Common typo found: \"miliseconds\" -- should it be \"milliseconds\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 586,
+        "startChar": 12,
+        "endLine": 586,
+        "endChar": 23
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665090",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "4752f050_e38ad42d",
+          "description": "Change to \"core/java/android/provider/BluetoothMapContract.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/provider/BluetoothMapContract.java",
+              "range": {
+                "startLine": 879,
+                "startChar": 12,
+                "endLine": 879,
+                "endChar": 23
+              },
+              "replacement": "milliseconds"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "eb5607b3_f471f17a",
+        "filename": "core/java/android/provider/BluetoothMapContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Common typo found: \"miliseconds\" -- should it be \"milliseconds\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 879,
+        "startChar": 12,
+        "endLine": 879,
+        "endChar": 23
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665090",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "54c1b056_34466271",
+          "description": "Change to \"core/java/android/provider/BluetoothMapContract.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/provider/BluetoothMapContract.java",
+              "range": {
+                "startLine": 989,
+                "startChar": 28,
+                "endLine": 989,
+                "endChar": 39
+              },
+              "replacement": "milliseconds"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "616fc670_3abc2034",
+        "filename": "core/java/android/provider/BluetoothMapContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Common typo found: \"miliseconds\" -- should it be \"milliseconds\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 989,
+        "startChar": 28,
+        "endLine": 989,
+        "endChar": 39
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665090",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "2488afe3_8d1d46e0",
+          "description": "Change to \"core/java/android/provider/BluetoothMapContract.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/provider/BluetoothMapContract.java",
+              "range": {
+                "startLine": 995,
+                "startChar": 28,
+                "endLine": 995,
+                "endChar": 39
+              },
+              "replacement": "milliseconds"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "a4b848ab_703c7908",
+        "filename": "core/java/android/provider/BluetoothMapContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Common typo found: \"miliseconds\" -- should it be \"milliseconds\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 995,
+        "startChar": 28,
+        "endLine": 995,
+        "endChar": 39
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665090",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "fc973d51_1af7e90c",
+          "description": "Change to \"core/java/android/provider/BluetoothMapContract.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/provider/BluetoothMapContract.java",
+              "range": {
+                "startLine": 1008,
+                "startChar": 12,
+                "endLine": 1008,
+                "endChar": 18
+              },
+              "replacement": "ACTIVE"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "99ff184b_e8a82482",
+        "filename": "core/java/android/provider/BluetoothMapContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Common typo found: \"ACITVE\" -- should it be \"ACTIVE\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1008,
+        "startChar": 12,
+        "endLine": 1008,
+        "endChar": 18
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665090",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "2dddd1d6_56c6b7d7",
+          "description": "Change to \"core/java/android/provider/BluetoothMapContract.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/provider/BluetoothMapContract.java",
+              "range": {
+                "startLine": 1026,
+                "startChar": 20,
+                "endLine": 1026,
+                "endChar": 28
+              },
+              "replacement": "INTEGER"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "6926d25e_4ac250b8",
+        "filename": "core/java/android/provider/BluetoothMapContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Common typo found: \"INTERGER\" -- should it be \"INTEGER\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1026,
+        "startChar": 20,
+        "endLine": 1026,
+        "endChar": 28
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665090",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "b27c92dd_311329c5",
+          "description": "Change to \"core/java/android/provider/BluetoothMapContract.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/provider/BluetoothMapContract.java",
+              "range": {
+                "startLine": 1061,
+                "startChar": 20,
+                "endLine": 1061,
+                "endChar": 28
+              },
+              "replacement": "INTEGER"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "f7f8b34e_0f0f95f4",
+        "filename": "core/java/android/provider/BluetoothMapContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Common typo found: \"INTERGER\" -- should it be \"INTEGER\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1061,
+        "startChar": 20,
+        "endLine": 1061,
+        "endChar": 28
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665090",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "c6242590_604d5d20",
+          "description": "Change to \"core/java/android/provider/BluetoothMapContract.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/provider/BluetoothMapContract.java",
+              "range": {
+                "startLine": 1075,
+                "startChar": 20,
+                "endLine": 1075,
+                "endChar": 28
+              },
+              "replacement": "INTEGER"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "b94da650_f9550c49",
+        "filename": "core/java/android/provider/BluetoothMapContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Common typo found: \"INTERGER\" -- should it be \"INTEGER\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1075,
+        "startChar": 20,
+        "endLine": 1075,
+        "endChar": 28
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665091",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "dcb40358_034490f5",
+        "filename": "core/java/android/provider/BluetoothMapEmailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027valid\u0027, \u0027validity check\u0027 or \u0027initial check\u0027; see https://source.android.com/setup/contribute/respectful-code for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 104,
+        "startChar": 10,
+        "endLine": 104,
+        "endChar": 16
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665091",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "80e29da4_a753fadd",
+        "filename": "core/java/android/provider/BluetoothMapEmailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 111
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665091",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "3e0647d7_1fbcea73",
+        "filename": "core/java/android/provider/BluetoothMapEmailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 284,
+        "endChar": 101
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665091",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5554e205_12008689",
+        "filename": "core/java/android/provider/BluetoothMapEmailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027complex\u0027, \u0027unexpected\u0027, or \u0027placeholder\u0027; see https://developers.google.com/style/inclusive-documentation#ableist-language for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 293,
+        "startChar": 32,
+        "endLine": 293,
+        "endChar": 37
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665091",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2f391ac7_d04d707d",
+        "filename": "core/java/android/provider/BluetoothMapEmailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 506,
+        "startChar": 0,
+        "endLine": 506,
+        "endChar": 108
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665091",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c957273e_c71bc166",
+        "filename": "core/java/android/provider/BluetoothMapEmailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 551,
+        "startChar": 0,
+        "endLine": 551,
+        "endChar": 105
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665090",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "77a4cf37_c345858a",
+          "description": "Change to \"core/java/android/provider/BluetoothMapEmailProvider.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/provider/BluetoothMapEmailProvider.java",
+              "range": {
+                "startLine": 623,
+                "startChar": 54,
+                "endLine": 623,
+                "endChar": 61
+              },
+              "replacement": "the"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "65cff7dd_9091542d",
+        "filename": "core/java/android/provider/BluetoothMapEmailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Common typo found: \"the the\" -- should it be \"the\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 623,
+        "startChar": 54,
+        "endLine": 623,
+        "endChar": 61
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665090",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "d8812d6b_50e30950",
+          "description": "Change to \"core/java/android/provider/BluetoothMapEmailProvider.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/provider/BluetoothMapEmailProvider.java",
+              "range": {
+                "startLine": 625,
+                "startChar": 54,
+                "endLine": 625,
+                "endChar": 61
+              },
+              "replacement": "the"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "353f7591_99badd52",
+        "filename": "core/java/android/provider/BluetoothMapEmailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Common typo found: \"the the\" -- should it be \"the\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 625,
+        "startChar": 54,
+        "endLine": 625,
+        "endChar": 61
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665091",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e074f138_38aff5dc",
+        "filename": "core/java/android/provider/BluetoothMapEmailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 681,
+        "startChar": 0,
+        "endLine": 681,
+        "endChar": 116
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665091",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f1547be0_73a038db",
+        "filename": "core/java/android/provider/BluetoothMapEmailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 693,
+        "startChar": 0,
+        "endLine": 693,
+        "endChar": 106
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665091",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c924ccef_3df9d07e",
+        "filename": "core/java/android/provider/BluetoothMapEmailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 707,
+        "startChar": 0,
+        "endLine": 707,
+        "endChar": 102
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665091",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2b21560f_64c44490",
+        "filename": "core/java/android/provider/BluetoothMapEmailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 735,
+        "startChar": 0,
+        "endLine": 735,
+        "endChar": 108
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665091",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "31557581_55a9ee04",
+        "filename": "core/java/android/provider/BluetoothMapEmailProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 741,
+        "startChar": 0,
+        "endLine": 741,
+        "endChar": 116
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665091",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b94e6dae_ede6c7dd",
+        "filename": "core/java/android/provider/BluetoothMapIMProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027valid\u0027, \u0027validity check\u0027 or \u0027initial check\u0027; see https://source.android.com/setup/contribute/respectful-code for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 82,
+        "startChar": 10,
+        "endLine": 82,
+        "endChar": 16
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665091",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "621df4ff_2c8ab2af",
+        "filename": "core/java/android/provider/BluetoothMapIMProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027complex\u0027, \u0027unexpected\u0027, or \u0027placeholder\u0027; see https://developers.google.com/style/inclusive-documentation#ableist-language for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 187,
+        "startChar": 32,
+        "endLine": 187,
+        "endChar": 37
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665090",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "cce9c86d_811db10b",
+          "description": "Change to \"core/java/android/provider/BluetoothMapIMProvider.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/provider/BluetoothMapIMProvider.java",
+              "range": {
+                "startLine": 430,
+                "startChar": 54,
+                "endLine": 430,
+                "endChar": 61
+              },
+              "replacement": "the"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "61f0ecc4_54acbb5e",
+        "filename": "core/java/android/provider/BluetoothMapIMProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Common typo found: \"the the\" -- should it be \"the\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 430,
+        "startChar": 54,
+        "endLine": 430,
+        "endChar": 61
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665090",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/207432?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "8b4e060e_3ddec68c",
+          "description": "Change to \"core/java/android/provider/BluetoothMapIMProvider.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/provider/BluetoothMapIMProvider.java",
+              "range": {
+                "startLine": 432,
+                "startChar": 54,
+                "endLine": 432,
+                "endChar": 61
+              },
+              "replacement": "the"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "c11820a2_76d241e2",
+        "filename": "core/java/android/provider/BluetoothMapIMProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:51Z",
+      "side": 1,
+      "message": "Common typo found: \"the the\" -- should it be \"the\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 432,
+        "startChar": 54,
+        "endLine": 432,
+        "endChar": 61
+      },
+      "revId": "c0001bf50a3d057e7bef830204725fcbb53979c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
