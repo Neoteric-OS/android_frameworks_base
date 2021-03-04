@@ -46,6 +46,30 @@
       },
       "revId": "fd58e15e456448945fb5bee45695e8482d9f64f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70a0763a_d894f08f",
+        "filename": "core/java/android/util/LocalLog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-03-04T08:41:58Z",
+      "side": 1,
+      "message": "No, this is not an acceptable solution. Like I said, you can jarjar the modules version into the existing package name for the framework usages.",
+      "parentUuid": "c42e564f_5fdbe45a",
+      "range": {
+        "startLine": 36,
+        "startChar": 11,
+        "endLine": 37,
+        "endChar": 29
+      },
+      "revId": "fd58e15e456448945fb5bee45695e8482d9f64f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
