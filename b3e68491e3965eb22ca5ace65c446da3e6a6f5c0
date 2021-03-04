@@ -33,6 +33,23 @@
       "message": "lajos@ - friendly ping",
       "revId": "b3e68491e3965eb22ca5ace65c446da3e6a6f5c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec53c74a_2c118cfc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1067098
+      },
+      "writtenOn": "2021-03-04T21:51:57Z",
+      "side": 1,
+      "message": "lajos: Ping^2.",
+      "revId": "b3e68491e3965eb22ca5ace65c446da3e6a6f5c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
