@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a2ed332_2f094931",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2021-03-04T22:41:44Z",
+      "side": 1,
+      "message": "it\u0027s a typo, but published API. the only way forward is to deprecate this constant and define a new one. but, the old constant must still work",
+      "revId": "f0717dea9db6d8a9a652ebefbb4693b6efe4ba25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
