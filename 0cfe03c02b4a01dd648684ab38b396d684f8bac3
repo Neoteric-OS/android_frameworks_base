@@ -313,6 +313,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b48d55a9_9e6cf861",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9050,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-04T12:10:10Z",
+      "side": 1,
+      "message": "Consulted – we decided to go with an enum-style int as suggested. Thanks.",
+      "parentUuid": "ff257ed9_8e03dccc",
+      "range": {
+        "startLine": 9050,
+        "startChar": 22,
+        "endLine": 9050,
+        "endChar": 32
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7384fa82_53161906",
@@ -350,6 +374,30 @@
       "side": 1,
       "message": "I think this is explicitly out of the supported cases. But I\u0027ll be checking again with Robert tomorrow.",
       "parentUuid": "7384fa82_53161906",
+      "range": {
+        "startLine": 9061,
+        "startChar": 16,
+        "endLine": 9061,
+        "endChar": 32
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d8bfdff_779bc4da",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9061,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-04T12:10:10Z",
+      "side": 1,
+      "message": "Yes. This feature is explicitly only for work profiles. It\u0027s a product decision not to support setting this for non work-profiles, at least for the current use cases.",
+      "parentUuid": "d503dfb3_96b43929",
       "range": {
         "startLine": 9061,
         "startChar": 16,
@@ -633,6 +681,30 @@
       "side": 1,
       "message": "I understand.\nBut if it is a right thing to do, I think we could at least show the direction for future developers who seeing this. Thus:\nIs it better to name it like isExactSingleUser,\nand adding todo in it for checking borders?\n\nDoesn\u0027t have to do that in this CL if it is considered blocking your progress.",
       "parentUuid": "0def7050_e9dfa000",
+      "range": {
+        "startLine": 9088,
+        "startChar": 37,
+        "endLine": 9088,
+        "endChar": 42
+      },
+      "revId": "0cfe03c02b4a01dd648684ab38b396d684f8bac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7f04791_88936c42",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9088,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-04T12:10:10Z",
+      "side": 1,
+      "message": "Renamed.\n\nI don\u0027t think it\u0027s a right thing to do for the reasons above. I don\u0027t think we should encourage developers to blindly test all code, but rather to write tests whenever it is appropriate. Yes, it is appropriate most of the time. Here, as I explained, I think it\u0027s not appropriate, and therefore I think we should not have a TODO to implement one.",
+      "parentUuid": "3d0e4ad1_9a52da58",
       "range": {
         "startLine": 9088,
         "startChar": 37,
