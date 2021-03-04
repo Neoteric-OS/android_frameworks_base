@@ -34,9 +34,9 @@ import android.util.ArraySet;
 import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.util.BitUtils;
 import com.android.internal.util.Preconditions;
 import com.android.net.module.util.CollectionUtils;
+import com.android.net.module.util.NetworkCapabilitiesUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -599,7 +599,7 @@ public final class NetworkCapabilities implements Parcelable {
      */
     @UnsupportedAppUsage
     public @NetCapability int[] getCapabilities() {
-        return BitUtils.unpackBits(mNetworkCapabilities);
+        return NetworkCapabilitiesUtils.unpackBits(mNetworkCapabilities);
     }
 
     /**
@@ -609,7 +609,7 @@ public final class NetworkCapabilities implements Parcelable {
      * @hide
      */
     public @NetCapability int[] getUnwantedCapabilities() {
-        return BitUtils.unpackBits(mUnwantedNetworkCapabilities);
+        return NetworkCapabilitiesUtils.unpackBits(mUnwantedNetworkCapabilities);
     }
 
 
@@ -621,8 +621,8 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public void setCapabilities(@NetCapability int[] capabilities,
             @NetCapability int[] unwantedCapabilities) {
-        mNetworkCapabilities = BitUtils.packBits(capabilities);
-        mUnwantedNetworkCapabilities = BitUtils.packBits(unwantedCapabilities);
+        mNetworkCapabilities = NetworkCapabilitiesUtils.packBits(capabilities);
+        mUnwantedNetworkCapabilities = NetworkCapabilitiesUtils.packBits(unwantedCapabilities);
     }
 
     /**
@@ -677,7 +677,7 @@ public final class NetworkCapabilities implements Parcelable {
                 & NON_REQUESTABLE_CAPABILITIES;
 
         if (nonRequestable != 0) {
-            return capabilityNameOf(BitUtils.unpackBits(nonRequestable)[0]);
+            return capabilityNameOf(NetworkCapabilitiesUtils.unpackBits(nonRequestable)[0]);
         }
         if (mLinkUpBandwidthKbps != 0 || mLinkDownBandwidthKbps != 0) return "link bandwidth";
         if (hasSignalStrength()) return "signalStrength";
@@ -935,7 +935,7 @@ public final class NetworkCapabilities implements Parcelable {
      */
     @SystemApi
     @NonNull public @Transport int[] getTransportTypes() {
-        return BitUtils.unpackBits(mTransportTypes);
+        return NetworkCapabilitiesUtils.unpackBits(mTransportTypes);
     }
 
     /**
@@ -945,7 +945,7 @@ public final class NetworkCapabilities implements Parcelable {
      * @hide
      */
     public void setTransportTypes(@Transport int[] transportTypes) {
-        mTransportTypes = BitUtils.packBits(transportTypes);
+        mTransportTypes = NetworkCapabilitiesUtils.packBits(transportTypes);
     }
 
     /**
@@ -1710,8 +1710,10 @@ public final class NetworkCapabilities implements Parcelable {
         long oldImmutableCapabilities = this.mNetworkCapabilities & mask;
         long newImmutableCapabilities = that.mNetworkCapabilities & mask;
         if (oldImmutableCapabilities != newImmutableCapabilities) {
-            String before = capabilityNamesOf(BitUtils.unpackBits(oldImmutableCapabilities));
-            String after = capabilityNamesOf(BitUtils.unpackBits(newImmutableCapabilities));
+            String before = capabilityNamesOf(NetworkCapabilitiesUtils.unpackBits(
+                    oldImmutableCapabilities));
+            String after = capabilityNamesOf(NetworkCapabilitiesUtils.unpackBits(
+                    newImmutableCapabilities));
             joiner.add(String.format("immutable capabilities changed: %s -> %s", before, after));
         }
 

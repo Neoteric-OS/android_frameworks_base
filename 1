@@ -1,0 +1,26 @@
+[CS10]Remove the hidden API usage of BitUtils
+
+The connection service will become the main line module.
+It is difficult to include BitUtils in the module. and so
+Move the hidden API needed in BitUtils to NetworkCapabilitiesUtils.
+
+Bug: 170598012
+Test: atest ConnectivityServiceTest
+      atest NetworkCapabilitiesTest
+Change-Id: I2a338f4f972554f3eeb8dd88c69f06c86dcc1019
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Thu Mar 4 13:48:57 2021 +0800
+#
+# On branch local
+# Your branch is ahead of 'aosp/master' by 1 commit.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	modified:   src/android/net/NetworkCapabilities.java
+#
+# Changes not staged for commit:
+#	modified:   ../../../services/core/java/com/android/server/ConnectivityService.java
+#
