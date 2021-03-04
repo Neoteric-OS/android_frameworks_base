@@ -16,6 +16,24 @@
       "message": "Stupid Question: Is it possible that we need to deal with Dual-SIM?\ne.g. 2 user that set different sim as default data SIM but both require ENTERPRISE.\nIn ther words, do we need to support NetworkSpecifier?",
       "revId": "ee23a977934043826e310c28eb67920052aa720f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "196a7871_487aa2df",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5056,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T15:55:08Z",
+      "side": 1,
+      "message": "Good question. That would argue for using NetworkCapabilities instead of an enum.\n\nFor this specific use case it seems unlikely that a DPC would particularly care about which SIM card is used. Also, given that dual-active devices are are, this wouldn\u0027t be very useful.",
+      "parentUuid": "25d98fe8_3c915d3f",
+      "revId": "ee23a977934043826e310c28eb67920052aa720f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

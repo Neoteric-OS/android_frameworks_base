@@ -115,6 +115,30 @@
       },
       "revId": "c23dec1ff6137e51b2e0b552b99bf4048f64180a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a86365b_7ff785f7",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5095,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T15:55:08Z",
+      "side": 1,
+      "message": "Well... exceptions are for programming errors, and the callback just tells the app when the operation completed. As long as the API provides a clear guarantee that either the callback will be called or an exception will be thrown, the caller can know what happened.\n\nThat said, how will we define completed? Does this complete when CS accepts the request? Or when the handler loop terminates and the request has been sent to the factories and apps\u0027 default networks have been changed?\n\nBut the common case here would seem to be to enable this feature, which will cause the network to be connected. In this case, getting a callback when the handler loop processes the request doesn\u0027t really mean much to the caller. The caller is probably much more interested in when the network actually comes up. And what if the network never comes up? Will the caller want to know?\n\nThis suggest we should perhaps consider using NetworkCallback for this. Would it be difficult to implement? If it\u0027s really trivial, then... maybe we should just use it.",
+      "parentUuid": "dcaba727_c3defe68",
+      "range": {
+        "startLine": 5095,
+        "startChar": 16,
+        "endLine": 5095,
+        "endChar": 17
+      },
+      "revId": "c23dec1ff6137e51b2e0b552b99bf4048f64180a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
