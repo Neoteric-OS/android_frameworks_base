@@ -51,6 +51,7 @@ import android.os.FileUtils;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
+import android.os.Trace;
 import android.os.UserHandle;
 import android.os.WorkSource;
 import android.os.storage.StorageManager;
@@ -98,6 +99,9 @@ public class PackageDexOptimizer {
     @GuardedBy("mInstallLock")
     private final PowerManager.WakeLock mDexoptWakeLock;
     private volatile boolean mSystemReady;
+
+    private final ArtStatsLogUtils.ArtStatsLogger mArtStatsLogger =
+            new ArtStatsLogUtils.ArtStatsLogger();
 
     PackageDexOptimizer(Installer installer, Object installLock, Context context,
             String wakeLockTag) {
@@ -252,6 +256,17 @@ public class PackageDexOptimizer {
                         profileUpdated, classLoaderContexts[i], dexoptFlags, sharedGid,
                         packageStats, options.isDowngrade(), profileName, dexMetadataPath,
                         options.getCompilationReason());
+
+                Trace.traceBegin(Trace.TRACE_TAG_PACKAGE_MANAGER, "dex2oat-metrics");
+                try {
+                    long sessionId = Math.randomLongInternal();
+                    ArtStatsLogUtils.writeStatsLog(mArtStatsLogger,sessionId, path, compilerFilter,
+                            sharedGid, packageStats.getCompileTime(path), dexMetadataPath,
+                            options.getCompilationReason(), newResult);
+                } finally {
+                    Trace.traceEnd(Trace.TRACE_TAG_PACKAGE_MANAGER);
+                }
+
                 // The end result is:
                 //  - FAILED if any path failed,
                 //  - PERFORMED if at least one path needed compilation,
