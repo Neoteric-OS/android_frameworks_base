@@ -1,0 +1,400 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664744",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/33240?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ecf558d6_86667fae",
+        "filename": "telephony/java/android/telephony/MSimTelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:22:49Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 496,
+        "startChar": 0,
+        "endLine": 496,
+        "endChar": 104
+      },
+      "revId": "b983d3f2934ba22dcf7a3014edd28167196759ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664744",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/33240?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9c773be9_ddeb09a7",
+        "filename": "telephony/java/android/telephony/MSimTelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:22:49Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 582,
+        "startChar": 0,
+        "endLine": 582,
+        "endChar": 106
+      },
+      "revId": "b983d3f2934ba22dcf7a3014edd28167196759ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664742",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/33240?revision\u003d3",
+      "fixSuggestions": [
+        {
+          "fixId": "466f2d77_5f7a9be7",
+          "description": "Change to \"telephony/java/android/telephony/MSimTelephonyManager.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/MSimTelephonyManager.java",
+              "range": {
+                "startLine": 602,
+                "startChar": 16,
+                "endLine": 602,
+                "endChar": 23
+              },
+              "replacement": "updated"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "4bfbbfb1_57b36d70",
+        "filename": "telephony/java/android/telephony/MSimTelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:22:49Z",
+      "side": 1,
+      "message": "Common typo found: \"udpated\" -- should it be \"updated\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 602,
+        "startChar": 16,
+        "endLine": 602,
+        "endChar": 23
+      },
+      "revId": "b983d3f2934ba22dcf7a3014edd28167196759ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664742",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/33240?revision\u003d3",
+      "fixSuggestions": [
+        {
+          "fixId": "353a7bb5_2f829af7",
+          "description": "Change to \"telephony/java/com/android/internal/telephony/IIccPhoneBookMSim.aidl\"",
+          "replacements": [
+            {
+              "path": "telephony/java/com/android/internal/telephony/IIccPhoneBookMSim.aidl",
+              "range": {
+                "startLine": 59,
+                "startChar": 42,
+                "endLine": 59,
+                "endChar": 48
+              },
+              "replacement": "Number"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "2cbf4808_7c8bdb38",
+        "filename": "telephony/java/com/android/internal/telephony/IIccPhoneBookMSim.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:22:49Z",
+      "side": 1,
+      "message": "Common typo found: \"Nubmer\" -- should it be \"Number\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 59,
+        "startChar": 42,
+        "endLine": 59,
+        "endChar": 48
+      },
+      "revId": "b983d3f2934ba22dcf7a3014edd28167196759ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664742",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/33240?revision\u003d3",
+      "fixSuggestions": [
+        {
+          "fixId": "337b8c04_f4ab37f5",
+          "description": "Change to \"telephony/java/com/android/internal/telephony/IIccPhoneBookMSim.aidl\"",
+          "replacements": [
+            {
+              "path": "telephony/java/com/android/internal/telephony/IIccPhoneBookMSim.aidl",
+              "range": {
+                "startLine": 79,
+                "startChar": 42,
+                "endLine": 79,
+                "endChar": 48
+              },
+              "replacement": "Number"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "4ad1669c_9a79b4c3",
+        "filename": "telephony/java/com/android/internal/telephony/IIccPhoneBookMSim.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:22:49Z",
+      "side": 1,
+      "message": "Common typo found: \"Nubmer\" -- should it be \"Number\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 79,
+        "startChar": 42,
+        "endLine": 79,
+        "endChar": 48
+      },
+      "revId": "b983d3f2934ba22dcf7a3014edd28167196759ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664742",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/33240?revision\u003d3",
+      "fixSuggestions": [
+        {
+          "fixId": "f70b45a2_fa123644",
+          "description": "Change to \"telephony/java/com/android/internal/telephony/ISmsMSim.aidl\"",
+          "replacements": [
+            {
+              "path": "telephony/java/com/android/internal/telephony/ISmsMSim.aidl",
+              "range": {
+                "startLine": 79,
+                "startChar": 38,
+                "endLine": 79,
+                "endChar": 49
+              },
+              "replacement": "successfully"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "ccb40e61_c3e6e760",
+        "filename": "telephony/java/com/android/internal/telephony/ISmsMSim.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:22:49Z",
+      "side": 1,
+      "message": "Common typo found: \"sucessfully\" -- should it be \"successfully\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 79,
+        "startChar": 38,
+        "endLine": 79,
+        "endChar": 49
+      },
+      "revId": "b983d3f2934ba22dcf7a3014edd28167196759ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664742",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/33240?revision\u003d3",
+      "fixSuggestions": [
+        {
+          "fixId": "188becfe_216b4b91",
+          "description": "Change to \"telephony/java/com/android/internal/telephony/ISmsMSim.aidl\"",
+          "replacements": [
+            {
+              "path": "telephony/java/com/android/internal/telephony/ISmsMSim.aidl",
+              "range": {
+                "startLine": 187,
+                "startChar": 16,
+                "endLine": 187,
+                "endChar": 24
+              },
+              "replacement": "preferred"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "88f36c1a_87ac427c",
+        "filename": "telephony/java/com/android/internal/telephony/ISmsMSim.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:22:49Z",
+      "side": 1,
+      "message": "Common typo found: \"prefered\" -- should it be \"preferred\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 187,
+        "startChar": 16,
+        "endLine": 187,
+        "endChar": 24
+      },
+      "revId": "b983d3f2934ba22dcf7a3014edd28167196759ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664742",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/33240?revision\u003d3",
+      "fixSuggestions": [
+        {
+          "fixId": "ac970715_75c41abe",
+          "description": "Change to \"telephony/java/com/android/internal/telephony/ITelephonyMSim.aidl\"",
+          "replacements": [
+            {
+              "path": "telephony/java/com/android/internal/telephony/ITelephonyMSim.aidl",
+              "range": {
+                "startLine": 332,
+                "startChar": 16,
+                "endLine": 332,
+                "endChar": 24
+              },
+              "replacement": "preferred"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "275715bf_9da22ec0",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephonyMSim.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:22:49Z",
+      "side": 1,
+      "message": "Common typo found: \"prefered\" -- should it be \"preferred\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 332,
+        "startChar": 16,
+        "endLine": 332,
+        "endChar": 24
+      },
+      "revId": "b983d3f2934ba22dcf7a3014edd28167196759ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664742",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/33240?revision\u003d3",
+      "fixSuggestions": [
+        {
+          "fixId": "0665b602_04a64f37",
+          "description": "Change to \"telephony/java/com/android/internal/telephony/ITelephonyMSim.aidl\"",
+          "replacements": [
+            {
+              "path": "telephony/java/com/android/internal/telephony/ITelephonyMSim.aidl",
+              "range": {
+                "startLine": 338,
+                "startChar": 16,
+                "endLine": 338,
+                "endChar": 24
+              },
+              "replacement": "preferred"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "0231156f_ceed8c18",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephonyMSim.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:22:49Z",
+      "side": 1,
+      "message": "Common typo found: \"prefered\" -- should it be \"preferred\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 338,
+        "startChar": 16,
+        "endLine": 338,
+        "endChar": 24
+      },
+      "revId": "b983d3f2934ba22dcf7a3014edd28167196759ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664742",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/33240?revision\u003d3",
+      "fixSuggestions": [
+        {
+          "fixId": "9d95f643_633944da",
+          "description": "Change to \"telephony/java/com/android/internal/telephony/ITelephonyMSim.aidl\"",
+          "replacements": [
+            {
+              "path": "telephony/java/com/android/internal/telephony/ITelephonyMSim.aidl",
+              "range": {
+                "startLine": 344,
+                "startChar": 16,
+                "endLine": 344,
+                "endChar": 24
+              },
+              "replacement": "preferred"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "78bdf2b0_124b4ff9",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephonyMSim.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:22:49Z",
+      "side": 1,
+      "message": "Common typo found: \"prefered\" -- should it be \"preferred\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 344,
+        "startChar": 16,
+        "endLine": 344,
+        "endChar": 24
+      },
+      "revId": "b983d3f2934ba22dcf7a3014edd28167196759ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
