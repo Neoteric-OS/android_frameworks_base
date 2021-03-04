@@ -1,0 +1,82 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665893",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/828660?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "fad4a2f6_d75171de",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:28:43Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 447,
+        "startChar": 0,
+        "endLine": 447,
+        "endChar": 106
+      },
+      "revId": "2511f2398d9e30c218c7076bed1920abac766bf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665893",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/828660?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "db9cf5db_38b52151",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:28:43Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1007,
+        "startChar": 0,
+        "endLine": 1007,
+        "endChar": 102
+      },
+      "revId": "2511f2398d9e30c218c7076bed1920abac766bf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665893",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/828660?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7bb84be5_2c1452fb",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:28:43Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1013,
+        "startChar": 0,
+        "endLine": 1013,
+        "endChar": 115
+      },
+      "revId": "2511f2398d9e30c218c7076bed1920abac766bf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
