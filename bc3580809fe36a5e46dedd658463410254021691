@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d2acf4a_81739314",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5826,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T16:33:55Z",
+      "side": 1,
+      "message": "This is not final, maybe say what the threading model is?",
+      "range": {
+        "startLine": 5826,
+        "startChar": 38,
+        "endLine": 5826,
+        "endChar": 64
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "526b94a1_f75d9e39",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 9028,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T16:33:55Z",
+      "side": 1,
+      "message": "Might want to add a TODO explaining what the code would have to do if it wanted to implement both types of preferences at the same time. Is it as simple as defining a priority order? Or would there have to be complicated intersection/union/... operations on each preference\u0027s UID ranges?",
+      "range": {
+        "startLine": 9028,
+        "startChar": 4,
+        "endLine": 9028,
+        "endChar": 62
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a2b2fa5_a56e5523",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 9053,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T16:33:55Z",
+      "side": 1,
+      "message": "Is this guaranteed to succeed regardless of what profile is passed in? For example, if I were to do:\n\n    mContext.createContextAsUser(UserHandle.of(-5725082))\n\nwould that succeed? Or would it throw? I suppose that since we\u0027re on a binder thread, even if it does throw, the exception will simply be sent back to the caller.\n\nBut given that we keep this UserHandle around and pass it on to the rest of the code (on the handler thread, where we can\u0027t usefully throw any more), it seems like we should validate is somehow. Is there an isValid() method? If not, perhaps we can perform some simplistic validation ourselves like checking that it\u0027s non-negative and \"not too large\"?",
+      "range": {
+        "startLine": 9053,
+        "startChar": 40,
+        "endLine": 9053,
+        "endChar": 59
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "513aacdf_a58bf4a6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 9072,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T16:33:55Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s true, I think UidRange will be in the module.",
+      "range": {
+        "startLine": 9072,
+        "startChar": 16,
+        "endLine": 9072,
+        "endChar": 63
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4af8498_733d1d2f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 9089,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T16:33:55Z",
+      "side": 1,
+      "message": "This, on the other hand, will not be accessible to ConnectivityService code because it\u0027s not an API.\n\nThat said - is this even needed? The UidRange is not an untrusted object passed in by a user. It\u0027s created in this code (line 9073), so there seems little point validating it in this code as well.",
+      "range": {
+        "startLine": 9089,
+        "startChar": 15,
+        "endLine": 9089,
+        "endChar": 40
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d60ddfa6_f402a4e4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 9224,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T16:33:55Z",
+      "side": 1,
+      "message": "Why is this a WTF? It\u0027s not a programming error in the OS, is it? It can happen due to callers calling public API methods without doing anything wrong?",
+      "range": {
+        "startLine": 9224,
+        "startChar": 12,
+        "endLine": 9224,
+        "endChar": 18
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29b21fd8_5f7e2154",
+        "filename": "services/core/java/com/android/server/connectivity/ProfileNetworkPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T16:33:55Z",
+      "side": 1,
+      "message": "Nit: if this is already an inner class of ProfileNetworkPreferences, why not just Preference? Otherwise you have ProfileNetworkPreferences.ProfileNetworkPreference.",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06818af3_b5bd6720",
+        "filename": "services/core/java/com/android/server/connectivity/ProfileNetworkPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T16:33:55Z",
+      "side": 1,
+      "message": "NC is mutable, a defensive copy would be prudent.",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 45
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dff34663_2eb4ea67",
+        "filename": "services/core/java/com/android/server/connectivity/ProfileNetworkPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T16:33:55Z",
+      "side": 1,
+      "message": "Nit: suggest removing spaces because they make it harder to sed/grep. Also to be consistent with other dumpsys outputs this would be something like \"ProfileNetworkPreference{user\u003d5 caps{}}\"",
+      "range": {
+        "startLine": 48,
+        "startChar": 50,
+        "endLine": 48,
+        "endChar": 53
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2942f6e_44cdd428",
+        "filename": "services/core/java/com/android/server/connectivity/ProfileNetworkPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T16:33:55Z",
+      "side": 1,
+      "message": "Are there actually cases where we need to clone these?",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 37
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c329cf8_626e1607",
+        "filename": "services/core/java/com/android/server/connectivity/ProfileNetworkPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T16:33:55Z",
+      "side": 1,
+      "message": "Suggest documenting somewhere in this class that it stores only one preference per user.",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 68,
+        "endChar": 55
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
