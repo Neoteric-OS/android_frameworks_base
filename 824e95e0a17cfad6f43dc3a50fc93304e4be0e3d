@@ -1,0 +1,670 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666587",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [
+        {
+          "fixId": "f0c24e79_a0bb78a8",
+          "description": "Change to \"core/java/android/hardware/face/IFaceServiceLockoutResetCallback.aidl\"",
+          "replacements": [
+            {
+              "path": "core/java/android/hardware/face/IFaceServiceLockoutResetCallback.aidl",
+              "range": {
+                "startLine": 30,
+                "startChar": 41,
+                "endLine": 30,
+                "endChar": 49
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "5871ee3c_90b9f4df",
+        "filename": "core/java/android/hardware/face/IFaceServiceLockoutResetCallback.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Common typo found: \"reciever\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 30,
+        "startChar": 41,
+        "endLine": 30,
+        "endChar": 49
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666587",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [
+        {
+          "fixId": "2443ba16_03b7f291",
+          "description": "Change to \"core/java/com/android/internal/widget/LockPatternUtils.java\"",
+          "replacements": [
+            {
+              "path": "core/java/com/android/internal/widget/LockPatternUtils.java",
+              "range": {
+                "startLine": 1664,
+                "startChar": 49,
+                "endLine": 1664,
+                "endChar": 62
+              },
+              "replacement": "authentication"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "8756e897_e058d25a",
+        "filename": "core/java/com/android/internal/widget/LockPatternUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Common typo found: \"authenticaion\" -- should it be \"authentication\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1664,
+        "startChar": 49,
+        "endLine": 1664,
+        "endChar": 62
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ad448924_b3b2ba3f",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 3360,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 3360,
+        "startChar": 0,
+        "endLine": 3360,
+        "endChar": 103
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666587",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [
+        {
+          "fixId": "d52e7e6c_dcdc4e8a",
+          "description": "Change to \"packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java\"",
+          "replacements": [
+            {
+              "path": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java",
+              "range": {
+                "startLine": 773,
+                "startChar": 76,
+                "endLine": 773,
+                "endChar": 83
+              },
+              "replacement": "actually"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "4c225136_b4a95601",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Common typo found: \"actualy\" -- should it be \"actually\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 773,
+        "startChar": 76,
+        "endLine": 773,
+        "endChar": 83
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ffe6c6ed_5f960502",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Prefer to use mContext.getSystemService(DevicePolicyManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 830,
+        "startChar": 16,
+        "endLine": 830,
+        "endChar": 64
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2616d08c_7de065b1",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1037,
+        "startChar": 0,
+        "endLine": 1037,
+        "endChar": 102
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "74bf85fc_54116880",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1399,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1399,
+        "startChar": 0,
+        "endLine": 1399,
+        "endChar": 116
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "37320296_4f34b95b",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1399,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(FaceAuthenticationManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 1399,
+        "startChar": 41,
+        "endLine": 1399,
+        "endChar": 94
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1d2ebb34_4a0e23f9",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1490,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1490,
+        "startChar": 0,
+        "endLine": 1490,
+        "endChar": 115
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d21c48d2_168d817b",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1507,
+        "startChar": 0,
+        "endLine": 1507,
+        "endChar": 123
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "da1d8c41_8535f788",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1518,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1518,
+        "startChar": 0,
+        "endLine": 1518,
+        "endChar": 127
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "94b15ae0_8c56243f",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitorCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 106
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "734abb98_6d636f23",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitorCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 106
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "68567a5c_663739c0",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitorCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 108
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "cc352d13_dd89b350",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/KeyguardIndicationController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 446,
+        "startChar": 0,
+        "endLine": 446,
+        "endChar": 108
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b65bc0b1_8706b6fb",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/KeyguardIndicationController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 468,
+        "startChar": 0,
+        "endLine": 468,
+        "endChar": 108
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "84723383_d64e83a6",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/KeyguardIndicationController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 525,
+        "startChar": 0,
+        "endLine": 525,
+        "endChar": 110
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6e90a61b_c09d77b8",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/BiometricUnlockController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 355,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 104
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1974b919_43d98639",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardBottomAreaView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 754,
+        "startChar": 0,
+        "endLine": 754,
+        "endChar": 118
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5cbcae93_04d738d1",
+        "filename": "services/core/java/com/android/server/face/FaceService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 103
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666587",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [
+        {
+          "fixId": "d568debd_0a7cd364",
+          "description": "Change to \"services/core/java/com/android/server/face/FaceService.java\"",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/face/FaceService.java",
+              "range": {
+                "startLine": 157,
+                "startChar": 73,
+                "endLine": 157,
+                "endChar": 83
+              },
+              "replacement": "Performance"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "841782f4_017760e1",
+        "filename": "services/core/java/com/android/server/face/FaceService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Common typo found: \"Performace\" -- should it be \"Performance\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 157,
+        "startChar": 73,
+        "endLine": 157,
+        "endChar": 83
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "4c5642b1_d0dd2275",
+        "filename": "services/core/java/com/android/server/face/FaceService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 359,
+        "endChar": 103
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/660242?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6081dd61_094614ff",
+        "filename": "services/core/java/com/android/server/face/FaceService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:32:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 830,
+        "startChar": 0,
+        "endLine": 830,
+        "endChar": 104
+      },
+      "revId": "824e95e0a17cfad6f43dc3a50fc93304e4be0e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
