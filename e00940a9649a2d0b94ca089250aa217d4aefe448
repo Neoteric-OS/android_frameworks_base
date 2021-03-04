@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008680070",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1607277?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1eb2d261_c171b0a2",
+        "filename": "core/java/android/view/ScrollCaptureTargetResolver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T21:49:10Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 1
+      },
+      "revId": "e00940a9649a2d0b94ca089250aa217d4aefe448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
