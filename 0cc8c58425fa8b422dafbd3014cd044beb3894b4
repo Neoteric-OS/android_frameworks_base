@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14265577_8f2c9e7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2021-03-04T19:06:01Z",
+      "side": 1,
+      "message": "A very old and obsolete change.  Please abandon",
+      "revId": "0cc8c58425fa8b422dafbd3014cd044beb3894b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
