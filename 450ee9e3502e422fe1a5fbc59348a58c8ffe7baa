@@ -166,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf661012_8929e3b3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10694,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-04T10:58:44Z",
+      "side": 1,
+      "message": "Ah I see, you want to describe the expected difference behavior of the callback in the context of this test. Done.",
+      "parentUuid": "a2dc9277_e0526a12",
+      "range": {
+        "startLine": 10693,
+        "startChar": 5,
+        "endLine": 10694,
+        "endChar": 59
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55cc4d54_5f3e48c2",
@@ -345,6 +369,30 @@
       "side": 1,
       "message": "Still unclear about what the rules do.\nMaybe:\n// Setting a network preference for this user will create a new set of routing rules that allow uids in the range of the user to use the network.\n\nOnly if you think it is better.",
       "parentUuid": "ab8de9d7_8a6abb01",
+      "range": {
+        "startLine": 10705,
+        "startChar": 11,
+        "endLine": 10705,
+        "endChar": 20
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a0d23b4_76be8e3d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10705,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-04T10:58:44Z",
+      "side": 1,
+      "message": "Reworded a bit, but hopefully what you asked for is in the new version, please see if you like it.",
+      "parentUuid": "ec6a4506_e0ef52ea",
       "range": {
         "startLine": 10705,
         "startChar": 11,
