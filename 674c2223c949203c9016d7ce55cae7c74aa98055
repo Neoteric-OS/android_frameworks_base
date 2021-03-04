@@ -1,0 +1,168 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665543",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/608396?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "13e8d08a_fb3bdd2f",
+          "description": "Change to \"core/java/android/hardware/iris/IIrisServiceLockoutResetCallback.aidl\"",
+          "replacements": [
+            {
+              "path": "core/java/android/hardware/iris/IIrisServiceLockoutResetCallback.aidl",
+              "range": {
+                "startLine": 30,
+                "startChar": 41,
+                "endLine": 30,
+                "endChar": 49
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "6b837658_54a75648",
+        "filename": "core/java/android/hardware/iris/IIrisServiceLockoutResetCallback.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:27:20Z",
+      "side": 1,
+      "message": "Common typo found: \"reciever\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 30,
+        "startChar": 41,
+        "endLine": 30,
+        "endChar": 49
+      },
+      "revId": "674c2223c949203c9016d7ce55cae7c74aa98055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665544",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/608396?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a424f729_202bcd9a",
+        "filename": "core/java/android/hardware/iris/IrisManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:27:20Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 103
+      },
+      "revId": "674c2223c949203c9016d7ce55cae7c74aa98055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665544",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/608396?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bbadf45b_dac827ad",
+        "filename": "core/java/android/hardware/iris/IrisManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:27:20Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 358,
+        "startChar": 0,
+        "endLine": 358,
+        "endChar": 102
+      },
+      "revId": "674c2223c949203c9016d7ce55cae7c74aa98055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665543",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/608396?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "6fc6b755_cf02c58a",
+          "description": "Change to \"services/core/java/com/android/server/iris/IrisService.java\"",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/iris/IrisService.java",
+              "range": {
+                "startLine": 159,
+                "startChar": 73,
+                "endLine": 159,
+                "endChar": 83
+              },
+              "replacement": "Performance"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "657e0c44_7144aa30",
+        "filename": "services/core/java/com/android/server/iris/IrisService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:27:20Z",
+      "side": 1,
+      "message": "Common typo found: \"Performace\" -- should it be \"Performance\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 159,
+        "startChar": 73,
+        "endLine": 159,
+        "endChar": 83
+      },
+      "revId": "674c2223c949203c9016d7ce55cae7c74aa98055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665544",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/608396?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6c8f5a18_02573c2d",
+        "filename": "services/core/java/com/android/server/iris/IrisService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:27:20Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 995,
+        "startChar": 0,
+        "endLine": 995,
+        "endChar": 110
+      },
+      "revId": "674c2223c949203c9016d7ce55cae7c74aa98055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
