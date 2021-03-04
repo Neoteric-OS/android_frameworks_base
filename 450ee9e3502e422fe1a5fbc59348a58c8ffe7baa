@@ -144,6 +144,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a2dc9277_e0526a12",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10694,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T07:28:48Z",
+      "side": 1,
+      "message": "No, I mean what is the behavior difference we are expecting to see?\nMaybe:\n// Register default network callback as uid of a different user. Verify it can see the slice network for the profile that setup later, while the other one cannot.\n\nOnly if think it is better.",
+      "parentUuid": "18958411_72d68ccb",
+      "range": {
+        "startLine": 10693,
+        "startChar": 5,
+        "endLine": 10694,
+        "endChar": 59
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "55cc4d54_5f3e48c2",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2
@@ -236,6 +260,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c58dff39_3b612659",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10704,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T07:28:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7e0c8aa4_abf54202",
+      "range": {
+        "startLine": 10704,
+        "startChar": 11,
+        "endLine": 10704,
+        "endChar": 53
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "519e0271_0fc961f9",
@@ -285,6 +333,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ec6a4506_e0ef52ea",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10705,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T07:28:48Z",
+      "side": 1,
+      "message": "Still unclear about what the rules do.\nMaybe:\n// Setting a network preference for this user will create a new set of routing rules that allow uids in the range of the user to use the network.\n\nOnly if you think it is better.",
+      "parentUuid": "ab8de9d7_8a6abb01",
+      "range": {
+        "startLine": 10705,
+        "startChar": 11,
+        "endLine": 10705,
+        "endChar": 20
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "51a41b20_17bcc204",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2
@@ -320,6 +392,30 @@
       "side": 1,
       "message": "In this case there used to be no setting for this range. Calling setNetworkPreferenceForUser inl.10700 is what conjures it into existence, and then the range is moved through the UID-specific rules.\n\nHere again I really struggle to make it clearer. Do you have any suggestion of a better wording ?",
       "parentUuid": "51a41b20_17bcc204",
+      "range": {
+        "startLine": 10706,
+        "startChar": 58,
+        "endLine": 10706,
+        "endChar": 63
+      },
+      "revId": "450ee9e3502e422fe1a5fbc59348a58c8ffe7baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52f5c123_f2982565",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10706,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T07:28:48Z",
+      "side": 1,
+      "message": "Now I understood.\nI think this is clear enough.\nThanks.",
+      "parentUuid": "765a7df6_3c7faf75",
       "range": {
         "startLine": 10706,
         "startChar": 58,
