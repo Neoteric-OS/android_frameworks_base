@@ -58,7 +58,8 @@ class RemoteAnimationController implements DeathRecipient {
 
     private final WindowManagerService mService;
     private final RemoteAnimationAdapter mRemoteAnimationAdapter;
-    private final List<RemoteAnimationRecord> mPendingAnimations = Collections.synchronizedList(new ArrayList<>());
+    private final List<RemoteAnimationRecord> mPendingAnimations = Collections.synchronizedList(
+            new ArrayList<>());
     private final ArrayList<WallpaperAnimationAdapter> mPendingWallpaperAnimations =
             new ArrayList<>();
     private final Rect mTmpRect = new Rect();
