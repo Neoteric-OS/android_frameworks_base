@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb67111a_57f88a7d",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1959,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T08:32:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94a09082_2d361dae",
+      "range": {
+        "startLine": 1959,
+        "startChar": 12,
+        "endLine": 1959,
+        "endChar": 46
+      },
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f429d62_5446a8d1",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-03T15:52:49Z",
       "side": 1,
       "message": "This can never be null",
+      "range": {
+        "startLine": 1968,
+        "startChar": 16,
+        "endLine": 1968,
+        "endChar": 40
+      },
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8596ed61_df99eef3",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1968,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T08:32:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f429d62_5446a8d1",
       "range": {
         "startLine": 1968,
         "startChar": 16,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "91f00503_38d32c52",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5606,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T08:32:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7110a33b_d9aaa4d3",
+      "range": {
+        "startLine": 5606,
+        "startChar": 28,
+        "endLine": 5606,
+        "endChar": 35
+      },
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79356f24_49f94e02",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-03-03T15:52:49Z",
       "side": 1,
       "message": "snapshot.networkCapabilities can never be null.",
+      "range": {
+        "startLine": 5608,
+        "startChar": 32,
+        "endLine": 5608,
+        "endChar": 68
+      },
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6446b22_0fd3eb5c",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5608,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T08:32:43Z",
+      "side": 1,
+      "message": "Done\nI like how @NonNull saves our life.",
+      "parentUuid": "79356f24_49f94e02",
       "range": {
         "startLine": 5608,
         "startChar": 32,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "32ba4064_44a296cd",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T08:32:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15298069_d45f1be4",
+      "range": {
+        "startLine": 1089,
+        "startChar": 0,
+        "endLine": 1090,
+        "endChar": 35
+      },
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e6ccb652_42d4631d",
@@ -156,6 +276,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac2c31f3_e58177a4",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T08:32:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6ccb652_42d4631d",
+      "range": {
+        "startLine": 1355,
+        "startChar": 20,
+        "endLine": 1356,
+        "endChar": 35
+      },
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6cb3029e_02e4045f",
@@ -169,6 +313,30 @@
       "writtenOn": "2021-03-03T15:52:49Z",
       "side": 1,
       "message": "List.of(",
+      "range": {
+        "startLine": 2071,
+        "startChar": 47,
+        "endLine": 2071,
+        "endChar": 65
+      },
+      "revId": "aebfe2fedf3d129c3353e497091df72665df1e49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b8234c5_5d3d8f5e",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2071,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T08:32:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cb3029e_02e4045f",
       "range": {
         "startLine": 2071,
         "startChar": 47,
