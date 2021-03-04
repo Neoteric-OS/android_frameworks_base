@@ -39,6 +39,29 @@
       },
       "revId": "a64abb184ce077516acc68b2d6953ad88565767a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "379aade5_cf8d567c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 9059,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-04T12:00:39Z",
+      "side": 1,
+      "message": "Is it possible that in future we might need to support NET_CAPABILITY_MMS(0) ?\nIf it is possible it might not be good to use 0 as NONE.",
+      "range": {
+        "startLine": 9059,
+        "startChar": 7,
+        "endLine": 9059,
+        "endChar": 73
+      },
+      "revId": "a64abb184ce077516acc68b2d6953ad88565767a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
