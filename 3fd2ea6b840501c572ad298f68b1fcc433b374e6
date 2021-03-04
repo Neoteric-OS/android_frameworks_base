@@ -16,6 +16,23 @@
       "message": "hi, I\u0027d like to invite you to do a code review!",
       "revId": "3fd2ea6b840501c572ad298f68b1fcc433b374e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6179051_84f759e4",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6948,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2021-03-04T09:34:27Z",
+      "side": 1,
+      "message": "What is the callstack? The method shouldn\u0027t be called for a detached activity. It is better to fix the root cause such as removing the activity from task when the activity cannot reach root task.",
+      "revId": "3fd2ea6b840501c572ad298f68b1fcc433b374e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
