@@ -134,6 +134,7 @@ package android {
     field public static final String MANAGE_USB = "android.permission.MANAGE_USB";
     field public static final String MANAGE_USERS = "android.permission.MANAGE_USERS";
     field public static final String MANAGE_USER_OEM_UNLOCK_STATE = "android.permission.MANAGE_USER_OEM_UNLOCK_STATE";
+    field public static final String MANAGE_WIFI_COUNTRY_CODE = "android.permission.MANAGE_WIFI_COUNTRY_CODE";
     field public static final String MODIFY_APPWIDGET_BIND_PERMISSIONS = "android.permission.MODIFY_APPWIDGET_BIND_PERMISSIONS";
     field public static final String MODIFY_AUDIO_ROUTING = "android.permission.MODIFY_AUDIO_ROUTING";
     field public static final String MODIFY_CELL_BROADCASTS = "android.permission.MODIFY_CELL_BROADCASTS";
@@ -1493,11 +1494,18 @@ package android.bluetooth {
     field public static final int ACCESS_REJECTED = 2; // 0x2
     field public static final int ACCESS_UNKNOWN = 0; // 0x0
     field public static final String ACTION_SILENCE_MODE_CHANGED = "android.bluetooth.device.action.SILENCE_MODE_CHANGED";
+    field public static final String DEVICE_TYPE_DEFAULT = "Default";
+    field public static final String DEVICE_TYPE_UNTETHERED_HEADSET = "Untethered Headset";
+    field public static final String DEVICE_TYPE_WATCH = "Watch";
     field public static final int METADATA_COMPANION_APP = 4; // 0x4
+    field public static final int METADATA_DEVICE_TYPE = 17; // 0x11
     field public static final int METADATA_ENHANCED_SETTINGS_UI_URI = 16; // 0x10
     field public static final int METADATA_HARDWARE_VERSION = 3; // 0x3
     field public static final int METADATA_IS_UNTETHERED_HEADSET = 6; // 0x6
+    field public static final int METADATA_MAIN_BATTERY = 18; // 0x12
+    field public static final int METADATA_MAIN_CHARGING = 19; // 0x13
     field public static final int METADATA_MAIN_ICON = 5; // 0x5
+    field public static final int METADATA_MAIN_LOW_BATTERY_THRESHOLD = 20; // 0x14
     field public static final int METADATA_MANUFACTURER_NAME = 0; // 0x0
     field public static final int METADATA_MAX_LENGTH = 2048; // 0x800
     field public static final int METADATA_MODEL_NAME = 1; // 0x1
@@ -1505,12 +1513,15 @@ package android.bluetooth {
     field public static final int METADATA_UNTETHERED_CASE_BATTERY = 12; // 0xc
     field public static final int METADATA_UNTETHERED_CASE_CHARGING = 15; // 0xf
     field public static final int METADATA_UNTETHERED_CASE_ICON = 9; // 0x9
+    field public static final int METADATA_UNTETHERED_CASE_LOW_BATTERY_THRESHOLD = 23; // 0x17
     field public static final int METADATA_UNTETHERED_LEFT_BATTERY = 10; // 0xa
     field public static final int METADATA_UNTETHERED_LEFT_CHARGING = 13; // 0xd
     field public static final int METADATA_UNTETHERED_LEFT_ICON = 7; // 0x7
+    field public static final int METADATA_UNTETHERED_LEFT_LOW_BATTERY_THRESHOLD = 21; // 0x15
     field public static final int METADATA_UNTETHERED_RIGHT_BATTERY = 11; // 0xb
     field public static final int METADATA_UNTETHERED_RIGHT_CHARGING = 14; // 0xe
     field public static final int METADATA_UNTETHERED_RIGHT_ICON = 8; // 0x8
+    field public static final int METADATA_UNTETHERED_RIGHT_LOW_BATTERY_THRESHOLD = 22; // 0x16
   }
 
   public final class BluetoothHeadset implements android.bluetooth.BluetoothProfile {
@@ -10429,6 +10440,7 @@ package android.telephony.data {
     method public long getRetryDurationMillis();
     method @Nullable public android.telephony.data.SliceInfo getSliceInfo();
     method @Deprecated public int getSuggestedRetryTime();
+    method @NonNull public java.util.List<android.telephony.data.TrafficDescriptor> getTrafficDescriptors();
     method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.data.DataCallResponse> CREATOR;
     field public static final int HANDOVER_FAILURE_MODE_DO_FALLBACK = 1; // 0x1
@@ -10464,6 +10476,7 @@ package android.telephony.data {
     method @NonNull public android.telephony.data.DataCallResponse.Builder setRetryDurationMillis(long);
     method @NonNull public android.telephony.data.DataCallResponse.Builder setSliceInfo(@Nullable android.telephony.data.SliceInfo);
     method @Deprecated @NonNull public android.telephony.data.DataCallResponse.Builder setSuggestedRetryTime(int);
+    method @NonNull public android.telephony.data.DataCallResponse.Builder setTrafficDescriptors(@NonNull java.util.List<android.telephony.data.TrafficDescriptor>);
   }
 
   public final class DataProfile implements android.os.Parcelable {
@@ -10535,7 +10548,7 @@ package android.telephony.data {
     method public void setDataProfile(@NonNull java.util.List<android.telephony.data.DataProfile>, boolean, @NonNull android.telephony.data.DataServiceCallback);
     method public void setInitialAttachApn(@NonNull android.telephony.data.DataProfile, boolean, @NonNull android.telephony.data.DataServiceCallback);
     method public void setupDataCall(int, @NonNull android.telephony.data.DataProfile, boolean, boolean, int, @Nullable android.net.LinkProperties, @NonNull android.telephony.data.DataServiceCallback);
-    method public void setupDataCall(int, @NonNull android.telephony.data.DataProfile, boolean, boolean, int, @Nullable android.net.LinkProperties, @IntRange(from=0, to=15) int, @Nullable android.telephony.data.SliceInfo, @NonNull android.telephony.data.DataServiceCallback);
+    method public void setupDataCall(int, @NonNull android.telephony.data.DataProfile, boolean, boolean, int, @Nullable android.net.LinkProperties, @IntRange(from=0, to=15) int, @Nullable android.telephony.data.SliceInfo, @Nullable android.telephony.data.TrafficDescriptor, boolean, @NonNull android.telephony.data.DataServiceCallback);
     method public void startHandover(int, @NonNull android.telephony.data.DataServiceCallback);
   }
 
@@ -10635,6 +10648,15 @@ package android.telephony.data {
     method @NonNull public android.telephony.data.ThrottleStatus.Builder setSlotIndex(int);
     method @NonNull public android.telephony.data.ThrottleStatus.Builder setThrottleExpiryTimeMillis(long);
     method @NonNull public android.telephony.data.ThrottleStatus.Builder setTransportType(int);
+  }
+
+  public final class TrafficDescriptor implements android.os.Parcelable {
+    ctor public TrafficDescriptor(@Nullable String, @Nullable String);
+    method public int describeContents();
+    method @Nullable public String getDnn();
+    method @Nullable public String getOsAppId();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.telephony.data.TrafficDescriptor> CREATOR;
   }
 
 }

@@ -24,7 +24,6 @@ import static android.content.Intent.ACTION_UID_REMOVED;
 import static android.content.Intent.ACTION_USER_REMOVED;
 import static android.content.Intent.EXTRA_UID;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
-import static android.net.ConnectivityManager.ACTION_TETHER_STATE_CHANGED;
 import static android.net.ConnectivityManager.isNetworkTypeMobile;
 import static android.net.NetworkIdentity.SUBTYPE_COMBINED;
 import static android.net.NetworkStack.checkNetworkStackPermission;
@@ -45,6 +44,7 @@ import static android.net.NetworkStats.UID_ALL;
 import static android.net.NetworkStatsHistory.FIELD_ALL;
 import static android.net.NetworkTemplate.buildTemplateMobileWildcard;
 import static android.net.NetworkTemplate.buildTemplateWifiWildcard;
+import static android.net.TetheringManager.ACTION_TETHER_STATE_CHANGED;
 import static android.net.TrafficStats.KB_IN_BYTES;
 import static android.net.TrafficStats.MB_IN_BYTES;
 import static android.net.TrafficStats.UNSUPPORTED;
@@ -379,6 +379,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 case MSG_UPDATE_IFACES: {
                     // If no cached states, ignore.
                     if (mLastNetworkStateSnapshots == null) break;
+                    // TODO (b/181642673): Protect mDefaultNetworks from concurrent accessing.
                     updateIfaces(mDefaultNetworks, mLastNetworkStateSnapshots, mActiveIface);
                     break;
                 }
@@ -1266,7 +1267,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
      * they are combined under a single {@link NetworkIdentitySet}.
      */
     @GuardedBy("mStatsLock")
-    private void updateIfacesLocked(@Nullable Network[] defaultNetworks,
+    private void updateIfacesLocked(@NonNull Network[] defaultNetworks,
             @NonNull NetworkStateSnapshot[] snapshots) {
         if (!mSystemReady) return;
         if (LOGV) Slog.v(TAG, "updateIfacesLocked()");
@@ -1282,10 +1283,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         // Rebuild active interfaces based on connected networks
         mActiveIfaces.clear();
         mActiveUidIfaces.clear();
-        if (defaultNetworks != null) {
-            // Caller is ConnectivityService. Update the list of default networks.
-            mDefaultNetworks = defaultNetworks;
-        }
+        // Update the list of default networks.
+        mDefaultNetworks = defaultNetworks;
 
         mLastNetworkStateSnapshots = snapshots;
 
