@@ -10660,4 +10660,12 @@ public class ConnectivityServiceTest {
 
         // default NCs will be unregistered in tearDown
     }
+
+    @Test
+    public void testRegisterBestNetworkCallback()
+            throws Exception {
+        final NetworkRequest request = new NetworkRequest.Builder().build();
+        assertThrows(IllegalArgumentException.class,
+                () -> mCm.registerBestNetworkCallback(request, null, new NetworkCallback()));
+    }
 }
