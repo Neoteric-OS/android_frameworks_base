@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b16c867f_634ed69d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5826,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d2acf4a_81739314",
+      "range": {
+        "startLine": 5826,
+        "startChar": 38,
+        "endLine": 5826,
+        "endChar": 64
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "526b94a1_f75d9e39",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-04T16:33:55Z",
       "side": 1,
       "message": "Might want to add a TODO explaining what the code would have to do if it wanted to implement both types of preferences at the same time. Is it as simple as defining a priority order? Or would there have to be complicated intersection/union/... operations on each preference\u0027s UID ranges?",
+      "range": {
+        "startLine": 9028,
+        "startChar": 4,
+        "endLine": 9028,
+        "endChar": 62
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e87b631e_7bd59191",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 9028,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "526b94a1_f75d9e39",
       "range": {
         "startLine": 9028,
         "startChar": 4,
@@ -89,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e61db270_61aa3564",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 9053,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:24:04Z",
+      "side": 1,
+      "message": "If I\u0027m reading the code correctly, this will throw IllegalStateException(\"Own package not found : \" + getPackageName())\n\nI couldn\u0027t find any way at all in UserHandle or UserManager to validate a UserHandle.\n\nAs for negative, UserHandle.CURRENT is supported and is user -2. I thought a little bit about it and see no real use case for it in this API, but also no strong reason to disallow that particular usage. However, I can find no way to resolve this (the context created here has a getUser() method, but it will happily return the passed one, so -2), which would be necessary to set the correct UID rules.\n\nSo I decided to :\n- Test explicitly for user ID \u003c 0 and reject\n- Catch ISE and translate it into a more appropriate exception for this use case.\nPlease let me know what you think.",
+      "parentUuid": "7a2b2fa5_a56e5523",
+      "range": {
+        "startLine": 9053,
+        "startChar": 40,
+        "endLine": 9053,
+        "endChar": 59
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "513aacdf_a58bf4a6",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
@@ -100,6 +172,30 @@
       "writtenOn": "2021-03-04T16:33:55Z",
       "side": 1,
       "message": "I don\u0027t think that\u0027s true, I think UidRange will be in the module.",
+      "range": {
+        "startLine": 9072,
+        "startChar": 16,
+        "endLine": 9072,
+        "endChar": 63
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cf02d82_6010dd1f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 9072,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:24:04Z",
+      "side": 1,
+      "message": "Yes, this comment is incorrect. Fixed.",
+      "parentUuid": "513aacdf_a58bf4a6",
       "range": {
         "startLine": 9072,
         "startChar": 16,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bea187c2_1fda16d4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 9089,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:24:04Z",
+      "side": 1,
+      "message": "I wondered this myself. It was only to catch egregious mistakes, but I don\u0027t mind removing it. Done.",
+      "parentUuid": "a4af8498_733d1d2f",
+      "range": {
+        "startLine": 9089,
+        "startChar": 15,
+        "endLine": 9089,
+        "endChar": 40
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d60ddfa6_f402a4e4",
@@ -146,6 +266,30 @@
       "writtenOn": "2021-03-04T16:33:55Z",
       "side": 1,
       "message": "Why is this a WTF? It\u0027s not a programming error in the OS, is it? It can happen due to callers calling public API methods without doing anything wrong?",
+      "range": {
+        "startLine": 9224,
+        "startChar": 12,
+        "endLine": 9224,
+        "endChar": 18
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7395a658_6dbb0d33",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 9224,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:24:04Z",
+      "side": 1,
+      "message": "It\u0027s very unlikely because the binder threads will in fact very likely catch this before the fact, as written in l.9186.\n\nAt least, OemPreferences are only be supported on Automotive devices, and I\u0027m not even sure they support an enterprise DPM. But I thought if we see this is happening, we should re-prioritize making it possible to use both of these APIs concurrently, so we should know about it, hence the wtf.\n\nPlease reopen if you disagree with the reasoning.",
+      "parentUuid": "d60ddfa6_f402a4e4",
       "range": {
         "startLine": 9224,
         "startChar": 12,
@@ -179,6 +323,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f406c08b_37cb96df",
+        "filename": "services/core/java/com/android/server/connectivity/ProfileNetworkPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29b21fd8_5f7e2154",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06818af3_b5bd6720",
@@ -192,6 +360,30 @@
       "writtenOn": "2021-03-04T16:33:55Z",
       "side": 1,
       "message": "NC is mutable, a defensive copy would be prudent.",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 45
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ce83e04_ad24f072",
+        "filename": "services/core/java/com/android/server/connectivity/ProfileNetworkPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06818af3_b5bd6720",
       "range": {
         "startLine": 43,
         "startChar": 12,
@@ -225,6 +417,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a21ab808_cbacf788",
+        "filename": "services/core/java/com/android/server/connectivity/ProfileNetworkPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dff34663_2eb4ea67",
+      "range": {
+        "startLine": 48,
+        "startChar": 50,
+        "endLine": 48,
+        "endChar": 53
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2942f6e_44cdd428",
@@ -248,6 +464,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0701ac39_0c7eb8b6",
+        "filename": "services/core/java/com/android/server/connectivity/ProfileNetworkPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:24:04Z",
+      "side": 1,
+      "message": "No, the constructor is private and used in l.75.",
+      "parentUuid": "c2942f6e_44cdd428",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 37
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c329cf8_626e1607",
@@ -261,6 +501,30 @@
       "writtenOn": "2021-03-04T16:33:55Z",
       "side": 1,
       "message": "Suggest documenting somewhere in this class that it stores only one preference per user.",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 68,
+        "endChar": 55
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3efa5de_576d5087",
+        "filename": "services/core/java/com/android/server/connectivity/ProfileNetworkPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c329cf8_626e1607",
       "range": {
         "startLine": 68,
         "startChar": 12,
