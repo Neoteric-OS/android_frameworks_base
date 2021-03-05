@@ -34,6 +34,24 @@
       "parentUuid": "5113e499_fd276df1",
       "revId": "6cf2c844136510e9f8a9e4e0aadcd7aa09209797",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1402890d_feeebb4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2021-03-05T13:42:10Z",
+      "side": 1,
+      "message": "Yeah, also that configuration I think is/was only for internal master.",
+      "parentUuid": "08c49163_642ec021",
+      "revId": "6cf2c844136510e9f8a9e4e0aadcd7aa09209797",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
