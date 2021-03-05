@@ -70,6 +70,30 @@
       },
       "revId": "31bace15a5b5c3a9b22cf796e8c341df1e307852",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d033c6e_6a9af283",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2296,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-05T03:38:00Z",
+      "side": 1,
+      "message": "This comment is generic \u0026 was possible before. But, the multiple wifi internet networks (can there be multiple cellular networks with internet connectivity (not MMS, etc)?) is the new feature in S. Anyway, i\u0027ll defer to Jean \u0026 Lorenzo on what to put in their API surface. \n\nI am working on putting together a detailed doc for STA + STA to put up in the wifi infra developer page here: https://developer.android.com/guide/topics/connectivity/wifi-infrastructure. We can mention more details there perhaps.",
+      "parentUuid": "a83a2c92_4be4597b",
+      "range": {
+        "startLine": 2294,
+        "startChar": 57,
+        "endLine": 2296,
+        "endChar": 0
+      },
+      "revId": "31bace15a5b5c3a9b22cf796e8c341df1e307852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
