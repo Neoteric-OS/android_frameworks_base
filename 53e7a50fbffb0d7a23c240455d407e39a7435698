@@ -46,6 +46,30 @@
       },
       "revId": "53e7a50fbffb0d7a23c240455d407e39a7435698",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d0c97da_0ccc89d1",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5079,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2021-03-05T16:59:52Z",
+      "side": 1,
+      "message": "https://paste.googleplex.com/5430124108316672 is the error message; if it doesn\u0027t happen to your CL, sorry about that, please feel free to ignore this comment.",
+      "parentUuid": "a0c17566_43a0d029",
+      "range": {
+        "startLine": 5079,
+        "startChar": 59,
+        "endLine": 5079,
+        "endChar": 69
+      },
+      "revId": "53e7a50fbffb0d7a23c240455d407e39a7435698",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
