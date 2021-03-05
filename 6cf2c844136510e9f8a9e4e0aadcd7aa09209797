@@ -16,6 +16,24 @@
       "message": "Do you know if they are running in any other way? Some are annotated @Presubmit, and I\u0027m fairly sure they were already running, but I failed to find the ATP configuration for that. It that\u0027s gone, probably annotation isn\u0027t needed either.",
       "revId": "6cf2c844136510e9f8a9e4e0aadcd7aa09209797",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08c49163_642ec021",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-03-05T13:10:47Z",
+      "side": 1,
+      "message": "I now remember we had the exact conversation months ago.. Not sure how android.platform.test.annotations.Presubmit is triggered, I did see some TEST_MAPPING file containing it as a filter explicitly, maybe that\u0027s the new way? I wrote this because I noticed some locksettings unit test is failing, so I thought it might not run as presubmit at the moment. I\u0027ll submit this anyway, as it should do no harm.",
+      "parentUuid": "5113e499_fd276df1",
+      "revId": "6cf2c844136510e9f8a9e4e0aadcd7aa09209797",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
