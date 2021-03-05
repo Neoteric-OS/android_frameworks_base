@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59eb55e0_1291efff",
+        "filename": "core/java/android/app/ActivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1301101
+      },
+      "writtenOn": "2021-03-05T20:07:30Z",
+      "side": 0,
+      "message": "If you remove PROCESS_CAPABILITY_NETWORK from PROCESS_CAPABILITY_ALL, it will conflict with the change I try to make in ag/13790448. \n\nCould you run test:\natest android.app.cts.ActivityManagerFgsBgStartTest\nto make sure it still passes.",
+      "range": {
+        "startLine": 612,
+        "startChar": 14,
+        "endLine": 612,
+        "endChar": 40
+      },
+      "revId": "fcbc6ff6b1e9041df568da8e563b907d86c79a75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
