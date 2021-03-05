@@ -25,7 +25,6 @@ import android.hardware.security.keymint.SecurityLevel;
 import android.hardware.security.keymint.Tag;
 import android.os.Build;
 import android.security.KeyPairGeneratorSpec;
-import android.security.KeyStore;
 import android.security.KeyStore2;
 import android.security.KeyStoreException;
 import android.security.KeyStoreSecurityLevel;
@@ -36,7 +35,6 @@ import android.security.keystore.AttestationUtils;
 import android.security.keystore.DeviceIdAttestationException;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
-import android.security.keystore.KeymasterUtils;
 import android.security.keystore.SecureKeyImportUnavailableException;
 import android.security.keystore.StrongBoxUnavailableException;
 import android.system.keystore2.Authorization;
@@ -267,7 +265,7 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
                 // Check that user authentication related parameters are acceptable. This method
                 // will throw an IllegalStateException if there are issues (e.g., secure lock screen
                 // not set up).
-                KeymasterUtils.addUserAuthArgs(new KeymasterArguments(), mSpec);
+                KeyStore2ParameterUtils.addUserAuthArgs(new ArrayList<>(), mSpec);
             } catch (IllegalArgumentException | IllegalStateException e) {
                 throw new InvalidAlgorithmParameterException(e);
             }
@@ -633,8 +631,8 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
             if (idTypesSet.contains(AttestationUtils.ID_TYPE_IMEI)
                     || idTypesSet.contains(AttestationUtils.ID_TYPE_MEID)) {
                 telephonyService =
-                    (TelephonyManager) KeyStore.getApplicationContext().getSystemService(
-                        Context.TELEPHONY_SERVICE);
+                    (TelephonyManager) android.app.AppGlobals.getInitialApplication()
+                            .getSystemService(Context.TELEPHONY_SERVICE);
                 if (telephonyService == null) {
                     throw new DeviceIdAttestationException("Unable to access telephony service");
                 }
