@@ -34,6 +34,24 @@
       "parentUuid": "25d98fe8_3c915d3f",
       "revId": "ee23a977934043826e310c28eb67920052aa720f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fb32939_55457b24",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5056,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:56Z",
+      "side": 1,
+      "message": "I do remind you that the connectivity code doesn\u0027t handle simultaneous different SIMs for different users. I don\u0027t know if 2 users can even set a separate default SIM, but if they can, one of them is always the default network on the device. That would mean that either apps for the other user can never run at the same time, or that they already go on the wrong SIM.\n\nIn other words, the support we lack here is not in this API. The support we lack here is support for concurrent users apps running on different SIMs.\n\nNote that interestingly, this works makes this almost possible. For example, if we make the argument a NetworkCapability as Lorenzo mentions and we remove the \"work profile only\" limitation, then this becomes a possible use of this API with no other changes.\n\nI want to draw your attention however on the fact that passing a NetworkCapabilities object here has other drawbacks which I think are worse (importantly it becomes impossible to implement a mode without a fallback (which we can very easily imagine becoming a requirement in the future), or to implement a mode with a cascade of cap X → cap Y → default) ; and on the fact that the lack of support for concurrent user apps running on different SIMs in S means it\u0027s not an existing use case.\n\nWith this, I would like to close this comment, because I believe the above means we have probably the correct tradeoff here, but please reopen if you disagree with the argument.",
+      "parentUuid": "196a7871_487aa2df",
+      "revId": "ee23a977934043826e310c28eb67920052aa720f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e8356ae_f5291ac6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d50fbdee_aa9473d3",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "bc598920d38967ff1e7e32cb8a0fba4b28c9aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6bc5c933_fcb47fda",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcaa498e_511de3c3",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4999,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:56Z",
+      "side": 1,
+      "message": "Guidance is API council rule 6.5 : \"Prefer functional interfaces over creating new single abstract method (SAM) types\". This case here seems to fit exactly the description under that section.",
+      "parentUuid": "6bc5c933_fcb47fda",
+      "range": {
+        "startLine": 4998,
+        "startChar": 0,
+        "endLine": 4999,
+        "endChar": 55
+      },
+      "revId": "bc598920d38967ff1e7e32cb8a0fba4b28c9aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "303a428e_6e5b55d3",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-03-04T15:55:08Z",
       "side": 1,
       "message": "Is there value in making it optional? If callers really don\u0027t want to listen for the callback they can simply pass in \"new Runnable()\"...",
+      "range": {
+        "startLine": 5060,
+        "startChar": 26,
+        "endLine": 5060,
+        "endChar": 34
+      },
+      "revId": "bc598920d38967ff1e7e32cb8a0fba4b28c9aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1baf76bf_309cbbe3",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5060,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:56Z",
+      "side": 1,
+      "message": "I don\u0027t think it matters all that much, but I tend to think that it\u0027s clear and easy to say \"null means I don\u0027t care about this\", which is why I favor null. Please reopen if you feel strongly.",
+      "parentUuid": "303a428e_6e5b55d3",
       "range": {
         "startLine": 5060,
         "startChar": 26,
@@ -95,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "48fd2092_5fffbadf",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5067,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:56Z",
+      "side": 1,
+      "message": "As you mention, I don\u0027t think we can resolve this in code review, so let\u0027s discuss with Product.\n\nFor now as you might have seen, the code rejects calls to this for non-work profile, because I liked to restrict this as much as possible for now. Robert also thought this was a reasonable limitation, and it\u0027s one that we can remove in a Mainline update.\n\nLet\u0027s check with Product.",
+      "parentUuid": "d665e3be_279cbd13",
+      "range": {
+        "startLine": 5067,
+        "startChar": 44,
+        "endLine": 5067,
+        "endChar": 77
+      },
+      "revId": "bc598920d38967ff1e7e32cb8a0fba4b28c9aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "60b9eff7_8bf2a3ad",
         "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
         "patchSetId": 8
@@ -106,6 +202,30 @@
       "writtenOn": "2021-03-04T15:55:08Z",
       "side": 1,
       "message": "Any reason this is in client code instead of on the server side? AFAIK NullPointerException is parcelable so it can be thrown by the AIDL call.",
+      "range": {
+        "startLine": 5071,
+        "startChar": 8,
+        "endLine": 5071,
+        "endChar": 65
+      },
+      "revId": "bc598920d38967ff1e7e32cb8a0fba4b28c9aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e50e2eca_15bc94f8",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5071,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:56Z",
+      "side": 1,
+      "message": "Removed. The server-side is already checking this in the next patch.\n\nI kept the null check for the executor though, because that object is local to the app.",
+      "parentUuid": "60b9eff7_8bf2a3ad",
       "range": {
         "startLine": 5071,
         "startChar": 8,

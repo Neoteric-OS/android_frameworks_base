@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5eecd30d_216e2101",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5017,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:56Z",
+      "side": 1,
+      "message": "Then they\u0027ll use another callback with a different name. Immediately, we have two callbacks to use this and neither of them needs a status.",
+      "parentUuid": "b57ea094_8beaee92",
+      "range": {
+        "startLine": 5017,
+        "startChar": 24,
+        "endLine": 5017,
+        "endChar": 25
+      },
+      "revId": "c23dec1ff6137e51b2e0b552b99bf4048f64180a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "efd2a82d_a6268615",
@@ -96,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "83c335db_282508d9",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5080,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:56Z",
+      "side": 1,
+      "message": "I think your suggestion is reasonable but we already have setOemNetworkPreference. If anything I would prefer the term Affinity especially as in this case the profile falls back, with the drawback that if we want to have a mode without a fallback the term will become worse than preference.\n\nUltimately this falls upon the API sponsor and API council to decide. +lorenzo@ any opinions there ?",
+      "parentUuid": "e28df908_8d402ae0",
+      "range": {
+        "startLine": 5080,
+        "startChar": 19,
+        "endLine": 5080,
+        "endChar": 36
+      },
+      "revId": "c23dec1ff6137e51b2e0b552b99bf4048f64180a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dcaba727_c3defe68",
         "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
         "patchSetId": 3
@@ -130,6 +178,30 @@
       "writtenOn": "2021-03-04T15:55:08Z",
       "side": 1,
       "message": "Well... exceptions are for programming errors, and the callback just tells the app when the operation completed. As long as the API provides a clear guarantee that either the callback will be called or an exception will be thrown, the caller can know what happened.\n\nThat said, how will we define completed? Does this complete when CS accepts the request? Or when the handler loop terminates and the request has been sent to the factories and apps\u0027 default networks have been changed?\n\nBut the common case here would seem to be to enable this feature, which will cause the network to be connected. In this case, getting a callback when the handler loop processes the request doesn\u0027t really mean much to the caller. The caller is probably much more interested in when the network actually comes up. And what if the network never comes up? Will the caller want to know?\n\nThis suggest we should perhaps consider using NetworkCallback for this. Would it be difficult to implement? If it\u0027s really trivial, then... maybe we should just use it.",
+      "parentUuid": "dcaba727_c3defe68",
+      "range": {
+        "startLine": 5095,
+        "startChar": 16,
+        "endLine": 5095,
+        "endChar": 17
+      },
+      "revId": "c23dec1ff6137e51b2e0b552b99bf4048f64180a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a5bfd42_2ab42e38",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5095,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:56Z",
+      "side": 1,
+      "message": "Junyu :\nThis is about timing. Errors that happen synchronously are sent via an exception. Errors that can only happen asynchronously need a callback. The reason to have exceptions thrown even when there is a listener is that it is a lot more developer-friendly to just throw immediately if you know something is wrong at the call site. IllegalArgumentException is the canonical example ; it\u0027s more friendly to the developer to throw immediately if they pass a broken argument than to make them wait for a callback to find out.\n\nThis is the common scheme in Android API – you can find plenty of examples in recent APIs. setOemNetworkPreference above works like this. The new QoS API works like this, look at registerQosCallback, that has both synchronous and asynchronous errors ; it\u0027s an example of where we have listeners that can send errors in other parts of the API. They are not appropriate when there is no possible asynchronous error. In this case there are no possible asynchronous errors, therefore the listener doesn\u0027t need to pass errors.\n\nI don\u0027t believe we will ever have an asynchronous error to report to this API, and so the current scheme is best. But if we do, then we\u0027ll expand the listener with an onError method.\n\nLorenzo :\nThe way I define it here is, the listener is called when the caller can run an app and trust that its default network is following the preference. I think this is what the caller may be interested in, and that is separate from caring whether the ENTERPRISE network is up (which they can do by filing a separate network callback anyway).\n\nI think using a NetworkCallback here wouldn\u0027t be too hard as long as we require the app to unregister it itself. But I do think that even if the caller cares about when the network is up, it may also care about when it\u0027s safe to start an app and trust that the setting has been applied.\n\nPlease reopen if you have further questions or objections.",
       "parentUuid": "dcaba727_c3defe68",
       "range": {
         "startLine": 5095,

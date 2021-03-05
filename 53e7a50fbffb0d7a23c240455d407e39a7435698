@@ -22,6 +22,30 @@
       },
       "revId": "53e7a50fbffb0d7a23c240455d407e39a7435698",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0c17566_43a0d029",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5079,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:56Z",
+      "side": 1,
+      "message": "I don\u0027t observe this problem, and UserHandle is public API. Are you sure you don\u0027t confuse with UserInfo (which is not stable API ?)",
+      "parentUuid": "e6382900_e7946601",
+      "range": {
+        "startLine": 5079,
+        "startChar": 59,
+        "endLine": 5079,
+        "endChar": 69
+      },
+      "revId": "53e7a50fbffb0d7a23c240455d407e39a7435698",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
