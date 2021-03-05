@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4de1b537_e5d5a218",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4658,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2021-03-05T19:06:47Z",
+      "side": 1,
+      "message": "The previous getUserIds() isn\u0027t excluding dying users from my reading of the implementation. I\u0027m not sure if we should actually do so or not, so please get a review from user manager owners.",
+      "range": {
+        "startLine": 4658,
+        "startChar": 16,
+        "endLine": 4658,
+        "endChar": 39
+      },
+      "revId": "16c1f1627e199e3215b3c88a93a206cf7a881ada",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
