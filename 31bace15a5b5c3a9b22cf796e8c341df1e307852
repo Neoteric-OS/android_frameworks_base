@@ -22,6 +22,30 @@
       },
       "revId": "31bace15a5b5c3a9b22cf796e8c341df1e307852",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "587bf33e_1e57285e",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2296,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-05T02:03:26Z",
+      "side": 1,
+      "message": "Can we also put a note under TRANSPORT_WIFI referring to the STA + STA support API\u0027s added in S (those CL\u0027s don\u0027t exist in AOSP though)?\n\nSomething like:\n\n\u003e Note: On devices supporting WIFI STA concurrency (indicated via WifiManager.isStaConcurrencyForXXX, etc), there could be multiple networks with TRANSPORT_WIFI as their transport type.",
+      "parentUuid": "f2175bf7_0c6015fd",
+      "range": {
+        "startLine": 2294,
+        "startChar": 57,
+        "endLine": 2296,
+        "endChar": 0
+      },
+      "revId": "31bace15a5b5c3a9b22cf796e8c341df1e307852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
