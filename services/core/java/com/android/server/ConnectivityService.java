@@ -117,7 +117,6 @@ import android.net.NetworkProvider;
 import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
 import android.net.NetworkStack;
-import android.net.NetworkStackClient;
 import android.net.NetworkState;
 import android.net.NetworkStateSnapshot;
 import android.net.NetworkTestResultParcelable;
@@ -144,13 +143,13 @@ import android.net.VpnTransportInfo;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.NetworkEvent;
 import android.net.netlink.InetDiagMessage;
+import android.net.networkstack.ModuleNetworkStackClient;
 import android.net.resolv.aidl.DnsHealthEventParcel;
 import android.net.resolv.aidl.IDnsResolverUnsolicitedEventListener;
 import android.net.resolv.aidl.Nat64PrefixEventParcel;
 import android.net.resolv.aidl.PrivateDnsValidationEventParcel;
 import android.net.shared.PrivateDnsConfig;
 import android.net.util.MultinetworkPolicyTracker;
-import android.net.util.NetdService;
 import android.os.BatteryStatsManager;
 import android.os.Binder;
 import android.os.Build;
@@ -989,10 +988,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         /**
-         * Get a reference to the NetworkStackClient.
+         * Get a reference to the ModuleNetworkStackClient.
          */
-        public NetworkStackClient getNetworkStack() {
-            return NetworkStackClient.getInstance();
+        public ModuleNetworkStackClient getNetworkStack() {
+            return ModuleNetworkStackClient.getInstance(null);
         }
 
         /**
@@ -1041,7 +1040,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     public ConnectivityService(Context context) {
         this(context, getDnsResolver(context), new IpConnectivityLog(),
-                NetdService.getInstance(), new Dependencies());
+                INetd.Stub.asInterface((IBinder) context.getSystemService(Context.NETD_SERVICE)),
+                new Dependencies());
     }
 
     @VisibleForTesting
@@ -2730,10 +2730,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         pw.println();
-        pw.println("NetworkStackClient logs:");
-        pw.increaseIndent();
-        NetworkStackClient.getInstance().dump(pw);
-        pw.decreaseIndent();
 
         pw.println();
         pw.println("Permission Monitor:");
