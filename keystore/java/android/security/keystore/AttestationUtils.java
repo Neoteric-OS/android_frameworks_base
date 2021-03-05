@@ -27,6 +27,7 @@ import android.security.KeyStore;
 import android.security.keymaster.KeymasterArguments;
 import android.security.keymaster.KeymasterCertificateChain;
 import android.security.keymaster.KeymasterDefs;
+import android.system.keystore2.ResponseCode;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArraySet;
@@ -261,7 +262,9 @@ public abstract class AttestationUtils {
 
         // Perform attestation.
         final KeymasterCertificateChain outChain = new KeymasterCertificateChain();
-        final int errorCode = KeyStore.getInstance().attestDeviceIds(attestArgs, outChain);
+        // TODO needs actual replacement.
+        final int errorCode = ResponseCode.SYSTEM_ERROR;
+        // KeyStore.getInstance().attestDeviceIds(attestArgs, outChain);
         if (errorCode != KeyStore.NO_ERROR) {
             throw new DeviceIdAttestationException("Unable to perform attestation",
                     KeyStore.getKeyStoreException(errorCode));
