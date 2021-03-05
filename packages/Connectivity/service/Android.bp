@@ -51,25 +51,75 @@ cc_library_shared {
 
 java_library {
     name: "service-connectivity",
+    // TODO: use system_server_current and remove dependency on android_system_server_stubs_current
+    // once dependency on service-connectivity-remaining-api is removed
+    sdk_version: "core_platform",
     srcs: [
         ":connectivity-service-srcs",
+        ":net-module-utils-srcs",
+        ":services-connectivityservice-shared-srcs",
     ],
     installable: true,
     jarjar_rules: "jarjar-rules.txt",
     libs: [
+        "service-connectivity-remaining-api",
+        "android_system_server_stubs_current",
         "android.net.ipsec.ike",
-        "services.core",
-        "services.net",
+        "framework-annotations-lib",
+        "framework-connectivity.impl",
+        "framework-tethering.stubs.module_lib",
+        "framework-wifi.stubs.module_lib",
         "unsupportedappusage",
+        "PlatformProperties",
     ],
     static_libs: [
+        "dnsresolver_aidl_interface-V7-java",
         "modules-utils-os",
         "net-utils-device-common",
         "net-utils-framework-common",
         "netd-client",
+        "netlink-client",
+        "networkstack-client",
     ],
     apex_available: [
         "//apex_available:platform",
         "com.android.tethering",
     ],
+}
+
+// Subset of the framework private API that is still used by service-connectivity and being
+// migrated. Used to restrict what private APIs are used so APIs can be addressed without
+// regression.
+java_library {
+    name: "service-connectivity-remaining-api",
+    sdk_version: "core_platform",
+    static_libs: [
+        "service-connectivity-remaining-api-renamed",
+    ],
+    jarjar_rules: "jarjar-remove.txt",
+    visibility: ["//visibility:private"],
+}
+
+// Remaining dependencies where unneeded classes are renamed to the remove.X package
+java_library {
+    name: "service-connectivity-remaining-api-renamed",
+    sdk_version: "core_platform",
+    static_libs: [
+        "framework",
+        "services.core",
+    ],
+    jarjar_rules: ":service-connectivity-api-keeps-jarjar-rules",
+    visibility: ["//visibility:private"],
+}
+
+// Combined jarjar keep rules from different files, so that the APIs can be addressed independently
+// without merge conflicts when removing them from the keep rules.
+// This renames classes that should not be used (not in the keep rules) to remove.*, so that they
+// can be zapped in a second jarjar pass.
+genrule {
+    name: "service-connectivity-api-keeps-jarjar-rules",
+    srcs: ["api-keep-rules/*.txt", "jarjar-filter.txt"],
+    out: ["service-connectivity-api-keeps-combined"],
+    cmd: "cat $(in) > $(out)",
+    visibility: ["//visibility:private"],
 }

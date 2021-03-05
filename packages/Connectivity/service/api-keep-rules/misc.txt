@@ -1,0 +1,21 @@
+
+# For VPN_UID, NETWORK_STACK_UID
+rule android.os.Process** @0
+
+# Used in NetworkDiagnostics
+rule com.android.internal.util.TrafficStatsConstants @0
+
+# Used in NetworkNotificationManager
+rule com.android.internal.messages.nano.SystemMessageProto** @0
+
+# For ACTION_CLEAR_DNS_CACHE
+rule android.content.Intent @0
+
+# For TYPE_VPN_*
+rule android.net.VpnManager @0
+
+# For TUN_INTF_NETID_RANGE
+rule com.android.server.IpSecService @0
+
+# Pulled as transitive dependency by registerContentObserver when not building against stubs
+rule android.content.ContentInterface @0

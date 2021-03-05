@@ -1,0 +1,1 @@
+rule android.app.PendingIntent* @0

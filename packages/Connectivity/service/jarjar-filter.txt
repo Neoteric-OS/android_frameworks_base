@@ -1,0 +1,7 @@
+# Rule to be appended after other rename rules, so remaining classes are put in the remove package.
+# This does not use the "keep" rule as it is too broad when keeping dependencies.
+# Classes in the "remove" package will then not be found when linking against the output jar.
+# "*.**" does not work (crashes javac), specify each package instead
+rule android.** remove.@0
+rule com.** remove.@0
+rule org.** remove.@0

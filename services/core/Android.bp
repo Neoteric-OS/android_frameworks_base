@@ -197,6 +197,7 @@ filegroup {
     srcs: [
         "java/com/android/server/ConnectivityService.java",
         "java/com/android/server/ConnectivityServiceInitializer.java",
+        "java/com/android/server/NetIdManager.java",
         "java/com/android/server/TestNetworkService.java",
         "java/com/android/server/connectivity/AutodestructReference.java",
         "java/com/android/server/connectivity/ConnectivityConstants.java",

@@ -1,0 +1,6 @@
+rule android.util.LocalLog @0
+rule android.util.LocalLog$ReadOnlyLocalLog @0
+rule android.util.IndentingPrintWriter @0
+rule com.android.internal.util.IndentingPrintWriter @0
+rule com.android.internal.util.MessageUtils @0
+rule com.android.internal.util.WakeupMessage @0

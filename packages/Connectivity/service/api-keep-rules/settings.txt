@@ -1,0 +1,1 @@
+rule android.provider.Settings** @0
