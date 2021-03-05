@@ -1,0 +1,4 @@
+# After removing the classes from the jar, restore references to them (for example as method
+# parameters) to use the original class package
+zap remove.**
+rule remove.** @1

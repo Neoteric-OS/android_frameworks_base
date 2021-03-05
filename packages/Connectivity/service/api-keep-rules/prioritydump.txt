@@ -1,0 +1,4 @@
+rule com.android.server.utils.PriorityDump @0
+rule com.android.server.utils.PriorityDump$PriorityDumper @0
+rule com.android.server.SystemService @0
+rule android.os.IServiceManager** @0

@@ -1,0 +1,8 @@
+rule com.android.internal.app.IBatteryStats** @0
+rule com.android.internal.os.BatteryStatsImpl* @0
+rule com.android.server.am.BatteryStatsService* @0
+rule android.os.BatteryStats @0
+
+# BatteryStatsService.getService() gets inlined and pulls additional dependencies
+rule android.os.PowerManagerInternal* @0
+rule com.android.server.Watchdog* @0

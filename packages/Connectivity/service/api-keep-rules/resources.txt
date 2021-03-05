@@ -1,0 +1,2 @@
+rule com.android.internal.R  @0
+rule com.android.internal.R$**  @0

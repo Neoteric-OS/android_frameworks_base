@@ -1,0 +1,4 @@
+rule android.content.pm.PackageManagerInternal @0
+rule android.content.pm.PackageManagerInternal$PackageListObserver @0
+rule com.android.server.pm.PackageList @0
+rule android.os.ServiceManager @0

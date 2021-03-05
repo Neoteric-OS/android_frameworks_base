@@ -1,0 +1,1 @@
+rule android.net.StringNetworkSpecifier @0

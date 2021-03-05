@@ -1,0 +1,5 @@
+rule android.net.INetworkPolicyListener* @0
+rule android.net.NetworkPolicyManager @0
+rule android.net.NetworkPolicyManager$Listener @0
+rule com.android.server.net.NetworkPolicyManagerInternal @0
+rule com.android.server.LocalServices @0
