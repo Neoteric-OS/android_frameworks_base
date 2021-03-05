@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c6be18e_5572ca5a",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 13780,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2021-03-05T21:19:34Z",
+      "side": 1,
+      "message": "Agrh. This is wrong :( I should have fixed the names when cherry-picking from sc-dev...",
+      "range": {
+        "startLine": 13779,
+        "startChar": 16,
+        "endLine": 13780,
+        "endChar": 52
+      },
+      "revId": "e6f6540181311f16d8880ebd5848ccb213268ef4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
