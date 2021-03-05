@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4006674d_50c9a83f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12cd074e_c69606db",
+      "range": {
+        "startLine": 1427,
+        "startChar": 12,
+        "endLine": 1427,
+        "endChar": 26
+      },
+      "revId": "d9965ec45ff4c6828345b6d152b60ef3df9e6aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5751b16f_e3a30a6a",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-05T00:29:11Z",
       "side": 1,
       "message": "I think you could simplify as follows:\n\n    UidRange range \u003d UidRange.createForUser(handle);\n    return new UidRangeParcel[] { new UidRangeParcel(range.start, range.stop); };",
+      "range": {
+        "startLine": 10685,
+        "startChar": 29,
+        "endLine": 10685,
+        "endChar": 40
+      },
+      "revId": "d9965ec45ff4c6828345b6d152b60ef3df9e6aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dc68bca_98a92ea6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 10685,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5751b16f_e3a30a6a",
       "range": {
         "startLine": 10685,
         "startChar": 29,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea7454d1_1c5dc10c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 10713,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91fa8927_8659b1ed",
+      "range": {
+        "startLine": 10713,
+        "startChar": 52,
+        "endLine": 10713,
+        "endChar": 53
+      },
+      "revId": "d9965ec45ff4c6828345b6d152b60ef3df9e6aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6027fced_6d8cff65",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-03-05T00:29:11Z",
       "side": 1,
       "message": "PER_USER_RANGE * testUserId  + 103",
+      "range": {
+        "startLine": 10733,
+        "startChar": 51,
+        "endLine": 10733,
+        "endChar": 57
+      },
+      "revId": "d9965ec45ff4c6828345b6d152b60ef3df9e6aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22e6f6d1_89a8733c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 10733,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:43Z",
+      "side": 1,
+      "message": "I\u0027m a bit hesitant to use PER_USER_RANGE pervasively ; instead I defined at the top a constant that I get from UidRange.createForUser and used that.",
+      "parentUuid": "6027fced_6d8cff65",
       "range": {
         "startLine": 10733,
         "startChar": 51,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5420fcaa_d8402d77",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 10759,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e17441dc_64dcce43",
+      "range": {
+        "startLine": 10759,
+        "startChar": 34,
+        "endLine": 10759,
+        "endChar": 39
+      },
+      "revId": "d9965ec45ff4c6828345b6d152b60ef3df9e6aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b913859a_f9e83458",
@@ -129,6 +249,54 @@
       "writtenOn": "2021-03-05T00:29:11Z",
       "side": 1,
       "message": "Are the ranges removed from mCellNetworkAgent as well? Might want to assert that here.\n\nAsserting ordering (e.g., using inOrder) might make sense here too, since plain verify() doesn\u0027t check ordering at all, and this test is asserting things as it goes along.",
+      "range": {
+        "startLine": 10769,
+        "startChar": 36,
+        "endLine": 10769,
+        "endChar": 55
+      },
+      "revId": "d9965ec45ff4c6828345b6d152b60ef3df9e6aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0d1cbae_5f167f82",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 10769,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:43Z",
+      "side": 1,
+      "message": "Good call.\n\nFor the enterprise use case I don\u0027t think it matters really in what order these two calls happen though, because there are only transitions from the default network to the enterprise network and the other way around. If we had more transitions than this, then we\u0027d need to make sure the new ranges are added before the old ones are removed, I\u0027m not 100% sure the code guarantees this today in fact – but the test does pass with inOrder testing for add first then remove.",
+      "parentUuid": "b913859a_f9e83458",
+      "range": {
+        "startLine": 10769,
+        "startChar": 36,
+        "endLine": 10769,
+        "endChar": 55
+      },
+      "revId": "d9965ec45ff4c6828345b6d152b60ef3df9e6aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6491617b_addae5b9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 10769,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b913859a_f9e83458",
       "range": {
         "startLine": 10769,
         "startChar": 36,
@@ -162,6 +330,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bf2b97d_190e0bab",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 10773,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0fc16e2_134cc0fa",
+      "range": {
+        "startLine": 10773,
+        "startChar": 8,
+        "endLine": 10773,
+        "endChar": 60
+      },
+      "revId": "d9965ec45ff4c6828345b6d152b60ef3df9e6aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3e875c76_0fb7fa7a",
@@ -179,6 +371,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1bd6b3a_63f525b1",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 10779,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e875c76_0fb7fa7a",
+      "revId": "d9965ec45ff4c6828345b6d152b60ef3df9e6aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "401bf4d5_b95953ee",
@@ -192,6 +402,30 @@
       "writtenOn": "2021-03-05T00:29:11Z",
       "side": 1,
       "message": "s/sliced //",
+      "range": {
+        "startLine": 10780,
+        "startChar": 53,
+        "endLine": 10780,
+        "endChar": 59
+      },
+      "revId": "d9965ec45ff4c6828345b6d152b60ef3df9e6aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9e8f31c_43a72e70",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 10780,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "401bf4d5_b95953ee",
       "range": {
         "startLine": 10780,
         "startChar": 53,
@@ -225,6 +459,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9292dac_7265c66f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 10787,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:43Z",
+      "side": 1,
+      "message": "No, there shouldn\u0027t be such an event. networkDestroy should remove the rules associated with the network when it is destroyed. I checked with Ken that this is the case.",
+      "parentUuid": "eb8a274d_10408650",
+      "range": {
+        "startLine": 10787,
+        "startChar": 36,
+        "endLine": 10787,
+        "endChar": 50
+      },
+      "revId": "d9965ec45ff4c6828345b6d152b60ef3df9e6aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68fe9956_587f71bf",
@@ -248,6 +506,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "075cf062_b3109cea",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 10829,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:43Z",
+      "side": 1,
+      "message": "Yes. I thought the same thing myself ; it\u0027s typically very hard to factorize these tests that exhibit the combination of multiple locals and having to do things in different orders.\n\nI didn\u0027t try super hard to factorize. Made a more earnest attempt ; I think it would be a bit difficult to factorize more than PS9.",
+      "parentUuid": "68fe9956_587f71bf",
+      "range": {
+        "startLine": 10806,
+        "startChar": 0,
+        "endLine": 10829,
+        "endChar": 33
+      },
+      "revId": "d9965ec45ff4c6828345b6d152b60ef3df9e6aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f930aff8_50396071",
@@ -261,6 +543,30 @@
       "writtenOn": "2021-03-05T00:29:11Z",
       "side": 1,
       "message": "Why VALIDATED? USER_PREFERENCE_ENTERPRISE + 1 doesn\u0027t really have any current meaning, does it?",
+      "range": {
+        "startLine": 11098,
+        "startChar": 71,
+        "endLine": 11098,
+        "endChar": 80
+      },
+      "revId": "d9965ec45ff4c6828345b6d152b60ef3df9e6aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "525a4604_f7e41d03",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11098,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:43Z",
+      "side": 1,
+      "message": "Ah, that\u0027s a leftover from the time where I had the API take a capability and I was checking with some different random capability. Done.",
+      "parentUuid": "f930aff8_50396071",
       "range": {
         "startLine": 11098,
         "startChar": 71,

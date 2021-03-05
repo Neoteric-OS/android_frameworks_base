@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f63ad8b6_59a4c528",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-05T13:23:43Z",
+      "side": 1,
+      "message": "Note to reviewers : while there are no big logic differences, the diff between PS7 and PS9 is huge and it may be difficult to tell how I addressed the comments. You may want to instead review the diff between PS7 and PS8 (which addresses the comments), then the diff between PS8 and PS9 (which factorizes the code).",
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
