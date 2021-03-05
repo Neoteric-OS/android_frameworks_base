@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dc76f0a_8a07f457",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4657,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2021-03-05T18:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2f62caf_db80862e",
+      "range": {
+        "startLine": 4657,
+        "startChar": 22,
+        "endLine": 4657,
+        "endChar": 24
+      },
+      "revId": "6351358ac09945768664d1f65c00e321b94bcfd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14ccaa51_70bae62e",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-05T17:38:28Z",
       "side": 1,
       "message": "It seems we do exclude precreated users in UserManagerService.getUserIds() looking at UserManagerService.updateUserIds().",
+      "range": {
+        "startLine": 4658,
+        "startChar": 41,
+        "endLine": 4658,
+        "endChar": 46
+      },
+      "revId": "6351358ac09945768664d1f65c00e321b94bcfd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d3b2b35_98af79b9",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4658,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2021-03-05T18:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14ccaa51_70bae62e",
       "range": {
         "startLine": 4658,
         "startChar": 41,
