@@ -640,14 +640,14 @@ public class NetworkStatsManager {
     }
 
     /**
-     *  Notify {@code NetworkStatsService} about network status changed.
+     * Notify {@code NetworkStatsService} about network status changed.
      *
-     *  Notifies NetworkStatsService of network state changes for data usage accounting purposes.
+     * Notifies NetworkStatsService of network state changes for data usage accounting purposes.
      *
-     *  To avoid races that attribute data usage to wrong network, such as new network with
-     *  the same interface after SIM hot-swap, this function will not return until
-     *  {@code NetworkStatsService} finishes its work of retrieving traffic statistics from
-     *  all data sources.
+     * To avoid races that attribute data usage to wrong network, such as new network with
+     * the same interface after SIM hot-swap, this function will not return until
+     * {@code NetworkStatsService} finishes its work of retrieving traffic statistics from
+     * all data sources.
      *
      * @param defaultNetworks the list of all networks that could be used by network traffic that
      *                        does not explicitly select a network.
@@ -674,8 +674,7 @@ public class NetworkStatsManager {
             Objects.requireNonNull(defaultNetworks);
             Objects.requireNonNull(networkStateSnapshots);
             Objects.requireNonNull(underlyingNetworkInfos);
-            // TODO: Change internal namings after the name is decided.
-            mService.forceUpdateIfaces(defaultNetworks.toArray(new Network[0]),
+            mService.notifyNetworkStatus(defaultNetworks.toArray(new Network[0]),
                     networkStateSnapshots.toArray(new NetworkStateSnapshot[0]), activeIface,
                     underlyingNetworkInfos.toArray(new UnderlyingNetworkInfo[0]));
         } catch (RemoteException e) {
