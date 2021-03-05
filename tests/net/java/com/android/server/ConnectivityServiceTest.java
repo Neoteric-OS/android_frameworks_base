@@ -10675,7 +10675,7 @@ public class ConnectivityServiceTest {
                 cellCb);
         mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR, cellLp, cellNcTemplate);
         mCellNetworkAgent.connect(true);
-        cellCb.expectAvailableCallbacksUnvalidated(mCellNetworkAgent);
+        cellCb.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
         List<NetworkStateSnapshot> snapshots = mCm.getAllNetworkStateSnapshot();
         assertLength(1, snapshots);
 
@@ -10702,24 +10702,29 @@ public class ConnectivityServiceTest {
         assertLength(2, snapshots);
         assertContainsAll(snapshots, cellSnapshot, wifiSnapshot);
 
-        // Set cellular as suspended, verify the snapshots will not contain suspended networks.
-        // TODO: Consider include SUSPENDED networks, which should be considered as
-        //  temporary shortage of connectivity of a connected network.
+        // Set cellular as suspended, verify the snapshots contain suspended celluler networks.
         mCellNetworkAgent.suspend();
-        waitForIdle();
+        cellCb.expectSuspendedCallbacks(mCellNetworkAgent);
+        final NetworkCapabilities cellNcSuspended =
+                mCm.getNetworkCapabilities(mCellNetworkAgent.getNetwork());
+        assertFalse(cellNcSuspended.hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
+        final NetworkStateSnapshot cellSnapshotSuspended = new NetworkStateSnapshot(
+                mCellNetworkAgent.getNetwork(), cellNcSuspended, cellLp,
+                null, ConnectivityManager.TYPE_MOBILE);
         snapshots = mCm.getAllNetworkStateSnapshot();
-        assertLength(1, snapshots);
-        assertEquals(wifiSnapshot, snapshots.get(0));
+        assertLength(2, snapshots);
+        assertContainsAll(snapshots, cellSnapshotSuspended, wifiSnapshot);
 
-        // Disconnect wifi, verify the snapshots contain nothing.
+        // Disconnect wifi, verify the snapshots only contain cellular.
         mWiFiNetworkAgent.disconnect();
         waitForIdle();
         snapshots = mCm.getAllNetworkStateSnapshot();
         assertEquals(mCellNetworkAgent.getNetwork(), mCm.getActiveNetwork());
-        assertLength(0, snapshots);
+        assertLength(1, snapshots);
+        assertEquals(cellSnapshotSuspended, snapshots.get(0));
 
         mCellNetworkAgent.resume();
-        waitForIdle();
+        cellCb.expectResumedCallbacks(mCellNetworkAgent);
         snapshots = mCm.getAllNetworkStateSnapshot();
         assertLength(1, snapshots);
         assertEquals(cellSnapshot, snapshots.get(0));
