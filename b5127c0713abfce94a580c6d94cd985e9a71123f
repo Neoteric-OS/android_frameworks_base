@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c7f775e_dd58d620",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-05T06:40:27Z",
+      "side": 1,
+      "message": "LGTM since this is a partial cherry-pick of ag/13526199 to solve the incoming merge conflict.",
+      "revId": "b5127c0713abfce94a580c6d94cd985e9a71123f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
