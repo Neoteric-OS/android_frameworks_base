@@ -46,6 +46,30 @@
       },
       "revId": "31bace15a5b5c3a9b22cf796e8c341df1e307852",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a83a2c92_4be4597b",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2296,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2021-03-05T03:23:27Z",
+      "side": 1,
+      "message": "But then at that point do we also need to say it for TRANSPORT_CELLULAR (there could be dual SIM) or TRANSPORT_ETHERNET (there could be multiple ethernet cables plugged in).",
+      "parentUuid": "587bf33e_1e57285e",
+      "range": {
+        "startLine": 2294,
+        "startChar": 57,
+        "endLine": 2296,
+        "endChar": 0
+      },
+      "revId": "31bace15a5b5c3a9b22cf796e8c341df1e307852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
