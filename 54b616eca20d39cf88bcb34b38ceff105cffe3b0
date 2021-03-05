@@ -170,6 +170,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4083be5d_7694c47c",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4587,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-03-05T19:35:26Z",
+      "side": 1,
+      "message": "If the issue is Mainlining, then the new patch isn\u0027t really going to help. UserInfo is not, and will not be, @SystemApi, so you still won\u0027t be able to do this.",
+      "parentUuid": "1241d6b6_e8f4b0fa",
+      "range": {
+        "startLine": 4587,
+        "startChar": 12,
+        "endLine": 4587,
+        "endChar": 20
+      },
+      "revId": "54b616eca20d39cf88bcb34b38ceff105cffe3b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "278f3b6e_584da803",
         "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
         "patchSetId": 1
