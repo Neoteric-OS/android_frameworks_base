@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2175bf7_0c6015fd",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2296,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2021-03-05T01:26:04Z",
+      "side": 1,
+      "message": "Please let me know if this is the right place to put this, or if there\u0027s a better place elsewhere.",
+      "range": {
+        "startLine": 2294,
+        "startChar": 57,
+        "endLine": 2296,
+        "endChar": 0
+      },
+      "revId": "31bace15a5b5c3a9b22cf796e8c341df1e307852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
