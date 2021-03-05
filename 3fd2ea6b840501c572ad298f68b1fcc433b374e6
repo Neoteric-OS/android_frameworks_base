@@ -51,6 +51,24 @@
       "parentUuid": "c6179051_84f759e4",
       "revId": "3fd2ea6b840501c572ad298f68b1fcc433b374e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7054682f_3b0a95bc",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6948,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2021-03-05T07:24:33Z",
+      "side": 1,
+      "message": "Thanks for the information.\nI think https://android.googlesource.com/platform/frameworks/base/+/275aba2deb2a9b7069e6ea66327dd6ca7854d6aa%5E%21/ has also resolved the case.\n\nWithout calling handleCompleteDeferredRemoval in the middle of force-stop, the relationship of activity-task won\u0027t be broken at that path.",
+      "parentUuid": "007c9c57_f5ed3a32",
+      "revId": "3fd2ea6b840501c572ad298f68b1fcc433b374e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
