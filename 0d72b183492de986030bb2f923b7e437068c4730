@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a7e74d1_51926594",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-06T00:40:01Z",
+      "side": 1,
+      "message": "Carry-forward +2 from lorenzo since this is pure rebase.",
+      "revId": "0d72b183492de986030bb2f923b7e437068c4730",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
