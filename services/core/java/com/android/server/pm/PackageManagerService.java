@@ -2916,16 +2916,16 @@ public class PackageManagerService extends IPackageManager.Stub
                     + ((SystemClock.uptimeMillis()-startTime)/1000f)
                     + " seconds");
 
-            // If the platform SDK has changed since the last time we booted,
+            // If the build fingerprint has changed since the last time we booted,
             // we need to re-grant app permission to catch any new ones that
             // appear.  This is really a hack, and means that apps can in some
             // cases get permissions that the user didn't initially explicitly
             // allow...  it would be nice to have some better way to handle
             // this situation.
             int updateFlags = UPDATE_PERMISSIONS_ALL;
-            if (ver.sdkVersion != mSdkVersion) {
-                Slog.i(TAG, "Platform changed from " + ver.sdkVersion + " to "
-                        + mSdkVersion + "; regranting permissions for internal storage");
+            if (mIsUpgrade) {
+                Slog.i(TAG, "Build fingerprint changed from " + ver.fingerprint + " to "
+                        + Build.FINGERPRINT + "; regranting permissions for internal storage");
                 updateFlags |= UPDATE_PERMISSIONS_REPLACE_PKG | UPDATE_PERMISSIONS_REPLACE_ALL;
             }
             updatePermissionsLPw(null, null, StorageManager.UUID_PRIVATE_INTERNAL, updateFlags);
@@ -23602,9 +23602,9 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
                     : StorageManager.UUID_PRIVATE_INTERNAL;
 
             int updateFlags = UPDATE_PERMISSIONS_ALL;
-            if (ver.sdkVersion != mSdkVersion) {
-                logCriticalInfo(Log.INFO, "Platform changed from " + ver.sdkVersion + " to "
-                        + mSdkVersion + "; regranting permissions for external");
+            if (!Build.FINGERPRINT.equals(ver.fingerprint)) {
+                logCriticalInfo(Log.INFO, "Build fingerprint changed from " + ver.fingerprint
+                        + " to " + Build.FINGERPRINT + "; regranting permissions for external");
                 updateFlags |= UPDATE_PERMISSIONS_REPLACE_PKG | UPDATE_PERMISSIONS_REPLACE_ALL;
             }
             updatePermissionsLPw(null, null, volumeUuid, updateFlags);
@@ -23776,9 +23776,9 @@ Slog.v(TAG, ":: stepped forward, applying functor at tag " + parser.getName());
 
         synchronized (mPackages) {
             int updateFlags = UPDATE_PERMISSIONS_ALL;
-            if (ver.sdkVersion != mSdkVersion) {
-                logCriticalInfo(Log.INFO, "Platform changed from " + ver.sdkVersion + " to "
-                        + mSdkVersion + "; regranting permissions for " + volumeUuid);
+            if (!Build.FINGERPRINT.equals(ver.fingerprint)) {
+                logCriticalInfo(Log.INFO, "Build fingerprint changed from " + ver.fingerprint
+                        + " to " + Build.FINGERPRINT + "; regranting permissions for " + volumeUuid);
                 updateFlags |= UPDATE_PERMISSIONS_REPLACE_PKG | UPDATE_PERMISSIONS_REPLACE_ALL;
             }
             updatePermissionsLPw(null, null, volumeUuid, updateFlags);
