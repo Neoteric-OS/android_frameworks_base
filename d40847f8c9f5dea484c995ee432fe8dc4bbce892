@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27d8e759_58ffd9ee",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-08T03:26:05Z",
+      "side": 1,
+      "message": "This is used to back LinkAddress and IpPrefix; before this change, I think the following would work:\n\nnew IpPrefix(\"[2001:db8::123]/64\")\nnew IpPrefix(\"/64\")\n\nChanging behavior for the LinkAddress and IpPrefix system API might not be OK. Maybe you could have a @Deprecated legacyParseIpAndMask method that checks for empty strings (like in libcore/ojluni/src/main/java/java/net/InetAddress.java) and strips brackets (like InetAddressUtils.parseNumericAddressNoThrowStripOptionalBrackets) and have LinkAddress and IpPrefix use that ? Also add tests for parsing the legacy format in IpPrefix / LinkAddress.\n\nIdeally you would use http://go/nonsdk/dev/compat-framework to have the LinkAddress and IpPrefix methods use the new behavior on newer target SDK, but this is a bit scary on upgrade as apps / settings may have user-provided stored addresses as strings, so it\u0027s not easy for them to check they don\u0027t have the wrong format (maybe we should deprecated the constructors and have .parse methods instead...)",
+      "range": {
+        "startLine": 231,
+        "startChar": 45,
+        "endLine": 231,
+        "endChar": 59
+      },
+      "revId": "d40847f8c9f5dea484c995ee432fe8dc4bbce892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
