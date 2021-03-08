@@ -3707,6 +3707,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     //   then it should be lingered.
     private boolean unneeded(NetworkAgentInfo nai, UnneededFor reason) {
         ensureRunningOnConnectivityServiceThread();
+
+        if (!nai.everConnected || nai.isVPN() || nai.isInactive()
+                || nai.getScore().getForceKeepupReason() != NetworkScore.DONT_FORCE_KEEPUP) {
+            return false;
+        }
+
         final int numRequests;
         switch (reason) {
             case TEARDOWN:
@@ -3720,9 +3726,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 return true;
         }
 
-        if (!nai.everConnected || nai.isVPN() || nai.isInactive() || numRequests > 0) {
-            return false;
-        }
+        if (numRequests > 0) return false;
+
         for (NetworkRequestInfo nri : mNetworkRequests.values()) {
             if (reason == UnneededFor.LINGER
                     && !nri.isMultilayerRequest()

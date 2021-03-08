@@ -19,12 +19,14 @@ package com.android.server.connectivity;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
+import static android.net.NetworkScore.DONT_FORCE_KEEPUP;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.net.NetworkAgentConfig;
 import android.net.NetworkCapabilities;
 import android.net.NetworkScore;
+import android.net.NetworkScore.ForceKeepupReason;
 
 import com.android.internal.annotations.VisibleForTesting;
 
@@ -95,9 +97,13 @@ public class FullScore {
     // Bitmask of all the policies applied to this score.
     private final long mPolicies;
 
-    FullScore(final int legacyInt, final long policies) {
+    private final int mForceKeepupReason;
+
+    FullScore(final int legacyInt, final long policies,
+            @ForceKeepupReason final int forceKeepupReason) {
         mLegacyInt = legacyInt;
         mPolicies = policies;
+        mForceKeepupReason = forceKeepupReason;
     }
 
     /**
@@ -110,7 +116,8 @@ public class FullScore {
      */
     public static FullScore fromNetworkScore(@NonNull final NetworkScore score,
             @NonNull final NetworkCapabilities caps, @NonNull final NetworkAgentConfig config) {
-        return withPolicies(score.getLegacyInt(), caps.hasCapability(NET_CAPABILITY_VALIDATED),
+        return withPolicies(score.getLegacyInt(), score.getForceKeepupReason(),
+                caps.hasCapability(NET_CAPABILITY_VALIDATED),
                 caps.hasTransport(TRANSPORT_VPN),
                 config.explicitlySelected,
                 config.acceptUnvalidated);
@@ -139,8 +146,8 @@ public class FullScore {
         final boolean everUserSelected = false;
         // Don't assume the user will accept unvalidated connectivity.
         final boolean acceptUnvalidated = false;
-        return withPolicies(score.getLegacyInt(), mayValidate, vpn, everUserSelected,
-                acceptUnvalidated);
+        return withPolicies(score.getLegacyInt(), DONT_FORCE_KEEPUP,
+                mayValidate, vpn, everUserSelected, acceptUnvalidated);
     }
 
     /**
@@ -152,13 +159,15 @@ public class FullScore {
      */
     public FullScore mixInScore(@NonNull final NetworkCapabilities caps,
             @NonNull final NetworkAgentConfig config) {
-        return withPolicies(mLegacyInt, caps.hasCapability(NET_CAPABILITY_VALIDATED),
+        return withPolicies(mLegacyInt, mForceKeepupReason,
+                caps.hasCapability(NET_CAPABILITY_VALIDATED),
                 caps.hasTransport(TRANSPORT_VPN),
                 config.explicitlySelected,
                 config.acceptUnvalidated);
     }
 
     private static FullScore withPolicies(@NonNull final int legacyInt,
+            @ForceKeepupReason final int forceKeepupReason,
             final boolean isValidated,
             final boolean isVpn,
             final boolean everUserSelected,
@@ -167,7 +176,8 @@ public class FullScore {
                 (isValidated         ? 1L << POLICY_IS_VALIDATED : 0)
                 | (isVpn             ? 1L << POLICY_IS_VPN : 0)
                 | (everUserSelected  ? 1L << POLICY_EVER_USER_SELECTED : 0)
-                | (acceptUnvalidated ? 1L << POLICY_ACCEPT_UNVALIDATED : 0));
+                | (acceptUnvalidated ? 1L << POLICY_ACCEPT_UNVALIDATED : 0),
+                forceKeepupReason);
     }
 
     /**
@@ -219,13 +229,21 @@ public class FullScore {
         return 0 != (mPolicies & (1L << policy));
     }
 
+    /**
+     * Returns the force keepup reason, or DONT_FORCE_KEEPUP.
+     */
+    public int getForceKeepupReason() {
+        return mForceKeepupReason;
+    }
+
     // Example output :
     // Score(50 ; Policies : EVER_USER_SELECTED&IS_VALIDATED)
     @Override
     public String toString() {
         final StringJoiner sj = new StringJoiner(
                 "&", // delimiter
-                "Score(" + mLegacyInt + " ; Policies : ", // prefix
+                "Score(" + mLegacyInt + " ; forceKeepup : " + mForceKeepupReason
+                        + " ; Policies : ", // prefix
                 ")"); // suffix
         for (int i = NetworkScore.MIN_AGENT_MANAGED_POLICY;
                 i <= NetworkScore.MAX_AGENT_MANAGED_POLICY; ++i) {
