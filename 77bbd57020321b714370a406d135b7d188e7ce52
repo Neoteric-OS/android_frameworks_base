@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fc655df_ae050931",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-08T02:57:56Z",
+      "side": 1,
+      "message": "Also explain why this is equivalent; I think there are differences.\nFor example, a VPN (TYPE_VPN) network could have TRANSPORT_CELLULAR | TRANSPORT_VPN, so this is not equivalent.\n\nCould you run this past Junyu ? I\u0027m suspecting that you may have to use NetworkCapabilitiesUtils.getDisplayTransport  \u003d\u003d TYPE_MOBILE instead.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "77bbd57020321b714370a406d135b7d188e7ce52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
