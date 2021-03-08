@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49da5004_e6338c2b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11011,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-08T11:24:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a25cbe63_d9d53ff3",
+      "range": {
+        "startLine": 11011,
+        "startChar": 36,
+        "endLine": 11011,
+        "endChar": 58
+      },
+      "revId": "be9308d468b6b54e7468eda69bfb5a4c23db3139",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ddc7590_d68a0d2c",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "I\u0027m not sure what you mean.\n\nWe can bring up a network in this test, but I\u0027m not sure what it brings to the table. I mean, it means we test in some other environment which may be valuable at times, but there is no limit to the combination of environments to test on. In this case, this is supposed to be completely independent of what networks are up and I see no reason to expect it might make a difference.\n\nCan you clarify your comment for me ?",
       "parentUuid": "7ddc7590_d68a0d2c",
+      "range": {
+        "startLine": 11037,
+        "startChar": 8,
+        "endLine": 11037,
+        "endChar": 13
+      },
+      "revId": "be9308d468b6b54e7468eda69bfb5a4c23db3139",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75c96b89_d0404ab2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11037,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-08T11:24:27Z",
+      "side": 1,
+      "message": "For example if we have a problematic implementation that throws the exception accordingly but the funcationly also breaks. This is not tested in this test, right?\nHowever the coverage can be extended without adding new codes if we move l.11121~11126 into testSetPreferenceForUserOnOff, right?\nFeel free to ignore if you think the idea is bad.",
+      "parentUuid": "418e99a4_3764c015",
       "range": {
         "startLine": 11037,
         "startChar": 8,

@@ -16,6 +16,236 @@
       "message": "Note to reviewers : while there are no big logic differences, the diff between PS7 and PS9 is huge and it may be difficult to tell how I addressed the comments. You may want to instead review the diff between PS7 and PS8 (which addresses the comments), then the diff between PS8 and PS9 (which factorizes the code).",
       "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e1fdfb3_07086114",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10875,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-08T11:24:27Z",
+      "side": 1,
+      "message": "Quesiton: I thought this means the routing rules on system default network will not be removed forever. But apparently I am wrong after seeing l.10891. What am I missing?",
+      "range": {
+        "startLine": 10875,
+        "startChar": 37,
+        "endLine": 10875,
+        "endChar": 65
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96a5330c_f2322520",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10924,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-08T11:24:27Z",
+      "side": 1,
+      "message": "Not sure why we want to verify this. but...sure, why not.",
+      "range": {
+        "startLine": 10924,
+        "startChar": 8,
+        "endLine": 10924,
+        "endChar": 87
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "812e2fd0_da1a537d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10938,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-08T11:24:27Z",
+      "side": 1,
+      "message": "Are we also expecting the rules will be added back for system default network, although it changes to a different one?",
+      "range": {
+        "startLine": 10938,
+        "startChar": 34,
+        "endLine": 10938,
+        "endChar": 48
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e42df704_85f6d599",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10944,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-08T11:24:27Z",
+      "side": 1,
+      "message": "What is the error says?\nno invocation at all?",
+      "range": {
+        "startLine": 10944,
+        "startChar": 8,
+        "endLine": 10944,
+        "endChar": 55
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52d40dd0_8f6057c5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10955,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-08T11:24:27Z",
+      "side": 1,
+      "message": "Question: Not sure how does this differ from testPreferenceForUserNetworkUpDown.\nIn this test, you setup callbacks, set prefs, connect work agent, and verify others dont\u0027 receive the callbacks.\nThen you disconnect work agent, verify profile callback lost while others got no callback.\nThis looks like a sub set of testPreferenceForUserNetworkUpDown to me.\nDid I miss something?",
+      "range": {
+        "startLine": 10955,
+        "startChar": 16,
+        "endLine": 10955,
+        "endChar": 58
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4ac8aea_90270a81",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10990,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-08T11:24:27Z",
+      "side": 1,
+      "message": "Not true?",
+      "range": {
+        "startLine": 10989,
+        "startChar": 77,
+        "endLine": 10990,
+        "endChar": 27
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76213251_e7c7dcd9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 11037,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-08T11:24:27Z",
+      "side": 1,
+      "message": "Why we have this here?",
+      "range": {
+        "startLine": 11037,
+        "startChar": 8,
+        "endLine": 11037,
+        "endChar": 36
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6aeda878_76aece18",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 11087,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-08T11:24:27Z",
+      "side": 1,
+      "message": "do we want to test networkRemoveUidRanges(mCellNetworkAgent)?",
+      "range": {
+        "startLine": 11087,
+        "startChar": 34,
+        "endLine": 11087,
+        "endChar": 53
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15f23b03_3fe04cbd",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 11097,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-08T11:24:27Z",
+      "side": 1,
+      "message": "Should the rules also be added for cell agent, testHandle 2?",
+      "range": {
+        "startLine": 11097,
+        "startChar": 34,
+        "endLine": 11097,
+        "endChar": 56
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96f4ad20_b1738f68",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 11151,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-08T11:24:27Z",
+      "side": 1,
+      "message": "nit: Is it better to define a MAX_USER_PREFERENCE or something?",
+      "range": {
+        "startLine": 11151,
+        "startChar": 24,
+        "endLine": 11151,
+        "endChar": 50
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
