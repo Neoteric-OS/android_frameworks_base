@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "283920d9_fb268b40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2021-03-08T20:40:35Z",
+      "side": 1,
+      "message": "nit: Maybe add description that we are deprecating the old function and exposing the separate parts of it while ReadDmaBufMapRefs stays the same and can be used instead of the obsolete function.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "9b01d979110b1e7b36ee1a9563135dbe9857d251",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
