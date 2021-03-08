@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13fe8856_d0674415",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1769651
+      },
+      "writtenOn": "2021-03-08T13:54:24Z",
+      "side": 1,
+      "message": "Hello, \n\nThis is my first patch to android. As it has been a few months since I opened this, I was wondering if I can be of any help in providing further information behind the reasons for the patch? Thanks for your time. - Rob",
+      "revId": "cec7315a62ac56e827ac94d74d71f25615655b69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
