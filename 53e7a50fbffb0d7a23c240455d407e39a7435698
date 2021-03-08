@@ -70,6 +70,30 @@
       },
       "revId": "53e7a50fbffb0d7a23c240455d407e39a7435698",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b769c03_80e18bea",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5079,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-08T10:48:07Z",
+      "side": 1,
+      "message": "I tried to repro but I can\u0027t. I managed to get other errors on the same function, but not that particular one.\n\nI don\u0027t understand why though. IIUC the code, I should get the warning : https://osscs.corp.google.com/android/platform/superproject/+/master:tools/metalava/src/main/java/com/android/tools/metalava/ApiLint.kt;l\u003d3193?q\u003dUSER_HANDLE\n\n...but I don\u0027t.\n\nOne thing that is surprising is that this is supposed to be a warning, but your log shows it as an error. Do you have any specific env that turns metalava warnings into errors ? To clarify, I also don\u0027t see a warning, but I wonder for some reason warnings might not be showing by default.\n\nIn any case, if you look at the check and the rationale, it doesn\u0027t look like it applies here – it wouldn\u0027t make a lot of sense to get a ConnectivityManager for this user and then call setNetworkPreference on it. Not to mention the current implementation of ConnectivityManager can\u0027t support this kind of usage at all. Also note the carve-out for \"ForUser\" methods (but this is supposed to be checked after the \"Manager\" class name, so I don\u0027t know what\u0027s wrong).\nSo even if this is actually a warning that for some reason I\u0027m not seeing, I think the right way to deal with this would be to annotate it with @SuppressLint anyway. If you\u0027d like, I can add the @SuppressLint annotation – it certainly wouldn\u0027t do if other people were seeing this.",
+      "parentUuid": "2d0c97da_0ccc89d1",
+      "range": {
+        "startLine": 5079,
+        "startChar": 59,
+        "endLine": 5079,
+        "endChar": 69
+      },
+      "revId": "53e7a50fbffb0d7a23c240455d407e39a7435698",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
