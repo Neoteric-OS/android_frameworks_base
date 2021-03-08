@@ -25,11 +25,16 @@ import static com.android.server.hdmi.HdmiControlService.STANDBY_SCREEN_OFF;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import android.content.Context;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.HdmiPortInfo;
 import android.hardware.hdmi.IHdmiControlCallback;
+import android.media.AudioDeviceInfo;
+import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.IPowerManager;
@@ -53,6 +58,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @SmallTest
 @Presubmit
@@ -299,6 +305,125 @@ public class HdmiCecLocalDeviceAudioSystemTest {
                 .isEqualTo(Constants.HANDLED);
         mTestLooper.dispatchAll();
         assertThat(mNativeWrapper.getOnlyResultMessage()).isEqualTo(expectedMessage);
+    }
+
+    @Test
+    public void getSupportedShortAudioDescriptor_NotSupportedCodec() throws Exception {
+        // Mock the deviceInfo object.
+        AudioDeviceInfo deviceInfo = mock(AudioDeviceInfo.class);
+        when(deviceInfo.getEncodings()).thenReturn(new int[] {AudioFormat.ENCODING_PCM_16BIT});
+        when(deviceInfo.getChannelCounts()).thenReturn(new int[] {5});
+        when(deviceInfo.getSampleRates()).thenReturn(new int[] {88});
+
+        int audioCodec = Constants.AUDIO_CODEC_MP3;
+        byte[] generatedSadArray =
+                mHdmiCecLocalDeviceAudioSystem.getSupportedShortAudioDescriptor(
+                        deviceInfo, audioCodec);
+        assertThat(generatedSadArray.length == 0).isTrue();
+    }
+
+    @Test
+    public void getSupportedShortAudioDescriptor_AudioCodec_None() throws Exception {
+        // Mock the deviceInfo object.
+        AudioDeviceInfo deviceInfo = mock(AudioDeviceInfo.class);
+        when(deviceInfo.getEncodings()).thenReturn(new int[] {AudioFormat.ENCODING_DEFAULT});
+        when(deviceInfo.getChannelCounts()).thenReturn(new int[] {2});
+        when(deviceInfo.getSampleRates()).thenReturn(new int[] {48});
+
+        int audioCodec = Constants.AUDIO_CODEC_NONE;
+        byte[] generatedSadArray =
+                mHdmiCecLocalDeviceAudioSystem.getSupportedShortAudioDescriptor(
+                        deviceInfo, audioCodec);
+        assertThat(generatedSadArray.length == 0).isTrue();
+    }
+
+    @Test
+    public void getSupportedShortAudioDescriptor_DeviceSupportsNoCodecs() throws Exception {
+        // Mock the deviceInfo object.
+        AudioDeviceInfo deviceInfo = mock(AudioDeviceInfo.class);
+        when(deviceInfo.getEncodings()).thenReturn(new int[] {});
+        when(deviceInfo.getChannelCounts()).thenReturn(new int[] {2});
+        when(deviceInfo.getSampleRates()).thenReturn(new int[] {48});
+
+        int audioCodec = Constants.AUDIO_CODEC_LPCM;
+        byte[] generatedSadArray =
+                mHdmiCecLocalDeviceAudioSystem.getSupportedShortAudioDescriptor(
+                        deviceInfo, audioCodec);
+        assertThat(generatedSadArray.length == 0).isTrue();
+    }
+
+    @Test
+    public void getSupportedShortAudioDescriptor_AudioCodec_LPCM() throws Exception {
+        // Mock the deviceInfo object.
+        AudioDeviceInfo deviceInfo = mock(AudioDeviceInfo.class);
+        when(deviceInfo.getEncodings()).thenReturn(new int[] {AudioFormat.ENCODING_PCM_16BIT});
+        when(deviceInfo.getChannelCounts()).thenReturn(new int[] {8});
+        when(deviceInfo.getSampleRates()).thenReturn(new int[] {192});
+
+        int audioCodec = Constants.AUDIO_CODEC_LPCM;
+
+        byte[] expectedSadArray = new byte[] {0x17, 0x40, 0x01};
+
+        byte[] generatedSadArray =
+                mHdmiCecLocalDeviceAudioSystem.getSupportedShortAudioDescriptor(
+                        deviceInfo, audioCodec);
+        assertThat(Arrays.equals(expectedSadArray, generatedSadArray)).isTrue();
+    }
+
+    @Test
+    public void getSupportedShortAudioDescriptor_AudioCodec_DD() throws Exception {
+        // Mock the deviceInfo object.
+        AudioDeviceInfo deviceInfo = mock(AudioDeviceInfo.class);
+        when(deviceInfo.getEncodings()).thenReturn(new int[] {AudioFormat.ENCODING_AC3});
+        when(deviceInfo.getChannelCounts()).thenReturn(new int[] {6});
+        when(deviceInfo.getSampleRates()).thenReturn(new int[] {88, 96});
+
+        int audioCodec = Constants.AUDIO_CODEC_DD;
+
+        byte[] expectedSadArray = new byte[] {0x15, 0x18, 0x0C};
+
+        byte[] generatedSadArray =
+                mHdmiCecLocalDeviceAudioSystem.getSupportedShortAudioDescriptor(
+                        deviceInfo, audioCodec);
+        assertThat(Arrays.equals(expectedSadArray, generatedSadArray)).isTrue();
+    }
+
+    @Test
+    public void getSupportedShortAudioDescriptor_AudioCodec_DDP() throws Exception {
+        // Mock the deviceInfo object.
+        AudioDeviceInfo deviceInfo = mock(AudioDeviceInfo.class);
+        when(deviceInfo.getEncodings()).thenReturn(new int[] {AudioFormat.ENCODING_E_AC3});
+        when(deviceInfo.getChannelCounts()).thenReturn(new int[] {4});
+        when(deviceInfo.getSampleRates()).thenReturn(new int[] {44, 176, 192});
+
+        int audioCodec = Constants.AUDIO_CODEC_DDP;
+
+        byte[] expectedSadArray = new byte[] {0x53, 0x62, 0x0};
+
+        byte[] generatedSadArray =
+                mHdmiCecLocalDeviceAudioSystem.getSupportedShortAudioDescriptor(
+                        deviceInfo, audioCodec);
+        assertThat(Arrays.equals(expectedSadArray, generatedSadArray)).isTrue();
+    }
+
+    @Test
+    public void getSupportedShortAudioDescriptors_AudioCodec_MPEG1_And_MPEG2() throws Exception {
+        // Mock the deviceInfo object.
+        AudioDeviceInfo deviceInfo = mock(AudioDeviceInfo.class);
+        when(deviceInfo.getEncodings())
+                .thenReturn(
+                        new int[] {AudioFormat.ENCODING_AAC_HE_V1, AudioFormat.ENCODING_AAC_HE_V2});
+        when(deviceInfo.getChannelCounts()).thenReturn(new int[] {8});
+        when(deviceInfo.getSampleRates()).thenReturn(new int[] {192});
+
+        int[] audioCodecs = new int[] {Constants.AUDIO_CODEC_MPEG1, Constants.AUDIO_CODEC_MPEG2};
+
+        byte[] expectedSadArray = new byte[] {0x1F, 0x40, 0x18, 0x2F, 0x40, 0x18};
+
+        byte[] generatedSadArray =
+                mHdmiCecLocalDeviceAudioSystem.getSupportedShortAudioDescriptors(
+                        deviceInfo, audioCodecs);
+        assertThat(Arrays.equals(expectedSadArray, generatedSadArray)).isTrue();
     }
 
     @Test
