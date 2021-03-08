@@ -91,6 +91,7 @@ import static android.net.NetworkPolicyManager.RULE_ALLOW_METERED;
 import static android.net.NetworkPolicyManager.RULE_NONE;
 import static android.net.NetworkPolicyManager.RULE_REJECT_ALL;
 import static android.net.NetworkPolicyManager.RULE_REJECT_METERED;
+import static android.net.NetworkScore.FORCE_KEEPUP_FOR_HANDOVER;
 import static android.net.OemNetworkPreferences.OEM_NETWORK_PREFERENCE_OEM_PAID;
 import static android.net.OemNetworkPreferences.OEM_NETWORK_PREFERENCE_OEM_PAID_NO_FALLBACK;
 import static android.net.OemNetworkPreferences.OEM_NETWORK_PREFERENCE_OEM_PAID_ONLY;
@@ -9671,6 +9672,66 @@ public class ConnectivityServiceTest {
                             mContext.getPackageName(), getAttributionTag())
             );
         }
+    }
+
+    @Test
+    public void testForceKeeup() throws Exception {
+        setAlwaysOnNetworks(false);
+        registerDefaultNetworkCallbacks();
+        final TestNetworkCallback allNetworksCb = new TestNetworkCallback();
+        final NetworkRequest allNetworksRequest = new NetworkRequest.Builder().clearCapabilities()
+                .build();
+        mCm.registerNetworkCallback(allNetworksRequest, allNetworksCb);
+
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true /* validated */);
+
+        mDefaultNetworkCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+        allNetworksCb.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(true /* validated */);
+
+        mDefaultNetworkCallback.expectAvailableDoubleValidatedCallbacks(mWiFiNetworkAgent);
+        // While the default callback doesn't see the network before it's validated, the listen
+        // sees the network come up and validate later
+        allNetworksCb.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        allNetworksCb.expectCallback(CallbackEntry.LOSING, mCellNetworkAgent);
+        allNetworksCb.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, mWiFiNetworkAgent);
+        allNetworksCb.expectCallback(CallbackEntry.LOST, mCellNetworkAgent,
+                TEST_LINGER_DELAY_MS * 2);
+
+        // The cell network has disconnected (see LOST above) because it was outscored and
+        // had no requests (see setAlwaysOnNetworks(false) above)
+
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        final NetworkScore score = new NetworkScore.Builder().setLegacyInt(30).build();
+        mCellNetworkAgent.setScore(score);
+        mCellNetworkAgent.connect(false /* validated */);
+
+        // The cell network gets torn down right away.
+        allNetworksCb.expectAvailableCallbacksUnvalidated(mCellNetworkAgent);
+        allNetworksCb.expectCallback(CallbackEntry.LOST, mCellNetworkAgent,
+                TEST_NASCENT_DELAY_MS * 2);
+        allNetworksCb.assertNoCallback();
+
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        final NetworkScore scoreKeepup = new NetworkScore.Builder().setLegacyInt(30)
+                .setForceKeepupReason(FORCE_KEEPUP_FOR_HANDOVER).build();
+        mCellNetworkAgent.setScore(scoreKeepup);
+        mCellNetworkAgent.connect(true /* validated */);
+
+        allNetworksCb.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+        mDefaultNetworkCallback.assertNoCallback();
+
+        mWiFiNetworkAgent.disconnect();
+
+        allNetworksCb.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
+        mDefaultNetworkCallback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
+        mDefaultNetworkCallback.expectAvailableCallbacksValidated(mCellNetworkAgent);
+
+        mCm.unregisterNetworkCallback(allNetworksCb);
+        // mDefaultNetworkCallback will be unregistered by tearDown()
     }
 
     private class QosCallbackMockHelper {

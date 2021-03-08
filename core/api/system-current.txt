@@ -6072,15 +6072,19 @@ package android.net {
 
   public final class NetworkScore implements android.os.Parcelable {
     method public int describeContents();
+    method public int getForceKeepupReason();
     method public int getLegacyInt();
     method public boolean hasPolicy(int);
     method public void writeToParcel(@NonNull android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkScore> CREATOR;
+    field public static final int DONT_FORCE_KEEPUP = 0; // 0x0
+    field public static final int FORCE_KEEPUP_FOR_HANDOVER = 1; // 0x1
   }
 
   public static final class NetworkScore.Builder {
     ctor public NetworkScore.Builder();
     method @NonNull public android.net.NetworkScore build();
+    method @NonNull public android.net.NetworkScore.Builder setForceKeepupReason(int);
     method @NonNull public android.net.NetworkScore.Builder setLegacyInt(int);
   }
 
