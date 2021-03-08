@@ -69,6 +69,24 @@
       "parentUuid": "007c9c57_f5ed3a32",
       "revId": "3fd2ea6b840501c572ad298f68b1fcc433b374e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14f938ce_2cfc3229",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6948,
+      "author": {
+        "id": 1862610
+      },
+      "writtenOn": "2021-03-08T02:54:37Z",
+      "side": 1,
+      "message": "I see, thanks for reply!",
+      "parentUuid": "7054682f_3b0a95bc",
+      "revId": "3fd2ea6b840501c572ad298f68b1fcc433b374e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
