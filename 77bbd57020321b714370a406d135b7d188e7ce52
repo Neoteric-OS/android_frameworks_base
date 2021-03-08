@@ -22,6 +22,30 @@
       },
       "revId": "77bbd57020321b714370a406d135b7d188e7ce52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f48d9b4_c291a14f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-08T07:38:27Z",
+      "side": 1,
+      "message": "Right, I think this will change output of getMobileIfaces() and hence breaks the TrafficStats#getMobile{Tx|Rx}{Packets|Bytes} APIs when VPN is active, but not 100% sure. Chiachang can you clarify?\ngetDisplayTransport SGTM.",
+      "parentUuid": "1fc655df_ae050931",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "77bbd57020321b714370a406d135b7d188e7ce52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
