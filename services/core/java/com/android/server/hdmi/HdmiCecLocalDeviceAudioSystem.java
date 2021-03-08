@@ -755,37 +755,162 @@ public class HdmiCecLocalDeviceAudioSystem extends HdmiCecLocalDeviceSource {
     @Nullable
     private byte[] getSupportedShortAudioDescriptor(
             AudioDeviceInfo deviceInfo, @AudioCodec int audioFormatCode) {
-        switch (audioFormatCode) {
-            case Constants.AUDIO_CODEC_NONE: {
-                return null;
-            }
-            case Constants.AUDIO_CODEC_LPCM: {
-                return getLpcmShortAudioDescriptor(deviceInfo);
-            }
-            // TODO(b/80297701): implement the rest of the codecs
-            case Constants.AUDIO_CODEC_DD:
-            case Constants.AUDIO_CODEC_MPEG1:
-            case Constants.AUDIO_CODEC_MP3:
-            case Constants.AUDIO_CODEC_MPEG2:
-            case Constants.AUDIO_CODEC_AAC:
-            case Constants.AUDIO_CODEC_DTS:
-            case Constants.AUDIO_CODEC_ATRAC:
-            case Constants.AUDIO_CODEC_ONEBITAUDIO:
-            case Constants.AUDIO_CODEC_DDP:
-            case Constants.AUDIO_CODEC_DTSHD:
-            case Constants.AUDIO_CODEC_TRUEHD:
-            case Constants.AUDIO_CODEC_DST:
-            case Constants.AUDIO_CODEC_WMAPRO:
-            default: {
-                return null;
+        byte[] shortAudioDescriptor = new byte[3];
+        HashMap<String, int> audioCodecsMap = mapAudioCodecCodecsWithAudioFormatCodecs();
+
+        // Get the list of supported audio format codecs.
+        int[] supportedCodecs = deviceInfo.getEncodings();
+        for (int supportedCodec : supportedCodecs) {
+            if (audioCodecsMap.get(String.valueOf(audioFormatCode)) == supportedCodec) {
+                // Intialise the first two bytes of short audio descriptor.
+                shortAudioDescriptor[0] =
+                        getFirstByteOfShortAudioDescriptor(deviceInfo, audioFormatCode);
+                shortAudioDescriptor[1] = getSecondByteOfShortAudioDescriptor(deviceInfo);
+                switch (audioFormatCode) {
+                    case Constants.AUDIO_CODEC_NONE: {
+                        return null;
+                    }
+                    case Constants.AUDIO_CODEC_LPCM: {
+                        // Here we are assuming that LPCM codec supports 24, 20 and 16 bit
+                        // rates.
+                        shortAudioDescriptor[2] = (byte) 0x07;
+                        return shortAudioDescriptor;
+                    }
+                    case Constants.AUDIO_CODEC_DD:
+                    case Constants.AUDIO_CODEC_MPEG1:
+                    case Constants.AUDIO_CODEC_MP3:
+                    case Constants.AUDIO_CODEC_MPEG2:
+                    case Constants.AUDIO_CODEC_AAC:
+                    case Constants.AUDIO_CODEC_DTS:
+                    case Constants.AUDIO_CODEC_ATRAC: {
+                        shortAudioDescriptor[2] = getThirdSadByteForCodecs2Through8(deviceInfo);
+                        return shortAudioDescriptor;
+                    }
+                    case Constants.AUDIO_CODEC_ONEBITAUDIO:
+                    case Constants.AUDIO_CODEC_DDP:
+                    case Constants.AUDIO_CODEC_DTSHD:
+                    case Constants.AUDIO_CODEC_TRUEHD:
+                    case Constants.AUDIO_CODEC_DST:
+                    case Constants.AUDIO_CODEC_WMAPRO: {
+                        // Default value is 0x0 unless defined by Audio Codec Vendor.
+                        shortAudioDescriptor[2] = (byte) 0x00;
+                        return shortAudioDescriptor;
+                    }
+                    default: {
+                        return null;
+                    }
+                }
             }
         }
+        return null;
     }
 
-    @Nullable
-    private byte[] getLpcmShortAudioDescriptor(AudioDeviceInfo deviceInfo) {
-        // TODO(b/80297701): implement
-        return null;
+    private HashMap<String, int> mapAudioCodecCodecsWithAudioFormatCodecs() {
+        // Mapping the values of @AudioCodec codecs with @AudioFormat codecs.
+        HashMap<String, int> audioCodecsMap = new HashMap<String, int>();
+        audioCodecsMap.put(
+                String.valueOf(Constants.AUDIO_CODEC_NONE), AudioFormat.ENCODING_DEFAULT);
+        audioCodecsMap.put(
+                String.valueOf(Constants.AUDIO_CODEC_LPCM), AudioFormat.ENCODING_PCM_16BIT);
+        audioCodecsMap.put(String.valueOf(Constants.AUDIO_CODEC_DD), AudioFormat.ENCODING_AC3);
+        audioCodecsMap.put(
+                String.valueOf(Constants.AUDIO_CODEC_MPEG1), AudioFormat.ENCODING_AAC_HE_V1);
+        audioCodecsMap.put(
+                String.valueOf(Constants.AUDIO_CODEC_MPEG2), AudioFormat.ENCODING_AAC_HE_V2);
+        audioCodecsMap.put(String.valueOf(Constants.AUDIO_CODEC_MP3), AudioFormat.ENCODING_MP3);
+        audioCodecsMap.put(String.valueOf(Constants.AUDIO_CODEC_AAC), AudioFormat.ENCODING_AAC_LC);
+        audioCodecsMap.put(String.valueOf(Constants.AUDIO_CODEC_DTS), AudioFormat.ENCODING_DTS);
+        audioCodecsMap.put(String.valueOf(Constants.AUDIO_CODEC_DDP), AudioFormat.ENCODING_E_AC3);
+        audioCodecsMap.put(
+                String.valueOf(Constants.AUDIO_CODEC_DTSHD), AudioFormat.ENCODING_DTS_HD);
+        audioCodecsMap.put(
+                String.valueOf(Constants.AUDIO_CODEC_TRUEHD), AudioFormat.ENCODING_DOLBY_TRUEHD);
+        /*
+         * Mapping the below four audio format codecs to @AudioFormat Encoding_Invalid since these
+         * codecs are not mentioned in AudioFormat class. If the AudioFormat class doesn't have
+         * these mapping values, then we may not get them as a supported audio format at all.
+         */
+        audioCodecsMap.put(
+                String.valueOf(Constants.AUDIO_CODEC_ATRAC), AudioFormat.ENCODING_INVALID);
+        audioCodecsMap.put(
+                String.valueOf(Constants.AUDIO_CODEC_ONEBITAUDIO), AudioFormat.ENCODING_INVALID);
+        audioCodecsMap.put(String.valueOf(Constants.AUDIO_CODEC_DST), AudioFormat.ENCODING_INVALID);
+        audioCodecsMap.put(
+                String.valueOf(Constants.AUDIO_CODEC_WMAPRO), AudioFormat.ENCODING_INVALID);
+
+        return audioCodecsMap;
+    }
+
+    private byte getFirstByteOfShortAudioDescriptor(
+            AudioDeviceInfo deviceInfo, @AudioCodec int audioFormatCode) {
+        byte firstByte = 0;
+        int maxNumberOfChannels = getMaxNumberOfChannels(deviceInfo);
+
+        // Fill bits 0-2 of the first byte.
+        firstByte |= (maxNumberOfChannels - 1);
+
+        // Fill bits 3-6 of the first byte.
+        firstByte |= (audioFormatCode << 3);
+
+        return firstByte;
+    }
+
+    private byte getSecondByteOfShortAudioDescriptor(AudioDeviceInfo deviceInfo) {
+        int[] samplingRates = {32, 44, 48, 88, 96, 176, 192};
+        ArrayList<Integer> listOfSamplingRates =
+                new ArrayList<Integer>(Arrays.asList(samplingRates));
+        int[] samplingRatesDeviceSupports = deviceInfo.getSampleRates();
+        if (samplingRatesDeviceSupports == null || samplingRatesDeviceSupports.length == 0) {
+            Slog.e(TAG, "Device supports arbitrary rates");
+            // Since device supports arbitrary rates, we will return 0x7f since bit 7th is reserved
+            return (byte) 0x7f;
+        }
+        byte secondByte = 0;
+        for (int sampleRate : samplingRatesDeviceSupports) {
+            if (listOfSamplingRates.contains(sampleRate)) {
+                int index = listOfSamplingRates.indexOf(sampleRate);
+                // Setting the bit of a sample rate which is being supported.
+                secondByte |= (1 << index);
+            }
+        }
+
+        return secondByte;
+    }
+
+    private int getMaxNumberOfChannels(AudioDeviceInfo deviceInfo) {
+        int maxNumberOfChannels;
+        int[] channelCounts = deviceInfo.getChannelCounts();
+        if (channelCounts.length) {
+            maxNumberOfChannels = channelCounts[channelCounts.length - 1];
+            if (maxNumberOfChannels > 8) {
+                Slog.e(TAG, "Max number of channel should not exceed eight");
+                maxNumberOfChannels = 8;
+            }
+        } else {
+            /*
+             * Empty array from deviceInfo.getChannelCounts() implies device supports arbitrary
+             * channel counts and hence we assume max channels are supported by the device.
+             */
+            maxNumberOfChannels = 8;
+        }
+        return maxNumberOfChannels;
+    }
+
+    private byte getThirdSadByteForCodecs2Through8(AudioDeviceInfo deviceInfo) {
+        /*
+         * Here, we are assuming that max bit rate is closely equals to the max sampling rate the
+         * device supports.
+         */
+        byte maxSamplingRate;
+        int[] samplingRatesDeviceSupports = deviceInfo.getSampleRates();
+        if (samplingRatesDeviceSupports == null || samplingRatesDeviceSupports.length == 0) {
+            maxSamplingRate = 192;
+        } else {
+            Arrays.sort(samplingRatesDeviceSupports);
+            maxSamplingRate = samplingRatesDeviceSupports[samplingRatesDeviceSupports.length - 1];
+        }
+
+        return maxSamplingRate;
     }
 
     @Nullable
