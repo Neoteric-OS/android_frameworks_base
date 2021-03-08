@@ -116,31 +116,39 @@ public class UnderlyingNetworkTracker {
 
         // register Network-selection request used to decide selected underlying Network
         mConnectivityManager.requestBackgroundNetwork(
-                getNetworkRequestBase().build(), mHandler, mRouteSelectionCallback);
+                getNetworkRequestBase(true /* requireVcnManaged */).build(),
+                mHandler, mRouteSelectionCallback);
     }
 
     private NetworkRequest getWifiNetworkRequest() {
-        return getNetworkRequestBase().addTransportType(NetworkCapabilities.TRANSPORT_WIFI).build();
+        return getNetworkRequestBase(true /* requireVcnManaged */)
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .build();
     }
 
     private NetworkRequest getCellNetworkRequestForSubId(int subId) {
-        return getNetworkRequestBase()
+        return getNetworkRequestBase(false /* requireVcnManaged */)
                 .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                 .setNetworkSpecifier(new TelephonyNetworkSpecifier(subId))
                 .build();
     }
 
-    private NetworkRequest.Builder getNetworkRequestBase() {
-        NetworkRequest.Builder requestBase = new NetworkRequest.Builder();
+    private NetworkRequest.Builder getNetworkRequestBase(boolean requireVcnManaged) {
+        NetworkRequest.Builder requestBase =
+                new NetworkRequest.Builder()
+                        .removeCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED)
+                        .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)
+                        .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
+
         for (int capability : mRequiredUnderlyingNetworkCapabilities) {
             requestBase.addCapability(capability);
         }
 
-        return requestBase
-                .removeCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED)
-                .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)
-                .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED)
-                .addUnwantedCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
+        if (requireVcnManaged) {
+            requestBase.addUnwantedCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
+        }
+
+        return requestBase;
     }
 
     /**
