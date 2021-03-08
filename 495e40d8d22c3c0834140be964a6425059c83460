@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "263a399f_ca00c9fb",
         "filename": "core/java/android/view/View.java",
@@ -20,10 +21,34 @@
         "endChar": 50
       },
       "revId": "495e40d8d22c3c0834140be964a6425059c83460",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8634870_1649e41f",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 14089,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2021-03-08T18:39:43Z",
+      "side": 1,
+      "message": "This needs a corresponding method to disable unbuffered dispatch. I\u0027m also a little concerned that this method is too similarly-named to the other method and doesn\u0027t make it obvious that this is a permanent (or at least, not temporary) setting.",
+      "parentUuid": "263a399f_ca00c9fb",
+      "range": {
+        "startLine": 14089,
+        "startChar": 22,
+        "endLine": 14089,
+        "endChar": 50
+      },
+      "revId": "495e40d8d22c3c0834140be964a6425059c83460",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "1a707cfe_b6deddc7",
         "filename": "core/java/android/view/ViewRootImpl.java",
@@ -43,10 +68,10 @@
         "endChar": 49
       },
       "revId": "495e40d8d22c3c0834140be964a6425059c83460",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "6ae1e17c_1b05433b",
         "filename": "core/java/android/view/ViewRootImpl.java",
@@ -67,8 +92,7 @@
         "endChar": 49
       },
       "revId": "495e40d8d22c3c0834140be964a6425059c83460",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
