@@ -46,6 +46,30 @@
       },
       "revId": "77bbd57020321b714370a406d135b7d188e7ce52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80a8b9e3_dfb1955e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-08T09:34:10Z",
+      "side": 1,
+      "message": "Previously isNetworkTypeMobile() should able to exclude VPN network since it will not contain TYPE_MOBILE for a VPN network. Updated as suggested.",
+      "parentUuid": "7f48d9b4_c291a14f",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "77bbd57020321b714370a406d135b7d188e7ce52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
