@@ -16,6 +16,23 @@
       "message": "\u003e Patch Set 1:\n\u003e \n\u003e I think we need to ensure that this dialog won\u0027t close while a user is still interacting with elements on it. We likely want to reset the timer any time the dialog receives user input.\n\nDone.  I have verified this on a Sony device but have not been able to verify on a Pixel device as my Taimen is no longer supported.  I will mark as verified once I get hold of a later Pixel model.  Thanks!",
       "revId": "6c39af0cc6cb14d6ace92fb0dce11bc1d594a633",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bfc87f8_489fb771",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112033
+      },
+      "writtenOn": "2021-03-08T20:34:03Z",
+      "side": 1,
+      "message": "+mpietal for power menu, since aran is ooo",
+      "revId": "6c39af0cc6cb14d6ace92fb0dce11bc1d594a633",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
