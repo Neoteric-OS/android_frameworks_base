@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008783428",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1622280?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a3807461_66e09169",
+        "filename": "core/java/android/os/VibrationEffect.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-09T00:10:08Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1086,
+        "startChar": 0,
+        "endLine": 1086,
+        "endChar": 106
+      },
+      "revId": "02f0cdef82356bb5c9818a5a57069eed16b3588b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
