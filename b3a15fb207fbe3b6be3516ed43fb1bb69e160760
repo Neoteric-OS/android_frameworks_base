@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a9b0cdd_af30204b",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b9df5ef_0b36b20c",
+      "range": {
+        "startLine": 1400,
+        "startChar": 7,
+        "endLine": 1400,
+        "endChar": 29
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b49860df_59deac25",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-09T13:00:22Z",
       "side": 1,
       "message": "It looks like we are saying that there will simply be no way to fetch the unredacted version of the object using synchronous calls. I wonder if we should provide a version of this method that takes a flag to pass in that information? That said, synchronous calls are generally not something we encourage due to the potential for race conditions, so perhaps this is fine.",
+      "range": {
+        "startLine": 1404,
+        "startChar": 24,
+        "endLine": 1406,
+        "endChar": 87
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e7f35aa_981aded8",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1406,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "Yeah, my previous version of the CL did have the synchronous API - getNetworkCapabilitesWithLocationSensitiveData(). Removed based on feedback from jchalard@. Apps should be able to use \"Future\" to convert the callback to a synchronous call if they want.",
+      "parentUuid": "b49860df_59deac25",
       "range": {
         "startLine": 1404,
         "startChar": 24,
@@ -89,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b83220fe_1c32c520",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3253,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly about this one. It seemed cleaner to include the \"no-flag\" case as well so that apps can change all usages from NetworkCallback() to the new NetworkCallback(int flags)",
+      "parentUuid": "d561ac42_d563b7f4",
+      "range": {
+        "startLine": 3250,
+        "startChar": 0,
+        "endLine": 3253,
+        "endChar": 46
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8d4d3541_17091900",
         "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
         "patchSetId": 6
@@ -100,6 +172,30 @@
       "writtenOn": "2021-03-09T13:00:22Z",
       "side": 1,
       "message": "Why is this flag NetworkCapabilities-specific? Currently we only have location data in NetworkCapabilities, but if we have it anywhere else in the future, then it would seem better not to require the caller to pass in more than one flag to redact location information.",
+      "range": {
+        "startLine": 3273,
+        "startChar": 32,
+        "endLine": 3273,
+        "endChar": 82
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f286e67c_c8fd4d2e",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3273,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "Made it generic. Please review my response for the same comment from jchalard@ regarding existing fields in LinkProperties.",
+      "parentUuid": "8d4d3541_17091900",
       "range": {
         "startLine": 3273,
         "startChar": 32,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c54548ee_8951c015",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3287,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70fd97c1_7eb5430f",
+      "range": {
+        "startLine": 3287,
+        "startChar": 16,
+        "endLine": 3287,
+        "endChar": 25
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "45bad5f4_5875d3fd",
@@ -146,6 +266,30 @@
       "writtenOn": "2021-03-09T13:00:22Z",
       "side": 1,
       "message": "Consider avoiding double negatives and saying, \"This field is only populated if:\n...\"",
+      "range": {
+        "startLine": 1053,
+        "startChar": 24,
+        "endLine": 1053,
+        "endChar": 47
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56665a1a_ecda235b",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45bad5f4_5875d3fd",
       "range": {
         "startLine": 1053,
         "startChar": 24,
@@ -202,6 +346,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e5dc100_2b079e06",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55394c9d_92a0d27a",
+      "range": {
+        "startLine": 1054,
+        "startChar": 28,
+        "endLine": 1054,
+        "endChar": 39
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a453820_0164a33d",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2927597_6f095a77",
+      "range": {
+        "startLine": 1054,
+        "startChar": 80,
+        "endLine": 1054,
+        "endChar": 81
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "631c0818_7cbae56b",
@@ -215,6 +407,30 @@
       "writtenOn": "2021-03-09T13:00:22Z",
       "side": 1,
       "message": "Suggest not importing this.",
+      "range": {
+        "startLine": 89,
+        "startChar": 55,
+        "endLine": 89,
+        "endChar": 74
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac6b2e3b_8876c3cd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "631c0818_7cbae56b",
       "range": {
         "startLine": 89,
         "startChar": 55,
@@ -250,6 +466,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ec37af6d_445b90fe",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1686,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "there are 2 fields which are gated using this:\n- Owner uid (not needed by settings)\n- WifiInfo (just added in S, settings doesn\u0027t use this).\n\nSysui \u0026 setting are planning to switch to the callback to retrieve WifiInfo. They can get the location sensitive data there.",
+      "parentUuid": "cc5b1cdd_9a885ec4",
+      "range": {
+        "startLine": 1686,
+        "startChar": 36,
+        "endLine": 1686,
+        "endChar": 76
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ed4d6335_7ee5e6a8",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 6
@@ -261,6 +501,30 @@
       "writtenOn": "2021-03-09T13:00:22Z",
       "side": 1,
       "message": "Can we avoid adding a new overload here by updating the callers to pass the boolean instead of the flag? I find that having multiple overloads for essentially the same behaviour is confusing.",
+      "range": {
+        "startLine": 1830,
+        "startChar": 0,
+        "endLine": 1839,
+        "endChar": 5
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43af4332_3da9ff8c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1839,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed4d6335_7ee5e6a8",
       "range": {
         "startLine": 1830,
         "startChar": 0,
@@ -284,6 +548,30 @@
       "writtenOn": "2021-03-09T13:00:22Z",
       "side": 1,
       "message": "Maybe put this check first, so we don\u0027t have to call any of the other methods if it\u0027s false?",
+      "range": {
+        "startLine": 1854,
+        "startChar": 16,
+        "endLine": 1854,
+        "endChar": 47
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f637748_ad70f7b9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a770bac2_fb8b9c51",
       "range": {
         "startLine": 1854,
         "startChar": 16,
@@ -319,6 +607,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bf07beca_bb8b76c0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "This is mentioned in the design doc here: https://docs.google.com/document/d/11aL1TVrmammk_ovZ_Y8I2VJxykuNW3AZeqe4JB0cD_E/edit#bookmark\u003did.tfajwagl5o8u\n\nThis is also mentioned in the public documentation of `NetworkCapabilities#getOwnerUid()` in this CL. The `ownerUid` is a field added by Fi last year to figure out network suggestions that they provided. We do provide a backwards compatible behavior here based on targetSdk. We do plan to reach out to Fi separately once this behavior is finalized. We don\u0027t believe there are other genuine users of this field.",
+      "parentUuid": "ed77a944_defb3169",
+      "range": {
+        "startLine": 1872,
+        "startChar": 8,
+        "endLine": 1872,
+        "endChar": 95
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8ff83f96_052804a7",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 6
@@ -330,6 +642,30 @@
       "writtenOn": "2021-03-09T13:00:22Z",
       "side": 1,
       "message": "Add a blank line after here to help readers notice the return statement.",
+      "range": {
+        "startLine": 1877,
+        "startChar": 8,
+        "endLine": 1877,
+        "endChar": 9
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7eea11e3_69f25826",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1877,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ff83f96_052804a7",
       "range": {
         "startLine": 1877,
         "startChar": 8,
@@ -363,6 +699,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf1c2b47_d8a5fbe8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5281,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e8cdf58_4ceb4d1b",
+      "range": {
+        "startLine": 5281,
+        "startChar": 45,
+        "endLine": 5281,
+        "endChar": 54
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6860d20_c9275dd3",
@@ -386,6 +746,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2baf8b7a_af6012e7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 8676,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6860d20_c9275dd3",
+      "range": {
+        "startLine": 8673,
+        "startChar": 0,
+        "endLine": 8676,
+        "endChar": 5
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "80c8c86f_0dde5704",
@@ -399,6 +783,30 @@
       "writtenOn": "2021-03-09T16:53:36Z",
       "side": 1,
       "message": "All these tactical unit tests are good for exercising the many cases that the code has to support, but I\u0027d feel much better if we had a test that actually registers a NetworkCallback and checks whether the callback contains the data that is supposed to be redacted.\n\nIs it possible to write such a test, or is there some reason we can\u0027t do that (e.g., the redaction happens via parceling code and we can\u0027t simulate without an IPC)?",
+      "range": {
+        "startLine": 8841,
+        "startChar": 8,
+        "endLine": 8841,
+        "endChar": 43
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29e1f828_bee36d48",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 8841,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-09T23:55:11Z",
+      "side": 1,
+      "message": "Done. Added a test with the full flow now.",
+      "parentUuid": "80c8c86f_0dde5704",
       "range": {
         "startLine": 8841,
         "startChar": 8,
