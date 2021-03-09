@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79dc2c93_150505ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-03-09T21:19:27Z",
+      "side": 1,
+      "message": "Added some comments, mostly as suggestions.",
+      "revId": "6e8b57c60a753a0a6c839d673a898e8e9b854a28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "289ae369_57d52a0c",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 5129,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-03-09T21:19:27Z",
+      "side": 1,
+      "message": "Is this needed? Will the caller be outside platform code?",
+      "range": {
+        "startLine": 5129,
+        "startChar": 9,
+        "endLine": 5129,
+        "endChar": 19
+      },
+      "revId": "6e8b57c60a753a0a6c839d673a898e8e9b854a28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f878fddd_5945c605",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-03-09T21:19:27Z",
+      "side": 1,
+      "message": "nit: This name really stutters. Maybe `REMOTE_OVERRIDE_COMPAT_CHANGE_CONFIG` instead?",
+      "range": {
+        "startLine": 413,
+        "startChar": 45,
+        "endLine": 413,
+        "endChar": 80
+      },
+      "revId": "6e8b57c60a753a0a6c839d673a898e8e9b854a28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
