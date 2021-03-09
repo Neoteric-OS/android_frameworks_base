@@ -4244,7 +4244,6 @@ android.net.NetworkAgentConfig
 android.net.NetworkCapabilities$1
 android.net.NetworkCapabilities$NameOf
 android.net.NetworkCapabilities
-android.net.NetworkConfig
 android.net.NetworkIdentity
 android.net.NetworkInfo$1
 android.net.NetworkInfo$DetailedState
