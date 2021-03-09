@@ -135,6 +135,7 @@ import com.android.server.net.watchlist.NetworkWatchlistService;
 import com.android.server.notification.NotificationManagerService;
 import com.android.server.oemlock.OemLockService;
 import com.android.server.om.OverlayManagerService;
+import com.android.server.omapi.SecureElementService;
 import com.android.server.os.BugreportManagerService;
 import com.android.server.os.DeviceIdentifiersPolicyService;
 import com.android.server.os.NativeTombstoneManagerService;
@@ -793,6 +794,15 @@ public final class SystemServer {
         final String TAG_SYSTEM_CONFIG = "ReadingSystemConfig";
         t.traceBegin(TAG_SYSTEM_CONFIG);
         SystemServerInitThreadPool.submit(SystemConfig::getInstance, TAG_SYSTEM_CONFIG);
+        t.traceEnd();
+
+        //Start secure element service
+        t.traceBegin("StartSecureElementService");
+        try {
+            mSystemServiceManager.startService(SecureElementService.class);
+        } catch (Throwable e) {
+            reportWtf("starting StartSecureElementService service", e);
+        }
         t.traceEnd();
 
         // Platform compat service is used by ActivityManagerService, PackageManagerService, and
