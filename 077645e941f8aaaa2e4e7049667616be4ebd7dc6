@@ -16,6 +16,24 @@
       "message": "Hello Brian, \n\nI was curious if you thought this documentation change was valid? Thank you. - Rob",
       "revId": "077645e941f8aaaa2e4e7049667616be4ebd7dc6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96b63e32_f58ffe08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1094493
+      },
+      "writtenOn": "2021-03-09T17:16:04Z",
+      "side": 1,
+      "message": "Yes, this is correct - thanks for the contribution!",
+      "parentUuid": "c8fee9ad_a77f7388",
+      "revId": "077645e941f8aaaa2e4e7049667616be4ebd7dc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
