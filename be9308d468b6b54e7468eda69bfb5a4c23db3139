@@ -143,6 +143,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a93d62ec_0efc6fa8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11037,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T11:59:52Z",
+      "side": 1,
+      "message": "Discussed in meeting, it\u0027s fine as is",
+      "parentUuid": "75c96b89_d0404ab2",
+      "range": {
+        "startLine": 11037,
+        "startChar": 8,
+        "endLine": 11037,
+        "endChar": 13
+      },
+      "revId": "be9308d468b6b54e7468eda69bfb5a4c23db3139",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cccd30be_e361d8a3",

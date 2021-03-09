@@ -43,6 +43,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e0d2142c_92a70b0d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10875,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T11:59:52Z",
+      "side": 1,
+      "message": "No I mean they are always active as long as there is a preference set. Updated the comment",
+      "parentUuid": "0e1fdfb3_07086114",
+      "range": {
+        "startLine": 10875,
+        "startChar": 37,
+        "endLine": 10875,
+        "endChar": 65
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "96a5330c_f2322520",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 9
@@ -87,6 +111,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8604d4b9_4a749af0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10938,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T11:59:52Z",
+      "side": 1,
+      "message": "Yes, we should expect networkAddUidRanges. Done.",
+      "parentUuid": "812e2fd0_da1a537d",
+      "range": {
+        "startLine": 10938,
+        "startChar": 34,
+        "endLine": 10938,
+        "endChar": 48
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e42df704_85f6d599",
@@ -100,6 +148,30 @@
       "writtenOn": "2021-03-08T11:24:27Z",
       "side": 1,
       "message": "What is the error says?\nno invocation at all?",
+      "range": {
+        "startLine": 10944,
+        "startChar": 8,
+        "endLine": 10944,
+        "endChar": 55
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1d90b82_d489079e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10944,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T11:59:52Z",
+      "side": 1,
+      "message": "Yes. Wanted but never invoked. I don\u0027t know why.",
+      "parentUuid": "e42df704_85f6d599",
       "range": {
         "startLine": 10944,
         "startChar": 8,
@@ -133,6 +205,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe0e0adf_ffe4b15d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10955,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T11:59:52Z",
+      "side": 1,
+      "message": "This is the only test where only the enterprise network is available. It tests that other apps don\u0027t get access to it, even if they do not have a default network. Clarified the comment.",
+      "parentUuid": "52d40dd0_8f6057c5",
+      "range": {
+        "startLine": 10955,
+        "startChar": 16,
+        "endLine": 10955,
+        "endChar": 58
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4ac8aea_90270a81",
@@ -146,6 +242,30 @@
       "writtenOn": "2021-03-08T11:24:27Z",
       "side": 1,
       "message": "Not true?",
+      "range": {
+        "startLine": 10989,
+        "startChar": 77,
+        "endLine": 10990,
+        "endChar": 27
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fca00172_4ec1cdbc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 10990,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T11:59:52Z",
+      "side": 1,
+      "message": "Argh you\u0027re right. Updated the comment.",
+      "parentUuid": "c4ac8aea_90270a81",
       "range": {
         "startLine": 10989,
         "startChar": 77,
@@ -179,6 +299,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "05e6b9e6_42f12003",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 11037,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T11:59:52Z",
+      "side": 1,
+      "message": "Whoa nice catch. The problem was that expectOnComplete was not asserting, so it was just waiting for the delay and returning null.",
+      "parentUuid": "76213251_e7c7dcd9",
+      "range": {
+        "startLine": 11037,
+        "startChar": 8,
+        "endLine": 11037,
+        "endChar": 36
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6aeda878_76aece18",
@@ -192,6 +336,30 @@
       "writtenOn": "2021-03-08T11:24:27Z",
       "side": 1,
       "message": "do we want to test networkRemoveUidRanges(mCellNetworkAgent)?",
+      "range": {
+        "startLine": 11087,
+        "startChar": 34,
+        "endLine": 11087,
+        "endChar": 53
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9219d6c_7b681def",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 11087,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T11:59:52Z",
+      "side": 1,
+      "message": "No this is the first time we call setNetworkPreferenceForUser for handle4, so we haven\u0027t added those ranges at all yet, so we should not be removing them.",
+      "parentUuid": "6aeda878_76aece18",
       "range": {
         "startLine": 11087,
         "startChar": 34,
@@ -225,6 +393,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed10c255_badedc65",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 11097,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T11:59:52Z",
+      "side": 1,
+      "message": "No, because this resets the preference to SYSTEM_DEFAULT, which means the UID ranges should just be removed and the profile should be back to using the system default network like other handles.",
+      "parentUuid": "15f23b03_3fe04cbd",
+      "range": {
+        "startLine": 11097,
+        "startChar": 34,
+        "endLine": 11097,
+        "endChar": 56
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "96f4ad20_b1738f68",
@@ -238,6 +430,30 @@
       "writtenOn": "2021-03-08T11:24:27Z",
       "side": 1,
       "message": "nit: Is it better to define a MAX_USER_PREFERENCE or something?",
+      "range": {
+        "startLine": 11151,
+        "startChar": 24,
+        "endLine": 11151,
+        "endChar": 50
+      },
+      "revId": "fd1a556ba714052c39b302e44e556992cf3d73e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c407f726_c6737809",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 11151,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T11:59:52Z",
+      "side": 1,
+      "message": "I\u0027d prefer not to right now, because I don\u0027t want to make such a constant public API, then it\u0027s only used in the test, so it would be adding production code for the benefit of the test.\n\nIf someone adds a new constant this test will break for sure and they\u0027ll know to update it, so they can add the constant at that time if it becomes useful.",
+      "parentUuid": "96f4ad20_b1738f68",
       "range": {
         "startLine": 11151,
         "startChar": 24,
