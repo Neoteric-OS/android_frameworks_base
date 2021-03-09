@@ -34,6 +34,24 @@
       "parentUuid": "c8fee9ad_a77f7388",
       "revId": "077645e941f8aaaa2e4e7049667616be4ebd7dc6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a39080f9_3dab77cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1769651
+      },
+      "writtenOn": "2021-03-09T20:28:00Z",
+      "side": 1,
+      "message": "Ok, awesome! Thanks very much for taking the time to review it. Let me know if any further action/rebase is needed from my end.",
+      "parentUuid": "96b63e32_f58ffe08",
+      "revId": "077645e941f8aaaa2e4e7049667616be4ebd7dc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
