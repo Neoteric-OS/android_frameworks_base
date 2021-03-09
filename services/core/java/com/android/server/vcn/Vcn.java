@@ -336,7 +336,7 @@ public class Vcn extends Handler {
             @NonNull NetworkRequest request, @NonNull VcnGatewayConnectionConfig config) {
         final NetworkCapabilities.Builder builder = new NetworkCapabilities.Builder();
         builder.addCapability(NET_CAPABILITY_NOT_VCN_MANAGED);
-        for (int cap : config.getAllExposedCapabilities()) {
+        for (int cap : config.getExposedCapabilities()) {
             builder.addCapability(cap);
         }
 

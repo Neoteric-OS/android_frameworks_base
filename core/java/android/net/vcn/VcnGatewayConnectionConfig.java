@@ -209,7 +209,7 @@ public final class VcnGatewayConnectionConfig {
         Preconditions.checkArgument(
                 mExposedCapabilities != null && !mExposedCapabilities.isEmpty(),
                 "exposedCapsBundle was null or empty");
-        for (Integer cap : getAllExposedCapabilities()) {
+        for (int cap : getExposedCapabilities()) {
             checkValidCapability(cap);
         }
 
@@ -267,20 +267,6 @@ public final class VcnGatewayConnectionConfig {
     }
 
     /**
-     * Returns all exposed capabilities.
-     *
-     * <p>Left to prevent the need to make major changes while changes are actively in flight.
-     *
-     * @deprecated use getExposedCapabilities() instead
-     * @hide
-     */
-    @Deprecated
-    @NonNull
-    public Set<Integer> getAllExposedCapabilities() {
-        return Collections.unmodifiableSet(mExposedCapabilities);
-    }
-
-    /**
      * Returns all capabilities required of underlying networks.
      *
      * <p>The returned integer-value capabilities will be sorted in ascending numerical order.
@@ -297,20 +283,6 @@ public final class VcnGatewayConnectionConfig {
     }
 
     /**
-     * Returns all capabilities required of underlying networks.
-     *
-     * <p>Left to prevent the need to make major changes while changes are actively in flight.
-     *
-     * @deprecated use getRequiredUnderlyingCapabilities() instead
-     * @hide
-     */
-    @Deprecated
-    @NonNull
-    public Set<Integer> getAllUnderlyingCapabilities() {
-        return Collections.unmodifiableSet(mUnderlyingCapabilities);
-    }
-
-    /**
      * Retrieves the configured retry intervals.
      *
      * @see Builder#setRetryInterval(long[])
@@ -318,20 +290,6 @@ public final class VcnGatewayConnectionConfig {
     @NonNull
     public long[] getRetryInterval() {
         return Arrays.copyOf(mRetryIntervalsMs, mRetryIntervalsMs.length);
-    }
-
-    /**
-     * Retrieves the configured retry intervals.
-     *
-     * <p>Left to prevent the need to make major changes while changes are actively in flight.
-     *
-     * @deprecated use getRetryInterval() instead
-     * @hide
-     */
-    @Deprecated
-    @NonNull
-    public long[] getRetryIntervalsMs() {
-        return getRetryInterval();
     }
 
     /**
