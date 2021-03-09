@@ -87,6 +87,7 @@ public class VcnGatewayConnectionTest extends VcnGatewayConnectionTestBase {
     private void verifyBuildNetworkCapabilitiesCommon(int transportType) {
         final NetworkCapabilities underlyingCaps = new NetworkCapabilities();
         underlyingCaps.addTransportType(transportType);
+        underlyingCaps.addCapability(NET_CAPABILITY_NOT_VCN_MANAGED);
         underlyingCaps.addCapability(NET_CAPABILITY_NOT_METERED);
         underlyingCaps.addCapability(NET_CAPABILITY_NOT_ROAMING);
 
