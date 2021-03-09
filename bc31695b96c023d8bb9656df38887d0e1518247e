@@ -16,6 +16,282 @@
       "message": "Ping for review!",
       "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05ed9a3e_ed71e596",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T12:56:50Z",
+      "side": 1,
+      "message": "contain",
+      "range": {
+        "startLine": 1383,
+        "startChar": 41,
+        "endLine": 1383,
+        "endChar": 49
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a426378d_6ad46dd4",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T12:56:50Z",
+      "side": 1,
+      "message": "this",
+      "range": {
+        "startLine": 1384,
+        "startChar": 7,
+        "endLine": 1384,
+        "endChar": 12
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7fc6495_2fa09cd1",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3267,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T12:56:50Z",
+      "side": 1,
+      "message": "contain",
+      "range": {
+        "startLine": 3267,
+        "startChar": 11,
+        "endLine": 3267,
+        "endChar": 19
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "603c91f7_3fba6846",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3269,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T12:56:50Z",
+      "side": 1,
+      "message": "Do we want to add \"for wifi suggestor apps\" ?",
+      "range": {
+        "startLine": 3269,
+        "startChar": 20,
+        "endLine": 3269,
+        "endChar": 21
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "574c62df_9cda5858",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3273,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T12:56:50Z",
+      "side": 1,
+      "message": "this",
+      "range": {
+        "startLine": 3273,
+        "startChar": 27,
+        "endLine": 3273,
+        "endChar": 32
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3545f577_c0f560b7",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3279,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T12:56:50Z",
+      "side": 1,
+      "message": "I think we don\u0027t need to spell out \"IN_NETWORK_CAPABILITIES\". Sure, today it\u0027s the only place, but if we have more in the future say in LinkProperties I think it\u0027s extremely likely that we\u0027ll want to use the same flag. If not, then we\u0027ll deprecate this name and add a new name for NC only.",
+      "range": {
+        "startLine": 3279,
+        "startChar": 58,
+        "endLine": 3279,
+        "endChar": 82
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "764e5a58_bfadba97",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T12:56:50Z",
+      "side": 1,
+      "message": "I think it\u0027s a bit more complex than this.\n\n  - The querying app has system permissions, or is the owner app itself\n  AND\n    - The app is the active VPN APP\n    OR\n      - The app has location permission\n      AND\n        - The app\u0027s target SDK is lower than S\n        OR\n        - The flag is included\n\nSo how to express this is a bit difficult, but at least we should say apps never get to see UIDs that are not their own. Suggested wording (feel free to improve, amend...) :\n\n  This field will only be populated for VPN and network suggestor apps,\n  and only for the network they own.\n  In the case of network suggestors, this field is also location sensitive,\n  so the app needs to hold LOCATION_FINE, and use FLAG_INCLUDE_LOCATION_INFO\n  in the request if they want to see it. They will then be blamed for\n  location access.",
+      "range": {
+        "startLine": 1042,
+        "startChar": 7,
+        "endLine": 1046,
+        "endChar": 11
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49340971_e37c6b03",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T12:56:50Z",
+      "side": 1,
+      "message": "Can you just use checkUnsupportedStartingFrom ?",
+      "range": {
+        "startLine": 1804,
+        "startChar": 0,
+        "endLine": 1818,
+        "endChar": 5
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92235186_be80197d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T12:56:50Z",
+      "side": 1,
+      "message": "Does this still need to be visible for testing ? I think tests should only use your new method, because the call site is clearer",
+      "range": {
+        "startLine": 1831,
+        "startChar": 5,
+        "endLine": 1831,
+        "endChar": 22
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2caa64b3_1f480776",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1862,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T12:56:50Z",
+      "side": 1,
+      "message": "The code looks correct to me but the comment not ; for \u003cS it\u0027s included iff the caller has location permission, not \"always\".",
+      "range": {
+        "startLine": 1862,
+        "startChar": 16,
+        "endLine": 1862,
+        "endChar": 22
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59ab8ec6_2211a6f3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8671,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T12:56:50Z",
+      "side": 1,
+      "message": "go/avoidwe. I don\u0027t think it\u0027s clear in this context who \u0027we\u0027 is. Likewise below.",
+      "range": {
+        "startLine": 8671,
+        "startChar": 67,
+        "endLine": 8671,
+        "endChar": 69
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95a8ead3_1a6b4972",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8705,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T12:56:50Z",
+      "side": 1,
+      "message": "This method is almost identical to the one above and the one below, can you have a helper to remove duplication ?",
+      "range": {
+        "startLine": 8705,
+        "startChar": 12,
+        "endLine": 8705,
+        "endChar": 95
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
