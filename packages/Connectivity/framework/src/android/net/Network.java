@@ -30,10 +30,10 @@ import android.system.OsConstants;
 import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.annotations.GuardedBy;
-import com.android.okhttp.internalandroidapi.Dns;
-import com.android.okhttp.internalandroidapi.HttpURLConnectionFactory;
 
 import libcore.io.IoUtils;
+import libcore.net.http.Dns;
+import libcore.net.http.HttpURLConnectionFactory;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
