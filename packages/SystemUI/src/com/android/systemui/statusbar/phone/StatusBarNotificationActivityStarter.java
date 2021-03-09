@@ -37,6 +37,7 @@ import android.os.RemoteException;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.dreams.IDreamManager;
+import android.service.notification.NotificationListenerService.RankingMap;
 import android.service.notification.NotificationStats;
 import android.service.notification.StatusBarNotification;
 import android.text.TextUtils;
@@ -210,9 +211,22 @@ public class StatusBarNotificationActivityStarter implements NotificationActivit
                 public void onPendingEntryAdded(NotificationEntry entry) {
                     handleFullScreenIntent(entry);
                 }
+                @Override
+                public void onNotificationRankingUpdated(RankingMap rankingMap) {
+                    String[] orderedKeys = rankingMap.getOrderedKeys();
+                    for (int i = 0; i < orderedKeys.length; i++) {
+                        String key = orderedKeys[i];
+                        NotificationEntry entry = mEntryManager.getPendingOrActiveNotif(key);
+                        if (entry != null) {
+                            handleFullScreenIntent(entry);
+                        }
+                    }
+                }
             });
         } else {
             mNotifPipeline.addCollectionListener(new NotifCollectionListener() {
+                // Consider to add method onRankingApplied()
+                // Called from NotificationEntryManager.addNotificationInternal()
                 @Override
                 public void onEntryAdded(NotificationEntry entry) {
                     handleFullScreenIntent(entry);
