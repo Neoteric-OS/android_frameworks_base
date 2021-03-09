@@ -5098,7 +5098,8 @@ public abstract class Context {
      * @hide
      */
     @SystemApi
-    public static final String SECURE_ELEMENT_SERVICE = "secure_element";
+    public static final String SECURE_ELEMENT_SERVICE =
+            "com.android.server.omapi.ISecureElementService/default";
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve an

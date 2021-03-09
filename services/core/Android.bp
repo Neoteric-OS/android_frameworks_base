@@ -15,6 +15,14 @@ filegroup {
     visibility: ["//frameworks/base/services"],
 }
 
+genrule {
+    name: "statslog-omapi-java-gen",
+    tools: ["stats-log-api-gen"],
+    cmd: "$(location stats-log-api-gen) --java $(out) --module secure_element"
+        + " --javaPackage com.android.server.omapi --javaClass SecureElementStatsLog",
+    out: ["com/android/server/omapi/SecureElementStatsLog.java"],
+}
+
 java_library {
     name: "protolog-common",
     srcs: [
@@ -30,6 +38,7 @@ java_library {
     ],
     static_libs: ["protolog-common"],
 }
+
 
 genrule {
     name: "services.core.protologsrc",
@@ -95,6 +104,7 @@ java_library_static {
         ":platform-compat-config",
         ":platform-compat-overrides",
         ":display-device-config",
+        ":statslog-omapi-java-gen",
         "java/com/android/server/EventLogTags.logtags",
         "java/com/android/server/am/EventLogTags.logtags",
         "java/com/android/server/wm/EventLogTags.logtags",
@@ -146,6 +156,9 @@ java_library_static {
         "overlayable_policy_aidl-java",
         "SurfaceFlingerProperties",
         "com.android.sysprop.watchdog",
+        "android.hardware.secure_element-V1.0-java",
+        "android.hardware.secure_element-V1.1-java",
+        "android.hardware.secure_element-V1.2-java"
     ],
 }
 
