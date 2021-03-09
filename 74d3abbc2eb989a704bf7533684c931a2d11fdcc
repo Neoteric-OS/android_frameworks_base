@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5b79b04_2ef06e35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-09T17:03:32Z",
+      "side": 1,
+      "message": "Updated this CL according to discussions with Chad. Created a new permission that we check to determine whether override is allowed on release builds.",
+      "revId": "74d3abbc2eb989a704bf7533684c931a2d11fdcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
