@@ -67,6 +67,7 @@ java_library {
         "net-utils-device-common",
         "net-utils-framework-common",
         "netd-client",
+        "PlatformProperties",
     ],
     apex_available: [
         "//apex_available:platform",
