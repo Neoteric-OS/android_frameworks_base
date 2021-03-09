@@ -30,10 +30,9 @@ import android.system.OsConstants;
 import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.annotations.GuardedBy;
-import com.android.okhttp.internalandroidapi.Dns;
-import com.android.okhttp.internalandroidapi.HttpURLConnectionFactory;
 
 import libcore.io.IoUtils;
+import libcore.net.http.HttpConnectionFactory;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -75,7 +74,7 @@ public class Network implements Parcelable {
     private volatile NetworkBoundSocketFactory mNetworkBoundSocketFactory = null;
     // mUrlConnectionFactory is initialized lazily when it is first needed.
     @GuardedBy("mLock")
-    private HttpURLConnectionFactory mUrlConnectionFactory;
+    private HttpConnectionFactory mUrlConnectionFactory;
     private final Object mLock = new Object();
 
     // Default connection pool values. These are evaluated at startup, just
@@ -295,12 +294,13 @@ public class Network implements Parcelable {
         return mNetworkBoundSocketFactory;
     }
 
-    private static HttpURLConnectionFactory createUrlConnectionFactory(Dns dnsLookup) {
+    private static HttpConnectionFactory createUrlConnectionFactory(
+            final HttpConnectionFactory.DnsResolver dnsLookup) {
         // Set configuration on the HttpURLConnectionFactory that will be good for all
         // connections created by this Network. Configuration that might vary is left
         // until openConnection() and passed as arguments.
-        HttpURLConnectionFactory urlConnectionFactory = new HttpURLConnectionFactory();
-        urlConnectionFactory.setDns(dnsLookup); // Let traffic go via dnsLookup
+        HttpConnectionFactory urlConnectionFactory = new HttpConnectionFactory();
+        urlConnectionFactory.setDnsResolver(dnsLookup); // Let traffic go via dnsLookup
         // A private connection pool just for this Network.
         urlConnectionFactory.setNewConnectionPool(httpMaxConnections,
                 httpKeepAliveDurationMs, TimeUnit.MILLISECONDS);
@@ -360,10 +360,11 @@ public class Network implements Parcelable {
         // will be instantiated in the near future with the same NetID. A good
         // solution would involve purging empty (or when all connections are timed
         // out) ConnectionPools.
-        final HttpURLConnectionFactory urlConnectionFactory;
+        final HttpConnectionFactory urlConnectionFactory;
         synchronized (mLock) {
             if (mUrlConnectionFactory == null) {
-                Dns dnsLookup = hostname -> Arrays.asList(getAllByName(hostname));
+                HttpConnectionFactory.DnsResolver dnsLookup =
+                        hostname -> Arrays.asList(getAllByName(hostname));
                 mUrlConnectionFactory = createUrlConnectionFactory(dnsLookup);
             }
             urlConnectionFactory = mUrlConnectionFactory;
