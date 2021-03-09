@@ -53,7 +53,7 @@ public class UnderlyingNetworkTracker {
 
     @NonNull private final VcnContext mVcnContext;
     @NonNull private final ParcelUuid mSubscriptionGroup;
-    @NonNull private final Set<Integer> mRequiredUnderlyingNetworkCapabilities;
+    @NonNull private final int[] mRequiredUnderlyingNetworkCapabilities;
     @NonNull private final UnderlyingNetworkTrackerCallback mCb;
     @NonNull private final Dependencies mDeps;
     @NonNull private final Handler mHandler;
@@ -73,7 +73,7 @@ public class UnderlyingNetworkTracker {
             @NonNull VcnContext vcnContext,
             @NonNull ParcelUuid subscriptionGroup,
             @NonNull TelephonySubscriptionSnapshot snapshot,
-            @NonNull Set<Integer> requiredUnderlyingNetworkCapabilities,
+            @NonNull int[] requiredUnderlyingNetworkCapabilities,
             @NonNull UnderlyingNetworkTrackerCallback cb) {
         this(
                 vcnContext,
@@ -88,7 +88,7 @@ public class UnderlyingNetworkTracker {
             @NonNull VcnContext vcnContext,
             @NonNull ParcelUuid subscriptionGroup,
             @NonNull TelephonySubscriptionSnapshot snapshot,
-            @NonNull Set<Integer> requiredUnderlyingNetworkCapabilities,
+            @NonNull int[] requiredUnderlyingNetworkCapabilities,
             @NonNull UnderlyingNetworkTrackerCallback cb,
             @NonNull Dependencies deps) {
         mVcnContext = Objects.requireNonNull(vcnContext, "Missing vcnContext");
