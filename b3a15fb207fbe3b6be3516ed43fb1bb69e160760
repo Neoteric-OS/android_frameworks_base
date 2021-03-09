@@ -16,6 +16,374 @@
       "message": "Ping for review!",
       "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b9df5ef_0b36b20c",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "Would remove the \"Note:\" and just say \"This method will remove\".",
+      "range": {
+        "startLine": 1400,
+        "startChar": 7,
+        "endLine": 1400,
+        "endChar": 29
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b49860df_59deac25",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1406,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "It looks like we are saying that there will simply be no way to fetch the unredacted version of the object using synchronous calls. I wonder if we should provide a version of this method that takes a flag to pass in that information? That said, synchronous calls are generally not something we encourage due to the potential for race conditions, so perhaps this is fine.",
+      "range": {
+        "startLine": 1404,
+        "startChar": 24,
+        "endLine": 1406,
+        "endChar": 87
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d561ac42_d563b7f4",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3253,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "I wonder: does this need to be public? If it\u0027s a bitmask, isn\u0027t it always the case that no flags are set by default?",
+      "range": {
+        "startLine": 3250,
+        "startChar": 0,
+        "endLine": 3253,
+        "endChar": 46
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d4d3541_17091900",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3273,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "Why is this flag NetworkCapabilities-specific? Currently we only have location data in NetworkCapabilities, but if we have it anywhere else in the future, then it would seem better not to require the caller to pass in more than one flag to redact location information.",
+      "range": {
+        "startLine": 3273,
+        "startChar": 32,
+        "endLine": 3273,
+        "endChar": 82
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70fd97c1_7eb5430f",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3287,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "No need to include this here since it\u0027s always true that 0 | x \u003d\u003d x.",
+      "range": {
+        "startLine": 3287,
+        "startChar": 16,
+        "endLine": 3287,
+        "endChar": 25
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45bad5f4_5875d3fd",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "Consider avoiding double negatives and saying, \"This field is only populated if:\n...\"",
+      "range": {
+        "startLine": 1053,
+        "startChar": 24,
+        "endLine": 1053,
+        "endChar": 47
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55394c9d_92a0d27a",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "prior to?",
+      "range": {
+        "startLine": 1054,
+        "startChar": 28,
+        "endLine": 1054,
+        "endChar": 39
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2927597_6f095a77",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": ", or:\nor\n, and:",
+      "range": {
+        "startLine": 1054,
+        "startChar": 80,
+        "endLine": 1054,
+        "endChar": 81
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "631c0818_7cbae56b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "Suggest not importing this.",
+      "range": {
+        "startLine": 89,
+        "startChar": 55,
+        "endLine": 89,
+        "endChar": 74
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc5b1cdd_9a885ec4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1686,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "I believe this method is called by SystemUi. Have you checked that it does not need this information?",
+      "range": {
+        "startLine": 1686,
+        "startChar": 36,
+        "endLine": 1686,
+        "endChar": 76
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed4d6335_7ee5e6a8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1839,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "Can we avoid adding a new overload here by updating the callers to pass the boolean instead of the flag? I find that having multiple overloads for essentially the same behaviour is confusing.",
+      "range": {
+        "startLine": 1830,
+        "startChar": 0,
+        "endLine": 1839,
+        "endChar": 5
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a770bac2_fb8b9c51",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "Maybe put this check first, so we don\u0027t have to call any of the other methods if it\u0027s false?",
+      "range": {
+        "startLine": 1854,
+        "startChar": 16,
+        "endLine": 1854,
+        "endChar": 47
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed77a944_defb3169",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "I don\u0027t have context on this. Could you help me understand what uses cases will be broken? Is there a buganizer link or a doc I can refer to? Or, if it\u0027s appropriate to put that info in this comment, that works too.",
+      "range": {
+        "startLine": 1872,
+        "startChar": 8,
+        "endLine": 1872,
+        "endChar": 95
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ff83f96_052804a7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1877,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "Add a blank line after here to help readers notice the return statement.",
+      "range": {
+        "startLine": 1877,
+        "startChar": 8,
+        "endLine": 1877,
+        "endChar": 9
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e8cdf58_4ceb4d1b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5281,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "Can you add a brief comment to explain why? Is it because the PendingIntents do not deliver any location-sensitive info, but only a \"network available\" indication?",
+      "range": {
+        "startLine": 5281,
+        "startChar": 45,
+        "endLine": 5281,
+        "endChar": 54
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6860d20_c9275dd3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 8676,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-09T13:00:22Z",
+      "side": 1,
+      "message": "Ditto, can we avoid adding an overload?",
+      "range": {
+        "startLine": 8673,
+        "startChar": 0,
+        "endLine": 8676,
+        "endChar": 5
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
