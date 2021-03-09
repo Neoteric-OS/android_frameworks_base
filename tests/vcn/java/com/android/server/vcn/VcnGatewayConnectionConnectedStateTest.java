@@ -202,7 +202,7 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
         final NetworkCapabilities nc = ncCaptor.getValue();
         assertTrue(nc.hasTransport(TRANSPORT_CELLULAR));
         assertFalse(nc.hasTransport(TRANSPORT_WIFI));
-        for (int cap : mConfig.getAllExposedCapabilities()) {
+        for (int cap : mConfig.getExposedCapabilities()) {
             assertTrue(nc.hasCapability(cap));
         }
 

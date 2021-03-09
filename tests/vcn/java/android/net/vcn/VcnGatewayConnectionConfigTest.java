@@ -150,7 +150,7 @@ public class VcnGatewayConnectionConfigTest {
         assertEquals(CONTROL_PLANE_CONFIG, config.getControlPlaneConfig());
         assertFalse(CONTROL_PLANE_CONFIG == config.getControlPlaneConfig());
 
-        assertArrayEquals(RETRY_INTERVALS_MS, config.getRetryIntervalsMs());
+        assertArrayEquals(RETRY_INTERVALS_MS, config.getRetryInterval());
         assertEquals(MAX_MTU, config.getMaxMtu());
     }
 
