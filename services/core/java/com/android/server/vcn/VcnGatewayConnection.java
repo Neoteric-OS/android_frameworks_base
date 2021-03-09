@@ -614,7 +614,7 @@ public class VcnGatewayConnection extends StateMachine {
                         mVcnContext,
                         subscriptionGroup,
                         mLastSnapshot,
-                        mConnectionConfig.getAllUnderlyingCapabilities(),
+                        mConnectionConfig.getRequiredUnderlyingCapabilities(),
                         mUnderlyingNetworkTrackerCallback);
         mIpSecManager = mVcnContext.getContext().getSystemService(IpSecManager.class);
 
@@ -1710,7 +1710,7 @@ public class VcnGatewayConnection extends StateMachine {
 
         private long getNextRetryIntervalsMs() {
             final int retryDelayIndex = mFailedAttempts - 1;
-            final long[] retryIntervalsMs = mConnectionConfig.getRetryIntervalsMs();
+            final long[] retryIntervalsMs = mConnectionConfig.getRetryInterval();
 
             // Repeatedly use last item in retry timeout list.
             if (retryDelayIndex >= retryIntervalsMs.length) {
@@ -1733,7 +1733,7 @@ public class VcnGatewayConnection extends StateMachine {
         builder.addCapability(NET_CAPABILITY_NOT_SUSPENDED);
 
         // Add exposed capabilities
-        for (int cap : gatewayConnectionConfig.getAllExposedCapabilities()) {
+        for (int cap : gatewayConnectionConfig.getExposedCapabilities()) {
             builder.addCapability(cap);
         }
 
@@ -1978,7 +1978,7 @@ public class VcnGatewayConnection extends StateMachine {
                 VcnContext vcnContext,
                 ParcelUuid subscriptionGroup,
                 TelephonySubscriptionSnapshot snapshot,
-                Set<Integer> requiredUnderlyingNetworkCapabilities,
+                int[] requiredUnderlyingNetworkCapabilities,
                 UnderlyingNetworkTrackerCallback callback) {
             return new UnderlyingNetworkTracker(
                     vcnContext,
