@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b73b2ff0_bea380c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-03-10T22:44:34Z",
+      "side": 1,
+      "message": "Synced with Janis and he pointed out we also want a feature version from Strongbox. Nice catch. I\u0027ll follow up with a new CL for that.",
+      "revId": "51ffbada5a5a8995d07fa9b71007d35d1b6685a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
