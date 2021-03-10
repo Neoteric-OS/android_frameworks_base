@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0012b51f_a9e9ffd9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-10T00:44:26Z",
+      "side": 1,
+      "message": "couple nits",
+      "revId": "6b5acce43688d0dd9515b058fc9c0993719352a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d3f4fcc_e38592f0",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-10T00:44:26Z",
+      "side": 1,
+      "message": "nit: since the VCN_MANAGED thing is done with wanted-negative capabilities, it\u0027d be nice to have a comment on this method explaining how someone should set this bit (without having to think to hard about it). Also, there are 3 possibilities, and a boolean can only express 2 of them, so explaining which 2 are available would be nice. (the answer is:\n1) \"don\u0027t care\" behavior\n2) \"only match VCN-underlying\" behavior.\n\nThere is no way here to specify a request that wants VCN/top-level networks.",
+      "range": {
+        "startLine": 136,
+        "startChar": 65,
+        "endLine": 136,
+        "endChar": 82
+      },
+      "revId": "6b5acce43688d0dd9515b058fc9c0993719352a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e194856_470e8e34",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-10T00:44:26Z",
+      "side": 1,
+      "message": "nit, naming. I think for consistenty this would be getBaseNetworkRequest()",
+      "range": {
+        "startLine": 136,
+        "startChar": 35,
+        "endLine": 136,
+        "endChar": 56
+      },
+      "revId": "6b5acce43688d0dd9515b058fc9c0993719352a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
