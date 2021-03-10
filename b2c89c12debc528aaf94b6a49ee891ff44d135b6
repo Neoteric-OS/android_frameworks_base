@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bfefb1d_caaa36e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T08:08:39Z",
+      "side": 1,
+      "message": "LGTM but this should in module-lib-current, not system-current.",
+      "revId": "b2c89c12debc528aaf94b6a49ee891ff44d135b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7de3e83a_346492fe",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T08:08:39Z",
+      "side": 1,
+      "message": "This should be MODULE_LIBRARIES instead.",
+      "range": {
+        "startLine": 62,
+        "startChar": 24,
+        "endLine": 62,
+        "endChar": 39
+      },
+      "revId": "b2c89c12debc528aaf94b6a49ee891ff44d135b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
