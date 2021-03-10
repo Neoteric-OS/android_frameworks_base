@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7b10f5c_dd3c4cb2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-10T06:27:31Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "b2279388c6bd89f14c8c3c01b6a44c8638c1c738",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc7d3cc0_5a97d67a",
+        "filename": "tests/net/integration/util/com/android/server/NetworkAgentWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-10T06:27:31Z",
+      "side": 1,
+      "message": "nit: Maybe not for this CL. But I don\u0027t see how CSTest can easily change extraInfo for testing.\nIf so, if we have 2 cellular agents with 2 different apn.\nWe cannot assert they have different apn.\nIt looks like we could pass NAC through TestNetworkAgentWrapper, but it seems unnecessary for now.",
+      "range": {
+        "startLine": 130,
+        "startChar": 37,
+        "endLine": 130,
+        "endChar": 40
+      },
+      "revId": "b2279388c6bd89f14c8c3c01b6a44c8638c1c738",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
