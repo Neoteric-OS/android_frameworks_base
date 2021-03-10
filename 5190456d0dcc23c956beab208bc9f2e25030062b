@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "04142631_84ba9258",
+        "filename": "core/java/android/net/netstats/provider/INetworkStatsProviderCallback.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T14:24:08Z",
+      "side": 1,
+      "message": "Per comment on other CL: AFAICS this behaves exactly the same as notifyLimitReached. So would suggest not adding  new method all, and just using notifyLimitReached instead. If you like you can rename notifyLimitReached to notifyWarningOrLimitReached (I think that would be cleared, but up to you).",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "5190456d0dcc23c956beab208bc9f2e25030062b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fa94542e_221ef4f1",
         "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
         "patchSetId": 4
