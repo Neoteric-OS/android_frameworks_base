@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c30ccb8e_c373065d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-10T01:01:18Z",
+      "side": 1,
+      "message": "Do we use the proto functionality ? If not, maybe we don\u0027t need this ?",
+      "range": {
+        "startLine": 893,
+        "startChar": 36,
+        "endLine": 893,
+        "endChar": 45
+      },
+      "revId": "e3c29bc684c8283a916e7a9ca165c684f74e0e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
