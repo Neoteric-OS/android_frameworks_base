@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "869070a1_54d46063",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T13:58:32Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "5190456d0dcc23c956beab208bc9f2e25030062b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa94542e_221ef4f1",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T13:58:32Z",
+      "side": 1,
+      "message": "Did you mean, \"MUST NOT issue\" both function calls when the limit is reached? The custom implementation is the one calling this method, right? But it sounds like this comment might not be necessary anyway, see below.",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 165,
+        "endChar": 46
+      },
+      "revId": "5190456d0dcc23c956beab208bc9f2e25030062b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65a6e733_1c05cd4a",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T13:58:32Z",
+      "side": 1,
+      "message": "I don\u0027t think this text is necessary here? Suggestion on what to write below.",
+      "range": {
+        "startLine": 165,
+        "startChar": 48,
+        "endLine": 167,
+        "endChar": 18
+      },
+      "revId": "5190456d0dcc23c956beab208bc9f2e25030062b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f2069cf_9477f48c",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T13:58:32Z",
+      "side": 1,
+      "message": "Why not?\n\nWe can have the system only ever call onSetWarningAndLimit. If the provider implements that, great, we\u0027re done. If the provider does not implement that, then the default implementation will throw away the warning and call the provider\u0027s onSetLimit method.\n\nIf the provider is only allowed to implement one of these two methods, then a single provider cannot both support the warning and support R.\n\nWe could perhaps instead say, \"if a provider implements onSetWarningAndLimit, the system will not call onSetLimit\".",
+      "range": {
+        "startLine": 207,
+        "startChar": 27,
+        "endLine": 208,
+        "endChar": 46
+      },
+      "revId": "5190456d0dcc23c956beab208bc9f2e25030062b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a6a90cd_f2fc81ed",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T13:58:32Z",
+      "side": 1,
+      "message": "Seems hard to follow. Suggest rewording:\n\nWhen this method is called, the implementation should behave as follows:\n1. If {@code warningBytes} is reached on {@code iface}, block all further traffic\n   on {@code iface} and call {@link NetworkStatsProvider@notifyWarningReached()}.\n2. If {@code} limitBytes is reached on {@code iface}, block all further traffic on\n   {@code iface} and call {@link NetworkStatsProvider#notifyLimitReached()}.",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 56
+      },
+      "revId": "5190456d0dcc23c956beab208bc9f2e25030062b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d10d2e57_7927ba14",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T13:58:32Z",
+      "side": 1,
+      "message": "Pre-existing, but... why does this take an interface, when notifyLimitReached does not take an interface?\n\n- If there are different limits for each interface, then when notifyLimitReached is called, how does the system know which interface hit the limit?\n- If there is only one limit for all interfaces, then why pass the interface in when setting the limit?\n\nIs it because calling notifyXyzReached doesn\u0027t actually notify of anything, but just requests that NSS recalculate all data and re-process all warnings and limits? If so, how does that work? Does calling notifyXyzReached just cause NSS to request a poll?",
+      "range": {
+        "startLine": 225,
+        "startChar": 37,
+        "endLine": 225,
+        "endChar": 58
+      },
+      "revId": "5190456d0dcc23c956beab208bc9f2e25030062b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
