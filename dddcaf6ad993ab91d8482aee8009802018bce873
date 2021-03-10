@@ -119,6 +119,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d959cab3_d0eede3e",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-10T03:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ae3d1de_d6e4048b",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 41
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9973dea_16d81dc2",
@@ -132,6 +156,30 @@
       "writtenOn": "2020-10-29T05:32:58Z",
       "side": 1,
       "message": "Update",
+      "range": {
+        "startLine": 159,
+        "startChar": 50,
+        "endLine": 159,
+        "endChar": 60
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4f30f4b_3d174277",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-10T03:35:22Z",
+      "side": 1,
+      "message": "The new API is descibed in next line. Or you mean something else is missing?",
+      "parentUuid": "a9973dea_16d81dc2",
       "range": {
         "startLine": 159,
         "startChar": 50,
@@ -165,6 +213,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f047ab5f_87a43c82",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-10T03:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fdcabd7_ff96d038",
+      "range": {
+        "startLine": 160,
+        "startChar": 59,
+        "endLine": 160,
+        "endChar": 84
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad8d8394_f929035e",
@@ -188,6 +260,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a643305e_f3813188",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-10T03:35:22Z",
+      "side": 1,
+      "message": "Done\nSee if it works for you.",
+      "parentUuid": "ad8d8394_f929035e",
+      "range": {
+        "startLine": 161,
+        "startChar": 46,
+        "endLine": 161,
+        "endChar": 47
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "921a9c74_8f805e05",
@@ -201,6 +297,30 @@
       "writtenOn": "2020-10-29T05:32:58Z",
       "side": 1,
       "message": "We\u0027ll have to make sure aosp/1470723 is ready to submit before I can give you API+1. I can\u0027t approve the API until the implementation is there.",
+      "range": {
+        "startLine": 1696,
+        "startChar": 12,
+        "endLine": 1696,
+        "endChar": 45
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6087aa71_9eca4632",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1696,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-10T03:35:22Z",
+      "side": 1,
+      "message": "Got it.\nIIUC We\u0027ll need 3 patches ready before this can be merged, which are:\n 1. NPMS change to send command: aosp/1470723\n 2. OffloadController implementation: on-going\n 3. NSS, NPMS change to handle warning reached: on-going.",
+      "parentUuid": "921a9c74_8f805e05",
       "range": {
         "startLine": 1696,
         "startChar": 12,
