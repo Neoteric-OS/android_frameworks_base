@@ -329,6 +329,30 @@
       },
       "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b427ebb_6bdaf5ec",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1696,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-10T07:51:10Z",
+      "side": 1,
+      "message": "Detach this from API change to prevent depenency problem of these modules.\nWill expose to system API at the top of the CLs.",
+      "parentUuid": "6087aa71_9eca4632",
+      "range": {
+        "startLine": 1696,
+        "startChar": 12,
+        "endLine": 1696,
+        "endChar": 45
+      },
+      "revId": "dddcaf6ad993ab91d8482aee8009802018bce873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
