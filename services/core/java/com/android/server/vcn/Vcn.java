@@ -30,6 +30,7 @@ import android.net.vcn.VcnManager.VcnErrorCode;
 import android.os.Handler;
 import android.os.Message;
 import android.os.ParcelUuid;
+import android.util.ArraySet;
 import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -191,6 +192,13 @@ public class Vcn extends Handler {
         return Collections.unmodifiableSet(new HashSet<>(mVcnGatewayConnections.values()));
     }
 
+    /** Get current Configs and Gateways for testing purposes */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public Map<VcnGatewayConnectionConfig, VcnGatewayConnection>
+            getVcnGatewayConnectionConfigMap() {
+        return Collections.unmodifiableMap(mVcnGatewayConnections);
+    }
+
     private class VcnNetworkRequestListener implements VcnNetworkProvider.NetworkRequestListener {
         @Override
         public void onNetworkRequested(@NonNull NetworkRequest request, int score, int providerId) {
@@ -237,9 +245,33 @@ public class Vcn extends Handler {
 
         mConfig = config;
 
-        // TODO(b/181815405): Reevaluate active VcnGatewayConnection(s)
+        if (mIsActive.getAndSet(true)) {
+            // VCN is already active - teardown any GatewayConnections whose configs have been
+            // removed and get all current requests
+            final Set<VcnGatewayConnectionConfig> configsToRemove = new ArraySet<>();
+            for (final VcnGatewayConnectionConfig gatewayConnectionConfig :
+                    mVcnGatewayConnections.keySet()) {
+                if (!mConfig.getGatewayConnectionConfigs().contains(gatewayConnectionConfig)) {
+                    configsToRemove.add(gatewayConnectionConfig);
+                }
+            }
 
-        if (!mIsActive.getAndSet(true)) {
+            for (final VcnGatewayConnectionConfig configToRemove : configsToRemove) {
+                final VcnGatewayConnection gatewayConnection =
+                        mVcnGatewayConnections.remove(configToRemove);
+                if (gatewayConnection == null) {
+                    Slog.wtf(
+                            getLogTag(), "Found gatewayConnectionConfig without GatewayConnection");
+                    continue;
+                }
+
+                gatewayConnection.teardownAsynchronously();
+            }
+
+            // Trigger a re-evaluation of all NetworkRequests (to make sure any that can be
+            // satisfied start a new GatewayConnection)
+            mVcnContext.getVcnNetworkProvider().resendAllRequests(mRequestListener);
+        } else {
             // If this VCN was not previously active, it is exiting Safe Mode. Re-register the
             // request listener to get NetworkRequests again (and all cached requests).
             mVcnContext.getVcnNetworkProvider().registerListener(mRequestListener);
@@ -252,14 +284,13 @@ public class Vcn extends Handler {
         for (VcnGatewayConnection gatewayConnection : mVcnGatewayConnections.values()) {
             gatewayConnection.teardownAsynchronously();
         }
+        mVcnGatewayConnections.clear();
 
         mIsActive.set(false);
     }
 
     private void handleEnterSafeMode() {
         handleTeardown();
-
-        mVcnGatewayConnections.clear();
 
         mVcnCallback.onEnteredSafeMode();
     }
