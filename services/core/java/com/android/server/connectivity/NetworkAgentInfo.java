@@ -596,9 +596,9 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         }
 
         @Override
-        public void sendNetworkInfo(@NonNull NetworkInfo info) {
+        public void sendNetworkInfo(@NonNull NetworkInfo info, int teardownDelayMs) {
             Objects.requireNonNull(info);
-            mHandler.obtainMessage(NetworkAgent.EVENT_NETWORK_INFO_CHANGED,
+            mHandler.obtainMessage(NetworkAgent.EVENT_NETWORK_INFO_CHANGED, teardownDelayMs, 0,
                     new Pair<>(NetworkAgentInfo.this, info)).sendToTarget();
         }
 

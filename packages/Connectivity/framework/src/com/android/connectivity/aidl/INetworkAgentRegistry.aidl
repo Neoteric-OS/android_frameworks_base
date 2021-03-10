@@ -30,7 +30,7 @@ oneway interface INetworkAgentRegistry {
     void sendNetworkCapabilities(in NetworkCapabilities nc);
     void sendLinkProperties(in LinkProperties lp);
     // TODO: consider replacing this by "markConnected()" and removing
-    void sendNetworkInfo(in NetworkInfo info);
+    void sendNetworkInfo(in NetworkInfo info, int teardownDelayMs);
     void sendScore(int score);
     void sendExplicitlySelected(boolean explicitlySelected, boolean acceptPartial);
     void sendSocketKeepaliveEvent(int slot, int reason);

@@ -2918,7 +2918,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
                 case NetworkAgent.EVENT_NETWORK_INFO_CHANGED: {
                     NetworkInfo info = (NetworkInfo) arg.second;
-                    updateNetworkInfo(nai, info);
+                    updateNetworkInfo(nai, info, msg.arg1);
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_SCORE_CHANGED: {
@@ -3479,7 +3479,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void handleNetworkAgentDisconnected(Message msg) {
         NetworkAgentInfo nai = (NetworkAgentInfo) msg.obj;
         if (mNetworkAgentInfos.contains(nai)) {
-            disconnectAndDestroyNetwork(nai);
+            disconnectAndDestroyNetwork(nai, 0 /* teardownDelayMs */);
         }
     }
 
@@ -3494,7 +3494,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // Destroys a network, remove references to it from the internal state managed by
     // ConnectivityService, free its interfaces and clean up.
     // Must be called on the Handler thread.
-    private void disconnectAndDestroyNetwork(NetworkAgentInfo nai) {
+    private void disconnectAndDestroyNetwork(NetworkAgentInfo nai, int teardownDelayMs) {
         ensureRunningOnConnectivityServiceThread();
         if (DBG) {
             log(nai.toShortString() + " disconnected, was satisfying " + nai.numNetworkRequests());
@@ -3567,6 +3567,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mLegacyTypeTracker.remove(nai, wasDefault);
         rematchAllNetworksAndRequests();
         mLingerMonitor.noteDisconnect(nai);
+
+        // TODO: stop hardcoding.
+        if (teardownDelayMs < 0) teardownDelayMs = 0;
+        if (teardownDelayMs > 5000) teardownDelayMs = 5000;
+        if (teardownDelayMs == 0) {
+            destroyNetwork(nai);
+        } else {
+            try {
+                mNetd.networkSetPermissionForNetwork(nai.network.netId, INetd.PERMISSION_SYSTEM);
+            } catch (RemoteException e) {
+                Log.d(TAG, "Error marking network restricted during teardown: " + e);
+            }
+            mHandler.postDelayed(() -> destroyNetwork(nai), teardownDelayMs);
+        }
+    }
+
+    private void destroyNetwork(NetworkAgentInfo nai) {
         if (nai.created) {
             // Tell netd to clean up the configuration for this network
             // (routing rules, DNS, etc).
@@ -7730,7 +7747,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return newInfo;
     }
 
-    private void updateNetworkInfo(NetworkAgentInfo networkAgent, NetworkInfo info) {
+    private void updateNetworkInfo(NetworkAgentInfo networkAgent, NetworkInfo info,
+            int teardownDelayMs) {
         final NetworkInfo newInfo = mixInInfo(networkAgent, info);
 
         final NetworkInfo.State state = newInfo.getState();
@@ -7814,7 +7832,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (networkAgent.isVPN()) {
                 updateUids(networkAgent, networkAgent.networkCapabilities, null);
             }
-            disconnectAndDestroyNetwork(networkAgent);
+            disconnectAndDestroyNetwork(networkAgent, teardownDelayMs);
             if (networkAgent.isVPN()) {
                 // As the active or bound network changes for apps, broadcast the default proxy, as
                 // apps may need to update their proxy data. This is called after disconnecting from
@@ -7826,6 +7844,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 state == NetworkInfo.State.SUSPENDED)) {
             mLegacyTypeTracker.update(networkAgent);
         }
+    }
+
+    private void updateNetworkInfo(NetworkAgentInfo networkAgent, NetworkInfo info) {
+        updateNetworkInfo(networkAgent, info, 0);
     }
 
     private void updateNetworkScore(@NonNull final NetworkAgentInfo nai, final int score) {

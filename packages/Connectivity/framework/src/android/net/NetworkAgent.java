@@ -800,10 +800,27 @@ public abstract class NetworkAgent {
      * the network is torn down and this agent can no longer be used.
      */
     public void unregister() {
+        unregister(0);
+    }
+
+    /**
+     * Unregister this network agent with a grace period to complete networking.
+     *
+     * This signals the network has disconnected and ends its lifecycle. After this is called,
+     * the network is torn down and this agent can no longer be used. The native network
+     * corresponding to this NetworkAgent will immediately be marked restricted and unavailable to
+     * unprivileged apps, but will be left connected until the specified time has elapsed. Until
+     * teardown is complete, the interface cannot be reused for another network.
+     *
+     * TODO: how does the transport know when it can reuse the interface? Need a callback.
+     *
+     * @hide TODO: expose as system API
+     */
+    public void unregister(@IntRange(from=0, to=5000) int teardownDelayMs) {
         // When unregistering an agent nobody should use the extrainfo (or reason) any more.
         mNetworkInfo.setDetailedState(NetworkInfo.DetailedState.DISCONNECTED, null /* reason */,
                 null /* extraInfo */);
-        queueOrSendNetworkInfo(mNetworkInfo);
+        queueOrSendNetworkInfo(mNetworkInfo, teardownDelayMs);
     }
 
     /**
@@ -854,8 +871,12 @@ public abstract class NetworkAgent {
         queueOrSendNetworkInfo(new NetworkInfo(networkInfo));
     }
 
+    private void queueOrSendNetworkInfo(NetworkInfo networkInfo, int teardownDelayMs) {
+        queueOrSendMessage(reg -> reg.sendNetworkInfo(networkInfo, teardownDelayMs));
+    }
+
     private void queueOrSendNetworkInfo(NetworkInfo networkInfo) {
-        queueOrSendMessage(reg -> reg.sendNetworkInfo(networkInfo));
+        queueOrSendNetworkInfo(networkInfo, 0);
     }
 
     /**
