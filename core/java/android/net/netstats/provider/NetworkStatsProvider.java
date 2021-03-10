@@ -147,10 +147,7 @@ public abstract class NetworkStatsProvider {
 
     /**
      * Notify system that the warning set by {@code onSetWarningAndLimit} has been reached.
-     *
-     * @hide
      */
-    // TODO: Expose as system API.
     public void notifyWarningReached() {
         try {
             getProviderCallbackBinderOrThrow().notifyWarningReached();
@@ -198,8 +195,9 @@ public abstract class NetworkStatsProvider {
      * @param iface the interface requiring the operation.
      * @param quotaBytes the quota defined as the number of bytes, starting from zero and counting
      *                   from now. A value of {@link #QUOTA_UNLIMITED} indicates there is no limit.
+     * @deprecated Use {@link #onSetWarningAndLimit(String, long, long)} instead.
      */
-    // TODO: deprecate this once onSetWarningAndLimit is ready.
+    @Deprecated
     public abstract void onSetLimit(@NonNull String iface, long quotaBytes);
 
     /**
@@ -218,10 +216,7 @@ public abstract class NetworkStatsProvider {
      *                     there is no warning.
      * @param limitBytes the limit defined as the number of bytes, starting from zero and counting
      *                   from now. A value of {@link #QUOTA_UNLIMITED} indicates there is no limit.
-     *
-     * @hide
      */
-    // TODO: Expose as system API.
     public void onSetWarningAndLimit(@NonNull String iface, long warningBytes, long limitBytes) {
         // Backward compatibility for those who didn't override this function.
         onSetLimit(iface, limitBytes);
