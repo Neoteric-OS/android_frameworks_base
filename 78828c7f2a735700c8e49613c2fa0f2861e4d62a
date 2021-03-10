@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "55d6a9b7_1ce08141",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3282,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-10T21:13:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97a96111_57b84a2d",
+      "range": {
+        "startLine": 3282,
+        "startChar": 26,
+        "endLine": 3282,
+        "endChar": 45
+      },
+      "revId": "78828c7f2a735700c8e49613c2fa0f2861e4d62a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7dfc0451_df09eb4b",
@@ -71,6 +95,30 @@
       "writtenOn": "2021-03-10T17:20:03Z",
       "side": 1,
       "message": "Since this is verbose and you use it twice, consider using a local:\n\n    final boolean includeLocationInfoFlag \u003d\n            (nri.mCallbackFlags \u0026 NetworkCallback.FLAG_INCLUDE_LOCATION_INFO) !\u003d 0;",
+      "range": {
+        "startLine": 7065,
+        "startChar": 33,
+        "endLine": 7066,
+        "endChar": 84
+      },
+      "revId": "78828c7f2a735700c8e49613c2fa0f2861e4d62a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eabfe9f8_cd3343ca",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 7066,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-10T21:13:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dfc0451_df09eb4b",
       "range": {
         "startLine": 7065,
         "startChar": 33,
@@ -104,6 +152,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "824830db_ef13fb1c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2423,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-10T21:13:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b40b3ab_b92f9701",
+      "range": {
+        "startLine": 2423,
+        "startChar": 8,
+        "endLine": 2423,
+        "endChar": 22
+      },
+      "revId": "78828c7f2a735700c8e49613c2fa0f2861e4d62a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eded6b46_3fb63aa4",
@@ -117,6 +189,30 @@
       "writtenOn": "2021-03-10T17:20:03Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 2429,
+        "startChar": 8,
+        "endLine": 2429,
+        "endChar": 22
+      },
+      "revId": "78828c7f2a735700c8e49613c2fa0f2861e4d62a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c849cd61_50d140e1",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2429,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-10T21:13:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eded6b46_3fb63aa4",
       "range": {
         "startLine": 2429,
         "startChar": 8,

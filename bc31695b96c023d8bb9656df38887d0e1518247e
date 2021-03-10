@@ -326,6 +326,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "777eaf95_77dd4ba2",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3279,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-10T21:13:40Z",
+      "side": 1,
+      "message": "The 2 fields are:\n- mCaptivePortalData\n- mCaptivePortalApiUrl\n\nI might be wrong in my initial assessment. This is probably location sensitive (from the url, you can figure out location), but this might also be just privileged data. Do we want apps other than settings to get this info? If no, then nothing needs to change.",
+      "parentUuid": "b6386ed0_f956f1ff",
+      "range": {
+        "startLine": 3279,
+        "startChar": 58,
+        "endLine": 3279,
+        "endChar": 82
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "764e5a58_bfadba97",
         "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
         "patchSetId": 5
