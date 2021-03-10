@@ -112,6 +112,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe29ba77_a6515e3f",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1406,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T17:20:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e7f35aa_981aded8",
+      "range": {
+        "startLine": 1404,
+        "startChar": 24,
+        "endLine": 1406,
+        "endChar": 87
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d561ac42_d563b7f4",
@@ -161,6 +185,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "17b982f9_ee0b58b5",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3253,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T17:20:03Z",
+      "side": 1,
+      "message": "There appears to be very little precedent for this:\n\n$ grep FLAG_NONE frameworks/base/core/api/*current.txt \nframeworks/base/core/api/current.txt:    field public static final int CREATE_FLAG_NONE \u003d 0; // 0x0\n$\n\nso I would hide it.",
+      "parentUuid": "b83220fe_1c32c520",
+      "range": {
+        "startLine": 3250,
+        "startChar": 0,
+        "endLine": 3253,
+        "endChar": 46
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8d4d3541_17091900",
         "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
         "patchSetId": 6
@@ -196,6 +244,30 @@
       "side": 1,
       "message": "Made it generic. Please review my response for the same comment from jchalard@ regarding existing fields in LinkProperties.",
       "parentUuid": "8d4d3541_17091900",
+      "range": {
+        "startLine": 3273,
+        "startChar": 32,
+        "endLine": 3273,
+        "endChar": 82
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62af3305_3ef6ba33",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3273,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T17:20:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f286e67c_c8fd4d2e",
       "range": {
         "startLine": 3273,
         "startChar": 32,
@@ -478,6 +550,30 @@
       "side": 1,
       "message": "there are 2 fields which are gated using this:\n- Owner uid (not needed by settings)\n- WifiInfo (just added in S, settings doesn\u0027t use this).\n\nSysui \u0026 setting are planning to switch to the callback to retrieve WifiInfo. They can get the location sensitive data there.",
       "parentUuid": "cc5b1cdd_9a885ec4",
+      "range": {
+        "startLine": 1686,
+        "startChar": 36,
+        "endLine": 1686,
+        "endChar": 76
+      },
+      "revId": "b3a15fb207fbe3b6be3516ed43fb1bb69e160760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53abd11c_d72dfd1a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1686,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T17:20:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ec37af6d_445b90fe",
       "range": {
         "startLine": 1686,
         "startChar": 36,

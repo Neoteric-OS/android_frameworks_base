@@ -302,6 +302,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b6386ed0_f956f1ff",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3279,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T17:20:03Z",
+      "side": 1,
+      "message": "Both of these options seem reasonable to me. We can also do #1 now and #2 in the future.\n\nWhat are the sensitive fields?",
+      "parentUuid": "10caa9c0_f80d85fb",
+      "range": {
+        "startLine": 3279,
+        "startChar": 58,
+        "endLine": 3279,
+        "endChar": 82
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "764e5a58_bfadba97",
         "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
         "patchSetId": 5
