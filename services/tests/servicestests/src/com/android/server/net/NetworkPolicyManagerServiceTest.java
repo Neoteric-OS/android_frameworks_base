@@ -1819,7 +1819,7 @@ public class NetworkPolicyManagerServiceTest {
         // yet reached.
         final NetworkPolicyManagerInternal npmi = LocalServices
                 .getService(NetworkPolicyManagerInternal.class);
-        npmi.onStatsProviderLimitReached("TEST");
+        npmi.onStatsProviderWarningAndLimitReached("TEST");
 
         // Verifies that the limit reached leads to a force update and new limit should be set.
         postMsgAndWaitForCompletion();

@@ -2076,14 +2076,16 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
         @Override
         public void notifyWarningReached() {
-            // TODO: Notify NPMS about this.
+            Log.d(TAG, mTag + ": notifyWarningReached");
+            LocalServices.getService(NetworkPolicyManagerInternal.class)
+                    .onStatsProviderWarningAndLimitReached(mTag);
         }
 
         @Override
         public void notifyLimitReached() {
             Log.d(TAG, mTag + ": notifyLimitReached");
             LocalServices.getService(NetworkPolicyManagerInternal.class)
-                    .onStatsProviderLimitReached(mTag);
+                    .onStatsProviderWarningAndLimitReached(mTag);
         }
 
         @Override
