@@ -29,6 +29,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -187,7 +188,6 @@ public class VcnTest {
             NetworkRequestListener requestListener,
             Set<VcnGatewayConnection> expectedGatewaysTornDown) {
         assertFalse(mVcn.isActive());
-        assertTrue(mVcn.getVcnGatewayConnections().isEmpty());
         for (final VcnGatewayConnection gatewayConnection : expectedGatewaysTornDown) {
             verify(gatewayConnection).teardownAsynchronously();
         }
@@ -238,6 +238,51 @@ public class VcnTest {
     }
 
     @Test
+    public void testGatewayQuitWhileInactive() {
+        final NetworkRequestListener requestListener = verifyAndGetRequestListener();
+        final Set<VcnGatewayConnection> gatewayConnections =
+                new ArraySet<>(startGatewaysAndGetGatewayConnections(requestListener));
+
+        mVcn.teardownAsynchronously();
+        mTestLooper.dispatchAll();
+
+        final VcnGatewayStatusCallback statusCallback = mGatewayStatusCallbackCaptor.getValue();
+        statusCallback.onQuit();
+        mTestLooper.dispatchAll();
+
+        // Verify that the VCN requests the networkRequests be resent
+        assertEquals(1, mVcn.getVcnGatewayConnections().size());
+        verify(mVcnNetworkProvider, never()).resendAllRequests(requestListener);
+    }
+
+    @Test
+    public void testUpdateConfigReevaluatesGatewayConnections() {
+        final NetworkRequestListener requestListener = verifyAndGetRequestListener();
+        startGatewaysAndGetGatewayConnections(requestListener);
+        assertEquals(2, mVcn.getVcnGatewayConnectionConfigMap().size());
+
+        // Create VcnConfig with only one VcnGatewayConnectionConfig so a gateway connection is torn
+        // down
+        final VcnGatewayConnectionConfig activeConfig =
+                VcnGatewayConnectionConfigTest.buildTestConfigWithExposedCaps(TEST_CAPS[0]);
+        final VcnGatewayConnectionConfig removedConfig =
+                VcnGatewayConnectionConfigTest.buildTestConfigWithExposedCaps(TEST_CAPS[1]);
+        final VcnConfig updatedConfig =
+                new VcnConfig.Builder(mContext).addGatewayConnectionConfig(activeConfig).build();
+
+        mVcn.updateConfig(updatedConfig);
+        mTestLooper.dispatchAll();
+
+        final VcnGatewayConnection activeGatewayConnection =
+                mVcn.getVcnGatewayConnectionConfigMap().get(activeConfig);
+        final VcnGatewayConnection removedGatewayConnection =
+                mVcn.getVcnGatewayConnectionConfigMap().get(removedConfig);
+        verify(activeGatewayConnection, never()).teardownAsynchronously();
+        verify(removedGatewayConnection).teardownAsynchronously();
+        verify(mVcnNetworkProvider).resendAllRequests(requestListener);
+    }
+
+    @Test
     public void testUpdateConfigExitsSafeMode() {
         final NetworkRequestListener requestListener = verifyAndGetRequestListener();
         final Set<VcnGatewayConnection> gatewayConnections =
@@ -261,8 +306,8 @@ public class VcnTest {
         verify(mVcnNetworkProvider, times(2)).registerListener(eq(requestListener));
         assertTrue(mVcn.isActive());
         for (final int[] caps : TEST_CAPS) {
-            // Expect each gateway connection created on initial startup, and again with new configs
-            verify(mDeps, times(2))
+            // Expect each gateway connection created only on initial startup
+            verify(mDeps)
                     .newVcnGatewayConnection(
                             eq(mVcnContext),
                             eq(TEST_SUB_GROUP),
