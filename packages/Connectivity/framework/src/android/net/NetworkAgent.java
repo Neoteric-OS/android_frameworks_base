@@ -185,6 +185,20 @@ public abstract class NetworkAgent {
     public static final int EVENT_UNDERLYING_NETWORKS_CHANGED = BASE + 5;
 
     /**
+     * Sent by the NetworkAgent to ConnectivityService to pass the current value of the teardown
+     * delay.
+     * arg1 = teardown delay in milliseconds
+     * @hide
+     */
+    public static final int EVENT_TEARDOWN_DELAY_CHANGED = BASE + 6;
+
+    /**
+     * The maximum value for the teardown delay, in milliseconds.
+     * @hide
+     */
+    public static final int MAX_TEARDOWN_DELAY_MS = 5000;
+
+    /**
      * Sent by ConnectivityService to the NetworkAgent to inform the agent of the
      * networks status - whether we could use the network or could not, due to
      * either a bad network configuration (no internet link) or captive portal.
@@ -196,7 +210,6 @@ public abstract class NetworkAgent {
      * @hide
      */
     public static final int CMD_REPORT_NETWORK_STATUS = BASE + 7;
-
 
     /**
      * Network validation suceeded.
@@ -849,6 +862,29 @@ public abstract class NetworkAgent {
         mNetworkInfo.setDetailedState(NetworkInfo.DetailedState.DISCONNECTED, null /* reason */,
                 null /* extraInfo */);
         queueOrSendNetworkInfo(mNetworkInfo);
+    }
+
+    /**
+     * Sets the value of the teardown delay.
+     *
+     * The teardown delay is the time between when the network disconnects and when the native
+     * network corresponding to this {@code NetworkAgent} is destroyed. By default, the native
+     * network is destroyed immediately. If {@code teardownDelayMs} is non-zero, then when this
+     * network disconnects, the system will instead immediately mark the network as restricted
+     * and unavailable to privileged apps, but will defer destroying the native network until the
+     * teardown delay timer expires.
+     *
+     * The interfaces in use by this network will remain in use until the native network is
+     * destroyed and cannot be reused until {@link #onNetworkDisconnected()} is called.
+     *
+     * This method may be called at any time while the network is connected. It has no effect if
+     * the network is already disconnected and the teardown delay timer is running.
+     *
+     * @param teardownDelayMs the teardown delay to set, or 0 to disable teardown delay.
+     */
+    public void setTeardownDelayMs(
+            @IntRange(from = 0, to = MAX_TEARDOWN_DELAY_MS) int teardownDelayMs) {
+        queueOrSendMessage(reg -> reg.sendTeardownDelayMs(teardownDelayMs));
     }
 
     /**
