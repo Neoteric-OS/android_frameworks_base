@@ -51,6 +51,7 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -235,6 +236,34 @@ public class VcnTest {
                         eq(mSubscriptionSnapshot),
                         any(),
                         mGatewayStatusCallbackCaptor.capture());
+    }
+
+    @Test
+    public void testUpdateConfigReevaluatesGatewayConnections() {
+        final NetworkRequestListener requestListener = verifyAndGetRequestListener();
+        startGatewaysAndGetGatewayConnections(requestListener);
+        final Map<VcnGatewayConnectionConfig, VcnGatewayConnection> initialConfigs =
+                mVcn.getVcnGatewayConnectionConfigMap();
+        assertEquals(2, initialConfigs.size());
+
+        // Create VcnConfig with only one VcnGatewayConnectionConfig so a gateway connection is torn
+        // down
+        final VcnGatewayConnectionConfig activeConfig =
+                VcnGatewayConnectionConfigTest.buildTestConfigWithExposedCaps(TEST_CAPS[0]);
+        final VcnGatewayConnectionConfig removedConfig =
+                VcnGatewayConnectionConfigTest.buildTestConfigWithExposedCaps(TEST_CAPS[1]);
+        final VcnConfig updatedConfig =
+                new VcnConfig.Builder(mContext).addGatewayConnectionConfig(activeConfig).build();
+
+        mVcn.updateConfig(updatedConfig);
+        mTestLooper.dispatchAll();
+
+        assertTrue(mVcn.getVcnGatewayConnectionConfigMap().containsKey(activeConfig));
+        assertFalse(mVcn.getVcnGatewayConnectionConfigMap().containsKey(removedConfig));
+        verify(mVcnNetworkProvider).resendAllRequests(requestListener);
+
+        final VcnGatewayConnection removedGatewayConnection = initialConfigs.get(removedConfig);
+        verify(removedGatewayConnection).teardownAsynchronously();
     }
 
     @Test
