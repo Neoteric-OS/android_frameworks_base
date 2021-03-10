@@ -33,6 +33,23 @@
       "message": "+mpietal for power menu, since aran is ooo",
       "revId": "6c39af0cc6cb14d6ace92fb0dce11bc1d594a633",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9cbbca3_d311f3ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2021-03-10T16:58:05Z",
+      "side": 1,
+      "message": "I don\u0027t see any harm in adding a timeout to the global actions menus",
+      "revId": "6c39af0cc6cb14d6ace92fb0dce11bc1d594a633",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
