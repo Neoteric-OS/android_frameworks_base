@@ -20,7 +20,7 @@ import android.net.TrafficStats;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.android.internal.util.TrafficStatsConstants;
+import com.android.net.module.util.TrafficStatsConstants;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -40,10 +40,10 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.android.internal.annotations.GuardedBy;
-import com.android.internal.util.TrafficStatsConstants;
 import com.android.net.IProxyCallback;
 import com.android.net.IProxyPortListener;
 import com.android.net.IProxyService;
+import com.android.net.module.util.TrafficStatsConstants;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

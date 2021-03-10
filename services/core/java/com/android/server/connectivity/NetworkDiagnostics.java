@@ -36,7 +36,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.android.internal.util.IndentingPrintWriter;
-import com.android.internal.util.TrafficStatsConstants;
+import com.android.net.module.util.TrafficStatsConstants;
 
 import libcore.io.IoUtils;
 

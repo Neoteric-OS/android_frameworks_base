@@ -20,7 +20,7 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.os.SystemClock;
 import android.util.Log;
 
-import com.android.internal.util.TrafficStatsConstants;
+import com.android.net.module.util.TrafficStatsConstants;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
