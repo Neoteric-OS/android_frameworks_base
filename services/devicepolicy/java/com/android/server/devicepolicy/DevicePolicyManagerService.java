@@ -87,6 +87,8 @@ import static android.app.admin.DevicePolicyManager.WIPE_SILENTLY;
 import static android.content.pm.PackageManager.MATCH_DIRECT_BOOT_AWARE;
 import static android.content.pm.PackageManager.MATCH_DIRECT_BOOT_UNAWARE;
 import static android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES;
+import static android.net.ConnectivityManager.USER_PREFERENCE_ENTERPRISE;
+import static android.net.ConnectivityManager.USER_PREFERENCE_SYSTEM_DEFAULT;
 import static android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK;
 import static android.os.UserManagerInternal.OWNER_TYPE_DEVICE_OWNER;
 import static android.os.UserManagerInternal.OWNER_TYPE_PROFILE_OWNER;
@@ -4264,6 +4266,15 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         updatePasswordQualityCacheForUserGroup(
                 userId == UserHandle.USER_SYSTEM ? UserHandle.USER_ALL : userId);
 
+        if (mUserManager.isManagedProfile(userId)) {
+            mInjector.binderWithCleanCallingIdentity(() ->
+                    mInjector.getConnectivityManager().setNetworkPreferenceForUser(
+                            UserHandle.of(userId),
+                            /* current value of the setting, either USER_PREFERENCE_ENTERPRISE if
+                               the slice is needed, or USER_PREFERENCE_SYSTEM_DEFAULT otherwise */,
+                            null /* executor */, null /* listener */));
+        }
+
         startOwnerService(userId, "start-user");
     }
 
@@ -4274,6 +4285,15 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
 
     @Override
     void handleStopUser(int userId) {
+        if (mUserManager.isManagedProfile(userId)) {
+            // When a user is stopped and no apps from the work profile can run, there is no
+            // point in requesting specific networking for the apps on the profile.
+            mInjector.binderWithCleanCallingIdentity(() ->
+                    mInjector.getConnectivityManager().setNetworkPreferenceForUser(
+                            UserHandle.of(userId), USER_PREFERENCE_SYSTEM_DEFAULT,
+                            null /* executor */, null /* listener */));
+        }
+
         stopOwnerService(userId, "stop-user");
     }
 
