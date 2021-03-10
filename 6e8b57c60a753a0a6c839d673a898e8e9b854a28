@@ -35,6 +35,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8f312e9_959abe40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-03-10T21:10:48Z",
+      "side": 1,
+      "message": "Hmm, the linked bug doesn\u0027t appear to be associated with any official SC hotlists or SC approved features.  Could you help link this work to an approved feature, or wait and land this after the sc-dev branch has been removed from the automerger path?",
+      "revId": "6e8b57c60a753a0a6c839d673a898e8e9b854a28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "289ae369_57d52a0c",
