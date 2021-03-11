@@ -22,6 +22,30 @@
       },
       "revId": "a5c0592ad01145c86f8006f5a37617e4e56350bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "299fe8a4_e8798b78",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2021-03-11T22:34:44Z",
+      "side": 1,
+      "message": "Actually this is done in the getState method of AndroidKeyStoreMaintenance.java. Do you suggest to move it here?",
+      "parentUuid": "f299a1a2_861a84d6",
+      "range": {
+        "startLine": 200,
+        "startChar": 16,
+        "endLine": 200,
+        "endChar": 67
+      },
+      "revId": "a5c0592ad01145c86f8006f5a37617e4e56350bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
