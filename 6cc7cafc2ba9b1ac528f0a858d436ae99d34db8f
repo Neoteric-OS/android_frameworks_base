@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36a709f6_782bb336",
+        "filename": "media/jni/soundpool/Sound.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-03-11T16:58:52Z",
+      "side": 1,
+      "message": "Perhaps, use \u0027%zd\u0027 w/o coercing to int (as in the changed lines above), same for the log lines below.",
+      "range": {
+        "startLine": 128,
+        "startChar": 51,
+        "endLine": 128,
+        "endChar": 71
+      },
+      "revId": "6cc7cafc2ba9b1ac528f0a858d436ae99d34db8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
