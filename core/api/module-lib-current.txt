@@ -16,6 +16,14 @@ package android.app.usage {
 
 }
 
+package android.content {
+
+  public abstract class Context {
+    field public static final String TEST_NETWORK_SERVICE = "test_network";
+  }
+
+}
+
 package android.net {
 
   public static final class IpSecManager.UdpEncapsulationSocket implements java.lang.AutoCloseable {
