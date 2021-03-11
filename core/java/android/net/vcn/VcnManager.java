@@ -433,7 +433,7 @@ public class VcnManager {
          * @param statusCode the code for the status change encountered by this {@link
          *     VcnStatusCallback}'s subscription group.
          */
-        public abstract void onVcnStatusChanged(@VcnStatusCode int statusCode);
+        public abstract void onStatusChanged(@VcnStatusCode int statusCode);
 
         /**
          * Invoked when a VCN Gateway Connection corresponding to this callback's subscription group
@@ -573,7 +573,7 @@ public class VcnManager {
         @Override
         public void onVcnStatusChanged(@VcnStatusCode int statusCode) {
             Binder.withCleanCallingIdentity(
-                    () -> mExecutor.execute(() -> mCallback.onVcnStatusChanged(statusCode)));
+                    () -> mExecutor.execute(() -> mCallback.onStatusChanged(statusCode)));
         }
 
         // TODO(b/180521637): use ServiceSpecificException for safer Exception 'parceling'
