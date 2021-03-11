@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aeefc117_ef094c5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T03:31:25Z",
+      "side": 1,
+      "message": "The only test failing is LooperStatsTest:\n\nhttps://android-build.googleplex.com/builds/tests/view?invocationId\u003dI05000007846555469\u0026testResultId\u003dTR87418547821528831\n\nwhich has been broken at HEAD for a while:\n\nhttps://android-build.googleplex.com/builds/tests/view?invocationId\u003dI05000007846555469\u0026testResultId\u003dTR40518547821528622",
+      "revId": "e93309bff78b8098bb16a9a2c60a070e4f8dfd22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
