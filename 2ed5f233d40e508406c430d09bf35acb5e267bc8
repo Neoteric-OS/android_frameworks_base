@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "754748ef_6aac1d72",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:20:07Z",
+      "side": 1,
+      "message": "LGTM assuming comments addresse.",
+      "revId": "2ed5f233d40e508406c430d09bf35acb5e267bc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8ddf6b8_37f10f3c",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:20:07Z",
+      "side": 1,
+      "message": "This is actually not a preference for the system default network: if a VPN is up the traffic will go on the VPN. Rename to USER_NETWORK_PREFERENCE_DEFAULT?",
+      "range": {
+        "startLine": 971,
+        "startChar": 28,
+        "endLine": 971,
+        "endChar": 58
+      },
+      "revId": "2ed5f233d40e508406c430d09bf35acb5e267bc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "836c62e4_b00758c6",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:20:07Z",
+      "side": 1,
+      "message": "Is USER_ necessary here? I\u0027d remove for a couple of reasons:\n\n1. This is not actually user preference in the sense of the user of the device, it\u0027s DPM preference. If by \"user\" you mean user in the sense of UserHandle, then maybe we should call it \"PROFILE\".\n2. In theory, these preference values could have exactly the same meanning if applied to the whole device in DO mode (which we might want to do in the future).\n\nSo I think this should be NETWORK_PREFERENCE_ENTERPRISE or PREFERENCE_ENTERPRISE.",
+      "range": {
+        "startLine": 981,
+        "startChar": 28,
+        "endLine": 981,
+        "endChar": 33
+      },
+      "revId": "2ed5f233d40e508406c430d09bf35acb5e267bc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b456577_af8b5d1d",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:20:07Z",
+      "side": 1,
+      "message": "Should this be called UserNetworkPreference? (and similarly, the constants USER_NETWORK_PREFERENCE_ENTERPRISE...). Or just NETWORK_PREFERENCE actually, see below.",
+      "range": {
+        "startLine": 989,
+        "startChar": 22,
+        "endLine": 989,
+        "endChar": 36
+      },
+      "revId": "2ed5f233d40e508406c430d09bf35acb5e267bc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a77e5a39_7dd599e4",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 5071,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:20:07Z",
+      "side": 1,
+      "message": "networks matching a",
+      "range": {
+        "startLine": 5071,
+        "startChar": 58,
+        "endLine": 5071,
+        "endChar": 77
+      },
+      "revId": "2ed5f233d40e508406c430d09bf35acb5e267bc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

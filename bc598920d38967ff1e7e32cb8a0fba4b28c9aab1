@@ -142,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eaf2a37_26e4536e",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5060,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:20:07Z",
+      "side": 1,
+      "message": "SGTM. Let\u0027s see what the pod says.",
+      "parentUuid": "1baf76bf_309cbbe3",
+      "range": {
+        "startLine": 5060,
+        "startChar": 26,
+        "endLine": 5060,
+        "endChar": 34
+      },
+      "revId": "bc598920d38967ff1e7e32cb8a0fba4b28c9aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d665e3be_279cbd13",
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "As you mention, I don\u0027t think we can resolve this in code review, so let\u0027s discuss with Product.\n\nFor now as you might have seen, the code rejects calls to this for non-work profile, because I liked to restrict this as much as possible for now. Robert also thought this was a reasonable limitation, and it\u0027s one that we can remove in a Mainline update.\n\nLet\u0027s check with Product.",
       "parentUuid": "d665e3be_279cbd13",
+      "range": {
+        "startLine": 5067,
+        "startChar": 44,
+        "endLine": 5067,
+        "endChar": 77
+      },
+      "revId": "bc598920d38967ff1e7e32cb8a0fba4b28c9aab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c80d04e3_68548526",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5067,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:20:07Z",
+      "side": 1,
+      "message": "Ack. In any case, if we do implement this, the caller can always pass in UserHandle.ALL.",
+      "parentUuid": "48fd2092_5fffbadf",
       "range": {
         "startLine": 5067,
         "startChar": 44,
