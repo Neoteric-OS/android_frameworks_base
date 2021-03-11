@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da3f14d8_4655e8a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T01:44:57Z",
+      "side": 1,
+      "message": "API LGTM assuming FLAG_NONE is hidden.",
+      "revId": "9b5a5efc6019ebae7b9e4bb5885902db4babc35b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
