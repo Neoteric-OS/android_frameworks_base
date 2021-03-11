@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2137c844_f7e6e23f",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1561157
+      },
+      "writtenOn": "2021-03-11T08:00:29Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem like all packages in mUserStates.get(userId) are hibernated. Shouldn\u0027t we only return the number of packages that are mUserStates.get(userId).get(packageName).hibernated \u003d\u003d true?",
+      "range": {
+        "startLine": 299,
+        "startChar": 12,
+        "endLine": 299,
+        "endChar": 50
+      },
+      "revId": "33d4e2e5a94f1aec9d9d4cfa524051b7606de189",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "501e0e29_f77e0c2a",
+        "filename": "services/tests/servicestests/src/com/android/server/apphibernation/AppHibernationServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1561157
+      },
+      "writtenOn": "2021-03-11T08:00:29Z",
+      "side": 1,
+      "message": "Maybe we can add a third package which is not hibernated.",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 86
+      },
+      "revId": "33d4e2e5a94f1aec9d9d4cfa524051b7606de189",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
