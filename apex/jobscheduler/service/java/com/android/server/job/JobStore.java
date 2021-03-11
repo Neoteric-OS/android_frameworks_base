@@ -529,21 +529,48 @@ public final class JobStore {
             return copy;
         }
 
+        private long getNetworkTransportTypes(NetworkRequest network) {
+            long transportType = 0;
+            for (int b = 0; b < 64; b++) {
+                if (network.hasTransport(b)) transportType |= (1L << b);
+            }
+            return transportType;
+        }
+
+        private long getNetworkCapabilities(NetworkRequest network) {
+            long capabilities = 0;
+            for (int b = 0; b < 64; b++) {
+                if (network.hasCapability(b)) capabilities |= (1L << b);
+            }
+            return capabilities;
+        }
+
+        private long getNetworkUnwantedCapabilities(NetworkRequest network) {
+            long unwantedCapabilities = 0;
+            for (int b = 0; b < 64; b++) {
+                if (network.hasUnwantedCapability(b)) unwantedCapabilities |= (1L << b);
+            }
+            return unwantedCapabilities;
+        }
+
         /**
          * Write out a tag with data identifying this job's constraints. If the constraint isn't here
          * it doesn't apply.
+         * TODO: Update this code to use proper serialization for NetworkRequest, because currently
+         *       store is not including everything (like, UIDs, bandwidth, signal strength etc. are
+         *       lost).
          */
         private void writeConstraintsToXml(XmlSerializer out, JobStatus jobStatus) throws IOException {
             out.startTag(null, XML_TAG_PARAMS_CONSTRAINTS);
             if (jobStatus.hasConnectivityConstraint()) {
                 final NetworkRequest network = jobStatus.getJob().getRequiredNetwork();
                 out.attribute(null, "net-capabilities", Long.toString(
-                        BitUtils.packBits(network.networkCapabilities.getCapabilities())));
+                        getNetworkCapabilities(network)));
                 out.attribute(null, "net-unwanted-capabilities", Long.toString(
-                        BitUtils.packBits(network.networkCapabilities.getUnwantedCapabilities())));
+                        getNetworkUnwantedCapabilities(network)));
 
                 out.attribute(null, "net-transport-types", Long.toString(
-                        BitUtils.packBits(network.networkCapabilities.getTransportTypes())));
+                        getNetworkTransportTypes(network)));
             }
             if (jobStatus.hasIdleConstraint()) {
                 out.attribute(null, "idle", Boolean.toString(true));
