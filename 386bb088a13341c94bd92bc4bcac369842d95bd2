@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e866e69_b9467d84",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9076,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T14:24:32Z",
+      "side": 1,
+      "message": "b/182460808",
+      "parentUuid": "02b79430_f4187667",
+      "range": {
+        "startLine": 9075,
+        "startChar": 41,
+        "endLine": 9076,
+        "endChar": 33
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "feb9221e_4c8205c1",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-11T08:48:53Z",
       "side": 1,
       "message": "managed",
+      "range": {
+        "startLine": 9115,
+        "startChar": 66,
+        "endLine": 9115,
+        "endChar": 70
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0090ab5_b1011e75",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9115,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T14:24:32Z",
+      "side": 1,
+      "message": "Done, but this is documented to mean the same thing, e.g. in the javadoc of UserManager#USER_TYPE_PROFILE_MANAGED and other places.\n\nI believe I used \"work profile\" in many places in the test – do you want me to go back and change all this ? I think it\u0027s probably not worth the time.",
+      "parentUuid": "feb9221e_4c8205c1",
       "range": {
         "startLine": 9115,
         "startChar": 66,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "543f47ac_7ae7e39e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9134,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T14:24:32Z",
+      "side": 1,
+      "message": "It\u0027s done in createDefaultNetworkCapabilitiesForUidRange, as you\u0027d expect.",
+      "parentUuid": "14c8d5f5_c6c47954",
+      "range": {
+        "startLine": 9134,
+        "startChar": 66,
+        "endLine": 9134,
+        "endChar": 67
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b10d3ffc_aabcd525",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-03-11T08:48:53Z",
       "side": 1,
       "message": "Nit: extra space.",
+      "range": {
+        "startLine": 9154,
+        "startChar": 67,
+        "endLine": 9154,
+        "endChar": 68
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb1b5a85_f87c805c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9154,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T14:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b10d3ffc_aabcd525",
       "range": {
         "startLine": 9154,
         "startChar": 67,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fe0ae25_c23e13d1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9161,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T14:24:32Z",
+      "side": 1,
+      "message": "Done with comments. As you guessed, a given request ID can only be a member of one NRI. Most obvious reason is the long-standing member :\n\n    private final HashMap\u003cNetworkRequest, NetworkRequestInfo\u003e mNetworkRequests \u003d new HashMap\u003c\u003e();\n\nThere is another important reason : the NetworkRequest in the default NRI won\u0027t have the right UIDs.",
+      "parentUuid": "d1614a35_63caae4d",
+      "range": {
+        "startLine": 9161,
+        "startChar": 20,
+        "endLine": 9161,
+        "endChar": 42
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a638d9a_acccad5a",
@@ -156,6 +276,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61a84af1_3a6d6ace",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9188,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T14:24:32Z",
+      "side": 1,
+      "message": "It should not change anything because it does not trigger a rematch until the new set of defaults is in place.\n\nAt some point during the development of PANS, this kind of usage could trigger blips in the callbacks (we thought it was acceptable), but I had a few bugfixes to PANS before this work (that my unit tests had me realize) that also happen to fix the blips.",
+      "parentUuid": "0a638d9a_acccad5a",
+      "range": {
+        "startLine": 9188,
+        "startChar": 8,
+        "endLine": 9188,
+        "endChar": 50
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a09636fe_22be3df6",
@@ -169,6 +313,30 @@
       "writtenOn": "2021-03-11T08:48:53Z",
       "side": 1,
       "message": "Do you want to say something about threading? It looks like this object is immutable, but I\u0027m not sure about the semantics of Collections.unmodifiableList. If it wraps the passed-in list in such a way that the caller can still modify it, then perhaps it\u0027s not actually immutable?",
+      "range": {
+        "startLine": 31,
+        "startChar": 47,
+        "endLine": 31,
+        "endChar": 48
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ab28844_945e58d2",
+        "filename": "services/core/java/com/android/server/connectivity/ProfileNetworkPreferences.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T14:24:32Z",
+      "side": 1,
+      "message": "Collections.unmodifiableList will wrap the underlying collection, so while the caller can be assured the callee can\u0027t modify a map created this way, the callee can\u0027t rely on the collection never changing. That\u0027s one of the reasons nobody does it like this any more.\n\nThe standard way of guaranteeing an actually immutable map is to create a copy first, as in\n\n  Collections.unmodifiableList(new ArrayList(list));\n\nThis is vulnerable to ConcurrentModificationException in list.\n\nIn this case I think it is fine as is, because the constructor calling this is private anyway and the caller throws away its ref to the list it built. So I think this is local enough to be safe.\n\nCollections.EMPTY_LIST, for its part, is really immutable.",
+      "parentUuid": "a09636fe_22be3df6",
       "range": {
         "startLine": 31,
         "startChar": 47,
