@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40508205_d00229fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1373412
+      },
+      "writtenOn": "2021-03-11T11:54:14Z",
+      "side": 1,
+      "message": "mts/networking/gce-unittests-r-build-module-on-qt-platform already failing",
+      "revId": "13c2ee55f7b8e0255be167fee8f8443a59e1bef7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
