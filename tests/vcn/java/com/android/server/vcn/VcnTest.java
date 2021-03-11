@@ -328,4 +328,14 @@ public class VcnTest {
                             any());
         }
     }
+
+    @Test
+    public void testIgnoreNetworkRequestWhileInactive() {
+        mVcn.setIsActive(false /* isActive */);
+
+        final NetworkRequestListener requestListener = verifyAndGetRequestListener();
+        triggerVcnRequestListeners(requestListener);
+
+        verify(mDeps, never()).newVcnGatewayConnection(any(), any(), any(), any(), any());
+    }
 }

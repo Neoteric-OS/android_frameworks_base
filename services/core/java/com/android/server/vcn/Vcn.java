@@ -232,28 +232,8 @@ public class Vcn extends Handler {
         }
     }
 
-    private boolean canProcessEvent(int what) {
-        // Can process all events while active, but only some events while not active.
-        if (isActive()) {
-            return true;
-        }
-
-        switch (what) {
-            case MSG_EVENT_CONFIG_UPDATED: // fallthrough
-            case MSG_EVENT_GATEWAY_CONNECTION_QUIT:
-                return true;
-
-            default:
-                return false;
-        }
-    }
-
     @Override
     public void handleMessage(@NonNull Message msg) {
-        if (!canProcessEvent(msg.what)) {
-            return;
-        }
-
         switch (msg.what) {
             case MSG_EVENT_CONFIG_UPDATED:
                 handleConfigUpdated((VcnConfig) msg.obj);
