@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "273b0718_1c07abd7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T14:59:46Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "bb5d578fef069391639014d9458165f451d87e8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11f2d0b9_aa4900f8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 11027,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T14:59:46Z",
+      "side": 1,
+      "message": "when...?",
+      "range": {
+        "startLine": 11027,
+        "startChar": 7,
+        "endLine": 11027,
+        "endChar": 11
+      },
+      "revId": "bb5d578fef069391639014d9458165f451d87e8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abc746fd_afddfe9d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 11135,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T14:59:46Z",
+      "side": 1,
+      "message": "Testing this case sounds super useful because it will help expose any codepaths that silently rely on the system default network. Would advise testing as many APIs here as you can, including legacy APIs like getActiveNetworkInfo, getNetworkInfo(int), etc.\n\nIdeally we\u0027d be able to use your new doAsUid lambda to call these APIs from the perspective of a UID in the work profile and see what happens :-)\n\nWe definitely need to ensure that getActiveNetworkInfo works correctly, and probably things like getActiveNetworkForUid as well.\n\nNo need to add coverage in this CL, but we do need to add coverage before ship. If you want to add coverage in this CL, and the methods don\u0027t work yet, you can always add assertions that check for the incorrect behaviour and add comments / TODOs to fix.",
+      "range": {
+        "startLine": 11134,
+        "startChar": 75,
+        "endLine": 11135,
+        "endChar": 81
+      },
+      "revId": "bb5d578fef069391639014d9458165f451d87e8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc94b34f_b2681b74",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 11140,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T14:59:46Z",
+      "side": 1,
+      "message": "Perhaps not for this CL, but:\n\n    assertNull(getActiveNetworkInfo);\n    doAsUid(UserHandle.getUid(testHandle, TEST_APP_ID),\n            () -\u003e assertEquals(workAgent2.getNetwork(), mCm.getActiveNetwork());\n    assertEquals(workAgent2.getNetwork(), mCm.getActiveNetworkForUid(...));",
+      "range": {
+        "startLine": 11140,
+        "startChar": 81,
+        "endLine": 11140,
+        "endChar": 82
+      },
+      "revId": "bb5d578fef069391639014d9458165f451d87e8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

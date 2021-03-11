@@ -337,6 +337,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "66e4cda1_e6558055",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 11111,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T14:59:46Z",
+      "side": 1,
+      "message": "Could this be a race? disconnectAndDestroyNetwork calls CALLBACK_LOST much earlier than it actually tells netd to destroy the network. Perhaps the one above works because assertNoCallback() internally calls waitForIdle?\n\nHopefully adding a waitForIdle here (with a comment explaining why it\u0027s necessary) will help.",
+      "parentUuid": "02f1a4f3_d1741fc6",
+      "range": {
+        "startLine": 11110,
+        "startChar": 0,
+        "endLine": 11111,
+        "endChar": 90
+      },
+      "revId": "7b16496af2c6713644e030b7c311ceb7c632245e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e7920f38_4a68d81b",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 12
@@ -372,6 +396,30 @@
       "side": 1,
       "message": "It differs in the important point that it does not connect a device-wide default network. It makes sure the callbacks are correctly accounted for if only the slice is available.\n\nI originally preferred to write this as a different test because I do think it\u0027s a pretty different thing to ensure, but in the latest patch set I added this use case at the bottom of the previous test. It removes a little bit duplication.",
       "parentUuid": "e7920f38_4a68d81b",
+      "range": {
+        "startLine": 11121,
+        "startChar": 16,
+        "endLine": 11121,
+        "endChar": 58
+      },
+      "revId": "7b16496af2c6713644e030b7c311ceb7c632245e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdf92d3c_e87d7249",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 11121,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T14:59:46Z",
+      "side": 1,
+      "message": "Much better, thanks!",
+      "parentUuid": "715709ee_adae4046",
       "range": {
         "startLine": 11121,
         "startChar": 16,
