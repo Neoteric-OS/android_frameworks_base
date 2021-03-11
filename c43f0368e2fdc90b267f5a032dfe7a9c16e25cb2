@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c47ba83d_3b75f126",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-03-11T19:39:20Z",
+      "side": 1,
+      "message": "Maybe extract methodName and reuse.",
+      "range": {
+        "startLine": 289,
+        "startChar": 37,
+        "endLine": 289,
+        "endChar": 73
+      },
+      "revId": "c43f0368e2fdc90b267f5a032dfe7a9c16e25cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
