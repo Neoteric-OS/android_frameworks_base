@@ -1418,6 +1418,7 @@ package android.app.usage {
 package android.apphibernation {
 
   public final class AppHibernationManager {
+    method @NonNull public java.util.List<java.lang.String> getHibernatingPackagesForUser();
     method public boolean isHibernatingForUser(@NonNull String);
     method public boolean isHibernatingGlobally(@NonNull String);
     method public void setHibernatingForUser(@NonNull String, boolean);

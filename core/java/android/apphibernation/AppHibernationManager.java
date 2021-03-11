@@ -23,6 +23,8 @@ import android.content.Context;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 
+import java.util.List;
+
 /**
  * This class provides an API surface for system apps to manipulate the app hibernation
  * state of a package for the user provided in the context.
@@ -102,6 +104,21 @@ public final class AppHibernationManager {
     public void setHibernatingGlobally(@NonNull String packageName, boolean isHibernating) {
         try {
             mIAppHibernationService.setHibernatingGlobally(packageName, isHibernating);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Get the hibernating packages for the user. This is equivalent to the list of packages for
+     * the user that return true for {@link #isHibernatingForUser}.
+     *
+     * @hide
+     */
+    @SystemApi
+    public @NonNull List<String> getHibernatingPackagesForUser() {
+        try {
+            return mIAppHibernationService.getHibernatingPackagesForUser(mContext.getUserId());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
