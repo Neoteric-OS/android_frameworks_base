@@ -29189,17 +29189,17 @@ package android.os {
     ctor public Binder();
     ctor public Binder(@Nullable String);
     method public void attachInterface(@Nullable android.os.IInterface, @Nullable String);
-    method public static final long clearCallingIdentity();
-    method public static final long clearCallingWorkSource();
+    method @dalvik.annotation.optimization.CriticalNative public static final long clearCallingIdentity();
+    method @dalvik.annotation.optimization.CriticalNative public static final long clearCallingWorkSource();
     method public void dump(@NonNull java.io.FileDescriptor, @Nullable String[]);
     method protected void dump(@NonNull java.io.FileDescriptor, @NonNull java.io.PrintWriter, @Nullable String[]);
     method public void dumpAsync(@NonNull java.io.FileDescriptor, @Nullable String[]);
     method public static final void flushPendingCommands();
-    method public static final int getCallingPid();
-    method public static final int getCallingUid();
+    method @dalvik.annotation.optimization.CriticalNative public static final int getCallingPid();
+    method @dalvik.annotation.optimization.CriticalNative public static final int getCallingUid();
     method public static final int getCallingUidOrThrow();
     method @NonNull public static final android.os.UserHandle getCallingUserHandle();
-    method public static final int getCallingWorkSourceUid();
+    method @dalvik.annotation.optimization.CriticalNative public static final int getCallingWorkSourceUid();
     method @Nullable public String getInterfaceDescriptor();
     method public boolean isBinderAlive();
     method public static final void joinThreadPool();
@@ -29208,8 +29208,8 @@ package android.os {
     method public boolean pingBinder();
     method @Nullable public android.os.IInterface queryLocalInterface(@NonNull String);
     method public static final void restoreCallingIdentity(long);
-    method public static final void restoreCallingWorkSource(long);
-    method public static final long setCallingWorkSourceUid(int);
+    method @dalvik.annotation.optimization.CriticalNative public static final void restoreCallingWorkSource(long);
+    method @dalvik.annotation.optimization.CriticalNative public static final long setCallingWorkSourceUid(int);
     method public final boolean transact(int, @NonNull android.os.Parcel, @Nullable android.os.Parcel, int) throws android.os.RemoteException;
     method public boolean unlinkToDeath(@NonNull android.os.IBinder.DeathRecipient, int);
   }
@@ -30390,12 +30390,12 @@ package android.os {
 
   public final class SystemClock {
     method @NonNull public static java.time.Clock currentGnssTimeClock();
-    method public static long currentThreadTimeMillis();
-    method public static long elapsedRealtime();
-    method public static long elapsedRealtimeNanos();
+    method @dalvik.annotation.optimization.CriticalNative public static long currentThreadTimeMillis();
+    method @dalvik.annotation.optimization.CriticalNative public static long elapsedRealtime();
+    method @dalvik.annotation.optimization.CriticalNative public static long elapsedRealtimeNanos();
     method public static boolean setCurrentTimeMillis(long);
     method public static void sleep(long);
-    method public static long uptimeMillis();
+    method @dalvik.annotation.optimization.CriticalNative public static long uptimeMillis();
   }
 
   public class TestLooperManager {
@@ -44430,7 +44430,7 @@ package android.util {
     method @NonNull public static String getStackTraceString(@Nullable Throwable);
     method public static int i(@Nullable String, @NonNull String);
     method public static int i(@Nullable String, @Nullable String, @Nullable Throwable);
-    method public static boolean isLoggable(@Nullable @Size(max=23, apis="..23") String, int);
+    method @dalvik.annotation.optimization.FastNative public static boolean isLoggable(@Nullable @Size(max=23, apis="..23") String, int);
     method public static int println(int, @Nullable String, @NonNull String);
     method public static int v(@Nullable String, @NonNull String);
     method public static int v(@Nullable String, @Nullable String, @Nullable Throwable);
