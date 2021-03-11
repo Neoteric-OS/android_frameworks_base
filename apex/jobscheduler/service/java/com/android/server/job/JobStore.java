@@ -529,21 +529,46 @@ public final class JobStore {
             return copy;
         }
 
+        private long getNetworkTransportTypes(NetworkRequest network) {
+            long transportType = 0;
+            for (int b = 0; b < 64; b++) {
+                if (network.hasTransport(b)) transportType |= (1L << b);
+            }
+            return transportType;
+        }
+
+        private long getNetworkCapabilities(NetworkRequest network) {
+            long capabilities = 0;
+            for (int b = 0; b < 64; b++) {
+                if (network.hasCapability(b)) capabilities |= (1L << b);
+            }
+            return capabilities;
+        }
+
+        private long getNetworkUnwantedCapabilities(NetworkRequest network) {
+            // NetworkRequests used here should not have unwanted capabilities.
+            // Using 0 for backwards compatibility with the XML format would
+            // be enough.
+            return 0;
+        }
+
         /**
          * Write out a tag with data identifying this job's constraints. If the constraint isn't here
          * it doesn't apply.
+         * TODO: Update this code to use proper serialization for NetworkRequest, because currently
+         *       store is not including everything (like, UIDs, bandwidth, signal strength etc. are
+         *       lost).
          */
         private void writeConstraintsToXml(XmlSerializer out, JobStatus jobStatus) throws IOException {
             out.startTag(null, XML_TAG_PARAMS_CONSTRAINTS);
             if (jobStatus.hasConnectivityConstraint()) {
                 final NetworkRequest network = jobStatus.getJob().getRequiredNetwork();
                 out.attribute(null, "net-capabilities", Long.toString(
-                        BitUtils.packBits(network.networkCapabilities.getCapabilities())));
+                        getNetworkCapabilities(network)));
                 out.attribute(null, "net-unwanted-capabilities", Long.toString(
-                        BitUtils.packBits(network.networkCapabilities.getUnwantedCapabilities())));
-
+                        getNetworkUnwantedCapabilities(network)));
                 out.attribute(null, "net-transport-types", Long.toString(
-                        BitUtils.packBits(network.networkCapabilities.getTransportTypes())));
+                        getNetworkTransportTypes(network)));
             }
             if (jobStatus.hasIdleConstraint()) {
                 out.attribute(null, "idle", Boolean.toString(true));
@@ -967,18 +992,22 @@ public final class JobStore {
                     null, "net-unwanted-capabilities");
             final String netTransportTypes = parser.getAttributeValue(null, "net-transport-types");
             if (netCapabilities != null && netTransportTypes != null) {
-                final NetworkRequest request = new NetworkRequest.Builder().build();
+                final NetworkRequest.Builder builder = new NetworkRequest.Builder()
+                        .clearCapabilities();
                 final long unwantedCapabilities = netUnwantedCapabilities != null
-                        ? Long.parseLong(netUnwantedCapabilities)
-                        : BitUtils.packBits(request.networkCapabilities.getUnwantedCapabilities());
-
+                        ? Long.parseLong(netUnwantedCapabilities) : 0;
                 // We're okay throwing NFE here; caught by caller
-                request.networkCapabilities.setCapabilities(
-                        BitUtils.unpackBits(Long.parseLong(netCapabilities)),
-                        BitUtils.unpackBits(unwantedCapabilities));
-                request.networkCapabilities.setTransportTypes(
-                        BitUtils.unpackBits(Long.parseLong(netTransportTypes)));
-                jobBuilder.setRequiredNetwork(request);
+                for (int capability : BitUtils.unpackBits(Long.parseLong(netCapabilities))) {
+                    builder.addCapability(capability);
+                }
+                for (int unwantedCapability : BitUtils.unpackBits(Long.parseLong(
+                        netUnwantedCapabilities))) {
+                    builder.addUnwantedCapability(unwantedCapability);
+                }
+                for (int transport : BitUtils.unpackBits(Long.parseLong(netTransportTypes))) {
+                    builder.addTransportType(transport);
+                }
+                jobBuilder.setRequiredNetwork(builder.build());
             } else {
                 // Read legacy values
                 val = parser.getAttributeValue(null, "connectivity");
