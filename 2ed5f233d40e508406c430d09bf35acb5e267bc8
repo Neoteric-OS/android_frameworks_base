@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "faac3666_57480750",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T15:07:58Z",
+      "side": 1,
+      "message": "Right. So this should be ...PREFERENCE_DEFAULT, not ...PREFERENCE_SYSTEM_DEFAULT",
+      "parentUuid": "f984b359_a7ea8623",
+      "range": {
+        "startLine": 971,
+        "startChar": 28,
+        "endLine": 971,
+        "endChar": 58
+      },
+      "revId": "2ed5f233d40e508406c430d09bf35acb5e267bc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "836c62e4_b00758c6",
         "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
         "patchSetId": 13
