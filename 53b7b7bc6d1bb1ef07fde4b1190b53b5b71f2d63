@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "272ebba8_4225d238",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1067098
+      },
+      "writtenOn": "2021-03-11T21:48:58Z",
+      "side": 1,
+      "message": "CL landed internally, PTAL",
+      "revId": "53b7b7bc6d1bb1ef07fde4b1190b53b5b71f2d63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
