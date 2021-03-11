@@ -159,6 +159,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4af70c5d_b919c3b4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 9053,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:48:53Z",
+      "side": 1,
+      "message": "This seems fine for now. I\u0027m wondering what will happen if the user is later deleted, but maybe that can\u0027t actually happen.",
+      "parentUuid": "e61db270_61aa3564",
+      "range": {
+        "startLine": 9053,
+        "startChar": 40,
+        "endLine": 9053,
+        "endChar": 59
+      },
+      "revId": "bc3580809fe36a5e46dedd658463410254021691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "513aacdf_a58bf4a6",

@@ -16,6 +16,167 @@
       "message": "LGTM assuming lorenzo\u0027s concern will be addressed.",
       "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02b79430_f4187667",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9076,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:48:53Z",
+      "side": 1,
+      "message": "This seems like a reasonable solution. We might want to attempt it in S. It would be pretty easy simply to encode the priority in the low-order digits of the rule priority. Then we could have CS define two simple priorities (OEM preference, per-profile preference, and maybe later per-UID preference or whatever). Shouldn\u0027t block this CL obviously.\n\nIf you think this is feasible, maybe file a bug for it to track?",
+      "range": {
+        "startLine": 9075,
+        "startChar": 41,
+        "endLine": 9076,
+        "endChar": 33
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "feb9221e_4c8205c1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9115,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:48:53Z",
+      "side": 1,
+      "message": "managed",
+      "range": {
+        "startLine": 9115,
+        "startChar": 66,
+        "endLine": 9115,
+        "endChar": 70
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14c8d5f5_c6c47954",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9134,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:48:53Z",
+      "side": 1,
+      "message": "Do we have to deal with NOT_VCN_MANAGED here, or does createDefaultNetworkCapabilitiesForUidRange take care of that for us?",
+      "range": {
+        "startLine": 9134,
+        "startChar": 66,
+        "endLine": 9134,
+        "endChar": 67
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b10d3ffc_aabcd525",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9154,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:48:53Z",
+      "side": 1,
+      "message": "Nit: extra space.",
+      "range": {
+        "startLine": 9154,
+        "startChar": 67,
+        "endLine": 9154,
+        "endChar": 68
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1614a35_63caae4d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9161,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:48:53Z",
+      "side": 1,
+      "message": "Out of curiosity, why not use the request inside mDefaultRequest? Does the ID need to be different? Must a given request ID be a member of at most one NRI? Might want to add a comment if we don\u0027t already have one somewhere else.",
+      "range": {
+        "startLine": 9161,
+        "startChar": 20,
+        "endLine": 9161,
+        "endChar": 42
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a638d9a_acccad5a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9188,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:48:53Z",
+      "side": 1,
+      "message": "Perhaps not for this CL, but it looks like the implementation of replaceDefaultNetworkRequestsForPreference removes all the old requests and adds the new ones. Could that mean that if a PC calls setPreference(ENTERPRISE); setPreference(ENTERPRISE); then the network will briefly go down while the second set of preferences is applied? Or does replaceDefaultNetworkRequestsForPreference not actually change anything because it does not trigger a rematch?",
+      "range": {
+        "startLine": 9188,
+        "startChar": 8,
+        "endLine": 9188,
+        "endChar": 50
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a09636fe_22be3df6",
+        "filename": "services/core/java/com/android/server/connectivity/ProfileNetworkPreferences.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T08:48:53Z",
+      "side": 1,
+      "message": "Do you want to say something about threading? It looks like this object is immutable, but I\u0027m not sure about the semantics of Collections.unmodifiableList. If it wraps the passed-in list in such a way that the caller can still modify it, then perhaps it\u0027s not actually immutable?",
+      "range": {
+        "startLine": 31,
+        "startChar": 47,
+        "endLine": 31,
+        "endChar": 48
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
