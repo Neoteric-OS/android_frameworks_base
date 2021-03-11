@@ -140,13 +140,15 @@ public class VcnTest {
         mTestLooper.dispatchAll();
     }
 
-    @Test
-    public void testSubscriptionSnapshotUpdatesVcnGatewayConnections() {
+    private void verifyUpdateSubscriptionSnapshotNotifiesConnectionGateways(boolean isActive) {
+        mVcn.setIsActive(isActive);
+
         final NetworkRequestListener requestListener = verifyAndGetRequestListener();
         startVcnGatewayWithCapabilities(requestListener, TEST_CAPS[0]);
 
+        // Expect gateway connections to be created here if the Vcn is active, else expect none.
         final Set<VcnGatewayConnection> gatewayConnections = mVcn.getVcnGatewayConnections();
-        assertFalse(gatewayConnections.isEmpty());
+        assertEquals(!isActive, gatewayConnections.isEmpty());
 
         final TelephonySubscriptionSnapshot updatedSnapshot =
                 mock(TelephonySubscriptionSnapshot.class);
@@ -157,6 +159,16 @@ public class VcnTest {
         for (final VcnGatewayConnection gateway : gatewayConnections) {
             verify(gateway).updateSubscriptionSnapshot(eq(updatedSnapshot));
         }
+    }
+
+    @Test
+    public void testSubscriptionSnapshotUpdatesVcnGatewayConnections() {
+        verifyUpdateSubscriptionSnapshotNotifiesConnectionGateways(true /* isActive */);
+    }
+
+    @Test
+    public void testSubscriptionSnapshotUpdatesVcnGatewayConnectionsWhileInactive() {
+        verifyUpdateSubscriptionSnapshotNotifiesConnectionGateways(false /* isActive */);
     }
 
     private void triggerVcnRequestListeners(NetworkRequestListener requestListener) {
@@ -315,5 +327,15 @@ public class VcnTest {
                             argThat(config -> Arrays.equals(caps, config.getExposedCapabilities())),
                             any());
         }
+    }
+
+    @Test
+    public void testIgnoreNetworkRequestWhileInactive() {
+        mVcn.setIsActive(false /* isActive */);
+
+        final NetworkRequestListener requestListener = verifyAndGetRequestListener();
+        triggerVcnRequestListeners(requestListener);
+
+        verify(mDeps, never()).newVcnGatewayConnection(any(), any(), any(), any(), any());
     }
 }

@@ -217,6 +217,12 @@ public class Vcn extends Handler {
         return Collections.unmodifiableMap(new HashMap<>(mVcnGatewayConnections));
     }
 
+    /** Set whether this Vcn is active for testing purposes */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public void setIsActive(boolean isActive) {
+        mIsActive.set(isActive);
+    }
+
     private class VcnNetworkRequestListener implements VcnNetworkProvider.NetworkRequestListener {
         @Override
         public void onNetworkRequested(@NonNull NetworkRequest request, int score, int providerId) {
@@ -226,28 +232,8 @@ public class Vcn extends Handler {
         }
     }
 
-    private boolean canProcessEvent(int what) {
-        // Can process all events while active, but only some events while not active.
-        if (isActive()) {
-            return true;
-        }
-
-        switch (what) {
-            case MSG_EVENT_CONFIG_UPDATED: // fallthrough
-            case MSG_EVENT_GATEWAY_CONNECTION_QUIT:
-                return true;
-
-            default:
-                return false;
-        }
-    }
-
     @Override
     public void handleMessage(@NonNull Message msg) {
-        if (!canProcessEvent(msg.what)) {
-            return;
-        }
-
         switch (msg.what) {
             case MSG_EVENT_CONFIG_UPDATED:
                 handleConfigUpdated((VcnConfig) msg.obj);
@@ -327,6 +313,11 @@ public class Vcn extends Handler {
 
     private void handleNetworkRequested(
             @NonNull NetworkRequest request, int score, int providerId) {
+        if (!isActive()) {
+            Slog.v(getLogTag(), "Received NetworkRequest while inactive. Ignore for now");
+            return;
+        }
+
         if (score > getNetworkScore()) {
             if (VDBG) {
                 Slog.v(
