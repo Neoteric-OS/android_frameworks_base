@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "878172f7_878b14ec",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4422,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T11:30:59Z",
+      "side": 0,
+      "message": "Why did you remove this ? It is still essential IIUC.",
+      "range": {
+        "startLine": 4422,
+        "startChar": 12,
+        "endLine": 4422,
+        "endChar": 31
+      },
+      "revId": "ddd2a13c38a9534c64cf1351f5622f0f1cdbe971",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

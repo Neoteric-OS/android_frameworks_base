@@ -16,6 +16,270 @@
       "message": "Android.bp adds net-tests-utils for HandlerUtils.",
       "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5288339_b3462f2d",
+        "filename": "core/java/android/net/util/MeteredMultipathPreferenceTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T11:30:59Z",
+      "side": 1,
+      "message": "This file has generally a lot too much duplication with MultinetworkPolicyTracker. Can you please make a base class or otherwise factorize the code ? For example I don\u0027t think it\u0027s acceptable that this class declares yet another copy of HandlerExecutor.\n\nGenerally : please don\u0027t copy-paste the code. Always try to factorize. Copy-pasted code results in bugs having to be found and fixed multiple times. It\u0027s a bad experience for users and a waste of our time.",
+      "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "879eda4a_9fe1387a",
+        "filename": "core/java/android/net/util/MeteredMultipathPreferenceTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T11:30:59Z",
+      "side": 1,
+      "message": "track",
+      "range": {
+        "startLine": 43,
+        "startChar": 14,
+        "endLine": 43,
+        "endChar": 20
+      },
+      "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f66dabf7_71f4c04a",
+        "filename": "core/java/android/net/util/MeteredMultipathPreferenceTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T11:30:59Z",
+      "side": 1,
+      "message": "Nullability of all these new members",
+      "range": {
+        "startLine": 49,
+        "startChar": 18,
+        "endLine": 49,
+        "endChar": 25
+      },
+      "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "447cd520_cf5f17c2",
+        "filename": "core/java/android/net/util/MeteredMultipathPreferenceTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T11:30:59Z",
+      "side": 1,
+      "message": "What\u0027s the threading model for this int ? What thread can access it ?\n\nBut better : why even have this ? It\u0027s write-only.",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 15
+      },
+      "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e15118b_daefdd7d",
+        "filename": "core/java/android/net/util/MeteredMultipathPreferenceTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T11:30:59Z",
+      "side": 1,
+      "message": "Nullability please",
+      "range": {
+        "startLine": 83,
+        "startChar": 45,
+        "endLine": 83,
+        "endChar": 52
+      },
+      "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcbc9d44_9aa86ebe",
+        "filename": "core/java/android/net/util/MeteredMultipathPreferenceTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T11:30:59Z",
+      "side": 1,
+      "message": "Can you please give this a name that clarifies what broadcast it will receive ?",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 26
+      },
+      "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3943bdb5_c9d0dbd0",
+        "filename": "core/java/android/net/util/MeteredMultipathPreferenceTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T11:30:59Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 143,
+        "endChar": 14
+      },
+      "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7536a12_6d6c245d",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T11:30:59Z",
+      "side": 1,
+      "message": "This looks awfully complex ; can\u0027t you just use a mock of MeteredMultipathPreferenceTracker and remove this class ?",
+      "range": {
+        "startLine": 501,
+        "startChar": 25,
+        "endLine": 501,
+        "endChar": 65
+      },
+      "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df519845_a7f2d0da",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1992,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T11:30:59Z",
+      "side": 1,
+      "message": "Can you have a small comments explaining why these particular values ?",
+      "range": {
+        "startLine": 1992,
+        "startChar": 40,
+        "endLine": 1992,
+        "endChar": 47
+      },
+      "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fd225f1_2efb33e6",
+        "filename": "tests/net/java/android/net/util/MeteredMultipathPreferenceTrackerTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T11:30:59Z",
+      "side": 1,
+      "message": "Please don\u0027t copy-paste this much code.",
+      "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb870b80_ee70ac8d",
+        "filename": "tests/net/java/android/net/util/MeteredMultipathPreferenceTrackerTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T11:30:59Z",
+      "side": 1,
+      "message": "Will this write to the real settings ? Or to some mock for the tests ? Tests should generally not alter the real device settings.",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 23
+      },
+      "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e8254ee_f848ddcf",
+        "filename": "tests/net/java/android/net/util/MeteredMultipathPreferenceTrackerTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T11:30:59Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this is really testing considering that the corresponding var is never used in the MeteredMultipathPreferenceTracker",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 45
+      },
+      "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
