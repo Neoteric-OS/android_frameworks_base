@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "599d574e_a3dc03c9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T13:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2531255_592e00e0",
+      "range": {
+        "startLine": 386,
+        "startChar": 12,
+        "endLine": 386,
+        "endChar": 73
+      },
+      "revId": "7b16496af2c6713644e030b7c311ceb7c632245e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4706662_c8dc1ab9",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-11T05:35:22Z",
       "side": 1,
       "message": "mEnterpriseCallback?\nmEnterpriseKeepupCallback?\nmEnterpriseRequestCallback?",
+      "range": {
+        "startLine": 10991,
+        "startChar": 32,
+        "endLine": 10991,
+        "endChar": 57
+      },
+      "revId": "7b16496af2c6713644e030b7c311ceb7c632245e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f576f98e_c2d2bdc9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 10991,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T13:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4706662_c8dc1ab9",
       "range": {
         "startLine": 10991,
         "startChar": 32,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f818b5bc_a68e6e01",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 10992,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T13:26:13Z",
+      "side": 1,
+      "message": "Went with setupEnterpriseNetwork, but this really also sets up other things for the \"preference for user\" tests, namely isManagedProfile() and create the UserHandle, so I\u0027m not sure it\u0027s much better.",
+      "parentUuid": "344e986a_2e440c4a",
+      "range": {
+        "startLine": 10992,
+        "startChar": 23,
+        "endLine": 10992,
+        "endChar": 49
+      },
+      "revId": "7b16496af2c6713644e030b7c311ceb7c632245e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c4c37c8_2225239b",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-03-11T05:35:22Z",
       "side": 1,
       "message": "The fact that we only have one UserManager is likely going to bite us soon, or may already be biting us.\n\nNot for this CL, but I think we should probably do something about this. Might it be as easy as the following?\n\n    SparseArray\u003cUserManager\u003e mUserManagers \u003d new SparseArray\u003c\u003e();\n\n    private class MockContext extends BroadcastInterceptingContext {\n\n        ...\n\n        @Override\n        public Context createContextAsUser(UserHandle user, int flags) {\n            final Context asUser \u003d mock(Context.class, AdditionalAnswers.delegatesTo(this));\n\n            doAnswer((inv) -\u003e {\n                final int userId \u003d UserHandle.getIdentifier(user));\n                if (!mUserManager.contains(userId)) {\n                    mUserManagers.put(userId, mock(UserManager.class));\n                }\n                return um;\n            }).when(asUser).getSystemService(UserManager.class);\n\n            doReturn(user).when(asUser).getUser();\n            return asUser;\n        }\n\n        ...\n    }",
+      "range": {
+        "startLine": 10993,
+        "startChar": 8,
+        "endLine": 10993,
+        "endChar": 61
+      },
+      "revId": "7b16496af2c6713644e030b7c311ceb7c632245e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ad043ac_0072db29",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 10993,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T13:26:13Z",
+      "side": 1,
+      "message": "Yes. Immediately this was fine because it doesn\u0027t matter what user manager we speak to, the only requirement from the test is that it says it\u0027s a managed profile (and this is only called for the relevant tests, so in practice it\u0027s not *too* bad).\n\nBut yeah it\u0027s setting up a lie across the board, and it\u0027s completely unrealistic (all profiles will declare themselves as work profiles) if we ever try to use this in a non-trivial way.\n\nThis has come up a number of times in Paul\u0027s code and here is what I came up with to solve it, which you can observe in a number of our tests already (here from NetworkNotificationManagerTest) :\n\n  final Context asUserCtx \u003d mock(Context.class, AdditionalAnswers.delegatesTo(mCtx));\n  doReturn(UserHandle.ALL).when(asUserCtx).getUser();\n  when(mCtx.createContextAsUser(eq(UserHandle.ALL), anyInt())).thenReturn(asUserCtx);\n  when(mCtx.getSystemService(eq(Context.NOTIFICATION_SERVICE)))\n        .thenReturn(mNotificationManager);\n\nI like this model a little bit better for its simplicity but it can\u0027t be applied here as is because mServiceContext is not an actual mock, so I went with your approach and an additional function to set whether WP for a given user.",
+      "parentUuid": "7c4c37c8_2225239b",
       "range": {
         "startLine": 10993,
         "startChar": 8,
@@ -127,6 +223,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dd8ec3a_f5736fe0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 11089,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T13:26:13Z",
+      "side": 1,
+      "message": "No AFAICT we don\u0027t call that when the default network is destroyed. Netd will cleanup on its own.",
+      "parentUuid": "113a1cc5_8cdd86c7",
+      "revId": "7b16496af2c6713644e030b7c311ceb7c632245e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad5b75e0_7d8a0863",
@@ -140,6 +254,30 @@
       "writtenOn": "2021-03-11T05:35:22Z",
       "side": 1,
       "message": "Consider asserting (here and previously) that mMockNetd.networkCreatePhysical is called.",
+      "range": {
+        "startLine": 11091,
+        "startChar": 39,
+        "endLine": 11091,
+        "endChar": 40
+      },
+      "revId": "7b16496af2c6713644e030b7c311ceb7c632245e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12a68e5c_dfce10b8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 11091,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T13:26:13Z",
+      "side": 1,
+      "message": "Done, but I don\u0027t want to go too far about testing too many unrelated things about netd in this test because it\u0027s not a test about network lifecycles. What this tests has, after all, nothing to do with creating networks or destroying networks – that should be covered in more targeted tests instead. I\u0027m a culprit here : I did, after all, decide to test for networkDestroy in places, but that\u0027s not really the job of this test. Kind of in the same way that I could test that the CONNECTIVITY_ACTION broadcast is sent, but don\u0027t because it makes the test more complex and it\u0027s unrelated ; we could come up with many things that should happen and could be tested.\n\nStill did it because I think it\u0027s pretty essential to this work to make sure the permission is correctly set.",
+      "parentUuid": "ad5b75e0_7d8a0863",
       "range": {
         "startLine": 11091,
         "startChar": 39,
@@ -173,6 +311,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02f1a4f3_d1741fc6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 11111,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T13:26:13Z",
+      "side": 1,
+      "message": "I don\u0027t understand well what it may mean to reset a mock that\u0027s in an inOrder, so I\u0027m not sure how it would help. But anyway I did check that it doesn\u0027t help.",
+      "parentUuid": "3a7010ad_2ecf90ae",
+      "range": {
+        "startLine": 11110,
+        "startChar": 0,
+        "endLine": 11111,
+        "endChar": 90
+      },
+      "revId": "7b16496af2c6713644e030b7c311ceb7c632245e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7920f38_4a68d81b",
@@ -186,6 +348,30 @@
       "writtenOn": "2021-03-11T05:35:22Z",
       "side": 1,
       "message": "How is this test different than the one above? I looked at it for a few minutes and wasn\u0027t able to spot the difference. Even if it is different, can you just fold it into the test above?",
+      "range": {
+        "startLine": 11121,
+        "startChar": 16,
+        "endLine": 11121,
+        "endChar": 58
+      },
+      "revId": "7b16496af2c6713644e030b7c311ceb7c632245e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "715709ee_adae4046",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 11121,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T13:26:13Z",
+      "side": 1,
+      "message": "It differs in the important point that it does not connect a device-wide default network. It makes sure the callbacks are correctly accounted for if only the slice is available.\n\nI originally preferred to write this as a different test because I do think it\u0027s a pretty different thing to ensure, but in the latest patch set I added this use case at the bottom of the previous test. It removes a little bit duplication.",
+      "parentUuid": "e7920f38_4a68d81b",
       "range": {
         "startLine": 11121,
         "startChar": 16,
@@ -219,6 +405,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc0184a5_73983d8a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 11223,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T13:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8139a00_434d9c71",
+      "range": {
+        "startLine": 11223,
+        "startChar": 43,
+        "endLine": 11223,
+        "endChar": 98
+      },
+      "revId": "7b16496af2c6713644e030b7c311ceb7c632245e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b95c8976_86fda358",
@@ -232,6 +442,30 @@
       "writtenOn": "2021-03-11T05:35:22Z",
       "side": 1,
       "message": "I think you could fold this test into testPreferenceForUserNetworkUpDown with only minimal additions. If so, I would recommend that. There might be a slight decrease in readability, but there will be better covereage, since the code is being exercised in multiple ways at the same time. And also, consider the cost of maintaining the 100 lines of code in this test, the additional compile time, etc.",
+      "range": {
+        "startLine": 11242,
+        "startChar": 0,
+        "endLine": 11243,
+        "endChar": 42
+      },
+      "revId": "7b16496af2c6713644e030b7c311ceb7c632245e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ad330dc_3c36ebc2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 11243,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T13:26:13Z",
+      "side": 1,
+      "message": "It\u0027s a tradeoff between code duplication/time and readability. For the test above, I folded it into the previous one because it could be made cleanly immediately after and it made some sense in the context of the previous test.\n\nHere, I think it would either complicate the merged test significantly (many locals to understand and more behavior to check all over) or it would simply be appended as is to save 10 lines of setup. Do consider it is also better for diagnosing flaky tests and the like if we have methods named more specifically after what they test – it\u0027s easier to understand something is wrong with handles if a test named \"forTwoProfiles\" flakes than it\u0027s a general \"testPerProfileNetworking\".\n\nWith this, I prefer to keep this separate. Please reopen if you feel strongly – in that case I will prefer the \"append\" approach for the reason that these tests are already pretty long and already have a confusingly large number of variables.",
+      "parentUuid": "b95c8976_86fda358",
       "range": {
         "startLine": 11242,
         "startChar": 0,
