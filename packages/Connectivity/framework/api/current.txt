@@ -385,7 +385,10 @@ package android.net {
   public class NetworkRequest implements android.os.Parcelable {
     method public boolean canBeSatisfiedBy(@Nullable android.net.NetworkCapabilities);
     method public int describeContents();
+    method @NonNull public int[] getCapabilities();
     method @Nullable public android.net.NetworkSpecifier getNetworkSpecifier();
+    method @NonNull public int[] getTransportTypes();
+    method @NonNull public int[] getUnwantedCapabilities();
     method public boolean hasCapability(int);
     method public boolean hasTransport(int);
     method public void writeToParcel(android.os.Parcel, int);
