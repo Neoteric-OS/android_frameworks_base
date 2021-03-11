@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0df1be34_6643b343",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-03-11T22:15:43Z",
+      "side": 1,
+      "message": "Hi Jeff, we\u0027d like to add two feature versions to convey the version of KeyMint implemented by the device both for the default HW-backed keystore and the StrongBox HW-backed keystore.",
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
