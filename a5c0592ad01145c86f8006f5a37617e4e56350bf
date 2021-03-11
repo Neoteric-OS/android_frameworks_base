@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f299a1a2_861a84d6",
+        "filename": "keystore/java/android/security/KeyStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-03-11T22:00:38Z",
+      "side": 1,
+      "message": "Even if the numeric values are the same, you need to add a switch statement mapping android.security.UserState values to Keystore#State values. Similar to the mapping in lines 208 ff.",
+      "range": {
+        "startLine": 200,
+        "startChar": 16,
+        "endLine": 200,
+        "endChar": 67
+      },
+      "revId": "a5c0592ad01145c86f8006f5a37617e4e56350bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
