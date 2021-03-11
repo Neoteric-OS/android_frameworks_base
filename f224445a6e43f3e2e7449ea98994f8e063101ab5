@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2de6e84_b489fea7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2021-03-11T23:38:17Z",
+      "side": 1,
+      "message": "Is there something blocking this from being rebased and submitted?  The hardcoded path at https://cs.android.com/android/platform/superproject/+/master:tools/metalava/src/main/java/com/android/tools/metalava/Options.kt;l\u003d1631-1635;drc\u003da65c75394072bd12c035822dc1d09924162c493e tripped me up when I was trying to change the way we handle rsp files in Soong.",
+      "revId": "f224445a6e43f3e2e7449ea98994f8e063101ab5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
