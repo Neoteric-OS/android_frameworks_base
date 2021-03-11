@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ffdf0d7_efef8bde",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-03-11T12:12:10Z",
+      "side": 1,
+      "message": "Please add some reasonable OWNERS of this Android.bp file on top of `soong/OWNERS`",
+      "revId": "52a7e8eb8a3b880b1d211f49d7d6b7a6b07892f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5288339_b3462f2d",
