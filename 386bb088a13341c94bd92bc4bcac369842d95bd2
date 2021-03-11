@@ -112,6 +112,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02c65253_82317855",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9115,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T15:12:06Z",
+      "side": 1,
+      "message": "If these are actually interchangeable, no need to do anything.",
+      "parentUuid": "a0090ab5_b1011e75",
+      "range": {
+        "startLine": 9115,
+        "startChar": 66,
+        "endLine": 9115,
+        "endChar": 70
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14c8d5f5_c6c47954",
@@ -243,6 +267,30 @@
       "side": 1,
       "message": "Done with comments. As you guessed, a given request ID can only be a member of one NRI. Most obvious reason is the long-standing member :\n\n    private final HashMap\u003cNetworkRequest, NetworkRequestInfo\u003e mNetworkRequests \u003d new HashMap\u003c\u003e();\n\nThere is another important reason : the NetworkRequest in the default NRI won\u0027t have the right UIDs.",
       "parentUuid": "d1614a35_63caae4d",
+      "range": {
+        "startLine": 9161,
+        "startChar": 20,
+        "endLine": 9161,
+        "endChar": 42
+      },
+      "revId": "386bb088a13341c94bd92bc4bcac369842d95bd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bacf46c_41204a55",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 9161,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T15:12:06Z",
+      "side": 1,
+      "message": "Thanks for the comment, I\u0027m sure it will be very helpful in the future.",
+      "parentUuid": "3fe0ae25_c23e13d1",
       "range": {
         "startLine": 9161,
         "startChar": 20,
