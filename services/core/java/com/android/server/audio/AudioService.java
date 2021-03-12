@@ -2495,7 +2495,10 @@ public class AudioService extends IAudioService.Stub
                     // Unmute the stream if it was previously muted
                     if (direction == AudioManager.ADJUST_RAISE) {
                         // unmute immediately for volume up
-                        streamState.mute(false);
+                        // if stream is not muted by ringermode or zenmode
+                        if (!isStreamMutedByRingerOrZenMode(streamType)) {
+                            streamState.mute(false);
+                        }
                     } else if (direction == AudioManager.ADJUST_LOWER) {
                         if (mIsSingleVolume) {
                             sendMsg(mAudioHandler, MSG_UNMUTE_STREAM, SENDMSG_QUEUE,
