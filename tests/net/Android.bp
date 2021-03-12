@@ -75,11 +75,11 @@ android_test {
         "services.net",
     ],
     libs: [
+        "ServiceConnectivityResources",
         "android.net.ipsec.ike.stubs.module_lib",
         "android.test.runner",
         "android.test.base",
         "android.test.mock",
-        "ServiceConnectivityResources",
     ],
     jni_libs: [
         "libservice-connectivity",

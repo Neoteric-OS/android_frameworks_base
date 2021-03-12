@@ -27,7 +27,11 @@
         android:defaultToDeviceProtectedStorage="true"
         android:directBootAware="true">
         <!-- This is only used to identify this app by resolving the action.
-             The activity is never actually triggered. -->
+             The activity is never actually triggered. The application may have
+             different package names depending on device build, so it must be
+             resolvable dynamically; the intent-filter of this empty activity
+             allows finding the package using a known action through the
+             PackageManager. -->
         <activity android:name="android.app.Activity" android:exported="true" android:enabled="true">
             <intent-filter>
                 <action android:name="com.android.server.connectivity.intent.action.SERVICE_CONNECTIVITY_RESOURCES_APK" />
