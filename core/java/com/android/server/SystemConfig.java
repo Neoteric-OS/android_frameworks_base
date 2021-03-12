@@ -1252,6 +1252,11 @@ public class SystemConfig {
             addFeature(PackageManager.FEATURE_APP_ENUMERATION, 0);
         }
 
+        // TODO: b/170424293 use Build.VERSION_CODES.S when S is finalized.
+        if (Build.VERSION.FIRST_SDK_INT >= Build.VERSION_CODES.R + 1) {
+            addFeature(PackageManager.FEATURE_IPSEC_TUNNEL_MIGRATION, 0);
+        }
+
         if (Build.VERSION.FIRST_SDK_INT >= Build.VERSION_CODES.Q) {
             addFeature(PackageManager.FEATURE_IPSEC_TUNNELS, 0);
         }
