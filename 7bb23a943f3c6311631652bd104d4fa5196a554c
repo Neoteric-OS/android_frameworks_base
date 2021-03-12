@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a69aa3e_1cdb22ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-12T09:42:33Z",
+      "side": 1,
+      "message": "Not sure about this one since it is not deprecated.\nCan you show me the link of API guideline of this?\nI found this but not sure if this is where I should look at.\ngo/android-api-guidelines#annotations-intdef",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 60
+      },
+      "revId": "7bb23a943f3c6311631652bd104d4fa5196a554c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
