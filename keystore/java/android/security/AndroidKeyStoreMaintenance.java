@@ -21,6 +21,7 @@ import android.annotation.Nullable;
 import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
 import android.security.maintenance.IKeystoreMaintenance;
+import android.security.maintenance.UserState;
 import android.system.keystore2.Domain;
 import android.system.keystore2.ResponseCode;
 import android.util.Log;
@@ -128,15 +129,15 @@ public class AndroidKeyStoreMaintenance {
      * @param userId - Android user id of the user.
      * @return UserState enum variant as integer if successful or an error
      */
-    public static int getState(int userId) {
+    public static @UserState int getState(int userId) {
         try {
             return getService().getState(userId);
         } catch (ServiceSpecificException e) {
             Log.e(TAG, "getState failed", e);
-            return e.errorCode;
+            throw new AssertionError(e);
         } catch (Exception e) {
             Log.e(TAG, "Can not connect to keystore", e);
-            return SYSTEM_ERROR;
+            throw new AssertionError(e);
         }
     }
 }
