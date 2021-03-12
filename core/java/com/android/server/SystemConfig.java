@@ -1501,6 +1501,10 @@ public class SystemConfig {
             addFeature(PackageManager.FEATURE_IPSEC_TUNNELS, 0);
         }
 
+        if (Build.VERSION.DEVICE_INITIAL_SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            addFeature(PackageManager.FEATURE_IPSEC_TUNNEL_MIGRATION, 0);
+        }
+
         if (isErofsSupported()) {
             if (isKernelVersionAtLeast(5, 10)) {
                 addFeature(PackageManager.FEATURE_EROFS, 0);
