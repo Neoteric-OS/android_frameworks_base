@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a8146d1_5e284118",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1429802
+      },
+      "writtenOn": "2021-03-12T05:34:43Z",
+      "side": 1,
+      "message": "Since you change the code in SettingsLib, did you run lib test?",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 26
+      },
+      "revId": "253c15771bc364eccd30052029932656165674b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "e186097a_3cb70c80",
