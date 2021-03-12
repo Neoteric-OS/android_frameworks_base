@@ -605,10 +605,24 @@ public abstract class PackageManager {
                 time = 1628668290863L,
                 codegenVersion = "1.0.23",
                 sourceFile = "frameworks/base/core/java/android/content/pm/PackageManager.java",
-                inputSignatures = "private final @android.annotation.Nullable java.lang.String mPackageName\nprivate final @android.annotation.Nullable android.content.ComponentName mComponentName\nprivate final @android.content.pm.PackageManager.EnabledState int mEnabledState\nprivate final @android.content.pm.PackageManager.EnabledFlags int mEnabledFlags\npublic @android.annotation.NonNull java.lang.String getPackageName()\npublic @android.annotation.Nullable java.lang.String getClassName()\npublic  boolean isComponent()\nclass ComponentEnabledSetting extends java.lang.Object implements [android.os.Parcelable]\n@com.android.internal.util.DataClass(genConstructor=false)")
+                inputSignatures =
+                        "private final @android.annotation.Nullable java.lang.String mPackageName\n"
+                            + "private final @android.annotation.Nullable"
+                            + " android.content.ComponentName mComponentName\n"
+                            + "private final @android.content.pm.PackageManager.EnabledState int"
+                            + " mEnabledState\n"
+                            + "private final @android.content.pm.PackageManager.EnabledFlags int"
+                            + " mEnabledFlags\n"
+                            + "public @android.annotation.NonNull java.lang.String"
+                            + " getPackageName()\n"
+                            + "public @android.annotation.Nullable java.lang.String"
+                            + " getClassName()\n"
+                            + "public  boolean isComponent()\n"
+                            + "class ComponentEnabledSetting extends java.lang.Object implements"
+                            + " [android.os.Parcelable]\n"
+                            + "@com.android.internal.util.DataClass(genConstructor=false)")
         @Deprecated
         private void __metadata() {}
-
 
         //@formatter:on
         // End of generated code
@@ -3071,11 +3085,12 @@ public abstract class PackageManager {
     public static final String FEATURE_SECURE_LOCK_SCREEN = "android.software.secure_lock_screen";
 
     /**
-     * Feature for {@link #getSystemAvailableFeatures} and
-     * {@link #hasSystemFeature}: The device includes an accelerometer.
+     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device
+     * includes an accelerometer.
      */
     @SdkConstant(SdkConstantType.FEATURE)
-    public static final String FEATURE_SENSOR_ACCELEROMETER = "android.hardware.sensor.accelerometer";
+    public static final String FEATURE_SENSOR_ACCELEROMETER =
+            "android.hardware.sensor.accelerometer";
 
     /**
      * Feature for {@link #getSystemAvailableFeatures} and
@@ -3153,11 +3168,12 @@ public abstract class PackageManager {
     public static final String FEATURE_SENSOR_STEP_COUNTER = "android.hardware.sensor.stepcounter";
 
     /**
-     * Feature for {@link #getSystemAvailableFeatures} and
-     * {@link #hasSystemFeature}: The device includes a hardware step detector.
+     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device
+     * includes a hardware step detector.
      */
     @SdkConstant(SdkConstantType.FEATURE)
-    public static final String FEATURE_SENSOR_STEP_DETECTOR = "android.hardware.sensor.stepdetector";
+    public static final String FEATURE_SENSOR_STEP_DETECTOR =
+            "android.hardware.sensor.stepdetector";
 
     /**
      * Feature for {@link #getSystemAvailableFeatures} and
@@ -3205,12 +3221,12 @@ public abstract class PackageManager {
     public static final String FEATURE_SENSOR_HEADING = "android.hardware.sensor.heading";
 
     /**
-     * Feature for {@link #getSystemAvailableFeatures} and
-     * {@link #hasSystemFeature}: The device supports exposing head tracker sensors from peripheral
-     * devices via the dynamic sensors API.
+     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device
+     * supports exposing head tracker sensors from peripheral devices via the dynamic sensors API.
      */
     @SdkConstant(SdkConstantType.FEATURE)
-    public static final String FEATURE_SENSOR_DYNAMIC_HEAD_TRACKER = "android.hardware.sensor.dynamic.head_tracker";
+    public static final String FEATURE_SENSOR_DYNAMIC_HEAD_TRACKER =
+            "android.hardware.sensor.dynamic.head_tracker";
 
     /**
      * Feature for {@link #getSystemAvailableFeatures} and
@@ -3459,29 +3475,29 @@ public abstract class PackageManager {
     public static final String FEATURE_TOUCHSCREEN = "android.hardware.touchscreen";
 
     /**
-     * Feature for {@link #getSystemAvailableFeatures} and
-     * {@link #hasSystemFeature}: The device's touch screen supports
-     * multitouch sufficient for basic two-finger gesture detection.
+     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device's
+     * touch screen supports multitouch sufficient for basic two-finger gesture detection.
      */
     @SdkConstant(SdkConstantType.FEATURE)
-    public static final String FEATURE_TOUCHSCREEN_MULTITOUCH = "android.hardware.touchscreen.multitouch";
+    public static final String FEATURE_TOUCHSCREEN_MULTITOUCH =
+            "android.hardware.touchscreen.multitouch";
 
     /**
-     * Feature for {@link #getSystemAvailableFeatures} and
-     * {@link #hasSystemFeature}: The device's touch screen is capable of
-     * tracking two or more fingers fully independently.
+     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device's
+     * touch screen is capable of tracking two or more fingers fully independently.
      */
     @SdkConstant(SdkConstantType.FEATURE)
-    public static final String FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT = "android.hardware.touchscreen.multitouch.distinct";
+    public static final String FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT =
+            "android.hardware.touchscreen.multitouch.distinct";
 
     /**
-     * Feature for {@link #getSystemAvailableFeatures} and
-     * {@link #hasSystemFeature}: The device's touch screen is capable of
-     * tracking a full hand of fingers fully independently -- that is, 5 or
-     * more simultaneous independent pointers.
+     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device's
+     * touch screen is capable of tracking a full hand of fingers fully independently -- that is, 5
+     * or more simultaneous independent pointers.
      */
     @SdkConstant(SdkConstantType.FEATURE)
-    public static final String FEATURE_TOUCHSCREEN_MULTITOUCH_JAZZHAND = "android.hardware.touchscreen.multitouch.jazzhand";
+    public static final String FEATURE_TOUCHSCREEN_MULTITOUCH_JAZZHAND =
+            "android.hardware.touchscreen.multitouch.jazzhand";
 
     /**
      * Feature for {@link #getSystemAvailableFeatures} and
@@ -3496,36 +3512,32 @@ public abstract class PackageManager {
     public static final String FEATURE_FAKETOUCH = "android.hardware.faketouch";
 
     /**
-     * Feature for {@link #getSystemAvailableFeatures} and
-     * {@link #hasSystemFeature}: The device does not have a touch screen, but
-     * does support touch emulation for basic events that supports distinct
-     * tracking of two or more fingers.  This is an extension of
-     * {@link #FEATURE_FAKETOUCH} for input devices with this capability.  Note
-     * that unlike a distinct multitouch screen as defined by
-     * {@link #FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT}, these kinds of input
-     * devices will not actually provide full two-finger gestures since the
-     * input is being transformed to cursor movement on the screen.  That is,
-     * single finger gestures will move a cursor; two-finger swipes will
-     * result in single-finger touch events; other two-finger gestures will
-     * result in the corresponding two-finger touch event.
+     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device
+     * does not have a touch screen, but does support touch emulation for basic events that supports
+     * distinct tracking of two or more fingers. This is an extension of {@link #FEATURE_FAKETOUCH}
+     * for input devices with this capability. Note that unlike a distinct multitouch screen as
+     * defined by {@link #FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT}, these kinds of input devices
+     * will not actually provide full two-finger gestures since the input is being transformed to
+     * cursor movement on the screen. That is, single finger gestures will move a cursor; two-finger
+     * swipes will result in single-finger touch events; other two-finger gestures will result in
+     * the corresponding two-finger touch event.
      */
     @SdkConstant(SdkConstantType.FEATURE)
-    public static final String FEATURE_FAKETOUCH_MULTITOUCH_DISTINCT = "android.hardware.faketouch.multitouch.distinct";
+    public static final String FEATURE_FAKETOUCH_MULTITOUCH_DISTINCT =
+            "android.hardware.faketouch.multitouch.distinct";
 
     /**
-     * Feature for {@link #getSystemAvailableFeatures} and
-     * {@link #hasSystemFeature}: The device does not have a touch screen, but
-     * does support touch emulation for basic events that supports tracking
-     * a hand of fingers (5 or more fingers) fully independently.
-     * This is an extension of
-     * {@link #FEATURE_FAKETOUCH} for input devices with this capability.  Note
-     * that unlike a multitouch screen as defined by
-     * {@link #FEATURE_TOUCHSCREEN_MULTITOUCH_JAZZHAND}, not all two finger
-     * gestures can be detected due to the limitations described for
-     * {@link #FEATURE_FAKETOUCH_MULTITOUCH_DISTINCT}.
+     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device
+     * does not have a touch screen, but does support touch emulation for basic events that supports
+     * tracking a hand of fingers (5 or more fingers) fully independently. This is an extension of
+     * {@link #FEATURE_FAKETOUCH} for input devices with this capability. Note that unlike a
+     * multitouch screen as defined by {@link #FEATURE_TOUCHSCREEN_MULTITOUCH_JAZZHAND}, not all two
+     * finger gestures can be detected due to the limitations described for {@link
+     * #FEATURE_FAKETOUCH_MULTITOUCH_DISTINCT}.
      */
     @SdkConstant(SdkConstantType.FEATURE)
-    public static final String FEATURE_FAKETOUCH_MULTITOUCH_JAZZHAND = "android.hardware.faketouch.multitouch.jazzhand";
+    public static final String FEATURE_FAKETOUCH_MULTITOUCH_JAZZHAND =
+            "android.hardware.faketouch.multitouch.jazzhand";
 
     /**
      * Feature for {@link #getSystemAvailableFeatures} and
@@ -4036,6 +4048,17 @@ public abstract class PackageManager {
     @SdkConstant(SdkConstantType.FEATURE)
     public static final String FEATURE_DEVICE_ID_ATTESTATION =
             "android.software.device_id_attestation";
+
+    /**
+     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device has
+     * the requisite kernel support for migrating IPsec tunnels to new source/destination addresses.
+     *
+     * <p>This feature implies that the device supports XFRM Migration (CONFIG_XFRM_MIGRATE) and has
+     * the kernel fixes to allow XFRM Migration correctly
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_IPSEC_TUNNEL_MIGRATION =
+            "android.software.ipsec_tunnel_migration";
 
     /**
      * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device has
@@ -9535,9 +9558,12 @@ public abstract class PackageManager {
             case INSTALL_FAILED_DUPLICATE_PACKAGE: return "INSTALL_FAILED_DUPLICATE_PACKAGE";
             case INSTALL_FAILED_NO_SHARED_USER: return "INSTALL_FAILED_NO_SHARED_USER";
             case INSTALL_FAILED_UPDATE_INCOMPATIBLE: return "INSTALL_FAILED_UPDATE_INCOMPATIBLE";
-            case INSTALL_FAILED_SHARED_USER_INCOMPATIBLE: return "INSTALL_FAILED_SHARED_USER_INCOMPATIBLE";
-            case INSTALL_FAILED_MISSING_SHARED_LIBRARY: return "INSTALL_FAILED_MISSING_SHARED_LIBRARY";
-            case INSTALL_FAILED_REPLACE_COULDNT_DELETE: return "INSTALL_FAILED_REPLACE_COULDNT_DELETE";
+            case INSTALL_FAILED_SHARED_USER_INCOMPATIBLE:
+                return "INSTALL_FAILED_SHARED_USER_INCOMPATIBLE";
+            case INSTALL_FAILED_MISSING_SHARED_LIBRARY:
+                return "INSTALL_FAILED_MISSING_SHARED_LIBRARY";
+            case INSTALL_FAILED_REPLACE_COULDNT_DELETE:
+                return "INSTALL_FAILED_REPLACE_COULDNT_DELETE";
             case INSTALL_FAILED_DEXOPT: return "INSTALL_FAILED_DEXOPT";
             case INSTALL_FAILED_OLDER_SDK: return "INSTALL_FAILED_OLDER_SDK";
             case INSTALL_FAILED_CONFLICTING_PROVIDER: return "INSTALL_FAILED_CONFLICTING_PROVIDER";
@@ -9546,7 +9572,8 @@ public abstract class PackageManager {
             case INSTALL_FAILED_CPU_ABI_INCOMPATIBLE: return "INSTALL_FAILED_CPU_ABI_INCOMPATIBLE";
             case INSTALL_FAILED_MISSING_FEATURE: return "INSTALL_FAILED_MISSING_FEATURE";
             case INSTALL_FAILED_CONTAINER_ERROR: return "INSTALL_FAILED_CONTAINER_ERROR";
-            case INSTALL_FAILED_INVALID_INSTALL_LOCATION: return "INSTALL_FAILED_INVALID_INSTALL_LOCATION";
+            case INSTALL_FAILED_INVALID_INSTALL_LOCATION:
+                return "INSTALL_FAILED_INVALID_INSTALL_LOCATION";
             case INSTALL_FAILED_MEDIA_UNAVAILABLE: return "INSTALL_FAILED_MEDIA_UNAVAILABLE";
             case INSTALL_FAILED_VERIFICATION_TIMEOUT: return "INSTALL_FAILED_VERIFICATION_TIMEOUT";
             case INSTALL_FAILED_VERIFICATION_FAILURE: return "INSTALL_FAILED_VERIFICATION_FAILURE";
@@ -9555,13 +9582,20 @@ public abstract class PackageManager {
             case INSTALL_FAILED_VERSION_DOWNGRADE: return "INSTALL_FAILED_VERSION_DOWNGRADE";
             case INSTALL_PARSE_FAILED_NOT_APK: return "INSTALL_PARSE_FAILED_NOT_APK";
             case INSTALL_PARSE_FAILED_BAD_MANIFEST: return "INSTALL_PARSE_FAILED_BAD_MANIFEST";
-            case INSTALL_PARSE_FAILED_UNEXPECTED_EXCEPTION: return "INSTALL_PARSE_FAILED_UNEXPECTED_EXCEPTION";
-            case INSTALL_PARSE_FAILED_NO_CERTIFICATES: return "INSTALL_PARSE_FAILED_NO_CERTIFICATES";
-            case INSTALL_PARSE_FAILED_INCONSISTENT_CERTIFICATES: return "INSTALL_PARSE_FAILED_INCONSISTENT_CERTIFICATES";
-            case INSTALL_PARSE_FAILED_CERTIFICATE_ENCODING: return "INSTALL_PARSE_FAILED_CERTIFICATE_ENCODING";
-            case INSTALL_PARSE_FAILED_BAD_PACKAGE_NAME: return "INSTALL_PARSE_FAILED_BAD_PACKAGE_NAME";
-            case INSTALL_PARSE_FAILED_BAD_SHARED_USER_ID: return "INSTALL_PARSE_FAILED_BAD_SHARED_USER_ID";
-            case INSTALL_PARSE_FAILED_MANIFEST_MALFORMED: return "INSTALL_PARSE_FAILED_MANIFEST_MALFORMED";
+            case INSTALL_PARSE_FAILED_UNEXPECTED_EXCEPTION:
+                return "INSTALL_PARSE_FAILED_UNEXPECTED_EXCEPTION";
+            case INSTALL_PARSE_FAILED_NO_CERTIFICATES:
+                return "INSTALL_PARSE_FAILED_NO_CERTIFICATES";
+            case INSTALL_PARSE_FAILED_INCONSISTENT_CERTIFICATES:
+                return "INSTALL_PARSE_FAILED_INCONSISTENT_CERTIFICATES";
+            case INSTALL_PARSE_FAILED_CERTIFICATE_ENCODING:
+                return "INSTALL_PARSE_FAILED_CERTIFICATE_ENCODING";
+            case INSTALL_PARSE_FAILED_BAD_PACKAGE_NAME:
+                return "INSTALL_PARSE_FAILED_BAD_PACKAGE_NAME";
+            case INSTALL_PARSE_FAILED_BAD_SHARED_USER_ID:
+                return "INSTALL_PARSE_FAILED_BAD_SHARED_USER_ID";
+            case INSTALL_PARSE_FAILED_MANIFEST_MALFORMED:
+                return "INSTALL_PARSE_FAILED_MANIFEST_MALFORMED";
             case INSTALL_PARSE_FAILED_MANIFEST_EMPTY: return "INSTALL_PARSE_FAILED_MANIFEST_EMPTY";
             case INSTALL_FAILED_INTERNAL_ERROR: return "INSTALL_FAILED_INTERNAL_ERROR";
             case INSTALL_FAILED_USER_RESTRICTED: return "INSTALL_FAILED_USER_RESTRICTED";
@@ -9571,7 +9605,8 @@ public abstract class PackageManager {
             case INSTALL_FAILED_BAD_DEX_METADATA: return "INSTALL_FAILED_BAD_DEX_METADATA";
             case INSTALL_FAILED_MISSING_SPLIT: return "INSTALL_FAILED_MISSING_SPLIT";
             case INSTALL_FAILED_BAD_SIGNATURE: return "INSTALL_FAILED_BAD_SIGNATURE";
-            case INSTALL_FAILED_WRONG_INSTALLED_VERSION: return "INSTALL_FAILED_WRONG_INSTALLED_VERSION";
+            case INSTALL_FAILED_WRONG_INSTALLED_VERSION:
+                return "INSTALL_FAILED_WRONG_INSTALLED_VERSION";
             case INSTALL_FAILED_PROCESS_NOT_DEFINED: return "INSTALL_FAILED_PROCESS_NOT_DEFINED";
             case INSTALL_FAILED_SESSION_INVALID: return "INSTALL_FAILED_SESSION_INVALID";
             default: return Integer.toString(status);
@@ -9686,7 +9721,8 @@ public abstract class PackageManager {
             case FLAG_PERMISSION_REVOKE_WHEN_REQUESTED: return "REVOKE_WHEN_REQUESTED";
             case FLAG_PERMISSION_USER_SENSITIVE_WHEN_GRANTED: return "USER_SENSITIVE_WHEN_GRANTED";
             case FLAG_PERMISSION_USER_SENSITIVE_WHEN_DENIED: return "USER_SENSITIVE_WHEN_DENIED";
-            case FLAG_PERMISSION_RESTRICTION_INSTALLER_EXEMPT: return "RESTRICTION_INSTALLER_EXEMPT";
+            case FLAG_PERMISSION_RESTRICTION_INSTALLER_EXEMPT:
+                return "RESTRICTION_INSTALLER_EXEMPT";
             case FLAG_PERMISSION_RESTRICTION_SYSTEM_EXEMPT: return "RESTRICTION_SYSTEM_EXEMPT";
             case FLAG_PERMISSION_RESTRICTION_UPGRADE_EXEMPT: return "RESTRICTION_UPGRADE_EXEMPT";
             case FLAG_PERMISSION_APPLY_RESTRICTION: return "APPLY_RESTRICTION";
