@@ -22,6 +22,30 @@
       },
       "revId": "7bb23a943f3c6311631652bd104d4fa5196a554c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "517e3d05_e6a29e6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-12T10:29:56Z",
+      "side": 1,
+      "message": "It\u0027s this one: http://go/android-api-guidelines#no-public-typedefs\n\nBecause the typedef is not exposed as an API, it can\u0027t be used outside of its jar",
+      "parentUuid": "6a69aa3e_1cdb22ee",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 60
+      },
+      "revId": "7bb23a943f3c6311631652bd104d4fa5196a554c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
