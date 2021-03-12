@@ -145,6 +145,7 @@ genrule {
     name: "frameworks-base-api-system-current.txt",
     srcs: [
         ":android.net.ipsec.ike{.system.api.txt}",
+        ":art.module.public.api{.system.api.txt}",
         ":framework-connectivity{.system.api.txt}",
         ":framework-media{.system.api.txt}",
         ":framework-mediaprovider{.system.api.txt}",
@@ -195,6 +196,7 @@ genrule {
     name: "frameworks-base-api-system-removed.txt",
     srcs: [
         ":android.net.ipsec.ike{.system.removed-api.txt}",
+        ":art.module.public.api{.system.removed-api.txt}",
         ":framework-connectivity{.system.removed-api.txt}",
         ":framework-media{.system.removed-api.txt}",
         ":framework-mediaprovider{.system.removed-api.txt}",
