@@ -20,6 +20,7 @@ import static android.net.IpSecManager.INVALID_RESOURCE_ID;
 import static android.net.NetworkRequest.Type.BACKGROUND_REQUEST;
 import static android.net.NetworkRequest.Type.LISTEN;
 import static android.net.NetworkRequest.Type.REQUEST;
+import static android.net.NetworkRequest.Type.TRACK_BEST;
 import static android.net.NetworkRequest.Type.TRACK_DEFAULT;
 import static android.net.NetworkRequest.Type.TRACK_SYSTEM_DEFAULT;
 import static android.net.QosCallback.QosCallbackRegistrationException;
@@ -1259,6 +1260,25 @@ public class ConnectivityManager {
     }
 
     /**
+     * Return a list of {@link NetworkStateSnapshot}s, one for each network that is currently
+     * connected.
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    @RequiresPermission(anyOf = {
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
+            android.Manifest.permission.NETWORK_STACK,
+            android.Manifest.permission.NETWORK_SETTINGS})
+    @NonNull
+    public List<NetworkStateSnapshot> getAllNetworkStateSnapshot() {
+        try {
+            return mService.getAllNetworkStateSnapshot();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Returns the {@link Network} object currently serving a given type, or
      * null if the given type is not connected.
      *
@@ -2245,31 +2265,6 @@ public class ConnectivityManager {
         }
     }
 
-    /* TODO: These permissions checks don't belong in client-side code. Move them to
-     * services.jar, possibly in com.android.server.net. */
-
-    /** {@hide} */
-    public static final void enforceChangePermission(Context context,
-            String callingPkg, String callingAttributionTag) {
-        int uid = Binder.getCallingUid();
-        checkAndNoteChangeNetworkStateOperation(context, uid, callingPkg,
-                callingAttributionTag, true /* throwException */);
-    }
-
-    /**
-     * Check if the package is a allowed to change the network state. This also accounts that such
-     * an access happened.
-     *
-     * @return {@code true} iff the package is allowed to change the network state.
-     */
-    // TODO: Remove method and replace with direct call once R code is pushed to AOSP
-    private static boolean checkAndNoteChangeNetworkStateOperation(@NonNull Context context,
-            int uid, @NonNull String callingPackage, @Nullable String callingAttributionTag,
-            boolean throwException) {
-        return Settings.checkAndNoteChangeNetworkStateOperation(context, uid, callingPackage,
-                throwException);
-    }
-
     /**
      * Check if the package is a allowed to write settings. This also accounts that such an access
      * happened.
@@ -2911,10 +2906,14 @@ public class ConnectivityManager {
         ResultReceiver wrappedListener = new ResultReceiver(null) {
             @Override
             protected void onReceiveResult(int resultCode, Bundle resultData) {
-                Binder.withCleanCallingIdentity(() ->
-                            executor.execute(() -> {
-                                listener.onTetheringEntitlementResult(resultCode);
-                            }));
+                final long token = Binder.clearCallingIdentity();
+                try {
+                    executor.execute(() -> {
+                        listener.onTetheringEntitlementResult(resultCode);
+                    });
+                } finally {
+                    Binder.restoreCallingIdentity(token);
+                }
             }
         };
 
@@ -4192,6 +4191,18 @@ public class ConnectivityManager {
     }
 
     /**
+     * @hide
+     */
+    // TODO: Make it public api.
+    @SuppressLint("ExecutorRegistration")
+    public void registerBestMatchingNetworkCallback(@NonNull NetworkRequest request,
+            @NonNull NetworkCallback networkCallback, @NonNull Handler handler) {
+        final NetworkCapabilities nc = request.networkCapabilities;
+        final CallbackHandler cbHandler = new CallbackHandler(handler);
+        sendRequestForNetwork(nc, networkCallback, 0, TRACK_BEST, TYPE_NONE, cbHandler);
+    }
+
+    /**
      * Requests bandwidth update for a given {@link Network} and returns whether the update request
      * is accepted by ConnectivityService. Once accepted, ConnectivityService will poll underlying
      * network connection for updated bandwidth information. The caller will be notified via
@@ -4981,10 +4992,10 @@ public class ConnectivityManager {
             NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK
     })
     public void requestBackgroundNetwork(@NonNull NetworkRequest request,
-            @Nullable Handler handler, @NonNull NetworkCallback networkCallback) {
+            @NonNull Handler handler, @NonNull NetworkCallback networkCallback) {
         final NetworkCapabilities nc = request.networkCapabilities;
         sendRequestForNetwork(nc, networkCallback, 0, BACKGROUND_REQUEST,
-                TYPE_NONE, handler == null ? getDefaultHandler() : new CallbackHandler(handler));
+                TYPE_NONE, new CallbackHandler(handler));
     }
 
     /**
