@@ -121,9 +121,57 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
         }
         builder.append(", metered=").append(mMetered);
         builder.append(", defaultNetwork=").append(mDefaultNetwork);
-        // TODO(180557699): Print a human readable string for OEM managed state.
-        builder.append(", oemManaged=").append(mOemManaged);
+        builder.append(", oemManaged=").append(getOemManagedNames(mOemManaged));
         return builder.append("}").toString();
+    }
+
+    /**
+     * Get the human readable representation of a bitfield representing the OEM managed state of a
+     * network.
+     */
+    static String getOemManagedNames(int oemManaged) {
+        if (oemManaged == OEM_NONE) {
+            return "OEM_NONE";
+        }
+        final StringBuilder sb = new StringBuilder("[");
+        final int[] oemManagedValues = unpackBitValues(oemManaged);
+        boolean firstElementAdded = false;
+        for (int oemManagedValue : oemManagedValues) {
+            if (oemManagedValue != 0) {
+                if (firstElementAdded) {
+                    sb.append("&");
+                } else {
+                    firstElementAdded = true;
+                }
+                sb.append(nameOfOemManaged(oemManagedValue));
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+    private static int[] unpackBitValues(int val) {
+        int size = Long.bitCount(val);
+        int[] result = new int[size];
+        int index = 0;
+        int bitValue = 1;
+        while (val != 0) {
+            if ((val & 1) == 1) result[index++] = bitValue;
+            val = val >>> 1;
+            bitValue <<= 1;
+        }
+        return result;
+    }
+
+    private static String nameOfOemManaged(int oemManagedBit) {
+        switch (oemManagedBit) {
+            case OEM_PAID:
+                return "OEM_PAID";
+            case OEM_PRIVATE:
+                return "OEM_PRIVATE";
+            default:
+                return "Invalid(" + oemManagedBit + ")";
+        }
     }
 
     public void dumpDebug(ProtoOutputStream proto, long tag) {
