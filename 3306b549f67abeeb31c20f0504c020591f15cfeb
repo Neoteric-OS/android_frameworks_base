@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1cb9d39_3d341f96",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-03-12T12:02:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cac5cc5_356111e7",
+      "range": {
+        "startLine": 13,
+        "startChar": 24,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "3306b549f67abeeb31c20f0504c020591f15cfeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "406ed63c_750a183a",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-12T09:15:00Z",
       "side": 1,
       "message": "legacy",
+      "range": {
+        "startLine": 116,
+        "startChar": 60,
+        "endLine": 116,
+        "endChar": 66
+      },
+      "revId": "3306b549f67abeeb31c20f0504c020591f15cfeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2575972_f8981aa0",
+        "filename": "packages/Connectivity/framework/src/android/net/IpPrefix.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-03-12T12:02:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "406ed63c_750a183a",
       "range": {
         "startLine": 116,
         "startChar": 60,
