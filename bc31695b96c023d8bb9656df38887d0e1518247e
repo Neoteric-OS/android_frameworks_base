@@ -350,6 +350,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a91011df_17e65081",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3279,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-12T04:46:32Z",
+      "side": 1,
+      "message": "Today no. But I can see a future where this will happen. Do we have authenticator apps for Passpoint ? I think maybe some wifi suggestor apps may want to authenticate through a captive portal, and may want to check this. I like doing #1 now and #2 in the future if it becomes useful and there are requests for it.",
+      "parentUuid": "777eaf95_77dd4ba2",
+      "range": {
+        "startLine": 3279,
+        "startChar": 58,
+        "endLine": 3279,
+        "endChar": 82
+      },
+      "revId": "bc31695b96c023d8bb9656df38887d0e1518247e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "764e5a58_bfadba97",
         "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
         "patchSetId": 5
