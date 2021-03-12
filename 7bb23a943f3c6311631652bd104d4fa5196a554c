@@ -46,6 +46,30 @@
       },
       "revId": "7bb23a943f3c6311631652bd104d4fa5196a554c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b628577d_2e93d0bc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-12T11:02:09Z",
+      "side": 1,
+      "message": "It confuses me since most of the API are supposed to be used outside of jar.\nThus, these 2 rules seem like conflicting with each other to me.\nWould like to call for help for this case.\n+jchalard@ to input.",
+      "parentUuid": "517e3d05_e6a29e6d",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 60
+      },
+      "revId": "7bb23a943f3c6311631652bd104d4fa5196a554c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
