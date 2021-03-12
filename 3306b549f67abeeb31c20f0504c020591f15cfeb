@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cac5cc5_356111e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-12T09:15:00Z",
+      "side": 1,
+      "message": "Typo: legacy",
+      "range": {
+        "startLine": 13,
+        "startChar": 24,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "3306b549f67abeeb31c20f0504c020591f15cfeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "406ed63c_750a183a",
+        "filename": "packages/Connectivity/framework/src/android/net/IpPrefix.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-12T09:15:00Z",
+      "side": 1,
+      "message": "legacy",
+      "range": {
+        "startLine": 116,
+        "startChar": 60,
+        "endLine": 116,
+        "endChar": 66
+      },
+      "revId": "3306b549f67abeeb31c20f0504c020591f15cfeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
