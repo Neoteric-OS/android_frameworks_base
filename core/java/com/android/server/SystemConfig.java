@@ -1497,6 +1497,10 @@ public class SystemConfig {
             addFeature(PackageManager.FEATURE_APP_ENUMERATION, 0);
         }
 
+        if (Build.VERSION.DEVICE_INITIAL_SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            addFeature(PackageManager.FEATURE_IPSEC_TUNNEL_MIGRATION, 0);
+        }
+
         if (Build.VERSION.DEVICE_INITIAL_SDK_INT >= Build.VERSION_CODES.Q) {
             addFeature(PackageManager.FEATURE_IPSEC_TUNNELS, 0);
         }
