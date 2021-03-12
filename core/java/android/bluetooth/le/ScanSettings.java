@@ -52,6 +52,16 @@ public final class ScanSettings implements Parcelable {
     public static final int SCAN_MODE_LOW_LATENCY = 2;
 
     /**
+     * Perform Bluetooth LE scan in ambient discovery mode. This mode has lower duty cycle and more
+     * aggressive scan interval than balanced mode that provides a good trade-off between scan
+     * latency and power consumption.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final int SCAN_MODE_AMBIENT_DISCOVERY = 3;
+
+    /**
      * Trigger a callback for every Bluetooth advertisement found that matches the filter criteria.
      * If no filter is active, all advertisement packets are reported.
      */
@@ -277,7 +287,9 @@ public final class ScanSettings implements Parcelable {
          */
         public Builder setScanMode(int scanMode) {
             if (scanMode < SCAN_MODE_OPPORTUNISTIC || scanMode > SCAN_MODE_LOW_LATENCY) {
-                throw new IllegalArgumentException("invalid scan mode " + scanMode);
+                if (scanMode != SCAN_MODE_AMBIENT_DISCOVERY) {
+                    throw new IllegalArgumentException("invalid scan mode " + scanMode);
+                }
             }
             mScanMode = scanMode;
             return this;
