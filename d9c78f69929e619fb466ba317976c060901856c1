@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0725a7a9_2c1dadfb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-12T05:20:09Z",
+      "side": 1,
+      "message": "Addressed the comments in aosp/1633279",
+      "revId": "d9c78f69929e619fb466ba317976c060901856c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "575ac16a_fed4210b",
@@ -14,6 +31,30 @@
       "writtenOn": "2021-03-12T04:46:32Z",
       "side": 1,
       "message": "...and the current state of the location toggle on the system, right ?",
+      "range": {
+        "startLine": 3274,
+        "startChar": 75,
+        "endLine": 3275,
+        "endChar": 22
+      },
+      "revId": "d9c78f69929e619fb466ba317976c060901856c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e77be76_f0f84527",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3275,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-12T05:20:09Z",
+      "side": 1,
+      "message": "Yes, location permission for apps are always guarded by the location toggle. We have stopped explicitly calling that out in the API docs now .",
+      "parentUuid": "575ac16a_fed4210b",
       "range": {
         "startLine": 3274,
         "startChar": 75,
@@ -47,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d8b9204_6d481050",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3280,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-12T05:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0404f376_5560f9cb",
+      "range": {
+        "startLine": 3280,
+        "startChar": 32,
+        "endLine": 3280,
+        "endChar": 58
+      },
+      "revId": "d9c78f69929e619fb466ba317976c060901856c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "489b3f0f_e6e4a833",
@@ -60,6 +125,30 @@
       "writtenOn": "2021-03-12T04:46:32Z",
       "side": 1,
       "message": "Supernit : in R, it will actually retrieve this information and will get blamed in all cases right ?",
+      "range": {
+        "startLine": 1059,
+        "startChar": 78,
+        "endLine": 1060,
+        "endChar": 85
+      },
+      "revId": "d9c78f69929e619fb466ba317976c060901856c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71ac8a4a_6f2289bd",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-12T05:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "489b3f0f_e6e4a833",
       "range": {
         "startLine": 1059,
         "startChar": 78,
@@ -93,6 +182,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ecbce66_f8daf409",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 5443,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-12T05:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9d4fa2e_d8d5131f",
+      "range": {
+        "startLine": 5443,
+        "startChar": 22,
+        "endLine": 5443,
+        "endChar": 24
+      },
+      "revId": "d9c78f69929e619fb466ba317976c060901856c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f35726ef_ad1effd5",
@@ -116,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2241acf3_16454999",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 8808,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-12T05:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f35726ef_ad1effd5",
+      "range": {
+        "startLine": 8808,
+        "startChar": 26,
+        "endLine": 8808,
+        "endChar": 41
+      },
+      "revId": "d9c78f69929e619fb466ba317976c060901856c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d3af434_b2e63c0e",
@@ -129,6 +266,30 @@
       "writtenOn": "2021-03-12T04:46:32Z",
       "side": 1,
       "message": "This says \"after Q\" but it\u0027s really between Q and S right ?",
+      "range": {
+        "startLine": 8828,
+        "startChar": 67,
+        "endLine": 8828,
+        "endChar": 73
+      },
+      "revId": "d9c78f69929e619fb466ba317976c060901856c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d8708e2_613d15ad",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 8828,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-12T05:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d3af434_b2e63c0e",
       "range": {
         "startLine": 8828,
         "startChar": 67,
@@ -185,6 +346,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a34a34b_faff6c37",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 8839,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-12T05:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43afefb6_d5563c78",
+      "range": {
+        "startLine": 8839,
+        "startChar": 34,
+        "endLine": 8839,
+        "endChar": 40
+      },
+      "revId": "d9c78f69929e619fb466ba317976c060901856c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0e08025_98561964",
@@ -198,6 +383,30 @@
       "writtenOn": "2021-03-12T04:46:32Z",
       "side": 1,
       "message": "Same comment as above\n\nAlso this has the exact same code as above and as testCreateWithLocationInfoSanitizedWithCoarseLocationPreQ except for the target SDK call and should probably use yet another helper.",
+      "range": {
+        "startLine": 8857,
+        "startChar": 26,
+        "endLine": 8857,
+        "endChar": 30
+      },
+      "revId": "d9c78f69929e619fb466ba317976c060901856c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ac9e627_51a39b34",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 8857,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-12T05:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0e08025_98561964",
       "range": {
         "startLine": 8857,
         "startChar": 26,
@@ -231,6 +440,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80c4cb01_6cf558e5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 8871,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-12T05:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b195a34b_541c4dc8",
+      "range": {
+        "startLine": 8871,
+        "startChar": 33,
+        "endLine": 8871,
+        "endChar": 34
+      },
+      "revId": "d9c78f69929e619fb466ba317976c060901856c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e14e2fc6_9feb9a29",
@@ -254,6 +487,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbf1cd5e_6c777bd5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 8876,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-12T05:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e14e2fc6_9feb9a29",
+      "range": {
+        "startLine": 8876,
+        "startChar": 34,
+        "endLine": 8876,
+        "endChar": 40
+      },
+      "revId": "d9c78f69929e619fb466ba317976c060901856c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "762968ed_408c60d3",
@@ -267,6 +524,30 @@
       "writtenOn": "2021-03-12T04:46:32Z",
       "side": 1,
       "message": "Considering we do have some different behavior for S, do we want to also do this check and the one below for S ? (also, here again the code is completely identical, so maybe have a helper for these eventually 4 methods)",
+      "range": {
+        "startLine": 8927,
+        "startChar": 69,
+        "endLine": 8927,
+        "endChar": 75
+      },
+      "revId": "d9c78f69929e619fb466ba317976c060901856c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01e63e0e_4754f586",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 8927,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-12T05:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "762968ed_408c60d3",
       "range": {
         "startLine": 8927,
         "startChar": 69,
