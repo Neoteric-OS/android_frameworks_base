@@ -14522,6 +14522,11 @@ public class TelephonyManager {
      * and can be used at any time during data throttling to hold onto the current level of data
      * throttling.
      *
+     * In addition to the {@link Manifest.permission#MODIFY_PHONE_STATE} permission, callers of this
+     * API must also be listed in the device configuration as an authorized app in
+     * {@code packages/services/Telephony/res/values/config.xml} under the
+     * {@code thermal_mitigation_whitelisted_packages} key.
+     *
      * @param thermalMitigationRequest Thermal mitigation request. See {@link
      * ThermalMitigationRequest} for details.
      *
@@ -14538,7 +14543,8 @@ public class TelephonyManager {
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
-                return telephony.sendThermalMitigationRequest(getSubId(), thermalMitigationRequest);
+                return telephony.sendThermalMitigationRequest(getSubId(), thermalMitigationRequest,
+                        getOpPackageName());
             }
             throw new IllegalStateException("telephony service is null.");
         } catch (RemoteException ex) {
