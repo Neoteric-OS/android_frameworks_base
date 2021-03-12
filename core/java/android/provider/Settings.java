@@ -7355,6 +7355,8 @@ public final class Settings {
          *
          * @hide
          */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
         public static final String CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS =
                 "connectivity_release_pending_intent_delay_ms";
 
@@ -9467,27 +9469,31 @@ public final class Settings {
                 "default_restrict_background_data";
 
         /** Inactivity timeout to track mobile data activity.
-        *
-        * If set to a positive integer, it indicates the inactivity timeout value in seconds to
-        * infer the data activity of mobile network. After a period of no activity on mobile
-        * networks with length specified by the timeout, an {@code ACTION_DATA_ACTIVITY_CHANGE}
-        * intent is fired to indicate a transition of network status from "active" to "idle". Any
-        * subsequent activity on mobile networks triggers the firing of {@code
-        * ACTION_DATA_ACTIVITY_CHANGE} intent indicating transition from "idle" to "active".
-        *
-        * Network activity refers to transmitting or receiving data on the network interfaces.
-        *
-        * Tracking is disabled if set to zero or negative value.
-        *
-        * @hide
-        */
-       public static final String DATA_ACTIVITY_TIMEOUT_MOBILE = "data_activity_timeout_mobile";
+         *
+         * If set to a positive integer, it indicates the inactivity timeout value in seconds to
+         * infer the data activity of mobile network. After a period of no activity on mobile
+         * networks with length specified by the timeout, an {@code ACTION_DATA_ACTIVITY_CHANGE}
+         * intent is fired to indicate a transition of network status from "active" to "idle". Any
+         * subsequent activity on mobile networks triggers the firing of {@code
+         * ACTION_DATA_ACTIVITY_CHANGE} intent indicating transition from "idle" to "active".
+         *
+         * Network activity refers to transmitting or receiving data on the network interfaces.
+         *
+         * Tracking is disabled if set to zero or negative value.
+         *
+         * @hide
+         */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        public static final String DATA_ACTIVITY_TIMEOUT_MOBILE = "data_activity_timeout_mobile";
 
-       /** Timeout to tracking Wifi data activity. Same as {@code DATA_ACTIVITY_TIMEOUT_MOBILE}
-        * but for Wifi network.
-        * @hide
-        */
-       public static final String DATA_ACTIVITY_TIMEOUT_WIFI = "data_activity_timeout_wifi";
+        /** Timeout to tracking Wifi data activity. Same as {@code DATA_ACTIVITY_TIMEOUT_MOBILE}
+         * but for Wifi network.
+         * @hide
+         */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        public static final String DATA_ACTIVITY_TIMEOUT_WIFI = "data_activity_timeout_wifi";
 
        /**
         * Whether or not data roaming is enabled. (0 = false, 1 = true)
@@ -9811,16 +9817,18 @@ public final class Settings {
        @UnsupportedAppUsage
        public static final String MOBILE_DATA = "mobile_data";
 
-       /**
-        * Whether the mobile data connection should remain active even when higher
-        * priority networks like WiFi are active, to help make network switching faster.
-        *
-        * See ConnectivityService for more info.
-        *
-        * (0 = disabled, 1 = enabled)
-        * @hide
-        */
-       public static final String MOBILE_DATA_ALWAYS_ON = "mobile_data_always_on";
+        /**
+         * Whether the mobile data connection should remain active even when higher
+         * priority networks like WiFi are active, to help make network switching faster.
+         *
+         * See ConnectivityService for more info.
+         *
+         * (0 = disabled, 1 = enabled)
+         * @hide
+         */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        public static final String MOBILE_DATA_ALWAYS_ON = "mobile_data_always_on";
 
         /**
          * Whether the wifi data connection should remain active even when higher
@@ -9833,6 +9841,8 @@ public final class Settings {
          * (0 = disabled, 1 = enabled)
          * @hide
          */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
         public static final String WIFI_ALWAYS_REQUESTED = "wifi_always_requested";
 
         /**
@@ -9957,32 +9967,40 @@ public final class Settings {
         public static final String SETTINGS_USE_EXTERNAL_PROVIDER_API =
                 "settings_use_external_provider_api";
 
-       /**
-        * Sample validity in seconds to configure for the system DNS resolver.
-        * {@hide}
-        */
-       public static final String DNS_RESOLVER_SAMPLE_VALIDITY_SECONDS =
-               "dns_resolver_sample_validity_seconds";
+        /**
+         * Sample validity in seconds to configure for the system DNS resolver.
+         * {@hide}
+         */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        public static final String DNS_RESOLVER_SAMPLE_VALIDITY_SECONDS =
+                "dns_resolver_sample_validity_seconds";
 
-       /**
-        * Success threshold in percent for use with the system DNS resolver.
-        * {@hide}
-        */
-       public static final String DNS_RESOLVER_SUCCESS_THRESHOLD_PERCENT =
-                "dns_resolver_success_threshold_percent";
+        /**
+         * Success threshold in percent for use with the system DNS resolver.
+         * {@hide}
+         */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        public static final String DNS_RESOLVER_SUCCESS_THRESHOLD_PERCENT =
+                 "dns_resolver_success_threshold_percent";
 
-       /**
-        * Minimum number of samples needed for statistics to be considered meaningful in the
-        * system DNS resolver.
-        * {@hide}
-        */
-       public static final String DNS_RESOLVER_MIN_SAMPLES = "dns_resolver_min_samples";
+        /**
+         * Minimum number of samples needed for statistics to be considered meaningful in the
+         * system DNS resolver.
+         * {@hide}
+         */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        public static final String DNS_RESOLVER_MIN_SAMPLES = "dns_resolver_min_samples";
 
-       /**
-        * Maximum number taken into account for statistics purposes in the system DNS resolver.
-        * {@hide}
-        */
-       public static final String DNS_RESOLVER_MAX_SAMPLES = "dns_resolver_max_samples";
+        /**
+         * Maximum number taken into account for statistics purposes in the system DNS resolver.
+         * {@hide}
+         */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        public static final String DNS_RESOLVER_MAX_SAMPLES = "dns_resolver_max_samples";
 
        /**
         * Whether to disable the automatic scheduling of system updates.
@@ -10272,42 +10290,50 @@ public final class Settings {
        @SystemApi
        public static final String WEBVIEW_MULTIPROCESS = "webview_multiprocess";
 
-       /**
-        * The maximum number of notifications shown in 24 hours when switching networks.
-        * @hide
-        */
-       public static final String NETWORK_SWITCH_NOTIFICATION_DAILY_LIMIT =
-              "network_switch_notification_daily_limit";
+        /**
+         * The maximum number of notifications shown in 24 hours when switching networks.
+         * @hide
+         */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        public static final String NETWORK_SWITCH_NOTIFICATION_DAILY_LIMIT =
+                "network_switch_notification_daily_limit";
 
-       /**
-        * The minimum time in milliseconds between notifications when switching networks.
-        * @hide
-        */
-       public static final String NETWORK_SWITCH_NOTIFICATION_RATE_LIMIT_MILLIS =
-              "network_switch_notification_rate_limit_millis";
+        /**
+         * The minimum time in milliseconds between notifications when switching networks.
+         * @hide
+         */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        public static final String NETWORK_SWITCH_NOTIFICATION_RATE_LIMIT_MILLIS =
+                "network_switch_notification_rate_limit_millis";
 
-       /**
-        * Whether to automatically switch away from wifi networks that lose Internet access.
-        * Only meaningful if config_networkAvoidBadWifi is set to 0, otherwise the system always
-        * avoids such networks. Valid values are:
-        *
-        * 0: Don't avoid bad wifi, don't prompt the user. Get stuck on bad wifi like it's 2013.
-        * null: Ask the user whether to switch away from bad wifi.
-        * 1: Avoid bad wifi.
-        *
-        * @hide
-        */
-       public static final String NETWORK_AVOID_BAD_WIFI = "network_avoid_bad_wifi";
+        /**
+         * Whether to automatically switch away from wifi networks that lose Internet access.
+         * Only meaningful if config_networkAvoidBadWifi is set to 0, otherwise the system always
+         * avoids such networks. Valid values are:
+         *
+         * 0: Don't avoid bad wifi, don't prompt the user. Get stuck on bad wifi like it's 2013.
+         * null: Ask the user whether to switch away from bad wifi.
+         * 1: Avoid bad wifi.
+         *
+         * @hide
+         */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        public static final String NETWORK_AVOID_BAD_WIFI = "network_avoid_bad_wifi";
 
-       /**
-        * User setting for ConnectivityManager.getMeteredMultipathPreference(). This value may be
-        * overridden by the system based on device or application state. If null, the value
-        * specified by config_networkMeteredMultipathPreference is used.
-        *
-        * @hide
-        */
-       public static final String NETWORK_METERED_MULTIPATH_PREFERENCE =
-               "network_metered_multipath_preference";
+        /**
+         * User setting for ConnectivityManager.getMeteredMultipathPreference(). This value may be
+         * overridden by the system based on device or application state. If null, the value
+         * specified by config_networkMeteredMultipathPreference is used.
+         *
+         * @hide
+         */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        public static final String NETWORK_METERED_MULTIPATH_PREFERENCE =
+                "network_metered_multipath_preference";
 
         /**
          * Default daily multipath budget used by ConnectivityManager.getMultipathPreference()
@@ -11099,6 +11125,8 @@ public final class Settings {
          *
          * @hide
          */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
         public static final String CAPTIVE_PORTAL_HTTP_URL = "captive_portal_http_url";
 
         /**
@@ -11215,6 +11243,8 @@ public final class Settings {
          *
          * @hide
          */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
         public static final String GLOBAL_HTTP_PROXY_HOST = "global_http_proxy_host";
 
         /**
@@ -11222,6 +11252,8 @@ public final class Settings {
          *
          * @hide
          */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
         public static final String GLOBAL_HTTP_PROXY_PORT = "global_http_proxy_port";
 
         /**
@@ -11233,6 +11265,8 @@ public final class Settings {
          *
          * @hide
          */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
         public static final String
                 GLOBAL_HTTP_PROXY_EXCLUSION_LIST = "global_http_proxy_exclusion_list";
 
@@ -11240,6 +11274,8 @@ public final class Settings {
          * The location PAC File for the proxy.
          * @hide
          */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
         public static final String
                 GLOBAL_HTTP_PROXY_PAC = "global_proxy_pac_url";
 
@@ -11268,11 +11304,17 @@ public final class Settings {
          *
          * @hide
          */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
         public static final String PRIVATE_DNS_MODE = "private_dns_mode";
 
         /**
+         * The specific Private DNS provider name.
+         *
          * @hide
          */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
         public static final String PRIVATE_DNS_SPECIFIER = "private_dns_specifier";
 
         /**
@@ -11284,6 +11326,8 @@ public final class Settings {
           *
           * {@hide}
           */
+        @SuppressLint("NoSettingsProvider")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
         public static final String PRIVATE_DNS_DEFAULT_MODE = "private_dns_default_mode";
 
 

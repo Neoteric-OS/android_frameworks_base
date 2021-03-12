@@ -108,6 +108,37 @@ package android.os {
 
 }
 
+package android.provider {
+
+  public static final class Settings.Global extends android.provider.Settings.NameValueTable {
+    field public static final String CAPTIVE_PORTAL_HTTP_URL = "captive_portal_http_url";
+    field public static final String DATA_ACTIVITY_TIMEOUT_MOBILE = "data_activity_timeout_mobile";
+    field public static final String DATA_ACTIVITY_TIMEOUT_WIFI = "data_activity_timeout_wifi";
+    field public static final String DNS_RESOLVER_MAX_SAMPLES = "dns_resolver_max_samples";
+    field public static final String DNS_RESOLVER_MIN_SAMPLES = "dns_resolver_min_samples";
+    field public static final String DNS_RESOLVER_SAMPLE_VALIDITY_SECONDS = "dns_resolver_sample_validity_seconds";
+    field public static final String DNS_RESOLVER_SUCCESS_THRESHOLD_PERCENT = "dns_resolver_success_threshold_percent";
+    field public static final String GLOBAL_HTTP_PROXY_EXCLUSION_LIST = "global_http_proxy_exclusion_list";
+    field public static final String GLOBAL_HTTP_PROXY_HOST = "global_http_proxy_host";
+    field public static final String GLOBAL_HTTP_PROXY_PAC = "global_proxy_pac_url";
+    field public static final String GLOBAL_HTTP_PROXY_PORT = "global_http_proxy_port";
+    field public static final String MOBILE_DATA_ALWAYS_ON = "mobile_data_always_on";
+    field public static final String NETWORK_AVOID_BAD_WIFI = "network_avoid_bad_wifi";
+    field public static final String NETWORK_METERED_MULTIPATH_PREFERENCE = "network_metered_multipath_preference";
+    field public static final String NETWORK_SWITCH_NOTIFICATION_DAILY_LIMIT = "network_switch_notification_daily_limit";
+    field public static final String NETWORK_SWITCH_NOTIFICATION_RATE_LIMIT_MILLIS = "network_switch_notification_rate_limit_millis";
+    field public static final String PRIVATE_DNS_DEFAULT_MODE = "private_dns_default_mode";
+    field public static final String PRIVATE_DNS_MODE = "private_dns_mode";
+    field public static final String PRIVATE_DNS_SPECIFIER = "private_dns_specifier";
+    field public static final String WIFI_ALWAYS_REQUESTED = "wifi_always_requested";
+  }
+
+  public static final class Settings.Secure extends android.provider.Settings.NameValueTable {
+    field public static final String CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS = "connectivity_release_pending_intent_delay_ms";
+  }
+
+}
+
 package android.telephony {
 
   public abstract class CellSignalStrength {
