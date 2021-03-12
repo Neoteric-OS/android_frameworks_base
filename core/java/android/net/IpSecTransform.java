@@ -113,6 +113,7 @@ public final class IpSecTransform implements AutoCloseable {
      * @param newDestinationAddress the new destination address
      * @hide
      */
+    @SystemApi
     @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNEL_MIGRATION)
     @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
     public void startMigration(
@@ -142,6 +143,7 @@ public final class IpSecTransform implements AutoCloseable {
      *
      * @hide
      */
+    @SystemApi
     @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNEL_MIGRATION)
     @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
     public void cancelMigration() {

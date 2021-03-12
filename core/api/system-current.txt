@@ -6042,6 +6042,11 @@ package android.net {
     method @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS) public void setUnderlyingNetwork(@NonNull android.net.Network) throws java.io.IOException;
   }
 
+  public final class IpSecTransform implements java.lang.AutoCloseable {
+    method @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS) public void cancelMigration();
+    method @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS) public void startMigration(@NonNull java.net.InetAddress, @NonNull java.net.InetAddress);
+  }
+
   public static class IpSecTransform.Builder {
     method @NonNull @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS) public android.net.IpSecTransform buildTunnelModeTransform(@NonNull java.net.InetAddress, @NonNull android.net.IpSecManager.SecurityParameterIndex) throws java.io.IOException, android.net.IpSecManager.ResourceUnavailableException, android.net.IpSecManager.SpiUnavailableException;
   }
