@@ -976,7 +976,7 @@ public class IpSecServiceParameterizedTest {
     }
 
     @Test
-    public void testFeatureFlagVerification() throws Exception {
+    public void testFeatureFlagIpSecTunnelsVerification() throws Exception {
         when(mMockPkgMgr.hasSystemFeature(eq(PackageManager.FEATURE_IPSEC_TUNNELS)))
                 .thenReturn(false);
 
@@ -984,6 +984,19 @@ public class IpSecServiceParameterizedTest {
             String addr = Inet4Address.getLoopbackAddress().getHostAddress();
             mIpSecService.createTunnelInterface(
                     addr, addr, new Network(0), new Binder(), BLESSED_PACKAGE);
+            fail("Expected UnsupportedOperationException for disabled feature");
+        } catch (UnsupportedOperationException expected) {
+        }
+    }
+
+    @Test
+    public void testFeatureFlagIpSecTunnelMigrationVerification() throws Exception {
+        when(mMockPkgMgr.hasSystemFeature(eq(PackageManager.FEATURE_IPSEC_TUNNEL_MIGRATION)))
+                .thenReturn(false);
+
+        try {
+            mIpSecService.startTransformMigration(
+                    1 /* transformId */, NEW_SRC_ADDRESS, NEW_DST_ADDRESS, BLESSED_PACKAGE);
             fail("Expected UnsupportedOperationException for disabled feature");
         } catch (UnsupportedOperationException expected) {
         }

@@ -1608,7 +1608,7 @@ public class IpSecService extends IIpSecService.Stub {
     private void enforceTunnelFeatureAndPermissions(String callingPackage) {
         if (!mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_IPSEC_TUNNELS)) {
             throw new UnsupportedOperationException(
-                    "IPsec Tunnel Mode requires PackageManager.FEATURE_IPSEC_TUNNELS");
+                    "IPsec Tunnel migration requires PackageManager.FEATURE_IPSEC_TUNNELS");
         }
 
         Objects.requireNonNull(callingPackage, "Null calling package cannot create IpSec tunnels");
@@ -1622,6 +1622,14 @@ public class IpSecService extends IIpSecService.Stub {
         }
         mContext.enforceCallingOrSelfPermission(
                 android.Manifest.permission.MANAGE_IPSEC_TUNNELS, "IpSecService");
+    }
+
+    private void enforceMigrateFeature(String callingPackage) {
+        if (!mContext.getPackageManager()
+                .hasSystemFeature(PackageManager.FEATURE_IPSEC_TUNNEL_MIGRATION)) {
+            throw new UnsupportedOperationException(
+                    "IPsec Tunnel Mode requires PackageManager.FEATURE_IPSEC_TUNNEL_MIGRATION");
+        }
     }
 
     private void createOrUpdateTransform(
@@ -1729,6 +1737,7 @@ public class IpSecService extends IIpSecService.Stub {
             String newDestinationAddress,
             String callingPackage) {
         enforceTunnelFeatureAndPermissions(callingPackage);
+        enforceMigrateFeature(callingPackage);
 
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
         TransformRecord transformInfo =
@@ -1741,6 +1750,7 @@ public class IpSecService extends IIpSecService.Stub {
     @Override
     public synchronized void cancelTransformMigration(int transformId, String callingPackage) {
         enforceTunnelFeatureAndPermissions(callingPackage);
+        enforceMigrateFeature(callingPackage);
 
         UserRecord userRecord = mUserResourceTracker.getUserRecord(Binder.getCallingUid());
         TransformRecord transformInfo =
