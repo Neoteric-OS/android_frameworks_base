@@ -106,6 +106,14 @@ class HostClipboardMonitor implements Runnable {
         return false;
     }
 
+    private void closeHostChannel() {
+        try {
+            mPipe.close();
+            mPipe = null;
+        } catch (IOException ignore) {
+        }
+    }
+
     public HostClipboardMonitor(HostClipboardCallback cb) {
         mHostClipboardCallback = cb;
     }
@@ -127,10 +135,7 @@ class HostClipboardMonitor implements Runnable {
                 mHostClipboardCallback.onHostClipboardUpdated(
                     new String(receivedData));
             } catch (IOException e) {
-                try {
-                    mPipe.close();
-                } catch (IOException ee) {}
-                mPipe = null;
+                closeHostChannel();
             } catch (InterruptedException e) {}
         }
     }
@@ -144,6 +149,7 @@ class HostClipboardMonitor implements Runnable {
         } catch(IOException e) {
             Slog.e("HostClipboardMonitor",
                    "Failed to set host clipboard " + e.getMessage());
+            closeHostChannel();
         }
     }
 }
