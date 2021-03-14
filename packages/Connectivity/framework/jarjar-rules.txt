@@ -1,1 +1,5 @@
 rule com.android.net.module.util.** android.net.connectivity.framework.util.@1
+
+rule android.net.NetworkCapabilitiesProto* android.net.connectivity.proto.NetworkCapabilitiesProto@1
+rule android.net.NetworkProto* android.net.connectivity.proto.NetworkProto@1
+rule android.net.NetworkRequestProto* android.net.connectivity.proto.NetworkRequestProto@1
