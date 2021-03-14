@@ -23,6 +23,25 @@ package {
     default_applicable_licenses: ["frameworks_base_license"],
 }
 
+java_library {
+    name: "framework-connectivity-protos",
+    proto: {
+        type: "nano",
+    },
+    srcs: [
+        // TODO: consider moving relevant .proto files directly to the module directory
+        ":framework-javastream-protos",
+    ],
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.tethering",
+    ],
+    jarjar_rules: "jarjar-rules-proto.txt",
+    visibility: [
+        "//visibility:private",
+    ],
+}
+
 // TODO: use a java_library in the bootclasspath instead
 filegroup {
     name: "framework-connectivity-internal-sources",
@@ -109,6 +128,10 @@ java_library {
         "framework-tethering.stubs.module_lib",
         "framework-wifi.stubs.module_lib",
         "unsupportedappusage",
+    ],
+    static_libs: [
+        "framework-connectivity-protos",
+        "net-utils-device-common",
     ],
     apex_available: ["com.android.tethering"],
     installable: true,
