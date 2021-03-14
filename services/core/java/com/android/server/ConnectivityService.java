@@ -200,6 +200,7 @@ import com.android.net.module.util.CollectionUtils;
 import com.android.net.module.util.LinkPropertiesUtils.CompareOrUpdateResult;
 import com.android.net.module.util.LinkPropertiesUtils.CompareResult;
 import com.android.net.module.util.NetworkCapabilitiesUtils;
+import com.android.net.module.util.NetworkStackConstants;
 import com.android.net.module.util.PermissionUtils;
 import com.android.server.connectivity.AutodestructReference;
 import com.android.server.connectivity.DnsManager;
@@ -2578,9 +2579,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             loge("Can't set TCP buffer sizes:" + e);
         }
 
-        final Integer rwndValue = Settings.Global.getInt(mContext.getContentResolver(),
-                Settings.Global.TCP_DEFAULT_INIT_RWND,
-                    mSystemProperties.getInt("net.tcp.default_init_rwnd", 0));
+        final Integer rwndValue = mSystemProperties.getInt("net.tcp.default_init_rwnd", 0);
         if (rwndValue != 0) {
             mSystemProperties.setTcpInitRwnd(rwndValue);
         }
@@ -3057,7 +3056,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         nai.lastCaptivePortalDetected = visible;
                         nai.everCaptivePortalDetected |= visible;
                         if (nai.lastCaptivePortalDetected &&
-                            Settings.Global.CAPTIVE_PORTAL_MODE_AVOID == getCaptivePortalMode()) {
+                                NetworkStackConstants.CAPTIVE_PORTAL_MODE_AVOID
+                                        == getCaptivePortalMode()) {
                             if (DBG) log("Avoiding captive portal network: " + nai.toShortString());
                             nai.onPreventAutomaticReconnect();
                             teardownUnneededNetwork(nai);
@@ -3168,8 +3168,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         private int getCaptivePortalMode() {
             return Settings.Global.getInt(mContext.getContentResolver(),
-                    Settings.Global.CAPTIVE_PORTAL_MODE,
-                    Settings.Global.CAPTIVE_PORTAL_MODE_PROMPT);
+                    NetworkStackConstants.CAPTIVE_PORTAL_MODE,
+                    NetworkStackConstants.CAPTIVE_PORTAL_MODE_PROMPT);
         }
 
         private boolean maybeHandleNetworkAgentInfoMessage(Message msg) {
