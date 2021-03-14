@@ -29,19 +29,19 @@ import java.util.Map;
  *
  */
 public class MailTo {
-    
-    static public final String MAILTO_SCHEME = "mailto:";
-    
+
+    public static final String MAILTO_SCHEME = "mailto:";
+
     // All the parsed content is added to the headers.
     private HashMap<String, String> mHeaders;
-    
-    // Well known headers
-    static private final String TO = "to";
-    static private final String BODY = "body";
-    static private final String CC = "cc";
-    static private final String SUBJECT = "subject";
 
-    
+    // Well known headers
+    private static final String TO = "to";
+    private static final String BODY = "body";
+    private static final String CC = "cc";
+    private static final String SUBJECT = "subject";
+
+
     /**
      * Test to see if the given string is a mailto URL
      * @param url string to be tested
@@ -53,7 +53,7 @@ public class MailTo {
         }
         return false;
     }
-    
+
     /**
      * Parse and decode a mailto scheme string. This parser implements
      * RFC 2368. The returned object can be queried for the parsed parameters.
@@ -66,16 +66,16 @@ public class MailTo {
             throw new NullPointerException();
         }
         if (!isMailTo(url)) {
-             throw new ParseException("Not a mailto scheme");
+            throw new ParseException("Not a mailto scheme");
         }
         // Strip the scheme as the Uri parser can't cope with it.
         String noScheme = url.substring(MAILTO_SCHEME.length());
         Uri email = Uri.parse(noScheme);
         MailTo m = new MailTo();
-        
+
         // Parse out the query parameters
         String query = email.getQuery();
-        if (query != null ) {
+        if (query != null) {
             String[] queries = query.split("&");
             for (String q : queries) {
                 String[] nameval = q.split("=");
@@ -88,7 +88,7 @@ public class MailTo {
                         nameval.length > 1 ? Uri.decode(nameval[1]) : null);
             }
         }
-        
+
         // Address can be specified in both the headers and just after the
         // mailto line. Join the two together.
         String address = email.getPath();
@@ -99,10 +99,10 @@ public class MailTo {
             }
             m.mHeaders.put(TO, address);
         }
-        
+
         return m;
     }
-    
+
     /**
      * Retrieve the To address line from the parsed mailto URL. This could be
      * several email address that are comma-space delimited.
@@ -112,7 +112,7 @@ public class MailTo {
     public String getTo() {
         return mHeaders.get(TO);
     }
-    
+
     /**
      * Retrieve the CC address line from the parsed mailto URL. This could be
      * several email address that are comma-space delimited.
@@ -122,7 +122,7 @@ public class MailTo {
     public String getCc() {
         return mHeaders.get(CC);
     }
-    
+
     /**
      * Retrieve the subject line from the parsed mailto URL.
      * If no subject line was specified, then null is return
@@ -131,7 +131,7 @@ public class MailTo {
     public String getSubject() {
         return mHeaders.get(SUBJECT);
     }
-    
+
     /**
      * Retrieve the body line from the parsed mailto URL.
      * If no body line was specified, then null is return
@@ -140,7 +140,7 @@ public class MailTo {
     public String getBody() {
         return mHeaders.get(BODY);
     }
-    
+
     /**
      * Retrieve all the parsed email headers from the mailto URL
      * @return map containing all parsed values
@@ -148,12 +148,12 @@ public class MailTo {
     public Map<String, String> getHeaders() {
         return mHeaders;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(MAILTO_SCHEME);
         sb.append('?');
-        for (Map.Entry<String,String> header : mHeaders.entrySet()) {
+        for (Map.Entry<String, String> header : mHeaders.entrySet()) {
             sb.append(Uri.encode(header.getKey()));
             sb.append('=');
             sb.append(Uri.encode(header.getValue()));
@@ -161,7 +161,7 @@ public class MailTo {
         }
         return sb.toString();
     }
-    
+
     /**
      * Private constructor. The only way to build a Mailto object is through
      * the parse() method.

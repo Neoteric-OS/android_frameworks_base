@@ -25003,17 +25003,6 @@ package android.net {
     enum_constant public static final android.net.LocalSocketAddress.Namespace RESERVED;
   }
 
-  public class MailTo {
-    method public String getBody();
-    method public String getCc();
-    method public java.util.Map<java.lang.String,java.lang.String> getHeaders();
-    method public String getSubject();
-    method public String getTo();
-    method public static boolean isMailTo(String);
-    method public static android.net.MailTo parse(String) throws android.net.ParseException;
-    field public static final String MAILTO_SCHEME = "mailto:";
-  }
-
   public abstract class NetworkSpecifier {
     ctor public NetworkSpecifier();
   }

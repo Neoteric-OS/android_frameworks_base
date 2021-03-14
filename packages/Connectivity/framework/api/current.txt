@@ -270,6 +270,17 @@ package android.net {
     field public static final int TYPE_UNICAST = 1; // 0x1
   }
 
+  public class MailTo {
+    method public String getBody();
+    method public String getCc();
+    method public java.util.Map<java.lang.String,java.lang.String> getHeaders();
+    method public String getSubject();
+    method public String getTo();
+    method public static boolean isMailTo(String);
+    method public static android.net.MailTo parse(String) throws android.net.ParseException;
+    field public static final String MAILTO_SCHEME = "mailto:";
+  }
+
   public class Network implements android.os.Parcelable {
     method public void bindSocket(java.net.DatagramSocket) throws java.io.IOException;
     method public void bindSocket(java.net.Socket) throws java.io.IOException;
