@@ -5870,8 +5870,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nri != null) {
             // declareNetworkRequestUnfulfillable() paths don't apply to multilayer requests.
             ensureNotMultilayerRequest(nri, "declareNetworkRequestUnfulfillable");
+            final int callingUid = mDeps.getCallingUid();
             mHandler.post(() -> handleReleaseNetworkRequest(
-                    nri.mRequests.get(0), mDeps.getCallingUid(), true));
+                    nri.mRequests.get(0), callingUid, true));
         }
     }
 
