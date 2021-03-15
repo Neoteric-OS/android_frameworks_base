@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8746e34f_6b5722c4",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-15T04:06:57Z",
+      "side": 1,
+      "message": "TextUtils.isEmpty(pieces[0]) is more common but that\u0027s fine",
+      "range": {
+        "startLine": 267,
+        "startChar": 16,
+        "endLine": 267,
+        "endChar": 56
+      },
+      "revId": "033521c57b04ba5fc93193185b4cfa4ef7525af6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
