@@ -359,6 +359,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "919ab765_2ba12a03",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 11111,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-15T12:31:52Z",
+      "side": 1,
+      "message": "Calling waitForIdle() lets it pass. Thanks for the help.\n\nI also added it before the other calls to verify().networkDestroy to deter flakes because though I\u0027ve never seen it fail in my runs, it looks like there may be a race if it\u0027s not called.",
+      "parentUuid": "66e4cda1_e6558055",
+      "range": {
+        "startLine": 11110,
+        "startChar": 0,
+        "endLine": 11111,
+        "endChar": 90
+      },
+      "revId": "7b16496af2c6713644e030b7c311ceb7c632245e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7920f38_4a68d81b",
