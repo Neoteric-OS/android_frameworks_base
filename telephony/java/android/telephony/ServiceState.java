@@ -564,6 +564,7 @@ public class ServiceState implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
     public int getDataRegState() {
         return mDataRegState;
     }
@@ -580,6 +581,7 @@ public class ServiceState implements Parcelable {
      *
      * @hide
      */
+    @TestApi
     public @RegState int getDataRegistrationState() {
         return getDataRegState();
     }
