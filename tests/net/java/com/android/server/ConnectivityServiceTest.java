@@ -113,6 +113,7 @@ import static com.android.testutils.MiscAsserts.assertLength;
 import static com.android.testutils.MiscAsserts.assertRunsInAtMost;
 import static com.android.testutils.MiscAsserts.assertThrows;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -11357,6 +11358,70 @@ public class ConnectivityServiceTest {
                         && !nc.hasCapability(NET_CAPABILITY_NOT_RESTRICTED));
         assertNoCallbacks(mSystemDefaultNetworkCallback, mDefaultNetworkCallback);
         inOrder.verify(mMockNetd, never()).networkAddUidRanges(anyInt(), any());
+
+        // All networks should be returned by the *AllNetwork* methods
+        assertArrayEquals(mCm.getAllNetworks(), new Network[] { workAgent2.getNetwork() });
+        final NetworkInfo[] nis0 = mCm.getAllNetworkInfo();
+        for (final NetworkInfo ni : nis0) {
+            // The exact number of NIs in the array depends on device configuration, but there
+            // should be no connected networks.
+            assertEquals(DetailedState.DISCONNECTED, ni.getDetailedState());
+        }
+        // Active network and active network info is null except for the work profile
+        assertEquals(null, mCm.getActiveNetwork());
+        assertEquals(null, mCm.getActiveNetworkForUid(Process.myUid()));
+        assertEquals(workAgent2.getNetwork(),
+                mCm.getActiveNetworkForUid(TEST_WORK_PROFILE_APP_UID));
+        assertNull(mCm.getActiveNetworkInfo());
+        assertEquals(null, mCm.getActiveNetworkInfoForUid(Process.myUid()));
+        final NetworkInfo ni0 = mCm.getActiveNetworkInfoForUid(TEST_WORK_PROFILE_APP_UID);
+        assertEquals(TYPE_MOBILE, ni0.getType());
+        // Default capabilities depend on the user ID
+        final NetworkCapabilities[] ncs0 = mCm.getDefaultNetworkCapabilitiesForUser(0);
+        assertEquals(0, ncs0.length);
+        // Strictly speaking the following call should return the list of caps from the
+        // enterprise network, but this is not implemented – the userId argument on the
+        // server side is unused – and it's never been a public API, only unsupportedAppUsage.
+        // TODO : maybe fix this someday ? It's probably not very important.
+//        final NetworkCapabilities[] ncs2 = mCm.getDefaultNetworkCapabilitiesForUser(2);
+//        assertEquals(1, ncs2.length);
+//        assertTrue(ncs2[0].hasCapability(NET_CAPABILITY_ENTERPRISE));
+
+        // Deprecated getters by type
+        assertNull(mCm.getNetworkForType(TYPE_MOBILE));
+        assertEquals(DetailedState.DISCONNECTED,
+                mCm.getNetworkInfo(TYPE_MOBILE).getDetailedState());
+        assertNotNull(mCm.getNetworkInfoForUid(workAgent2.getNetwork(), Process.myUid(),
+                false /* ignoreBlocked */));
+        assertNotNull(mCm.getNetworkInfoForUid(workAgent2.getNetwork(), TEST_WORK_PROFILE_APP_UID,
+                false /* ignoreBlocked */));
+
+        doAsUid(TEST_WORK_PROFILE_APP_UID, () -> {
+            // All networks should be returned by the *AllNetwork* methods
+            assertArrayEquals(mCm.getAllNetworks(), new Network[] { workAgent2.getNetwork() });
+            final NetworkInfo[] nis2 = mCm.getAllNetworkInfo();
+            for (final NetworkInfo ni : nis2) {
+                if (TYPE_MOBILE == ni.getType()) {
+                    // TODO : this returns DISCONNECTED.
+                    // assertEquals(DetailedState.CONNECTED, ni.getDetailedState());
+                } else {
+                    assertEquals(DetailedState.DISCONNECTED, ni.getDetailedState());
+                }
+            }
+            // Active network and active network info is null except for the work profile
+            assertEquals(workAgent2.getNetwork(), mCm.getActiveNetwork());
+            assertEquals(DetailedState.CONNECTED, mCm.getActiveNetworkInfo().getDetailedState());
+
+            // Deprecated getters by type
+            // TODO : this returns null and disconnected.
+            // assertEquals(workAgent2.getNetwork(), mCm.getNetworkForType(TYPE_MOBILE));
+            // assertEquals(DetailedState.CONNECTED,
+            //        mCm.getNetworkInfo(TYPE_MOBILE).getDetailedState());
+        });
+
+        // Without an active network, isActiveNetworkMetered and isDefaultNetworkActive return true.
+        assertTrue(mCm.isActiveNetworkMetered());
+        assertTrue(mCm.isDefaultNetworkActive());
 
         // When the agent disconnects, test that the app on the work profile falls back to the
         // default network.
