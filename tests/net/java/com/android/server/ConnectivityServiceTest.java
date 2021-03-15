@@ -11393,8 +11393,7 @@ public class ConnectivityServiceTest {
             final NetworkInfo[] nis2 = mCm.getAllNetworkInfo();
             for (final NetworkInfo ni : nis2) {
                 if (TYPE_MOBILE == ni.getType()) {
-                    // TODO : this returns DISCONNECTED.
-                    // assertEquals(DetailedState.CONNECTED, ni.getDetailedState());
+                    assertEquals(DetailedState.CONNECTED, ni.getDetailedState());
                 } else {
                     assertEquals(DetailedState.DISCONNECTED, ni.getDetailedState());
                 }
@@ -11404,10 +11403,9 @@ public class ConnectivityServiceTest {
             assertEquals(DetailedState.CONNECTED, mCm.getActiveNetworkInfo().getDetailedState());
 
             // Deprecated getters by type
-            // TODO : this returns null and disconnected.
-            // assertEquals(workAgent2.getNetwork(), mCm.getNetworkForType(TYPE_MOBILE));
-            // assertEquals(DetailedState.CONNECTED,
-            //        mCm.getNetworkInfo(TYPE_MOBILE).getDetailedState());
+            assertEquals(workAgent2.getNetwork(), mCm.getNetworkForType(TYPE_MOBILE));
+            assertEquals(DetailedState.CONNECTED,
+                    mCm.getNetworkInfo(TYPE_MOBILE).getDetailedState());
         });
 
         // Without an active network, isActiveNetworkMetered and isDefaultNetworkActive return true.
