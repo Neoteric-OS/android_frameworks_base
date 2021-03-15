@@ -1631,7 +1631,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!mLegacyTypeTracker.isTypeSupported(networkType)) {
             return null;
         }
-        final NetworkAgentInfo nai = mLegacyTypeTracker.getNetworkForType(networkType);
+        final NetworkAgentInfo nai = getNetworkAgentInfoForType(networkType);
         if (nai == null) {
             return makeFakeNetworkInfo(networkType, uid);
         }
@@ -1671,9 +1671,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final ArrayList<NetworkInfo> result = new ArrayList<>();
         for (int networkType = 0; networkType <= ConnectivityManager.MAX_NETWORK_TYPE;
                 networkType++) {
-            NetworkInfo info = getNetworkInfo(networkType);
+            final NetworkAgentInfo info = getNetworkAgentInfoForType(networkType);
             if (info != null) {
-                result.add(info);
+                result.add(info.networkInfo);
             }
         }
         return result.toArray(new NetworkInfo[result.size()]);
@@ -1681,19 +1681,38 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public Network getNetworkForType(int networkType) {
+        final NetworkAgentInfo nai = getNetworkAgentInfoForType(networkType);
+        if (null == nai) return null;
+        return nai.network;
+    }
+
+    // Returns null if the type is not supported, there is no valid network for this type
+    // according to LegacyTypeTracker, or if the network is blocked for the caller UID.
+    @Nullable
+    private NetworkAgentInfo getNetworkAgentInfoForType(int networkType) {
         enforceAccessPermission();
         if (!mLegacyTypeTracker.isTypeSupported(networkType)) {
             return null;
         }
-        final NetworkAgentInfo nai = mLegacyTypeTracker.getNetworkForType(networkType);
+        final NetworkAgentInfo nai;
+        final int uid = mDeps.getCallingUid();
+        final NetworkAgentInfo defaultNai = getDefaultNetworkForUid(uid);
+        if (defaultNai != null && defaultNai.networkInfo.getType() == networkType) {
+            // Under per-uid default networking, it's possible the first network is one
+            // that's not the default for this UID. Rather than going through the pain of
+            // teaching LegacyTypeTracker about per-uid default networking, simply check
+            // here if the default network happens to be of the wanted type.
+            nai = defaultNai;
+        } else {
+            nai = mLegacyTypeTracker.getNetworkForType(networkType);
+        }
         if (nai == null) {
             return null;
         }
-        final int uid = mDeps.getCallingUid();
         if (isNetworkWithCapabilitiesBlocked(nai.networkCapabilities, uid, false)) {
             return null;
         }
-        return nai.network;
+        return nai;
     }
 
     @Override
@@ -1793,7 +1812,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public LinkProperties getLinkPropertiesForType(int networkType) {
         enforceAccessPermission();
-        NetworkAgentInfo nai = mLegacyTypeTracker.getNetworkForType(networkType);
+        NetworkAgentInfo nai = getNetworkAgentInfoForType(networkType);
         final LinkProperties lp = getLinkProperties(nai);
         if (lp == null) return null;
         return linkPropertiesRestrictedForCallerPermissions(
