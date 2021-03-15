@@ -4577,6 +4577,17 @@ public final class Telephony {
          * The current data network type.
          */
         public static final String DATA_NETWORK_TYPE = "data_network_type";
+
+        /**
+         * An integer value indicating the current duplex mode if the radio technology is LTE,
+         * LTE-CA or NR.
+         * <p>
+         * Valid values: {@link ServiceState#DUPLEX_MODE_UNKNOWN},
+         * {@link ServiceState#DUPLEX_MODE_FDD}, {@link ServiceState#DUPLEX_MODE_TDD}.
+         * <p>
+         * This is the same as {@link ServiceState#getDuplexMode()}.
+         */
+        public static final String DUPLEX_MODE = "duplex_mode";
     }
 
     /**
