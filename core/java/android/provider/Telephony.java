@@ -4572,6 +4572,16 @@ public final class Telephony {
          * This is the same as {@link ServiceState#getIsManualSelection()}.
          */
         public static final String IS_MANUAL_NETWORK_SELECTION = "is_manual_network_selection";
+
+        /**
+         * An integer value indicating the current duplex mode.
+         * <p>
+         * Valid values: {@link ServiceState#DUPLEX_MODE_UNKNOWN},
+         * {@link ServiceState#DUPLEX_MODE_FDD}, {@link ServiceState#DUPLEX_MODE_TDD}.
+         * <p>
+         * This is the same as {@link ServiceState#getDuplexMode()}.
+         */
+        public static final String DUPLEX_MODE = "duplex_mode";
     }
 
     /**
