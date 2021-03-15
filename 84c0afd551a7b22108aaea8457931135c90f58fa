@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5c6c091_51d44e67",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-15T22:45:09Z",
+      "side": 1,
+      "message": "NACK. we should have a bug filed with the cuttlefish folks, and either have them track this, or just fix it outright.",
+      "range": {
+        "startLine": 1255,
+        "startChar": 17,
+        "endLine": 1255,
+        "endChar": 28
+      },
+      "revId": "84c0afd551a7b22108aaea8457931135c90f58fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
