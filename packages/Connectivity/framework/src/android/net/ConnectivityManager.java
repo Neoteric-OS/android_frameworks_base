@@ -3691,8 +3691,8 @@ public class ConnectivityManager {
                 final int callbackFlags = callback.mFlags;
                 if (reqType == LISTEN) {
                     request = mService.listenForNetwork(
-                            need, messenger, binder, callbackFlags, callingPackageName,
-                            getAttributionTag());
+                            need, reqType.ordinal(), messenger, binder, callbackFlags,
+                            callingPackageName, getAttributionTag());
                 } else {
                     request = mService.requestNetwork(
                             need, reqType.ordinal(), messenger, timeoutMs, binder, legacyType,

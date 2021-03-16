@@ -55,6 +55,7 @@ import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkPolicyManager.RULE_NONE;
 import static android.net.NetworkPolicyManager.uidRulesToString;
+import static android.net.NetworkRequest.Type.LISTEN;
 import static android.net.NetworkRequest.Type.LISTEN_FOR_BEST;
 import static android.net.shared.NetworkMonitorUtils.isPrivateDnsValidationRequired;
 import static android.os.Process.INVALID_UID;
@@ -5755,7 +5756,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public NetworkRequest listenForNetwork(NetworkCapabilities networkCapabilities,
+    public NetworkRequest listenForNetwork(NetworkCapabilities networkCapabilities, int reqTypeInt,
             Messenger messenger, IBinder binder,
             @NetworkCallback.Flag int callbackFlags,
             @NonNull String callingPackageName, @NonNull String callingAttributionTag) {
@@ -5776,8 +5777,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         restrictBackgroundRequestForCaller(nc);
         ensureValid(nc);
 
+        final NetworkRequest.Type reqType;
+        try {
+            reqType = NetworkRequest.Type.values()[reqTypeInt];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("Unsupported request type " + reqTypeInt);
+        }
+        if (reqType != LISTEN) {
+            throw new IllegalArgumentException("Unsupported request type " + reqType);
+        }
+
         NetworkRequest networkRequest = new NetworkRequest(nc, TYPE_NONE, nextNetworkRequestId(),
-                NetworkRequest.Type.LISTEN);
+                reqType);
         NetworkRequestInfo nri =
                 new NetworkRequestInfo(networkRequest, messenger, binder, callbackFlags,
                         callingAttributionTag);
@@ -5803,7 +5814,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         restrictRequestUidsForCallerAndSetRequestorInfo(nc, callingUid, callingPackageName);
 
         NetworkRequest networkRequest = new NetworkRequest(nc, TYPE_NONE, nextNetworkRequestId(),
-                NetworkRequest.Type.LISTEN);
+                LISTEN);
         NetworkRequestInfo nri =
                 new NetworkRequestInfo(networkRequest, operation, callingAttributionTag);
         if (VDBG) log("pendingListenForNetwork for " + nri);
@@ -8717,7 +8728,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         final NetworkRequest requestWithId =
                 new NetworkRequest(
-                        nc, TYPE_NONE, nextNetworkRequestId(), NetworkRequest.Type.LISTEN);
+                        nc, TYPE_NONE, nextNetworkRequestId(), LISTEN);
 
         // NetworkRequestInfos created here count towards MAX_NETWORK_REQUESTS_PER_UID limit.
         //
@@ -9371,7 +9382,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             final NetworkCapabilities netcap = createDefaultPerAppNetCap()
                     .addCapability(NET_CAPABILITY_NOT_METERED)
                     .addCapability(NET_CAPABILITY_VALIDATED);
-            return createNetworkRequest(NetworkRequest.Type.LISTEN, netcap);
+            return createNetworkRequest(LISTEN, netcap);
         }
 
         private NetworkRequest createOemPaidNetworkRequest() {

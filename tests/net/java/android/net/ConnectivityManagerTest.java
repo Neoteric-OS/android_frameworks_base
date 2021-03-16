@@ -33,6 +33,8 @@ import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_ETHERNET;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.NetworkRequest.Type.BACKGROUND_REQUEST;
+import static android.net.NetworkRequest.Type.LISTEN;
+import static android.net.NetworkRequest.Type.LISTEN_FOR_BEST;
 import static android.net.NetworkRequest.Type.REQUEST;
 import static android.net.NetworkRequest.Type.TRACK_DEFAULT;
 import static android.net.NetworkRequest.Type.TRACK_SYSTEM_DEFAULT;
@@ -366,8 +368,8 @@ public class ConnectivityManagerTest {
         manager.registerNetworkCallback(request, callback);
         verify(mService, never()).requestNetwork(any(), anyInt(), any(), anyInt(), any(), anyInt(),
                 anyInt(), any(), any());
-        verify(mService).listenForNetwork(eq(request.networkCapabilities), any(), any(), anyInt(),
-                eq(testPkgName), eq(testAttributionTag));
+        verify(mService).listenForNetwork(eq(request.networkCapabilities), eq(LISTEN.ordinal()),
+                any(), any(), anyInt(), eq(testPkgName), eq(testAttributionTag));
         reset(mService);
 
         manager.registerDefaultNetworkCallback(callback);
@@ -386,6 +388,14 @@ public class ConnectivityManagerTest {
         manager.registerSystemDefaultNetworkCallback(callback, handler);
         verify(mService).requestNetwork(eq(null),
                 eq(TRACK_SYSTEM_DEFAULT.ordinal()), any(), anyInt(), any(), eq(TYPE_NONE), anyInt(),
+                eq(testPkgName), eq(testAttributionTag));
+        reset(mService);
+
+        // Verify that register best matching network callback calls requestNetwork.
+        // TODO: Make it calls listenForNetwork instead.
+        manager.registerBestMatchingNetworkCallback(request, callback, handler);
+        verify(mService).requestNetwork(eq(request.networkCapabilities),
+                eq(LISTEN_FOR_BEST.ordinal()), any(), anyInt(), any(), eq(TYPE_NONE), anyInt(),
                 eq(testPkgName), eq(testAttributionTag));
         reset(mService);
     }

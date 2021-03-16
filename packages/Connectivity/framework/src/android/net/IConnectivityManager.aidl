@@ -151,7 +151,7 @@ interface IConnectivityManager
 
     void releasePendingNetworkRequest(in PendingIntent operation);
 
-    NetworkRequest listenForNetwork(in NetworkCapabilities networkCapabilities,
+    NetworkRequest listenForNetwork(in NetworkCapabilities networkCapabilities, int reqType,
             in Messenger messenger, in IBinder binder, int callbackFlags, String callingPackageName,
             String callingAttributionTag);
 
