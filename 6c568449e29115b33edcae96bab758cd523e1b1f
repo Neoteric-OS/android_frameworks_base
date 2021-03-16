@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8977bf2a_5a21ac5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T08:11:00Z",
+      "side": 1,
+      "message": "I believe this is a good change. It would have multiple good impacts :\n• It would account traffic for the settings VPN on the VPN UID instead of the system\n• It would use the VPN UID as the UID for PANS, which means it could be separated from the default network for the system server. In principle this is nice, though in practice there is no package name for the VPN UID, so it\u0027s not actionable, which means it becomes impossible to set a default network for the settings VPNs.\n\nIt would also redact the UID from some of the calls to the system server. This is wrong, but it could be fixed very easily and nobody is reading it now.\n\nI think we want to hold onto this change and eventually check it in. But we don\u0027t have time for S to evaluate the impact in depth – in other words, this is great but it\u0027s too scary right now.\n\nLet\u0027s expose the VPN_UID constant, and we\u0027ll think about this patch later.\n",
+      "revId": "6c568449e29115b33edcae96bab758cd523e1b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "546fa985_c29ff07c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6838,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T08:11:00Z",
+      "side": 1,
+      "message": "final int[] exemptUids \u003d { nai.networkCapabilities.getOwnerUid() };",
+      "range": {
+        "startLine": 6837,
+        "startChar": 8,
+        "endLine": 6838,
+        "endChar": 61
+      },
+      "revId": "6c568449e29115b33edcae96bab758cd523e1b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
