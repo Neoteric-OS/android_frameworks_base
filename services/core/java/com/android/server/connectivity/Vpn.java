@@ -1091,7 +1091,7 @@ public class Vpn {
 
     private int getAppUid(final String app, final int userId) {
         if (VpnConfig.LEGACY_VPN.equals(app)) {
-            return Process.myUid();
+            return Process.VPN_UID;
         }
         PackageManager pm = mContext.getPackageManager();
         return Binder.withCleanCallingIdentity(() -> {
