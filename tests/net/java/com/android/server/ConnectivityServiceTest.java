@@ -1516,8 +1516,7 @@ public class ConnectivityServiceTest {
     }
 
     private ConnectivityService.Dependencies makeDependencies() {
-        doReturn(TEST_TCP_INIT_RWND).when(mSystemProperties)
-                .getInt("net.tcp.default_init_rwnd", 0);
+        doReturn(TEST_TCP_INIT_RWND).when(mSystemProperties).getTcpDefaultInitRwnd(0 /* def */);
         doReturn(false).when(mSystemProperties).getBoolean("ro.radio.noril", false);
         doNothing().when(mSystemProperties).setTcpInitRwnd(anyInt());
         final ConnectivityService.Dependencies deps = mock(ConnectivityService.Dependencies.class);

@@ -38,4 +38,11 @@ public class MockableSystemProperties {
     public void setTcpInitRwnd(int value) {
         NetworkProperties.tcp_init_rwnd(value);
     }
+
+    /**
+     * Get net.tcp.default_init_rwnd by NetworkProperties#tcp_init_rwnd with default value.
+     */
+    public int getTcpDefaultInitRwnd(int def) {
+        return NetworkProperties.tcp_default_init_rwnd().orElse(def);
+    }
 }
