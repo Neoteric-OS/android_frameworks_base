@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "751011d8_541ff762",
+        "filename": "core/java/android/apphibernation/AppHibernationManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2021-03-16T04:06:13Z",
+      "side": 1,
+      "message": "Why don\u0027t you return the entire list of packages instead of just the count? Wouldn\u0027t you end up calling isHibernatingForUser() for every single package after that? That\u0027s a lot of IPCs instead of one fetch that can be cached in Settings or who ever the client is.",
+      "revId": "c43f0368e2fdc90b267f5a032dfe7a9c16e25cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c47ba83d_3b75f126",
         "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
         "patchSetId": 3
