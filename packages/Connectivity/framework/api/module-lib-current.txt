@@ -22,7 +22,18 @@ package android.net {
   }
 
   public final class NetworkCapabilities implements android.os.Parcelable {
+    method public void addUnwantedCapability(int);
+    method @NonNull public int[] getUnwantedCapabilities();
+    method public boolean hasUnwantedCapability(int);
     field public static final int TRANSPORT_TEST = 7; // 0x7
+  }
+
+  public class NetworkRequest implements android.os.Parcelable {
+    method public boolean hasUnwantedCapability(int);
+  }
+
+  public static class NetworkRequest.Builder {
+    method @NonNull public android.net.NetworkRequest.Builder addUnwantedCapability(int);
   }
 
   public final class TcpRepairWindow {
