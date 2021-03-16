@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76ab6f38_39c63b3d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 11226,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T08:10:30Z",
+      "side": 1,
+      "message": "nit: Not for this CL, but I think this test is already too long and hard to follow.\nMaybe we\u0027ll need to factorize this when addressing quality OKR.",
+      "range": {
+        "startLine": 11226,
+        "startChar": 16,
+        "endLine": 11226,
+        "endChar": 50
+      },
+      "revId": "c5d92f2213c645414783b17fedbc522ffecca1cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f729830_fc639eee",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 11358,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T08:10:30Z",
+      "side": 1,
+      "message": "nit: maybe describe why?",
+      "range": {
+        "startLine": 11358,
+        "startChar": 46,
+        "endLine": 11358,
+        "endChar": 47
+      },
+      "revId": "c5d92f2213c645414783b17fedbc522ffecca1cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c78ddcc0_bd62e65e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 11377,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T08:10:30Z",
+      "side": 1,
+      "message": "style error?",
+      "range": {
+        "startLine": 11377,
+        "startChar": 0,
+        "endLine": 11377,
+        "endChar": 2
+      },
+      "revId": "c5d92f2213c645414783b17fedbc522ffecca1cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "461204b4_4c8d5a7f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 11384,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T08:10:30Z",
+      "side": 1,
+      "message": "Can this be replaced by assertNetworkInfo(int type, DetailedState state)?",
+      "range": {
+        "startLine": 11383,
+        "startChar": 8,
+        "endLine": 11384,
+        "endChar": 68
+      },
+      "revId": "c5d92f2213c645414783b17fedbc522ffecca1cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81ff8630_65492ee7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 11394,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T08:10:30Z",
+      "side": 1,
+      "message": "Why do we use for loop?\nIt seems to me you are expecting only 1 network, right?",
+      "range": {
+        "startLine": 11394,
+        "startChar": 12,
+        "endLine": 11394,
+        "endChar": 47
+      },
+      "revId": "c5d92f2213c645414783b17fedbc522ffecca1cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d069b5fc_cdc6ca31",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 11397,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T08:10:30Z",
+      "side": 1,
+      "message": "Maybe use checkNetworkInfo(NetworkInfo ni, int type, DetailedState state)?",
+      "range": {
+        "startLine": 11397,
+        "startChar": 23,
+        "endLine": 11397,
+        "endChar": 84
+      },
+      "revId": "c5d92f2213c645414783b17fedbc522ffecca1cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "005904b5_98611b4b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 11404,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T08:10:30Z",
+      "side": 1,
+      "message": "Can we use assertActiveNetworkInfo(int type, DetailedState state)?",
+      "range": {
+        "startLine": 11403,
+        "startChar": 13,
+        "endLine": 11404,
+        "endChar": 97
+      },
+      "revId": "c5d92f2213c645414783b17fedbc522ffecca1cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
