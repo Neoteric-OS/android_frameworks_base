@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "58ab68cb_bf7999a7",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2730,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2021-03-16T16:38:08Z",
+      "side": 1,
+      "message": "just to be clear, this method is only called when the storage is moved, right?",
+      "range": {
+        "startLine": 2730,
+        "startChar": 16,
+        "endLine": 2730,
+        "endChar": 37
+      },
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a8bbf820_eab16276",
         "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
         "patchSetId": 7
@@ -14,6 +37,30 @@
       "writtenOn": "2021-02-11T22:56:08Z",
       "side": 1,
       "message": "I don\u0027t have any context into the storage issue here, so I cannot speak to that. But regarding the user code:\n\nWhen does this storage code get exercised? Does this mean that cleanupPreCreatedUsers() can now be called even not during boot-up? Is that safe? I believe this method is currently only called at boot, and perhaps relies on that assumption.\nIn particular, what if someone is trying to upgrade a pre-created user into a full user at the same time? Might we wind up *slating* the pre-create for removal, then upgrading it, and only then removing it (thereby destroying a regular user!)?\n\nAny thoughts Felipe?",
+      "range": {
+        "startLine": 5065,
+        "startChar": 36,
+        "endLine": 5065,
+        "endChar": 58
+      },
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9870ddb9_2d8c0197",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5065,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2021-03-16T16:38:08Z",
+      "side": 1,
+      "message": "Sorry, I meant to reply earlier, but forgot to finish the comment.\n\nI think removing the pre-created users when the storage is moved is fine, it\u0027s safer than try to \"salvage\" the pre-created users data.\n\nThe pre-created users are not necessarily pre-created at boot, they could be at any time (in fact, we\u0027re changing the workflow on Automotive to created them when the device is shut down / goes into garage mode).\n\nAnyways, the goal of pre-creation is to optimize the (real) creation time, but correctness is more important, so cleaning up these users when it would be hard to fix / change their state is a good compromise to me.",
+      "parentUuid": "a8bbf820_eab16276",
       "range": {
         "startLine": 5065,
         "startChar": 36,
