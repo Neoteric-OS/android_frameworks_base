@@ -34218,6 +34218,7 @@ package android.provider {
     method public static android.net.Uri getUriForSubscriptionIdAndField(int, String);
     field public static final String AUTHORITY = "service-state";
     field public static final android.net.Uri CONTENT_URI;
+    field public static final String DATA_NETWORK_TYPE = "data_network_type";
     field public static final String IS_MANUAL_NETWORK_SELECTION = "is_manual_network_selection";
     field public static final String VOICE_OPERATOR_NUMERIC = "voice_operator_numeric";
     field public static final String VOICE_REG_STATE = "voice_reg_state";
@@ -40424,6 +40425,7 @@ package android.telephony {
     method public int getCdmaSystemId();
     method public int[] getCellBandwidths();
     method public int getChannelNumber();
+    method public int getDataNetworkType();
     method public int getDuplexMode();
     method public boolean getIsManualSelection();
     method @NonNull public java.util.List<android.telephony.NetworkRegistrationInfo> getNetworkRegistrationInfoList();

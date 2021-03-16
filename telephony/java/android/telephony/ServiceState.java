@@ -1655,9 +1655,7 @@ public class ServiceState implements Parcelable {
      * behavior,
      *
      * @return Current data network type
-     * @hide
      */
-    @TestApi
     public @NetworkType int getDataNetworkType() {
         final NetworkRegistrationInfo iwlanRegInfo = getNetworkRegistrationInfo(
                 NetworkRegistrationInfo.DOMAIN_PS, AccessNetworkConstants.TRANSPORT_TYPE_WLAN);
