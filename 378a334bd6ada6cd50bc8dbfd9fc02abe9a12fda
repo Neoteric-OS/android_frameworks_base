@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ec4fb7e_f1d2c65d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T11:13:10Z",
+      "side": 1,
+      "message": "While I agree with the conclusion that we can remove the exposedCapability pieces, I strongly disagree that transport-dependent is a good idea here. A WiFi network may support IMS or CBS in the future for example ; this becomes more realistic with the existence of carrier wifi for example.\n\nTransport-dependent is essentially *never* a good idea.",
+      "range": {
+        "startLine": 9,
+        "startChar": 36,
+        "endLine": 9,
+        "endChar": 65
+      },
+      "revId": "378a334bd6ada6cd50bc8dbfd9fc02abe9a12fda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "a7c6a287_d72c8e01",
@@ -14,6 +37,75 @@
       "writtenOn": "2021-03-15T23:09:24Z",
       "side": 1,
       "message": "This CL hides a partial solution to a larger problem. Since we don\u0027t need to solve that problem in S, hide the partial solution and leave the space open to a more complete solution in a future release.",
+      "revId": "378a334bd6ada6cd50bc8dbfd9fc02abe9a12fda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3097170a_8df05e61",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T11:13:10Z",
+      "side": 1,
+      "message": "That\u0027s not actually accurate is it ? It\u0027s a unification of a carrier network.",
+      "range": {
+        "startLine": 59,
+        "startChar": 29,
+        "endLine": 59,
+        "endChar": 37
+      },
+      "revId": "378a334bd6ada6cd50bc8dbfd9fc02abe9a12fda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea52d44a_4f5c3e80",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T11:13:10Z",
+      "side": 1,
+      "message": "\"limited to the following\" seems sufficient and less likely to become obsolete.",
+      "range": {
+        "startLine": 60,
+        "startChar": 14,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "378a334bd6ada6cd50bc8dbfd9fc02abe9a12fda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fa09c73_61ddfe20",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T11:13:10Z",
+      "side": 1,
+      "message": "This is hopefully never happening",
+      "range": {
+        "startLine": 292,
+        "startChar": 42,
+        "endLine": 292,
+        "endChar": 87
+      },
       "revId": "378a334bd6ada6cd50bc8dbfd9fc02abe9a12fda",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
