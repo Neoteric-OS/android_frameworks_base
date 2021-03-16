@@ -57,7 +57,6 @@ import static android.net.NetworkPolicyManager.RULE_NONE;
 import static android.net.NetworkPolicyManager.uidRulesToString;
 import static android.net.shared.NetworkMonitorUtils.isPrivateDnsValidationRequired;
 import static android.os.Process.INVALID_UID;
-import static android.os.Process.VPN_UID;
 import static android.system.OsConstants.IPPROTO_TCP;
 import static android.system.OsConstants.IPPROTO_UDP;
 
@@ -6797,9 +6796,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private boolean requiresVpnIsolation(@NonNull NetworkAgentInfo nai, NetworkCapabilities nc,
             LinkProperties lp) {
         if (nc == null || lp == null) return false;
+
         return nai.isVPN()
                 && !nai.networkAgentConfig.allowBypass
-                && nc.getOwnerUid() != Process.SYSTEM_UID
+                && getVpnType(nai) != VpnManager.TYPE_VPN_LEGACY
                 && lp.getInterfaceName() != null
                 && (lp.hasIpv4DefaultRoute() || lp.hasIpv4UnreachableDefaultRoute())
                 && (lp.hasIpv6DefaultRoute() || lp.hasIpv6UnreachableDefaultRoute());
@@ -6839,8 +6839,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // TODO: Excluding VPN_UID is necessary in order to not to kill the TCP connection used
         // by PPTP. Fix this by making Vpn set the owner UID to VPN_UID instead of system when
         // starting a legacy VPN, and remove VPN_UID here. (b/176542831)
-        exemptUids[0] = VPN_UID;
-        exemptUids[1] = nai.networkCapabilities.getOwnerUid();
+        exemptUids[0] = nai.networkCapabilities.getOwnerUid();
         UidRangeParcel[] ranges = toUidRangeStableParcels(uidRanges);
 
         maybeCloseSockets(nai, ranges, exemptUids);
