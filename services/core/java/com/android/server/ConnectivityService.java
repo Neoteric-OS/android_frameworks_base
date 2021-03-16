@@ -5553,21 +5553,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 //  request if the app changes network state. http://b/29964605
                 enforceMeteredApnPolicy(networkCapabilities);
                 break;
-            case LISTEN_FOR_BEST:
-                enforceAccessPermission();
-                networkCapabilities = new NetworkCapabilities(networkCapabilities);
-                break;
             default:
                 throw new IllegalArgumentException("Unsupported request type " + reqType);
         }
         ensureRequestableCapabilities(networkCapabilities);
         ensureSufficientPermissionsForRequest(networkCapabilities,
                 Binder.getCallingPid(), callingUid, callingPackageName);
-
-        // Enforce FOREGROUND if the caller does not have permission to use background network.
-        if (reqType == LISTEN_FOR_BEST) {
-            restrictBackgroundRequestForCaller(networkCapabilities);
-        }
 
         // Set the UID range for this request to the single UID of the requester, unless the
         // requester has the permission to specify other UIDs.
@@ -5783,7 +5774,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new IllegalArgumentException("Unsupported request type " + reqTypeInt);
         }
-        if (reqType != LISTEN) {
+        if (reqType != LISTEN && reqType != LISTEN_FOR_BEST) {
             throw new IllegalArgumentException("Unsupported request type " + reqType);
         }
 

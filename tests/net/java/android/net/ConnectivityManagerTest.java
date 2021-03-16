@@ -391,12 +391,13 @@ public class ConnectivityManagerTest {
                 eq(testPkgName), eq(testAttributionTag));
         reset(mService);
 
-        // Verify that register best matching network callback calls requestNetwork.
-        // TODO: Make it calls listenForNetwork instead.
+        // Verify that register best matching network callback calls listenForNetwork.
         manager.registerBestMatchingNetworkCallback(request, callback, handler);
-        verify(mService).requestNetwork(eq(request.networkCapabilities),
-                eq(LISTEN_FOR_BEST.ordinal()), any(), anyInt(), any(), eq(TYPE_NONE), anyInt(),
-                eq(testPkgName), eq(testAttributionTag));
+        verify(mService, never()).requestNetwork(any(), anyInt(), any(), anyInt(), any(), anyInt(),
+                anyInt(), any(), any());
+        verify(mService).listenForNetwork(eq(request.networkCapabilities),
+                eq(LISTEN_FOR_BEST.ordinal()), any(), any(), anyInt(), eq(testPkgName),
+                eq(testAttributionTag));
         reset(mService);
     }
 

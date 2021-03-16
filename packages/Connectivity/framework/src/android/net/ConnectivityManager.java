@@ -3689,7 +3689,7 @@ public class ConnectivityManager {
                 Messenger messenger = new Messenger(handler);
                 Binder binder = new Binder();
                 final int callbackFlags = callback.mFlags;
-                if (reqType == LISTEN) {
+                if (reqType == LISTEN || reqType == LISTEN_FOR_BEST) {
                     request = mService.listenForNetwork(
                             need, reqType.ordinal(), messenger, binder, callbackFlags,
                             callingPackageName, getAttributionTag());
