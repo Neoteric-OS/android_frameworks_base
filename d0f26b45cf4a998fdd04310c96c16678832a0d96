@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70ecbdc4_9fb64a5f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T17:16:41Z",
+      "side": 1,
+      "message": "TH failed due to lack of aosp/1635044 in internal master.\nWait for auto merger to populate the change into internal master.",
+      "revId": "d0f26b45cf4a998fdd04310c96c16678832a0d96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
