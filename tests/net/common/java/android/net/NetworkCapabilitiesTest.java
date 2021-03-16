@@ -518,11 +518,21 @@ public class NetworkCapabilitiesTest {
         assertFalse(nc1.equalsNetCapabilities(nc2));
         nc2.addUnwantedCapability(NET_CAPABILITY_INTERNET);
         assertTrue(nc1.equalsNetCapabilities(nc2));
+        if (isAtLeastS()) {
+            // Remove a required capability doesn't affect unwanted capabilities.
+            nc1.removeCapability(NET_CAPABILITY_INTERNET);
+            assertTrue(nc1.equalsNetCapabilities(nc2));
 
-        nc1.removeCapability(NET_CAPABILITY_INTERNET);
-        assertFalse(nc1.equalsNetCapabilities(nc2));
-        nc2.removeCapability(NET_CAPABILITY_INTERNET);
-        assertTrue(nc1.equalsNetCapabilities(nc2));
+            nc1.removeUnwantedCapability(NET_CAPABILITY_INTERNET);
+            assertFalse(nc1.equalsNetCapabilities(nc2));
+            nc2.removeUnwantedCapability(NET_CAPABILITY_INTERNET);
+            assertTrue(nc1.equalsNetCapabilities(nc2));
+        } else {
+            nc1.removeCapability(NET_CAPABILITY_INTERNET);
+            assertFalse(nc1.equalsNetCapabilities(nc2));
+            nc2.removeCapability(NET_CAPABILITY_INTERNET);
+            assertTrue(nc1.equalsNetCapabilities(nc2));
+        }
     }
 
     @Test
@@ -584,6 +594,17 @@ public class NetworkCapabilitiesTest {
         // will never be satisfied.
         assertTrue(nc2.hasCapability(NET_CAPABILITY_NOT_ROAMING));
         assertTrue(nc2.hasUnwantedCapability(NET_CAPABILITY_NOT_ROAMING));
+
+        if (isAtLeastS()) {
+            // Verify remove from unwanted capability won't affect required capability.
+            nc2.removeUnwantedCapability(NET_CAPABILITY_NOT_ROAMING);
+            assertTrue(nc2.hasCapability(NET_CAPABILITY_NOT_ROAMING));
+
+            // Verify remove from required capability won't affect unwanted capability.
+            nc2.combineCapabilities(nc1);
+            nc2.removeCapability(NET_CAPABILITY_NOT_ROAMING);
+            assertTrue(nc2.hasUnwantedCapability(NET_CAPABILITY_NOT_ROAMING));
+        }
 
         nc1.setSSID(TEST_SSID);
         nc2.combineCapabilities(nc1);

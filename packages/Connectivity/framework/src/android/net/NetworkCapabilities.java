@@ -574,18 +574,31 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     /**
-     * Removes (if found) the given capability from this {@code NetworkCapability} instance.
+     * Removes (if found) the given capability from this {@code NetworkCapability}
+     * instance that were added via addCapability(int) or setCapabilities(int[], int[]).
      *
      * @param capability the capability to be removed.
      * @return This NetworkCapabilities instance, to facilitate chaining.
      * @hide
      */
     public @NonNull NetworkCapabilities removeCapability(@NetCapability int capability) {
-        // Note that this method removes capabilities that were added via addCapability(int),
-        // addUnwantedCapability(int) or setCapabilities(int[], int[]).
         checkValidCapability(capability);
         final long mask = ~(1 << capability);
         mNetworkCapabilities &= mask;
+        return this;
+    }
+
+    /**
+     * Removes (if found) the given unwanted capability from this {@code NetworkCapability}
+     * instance that were added via addUnwantedCapability(int) or setCapabilities(int[], int[]).
+     *
+     * @param capability the capability to be removed.
+     * @return This NetworkCapabilities instance, to facilitate chaining.
+     * @hide
+     */
+    public @NonNull NetworkCapabilities removeUnwantedCapability(@NetCapability int capability) {
+        checkValidCapability(capability);
+        final long mask = ~(1 << capability);
         mUnwantedNetworkCapabilities &= mask;
         return this;
     }
@@ -660,6 +673,7 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public boolean hasUnwantedCapability(@NetCapability int capability) {
         return isValidCapability(capability)
                 && ((mUnwantedNetworkCapabilities & (1 << capability)) != 0);
