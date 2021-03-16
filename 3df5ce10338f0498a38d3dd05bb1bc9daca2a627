@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6287269f_5c97fd03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-03-16T20:50:35Z",
+      "side": 1,
+      "message": "Again, it is not 100% sure that we need to expose SS#duplexMode in telephony provider yet.\nBut the CL is prepared to make if it does, we have a CL ready (or for better discussion).\nThanks",
+      "revId": "3df5ce10338f0498a38d3dd05bb1bc9daca2a627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
