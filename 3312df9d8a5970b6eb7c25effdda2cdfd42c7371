@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20bdff4e_657e2ed7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2021-03-16T00:17:36Z",
+      "side": 1,
+      "message": "I don\u0027t understand this part. This module has IntDef, IntRange, NonNull, etc in srcs. If there\u0027s a missing annotation, can we add it? (and remove the special case in Options.kt)\n\nIf we are going to disable annotations, however, the annotation files should better be removed from srcs as well.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 59
+      },
+      "revId": "3312df9d8a5970b6eb7c25effdda2cdfd42c7371",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
