@@ -4442,12 +4442,16 @@ public class ConnectivityManager {
     /**
      * Requests that the system open the captive portal app on the specified network.
      *
+     * <p>This is to be used on networks where a captive portal was detected, as per
+     * {@link NetworkCapabilities#NET_CAPABILITY_CAPTIVE_PORTAL}.
+     *
      * @param network The network to log into.
      *
      * @hide
      */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
-    public void startCaptivePortalApp(Network network) {
+    public void startCaptivePortalApp(@NonNull Network network) {
         try {
             mService.startCaptivePortalApp(network);
         } catch (RemoteException e) {
