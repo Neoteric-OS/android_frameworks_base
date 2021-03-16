@@ -22,6 +22,30 @@
       },
       "revId": "3312df9d8a5970b6eb7c25effdda2cdfd42c7371",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4de22890_71ddb542",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2021-03-16T00:59:56Z",
+      "side": 1,
+      "message": "Without this or the special case in Options.kt, the build fails:\n\n out/soong/.intermediates/frameworks/base/hwbinder.stubs/android_common/javac/srcjars/android/os/RemoteException.java:27: error: package android.annotation does not exist\n @android.annotation.NonNull\n                    ^\nComparing the generated stubs:\n\n --- out/soong/.intermediates/frameworks/base/hwbinder-stubs-docs/android_common/stubsDir/android/os/RemoteException.java\t2021-03-15 17:32:21.546129458 -0700\n +++ /tmp/bad/hwbinder-stubs-docs/android_common/stubsDir/android/os/RemoteException.java\t2021-03-15 17:29:54.756376940 -0700\n @@ -24,8 +24,10 @@\n  \n  public RemoteException(java.lang.String message) { throw new RuntimeException(\"Stub!\"); }\n  \n +@android.annotation.NonNull\n  public java.lang.RuntimeException rethrowAsRuntimeException() { throw new \nRuntimeException(\"Stub!\"); }\n  \n +@android.annotation.NonNull\n  public java.lang.RuntimeException rethrowFromSystemServer() { throw new RuntimeException(\"Stub!\"); }\n  }\n\nandroid.annotation.NonNull is in the sources for metalava, but not in the output stubs, I assume because it is @hide.  That means it is not in the classpath once it reaches javac.  None of the other annotations in srcs are in the stubs either, nor are the referenced by the stubs.\n\nI think aosp/1636905 is the right solution.",
+      "parentUuid": "20bdff4e_657e2ed7",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 59
+      },
+      "revId": "3312df9d8a5970b6eb7c25effdda2cdfd42c7371",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
