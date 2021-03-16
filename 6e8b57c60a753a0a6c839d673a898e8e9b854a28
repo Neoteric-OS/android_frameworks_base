@@ -95,6 +95,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "4f4ae25e_38292857",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 5129,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-16T09:33:42Z",
+      "side": 1,
+      "message": "Yes, the caller will be the play store app.",
+      "parentUuid": "289ae369_57d52a0c",
+      "range": {
+        "startLine": 5129,
+        "startChar": 9,
+        "endLine": 5129,
+        "endChar": 19
+      },
+      "revId": "6e8b57c60a753a0a6c839d673a898e8e9b854a28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f878fddd_5945c605",
         "filename": "data/etc/privapp-permissions-platform.xml",
         "patchSetId": 5
