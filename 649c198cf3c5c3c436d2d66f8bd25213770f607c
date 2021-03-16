@@ -16,6 +16,23 @@
       "message": "Now we have\n+2 on aosp/1534836\n+2 on aosp/1535676\n+2 on aosp/1549486\n+2 on aosp/1549485 \n\nI\u0027d like to request for owner\u0027s approval to merge. ",
       "revId": "649c198cf3c5c3c436d2d66f8bd25213770f607c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "741900b1_df99acd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2021-03-16T17:45:37Z",
+      "side": 1,
+      "message": "FWIW, I was confused by the fact that we have another change in the same stack that changes this over to a COW persistent data block. I\u0027m not sure why separate changes were needed. Anyway, this looks OK to me.",
+      "revId": "649c198cf3c5c3c436d2d66f8bd25213770f607c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
