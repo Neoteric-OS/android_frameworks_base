@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4949ceb0_99bb5838",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-03-16T16:15:42Z",
+      "side": 1,
+      "message": "OWNERS+1, but see note inline about how to structure the OWNERS file in a more robust way",
+      "revId": "b7e8adc97686f1f6d3fbcff620dbbe6d134c6016",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff2a6f7f_984e4530",
+        "filename": "services/tests/mockingservicestests/src/com/android/server/pm/dex/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-03-16T16:15:42Z",
+      "side": 1,
+      "message": "Can you write this OWNERS file in terms of an \"include\" directive?  For example, perhaps:\n\ninclude platform/art:/OWNERS",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "b7e8adc97686f1f6d3fbcff620dbbe6d134c6016",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
