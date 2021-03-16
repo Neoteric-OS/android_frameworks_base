@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009023780",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552659?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "72b5de5d_f43f6791",
+        "filename": "packages/Connectivity/framework/jni/android_net_NetworkUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-16T06:27:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 121
+      },
+      "revId": "1f4af6bfc78b818deda2da85dbe2b13ff1f0ac64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009023780",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552659?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5ae3064b_e60fee04",
+        "filename": "packages/Connectivity/framework/jni/android_net_NetworkUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-16T06:27:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 114
+      },
+      "revId": "1f4af6bfc78b818deda2da85dbe2b13ff1f0ac64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009023780",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552659?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "fd46df09_6d1d597e",
+        "filename": "packages/Connectivity/framework/jni/android_net_NetworkUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-16T06:27:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 299,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 134
+      },
+      "revId": "1f4af6bfc78b818deda2da85dbe2b13ff1f0ac64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009023780",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552659?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "02341778_3fb965a5",
+        "filename": "packages/Connectivity/framework/jni/android_net_NetworkUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-16T06:27:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 102
+      },
+      "revId": "1f4af6bfc78b818deda2da85dbe2b13ff1f0ac64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009023780",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552659?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "56880b76_778d2356",
+        "filename": "packages/Connectivity/framework/jni/android_net_NetworkUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-16T06:27:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 301,
+        "endChar": 121
+      },
+      "revId": "1f4af6bfc78b818deda2da85dbe2b13ff1f0ac64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009023780",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552659?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "abcf813f_435d2c48",
+        "filename": "packages/Connectivity/framework/jni/android_net_NetworkUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-16T06:27:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 138
+      },
+      "revId": "1f4af6bfc78b818deda2da85dbe2b13ff1f0ac64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009023780",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1552659?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "015aef67_969d6bdf",
+        "filename": "packages/Connectivity/framework/jni/android_net_NetworkUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-16T06:27:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 102
+      },
+      "revId": "1f4af6bfc78b818deda2da85dbe2b13ff1f0ac64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
