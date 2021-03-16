@@ -4572,6 +4572,11 @@ public final class Telephony {
          * This is the same as {@link ServiceState#getIsManualSelection()}.
          */
         public static final String IS_MANUAL_NETWORK_SELECTION = "is_manual_network_selection";
+
+        /**
+         * The current data network type.
+         */
+        public static final String DATA_NETWORK_TYPE = "data_network_type";
     }
 
     /**
