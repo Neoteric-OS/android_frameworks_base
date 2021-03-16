@@ -1533,6 +1533,7 @@ public class ConnectivityServiceTest {
             return mPolicyTracker;
         }).when(deps).makeMultinetworkPolicyTracker(any(), any(), any());
         doReturn(true).when(deps).getCellular464XlatEnabled();
+        doReturn(TEST_TCP_INIT_RWND).when(deps).getTcpDefaultInitRwnd();
 
         return deps;
     }
@@ -8457,6 +8458,8 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testTcpBufferReset() throws Exception {
+
+
         final String testTcpBufferSizes = "1,2,3,4,5,6";
         final NetworkRequest networkRequest = new NetworkRequest.Builder()
                 .addTransportType(TRANSPORT_CELLULAR)

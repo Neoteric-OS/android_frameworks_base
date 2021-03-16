@@ -1077,6 +1077,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public boolean getCellular464XlatEnabled() {
             return NetworkProperties.isCellular464XlatEnabled().orElse(true);
         }
+
+        public int getTcpDefaultInitRwnd() {
+            return NetworkProperties.tcp_default_init_rwnd().orElse(0);
+        }
     }
 
     public ConnectivityService(Context context) {
@@ -2595,9 +2599,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             loge("Can't set TCP buffer sizes:" + e);
         }
 
-        final Integer rwndValue = Settings.Global.getInt(mContext.getContentResolver(),
-                Settings.Global.TCP_DEFAULT_INIT_RWND,
-                    mSystemProperties.getInt("net.tcp.default_init_rwnd", 0));
+        final Integer rwndValue = mDeps.getTcpDefaultInitRwnd();
+        Log.d("honda", "rwndValue=" + rwndValue);
         if (rwndValue != 0) {
             mSystemProperties.setTcpInitRwnd(rwndValue);
         }
