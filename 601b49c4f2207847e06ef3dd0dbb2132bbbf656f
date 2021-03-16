@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a03eab93_36137b1f",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2730,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-03-16T18:28:38Z",
+      "side": 1,
+      "message": "I can\u0027t say for sure the purpose that this function was designed for. But as I can see from the sources the only place that it is used is moving of storage in the `pm`.\n\nAlso, not sure that I understood a comment in `frameworks/base/core/java/android/os/storage/StorageManager.java` correctly but it seems that the `StorageManager.setPrimaryStorageUuid` is supposed to be called only via `PackageManager.movePrimaryStorage`:\n\n```\n    /**                                                                                                                                                                                                     \n     * This is not the API you\u0027re looking for.                                                                                                                                                              \n     *                                                                                                                                                                                                      \n     * @see PackageManager#movePrimaryStorage(VolumeInfo)                                                                                                                                                   \n     * @hide                                                                                                                                                                                                \n     */                                                                                                                                                                                                     \n    public void setPrimaryStorageUuid(String volumeUuid, IPackageMoveObserver callback) {\n    ...\n```\n\nIt would be nice if storage manager owners comment.",
+      "parentUuid": "58ab68cb_bf7999a7",
+      "range": {
+        "startLine": 2730,
+        "startChar": 16,
+        "endLine": 2730,
+        "endChar": 37
+      },
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a8bbf820_eab16276",
         "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
         "patchSetId": 7
