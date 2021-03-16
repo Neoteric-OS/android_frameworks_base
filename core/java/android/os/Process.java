@@ -16,8 +16,11 @@
 
 package android.os;
 
+import static android.annotation.SystemApi.Client.PRIVILEGED_APPS;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.system.ErrnoException;
@@ -103,7 +106,7 @@ public class Process {
      * Defines the UID/GID for the group that controls VPN services.
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
+    @SystemApi(client = PRIVILEGED_APPS)
     public static final int VPN_UID = 1016;
 
     /**

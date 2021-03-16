@@ -7086,6 +7086,10 @@ package android.os {
     field public static final int EVENT_UNSPECIFIED = 0; // 0x0
   }
 
+  public class Process {
+    field public static final int VPN_UID = 1016; // 0x3f8
+  }
+
   public class RecoverySystem {
     method @RequiresPermission(android.Manifest.permission.RECOVERY) public static void cancelScheduledUpdate(android.content.Context) throws java.io.IOException;
     method @RequiresPermission(anyOf={android.Manifest.permission.RECOVERY, android.Manifest.permission.REBOOT}) public static void clearPrepareForUnattendedUpdate(@NonNull android.content.Context) throws java.io.IOException;
