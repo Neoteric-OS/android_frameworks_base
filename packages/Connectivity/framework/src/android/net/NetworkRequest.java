@@ -36,6 +36,7 @@ import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.net.NetworkCapabilities.NetCapability;
@@ -300,6 +301,9 @@ public class NetworkRequest implements Parcelable {
          *
          * @hide
          */
+        @NonNull
+        @SuppressLint("MissingGetterMatchingBuilder")
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
         public Builder addUnwantedCapability(@NetworkCapabilities.NetCapability int capability) {
             mNetworkCapabilities.addUnwantedCapability(capability);
             return this;
@@ -562,6 +566,7 @@ public class NetworkRequest implements Parcelable {
      *
      * @hide
      */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public boolean hasUnwantedCapability(@NetCapability int capability) {
         return networkCapabilities.hasUnwantedCapability(capability);
     }

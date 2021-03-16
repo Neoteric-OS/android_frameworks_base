@@ -567,6 +567,7 @@ public final class NetworkCapabilities implements Parcelable {
      * @see #addCapability(int)
      * @hide
      */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public void addUnwantedCapability(@NetCapability int capability) {
         checkValidCapability(capability);
         mUnwantedNetworkCapabilities |= 1 << capability;
@@ -622,6 +623,8 @@ public final class NetworkCapabilities implements Parcelable {
      * @return an array of unwanted capability values for this instance.
      * @hide
      */
+    @NonNull
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public @NetCapability int[] getUnwantedCapabilities() {
         return NetworkCapabilitiesUtils.unpackBits(mUnwantedNetworkCapabilities);
     }
@@ -660,6 +663,7 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public boolean hasUnwantedCapability(@NetCapability int capability) {
         return isValidCapability(capability)
                 && ((mUnwantedNetworkCapabilities & (1 << capability)) != 0);
