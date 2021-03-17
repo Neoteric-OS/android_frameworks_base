@@ -16,11 +16,19 @@
 
 package android.net;
 
+import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
+import android.annotation.SystemApi;
+import android.content.Context;
+import android.provider.Settings;
+
 /**
  * A manager class for connectivity module settings.
  *
  * @hide
  */
+@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
 public class ConnectivitySettingsManager {
 
     private ConnectivitySettingsManager() {}
@@ -33,6 +41,8 @@ public class ConnectivitySettingsManager {
      * 0: Don't avoid bad wifi, don't prompt the user. Get stuck on bad wifi like it's 2013.
      * null: Ask the user whether to switch away from bad wifi.
      * 1: Avoid bad wifi.
+     *
+     * @hide
      */
     public static final String NETWORK_AVOID_BAD_WIFI = "network_avoid_bad_wifi";
 
@@ -40,7 +50,68 @@ public class ConnectivitySettingsManager {
      * User setting for ConnectivityManager.getMeteredMultipathPreference(). This value may be
      * overridden by the system based on device or application state. If null, the value
      * specified by config_networkMeteredMultipathPreference is used.
+     *
+     * @hide
      */
     public static final String NETWORK_METERED_MULTIPATH_PREFERENCE =
             "network_metered_multipath_preference";
+
+    /**
+     * Get avoid bad wifi setting from {@link Settings}.
+     *
+     * @param context The {@link Context} to query the setting.
+     * @return The setting whether to automatically switch away from wifi networks that lose
+     *         internet access.
+     */
+    @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
+    @Nullable
+    public static String getNetworkAvoidBadWifi(@NonNull Context context) {
+        context.enforceCallingOrSelfPermission(
+                android.Manifest.permission.WRITE_SETTINGS, "ConnectivitySettingsManager");
+        return Settings.Global.getString(context.getContentResolver(), NETWORK_AVOID_BAD_WIFI);
+    }
+
+    /**
+     * Set avoid bad wifi setting to {@link Settings}.
+     *
+     * @param context The {@link Context} to set the setting.
+     * @param value Whether to automatically switch away from wifi networks that lose internet
+     *              access.
+     */
+    @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
+    public static void setNetworkAvoidBadWifi(@NonNull Context context, @Nullable String value) {
+        context.enforceCallingOrSelfPermission(
+                android.Manifest.permission.WRITE_SETTINGS, "ConnectivitySettingsManager");
+        Settings.Global.putString(context.getContentResolver(), NETWORK_AVOID_BAD_WIFI, value);
+    }
+
+    /**
+     * Get network metered multipath preference from {@link Settings}.
+     *
+     * @param context The {@link Context} to query the setting.
+     * @return The network metered multipath preference.
+     */
+    @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
+    @Nullable
+    public static String getNetworkMeteredMultipathPreference(@NonNull Context context) {
+        context.enforceCallingOrSelfPermission(
+                android.Manifest.permission.WRITE_SETTINGS, "ConnectivitySettingsManager");
+        return Settings.Global.getString(
+                context.getContentResolver(), NETWORK_METERED_MULTIPATH_PREFERENCE);
+    }
+
+    /**
+     * Set network metered multipath preference to {@link Settings}.
+     *
+     * @param context The {@link Context} to set the setting.
+     * @param preference The network metered multipath preference.
+     */
+    @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
+    public static void setNetworkMeteredMultipathPreference(@NonNull Context context,
+            @Nullable String preference) {
+        context.enforceCallingOrSelfPermission(
+                android.Manifest.permission.WRITE_SETTINGS, "ConnectivitySettingsManager");
+        Settings.Global.putString(
+                context.getContentResolver(), NETWORK_METERED_MULTIPATH_PREFERENCE, preference);
+    }
 }
