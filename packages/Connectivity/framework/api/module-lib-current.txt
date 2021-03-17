@@ -17,6 +17,13 @@ package android.net {
     field public static final String PRIVATE_DNS_MODE_PROVIDER_HOSTNAME = "hostname";
   }
 
+  public class ConnectivitySettingsManager {
+    method @Nullable public static String getNetworkAvoidBadWifi(@NonNull android.content.Context);
+    method @Nullable public static String getNetworkMeteredMultipathPreference(@NonNull android.content.Context);
+    method public static void setNetworkAvoidBadWifi(@NonNull android.content.Context, @Nullable String);
+    method public static void setNetworkMeteredMultipathPreference(@NonNull android.content.Context, @Nullable String);
+  }
+
   public final class NetworkAgentConfig implements android.os.Parcelable {
     method @Nullable public String getSubscriberId();
   }
