@@ -16,6 +16,52 @@
       "message": "Hi Jeff, we\u0027d like to add two feature versions to convey the version of KeyMint implemented by the device both for the default HW-backed keystore and the StrongBox HW-backed keystore.",
       "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b625c29b_17eac9f2",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-03-17T20:31:31Z",
+      "side": 1,
+      "message": "Hmm, should a developer need to understand the difference between \"KeyStore\" and \"KeyMint\"?  It almost sounds like KeyMint is an implementation detail behind the scenes.\n\nAt a distance I\u0027m wondering if this should be defined as:\n\n    public static final String FEATURE_KEYSTORE \u003d \"android.hardware.keystore\";",
+      "range": {
+        "startLine": 2183,
+        "startChar": 0,
+        "endLine": 2183,
+        "endChar": 85
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8575dd83_02e4e3c3",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-03-17T20:31:31Z",
+      "side": 1,
+      "message": "Hmm, how is this value related to the existing FEATURE_STRONGBOX_KEYSTORE value?\n\nNote that it is reasonable to add a version to an existing feature, so you might be interested in reusing FEATURE_STRONGBOX_KEYSTORE?  (Which might better align with FEATURE_KEYSTORE suggestion above?)",
+      "range": {
+        "startLine": 2200,
+        "startChar": 0,
+        "endLine": 2200,
+        "endChar": 58
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
