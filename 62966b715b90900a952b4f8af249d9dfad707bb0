@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b28a019f_d520f8d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T08:17:09Z",
+      "side": 1,
+      "message": "LGTM, feel free to address comments in a follow-up",
+      "revId": "62966b715b90900a952b4f8af249d9dfad707bb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f66b97c_2dc1c305",
+        "filename": "packages/Connectivity/service/ServiceConnectivityResources/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T08:17:09Z",
+      "side": 1,
+      "message": "FWIW I doubt that anyone customizes these any more. No need to take them out of this CL, but might want to file a bug not to ever support them.",
+      "range": {
+        "startLine": 45,
+        "startChar": 45,
+        "endLine": 45,
+        "endChar": 85
+      },
+      "revId": "62966b715b90900a952b4f8af249d9dfad707bb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33a1f31a_730f620e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T08:17:09Z",
+      "side": 1,
+      "message": "Should be SparseIntArray?",
+      "range": {
+        "startLine": 738,
+        "startChar": 8,
+        "endLine": 738,
+        "endChar": 77
+      },
+      "revId": "62966b715b90900a952b4f8af249d9dfad707bb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a99ec049_fd4b627a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T08:17:09Z",
+      "side": 1,
+      "message": "Is this guaranteed to be available in the ConnectivityService constructor, where this is called? (Preasumably yes, since it\u0027s likely that PackageManagerService starts before ConnectivityService.)",
+      "range": {
+        "startLine": 746,
+        "startChar": 38,
+        "endLine": 746,
+        "endChar": 61
+      },
+      "revId": "62966b715b90900a952b4f8af249d9dfad707bb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3660dac5_9bc76af6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T08:17:09Z",
+      "side": 1,
+      "message": "FWIW I think this is only used for requestRouteToHostAddress and does not seem usfeul. We might want to remove it, and only put it back if someone needs it. Maybe file a bug to do that?",
+      "range": {
+        "startLine": 1259,
+        "startChar": 45,
+        "endLine": 1259,
+        "endChar": 69
+      },
+      "revId": "62966b715b90900a952b4f8af249d9dfad707bb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
