@@ -146,7 +146,7 @@ stubs_defaults {
         " --hide-package com.google.android.startop.iorap" +
         " --hide DeprecationMismatch" +
         " --hide HiddenTypedefConstant",
-    visibility: ["//visibility:private"],
+    visibility: ["//frameworks/base:__subpackages__"],
     filter_packages: ["com.android."],
 }
 
@@ -193,7 +193,7 @@ droidstubs {
 }
 
 java_library {
-    name: "android_system_server_stubs_current",
+    name: "android_system_server_stubs_deprecated",
     defaults: ["android_stubs_dists_default"],
     srcs: [":services-stubs.sources"],
     installable: false,
@@ -207,7 +207,7 @@ java_library {
 }
 
 droidstubs {
-    name: "services-non-updatable-stubs.sources",
+    name: "services-non-updatable-stubs",
     srcs: [":services-non-updatable-sources"],
     defaults: ["services-stubs-default"],
     check_api: {
