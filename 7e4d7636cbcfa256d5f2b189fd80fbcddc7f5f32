@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e448b34_e5ee0fde",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-17T07:09:50Z",
+      "side": 1,
+      "message": "Suggest slightly more formal language, and describe what \"migrated\" means\n\nThis call marks a transform for migration. A transform being migrated will be updated to use new addresses without changing the underlying keys, SPIs or sequence numbers.\n\n\u003c\u003csomething about IpSecManager.applyTransform, preferably permissive enough that if we do it earlier, it doesn\u0027t break things\u003e\u003e",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 71
+      },
+      "revId": "7e4d7636cbcfa256d5f2b189fd80fbcddc7f5f32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c336f27_8ee4578d",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-17T07:09:50Z",
+      "side": 1,
+      "message": "Suggest mentioning something here if a caller is expected to call applyTransform immediately following this.",
+      "range": {
+        "startLine": 106,
+        "startChar": 72,
+        "endLine": 106,
+        "endChar": 92
+      },
+      "revId": "7e4d7636cbcfa256d5f2b189fd80fbcddc7f5f32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fc54478_152100a5",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-17T07:09:50Z",
+      "side": 1,
+      "message": "Only MODE_TUNNEL transforms may be migrated. Attempting to migrate any other transforms will throw an UnsupportedOperationException.",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 38
+      },
+      "revId": "7e4d7636cbcfa256d5f2b189fd80fbcddc7f5f32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
