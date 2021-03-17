@@ -413,6 +413,23 @@ java_library_static {
     },
 }
 
+java_library {
+    name: "android_system_server_stubs_current",
+    defaults: ["android_stubs_dists_default"],
+    srcs: [":services-non-updatable-stubs"],
+    installable: false,
+    static_libs: [
+        "android_module_lib_stubs_current",
+        "service-permission.stubs.system_server",
+    ],
+    sdk_version: "none",
+    system_modules: "none",
+    java_version: "1.8",
+    dist: {
+        dir: "apistubs/android/system-server",
+    },
+}
+
 /////////////////////////////////////////////////////////////////////
 // hwbinder.stubs provides APIs required for building HIDL Java
 // libraries.

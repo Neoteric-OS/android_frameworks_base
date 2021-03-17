@@ -338,7 +338,7 @@ genrule {
         {
             targets: ["sdk", "win_sdk"],
             dir: "apistubs/android/system-server/api",
-            dest: "merge-android.txt",
+            dest: "android.txt",
         },
     ],
 }
@@ -361,7 +361,7 @@ genrule {
         {
             targets: ["sdk", "win_sdk"],
             dir: "apistubs/android/system-server/api",
-            dest: "merge-removed.txt",
+            dest: "removed.txt",
         },
     ],
 }
