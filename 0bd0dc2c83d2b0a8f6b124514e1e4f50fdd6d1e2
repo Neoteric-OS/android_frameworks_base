@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4681c3bf_255e8561",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-17T05:26:17Z",
+      "side": 1,
+      "message": "Nits addressed in aosp/1640140",
+      "revId": "0bd0dc2c83d2b0a8f6b124514e1e4f50fdd6d1e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b1a4846d_74ffe47e",
@@ -31,6 +48,30 @@
       "writtenOn": "2021-03-17T05:13:49Z",
       "side": 1,
       "message": "There should be no need for this because ConnectivityServiceTest.TestNetworkCallback#assertNoCallback already calls waitForIdle. If this waitForIdle is necessary, then I think there might be a bug in waitForIdle, or otherwise in the threading code in the test infra (or even in the CL).",
+      "range": {
+        "startLine": 11310,
+        "startChar": 8,
+        "endLine": 11310,
+        "endChar": 22
+      },
+      "revId": "0bd0dc2c83d2b0a8f6b124514e1e4f50fdd6d1e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6533d99c_f89623ce",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 11310,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-17T05:26:17Z",
+      "side": 1,
+      "message": "No I don\u0027t think it is necessary. I just added it defensively as it was necessary in l.11337 ; as I said I had never seen this one fail. I didn\u0027t realize assertNoCallback calls waitForIdle.",
+      "parentUuid": "b1a4846d_74ffe47e",
       "range": {
         "startLine": 11310,
         "startChar": 8,
@@ -64,6 +105,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80e176e4_ba631d4d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 11329,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-17T05:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1708699f_81fffc50",
+      "range": {
+        "startLine": 11329,
+        "startChar": 8,
+        "endLine": 11329,
+        "endChar": 22
+      },
+      "revId": "0bd0dc2c83d2b0a8f6b124514e1e4f50fdd6d1e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0f2901a_4a93a749",
@@ -87,6 +152,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db457249_585017d8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 11337,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-17T05:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0f2901a_4a93a749",
+      "range": {
+        "startLine": 11337,
+        "startChar": 8,
+        "endLine": 11337,
+        "endChar": 22
+      },
+      "revId": "0bd0dc2c83d2b0a8f6b124514e1e4f50fdd6d1e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05fd83a2_946a7487",
@@ -100,6 +189,30 @@
       "writtenOn": "2021-03-17T05:13:49Z",
       "side": 1,
       "message": "unnecessary",
+      "range": {
+        "startLine": 11366,
+        "startChar": 8,
+        "endLine": 11366,
+        "endChar": 22
+      },
+      "revId": "0bd0dc2c83d2b0a8f6b124514e1e4f50fdd6d1e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b972f3b7_af009085",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 11366,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-17T05:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05fd83a2_946a7487",
       "range": {
         "startLine": 11366,
         "startChar": 8,

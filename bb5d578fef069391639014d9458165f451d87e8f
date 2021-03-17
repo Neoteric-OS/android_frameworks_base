@@ -136,6 +136,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "455d3083_3a7c0067",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 11135,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-17T05:26:17Z",
+      "side": 1,
+      "message": "Okay. I\u0027m scared we\u0027ll get complaints that some apps using these don\u0027t work as expected. Let\u0027s keep the change in case we hear about that, and if we don\u0027t then we\u0027ll never have to submit it.",
+      "parentUuid": "0f1e6961_20515359",
+      "range": {
+        "startLine": 11134,
+        "startChar": 75,
+        "endLine": 11135,
+        "endChar": 81
+      },
+      "revId": "bb5d578fef069391639014d9458165f451d87e8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc94b34f_b2681b74",
