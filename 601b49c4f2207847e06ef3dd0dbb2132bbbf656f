@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "788436c1_ebb54e3a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2021-03-17T20:10:27Z",
+      "side": 1,
+      "message": "please also add a line for Bug: 183030528",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "b4abec21_b15e9eb3",
@@ -174,6 +197,30 @@
       "side": 1,
       "message": "I don\u0027t think the current synchronization is sufficient. PTAL. We lock before getting the data, but once we have it, we freely use it and modify it without a lock.\nE.g. notice in convertPreCreatedUserIfPossible() how \npreCreatedUser.preCreated \u003d false;\nis done without a lock. A different thread might have acquired that same user and done other things with it during the meantime.\n\nPerhaps this should be fixed regardless. But right now it\u0027s perhaps safe simply because we only remove precreated users at boot.",
       "parentUuid": "d0d72b90_88b6034f",
+      "range": {
+        "startLine": 5065,
+        "startChar": 36,
+        "endLine": 5065,
+        "endChar": 58
+      },
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a046ab1_f5616982",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5065,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2021-03-17T20:10:27Z",
+      "side": 1,
+      "message": "Yes, I think we might need to a proper fix to either keep the lock longer or add a new lock (probably the former, as there\u0027s too many locks already), but that issue is already there, regardless of this change - I filed b/183030528 for that",
+      "parentUuid": "cacc5510_1f26bb3a",
       "range": {
         "startLine": 5065,
         "startChar": 36,
