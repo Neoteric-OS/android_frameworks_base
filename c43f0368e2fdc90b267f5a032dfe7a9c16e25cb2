@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c644beab_af9289e6",
+        "filename": "core/java/android/apphibernation/AppHibernationManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-03-17T21:25:35Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "751011d8_541ff762",
+      "revId": "c43f0368e2fdc90b267f5a032dfe7a9c16e25cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c47ba83d_3b75f126",
