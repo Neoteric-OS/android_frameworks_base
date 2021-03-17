@@ -23,7 +23,6 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Binder;
-import android.os.FileUtils;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.SystemProperties;
@@ -147,6 +146,26 @@ public class PersistentDataBlockService extends SystemService {
         mContext = context;
         mDataBlockFile = SystemProperties.get(PERSISTENT_DATA_BLOCK_PROP);
         mIsRunningDSU = SystemProperties.getBoolean(GSI_RUNNING_PROP, false);
+        if (mIsRunningDSU) {
+            mDataBlockFile = GSI_SANDBOX;
+            String realpdb = SystemProperties.get(PERSISTENT_DATA_BLOCK_PROP);
+            long pdb_size = nativeGetBlockDeviceSize(realpdb);
+            if (pdb_size < 0) {
+                pdb_size = MAX_DATA_BLOCK_SIZE;
+            }
+            if (!new File(GSI_SANDBOX).exists()
+                    || nativeGetBlockDeviceSize(GSI_SANDBOX) != pdb_size) {
+                try {
+                    FileOutputStream out = getBlockOutputStream();
+                    out.write(new byte[(int)pdb_size]);
+                    out.flush();
+                    out.close();
+                    Slog.e(TAG, "An empty PDB is created");
+                } catch (IOException e) {
+                    Slog.e(TAG, "Failed to create an empty sandbox: " + e.toString());
+                }
+            }
+        }
         mBlockDeviceSize = -1; // Load lazily
     }
 
@@ -291,18 +310,7 @@ public class PersistentDataBlockService extends SystemService {
     }
 
     private FileOutputStream getBlockOutputStream() throws IOException {
-        if (!mIsRunningDSU) {
-            return new FileOutputStream(new File(mDataBlockFile));
-        } else {
-            File sandbox = new File(GSI_SANDBOX);
-            File realpdb = new File(SystemProperties.get(PERSISTENT_DATA_BLOCK_PROP));
-            if (!sandbox.exists()) {
-                FileUtils.copy(realpdb, sandbox);
-                mDataBlockFile = GSI_SANDBOX;
-            }
-            Slog.i(TAG, "PersistentDataBlock copy-on-write");
-            return new FileOutputStream(sandbox);
-        }
+        return new FileOutputStream(new File(mDataBlockFile));
     }
 
     private boolean computeAndWriteDigestLocked() {
@@ -565,17 +573,6 @@ public class PersistentDataBlockService extends SystemService {
         public void wipe() {
             enforceOemUnlockWritePermission();
 
-            if (mIsRunningDSU) {
-                File sandbox = new File(GSI_SANDBOX);
-                if (sandbox.exists()) {
-                    if (sandbox.delete()) {
-                        mDataBlockFile = SystemProperties.get(PERSISTENT_DATA_BLOCK_PROP);
-                    } else {
-                        Slog.e(TAG, "Failed to wipe sandbox persistent data block");
-                    }
-                }
-                return;
-            }
             synchronized (mLock) {
                 int ret = nativeWipe(mDataBlockFile);
 
