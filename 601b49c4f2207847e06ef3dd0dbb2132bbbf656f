@@ -253,6 +253,30 @@
       },
       "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f2ba68f_40a1d2e6",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5065,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2021-03-17T20:25:13Z",
+      "side": 1,
+      "message": "Sergii, can you make that change (in a separated, parent CL)?",
+      "parentUuid": "fe2d0343_740cb5ea",
+      "range": {
+        "startLine": 5065,
+        "startChar": 36,
+        "endLine": 5065,
+        "endChar": 58
+      },
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
