@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe0b7c04_3c2a2f07",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-03-17T03:21:13Z",
+      "side": 1,
+      "message": "nit: @NonNull ?",
+      "range": {
+        "startLine": 75,
+        "startChar": 73,
+        "endLine": 75,
+        "endChar": 74
+      },
+      "revId": "5b31b56240bd23567dfb696a6bc24be6c260b177",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55aadca9_f3fbd383",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-03-17T03:21:13Z",
+      "side": 1,
+      "message": "nit: Could you please add javadoc?",
+      "revId": "5b31b56240bd23567dfb696a6bc24be6c260b177",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf15f4e3_0c250ff4",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-03-17T03:21:13Z",
+      "side": 1,
+      "message": "nit: checkAllCompatOverridesAreOverridable",
+      "range": {
+        "startLine": 399,
+        "startChar": 17,
+        "endLine": 399,
+        "endChar": 45
+      },
+      "revId": "5b31b56240bd23567dfb696a6bc24be6c260b177",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
