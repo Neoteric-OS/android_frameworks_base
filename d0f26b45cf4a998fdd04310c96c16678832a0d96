@@ -16,6 +16,29 @@
       "message": "TH failed due to lack of aosp/1635044 in internal master.\nWait for auto merger to populate the change into internal master.",
       "revId": "d0f26b45cf4a998fdd04310c96c16678832a0d96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a64c8a90_baefb3df",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T06:14:34Z",
+      "side": 1,
+      "message": "What was the reason you didn\u0027t add this? Is it for consistency with other builder setters which don\u0027t have corresponding getters?",
+      "range": {
+        "startLine": 305,
+        "startChar": 8,
+        "endLine": 305,
+        "endChar": 53
+      },
+      "revId": "d0f26b45cf4a998fdd04310c96c16678832a0d96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
