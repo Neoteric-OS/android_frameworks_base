@@ -3524,6 +3524,27 @@ public class ConnectivityManager {
          */
         public void onBlockedStatusChanged(@NonNull Network network, boolean blocked) {}
 
+        /**
+         * Called when access to the specified network is blocked or unblocked.
+         *
+         * If a NetworkCallback object implements this method,
+         * {@link #onBlockedStatusChanged(Network, boolean)} will not be called.
+         *
+         * <p>Do NOT call {@link #getNetworkCapabilities(Network)} or
+         * {@link #getLinkProperties(Network)} or other synchronous ConnectivityManager methods in
+         * this callback as this is prone to race conditions : calling these methods while in a
+         * callback may return an outdated or even a null object.
+         *
+         * @param network The {@link Network} whose blocked status has changed.
+         * @param blocked The blocked status of this {@link Network}.
+         * @hide
+         */
+        // TODO: @SystemApi(client = MODULE_LIBRARIES)
+        public void onBlockedStatusChanged(@NonNull Network network,
+                @NetworkPolicyManager.BlockedReason int blocked) {
+            onBlockedStatusChanged(network, blocked != 0);
+        }
+
         private NetworkRequest networkRequest;
         private final int mFlags;
     }
