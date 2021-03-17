@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "beb100f3_d76311f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:13:49Z",
+      "side": 1,
+      "message": "LGTM as is, feel free to address nits in a follow-up.",
+      "revId": "0bd0dc2c83d2b0a8f6b124514e1e4f50fdd6d1e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1a4846d_74ffe47e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 11310,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:13:49Z",
+      "side": 1,
+      "message": "There should be no need for this because ConnectivityServiceTest.TestNetworkCallback#assertNoCallback already calls waitForIdle. If this waitForIdle is necessary, then I think there might be a bug in waitForIdle, or otherwise in the threading code in the test infra (or even in the CL).",
+      "range": {
+        "startLine": 11310,
+        "startChar": 8,
+        "endLine": 11310,
+        "endChar": 22
+      },
+      "revId": "0bd0dc2c83d2b0a8f6b124514e1e4f50fdd6d1e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1708699f_81fffc50",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 11329,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:13:49Z",
+      "side": 1,
+      "message": "Also unnecessary.",
+      "range": {
+        "startLine": 11329,
+        "startChar": 8,
+        "endLine": 11329,
+        "endChar": 22
+      },
+      "revId": "0bd0dc2c83d2b0a8f6b124514e1e4f50fdd6d1e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0f2901a_4a93a749",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 11337,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:13:49Z",
+      "side": 1,
+      "message": "This one is necesssary; suggest adding a comment such as:\n\n    waitForIdle();  // ConnectivityService calls onLost before the network is fully torn down.",
+      "range": {
+        "startLine": 11337,
+        "startChar": 8,
+        "endLine": 11337,
+        "endChar": 22
+      },
+      "revId": "0bd0dc2c83d2b0a8f6b124514e1e4f50fdd6d1e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05fd83a2_946a7487",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 11366,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:13:49Z",
+      "side": 1,
+      "message": "unnecessary",
+      "range": {
+        "startLine": 11366,
+        "startChar": 8,
+        "endLine": 11366,
+        "endChar": 22
+      },
+      "revId": "0bd0dc2c83d2b0a8f6b124514e1e4f50fdd6d1e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
