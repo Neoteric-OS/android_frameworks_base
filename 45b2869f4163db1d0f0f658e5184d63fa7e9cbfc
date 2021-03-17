@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a07a2074_a0885329",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:46:06Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "45b2869f4163db1d0f0f658e5184d63fa7e9cbfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0801e77f_070695de",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11374,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:46:06Z",
+      "side": 1,
+      "message": "Suggest:\n\n    doAsUid(TEST_WORK_PROFILE_APP_UID,\n            () -\u003e assertEquals(workAgent2.getNetwork(), mCm.getActiveNetwork));\n\nI see you have that below, but I\u0027d find it easier to compare/contrast here. Up to you I\u0027d say.",
+      "range": {
+        "startLine": 11374,
+        "startChar": 70,
+        "endLine": 11374,
+        "endChar": 71
+      },
+      "revId": "45b2869f4163db1d0f0f658e5184d63fa7e9cbfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "473884cd_c5ed64d4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11376,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:46:06Z",
+      "side": 1,
+      "message": "Blank line after here?",
+      "range": {
+        "startLine": 11376,
+        "startChar": 75,
+        "endLine": 11376,
+        "endChar": 76
+      },
+      "revId": "45b2869f4163db1d0f0f658e5184d63fa7e9cbfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f397757_e1c9cd5e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11377,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:46:06Z",
+      "side": 1,
+      "message": "... and a doAsUid(... getActiveNetworkInfo) here too.",
+      "range": {
+        "startLine": 11377,
+        "startChar": 89,
+        "endLine": 11377,
+        "endChar": 90
+      },
+      "revId": "45b2869f4163db1d0f0f658e5184d63fa7e9cbfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2243f34_41bdaf4d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11378,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:46:06Z",
+      "side": 1,
+      "message": "blank line after here?",
+      "range": {
+        "startLine": 11378,
+        "startChar": 48,
+        "endLine": 11378,
+        "endChar": 49
+      },
+      "revId": "45b2869f4163db1d0f0f658e5184d63fa7e9cbfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f482564_556a83f4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11384,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:46:06Z",
+      "side": 1,
+      "message": "Goodness me, that\u0027s terrible.\n\nCan we make this @UnsupportedAppUsage(maxTargetSdk \u003d Build.VERSION_CODES.R) at least?",
+      "range": {
+        "startLine": 11383,
+        "startChar": 61,
+        "endLine": 11384,
+        "endChar": 32
+      },
+      "revId": "45b2869f4163db1d0f0f658e5184d63fa7e9cbfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "251d5363_e7041b17",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11388,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:46:06Z",
+      "side": 1,
+      "message": "Suggest removing the commented-out code.",
+      "range": {
+        "startLine": 11386,
+        "startChar": 0,
+        "endLine": 11388,
+        "endChar": 71
+      },
+      "revId": "45b2869f4163db1d0f0f658e5184d63fa7e9cbfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3546129c_3cdbd3d3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11390,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:46:06Z",
+      "side": 1,
+      "message": "Add comments saying that these are unaffected by per-app default networks, and have been deprecated for many years, so we probably don\u0027t want to make their return value app-specific.",
+      "range": {
+        "startLine": 11390,
+        "startChar": 8,
+        "endLine": 11390,
+        "endChar": 37
+      },
+      "revId": "45b2869f4163db1d0f0f658e5184d63fa7e9cbfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4c9f341_2f53f7c7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11405,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:46:06Z",
+      "side": 1,
+      "message": "Is this a bug? If so, would say so explicitly. Might be good to briefly try and see if you can find out what causes it (but I wouldn\u0027t spend too much time on that).",
+      "range": {
+        "startLine": 11405,
+        "startChar": 55,
+        "endLine": 11405,
+        "endChar": 56
+      },
+      "revId": "45b2869f4163db1d0f0f658e5184d63fa7e9cbfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9de28f1d_f37f4f93",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11413,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:46:06Z",
+      "side": 1,
+      "message": "Use assertActiveNetworkInfo?",
+      "range": {
+        "startLine": 11413,
+        "startChar": 12,
+        "endLine": 11413,
+        "endChar": 97
+      },
+      "revId": "45b2869f4163db1d0f0f658e5184d63fa7e9cbfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e251db06_4972fe25",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11419,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:46:06Z",
+      "side": 1,
+      "message": "I\u0027d just add assertions that pass (i.e., document what the current return values are), and add a comment saying we probably aren\u0027t going to fix this since these APIs have been deprecated for years.",
+      "range": {
+        "startLine": 11415,
+        "startChar": 0,
+        "endLine": 11419,
+        "endChar": 74
+      },
+      "revId": "45b2869f4163db1d0f0f658e5184d63fa7e9cbfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e02128fd_785db3ea",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11423,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:46:06Z",
+      "side": 1,
+      "message": "Need a doAsUid call for this as well, to ensure that if the work profile app calls isActiveNetworkMetered, the result is correct.",
+      "range": {
+        "startLine": 11423,
+        "startChar": 48,
+        "endLine": 11423,
+        "endChar": 49
+      },
+      "revId": "45b2869f4163db1d0f0f658e5184d63fa7e9cbfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
