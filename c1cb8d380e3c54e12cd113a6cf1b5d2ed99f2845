@@ -16,6 +16,46 @@
       "message": "Can we add tests to HdmiCecLocalDeviceTvTest to cover the added functionality and to emulate the erroneous behavior?",
       "revId": "c1cb8d380e3c54e12cd113a6cf1b5d2ed99f2845",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be3c957d_45bbaaba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2021-03-17T13:22:09Z",
+      "side": 1,
+      "message": "Tests would still be appa",
+      "revId": "c1cb8d380e3c54e12cd113a6cf1b5d2ed99f2845",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a709ed0_cfd3d9b1",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1686,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2021-03-17T13:22:09Z",
+      "side": 1,
+      "message": "formatting",
+      "range": {
+        "startLine": 1686,
+        "startChar": 32,
+        "endLine": 1686,
+        "endChar": 45
+      },
+      "revId": "c1cb8d380e3c54e12cd113a6cf1b5d2ed99f2845",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
