@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a0f500e_fef55797",
+        "filename": "packages/Connectivity/framework/api/module-lib-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-17T09:47:51Z",
+      "side": 1,
+      "message": "If there\u0027s no external caller registering callbacks for changes of this setting, maybe no need to add a getter for the URI to the API (and just keep the constant public @hide in CS) ?\nAlso for avoidBadWifi",
+      "range": {
+        "startLine": 22,
+        "startChar": 50,
+        "endLine": 22,
+        "endChar": 75
+      },
+      "revId": "f49bd5743e17b99a19e1403a298c0592f81ea4e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
