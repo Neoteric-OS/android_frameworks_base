@@ -229,6 +229,30 @@
       },
       "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe2d0343_740cb5ea",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5065,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-03-17T20:16:14Z",
+      "side": 1,
+      "message": "I think we need to fix the race before we can submit this cl... otherwise we could perhaps literally destroy users.\nYour new b/183030528 is only non-essential if we continue to only remove precreates at boot. If we submit this cl first, then it would become a scary possibility to destroy users due to race.\n\nBottom line: right now, Android assumes (implicitly) that precreated users are only removed at boot. If this cl is going to change that, we need to make sure the rest of the Android code can accomodate first.",
+      "parentUuid": "0a046ab1_f5616982",
+      "range": {
+        "startLine": 5065,
+        "startChar": 36,
+        "endLine": 5065,
+        "endChar": 58
+      },
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
