@@ -50,6 +50,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "6d4e4ff9_e4da19db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-17T05:37:27Z",
+      "side": 1,
+      "message": "Yes, that sounds like the right course of action.",
+      "parentUuid": "95d55f4f_a2f07b18",
+      "range": {
+        "startLine": 9,
+        "startChar": 36,
+        "endLine": 9,
+        "endChar": 65
+      },
+      "revId": "378a334bd6ada6cd50bc8dbfd9fc02abe9a12fda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "a7c6a287_d72c8e01",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 5
