@@ -3039,8 +3039,10 @@ public class ConnectivityManager {
      *        HTTP proxy.  A {@code null} value will clear the global HTTP proxy.
      * @hide
      */
+    // Used by Device Policy Manager to set the global proxy.
     @RequiresPermission(android.Manifest.permission.NETWORK_STACK)
-    public void setGlobalProxy(ProxyInfo p) {
+    @SystemApi(client = MODULE_LIBRARIES)
+    public void setGlobalProxy(@Nullable final ProxyInfo p) {
         try {
             mService.setGlobalProxy(p);
         } catch (RemoteException e) {
