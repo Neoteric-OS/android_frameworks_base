@@ -44,7 +44,6 @@ import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyBoolean;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -227,7 +226,7 @@ public class ConnectivityManagerTest {
         // callback triggers
         captor.getValue().send(makeMessage(request, ConnectivityManager.CALLBACK_AVAILABLE));
         verify(callback, timeout(500).times(1)).onAvailable(any(Network.class),
-                any(NetworkCapabilities.class), any(LinkProperties.class), anyBoolean());
+                any(NetworkCapabilities.class), any(LinkProperties.class), anyInt());
 
         // unregister callback
         manager.unregisterNetworkCallback(callback);
@@ -255,7 +254,7 @@ public class ConnectivityManagerTest {
         // callback triggers
         captor.getValue().send(makeMessage(req1, ConnectivityManager.CALLBACK_AVAILABLE));
         verify(callback, timeout(100).times(1)).onAvailable(any(Network.class),
-                any(NetworkCapabilities.class), any(LinkProperties.class), anyBoolean());
+                any(NetworkCapabilities.class), any(LinkProperties.class), anyInt());
 
         // unregister callback
         manager.unregisterNetworkCallback(callback);
