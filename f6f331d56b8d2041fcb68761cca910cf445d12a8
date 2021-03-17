@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0a1378a_0a5a05c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-17T11:06:26Z",
+      "side": 1,
+      "message": "LGTM considering the next step is to have the manager class be the API surface, and remove the constants from Settings.Global",
+      "revId": "f6f331d56b8d2041fcb68761cca910cf445d12a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
