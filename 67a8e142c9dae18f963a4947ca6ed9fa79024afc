@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9faa6d31_78b2e096",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3211,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-17T06:54:24Z",
+      "side": 1,
+      "message": "This doesn\u0027t look accurate :)",
+      "range": {
+        "startLine": 3211,
+        "startChar": 72,
+        "endLine": 3211,
+        "endChar": 93
+      },
+      "revId": "67a8e142c9dae18f963a4947ca6ed9fa79024afc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
