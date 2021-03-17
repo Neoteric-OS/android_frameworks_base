@@ -1421,10 +1421,10 @@ package android.app.usage {
 package android.apphibernation {
 
   public final class AppHibernationManager {
-    method public boolean isHibernatingForUser(@NonNull String);
-    method public boolean isHibernatingGlobally(@NonNull String);
-    method public void setHibernatingForUser(@NonNull String, boolean);
-    method public void setHibernatingGlobally(@NonNull String, boolean);
+    method @RequiresPermission(android.Manifest.permission.MANAGE_APP_HIBERNATION) public boolean isHibernatingForUser(@NonNull String);
+    method @RequiresPermission(android.Manifest.permission.MANAGE_APP_HIBERNATION) public boolean isHibernatingGlobally(@NonNull String);
+    method @RequiresPermission(android.Manifest.permission.MANAGE_APP_HIBERNATION) public void setHibernatingForUser(@NonNull String, boolean);
+    method @RequiresPermission(android.Manifest.permission.MANAGE_APP_HIBERNATION) public void setHibernatingGlobally(@NonNull String, boolean);
   }
 
 }
