@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39de54d2_624479cf",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-17T06:53:31Z",
+      "side": 1,
+      "message": "mConfig.throwIfNotTunnelMode? or inverse?",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 5
+      },
+      "revId": "44129e89c3480002f9d6b0fa5bfed1b6f5af367e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aca4bfa8_4805d28c",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-17T06:53:31Z",
+      "side": 1,
+      "message": "Per offline conversation, I\u0027m not sure I see a strong reason for this; if a caller wants to use the old network again, they can always set the src/dst address back to the old src/dst addresses.\n\nIn addition, if there is a control plane (eg IKE) presumably also needs to migrate, otherwise it\u0027ll be out of sync with the dataplane.",
+      "range": {
+        "startLine": 147,
+        "startChar": 16,
+        "endLine": 147,
+        "endChar": 31
+      },
+      "revId": "44129e89c3480002f9d6b0fa5bfed1b6f5af367e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3483aaa_96aa01c3",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1737,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-17T06:53:31Z",
+      "side": 1,
+      "message": "If this is exclusively local to the IpSecService, suggest having this on the TransformRecord instead of the IpSecConfig; this information does not need to cross the binder boundary in the config object.",
+      "range": {
+        "startLine": 1737,
+        "startChar": 0,
+        "endLine": 1737,
+        "endChar": 66
+      },
+      "revId": "44129e89c3480002f9d6b0fa5bfed1b6f5af367e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
