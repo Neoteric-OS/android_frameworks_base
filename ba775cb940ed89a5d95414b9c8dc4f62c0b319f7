@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c249852b_61a114f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T13:18:11Z",
+      "side": 1,
+      "message": "LGTM, but please reword the docs if you can. Doesn\u0027t need to be in this CL.",
+      "revId": "ba775cb940ed89a5d95414b9c8dc4f62c0b319f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93ee23fb_e10b26b1",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3041,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T13:18:11Z",
+      "side": 1,
+      "message": "This documentation is too informal and should be reworded.",
+      "range": {
+        "startLine": 3032,
+        "startChar": 0,
+        "endLine": 3041,
+        "endChar": 7
+      },
+      "revId": "ba775cb940ed89a5d95414b9c8dc4f62c0b319f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
