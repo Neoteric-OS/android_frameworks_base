@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2157ddf0_43974b51",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4577,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-17T22:42:24Z",
+      "side": 1,
+      "message": "I fear that the documentation for the original duplex mode value is out-of-date. Could you specify which cell this is the duplex mode for (I believe it\u0027s the PS+WWAN NRI, but I could be mistaken).\n\nThis is kind of why I am reluctant to expose this. I\u0027d prefer to deprecate the one in SS if I had my way. :-)\n\nBut... if we intend to expose this (c\u0027est la vie), let\u0027s try to update the docs.",
+      "range": {
+        "startLine": 4577,
+        "startChar": 58,
+        "endLine": 4577,
+        "endChar": 62
+      },
+      "revId": "80259a59dbe06ed53a722c642f2ca681c8eea8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
