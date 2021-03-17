@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4707e7e0_11b54738",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4577,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-03-17T23:50:57Z",
+      "side": 1,
+      "message": "Yes, only for PS and specifically for LTE/LTE_CA/NR.\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/telephony/java/android/telephony/ServiceState.java;l\u003d597?q\u003dgetDuplexMode",
+      "parentUuid": "2157ddf0_43974b51",
+      "range": {
+        "startLine": 4577,
+        "startChar": 58,
+        "endLine": 4577,
+        "endChar": 62
+      },
+      "revId": "80259a59dbe06ed53a722c642f2ca681c8eea8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0782a58_c6ec190f",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-17T22:44:00Z",
       "side": 1,
       "message": "I think you can use an @see annotation here?",
+      "range": {
+        "startLine": 4582,
+        "startChar": 11,
+        "endLine": 4582,
+        "endChar": 15
+      },
+      "revId": "80259a59dbe06ed53a722c642f2ca681c8eea8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e395069_7d62bd98",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4582,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-03-17T23:50:57Z",
+      "side": 1,
+      "message": "All the other fields use the @link annotation. Pls let me know if you want to update them all together.",
+      "parentUuid": "e0782a58_c6ec190f",
       "range": {
         "startLine": 4582,
         "startChar": 11,
