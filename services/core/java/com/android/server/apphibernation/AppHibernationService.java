@@ -173,7 +173,6 @@ public final class AppHibernationService extends SystemService {
         if (!checkHibernationEnabled("isHibernatingForUser")) {
             return false;
         }
-
         userId = handleIncomingUser(userId, "isHibernating");
         if (!mUserManager.isUserUnlockingOrUnlocked(userId)) {
             Slog.e(TAG, "Attempt to get hibernation state of stopped or nonexistent user "
@@ -580,7 +579,7 @@ public final class AppHibernationService extends SystemService {
 
     private final AppHibernationServiceStub mServiceStub = new AppHibernationServiceStub(this);
 
-    static final class AppHibernationServiceStub extends IAppHibernationService.Stub {
+    final class AppHibernationServiceStub extends IAppHibernationService.Stub {
         final AppHibernationService mService;
 
         AppHibernationServiceStub(AppHibernationService service) {
@@ -589,21 +588,33 @@ public final class AppHibernationService extends SystemService {
 
         @Override
         public boolean isHibernatingForUser(String packageName, int userId) {
+            getContext().enforceCallingPermission(
+                    android.Manifest.permission.MANAGE_APP_HIBERNATION,
+                    "Caller does not have MANAGE_APP_HIBERNATION permission.");
             return mService.isHibernatingForUser(packageName, userId);
         }
 
         @Override
         public void setHibernatingForUser(String packageName, int userId, boolean isHibernating) {
+            getContext().enforceCallingPermission(
+                    android.Manifest.permission.MANAGE_APP_HIBERNATION,
+                    "Caller does not have MANAGE_APP_HIBERNATION permission.");
             mService.setHibernatingForUser(packageName, userId, isHibernating);
         }
 
         @Override
         public void setHibernatingGlobally(String packageName, boolean isHibernating) {
+            getContext().enforceCallingPermission(
+                    android.Manifest.permission.MANAGE_APP_HIBERNATION,
+                    "Caller does not have MANAGE_APP_HIBERNATION permission.");
             mService.setHibernatingGlobally(packageName, isHibernating);
         }
 
         @Override
         public boolean isHibernatingGlobally(String packageName) {
+            getContext().enforceCallingPermission(
+                    android.Manifest.permission.MANAGE_APP_HIBERNATION,
+                    "Caller does not have MANAGE_APP_HIBERNATION permission.");
             return mService.isHibernatingGlobally(packageName);
         }
 
