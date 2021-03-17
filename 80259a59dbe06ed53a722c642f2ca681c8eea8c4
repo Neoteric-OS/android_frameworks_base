@@ -22,6 +22,29 @@
       },
       "revId": "80259a59dbe06ed53a722c642f2ca681c8eea8c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0782a58_c6ec190f",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4582,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-17T22:44:00Z",
+      "side": 1,
+      "message": "I think you can use an @see annotation here?",
+      "range": {
+        "startLine": 4582,
+        "startChar": 11,
+        "endLine": 4582,
+        "endChar": 15
+      },
+      "revId": "80259a59dbe06ed53a722c642f2ca681c8eea8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
