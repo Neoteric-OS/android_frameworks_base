@@ -110,6 +110,30 @@
       },
       "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "204fdd33_e1790a86",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5065,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-03-17T19:06:01Z",
+      "side": 1,
+      "message": "When I said \"at boot\", I mean that cleanupPreCreatedUsers() is currently called at boot, not that the precreated user is created at boot.\n\nI\u0027m concerned that if we can also call cleanupPreCreatedUsers() later-than-boot then we need to address potential race conditions that could result in removing fully created users (or in-the-process-of-becoming fully created users).\n\nE.g., what would happen if this method were invoked in the middle of a separate thread running\nconvertPreCreatedUserIfPossible()?\nI think we could end up deciding to upgrade a precreate, but then making that precreate \u0027removed\u0027 before we actually finish the upgrade, resulting in a garbage user.\n\nWe need to think about that carefully and either convince ourselves we\u0027re safe or lock to avoid the races, etc..",
+      "parentUuid": "9870ddb9_2d8c0197",
+      "range": {
+        "startLine": 5065,
+        "startChar": 36,
+        "endLine": 5065,
+        "endChar": 58
+      },
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
