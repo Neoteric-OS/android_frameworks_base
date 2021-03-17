@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a59d9b7_157fff97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-03-17T19:09:40Z",
+      "side": 1,
+      "message": "I think these merge conflicts are due to the automerger issue.  I\u0027m going to let that resolve and then check again.",
+      "revId": "db3b803b20ca989492b7e7b513770ae84394db08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
