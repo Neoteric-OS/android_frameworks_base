@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b4341c5_23d317a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:53:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure the extra complexity here is worth the trade-off. AFAICT the APIs this CL have been deprecated for many years, and I doubt are used much anyway these days.\n\nWe should make sure that widely-used like getActiveNetworkInfo and isActiveNetworkMetered work well, but I think they do even without this CL, right?",
+      "revId": "c8650661156c459dc30d8f72af3557dc5ed1e660",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

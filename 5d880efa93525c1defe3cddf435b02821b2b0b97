@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63e5f1e8_6d407a46",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1630,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:53:03Z",
+      "side": 1,
+      "message": "This is only used by getNetworkInfo(int), right? If so, I\u0027m not sure it\u0027s worth trying to fix it. It\u0027s been deprecated for years (M?), and an app relying on such old APIs will probably be using CONNECTIVITY_ACTION as well, which we can\u0027t reasonably fix (or at least, we can\u0027t fix the extras).",
+      "range": {
+        "startLine": 1630,
+        "startChar": 24,
+        "endLine": 1630,
+        "endChar": 53
+      },
+      "revId": "5d880efa93525c1defe3cddf435b02821b2b0b97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "839245cf_84742c62",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:53:03Z",
+      "side": 1,
+      "message": "This one seems even less useful to fix. I doubt that many apps call this.",
+      "range": {
+        "startLine": 1674,
+        "startChar": 42,
+        "endLine": 1674,
+        "endChar": 68
+      },
+      "revId": "5d880efa93525c1defe3cddf435b02821b2b0b97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6476d50a_1100c62b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1692,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:53:03Z",
+      "side": 1,
+      "message": "If we don\u0027t fix getAllNetworkInfo and getNetworkInfo, do we need to touch this code at all? If so, I\u0027d advise not making this change.",
+      "range": {
+        "startLine": 1692,
+        "startChar": 29,
+        "endLine": 1692,
+        "endChar": 55
+      },
+      "revId": "5d880efa93525c1defe3cddf435b02821b2b0b97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
