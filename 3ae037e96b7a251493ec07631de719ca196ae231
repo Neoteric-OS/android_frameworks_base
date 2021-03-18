@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8576f22_f970a00b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-18T21:27:32Z",
+      "side": 1,
+      "message": "Addressed the comments. PTAL, Thanks!",
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8371d5cf_1de4421e",
@@ -31,6 +48,30 @@
       "writtenOn": "2021-03-18T01:49:50Z",
       "side": 1,
       "message": "You don\u0027t need this text, the intdef will generate the javadoc for you. Just say \"the redactions that need to be performed ...\".",
+      "range": {
+        "startLine": 98,
+        "startChar": 38,
+        "endLine": 98,
+        "endChar": 71
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5668382d_e5d87048",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-18T21:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8371d5cf_1de4421e",
       "range": {
         "startLine": 98,
         "startChar": 38,
@@ -64,6 +105,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "317ae6f9_981e8110",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-18T21:27:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "935e78b6_a0d4471e",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 72
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85bfc8ee_813ac937",
@@ -77,6 +142,30 @@
       "writtenOn": "2021-03-18T01:49:50Z",
       "side": 1,
       "message": "Maybe:\n\n/**\n * Redact all fields in this object that require any relevant permission.\n * @hide\n */\n\n?",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 52
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "feabb1d9_84f0a76d",
+        "filename": "packages/Connectivity/framework/src/android/net/TransportInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-18T21:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85bfc8ee_813ac937",
       "range": {
         "startLine": 80,
         "startChar": 7,
@@ -110,6 +199,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a51cc229_3cc60c0d",
+        "filename": "packages/Connectivity/framework/src/android/net/TransportInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-18T21:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22f7b4a1_3612e928",
+      "range": {
+        "startLine": 119,
+        "startChar": 25,
+        "endLine": 119,
+        "endChar": 78
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3bb4f134_877bf1a2",
@@ -123,6 +236,30 @@
       "writtenOn": "2021-03-18T01:49:50Z",
       "side": 1,
       "message": "You don\u0027t need this javadoc, the @IntDef will generate it for you. Also everywhere else.",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 49
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4378e5d_d8a00929",
+        "filename": "packages/Connectivity/framework/src/android/net/TransportInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-18T21:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bb4f134_877bf1a2",
       "range": {
         "startLine": 135,
         "startChar": 7,
@@ -156,6 +293,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c18c24c9_b12c2aea",
+        "filename": "packages/Connectivity/framework/src/android/net/TransportInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-18T21:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8c381ad_efab8a79",
+      "range": {
+        "startLine": 136,
+        "startChar": 22,
+        "endLine": 136,
+        "endChar": 25
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ab4869c_ad3b0318",
@@ -169,6 +330,30 @@
       "writtenOn": "2021-03-18T01:49:50Z",
       "side": 1,
       "message": "Why does this use the word \"required\"? Only the caller knows which redactions are actually required at any point in time. So this method looks like it returns the list of which redactions *might* be necessary.\n\nDo we have a better word for this? getSupportedRedactions? getRelevantRedactions? getApplicableRedactions?\n\nDon\u0027t feel super strongly about this, and API council will have an opinion anyway, so I think it\u0027s probably fine to leave as is.",
+      "range": {
+        "startLine": 140,
+        "startChar": 35,
+        "endLine": 140,
+        "endChar": 43
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a903118_039caed4",
+        "filename": "packages/Connectivity/framework/src/android/net/TransportInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-18T21:27:32Z",
+      "side": 1,
+      "message": "Done. I like getApplicable, but yeah we might have to change based on API council feedback.",
+      "parentUuid": "6ab4869c_ad3b0318",
       "range": {
         "startLine": 140,
         "startChar": 35,
@@ -202,6 +387,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a33e5755_d63470ee",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1853,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-18T21:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f5f6214_9ebd341d",
+      "range": {
+        "startLine": 1853,
+        "startChar": 26,
+        "endLine": 1853,
+        "endChar": 27
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e591e269_13e3bb4e",
@@ -215,6 +424,30 @@
       "writtenOn": "2021-03-18T01:49:50Z",
       "side": 1,
       "message": "Suggest generalizing to RedactionPermissionCheckerWrapper or even just RedactionPermissionChecker.",
+      "range": {
+        "startLine": 1855,
+        "startChar": 18,
+        "endLine": 1855,
+        "endChar": 50
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbbb86fe_fc821c0e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1855,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-18T21:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e591e269_13e3bb4e",
       "range": {
         "startLine": 1855,
         "startChar": 18,
@@ -248,6 +481,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "432f6371_94041cff",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1951,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-18T21:27:32Z",
+      "side": 1,
+      "message": "Agreed. That is more coherent.",
+      "parentUuid": "a6cb37c3_f61b9fbf",
+      "range": {
+        "startLine": 1949,
+        "startChar": 0,
+        "endLine": 1951,
+        "endChar": 77
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02d197a9_3e5cb58b",
@@ -271,6 +528,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06d6be8c_98c3f7cd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2490,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-18T21:27:32Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "02d197a9_3e5cb58b",
+      "range": {
+        "startLine": 2490,
+        "startChar": 55,
+        "endLine": 2490,
+        "endChar": 67
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "844283b3_1d3aec66",
@@ -284,6 +565,24 @@
       "writtenOn": "2021-03-18T01:49:50Z",
       "side": 1,
       "message": "Could you add a test with a subclass of TransportInfo defined in this file and check that when an app registers a callback (without any flags, because we don\u0027t have a way to set the flag in the TestNetworkCallback constructor), that it gets redacted in various scenarios? That test can also have a TODO to check the behaviour once it\u0027s possible to have a TestNetworkCallback that takes a flag.\n\nDoesn\u0027t need to be in this CL, could be in a CL on top of it.",
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e7e68e5_3d040aa8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 9008,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-18T21:27:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "844283b3_1d3aec66",
       "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
