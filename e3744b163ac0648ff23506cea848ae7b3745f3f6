@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe63e12c_a770731a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T14:50:46Z",
+      "side": 1,
+      "message": "LGTM assuming we delete this ASAP, but see inline.",
+      "revId": "e3744b163ac0648ff23506cea848ae7b3745f3f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "320aae9b_aaba8d67",
+        "filename": "packages/Connectivity/framework/src/android/net/InetAddressCompat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T14:50:46Z",
+      "side": 1,
+      "message": "Not that this will ever happen, but this should be |host|.\n\nAlso - why not just throw IllegalStateException or RuntimeException or even NoSuchMethodError? That seems like it would be a lot clearer to understand.",
+      "range": {
+        "startLine": 59,
+        "startChar": 44,
+        "endLine": 59,
+        "endChar": 80
+      },
+      "revId": "e3744b163ac0648ff23506cea848ae7b3745f3f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de0e094a_13573271",
+        "filename": "packages/Connectivity/framework/src/android/net/InetAddressCompat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T14:50:46Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 73,
+        "startChar": 22,
+        "endLine": 73,
+        "endChar": 42
+      },
+      "revId": "e3744b163ac0648ff23506cea848ae7b3745f3f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
