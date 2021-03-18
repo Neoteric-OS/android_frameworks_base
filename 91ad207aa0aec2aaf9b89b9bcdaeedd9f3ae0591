@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b38ba84b_ccf05f2e",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-18T07:59:24Z",
+      "side": 1,
+      "message": "On second thought I still think this is correct.\nSince we\u0027ll have R devices that run the S CTS, right?",
+      "revId": "91ad207aa0aec2aaf9b89b9bcdaeedd9f3ae0591",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
