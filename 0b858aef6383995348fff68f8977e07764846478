@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "90a7a7ff_41ca7e18",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreCipherSpiBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-03-18T20:10:56Z",
+      "side": 1,
+      "message": "This is the CipherSpiBase no verification done here - ever.",
+      "parentUuid": "5ab9713c_7e54f54f",
+      "range": {
+        "startLine": 127,
+        "startChar": 29,
+        "endLine": 127,
+        "endChar": 41
+      },
+      "revId": "0b858aef6383995348fff68f8977e07764846478",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f30ab9f_40efa64e",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-18T19:56:25Z",
       "side": 1,
       "message": "Not sure why we include private key here. The comment says public key operations get diverted to the default provider.",
+      "range": {
+        "startLine": 128,
+        "startChar": 35,
+        "endLine": 128,
+        "endChar": 45
+      },
+      "revId": "0b858aef6383995348fff68f8977e07764846478",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c54389e_4c702033",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreCipherSpiBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-03-18T20:10:56Z",
+      "side": 1,
+      "message": "Because this is the CipherSpiBase, there is no way you can start a private key operation with any kind of asymmetric key. But I think you can start a public key operation by passing in a Private key object.",
+      "parentUuid": "7f30ab9f_40efa64e",
       "range": {
         "startLine": 128,
         "startChar": 35,
