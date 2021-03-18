@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae0738e3_d2bda31b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-03-18T11:38:40Z",
+      "side": 1,
+      "message": "Could you confirm if this request is still actual (since the separate CL is proposed: https://android-review.googlesource.com/c/platform/frameworks/base/+/1645167).",
+      "parentUuid": "788436c1_ebb54e3a",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "b4abec21_b15e9eb3",
@@ -54,6 +78,24 @@
       "writtenOn": "2021-03-18T08:44:15Z",
       "side": 1,
       "message": "I don\u0027t know what \"pre-created\" users are - is it ok to just delete them without any UI indication?",
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "364390cd_19ba003b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-03-18T11:38:40Z",
+      "side": 1,
+      "message": "Pre-created users is an invisible entity for device users (you can\u0027t even see them via `pm list users`). So I\u0027m almost sure that additional UI notification may scare and confuse them.",
+      "parentUuid": "fe41c585_96255499",
       "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -142,6 +184,30 @@
       "writtenOn": "2021-03-18T08:44:15Z",
       "side": 1,
       "message": "please add a comment why they need to be removed here.",
+      "range": {
+        "startLine": 2783,
+        "startChar": 16,
+        "endLine": 2783,
+        "endChar": 30
+      },
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c408c4c9_aba7ffb8",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2783,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-03-18T11:38:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd3c7b74_3c725370",
       "range": {
         "startLine": 2783,
         "startChar": 16,
@@ -333,6 +399,30 @@
       "side": 1,
       "message": "Sergii, can you make that change (in a separated, parent CL)?",
       "parentUuid": "fe2d0343_740cb5ea",
+      "range": {
+        "startLine": 5065,
+        "startChar": 36,
+        "endLine": 5065,
+        "endChar": 58
+      },
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c36b9fa_8e592f87",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5065,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-03-18T11:38:40Z",
+      "side": 1,
+      "message": "Here you are: https://android-review.googlesource.com/c/platform/frameworks/base/+/1645167 .",
+      "parentUuid": "6f2ba68f_40a1d2e6",
       "range": {
         "startLine": 5065,
         "startChar": 36,
