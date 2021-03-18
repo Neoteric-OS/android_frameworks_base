@@ -3597,28 +3597,29 @@ public class UserManagerService extends IUserManager.Stub {
     private @Nullable UserInfo convertPreCreatedUserIfPossible(String userType,
             @UserInfoFlag int flags, String name) {
         final UserData preCreatedUserData;
+        final UserInfo preCreatedUser;
         synchronized (mUsersLock) {
             preCreatedUserData = getPreCreatedUserLU(userType);
+            if (preCreatedUserData == null) {
+                return null;
+            }
+            preCreatedUser = preCreatedUserData.info;
+            final int newFlags = preCreatedUser.flags | flags;
+            if (!checkUserTypeConsistency(newFlags)) {
+                Slog.wtf(LOG_TAG, "Cannot reuse pre-created user " + preCreatedUser.id
+                        + " of type " + userType + " because flags are inconsistent. "
+                        + "Flags (" + Integer.toHexString(flags) + "); preCreatedUserFlags ( "
+                        + Integer.toHexString(preCreatedUser.flags) + ").");
+                return null;
+            }
+            Slog.i(LOG_TAG, "Reusing pre-created user " + preCreatedUser.id + " of type "
+                    + userType + " and bestowing on it flags " + UserInfo.flagsToString(flags));
+            preCreatedUser.name = name;
+            preCreatedUser.flags = newFlags;
+            preCreatedUser.preCreated = false;
+            preCreatedUser.convertedFromPreCreated = true;
+            preCreatedUser.creationTime = getCreationTime();
         }
-        if (preCreatedUserData == null) {
-            return null;
-        }
-        final UserInfo preCreatedUser = preCreatedUserData.info;
-        final int newFlags = preCreatedUser.flags | flags;
-        if (!checkUserTypeConsistency(newFlags)) {
-            Slog.wtf(LOG_TAG, "Cannot reuse pre-created user " + preCreatedUser.id
-                    + " of type " + userType + " because flags are inconsistent. "
-                    + "Flags (" + Integer.toHexString(flags) + "); preCreatedUserFlags ( "
-                    + Integer.toHexString(preCreatedUser.flags) + ").");
-            return null;
-        }
-        Slog.i(LOG_TAG, "Reusing pre-created user " + preCreatedUser.id + " of type "
-                + userType + " and bestowing on it flags " + UserInfo.flagsToString(flags));
-        preCreatedUser.name = name;
-        preCreatedUser.flags = newFlags;
-        preCreatedUser.preCreated = false;
-        preCreatedUser.convertedFromPreCreated = true;
-        preCreatedUser.creationTime = getCreationTime();
 
         synchronized (mPackagesLock) {
             writeUserLP(preCreatedUserData);
