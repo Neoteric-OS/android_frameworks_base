@@ -20,6 +20,7 @@ import android.net.InetAddresses;
 import android.net.IpConfiguration;
 import android.net.IpConfiguration.IpAssignment;
 import android.net.IpConfiguration.ProxySettings;
+import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.ProxyInfo;
 import android.net.RouteInfo;
@@ -324,8 +325,13 @@ public class IpConfigStore {
                                 if (in.readInt() == 1) {
                                     gateway = InetAddresses.parseNumericAddress(in.readUTF());
                                 }
-                                RouteInfo route = new RouteInfo(dest, gateway);
-                                if (route.isIPv4Default() && gatewayAddress == null) {
+                                RouteInfo route = new RouteInfo(dest == null ? null : new IpPrefix(
+                                        dest.getAddress(), dest.getPrefixLength()),
+                                        gateway, null, RouteInfo.RTN_UNICAST);
+                                if ((route.isDefaultRoute()
+                                        && route.getDestination().getAddress()
+                                        instanceof Inet4Address)
+                                        && gatewayAddress == null) {
                                     gatewayAddress = gateway;
                                 } else {
                                     loge("Non-IPv4 default or duplicate route: " + route);
