@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61251116_c4c520ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T01:49:50Z",
+      "side": 1,
+      "message": "Looks great. Code LGTM assuming comments addressed. From an API perspective, it looks like the list of redaction types should be in NetworkCapabilities, not TransportInfo, see inline. I think we need more test coverage in ConnectivityServiceTest to ensure the callbacks are correct, but doesn\u0027t need to be in this CL, it\u0027s probably easier to review in a follow-up CL.",
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8371d5cf_1de4421e",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T01:49:50Z",
+      "side": 1,
+      "message": "You don\u0027t need this text, the intdef will generate the javadoc for you. Just say \"the redactions that need to be performed ...\".",
+      "range": {
+        "startLine": 98,
+        "startChar": 38,
+        "endLine": 98,
+        "endChar": 71
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "935e78b6_a0d4471e",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T01:49:50Z",
+      "side": 1,
+      "message": "If there are callers that depend on this method in different branches, then you might want to mark the old one @Deprecated instead of changing its signature. You could add the (NetworkCapabilties, long) version and do:\n\n    @Deprecated\n    public NetworkCapabilities(NetworkCapabilities nc, boolean parcelSensitiveFields) {\n        this(nc, 0xffffffffffffffff);\n    }\n\nand then delete the method later. But there may be no callers that require this. If so, it\u0027s fine to modify.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 72
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85bfc8ee_813ac937",
+        "filename": "packages/Connectivity/framework/src/android/net/TransportInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T01:49:50Z",
+      "side": 1,
+      "message": "Maybe:\n\n/**\n * Redact all fields in this object that require any relevant permission.\n * @hide\n */\n\n?",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 52
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22f7b4a1_3612e928",
+        "filename": "packages/Connectivity/framework/src/android/net/TransportInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T01:49:50Z",
+      "side": 1,
+      "message": "Remove, the intdef will document this for you.",
+      "range": {
+        "startLine": 119,
+        "startChar": 25,
+        "endLine": 119,
+        "endChar": 78
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bb4f134_877bf1a2",
+        "filename": "packages/Connectivity/framework/src/android/net/TransportInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T01:49:50Z",
+      "side": 1,
+      "message": "You don\u0027t need this javadoc, the @IntDef will generate it for you. Also everywhere else.",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 49
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8c381ad_efab8a79",
+        "filename": "packages/Connectivity/framework/src/android/net/TransportInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T01:49:50Z",
+      "side": 1,
+      "message": "This should be long. Surprised the compiler didn\u0027t catch it, how did it generate the javadocs if it didn\u0027t have a method that matches this @see tag?",
+      "range": {
+        "startLine": 136,
+        "startChar": 22,
+        "endLine": 136,
+        "endChar": 25
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ab4869c_ad3b0318",
+        "filename": "packages/Connectivity/framework/src/android/net/TransportInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T01:49:50Z",
+      "side": 1,
+      "message": "Why does this use the word \"required\"? Only the caller knows which redactions are actually required at any point in time. So this method looks like it returns the list of which redactions *might* be necessary.\n\nDo we have a better word for this? getSupportedRedactions? getRelevantRedactions? getApplicableRedactions?\n\nDon\u0027t feel super strongly about this, and API council will have an opinion anyway, so I think it\u0027s probably fine to leave as is.",
+      "range": {
+        "startLine": 140,
+        "startChar": 35,
+        "endLine": 140,
+        "endChar": 43
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f5f6214_9ebd341d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1853,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T01:49:50Z",
+      "side": 1,
+      "message": "Any cache must have a clearly defined invalidation mechanism.\n\nIt sounds like here there is no invalidation mechanism; instead the cache is short-lived and scoped to a particular call. That seems like a workable solution, but it must be documented here. Something like:\n\n    * This wrapper does not support any sort of invalidation and thus must not be\n    * persistent or long-lived. It may only be used for the time necessary to\n    * compute the redactions required by one particular NetworkCallback or\n    * synchronous call.",
+      "range": {
+        "startLine": 1853,
+        "startChar": 26,
+        "endLine": 1853,
+        "endChar": 27
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e591e269_13e3bb4e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1855,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T01:49:50Z",
+      "side": 1,
+      "message": "Suggest generalizing to RedactionPermissionCheckerWrapper or even just RedactionPermissionChecker.",
+      "range": {
+        "startLine": 1855,
+        "startChar": 18,
+        "endLine": 1855,
+        "endChar": 50
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6cb37c3_f61b9fbf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1951,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T01:49:50Z",
+      "side": 1,
+      "message": "The existence of this code suggests that the set of redactions should not be a property of TransportInfo, but a property of NetworkCapabilities. Because even if the transportinfo says \"I don\u0027t need or support any redactions\", other data in NetworkCapabilities might.\n\nA great example of this is the SSID field in NetworkCapabilities. Currently this field is cleared unconditionally if the receiver does not have NETWORK_SETTINGS. In reality, it seems more correct to redact that field based on location.\n\nSo perhaps we should move these redaction constants to NetworkCapabilities? TransportInfo can still use and understand them, take them as arguments, etc. In practice, I think this is already the case in this CL, because the NetworkCapabilities copy constructor takes a bitmask of redactions.",
+      "range": {
+        "startLine": 1949,
+        "startChar": 0,
+        "endLine": 1951,
+        "endChar": 77
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02d197a9_3e5cb58b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2490,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T01:49:50Z",
+      "side": 1,
+      "message": "This seems conceptually incorrect. Is there a reason we cannot pass the calling PID here? Maybe just add a pid field to the LocationPermissionCheckerWrapper object?",
+      "range": {
+        "startLine": 2490,
+        "startChar": 55,
+        "endLine": 2490,
+        "endChar": 67
+      },
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "844283b3_1d3aec66",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 9008,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T01:49:50Z",
+      "side": 1,
+      "message": "Could you add a test with a subclass of TransportInfo defined in this file and check that when an app registers a callback (without any flags, because we don\u0027t have a way to set the flag in the TestNetworkCallback constructor), that it gets redacted in various scenarios? That test can also have a TODO to check the behaviour once it\u0027s possible to have a TestNetworkCallback that takes a flag.\n\nDoesn\u0027t need to be in this CL, could be in a CL on top of it.",
+      "revId": "3ae037e96b7a251493ec07631de719ca196ae231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
