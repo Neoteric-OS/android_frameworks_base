@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "905af69a_8fc4ef1f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-03-18T13:29:19Z",
+      "side": 1,
+      "message": "b/160623310 is the Keystore2 feature, instead we might want to use b/160616951 (KeyMint feature).",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "0df1be34_6643b343",
@@ -43,6 +66,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "edc92b5a_dfce1135",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-03-18T13:29:19Z",
+      "side": 1,
+      "message": "Sorta. Kinda. It\u0027s complicated. It\u0027s a good question :-)\n\nFirst, if you care about HW-backed Android KeyStore you probably have an application with a server backend and an Android frontend (and likely other mobile frontends and a website). In which case you probably care about things like attestation and here\u0027s where the nice layered \"Android KeyStore is the abstraction, pay no attention to KeyMint behind the curtain\" picture starts to fall apart... I mean, to deal with attestation you\u0027ll need to look at https://source.android.com/security/keystore/attestation which mentions both KeyMaster (and in the future will also mention KeyMint). In particular you likely need to have explicit support for various KeyMaster / KeyMint versions in your server backend.\n\nSo I really don\u0027t see how it\u0027s helpful to hide this implementation detail from the developer, I think in fact it might just add extra confusion. The alternative is that you develop a parallel world with KeyStore versions which map 1:1 to KeyMaster / KeyMint versions (and do things like mirror the stuff from source.android.com on developer.android.com). But that\u0027s just lots of extra busy-work just to avoid using the words KeyMaster and KeyMint.\n\nI guess maybe we could call it FEATURE_KEYSTORE instead of FEATURE_KEYMINT but point out in the JavaDoc that this really is backed by KeyMint and point them to the source.android.com page? Shawn is back on Monday, I kinda want him to weigh in as well.",
+      "parentUuid": "b625c29b_17eac9f2",
+      "range": {
+        "startLine": 2183,
+        "startChar": 0,
+        "endLine": 2183,
+        "endChar": 85
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8575dd83_02e4e3c3",
         "filename": "core/java/android/content/pm/PackageManager.java",
         "patchSetId": 3
@@ -54,6 +101,30 @@
       "writtenOn": "2021-03-17T20:31:31Z",
       "side": 1,
       "message": "Hmm, how is this value related to the existing FEATURE_STRONGBOX_KEYSTORE value?\n\nNote that it is reasonable to add a version to an existing feature, so you might be interested in reusing FEATURE_STRONGBOX_KEYSTORE?  (Which might better align with FEATURE_KEYSTORE suggestion above?)",
+      "range": {
+        "startLine": 2200,
+        "startChar": 0,
+        "endLine": 2200,
+        "endChar": 58
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c2f660b_3dafd85c",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-03-18T13:29:19Z",
+      "side": 1,
+      "message": "I think with the proposed setup, you\u0027d have FEATURE_KEYMINT_STRONGBOX set to a non-empty version if and only if FEATURE_STRONGBOX_KEYSTORE is set to true.\n\nSo if we end up using FEATURE_KEYSTORE instead of FEATURE_KEYMINT it would be great if we can just reuse FEATURE_STRONGBOX_KEYSTORE.",
+      "parentUuid": "8575dd83_02e4e3c3",
       "range": {
         "startLine": 2200,
         "startChar": 0,
