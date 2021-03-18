@@ -41,6 +41,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe41c585_96255499",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2021-03-18T08:44:15Z",
+      "side": 1,
+      "message": "I don\u0027t know what \"pre-created\" users are - is it ok to just delete them without any UI indication?",
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58ab68cb_bf7999a7",
@@ -83,6 +100,53 @@
         "startChar": 16,
         "endLine": 2730,
         "endChar": 37
+      },
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "351876a6_c3b904bf",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2730,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2021-03-18T08:44:15Z",
+      "side": 1,
+      "message": "Yeah I think this is fine.",
+      "parentUuid": "a03eab93_36137b1f",
+      "range": {
+        "startLine": 2730,
+        "startChar": 16,
+        "endLine": 2730,
+        "endChar": 37
+      },
+      "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd3c7b74_3c725370",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2783,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2021-03-18T08:44:15Z",
+      "side": 1,
+      "message": "please add a comment why they need to be removed here.",
+      "range": {
+        "startLine": 2783,
+        "startChar": 16,
+        "endLine": 2783,
+        "endChar": 30
       },
       "revId": "601b49c4f2207847e06ef3dd0dbb2132bbbf656f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
