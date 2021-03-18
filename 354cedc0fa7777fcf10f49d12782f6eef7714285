@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96bd8aa9_03f5ccdc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-03-18T15:24:19Z",
+      "side": 1,
+      "message": "\u003e Patch Set 1: Code-Review+2\n\u003e \n\u003e By voting Code-Review+2 the following files are now code-owner approved by Beverly Tai:\n\u003e * services/tests/uiservicestests/src/com/android/server/notification/NotificationManagerServiceTest.java\n\u003e \n\n@Beverly: even with this fix, still have issue in CI for 10 tests, but I cannot see which one.\nCould you please share with me what are these failures so that I can fix ASAP (not in blind mode ;-) )\nMany thanks in adavance!\n",
+      "revId": "354cedc0fa7777fcf10f49d12782f6eef7714285",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
