@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d95cb29_2bb42507",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1170070
+      },
+      "writtenOn": "2021-03-18T23:26:42Z",
+      "side": 1,
+      "message": "(+timmurray to approve if we\u0027re changing the total amount pinned)",
+      "revId": "5e316f809d93bf1ac3886ee8a170ac64c07d6ae9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22973871_f312897f",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1170070
+      },
+      "writtenOn": "2021-03-18T23:26:42Z",
+      "side": 1,
+      "message": "Maybe this is a silly question but I did a quick spot check on this pinner config:\nhttps://source.corp.google.com/android/device/google/redbull/overlay/frameworks/base/core/res/res/values/config.xml;l\u003d278\n\nAnd I\u0027m not necessarily seeing that every .apk and .jar file in that list are accompanied by a corresponding odex. For example:\n        \u003citem\u003e\"/apex/com.android.art/javalib/core-oj.jar\"\u003c/item\u003e\n        \u003citem\u003e\"/apex/com.android.art/javalib/core-libart.jar\"\u003c/item\u003e\n        \u003citem\u003e\"/apex/com.android.media/javalib/updatable-media.jar\"\u003c/item\u003e\n\nAnd maybe this one (does this odex go with this jar despite the different names?):\n        \u003citem\u003e\"/system/framework/framework.jar\"\u003c/item\u003e\n        \u003citem\u003e\"/system/framework/arm64/boot-framework.oat\"\u003c/item\u003e\n\nSo I guess I have a few general questions about this change:\n- What impact do we expect this to have on the files that are being pinned? Do the .jars missing odexes not have them, or are we going to be pinning more now?\n- Should this be topic\u0027d in with cleaning up the pinner configs for pixel devices to remove the now-unnecessary odexes?\n- Do we need to test on each device to ensure that we\u0027re pinning the same amount before and after this change?",
+      "revId": "5e316f809d93bf1ac3886ee8a170ac64c07d6ae9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35873434_613232d3",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1170070
+      },
+      "writtenOn": "2021-03-18T23:26:42Z",
+      "side": 1,
+      "message": "Can we consolidate your change with this code inside pinApp so we only have one codepath for this?",
+      "range": {
+        "startLine": 637,
+        "startChar": 0,
+        "endLine": 669,
+        "endChar": 5
+      },
+      "revId": "5e316f809d93bf1ac3886ee8a170ac64c07d6ae9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
