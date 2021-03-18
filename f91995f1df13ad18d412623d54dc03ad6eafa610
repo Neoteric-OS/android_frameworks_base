@@ -16,6 +16,24 @@
       "message": "Why are there no permission checks for read or write access to hibernating state? We can\u0027t allow random apps to call into this code.",
       "revId": "f91995f1df13ad18d412623d54dc03ad6eafa610",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a637bdc6_20e713ce",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-03-18T21:20:55Z",
+      "side": 1,
+      "message": "As discussed offline, added permission checks into the topic (and this CL).",
+      "parentUuid": "1a167750_f0662f37",
+      "revId": "f91995f1df13ad18d412623d54dc03ad6eafa610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
