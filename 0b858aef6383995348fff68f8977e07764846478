@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f0abddb_eed4c47f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2021-03-18T19:56:25Z",
+      "side": 1,
+      "message": "I am not familiar with this class. So please feel free to resolve the comments if they are not relevant.",
+      "revId": "0b858aef6383995348fff68f8977e07764846478",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ab9713c_7e54f54f",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreCipherSpiBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2021-03-18T19:56:25Z",
+      "side": 1,
+      "message": "Isn\u0027t signature verification not relevant here as a public key operation?",
+      "range": {
+        "startLine": 127,
+        "startChar": 29,
+        "endLine": 127,
+        "endChar": 41
+      },
+      "revId": "0b858aef6383995348fff68f8977e07764846478",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f30ab9f_40efa64e",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreCipherSpiBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2021-03-18T19:56:25Z",
+      "side": 1,
+      "message": "Not sure why we include private key here. The comment says public key operations get diverted to the default provider.",
+      "range": {
+        "startLine": 128,
+        "startChar": 35,
+        "endLine": 128,
+        "endChar": 45
+      },
+      "revId": "0b858aef6383995348fff68f8977e07764846478",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
