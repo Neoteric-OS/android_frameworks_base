@@ -86,6 +86,13 @@ public class VpnManager {
     public static final int TYPE_VPN_LEGACY = 3;
 
     /**
+     * An VPN created by OEM code through other means than {@link VpnService} or {@link VpnManager}.
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static final int TYPE_VPN_OEM = 4;
+
+    /**
      * Channel for VPN notifications.
      * @hide
      */
