@@ -2786,6 +2786,14 @@ class StorageManagerService extends IStorageManager.Stub
                     return;
                 }
             }
+
+            // Pre-created users are stored in STATE_SHUTDOWN state. If FBE is enabled their data is
+            // ciphered and can't be accessed. To prevent failures on the bottom layers we need to
+            // remove pre-created users before moving actually starts.
+            if (StorageManager.isFileEncryptedNativeOrEmulated()) {
+                Binder.withCleanCallingIdentity(() ->
+                    LocalServices.getService(UserManagerInternal.class).removeAllPreCreatedUsers());
+            }
         }
 
         try {

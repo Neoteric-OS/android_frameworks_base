@@ -144,6 +144,11 @@ public abstract class UserManagerInternal {
     public abstract void removeAllUsers();
 
     /**
+     * Remove any pre-created users from the system.
+     */
+    public abstract void removeAllPreCreatedUsers();
+
+    /**
      * Called by the activity manager when the ephemeral user goes to background and its removal
      * starts as a result.
      *
