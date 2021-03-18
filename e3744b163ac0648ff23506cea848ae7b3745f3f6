@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ed7e3bd_ece1d811",
+        "filename": "packages/Connectivity/framework/src/android/net/InetAddressCompat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-18T14:54:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "320aae9b_aaba8d67",
+      "range": {
+        "startLine": 59,
+        "startChar": 44,
+        "endLine": 59,
+        "endChar": 80
+      },
+      "revId": "e3744b163ac0648ff23506cea848ae7b3745f3f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de0e094a_13573271",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-18T14:50:46Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 73,
+        "startChar": 22,
+        "endLine": 73,
+        "endChar": 42
+      },
+      "revId": "e3744b163ac0648ff23506cea848ae7b3745f3f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f2fb81c_29a780a7",
+        "filename": "packages/Connectivity/framework/src/android/net/InetAddressCompat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-18T14:54:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de0e094a_13573271",
       "range": {
         "startLine": 73,
         "startChar": 22,
