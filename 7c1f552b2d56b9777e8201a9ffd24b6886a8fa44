@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62409610_d0ab1fe5",
+        "filename": "keystore/java/android/security/AndroidKeyStoreMaintenance.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-03-19T20:48:54Z",
+      "side": 1,
+      "message": "On second thought this should be able to take the value of SYSTEM_ERROR which is not a valid UserState.",
+      "range": {
+        "startLine": 132,
+        "startChar": 18,
+        "endLine": 132,
+        "endChar": 28
+      },
+      "revId": "7c1f552b2d56b9777e8201a9ffd24b6886a8fa44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
