@@ -70,6 +70,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3809db15_7034ef68",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-03-19T11:58:09Z",
+      "side": 1,
+      "message": "(I\u0027ve now moved the config files out of the topic due to merge conflicts)",
+      "parentUuid": "fbcdf351_b263f71f",
+      "revId": "5e316f809d93bf1ac3886ee8a170ac64c07d6ae9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35873434_613232d3",
