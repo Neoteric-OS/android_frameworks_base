@@ -45,6 +45,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -4553,6 +4554,114 @@ final public class MediaCodec {
     }
 
     private native void native_enableOnFrameRenderedListener(boolean enable);
+
+    /**
+     * Returns a list of vendor parameter names.
+     * <p>
+     * This method can be called in any codec state except for released state.
+     *
+     * @return a list containing supported vendor parameters.
+     * @throws IllegalStateException if in the Released state.
+     */
+    @NonNull
+    public List<String> querySupportedVendorParameters() {
+        return native_querySupportedVendorParameters();
+    }
+
+    @NonNull
+    private native List<String> native_querySupportedVendorParameters();
+
+    /**
+     * Contains description of a parameter.
+     */
+    public class ParameterDescriptor {
+        private ParameterDescriptor() {}
+
+        /**
+         * Returns the name of the parameter.
+         */
+        @NonNull
+        public String getName() {
+            return mName;
+        }
+
+        /**
+         * Returns the type of the parameter.
+         * {@link MediaFormat.TYPE_NULL} is never returned.
+         */
+        @MediaFormat.Type
+        public int getType() {
+            return mType;
+        }
+
+        private String mName;
+        private @MediaFormat.Type int mType;
+    }
+
+    /**
+     * Describe a parameter with the name.
+     * <p>
+     * This method can be called in any codec state except for released state.
+     *
+     * @return {@link ParameterDescriptor} object that describes the parameter.
+     *         {@code null} if unrecognized / not able to describe.
+     * @throws IllegalStateException if in the Released state.
+     */
+    @Nullable
+    public ParameterDescriptor describeParameter(@NonNull String name) {
+        return native_describeParameter(name);
+    }
+
+    @Nullable
+    private native ParameterDescriptor native_describeParameter(@NonNull String name);
+
+    /**
+     * Subscribe to vendor parameters, so that changes to these parameters generate
+     * output format change event.
+     * <p>
+     * Unrecognized parameter names or standard (non-vendor) parameter names will be ignored.
+     * {@link #reset} also resets the list of subscribed parameters.
+     * If a parameter in {@code names} is already subscribed, it will remain subscribed.
+     * This method can be called in any codec state except for released state.
+     * <p>
+     * Note that when vendor parameters are set in {@link #configure} or
+     * {@link #setParameters} they are automatically subscribed.
+     * <p>
+     * See also {@link INFO_OUTPUT_FORMAT_CHANGED} or {@link Callback#onOutputFormatChanged}
+     * for output format change events.
+     *
+     * @param names names of the vendor parameters to subscribe.
+     * @throws IllegalStateException if in the Released state.
+     */
+    public void subscribeToVendorParameters(@NonNull List<String> names) {
+        native_subscribeToVendorParameters(names);
+    }
+
+    private native void native_subscribeToVendorParameters(@NonNull List<String> names);
+
+    /**
+     * Unsubscribe from vendor parameters, so that changes to these parameters
+     * no longer generate output format change event.
+     * <p>
+     * Unrecognized parameter names, standard (non-vendor) parameter names will be ignored.
+     * {@link reset} also resets the list of subscribed parameters.
+     * If a parameter in {@code names} is already unsubscribed, it will remain unsubscribed.
+     * This method can be called in any codec state except for released state.
+     * <p>
+     * Note that when vendor parameters are set in {@link #configure} or
+     * {@link #setParameters} they are automatically subscribed.
+     * <p>
+     * See also {@link INFO_OUTPUT_FORMAT_CHANGED} or {@link Callback#onOutputFormatChanged}
+     * for output format change events.
+     *
+     * @param names names of the vendor parameters to unsubscribe.
+     * @throws IllegalStateException if in the Released state.
+     */
+    public void unsubscribeFromVendorParameters(@NonNull List<String> names) {
+        native_unsubscribeFromVendorParameters(names);
+    }
+
+    private native void native_unsubscribeFromVendorParameters(@NonNull List<String> names);
 
     private EventHandler getEventHandlerOn(
             @Nullable Handler handler, @NonNull EventHandler lastHandler) {
