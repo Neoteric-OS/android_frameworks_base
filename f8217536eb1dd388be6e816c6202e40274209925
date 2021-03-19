@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac327f29_7ea6c2b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-19T01:34:49Z",
+      "side": 1,
+      "message": "Removed some unit test dependencies on WifiInfo. PTAL, Thanks!",
+      "revId": "f8217536eb1dd388be6e816c6202e40274209925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
