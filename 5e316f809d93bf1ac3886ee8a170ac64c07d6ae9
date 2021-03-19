@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e46a2e7e_fb4345c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-03-19T10:28:43Z",
+      "side": 1,
+      "message": "Thanks Carmen!",
+      "revId": "5e316f809d93bf1ac3886ee8a170ac64c07d6ae9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22973871_f312897f",
@@ -35,6 +52,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbcdf351_b263f71f",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-03-19T10:28:43Z",
+      "side": 1,
+      "message": "The CL is a no-op in terms of how many files get pinned. FYI:\ncore-oj.jar -\u003e boot.oat\ncore-libart.jar -\u003e boot-core-libart.oat\nframework.jar -\u003e boot-framework.oat\nservices.jar -\u003e services.odex\nSystemUIGoogle.apk -\u003e SystemUIGoogle.odex\n\nWhen a jar is missing an odex (like updatable-media.jar) getDexFileOutputPaths will return null.\n\nI actually have the CLs for dropping the odex/oat file in the configs but didn\u0027t put it in the topic. This is done now.",
+      "parentUuid": "22973871_f312897f",
+      "revId": "5e316f809d93bf1ac3886ee8a170ac64c07d6ae9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35873434_613232d3",
@@ -48,6 +83,30 @@
       "writtenOn": "2021-03-18T23:26:42Z",
       "side": 1,
       "message": "Can we consolidate your change with this code inside pinApp so we only have one codepath for this?",
+      "range": {
+        "startLine": 637,
+        "startChar": 0,
+        "endLine": 669,
+        "endChar": 5
+      },
+      "revId": "5e316f809d93bf1ac3886ee8a170ac64c07d6ae9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cc85357_9fdf2555",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-03-19T10:28:43Z",
+      "side": 1,
+      "message": "The app code has its own tweaks (like checking appInfo, different pinSizeLimit, different location where to put the pinned file) - which I think will make the code less easy to follow.",
+      "parentUuid": "35873434_613232d3",
       "range": {
         "startLine": 637,
         "startChar": 0,
