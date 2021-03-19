@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ac2204a_c747ce99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-19T00:23:06Z",
+      "side": 1,
+      "message": "LGTM, only nits. API LGTM but I per discussion over IM these should probably all be @SystemApi(client \u003d MODULE_LIBRARIES) instead of @SystemApi.",
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dce6b240_29ab2b0d",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-19T00:23:06Z",
+      "side": 1,
+      "message": "Nit: need",
+      "range": {
+        "startLine": 80,
+        "startChar": 30,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "335bf59c_bc0b9907",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-19T00:23:06Z",
+      "side": 1,
+      "message": "Which bit? Update comment.",
+      "range": {
+        "startLine": 180,
+        "startChar": 11,
+        "endLine": 180,
+        "endChar": 19
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45e52d46_6cebe2f7",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-19T00:23:06Z",
+      "side": 1,
+      "message": "Perhaps not for this CL, but why is this the case? Is it because we might not know how to implement the redactions without going through the parceling and unparceling code? If so, maybe add a comment.",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 80
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b02b04ad_65b71a16",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2404,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-19T00:23:06Z",
+      "side": 1,
+      "message": "\"object\" or \"NetworkCapabilities\".",
+      "range": {
+        "startLine": 2404,
+        "startChar": 46,
+        "endLine": 2404,
+        "endChar": 59
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1419c1bf_2d9bd613",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1988,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-19T00:23:06Z",
+      "side": 1,
+      "message": "Consider static import for brevity.",
+      "range": {
+        "startLine": 1988,
+        "startChar": 26,
+        "endLine": 1988,
+        "endChar": 76
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19c5b693_232e9bc9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1994,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-19T00:23:06Z",
+      "side": 1,
+      "message": "For brevity, suggest:\n\n    private boolean shouldRedact(@NetworkCapabilities.RedactionType int redactions,\n            @NetworkCapabilities.RedactionType redaction) {\n        return (redactions \u0026 redaction) !\u003d 0;\n    }\n\nthen this just becomes:\n\n    if (shouldRedact(redactions, REDACTION_LOCAL_MAC_ADDRESS) \u0026\u0026\n            redactionPermissionChecker.hasLocalMacAddressPermission()) {\n        redactions \u0026\u003d ~REDACTION_LOCAL_MAC_ADDRESS;\n    }",
+      "range": {
+        "startLine": 1994,
+        "startChar": 13,
+        "endLine": 1994,
+        "endChar": 79
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "623a04f1_aad645b9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-19T00:23:06Z",
+      "side": 1,
+      "message": "Optional: while you\u0027re at it, consider renaming \"caller\" -\u003e \"calling\" for consistency with other code.",
+      "range": {
+        "startLine": 2011,
+        "startChar": 16,
+        "endLine": 2011,
+        "endChar": 25
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "372fbae2_7c1474aa",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9068,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-19T00:23:06Z",
+      "side": 1,
+      "message": "Consider static import for brevity.",
+      "range": {
+        "startLine": 9067,
+        "startChar": 28,
+        "endLine": 9068,
+        "endChar": 72
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32a1954b_762b162d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9105,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-19T00:23:06Z",
+      "side": 1,
+      "message": "Consider shortening to \"locationRedacted\" (or \"isLocationRedacted\"), \"isLocalMacRedacted\", etc.",
+      "range": {
+        "startLine": 9105,
+        "startChar": 29,
+        "endLine": 9105,
+        "endChar": 62
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8764feda_dda16476",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9142,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-19T00:23:06Z",
+      "side": 1,
+      "message": "Nit: could be called \"that\" instead of otherT.",
+      "range": {
+        "startLine": 9142,
+        "startChar": 30,
+        "endLine": 9142,
+        "endChar": 36
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
