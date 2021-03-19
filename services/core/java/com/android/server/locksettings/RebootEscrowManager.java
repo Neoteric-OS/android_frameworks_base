@@ -70,6 +70,7 @@ class RebootEscrowManager {
     public static final String REBOOT_ESCROW_ARMED_KEY = "reboot_escrow_armed_count";
 
     static final String REBOOT_ESCROW_KEY_ARMED_TIMESTAMP = "reboot_escrow_key_stored_timestamp";
+    static final String REBOOT_ESCROW_KEY_PROVIDER = "reboot_escrow_key_provider";
 
     /**
      * The verified boot 2.0 vbmeta digest of the current slot, the property value is always
@@ -112,6 +113,7 @@ class RebootEscrowManager {
             ERROR_LOAD_ESCROW_KEY,
             ERROR_RETRY_COUNT_EXHAUSTED,
             ERROR_UNLOCK_ALL_USERS,
+            ERROR_PROVIDER_MISMATCH,
     })
     @Retention(RetentionPolicy.SOURCE)
     @interface RebootEscrowErrorCode {
@@ -123,6 +125,7 @@ class RebootEscrowManager {
     static final int ERROR_LOAD_ESCROW_KEY = 3;
     static final int ERROR_RETRY_COUNT_EXHAUSTED = 4;
     static final int ERROR_UNLOCK_ALL_USERS = 5;
+    static final int ERROR_PROVIDER_MISMATCH = 6;
 
     private @RebootEscrowErrorCode int mLoadEscrowDataErrorCode = ERROR_NONE;
 
@@ -359,6 +362,14 @@ class RebootEscrowManager {
 
         if (escrowKey == null) {
             mLoadEscrowDataErrorCode = ERROR_LOAD_ESCROW_KEY;
+            // Specifically check if the RoR provider has changed after reboot.
+            int providerType = mInjector.serverBasedResumeOnReboot()
+                    ? RebootEscrowProviderInterface.TYPE_SERVER_BASED
+                    : RebootEscrowProviderInterface.TYPE_HAL;
+            if (providerType != mStorage.getInt(REBOOT_ESCROW_KEY_PROVIDER, -1, USER_SYSTEM)) {
+                mLoadEscrowDataErrorCode = ERROR_PROVIDER_MISMATCH;
+            }
+
             onGetRebootEscrowKeyFailed(users, attemptNumber + 1);
             return;
         }
@@ -384,6 +395,7 @@ class RebootEscrowManager {
         mStorage.removeKey(REBOOT_ESCROW_KEY_ARMED_TIMESTAMP, USER_SYSTEM);
         mStorage.removeKey(REBOOT_ESCROW_KEY_VBMETA_DIGEST, USER_SYSTEM);
         mStorage.removeKey(REBOOT_ESCROW_KEY_OTHER_VBMETA_DIGEST, USER_SYSTEM);
+        mStorage.removeKey(REBOOT_ESCROW_KEY_PROVIDER, USER_SYSTEM);
     }
 
     private int getVbmetaDigestStatusOnRestoreComplete() {
@@ -433,6 +445,7 @@ class RebootEscrowManager {
         if (!success && errorCode == ERROR_NONE) {
             errorCode = ERROR_UNKNOWN;
         }
+
         // TODO(179105110) report the duration since boot complete.
         mInjector.reportMetric(success, errorCode, serviceType, attemptCount,
                 escrowDurationInSeconds, vbmetaDigestStatus, -1);
@@ -584,6 +597,17 @@ class RebootEscrowManager {
             return false;
         }
 
+        int expectedProviderType = mInjector.serverBasedResumeOnReboot()
+                ? RebootEscrowProviderInterface.TYPE_SERVER_BASED
+                : RebootEscrowProviderInterface.TYPE_HAL;
+        int actualProviderType = rebootEscrowProvider.getType();
+        if (expectedProviderType != actualProviderType) {
+            Slog.w(TAG, "Reboot escrow provider has changed from "
+                    + actualProviderType + " to " + expectedProviderType
+                    + " during the resume on reboot process. Please prepare the RoR again.");
+            return false;
+        }
+
         RebootEscrowKey escrowKey;
         synchronized (mKeyGenerationLock) {
             escrowKey = mPendingRebootEscrowKey;
@@ -610,6 +634,7 @@ class RebootEscrowManager {
                     USER_SYSTEM);
             mStorage.setString(REBOOT_ESCROW_KEY_OTHER_VBMETA_DIGEST,
                     mInjector.getVbmetaDigest(true), USER_SYSTEM);
+            mStorage.setInt(REBOOT_ESCROW_KEY_PROVIDER, actualProviderType, USER_SYSTEM);
             mEventLog.addEntry(RebootEscrowEvent.SET_ARMED_STATUS);
         }
 
