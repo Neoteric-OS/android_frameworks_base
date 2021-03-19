@@ -16,6 +16,75 @@
       "message": "Addressed the comments. PTAL, Thanks!",
       "revId": "e91b7bd7adb0f8a367daf990a84fb456444b5fdf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73b05ecd_69021a5c",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-19T01:52:36Z",
+      "side": 1,
+      "message": "this NetworkCapabilities object",
+      "range": {
+        "startLine": 68,
+        "startChar": 51,
+        "endLine": 68,
+        "endChar": 64
+      },
+      "revId": "e91b7bd7adb0f8a367daf990a84fb456444b5fdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b3e1100_9300bed6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 9117,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-19T01:52:36Z",
+      "side": 1,
+      "message": "Might fit on fewer lines.",
+      "range": {
+        "startLine": 9115,
+        "startChar": 0,
+        "endLine": 9117,
+        "endChar": 43
+      },
+      "revId": "e91b7bd7adb0f8a367daf990a84fb456444b5fdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4e97ac8_ab50660a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 9127,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-19T01:52:36Z",
+      "side": 1,
+      "message": "Unneeded due to static import?",
+      "range": {
+        "startLine": 9127,
+        "startChar": 34,
+        "endLine": 9127,
+        "endChar": 54
+      },
+      "revId": "e91b7bd7adb0f8a367daf990a84fb456444b5fdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
