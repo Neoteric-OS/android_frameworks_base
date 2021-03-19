@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c51f9bce_d8450805",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-03-19T21:16:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e448b34_e5ee0fde",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 71
+      },
+      "revId": "7e4d7636cbcfa256d5f2b189fd80fbcddc7f5f32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1c336f27_8ee4578d",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e11bbdc_dbd5d981",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-03-19T21:16:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c336f27_8ee4578d",
+      "range": {
+        "startLine": 106,
+        "startChar": 72,
+        "endLine": 106,
+        "endChar": 92
+      },
+      "revId": "7e4d7636cbcfa256d5f2b189fd80fbcddc7f5f32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4fc54478_152100a5",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-03-17T07:09:50Z",
       "side": 1,
       "message": "Only MODE_TUNNEL transforms may be migrated. Attempting to migrate any other transforms will throw an UnsupportedOperationException.",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 38
+      },
+      "revId": "7e4d7636cbcfa256d5f2b189fd80fbcddc7f5f32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51c46afd_7d303d79",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-03-19T21:16:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fc54478_152100a5",
       "range": {
         "startLine": 108,
         "startChar": 0,
