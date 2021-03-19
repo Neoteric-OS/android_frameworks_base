@@ -981,7 +981,8 @@ public class PhoneStateListener {
      * <p> The {@link TelephonyDisplayInfo} contains status information shown to the user based on
      * carrier policy.
      *
-     * Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE} or that the calling
+     * Before {@link android.os.Build.VERSION_CODES#S Android S},
+     * requires permission: {@link android.Manifest.permission#READ_PHONE_STATE} or that the calling
      * app has carrier privileges (see {@link TelephonyManager#hasCarrierPrivileges}).
      *
      * @param telephonyDisplayInfo The display information.
