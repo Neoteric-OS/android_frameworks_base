@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63e34512_d7ba11ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-19T01:59:49Z",
+      "side": 1,
+      "message": "nit: internet",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 10,
+        "endChar": 49
+      },
+      "revId": "a92d96e8e947c9c3fa17daa6980bdb2d3471bc10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
