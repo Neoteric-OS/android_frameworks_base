@@ -33,6 +33,23 @@
       "message": "This seems like a reasonable approach to me, but I\u0027d like to get a secondary review from Adam. Removing all other reviewers.",
       "revId": "2076ef9768a1b01ea81afafab058aeed94b8b8ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63129657_63cd7b0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2021-03-19T14:54:03Z",
+      "side": 1,
+      "message": "Aaaaand apparently I\u0027m not ACL\u0027ed to remove reviewers. Well -- everyone can remove themselves.\n\nAdam, please take a look when you can.",
+      "revId": "2076ef9768a1b01ea81afafab058aeed94b8b8ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
