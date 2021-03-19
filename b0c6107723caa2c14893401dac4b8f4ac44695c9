@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41b4899c_95aaf23d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-19T19:43:51Z",
+      "side": 1,
+      "message": "Can we please submit this CL ? This is causing a merge conflict for my CL: aosp/1601458 in internal master/sc-dev (because this CL is present on sc-dev/internal master, but was reverted in AOSP).",
+      "revId": "b0c6107723caa2c14893401dac4b8f4ac44695c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
