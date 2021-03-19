@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3784ae2d_c6eb831d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-19T20:15:58Z",
+      "side": 1,
+      "message": "Rebasing to resolve merge conflicts. Inheriting +2. ",
+      "revId": "adee4b7b7e26e40ccfdb99dabc5fbf8c2c6b787e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
