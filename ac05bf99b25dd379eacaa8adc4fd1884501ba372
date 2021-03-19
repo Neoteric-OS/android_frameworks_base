@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abb24040_ac8f7cf4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2021-03-19T07:18:11Z",
+      "side": 1,
+      "message": "Is there a bug/FR describing the goals of these changes? What will cause changes to these new settings values?",
+      "revId": "ac05bf99b25dd379eacaa8adc4fd1884501ba372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
