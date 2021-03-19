@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cefd1413_33c12dc9",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-19T01:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dce6b240_29ab2b0d",
+      "range": {
+        "startLine": 80,
+        "startChar": 30,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "335bf59c_bc0b9907",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-19T00:23:06Z",
       "side": 1,
       "message": "Which bit? Update comment.",
+      "range": {
+        "startLine": 180,
+        "startChar": 11,
+        "endLine": 180,
+        "endChar": 19
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edafbd9f_6a83d240",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-19T01:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "335bf59c_bc0b9907",
       "range": {
         "startLine": 180,
         "startChar": 11,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "480cb02a_492d32d9",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-19T01:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e52d46_6cebe2f7",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 80
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b02b04ad_65b71a16",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-03-19T00:23:06Z",
       "side": 1,
       "message": "\"object\" or \"NetworkCapabilities\".",
+      "range": {
+        "startLine": 2404,
+        "startChar": 46,
+        "endLine": 2404,
+        "endChar": 59
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97f03318_4f117192",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2404,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-19T01:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b02b04ad_65b71a16",
       "range": {
         "startLine": 2404,
         "startChar": 46,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82cba31f_4397d657",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1988,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-19T01:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1419c1bf_2d9bd613",
+      "range": {
+        "startLine": 1988,
+        "startChar": 26,
+        "endLine": 1988,
+        "endChar": 76
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19c5b693_232e9bc9",
@@ -156,6 +276,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ce35ee4_b7d481f0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1994,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-19T01:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19c5b693_232e9bc9",
+      "range": {
+        "startLine": 1994,
+        "startChar": 13,
+        "endLine": 1994,
+        "endChar": 79
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "623a04f1_aad645b9",
@@ -169,6 +313,30 @@
       "writtenOn": "2021-03-19T00:23:06Z",
       "side": 1,
       "message": "Optional: while you\u0027re at it, consider renaming \"caller\" -\u003e \"calling\" for consistency with other code.",
+      "range": {
+        "startLine": 2011,
+        "startChar": 16,
+        "endLine": 2011,
+        "endChar": 25
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "596c9e02_86423bf7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-19T01:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "623a04f1_aad645b9",
       "range": {
         "startLine": 2011,
         "startChar": 16,
@@ -225,6 +393,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "154b46d7_723ebbe4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9105,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-19T01:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32a1954b_762b162d",
+      "range": {
+        "startLine": 9105,
+        "startChar": 29,
+        "endLine": 9105,
+        "endChar": 62
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8764feda_dda16476",
@@ -238,6 +430,30 @@
       "writtenOn": "2021-03-19T00:23:06Z",
       "side": 1,
       "message": "Nit: could be called \"that\" instead of otherT.",
+      "range": {
+        "startLine": 9142,
+        "startChar": 30,
+        "endLine": 9142,
+        "endChar": 36
+      },
+      "revId": "af9238882a27615db7c6382e4068ac26ca5f49d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d215caea_c59b1231",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9142,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-19T01:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8764feda_dda16476",
       "range": {
         "startLine": 9142,
         "startChar": 30,
