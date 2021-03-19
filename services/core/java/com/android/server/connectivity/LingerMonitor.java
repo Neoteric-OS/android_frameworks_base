@@ -34,7 +34,7 @@ import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
 
-import com.android.internal.R;
+import com.android.connectivity.resources.R;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.MessageUtils;
 import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
@@ -72,6 +72,7 @@ public class LingerMonitor {
             new Class[] { LingerMonitor.class }, new String[]{ "NOTIFY_TYPE_" });
 
     private final Context mContext;
+    final ConnectivityResources mResources;
     private final NetworkNotificationManager mNotifier;
     private final int mDailyLimit;
     private final long mRateLimitMillis;
@@ -89,6 +90,7 @@ public class LingerMonitor {
     public LingerMonitor(Context context, NetworkNotificationManager notifier,
             int dailyLimit, long rateLimitMillis) {
         mContext = context;
+        mResources = new ConnectivityResources(mContext);
         mNotifier = notifier;
         mDailyLimit = dailyLimit;
         mRateLimitMillis = rateLimitMillis;
@@ -129,7 +131,7 @@ public class LingerMonitor {
     public boolean isNotificationEnabled(NetworkAgentInfo fromNai, NetworkAgentInfo toNai) {
         // TODO: Evaluate moving to CarrierConfigManager.
         String[] notifySwitches =
-                mContext.getResources().getStringArray(R.array.config_networkNotifySwitches);
+                mResources.get().getStringArray(R.array.config_networkNotifySwitches);
 
         if (VDBG) {
             Log.d(TAG, "Notify on network switches: " + Arrays.toString(notifySwitches));
@@ -179,7 +181,7 @@ public class LingerMonitor {
     // Notify the user of a network switch using a notification or a toast.
     private void notify(NetworkAgentInfo fromNai, NetworkAgentInfo toNai, boolean forceToast) {
         int notifyType =
-                mContext.getResources().getInteger(R.integer.config_networkNotifySwitchType);
+                mResources.get().getInteger(R.integer.config_networkNotifySwitchType);
         if (notifyType == NOTIFY_TYPE_NOTIFICATION && forceToast) {
             notifyType = NOTIFY_TYPE_TOAST;
         }
