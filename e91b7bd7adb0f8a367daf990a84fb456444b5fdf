@@ -66,6 +66,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "616f9431_5a17011d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 9117,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-19T01:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b3e1100_9300bed6",
+      "range": {
+        "startLine": 9115,
+        "startChar": 0,
+        "endLine": 9117,
+        "endChar": 43
+      },
+      "revId": "e91b7bd7adb0f8a367daf990a84fb456444b5fdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "a4e97ac8_ab50660a",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 19
@@ -77,6 +101,30 @@
       "writtenOn": "2021-03-19T01:52:36Z",
       "side": 1,
       "message": "Unneeded due to static import?",
+      "range": {
+        "startLine": 9127,
+        "startChar": 34,
+        "endLine": 9127,
+        "endChar": 54
+      },
+      "revId": "e91b7bd7adb0f8a367daf990a84fb456444b5fdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "267a1ada_51e728fe",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 9127,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-19T01:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4e97ac8_ab50660a",
       "range": {
         "startLine": 9127,
         "startChar": 34,
