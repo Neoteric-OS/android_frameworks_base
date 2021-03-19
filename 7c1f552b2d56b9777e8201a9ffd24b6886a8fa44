@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69739254_304d0172",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2021-03-19T21:19:48Z",
+      "side": 1,
+      "message": "i",
+      "revId": "7c1f552b2d56b9777e8201a9ffd24b6886a8fa44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62409610_d0ab1fe5",
@@ -14,6 +31,30 @@
       "writtenOn": "2021-03-19T20:48:54Z",
       "side": 1,
       "message": "On second thought this should be able to take the value of SYSTEM_ERROR which is not a valid UserState.",
+      "range": {
+        "startLine": 132,
+        "startChar": 18,
+        "endLine": 132,
+        "endChar": 28
+      },
+      "revId": "7c1f552b2d56b9777e8201a9ffd24b6886a8fa44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79a84f5e_936b319a",
+        "filename": "keystore/java/android/security/AndroidKeyStoreMaintenance.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2021-03-19T21:19:48Z",
+      "side": 1,
+      "message": "Is it fine to throw an AssertionError with the caught error, as it is done in an earlier patch set of the original CL related to this?\n(e.g. line 142 and 145 in https://android-review.googlesource.com/c/platform/frameworks/base/+/1630059/1/keystore/java/android/security/AndroidKeyStoreMaintenance.java#142)",
+      "parentUuid": "62409610_d0ab1fe5",
       "range": {
         "startLine": 132,
         "startChar": 18,
