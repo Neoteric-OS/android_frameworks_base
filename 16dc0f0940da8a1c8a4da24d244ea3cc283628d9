@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8594a79f_d1e2e7c0",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-20T06:33:47Z",
+      "side": 1,
+      "message": "Because.. I don\u0027t want to mess up the general RoR flow. In case we read a wrong value from mStorage, we at most get a bad metrics.",
+      "parentUuid": "89df3df6_b7a48dd2",
+      "range": {
+        "startLine": 369,
+        "startChar": 12,
+        "endLine": 371,
+        "endChar": 13
+      },
+      "revId": "16dc0f0940da8a1c8a4da24d244ea3cc283628d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb9fd747_b43ea4b3",
@@ -71,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17bbc922_eb9ddde3",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-20T06:33:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b85c6fd2_40d4454b",
+      "range": {
+        "startLine": 604,
+        "startChar": 8,
+        "endLine": 604,
+        "endChar": 55
+      },
+      "revId": "16dc0f0940da8a1c8a4da24d244ea3cc283628d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e303f2d8_5cc2adef",
@@ -94,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d587e784_84d4ae04",
+        "filename": "services/tests/servicestests/src/com/android/server/locksettings/RebootEscrowManagerTests.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-20T06:33:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e303f2d8_5cc2adef",
+      "range": {
+        "startLine": 544,
+        "startChar": 48,
+        "endLine": 544,
+        "endChar": 59
+      },
+      "revId": "16dc0f0940da8a1c8a4da24d244ea3cc283628d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e9477e7_d86162e0",
@@ -107,6 +179,30 @@
       "writtenOn": "2021-03-19T23:53:28Z",
       "side": 1,
       "message": "Why 10000? Seems like 1001 should be enough since the delay is 1000 * Injector.getLoadEscrowDataRetryIntervalSeconds(), and Injector.getLoadEscrowDataRetryIntervalSeconds() is 1 in the mock above. This makes the test take longer than necessary.",
+      "range": {
+        "startLine": 577,
+        "startChar": 21,
+        "endLine": 577,
+        "endChar": 30
+      },
+      "revId": "16dc0f0940da8a1c8a4da24d244ea3cc283628d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad176460_5b281dbc",
+        "filename": "services/tests/servicestests/src/com/android/server/locksettings/RebootEscrowManagerTests.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-20T06:33:47Z",
+      "side": 1,
+      "message": "reduce to 5s as the retry success test also use 5 seconds. Mostly worried about the overhead and race conditions, since we actually run on a different thread.",
+      "parentUuid": "1e9477e7_d86162e0",
       "range": {
         "startLine": 577,
         "startChar": 21,
