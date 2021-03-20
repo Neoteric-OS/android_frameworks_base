@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b85c6fd2_40d4454b",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-20T00:07:50Z",
+      "side": 1,
+      "message": "Because, we don\u0027t want to change (recreate) the provider when a RoR is in progress.",
+      "parentUuid": "eb9fd747_b43ea4b3",
+      "range": {
+        "startLine": 604,
+        "startChar": 8,
+        "endLine": 604,
+        "endChar": 55
+      },
+      "revId": "16dc0f0940da8a1c8a4da24d244ea3cc283628d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e303f2d8_5cc2adef",
         "filename": "services/tests/servicestests/src/com/android/server/locksettings/RebootEscrowManagerTests.java",
         "patchSetId": 2
