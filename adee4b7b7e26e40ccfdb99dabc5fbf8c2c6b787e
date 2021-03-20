@@ -16,6 +16,23 @@
       "message": "Rebasing to resolve merge conflicts. Inheriting +2. ",
       "revId": "adee4b7b7e26e40ccfdb99dabc5fbf8c2c6b787e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64a0475d_2cd31f6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-20T00:52:23Z",
+      "side": 1,
+      "message": "lorenzo@: Can i get the owner\u0027s +2 again? I lost it after the rebase on top of the conflicting aosp/1646848",
+      "revId": "adee4b7b7e26e40ccfdb99dabc5fbf8c2c6b787e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
