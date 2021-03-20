@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbd89385_13d39fa1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2021-03-20T04:54:12Z",
+      "side": 1,
+      "message": "couple questions to ensure I understand the semantics; that may lead to tweaks in the comments.\notherwise, looks good.",
+      "revId": "e8d4b6985f4899056db6cda2db8693d7e963dce8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbb17795_77e1e737",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4563,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2021-03-20T04:54:12Z",
+      "side": 1,
+      "message": "list can be empty, right?  but we always get a list.",
+      "range": {
+        "startLine": 4563,
+        "startChar": 16,
+        "endLine": 4563,
+        "endChar": 25
+      },
+      "revId": "e8d4b6985f4899056db6cda2db8693d7e963dce8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac6395e5_671c06e6",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4590,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2021-03-20T04:54:12Z",
+      "side": 1,
+      "message": "too bad we can\u0027t point to Mediaformat for the list of allowed types.\nall we know from here is \"not type_null\".\n\nwhat I\u0027m thinking of is a \"the MediaFormat.types include: int, long, float, string, bytebuffer\".  or more properly that that list appears somewhere in MediaFormat and we just point there \"it returns any of {@link mediaformat.typelist} except {@link mediaformat.type_null}.",
+      "range": {
+        "startLine": 4590,
+        "startChar": 18,
+        "endLine": 4590,
+        "endChar": 39
+      },
+      "revId": "e8d4b6985f4899056db6cda2db8693d7e963dce8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fb51dc0_308aa4df",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4632,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2021-03-20T04:54:12Z",
+      "side": 1,
+      "message": "if i\u0027m tracking -- i can say:\nsubscribeToVendorParameters(querySupportedVenderParameters());\nto easily learn about all of them.\n\nthis says @nonnull on the subscription parameter;  i see that querySupported() says \"@Nonnull\" which I\u0027m taking to mean \"we always return a list, even if it might be empty.  i\u0027m presuming that an empty list is an allowed argument to the subscribe() call?",
+      "range": {
+        "startLine": 4632,
+        "startChar": 3,
+        "endLine": 4632,
+        "endChar": 6
+      },
+      "revId": "e8d4b6985f4899056db6cda2db8693d7e963dce8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bc13724_da2afa11",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4651,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2021-03-20T04:54:12Z",
+      "side": 1,
+      "message": "i like phrasing:\n\nNote that any vendor parameters set in a configure() or setParameters() call are automatically subscribed.",
+      "range": {
+        "startLine": 4651,
+        "startChar": 19,
+        "endLine": 4651,
+        "endChar": 25
+      },
+      "revId": "e8d4b6985f4899056db6cda2db8693d7e963dce8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
