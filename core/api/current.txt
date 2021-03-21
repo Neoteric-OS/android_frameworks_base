@@ -7638,6 +7638,7 @@ package android.app.job {
     method public static final long getMinPeriodMillis();
     method @Deprecated public int getNetworkType();
     method @Nullable public android.net.NetworkRequest getRequiredNetwork();
+    method @Nullable public android.net.NetworkRequest.Builder getRequiredNetworkBuilder();
     method @NonNull public android.content.ComponentName getService();
     method @NonNull public android.os.Bundle getTransientExtras();
     method public long getTriggerContentMaxDelay();
@@ -7682,6 +7683,7 @@ package android.app.job {
     method @RequiresPermission(android.Manifest.permission.RECEIVE_BOOT_COMPLETED) public android.app.job.JobInfo.Builder setPersisted(boolean);
     method public android.app.job.JobInfo.Builder setPrefetch(boolean);
     method public android.app.job.JobInfo.Builder setRequiredNetwork(@Nullable android.net.NetworkRequest);
+    method @NonNull public android.app.job.JobInfo.Builder setRequiredNetworkBuilder(@Nullable android.net.NetworkRequest.Builder);
     method public android.app.job.JobInfo.Builder setRequiredNetworkType(int);
     method public android.app.job.JobInfo.Builder setRequiresBatteryNotLow(boolean);
     method public android.app.job.JobInfo.Builder setRequiresCharging(boolean);

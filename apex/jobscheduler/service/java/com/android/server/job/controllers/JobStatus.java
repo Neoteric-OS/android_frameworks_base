@@ -486,7 +486,7 @@ public final class JobStatus {
             // Later, when we check if a given network satisfies the required
             // network, we need to know the UID that is requesting it, so push
             // our source UID into place.
-            job.getRequiredNetwork().networkCapabilities.setSingleUid(this.sourceUid);
+            job.getRequiredNetworkBuilder().setSingleUid(this.sourceUid);
         }
         final JobSchedulerInternal jsi = LocalServices.getService(JobSchedulerInternal.class);
         mHasMediaBackupExemption = !job.hasLateConstraint() && exemptedMediaUrisOnly

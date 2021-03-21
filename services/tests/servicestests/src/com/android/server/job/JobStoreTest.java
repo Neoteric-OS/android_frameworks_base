@@ -361,21 +361,19 @@ public class JobStoreTest {
         assertPersistedEquals(new JobInfo.Builder(0, mComponent)
                 .setPersisted(true)
                 .setRequiresDeviceIdle(true)
-                .setRequiredNetwork(null).build());
+                .setRequiredNetworkBuilder(null).build());
         assertPersistedEquals(new JobInfo.Builder(0, mComponent)
                 .setPersisted(true)
-                .setRequiredNetwork(new NetworkRequest.Builder().build()).build());
+                .setRequiredNetworkBuilder(new NetworkRequest.Builder()).build());
         assertPersistedEquals(new JobInfo.Builder(0, mComponent)
                 .setPersisted(true)
-                .setRequiredNetwork(new NetworkRequest.Builder()
-                        .addTransportType(TRANSPORT_WIFI).build())
-                .build());
+                .setRequiredNetworkBuilder(new NetworkRequest.Builder()
+                        .addTransportType(TRANSPORT_WIFI)).build());
         assertPersistedEquals(new JobInfo.Builder(0, mComponent)
                 .setPersisted(true)
-                .setRequiredNetwork(new NetworkRequest.Builder()
+                .setRequiredNetworkBuilder(new NetworkRequest.Builder()
                         .addCapability(NET_CAPABILITY_IMS)
-                        .addUnwantedCapability(NET_CAPABILITY_OEM_PAID)
-                        .build())
+                        .addUnwantedCapability(NET_CAPABILITY_OEM_PAID))
                 .build());
     }
 
