@@ -178,6 +178,9 @@ public class NetworkRequest implements Parcelable {
      * needed in terms of {@link NetworkCapabilities} features
      */
     public static class Builder {
+
+        private final NetworkRequest mRequest;
+
         /**
          * Capabilities that are currently compatible with VCN networks.
          */
@@ -202,6 +205,16 @@ public class NetworkRequest implements Parcelable {
         // A boolean that represents the user modified NOT_VCN_MANAGED capability.
         private boolean mModifiedNotVcnManaged = false;
 
+
+        /**
+         * Creates a new Builder of NetworkRequest from an existing instance.
+         */
+        public Builder(@NonNull final NetworkRequest nr) {
+            Objects.requireNonNull(nr);
+            mNetworkCapabilities = null;
+            mRequest = new NetworkRequest(nr);
+        }
+
         /**
          * Default constructor for Builder.
          */
@@ -211,6 +224,8 @@ public class NetworkRequest implements Parcelable {
             // it for apps that do not have the NETWORK_SETTINGS permission.
             mNetworkCapabilities = new NetworkCapabilities();
             mNetworkCapabilities.setSingleUid(Process.myUid());
+            mRequest = new NetworkRequest(mNetworkCapabilities, ConnectivityManager.TYPE_NONE,
+                    ConnectivityManager.REQUEST_ID_UNSET, Type.NONE);
         }
 
         /**
@@ -283,6 +298,18 @@ public class NetworkRequest implements Parcelable {
          */
         public Builder setUids(Set<UidRange> uids) {
             mNetworkCapabilities.setUids(uids);
+            return this;
+        }
+
+        /**
+         * Convenience method to set the UIDs this network applies to to a single UID.
+         *
+         * @param uid UID of the app.
+         * @return The builder to facilitate chaining.
+         */
+        @NonNull
+        public Builder setSingleUid(int uid) {
+            mNetworkCapabilities.setSingleUid(uid);
             return this;
         }
 

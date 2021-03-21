@@ -33,6 +33,7 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.content.ClipData;
 import android.content.ComponentName;
 import android.net.NetworkRequest;
+import android.net.NetworkRequest.Builder;
 import android.net.NetworkSpecifier;
 import android.net.Uri;
 import android.os.BaseBundle;
@@ -314,7 +315,7 @@ public class JobInfo implements Parcelable {
     private final long triggerContentMaxDelay;
     private final boolean hasEarlyConstraint;
     private final boolean hasLateConstraint;
-    private final NetworkRequest networkRequest;
+    private final NetworkRequest.Builder mRequestBuilder;
     private final long networkDownloadBytes;
     private final long networkUploadBytes;
     private final long minLatencyMillis;
@@ -460,13 +461,13 @@ public class JobInfo implements Parcelable {
      */
     @Deprecated
     public @NetworkType int getNetworkType() {
-        if (networkRequest == null) {
+        if (mRequestBuilder.build() == null) {
             return NETWORK_TYPE_NONE;
-        } else if (networkRequest.hasCapability(NET_CAPABILITY_NOT_METERED)) {
+        } else if (mRequestBuilder.build().hasCapability(NET_CAPABILITY_NOT_METERED)) {
             return NETWORK_TYPE_UNMETERED;
-        } else if (networkRequest.hasCapability(NET_CAPABILITY_NOT_ROAMING)) {
+        } else if (mRequestBuilder.build().hasCapability(NET_CAPABILITY_NOT_ROAMING)) {
             return NETWORK_TYPE_NOT_ROAMING;
-        } else if (networkRequest.hasTransport(TRANSPORT_CELLULAR)) {
+        } else if (mRequestBuilder.build().hasTransport(TRANSPORT_CELLULAR)) {
             return NETWORK_TYPE_CELLULAR;
         } else {
             return NETWORK_TYPE_ANY;
@@ -480,7 +481,17 @@ public class JobInfo implements Parcelable {
      * @see Builder#setRequiredNetwork(NetworkRequest)
      */
     public @Nullable NetworkRequest getRequiredNetwork() {
-        return networkRequest;
+        return mRequestBuilder.build();
+    }
+
+    /**
+     * Return the detailed description of the kind of network this job requires,
+     * or {@code null} if no specific kind of network is required.
+     *
+     * @see Builder#getRequiredNetworkBuilder(NetworkRequest.Builder)
+     */
+    public @Nullable NetworkRequest.Builder getRequiredNetworkBuilder() {
+        return mRequestBuilder;
     }
 
     /**
@@ -655,7 +666,7 @@ public class JobInfo implements Parcelable {
         if (hasLateConstraint != j.hasLateConstraint) {
             return false;
         }
-        if (!Objects.equals(networkRequest, j.networkRequest)) {
+        if (!Objects.equals(mRequestBuilder.build(), j.mRequestBuilder.build())) {
             return false;
         }
         if (networkDownloadBytes != j.networkDownloadBytes) {
@@ -721,8 +732,8 @@ public class JobInfo implements Parcelable {
         hashCode = 31 * hashCode + Long.hashCode(triggerContentMaxDelay);
         hashCode = 31 * hashCode + Boolean.hashCode(hasEarlyConstraint);
         hashCode = 31 * hashCode + Boolean.hashCode(hasLateConstraint);
-        if (networkRequest != null) {
-            hashCode = 31 * hashCode + networkRequest.hashCode();
+        if (mRequestBuilder.build() != null) {
+            hashCode = 31 * hashCode + mRequestBuilder.build().hashCode();
         }
         hashCode = 31 * hashCode + Long.hashCode(networkDownloadBytes);
         hashCode = 31 * hashCode + Long.hashCode(networkUploadBytes);
@@ -756,9 +767,10 @@ public class JobInfo implements Parcelable {
         triggerContentUpdateDelay = in.readLong();
         triggerContentMaxDelay = in.readLong();
         if (in.readInt() != 0) {
-            networkRequest = NetworkRequest.CREATOR.createFromParcel(in);
+            mRequestBuilder = new NetworkRequest.Builder(NetworkRequest.CREATOR
+                    .createFromParcel(in));
         } else {
-            networkRequest = null;
+            mRequestBuilder = null;
         }
         networkDownloadBytes = in.readLong();
         networkUploadBytes = in.readLong();
@@ -789,7 +801,7 @@ public class JobInfo implements Parcelable {
                 : null;
         triggerContentUpdateDelay = b.mTriggerContentUpdateDelay;
         triggerContentMaxDelay = b.mTriggerContentMaxDelay;
-        networkRequest = b.mNetworkRequest;
+        mRequestBuilder = b.mNetworkRequestBuilder;
         networkDownloadBytes = b.mNetworkDownloadBytes;
         networkUploadBytes = b.mNetworkUploadBytes;
         minLatencyMillis = b.mMinLatencyMillis;
@@ -828,9 +840,9 @@ public class JobInfo implements Parcelable {
         out.writeTypedArray(triggerContentUris, flags);
         out.writeLong(triggerContentUpdateDelay);
         out.writeLong(triggerContentMaxDelay);
-        if (networkRequest != null) {
+        if (mRequestBuilder.build() != null) {
             out.writeInt(1);
-            networkRequest.writeToParcel(out, flags);
+            mRequestBuilder.build().writeToParcel(out, flags);
         } else {
             out.writeInt(0);
         }
@@ -968,7 +980,7 @@ public class JobInfo implements Parcelable {
         private int mFlags;
         // Requirements.
         private int mConstraintFlags;
-        private NetworkRequest mNetworkRequest;
+        private NetworkRequest.Builder mNetworkRequestBuilder;
         private long mNetworkDownloadBytes = NETWORK_BYTES_UNKNOWN;
         private long mNetworkUploadBytes = NETWORK_BYTES_UNKNOWN;
         private ArrayList<TriggerContentUri> mTriggerContentUris;
@@ -1102,7 +1114,7 @@ public class JobInfo implements Parcelable {
          */
         public Builder setRequiredNetworkType(@NetworkType int networkType) {
             if (networkType == NETWORK_TYPE_NONE) {
-                return setRequiredNetwork(null);
+                return setRequiredNetworkBuilder(null);
             } else {
                 final NetworkRequest.Builder builder = new NetworkRequest.Builder();
 
@@ -1121,8 +1133,41 @@ public class JobInfo implements Parcelable {
                     builder.addTransportType(TRANSPORT_CELLULAR);
                 }
 
-                return setRequiredNetwork(builder.build());
+                return setRequiredNetworkBuilder(builder);
             }
+        }
+
+        /**
+         * Set detailed description of the kind of network your job requires.
+         * <p>
+         * If your job doesn't need a network connection, you don't need to call
+         * this method, as the default is {@code null}.
+         * <p>
+         * Calling this method defines network as a strict requirement for your
+         * job. If the network requested is not available your job will never
+         * run. See {@link #setOverrideDeadline(long)} to change this behavior.
+         * Calling this method will override any requirements previously defined
+         * by {@link #setRequiredNetworkType(int)}; you typically only want to
+         * call one of these methods.
+         * <p class="note">
+         * When your job executes in
+         * {@link JobService#onStartJob(JobParameters)}, be sure to use the
+         * specific network returned by {@link JobParameters#getNetwork()},
+         * otherwise you'll use the default network which may not meet this
+         * constraint.
+         *
+         * @param builder The detailed description of the kind of network
+         *            this job requires, or {@code null} if no specific kind of
+         *            network is required. Defining a {@link NetworkSpecifier}
+         *            is only supported for jobs that aren't persisted.
+         * @see #setRequiredNetworkType(int)
+         * @see JobInfo#getRequiredNetwork()
+         * @see JobParameters#getNetwork()
+         */
+        @NonNull
+        public Builder setRequiredNetworkBuilder(@Nullable NetworkRequest.Builder builder) {
+            mNetworkRequestBuilder = builder;
+            return this;
         }
 
         /**
@@ -1153,7 +1198,6 @@ public class JobInfo implements Parcelable {
          * @see JobParameters#getNetwork()
          */
         public Builder setRequiredNetwork(@Nullable NetworkRequest networkRequest) {
-            mNetworkRequest = networkRequest;
             return this;
         }
 
@@ -1507,13 +1551,14 @@ public class JobInfo implements Parcelable {
          */
         public JobInfo build() {
             // Check that network estimates require network type
-            if ((mNetworkDownloadBytes > 0 || mNetworkUploadBytes > 0) && mNetworkRequest == null) {
+            if ((mNetworkDownloadBytes > 0 || mNetworkUploadBytes > 0)
+                    && mNetworkRequestBuilder.build() == null) {
                 throw new IllegalArgumentException(
                         "Can't provide estimated network usage without requiring a network");
             }
             // We can't serialize network specifiers
-            if (mIsPersisted && mNetworkRequest != null
-                    && mNetworkRequest.getNetworkSpecifier() != null) {
+            if (mIsPersisted && mNetworkRequestBuilder.build() != null
+                    && mNetworkRequestBuilder.build().getNetworkSpecifier() != null) {
                 throw new IllegalArgumentException(
                         "Network specifiers aren't supported for persistent jobs");
             }
