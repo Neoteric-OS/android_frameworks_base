@@ -69,9 +69,6 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_OEM_PAID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_OEM_PRIVATE;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
-import static android.net.NetworkCapabilities.REDACT_FOR_ACCESS_FINE_LOCATION;
-import static android.net.NetworkCapabilities.REDACT_FOR_LOCAL_MAC_ADDRESS;
-import static android.net.NetworkCapabilities.REDACT_FOR_NETWORK_SETTINGS;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
@@ -1782,8 +1779,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         nai.network,
                         createWithLocationInfoSanitizedIfNecessaryWhenParceled(
                                 nc, false /* includeLocationSensitiveInfo */,
-                                getCallingPid(), mDeps.getCallingUid(), callingPackageName,
-                                callingAttributionTag));
+                                mDeps.getCallingUid(), callingPackageName, callingAttributionTag));
             }
         }
 
@@ -1798,7 +1794,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             createWithLocationInfoSanitizedIfNecessaryWhenParceled(
                                     nc,
                                     false /* includeLocationSensitiveInfo */,
-                                    getCallingPid(), mDeps.getCallingUid(), callingPackageName,
+                                    mDeps.getCallingUid(), callingPackageName,
                                     callingAttributionTag));
                 }
             }
@@ -1881,7 +1877,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return createWithLocationInfoSanitizedIfNecessaryWhenParceled(
                 getNetworkCapabilitiesInternal(network),
                 false /* includeLocationSensitiveInfo */,
-                getCallingPid(), mDeps.getCallingUid(), callingPackageName, callingAttributionTag);
+                mDeps.getCallingUid(), callingPackageName, callingAttributionTag);
     }
 
     @VisibleForTesting
@@ -1900,137 +1896,40 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return newNc;
     }
 
-    /**
-     * Wrapper used to cache the permission check results performed for the corresponding
-     * app. This avoid performing multiple permission checks for different fields in
-     * NetworkCapabilities.
-     * Note: This wrapper does not support any sort of invalidation and thus must not be
-     * persistent or long-lived. It may only be used for the time necessary to
-     * compute the redactions required by one particular NetworkCallback or
-     * synchronous call.
-     */
-    private class RedactionPermissionChecker {
-        private final int mCallingPid;
-        private final int mCallingUid;
-        @NonNull private final String mCallingPackageName;
-        @Nullable private final String mCallingAttributionTag;
-
-        private Boolean mHasLocationPermission = null;
-        private Boolean mHasLocalMacAddressPermission = null;
-        private Boolean mHasSettingsPermission = null;
-
-        RedactionPermissionChecker(int callingPid, int callingUid,
-                @NonNull String callingPackageName, @Nullable String callingAttributionTag) {
-            mCallingPid = callingPid;
-            mCallingUid = callingUid;
-            mCallingPackageName = callingPackageName;
-            mCallingAttributionTag = callingAttributionTag;
+    private boolean hasLocationPermission(int callerUid, @NonNull String callerPkgName,
+            @Nullable String callingAttributionTag) {
+        final long token = Binder.clearCallingIdentity();
+        try {
+            return mLocationPermissionChecker.checkLocationPermission(
+                    callerPkgName, callingAttributionTag, callerUid, null /* message */);
+        } finally {
+            Binder.restoreCallingIdentity(token);
         }
-
-        private boolean hasLocationPermissionInternal() {
-            final long token = Binder.clearCallingIdentity();
-            try {
-                return mLocationPermissionChecker.checkLocationPermission(
-                        mCallingPackageName, mCallingAttributionTag, mCallingUid,
-                        null /* message */);
-            } finally {
-                Binder.restoreCallingIdentity(token);
-            }
-        }
-
-        /**
-         * Returns whether the app holds location permission or not (might return cached result
-         * if the permission was already checked before).
-         */
-        public boolean hasLocationPermission() {
-            if (mHasLocationPermission == null) {
-                // If there is no cached result, perform the check now.
-                mHasLocationPermission = hasLocationPermissionInternal();
-            }
-            return mHasLocationPermission;
-        }
-
-        /**
-         * Returns whether the app holds local mac address permission or not (might return cached
-         * result if the permission was already checked before).
-         */
-        public boolean hasLocalMacAddressPermission() {
-            if (mHasLocalMacAddressPermission == null) {
-                // If there is no cached result, perform the check now.
-                mHasLocalMacAddressPermission =
-                        checkLocalMacAddressPermission(mCallingPid, mCallingUid);
-            }
-            return mHasLocalMacAddressPermission;
-        }
-
-        /**
-         * Returns whether the app holds settings permission or not (might return cached
-         * result if the permission was already checked before).
-         */
-        public boolean hasSettingsPermission() {
-            if (mHasSettingsPermission == null) {
-                // If there is no cached result, perform the check now.
-                mHasSettingsPermission = checkSettingsPermission(mCallingPid, mCallingUid);
-            }
-            return mHasSettingsPermission;
-        }
-    }
-
-    private static boolean shouldRedact(@NetworkCapabilities.RedactionType long redactions,
-            @NetworkCapabilities.NetCapability long redaction) {
-        return (redactions & redaction) != 0;
-    }
-
-    /**
-     * Use the provided |applicableRedactions| to check the receiving app's
-     * permissions and clear/set the corresponding bit in the returned bitmask. The bitmask
-     * returned will be used to ensure the necessary redactions are performed by NetworkCapabilities
-     * before being sent to the corresponding app.
-     */
-    private @NetworkCapabilities.RedactionType long retrieveRequiredRedactions(
-            @NetworkCapabilities.RedactionType long applicableRedactions,
-            @NonNull RedactionPermissionChecker redactionPermissionChecker,
-            boolean includeLocationSensitiveInfo) {
-        long redactions = applicableRedactions;
-        if (shouldRedact(redactions, REDACT_FOR_ACCESS_FINE_LOCATION)) {
-            if (includeLocationSensitiveInfo
-                    && redactionPermissionChecker.hasLocationPermission()) {
-                redactions &= ~REDACT_FOR_ACCESS_FINE_LOCATION;
-            }
-        }
-        if (shouldRedact(redactions, REDACT_FOR_LOCAL_MAC_ADDRESS)) {
-            if (redactionPermissionChecker.hasLocalMacAddressPermission()) {
-                redactions &= ~REDACT_FOR_LOCAL_MAC_ADDRESS;
-            }
-        }
-        if (shouldRedact(redactions, REDACT_FOR_NETWORK_SETTINGS)) {
-            if (redactionPermissionChecker.hasSettingsPermission()) {
-                redactions &= ~REDACT_FOR_NETWORK_SETTINGS;
-            }
-        }
-        return redactions;
     }
 
     @VisibleForTesting
     @Nullable
     NetworkCapabilities createWithLocationInfoSanitizedIfNecessaryWhenParceled(
             @Nullable NetworkCapabilities nc, boolean includeLocationSensitiveInfo,
-            int callingPid, int callingUid, @NonNull String callingPkgName,
-            @Nullable String callingAttributionTag) {
+            int callerUid, @NonNull String callerPkgName, @Nullable String callingAttributionTag) {
         if (nc == null) {
             return null;
         }
+        Boolean hasLocationPermission = null;
+        final NetworkCapabilities newNc;
         // Avoid doing location permission check if the transport info has no location sensitive
         // data.
-        final RedactionPermissionChecker redactionPermissionChecker =
-                new RedactionPermissionChecker(callingPid, callingUid, callingPkgName,
-                        callingAttributionTag);
-        final long redactions = retrieveRequiredRedactions(
-                nc.getApplicableRedactions(), redactionPermissionChecker,
-                includeLocationSensitiveInfo);
-        final NetworkCapabilities newNc = new NetworkCapabilities(nc, redactions);
+        if (includeLocationSensitiveInfo
+                && nc.getTransportInfo() != null
+                && nc.getTransportInfo().hasLocationSensitiveFields()) {
+            hasLocationPermission =
+                    hasLocationPermission(callerUid, callerPkgName, callingAttributionTag);
+            newNc = new NetworkCapabilities(nc, hasLocationPermission);
+        } else {
+            newNc = new NetworkCapabilities(nc, false /* parcelLocationSensitiveFields */);
+        }
         // Reset owner uid if not destined for the owner app.
-        if (callingUid != nc.getOwnerUid()) {
+        if (callerUid != nc.getOwnerUid()) {
             newNc.setOwnerUid(INVALID_UID);
             return newNc;
         }
@@ -2039,17 +1938,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Owner UIDs already checked above. No need to re-check.
             return newNc;
         }
-        // If the calling does not want location sensitive data & target SDK >= S, then mask info.
-        // Else include the owner UID iff the calling has location permission to provide backwards
+        // If the caller does not want location sensitive data & target SDK >= S, then mask info.
+        // Else include the owner UID iff the caller has location permission to provide backwards
         // compatibility for older apps.
         if (!includeLocationSensitiveInfo
                 && isTargetSdkAtleast(
-                        Build.VERSION_CODES.S, callingUid, callingPkgName)) {
+                        Build.VERSION_CODES.S, callerUid, callerPkgName)) {
             newNc.setOwnerUid(INVALID_UID);
             return newNc;
         }
+
+        if (hasLocationPermission == null) {
+            // Location permission not checked yet, check now for masking owner UID.
+            hasLocationPermission =
+                    hasLocationPermission(callerUid, callerPkgName, callingAttributionTag);
+        }
         // Reset owner uid if the app has no location permission.
-        if (!redactionPermissionChecker.hasLocationPermission()) {
+        if (!hasLocationPermission) {
             newNc.setOwnerUid(INVALID_UID);
         }
         return newNc;
@@ -2562,11 +2467,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void enforceKeepalivePermission() {
         mContext.enforceCallingOrSelfPermission(KeepaliveTracker.PERMISSION, "ConnectivityService");
-    }
-
-    private boolean checkLocalMacAddressPermission(int pid, int uid) {
-        return PERMISSION_GRANTED == mContext.checkPermission(
-                Manifest.permission.LOCAL_MAC_ADDRESS, pid, uid);
     }
 
     private void sendConnectedBroadcast(NetworkInfo info) {
@@ -7270,7 +7170,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 putParcelable(
                         bundle,
                         createWithLocationInfoSanitizedIfNecessaryWhenParceled(
-                                nc, includeLocationSensitiveInfo, nri.mPid, nri.mUid,
+                                nc, includeLocationSensitiveInfo, nri.mUid,
                                 nrForCallback.getRequestorPackageName(),
                                 nri.mCallingAttributionTag));
                 putParcelable(bundle, linkPropertiesRestrictedForCallerPermissions(
@@ -7291,7 +7191,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 putParcelable(
                         bundle,
                         createWithLocationInfoSanitizedIfNecessaryWhenParceled(
-                                netCap, includeLocationSensitiveInfo, nri.mPid, nri.mUid,
+                                netCap, includeLocationSensitiveInfo, nri.mUid,
                                 nrForCallback.getRequestorPackageName(),
                                 nri.mCallingAttributionTag));
                 break;
