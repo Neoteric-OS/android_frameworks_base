@@ -90,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1b1714b9_5d17b977",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2021-03-22T13:15:28Z",
+      "side": 1,
+      "message": "I think Keymaster / KeyMint is an implementation detail that should continue to be hidden from the developer. What we do already have is a distinction between Keystore and Keystore\u0027s hardware support; not all Keystore keys or feature of keys are hardware-backed.  I think something like \"FEATURE_KEYSTORE_HARDWARE\" would use this existing distinction rather than introducing a new concept. Then the definitions of the various levels would express which keystore features are implemented in hardware.",
+      "parentUuid": "edc92b5a_dfce1135",
+      "range": {
+        "startLine": 2183,
+        "startChar": 0,
+        "endLine": 2183,
+        "endChar": 85
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8575dd83_02e4e3c3",
         "filename": "core/java/android/content/pm/PackageManager.java",
         "patchSetId": 3
@@ -125,6 +149,30 @@
       "side": 1,
       "message": "I think with the proposed setup, you\u0027d have FEATURE_KEYMINT_STRONGBOX set to a non-empty version if and only if FEATURE_STRONGBOX_KEYSTORE is set to true.\n\nSo if we end up using FEATURE_KEYSTORE instead of FEATURE_KEYMINT it would be great if we can just reuse FEATURE_STRONGBOX_KEYSTORE.",
       "parentUuid": "8575dd83_02e4e3c3",
+      "range": {
+        "startLine": 2200,
+        "startChar": 0,
+        "endLine": 2200,
+        "endChar": 58
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbf771a1_80404f75",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2021-03-22T13:15:28Z",
+      "side": 1,
+      "message": "I think adding a version to FEATURE_STRONGBOX_KEYSTORE makes sense.",
+      "parentUuid": "7c2f660b_3dafd85c",
       "range": {
         "startLine": 2200,
         "startChar": 0,
