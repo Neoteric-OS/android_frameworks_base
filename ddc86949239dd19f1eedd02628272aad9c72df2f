@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f63a98e_43cccf63",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 6047,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-22T22:50:38Z",
+      "side": 1,
+      "message": "I\u0027m confused. This has startMigration() and cancelMigration() but the API just has \"migrate\".",
+      "range": {
+        "startLine": 6047,
+        "startChar": 93,
+        "endLine": 6047,
+        "endChar": 107
+      },
+      "revId": "ddc86949239dd19f1eedd02628272aad9c72df2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
