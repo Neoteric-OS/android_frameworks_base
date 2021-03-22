@@ -251,6 +251,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3dcec4b5_e1f3e9db",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-03-22T16:10:25Z",
+      "side": 1,
+      "message": "By the same token, should we also not mention KeyMaster/KeyMint (\"KM\" in the following) where the Android Attestation Extension is documented? I\u0027m not trying to be facetious but... all we\u0027re saying in this CL - basically - is that the version number which can be retrieved from FEATURE_HARDWARE_KEYSTORE is the same version number which you get from Android Attestation Extension.\n\nWe have to say _something_ about what version number in FEATURE_HARDWARE_KEYSTORE is. I\u0027m open for suggestions but I don\u0027t think inventing a new \"keystore feature version number\" is going to help b/c it would just 100% correlate to KM versions anyway.",
+      "parentUuid": "caf2dc5d_2500dfe6",
+      "range": {
+        "startLine": 2183,
+        "startChar": 0,
+        "endLine": 2183,
+        "endChar": 85
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8575dd83_02e4e3c3",
         "filename": "core/java/android/content/pm/PackageManager.java",
         "patchSetId": 3
