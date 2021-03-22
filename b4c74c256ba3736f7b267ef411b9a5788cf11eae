@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "14a358c0_b3835fe6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-03-22T14:35:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "905af69a_8fc4ef1f",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "0df1be34_6643b343",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -177,6 +201,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5e370ff_0582ae81",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-03-22T14:35:05Z",
+      "side": 1,
+      "message": "How would you use the version number if you don\u0027t know what it is? IOW, we need to mention them. New PS coming up using FEATURE_HARDWARE_KEYSTORE and FEATURE_STRONGBOX_KEYSTORE.",
+      "parentUuid": "abf9a463_bd3041a7",
+      "range": {
+        "startLine": 2183,
+        "startChar": 0,
+        "endLine": 2183,
+        "endChar": 85
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8575dd83_02e4e3c3",
@@ -238,6 +286,30 @@
       "side": 1,
       "message": "I think adding a version to FEATURE_STRONGBOX_KEYSTORE makes sense.",
       "parentUuid": "7c2f660b_3dafd85c",
+      "range": {
+        "startLine": 2200,
+        "startChar": 0,
+        "endLine": 2200,
+        "endChar": 58
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "749457b7_b8118eca",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-03-22T14:35:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbf771a1_80404f75",
       "range": {
         "startLine": 2200,
         "startChar": 0,
