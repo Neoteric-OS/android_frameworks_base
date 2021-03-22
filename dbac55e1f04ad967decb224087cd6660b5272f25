@@ -50,6 +50,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "021c4d46_e333815d",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2021-03-22T21:25:37Z",
+      "side": 1,
+      "message": "\"cancel and prepare\" or should you reset the rebootescrow ready state here ?",
+      "range": {
+        "startLine": 610,
+        "startChar": 24,
+        "endLine": 612,
+        "endChar": 93
+      },
+      "revId": "dbac55e1f04ad967decb224087cd6660b5272f25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "34590fb2_5b751e4b",
         "filename": "services/tests/servicestests/src/com/android/server/locksettings/RebootEscrowManagerTests.java",
         "patchSetId": 3
