@@ -225,6 +225,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "caf2dc5d_2500dfe6",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2021-03-22T15:02:19Z",
+      "side": 1,
+      "message": "The version numbers will need to be associated with the keystore features that are hardware-supported, but I don\u0027t think we need to mention Keymaster or KeyMint.",
+      "parentUuid": "f5e370ff_0582ae81",
+      "range": {
+        "startLine": 2183,
+        "startChar": 0,
+        "endLine": 2183,
+        "endChar": 85
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8575dd83_02e4e3c3",
