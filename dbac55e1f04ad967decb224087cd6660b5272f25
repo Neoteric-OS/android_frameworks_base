@@ -22,6 +22,29 @@
       },
       "revId": "dbac55e1f04ad967decb224087cd6660b5272f25",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34590fb2_5b751e4b",
+        "filename": "services/tests/servicestests/src/com/android/server/locksettings/RebootEscrowManagerTests.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2021-03-22T17:37:29Z",
+      "side": 1,
+      "message": "missing assert for error code reporting.",
+      "range": {
+        "startLine": 761,
+        "startChar": 0,
+        "endLine": 761,
+        "endChar": 71
+      },
+      "revId": "dbac55e1f04ad967decb224087cd6660b5272f25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
