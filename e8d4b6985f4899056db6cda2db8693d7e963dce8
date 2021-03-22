@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb363f85_15d4a6f0",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4563,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2021-03-22T16:31:43Z",
+      "side": 1,
+      "message": "Right. Clarified in the comment.",
+      "parentUuid": "dbb17795_77e1e737",
+      "range": {
+        "startLine": 4563,
+        "startChar": 16,
+        "endLine": 4563,
+        "endChar": 25
+      },
+      "revId": "e8d4b6985f4899056db6cda2db8693d7e963dce8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac6395e5_671c06e6",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-20T04:54:12Z",
       "side": 1,
       "message": "too bad we can\u0027t point to Mediaformat for the list of allowed types.\nall we know from here is \"not type_null\".\n\nwhat I\u0027m thinking of is a \"the MediaFormat.types include: int, long, float, string, bytebuffer\".  or more properly that that list appears somewhere in MediaFormat and we just point there \"it returns any of {@link mediaformat.typelist} except {@link mediaformat.type_null}.",
+      "range": {
+        "startLine": 4590,
+        "startChar": 18,
+        "endLine": 4590,
+        "endChar": 39
+      },
+      "revId": "e8d4b6985f4899056db6cda2db8693d7e963dce8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e8517bd_d707762d",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4590,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2021-03-22T16:31:43Z",
+      "side": 1,
+      "message": "Here I am relying on the doc feature that auto-generates a list of the @IntDefs, e.g.: https://developer.android.com/reference/android/hardware/HardwareBuffer?hl\u003den#getFormat() here the list of values is auto-generated.",
+      "parentUuid": "ac6395e5_671c06e6",
       "range": {
         "startLine": 4590,
         "startChar": 18,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12f94530_50142780",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4632,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2021-03-22T16:31:43Z",
+      "side": 1,
+      "message": "Correct. Added clarification in the comments.",
+      "parentUuid": "3fb51dc0_308aa4df",
+      "range": {
+        "startLine": 4632,
+        "startChar": 3,
+        "endLine": 4632,
+        "endChar": 6
+      },
+      "revId": "e8d4b6985f4899056db6cda2db8693d7e963dce8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6bc13724_da2afa11",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-03-20T04:54:12Z",
       "side": 1,
       "message": "i like phrasing:\n\nNote that any vendor parameters set in a configure() or setParameters() call are automatically subscribed.",
+      "range": {
+        "startLine": 4651,
+        "startChar": 19,
+        "endLine": 4651,
+        "endChar": 25
+      },
+      "revId": "e8d4b6985f4899056db6cda2db8693d7e963dce8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9f37143_2aa97f6f",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4651,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2021-03-22T16:31:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bc13724_da2afa11",
       "range": {
         "startLine": 4651,
         "startChar": 19,
