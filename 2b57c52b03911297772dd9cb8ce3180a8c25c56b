@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0236483_70e8b052",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-22T12:50:44Z",
+      "side": 1,
+      "message": "Carry-over +2 from inter master since this is a simple cherry-pick.",
+      "revId": "2b57c52b03911297772dd9cb8ce3180a8c25c56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
