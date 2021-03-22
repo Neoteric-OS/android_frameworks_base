@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b53a2e8_c2a9a58c",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-22T23:21:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7feac708_14ee17ff",
+      "range": {
+        "startLine": 378,
+        "startChar": 0,
+        "endLine": 378,
+        "endChar": 69
+      },
+      "revId": "dbac55e1f04ad967decb224087cd6660b5272f25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "021c4d46_e333815d",
@@ -108,6 +132,30 @@
       "writtenOn": "2021-03-22T17:37:29Z",
       "side": 1,
       "message": "missing assert for error code reporting.",
+      "range": {
+        "startLine": 761,
+        "startChar": 0,
+        "endLine": 761,
+        "endChar": 71
+      },
+      "revId": "dbac55e1f04ad967decb224087cd6660b5272f25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83721558_e7b54626",
+        "filename": "services/tests/servicestests/src/com/android/server/locksettings/RebootEscrowManagerTests.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-22T23:21:06Z",
+      "side": 1,
+      "message": "will do in a follow up cl.",
+      "parentUuid": "34590fb2_5b751e4b",
       "range": {
         "startLine": 761,
         "startChar": 0,
