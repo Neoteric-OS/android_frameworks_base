@@ -181,7 +181,7 @@ public abstract class ImsFeature {
      * Used by the ImsFeature to call back to the CapabilityCallback that the framework has
      * provided.
      */
-    protected static class CapabilityCallbackProxy {
+    public static class CapabilityCallbackProxy {
         private final IImsCapabilityCallback mCallback;
 
         /** @hide */
