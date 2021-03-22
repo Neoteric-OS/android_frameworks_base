@@ -50,6 +50,24 @@
       "message": "Aaaaand apparently I\u0027m not ACL\u0027ed to remove reviewers. Well -- everyone can remove themselves.\n\nAdam, please take a look when you can.",
       "revId": "2076ef9768a1b01ea81afafab058aeed94b8b8ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32aa19ce_fa068b59",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1220972
+      },
+      "writtenOn": "2021-03-22T01:27:00Z",
+      "side": 1,
+      "message": "\u003e ✔️ All files and artifacts have passed presubmit lint checks\n\u003e For more details see (https://android-build.googleplex.com/builds/treetop/android-review/1645426?revision\u003d2)\n\u003e \n\u003e Have a question? Found a bug? http://go/presubmit-lint-bug\n\nCan I get more details about the lint check erros?",
+      "parentUuid": "e43f6dc1_ffe4fd6b",
+      "revId": "2076ef9768a1b01ea81afafab058aeed94b8b8ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
