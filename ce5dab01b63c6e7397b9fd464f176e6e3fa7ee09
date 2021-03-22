@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9243f652_95fcc472",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-22T22:46:27Z",
+      "side": 1,
+      "message": "nothing major.",
+      "revId": "ce5dab01b63c6e7397b9fd464f176e6e3fa7ee09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56ba730a_25224ebc",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-22T22:46:27Z",
+      "side": 1,
+      "message": "This feels very implementation-detail-y to me. Could we say:\n\nBegin the process of migrating this transform. To complete the migration once started, callers should call {@link applyTunnelModeTransform}.",
+      "range": {
+        "startLine": 100,
+        "startChar": 10,
+        "endLine": 101,
+        "endChar": 94
+      },
+      "revId": "ce5dab01b63c6e7397b9fd464f176e6e3fa7ee09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca2fa302_b96a8f6c",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-22T22:46:27Z",
+      "side": 1,
+      "message": "Do we specify anywhere that the saddr+daddr need to be the same address family but that the address family can be different from the old saddr+dadder? Or can we say that the saddr+daddr must follow the same rules as specified \u003cwherever\u003e?",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 63
+      },
+      "revId": "ce5dab01b63c6e7397b9fd464f176e6e3fa7ee09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a0e9707_20cabcb8",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-22T22:46:27Z",
+      "side": 1,
+      "message": "nit: I *think* methods like this are usually called something like assertTunnelMode or assertTunnelModeOrThrow() (do not respin the patch for this).",
+      "range": {
+        "startLine": 638,
+        "startChar": 21,
+        "endLine": 638,
+        "endChar": 41
+      },
+      "revId": "ce5dab01b63c6e7397b9fd464f176e6e3fa7ee09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dac3980_fa048623",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1782,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-22T22:46:27Z",
+      "side": 1,
+      "message": "I notice that internally we are calling this \"startMigration\". I feel like that\u0027s a hint that maybe the public API should also be something closer to that. (yes, bikeshedding may ensue). I suggest that we try to get feedback from L before making more changes, but maybe this is something to discuss.",
+      "range": {
+        "startLine": 1782,
+        "startChar": 22,
+        "endLine": 1782,
+        "endChar": 36
+      },
+      "revId": "ce5dab01b63c6e7397b9fd464f176e6e3fa7ee09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
