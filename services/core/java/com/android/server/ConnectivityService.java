@@ -8113,6 +8113,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             final int oldBlockedState = getBlockedState(blockedReasons, oldMetered, oldVpnBlocked);
             final int newBlockedState = getBlockedState(blockedReasons, newMetered, newVpnBlocked);
             if (oldBlockedState != newBlockedState) {
+                Log.d(TAG,
+nai.toShortString() + " " + nri.mUid
++ " oldBlockedState=" + blockedReasonsToString(oldBlockedState)
++ " newBlockedState=" + blockedReasonsToString(newBlockedState));
                 callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_BLK_CHANGED,
                         newBlockedState);
             }
@@ -8132,6 +8136,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
             final int oldBlockedState = getBlockedState(
                     mUidBlockedReasons.get(uid, BLOCKED_REASON_NONE), metered, vpnBlocked);
             final int newBlockedState = getBlockedState(blockedReasons, metered, vpnBlocked);
+Log.d(TAG, "maybeNotifyNetworkBlockedForNewState " + uid
++ " old=" + NetworkPolicyManager.blockedReasonsToString(oldBlockedState)
++ " new=" + NetworkPolicyManager.blockedReasonsToString(newBlockedState));
             if (oldBlockedState == newBlockedState) {
                 continue;
             }
