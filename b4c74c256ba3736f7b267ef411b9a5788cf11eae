@@ -299,6 +299,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7a60efaf_1581ea30",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2021-03-23T19:46:08Z",
+      "side": 1,
+      "message": "30 -- Optional support for ID attestation\n20 -- Attestation and hardware key version binding support\n10 -- AES, HMAC, ECDSA and RSA support, with hardware-backed digesting and padding. Authentication binding support.",
+      "parentUuid": "9ceeb245_e229f361",
+      "range": {
+        "startLine": 2183,
+        "startChar": 0,
+        "endLine": 2183,
+        "endChar": 85
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8575dd83_02e4e3c3",
         "filename": "core/java/android/content/pm/PackageManager.java",
         "patchSetId": 3
