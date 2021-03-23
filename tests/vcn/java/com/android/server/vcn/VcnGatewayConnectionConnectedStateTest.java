@@ -159,11 +159,7 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
         assertEquals(mGatewayConnection.mConnectedState, mGatewayConnection.getCurrentState());
     }
 
-    @Test
-    public void testChildOpenedRegistersNetwork() throws Exception {
-        // Verify scheduled but not canceled when entering ConnectedState
-        verifySafeModeTimeoutAlarmAndGetCallback(false /* expectCanceled */);
-
+    private void triggerChildOpened() {
         final VcnChildSessionConfiguration mMockChildSessionConfig =
                 mock(VcnChildSessionConfiguration.class);
         doReturn(Collections.singletonList(TEST_INTERNAL_ADDR))
@@ -174,6 +170,13 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
                 .getInternalDnsServers();
 
         getChildSessionCallback().onOpened(mMockChildSessionConfig);
+    }
+
+    @Test
+    public void testChildOpenedRegistersNetwork() throws Exception {
+        // Verify scheduled but not canceled when entering ConnectedState
+        verifySafeModeTimeoutAlarmAndGetCallback(false /* expectCanceled */);
+        triggerChildOpened();
         mTestLooper.dispatchAll();
 
         assertEquals(mGatewayConnection.mConnectedState, mGatewayConnection.getCurrentState());
@@ -211,6 +214,20 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
         mGatewayConnection.mNetworkAgent.onValidationStatus(
                 NetworkAgent.VALIDATION_STATUS_VALID, null /* redirectUri */);
         verify(mSafeModeTimeoutAlarm).cancel();
+        assertFalse(mGatewayConnection.isInSafeMode());
+    }
+
+    @Test
+    public void testSuccessfulConnectionExitsSafeMode() throws Exception {
+        verifySafeModeTimeoutNotifiesCallback(mGatewayConnection.mConnectedState);
+
+        triggerChildOpened();
+        mTestLooper.dispatchAll();
+
+        mGatewayConnection.mNetworkAgent.onValidationStatus(
+                NetworkAgent.VALIDATION_STATUS_VALID, null /* redirectUri */);
+
+        assertFalse(mGatewayConnection.isInSafeMode());
     }
 
     @Test
