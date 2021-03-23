@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34e64ad7_f8f21b9a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431413
+      },
+      "writtenOn": "2021-03-23T23:36:23Z",
+      "side": 1,
+      "message": "Anton, given the context in the commit message, is frameworks/base/core/java/android/stats/StatsHelper.java the most appropriate place for this @SystemApi?",
+      "revId": "31233e29e35b46800f0001ddd3c49db4fe693acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
