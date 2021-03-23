@@ -271,6 +271,10 @@ public class PermissionMonitor {
         return mApps.containsKey(uid);
     }
 
+    public synchronized boolean hasRestrictedNetworksPermission (int uid) {
+        return mApps.get(uid) == true;
+    }
+
     private void update(Set<UserHandle> users, Map<Integer, Boolean> apps, boolean add) {
         List<Integer> network = new ArrayList<>();
         List<Integer> system = new ArrayList<>();
