@@ -1403,11 +1403,10 @@ public class RecoverySystem {
             throws IOException {
         try {
             return mService.rebootWithLskf(packageName, reason, slotSwitch);
-        } catch (RemoteException e) {
-            throw new IOException("could not reboot for update");
+        } catch (RemoteException | RuntimeException e) {
+            throw new IOException("could not reboot for update", e);
         }
     }
-
 
     /**
      * Calls the recovery system service to reboot and apply update. This is the legacy API and
@@ -1418,8 +1417,8 @@ public class RecoverySystem {
             throws IOException {
         try {
             return mService.rebootWithLskfAssumeSlotSwitch(packageName, reason);
-        } catch (RemoteException e) {
-            throw new IOException("could not reboot for update");
+        } catch (RemoteException | RuntimeException e) {
+            throw new IOException("could not reboot for update", e);
         }
     }
 
