@@ -321,6 +321,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "275ca83a_187b1b74",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-03-23T21:01:38Z",
+      "side": 1,
+      "message": "I\u0027ve used this in the latest patchset. Thanks Shawn.",
+      "parentUuid": "7a60efaf_1581ea30",
+      "range": {
+        "startLine": 2183,
+        "startChar": 0,
+        "endLine": 2183,
+        "endChar": 85
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8575dd83_02e4e3c3",
