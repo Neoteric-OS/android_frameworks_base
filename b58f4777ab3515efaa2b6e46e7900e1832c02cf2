@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "500dcfcf_242b8047",
+        "filename": "services/profcollect/src/com/android/server/profcollect/ProfcollectForwardingService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1810984
+      },
+      "writtenOn": "2021-03-23T08:04:15Z",
+      "side": 1,
+      "message": "how about adding \"uploadIntent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)\" to prevent from the delay of broadcasting ?\n\nhttps://developer.android.com/reference/android/content/Intent#FLAG_RECEIVER_FOREGROUND",
+      "range": {
+        "startLine": 304,
+        "startChar": 23,
+        "endLine": 304,
+        "endChar": 35
+      },
+      "revId": "b58f4777ab3515efaa2b6e46e7900e1832c02cf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
