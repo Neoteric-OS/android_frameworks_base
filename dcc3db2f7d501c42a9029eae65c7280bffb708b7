@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e90f9d15_ad8798c6",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-23T23:47:15Z",
+      "side": 1,
+      "message": "this is the way.",
+      "range": {
+        "startLine": 374,
+        "startChar": 30,
+        "endLine": 374,
+        "endChar": 62
+      },
+      "revId": "dcc3db2f7d501c42a9029eae65c7280bffb708b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "012e2eba_2feac1b9",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-23T23:47:15Z",
+      "side": 1,
+      "message": "would it make sense to move this check into the enforceCallingUserAndCarrierPrivilege() method?",
+      "range": {
+        "startLine": 566,
+        "startChar": 17,
+        "endLine": 566,
+        "endChar": 33
+      },
+      "revId": "dcc3db2f7d501c42a9029eae65c7280bffb708b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

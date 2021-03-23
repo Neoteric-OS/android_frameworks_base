@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b268c41_862a4c69",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-23T23:47:15Z",
+      "side": 0,
+      "message": "This calls across (another) Binder, so the phone process is seeing the carrier privileges check for the system server. This was never going to work. I probably approved this code and missed the check, but this isn\u0027t a bug. If anything though, we should probably have some kind of a safety inside of TM#hasCarrierPrivileges() to catch these and/or always return false for system server since it should *never* rely on carrier privileges.\n\nCould you file a bug for that?\n\nBtw, if we were using CarrierPrivilegesTracker, then the cache could be client-side, not require a binder call, and then this would work. :-)",
+      "range": {
+        "startLine": 371,
+        "startChar": 30,
+        "endLine": 371,
+        "endChar": 50
+      },
+      "revId": "226af1dbfdac3112f41982ebf2e9fd1a0f3cc323",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
