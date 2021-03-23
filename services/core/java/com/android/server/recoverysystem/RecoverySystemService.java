@@ -40,6 +40,7 @@ import android.os.SystemProperties;
 import android.provider.DeviceConfig;
 import android.util.ArrayMap;
 import android.util.ArraySet;
+import android.util.FastImmutableArraySet;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
@@ -136,7 +137,7 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
      */
     @IntDef({ ROR_NEED_PREPARATION,
             ROR_SKIP_PREPARATION_AND_NOTIFY,
-            ROR_SKIP_PREPARATION_NOT_NOTIFY})
+            ROR_SKIP_PREPARATION_NOT_NOTIFY })
     private @interface ResumeOnRebootActionsOnRequest {}
 
     /**
@@ -144,7 +145,7 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
      */
     @IntDef({ ROR_NOT_REQUESTED,
             ROR_REQUESTED_NEED_CLEAR,
-            ROR_REQUESTED_SKIP_CLEAR})
+            ROR_REQUESTED_SKIP_CLEAR })
     private @interface ResumeOnRebootActionsOnClear {}
 
     /**
@@ -155,14 +156,24 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
     private static final int REBOOT_ERROR_INVALID_PACKAGE_NAME = 2;
     private static final int REBOOT_ERROR_LSKF_NOT_CAPTURED = 3;
     private static final int REBOOT_ERROR_SLOT_MISMATCH = 4;
-    private static final int REBOOT_ERROR_ARM_REBOOT_ESCROW_FAILURE = 5;
+    private static final int REBOOT_ERROR_ARM_REBOOT_ESCROW_UNSPECIFIED = 5;
+    private static final int REBOOT_ERROR_ARM_REBOOT_ESCROW_NOT_READY = 6;
+    private static final int REBOOT_ERROR_ARM_REBOOT_NO_PROVIDER = 7;
+    private static final int REBOOT_ERROR_ARM_REBOOT_PROVIDER_MISMATCH = 8;
+    private static final int REBOOT_ERROR_ARM_REBOOT_NO_ESCROW_KEY = 9;
+    private static final int REBOOT_ERROR_ARM_REBOOT_KEYSTORE_FAILURE = 10;
 
     @IntDef({ REBOOT_ERROR_NONE,
             REBOOT_ERROR_UNKNOWN,
             REBOOT_ERROR_INVALID_PACKAGE_NAME,
             REBOOT_ERROR_LSKF_NOT_CAPTURED,
             REBOOT_ERROR_SLOT_MISMATCH,
-            REBOOT_ERROR_ARM_REBOOT_ESCROW_FAILURE})
+            REBOOT_ERROR_ARM_REBOOT_ESCROW_UNSPECIFIED,
+            REBOOT_ERROR_ARM_REBOOT_ESCROW_NOT_READY,
+            REBOOT_ERROR_ARM_REBOOT_NO_PROVIDER,
+            REBOOT_ERROR_ARM_REBOOT_PROVIDER_MISMATCH,
+            REBOOT_ERROR_ARM_REBOOT_NO_ESCROW_KEY,
+            REBOOT_ERROR_ARM_REBOOT_KEYSTORE_FAILURE })
     private @interface ResumeOnRebootRebootErrorCode {}
 
     /**
@@ -720,6 +731,26 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
         return true;
     }
 
+    private @ResumeOnRebootRebootErrorCode int fromArmRebootEscrowErrorCode(
+            int armRebootEscrowErrorCode) {
+        switch (armRebootEscrowErrorCode) {
+            case LockSettingsInternal.ARM_REBOOT_ERROR_NONE:
+                return REBOOT_ERROR_NONE;
+            case LockSettingsInternal.ARM_REBOOT_ERROR_ESCROW_NOT_READY:
+                return REBOOT_ERROR_ARM_REBOOT_ESCROW_NOT_READY;
+            case LockSettingsInternal.ARM_REBOOT_ERROR_NO_PROVIDER:
+                return REBOOT_ERROR_ARM_REBOOT_NO_PROVIDER;
+            case LockSettingsInternal.ARM_REBOOT_ERROR_PROVIDER_MISMATCH:
+                return REBOOT_ERROR_ARM_REBOOT_PROVIDER_MISMATCH;
+            case LockSettingsInternal.ARM_REBOOT_ERROR_NO_ESCROW_KEY:
+                return REBOOT_ERROR_ARM_REBOOT_NO_ESCROW_KEY;
+            case LockSettingsInternal.ARM_REBOOT_ERROR_KEYSTORE_FAILURE:
+                return REBOOT_ERROR_ARM_REBOOT_KEYSTORE_FAILURE;
+            default:
+                return REBOOT_ERROR_ARM_REBOOT_ESCROW_UNSPECIFIED;
+        }
+    }
+
     private @ResumeOnRebootRebootErrorCode int armRebootEscrow(String packageName,
             boolean slotSwitch) {
         if (packageName == null) {
@@ -735,16 +766,17 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
         }
 
         final long origId = Binder.clearCallingIdentity();
-        boolean result;
+        int rebootEscrowErrorCode;
         try {
-            result = mInjector.getLockSettingsService().armRebootEscrow();
+            rebootEscrowErrorCode = mInjector.getLockSettingsService().armRebootEscrow();
         } finally {
             Binder.restoreCallingIdentity(origId);
         }
 
-        if (!result) {
-            Slog.w(TAG, "Failure to escrow key for reboot");
-            return REBOOT_ERROR_ARM_REBOOT_ESCROW_FAILURE;
+        if (rebootEscrowErrorCode != LockSettingsInternal.ARM_REBOOT_ERROR_NONE) {
+            Slog.w(TAG, "Failure to escrow key for reboot, rebootEscrowErrorCode: "
+                    + rebootEscrowErrorCode);
+            return fromArmRebootEscrowErrorCode(rebootEscrowErrorCode);
         }
 
         return REBOOT_ERROR_NONE;
@@ -788,9 +820,32 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
                 requestCount, slotSwitch, serverBased, durationSeconds, lskfCapturedCount);
     }
 
+    private void clearRoRPreparationStateOnRebootFailure(
+            @ResumeOnRebootRebootErrorCode int errorCode) {
+        final FastImmutableArraySet<Integer> fatalRebootErrors =
+                new FastImmutableArraySet<>(new Integer[]{
+                        REBOOT_ERROR_ARM_REBOOT_ESCROW_NOT_READY,
+                        REBOOT_ERROR_ARM_REBOOT_NO_PROVIDER,
+                        REBOOT_ERROR_ARM_REBOOT_PROVIDER_MISMATCH,
+                        REBOOT_ERROR_ARM_REBOOT_NO_ESCROW_KEY,
+                        REBOOT_ERROR_ARM_REBOOT_KEYSTORE_FAILURE,
+                });
+
+        if (!fatalRebootErrors.contains(errorCode)) {
+            return;
+        }
+
+        Slog.w(TAG, "Clearing resume on reboot states for all clients");
+        synchronized (this) {
+            mCallerPendingRequest.clear();
+            mCallerPreparedForReboot.clear();
+        }
+    }
+
     private boolean rebootWithLskfImpl(String packageName, String reason, boolean slotSwitch) {
         @ResumeOnRebootRebootErrorCode int errorCode = armRebootEscrow(packageName, slotSwitch);
         reportMetricsOnRebootWithLskf(packageName, slotSwitch, errorCode);
+        clearRoRPreparationStateOnRebootFailure(errorCode);
 
         if (errorCode != REBOOT_ERROR_NONE) {
             return false;
