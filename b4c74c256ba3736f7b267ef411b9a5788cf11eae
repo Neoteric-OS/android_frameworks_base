@@ -275,6 +275,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9ceeb245_e229f361",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2021-03-23T19:40:44Z",
+      "side": 1,
+      "message": "It\u0027s not the same version number you get from the attestation extension, unfortunately.\n\nMy suggestion is just that instead of saying \"This is KM version X\" (which doesn\u0027t mean anything to developers -- it means something to OEMs but not to devs) we should instead specify features. For example (each version only lists features added in that version):\n\n100 -- Hardware support for ECDH and support for app-generated attestation keys.\n41 -- Hardware enforcement of device-unlocked keys.\n40 -- Support for wrapped key import\n\nNote that there\u0027s a lot more in each version, but we would only want to reflect the app-visible features.",
+      "parentUuid": "3dcec4b5_e1f3e9db",
+      "range": {
+        "startLine": 2183,
+        "startChar": 0,
+        "endLine": 2183,
+        "endChar": 85
+      },
+      "revId": "b4c74c256ba3736f7b267ef411b9a5788cf11eae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8575dd83_02e4e3c3",
         "filename": "core/java/android/content/pm/PackageManager.java",
         "patchSetId": 3
