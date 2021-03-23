@@ -16,6 +16,23 @@
       "message": "Starting TreeHugger on this revert.",
       "revId": "a7937d4165ccb6c615806cad58440eb89c6fc93f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8d32a94_090ff337",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1581454
+      },
+      "writtenOn": "2021-03-23T18:45:07Z",
+      "side": 1,
+      "message": "Hey Greg, thanks for working on this. The root cause has been fixed (https://android-review.googlesource.com/1649650) so we don\u0027t need to revert the original CL.",
+      "revId": "a7937d4165ccb6c615806cad58440eb89c6fc93f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
