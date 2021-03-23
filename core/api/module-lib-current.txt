@@ -158,6 +158,14 @@ package android.os {
 
 }
 
+package android.stats {
+
+  public final class StatsHelper {
+    method public static void sendStatsdReadyBroadcast(@NonNull android.content.Context);
+  }
+
+}
+
 package android.telephony {
 
   public abstract class CellSignalStrength {
