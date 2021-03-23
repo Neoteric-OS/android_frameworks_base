@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4458321b_b4f46105",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-03-23T16:08:59Z",
+      "side": 1,
+      "message": "XML changes LGTM, didn\u0027t review anything else",
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
