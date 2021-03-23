@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02196060_ca865952",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4568,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2021-03-23T16:31:40Z",
+      "side": 1,
+      "message": "how about simply \"get\"? Or is \"query\" intended to imply something different here?",
+      "range": {
+        "startLine": 4568,
+        "startChar": 24,
+        "endLine": 4568,
+        "endChar": 29
+      },
+      "revId": "94e441f3b46c08386aaaf2b561ef5ca494d4fa5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79199819_bcf4d170",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4603,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2021-03-23T16:31:40Z",
+      "side": 1,
+      "message": "I\u0027m confused by the \"describe\" verb here. Is it not just a getter too? Why not more explicitly \"getParameterDescriptor\"?",
+      "range": {
+        "startLine": 4603,
+        "startChar": 7,
+        "endLine": 4603,
+        "endChar": 15
+      },
+      "revId": "94e441f3b46c08386aaaf2b561ef5ca494d4fa5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05c265ba_7bcbff38",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4612,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2021-03-23T16:31:40Z",
+      "side": 1,
+      "message": "Parameter is not described in javadoc.\nI assume the name would be one from the list of vendor parameters, so refer to the getter in the doc.",
+      "range": {
+        "startLine": 4612,
+        "startChar": 49,
+        "endLine": 4612,
+        "endChar": 69
+      },
+      "revId": "94e441f3b46c08386aaaf2b561ef5ca494d4fa5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
