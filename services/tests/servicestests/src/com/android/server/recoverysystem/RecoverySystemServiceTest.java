@@ -17,7 +17,9 @@
 package com.android.server.recoverysystem;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
@@ -26,6 +28,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -86,7 +89,8 @@ public class RecoverySystemServiceTest {
         mUncryptUpdateFileWriter = mock(FileWriter.class);
         mLockSettingsInternal = mock(LockSettingsInternal.class);
 
-        when(mLockSettingsInternal.armRebootEscrow()).thenReturn(true);
+        doReturn(LockSettingsInternal.ARM_REBOOT_ERROR_NONE).when(mLockSettingsInternal)
+                .armRebootEscrow();
 
         Looper looper = InstrumentationRegistry.getContext().getMainLooper();
         mIPowerManager = mock(IPowerManager.class);
@@ -490,4 +494,23 @@ public class RecoverySystemServiceTest {
     }
 
     // TODO(xunchang) add more multi client tests
+
+    @Test
+    public void rebootWithLskf_armEscrowDataFatalError_Failure() throws Exception {
+        doReturn(LockSettingsInternal.ARM_REBOOT_ERROR_PROVIDER_MISMATCH)
+                .when(mLockSettingsInternal).armRebootEscrow();
+
+        assertTrue(mRecoverySystemService.requestLskf(FAKE_OTA_PACKAGE_NAME, null));
+        mRecoverySystemService.onPreparedForReboot(true);
+        assertTrue(mRecoverySystemService.isLskfCaptured(FAKE_OTA_PACKAGE_NAME));
+
+        assertFalse(mRecoverySystemService.rebootWithLskf(FAKE_OTA_PACKAGE_NAME, "ab-update",
+                true));
+        // Verify that the RoR preparation state has been cleared.
+        assertFalse(mRecoverySystemService.isLskfCaptured(FAKE_OTA_PACKAGE_NAME));
+        verify(mMetricsReporter).reportRebootEscrowRebootMetrics(eq(8 /* provider mismatch */),
+                eq(1000), eq(1) /* client count */, eq(1) /* request count */,
+                eq(true) /* slot switch */, anyBoolean(), anyInt(),
+                eq(1) /* lskf capture count */);
+    }
 }

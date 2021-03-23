@@ -18,6 +18,15 @@ package com.android.server.locksettings;
 
 import static android.os.UserHandle.USER_SYSTEM;
 
+import static com.android.internal.widget.LockSettingsInternal.ARM_REBOOT_ERROR_ESCROW_NOT_READY;
+import static com.android.internal.widget.LockSettingsInternal.ARM_REBOOT_ERROR_KEYSTORE_FAILURE;
+import static com.android.internal.widget.LockSettingsInternal.ARM_REBOOT_ERROR_NONE;
+import static com.android.internal.widget.LockSettingsInternal.ARM_REBOOT_ERROR_NO_ESCROW_KEY;
+import static com.android.internal.widget.LockSettingsInternal.ARM_REBOOT_ERROR_NO_PROVIDER;
+import static com.android.internal.widget.LockSettingsInternal.ARM_REBOOT_ERROR_PROVIDER_MISMATCH;
+import static com.android.internal.widget.LockSettingsInternal.ARM_REBOOT_ERROR_STORE_ESCROW_KEY;
+import static com.android.internal.widget.LockSettingsInternal.ArmRebootEscrowErrorCode;
+
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.UserIdInt;
@@ -577,16 +586,14 @@ class RebootEscrowManager {
         mRebootEscrowWanted = false;
         setRebootEscrowReady(false);
 
-
         RebootEscrowProviderInterface rebootEscrowProvider = mInjector.getRebootEscrowProvider();
         if (rebootEscrowProvider == null) {
-            Slog.w(TAG,
-                    "Had reboot escrow data for users, but RebootEscrowProvider is unavailable");
-            return;
+            Slog.w(TAG, "RebootEscrowProvider is unavailable for clear request");
+        } else {
+            rebootEscrowProvider.clearRebootEscrowKey();
         }
 
         clearMetricsStorage();
-        rebootEscrowProvider.clearRebootEscrowKey();
 
         List<UserInfo> users = mUserManager.getUsers();
         for (UserInfo user : users) {
@@ -596,20 +603,31 @@ class RebootEscrowManager {
         mEventLog.addEntry(RebootEscrowEvent.CLEARED_LSKF_REQUEST);
     }
 
-    boolean armRebootEscrowIfNeeded() {
+    @ArmRebootEscrowErrorCode int armRebootEscrowIfNeeded() {
         if (!mRebootEscrowReady) {
-            return false;
+            return ARM_REBOOT_ERROR_ESCROW_NOT_READY;
         }
 
         RebootEscrowProviderInterface rebootEscrowProvider = mInjector.getRebootEscrowProvider();
         if (rebootEscrowProvider == null) {
             Slog.w(TAG,
                     "Had reboot escrow data for users, but RebootEscrowProvider is unavailable");
-            return false;
+            clearRebootEscrowIfNeeded();
+            return ARM_REBOOT_ERROR_NO_PROVIDER;
         }
 
+        int expectedProviderType = mInjector.serverBasedResumeOnReboot()
+                ? RebootEscrowProviderInterface.TYPE_SERVER_BASED
+                : RebootEscrowProviderInterface.TYPE_HAL;
         int actualProviderType = rebootEscrowProvider.getType();
-        // TODO(b/183140900) Fail the reboot if provider type mismatches.
+        if (expectedProviderType != actualProviderType) {
+            Slog.w(TAG, "Reboot escrow provider has changed from "
+                    + actualProviderType + " to " + expectedProviderType
+                    + " during the resume on reboot process. Please clear and prepare the RoR"
+                    + " again.");
+            clearRebootEscrowIfNeeded();
+            return ARM_REBOOT_ERROR_PROVIDER_MISMATCH;
+        }
 
         RebootEscrowKey escrowKey;
         synchronized (mKeyGenerationLock) {
@@ -618,30 +636,34 @@ class RebootEscrowManager {
 
         if (escrowKey == null) {
             Slog.e(TAG, "Escrow key is null, but escrow was marked as ready");
-            return false;
+            clearRebootEscrowIfNeeded();
+            return ARM_REBOOT_ERROR_NO_ESCROW_KEY;
         }
 
         // We will use the same key from keystore to encrypt the escrow key and escrow data blob.
         SecretKey kk = mKeyStoreManager.getKeyStoreEncryptionKey();
         if (kk == null) {
             Slog.e(TAG, "Failed to get encryption key from keystore.");
-            return false;
+            clearRebootEscrowIfNeeded();
+            return ARM_REBOOT_ERROR_KEYSTORE_FAILURE;
         }
         boolean armedRebootEscrow = rebootEscrowProvider.storeRebootEscrowKey(escrowKey, kk);
-        if (armedRebootEscrow) {
-            mStorage.setInt(REBOOT_ESCROW_ARMED_KEY, mInjector.getBootCount(), USER_SYSTEM);
-            mStorage.setLong(REBOOT_ESCROW_KEY_ARMED_TIMESTAMP, mInjector.getCurrentTimeMillis(),
-                    USER_SYSTEM);
-            // Store the vbmeta digest of both slots.
-            mStorage.setString(REBOOT_ESCROW_KEY_VBMETA_DIGEST, mInjector.getVbmetaDigest(false),
-                    USER_SYSTEM);
-            mStorage.setString(REBOOT_ESCROW_KEY_OTHER_VBMETA_DIGEST,
-                    mInjector.getVbmetaDigest(true), USER_SYSTEM);
-            mStorage.setInt(REBOOT_ESCROW_KEY_PROVIDER, actualProviderType, USER_SYSTEM);
-            mEventLog.addEntry(RebootEscrowEvent.SET_ARMED_STATUS);
+        if (!armedRebootEscrow) {
+            return ARM_REBOOT_ERROR_STORE_ESCROW_KEY;
         }
 
-        return armedRebootEscrow;
+        mStorage.setInt(REBOOT_ESCROW_ARMED_KEY, mInjector.getBootCount(), USER_SYSTEM);
+        mStorage.setLong(REBOOT_ESCROW_KEY_ARMED_TIMESTAMP, mInjector.getCurrentTimeMillis(),
+                USER_SYSTEM);
+        // Store the vbmeta digest of both slots.
+        mStorage.setString(REBOOT_ESCROW_KEY_VBMETA_DIGEST, mInjector.getVbmetaDigest(false),
+                USER_SYSTEM);
+        mStorage.setString(REBOOT_ESCROW_KEY_OTHER_VBMETA_DIGEST,
+                mInjector.getVbmetaDigest(true), USER_SYSTEM);
+        mStorage.setInt(REBOOT_ESCROW_KEY_PROVIDER, actualProviderType, USER_SYSTEM);
+        mEventLog.addEntry(RebootEscrowEvent.SET_ARMED_STATUS);
+
+        return ARM_REBOOT_ERROR_NONE;
     }
 
     private void setRebootEscrowReady(boolean ready) {
@@ -663,12 +685,10 @@ class RebootEscrowManager {
     }
 
     boolean clearRebootEscrow() {
-        if (mInjector.getRebootEscrowProvider() == null) {
-            return false;
-        }
-
+        boolean hasProvider = mInjector.getRebootEscrowProvider() != null;
         clearRebootEscrowIfNeeded();
-        return true;
+
+        return hasProvider;
     }
 
     void setRebootEscrowListener(RebootEscrowListener listener) {
