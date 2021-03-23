@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "436d32d0_fcb06cd7",
+        "filename": "services/profcollect/src/com/android/server/profcollect/ProfcollectForwardingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1810984
+      },
+      "writtenOn": "2021-03-23T09:02:56Z",
+      "side": 1,
+      "message": "Please help to replace it with \n\nputExtra(\"EXTRA_PROFILE_PATH\", reportPath)\n\ndue to I think ProfcollectForwardingService just wants to send the absoluete path of the profile rather then the uri.\n\n// Design doc has been updated\nhttps://screenshot.googleplex.com/3AyGmSisMdHEpx2\n\nP.S:\nI think I will create a CL for BetterBug to support EXTRA_PROFILE_PATH today.",
+      "range": {
+        "startLine": 308,
+        "startChar": 24,
+        "endLine": 308,
+        "endChar": 68
+      },
+      "revId": "a91fa55c3cc87bde1ee4101ff0f1fe38910ca015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
