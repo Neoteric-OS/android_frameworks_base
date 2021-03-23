@@ -28,7 +28,9 @@ import android.annotation.SystemService;
 import android.annotation.TestApi;
 import android.app.ActivityManager;
 import android.app.ActivityManager.ProcessCapability;
+import android.app.admin.DevicePolicyManager;
 import android.compat.annotation.UnsupportedAppUsage;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -249,6 +251,17 @@ public class NetworkPolicyManager {
     public static final int BLOCKED_REASON_RESTRICTED_MODE = 1 << 3;
 
     /**
+     * Flag to indicate that an app is blocked because it is subject to an always-on VPN but the VPN
+     * is not currently connected.
+     *
+     * @see DevicePolicyManager#setAlwaysOnVpnPackage(ComponentName, String, boolean)
+     *
+     * @hide
+     */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static final int BLOCKED_REASON_LOCKDOWN_VPN = 1 << 4;
+
+    /**
      * Flag to indicate that an app is subject to Data saver restrictions that would
      * result in its metered network access being blocked.
      *
@@ -275,7 +288,12 @@ public class NetworkPolicyManager {
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public static final int BLOCKED_METERED_REASON_ADMIN_DISABLED = 1 << 18;
 
-    /** @hide */
+    /**
+     * Set of blocked reasons that are only applicable on metered networks.
+     *
+     * @hide
+     */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public static final int BLOCKED_METERED_REASON_MASK = 0xffff0000;
 
     /**

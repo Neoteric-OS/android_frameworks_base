@@ -3349,7 +3349,7 @@ public class ConnectivityManager {
          */
         public void onAvailable(@NonNull Network network,
                 @NonNull NetworkCapabilities networkCapabilities,
-                @NonNull LinkProperties linkProperties, boolean blocked) {
+                @NonNull LinkProperties linkProperties, int blocked) {
             // Internally only this method is called when a new network is available, and
             // it calls the callback in the same way and order that older versions used
             // to call so as not to change the behavior.
@@ -3659,7 +3659,7 @@ public class ConnectivityManager {
                 case CALLBACK_AVAILABLE: {
                     NetworkCapabilities cap = getObject(message, NetworkCapabilities.class);
                     LinkProperties lp = getObject(message, LinkProperties.class);
-                    callback.onAvailable(network, cap, lp, message.arg1 != 0);
+                    callback.onAvailable(network, cap, lp, message.arg1);
                     break;
                 }
                 case CALLBACK_LOSING: {
@@ -3693,8 +3693,7 @@ public class ConnectivityManager {
                     break;
                 }
                 case CALLBACK_BLK_CHANGED: {
-                    boolean blocked = message.arg1 != 0;
-                    callback.onBlockedStatusChanged(network, blocked);
+                    callback.onBlockedStatusChanged(network, message.arg1);
                 }
             }
         }
