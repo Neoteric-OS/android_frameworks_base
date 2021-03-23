@@ -275,7 +275,7 @@ public class VcnGatewayConnectionTestBase {
         delayedEvent.run();
         mTestLooper.dispatchAll();
 
-        verify(mGatewayStatusCallback).onEnteredSafeMode();
+        verify(mGatewayStatusCallback).onSafeModeStatusChanged();
         assertEquals(expectedState, mGatewayConnection.getCurrentState());
     }
 }

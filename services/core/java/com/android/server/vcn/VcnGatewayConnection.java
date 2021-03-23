@@ -504,6 +504,15 @@ public class VcnGatewayConnection extends StateMachine {
     private boolean mIsQuitting = false;
 
     /**
+     * Whether the VcnGatewayConnection is in safe mode.
+     *
+     * <p>Upon hitting the safe mode timeout, this will be set to {@code true}. In safe mode, this
+     * VcnGatewayConnection will continue attempting to connect, and if a successful connection is
+     * made, safe mode will be exited.
+     */
+    private boolean mIsInSafeMode = false;
+
+    /**
      * The token used by the primary/current/active session.
      *
      * <p>This token MUST be updated when a new stateful/async session becomes the
@@ -626,6 +635,14 @@ public class VcnGatewayConnection extends StateMachine {
         setInitialState(mDisconnectedState);
         setDbg(VDBG);
         start();
+    }
+
+    /** Queries whether this VcnGatewayConnection is in safe mode. */
+    public boolean isInSafeMode() {
+        // Accessing internal state; must only be done on looper thread.
+        mVcnContext.ensureRunningOnLooperThread();
+
+        return mIsInSafeMode;
     }
 
     /**
@@ -1162,6 +1179,13 @@ public class VcnGatewayConnection extends StateMachine {
             }
         }
 
+        protected void handleSafeModeTimeoutExceeded() {
+            mSafeModeTimeoutAlarm = null;
+
+            mIsInSafeMode = true;
+            mGatewayStatusCallback.onSafeModeStatusChanged();
+        }
+
         protected void logUnexpectedEvent(int what) {
             Slog.d(TAG, String.format(
                     "Unexpected event code %d in state %s", what, this.getClass().getSimpleName()));
@@ -1315,8 +1339,7 @@ public class VcnGatewayConnection extends StateMachine {
                     }
                     break;
                 case EVENT_SAFE_MODE_TIMEOUT_EXCEEDED:
-                    mGatewayStatusCallback.onEnteredSafeMode();
-                    mSafeModeTimeoutAlarm = null;
+                    handleSafeModeTimeoutExceeded();
                     break;
                 default:
                     logUnhandledMessage(msg);
@@ -1401,8 +1424,7 @@ public class VcnGatewayConnection extends StateMachine {
                     handleDisconnectRequested((EventDisconnectRequestedInfo) msg.obj);
                     break;
                 case EVENT_SAFE_MODE_TIMEOUT_EXCEEDED:
-                    mGatewayStatusCallback.onEnteredSafeMode();
-                    mSafeModeTimeoutAlarm = null;
+                    handleSafeModeTimeoutExceeded();
                     break;
                 default:
                     logUnhandledMessage(msg);
@@ -1469,6 +1491,9 @@ public class VcnGatewayConnection extends StateMachine {
             // Validated connection, clear failed attempt counter
             mFailedAttempts = 0;
             cancelSafeModeAlarm();
+
+            mIsInSafeMode = false;
+            mGatewayStatusCallback.onSafeModeStatusChanged();
         }
 
         protected void applyTransform(
@@ -1587,8 +1612,7 @@ public class VcnGatewayConnection extends StateMachine {
                     handleDisconnectRequested((EventDisconnectRequestedInfo) msg.obj);
                     break;
                 case EVENT_SAFE_MODE_TIMEOUT_EXCEEDED:
-                    mGatewayStatusCallback.onEnteredSafeMode();
-                    mSafeModeTimeoutAlarm = null;
+                    handleSafeModeTimeoutExceeded();
                     break;
                 default:
                     logUnhandledMessage(msg);
@@ -1692,8 +1716,7 @@ public class VcnGatewayConnection extends StateMachine {
                     handleDisconnectRequested((EventDisconnectRequestedInfo) msg.obj);
                     break;
                 case EVENT_SAFE_MODE_TIMEOUT_EXCEEDED:
-                    mGatewayStatusCallback.onEnteredSafeMode();
-                    mSafeModeTimeoutAlarm = null;
+                    handleSafeModeTimeoutExceeded();
                     break;
                 default:
                     logUnhandledMessage(msg);

@@ -915,8 +915,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     // TODO(b/180452282): Make name more generic and implement directly with VcnManagementService
     /** Callback for Vcn signals sent up to VcnManagementService. */
     public interface VcnCallback {
-        /** Called by a Vcn to signal that it has entered safe mode. */
-        void onEnteredSafeMode();
+        /** Called by a Vcn to signal that it's safe mode status has changed. */
+        void onSafeModeStatusChanged(boolean isInSafeMode);
 
         /** Called by a Vcn to signal that an error occurred. */
         void onGatewayConnectionError(
@@ -935,15 +935,18 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         }
 
         @Override
-        public void onEnteredSafeMode() {
+        public void onSafeModeStatusChanged(boolean isInSafeMode) {
             synchronized (mLock) {
                 // Ignore if this subscription group doesn't exist anymore
                 if (!mVcns.containsKey(mSubGroup)) {
                     return;
                 }
 
+                final int status =
+                        isInSafeMode ? VCN_STATUS_CODE_SAFE_MODE : VCN_STATUS_CODE_ACTIVE;
+
                 notifyAllPolicyListenersLocked();
-                notifyAllPermissionedStatusCallbacksLocked(mSubGroup, VCN_STATUS_CODE_SAFE_MODE);
+                notifyAllPermissionedStatusCallbacksLocked(mSubGroup, status);
             }
         }
 
