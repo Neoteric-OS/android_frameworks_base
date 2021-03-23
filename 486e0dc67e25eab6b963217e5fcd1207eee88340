@@ -16,6 +16,23 @@
       "message": "+Michael to take a look at the proposed fix or loop in right folk to look at this one.",
       "revId": "486e0dc67e25eab6b963217e5fcd1207eee88340",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba89d359_36af23c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1352498
+      },
+      "writtenOn": "2021-03-23T10:11:04Z",
+      "side": 1,
+      "message": "+Adrian and Wale,\n\nhi all, could you PTAL the upstream request from MTK and let them know if this CL looks good to you or not? Thanks.",
+      "revId": "486e0dc67e25eab6b963217e5fcd1207eee88340",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
