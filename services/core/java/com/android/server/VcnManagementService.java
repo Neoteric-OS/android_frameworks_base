@@ -23,6 +23,9 @@ import static android.net.vcn.VcnManager.VCN_STATUS_CODE_SAFE_MODE;
 
 import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionTrackerCallback;
+import static com.android.server.vcn.Vcn.VCN_STATUS_ACTIVE;
+import static com.android.server.vcn.Vcn.VCN_STATUS_SAFE_MODE;
+import static com.android.server.vcn.Vcn.VCN_STATUS_QUIT;
 
 import static java.util.Objects.requireNonNull;
 
@@ -532,15 +535,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         if (mVcns.containsKey(subscriptionGroup)) {
             final Vcn vcn = mVcns.get(subscriptionGroup);
-            final boolean isActive = vcn.isActive();
+            final boolean isActive = vcn.getStatus() == VCN_STATUS_ACTIVE;
             vcn.updateConfig(config);
-
-            // Only notify VcnStatusCallbacks if this VCN was previously in Safe Mode
-            if (!isActive) {
-                // TODO(b/181789060): invoke asynchronously after Vcn notifies through VcnCallback
-                notifyAllPermissionedStatusCallbacksLocked(
-                        subscriptionGroup, VCN_STATUS_CODE_ACTIVE);
-            }
         } else {
             startVcnLocked(subscriptionGroup, config);
         }
@@ -757,7 +753,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
                     final Vcn vcn = mVcns.get(subGroup);
                     if (vcn != null) {
-                        if (vcn.isActive()) {
+                        if (vcn.getStatus() == VCN_STATUS_ACTIVE) {
                             isVcnManagedNetwork = true;
                         }
 
@@ -874,11 +870,13 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                     vcnStatus = VcnManager.VCN_STATUS_CODE_NOT_CONFIGURED;
                 } else if (vcn == null) {
                     vcnStatus = VcnManager.VCN_STATUS_CODE_INACTIVE;
-                } else if (vcn.isActive()) {
+                } else if (vcn.getStatus() == VCN_STATUS_ACTIVE) {
                     vcnStatus = VcnManager.VCN_STATUS_CODE_ACTIVE;
-                } else {
-                    // TODO(b/181789060): create Vcn.getStatus() and Log.WTF() for unknown status
+                } else if (vcn.getStatus() == VCN_STATUS_SAFE_MODE) {
                     vcnStatus = VcnManager.VCN_STATUS_CODE_SAFE_MODE;
+                } else {
+                    Slog.wtf(TAG, "Unknown VCN status");
+                    vcnStatus = VcnManager.VCN_STATUS_CODE_NOT_CONFIGURED;
                 }
 
                 try {

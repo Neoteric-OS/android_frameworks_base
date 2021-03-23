@@ -24,6 +24,9 @@ import static android.telephony.TelephonyManager.CARRIER_PRIVILEGE_STATUS_NO_ACC
 
 import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionTrackerCallback;
+import static com.android.server.vcn.Vcn.VCN_STATUS_ACTIVE;
+import static com.android.server.vcn.Vcn.VCN_STATUS_SAFE_MODE;
+import static com.android.server.vcn.Vcn.VCN_STATUS_QUIT;
 import static com.android.server.vcn.VcnTestUtils.setupSystemService;
 
 import static org.junit.Assert.assertEquals;
@@ -695,7 +698,7 @@ public class VcnManagementServiceTest {
                 hasCarrierPrivileges);
 
         final Vcn vcn = startAndGetVcnInstance(subGrp);
-        doReturn(isVcnActive).when(vcn).isActive();
+        doReturn(isVcnActive ? VCN_STATUS_ACTIVE : VCN_STATUS_SAFE_MODE).when(vcn).getStatus();
 
         doReturn(true)
                 .when(mLocationPermissionChecker)

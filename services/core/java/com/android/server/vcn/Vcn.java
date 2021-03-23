@@ -37,6 +37,7 @@ import com.android.internal.annotations.VisibleForTesting.Visibility;
 import com.android.server.VcnManagementService.VcnCallback;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -56,6 +57,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class Vcn extends Handler {
     private static final String TAG = Vcn.class.getSimpleName();
+
+    /** Status representing a healthy VCN, providing primary connectivity */
+    public static final int VCN_STATUS_ACTIVE = 1;
+
+    /** Status representing a safe-mode VCN, providing opportunistic connectivity */
+    public static final int VCN_STATUS_SAFE_MODE = 2;
+
+    /** Status representing a VCN that has quit, and is no longer providing any connectivity */
+    public static final int VCN_STATUS_QUIT = 3;
 
     private static final int MSG_EVENT_BASE = 0;
     private static final int MSG_CMD_BASE = 100;
@@ -136,19 +146,8 @@ public class Vcn extends Handler {
     @NonNull private VcnConfig mConfig;
     @NonNull private TelephonySubscriptionSnapshot mLastSnapshot;
 
-    /**
-     * Whether this Vcn instance is active and running.
-     *
-     * <p>The value will be {@code true} while running. It will be {@code false} if the VCN has been
-     * shut down or has entered safe mode.
-     *
-     * <p>This AtomicBoolean is required in order to ensure consistency and correctness across
-     * multiple threads. Unlike the rest of the Vcn, this is queried synchronously on Binder threads
-     * from VcnManagementService, and therefore cannot rely on guarantees of running on the VCN
-     * Looper.
-     */
-    // TODO: Change this to a status value
-    private final AtomicBoolean mIsActive = new AtomicBoolean(true);
+    // Accessed from different threads, but always under lock in VcnManagementService
+    private volatile int mCurrentStatus = VCN_STATUS_ACTIVE;
 
     public Vcn(
             @NonNull VcnContext vcnContext,
@@ -200,9 +199,9 @@ public class Vcn extends Handler {
         sendMessageAtFrontOfQueue(obtainMessage(MSG_CMD_TEARDOWN));
     }
 
-    /** Synchronously checks whether this Vcn is active. */
-    public boolean isActive() {
-        return mIsActive.get();
+    /** Synchronously retrieves the current status code. */
+    public int getStatus() {
+        return mCurrentStatus;
     }
 
     /** Get current Gateways for testing purposes */
@@ -235,6 +234,10 @@ public class Vcn extends Handler {
 
     @Override
     public void handleMessage(@NonNull Message msg) {
+        if (mCurrentStatus == VCN_STATUS_QUIT) {
+            return;
+        }
+
         switch (msg.what) {
             case MSG_EVENT_CONFIG_UPDATED:
                 handleConfigUpdated((VcnConfig) msg.obj);
@@ -275,7 +278,7 @@ public class Vcn extends Handler {
             gatewayConnection.teardownAsynchronously();
         }
 
-        mIsActive.set(false);
+        mCurrentStatus = VCN_STATUS_QUIT;
     }
 
     private void handleSafeModeStatusChanged() {
@@ -286,7 +289,7 @@ public class Vcn extends Handler {
             hasSafeModeGatewayConnection |= gatewayConnection.isInSafeMode();
         }
 
-        mIsActive.set(!hasSafeModeGatewayConnection);
+        mCurrentStatus = hasSafeModeGatewayConnection ? VCN_STATUS_SAFE_MODE : VCN_STATUS_ACTIVE;
         mVcnCallback.onSafeModeStatusChanged(hasSafeModeGatewayConnection);
     }
 
@@ -358,10 +361,8 @@ public class Vcn extends Handler {
     private void handleSubscriptionsChanged(@NonNull TelephonySubscriptionSnapshot snapshot) {
         mLastSnapshot = snapshot;
 
-        if (isActive()) {
-            for (VcnGatewayConnection gatewayConnection : mVcnGatewayConnections.values()) {
-                gatewayConnection.updateSubscriptionSnapshot(mLastSnapshot);
-            }
+        for (VcnGatewayConnection gatewayConnection : mVcnGatewayConnections.values()) {
+            gatewayConnection.updateSubscriptionSnapshot(mLastSnapshot);
         }
     }
 

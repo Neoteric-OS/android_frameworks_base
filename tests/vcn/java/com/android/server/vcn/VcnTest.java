@@ -20,6 +20,10 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_MMS;
 
+import static com.android.server.vcn.Vcn.VCN_STATUS_ACTIVE;
+import static com.android.server.vcn.Vcn.VCN_STATUS_SAFE_MODE;
+import static com.android.server.vcn.Vcn.VCN_STATUS_QUIT;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.any;
@@ -197,7 +201,7 @@ public class VcnTest {
             NetworkRequestListener requestListener,
             Set<VcnGatewayConnection> expectedGatewaysTornDown,
             boolean expectInSafeMode) {
-        assertEquals(!expectInSafeMode, mVcn.isActive());
+        assertEquals(expectInSafeMode ? VCN_STATUS_SAFE_MODE : VCN_STATUS_ACTIVE, mVcn.getStatus());
         verify(mVcnCallback).onSafeModeStatusChanged(expectInSafeMode);
     }
 
