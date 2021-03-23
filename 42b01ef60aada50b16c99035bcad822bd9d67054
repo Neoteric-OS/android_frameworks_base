@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8c9d0c3_0a653fdc",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-23T12:42:39Z",
+      "side": 1,
+      "message": "Does this unbox before comparing ? Could it lead to NPE in that case ?",
+      "range": {
+        "startLine": 275,
+        "startChar": 15,
+        "endLine": 275,
+        "endChar": 37
+      },
+      "revId": "42b01ef60aada50b16c99035bcad822bd9d67054",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
