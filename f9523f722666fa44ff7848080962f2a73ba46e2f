@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49ba16cc_fca88475",
+        "filename": "core/api/current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 20590,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2021-03-23T23:00:37Z",
+      "side": 1,
+      "message": "does this need an IntDef? @MediaFormat.Type does not show up here.",
+      "range": {
+        "startLine": 20590,
+        "startChar": 18,
+        "endLine": 20590,
+        "endChar": 21
+      },
+      "revId": "f9523f722666fa44ff7848080962f2a73ba46e2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16d6f904_89036801",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4563,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2021-03-23T23:00:37Z",
+      "side": 1,
+      "message": "is this in any order? (e.g. dependence order) or arbitrary order?",
+      "range": {
+        "startLine": 4563,
+        "startChar": 50,
+        "endLine": 4563,
+        "endChar": 60
+      },
+      "revId": "f9523f722666fa44ff7848080962f2a73ba46e2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3aa8c7e_21bba6d2",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4628,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2021-03-23T23:00:37Z",
+      "side": 1,
+      "message": "is there an expectation for the race condition if there is already a pending output format change event? Also, will subscribing to a parameter trigger an automatic format change to return that parameter value?",
+      "range": {
+        "startLine": 4628,
+        "startChar": 33,
+        "endLine": 4628,
+        "endChar": 45
+      },
+      "revId": "f9523f722666fa44ff7848080962f2a73ba46e2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ada34871_eb9d392c",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4653,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2021-03-23T23:00:37Z",
+      "side": 1,
+      "message": "is there an expectation for the race condition if there is already a pending output format change event?",
+      "range": {
+        "startLine": 4653,
+        "startChar": 33,
+        "endLine": 4653,
+        "endChar": 45
+      },
+      "revId": "f9523f722666fa44ff7848080962f2a73ba46e2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4123df11_95973f10",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4656,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2021-03-23T23:00:37Z",
+      "side": 1,
+      "message": "can this method be used to unsubscribe from these automatically subscribed keys?",
+      "range": {
+        "startLine": 4656,
+        "startChar": 39,
+        "endLine": 4656,
+        "endChar": 63
+      },
+      "revId": "f9523f722666fa44ff7848080962f2a73ba46e2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
