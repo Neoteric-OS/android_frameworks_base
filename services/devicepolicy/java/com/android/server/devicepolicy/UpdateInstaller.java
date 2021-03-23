@@ -90,11 +90,27 @@ abstract class UpdateInstaller {
         Intent batteryStatus = mContext.registerReceiver(
                 /* receiver= */ null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         float batteryPercentage = calculateBatteryPercentage(batteryStatus);
-        boolean isBatteryPluggedIn =
-                batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, /* defaultValue= */ -1) > 0;
-        return isBatteryPluggedIn
+        int batteryLevel = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL,
+                                                    /* defaultValue= */ -1);
+        int powerType = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED,
+                                                    /* defaultValue= */ -1);
+        int batteryHealth = batteryStatus.getIntExtra(BatteryManager.EXTRA_HEALTH,
+                                                    /* defaultValue= */ -1);
+        int batteryStat = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS,
+                                                    /* defaultValue= */ -1);
+
+        boolean isBatteryPluggedIn = powerType > 0;
+
+        /* Condition to allow batteryless device */
+        if (batteryLevel == 0 && powerType == BatteryManager.BATTERY_PLUGGED_AC
+                    && batteryHealth == BatteryManager.BATTERY_HEALTH_UNKNOWN
+                    && batteryStat == BatteryManager.BATTERY_STATUS_UNKNOWN) {
+            return true;
+        } else {
+            return isBatteryPluggedIn
                 ? batteryPercentage >= mConstants.BATTERY_THRESHOLD_CHARGING
                 : batteryPercentage >= mConstants.BATTERY_THRESHOLD_NOT_CHARGING;
+        }
     }
 
     private float calculateBatteryPercentage(Intent batteryStatus) {
