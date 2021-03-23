@@ -295,10 +295,19 @@ public final class ProfcollectForwardingService extends SystemService {
             return;
         }
 
-        try {
-            mIProfcollect.report();
-        } catch (RemoteException e) {
-            Log.e(LOG_TAG, e.getMessage());
-        }
+        new Thread(() -> {
+            try {
+                String reportPath = mIProfcollect.report();
+                Intent uploadIntent =
+                        new Intent("com.google.android.apps.betterbug.intent.action.UPLOAD_PROFILE")
+                        .putExtra("EXTRA_DESTINATION", "PROFCOLLECT")
+                        .putExtra("EXTRA_PACKAGE_NAME", getContext().getPackageName())
+                        .putExtra("EXTRA_PROFILE_PATH", reportPath)
+                        .addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+                getContext().sendBroadcast(uploadIntent);
+            } catch (RemoteException e) {
+                Log.e(LOG_TAG, e.getMessage());
+            }
+        }).start();
     }
 }
