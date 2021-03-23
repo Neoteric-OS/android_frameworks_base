@@ -33,6 +33,23 @@
       "message": "+Adrian and Wale,\n\nhi all, could you PTAL the upstream request from MTK and let them know if this CL looks good to you or not? Thanks.",
       "revId": "486e0dc67e25eab6b963217e5fcd1207eee88340",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a743c35b_3c334ebc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-03-23T14:02:16Z",
+      "side": 1,
+      "message": "The root cause of the bug is that you have things drawing during AOD that shouldn\u0027t be. They should just be made to not draw. This CL just breaks draw wakelocks.",
+      "revId": "486e0dc67e25eab6b963217e5fcd1207eee88340",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
