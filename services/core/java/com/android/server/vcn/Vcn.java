@@ -17,6 +17,9 @@
 package com.android.server.vcn;
 
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED;
+import static android.net.vcn.VcnManager.VCN_STATUS_CODE_ACTIVE;
+import static android.net.vcn.VcnManager.VCN_STATUS_CODE_INACTIVE;
+import static android.net.vcn.VcnManager.VCN_STATUS_CODE_SAFE_MODE;
 
 import static com.android.server.VcnManagementService.VDBG;
 
@@ -44,7 +47,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Represents an single instance of a VCN.
@@ -136,19 +138,8 @@ public class Vcn extends Handler {
     @NonNull private VcnConfig mConfig;
     @NonNull private TelephonySubscriptionSnapshot mLastSnapshot;
 
-    /**
-     * Whether this Vcn instance is active and running.
-     *
-     * <p>The value will be {@code true} while running. It will be {@code false} if the VCN has been
-     * shut down or has entered safe mode.
-     *
-     * <p>This AtomicBoolean is required in order to ensure consistency and correctness across
-     * multiple threads. Unlike the rest of the Vcn, this is queried synchronously on Binder threads
-     * from VcnManagementService, and therefore cannot rely on guarantees of running on the VCN
-     * Looper.
-     */
-    // TODO: Change this to a status value
-    private final AtomicBoolean mIsActive = new AtomicBoolean(true);
+    // Accessed from different threads, but always under lock in VcnManagementService
+    private volatile int mCurrentStatus = VCN_STATUS_CODE_ACTIVE;
 
     public Vcn(
             @NonNull VcnContext vcnContext,
@@ -200,9 +191,15 @@ public class Vcn extends Handler {
         sendMessageAtFrontOfQueue(obtainMessage(MSG_CMD_TEARDOWN));
     }
 
-    /** Synchronously checks whether this Vcn is active. */
-    public boolean isActive() {
-        return mIsActive.get();
+    /** Synchronously retrieves the current status code. */
+    public int getStatus() {
+        return mCurrentStatus;
+    }
+
+    /** Sets the status of this VCN */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public void setStatus(int status) {
+        mCurrentStatus = status;
     }
 
     /** Get current Gateways for testing purposes */
@@ -218,12 +215,6 @@ public class Vcn extends Handler {
         return Collections.unmodifiableMap(new HashMap<>(mVcnGatewayConnections));
     }
 
-    /** Set whether this Vcn is active for testing purposes */
-    @VisibleForTesting(visibility = Visibility.PRIVATE)
-    public void setIsActive(boolean isActive) {
-        mIsActive.set(isActive);
-    }
-
     private class VcnNetworkRequestListener implements VcnNetworkProvider.NetworkRequestListener {
         @Override
         public void onNetworkRequested(@NonNull NetworkRequest request, int score, int providerId) {
@@ -235,6 +226,11 @@ public class Vcn extends Handler {
 
     @Override
     public void handleMessage(@NonNull Message msg) {
+        if (mCurrentStatus != VCN_STATUS_CODE_ACTIVE
+                && mCurrentStatus != VCN_STATUS_CODE_SAFE_MODE) {
+            return;
+        }
+
         switch (msg.what) {
             case MSG_EVENT_CONFIG_UPDATED:
                 handleConfigUpdated((VcnConfig) msg.obj);
@@ -298,7 +294,7 @@ public class Vcn extends Handler {
             gatewayConnection.teardownAsynchronously();
         }
 
-        mIsActive.set(false);
+        mCurrentStatus = VCN_STATUS_CODE_INACTIVE;
     }
 
     private void handleSafeModeStatusChanged() {
@@ -309,17 +305,13 @@ public class Vcn extends Handler {
             hasSafeModeGatewayConnection |= gatewayConnection.isInSafeMode();
         }
 
-        mIsActive.set(!hasSafeModeGatewayConnection);
+        mCurrentStatus =
+                hasSafeModeGatewayConnection ? VCN_STATUS_CODE_SAFE_MODE : VCN_STATUS_CODE_ACTIVE;
         mVcnCallback.onSafeModeStatusChanged(hasSafeModeGatewayConnection);
     }
 
     private void handleNetworkRequested(
             @NonNull NetworkRequest request, int score, int providerId) {
-        if (!isActive()) {
-            Slog.v(getLogTag(), "Received NetworkRequest while inactive. Ignore for now");
-            return;
-        }
-
         if (score > getNetworkScore()) {
             if (VDBG) {
                 Slog.v(
@@ -372,8 +364,8 @@ public class Vcn extends Handler {
         mVcnGatewayConnections.remove(config);
 
         // Trigger a re-evaluation of all NetworkRequests (to make sure any that can be satisfied
-        // start a new GatewayConnection), but only if the Vcn is still active
-        if (isActive()) {
+        // start a new GatewayConnection), but only if the Vcn is still alive
+        if (mCurrentStatus != VCN_STATUS_CODE_INACTIVE) {
             mVcnContext.getVcnNetworkProvider().resendAllRequests(mRequestListener);
         }
     }

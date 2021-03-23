@@ -19,6 +19,8 @@ package com.android.server.vcn;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_MMS;
+import static android.net.vcn.VcnManager.VCN_STATUS_CODE_ACTIVE;
+import static android.net.vcn.VcnManager.VCN_STATUS_CODE_SAFE_MODE;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -137,7 +139,7 @@ public class VcnTest {
         mTestLooper.dispatchAll();
     }
 
-    private void verifyUpdateSubscriptionSnapshotNotifiesGatewayConnections(boolean isSafeMode) {
+    private void verifyUpdateSubscriptionSnapshotNotifiesGatewayConnections(int status) {
         final NetworkRequestListener requestListener = verifyAndGetRequestListener();
         startVcnGatewayWithCapabilities(requestListener, TEST_CAPS[0]);
 
@@ -147,7 +149,7 @@ public class VcnTest {
         final TelephonySubscriptionSnapshot updatedSnapshot =
                 mock(TelephonySubscriptionSnapshot.class);
 
-        mVcn.setIsActive(!isSafeMode);
+        mVcn.setStatus(status);
 
         mVcn.updateSubscriptionSnapshot(updatedSnapshot);
         mTestLooper.dispatchAll();
@@ -159,12 +161,12 @@ public class VcnTest {
 
     @Test
     public void testSubscriptionSnapshotUpdatesVcnGatewayConnections() {
-        verifyUpdateSubscriptionSnapshotNotifiesGatewayConnections(false /* isSafeMode */);
+        verifyUpdateSubscriptionSnapshotNotifiesGatewayConnections(VCN_STATUS_CODE_ACTIVE);
     }
 
     @Test
     public void testSubscriptionSnapshotUpdatesVcnGatewayConnectionsInSafeMode() {
-        verifyUpdateSubscriptionSnapshotNotifiesGatewayConnections(true /* isSafeMode */);
+        verifyUpdateSubscriptionSnapshotNotifiesGatewayConnections(VCN_STATUS_CODE_SAFE_MODE);
     }
 
     private void triggerVcnRequestListeners(NetworkRequestListener requestListener) {
@@ -200,7 +202,9 @@ public class VcnTest {
             verify(gatewayConnection, never()).teardownAsynchronously();
         }
 
-        assertEquals(!expectInSafeMode, mVcn.isActive());
+        assertEquals(
+                expectInSafeMode ? VCN_STATUS_CODE_SAFE_MODE : VCN_STATUS_CODE_ACTIVE,
+                mVcn.getStatus());
         verify(mVcnCallback).onSafeModeStatusChanged(expectInSafeMode);
     }
 
@@ -230,8 +234,8 @@ public class VcnTest {
         verifySafeMode(requestListener, gatewayConnections, false);
     }
 
-    private void verifyGatewayQuit(boolean isSafeMode) {
-        mVcn.setIsActive(!isSafeMode);
+    private void verifyGatewayQuit(int status) {
+        mVcn.setStatus(status);
 
         final NetworkRequestListener requestListener = verifyAndGetRequestListener();
         final Set<VcnGatewayConnection> gatewayConnections =
@@ -260,12 +264,12 @@ public class VcnTest {
 
     @Test
     public void testGatewayQuitReevaluatesRequests() {
-        verifyGatewayQuit(false /* isSafeMode */);
+        verifyGatewayQuit(VCN_STATUS_CODE_ACTIVE);
     }
 
     @Test
     public void testGatewayQuitReevaluatesRequestsInSafeMode() {
-        verifyGatewayQuit(false /* isSafeMode */);
+        verifyGatewayQuit(VCN_STATUS_CODE_SAFE_MODE);
     }
 
     @Test
