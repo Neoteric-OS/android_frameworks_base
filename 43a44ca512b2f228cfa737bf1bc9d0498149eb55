@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c41f6999_38be78bc",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3466,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-24T17:37:04Z",
+      "side": 1,
+      "message": "nit: Add @BlockedReason",
+      "range": {
+        "startLine": 3466,
+        "startChar": 56,
+        "endLine": 3466,
+        "endChar": 59
+      },
+      "revId": "43a44ca512b2f228cfa737bf1bc9d0498149eb55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
