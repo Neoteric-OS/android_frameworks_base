@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad777a85_306e8c8b",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-03-24T06:41:45Z",
+      "side": 1,
+      "message": "When to use this intent? I can\u0027t find it in the other API commit.",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 91
+      },
+      "revId": "72ccef94fb6347ff51062b34a7016f448b0a4f9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bd8f3c8_d8252cba",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-03-24T06:41:45Z",
+      "side": 1,
+      "message": "The config seems not be used under frameworks/base. How about to put it under packages/apps/Bluetooth? Could you please set the default config to false?",
+      "range": {
+        "startLine": 137,
+        "startChar": 16,
+        "endLine": 137,
+        "endChar": 43
+      },
+      "revId": "72ccef94fb6347ff51062b34a7016f448b0a4f9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
