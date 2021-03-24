@@ -16,6 +16,178 @@
       "message": "XML changes LGTM, didn\u0027t review anything else",
       "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae6a570a_b5694a23",
+        "filename": "core/java/android/app/compat/CompatChanges.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-03-24T01:14:04Z",
+      "side": 1,
+      "message": "Where is this used?",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4fa8972_87b58826",
+        "filename": "core/java/android/app/compat/CompatChanges.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-03-24T01:14:04Z",
+      "side": 1,
+      "message": "Where will this be used from that requires unhiding it?",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 34
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "410b91fd_a1a8a6ea",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 5125,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-03-24T01:14:04Z",
+      "side": 1,
+      "message": "Could you please explain to me how this is different from OVERRIDE_OVERRIDABLE_COMPAT_CHANGES, and what function did CompatChange#getOverridable() have before this change. E.g. why are the overrides for non-overridable changes allowed at all?\n\nIf OVERRIDE_OVERRIDABLE_COMPAT_CHANGES is a stronger permission, doesn\u0027t the same protection level make them equivalent?",
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26e38af6_a77edcff",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-03-24T01:14:04Z",
+      "side": 1,
+      "message": "Since all setOverrides* methods here have the same visibility and access level, would it make sense to:\n1. Verify if only the overridable changes are requested everywhere.\n2. Verify if the caller that requested overrides on a user build has the right permission everywhere.\n3. Rename this method to setOverridesNoRelaunch.",
+      "range": {
+        "startLine": 186,
+        "startChar": 16,
+        "endLine": 186,
+        "endChar": 43
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "485f55a2_b86e529c",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-03-24T01:14:04Z",
+      "side": 1,
+      "message": "nit: checkCompatChangeOverrideOnUserBuildPermission ?",
+      "range": {
+        "startLine": 387,
+        "startChar": 17,
+        "endLine": 387,
+        "endChar": 63
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "572df527_b19f7470",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-03-24T01:14:04Z",
+      "side": 1,
+      "message": "nit: should this message differ from one in checkCompatChangeOverridePermission() and highlight that it\u0027s for overridable changes specifically?",
+      "range": {
+        "startLine": 394,
+        "startChar": 41,
+        "endLine": 394,
+        "endChar": 70
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7c86531_2ca33361",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-03-24T01:14:04Z",
+      "side": 1,
+      "message": "nit: I guess this is only true when calling #setOverridesOnReleaseBuilds(), since it\u0027s allowed if the caller has OVERRIDE_COMPAT_CHANGE_CONFIG and calls setOverrides().\nMaybe update to smth like the following?\n\"Only change ids marked as Overridable can be overridden via PlatformCompat#setOverridesOnReleaseBuilds().\"",
+      "range": {
+        "startLine": 401,
+        "startChar": 45,
+        "endLine": 402,
+        "endChar": 37
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "588fc9ea_9f2d980a",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-03-24T01:14:04Z",
+      "side": 1,
+      "message": "Is there a test that verifies that it can\u0027t set an override for a non-overridable change?",
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
