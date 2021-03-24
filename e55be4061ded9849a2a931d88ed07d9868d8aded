@@ -176,6 +176,30 @@
       },
       "revId": "e55be4061ded9849a2a931d88ed07d9868d8aded",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90d8f3d6_def2b718",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3206,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2021-03-24T19:09:01Z",
+      "side": 1,
+      "message": "I guess in the short term, not many apps will sign up for that filtering, since most devices won\u0027t list the flag.  But that\u0027ll hopefully improve quickly, and if we don\u0027t add the flag, we\u0027ll never get to a point where it\u0027s useful.\n\nThanks for the explanations! I\u0027m comfortable enough to API+1 based on that.",
+      "parentUuid": "1d6fe700_63cc4be8",
+      "range": {
+        "startLine": 3205,
+        "startChar": 0,
+        "endLine": 3206,
+        "endChar": 68
+      },
+      "revId": "e55be4061ded9849a2a931d88ed07d9868d8aded",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
