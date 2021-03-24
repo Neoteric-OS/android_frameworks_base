@@ -883,10 +883,11 @@ public class ZygoteInit {
         try {
             Os.setpgid(0, 0);
         } catch (ErrnoException ex) {
-            throw new RuntimeException("Failed to setpgid(0,0)", ex);
+            Log.e(TAG, "Failed to setpgid(0,0)", ex);
+            System.exit(1);
         }
 
-        Runnable caller;
+        Runnable caller = null;
         try {
             // Store now for StatsLogging later.
             final long startTime = SystemClock.elapsedRealtime();
@@ -931,7 +932,8 @@ public class ZygoteInit {
             }
 
             if (abiList == null) {
-                throw new RuntimeException("No ABI list supplied.");
+                Log.e(TAG, "No ABI list supplied.");
+                System.exit(1);
             }
 
             // In some configurations, we avoid preloading resources and classes eagerly.
@@ -966,7 +968,7 @@ public class ZygoteInit {
                 // child (system_server) process.
                 if (r != null) {
                     r.run();
-                    return;
+                    System.exit(0);
                 }
             }
 
@@ -977,7 +979,7 @@ public class ZygoteInit {
             caller = zygoteServer.runSelectLoop(abiList);
         } catch (Throwable ex) {
             Log.e(TAG, "System zygote died with exception", ex);
-            throw ex;
+            System.exit(1);
         } finally {
             if (zygoteServer != null) {
                 zygoteServer.closeServerSocket();
@@ -989,6 +991,7 @@ public class ZygoteInit {
         if (caller != null) {
             caller.run();
         }
+        System.exit(0);
     }
 
     /**
