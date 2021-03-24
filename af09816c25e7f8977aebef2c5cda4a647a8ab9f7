@@ -82,6 +82,53 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7afbd93e_949e947c",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-03-24T18:01:53Z",
+      "side": 1,
+      "message": "getNrQosIdentifier?\n\nIt may be consistent with the other one, but it doesn\u0027t mean it is readable.",
+      "parentUuid": "c0d40893_6120e128",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 21
+      },
+      "revId": "af09816c25e7f8977aebef2c5cda4a647a8ab9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d7b23d0_0c78fbda",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-03-24T18:01:53Z",
+      "side": 1,
+      "message": "getQosFlowIdentifier\n\n@IntRange(from\u003d1, to\u003d63)",
+      "range": {
+        "startLine": 68,
+        "startChar": 15,
+        "endLine": 68,
+        "endChar": 21
+      },
+      "revId": "af09816c25e7f8977aebef2c5cda4a647a8ab9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07c0b444_ce0abee4",
@@ -119,6 +166,30 @@
       "side": 1,
       "message": "This is following existing 4G API\n\nhttps://source.corp.google.com/sc-dev/frameworks/base/telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java\n\nI can alter both of them in a followup CL if needed",
       "parentUuid": "07c0b444_ce0abee4",
+      "range": {
+        "startLine": 81,
+        "startChar": 35,
+        "endLine": 81,
+        "endChar": 42
+      },
+      "revId": "af09816c25e7f8977aebef2c5cda4a647a8ab9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f33fcb3_b96502f1",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-03-24T18:01:53Z",
+      "side": 1,
+      "message": "getGuaranteedUplinkBitRateKbps",
+      "parentUuid": "cd50829d_b17290a8",
       "range": {
         "startLine": 81,
         "startChar": 35,
@@ -176,6 +247,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "675d4798_286e61df",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-03-24T18:01:53Z",
+      "side": 1,
+      "message": "getGuaranteedDownlinkBitRateKbps",
+      "parentUuid": "c17f739e_afe00b27",
+      "range": {
+        "startLine": 94,
+        "startChar": 37,
+        "endLine": 94,
+        "endChar": 44
+      },
+      "revId": "af09816c25e7f8977aebef2c5cda4a647a8ab9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b650804f_17609395",
@@ -213,6 +308,30 @@
       "side": 1,
       "message": "same as above",
       "parentUuid": "b650804f_17609395",
+      "range": {
+        "startLine": 107,
+        "startChar": 28,
+        "endLine": 107,
+        "endChar": 35
+      },
+      "revId": "af09816c25e7f8977aebef2c5cda4a647a8ab9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4638d0b7_8419571f",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-03-24T18:01:53Z",
+      "side": 1,
+      "message": "getMaxUplinkBitRateKbps",
+      "parentUuid": "8fb673b5_01c98622",
       "range": {
         "startLine": 107,
         "startChar": 28,
@@ -307,6 +426,30 @@
       "side": 1,
       "message": "Can i do in a follow up CL ?",
       "parentUuid": "56113aad_3162b9bd",
+      "range": {
+        "startLine": 132,
+        "startChar": 16,
+        "endLine": 132,
+        "endChar": 34
+      },
+      "revId": "af09816c25e7f8977aebef2c5cda4a647a8ab9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f80cd340_d7d97089",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-03-24T18:01:53Z",
+      "side": 1,
+      "message": "java.time.Duration getBitRateWindowDuration()?",
+      "parentUuid": "120144f2_6d37a646",
       "range": {
         "startLine": 132,
         "startChar": 16,
