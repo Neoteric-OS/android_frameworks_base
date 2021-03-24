@@ -33,6 +33,23 @@
       "message": "Looks like the api txt file doesnt automerge - probably have to do it in sc-dev or master \u0026 CP.",
       "revId": "31233e29e35b46800f0001ddd3c49db4fe693acf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e0ec5d7_36b9eaac",
+        "filename": "core/java/android/stats/StatsHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2021-03-24T05:00:12Z",
+      "side": 1,
+      "message": "Should this be SYSTEM_SERVER instead of MODULE_LIBRARIES? StatsCompanionService runs in system server, and is the only thing that will call this.",
+      "revId": "31233e29e35b46800f0001ddd3c49db4fe693acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
