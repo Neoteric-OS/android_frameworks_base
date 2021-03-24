@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2415c707_9844ef72",
+        "filename": "packages/Connectivity/framework/api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T02:15:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f453a508_964bb41f",
+      "range": {
+        "startLine": 233,
+        "startChar": 29,
+        "endLine": 233,
+        "endChar": 54
+      },
+      "revId": "0f901fc0318e91541598b292777c27ba7d71939a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd28ddb6_1b51f77f",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-23T11:46:50Z",
       "side": 1,
       "message": "It\u0027s already of this static type",
+      "range": {
+        "startLine": 1175,
+        "startChar": 16,
+        "endLine": 1175,
+        "endChar": 47
+      },
+      "revId": "0f901fc0318e91541598b292777c27ba7d71939a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91cc4971_25276655",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkAgent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T02:15:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dd28ddb6_1b51f77f",
       "range": {
         "startLine": 1175,
         "startChar": 16,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de31c34b_a1c250a2",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkAgent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T02:15:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a2b4d824_a96fbd09",
+      "range": {
+        "startLine": 1182,
+        "startChar": 57,
+        "endLine": 1182,
+        "endChar": 60
+      },
+      "revId": "0f901fc0318e91541598b292777c27ba7d71939a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb22b4b1_097201e7",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-03-23T11:46:50Z",
       "side": 1,
       "message": "Update",
+      "range": {
+        "startLine": 1194,
+        "startChar": 28,
+        "endLine": 1194,
+        "endChar": 31
+      },
+      "revId": "0f901fc0318e91541598b292777c27ba7d71939a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19a7db14_2c892d77",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkAgent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T02:15:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cb22b4b1_097201e7",
       "range": {
         "startLine": 1194,
         "startChar": 28,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f20b1c0d_70199ab4",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T02:15:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1c66529f_f0522ba4",
+      "range": {
+        "startLine": 99,
+        "startChar": 23,
+        "endLine": 99,
+        "endChar": 24
+      },
+      "revId": "0f901fc0318e91541598b292777c27ba7d71939a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4305d92d_925581fc",
@@ -146,6 +266,30 @@
       "writtenOn": "2021-03-23T11:46:50Z",
       "side": 1,
       "message": "downlink ?",
+      "range": {
+        "startLine": 112,
+        "startChar": 18,
+        "endLine": 112,
+        "endChar": 19
+      },
+      "revId": "0f901fc0318e91541598b292777c27ba7d71939a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63359a97_d28498ce",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T02:15:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4305d92d_925581fc",
       "range": {
         "startLine": 112,
         "startChar": 18,
@@ -179,6 +323,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5fbbe55_0c9c23fe",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T02:15:41Z",
+      "side": 1,
+      "message": "This method is a copy of EpsBearerQosSessionAttributes#getRemoteAddresses()\n\nThis method is useful for app in the cases its not empty\na) The app will know whether its remote addresses are part of this or not.\nb) The app will know how many other apps sharing this QOS based on remote addresses which are not meant for this app.\n\nI agree in case its empty its not useful for the app but i also think that the API would be useful as mentioned above",
+      "parentUuid": "bd35ebd7_007e5f1e",
+      "range": {
+        "startLine": 140,
+        "startChar": 7,
+        "endLine": 141,
+        "endChar": 84
+      },
+      "revId": "0f901fc0318e91541598b292777c27ba7d71939a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "32da85d7_6aa4e519",
@@ -202,6 +370,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f0196d2_04f3fa99",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T02:15:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "32da85d7_6aa4e519",
+      "range": {
+        "startLine": 210,
+        "startChar": 41,
+        "endLine": 210,
+        "endChar": 43
+      },
+      "revId": "0f901fc0318e91541598b292777c27ba7d71939a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69c9ac20_b38dc0c9",
@@ -215,6 +407,30 @@
       "writtenOn": "2021-03-23T11:46:50Z",
       "side": 1,
       "message": "Can you please factorize the code with helper function(s) ? We avoid copy-pasting this much code, even in tests.",
+      "range": {
+        "startLine": 9937,
+        "startChar": 16,
+        "endLine": 9937,
+        "endChar": 49
+      },
+      "revId": "0f901fc0318e91541598b292777c27ba7d71939a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f04bec2_57c8a9b7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9937,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T02:15:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "69c9ac20_b38dc0c9",
       "range": {
         "startLine": 9937,
         "startChar": 16,
