@@ -128,6 +128,30 @@
       },
       "revId": "e55be4061ded9849a2a931d88ed07d9868d8aded",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "431a78ab_931fa36a",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3206,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2021-03-24T18:47:58Z",
+      "side": 1,
+      "message": "The main issue with the \"all devices launching with\" language is that there\u0027s no way for an app to query that, so it basically just boils down to \"may not be set\".\n\nIt\u0027d be great if we could require OEMs to set a feature flag on upgrade at least (since it sounds like no actual new feature development work would be needed), but I know the various vendor upgrade support requirements can make that difficult at times.  Is there any way we could set it automatically for the OEM?",
+      "parentUuid": "349c448e_6fab8129",
+      "range": {
+        "startLine": 3205,
+        "startChar": 0,
+        "endLine": 3206,
+        "endChar": 68
+      },
+      "revId": "e55be4061ded9849a2a931d88ed07d9868d8aded",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
