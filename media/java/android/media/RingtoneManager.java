@@ -526,7 +526,9 @@ public class RingtoneManager {
             final Cursor cursor = getCursor();
             cursor.moveToPosition(-1);
             while (cursor.moveToNext()) {
-                if (ringtoneId == cursor.getLong(ID_COLUMN_INDEX)) {
+                Uri uriFromCursor=  getUriFromCursor(mContext, cursor);
+                if (ringtoneId == cursor.getLong(ID_COLUMN_INDEX)
+                        && ringtoneUri.equals(uriFromCursor)) {
                     return cursor.getPosition();
                 }
             }
