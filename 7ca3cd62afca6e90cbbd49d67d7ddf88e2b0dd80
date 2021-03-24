@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2c309d9_cd49028c",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3175,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-03-24T21:27:55Z",
+      "side": 1,
+      "message": "I think that might be helpful but at this point we\u0027ll just leave them as is as it\u0027s not clear where those constants would be defined nor how they should be named.\n\nFWIW, we\u0027re planning to revisit this for Android 13 where we\u0027ll also go through all the JavaDoc for each method and mention that if using the AndroidKeyStore provider then FEATURE_HARDWARE_KEYSTORE / FEATURE_STRONGBOX_KEYSTORE can be used to determine whether it\u0027s implemented in Secure hardware or not. We\u0027ll add the constants as part of that work.",
+      "parentUuid": "d4632885_62be163f",
+      "range": {
+        "startLine": 3175,
+        "startChar": 11,
+        "endLine": 3175,
+        "endChar": 14
+      },
+      "revId": "7ca3cd62afca6e90cbbd49d67d7ddf88e2b0dd80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bfc56bf7_4725d0aa",
@@ -55,6 +79,30 @@
       "side": 1,
       "message": "\u003e Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.\n\nPlease fix.",
       "parentUuid": "da31f77d_c290e986",
+      "range": {
+        "startLine": 3218,
+        "startChar": 0,
+        "endLine": 3218,
+        "endChar": 101
+      },
+      "revId": "7ca3cd62afca6e90cbbd49d67d7ddf88e2b0dd80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b4e271b_3d89c4d9",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3218,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-03-24T21:27:55Z",
+      "side": 1,
+      "message": "Done. I don\u0027t think I can fix the other ones with e.g.\n android.security.keystore.KeyGenParameterSpec.Builder#setDevicePropertiesAttestationIncluded(boolean)})\n\nsince that would break the @link logic in JavaDoc.",
+      "parentUuid": "bfc56bf7_4725d0aa",
       "range": {
         "startLine": 3218,
         "startChar": 0,
