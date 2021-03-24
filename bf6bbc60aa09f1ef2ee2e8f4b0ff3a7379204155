@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c603c65_4eb992d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-03-24T01:31:31Z",
+      "side": 1,
+      "message": "Ytai - I guess the Java case here is much simpler since we delay creating and marking the underlying binder. Could have saved all the work in https://android-review.googlesource.com/c/platform/frameworks/native/+/1649815, though I\u0027ll keep that since it\u0027s done.\n\nI still need to add a test for this - I realize that markVintfStability for Java doesn\u0027t seem to have one.",
+      "revId": "bf6bbc60aa09f1ef2ee2e8f4b0ff3a7379204155",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
