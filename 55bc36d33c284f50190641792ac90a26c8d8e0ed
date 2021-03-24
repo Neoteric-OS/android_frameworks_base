@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2065a302_b65c4e0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2021-03-24T07:43:11Z",
+      "side": 1,
+      "message": "We are not sure if we should block NewDeviceAction during standby mode.\nIn the case of quiescent reboot, does framework need to handle \u003cReport physical address\u003e",
+      "revId": "55bc36d33c284f50190641792ac90a26c8d8e0ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
