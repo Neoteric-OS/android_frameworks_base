@@ -35,6 +35,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53275fa2_75d705f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T19:57:02Z",
+      "side": 1,
+      "message": "Telephony API review comments are being addressed in aosp/1653227",
+      "revId": "af09816c25e7f8977aebef2c5cda4a647a8ab9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0997893_0d1cf3fd",
