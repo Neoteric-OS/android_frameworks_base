@@ -152,6 +152,30 @@
       },
       "revId": "e55be4061ded9849a2a931d88ed07d9868d8aded",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d6fe700_63cc4be8",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3206,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-03-24T19:04:37Z",
+      "side": 1,
+      "message": "Right. So \"may not be set\" really means that the application isn\u0027t guaranteed anything wrt. whether this is implemented in Secure Hardware or not. For all we know the device could have no KeyMaster at all or an ancient one (KeyMaster 1, 2, or 3).\n\nNote that the APIs for e.g. AES, HMAC, EC, RSA operations with AndroidKeystore provider still work though, they just aren\u0027t backed by secure hardware - the app can check for this through attestations or android.security.keystore.KeyInfo. getSecurityLevel().\n\nSo if the app is running on a device where FEATURE_HARDWARE_KEYSTORE isn\u0027t set it can always find out if Secure Hardware is available by simply just trying to create the key and then check KeyInfo. They can then bail at runtime if the key isn\u0027t created in secure hardware.\n\nThe main reason for adding FEATURE_HARDWARE_KEYSTORE is for apps which won\u0027t run on devices that don\u0027t have the necessary secure hardware. By using this, they can be filtered in the play store so they won\u0027t appear on devices without it.\n\nWith this in mind, I\u0027m not sure there\u0027s a lot of value of forcing OEMs to set this or automatically set it for them. I\u0027ll let Shawn chime in on this as well.",
+      "parentUuid": "431a78ab_931fa36a",
+      "range": {
+        "startLine": 3205,
+        "startChar": 0,
+        "endLine": 3206,
+        "endChar": 68
+      },
+      "revId": "e55be4061ded9849a2a931d88ed07d9868d8aded",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
