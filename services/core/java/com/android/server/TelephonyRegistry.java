@@ -2026,6 +2026,31 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
     }
 
     @Override
+    public void notifyMissingUnknownApn(
+            int phoneId, int subId, @NonNull PreciseDataConnectionState preciseState) {
+        if (!checkNotifyPermission("notifyMissingUnknownApn()")) {
+            return;
+        }
+
+        synchronized (mRecords) {
+            if (validatePhoneId(phoneId)) {
+                for (Record r : mRecords) {
+                    if (r.matchTelephonyCallbackEvent(
+                            TelephonyCallback.EVENT_PRECISE_DATA_CONNECTION_STATE_CHANGED)
+                            && idMatch(r.subId, subId, phoneId)) {
+                        try {
+                            r.callback.onPreciseDataConnectionStateChanged(preciseState);
+                        } catch (RemoteException ex) {
+                            mRemoveList.add(r.binder);
+                        }
+                    }
+                }
+            }
+            handleRemoveListLocked();
+        }
+    }
+
+    @Override
     public void notifySrvccStateChanged(int subId, @SrvccState int state) {
         if (!checkNotifyPermission("notifySrvccStateChanged()")) {
             return;
