@@ -68,6 +68,8 @@ interface ITelephonyRegistry {
             int foregroundCallState, int backgroundCallState);
     void notifyDisconnectCause(int phoneId, int subId, int disconnectCause,
             int preciseDisconnectCause);
+    void notifyMissingUnknownApn(int phoneId, int subId,
+            in PreciseDataConnectionState preciseState);
     void notifyCellInfoForSubscriber(in int subId, in List<CellInfo> cellInfo);
     void notifySrvccStateChanged(in int subId, in int lteState);
     void notifySimActivationStateChangedForPhoneId(in int phoneId, in int subId,
