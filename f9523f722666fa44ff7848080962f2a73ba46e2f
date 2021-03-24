@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72fd0335_31216347",
+        "filename": "core/api/current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 20590,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2021-03-24T01:12:54Z",
+      "side": 1,
+      "message": "It\u0027s in the java file, they don\u0027t show in the .txt file.",
+      "parentUuid": "49ba16cc_fca88475",
+      "range": {
+        "startLine": 20590,
+        "startChar": 18,
+        "endLine": 20590,
+        "endChar": 21
+      },
+      "revId": "f9523f722666fa44ff7848080962f2a73ba46e2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16d6f904_89036801",
