@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33839423_837639b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-24T08:15:55Z",
+      "side": 1,
+      "message": "Core networking changes LGTM assuming comments addressed.",
+      "revId": "5114818f26575b44ff1b36f6dbb5c12d705871ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f682ec41_541842da",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-24T08:15:55Z",
+      "side": 1,
+      "message": "Given that NET_CAPABILITY_ENTERPRISE was added first, could you keep it as 29, and move NET_CAPABILITY_VSIM (\u003d\u003d30) and NET_CAPABILITY_BIP (\u003d\u003d31) after it?",
+      "range": {
+        "startLine": 443,
+        "startChar": 56,
+        "endLine": 443,
+        "endChar": 58
+      },
+      "revId": "5114818f26575b44ff1b36f6dbb5c12d705871ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b729162_c75cf0f8",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-24T08:15:55Z",
+      "side": 1,
+      "message": "Thanks for sorting alphabetically. Could you sort NET_CAPABILITY_ENTERPRISE alphabetically as well? (After EIMS, before FOTA)",
+      "range": {
+        "startLine": 507,
+        "startChar": 20,
+        "endLine": 507,
+        "endChar": 45
+      },
+      "revId": "5114818f26575b44ff1b36f6dbb5c12d705871ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
