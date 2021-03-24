@@ -21,7 +21,7 @@ package android.net;
  * <p>Concrete implementations for a control plane protocol should implement this interface.
  * Subclasses should be immutable data classes containing connection, authentication and
  * authorization parameters required to establish an encrypted tunnel.
+ *
+ * @see android.net.ipsec.ike.IkeTunnelParams
  */
-// TODO: b/180664474 Add "@see android.net.ipsec.ike.IkeTunnelParams" when IkeTunnelParams is
-// exposed
 public interface EncryptedTunnelParams {}
