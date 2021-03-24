@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0d40893_6120e128",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T17:06:44Z",
+      "side": 1,
+      "message": "This is following already existing 4G API. \nhttps://source.corp.google.com/sc-dev/frameworks/base/telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java;l\u003d56\n\nAlso 5QI is a spec term and the comment clearly explains what it is. I can definitely change it later based if API council raises issue.",
+      "parentUuid": "f0997893_0d1cf3fd",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 21
+      },
+      "revId": "af09816c25e7f8977aebef2c5cda4a647a8ab9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07c0b444_ce0abee4",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-24T16:24:12Z",
       "side": 1,
       "message": "Kbps",
+      "range": {
+        "startLine": 81,
+        "startChar": 35,
+        "endLine": 81,
+        "endChar": 42
+      },
+      "revId": "af09816c25e7f8977aebef2c5cda4a647a8ab9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd50829d_b17290a8",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T17:06:44Z",
+      "side": 1,
+      "message": "This is following existing 4G API\n\nhttps://source.corp.google.com/sc-dev/frameworks/base/telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java\n\nI can alter both of them in a followup CL if needed",
+      "parentUuid": "07c0b444_ce0abee4",
       "range": {
         "startLine": 81,
         "startChar": 35,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c17f739e_afe00b27",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T17:06:44Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "6c493870_7bf638b8",
+      "range": {
+        "startLine": 94,
+        "startChar": 37,
+        "endLine": 94,
+        "endChar": 44
+      },
+      "revId": "af09816c25e7f8977aebef2c5cda4a647a8ab9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b650804f_17609395",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-03-24T16:24:12Z",
       "side": 1,
       "message": "Kbps",
+      "range": {
+        "startLine": 107,
+        "startChar": 28,
+        "endLine": 107,
+        "endChar": 35
+      },
+      "revId": "af09816c25e7f8977aebef2c5cda4a647a8ab9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fb673b5_01c98622",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T17:06:44Z",
+      "side": 1,
+      "message": "same as above",
+      "parentUuid": "b650804f_17609395",
       "range": {
         "startLine": 107,
         "startChar": 28,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6730361d_4cf15719",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T17:06:44Z",
+      "side": 1,
+      "message": "same as above",
+      "parentUuid": "c3794d41_f6800e5b",
+      "range": {
+        "startLine": 120,
+        "startChar": 30,
+        "endLine": 120,
+        "endChar": 37
+      },
+      "revId": "af09816c25e7f8977aebef2c5cda4a647a8ab9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56113aad_3162b9bd",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-03-24T16:24:12Z",
       "side": 1,
       "message": "should follow go/android-api-guidelines#time",
+      "range": {
+        "startLine": 132,
+        "startChar": 16,
+        "endLine": 132,
+        "endChar": 34
+      },
+      "revId": "af09816c25e7f8977aebef2c5cda4a647a8ab9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "120144f2_6d37a646",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-03-24T17:06:44Z",
+      "side": 1,
+      "message": "Can i do in a follow up CL ?",
+      "parentUuid": "56113aad_3162b9bd",
       "range": {
         "startLine": 132,
         "startChar": 16,
