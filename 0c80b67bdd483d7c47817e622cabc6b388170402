@@ -137,6 +137,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e152fafb_e926e823",
+        "filename": "core/java/android/app/compat/CompatChanges.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T18:57:41Z",
+      "side": 1,
+      "message": "Discussed. Moved to static.",
+      "parentUuid": "2e5fd61f_21b98518",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4fa8972_87b58826",
@@ -221,6 +245,24 @@
       "writtenOn": "2021-03-24T15:21:50Z",
       "side": 1,
       "message": "Could you please add links to a definition of \u0027Overridable\u0027 and \u0027release build\u0027 here and in other methods where appropriate?",
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f276c90_68ffcb34",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T18:57:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea62401d_e0aed798",
       "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -314,6 +356,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd71326e_42b160a6",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 5125,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T18:57:41Z",
+      "side": 1,
+      "message": "Not renaming annotation at this point.",
+      "parentUuid": "a99b5f67_8026d6b4",
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "30b626ba_a1467f3d",
@@ -327,6 +387,30 @@
       "writtenOn": "2021-03-24T15:21:50Z",
       "side": 1,
       "message": "What do you think about mentioning the \u0027release builds\u0027 in the names of the permission and methods introduced in this CL? That could avoid confusion or at least save some time to figure out the meaning of \u0027overridable\u0027.\n\nE.g. OVERRIDE_RELEASE_BUILD_OVERRIDABLE_COMPAT_CHANGE_CONFIG",
+      "range": {
+        "startLine": 5133,
+        "startChar": 49,
+        "endLine": 5133,
+        "endChar": 84
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ee12d98_2afb2166",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 5133,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T18:57:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30b626ba_a1467f3d",
       "range": {
         "startLine": 5133,
         "startChar": 49,
@@ -384,6 +468,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31ef39cf_3c8a15e6",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T18:57:41Z",
+      "side": 1,
+      "message": "Added a TODO as per discussion.",
+      "parentUuid": "cce2f80e_5187c14f",
+      "range": {
+        "startLine": 186,
+        "startChar": 16,
+        "endLine": 186,
+        "endChar": 43
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "485f55a2_b86e529c",
@@ -397,6 +505,30 @@
       "writtenOn": "2021-03-24T01:14:04Z",
       "side": 1,
       "message": "nit: checkCompatChangeOverrideOnUserBuildPermission ?",
+      "range": {
+        "startLine": 387,
+        "startChar": 17,
+        "endLine": 387,
+        "endChar": 63
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37ad0d7d_cb90c688",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T18:57:41Z",
+      "side": 1,
+      "message": "Will do this in follow-up.",
+      "parentUuid": "485f55a2_b86e529c",
       "range": {
         "startLine": 387,
         "startChar": 17,
@@ -430,6 +562,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e897873_7e8020fb",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T18:57:41Z",
+      "side": 1,
+      "message": "Will do this in follow-up.",
+      "parentUuid": "572df527_b19f7470",
+      "range": {
+        "startLine": 394,
+        "startChar": 41,
+        "endLine": 394,
+        "endChar": 70
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7c86531_2ca33361",
@@ -443,6 +599,30 @@
       "writtenOn": "2021-03-24T01:14:04Z",
       "side": 1,
       "message": "nit: I guess this is only true when calling #setOverridesOnReleaseBuilds(), since it\u0027s allowed if the caller has OVERRIDE_COMPAT_CHANGE_CONFIG and calls setOverrides().\nMaybe update to smth like the following?\n\"Only change ids marked as Overridable can be overridden via PlatformCompat#setOverridesOnReleaseBuilds().\"",
+      "range": {
+        "startLine": 401,
+        "startChar": 45,
+        "endLine": 402,
+        "endChar": 37
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0130746_35fb63e8",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T18:57:41Z",
+      "side": 1,
+      "message": "Will do this in follow-up.",
+      "parentUuid": "a7c86531_2ca33361",
       "range": {
         "startLine": 401,
         "startChar": 45,
@@ -537,6 +717,24 @@
       "writtenOn": "2021-03-24T15:59:16Z",
       "side": 1,
       "message": "I think CTS would be perfect for a new permission!",
+      "parentUuid": "a52904d8_758999c5",
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "074dfc24_ac483df3",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T18:57:41Z",
+      "side": 1,
+      "message": "Will add CTS test.",
       "parentUuid": "a52904d8_758999c5",
       "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
