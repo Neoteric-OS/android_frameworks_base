@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c4e42ab2_b0f85d00",
+        "filename": "core/java/android/app/compat/CompatChanges.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T14:51:11Z",
+      "side": 1,
+      "message": "The client of this API will use it. I didn\u0027t want to make the API call static (for testing on client code), so we need a constructor.\n\nSee CTS test for usage pattern: https://r.android.com/c/platform/cts/+/1599133/3/hostsidetests/appcompat/compatchanges/app/src/com/android/cts/appcompat/compatchanges/CompatChangesTest.java",
+      "parentUuid": "ae6a570a_b5694a23",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c4fa8972_87b58826",
         "filename": "core/java/android/app/compat/CompatChanges.java",
         "patchSetId": 10
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-24T01:14:04Z",
       "side": 1,
       "message": "Where will this be used from that requires unhiding it?",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 34
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b33c3e2_8eccafe8",
+        "filename": "core/java/android/app/compat/CompatChanges.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T14:51:11Z",
+      "side": 1,
+      "message": "This will be called from Phonesky (Play app).",
+      "parentUuid": "c4fa8972_87b58826",
       "range": {
         "startLine": 109,
         "startChar": 16,
@@ -83,6 +131,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c2e26eb7_be324b67",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 5125,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T14:51:11Z",
+      "side": 1,
+      "message": "I think it\u0027s easier to audit separate permissions, even if they have the same protection.\n\nThe new permission is explicitly for allowing overrides on release builds and non-test apps. We will only give it to Phonesky and Shell. The existing permission is given to Settings for example.\n\nOverridable is a concept that I added in https://r.android.com/c/tools/platform-compat/+/1540125/2/java/android/compat/annotation/Overridable.java, which explicitly denotes changeids that are overridable in release builds. Overrides are always allowed in non-release builds or apks marked as test-apks.",
+      "parentUuid": "410b91fd_a1a8a6ea",
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "26e38af6_a77edcff",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 10
@@ -94,6 +160,30 @@
       "writtenOn": "2021-03-24T01:14:04Z",
       "side": 1,
       "message": "Since all setOverrides* methods here have the same visibility and access level, would it make sense to:\n1. Verify if only the overridable changes are requested everywhere.\n2. Verify if the caller that requested overrides on a user build has the right permission everywhere.\n3. Rename this method to setOverridesNoRelaunch.",
+      "range": {
+        "startLine": 186,
+        "startChar": 16,
+        "endLine": 186,
+        "endChar": 43
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cce2f80e_5187c14f",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T14:51:11Z",
+      "side": 1,
+      "message": "Yes, I think we can streamline this a little. The problem is that overrides are always allowed for test-apks, even when on a release build. This whole logic lives in the OverrideValidatorImpl and is called further down the line. We should avoid duplicating that logic here.",
+      "parentUuid": "26e38af6_a77edcff",
       "range": {
         "startLine": 186,
         "startChar": 16,
@@ -186,6 +276,24 @@
       "writtenOn": "2021-03-24T01:14:04Z",
       "side": 1,
       "message": "Is there a test that verifies that it can\u0027t set an override for a non-overridable change?",
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bef9b3bf_48f9392b",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T14:51:11Z",
+      "side": 1,
+      "message": "Hmm, there is one in the CTS tests: https://r.android.com/c/platform/cts/+/1599133/3/hostsidetests/appcompat/compatchanges/app/src/com/android/cts/appcompat/compatchanges/CompatChangesTest.java\nHere I tried quickly, but found that the permission check always passed.",
+      "parentUuid": "588fc9ea_9f2d980a",
       "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
