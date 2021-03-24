@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4820446b_f955bf5b",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-24T04:11:07Z",
+      "side": 1,
+      "message": "It\u0027s actually correct, updated the message to avoid confusions.",
+      "parentUuid": "70e99900_34b47cf9",
+      "range": {
+        "startLine": 625,
+        "startChar": 22,
+        "endLine": 625,
+        "endChar": 72
+      },
+      "revId": "8b0ccd2e3dbc4846ceb8dbc1f96aa0cb7c2f308a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "89ae0fb4_9e3185ed",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-23T21:25:31Z",
       "side": 1,
       "message": "Does this also need a clearRebootEscrowIfNeeded() call associated to it? Seems like most other error codes here have an associated call to that function, but I\u0027m unsure what the pattern is for deciding on which errors we clear the reboot escrow.",
+      "range": {
+        "startLine": 652,
+        "startChar": 12,
+        "endLine": 652,
+        "endChar": 53
+      },
+      "revId": "8b0ccd2e3dbc4846ceb8dbc1f96aa0cb7c2f308a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad67e28b_86ff0140",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-24T04:11:07Z",
+      "side": 1,
+      "message": "add a comment and todo",
+      "parentUuid": "89ae0fb4_9e3185ed",
       "range": {
         "startLine": 652,
         "startChar": 12,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "55662542_6923ed83",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-24T04:11:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f4c0a35_978a77c0",
+      "range": {
+        "startLine": 140,
+        "startChar": 43,
+        "endLine": 140,
+        "endChar": 44
+      },
+      "revId": "8b0ccd2e3dbc4846ceb8dbc1f96aa0cb7c2f308a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df335bbd_b8359b70",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-03-23T21:25:31Z",
       "side": 1,
       "message": "Will there need to be a way to notify clients that their request has been dropped or that they have been \"unprepared\" for RoR?",
+      "range": {
+        "startLine": 824,
+        "startChar": 12,
+        "endLine": 825,
+        "endChar": 45
+      },
+      "revId": "8b0ccd2e3dbc4846ceb8dbc1f96aa0cb7c2f308a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5260dbb3_fe9fc46c",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-24T04:11:07Z",
+      "side": 1,
+      "message": "Good question. Today we don\u0027t have this mechanism (no intent call to notify lskf get cleared). And clients will call isLskfCaptured to confirm the RoR preparation status.",
+      "parentUuid": "df335bbd_b8359b70",
       "range": {
         "startLine": 824,
         "startChar": 12,
