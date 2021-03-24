@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6687f91c_ad3bed28",
+        "filename": "services/profcollect/src/com/android/server/profcollect/ProfcollectForwardingService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1810984
+      },
+      "writtenOn": "2021-03-24T10:14:00Z",
+      "side": 1,
+      "message": "Is it better to use queryBroadcastReceivers to check the BetterBug supports the uploadintent or not before sending broadcast uploadIntent?\nlike:\nhttps://screenshot.googleplex.com/8RD3LT65faBSTAB",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 57
+      },
+      "revId": "f6f75996e5c5ceaf6dbbfcd829fe8a6e7938b59d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
