@@ -2391,8 +2391,10 @@ public final class NetworkCapabilities implements Parcelable {
     /**
      * Gets the subscription ID set that associated to this network or request.
      * @return
+     * @hide
      */
     @NonNull
+    @SystemApi
     public Set<Integer> getSubIds() {
         return new ArraySet<>(mSubIds);
     }
@@ -2759,8 +2761,10 @@ public final class NetworkCapabilities implements Parcelable {
          *
          * @param subIds a set that represent the subscription IDs. Empty if clean up.
          * @return this builder.
+         * @hide
          */
         @NonNull
+        @SystemApi
         public Builder setSubIds(@NonNull final Set<Integer> subIds) {
             mCaps.setSubIds(subIds);
             return this;
