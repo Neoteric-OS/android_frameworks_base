@@ -115,6 +115,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "877915b9_a5183020",
+        "filename": "core/java/android/app/compat/CompatChanges.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-03-24T15:59:16Z",
+      "side": 1,
+      "message": "In general I would agree with that. In this particular case though the class seems to be stateless and making only static external calls. So another static method would be in line with the rest of the class interface.\n\nIf the purpose is to make it easier to test, then maybe we could look into how the dependencies could be injected via the constructor.",
+      "parentUuid": "2e5fd61f_21b98518",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c4fa8972_87b58826",
         "filename": "core/java/android/app/compat/CompatChanges.java",
         "patchSetId": 10
@@ -268,6 +292,24 @@
       "side": 1,
       "message": "Do you think I should rename the annotation? I do see how it is confusing.",
       "parentUuid": "c6923a03_c86a218e",
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d11d2e7_95ea1459",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 5125,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-03-24T15:59:16Z",
+      "side": 1,
+      "message": "In my case it would make it easier to understand, but feel free to address in a separate CL.",
+      "parentUuid": "a99b5f67_8026d6b4",
       "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -478,6 +520,24 @@
       "side": 1,
       "message": "In the CTS or the unit test?\nYes, that does make sense.",
       "parentUuid": "538f4aa1_30c24554",
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb12b7ce_3cf783f5",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-03-24T15:59:16Z",
+      "side": 1,
+      "message": "I think CTS would be perfect for a new permission!",
+      "parentUuid": "a52904d8_758999c5",
       "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
