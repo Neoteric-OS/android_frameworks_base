@@ -502,8 +502,10 @@ public class NetworkRequest implements Parcelable {
          * An empty set matches all networks, including those without a subId.
          *
          * @param subIds A {@code Set} that represents subscription IDs.
+         * @hide
          */
         @NonNull
+        @SystemApi
         public Builder setSubIds(@NonNull Set<Integer> subIds) {
             mNetworkCapabilities.setSubIds(subIds);
             return this;
