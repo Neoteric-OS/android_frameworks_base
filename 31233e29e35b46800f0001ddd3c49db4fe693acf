@@ -68,6 +68,47 @@
       "message": "Should this be SYSTEM_SERVER instead of MODULE_LIBRARIES? StatsCompanionService runs in system server, and is the only thing that will call this.",
       "revId": "31233e29e35b46800f0001ddd3c49db4fe693acf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "298b7463_54fbd135",
+        "filename": "core/java/android/stats/StatsHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2021-03-24T23:53:51Z",
+      "side": 1,
+      "message": "If this is only called by the system server, then let\u0027s use @SystemApi(client\u003dSYSTEM_SERVER).\n\nTo do that, you need to move it under f/b/services/ -- probably in frameworks/base/services/core/java/com/android/server/stats/?",
+      "parentUuid": "0e0ec5d7_36b9eaac",
+      "revId": "31233e29e35b46800f0001ddd3c49db4fe693acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09c21f75_adb65c2f",
+        "filename": "core/java/android/stats/StatsHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2021-03-24T23:53:51Z",
+      "side": 1,
+      "message": "Are you sure you only want to send it to user-0 apps? That means processes running on other users (e.g. secondary users, work profile) won\u0027t receive it, including gms-core.",
+      "range": {
+        "startLine": 43,
+        "startChar": 16,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "31233e29e35b46800f0001ddd3c49db4fe693acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
