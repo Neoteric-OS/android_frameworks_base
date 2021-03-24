@@ -91,6 +91,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2e5fd61f_21b98518",
+        "filename": "core/java/android/app/compat/CompatChanges.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T15:25:46Z",
+      "side": 1,
+      "message": "Re updated: I only added this method in an earlier CL, so I wouldn\u0027t say updated as such.\n\nNon-static: Happy either way, I thought it was better API design to use non-static, because it allows for easier mocking and testing on the client.",
+      "parentUuid": "ca82c27e_58613a23",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c4fa8972_87b58826",
         "filename": "core/java/android/app/compat/CompatChanges.java",
         "patchSetId": 10
@@ -226,6 +250,24 @@
       "side": 1,
       "message": "I see. Do you mind updating the documentation here to highlight the difference between the two permissions?\n\nnit: I was mostly confused by a broad \u0027Overridable\u0027 name, maybe smth like \u0027OverridableOnReleaseBuilds\u0027 would be more clear to me.",
       "parentUuid": "c2e26eb7_be324b67",
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a99b5f67_8026d6b4",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 5125,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T15:25:46Z",
+      "side": 1,
+      "message": "Do you think I should rename the annotation? I do see how it is confusing.",
+      "parentUuid": "c6923a03_c86a218e",
       "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -418,6 +460,24 @@
       "side": 1,
       "message": "How do you configure a particular permission in this test? Would it make sense to check the separation between the regular and \u0027overridable\u0027 permissions.",
       "parentUuid": "bef9b3bf_48f9392b",
+      "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a52904d8_758999c5",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-03-24T15:25:46Z",
+      "side": 1,
+      "message": "In the CTS or the unit test?\nYes, that does make sense.",
+      "parentUuid": "538f4aa1_30c24554",
       "revId": "0c80b67bdd483d7c47817e622cabc6b388170402",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
