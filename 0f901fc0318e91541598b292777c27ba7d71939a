@@ -347,6 +347,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "271330db_fc700dfc",
+        "filename": "telephony/java/android/telephony/data/NrQosSessionAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-24T05:53:27Z",
+      "side": 1,
+      "message": "Then it sounds like the system should ensure the list is not empty (because it\u0027s the only party with a full picture) – it sounds like you agree that an empty list poses an unsolvable problem to apps.\n\nThis can of course be addressed in followups.",
+      "parentUuid": "d5fbbe55_0c9c23fe",
+      "range": {
+        "startLine": 140,
+        "startChar": 7,
+        "endLine": 141,
+        "endChar": 84
+      },
+      "revId": "0f901fc0318e91541598b292777c27ba7d71939a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "32da85d7_6aa4e519",
@@ -455,6 +479,30 @@
       "side": 1,
       "message": "Jean, Actually i will do this in separate CL",
       "parentUuid": "4f04bec2_57c8a9b7",
+      "range": {
+        "startLine": 9937,
+        "startChar": 16,
+        "endLine": 9937,
+        "endChar": 49
+      },
+      "revId": "0f901fc0318e91541598b292777c27ba7d71939a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d340d143_f0c71d24",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9937,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-24T05:53:27Z",
+      "side": 1,
+      "message": "Fair enough",
+      "parentUuid": "b1ab778f_5b047b43",
       "range": {
         "startLine": 9937,
         "startChar": 16,
