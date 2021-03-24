@@ -16,6 +16,53 @@
       "message": "thanks for looking Michael, replies inline",
       "revId": "7ca3cd62afca6e90cbbd49d67d7ddf88e2b0dd80",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4632885_62be163f",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3175,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2021-03-24T21:08:14Z",
+      "side": 1,
+      "message": "should these numbers be constants defined somewhere in keystore?",
+      "range": {
+        "startLine": 3175,
+        "startChar": 11,
+        "endLine": 3175,
+        "endChar": 14
+      },
+      "revId": "7ca3cd62afca6e90cbbd49d67d7ddf88e2b0dd80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfc56bf7_4725d0aa",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3218,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2021-03-24T21:08:14Z",
+      "side": 1,
+      "message": "\u003e Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.\n\nPlease fix.",
+      "parentUuid": "da31f77d_c290e986",
+      "range": {
+        "startLine": 3218,
+        "startChar": 0,
+        "endLine": 3218,
+        "endChar": 101
+      },
+      "revId": "7ca3cd62afca6e90cbbd49d67d7ddf88e2b0dd80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
