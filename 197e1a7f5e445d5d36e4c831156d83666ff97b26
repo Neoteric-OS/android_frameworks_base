@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08e5d534_ca8a9c54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2021-03-24T03:07:48Z",
+      "side": 1,
+      "message": "There\u0027s conflict on current.txt; I\u0027ll need to merge this as DO NOT MERGE \u0026 cherry-pick this to internal branch.",
+      "revId": "197e1a7f5e445d5d36e4c831156d83666ff97b26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
