@@ -647,6 +647,23 @@ public class TelephonyRegistryManager {
     }
 
     /**
+     * Notify precise data connection failed on certain subscription due to missing or unknown APN.
+     *
+     * @param slotIndex for which data connection failed due to missing or unknown APN.
+     *        Can be derived from subId except when subId is invalid.
+     * @param subId for which data connection failed due to missing or unknown APN.
+     * @param preciseState the PreciseDataConnectionState
+     */
+    public void notifyMissingUnknownApn(
+            int slotIndex, int subId, @NonNull PreciseDataConnectionState preciseState) {
+        try {
+            sRegistry.notifyMissingUnknownApn(slotIndex, subId, preciseState);
+        } catch (RemoteException ex) {
+            // system process is dead
+        }
+    }
+
+    /**
      * Notify single Radio Voice Call Continuity (SRVCC) state change for the currently active call
      * on certain subscription.
      *
