@@ -18184,6 +18184,19 @@ package android.hardware.input {
 
 }
 
+package android.hardware.lights {
+
+  public final class LightsRequest {
+  }
+
+  public static final class LightsRequest.Builder {
+    ctor public LightsRequest.Builder();
+    method @NonNull public android.hardware.lights.LightsRequest build();
+    method @NonNull public android.hardware.lights.LightsRequest.Builder clearLight(@NonNull android.hardware.lights.Light);
+  }
+
+}
+
 package android.hardware.usb {
 
   public class UsbAccessory implements android.os.Parcelable {

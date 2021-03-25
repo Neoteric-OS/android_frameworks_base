@@ -24,10 +24,7 @@ import com.android.internal.util.Preconditions;
 
 /**
  * Encapsulates a request to modify the state of multiple lights.
- *
- * @hide
  */
-@SystemApi
 public final class LightsRequest {
 
     /** Visible to {@link LightsManager.Session}. */
@@ -61,7 +58,9 @@ public final class LightsRequest {
          *
          * @param light the light to modify
          * @param state the desired color and intensity of the light
+         * @hide
          */
+        @SystemApi
         public @NonNull Builder setLight(@NonNull Light light, @NonNull LightState state) {
             Preconditions.checkNotNull(light);
             Preconditions.checkNotNull(state);
