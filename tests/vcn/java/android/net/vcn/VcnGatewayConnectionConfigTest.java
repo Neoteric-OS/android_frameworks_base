@@ -21,7 +21,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
+import android.net.EncryptedTunnelParams;
 import android.net.NetworkCapabilities;
+import android.net.ipsec.ike.IkeTunnelParams;
+import android.net.vcn.persistablebundleutils.IkeSessionParamsUtilsTest;
+import android.net.vcn.persistablebundleutils.TunnelModeChildSessionParamsUtilsTest;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -58,8 +62,13 @@ public class VcnGatewayConnectionConfigTest {
             };
     public static final int MAX_MTU = 1360;
 
-    public static final VcnControlPlaneConfig CONTROL_PLANE_CONFIG =
-            VcnControlPlaneIkeConfigTest.buildTestConfig();
+    public static final EncryptedTunnelParams ENCRYPTED_TUNNEL_PARAMS = buildTestParams();
+
+    public static IkeTunnelParams buildTestParams() {
+        return new IkeTunnelParams(
+                IkeSessionParamsUtilsTest.createBuilderMinimum().build(),
+                TunnelModeChildSessionParamsUtilsTest.createBuilderMinimum().build());
+    }
 
     // Public for use in VcnGatewayConnectionTest
     public static VcnGatewayConnectionConfig buildTestConfig() {
@@ -67,7 +76,7 @@ public class VcnGatewayConnectionConfigTest {
     }
 
     private static VcnGatewayConnectionConfig.Builder newBuilder() {
-        return new VcnGatewayConnectionConfig.Builder(CONTROL_PLANE_CONFIG);
+        return new VcnGatewayConnectionConfig.Builder(ENCRYPTED_TUNNEL_PARAMS);
     }
 
     // Public for use in VcnGatewayConnectionTest
@@ -87,11 +96,11 @@ public class VcnGatewayConnectionConfigTest {
     }
 
     @Test
-    public void testBuilderRequiresNonNullControlPlaneConfig() {
+    public void testBuilderRequiresNonNullEncryptedTunnelParams() {
         try {
             new VcnGatewayConnectionConfig.Builder(null).build();
 
-            fail("Expected exception due to invalid control plane config");
+            fail("Expected exception due to the absence of encrypted tunnel parameters");
         } catch (NullPointerException e) {
         }
     }
@@ -147,8 +156,8 @@ public class VcnGatewayConnectionConfigTest {
         Arrays.sort(underlyingCaps);
         assertArrayEquals(UNDERLYING_CAPS, underlyingCaps);
 
-        assertEquals(CONTROL_PLANE_CONFIG, config.getControlPlaneConfig());
-        assertFalse(CONTROL_PLANE_CONFIG == config.getControlPlaneConfig());
+        assertEquals(ENCRYPTED_TUNNEL_PARAMS, config.getEncryptedTunnelParams());
+        assertFalse(ENCRYPTED_TUNNEL_PARAMS == config.getEncryptedTunnelParams());
 
         assertArrayEquals(RETRY_INTERVALS_MS, config.getRetryIntervalsMs());
         assertEquals(MAX_MTU, config.getMaxMtu());

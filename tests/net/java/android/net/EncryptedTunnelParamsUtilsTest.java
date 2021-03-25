@@ -68,7 +68,7 @@ public class EncryptedTunnelParamsUtilsTest {
                 new TunnelModeChildSessionParams.Builder().addSaProposal(childProposal).build();
     }
 
-    private static IkeTunnelParams buildTestParams() {
+    public static IkeTunnelParams buildTestParams() {
         return new IkeTunnelParams(IKE_PARAMS, CHILD_PARAMS);
     }
 

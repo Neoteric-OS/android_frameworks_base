@@ -52,7 +52,7 @@ import java.util.concurrent.TimeUnit;
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class IkeSessionParamsUtilsTest {
-    private static IkeSessionParams.Builder createBuilderMinimum() {
+    public static IkeSessionParams.Builder createBuilderMinimum() {
         final InetAddress serverAddress = InetAddresses.parseNumericAddress("192.0.2.100");
 
         return new IkeSessionParams.Builder()

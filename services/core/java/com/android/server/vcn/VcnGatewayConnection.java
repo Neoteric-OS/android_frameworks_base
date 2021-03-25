@@ -55,11 +55,11 @@ import android.net.ipsec.ike.IkeSession;
 import android.net.ipsec.ike.IkeSessionCallback;
 import android.net.ipsec.ike.IkeSessionConfiguration;
 import android.net.ipsec.ike.IkeSessionParams;
+import android.net.ipsec.ike.IkeTunnelParams;
 import android.net.ipsec.ike.exceptions.AuthenticationFailedException;
 import android.net.ipsec.ike.exceptions.IkeException;
 import android.net.ipsec.ike.exceptions.IkeInternalException;
 import android.net.ipsec.ike.exceptions.IkeProtocolException;
-import android.net.vcn.VcnControlPlaneIkeConfig;
 import android.net.vcn.VcnGatewayConnectionConfig;
 import android.net.vcn.VcnTransportInfo;
 import android.net.wifi.WifiInfo;
@@ -1943,19 +1943,19 @@ public class VcnGatewayConnection extends StateMachine {
     }
 
     private IkeSessionParams buildIkeParams(@NonNull Network network) {
-        final VcnControlPlaneIkeConfig controlPlaneConfig =
-                (VcnControlPlaneIkeConfig) mConnectionConfig.getControlPlaneConfig();
+        final IkeTunnelParams encryptedTunnelParams =
+                (IkeTunnelParams) mConnectionConfig.getEncryptedTunnelParams();
         final IkeSessionParams.Builder builder =
-                new IkeSessionParams.Builder(controlPlaneConfig.getIkeSessionParams());
+                new IkeSessionParams.Builder(encryptedTunnelParams.getIkeSessionParams());
         builder.setConfiguredNetwork(network);
 
         return builder.build();
     }
 
     private ChildSessionParams buildChildParams() {
-        final VcnControlPlaneIkeConfig controlPlaneConfig =
-                (VcnControlPlaneIkeConfig) mConnectionConfig.getControlPlaneConfig();
-        return controlPlaneConfig.getChildSessionParams();
+        final IkeTunnelParams encryptedTunnelParams =
+                (IkeTunnelParams) mConnectionConfig.getEncryptedTunnelParams();
+        return encryptedTunnelParams.getChildSessionParams();
     }
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
