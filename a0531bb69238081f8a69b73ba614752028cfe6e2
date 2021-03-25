@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3e07d8e_a6a40316",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3642,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-25T05:21:01Z",
+      "side": 1,
+      "message": "It\u0027s also called when the reason changed but the network is still blocked.",
+      "range": {
+        "startLine": 3642,
+        "startChar": 55,
+        "endLine": 3642,
+        "endChar": 79
+      },
+      "revId": "a0531bb69238081f8a69b73ba614752028cfe6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d7f7c63_776f5f02",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7314,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-25T05:21:01Z",
+      "side": 1,
+      "message": "Did you want to fix this while you\u0027re here ? I think it may come in handy when debugging.\n\nIn a followup is fine.",
+      "range": {
+        "startLine": 7314,
+        "startChar": 72,
+        "endLine": 7314,
+        "endChar": 81
+      },
+      "revId": "a0531bb69238081f8a69b73ba614752028cfe6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50d35128_fc86e06b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8077,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-25T05:21:01Z",
+      "side": 1,
+      "message": "Considering that blocked reasons are flags, structurally BLOCKED_REASON_NONE is necessarily 0 and usage must consider 0 unblocked, and therefore I question the usefulness of having such a method as opposed to simply calling .put(blockedReasons).\n\nNot feeling strongly.",
+      "range": {
+        "startLine": 8077,
+        "startChar": 17,
+        "endLine": 8077,
+        "endChar": 37
+      },
+      "revId": "a0531bb69238081f8a69b73ba614752028cfe6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
