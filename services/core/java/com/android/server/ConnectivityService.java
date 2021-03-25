@@ -6214,7 +6214,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private final NetworkRequest mDefaultVehicleRequest;
 
     // TODO replace with INetd.DUMMY_NET_ID when available.
-    private static final int NO_SERVICE_NET_ID = 51;
+    private static final int NO_SERVICE_NET_ID = 52;
     // Sentinel NAI used to direct apps with default networks that should have no connectivity to a
     // network with no service. This NAI should never be matched against, nor should any public API
     // ever return the associated network. For this reason, this NAI is not in the list of available
