@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a700196_720fa738",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-03-25T20:40:39Z",
+      "side": 1,
+      "message": "Add BLOCKED_REASON_LOCKDOWN_VPN?",
+      "range": {
+        "startLine": 919,
+        "startChar": 12,
+        "endLine": 923,
+        "endChar": 43
+      },
+      "revId": "5ab70251e8fdf8acf351ab46987633b60e40b191",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
