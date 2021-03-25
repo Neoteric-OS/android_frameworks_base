@@ -61,10 +61,10 @@ import android.net.ipsec.ike.IkeSession;
 import android.net.ipsec.ike.IkeSessionCallback;
 import android.net.ipsec.ike.IkeSessionConfiguration;
 import android.net.ipsec.ike.IkeSessionParams;
+import android.net.ipsec.ike.IkeTunnelConnectionParams;
 import android.net.ipsec.ike.exceptions.IkeException;
 import android.net.ipsec.ike.exceptions.IkeInternalException;
 import android.net.ipsec.ike.exceptions.IkeProtocolException;
-import android.net.vcn.VcnControlPlaneIkeConfig;
 import android.net.vcn.VcnGatewayConnectionConfig;
 import android.net.vcn.VcnTransportInfo;
 import android.net.wifi.WifiInfo;
@@ -1923,8 +1923,8 @@ public class VcnGatewayConnection extends StateMachine {
             @NonNull IpSecTunnelInterface tunnelIface,
             @NonNull VcnChildSessionConfiguration childConfig,
             @Nullable UnderlyingNetworkRecord underlying) {
-        final VcnControlPlaneIkeConfig controlPlaneConfig =
-                (VcnControlPlaneIkeConfig) gatewayConnectionConfig.getControlPlaneConfig();
+        final IkeTunnelConnectionParams ikeTunnelParams =
+                gatewayConnectionConfig.getTunnelConnectionParams();
         final LinkProperties lp = new LinkProperties();
 
         lp.setInterfaceName(tunnelIface.getInterfaceName());
@@ -1943,7 +1943,7 @@ public class VcnGatewayConnection extends StateMachine {
         final int underlyingMtu = (underlying == null) ? 0 : underlying.linkProperties.getMtu();
         lp.setMtu(
                 MtuUtils.getMtu(
-                        controlPlaneConfig.getChildSessionParams().getSaProposals(),
+                        ikeTunnelParams.getTunnelModeChildSessionParams().getSaProposals(),
                         gatewayConnectionConfig.getMaxMtu(),
                         underlyingMtu));
 
@@ -2131,19 +2131,17 @@ public class VcnGatewayConnection extends StateMachine {
     }
 
     private IkeSessionParams buildIkeParams(@NonNull Network network) {
-        final VcnControlPlaneIkeConfig controlPlaneConfig =
-                (VcnControlPlaneIkeConfig) mConnectionConfig.getControlPlaneConfig();
+        final IkeTunnelConnectionParams ikeTunnelConnectionParams =
+                mConnectionConfig.getTunnelConnectionParams();
         final IkeSessionParams.Builder builder =
-                new IkeSessionParams.Builder(controlPlaneConfig.getIkeSessionParams());
+                new IkeSessionParams.Builder(ikeTunnelConnectionParams.getIkeSessionParams());
         builder.setNetwork(network);
 
         return builder.build();
     }
 
     private ChildSessionParams buildChildParams() {
-        final VcnControlPlaneIkeConfig controlPlaneConfig =
-                (VcnControlPlaneIkeConfig) mConnectionConfig.getControlPlaneConfig();
-        return controlPlaneConfig.getChildSessionParams();
+        return mConnectionConfig.getTunnelConnectionParams().getTunnelModeChildSessionParams();
     }
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
