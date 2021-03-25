@@ -24,4 +24,6 @@ package android.net;
  *
  * @see android.net.ipsec.ike.IkeTunnelConnectionParams
  */
+// STOPSHIP:b/186071626 Remove TunnelConnectionParams when non-updatable API stub can resolve
+// IkeTunnelConnectionParams
 public interface TunnelConnectionParams {}
