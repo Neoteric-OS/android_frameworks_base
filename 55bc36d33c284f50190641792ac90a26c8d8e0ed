@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7244cdfd_807c67ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-03-25T12:52:53Z",
+      "side": 1,
+      "message": "See my other comment.",
+      "parentUuid": "59bf011a_4fd60a63",
+      "revId": "55bc36d33c284f50190641792ac90a26c8d8e0ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59787970_650044ce",
@@ -49,6 +67,24 @@
       "writtenOn": "2021-03-25T03:24:21Z",
       "side": 1,
       "message": "This could ensure that there\u0027s no newly added NewDeviceAction that blocks CEC from entering standby successfully.\nBut this will also block NewDeviceAction in quiescent boot mode, we\u0027re not sure if this is acceptable or not.",
+      "revId": "55bc36d33c284f50190641792ac90a26c8d8e0ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c841457a_76cda24f",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-03-25T12:52:53Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. It is not a concern:\n\n1. After quiescent boot, the device will be asleep and therefore not interested in discovering new devices.\n\n2. During the first stage of a regular boot, isPowerStandbyOrTransient() \u003d\u003d true for a while. However, when boot completes, DeviceDiscoveryAction will be started, making any NewDeviceActions redundant.",
+      "parentUuid": "59787970_650044ce",
       "revId": "55bc36d33c284f50190641792ac90a26c8d8e0ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
