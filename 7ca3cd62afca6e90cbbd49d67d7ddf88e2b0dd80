@@ -89,6 +89,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84184296_5b08bab9",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3175,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-03-25T18:29:24Z",
+      "side": 1,
+      "message": "Understood, we\u0027ll be careful and we won\u0027t change the meaning of those numbers. Thanks!",
+      "parentUuid": "b037afc3_976f5590",
+      "range": {
+        "startLine": 3175,
+        "startChar": 11,
+        "endLine": 3175,
+        "endChar": 14
+      },
+      "revId": "7ca3cd62afca6e90cbbd49d67d7ddf88e2b0dd80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bfc56bf7_4725d0aa",
