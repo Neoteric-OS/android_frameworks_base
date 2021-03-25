@@ -29,7 +29,8 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class EncryptedTunnelParamsUtilsTest {
-    private static IkeTunnelParams buildTestParams() {
+    // Public for use in VcnGatewayConnectionConfigTest
+    public static IkeTunnelParams buildTestParams() {
         return new IkeTunnelParams(
                 IkeSessionParamsUtilsTest.createBuilderMinimum().build(),
                 TunnelModeChildSessionParamsUtilsTest.createBuilderMinimum().build());
