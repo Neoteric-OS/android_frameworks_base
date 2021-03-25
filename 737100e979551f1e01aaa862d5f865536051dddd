@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de39c45f_53fa6937",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-03-25T11:01:57Z",
+      "side": 1,
+      "message": "It\u0027s a clean cherry-pick.",
+      "revId": "737100e979551f1e01aaa862d5f865536051dddd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
