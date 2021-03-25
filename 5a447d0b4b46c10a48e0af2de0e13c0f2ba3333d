@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc7006b6_3caabc6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1292888
+      },
+      "writtenOn": "2021-03-25T10:14:01Z",
+      "side": 1,
+      "message": "Toki should this still be merged? Given it has been inactive for 2 years :)",
+      "revId": "5a447d0b4b46c10a48e0af2de0e13c0f2ba3333d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
