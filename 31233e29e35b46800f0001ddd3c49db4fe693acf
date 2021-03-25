@@ -88,6 +88,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a02c6b77_7b7b0eb2",
+        "filename": "core/java/android/stats/StatsHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1431413
+      },
+      "writtenOn": "2021-03-25T21:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "298b7463_54fbd135",
+      "revId": "31233e29e35b46800f0001ddd3c49db4fe693acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09c21f75_adb65c2f",
@@ -125,6 +143,30 @@
       "side": 1,
       "message": "(You can use UserHandle.ALL to send it to all users.)",
       "parentUuid": "09c21f75_adb65c2f",
+      "range": {
+        "startLine": 43,
+        "startChar": 16,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "31233e29e35b46800f0001ddd3c49db4fe693acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4283b1a3_3756a416",
+        "filename": "core/java/android/stats/StatsHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1431413
+      },
+      "writtenOn": "2021-03-25T21:56:56Z",
+      "side": 1,
+      "message": "We don\u0027t need to expand it for other users. There\u0027s only one consumer of this broadcast currently and it\u0027s in system user. We can look into expanding it to UserHandle.ALL if we have a use case for non system user apps to receive the broadcast.",
+      "parentUuid": "a6f9ab87_250bc292",
       "range": {
         "startLine": 43,
         "startChar": 16,
