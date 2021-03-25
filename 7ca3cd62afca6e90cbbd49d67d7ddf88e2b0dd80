@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b037afc3_976f5590",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3175,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2021-03-25T17:35:05Z",
+      "side": 1,
+      "message": "Just be very careful as you are creating defacto [but untracked] API. There will be applications that expect certain values to mean certain things; and that cannot change.",
+      "parentUuid": "a2c309d9_cd49028c",
+      "range": {
+        "startLine": 3175,
+        "startChar": 11,
+        "endLine": 3175,
+        "endChar": 14
+      },
+      "revId": "7ca3cd62afca6e90cbbd49d67d7ddf88e2b0dd80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bfc56bf7_4725d0aa",
@@ -103,6 +127,30 @@
       "side": 1,
       "message": "Done. I don\u0027t think I can fix the other ones with e.g.\n android.security.keystore.KeyGenParameterSpec.Builder#setDevicePropertiesAttestationIncluded(boolean)})\n\nsince that would break the @link logic in JavaDoc.",
       "parentUuid": "bfc56bf7_4725d0aa",
+      "range": {
+        "startLine": 3218,
+        "startChar": 0,
+        "endLine": 3218,
+        "endChar": 101
+      },
+      "revId": "7ca3cd62afca6e90cbbd49d67d7ddf88e2b0dd80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb764d7b_feb0d2f8",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3218,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2021-03-25T17:35:05Z",
+      "side": 1,
+      "message": "indeed, you can\u0027t. that\u0027s why i only flagged this one. 😊",
+      "parentUuid": "3b4e271b_3d89c4d9",
       "range": {
         "startLine": 3218,
         "startChar": 0,
