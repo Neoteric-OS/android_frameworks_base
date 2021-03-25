@@ -34,6 +34,23 @@
       "parentUuid": "2065a302_b65c4e0c",
       "revId": "55bc36d33c284f50190641792ac90a26c8d8e0ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59787970_650044ce",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2021-03-25T03:24:21Z",
+      "side": 1,
+      "message": "This could ensure that there\u0027s no newly added NewDeviceAction that blocks CEC from entering standby successfully.\nBut this will also block NewDeviceAction in quiescent boot mode, we\u0027re not sure if this is acceptable or not.",
+      "revId": "55bc36d33c284f50190641792ac90a26c8d8e0ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
