@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11b5a16b_32c6ee8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-25T14:04:47Z",
+      "side": 1,
+      "message": "No new comments on top of what I wrote on the previous patchset",
+      "revId": "f367799be6fe5897cc6b40be8f388bb8e374054e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
