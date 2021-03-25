@@ -23,11 +23,13 @@
 #include <jni.h>
 #include <nativehelper/JNIHelp.h>
 
+#include <android/binder_manager.h>
 #include <android/hidl/manager/1.2/IServiceManager.h>
 #include <binder/IServiceManager.h>
 #include <hidl/HidlTransportSupport.h>
 #include <incremental_service.h>
 
+#include <memtrackproxy/MemtrackProxy.h>
 #include <schedulerservice/SchedulingPolicyService.h>
 #include <sensorservice/SensorService.h>
 #include <sensorservicehidl/SensorManager.h>
@@ -44,6 +46,21 @@
 
 using android::base::GetIntProperty;
 using namespace std::chrono_literals;
+
+namespace {
+
+static void startMemtrackProxyService() {
+    using aidl::android::hardware::memtrack::MemtrackProxy;
+
+    std::shared_ptr<MemtrackProxy> memtrack_proxy = ndk::SharedRefBase::make<MemtrackProxy>();
+
+    const std::string instance = std::string() + MemtrackProxy::descriptor + "/proxy";
+    const binder_exception_t err =
+            AServiceManager_addService(memtrack_proxy->asBinder().get(), instance.c_str());
+    LOG_ALWAYS_FATAL_IF(err != EX_NONE, "Cannot register %s: %d", instance.c_str(), err);
+}
+
+} // namespace
 
 namespace android {
 
@@ -92,6 +109,8 @@ static void android_server_SystemServer_startHidlServices(JNIEnv* env, jobject /
     sp<IStats> statsHal = new StatsHal();
     err = statsHal->registerAsService();
     LOG_ALWAYS_FATAL_IF(err != OK, "Cannot register %s: %d", IStats::descriptor, err);
+
+    startMemtrackProxyService();
 }
 
 static void android_server_SystemServer_initZygoteChildHeapProfiling(JNIEnv* /* env */,
