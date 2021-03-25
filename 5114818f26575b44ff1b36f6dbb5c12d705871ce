@@ -62,6 +62,46 @@
       },
       "revId": "5114818f26575b44ff1b36f6dbb5c12d705871ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d474cf3_0a57b884",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2021-03-25T02:33:08Z",
+      "side": 1,
+      "message": "TYPE_VSIM and TYPE_BIP should be added to this IntDef",
+      "revId": "5114818f26575b44ff1b36f6dbb5c12d705871ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "524d7c37_3bb733f1",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2021-03-25T02:33:08Z",
+      "side": 1,
+      "message": "please add these above TYPE_ENTERPRISE, and change the value for TYPE_ENTERPRISE to be TYPE_BIP \u003c\u003c 1.",
+      "range": {
+        "startLine": 143,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 52
+      },
+      "revId": "5114818f26575b44ff1b36f6dbb5c12d705871ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
