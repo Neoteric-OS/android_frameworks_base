@@ -1,0 +1,487 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009350693",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653867?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9a892a33_9876c497",
+        "filename": "stats/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 2249,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-25T05:55:01Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 2249,
+        "startChar": 19,
+        "endLine": 2249,
+        "endChar": 29
+      },
+      "revId": "b2cc21d923a28e5e74beb21757b4e7bf6d555969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009350693",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653867?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "26fc5472_86c1c7dd",
+        "filename": "stats/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 2250,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-25T05:55:01Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 2250,
+        "startChar": 17,
+        "endLine": 2250,
+        "endChar": 27
+      },
+      "revId": "b2cc21d923a28e5e74beb21757b4e7bf6d555969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009350693",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653867?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6b41f92d_68d103ab",
+        "filename": "stats/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 2251,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-25T05:55:01Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 2251,
+        "startChar": 20,
+        "endLine": 2251,
+        "endChar": 30
+      },
+      "revId": "b2cc21d923a28e5e74beb21757b4e7bf6d555969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009350692",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653867?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "c6ae1633_39e04587",
+          "description": "Change to \"stats/atoms.proto\"",
+          "replacements": [
+            {
+              "path": "stats/atoms.proto",
+              "range": {
+                "startLine": 2299,
+                "startChar": 42,
+                "endLine": 2299,
+                "endChar": 52
+              },
+              "replacement": "triggered"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "a3cb8557_397f102d",
+        "filename": "stats/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 2299,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-25T05:55:01Z",
+      "side": 1,
+      "message": "Common typo found: \"triggerred\" -- should it be \"triggered\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 2299,
+        "startChar": 42,
+        "endLine": 2299,
+        "endChar": 52
+      },
+      "revId": "b2cc21d923a28e5e74beb21757b4e7bf6d555969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009350692",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653867?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "b54c324d_9400ea86",
+          "description": "Change to \"stats/atoms.proto\"",
+          "replacements": [
+            {
+              "path": "stats/atoms.proto",
+              "range": {
+                "startLine": 2570,
+                "startChar": 42,
+                "endLine": 2570,
+                "endChar": 52
+              },
+              "replacement": "triggered"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "6b1d6ca6_5cac1fc8",
+        "filename": "stats/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 2570,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-25T05:55:01Z",
+      "side": 1,
+      "message": "Common typo found: \"triggerred\" -- should it be \"triggered\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 2570,
+        "startChar": 42,
+        "endLine": 2570,
+        "endChar": 52
+      },
+      "revId": "b2cc21d923a28e5e74beb21757b4e7bf6d555969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009350692",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653867?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "b36863d3_02501efe",
+          "description": "Change to \"stats/atoms.proto\"",
+          "replacements": [
+            {
+              "path": "stats/atoms.proto",
+              "range": {
+                "startLine": 2610,
+                "startChar": 42,
+                "endLine": 2610,
+                "endChar": 52
+              },
+              "replacement": "triggered"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "b66afd8b_866ade24",
+        "filename": "stats/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 2610,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-25T05:55:01Z",
+      "side": 1,
+      "message": "Common typo found: \"triggerred\" -- should it be \"triggered\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 2610,
+        "startChar": 42,
+        "endLine": 2610,
+        "endChar": 52
+      },
+      "revId": "b2cc21d923a28e5e74beb21757b4e7bf6d555969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009350692",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653867?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "b27b2170_3adb2b50",
+          "description": "Change to \"stats/atoms.proto\"",
+          "replacements": [
+            {
+              "path": "stats/atoms.proto",
+              "range": {
+                "startLine": 2929,
+                "startChar": 42,
+                "endLine": 2929,
+                "endChar": 52
+              },
+              "replacement": "triggered"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "86ccfe61_1f15317f",
+        "filename": "stats/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 2929,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-25T05:55:01Z",
+      "side": 1,
+      "message": "Common typo found: \"triggerred\" -- should it be \"triggered\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 2929,
+        "startChar": 42,
+        "endLine": 2929,
+        "endChar": 52
+      },
+      "revId": "b2cc21d923a28e5e74beb21757b4e7bf6d555969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009350692",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653867?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "d48dccf7_fd08e121",
+          "description": "Change to \"stats/atoms.proto\"",
+          "replacements": [
+            {
+              "path": "stats/atoms.proto",
+              "range": {
+                "startLine": 6202,
+                "startChar": 84,
+                "endLine": 6202,
+                "endChar": 90
+              },
+              "replacement": "Service"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "6485f631_3981371c",
+        "filename": "stats/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 6202,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-25T05:55:01Z",
+      "side": 1,
+      "message": "Common typo found: \"Servie\" -- should it be \"Service\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 6202,
+        "startChar": 84,
+        "endLine": 6202,
+        "endChar": 90
+      },
+      "revId": "b2cc21d923a28e5e74beb21757b4e7bf6d555969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009350693",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653867?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ec1347b7_40e1d3c2",
+        "filename": "stats/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 7344,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-25T05:55:01Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 7344,
+        "startChar": 12,
+        "endLine": 7344,
+        "endChar": 21
+      },
+      "revId": "b2cc21d923a28e5e74beb21757b4e7bf6d555969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009350693",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653867?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f301571d_049e1bd1",
+        "filename": "stats/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 7362,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-25T05:55:01Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 7362,
+        "startChar": 61,
+        "endLine": 7362,
+        "endChar": 70
+      },
+      "revId": "b2cc21d923a28e5e74beb21757b4e7bf6d555969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009350692",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653867?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "22cc8462_aed48798",
+          "description": "Change to \"stats/atoms.proto\"",
+          "replacements": [
+            {
+              "path": "stats/atoms.proto",
+              "range": {
+                "startLine": 9329,
+                "startChar": 30,
+                "endLine": 9329,
+                "endChar": 37
+              },
+              "replacement": "occurred"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "0c107f28_5c906a82",
+        "filename": "stats/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 9329,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-25T05:55:01Z",
+      "side": 1,
+      "message": "Common typo found: \"occured\" -- should it be \"occurred\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 9329,
+        "startChar": 30,
+        "endLine": 9329,
+        "endChar": 37
+      },
+      "revId": "b2cc21d923a28e5e74beb21757b4e7bf6d555969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009350692",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653867?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "d5c3b809_3c93b812",
+          "description": "Change to \"stats/atoms.proto\"",
+          "replacements": [
+            {
+              "path": "stats/atoms.proto",
+              "range": {
+                "startLine": 10921,
+                "startChar": 48,
+                "endLine": 10921,
+                "endChar": 60
+              },
+              "replacement": "compatibility"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "7c20634c_c0d8edc0",
+        "filename": "stats/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 10921,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-25T05:55:01Z",
+      "side": 1,
+      "message": "Common typo found: \"compatibilty\" -- should it be \"compatibility\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 10921,
+        "startChar": 48,
+        "endLine": 10921,
+        "endChar": 60
+      },
+      "revId": "b2cc21d923a28e5e74beb21757b4e7bf6d555969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009350693",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653867?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0d110111_a757bff2",
+        "filename": "stats/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 13281,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-25T05:55:01Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 13281,
+        "startChar": 41,
+        "endLine": 13281,
+        "endChar": 50
+      },
+      "revId": "b2cc21d923a28e5e74beb21757b4e7bf6d555969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009350693",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653867?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "56ed028f_9ace9dff",
+        "filename": "stats/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 13282,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-25T05:55:01Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 13282,
+        "startChar": 23,
+        "endLine": 13282,
+        "endChar": 32
+      },
+      "revId": "b2cc21d923a28e5e74beb21757b4e7bf6d555969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
