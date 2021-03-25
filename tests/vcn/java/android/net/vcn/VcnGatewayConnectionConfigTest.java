@@ -22,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import android.net.NetworkCapabilities;
-import android.net.TunnelConnectionParams;
 import android.net.vcn.persistablebundleutils.TunnelConnectionParamsUtilsTest;
 
 import androidx.test.filters.SmallTest;
@@ -60,7 +59,7 @@ public class VcnGatewayConnectionConfigTest {
             };
     public static final int MAX_MTU = 1360;
 
-    public static final TunnelConnectionParams TUNNEL_CONNECTION_PARAMS =
+    public static final IkeTunnelConnectionParams TUNNEL_CONNECTION_PARAMS =
             TunnelConnectionParamsUtilsTest.buildTestParams();
 
     public static final String GATEWAY_CONNECTION_NAME_PREFIX = "gatewayConnectionName-";
