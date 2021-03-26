@@ -81,6 +81,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6940202_4466a777",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1355299
+      },
+      "writtenOn": "2021-03-26T07:05:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78228a3e_db2dfea0",
+      "range": {
+        "startLine": 446,
+        "startChar": 50,
+        "endLine": 446,
+        "endChar": 75
+      },
+      "revId": "5114818f26575b44ff1b36f6dbb5c12d705871ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b729162_c75cf0f8",
@@ -117,6 +141,30 @@
       "writtenOn": "2021-03-25T02:48:20Z",
       "side": 1,
       "message": "nit: these should come after ENTERPRISE once the order is switched.",
+      "range": {
+        "startLine": 2088,
+        "startChar": 12,
+        "endLine": 2088,
+        "endChar": 16
+      },
+      "revId": "5114818f26575b44ff1b36f6dbb5c12d705871ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "077d8add_c8eec174",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2088,
+      "author": {
+        "id": 1355299
+      },
+      "writtenOn": "2021-03-26T07:05:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5208b973_7f64faf2",
       "range": {
         "startLine": 2088,
         "startChar": 12,
