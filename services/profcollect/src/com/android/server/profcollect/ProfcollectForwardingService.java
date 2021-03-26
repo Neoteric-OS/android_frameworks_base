@@ -301,10 +301,15 @@ public final class ProfcollectForwardingService extends SystemService {
 
         new Thread(() -> {
             try {
-                String reportPath = mIProfcollect.report();
+                String reportUuid = mIProfcollect.report();
+
                 if (!uploadReport) {
                     return;
                 }
+                mIProfcollect.copy_report_to_bb(reportUuid);
+                String reportPath =
+                        "/data/user/10/com.google.android.apps.internal.betterbug/cache/"
+                        + reportUuid + ".zip";
                 Intent uploadIntent =
                         new Intent("com.google.android.apps.betterbug.intent.action.UPLOAD_PROFILE")
                         .setPackage("com.google.android.apps.internal.betterbug")
@@ -316,6 +321,7 @@ public final class ProfcollectForwardingService extends SystemService {
                 if (context.getPackageManager().queryBroadcastReceivers(uploadIntent, 0) != null) {
                     context.sendBroadcast(uploadIntent);
                 }
+                mIProfcollect.delete_report(reportUuid);
             } catch (RemoteException e) {
                 Log.e(LOG_TAG, e.getMessage());
             }
