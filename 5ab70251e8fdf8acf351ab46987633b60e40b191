@@ -39,6 +39,30 @@
       },
       "revId": "5ab70251e8fdf8acf351ab46987633b60e40b191",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be82bff8_318c1087",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-26T04:07:48Z",
+      "side": 1,
+      "message": "Good catch. Done in latest patchset of aosp/1654010.",
+      "parentUuid": "7a700196_720fa738",
+      "range": {
+        "startLine": 919,
+        "startChar": 12,
+        "endLine": 923,
+        "endChar": 43
+      },
+      "revId": "5ab70251e8fdf8acf351ab46987633b60e40b191",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
