@@ -80,6 +80,8 @@ import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkPolicyManager.blockedReasonsToString;
 import static android.net.NetworkRequest.Type.LISTEN_FOR_BEST;
+import static android.net.OemNetworkPreferences.OEM_NETWORK_PREFERENCE_TEST;
+import static android.net.OemNetworkPreferences.OEM_NETWORK_PREFERENCE_TEST_ONLY;
 import static android.net.shared.NetworkMonitorUtils.isPrivateDnsValidationRequired;
 import static android.os.Process.INVALID_UID;
 import static android.os.Process.VPN_UID;
@@ -2513,6 +2515,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void enforceOemNetworkPreferencesPermission() {
         mContext.enforceCallingOrSelfPermission(
                 android.Manifest.permission.CONTROL_OEM_PAID_NETWORK_PREFERENCE,
+                "ConnectivityService");
+    }
+
+    private void enforceManageTestNetworksPermission() {
+        mContext.enforceCallingOrSelfPermission(
+                android.Manifest.permission.MANAGE_TEST_NETWORKS,
                 "ConnectivityService");
     }
 
@@ -9602,8 +9610,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
             @NonNull final OemNetworkPreferences preference,
             @Nullable final IOnCompleteListener listener) {
 
-        enforceAutomotiveDevice();
-        enforceOemNetworkPreferencesPermission();
+        Objects.requireNonNull(preference, "OemNetworkPreferences must be non-null");
+        // Only bypass the permission/device checks if this is a valid test request.
+        if (isValidTestOemNetworkPreference(preference)) {
+            enforceManageTestNetworksPermission();
+        } else {
+            enforceAutomotiveDevice();
+            enforceOemNetworkPreferencesPermission();
+            validateOemNetworkPreferences(preference);
+        }
 
         if (!mProfileNetworkPreferences.isEmpty()) {
             // Strictly speaking, mProfileNetworkPreferences should only be touched on the
@@ -9614,19 +9629,39 @@ public class ConnectivityService extends IConnectivityManager.Stub
             throwConcurrentPreferenceException();
         }
 
-        Objects.requireNonNull(preference, "OemNetworkPreferences must be non-null");
-        validateOemNetworkPreferences(preference);
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_SET_OEM_NETWORK_PREFERENCE,
                 new Pair<>(preference, listener)));
+    }
+
+    /**
+     * Check the validity of an OEM network preference to be used for testing purposes.
+     * @param preference the preference to validate
+     * @return true if this is a valid OEM network preference test request.
+     */
+    private boolean isValidTestOemNetworkPreference(
+            @NonNull final OemNetworkPreferences preference) {
+        // Allow for clearing of an existing OemNetworkPreference used for testing.
+        final boolean isValidTestClearPref = preference.getNetworkPreferences().size() == 0
+                && isTestOemNetworkPreference(mOemNetworkPreferences);
+        return isTestOemNetworkPreference(preference) || isValidTestClearPref;
+    }
+
+    private boolean isTestOemNetworkPreference(@NonNull final OemNetworkPreferences preference) {
+        final Map<String, Integer> prefMap = preference.getNetworkPreferences();
+        return prefMap.size() == 1
+                && (prefMap.containsValue(OEM_NETWORK_PREFERENCE_TEST)
+                || prefMap.containsValue(OEM_NETWORK_PREFERENCE_TEST_ONLY));
     }
 
     private void validateOemNetworkPreferences(@NonNull OemNetworkPreferences preference) {
         for (@OemNetworkPreferences.OemNetworkPreference final int pref
                 : preference.getNetworkPreferences().values()) {
-            if (OemNetworkPreferences.OEM_NETWORK_PREFERENCE_UNINITIALIZED == pref) {
-                final String msg = "OEM_NETWORK_PREFERENCE_UNINITIALIZED is an invalid value.";
-                throw new IllegalArgumentException(msg);
+            if (0 < pref && pref <= OemNetworkPreferences.OEM_NETWORK_PREFERENCE_MAX) {
+                return;
             }
+            throw new IllegalArgumentException(
+                    OemNetworkPreferences.oemNetworkPreferenceToString(pref)
+                    + " is an invalid value.");
         }
     }
 
@@ -9836,13 +9871,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 case OemNetworkPreferences.OEM_NETWORK_PREFERENCE_OEM_PRIVATE_ONLY:
                     requests.add(createOemPrivateNetworkRequest());
                     break;
+                case OEM_NETWORK_PREFERENCE_TEST:
+                    requests.add(createUnmeteredNetworkRequest());
+                    requests.add(createTestNetworkRequest());
+                    requests.add(createDefaultRequest());
+                    break;
+                case OEM_NETWORK_PREFERENCE_TEST_ONLY:
+                    requests.add(createTestNetworkRequest());
+                    break;
                 default:
                     // This should never happen.
                     throw new IllegalArgumentException("createNriFromOemNetworkPreferences()"
                             + " called with invalid preference of " + preference);
             }
 
-            final ArraySet ranges = new ArraySet<Integer>();
+            final ArraySet<UidRange> ranges = new ArraySet<>();
             for (final int uid : uids) {
                 ranges.add(new UidRange(uid, uid));
             }
@@ -9874,10 +9917,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         private NetworkCapabilities createDefaultPerAppNetCap() {
-            final NetworkCapabilities netCap = new NetworkCapabilities();
-            netCap.addCapability(NET_CAPABILITY_INTERNET);
-            netCap.setRequestorUidAndPackageName(Process.myUid(), mContext.getPackageName());
-            return netCap;
+            final NetworkCapabilities netcap = new NetworkCapabilities();
+            netcap.addCapability(NET_CAPABILITY_INTERNET);
+            netcap.setRequestorUidAndPackageName(Process.myUid(), mContext.getPackageName());
+            return netcap;
+        }
+
+        private NetworkRequest createTestNetworkRequest() {
+            final NetworkCapabilities netcap = new NetworkCapabilities();
+            netcap.clearAll();
+            netcap.addTransportType(TRANSPORT_TEST);
+            return createNetworkRequest(NetworkRequest.Type.REQUEST, netcap);
         }
     }
 }
