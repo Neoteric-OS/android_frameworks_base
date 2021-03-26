@@ -41,6 +41,20 @@ import java.util.Objects;
 @SystemApi
 public final class OemNetworkPreferences implements Parcelable {
     /**
+     * This preference is only to be used for testing and nothing else.
+     * Use only TRANSPORT_TEST transport networks.
+     */
+    public static final int OEM_NETWORK_PREFERENCE_TEST_ONLY = -2;
+
+    /**
+     * This preference is only to be used for testing and nothing else.
+     * If an unmetered network is available, use it.
+     * Otherwise, if a network with the TRANSPORT_TEST transport is available, use it.
+     * Otherwise, use the general default network.
+     */
+    public static final int OEM_NETWORK_PREFERENCE_TEST = -1;
+
+    /**
      * Default in case this value is not set. Using it will result in an error.
      */
     public static final int OEM_NETWORK_PREFERENCE_UNINITIALIZED = 0;
@@ -185,6 +199,8 @@ public final class OemNetworkPreferences implements Parcelable {
 
     /** @hide */
     @IntDef(prefix = "OEM_NETWORK_PREFERENCE_", value = {
+            OEM_NETWORK_PREFERENCE_TEST_ONLY,
+            OEM_NETWORK_PREFERENCE_TEST,
             OEM_NETWORK_PREFERENCE_UNINITIALIZED,
             OEM_NETWORK_PREFERENCE_OEM_PAID,
             OEM_NETWORK_PREFERENCE_OEM_PAID_NO_FALLBACK,
@@ -205,6 +221,10 @@ public final class OemNetworkPreferences implements Parcelable {
     @NonNull
     public static String oemNetworkPreferenceToString(@OemNetworkPreference int value) {
         switch (value) {
+            case OEM_NETWORK_PREFERENCE_TEST_ONLY:
+                return "OEM_NETWORK_PREFERENCE_TEST_ONLY";
+            case OEM_NETWORK_PREFERENCE_TEST:
+                return "OEM_NETWORK_PREFERENCE_TEST";
             case OEM_NETWORK_PREFERENCE_UNINITIALIZED:
                 return "OEM_NETWORK_PREFERENCE_UNINITIALIZED";
             case OEM_NETWORK_PREFERENCE_OEM_PAID:

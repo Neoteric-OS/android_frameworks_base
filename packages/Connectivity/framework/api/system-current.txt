@@ -349,6 +349,8 @@ package android.net {
     field public static final int OEM_NETWORK_PREFERENCE_OEM_PAID_NO_FALLBACK = 2; // 0x2
     field public static final int OEM_NETWORK_PREFERENCE_OEM_PAID_ONLY = 3; // 0x3
     field public static final int OEM_NETWORK_PREFERENCE_OEM_PRIVATE_ONLY = 4; // 0x4
+    field public static final int OEM_NETWORK_PREFERENCE_TEST = -1; // 0xffffffff
+    field public static final int OEM_NETWORK_PREFERENCE_TEST_ONLY = -2; // 0xfffffffe
     field public static final int OEM_NETWORK_PREFERENCE_UNINITIALIZED = 0; // 0x0
   }
 
