@@ -22,6 +22,30 @@
       },
       "revId": "77330a0805fb0f49f70202dbf5a7213dda09ef44",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e8684fe_18a3d4d2",
+        "filename": "services/profcollect/src/com/android/server/profcollect/ProfcollectForwardingService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1810984
+      },
+      "writtenOn": "2021-03-27T01:39:03Z",
+      "side": 1,
+      "message": "\u003e changpa@: Is corp BB guaranteed to be in this path?\nNo, because I am also not sure if 10 always means work profile due to 10 seems to only mean MIN_SECONDARY_USER_ID rather than work profile id.\nhttps://source.corp.google.com/android/frameworks/base/core/java/android/os/UserHandle.java;l\u003d119\n\n\u003e  Is it possible to create 10 normal profiles and cause work profile to select a different path?\nI am not sure, but I\u0027ve just searched and checked some codes and found out that maybe you can try whether it is possible to use below way to decide the cache path of work profile BetterBug:\n\nA.Get all profiles ids by using UserManager.getProfileIds\n\nB.And check which profile id is work profile id  by using UserManager.isManagedProfile\n\nC.Then use that work profile id(like 10) in the work profile BetterBugs cached path\nlike  /data/user/10/com.google.android.apps.internal.betterbug/cache\n\n// Reference:\nhttps://screenshot.googleplex.com/7mrTbQpuJ9QyEG3",
+      "parentUuid": "bf862c2f_d20c8fe9",
+      "range": {
+        "startLine": 311,
+        "startChar": 25,
+        "endLine": 311,
+        "endChar": 88
+      },
+      "revId": "77330a0805fb0f49f70202dbf5a7213dda09ef44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
