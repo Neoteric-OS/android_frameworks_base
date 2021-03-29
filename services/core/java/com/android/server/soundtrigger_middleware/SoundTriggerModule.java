@@ -207,6 +207,7 @@ class SoundTriggerModule implements IHwBinder.DeathRecipient {
      */
     private void reset() {
         attachToHal();
+        mProperties = ConversionUtil.hidl2aidlProperties(mHalService.getProperties());
         // We conservatively assume that external capture is active until explicitly told otherwise.
         mRecognitionAvailable = mProperties.concurrentCapture;
         mNumLoadedModels = 0;
