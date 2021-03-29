@@ -316,7 +316,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static final int DEFAULT_NASCENT_DELAY_MS = 5_000;
 
     // The maximum number of network request allowed per uid before an exception is thrown.
-    private static final int MAX_NETWORK_REQUESTS_PER_UID = 100;
+    @VisibleForTesting
+    static final int MAX_NETWORK_REQUESTS_PER_UID = 100;
 
     @VisibleForTesting
     protected int mLingerDelayMs;  // Can't be final, or test subclass constructors can't change it.
@@ -332,7 +333,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @VisibleForTesting
     protected final PermissionMonitor mPermissionMonitor;
 
-    private final PerUidCounter mNetworkRequestCounter;
+    @VisibleForTesting
+    final PerUidCounter mNetworkRequestCounter;
 
     private volatile boolean mLockdownEnabled;
 
@@ -1041,8 +1043,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         private final int mMaxCountPerUid;
 
         // Map from UID to number of NetworkRequests that UID has filed.
+        @VisibleForTesting
         @GuardedBy("mUidToNetworkRequestCount")
-        private final SparseIntArray mUidToNetworkRequestCount = new SparseIntArray();
+        final SparseIntArray mUidToNetworkRequestCount = new SparseIntArray();
 
         /**
          * Constructor
@@ -9449,9 +9452,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         validateNetworkCapabilitiesOfProfileNetworkPreference(preference.capabilities);
 
         mProfileNetworkPreferences = mProfileNetworkPreferences.plus(preference);
-        final ArraySet<NetworkRequestInfo> nris =
-                createNrisFromProfileNetworkPreferences(mProfileNetworkPreferences);
-        replaceDefaultNetworkRequestsForPreference(nris);
+        replacePerAppNetworkRequestsForPreference(mProfileNetworkPreferences.preferences.size(),
+                () -> {
+                    final ArraySet<NetworkRequestInfo> nris =
+                            createNrisFromProfileNetworkPreferences(mProfileNetworkPreferences);
+                    replaceDefaultNetworkRequestsForPreference(nris);
+                });
         // Finally, rematch.
         rematchAllNetworksAndRequests();
 
@@ -9536,9 +9542,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return;
         }
 
-        final ArraySet<NetworkRequestInfo> nris =
-                new OemNetworkRequestFactory().createNrisFromOemNetworkPreferences(preference);
-        replaceDefaultNetworkRequestsForPreference(nris);
+        final int uniquePreferenceCount = new ArraySet<>(
+                preference.getNetworkPreferences().values()).size();
+        replacePerAppNetworkRequestsForPreference(uniquePreferenceCount,
+                () -> {
+                    final ArraySet<NetworkRequestInfo> nris =
+                            new OemNetworkRequestFactory()
+                                    .createNrisFromOemNetworkPreferences(preference);
+                    replaceDefaultNetworkRequestsForPreference(nris);
+                });
         mOemNetworkPreferences = preference;
         // TODO http://b/176496396 persist data to shared preferences.
 
@@ -9549,6 +9561,35 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 loge("Can't send onComplete in handleSetOemNetworkPreference", e);
             }
         }
+    }
+
+    /**
+     * Used to adjust the request counter for the per-app API flows. Directly adjusting the counter
+     * is not ideal however in the per-app flows, the nris can't be removed until they are used to
+     * create the new nris upon set. Therefore the request count limit can be artificially hit. This
+     * method is used as a workaround for this particular case so that the request counts are
+     * accounted for correctly.
+     * @param numOfNewRequests the new request count to account for
+     * @param r the runnable to execute
+     */
+    private void replacePerAppNetworkRequestsForPreference(final int numOfNewRequests,
+            @NonNull final Runnable r) {
+        final int reqCountOverage = getCallingUidRequestCountOverage(numOfNewRequests);
+        for (int i = 0; i < reqCountOverage; i++) {
+            mNetworkRequestCounter.decrementCount(mDeps.getCallingUid());
+        }
+        r.run();
+        for (int i = 0; i < reqCountOverage; i++) {
+            mNetworkRequestCounter.incrementCountOrThrow(mDeps.getCallingUid());
+        }
+    }
+
+    private int getCallingUidRequestCountOverage(final int numOfNewRequests) {
+        final int newUidRequestCount = mNetworkRequestCounter.mUidToNetworkRequestCount
+                .get(mDeps.getCallingUid(), 0)
+                + numOfNewRequests;
+        return newUidRequestCount >= MAX_NETWORK_REQUESTS_PER_UID
+                ? newUidRequestCount - (MAX_NETWORK_REQUESTS_PER_UID - 1) : 0;
     }
 
     private void replaceDefaultNetworkRequestsForPreference(
@@ -9564,10 +9605,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final ArraySet<NetworkRequestInfo> perAppCallbackRequestsToUpdate =
                 getPerAppCallbackRequestsToUpdate();
         final ArraySet<NetworkRequestInfo> nrisToRegister = new ArraySet<>(nris);
-        nrisToRegister.addAll(
-                createPerAppCallbackRequestsToRegister(perAppCallbackRequestsToUpdate));
-        handleRemoveNetworkRequests(perAppCallbackRequestsToUpdate);
-        handleRegisterNetworkRequests(nrisToRegister);
+        replacePerAppNetworkRequestsForPreference(perAppCallbackRequestsToUpdate.size(),
+                () -> {
+                    nrisToRegister.addAll(
+                            createPerAppCallbackRequestsToRegister(perAppCallbackRequestsToUpdate));
+                    handleRemoveNetworkRequests(perAppCallbackRequestsToUpdate);
+                    handleRegisterNetworkRequests(nrisToRegister);
+                });
     }
 
     /**
