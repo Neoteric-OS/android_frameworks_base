@@ -20,6 +20,7 @@ import static android.view.Display.DEFAULT_DISPLAY;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
@@ -56,6 +57,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.security.GeneralSecurityException;
 import java.security.PublicKey;
 import java.security.SignatureException;
@@ -153,6 +156,63 @@ public class RecoverySystem {
     private static final Object sRequestLock = new Object();
 
     private final IRecoverySystem mService;
+
+    /**
+     * The error codes for reboots initiated by resume on reboot clients.
+     *  @hide
+     */
+    @IntDef(prefix = { "ROR_REBOOT_ERROR_" }, value = {
+            RESUME_ON_REBOOT_REBOOT_ERROR_NONE,
+            RESUME_ON_REBOOT_REBOOT_ERROR_UNSPECIFIED,
+            RESUME_ON_REBOOT_REBOOT_ERROR_INVALID_PACKAGE_NAME,
+            RESUME_ON_REBOOT_REBOOT_ERROR_LSKF_NOT_CAPTURED,
+            RESUME_ON_REBOOT_REBOOT_ERROR_SLOT_MISMATCH,
+            RESUME_ON_REBOOT_REBOOT_ERROR_ARM_REBOOT_ESCROW_FAILURE})
+    public @interface ResumeOnRebootRebootErrorCode {}
+
+    /**
+     * The reboot of RoR succeeds.
+     *  @hide
+     */
+    @SystemApi
+    public static final int RESUME_ON_REBOOT_REBOOT_ERROR_NONE = 0;
+
+    /**
+     * The reboot of RoR fails due to an unknown reason.
+     *  @hide
+     */
+    @SystemApi
+    public static final int RESUME_ON_REBOOT_REBOOT_ERROR_UNSPECIFIED = 1;
+
+    /**
+     * The reboot of RoR fails because the package name of the client is invalid.
+     *  @hide
+     */
+    @SystemApi
+    public static final int RESUME_ON_REBOOT_REBOOT_ERROR_INVALID_PACKAGE_NAME = 2;
+
+    /**
+     * The reboot of RoR fails because the LSKF hasn't been captured.
+     *  @hide
+     */
+    @SystemApi
+    public static final int RESUME_ON_REBOOT_REBOOT_ERROR_LSKF_NOT_CAPTURED = 3;
+
+    /**
+     * The reboot of RoR fails because the client expects a different boot slot for the next boot
+     * on A/B devices.
+     *  @hide
+     */
+    @SystemApi
+    public static final int RESUME_ON_REBOOT_REBOOT_ERROR_SLOT_MISMATCH = 4;
+
+    /**
+     * The reboot of RoR fails because the resume on reboot provider, e.g. HAL / server based,
+     * fails to arm/store the escrow key.
+     *  @hide
+     */
+    @SystemApi
+    public static final int RESUME_ON_REBOOT_REBOOT_ERROR_ARM_REBOOT_ESCROW_FAILURE = 5;
 
     /**
      * Interface definition for a callback to be invoked regularly as
@@ -723,7 +783,8 @@ public class RecoverySystem {
         }
         RecoverySystem rs = (RecoverySystem) context.getSystemService(Context.RECOVERY_SERVICE);
         // OTA is the sole user, who expects a slot switch.
-        if (!rs.rebootWithLskfAssumeSlotSwitch(context.getPackageName(), reason)) {
+        if (rs.rebootWithLskfAssumeSlotSwitch(context.getPackageName(), reason)
+                != RESUME_ON_REBOOT_REBOOT_ERROR_NONE) {
             throw new IOException("system not prepared to apply update");
         }
     }
@@ -759,12 +820,10 @@ public class RecoverySystem {
     @SystemApi
     @RequiresPermission(anyOf = {android.Manifest.permission.RECOVERY,
             android.Manifest.permission.REBOOT})
-    public static void rebootAndApply(@NonNull Context context,
+    public static @ResumeOnRebootRebootErrorCode int rebootAndApply(@NonNull Context context,
             @NonNull String reason, boolean slotSwitch) throws IOException {
         RecoverySystem rs = context.getSystemService(RecoverySystem.class);
-        if (!rs.rebootWithLskf(context.getPackageName(), reason, slotSwitch)) {
-            throw new IOException("system not prepared to apply update");
-        }
+        return rs.rebootWithLskf(context.getPackageName(), reason, slotSwitch);
     }
 
     /**
@@ -1399,8 +1458,8 @@ public class RecoverySystem {
      * Calls the recovery system service to reboot and apply update.
      *
      */
-    private boolean rebootWithLskf(String packageName, String reason, boolean slotSwitch)
-            throws IOException {
+    private @ResumeOnRebootRebootErrorCode int rebootWithLskf(String packageName, String reason,
+            boolean slotSwitch) throws IOException {
         try {
             return mService.rebootWithLskf(packageName, reason, slotSwitch);
         } catch (RemoteException e) {
@@ -1414,8 +1473,8 @@ public class RecoverySystem {
      * expects a slot switch for A/B devices.
      *
      */
-    private boolean rebootWithLskfAssumeSlotSwitch(String packageName, String reason)
-            throws IOException {
+    private @ResumeOnRebootRebootErrorCode int rebootWithLskfAssumeSlotSwitch(String packageName,
+            String reason) throws IOException {
         try {
             return mService.rebootWithLskfAssumeSlotSwitch(packageName, reason);
         } catch (RemoteException e) {
