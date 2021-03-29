@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eed708f5_500e98a8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-29T10:42:52Z",
+      "side": 1,
+      "message": "I don\u0027t know what a sakename is.\n\nDo you mean the test would do:\n\n    mWiFiNetworkAgent \u003d new TestNetworkAgentWrapper(TRANSPORT_WIFI) {\n        @Override\n        public void onNetworkConnected() {\n            ...\n        }\n\n        @Override\n        public void onNetworkUnwanted {\n            ...\n        }\n\n        @Override\n        public void onNetworkDestroyed() {\n            ...\n        }\n    };\n\nif so, that would require code duplication as soon as a test wanted to connect more than one of these.\n\nI could define a subclass of TestNetworkAgentWrapper that does something like this, but it would have to be in the testcase method or it wouldn\u0027t be able to access local variables. If more than one testcase needed that it would also cause code duplication.\n\nDefining a class within ConnectivityService itself wouldn\u0027t help because it would basically be the same as TestNetworkAgentWrapper - it would still need the user of the class to pass in lambdas or runnables to tell it what to do in onNetworkConnected/onNetworkUnwanted/onNetworkDestroyed.",
+      "parentUuid": "c4d7cbce_c6e361f9",
+      "range": {
+        "startLine": 718,
+        "startChar": 16,
+        "endLine": 718,
+        "endChar": 24
+      },
+      "revId": "f2dd01471d32ef6243f172ff8377f8b046824e0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "96535dfc_238f4082",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 5
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-29T08:51:59Z",
       "side": 1,
       "message": "If it\u0027s impossible why bother catching it only to fail ? The method throws Exception and will fail with a better stack trace when this is thrown if you just don\u0027t try{}.",
+      "range": {
+        "startLine": 2854,
+        "startChar": 37,
+        "endLine": 2854,
+        "endChar": 47
+      },
+      "revId": "f2dd01471d32ef6243f172ff8377f8b046824e0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db281989_593684b9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2854,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-29T10:42:52Z",
+      "side": 1,
+      "message": "The lambda cannot throw because Runnable doesn\u0027t throw anything. A previous patcheset used ExceptionalRunnable and caught the exception in TestNetworkAgentWrapper#onNetworkCreated. I removed it because I thought it was better to complicate the testcase code than TestNetworkAgentWrapper code. Also, the duringTeardown lambda has to catch exceptions no matter what because it\u0027s posted directly to a lambda. I can change it back if you like.",
+      "parentUuid": "96535dfc_238f4082",
       "range": {
         "startLine": 2854,
         "startChar": 37,
@@ -100,6 +148,30 @@
       "writtenOn": "2021-03-29T08:51:59Z",
       "side": 1,
       "message": "I am worried of flakes – I don\u0027t think there are any particular guarantees of executing the messages within any amount of time in Handler, only more than asked. And on this kind of time scale, I would be surprised if we didn\u0027t get some non-negligeable percentage of flakes.\n\nHave you run this in a tight loop a couple hundred times to have a first estimate of the flake rate ?\n\nIf it is flaky, an option would be to make the timer a very long time, and to call the events manually on CS to test the order of the netd commands ; you\u0027d have a separate test for the order of events.\nAnother option would be to have a spy on the agent so you can use it in an inOrder with the netd mock. The check in l.2879 could be hardcoded in onNetworkDisconnected in the instrumented agent since this should be an invariant anyway.",
+      "range": {
+        "startLine": 2907,
+        "startChar": 38,
+        "endLine": 2907,
+        "endChar": 41
+      },
+      "revId": "f2dd01471d32ef6243f172ff8377f8b046824e0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5874e03c_5ffdc52d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2907,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-29T10:42:52Z",
+      "side": 1,
+      "message": "Yes, the commit message says this passed 500 times in a row. That\u0027s on physical hardware though, not cuttlefish. Note that the delay does not have to be exactly 150ms: as the comment says, it just needs to be such that the runnable runs after the disconnect and before the destroy.",
+      "parentUuid": "1f0abbdc_395054e3",
       "range": {
         "startLine": 2907,
         "startChar": 38,
