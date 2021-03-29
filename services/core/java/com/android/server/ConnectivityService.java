@@ -316,7 +316,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static final int DEFAULT_NASCENT_DELAY_MS = 5_000;
 
     // The maximum number of network request allowed per uid before an exception is thrown.
-    private static final int MAX_NETWORK_REQUESTS_PER_UID = 100;
+    @VisibleForTesting
+    static final int MAX_NETWORK_REQUESTS_PER_UID = 100;
 
     @VisibleForTesting
     protected int mLingerDelayMs;  // Can't be final, or test subclass constructors can't change it.
@@ -332,7 +333,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @VisibleForTesting
     protected final PermissionMonitor mPermissionMonitor;
 
-    private final PerUidCounter mNetworkRequestCounter;
+    @VisibleForTesting
+    final PerUidCounter mNetworkRequestCounter;
 
     private volatile boolean mLockdownEnabled;
 
@@ -1041,8 +1043,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         private final int mMaxCountPerUid;
 
         // Map from UID to number of NetworkRequests that UID has filed.
+        @VisibleForTesting
         @GuardedBy("mUidToNetworkRequestCount")
-        private final SparseIntArray mUidToNetworkRequestCount = new SparseIntArray();
+        final SparseIntArray mUidToNetworkRequestCount = new SparseIntArray();
 
         /**
          * Constructor
@@ -3978,7 +3981,33 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    private void handleRemoveNetworkRequests(@NonNull final Set<NetworkRequestInfo> nris) {
+        handleRemoveNetworkRequests(nris, true);
+    }
+
+    private void handleRemoveNetworkRequests(@NonNull final Set<NetworkRequestInfo> nris,
+            final boolean shouldClearSatisfier) {
+        for (final NetworkRequestInfo nri : nris) {
+            if (mDefaultRequest == nri) {
+                // Make sure we never remove the default request.
+                continue;
+            }
+            handleRemoveNetworkRequest(nri, shouldClearSatisfier);
+        }
+    }
+
     private void handleRemoveNetworkRequest(@NonNull final NetworkRequestInfo nri) {
+        handleRemoveNetworkRequest(nri, true);
+    }
+
+    /**
+     * Remove any currently tracked state as related to the given network request.
+     * @param nri the request to remove.
+     * @param shouldClearSatisfier whether or not to clear the request's satisfier. This should
+     *                             almost always be true.
+     */
+    private void handleRemoveNetworkRequest(@NonNull final NetworkRequestInfo nri,
+            final boolean shouldClearSatisfier) {
         ensureRunningOnConnectivityServiceThread();
         nri.unlinkDeathRecipient();
         for (final NetworkRequest req : nri.mRequests) {
@@ -4008,24 +4037,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mNetworkRequestCounter.decrementCount(nri.mUid);
         mNetworkRequestInfoLogs.log("RELEASE " + nri);
 
+        if (shouldClearSatisfier) {
+            clearNriSatisfier(nri);
+        }
+
+        cancelNpiRequests(nri);
+    }
+
+    private void clearNrisSatisfier(@NonNull final ArraySet<NetworkRequestInfo> nris) {
+        for (final NetworkRequestInfo nri : nris) {
+            clearNriSatisfier(nri);
+        }
+    }
+
+    private void clearNriSatisfier(@NonNull final NetworkRequestInfo nri) {
         if (null != nri.getActiveRequest()) {
             if (!nri.getActiveRequest().isListen()) {
                 removeSatisfiedNetworkRequestFromNetwork(nri);
             } else {
                 nri.setSatisfier(null, null);
             }
-        }
-
-        cancelNpiRequests(nri);
-    }
-
-    private void handleRemoveNetworkRequests(@NonNull final Set<NetworkRequestInfo> nris) {
-        for (final NetworkRequestInfo nri : nris) {
-            if (mDefaultRequest == nri) {
-                // Make sure we never remove the default request.
-                continue;
-            }
-            handleRemoveNetworkRequest(nri);
         }
     }
 
@@ -9449,9 +9480,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         validateNetworkCapabilitiesOfProfileNetworkPreference(preference.capabilities);
 
         mProfileNetworkPreferences = mProfileNetworkPreferences.plus(preference);
+        // Removal must happen prior to creation to not artificially hit the max request count limit
+        handleRemoveNetworkRequests(new ArraySet<>(mDefaultNetworkRequests));
         final ArraySet<NetworkRequestInfo> nris =
                 createNrisFromProfileNetworkPreferences(mProfileNetworkPreferences);
-        replaceDefaultNetworkRequestsForPreference(nris);
+        addPerAppDefaultNetworkRequests(nris);
         // Finally, rematch.
         rematchAllNetworksAndRequests();
 
@@ -9536,9 +9569,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return;
         }
 
+        // Removal must happen prior to creation to not artificially hit the max request count limit
+        handleRemoveNetworkRequests(new ArraySet<>(mDefaultNetworkRequests));
         final ArraySet<NetworkRequestInfo> nris =
                 new OemNetworkRequestFactory().createNrisFromOemNetworkPreferences(preference);
-        replaceDefaultNetworkRequestsForPreference(nris);
+        addPerAppDefaultNetworkRequests(nris);
         mOemNetworkPreferences = preference;
         // TODO http://b/176496396 persist data to shared preferences.
 
@@ -9551,22 +9586,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void replaceDefaultNetworkRequestsForPreference(
-            @NonNull final Set<NetworkRequestInfo> nris) {
-        // Pass in a defensive copy as this collection will be updated on remove.
-        handleRemoveNetworkRequests(new ArraySet<>(mDefaultNetworkRequests));
-        addPerAppDefaultNetworkRequests(nris);
-    }
-
     private void addPerAppDefaultNetworkRequests(@NonNull final Set<NetworkRequestInfo> nris) {
         ensureRunningOnConnectivityServiceThread();
         mDefaultNetworkRequests.addAll(nris);
         final ArraySet<NetworkRequestInfo> perAppCallbackRequestsToUpdate =
                 getPerAppCallbackRequestsToUpdate();
         final ArraySet<NetworkRequestInfo> nrisToRegister = new ArraySet<>(nris);
+        // Removal must happen prior to creation to not artificially hit the max request count limit
+        handleRemoveNetworkRequests(perAppCallbackRequestsToUpdate, false);
         nrisToRegister.addAll(
                 createPerAppCallbackRequestsToRegister(perAppCallbackRequestsToUpdate));
-        handleRemoveNetworkRequests(perAppCallbackRequestsToUpdate);
+        // Creation of nris require the satisifer to be intact for the above flow therefore
+        // although we need to remove the nris upfront to avoid the max request count limit, we
+        // can't remove the nri satisifers until creation is complete.
+        clearNrisSatisfier(perAppCallbackRequestsToUpdate);
         handleRegisterNetworkRequests(nrisToRegister);
     }
 

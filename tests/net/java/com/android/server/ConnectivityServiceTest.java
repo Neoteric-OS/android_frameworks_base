@@ -12013,4 +12013,76 @@ public class ConnectivityServiceTest {
                         mCm.setProfileNetworkPreference(testHandle,
                                 PROFILE_NETWORK_PREFERENCE_ENTERPRISE, null, null));
     }
+
+    /**
+     * Validate request counts are counted accurately on setProfileNetworkPreference on set/replace.
+     */
+    @Test
+    public void testProfileNetworkPrefCountsRequestsCorrectlyOnSet() throws Exception {
+        final UserHandle testHandle = setupEnterpriseNetwork();
+        final ArraySet<TestNetworkCallback> callbacks = new ArraySet<>();
+        try {
+            final int requestCount = mService.mNetworkRequestCounter
+                    .mUidToNetworkRequestCount.get(Process.myUid());
+            // The limit is hit when total requests <= limit.
+            final int maxCount = ConnectivityService.MAX_NETWORK_REQUESTS_PER_UID - requestCount;
+            for (int i = 1; i < maxCount - 1; i++) {
+                final TestNetworkCallback cb = new TestNetworkCallback();
+                mCm.registerDefaultNetworkCallback(cb);
+                callbacks.add(cb);
+            }
+
+            // Set initially to test the limit prior to having existing requests.
+            final TestOnCompleteListener listener = new TestOnCompleteListener();
+            mCm.setProfileNetworkPreference(testHandle, PROFILE_NETWORK_PREFERENCE_ENTERPRISE,
+                    Runnable::run, listener);
+            listener.expectOnComplete();
+
+            // re-set so as to test the limit as part of replacing existing requests.
+            mCm.setProfileNetworkPreference(testHandle, PROFILE_NETWORK_PREFERENCE_ENTERPRISE,
+                    Runnable::run, listener);
+            listener.expectOnComplete();
+        } finally {
+            for (final TestNetworkCallback cb : callbacks) {
+                mCm.unregisterNetworkCallback(cb);
+            }
+        }
+    }
+
+    /**
+     * Validate request counts are counted accurately on setOemNetworkPreference on set/replace.
+     */
+    @Test
+    public void testSetOemNetworkPreferenceCountsRequestsCorrectlyOnSet() throws Exception {
+        mockHasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE, true);
+        @OemNetworkPreferences.OemNetworkPreference final int networkPref =
+                OEM_NETWORK_PREFERENCE_OEM_PRIVATE_ONLY;
+        final ArraySet<TestNetworkCallback> callbacks = new ArraySet<>();
+        try {
+            final int requestCount = mService.mNetworkRequestCounter
+                    .mUidToNetworkRequestCount.get(Process.myUid());
+            // The limit is hit when total requests <= limit.
+            final int maxCount = ConnectivityService.MAX_NETWORK_REQUESTS_PER_UID - requestCount;
+            for (int i = 1; i < maxCount - 1; i++) {
+                final TestNetworkCallback cb = new TestNetworkCallback();
+                mCm.registerDefaultNetworkCallback(cb);
+                callbacks.add(cb);
+            }
+
+            // Set initially to test the limit prior to having existing requests.
+            final TestOemListenerCallback listener = new TestOemListenerCallback();
+            mService.setOemNetworkPreference(
+                    createDefaultOemNetworkPreferences(networkPref), listener);
+            listener.expectOnComplete();
+
+            // re-set so as to test the limit as part of replacing existing requests.
+            mService.setOemNetworkPreference(
+                    createDefaultOemNetworkPreferences(networkPref), listener);
+            listener.expectOnComplete();
+        } finally {
+            for (final TestNetworkCallback cb : callbacks) {
+                mCm.unregisterNetworkCallback(cb);
+            }
+        }
+    }
 }
