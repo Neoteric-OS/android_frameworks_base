@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ad3257d_f7a50560",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-29T03:12:30Z",
+      "side": 1,
+      "message": "Latest patchset is a clean cherry-pick from internal branch",
+      "revId": "8230b03102fd3de01986fed7f1a7e660e366d859",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
