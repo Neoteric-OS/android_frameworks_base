@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28f71918_ea86ac18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-29T08:51:59Z",
+      "side": 1,
+      "message": "I think this works and is acceptable for now as long as it doesn\u0027t flake too much. Some nits and suggestions in comments.",
+      "revId": "f2dd01471d32ef6243f172ff8377f8b046824e0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4d7cbce_c6e361f9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-29T08:51:59Z",
+      "side": 1,
+      "message": "Rather than arbitrary Runnables, I think this test would be clearer if the overridden methods in InstrumentedNetworkAgent would always call a sakename in TestNetworkAgentWrapper, and the new test you\u0027re writing would override those instead of setting Runnables.",
+      "range": {
+        "startLine": 718,
+        "startChar": 16,
+        "endLine": 718,
+        "endChar": 24
+      },
+      "revId": "f2dd01471d32ef6243f172ff8377f8b046824e0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96535dfc_238f4082",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2854,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-29T08:51:59Z",
+      "side": 1,
+      "message": "If it\u0027s impossible why bother catching it only to fail ? The method throws Exception and will fail with a better stack trace when this is thrown if you just don\u0027t try{}.",
+      "range": {
+        "startLine": 2854,
+        "startChar": 37,
+        "endLine": 2854,
+        "endChar": 47
+      },
+      "revId": "f2dd01471d32ef6243f172ff8377f8b046824e0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b2804ff_c4304e46",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2892,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-29T08:51:59Z",
+      "side": 1,
+      "message": "Sounds like aosp/1654012",
+      "range": {
+        "startLine": 2892,
+        "startChar": 17,
+        "endLine": 2892,
+        "endChar": 29
+      },
+      "revId": "f2dd01471d32ef6243f172ff8377f8b046824e0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f0abbdc_395054e3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2907,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-29T08:51:59Z",
+      "side": 1,
+      "message": "I am worried of flakes – I don\u0027t think there are any particular guarantees of executing the messages within any amount of time in Handler, only more than asked. And on this kind of time scale, I would be surprised if we didn\u0027t get some non-negligeable percentage of flakes.\n\nHave you run this in a tight loop a couple hundred times to have a first estimate of the flake rate ?\n\nIf it is flaky, an option would be to make the timer a very long time, and to call the events manually on CS to test the order of the netd commands ; you\u0027d have a separate test for the order of events.\nAnother option would be to have a spy on the agent so you can use it in an inOrder with the netd mock. The check in l.2879 could be hardcoded in onNetworkDisconnected in the instrumented agent since this should be an invariant anyway.",
+      "range": {
+        "startLine": 2907,
+        "startChar": 38,
+        "endLine": 2907,
+        "endChar": 41
+      },
+      "revId": "f2dd01471d32ef6243f172ff8377f8b046824e0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
