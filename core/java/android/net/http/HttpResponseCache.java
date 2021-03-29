@@ -16,8 +16,8 @@
 
 package android.net.http;
 
-import com.android.okhttp.internalandroidapi.AndroidResponseCacheAdapter;
-import com.android.okhttp.internalandroidapi.HasCacheHolder;
+import libcore.net.http.AndroidResponseCacheAdapter;
+import libcore.net.http.HasCacheHolder.CacheHolder;
 
 import java.io.Closeable;
 import java.io.File;
@@ -148,7 +148,7 @@ import java.util.Map;
  *       } catch (Exception httpResponseCacheNotAvailable) {
  *       }}</pre>
  */
-public final class HttpResponseCache extends ResponseCache implements HasCacheHolder, Closeable {
+public final class HttpResponseCache extends ResponseCache implements Closeable {
 
     private final AndroidResponseCacheAdapter mDelegate;
 
@@ -183,7 +183,7 @@ public final class HttpResponseCache extends ResponseCache implements HasCacheHo
         ResponseCache installed = ResponseCache.getDefault();
         if (installed instanceof HttpResponseCache) {
             HttpResponseCache installedResponseCache = (HttpResponseCache) installed;
-            CacheHolder cacheHolder = installedResponseCache.getCacheHolder();
+            CacheHolder cacheHolder = installedResponseCache.mDelegate.getCacheHolder();
             // don't close and reopen if an equivalent cache is already installed
             if (cacheHolder.isEquivalent(directory, maxSize)) {
                 return installedResponseCache;
@@ -292,11 +292,5 @@ public final class HttpResponseCache extends ResponseCache implements HasCacheHo
             ResponseCache.setDefault(null);
         }
         mDelegate.delete();
-    }
-
-    /** @hide Needed for OkHttp integration. */
-    @Override
-    public CacheHolder getCacheHolder() {
-        return mDelegate.getCacheHolder();
     }
 }
