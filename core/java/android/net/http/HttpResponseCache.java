@@ -16,8 +16,8 @@
 
 package android.net.http;
 
-import com.android.okhttp.internalandroidapi.AndroidResponseCacheAdapter;
-import com.android.okhttp.internalandroidapi.HasCacheHolder;
+import libcore.net.http.AndroidResponseCacheAdapter;
+import libcore.net.http.HasCacheHolder;
 
 import java.io.Closeable;
 import java.io.File;
