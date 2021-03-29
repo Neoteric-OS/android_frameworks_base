@@ -30,6 +30,7 @@ import com.android.i18n.timezone.ZoneInfoDb;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,11 +44,26 @@ import java.util.List;
 public class TimeUtils {
     /** @hide */ public TimeUtils() {}
     /** {@hide} */
-    private static SimpleDateFormat sLoggingFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final SimpleDateFormat sLoggingFormat =
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /** @hide */
     public static final SimpleDateFormat sDumpDateFormat =
             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+
+    /**
+     * The timestamp used to determine which time zones to show to users by using the notUsedAfter
+     * metadata Android holds for each time zone.
+     *
+     * notUsedAfter exists because some time zones effectively "merge" with other time
+     * zones after a given point in time (i.e. they have identical transitions, offsets, etc.).
+     * After that point we only need to show one of the functionally identical ones.
+     *
+     * This is the same values that is used in SettingsUI to keep results consistent.
+     */
+    private static final Instant MIN_USE_DATE_OF_TIMEZONE =
+            Instant.ofEpochMilli(1546300800000L); // 1/1/2019 00:00 UTC
+
     /**
      * Tries to return a time zone that would have had the specified offset
      * and DST value at the specified moment in the specified country.
@@ -109,7 +125,7 @@ public class TimeUtils {
 
         List<String> timeZoneIds = new ArrayList<>();
         for (TimeZoneMapping timeZoneMapping : countryTimeZones.getTimeZoneMappings()) {
-            if (timeZoneMapping.isShownInPicker()) {
+            if (timeZoneMapping.isShownInPickerAt(MIN_USE_DATE_OF_TIMEZONE)) {
                 timeZoneIds.add(timeZoneMapping.getTimeZoneId());
             }
         }
