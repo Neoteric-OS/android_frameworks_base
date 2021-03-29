@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8c523db6_54b8a391",
+        "filename": "core/java/com/android/internal/widget/LockSettingsInternal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-29T20:21:44Z",
+      "side": 1,
+      "message": "It seems like this is never used.",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 40
+      },
+      "revId": "1f39e0c91de1a1d64b2f5d7a94ca887dd255f808",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8610822_c6b1cf7f",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-29T20:21:44Z",
+      "side": 1,
+      "message": "Hmmm, don\u0027t think this needs to sound part of the instructions since we\u0027re already clearing it in the next line.",
+      "range": {
+        "startLine": 626,
+        "startChar": 25,
+        "endLine": 626,
+        "endChar": 37
+      },
+      "revId": "1f39e0c91de1a1d64b2f5d7a94ca887dd255f808",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3ad9e6a_4c9e2c6b",
         "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
         "patchSetId": 4
