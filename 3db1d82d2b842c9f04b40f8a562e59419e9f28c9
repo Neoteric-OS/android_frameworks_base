@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13c699f4_340ffe98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-03-30T11:00:12Z",
+      "side": 1,
+      "message": "I think it\u0027s because it\u0027s not being fed core/java/android/ddm/package.html, which has @hide in it. Maybe r.android.com/1655730 is a viable alternative to this CL?",
+      "revId": "3db1d82d2b842c9f04b40f8a562e59419e9f28c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
