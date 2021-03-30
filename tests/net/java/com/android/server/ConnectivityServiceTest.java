@@ -5391,8 +5391,9 @@ public class ConnectivityServiceTest {
     }
 
     @Test
-    public void testNetworkCallbackMaximum() {
+    public void testNetworkCallbackMaximum() throws Exception {
         final int MAX_REQUESTS = 100;
+        final int SYSTEM_ONLY_MAX_REQUESTS = 100;
         final int CALLBACKS = 89;
         final int INTENTS = 11;
         assertEquals(MAX_REQUESTS, CALLBACKS + INTENTS);
@@ -5442,6 +5443,31 @@ public class ConnectivityServiceTest {
                         PendingIntent.getBroadcast(mContext, 0 /* requestCode */,
                                 new Intent("d"), FLAG_IMMUTABLE))
         );
+
+        // The system gets another SYSTEM_ONLY_MAX_REQUESTS slots.
+        final Handler handler = new Handler(ConnectivityThread.getInstanceLooper());
+        withPermission(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, () -> {
+            ArrayList<NetworkCallback> systemRegistered = new ArrayList<>();
+            for (int i = 0; i < SYSTEM_ONLY_MAX_REQUESTS; i++) {
+                NetworkCallback cb = new NetworkCallback();
+                if (i % 2 == 0) {
+                    mCm.registerDefaultNetworkCallbackAsUid(1000000 + i, cb, handler);
+                } else {
+                    mCm.registerNetworkCallback(networkRequest, cb);
+                }
+                systemRegistered.add(cb);
+            }
+
+            assertThrows(TooManyRequestsException.class, () ->
+                    mCm.registerDefaultNetworkCallbackAsUid(1001042, new NetworkCallback(),
+                            handler));
+            assertThrows(TooManyRequestsException.class, () ->
+                mCm.registerNetworkCallback(networkRequest, new NetworkCallback()));
+
+            for (int i = 0; i < SYSTEM_ONLY_MAX_REQUESTS; i++) {
+                mCm.unregisterNetworkCallback(systemRegistered.get(i));
+            }
+        });
 
         for (Object o : registered) {
             if (o instanceof NetworkCallback) {

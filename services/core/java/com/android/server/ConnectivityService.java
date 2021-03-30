@@ -333,6 +333,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     protected final PermissionMonitor mPermissionMonitor;
 
     private final PerUidCounter mNetworkRequestCounter;
+    private final PerUidCounter mSystemNetworkRequestCounter;
 
     private volatile boolean mLockdownEnabled;
 
@@ -1201,6 +1202,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mContext = Objects.requireNonNull(context, "missing Context");
         mResources = deps.getResources(mContext);
         mNetworkRequestCounter = new PerUidCounter(MAX_NETWORK_REQUESTS_PER_UID);
+        mSystemNetworkRequestCounter = new PerUidCounter(MAX_NETWORK_REQUESTS_PER_UID);
 
         mMetricsLog = logger;
         mNetworkRanker = new NetworkRanker();
@@ -4005,7 +4007,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
             }
         }
-        mNetworkRequestCounter.decrementCount(nri.mUid);
+        decrementRequestCount(nri);
         mNetworkRequestInfoLogs.log("RELEASE " + nri);
 
         if (null != nri.getActiveRequest()) {
@@ -4114,6 +4116,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
             }
         }
+    }
+
+    private PerUidCounter getRequestCounter(NetworkRequestInfo nri) {
+        return checkAnyPermissionOf(
+                nri.mPid, nri.mUid, NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK)
+                ? mSystemNetworkRequestCounter : mNetworkRequestCounter;
+    }
+
+    private void incrementRequestCount(NetworkRequestInfo nri) {
+        getRequestCounter(nri).incrementCountOrThrow(nri.mUid);
+    }
+
+    private void decrementRequestCount(NetworkRequestInfo nri) {
+        getRequestCounter(nri).decrementCount(nri.mUid);
     }
 
     @Override
@@ -5464,7 +5480,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mPid = getCallingPid();
             mUid = mDeps.getCallingUid();
             mAsUid = asUid;
-            mNetworkRequestCounter.incrementCountOrThrow(mUid);
+            incrementRequestCount(this);
             /**
              * Location sensitive data not included in pending intent. Only included in
              * {@link NetworkCallback}.
@@ -5496,7 +5512,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mUid = mDeps.getCallingUid();
             mAsUid = asUid;
             mPendingIntent = null;
-            mNetworkRequestCounter.incrementCountOrThrow(mUid);
+            incrementRequestCount(this);
             mCallbackFlags = callbackFlags;
             mCallingAttributionTag = callingAttributionTag;
 
@@ -5539,7 +5555,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mUid = nri.mUid;
             mAsUid = nri.mAsUid;
             mPendingIntent = nri.mPendingIntent;
-            mNetworkRequestCounter.incrementCountOrThrow(mUid);
+            incrementRequestCount(nri);
             mCallbackFlags = nri.mCallbackFlags;
             mCallingAttributionTag = nri.mCallingAttributionTag;
         }
@@ -8724,7 +8740,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Decrement the reference count for this NetworkRequestInfo. The reference count is
             // incremented when the NetworkRequestInfo is created as part of
             // enforceRequestCountLimit().
-            mNetworkRequestCounter.decrementCount(nri.mUid);
+            decrementRequestCount(nri);
             return;
         }
 
@@ -8790,7 +8806,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // Decrement the reference count for this NetworkRequestInfo. The reference count is
         // incremented when the NetworkRequestInfo is created as part of
         // enforceRequestCountLimit().
-        mNetworkRequestCounter.decrementCount(nri.mUid);
+        decrementRequestCount(nri);
 
         iCb.unlinkToDeath(cbInfo, 0);
     }
