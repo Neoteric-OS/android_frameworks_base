@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8afacf9_e56cc8e9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5479,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-30T13:23:25Z",
+      "side": 1,
+      "message": "No strong objection, but why do this 4 times rather than 2 or 3 ?",
+      "range": {
+        "startLine": 5474,
+        "startChar": 0,
+        "endLine": 5479,
+        "endChar": 22
+      },
+      "revId": "b9549ff6c178f4c4fde4eaf371b88cd47b9eb6f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
