@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74738b07_d257846c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-30T13:46:22Z",
+      "side": 1,
+      "message": "Considering the system will simply use this different object with the same limit, I don\u0027t think this actually increases the number of callbacks that the system can file.",
+      "range": {
+        "startLine": 1205,
+        "startChar": 0,
+        "endLine": 1205,
+        "endChar": 87
+      },
+      "revId": "22e13f38e9e7d0e827dca7c20a26fd5191fb9d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c5f9e4a_e8e74778",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5443,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-30T13:46:22Z",
+      "side": 1,
+      "message": "Well no, it gets a separate SYSTEM_ONLY_MAX_REQUESTS with your change.",
+      "range": {
+        "startLine": 5443,
+        "startChar": 27,
+        "endLine": 5443,
+        "endChar": 34
+      },
+      "revId": "22e13f38e9e7d0e827dca7c20a26fd5191fb9d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8838d7fb_ef13f2dc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5466,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-30T13:46:22Z",
+      "side": 1,
+      "message": "foreach ?",
+      "range": {
+        "startLine": 5464,
+        "startChar": 12,
+        "endLine": 5466,
+        "endChar": 13
+      },
+      "revId": "22e13f38e9e7d0e827dca7c20a26fd5191fb9d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
