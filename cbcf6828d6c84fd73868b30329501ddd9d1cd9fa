@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a4308d6_58655b44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-30T00:20:22Z",
+      "side": 1,
+      "message": "Module error in FrameworksServicesTests is the same issue (JobScheduler crash during app installation) as discussed here:\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1652261/10",
+      "revId": "cbcf6828d6c84fd73868b30329501ddd9d1cd9fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
