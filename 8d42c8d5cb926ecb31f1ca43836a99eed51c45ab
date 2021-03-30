@@ -16,6 +16,23 @@
       "message": "Verified with the same reproduce steps as b/183921387. Issue cannot reproduce with this patch.",
       "revId": "8d42c8d5cb926ecb31f1ca43836a99eed51c45ab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9ebbc09_0775a144",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-30T16:01:36Z",
+      "side": 1,
+      "message": "The only failing test is VibratorManagerServiceTest, which is unrelated.",
+      "revId": "8d42c8d5cb926ecb31f1ca43836a99eed51c45ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
