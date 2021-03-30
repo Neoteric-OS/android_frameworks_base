@@ -79,6 +79,9 @@ stubs_defaults {
         "sdk-dir",
         "api-versions-jars-dir",
     ],
+    // TODO(b/153703940): framework-doc-stubs and framework-doc-system-stubs
+    // fail with sandboxing enabled.
+    sandbox: false,
     previous_api: ":android.api.public.latest",
     merge_annotations_dirs: [
         "metalava-manual",
