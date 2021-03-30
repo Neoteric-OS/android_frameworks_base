@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfc97af5_6ba67a52",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-30T16:03:46Z",
+      "side": 1,
+      "message": "Should this go into sc-dev instead, given that in AOSP, the jobscheduler still uses getActiveNetworkForUid?",
+      "revId": "c6ec23d3089421589c579ee3581ef4a829167d0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
