@@ -292,7 +292,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static final int DEFAULT_NASCENT_DELAY_MS = 5_000;
 
     // The maximum number of network request allowed per uid before an exception is thrown.
-    private static final int MAX_NETWORK_REQUESTS_PER_UID = 100;
+    private static final int MAX_NETWORK_REQUESTS_PER_UID = 300;
 
     @VisibleForTesting
     protected int mLingerDelayMs;  // Can't be final, or test subclass constructors can't change it.
