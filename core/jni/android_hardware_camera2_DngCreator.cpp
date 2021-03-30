@@ -1611,11 +1611,19 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
     }
 
     {
-        // Set whitelevel
-        camera_metadata_entry entry =
-                characteristics.find(ANDROID_SENSOR_INFO_WHITE_LEVEL);
-        BAIL_IF_EMPTY_RET_NULL_SP(entry, env, TAG_WHITELEVEL, writer);
-        uint32_t whiteLevel = static_cast<uint32_t>(entry.data.i32[0]);
+        uint32_t whiteLevel;
+
+        // Set whiteLevel tags, using dynamic white level if available
+        camera_metadata_entry entry = results.find(ANDROID_SENSOR_DYNAMIC_WHITE_LEVEL);
+        if (entry.count != 0) {
+            whiteLevel = static_cast<uint32_t>(entry.data.i32[0]);
+        } else {
+            // Fall back to static white level which is guaranteed
+            entry = characteristics.find(ANDROID_SENSOR_INFO_WHITE_LEVEL);
+            BAIL_IF_EMPTY_RET_NULL_SP(entry, env, TAG_WHITELEVEL, writer);
+            whiteLevel = static_cast<uint32_t>(entry.data.i32[0]);
+        }
+
         BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_WHITELEVEL, 1, &whiteLevel, TIFF_IFD_0),
                 env, TAG_WHITELEVEL, writer);
     }
