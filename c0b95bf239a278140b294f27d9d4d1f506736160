@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dca5ecb1_52dbcc0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-30T01:27:06Z",
+      "side": 1,
+      "message": "From meeting, let\u0027s explore a more targetted solution where we decrement the count immediately before creating the requests and increment it again after removing them. It\u0027s a hack, but it\u0027s probably a lot more circumscribed.",
+      "revId": "c0b95bf239a278140b294f27d9d4d1f506736160",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9f3cdb3_3cfabae7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 12093,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-30T01:27:06Z",
+      "side": 1,
+      "message": "Let\u0027s move this into a Runnable and factorize the outer code",
+      "range": {
+        "startLine": 12084,
+        "startChar": 12,
+        "endLine": 12093,
+        "endChar": 40
+      },
+      "revId": "c0b95bf239a278140b294f27d9d4d1f506736160",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
