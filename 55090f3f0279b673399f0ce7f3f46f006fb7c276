@@ -16,6 +16,24 @@
       "message": "Wouldn\u0027t the power button logic fall under Michael\u0027s team vs. your team?",
       "revId": "55090f3f0279b673399f0ce7f3f46f006fb7c276",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8b620a2_642c42f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1157913
+      },
+      "writtenOn": "2021-03-31T19:12:14Z",
+      "side": 1,
+      "message": "Added more context on the bug comment#1",
+      "parentUuid": "a4577440_6a2774ed",
+      "revId": "55090f3f0279b673399f0ce7f3f46f006fb7c276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
