@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009492139",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1649289?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f5fd5f10_2e346c5a",
+        "filename": "graphics/java/android/graphics/RecordingCanvas.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-31T13:53:19Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 115
+      },
+      "revId": "24e5eddfb19336d916514a59a71b737b8e80e2ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
