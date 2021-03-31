@@ -2583,6 +2583,10 @@ NotCloseable: android.telephony.ims.stub.ImsUtImplBase:
     
 
 
+NullableCollection: android.telephony.TelephonyManager#getCertsFromCarrierPrivilegeAccessRules():
+    Return type of method android.telephony.TelephonyManager.getCertsFromCarrierPrivilegeAccessRules() is a nullable collection (`java.util.List`); must be non-null
+
+
 OnNameExpected: android.service.autofill.augmented.AugmentedAutofillService#dump(java.io.PrintWriter, String[]):
     
 OnNameExpected: android.service.contentcapture.ContentCaptureService#dump(java.io.FileDescriptor, java.io.PrintWriter, String[]):

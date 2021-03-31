@@ -11132,12 +11132,11 @@ public class TelephonyManager {
      *
      * @return a list of certificate in hex string. return {@code null} if there is no certs
      * or privilege rules are not loaded yet.
-     *
-     * <p>Requires Permission:
-     * {@link android.Manifest.permission#READ_PRIVILEGED_PHONE_STATE}
      * @hide
      */
+    @TestApi
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    @Nullable
     public List<String> getCertsFromCarrierPrivilegeAccessRules() {
         try {
             ITelephony service = getITelephony();
