@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a56cc653_0a0f839f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2021-03-31T06:42:03Z",
+      "side": 1,
+      "message": "This is the CP. Should I just merge my permission or sync the rest too?\n\nIf I don\u0027t, it might end up in bad merge conflicts later? And they don\u0027t look like they were intentionally kept out of aosp/",
+      "revId": "4452141aa98c9f82c674632c35acba49ee9a3f1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
