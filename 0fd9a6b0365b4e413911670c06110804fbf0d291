@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20c75c40_8c59413c",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-31T23:34:54Z",
+      "side": 1,
+      "message": "per our conversation offline, can we document why we explicitly want subIds in the Wifi request and not in the cell request?",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 170,
+        "endChar": 5
+      },
+      "revId": "0fd9a6b0365b4e413911670c06110804fbf0d291",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
