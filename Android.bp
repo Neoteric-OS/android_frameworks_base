@@ -1071,6 +1071,7 @@ filegroup {
 
 aidl_interface {
     name: "libincremental_aidl",
+    host_supported: true,
     unstable: true,
     srcs: [
         ":incremental_aidl",
