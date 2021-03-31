@@ -254,8 +254,6 @@ public final class VcnGatewayConnectionConfig {
      * configured on a single {@link VcnConfig}. This name is only for identification purposes and
      * will be returned in {@link VcnManager.VcnStatusCallback#onGatewayConnectionError(String, int,
      * Throwable)}.
-     *
-     * @hide
      */
     @NonNull
     public String getGatewayConnectionName() {
@@ -437,16 +435,6 @@ public final class VcnGatewayConnectionConfig {
         /**
          * Construct a Builder object.
          *
-         * @param ctrlPlaneConfig the control plane configuration
-         * @see VcnControlPlaneConfig
-         */
-        public Builder(@NonNull VcnControlPlaneConfig ctrlPlaneConfig) {
-            this("" /* gatewayConnectionName */, ctrlPlaneConfig);
-        }
-
-        /**
-         * Construct a Builder object.
-         *
          * @param gatewayConnectionName the String GatewayConnection name for this
          *     VcnGatewayConnectionConfig. Each VcnGatewayConnectionConfig within a {@link
          *     VcnConfig} must be given a unique name. This name is used by the caller to
@@ -456,7 +444,6 @@ public final class VcnGatewayConnectionConfig {
          *     Throwable)}.
          * @param ctrlPlaneConfig the control plane configuration
          * @see VcnControlPlaneConfig
-         * @hide
          */
         public Builder(
                 @NonNull String gatewayConnectionName,
