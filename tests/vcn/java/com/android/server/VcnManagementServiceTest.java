@@ -920,12 +920,12 @@ public class VcnManagementServiceTest {
 
     @Test
     public void testVcnEnteringSafeModeNotifiesPolicyListeners() throws Exception {
-        verifyVcnSafeModeChangesNotifiesPolicyListeners(true);
+        verifyVcnSafeModeChangesNotifiesPolicyListeners(true /* enterSafeMode */);
     }
 
     @Test
     public void testVcnExitingSafeModeNotifiesPolicyListeners() throws Exception {
-        verifyVcnSafeModeChangesNotifiesPolicyListeners(false);
+        verifyVcnSafeModeChangesNotifiesPolicyListeners(false /* enterSafeMode */);
     }
 
     private void triggerVcnStatusCallbackOnSafeModeStatusChanged(
@@ -951,7 +951,7 @@ public class VcnManagementServiceTest {
 
         mVcnMgmtSvc.registerVcnStatusCallback(subGroup, mMockStatusCallback, pkgName);
 
-        triggerVcnSafeMode(subGroup, snapshot, true);
+        triggerVcnSafeMode(subGroup, snapshot, true /* enterSafeMode */);
     }
 
     @Test

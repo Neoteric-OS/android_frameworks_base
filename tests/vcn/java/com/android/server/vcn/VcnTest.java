@@ -217,21 +217,20 @@ public class VcnTest {
         // Doesn't matter which callback this gets, or which VCN is in safe mode - any Gateway
         // entering Safemode should trigger safe mode
         final VcnGatewayStatusCallback statusCallback = mGatewayStatusCallbackCaptor.getValue();
-        final VcnGatewayConnection gatewayConnection =
-                mVcn.getVcnGatewayConnections().iterator().next();
+        final VcnGatewayConnection gatewayConnection = gatewayConnections.iterator().next();
 
         doReturn(true).when(gatewayConnection).isInSafeMode();
         statusCallback.onSafeModeStatusChanged();
         mTestLooper.dispatchAll();
 
-        verifySafeMode(requestListener, gatewayConnections, true);
+        verifySafeMode(requestListener, gatewayConnections, true /* expectInSafeMode */);
 
         // Verify that when all GatewayConnections exit safe mode, the VCN also exits safe mode
         doReturn(false).when(gatewayConnection).isInSafeMode();
         statusCallback.onSafeModeStatusChanged();
         mTestLooper.dispatchAll();
 
-        verifySafeMode(requestListener, gatewayConnections, false);
+        verifySafeMode(requestListener, gatewayConnections, false /* expectInSafeMode */);
     }
 
     private void verifyGatewayQuit(int status) {

@@ -97,7 +97,7 @@ public class Vcn extends Handler {
     private static final int MSG_EVENT_GATEWAY_CONNECTION_QUIT = MSG_EVENT_BASE + 3;
 
     /**
-     * Triggers reevaluation of safe mode triggers.
+     * Triggers reevaluation of safe mode conditions.
      *
      * <p>Upon entering safe mode, the VCN will only provide gateway connections opportunistically,
      * leaving the underlying networks marked as NOT_VCN_MANAGED.
@@ -272,8 +272,8 @@ public class Vcn extends Handler {
 
         mConfig = config;
 
-        // VCN is already active - teardown any GatewayConnections whose configs have been
-        // removed and get all current requests
+        // Teardown any GatewayConnections whose configs have been removed and get all current
+        // requests
         for (final Entry<VcnGatewayConnectionConfig, VcnGatewayConnection> entry :
                 mVcnGatewayConnections.entrySet()) {
             final VcnGatewayConnectionConfig gatewayConnectionConfig = entry.getKey();
@@ -311,7 +311,10 @@ public class Vcn extends Handler {
 
         // If any VcnGatewayConnection is in safe mode, mark the entire VCN as being in safe mode
         for (VcnGatewayConnection gatewayConnection : mVcnGatewayConnections.values()) {
-            hasSafeModeGatewayConnection |= gatewayConnection.isInSafeMode();
+            if (gatewayConnection.isInSafeMode()) {
+                hasSafeModeGatewayConnection = true;
+                break;
+            }
         }
 
         mCurrentStatus =
