@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50b7936b_bc67f9b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-31T23:21:50Z",
+      "side": 1,
+      "message": "lgtm with one small comment",
+      "revId": "b2dc23c3f4f9e180a10349a2025b6dce5a192df8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7e40f36_c3838178",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-31T23:21:50Z",
+      "side": 1,
+      "message": "I think this can NPE, as we haven\u0027t yet verified that vcn is non-null. Maybe\n```vcn \u003d\u003d null ? NOT_CONFIGURED : vcn.getStatus()```\ninstead?",
+      "range": {
+        "startLine": 883,
+        "startChar": 38,
+        "endLine": 883,
+        "endChar": 53
+      },
+      "revId": "b2dc23c3f4f9e180a10349a2025b6dce5a192df8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
