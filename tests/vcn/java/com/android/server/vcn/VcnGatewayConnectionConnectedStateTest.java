@@ -60,16 +60,23 @@ import org.mockito.ArgumentCaptor;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Collections;
+import java.util.function.Consumer;
 
 /** Tests for VcnGatewayConnection.ConnectedState */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnectionTestBase {
     private VcnIkeSession mIkeSession;
+    private NetworkAgent mNetworkAgent;
 
     @Before
     public void setUp() throws Exception {
         super.setUp();
+
+        mNetworkAgent = mock(NetworkAgent.class);
+        doReturn(mNetworkAgent)
+                .when(mDeps)
+                .newNetworkAgent(any(), any(), any(), any(), anyInt(), any(), any(), any(), any());
 
         mGatewayConnection.setUnderlyingNetwork(TEST_UNDERLYING_NETWORK_RECORD_1);
 
@@ -172,6 +179,24 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
         getChildSessionCallback().onOpened(mMockChildSessionConfig);
     }
 
+    private void triggerValidation(int status) {
+        final ArgumentCaptor<Consumer<Integer>> validationCallbackCaptor =
+                ArgumentCaptor.forClass(Consumer.class);
+        verify(mDeps)
+                .newNetworkAgent(
+                        any(),
+                        any(),
+                        any(),
+                        any(),
+                        anyInt(),
+                        any(),
+                        any(),
+                        any(),
+                        validationCallbackCaptor.capture());
+
+        validationCallbackCaptor.getValue().accept(status);
+    }
+
     @Test
     public void testChildOpenedRegistersNetwork() throws Exception {
         // Verify scheduled but not canceled when entering ConnectedState
@@ -185,15 +210,20 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
                 ArgumentCaptor.forClass(LinkProperties.class);
         final ArgumentCaptor<NetworkCapabilities> ncCaptor =
                 ArgumentCaptor.forClass(NetworkCapabilities.class);
-        verify(mConnMgr)
-                .registerNetworkAgent(
-                        any(),
-                        any(),
-                        lpCaptor.capture(),
+        verify(mDeps)
+                .newNetworkAgent(
+                        eq(mVcnContext),
+                        any(String.class),
                         ncCaptor.capture(),
+                        lpCaptor.capture(),
+                        anyInt(),
                         any(),
                         any(),
-                        anyInt());
+                        any(),
+                        any());
+        verify(mNetworkAgent).register();
+        verify(mNetworkAgent).markConnected();
+
         verify(mIpSecSvc)
                 .addAddressToTunnelInterface(
                         eq(TEST_IPSEC_TUNNEL_RESOURCE_ID), eq(TEST_INTERNAL_ADDR), any());
@@ -211,21 +241,20 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
 
         // Now that Vcn Network is up, notify it as validated and verify the SafeMode alarm is
         // canceled
-        mGatewayConnection.mNetworkAgent.onValidationStatus(
-                NetworkAgent.VALIDATION_STATUS_VALID, null /* redirectUri */);
+        triggerValidation(NetworkAgent.VALIDATION_STATUS_VALID);
         verify(mSafeModeTimeoutAlarm).cancel();
         assertFalse(mGatewayConnection.isInSafeMode());
     }
 
     @Test
     public void testSuccessfulConnectionExitsSafeMode() throws Exception {
-        verifySafeModeTimeoutNotifiesCallback(mGatewayConnection.mConnectedState);
+        verifySafeModeTimeoutNotifiesCallbackAndUnregistersNetworkAgent(
+                mGatewayConnection.mConnectedState);
 
         triggerChildOpened();
         mTestLooper.dispatchAll();
 
-        mGatewayConnection.mNetworkAgent.onValidationStatus(
-                NetworkAgent.VALIDATION_STATUS_VALID, null /* redirectUri */);
+        triggerValidation(NetworkAgent.VALIDATION_STATUS_VALID);
 
         assertFalse(mGatewayConnection.isInSafeMode());
     }
