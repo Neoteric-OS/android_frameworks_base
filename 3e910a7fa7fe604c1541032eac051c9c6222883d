@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "333c49ec_19d1972a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-31T00:01:43Z",
+      "side": 1,
+      "message": "Looks like this also fixes b/181789060",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "3e910a7fa7fe604c1541032eac051c9c6222883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41bf078e_64f2c033",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-31T00:01:43Z",
+      "side": 1,
+      "message": "given that the status value can change between calls (and Vcn instances run on a different thread), I\u0027m not sure this is safe. Can we do this with only one call to getStatus()?",
+      "range": {
+        "startLine": 888,
+        "startChar": 27,
+        "endLine": 889,
+        "endChar": 71
+      },
+      "revId": "3e910a7fa7fe604c1541032eac051c9c6222883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9b970af_1e80bb31",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-31T00:01:43Z",
+      "side": 1,
+      "message": "might be worth logging the received status still",
+      "range": {
+        "startLine": 892,
+        "startChar": 34,
+        "endLine": 892,
+        "endChar": 54
+      },
+      "revId": "3e910a7fa7fe604c1541032eac051c9c6222883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbeff8c1_e14810cf",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-31T00:01:43Z",
+      "side": 1,
+      "message": "Right now we only use statuses from VcnManager and that completely works. However, is there a chance that we ever want to have more state internally than that?",
+      "range": {
+        "startLine": 149,
+        "startChar": 25,
+        "endLine": 149,
+        "endChar": 39
+      },
+      "revId": "3e910a7fa7fe604c1541032eac051c9c6222883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfb8b9f5_a663d7de",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-31T00:01:43Z",
+      "side": 1,
+      "message": "Is there a reason we need to restrict config updates? istm that this is dangerous, as we unconditionally set the status to ACTIVE above but conditionally register the requestListener again (meaning updating configs on an INACTIVE Vcn makes it ACTIVE but it won\u0027t listen to future requests).\n\nSuggest at least Log.wtf() for the else-case here",
+      "range": {
+        "startLine": 292,
+        "startChar": 10,
+        "endLine": 292,
+        "endChar": 60
+      },
+      "revId": "3e910a7fa7fe604c1541032eac051c9c6222883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
