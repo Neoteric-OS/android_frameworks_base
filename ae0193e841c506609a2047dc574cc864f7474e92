@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20952cae_ab3df998",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2021-03-31T23:08:52Z",
+      "side": 1,
+      "message": "Hi Michael, I\u0027m trying to add tests for android.media.MediaPlayer.setOnRtpRxNoticeListener\nin CTS. The approach is to grant permission to the shell, and then in the CTS test assume\nthe identity of the shell to check that the API is accessible.\n\nI have already merged aosp/1652487 and after this I plan to merge a well formatted version\nof ag/13774876. Let me know if you think this is ok to do. I asked around and no one offered\na better alternative.",
+      "revId": "ae0193e841c506609a2047dc574cc864f7474e92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
