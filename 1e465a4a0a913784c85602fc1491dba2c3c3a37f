@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d090bcc9_916bae0f",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-31T05:09:38Z",
+      "side": 1,
+      "message": "The name seems a bit misleading since it also includes purely reboot-related errors (eg. when it\u0027s just a switch slot mismatch, nothing to do with the escrow). Consider renaming to something like PrepareForRebootError?",
+      "range": {
+        "startLine": 176,
+        "startChar": 17,
+        "endLine": 176,
+        "endChar": 37
+      },
+      "revId": "1e465a4a0a913784c85602fc1491dba2c3c3a37f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
