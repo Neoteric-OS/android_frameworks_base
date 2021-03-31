@@ -362,9 +362,9 @@ public class PipBoundsHandler {
     private void updateDisplayInfoIfNeeded() {
         final boolean updateNeeded;
         if ((mDisplayInfo.rotation == ROTATION_0) || (mDisplayInfo.rotation == ROTATION_180)) {
-            updateNeeded = (mDisplayInfo.logicalWidth > mDisplayInfo.logicalHeight);
-        } else {
             updateNeeded = (mDisplayInfo.logicalWidth < mDisplayInfo.logicalHeight);
+        } else {
+            updateNeeded = (mDisplayInfo.logicalWidth > mDisplayInfo.logicalHeight);
         }
         if (updateNeeded) {
             final int newLogicalHeight = mDisplayInfo.logicalWidth;
