@@ -118,7 +118,7 @@ public class UnderlyingNetworkTracker {
         if (!mIsQuitting) {
             mRouteSelectionCallback = new RouteSelectionCallback();
             mConnectivityManager.requestBackgroundNetwork(
-                    getBaseNetworkRequestBuilder().build(), mHandler, mRouteSelectionCallback);
+                    getRouteSelectionRequest(), mHandler, mRouteSelectionCallback);
 
             mWifiBringupCallback = new NetworkBringupCallback();
             mConnectivityManager.requestBackgroundNetwork(
@@ -149,9 +149,16 @@ public class UnderlyingNetworkTracker {
         }
     }
 
+    private NetworkRequest getRouteSelectionRequest() {
+        return getBaseNetworkRequestBuilder()
+                .setSubIds(mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup))
+                .build();
+    }
+
     private NetworkRequest getWifiNetworkRequest() {
         return getBaseNetworkRequestBuilder()
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .setSubIds(mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup))
                 .build();
     }
 
@@ -176,8 +183,7 @@ public class UnderlyingNetworkTracker {
                 .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                 .removeCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED)
                 .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)
-                .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED)
-                .setSubIds(mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup));
+                .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
     }
 
     /**
