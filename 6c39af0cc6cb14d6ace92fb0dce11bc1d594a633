@@ -50,6 +50,24 @@
       "message": "I don\u0027t see any harm in adding a timeout to the global actions menus",
       "revId": "6c39af0cc6cb14d6ace92fb0dce11bc1d594a633",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76be4a18_23709f6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2021-03-31T07:21:39Z",
+      "side": 1,
+      "message": "mpietal@\n\nThanks for the review and apologies for taking ages to verify - working from home ẃithout access to a newer Pixel.\n\nOne thought I had when testing this was whether we should take into account accessibility i.e is there an accessibility case where this should be deactivated or extended to give the user more time to interact?",
+      "parentUuid": "b9cbbca3_d311f3ec",
+      "revId": "6c39af0cc6cb14d6ace92fb0dce11bc1d594a633",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
