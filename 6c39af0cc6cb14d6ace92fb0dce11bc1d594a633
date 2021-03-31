@@ -68,6 +68,24 @@
       "parentUuid": "b9cbbca3_d311f3ec",
       "revId": "6c39af0cc6cb14d6ace92fb0dce11bc1d594a633",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90866756_63b98d58",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2021-03-31T13:31:03Z",
+      "side": 1,
+      "message": "There is an Accessibility setting for \"Time to take action\", but this is really meant for very transient items, like how long heads-up notifications will show. I believe 1 minute is fine for this.",
+      "parentUuid": "76be4a18_23709f6c",
+      "revId": "6c39af0cc6cb14d6ace92fb0dce11bc1d594a633",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
