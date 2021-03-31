@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8423345_b52fd429",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-31T21:43:10Z",
+      "side": 1,
+      "message": "Added, but i don\u0027t think completely fixes. we need to still to do the onStatusChanged() and the remove-after-teardown",
+      "parentUuid": "333c49ec_19d1972a",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "3e910a7fa7fe604c1541032eac051c9c6222883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41bf078e_64f2c033",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a4feead_1da86f71",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-31T21:43:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41bf078e_64f2c033",
+      "range": {
+        "startLine": 888,
+        "startChar": 27,
+        "endLine": 889,
+        "endChar": 71
+      },
+      "revId": "3e910a7fa7fe604c1541032eac051c9c6222883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d9b970af_1e80bb31",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-03-31T00:01:43Z",
       "side": 1,
       "message": "might be worth logging the received status still",
+      "range": {
+        "startLine": 892,
+        "startChar": 34,
+        "endLine": 892,
+        "endChar": 54
+      },
+      "revId": "3e910a7fa7fe604c1541032eac051c9c6222883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b507ad2_b0ecc2d4",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-31T21:43:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9b970af_1e80bb31",
       "range": {
         "startLine": 892,
         "startChar": 34,
@@ -95,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4253cbb3_f684ff63",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-31T21:43:10Z",
+      "side": 1,
+      "message": "Yep; all this is implementation-only, so once we find another case that doesn\u0027t fit the VcnManager statuses, we can just switch over to something else.\n\nUntil then though, I\u0027d prefer just using what we have, under the YAGNI principle. 😊",
+      "parentUuid": "bbeff8c1_e14810cf",
+      "range": {
+        "startLine": 149,
+        "startChar": 25,
+        "endLine": 149,
+        "endChar": 39
+      },
+      "revId": "3e910a7fa7fe604c1541032eac051c9c6222883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bfb8b9f5_a663d7de",
         "filename": "services/core/java/com/android/server/vcn/Vcn.java",
         "patchSetId": 4
@@ -106,6 +202,30 @@
       "writtenOn": "2021-03-31T00:01:43Z",
       "side": 1,
       "message": "Is there a reason we need to restrict config updates? istm that this is dangerous, as we unconditionally set the status to ACTIVE above but conditionally register the requestListener again (meaning updating configs on an INACTIVE Vcn makes it ACTIVE but it won\u0027t listen to future requests).\n\nSuggest at least Log.wtf() for the else-case here",
+      "range": {
+        "startLine": 292,
+        "startChar": 10,
+        "endLine": 292,
+        "endChar": 60
+      },
+      "revId": "3e910a7fa7fe604c1541032eac051c9c6222883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dea58a63_327dd78f",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-31T21:43:10Z",
+      "side": 1,
+      "message": "Ahh, fixed in the next CL, but should be here. added the else clause.\n\nWe\u0027ll also be re-tooling this in the next CL, where we don\u0027t modify the current status in this method.",
+      "parentUuid": "bfb8b9f5_a663d7de",
       "range": {
         "startLine": 292,
         "startChar": 10,
