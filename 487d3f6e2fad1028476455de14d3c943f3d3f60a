@@ -16,6 +16,24 @@
       "message": "I assume this is a direct CP from internal?",
       "revId": "487d3f6e2fad1028476455de14d3c943f3d3f60a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1972f6a4_7fcfeff0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1005967
+      },
+      "writtenOn": "2021-04-01T00:13:18Z",
+      "side": 1,
+      "message": "yes, we had a very bad time with the diff last year and try to minimize it",
+      "parentUuid": "2ed5700b_00353805",
+      "revId": "487d3f6e2fad1028476455de14d3c943f3d3f60a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
