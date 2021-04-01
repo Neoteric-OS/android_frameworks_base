@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "23bd2b6a_c642ffcd",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-04-01T00:31:59Z",
+      "side": 1,
+      "message": "I suggest to leave it with its implementation.",
+      "parentUuid": "c8a2fa98_201f9ef4",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 91
+      },
+      "revId": "72ccef94fb6347ff51062b34a7016f448b0a4f9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5bd8f3c8_d8252cba",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 5
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "we do in the same way as hearing aid does. I think this is in frameworks/base so it can be overlayed by devices.\n\nI will set it to false.",
       "parentUuid": "5bd8f3c8_d8252cba",
+      "range": {
+        "startLine": 137,
+        "startChar": 16,
+        "endLine": 137,
+        "endChar": 43
+      },
+      "revId": "72ccef94fb6347ff51062b34a7016f448b0a4f9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbe991b2_5195f2b3",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-04-01T00:31:59Z",
+      "side": 1,
+      "message": "For hearing aid profile, the reason of the config put under frameworks/base is that Setting need to know if isHearingAidProfileSupported or not and depend on it to show the hearing aid preference. For the other profile, their configs are all kept under packages/apps/Bluetooth.",
+      "parentUuid": "72c508b5_8cba4d80",
       "range": {
         "startLine": 137,
         "startChar": 16,
