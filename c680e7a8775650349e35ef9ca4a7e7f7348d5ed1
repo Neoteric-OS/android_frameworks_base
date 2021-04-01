@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbfabc23_993f5471",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-04-01T20:52:05Z",
+      "side": 1,
+      "message": "OWNERS is granted when a team has enough context in that part of the code base to review whether a given CL fits the architecture, not just whenever work needs to be done. I\u0027d be open to approving this down the road, but we need to actually have some code land first.",
+      "revId": "c680e7a8775650349e35ef9ca4a7e7f7348d5ed1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
