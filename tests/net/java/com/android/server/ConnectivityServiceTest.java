@@ -3339,6 +3339,8 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testCaptivePortalApp() throws Exception {
+        mServiceContext.setPermission(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
+                PERMISSION_GRANTED);
         final TestNetworkCallback captivePortalCallback = new TestNetworkCallback();
         final NetworkRequest captivePortalRequest = new NetworkRequest.Builder()
                 .addCapability(NET_CAPABILITY_CAPTIVE_PORTAL).build();
@@ -3378,8 +3380,6 @@ public class ConnectivityServiceTest {
         final String testKey = "testkey";
         final String testValue = "testvalue";
         testBundle.putString(testKey, testValue);
-        mServiceContext.setPermission(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
-                PERMISSION_GRANTED);
         mCm.startCaptivePortalApp(wifiNetwork, testBundle);
         final Intent signInIntent = mServiceContext.expectStartActivityIntent(TIMEOUT_MS);
         assertEquals(ACTION_CAPTIVE_PORTAL_SIGN_IN, signInIntent.getAction());
