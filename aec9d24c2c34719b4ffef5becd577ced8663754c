@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9870e0b8_f98f7146",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-01T21:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cddeb118_365333f3",
+      "revId": "aec9d24c2c34719b4ffef5becd577ced8663754c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06f0f95c_b96df64b",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-04-01T20:48:34Z",
       "side": 1,
       "message": "I\u0027m wondering if we should define a VcnNetworkAgent vs the anonymous class here (for logging purposes + maintainability if nothing else). Do we expect to need more NetworkAgent behavior in the future?",
+      "range": {
+        "startLine": 2066,
+        "startChar": 19,
+        "endLine": 2066,
+        "endChar": 35
+      },
+      "revId": "aec9d24c2c34719b4ffef5becd577ced8663754c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07c5655b_3c08a59c",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2066,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-01T21:53:22Z",
+      "side": 1,
+      "message": "Not really; it\u0027d require defining it as an instance class to access methods on the GatewayConnection class, at which point the Dependencies class doesn\u0027t have the ability to access it.",
+      "parentUuid": "06f0f95c_b96df64b",
       "range": {
         "startLine": 2066,
         "startChar": 19,
