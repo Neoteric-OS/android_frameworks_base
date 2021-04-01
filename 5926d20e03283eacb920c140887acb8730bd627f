@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "861fcd19_32672175",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-01T08:56:17Z",
+      "side": 1,
+      "message": "How do you ensure that ? ISTM that you could in principle build 2 objects with the same name, and then be unable to distinguish. To be clear if you do that you get what you deserve, I don\u0027t think we should do anything to address this, but the doc suggests differently and I find it surprising.",
+      "range": {
+        "startLine": 449,
+        "startChar": 67,
+        "endLine": 449,
+        "endChar": 78
+      },
+      "revId": "5926d20e03283eacb920c140887acb8730bd627f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
