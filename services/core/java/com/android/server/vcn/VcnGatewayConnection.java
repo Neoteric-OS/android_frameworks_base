@@ -76,6 +76,7 @@ import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
+import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.internal.util.WakeupMessage;
@@ -1915,6 +1916,29 @@ public class VcnGatewayConnection extends StateMachine {
             // will be closed by the IKE library.
             Slog.v(TAG, "ChildTransformDeleted; Direction: " + direction + "; for token " + mToken);
         }
+    }
+
+    /**
+     * Dumps the state of this VcnGatewayConnection for logging and debugging purposes.
+     *
+     * <p>PII and credentials MUST NEVER be dumped here.
+     */
+    public void dump(IndentingPrintWriter pw) {
+        // TODO: Change this to use gateway connection name
+        pw.println(
+                "VcnGatewayConnection ("
+                        + Arrays.toString(mConnectionConfig.getExposedCapabilities())
+                        + "):");
+        pw.increaseIndent();
+
+        pw.println("Current state: " + getCurrentState().getClass().getSimpleName());
+        pw.println("mIsQuitting: " + mIsQuitting);
+        pw.println("mIsInSafeMode: " + mIsInSafeMode);
+        pw.println("mCurrentToken: " + mCurrentToken);
+        pw.println("mFailedAttempts: " + mFailedAttempts);
+        pw.println("mNetworkAgent: " + mNetworkAgent);
+
+        pw.decreaseIndent();
     }
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)

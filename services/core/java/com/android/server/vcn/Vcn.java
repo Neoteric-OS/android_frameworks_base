@@ -17,6 +17,7 @@
 package com.android.server.vcn;
 
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED;
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.vcn.VcnManager.VCN_STATUS_CODE_ACTIVE;
 import static android.net.vcn.VcnManager.VCN_STATUS_CODE_INACTIVE;
 import static android.net.vcn.VcnManager.VCN_STATUS_CODE_SAFE_MODE;
@@ -37,6 +38,7 @@ import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
+import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.VcnManagementService.VcnCallback;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 
@@ -324,6 +326,8 @@ public class Vcn extends Handler {
 
     private void handleNetworkRequested(
             @NonNull NetworkRequest request, int score, int providerId) {
+        Slog.v(getLogTag(), "Received request " + request);
+
         if (score > getNetworkScore()) {
             if (VDBG) {
                 Slog.v(
@@ -403,6 +407,26 @@ public class Vcn extends Handler {
 
     private String getLogTag() {
         return TAG + " [" + mSubscriptionGroup.hashCode() + "]";
+    }
+
+    /**
+     * Dumps the state of this Vcn for logging and debugging purposes.
+     *
+     * <p>PII and credentials MUST NEVER be dumped here.
+     */
+    public void dump(IndentingPrintWriter pw) {
+        pw.println("Vcn (" + mSubscriptionGroup + "):");
+        pw.increaseIndent();
+
+        pw.println("mCurrentStatus: " + mCurrentStatus);
+
+        pw.println("mVcnGatewayConnections:");
+        for (VcnGatewayConnection gw : mVcnGatewayConnections.values()) {
+            gw.dump(pw);
+        }
+        pw.println();
+
+        pw.decreaseIndent();
     }
 
     /** Retrieves the network score for a VCN Network */
