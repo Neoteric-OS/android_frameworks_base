@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb1973e9_5771963d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-04-01T18:00:03Z",
+      "side": 1,
+      "message": "adding other battery stats owners - guess current gerrit plugin shows only a subset, and not necessarily those most relevant",
+      "revId": "de4e95ed68a14bdc4187d19a0a018914a6755b83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
