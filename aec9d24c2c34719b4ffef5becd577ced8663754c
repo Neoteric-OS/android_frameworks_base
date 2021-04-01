@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cddeb118_365333f3",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-01T20:48:34Z",
+      "side": 1,
+      "message": "nit: extra line",
+      "revId": "aec9d24c2c34719b4ffef5becd577ced8663754c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06f0f95c_b96df64b",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2066,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-01T20:48:34Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we should define a VcnNetworkAgent vs the anonymous class here (for logging purposes + maintainability if nothing else). Do we expect to need more NetworkAgent behavior in the future?",
+      "range": {
+        "startLine": 2066,
+        "startChar": 19,
+        "endLine": 2066,
+        "endChar": 35
+      },
+      "revId": "aec9d24c2c34719b4ffef5becd577ced8663754c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
