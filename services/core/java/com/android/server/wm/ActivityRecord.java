@@ -1917,7 +1917,8 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
     private int getStartingWindowType(boolean newTask, boolean taskSwitch, boolean processRunning,
             boolean allowTaskSnapshot, boolean activityCreated,
             ActivityManager.TaskSnapshot snapshot) {
-        if (newTask || !processRunning || (taskSwitch && !activityCreated)) {
+        if (newTask || !processRunning || (taskSwitch && !activityCreated)
+            || (!activityCreated && intent != null && isMainIntent(intent) && isProcessRunningWithoutActivity())) {
             return STARTING_WINDOW_TYPE_SPLASH_SCREEN;
         } else if (taskSwitch && allowTaskSnapshot) {
             if (isSnapshotCompatible(snapshot)) {
@@ -7314,6 +7315,14 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
             proc = mAtmService.mProcessNames.get(processName, info.applicationInfo.uid);
         }
         return proc != null && proc.hasThread();
+    }
+
+    boolean isProcessRunningWithoutActivity() {
+        WindowProcessController proc = app;
+        if (proc == null) {
+            proc = mAtmService.mProcessNames.get(processName, info.applicationInfo.uid);
+        }
+        return proc != null && proc.hasThread() && !proc.hasActivities();
     }
 
     /**
