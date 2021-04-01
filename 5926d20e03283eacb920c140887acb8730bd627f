@@ -22,6 +22,30 @@
       },
       "revId": "5926d20e03283eacb920c140887acb8730bd627f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43d5bf49_ae631743",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-01T18:26:51Z",
+      "side": 1,
+      "message": "This is enforced when VcnGatewayConnectionConfigs are added to a VcnConfig.Builder - this is added and documented in the parent CL\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/changes/90/1634490/9/core/java/android/net/vcn/VcnConfig.java#186",
+      "parentUuid": "861fcd19_32672175",
+      "range": {
+        "startLine": 449,
+        "startChar": 67,
+        "endLine": 449,
+        "endChar": 78
+      },
+      "revId": "5926d20e03283eacb920c140887acb8730bd627f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
