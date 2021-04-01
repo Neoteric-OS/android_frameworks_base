@@ -16,6 +16,23 @@
       "message": "Add more for the patch review.",
       "revId": "330f546e8237fcb33e3454ad74f1d0ffd6927c28",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c551f195_bc8c31ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1043738
+      },
+      "writtenOn": "2021-04-01T16:56:03Z",
+      "side": 1,
+      "message": "@Gaurav, can we have someone vote DrNo-Review? looks it is the only one we are missing 😊",
+      "revId": "330f546e8237fcb33e3454ad74f1d0ffd6927c28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
