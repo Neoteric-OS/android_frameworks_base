@@ -86,6 +86,24 @@
       "parentUuid": "76be4a18_23709f6c",
       "revId": "6c39af0cc6cb14d6ace92fb0dce11bc1d594a633",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3da1b66_40343bba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2021-04-01T12:50:30Z",
+      "side": 1,
+      "message": "Thank you for the confirmation, that sounds reasonable.\n\nPlease merge this when you are ready, as I have no rights to do that on AOSP.\n\nThanks again!",
+      "parentUuid": "90866756_63b98d58",
+      "revId": "6c39af0cc6cb14d6ace92fb0dce11bc1d594a633",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
