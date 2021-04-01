@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b410cb2_f5b332c3",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-01T20:20:26Z",
+      "side": 1,
+      "message": "nit: which appears?",
+      "range": {
+        "startLine": 188,
+        "startChar": 36,
+        "endLine": 188,
+        "endChar": 43
+      },
+      "revId": "090c75e5f40823c0969fd40f262fdb10d6fa0c6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
