@@ -33,6 +33,24 @@
       "message": "Is there something we need to fix to get this merged?\n\nThanks!",
       "revId": "f2cef7f837b48193149e97c1f64b73b138320d8c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a23f379_f86574de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1085403
+      },
+      "writtenOn": "2021-04-01T04:52:41Z",
+      "side": 1,
+      "message": "Looks like some missing resources/strings:\n\nframeworks/base/core/java/android/print/PrintAttributes.java:641: error: cannot find symbol\n                        R.string.mediasize_na_ansi_c, 17000, 22000);\n                                ^\n  symbol:   variable mediasize_na_ansi_c\n  location: class string\nframeworks/base/core/java/android/print/PrintAttributes.java:645: error: cannot find symbol\n                        R.string.mediasize_na_ansi_d, 22000, 34000);\n                                ^\n  symbol:   variable mediasize_na_ansi_d\n  location: class string\nframeworks/base/core/java/android/print/PrintAttributes.java:649: error: cannot find symbol\n                        R.string.mediasize_na_ansi_e, 34000, 44000);\n                                ^\n  symbol:   variable mediasize_na_ansi_e\n  location: class string\nframeworks/base/core/java/android/print/PrintAttributes.java:653: error: cannot find symbol\n                        R.string.mediasize_na_ansi_f, 28000, 40000);\n                                ^\n  symbol:   variable mediasize_na_ansi_f\n  location: class string\nframeworks/base/core/java/android/print/PrintAttributes.java:657: error: cannot find symbol\n                        R.string.mediasize_na_arch_a, 9000, 12000);\n                                ^\n  symbol:   variable mediasize_na_arch_a\n  location: class string\nframeworks/base/core/java/android/print/PrintAttributes.java:661: error: cannot find symbol\n                        R.string.mediasize_na_arch_b, 12000, 18000);\n                                ^\n  symbol:   variable mediasize_na_arch_b\n  location: class string\nframeworks/base/core/java/android/print/PrintAttributes.java:665: error: cannot find symbol\n                        R.string.mediasize_na_arch_c, 18000, 24000);\n                                ^\n  symbol:   variable mediasize_na_arch_c\n  location: class string\nframeworks/base/core/java/android/print/PrintAttributes.java:669: error: cannot find symbol\n                        R.string.mediasize_na_arch_d, 24000, 36000);\n                                ^\n  symbol:   variable mediasize_na_arch_d\n  location: class string\nframeworks/base/core/java/android/print/PrintAttributes.java:673: error: cannot find symbol\n                        R.string.mediasize_na_arch_e, 36000, 48000);\n                                ^\n  symbol:   variable mediasize_na_arch_e\n  location: class string\nframeworks/base/core/java/android/print/PrintAttributes.java:677: error: cannot find symbol\n                        R.string.mediasize_na_arch_e1, 30000, 42000);\n                                ^\n  symbol:   variable mediasize_na_arch_e1\n  location: class string\nframeworks/base/core/java/android/print/PrintAttributes.java:681: error: cannot find symbol\n                        R.string.mediasize_na_super_b, 13000, 19000);\n                                ^",
+      "parentUuid": "e7caa88a_d0c508b7",
+      "revId": "f2cef7f837b48193149e97c1f64b73b138320d8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
