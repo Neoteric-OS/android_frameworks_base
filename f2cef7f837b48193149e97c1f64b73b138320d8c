@@ -51,6 +51,24 @@
       "parentUuid": "e7caa88a_d0c508b7",
       "revId": "f2cef7f837b48193149e97c1f64b73b138320d8c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d3d9220_aa2a1a8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1085403
+      },
+      "writtenOn": "2021-04-01T04:56:50Z",
+      "side": 1,
+      "message": "Strange because they are added by this diff. Checking ...",
+      "parentUuid": "5a23f379_f86574de",
+      "revId": "f2cef7f837b48193149e97c1f64b73b138320d8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
