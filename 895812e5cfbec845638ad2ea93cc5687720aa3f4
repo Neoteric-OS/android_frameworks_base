@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "832203fe_e84451c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2021-04-02T05:46:33Z",
+      "side": 1,
+      "message": "Can these be named directly after the application that they launch?\n\nFor example, KEYCODE_APP_1 -\u003e KEYCODE_NETFLIX?\n\nMichael, what are your thoughts here?",
+      "revId": "895812e5cfbec845638ad2ea93cc5687720aa3f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
