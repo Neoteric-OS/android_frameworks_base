@@ -824,13 +824,71 @@ public class KeyEvent extends InputEvent implements Parcelable {
      * consuming content. May be consumed by system to set account globally.
      */
     public static final int KEYCODE_PROFILE_SWITCH = 288;
+    /** Key code constant: Settings Application key #1.
+     * Directly launches the application assigned to the key. */
+    public static final int KEYCODE_SETTINGS_APP_1 = 289;
+    /** Key code constant: Settings Application key #2. */
+    public static final int KEYCODE_SETTINGS_APP_2 = 290;
+    /** Key code constant: Settings Application key #3. */
+    public static final int KEYCODE_SETTINGS_APP_3 = 291;
+    /** Key code constant: Settings Application key #4. */
+    public static final int KEYCODE_SETTINGS_APP_4 = 292;
+    /** Key code constant: Video Application key #1. */
+    public static final int KEYCODE_VIDEO_APP_1 = 293;
+    /** Key code constant: Video Application key #2. */
+    public static final int KEYCODE_VIDEO_APP_2 = 294;
+    /** Key code constant: Video Application key #3. */
+    public static final int KEYCODE_VIDEO_APP_3 = 295;
+    /** Key code constant: Video Application key #4. */
+    public static final int KEYCODE_VIDEO_APP_4 = 296;
+    /** Key code constant: Video Application key #5. */
+    public static final int KEYCODE_VIDEO_APP_5 = 297;
+    /** Key code constant: Video Application key #6. */
+    public static final int KEYCODE_VIDEO_APP_6 = 298;
+    /** Key code constant: Video Application key #7. */
+    public static final int KEYCODE_VIDEO_APP_7 = 299;
+    /** Key code constant: Video Application key #8. */
+    public static final int KEYCODE_VIDEO_APP_8 = 300;
+    /** Key code constant: Featured Application key #1. */
+    public static final int KEYCODE_FEATURED_APP_1 = 301;
+    /** Key code constant: Featured Application key #2. */
+    public static final int KEYCODE_FEATURED_APP_2 = 302;
+    /** Key code constant: Featured Application key #3. */
+    public static final int KEYCODE_FEATURED_APP_3 = 303;
+    /** Key code constant: Featured Application key #4. */
+    public static final int KEYCODE_FEATURED_APP_4 = 304;
+    /** Key code constant: Demo Application key #1. */
+    public static final int KEYCODE_DEMO_APP_1 = 305;
+    /** Key code constant: Demo Application key #2. */
+    public static final int KEYCODE_DEMO_APP_2 = 306;
+    /** Key code constant: Demo Application key #3. */
+    public static final int KEYCODE_DEMO_APP_3 = 307;
+    /** Key code constant: Demo Application key #4. */
+    public static final int KEYCODE_DEMO_APP_4 = 308;
+    /** Key code constant: Setup Application key #1. */
+    public static final int KEYCODE_SETUP_APP_1 = 309;
+    /** Key code constant: Setup Application key #2. */
+    public static final int KEYCODE_SETUP_APP_2 = 310;
+    /** Key code constant: Setup Application key #3. */
+    public static final int KEYCODE_SETUP_APP_3 = 311;
+    /** Key code constant: Setup Application key #4. */
+    public static final int KEYCODE_SETUP_APP_4 = 312;
+    /** Key code constant: Menu Application key #1. */
+    public static final int KEYCODE_MENU_APP_1 = 313;
+    /** Key code constant: Menu Application key #2. */
+    public static final int KEYCODE_MENU_APP_2 = 314;
+    /** Key code constant: Menu Application key #3. */
+    public static final int KEYCODE_MENU_APP_3 = 315;
+    /** Key code constant: Menu Application key #4. */
+    public static final int KEYCODE_MENU_APP_4 = 316;
 
-    /**
+
+   /**
      * Integer value of the last KEYCODE. Increases as new keycodes are added to KeyEvent.
      * @hide
      */
     @TestApi
-    public static final int LAST_KEYCODE = KEYCODE_PROFILE_SWITCH;
+    public static final int LAST_KEYCODE = KEYCODE_MENU_APP_4;
 
     // NOTE: If you add a new keycode here you must also add it to:
     //  isSystem()
