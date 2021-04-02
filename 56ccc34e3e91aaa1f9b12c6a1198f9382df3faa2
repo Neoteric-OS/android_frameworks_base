@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74ffade4_5b61c687",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-02T08:00:19Z",
+      "side": 1,
+      "message": "LGTM when the comment is addressed",
+      "revId": "56ccc34e3e91aaa1f9b12c6a1198f9382df3faa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6b79601_f04ac6e4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 12231,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-02T08:00:19Z",
+      "side": 1,
+      "message": "Please unregister the callbacks to avoid subsequent tests having a lower available limit",
+      "range": {
+        "startLine": 12229,
+        "startChar": 0,
+        "endLine": 12231,
+        "endChar": 83
+      },
+      "revId": "56ccc34e3e91aaa1f9b12c6a1198f9382df3faa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
