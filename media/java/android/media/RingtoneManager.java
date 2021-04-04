@@ -545,7 +545,7 @@ public class RingtoneManager {
      * @param context The context to use for querying.
      * @return A ringtone URI, or null if one cannot be found.
      */
-    public static Uri getValidRingtoneUri(Context context) {
+    public static @Nullable Uri getValidRingtoneUri(Context context) {
         final RingtoneManager rm = new RingtoneManager(context);
         
         Uri uri = getValidRingtoneUriFromCursorAndClose(context, rm.getInternalRingtones());
@@ -675,7 +675,7 @@ public class RingtoneManager {
      * @param ringtoneUri The {@link Uri} of a sound or ringtone.
      * @return A {@link Ringtone} for the given URI, or null.
      */
-    public static Ringtone getRingtone(final Context context, Uri ringtoneUri) {
+    public static @Nullable Ringtone getRingtone(final Context context, Uri ringtoneUri) {
         // Don't set the stream type
         return getRingtone(context, ringtoneUri, -1);
     }
@@ -694,7 +694,7 @@ public class RingtoneManager {
      *
      * @hide
      */
-    public static Ringtone getRingtone(
+    public static @Nullable Ringtone getRingtone(
             final Context context, Uri ringtoneUri,
             @Nullable VolumeShaper.Configuration volumeShaperConfig) {
         // Don't set the stream type
@@ -786,7 +786,7 @@ public class RingtoneManager {
      * @return A {@link Uri} pointing to the default sound for the sound type.
      * @see #setActualDefaultRingtoneUri(Context, int, Uri)
      */
-    public static Uri getActualDefaultRingtoneUri(Context context, int type) {
+    public static @Nullable Uri getActualDefaultRingtoneUri(Context context, int type) {
         String setting = getSettingForType(type);
         if (setting == null) return null;
         final String uriString = Settings.System.getStringForUser(context.getContentResolver(),
@@ -1030,7 +1030,7 @@ public class RingtoneManager {
      * @param type The ringtone type whose default should be returned.
      * @return The {@link Uri} of the default ringtone for the given type.
      */
-    public static Uri getDefaultUri(int type) {
+    public static @Nullable Uri getDefaultUri(int type) {
         if ((type & TYPE_RINGTONE) != 0) {
             return Settings.System.DEFAULT_RINGTONE_URI;
         } else if ((type & TYPE_NOTIFICATION) != 0) {
@@ -1102,7 +1102,7 @@ public class RingtoneManager {
      * @return created context, or null if package does not exist
      * @hide
      */
-    private static Context createPackageContextAsUser(Context context, int userId) {
+    private static @Nullable Context createPackageContextAsUser(Context context, int userId) {
         try {
             return context.createPackageContextAsUser(context.getPackageName(), 0 /* flags */,
                     UserHandle.of(userId));
