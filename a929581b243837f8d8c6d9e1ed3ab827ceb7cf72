@@ -33,6 +33,24 @@
       "message": "Hi brad, could you help to paste failed tests here? I don\u0027t have the permission to visit it. ",
       "revId": "a929581b243837f8d8c6d9e1ed3ab827ceb7cf72",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c338c35a_415a7e98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1011530
+      },
+      "writtenOn": "2021-04-05T15:42:08Z",
+      "side": 1,
+      "message": "The build is broken, since it tried to automerge to the internal master.\nYou should add \u0027RESTRICT AUTOMERGE\u0027 tag as follows:\nhttps://android.googlesource.com/platform/frameworks/base/+/5239804b28b3e49fdea54fc73e431f262c1cf727",
+      "parentUuid": "b5f7fd13_4aa64db5",
+      "revId": "a929581b243837f8d8c6d9e1ed3ab827ceb7cf72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
