@@ -5886,10 +5886,10 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 return;
             }
             if ((allowedReasons & ALLOWED_REASON_SYSTEM) != 0) {
-                effectiveBlockedReasons = (blockedReasons & ALLOWED_METERED_REASON_MASK);
+                effectiveBlockedReasons &= ALLOWED_METERED_REASON_MASK;
             }
             if ((allowedReasons & ALLOWED_METERED_REASON_SYSTEM) != 0) {
-                effectiveBlockedReasons = (blockedReasons & ~ALLOWED_METERED_REASON_MASK);
+                effectiveBlockedReasons &= ~ALLOWED_METERED_REASON_MASK;
             }
             if ((allowedReasons & ALLOWED_REASON_FOREGROUND) != 0) {
                 effectiveBlockedReasons &= ~BLOCKED_REASON_BATTERY_SAVER;
