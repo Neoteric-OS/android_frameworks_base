@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdea4eaa_077221d8",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1463,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-05T22:36:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "943d061c_877fdc34",
+      "range": {
+        "startLine": 1461,
+        "startChar": 43,
+        "endLine": 1463,
+        "endChar": 29
+      },
+      "revId": "ebdbf78e4347dc76eaf431e105927fd57239b481",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "849c163f_7b4f1065",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-04-05T21:54:53Z",
       "side": 1,
       "message": "(feel free to ignore) I think this can also be written without the return if you\u0027d like to condense\n\n```\nargThat(nac -\u003e nac.getLegacyType() \u003d\u003d ConnectivityManager.TYPE_MOBILE)\n```",
+      "range": {
+        "startLine": 222,
+        "startChar": 32,
+        "endLine": 224,
+        "endChar": 25
+      },
+      "revId": "ebdbf78e4347dc76eaf431e105927fd57239b481",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4038bf9_9b6ccd5d",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionConnectedStateTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-05T22:36:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "849c163f_7b4f1065",
       "range": {
         "startLine": 222,
         "startChar": 32,
