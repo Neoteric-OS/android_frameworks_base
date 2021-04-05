@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8ad0e1f_31acee8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-05T22:35:46Z",
+      "side": 1,
+      "message": "LGTM with minor nits",
+      "revId": "72745884f70ba83aa7f0c725e9c94c40293a2f7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afcb2266_2c77c029",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionConnectedStateTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-05T22:35:46Z",
+      "side": 1,
+      "message": "nit: not used",
+      "range": {
+        "startLine": 273,
+        "startChar": 8,
+        "endLine": 274,
+        "endChar": 62
+      },
+      "revId": "72745884f70ba83aa7f0c725e9c94c40293a2f7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95ceda0a_21d6230c",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionConnectedStateTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-05T22:35:46Z",
+      "side": 1,
+      "message": "just curious - is there a reason we use Objects#equals() here instead of normal equals() (given that we know startingInternalAddrs / TEST_DNS_ADDR are non-null)?",
+      "range": {
+        "startLine": 281,
+        "startChar": 35,
+        "endLine": 285,
+        "endChar": 62
+      },
+      "revId": "72745884f70ba83aa7f0c725e9c94c40293a2f7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54c54e59_3b895c79",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionConnectedStateTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-05T22:35:46Z",
+      "side": 1,
+      "message": "nit: can we add a bug for this?",
+      "range": {
+        "startLine": 309,
+        "startChar": 11,
+        "endLine": 309,
+        "endChar": 15
+      },
+      "revId": "72745884f70ba83aa7f0c725e9c94c40293a2f7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
