@@ -51,6 +51,24 @@
       "parentUuid": "b5f7fd13_4aa64db5",
       "revId": "a929581b243837f8d8c6d9e1ed3ab827ceb7cf72",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "168fcb8b_253e9603",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2021-04-05T15:56:49Z",
+      "side": 1,
+      "message": "Thanks. I restore and add the RESTRICT AUTOMERGE tag.",
+      "parentUuid": "c338c35a_415a7e98",
+      "revId": "a929581b243837f8d8c6d9e1ed3ab827ceb7cf72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
