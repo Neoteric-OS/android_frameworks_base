@@ -619,6 +619,7 @@ public class LocalBluetoothProfileManager {
                     || ArrayUtils.contains(uuids, BluetoothUuid.ADVANCE_HEARINGAID_UUID)
                     || ArrayUtils.contains(uuids, BluetoothUuid.ADVANCE_MEDIA_P_UUID)
                     || ArrayUtils.contains(uuids, BluetoothUuid.ADVANCE_MEDIA_G_UUID)
+                    || ArrayUtils.contains(uuids, BluetoothUuid.ADVANCE_MEDIA_W_UUID)
                     || (mA2dpProfile.getConnectionStatus(device)
                         == BluetoothProfile.STATE_CONNECTED))) {
                 if(DEBUG) Log.d(TAG, " Advance Audio Media supported ");
@@ -692,8 +693,8 @@ public class LocalBluetoothProfileManager {
             profiles.add(mSapProfile);
             removedProfiles.remove(mSapProfile);
         }
-
-        if (mBCProfile != null) {
+        CachedBluetoothDevice cachedDevice = mDeviceManager.findDevice(device);
+        if (mBCProfile != null && cachedDevice != null && cachedDevice.isBASeeker()) {
             profiles.add(mBCProfile);
             removedProfiles.remove(mBCProfile);
             if(DEBUG) Log.d(TAG, "BC profile removed");
