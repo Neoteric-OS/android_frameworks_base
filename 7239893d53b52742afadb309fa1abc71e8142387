@@ -16,6 +16,23 @@
       "message": "remove depend change 1550654",
       "revId": "7239893d53b52742afadb309fa1abc71e8142387",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da13b7e4_04aea47e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1593864
+      },
+      "writtenOn": "2021-04-06T08:28:43Z",
+      "side": 1,
+      "message": "Any update，please. Thanks.",
+      "revId": "7239893d53b52742afadb309fa1abc71e8142387",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
