@@ -22,12 +22,14 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
+import android.app.ActivityThread;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.graphics.ImageFormat;
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
 import android.hardware.HardwareBuffer;
 import android.media.MediaCodecInfo.CodecCapabilities;
+import android.media.PqApplier;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,6 +38,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.PersistableBundle;
 import android.view.Surface;
+import android.util.Log;
 
 import java.io.IOException;
 import java.lang.annotation.Retention;
@@ -1627,6 +1630,7 @@ import java.util.concurrent.locks.ReentrantLock;
  </table>
  */
 final public class MediaCodec {
+    private static final String TAG = "MediaCodec";
 
     /**
      * Per buffer metadata includes an offset and size specifying
@@ -1771,6 +1775,7 @@ final public class MediaCodec {
     private MediaCodecInfo mCodecInfo;
     private final Object mCodecInfoLock = new Object();
     private MediaCrypto mCrypto;
+    private PqApplier mPqApplier;
 
     private static final int EVENT_CALLBACK = 1;
     private static final int EVENT_SET_CALLBACK = 2;
@@ -2043,6 +2048,21 @@ final public class MediaCodec {
         mNameAtCreation = nameIsType ? null : name;
 
         native_setup(name, nameIsType, encoder, pid, uid);
+
+        MediaCodecInfo codecInfo = getCodecInfo();
+        String[] types = codecInfo.getSupportedTypes();
+        for (int j = 0; j < types.length; ++j) {
+            String mediaType = types[j];
+
+            if (!mediaType.toLowerCase().startsWith("audio/") && !encoder) {
+                Log.d(TAG, "decoder type:" + mediaType + " need PqApplier");
+                String packageName = ActivityThread.currentPackageName();
+                if (packageName != null) {
+                    mPqApplier = new PqApplier(this, packageName);
+                }
+                break;
+            }
+        }
     }
 
     private String mNameAtCreation;
@@ -2051,6 +2071,10 @@ final public class MediaCodec {
     protected void finalize() {
         native_finalize();
         mCrypto = null;
+        if (mPqApplier != null && mNativeContext != 0) {
+            mPqApplier.close();
+            mPqApplier = null;
+        }
     }
 
     /**
@@ -2082,6 +2106,10 @@ final public class MediaCodec {
         freeAllTrackedBuffers(); // free buffers first
         native_release();
         mCrypto = null;
+        if (mPqApplier != null) {
+            mPqApplier.close();
+            mPqApplier = null;
+        }
     }
 
     private native final void native_release();
@@ -2258,6 +2286,9 @@ final public class MediaCodec {
         }
 
         native_configure(keys, values, surface, crypto, descramblerBinder, flags);
+        if (mPqApplier != null) {
+            mPqApplier.setPqParamsToHal();
+        }
     }
 
     /**
@@ -4708,11 +4739,19 @@ final public class MediaCodec {
                 } else {
                     values[i] = value;
                 }
+
+                if (key.equals(MediaFormat.KEY_PQ_APPLIER)) {
+                    if (mPqApplier != null) {
+                        mPqApplier.setPqParamsToPqRepoWithSession((String)value);
+                    }
+                }
             }
             ++i;
         }
 
-        setParameters(keys, values);
+        if (0 != i) {
+            setParameters(keys, values);
+        }
     }
 
     /**

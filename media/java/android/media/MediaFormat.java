@@ -1399,6 +1399,8 @@ public final class MediaFormat {
      */
     public static final String KEY_COLOR_STANDARD = "color-standard";
 
+    public static final String KEY_PQ_APPLIER = "pq-applier";
+
     /** BT.709 color chromacity coordinates with KR = 0.2126, KB = 0.0722. */
     public static final int COLOR_STANDARD_BT709 = 1;
 
