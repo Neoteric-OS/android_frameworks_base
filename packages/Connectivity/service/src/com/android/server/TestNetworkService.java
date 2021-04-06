@@ -28,6 +28,7 @@ import android.net.ITestNetworkManager;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
+import android.net.Network;
 import android.net.NetworkAgent;
 import android.net.NetworkAgentConfig;
 import android.net.NetworkCapabilities;
@@ -36,6 +37,9 @@ import android.net.RouteInfo;
 import android.net.TestNetworkInterface;
 import android.net.TestNetworkSpecifier;
 import android.net.util.NetdService;
+import android.net.vcn.VcnManager;
+import android.net.vcn.VcnManager.VcnNetworkPolicyChangeListener;
+import android.net.vcn.VcnNetworkPolicyResult;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -43,10 +47,12 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.modules.utils.build.SdkLevel;
 import com.android.net.module.util.NetdUtils;
 import com.android.net.module.util.NetworkStackConstants;
 import com.android.net.module.util.PermissionUtils;
@@ -74,7 +80,10 @@ class TestNetworkService extends ITestNetworkManager.Stub {
     @NonNull private final Handler mHandler;
 
     @NonNull private final ConnectivityManager mCm;
+    @NonNull private final VcnManager mVcnManager;
     @NonNull private final NetworkProvider mNetworkProvider;
+
+    @NonNull private final VcnNetworkPolicyChangeListener mPolicyChangeListener;
 
     // Native method stubs
     private static native int jniCreateTunTap(boolean isTun, @NonNull String iface);
@@ -88,11 +97,20 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         mContext = Objects.requireNonNull(context, "missing Context");
         mNetd = Objects.requireNonNull(NetdService.getInstance(), "could not get netd instance");
         mCm = mContext.getSystemService(ConnectivityManager.class);
+        mVcnManager = mContext.getSystemService(VcnManager.class);
         mNetworkProvider = new NetworkProvider(mContext, mHandler.getLooper(),
                 TEST_NETWORK_PROVIDER_NAME);
+        mPolicyChangeListener = new TestVcnNetworkPolicyListener();
+
         final long token = Binder.clearCallingIdentity();
         try {
             mCm.registerNetworkProvider(mNetworkProvider);
+
+            if (SdkLevel.isAtLeastS()) {
+                // mPolicyChangeListener is never removed, as TestNetworkService is never stopped.
+                mVcnManager.addVcnNetworkPolicyChangeListener(
+                        mHandler::post, mPolicyChangeListener);
+            }
         } finally {
             Binder.restoreCallingIdentity(token);
         }
@@ -157,6 +175,11 @@ class TestNetworkService extends ITestNetworkManager.Stub {
     @NonNull
     private final SparseArray<TestNetworkAgent> mTestNetworkTracker = new SparseArray<>();
 
+    /**
+     * NetworkAgent for Test Networks only.
+     *
+     * <p>NOTE: TestNetworkAgent IS NOT THREAD-SAFE.
+     */
     public class TestNetworkAgent extends NetworkAgent implements IBinder.DeathRecipient {
         private static final int NETWORK_SCORE = 1; // Use a low, non-zero score.
 
@@ -167,6 +190,12 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         private IBinder mBinder;
 
         @NonNull private final Object mBinderLock = new Object();
+
+        // Cache NetworkCapabilities for this Network for VCN Network Policy updates.
+        @NonNull private NetworkCapabilities mNetworkCapabilities;
+
+        // Cache LinkProperties for this Network for VCN Network Policy updates.
+        @NonNull private final LinkProperties mLinkProperties;
 
         private TestNetworkAgent(
                 @NonNull Context context,
@@ -180,6 +209,8 @@ class TestNetworkService extends ITestNetworkManager.Stub {
                 throws RemoteException {
             super(context, looper, TEST_NETWORK_LOGTAG, nc, lp, NETWORK_SCORE, config, np);
             mUid = uid;
+            mNetworkCapabilities = nc;
+            mLinkProperties = lp;
             synchronized (mBinderLock) {
                 mBinder = binder; // Binder null-checks in create()
 
@@ -220,12 +251,31 @@ class TestNetworkService extends ITestNetworkManager.Stub {
 
             // Has to be in TestNetworkAgent to ensure all teardown codepaths properly clean up
             // resources, even for binder death or unwanted calls.
-            synchronized (mTestNetworkTracker) {
-                mTestNetworkTracker.remove(getNetwork().getNetId());
-            }
+            removeNetworkAgent(getNetwork().getNetId());
+        }
+
+        private NetworkCapabilities getNetworkCapabilities() {
+            return mNetworkCapabilities;
+        }
+
+        private void updateNetworkCapabilities(@NonNull NetworkCapabilities nc) {
+            mNetworkCapabilities = Objects.requireNonNull(nc, "missing NetworkCapabilities");
+            sendNetworkCapabilities(mNetworkCapabilities);
+        }
+
+        private LinkProperties getLinkProperties() {
+            return mLinkProperties;
         }
     }
 
+    /** Utility to remove the specified netId from TestNetworkService. */
+    private void removeNetworkAgent(int netId) {
+        synchronized (mTestNetworkTracker) {
+            mTestNetworkTracker.remove(netId);
+        }
+    }
+
+    @GuardedBy("mTestNetworkTracker")
     private TestNetworkAgent registerTestNetworkAgent(
             @NonNull Looper looper,
             @NonNull Context context,
@@ -290,12 +340,38 @@ class TestNetworkService extends ITestNetworkManager.Stub {
                     NetworkStackConstants.IPV6_ADDR_ANY, 0), null, iface));
         }
 
-        final TestNetworkAgent agent = new TestNetworkAgent(context, looper, nc, lp,
-                new NetworkAgentConfig.Builder().build(), callingUid, binder,
-                mNetworkProvider);
+        final NetworkCapabilities vcnRequestedCapabilities =
+                getVcnRequestedNetworkCapabilities(nc, lp);
+
+        final TestNetworkAgent agent = new TestNetworkAgent(context, looper,
+                vcnRequestedCapabilities, lp, new NetworkAgentConfig.Builder().build(), callingUid,
+                binder, mNetworkProvider);
         agent.register();
         agent.markConnected();
         return agent;
+    }
+
+    private NetworkCapabilities getVcnRequestedNetworkCapabilities(
+            @NonNull NetworkCapabilities nc, @NonNull LinkProperties lp) {
+        if (!SdkLevel.isAtLeastS()) {
+            return nc;
+        }
+
+        final long token = Binder.clearCallingIdentity();
+        final VcnNetworkPolicyResult vcnNetworkPolicy;
+        try {
+            vcnNetworkPolicy = mVcnManager.applyVcnNetworkPolicy(nc, lp);
+        } finally {
+            Binder.restoreCallingIdentity(token);
+        }
+
+        if (vcnNetworkPolicy.isTeardownRequested()) {
+            Log.d(TEST_NETWORK_LOGTAG, "teardown requested by VcnManagementService");
+            throw new IllegalStateException(
+                    "VcnMgmtSvc requested teardown on test Network startup");
+        }
+
+        return vcnNetworkPolicy.getNetworkCapabilities();
     }
 
     /**
@@ -382,5 +458,37 @@ class TestNetworkService extends ITestNetworkManager.Stub {
 
     public static void enforceTestNetworkPermissions(@NonNull Context context) {
         context.enforceCallingOrSelfPermission(PERMISSION_NAME, "TestNetworkService");
+    }
+
+    /**
+     * TestVcnNetworkPolicyListener is used to track VCN Network Policies for all TestNetworkAgents.
+     */
+    private class TestVcnNetworkPolicyListener implements VcnNetworkPolicyChangeListener {
+        @Override
+        public void onPolicyChanged() {
+            synchronized (mTestNetworkTracker) {
+                for (int i = 0; i < mTestNetworkTracker.size(); i++) {
+                    applyVcnNetworkPolicyLocked(mTestNetworkTracker.valueAt(i));
+                }
+            }
+        }
+    }
+
+    @GuardedBy("mTestNetworkTracker")
+    private void applyVcnNetworkPolicyLocked(@NonNull TestNetworkAgent networkAgent) {
+        final Network network = networkAgent.getNetwork();
+        if (network == null) {
+            return;
+        }
+
+        final NetworkCapabilities nc = networkAgent.getNetworkCapabilities();
+        final LinkProperties lp = networkAgent.getLinkProperties();
+
+        final VcnNetworkPolicyResult vcnNetworkPolicy = mVcnManager.applyVcnNetworkPolicy(nc, lp);
+        if (vcnNetworkPolicy.isTeardownRequested()) {
+            teardownTestNetwork(network.getNetId());
+        } else {
+            networkAgent.updateNetworkCapabilities(vcnNetworkPolicy.getNetworkCapabilities());
+        }
     }
 }
