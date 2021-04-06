@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f110ca8_720078c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-04-06T22:52:01Z",
+      "side": 1,
+      "message": "Addressed the nit. Inheriting +2.",
+      "revId": "fea4de4d6dc5767d312a5746fdef5d554fbd226b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
