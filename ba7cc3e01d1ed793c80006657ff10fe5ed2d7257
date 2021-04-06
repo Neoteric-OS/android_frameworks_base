@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d990d6c_074f8abe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1332872
+      },
+      "writtenOn": "2021-04-06T02:27:06Z",
+      "side": 1,
+      "message": "Maybe we can say \"the error message is printed when DNS queries fail because of network, like server/connection timeout, but it is not a real device bug.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "ba7cc3e01d1ed793c80006657ff10fe5ed2d7257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a60c224_3661942e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1332872
+      },
+      "writtenOn": "2021-04-06T02:27:06Z",
+      "side": 1,
+      "message": "the log severity from error to warning",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "ba7cc3e01d1ed793c80006657ff10fe5ed2d7257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a3476b6_047b3cd7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1332872
+      },
+      "writtenOn": "2021-04-06T02:27:06Z",
+      "side": 1,
+      "message": "go/greenlog",
+      "range": {
+        "startLine": 10,
+        "startChar": 33,
+        "endLine": 10,
+        "endChar": 50
+      },
+      "revId": "ba7cc3e01d1ed793c80006657ff10fe5ed2d7257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
