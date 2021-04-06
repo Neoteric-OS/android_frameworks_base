@@ -50,6 +50,23 @@
       "message": "I\u0027m not really sure of the implications for approving this, so adding Chad and Tyler to take a look.",
       "revId": "ae0193e841c506609a2047dc574cc864f7474e92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e34a3291_50cbd97e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2021-04-06T18:58:38Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "ae0193e841c506609a2047dc574cc864f7474e92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
