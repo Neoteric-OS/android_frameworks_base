@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe3ea667_0f6da170",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 9002,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-06T14:52:52Z",
+      "side": 1,
+      "message": "Mostly to ensure I understand: the *app* is not explicitly asking to remove it, right? Removal is the default, so what happened is that the app didn\u0027t explicitly ask to include it? (Perhaps because it can\u0027t, since before S there is no way to ask?)",
+      "range": {
+        "startLine": 9002,
+        "startChar": 53,
+        "endLine": 9002,
+        "endChar": 90
+      },
+      "revId": "e75004051ebb7b12d522a57ac961c5b1442fb383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
