@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8784310_d1a70e00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1349877
+      },
+      "writtenOn": "2021-04-06T02:39:30Z",
+      "side": 1,
+      "message": "I think it prints message in either way (network failures or internal bug if any). However, network failures are expected to happen with a certain probability, and internal errors are not expected to happen.",
+      "parentUuid": "2d990d6c_074f8abe",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "ba7cc3e01d1ed793c80006657ff10fe5ed2d7257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2a60c224_3661942e",
@@ -60,6 +84,54 @@
       "writtenOn": "2021-04-06T02:27:06Z",
       "side": 1,
       "message": "go/greenlog",
+      "range": {
+        "startLine": 10,
+        "startChar": 33,
+        "endLine": 10,
+        "endChar": 50
+      },
+      "revId": "ba7cc3e01d1ed793c80006657ff10fe5ed2d7257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eebd5d8b_2de85870",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1349877
+      },
+      "writtenOn": "2021-04-06T02:39:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a60c224_3661942e",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "ba7cc3e01d1ed793c80006657ff10fe5ed2d7257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7b4cb5c_a2affe3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1349877
+      },
+      "writtenOn": "2021-04-06T02:39:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a3476b6_047b3cd7",
       "range": {
         "startLine": 10,
         "startChar": 33,
