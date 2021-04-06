@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "254dee45_a4896f56",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2943,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-04-06T13:26:55Z",
+      "side": 1,
+      "message": "I will follow up ConnectivityServiceTest part. You could skip this file while fixing the conflict.",
+      "range": {
+        "startLine": 2942,
+        "startChar": 8,
+        "endLine": 2943,
+        "endChar": 55
+      },
+      "revId": "6c955e2cb789ee021aec1ab1095f7bc7ea65d52a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
