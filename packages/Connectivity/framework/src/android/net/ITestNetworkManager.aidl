@@ -32,8 +32,9 @@ interface ITestNetworkManager
     TestNetworkInterface createTunInterface(in LinkAddress[] linkAddrs);
     TestNetworkInterface createTapInterface();
 
+    // TODO(b/187347565): update to pass NetworkCapabilities object instead of separate fields
     void setupTestNetwork(in String iface, in LinkProperties lp, in boolean isMetered,
-            in int[] administratorUids, in IBinder binder);
+            in boolean isRoaming, in int[] administratorUids, in int[] subIds, in IBinder binder);
 
     void teardownTestNetwork(int netId);
 }
