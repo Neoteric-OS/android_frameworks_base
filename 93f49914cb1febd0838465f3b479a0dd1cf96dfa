@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adf5df55_b5750d56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-04-07T10:12:19Z",
+      "side": 1,
+      "message": "From Android T on, mAutoTvOff will no longer be used in playback devices. We\u0027re already working on this internally.\n",
+      "revId": "93f49914cb1febd0838465f3b479a0dd1cf96dfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
