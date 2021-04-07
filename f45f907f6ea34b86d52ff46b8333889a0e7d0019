@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efc2a623_4aa035a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-07T10:15:21Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "f45f907f6ea34b86d52ff46b8333889a0e7d0019",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4eaede99_7782638b",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-07T10:15:21Z",
+      "side": 1,
+      "message": "\"Tossed\" is too informal for an API. Use \"cleared\" or \"flushed\".",
+      "range": {
+        "startLine": 451,
+        "startChar": 29,
+        "endLine": 451,
+        "endChar": 35
+      },
+      "revId": "f45f907f6ea34b86d52ff46b8333889a0e7d0019",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
