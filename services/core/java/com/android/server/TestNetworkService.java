@@ -48,6 +48,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
+import android.util.ArraySet;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -65,6 +66,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /** @hide */
@@ -200,6 +202,10 @@ class TestNetworkService extends ITestNetworkManager.Stub {
 
         @NonNull private final Object mBinderLock = new Object();
 
+        // Cache NetworkCapabilities for this Network so that the NetworkSpecifier, adminUids,
+        // subIds, and other configurations are not lost on updates.
+        @NonNull private NetworkCapabilities mNetworkCapabilities;
+
         private TestNetworkAgent(
                 @NonNull Context context,
                 @NonNull Looper looper,
@@ -212,6 +218,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
                 throws RemoteException {
             super(context, looper, TEST_NETWORK_LOGTAG, nc, lp, NETWORK_SCORE, config, np);
             mUid = uid;
+            mNetworkCapabilities = nc;
             synchronized (mBinderLock) {
                 mBinder = binder; // Binder null-checks in create()
 
@@ -256,6 +263,16 @@ class TestNetworkService extends ITestNetworkManager.Stub {
                 mTestNetworkTracker.remove(getNetwork().getNetId());
             }
         }
+
+        private NetworkCapabilities getNetworkCapabilities() {
+            return mNetworkCapabilities;
+        }
+
+        private void updateNetworkCapabilities(@NonNull NetworkCapabilities nc) {
+            mNetworkCapabilities = Objects.requireNonNull(nc, "missing NetworkCapabilities");
+
+            sendNetworkCapabilities(mNetworkCapabilities);
+        }
     }
 
     @Nullable
@@ -267,6 +284,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
             boolean isMetered,
             int callingUid,
             @NonNull int[] administratorUids,
+            @NonNull Set<Integer> subIds,
             @NonNull IBinder binder)
             throws RemoteException, SocketException {
         Objects.requireNonNull(looper, "missing Looper");
@@ -282,6 +300,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
         nc.setNetworkSpecifier(new TestNetworkSpecifier(iface));
         nc.setAdministratorUids(administratorUids);
+        nc.setSubIds(subIds);
         if (!isMetered) {
             nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
         }
@@ -359,6 +378,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
             @Nullable LinkProperties lp,
             boolean isMetered,
             @NonNull int[] administratorUids,
+            @NonNull int[] subIds,
             @NonNull IBinder binder) {
         enforceTestNetworkPermissions(mContext);
 
@@ -395,6 +415,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
                                 isMetered,
                                 Binder.getCallingUid(),
                                 administratorUids,
+                                toSet(subIds),
                                 binder);
                 if (agent == null) {
                     return;
@@ -407,6 +428,14 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+    private Set<Integer> toSet(@NonNull int[] array) {
+        final Set<Integer> result = new ArraySet<>(array.length);
+        for (int i : array) {
+            result.add(i);
+        }
+        return result;
     }
 
     /** Teardown a test network */
@@ -459,7 +488,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
 
         // VcnManagementService will only ever remove NOT_VCN_MANAGED, so explicitly add it in case
         // this Network regained NOT_VCN_MANAGED
-        final NetworkCapabilities nc = mCm.getNetworkCapabilities(network);
+        final NetworkCapabilities nc = networkAgent.getNetworkCapabilities();
         nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
 
         final LinkProperties lp = mCm.getLinkProperties(network);
@@ -468,7 +497,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         if (vcnNetworkPolicy.isTeardownRequested()) {
             teardownTestNetwork(network.getNetId());
         } else {
-            networkAgent.sendNetworkCapabilities(vcnNetworkPolicy.getNetworkCapabilities());
+            networkAgent.updateNetworkCapabilities(vcnNetworkPolicy.getNetworkCapabilities());
         }
     }
 }
