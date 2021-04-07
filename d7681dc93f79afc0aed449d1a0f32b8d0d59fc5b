@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "97d56b0e_6f5dfb40",
         "filename": "core/java/android/app/LoadedApk.java",
@@ -20,8 +21,31 @@
         "endChar": 18
       },
       "revId": "d7681dc93f79afc0aed449d1a0f32b8d0d59fc5b",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ed3a3df_f342d461",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1267775
+      },
+      "writtenOn": "2021-04-07T20:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97d56b0e_6f5dfb40",
+      "range": {
+        "startLine": 830,
+        "startChar": 12,
+        "endLine": 830,
+        "endChar": 18
+      },
+      "revId": "d7681dc93f79afc0aed449d1a0f32b8d0d59fc5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
