@@ -50,6 +50,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
+import android.util.ArraySet;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -67,6 +68,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /** @hide */
@@ -283,8 +285,10 @@ class TestNetworkService extends ITestNetworkManager.Stub {
             @NonNull String iface,
             @Nullable LinkProperties lp,
             boolean isMetered,
+            boolean isRoaming,
             int callingUid,
             @NonNull int[] administratorUids,
+            @NonNull Set<Integer> subIds,
             @NonNull IBinder binder)
             throws RemoteException, SocketException {
         Objects.requireNonNull(looper, "missing Looper");
@@ -300,8 +304,12 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
         nc.setNetworkSpecifier(new TestNetworkSpecifier(iface));
         nc.setAdministratorUids(administratorUids);
+        nc.setSubscriptionIds(subIds);
         if (!isMetered) {
             nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
+        }
+        if (!isRoaming) {
+            nc.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING);
         }
 
         // Build LinkProperties
@@ -397,7 +405,9 @@ class TestNetworkService extends ITestNetworkManager.Stub {
             @NonNull String iface,
             @Nullable LinkProperties lp,
             boolean isMetered,
+            boolean isRoaming,
             @NonNull int[] administratorUids,
+            @NonNull int[] subIds,
             @NonNull IBinder binder) {
         enforceTestNetworkPermissions(mContext);
 
@@ -432,8 +442,10 @@ class TestNetworkService extends ITestNetworkManager.Stub {
                                 iface,
                                 lp,
                                 isMetered,
+                                isRoaming,
                                 Binder.getCallingUid(),
                                 administratorUids,
+                                toSet(subIds),
                                 binder);
 
                 mTestNetworkTracker.put(agent.getNetwork().getNetId(), agent);
@@ -443,6 +455,14 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+    private static Set<Integer> toSet(@NonNull int[] array) {
+        final Set<Integer> result = new ArraySet<>(array.length);
+        for (int i : array) {
+            result.add(i);
+        }
+        return result;
     }
 
     /** Teardown a test network */

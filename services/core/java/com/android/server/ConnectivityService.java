@@ -7070,7 +7070,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         newNc.setPrivateDnsBroken(nai.networkCapabilities.isPrivateDnsBroken());
 
         // TODO : remove this once all factories are updated to send NOT_SUSPENDED and NOT_ROAMING
-        if (!newNc.hasTransport(TRANSPORT_CELLULAR)) {
+        if (!newNc.hasTransport(TRANSPORT_CELLULAR) && !newNc.hasTransport(TRANSPORT_TEST)) {
             newNc.addCapability(NET_CAPABILITY_NOT_SUSPENDED);
             newNc.addCapability(NET_CAPABILITY_NOT_ROAMING);
         }

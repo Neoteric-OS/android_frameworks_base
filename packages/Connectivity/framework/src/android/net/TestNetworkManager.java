@@ -23,9 +23,14 @@ import android.annotation.SystemApi;
 import android.os.IBinder;
 import android.os.RemoteException;
 
+import com.android.internal.util.ArrayUtils;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Class that allows creation and management of per-app, test-only networks
@@ -74,10 +79,15 @@ public class TestNetworkManager {
             @NonNull String iface,
             @Nullable LinkProperties lp,
             boolean isMetered,
+            boolean isRoaming,
             @NonNull int[] administratorUids,
+            @NonNull Set<Integer> subIds,
             @NonNull IBinder binder) {
         try {
-            mService.setupTestNetwork(iface, lp, isMetered, administratorUids, binder);
+            // Convert subIds to int[] because AIDL does not support Sets
+            final int[] subIdsArr = ArrayUtils.convertToIntArray(new ArrayList<>(subIds));
+            mService.setupTestNetwork(iface, lp, isMetered, isRoaming, administratorUids, subIdsArr,
+                    binder);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -96,7 +106,8 @@ public class TestNetworkManager {
     public void setupTestNetwork(
             @NonNull LinkProperties lp, boolean isMetered, @NonNull IBinder binder) {
         Objects.requireNonNull(lp, "Invalid LinkProperties");
-        setupTestNetwork(lp.getInterfaceName(), lp, isMetered, new int[0], binder);
+        setupTestNetwork(lp.getInterfaceName(), lp, isMetered, true, new int[0],
+                Collections.EMPTY_SET, binder);
     }
 
     /**
@@ -109,7 +120,7 @@ public class TestNetworkManager {
     @RequiresPermission(Manifest.permission.MANAGE_TEST_NETWORKS)
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public void setupTestNetwork(@NonNull String iface, @NonNull IBinder binder) {
-        setupTestNetwork(iface, null, true, new int[0], binder);
+        setupTestNetwork(iface, null, true, true, new int[0], Collections.EMPTY_SET, binder);
     }
 
     /**
@@ -123,7 +134,29 @@ public class TestNetworkManager {
      */
     public void setupTestNetwork(
             @NonNull String iface, @NonNull int[] administratorUids, @NonNull IBinder binder) {
-        setupTestNetwork(iface, null, true, administratorUids, binder);
+        setupTestNetwork(iface, null, true, true, administratorUids, Collections.EMPTY_SET, binder);
+    }
+
+    /**
+     * Sets up a capability-limited, testing-only network for a given interface with the given
+     * subIds.
+     *
+     * @param iface The name of the interface to be used for the Network LinkProperties.
+     * @param lp The LinkProperties for the TestNetworkService to use for this test network. Note
+     *     that the interface name and link addresses will be overwritten, and the passed-in values
+     *     discarded.
+     * @param isMetered Whether or not the network should be considered metered.
+     * @param isRoaming Whether or not the network should be marked as roaming.
+     * @param subIds The subIds to be set for the test-only network.
+     * @param binder A binder object guarding the lifecycle of this test network.
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.MANAGE_TEST_NETWORKS)
+    public void setupTestNetwork(
+            @NonNull String iface, @NonNull LinkProperties lp, boolean isMetered, boolean isRoaming,
+            @NonNull Set<Integer> subIds, @NonNull IBinder binder) {
+        setupTestNetwork(iface, lp, isMetered, isRoaming, new int[0] /* administratorUids */,
+                subIds, binder);
     }
 
     /**
