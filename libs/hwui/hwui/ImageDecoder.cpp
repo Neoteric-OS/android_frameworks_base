@@ -37,6 +37,10 @@ sk_sp<SkColorSpace> ImageDecoder::getDefaultColorSpace() const {
     return SkColorSpace::MakeSRGB();
 }
 
+ImageDecoder::ImageDecoder(uint64_t nativePlugin) {
+    mNativePlugin = nativePlugin;
+}
+
 ImageDecoder::ImageDecoder(std::unique_ptr<SkAndroidCodec> codec, sk_sp<SkPngChunkReader> peeker)
     : mCodec(std::move(codec))
     , mPeeker(std::move(peeker))
