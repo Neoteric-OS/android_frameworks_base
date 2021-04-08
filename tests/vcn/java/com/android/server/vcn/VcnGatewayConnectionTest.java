@@ -16,6 +16,8 @@
 
 package com.android.server.vcn;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED;
@@ -85,7 +87,8 @@ public class VcnGatewayConnectionTest extends VcnGatewayConnectionTestBase {
         mWifiInfo = mock(WifiInfo.class);
     }
 
-    private void verifyBuildNetworkCapabilitiesCommon(int transportType) {
+    private void verifyBuildNetworkCapabilitiesCommon(
+            int transportType, boolean isMobileDataEnabled) {
         final NetworkCapabilities underlyingCaps = new NetworkCapabilities();
         underlyingCaps.addTransportType(transportType);
         underlyingCaps.addCapability(NET_CAPABILITY_NOT_VCN_MANAGED);
@@ -106,11 +109,22 @@ public class VcnGatewayConnectionTest extends VcnGatewayConnectionTestBase {
                         new Network(0), underlyingCaps, new LinkProperties(), false);
         final NetworkCapabilities vcnCaps =
                 VcnGatewayConnection.buildNetworkCapabilities(
-                        VcnGatewayConnectionConfigTest.buildTestConfig(), record);
+                        VcnGatewayConnectionConfigTest.buildTestConfig(),
+                        record,
+                        isMobileDataEnabled);
 
         assertTrue(vcnCaps.hasTransport(TRANSPORT_CELLULAR));
         assertTrue(vcnCaps.hasCapability(NET_CAPABILITY_NOT_METERED));
         assertTrue(vcnCaps.hasCapability(NET_CAPABILITY_NOT_ROAMING));
+
+        for (int cap : VcnGatewayConnectionConfigTest.EXPOSED_CAPS) {
+            if (cap == NET_CAPABILITY_INTERNET || cap == NET_CAPABILITY_DUN) {
+                assertEquals(isMobileDataEnabled, vcnCaps.hasCapability(cap));
+            } else {
+                assertTrue(vcnCaps.hasCapability(cap));
+            }
+        }
+
         assertArrayEquals(new int[] {TEST_UID}, vcnCaps.getAdministratorUids());
         assertTrue(vcnCaps.getTransportInfo() instanceof VcnTransportInfo);
 
@@ -124,12 +138,17 @@ public class VcnGatewayConnectionTest extends VcnGatewayConnectionTestBase {
 
     @Test
     public void testBuildNetworkCapabilitiesUnderlyingWifi() throws Exception {
-        verifyBuildNetworkCapabilitiesCommon(TRANSPORT_WIFI);
+        verifyBuildNetworkCapabilitiesCommon(TRANSPORT_WIFI, true /* isMobileDataEnabled */);
     }
 
     @Test
     public void testBuildNetworkCapabilitiesUnderlyingCell() throws Exception {
-        verifyBuildNetworkCapabilitiesCommon(TRANSPORT_CELLULAR);
+        verifyBuildNetworkCapabilitiesCommon(TRANSPORT_CELLULAR, true /* isMobileDataEnabled */);
+    }
+
+    @Test
+    public void testBuildNetworkCapabilitiesMobileDataDisabled() throws Exception {
+        verifyBuildNetworkCapabilitiesCommon(TRANSPORT_CELLULAR, false /* isMobileDataEnabled */);
     }
 
     @Test
