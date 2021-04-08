@@ -259,8 +259,8 @@ package android.net {
   public static final class NetworkAgentConfig.Builder {
     ctor public NetworkAgentConfig.Builder();
     method @NonNull public android.net.NetworkAgentConfig build();
-    method @NonNull public android.net.NetworkAgentConfig.Builder disableNat64Detection();
-    method @NonNull public android.net.NetworkAgentConfig.Builder disableProvisioningNotification();
+    method @NonNull public android.net.NetworkAgentConfig.Builder setEnabledNat64Detection(boolean);
+    method @NonNull public android.net.NetworkAgentConfig.Builder setEnabledProvisioningNotification(boolean);
     method @NonNull public android.net.NetworkAgentConfig.Builder setExplicitlySelected(boolean);
     method @NonNull public android.net.NetworkAgentConfig.Builder setLegacyExtraInfo(@NonNull String);
     method @NonNull public android.net.NetworkAgentConfig.Builder setLegacySubType(int);
