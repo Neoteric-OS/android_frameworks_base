@@ -1531,9 +1531,17 @@ public final class ActivityThread extends ClientTransactionHandler {
 
         @Override
         public void dumpGfxInfo(ParcelFileDescriptor pfd, String[] args) {
-            nDumpGraphicsInfo(pfd.getFileDescriptor());
-            WindowManagerGlobal.getInstance().dumpGfxInfo(pfd.getFileDescriptor(), args);
-            IoUtils.closeQuietly(pfd);
+        DumpComponentInfo data = new DumpComponentInfo();
+            try {
+                data.fd = pfd.dup();
+                data.token = null;
+                data.args = args;
+                sendMessage(H.DUMP_GFXINFO, data, 0, 0, true /*async*/);
+            } catch (IOException e) {
+                Slog.w(TAG, "dumpGfxInfo failed", e);
+            } finally {
+                IoUtils.closeQuietly(pfd);
+            }
         }
 
         @Override
@@ -1857,6 +1865,7 @@ public final class ActivityThread extends ClientTransactionHandler {
         public static final int RELAUNCH_ACTIVITY = 160;
         public static final int PURGE_RESOURCES = 161;
         public static final int ATTACH_STARTUP_AGENTS = 162;
+        public static final int DUMP_GFXINFO = 163;
 
         String codeToString(int code) {
             if (DEBUG_MESSAGES) {
@@ -1900,6 +1909,7 @@ public final class ActivityThread extends ClientTransactionHandler {
                     case RELAUNCH_ACTIVITY: return "RELAUNCH_ACTIVITY";
                     case PURGE_RESOURCES: return "PURGE_RESOURCES";
                     case ATTACH_STARTUP_AGENTS: return "ATTACH_STARTUP_AGENTS";
+                    case DUMP_GFXINFO: return "DUMP GFXINFO";
                 }
             }
             return Integer.toString(code);
@@ -1969,6 +1979,9 @@ public final class ActivityThread extends ClientTransactionHandler {
                     break;
                 case DUMP_SERVICE:
                     handleDumpService((DumpComponentInfo)msg.obj);
+                    break;
+                case DUMP_GFXINFO:
+                    handleDumpGfxInfo((DumpComponentInfo)msg.obj);
                     break;
                 case LOW_MEMORY:
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "lowMemory");
@@ -4256,6 +4269,15 @@ public final class ActivityThread extends ClientTransactionHandler {
                             + " with " + data.intent + ": " + e.toString(), e);
                 }
             }
+        }
+    }
+
+    private void handleDumpGfxInfo(DumpComponentInfo info) {
+        try {
+            nDumpGraphicsInfo(info.fd.getFileDescriptor());
+            WindowManagerGlobal.getInstance().dumpGfxInfo(info.fd.getFileDescriptor(), info.args);
+        } finally {
+            IoUtils.closeQuietly(info.fd);
         }
     }
 
