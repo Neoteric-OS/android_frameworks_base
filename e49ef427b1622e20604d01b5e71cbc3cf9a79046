@@ -16,6 +16,23 @@
       "message": "LGTM but ",
       "revId": "e49ef427b1622e20604d01b5e71cbc3cf9a79046",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "198814b5_894510f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-08T09:16:08Z",
+      "side": 1,
+      "message": "This code is currently unowned because there is no OWNERS file so it\u0027s defaulting to top-level frameworks/base OWNERS. It\u0027s also unmaintained - I count 10 changes total since 2013.\n\nIf we add ourselves to the OWNERS file, then the people in the OWNERS file become the owners of these tests. I have no objection to that if it\u0027s what we want to do, but if so, then why can\u0027t we just move these tests to frameworks/base/tests/net instead? IIRC that\u0027s what we did with NetworkStatsServiceTest a while ago.",
+      "revId": "e49ef427b1622e20604d01b5e71cbc3cf9a79046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
