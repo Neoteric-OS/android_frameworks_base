@@ -65,6 +65,7 @@ public class VcnGatewayConnectionDisconnectedStateTest extends VcnGatewayConnect
                         TEST_SUBSCRIPTION_SNAPSHOT,
                         mConfig,
                         mGatewayStatusCallback,
+                        true,
                         mDeps);
 
         vgc.setIsQuitting(true);
