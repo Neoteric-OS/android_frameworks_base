@@ -32,7 +32,8 @@ class ANDROID_API ImageDecoder {
 public:
     std::unique_ptr<SkAndroidCodec> mCodec;
     sk_sp<SkPngChunkReader> mPeeker;
-
+    uint64_t mNativePlugin;
+    ImageDecoder(uint64_t nativePlugin);
     ImageDecoder(std::unique_ptr<SkAndroidCodec> codec,
                  sk_sp<SkPngChunkReader> peeker = nullptr);
 

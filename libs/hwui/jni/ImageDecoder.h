@@ -18,6 +18,54 @@
 
 #include <jni.h>
 
+#include <utils/Color.h>
+#include <SkCodec.h>
+#include <sys/time.h>
+
+class ImageDecoderPluginBase {
+public:
+
+    ImageDecoderPluginBase() {}
+    virtual ~ImageDecoderPluginBase() {}
+    virtual bool sniff(void* buffer, size_t bytesRead) = 0;
+    virtual bool setStream(std::unique_ptr<SkStream> stream) = 0;
+    virtual int getWidth() = 0;
+    virtual int getHeight() = 0;
+    virtual int decode(int targetWidth, int targetHeight, SkIRect rect, SkColorType colorType, sk_sp<SkColorSpace> colorSpace) = 0;
+    virtual SkCodec::Result fillBitmap(void* pixels, size_t dstBufferSize);
+    virtual SkISize getSampledSize(int sampleSize) = 0;
+    virtual const char* getMimeType() = 0;
+    virtual SkImageInfo getOutputInfo() = 0;
+    virtual void enableHdr() = 0;
+    virtual bool getHdrInfo(int* colorStandard, int* colorRange, int* colorTransfer, void *data);
+};
+
+class ImageDecoderPlugin : public ImageDecoderPluginBase{
+public:
+    ImageDecoderPlugin();
+    virtual ~ImageDecoderPlugin();
+    virtual bool sniff(void* buffer, size_t bytesRead);
+    virtual bool setStream(std::unique_ptr<SkStream> stream);
+    virtual int getWidth();
+    virtual int getHeight();
+    virtual int decode(int targetWidth, int targetHeight, SkIRect rect, SkColorType colorType, sk_sp<SkColorSpace> colorSpace);
+    virtual SkCodec::Result fillBitmap(void* pixels, size_t dstBufferSize);
+    virtual SkISize getSampledSize(int sampleSize);
+    virtual const char* getMimeType();
+    virtual SkImageInfo getOutputInfo();
+    virtual void enableHdr();
+    virtual bool getHdrInfo(int* colorStandard, int* colorRange, int* colorTransfer, void *data);
+
+private:
+    void *mVendorLibHandle;
+    ImageDecoderPluginBase *mPluginBase;
+
+    void addImageDecoderPlugin();
+    void clearImageDecoderPlugin();
+};
+
+void PostHdrColorInfo(JNIEnv* env, jobject jimageDecoder, jlong nativePtr);
+
 // Creates a Java Canvas object from canvas, calls jimageDecoder's PostProcess on it, and then
 // releases the Canvas.
 // Caller needs to check for exceptions.
