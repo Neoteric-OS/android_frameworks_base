@@ -27,6 +27,7 @@ import android.annotation.IntDef;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.content.Context;
 import android.net.ConnectivityManager.MultipathPreference;
@@ -910,8 +911,11 @@ public class ConnectivitySettingsManager {
      * @return A list of apps that should go on cellular networks in preference even when
      *         higher-priority networks are connected or null if no setting value.
      */
+    @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
     @Nullable
     public static String getMobileDataPreferredApps(@NonNull Context context) {
+        context.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_SETTINGS,
+                "ConnectivitySettingsManager");
         return Settings.Secure.getString(context.getContentResolver(), MOBILE_DATA_PREFERRED_APPS);
     }
 
@@ -923,7 +927,10 @@ public class ConnectivitySettingsManager {
      * @param list A list of apps that should go on cellular networks in preference even when
      *             higher-priority networks are connected.
      */
+    @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
     public static void setMobileDataPreferredApps(@NonNull Context context, @Nullable String list) {
+        context.enforceCallingOrSelfPermission(android.Manifest.permission.NETWORK_SETTINGS,
+                "ConnectivitySettingsManager");
         Settings.Secure.putString(context.getContentResolver(), MOBILE_DATA_PREFERRED_APPS, list);
     }
 }
