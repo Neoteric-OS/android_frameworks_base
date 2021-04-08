@@ -1,0 +1,799 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ef258e6d_522af4fd",
+        "filename": "graphics/java/android/graphics/ImageColorInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 8
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b86ff643_ac63912a",
+        "filename": "graphics/java/android/graphics/ImageColorInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 49,
+        "startChar": 71,
+        "endLine": 49,
+        "endChar": 72
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b2fc9224_9309190e",
+        "filename": "graphics/java/android/graphics/ImageColorInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 112
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a98b4475_dd30412d",
+        "filename": "graphics/java/android/graphics/ImageColorInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 1
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "12e6b545_d3923ff6",
+        "filename": "graphics/java/android/graphics/ImageColorInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 126,
+        "startChar": 37,
+        "endLine": 126,
+        "endChar": 38
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e8f278db_81e4b598",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 122
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694398",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "0b3f123b_88376611",
+          "description": "Change to \"libs/hwui/jni/ImageDecoder.cpp\"",
+          "replacements": [
+            {
+              "path": "libs/hwui/jni/ImageDecoder.cpp",
+              "range": {
+                "startLine": 157,
+                "startChar": 19,
+                "endLine": 157,
+                "endChar": 26
+              },
+              "replacement": "Destroy"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "ec1c0b6c_a20704fa",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Common typo found: \"Destory\" -- should it be \"Destroy\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 157,
+        "startChar": 19,
+        "endLine": 157,
+        "endChar": 26
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694398",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "e3a5c345_7a5b3ea0",
+          "description": "Change to \"libs/hwui/jni/ImageDecoder.cpp\"",
+          "replacements": [
+            {
+              "path": "libs/hwui/jni/ImageDecoder.cpp",
+              "range": {
+                "startLine": 158,
+                "startChar": 34,
+                "endLine": 158,
+                "endChar": 41
+              },
+              "replacement": "destroy"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "941f81c1_67ca06b5",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Common typo found: \"destory\" -- should it be \"destroy\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 158,
+        "startChar": 34,
+        "endLine": 158,
+        "endChar": 41
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694398",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "0a513232_93d14d51",
+          "description": "Change to \"libs/hwui/jni/ImageDecoder.cpp\"",
+          "replacements": [
+            {
+              "path": "libs/hwui/jni/ImageDecoder.cpp",
+              "range": {
+                "startLine": 158,
+                "startChar": 4,
+                "endLine": 158,
+                "endChar": 11
+              },
+              "replacement": "Destroy"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "496a70e6_86645db0",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Common typo found: \"Destory\" -- should it be \"Destroy\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 11
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694398",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "d9e054a4_3331a0e4",
+          "description": "Change to \"libs/hwui/jni/ImageDecoder.cpp\"",
+          "replacements": [
+            {
+              "path": "libs/hwui/jni/ImageDecoder.cpp",
+              "range": {
+                "startLine": 159,
+                "startChar": 9,
+                "endLine": 159,
+                "endChar": 16
+              },
+              "replacement": "Destroy"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "2054646d_8bd95b3f",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Common typo found: \"Destory\" -- should it be \"Destroy\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 159,
+        "startChar": 9,
+        "endLine": 159,
+        "endChar": 16
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694398",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "89b4dd4b_39f4bc86",
+          "description": "Change to \"libs/hwui/jni/ImageDecoder.cpp\"",
+          "replacements": [
+            {
+              "path": "libs/hwui/jni/ImageDecoder.cpp",
+              "range": {
+                "startLine": 159,
+                "startChar": 65,
+                "endLine": 159,
+                "endChar": 72
+              },
+              "replacement": "destroy"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "c7bb33d4_9c409bff",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Common typo found: \"destory\" -- should it be \"destroy\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 159,
+        "startChar": 65,
+        "endLine": 159,
+        "endChar": 72
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694398",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "ab96574f_0bfbf40d",
+          "description": "Change to \"libs/hwui/jni/ImageDecoder.cpp\"",
+          "replacements": [
+            {
+              "path": "libs/hwui/jni/ImageDecoder.cpp",
+              "range": {
+                "startLine": 161,
+                "startChar": 8,
+                "endLine": 161,
+                "endChar": 15
+              },
+              "replacement": "destroy"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "ccbc72c8_c005a8ad",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Common typo found: \"destory\" -- should it be \"destroy\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 161,
+        "startChar": 8,
+        "endLine": 161,
+        "endChar": 15
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694398",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "70f21e93_bf00a38f",
+          "description": "Change to \"libs/hwui/jni/ImageDecoder.cpp\"",
+          "replacements": [
+            {
+              "path": "libs/hwui/jni/ImageDecoder.cpp",
+              "range": {
+                "startLine": 162,
+                "startChar": 10,
+                "endLine": 162,
+                "endChar": 17
+              },
+              "replacement": "destroy"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "87633f31_6e786b62",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Common typo found: \"destory\" -- should it be \"destroy\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 162,
+        "startChar": 10,
+        "endLine": 162,
+        "endChar": 17
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "3d081936_d07ca5d5",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 136
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2bc1570a_b19abce7",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 102
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "419a8bf2_df2d7c96",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 104
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f2b86bc4_fd0a4ed6",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 479,
+        "startChar": 0,
+        "endLine": 479,
+        "endChar": 148
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1a097295_cb0f7593",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 629,
+        "startChar": 0,
+        "endLine": 629,
+        "endChar": 109
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8df858b9_f6f54284",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 938,
+        "startChar": 0,
+        "endLine": 938,
+        "endChar": 105
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6e7fc6cd_92fa6977",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 960,
+        "startChar": 0,
+        "endLine": 960,
+        "endChar": 105
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e3979de8_db705b93",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 976,
+        "startChar": 0,
+        "endLine": 976,
+        "endChar": 105
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "220ab21e_977c5b10",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 988,
+        "startChar": 0,
+        "endLine": 988,
+        "endChar": 105
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b3e47b14_86ed05d1",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1013,
+        "startChar": 0,
+        "endLine": 1013,
+        "endChar": 142
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "93b893d3_d0b6cf1c",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1015,
+        "startChar": 0,
+        "endLine": 1015,
+        "endChar": 103
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "cec629ee_14568fb0",
+        "filename": "libs/hwui/jni/ImageDecoder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 131
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009694394",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "650f950f_88bc33db",
+        "filename": "libs/hwui/jni/ImageDecoder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-08T05:54:01Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 127
+      },
+      "revId": "ced8d4a8587344bbe84255c0032269a852b27c63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
