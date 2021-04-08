@@ -804,6 +804,7 @@ public final class ImageDecoder implements AutoCloseable {
 
     private PostProcessor          mPostProcessor;
     private OnPartialImageListener mOnPartialImageListener;
+    private ColorInfoListener      mOnColorInfoListener;
 
     // Objects for interacting with the input.
     private InputStream         mInputStream;
@@ -1137,6 +1138,19 @@ public final class ImageDecoder implements AutoCloseable {
         mDesiredHeight = height;
     }
 
+    /**
+     *
+     * enable HDR effect.
+     *  @return {Null}
+     */
+    @NonNull
+    public void enableHdr() {
+        if (mNativePtr == 0) {
+            throw new IllegalStateException("ImageDecoder is closed!");
+        }
+        nEnableHdr(mNativePtr);
+    }
+
     /** @removed
      * @deprecated Renamed to {@link #setTargetSampleSize}.
      */
@@ -1377,6 +1391,21 @@ public final class ImageDecoder implements AutoCloseable {
     @Nullable
     public OnPartialImageListener getOnPartialImageListener() {
         return mOnPartialImageListener;
+    }
+
+    /**
+     * Set HDR color info Listener.
+     */
+    public void setColorInfoListener(@Nullable ColorInfoListener listener) {
+        mOnColorInfoListener = listener;
+    }
+
+    /**
+     * Get HDR color info Listener.
+     */
+    @NonNull
+    public ColorInfoListener getColorInfoListener() {
+        return mOnColorInfoListener;
     }
 
     /**
@@ -1986,6 +2015,19 @@ public final class ImageDecoder implements AutoCloseable {
         }
     }
 
+    /**
+     * Private method called by JNI.
+     */
+    @SuppressWarnings("unused")
+    private void PostColorInfo(@NonNull ImageColorInfo colorinfo) {
+        try {
+            if (mOnColorInfoListener != null) {
+                mOnColorInfoListener.onColorInfoListener(colorinfo);
+            }
+        } finally {
+        }
+    }
+
     private static native ImageDecoder nCreate(long asset,
             boolean preferAnimation, Source src) throws IOException;
     private static native ImageDecoder nCreate(ByteBuffer buffer, int position, int limit,
@@ -2013,4 +2055,6 @@ public final class ImageDecoder implements AutoCloseable {
     private static native void nClose(long nativePtr);
     private static native String nGetMimeType(long nativePtr);
     private static native ColorSpace nGetColorSpace(long nativePtr);
+    private static native void nEnableHdr(long nativePtr);
+
 }
