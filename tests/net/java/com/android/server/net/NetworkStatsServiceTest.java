@@ -164,9 +164,10 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
 
     private long mElapsedRealtime;
 
-    private BroadcastInterceptingContext mServiceContext;
     private File mStatsDir;
 
+    private @Mock MockContext mServiceContext;
+    private @Mock TelephonyManager mTelephonyManager;
     private @Mock INetworkManagementService mNetManager;
     private @Mock NetworkStatsFactory mStatsFactory;
     private @Mock NetworkStatsSettings mSettings;
@@ -182,6 +183,17 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
     private ContentObserver mContentObserver;
     private Handler mHandler;
 
+    private class MockContext extends BroadcastInterceptingContext {
+        MockContext(Context base) {
+            super(base);
+        }
+
+        @Override
+        public Object getSystemService(String name) {
+            if (Context.TELEPHONY_SERVICE.equals(name)) return mTelephonyManager;
+            return super.getSystemService(name);
+        }
+    }
     private final Clock mClock = new SimpleClock(ZoneOffset.UTC) {
         @Override
         public long millis() {
@@ -194,7 +206,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         MockitoAnnotations.initMocks(this);
         final Context context = InstrumentationRegistry.getContext();
 
-        mServiceContext = new BroadcastInterceptingContext(context);
+        mServiceContext = new MockContext(context);
         mStatsDir = context.getFilesDir();
         if (mStatsDir.exists()) {
             IoUtils.deleteContents(mStatsDir);
