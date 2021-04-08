@@ -201,6 +201,7 @@ public class VcnGatewayConnectionTestBase {
                         TEST_SUBSCRIPTION_SNAPSHOT,
                         mConfig,
                         mGatewayStatusCallback,
+                        true /* isMobileDataEnabled */,
                         mDeps);
     }
 
