@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a8b8806_76cf4852",
+        "filename": "tests/net/java/android/net/ConnectivitySettingsManagerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-04-08T07:10:04Z",
+      "side": 1,
+      "message": "Not for this commit. I see setNetworkSwitchNotificationMaximumDailyCount will only throw exception if count less than 0. But I see the exception message shows that count must be 0~10. \nWhy do we only throw exception for \u003c 0 but not for \u003e 10 case? or the message is actually not accurate?",
+      "range": {
+        "startLine": 220,
+        "startChar": 80,
+        "endLine": 220,
+        "endChar": 83
+      },
+      "revId": "69201bef86df14fb8eb5121e46e218c535092807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3f41f14_efaa725c",
+        "filename": "tests/net/java/android/net/ConnectivitySettingsManagerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-04-08T07:10:04Z",
+      "side": 1,
+      "message": "optional: I think we can ignore this. It verifies again at the end of the test anyway.",
+      "range": {
+        "startLine": 250,
+        "startChar": 7,
+        "endLine": 251,
+        "endChar": 51
+      },
+      "revId": "69201bef86df14fb8eb5121e46e218c535092807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27a2e147_2defb5ee",
+        "filename": "tests/net/java/android/net/ConnectivitySettingsManagerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-04-08T07:10:04Z",
+      "side": 1,
+      "message": "Do you like to also verfiy either host or pacFileUrl is empty will result in null ProxyInfo?\n\nif you\u0027re verify this via putting the setting directly, maybe do something like below?\n\n Settings.Global.putString(resolver, GLOBAL_HTTP_PROXY_PORT, 1234)\n Settings.Global.putString(resolver, GLOBAL_HTTP_PROXY_EXCLUSION_LIST, ArrayList\u003cString\u003e())\n Settings.Global.putString(resolver, GLOBAL_HTTP_PROXY_PAC, pacFileUrl)\n Settings.Global.putString(resolver, GLOBAL_HTTP_PROXY_HOST, \"\")\n assertEquals(null, getGlobalProxy(context))\n Settings.Global.putString(resolver, GLOBAL_HTTP_PROXY_PAC, null)\n Settings.Global.putString(resolver, GLOBAL_HTTP_PROXY_HOST, host)\n assertEquals(null, getGlobalProxy(context))\n\nIf we may result in updating the setting several times, maybe add a helper function to update those settings",
+      "range": {
+        "startLine": 253,
+        "startChar": 7,
+        "endLine": 257,
+        "endChar": 56
+      },
+      "revId": "69201bef86df14fb8eb5121e46e218c535092807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
