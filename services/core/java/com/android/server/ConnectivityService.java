@@ -6117,6 +6117,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void handleRegisterNetworkProvider(NetworkProviderInfo npi) {
+        if (npi.messenger == null) {
+            loge("Got a NetworkProvider with null messenger.");
+            return;
+        }
+
         if (mNetworkProviderInfos.containsKey(npi.messenger)) {
             // Avoid creating duplicates. even if an app makes a direct AIDL call.
             // This will never happen if an app calls ConnectivityManager#registerNetworkProvider,
