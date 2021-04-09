@@ -64,7 +64,6 @@ import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
 import android.util.Log;
-import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
@@ -142,7 +141,7 @@ import java.util.concurrent.TimeUnit;
  */
 // TODO(b/180451994): ensure all incoming + outgoing calls have a cleared calling identity
 public class VcnManagementService extends IVcnManagementService.Stub {
-    @NonNull private static final String TAG = VcnManagementService.class.getSimpleName();
+    @NonNull private static final String TAG = "CJK";
 
     public static final boolean VDBG = false; // STOPSHIP: if true
 
@@ -241,13 +240,13 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             try {
                 configBundle = mConfigDiskRwHelper.readFromDisk();
             } catch (IOException e1) {
-                Slog.e(TAG, "Failed to read configs from disk; retrying", e1);
+                Log.e(TAG, "Failed to read configs from disk; retrying", e1);
 
                 // Retry immediately. The IOException may have been transient.
                 try {
                     configBundle = mConfigDiskRwHelper.readFromDisk();
                 } catch (IOException e2) {
-                    Slog.wtf(TAG, "Failed to read configs from disk", e2);
+                    Log.wtf(TAG, "Failed to read configs from disk", e2);
                     return;
                 }
             }
@@ -433,8 +432,21 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             synchronized (mLock) {
                 mLastSnapshot = snapshot;
 
+                Log.e("CJK", "received new snapshot: " + mLastSnapshot);
+
                 // Start any VCN instances as necessary
                 for (Entry<ParcelUuid, VcnConfig> entry : mConfigs.entrySet()) {
+                    final boolean b =
+                            snapshot.packageHasPermissionsForSubscriptionGroup(
+                                    entry.getKey(), entry.getValue().getProvisioningPackageName());
+                    Log.e(
+                            "CJK",
+                            "subGrp="
+                                    + entry.getKey()
+                                    + " pkg="
+                                    + entry.getValue().getProvisioningPackageName()
+                                    + " isPrivileged="
+                                    + b);
                     if (snapshot.packageHasPermissionsForSubscriptionGroup(
                             entry.getKey(), entry.getValue().getProvisioningPackageName())) {
                         if (!mVcns.containsKey(entry.getKey())) {
@@ -484,6 +496,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
     @GuardedBy("mLock")
     private void stopVcnLocked(@NonNull ParcelUuid uuidToTeardown) {
+        Log.e(TAG, "tearing down VCN for subGrp: " + uuidToTeardown);
         final Vcn vcnToTeardown = mVcns.remove(uuidToTeardown);
         if (vcnToTeardown == null) {
             return;
@@ -516,7 +529,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
     @GuardedBy("mLock")
     private void startVcnLocked(@NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config) {
-        Slog.v(TAG, "Starting VCN config for subGrp: " + subscriptionGroup);
+        Log.e(TAG, "Starting VCN config for subGrp: " + subscriptionGroup);
 
         // TODO(b/176939047): Support multiple VCNs active at the same time, or limit to one active
         //                    VCN.
@@ -538,13 +551,32 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @GuardedBy("mLock")
     private void startOrUpdateVcnLocked(
             @NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config) {
-        Slog.v(TAG, "Starting or updating VCN config for subGrp: " + subscriptionGroup);
+
+        boolean b =
+                mLastSnapshot.packageHasPermissionsForSubscriptionGroup(
+                        subscriptionGroup, config.getProvisioningPackageName());
+        Log.e(
+                "CJK",
+                "subGrp="
+                        + subscriptionGroup
+                        + " pkg="
+                        + config.getProvisioningPackageName()
+                        + " isPrivileged="
+                        + b);
 
         if (mVcns.containsKey(subscriptionGroup)) {
+            Log.e(TAG, "updating VCN config for subGrp: " + subscriptionGroup);
             final Vcn vcn = mVcns.get(subscriptionGroup);
             vcn.updateConfig(config);
-        } else {
+        } else if (mLastSnapshot.packageHasPermissionsForSubscriptionGroup(
+                subscriptionGroup, config.getProvisioningPackageName())) {
+            Log.e(TAG, "Starting VCN config for subGrp: " + subscriptionGroup);
             startVcnLocked(subscriptionGroup, config);
+        } else {
+            Log.e(
+                    TAG,
+                    "NEITHER starting / updating VCN config (not permissioned) for subGrp: "
+                            + subscriptionGroup);
         }
     }
 
@@ -564,7 +596,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         if (!config.getProvisioningPackageName().equals(opPkgName)) {
             throw new IllegalArgumentException("Mismatched caller and VcnConfig creator");
         }
-        Slog.v(TAG, "VCN config updated for subGrp: " + subscriptionGroup);
+        Log.e(TAG, "VCN config updated for subGrp: " + subscriptionGroup);
 
         mContext.getSystemService(AppOpsManager.class)
                 .checkPackage(mDeps.getBinderCallingUid(), config.getProvisioningPackageName());
@@ -589,7 +621,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     public void clearVcnConfig(@NonNull ParcelUuid subscriptionGroup, @NonNull String opPkgName) {
         requireNonNull(subscriptionGroup, "subscriptionGroup was null");
         requireNonNull(opPkgName, "opPkgName was null");
-        Slog.v(TAG, "VCN config cleared for subGrp: " + subscriptionGroup);
+        Log.e(TAG, "VCN config cleared for subGrp: " + subscriptionGroup);
 
         mContext.getSystemService(AppOpsManager.class)
                 .checkPackage(mDeps.getBinderCallingUid(), opPkgName);
@@ -624,7 +656,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                             VcnConfig::toPersistableBundle);
             mConfigDiskRwHelper.writeToDisk(bundle);
         } catch (IOException e) {
-            Slog.e(TAG, "Failed to save configs to disk", e);
+            Log.e(TAG, "Failed to save configs to disk", e);
             throw new ServiceSpecificException(0, "Failed to save configs");
         }
     }
@@ -734,7 +766,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         for (int subId : networkCapabilities.getSubIds()) {
             // Verify that all subscriptions point to the same group
             if (subGrp != null && !subGrp.equals(snapshot.getGroupForSubId(subId))) {
-                Slog.wtf(TAG, "Got multiple subscription groups for a single network");
+                Log.wtf(TAG, "Got multiple subscription groups for a single network");
             }
 
             subGrp = snapshot.getGroupForSubId(subId);
@@ -766,11 +798,13 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             final NetworkCapabilities ncCopy = new NetworkCapabilities(networkCapabilities);
 
             final ParcelUuid subGrp = getSubGroupForNetworkCapabilities(ncCopy);
+            Log.e("CJK", "subIds=" + ncCopy.getSubIds() + " map to subGrp=" + subGrp);
             boolean isVcnManagedNetwork = false;
             boolean isRestrictedCarrierWifi = false;
             synchronized (mLock) {
                 final Vcn vcn = mVcns.get(subGrp);
                 if (vcn != null) {
+                    Log.e("CJK", "found VCN w status=" + vcn.getStatus());
                     if (vcn.getStatus() == VCN_STATUS_CODE_ACTIVE) {
                         isVcnManagedNetwork = true;
                     }
@@ -795,6 +829,18 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             }
 
             final NetworkCapabilities result = ncBuilder.build();
+
+            if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_TEST)) {
+                Log.e(
+                        "CJK",
+                        "test network: not_vcn_mgd? "
+                                + result.hasCapability(
+                                        NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED));
+                Log.e(
+                        "CJK", "test network: incoming subIds=" + networkCapabilities.getSubIds());
+                Log.e("CJK", "test network: outgoing subIds=" + result.getSubIds());
+            }
+
             return new VcnUnderlyingNetworkPolicy(
                     mTrackingNetworkCallback.requiresRestartForCarrierWifi(result), result);
         });
@@ -894,14 +940,14 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                         || vcnStatus == VCN_STATUS_CODE_SAFE_MODE) {
                     resultStatus = vcnStatus;
                 } else {
-                    Slog.wtf(TAG, "Unknown VCN status: " + vcnStatus);
+                    Log.wtf(TAG, "Unknown VCN status: " + vcnStatus);
                     resultStatus = VCN_STATUS_CODE_NOT_CONFIGURED;
                 }
 
                 try {
                     cbInfo.mCallback.onVcnStatusChanged(resultStatus);
                 } catch (RemoteException e) {
-                    Slog.d(TAG, "VcnStatusCallback threw on VCN status change", e);
+                    Log.d(TAG, "VcnStatusCallback threw on VCN status change", e);
                 }
             }
         } finally {
