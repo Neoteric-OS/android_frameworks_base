@@ -34,6 +34,23 @@
       "parentUuid": "832203fe_e84451c7",
       "revId": "895812e5cfbec845638ad2ea93cc5687720aa3f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "657b366c_f4d0c3b9",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-04-09T11:59:27Z",
+      "side": 1,
+      "message": "These should be as specific as possible, so in this case:\n\n  KEYCODE_VIDEO\n\nor if we need multiple\n\n  KEYCODE_VIDEO_APP_1.\n\nWe probably don\u0027t need 16 video apps either, so lets limit to 4 or 8.",
+      "revId": "895812e5cfbec845638ad2ea93cc5687720aa3f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
