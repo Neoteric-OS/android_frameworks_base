@@ -178,6 +178,9 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
                 final ParcelUuid subGroup = subInfo.getGroupUuid();
                 final Set<String> pkgs =
                         privilegedPackages.getOrDefault(subGroup, new ArraySet<>());
+                List<String> privPkgs = subIdSpecificTelephonyManager.getPackagesWithCarrierPrivileges();
+                android.util.Log.e("CJK", "Curr cached priv pkgs for subId=" + subInfo.getSubscriptionId() + " " + pkgs);
+                android.util.Log.e("CJK", "TelMan priv pkgs for subId=" + subInfo.getSubscriptionId() + " " + privPkgs);
                 pkgs.addAll(subIdSpecificTelephonyManager.getPackagesWithCarrierPrivileges());
 
                 privilegedPackages.put(subGroup, pkgs);

@@ -351,6 +351,12 @@ class TestNetworkService extends ITestNetworkManager.Stub {
                 return null;
             }
 
+            boolean notVcnManaged =
+                    vcnNetworkPolicy
+                            .getNetworkCapabilities()
+                            .hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
+            Log.e("CJK", "network policy for subIds=" + subIds + " not_vcn_mgd? " + notVcnManaged);
+
             nc = vcnNetworkPolicy.getNetworkCapabilities();
         } catch (SecurityException e) {
             Log.e(TEST_NETWORK_LOGTAG, "failed to get network policy in TestNetworkService", e);
@@ -473,7 +479,11 @@ class TestNetworkService extends ITestNetworkManager.Stub {
         public void onPolicyChanged() {
             synchronized (mTestNetworkTracker) {
                 for (int i = 0; i < mTestNetworkTracker.size(); i++) {
-                    applyVcnNetworkPolicyLocked(mTestNetworkTracker.valueAt(i));
+                    try {
+                        applyVcnNetworkPolicyLocked(mTestNetworkTracker.valueAt(i));
+                    } catch (SecurityException e) {
+                        Log.e("CJK", "security exception applying vcn policy", e);
+                    }
                 }
             }
         }
@@ -486,6 +496,8 @@ class TestNetworkService extends ITestNetworkManager.Stub {
             return;
         }
 
+        Log.e("CJK", "applying vcn policy for network=" + network.getNetId());
+
         // VcnManagementService will only ever remove NOT_VCN_MANAGED, so explicitly add it in case
         // this Network regained NOT_VCN_MANAGED
         final NetworkCapabilities nc = networkAgent.getNetworkCapabilities();
@@ -495,8 +507,20 @@ class TestNetworkService extends ITestNetworkManager.Stub {
 
         final VcnNetworkPolicyResult vcnNetworkPolicy = mVcnManager.applyVcnNetworkPolicy(nc, lp);
         if (vcnNetworkPolicy.isTeardownRequested()) {
+            Log.e("CJK", "teardown requrested for network=" + network.getNetId());
             teardownTestNetwork(network.getNetId());
         } else {
+            boolean notVcnManaged =
+                    vcnNetworkPolicy
+                            .getNetworkCapabilities()
+                            .hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
+            Log.e(
+                    "CJK",
+                    "rcvd network policy for network="
+                            + network.getNetId()
+                            + " not_vcn_mgd? "
+                            + notVcnManaged);
+
             networkAgent.updateNetworkCapabilities(vcnNetworkPolicy.getNetworkCapabilities());
         }
     }
