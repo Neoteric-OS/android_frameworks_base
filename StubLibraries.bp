@@ -276,11 +276,6 @@ java_defaults {
         "art-notices-for-framework-stubs-jar",
         "framework-res-package-jar", // Export package of framework-res
     ],
-    errorprone: {
-        javacflags: [
-            "-XepDisableAllChecks",
-        ],
-    },
     sdk_version: "none",
     system_modules: "none",
     java_version: "1.8",
