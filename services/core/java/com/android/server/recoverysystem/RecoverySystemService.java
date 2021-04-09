@@ -809,6 +809,17 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
     }
 
     @Override // Binder call
+    public void installPackage(String packagePath) {
+        try {
+            File packageFile = new File(packagePath);
+            RecoverySystem.installPackage(mContext, packageFile);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override // Binder call
     public boolean isLskfCaptured(String packageName) {
         enforcePermissionForResumeOnReboot();
         boolean captured;

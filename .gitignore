@@ -2,3 +2,8 @@
 *.iml
 *.sw*
 gen/
+.project
+.classpath
+.vscode
+.settings
+*.code-workspace

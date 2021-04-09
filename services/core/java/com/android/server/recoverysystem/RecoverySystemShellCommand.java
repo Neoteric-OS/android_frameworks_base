@@ -46,6 +46,8 @@ public class RecoverySystemShellCommand extends ShellCommand {
                     return clearLskf();
                 case "reboot-and-apply":
                     return rebootAndApply();
+                case "install-package":
+                    return installPackage();
                 default:
                     return handleDefaultCommands(cmd);
             }
@@ -54,6 +56,12 @@ public class RecoverySystemShellCommand extends ShellCommand {
             e.printStackTrace(getErrPrintWriter());
             return -1;
         }
+    }
+
+    private int installPackage() throws RemoteException {
+        String packageFile = getNextArgRequired();
+        mService.installPackage(packageFile);
+        return 0;
     }
 
     private int requestLskf() throws RemoteException {

@@ -32,4 +32,5 @@ interface IRecoverySystem {
     boolean isLskfCaptured(in String packageName);
     int rebootWithLskfAssumeSlotSwitch(in String packageName, in String reason);
     int rebootWithLskf(in String packageName, in String reason, in boolean slotSwitch);
+    void installPackage(in String packageFile);
 }
