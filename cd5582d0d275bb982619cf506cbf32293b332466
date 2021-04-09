@@ -1,0 +1,134 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009738837",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0cb88038_d04afc80",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-09T03:38:32Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 113
+      },
+      "revId": "cd5582d0d275bb982619cf506cbf32293b332466",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009738837",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5a967ab6_5b97668d",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-09T03:38:32Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1020,
+        "startChar": 0,
+        "endLine": 1020,
+        "endChar": 142
+      },
+      "revId": "cd5582d0d275bb982619cf506cbf32293b332466",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009738837",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d16598e9_61fbb994",
+        "filename": "libs/hwui/jni/ImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-09T03:38:32Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1022,
+        "startChar": 0,
+        "endLine": 1022,
+        "endChar": 103
+      },
+      "revId": "cd5582d0d275bb982619cf506cbf32293b332466",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009738837",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "76f53dbe_3fef11d0",
+        "filename": "libs/hwui/jni/ImageDecoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-09T03:38:32Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 131
+      },
+      "revId": "cd5582d0d275bb982619cf506cbf32293b332466",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009738837",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1669045?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "325979e6_2adeff34",
+        "filename": "libs/hwui/jni/ImageDecoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-09T03:38:32Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 127
+      },
+      "revId": "cd5582d0d275bb982619cf506cbf32293b332466",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
