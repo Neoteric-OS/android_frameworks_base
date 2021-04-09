@@ -301,7 +301,7 @@ modules_system_stubs = [
 java_defaults {
     name: "android-non-updatable_defaults_stubs_current",
     libs: ["stub-annotations"],
-    static_libs: ["framework-res-package-jar"], // Export package of framework-res
+    static_libs: ["resources-for-android-jar"],
     errorprone: {
         javacflags: [
             "-XepDisableAllChecks",

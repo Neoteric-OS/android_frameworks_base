@@ -76,11 +76,13 @@ android_app {
     },
 }
 
+// Due to a bug in old developer tools (b/127733650), we need to make sure resources are compressed.
 java_genrule {
-    name: "framework-res-package-jar",
+    name: "resources-for-android-jar",
     srcs: [":framework-res{.export-package.apk}"],
-    out: ["framework-res-package.jar"],
-    cmd: "cp $(in) $(out)",
+    out: ["resources-for-android-jar.jar"],
+    tools: ["ziptime"],
+    cmd: "unzip -qd $(genDir) $(in) && (cd $(genDir) && zip -rqX $$(basename $(out)) *) && $(location ziptime) $(out)",
 }
 
 // This logic can be removed once robolectric's transition to binary resources is complete
