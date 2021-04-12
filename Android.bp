@@ -360,7 +360,6 @@ java_library {
 // its suffix "-minus-apex".
 java_library {
     name: "framework",
-    defaults: ["framework-aidl-export-defaults"],
     installable: false, // this lib is a build-only library
     static_libs: [
         "app-compat-annotations",
