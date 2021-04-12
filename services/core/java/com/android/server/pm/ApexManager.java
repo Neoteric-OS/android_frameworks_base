@@ -25,6 +25,7 @@ import android.apex.ApexInfo;
 import android.apex.ApexInfoList;
 import android.apex.ApexSessionInfo;
 import android.apex.ApexSessionParams;
+import android.apex.CompressedApexInfoList;
 import android.apex.IApexService;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -355,6 +356,20 @@ public abstract class ApexManager {
      * Inform apexd that the boot has completed.
      */
     public abstract void markBootCompleted();
+
+    /**
+     * Estimate how much storage space is needed on /data/ for decompressing apexes
+     * @param infoList List of apexes that need to be decompressed on next boot
+     * @return Size, in bytes, the amount of space needed on /data/
+     */
+    public abstract long calculateSizeForCompressedApex(CompressedApexInfoList infoList);
+
+    /**
+     * Reserve space on /data so that apexes can be decompressed after OTA
+     * @param infoList List of apexes that need to be decompressed on next boot
+     */
+    public abstract void reserveSpaceForCompressedApex(CompressedApexInfoList infoList)
+            throws RemoteException;
 
     /**
      * Dumps various state information to the provided {@link PrintWriter} object.
@@ -896,6 +911,22 @@ public abstract class ApexManager {
             } catch (RemoteException re) {
                 Slog.e(TAG, "Unable to contact apexservice", re);
             }
+        }
+
+        @Override
+        public long calculateSizeForCompressedApex(CompressedApexInfoList infoList) {
+            try {
+                return waitForApexService().calculateSizeForCompressedApex(infoList);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            return 0;
+        }
+
+        @Override
+        public void reserveSpaceForCompressedApex(CompressedApexInfoList infoList)
+                throws RemoteException {
+            waitForApexService().reserveSpaceForCompressedApex(infoList);
         }
 
         /**
