@@ -22,6 +22,30 @@
       },
       "revId": "93afc34f6d4d99742ed24aa5db8117b6efb45b67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e67594d_abbbe06c",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-04-12T09:40:51Z",
+      "side": 1,
+      "message": "No they\u0027re not necessary. I used bpfmt -w. It seems as though frameworks/base/PREUPLOAD.cfg does not enforce formatting on bp files.",
+      "parentUuid": "c44188c3_cd668e6e",
+      "range": {
+        "startLine": 386,
+        "startChar": 0,
+        "endLine": 389,
+        "endChar": 14
+      },
+      "revId": "93afc34f6d4d99742ed24aa5db8117b6efb45b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
