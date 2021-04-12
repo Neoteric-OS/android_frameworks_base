@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3436f576_22782a8d",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkAgentConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-04-12T03:06:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e342c345_5e0085ba",
+      "range": {
+        "startLine": 314,
+        "startChar": 11,
+        "endLine": 314,
+        "endChar": 14
+      },
+      "revId": "b1cfd4809e81a4dafcd7dc9a6ef64f994df66c52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee66ed32_8c587172",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-04-12T02:05:04Z",
       "side": 1,
       "message": ". By default, NAT64 detection is enabled.",
+      "range": {
+        "startLine": 315,
+        "startChar": 93,
+        "endLine": 315,
+        "endChar": 94
+      },
+      "revId": "b1cfd4809e81a4dafcd7dc9a6ef64f994df66c52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99473985_1a4cb1f5",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkAgentConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-04-12T03:06:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee66ed32_8c587172",
       "range": {
         "startLine": 315,
         "startChar": 93,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0723166c_131b7a29",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkAgentConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-04-12T03:06:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15da332c_e4ee6e16",
+      "range": {
+        "startLine": 326,
+        "startChar": 11,
+        "endLine": 326,
+        "endChar": 14
+      },
+      "revId": "b1cfd4809e81a4dafcd7dc9a6ef64f994df66c52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87e4b1c5_2de0db5b",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-04-12T02:05:04Z",
       "side": 1,
       "message": "By default, the notification is enabled.",
+      "range": {
+        "startLine": 327,
+        "startChar": 66,
+        "endLine": 327,
+        "endChar": 67
+      },
+      "revId": "b1cfd4809e81a4dafcd7dc9a6ef64f994df66c52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5929205c_5fc0937c",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkAgentConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-04-12T03:06:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e4b1c5_2de0db5b",
       "range": {
         "startLine": 327,
         "startChar": 66,
