@@ -16,6 +16,7 @@
 
 package android.os;
 
+import static android.ota.nano.OtaPackageMetadata.ApexMetadata;
 import static android.view.Display.DEFAULT_DISPLAY;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -27,6 +28,8 @@ import android.annotation.RequiresPermission;
 import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
+import android.apex.CompressedApexInfo;
+import android.apex.CompressedApexInfoList;
 import android.app.KeyguardManager;
 import android.app.PendingIntent;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -47,6 +50,8 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Display;
 
+import com.android.server.pm.ApexManager;
+
 import libcore.io.Streams;
 
 import java.io.ByteArrayInputStream;
@@ -63,6 +68,7 @@ import java.security.SignatureException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
@@ -595,6 +601,48 @@ public class RecoverySystem {
         installPackage(context, packageFile, false);
     }
 
+    // Metadata should be no more than few MB, if it's larger than 100MB something is wrong.
+    private static final long APEX_INFO_SIZE_LIMIT = 24 * 1024 * 100;
+    private static void allocateSpaceForUpdate(File packageFile)
+            throws IOException {
+        try (ZipFile zipFile = new ZipFile(packageFile)) {
+            final ZipEntry entry = zipFile.getEntry("apex_info.pb");
+            if (entry == null) {
+                return;
+            }
+            InputStream is = zipFile.getInputStream(entry);
+            Log.i(TAG, "Allocating " + entry.getSize()
+                    + " bytes of memory to store OTA Metadata");
+            if (entry.getSize() >= APEX_INFO_SIZE_LIMIT) {
+                throw new IllegalArgumentException("apex_info.pb has size "
+                        + entry.getSize()
+                        + " which is larger than the permitted limit" + APEX_INFO_SIZE_LIMIT);
+            }
+            byte[] data = new byte[(int) entry.getSize()];
+            int bytesRead = is.read(data);
+            if (bytesRead != data.length) {
+                throw new IOException("Only read " + bytesRead + " when expecting " + data.length);
+            }
+            ApexMetadata metadata = ApexMetadata.parseFrom(data);
+            CompressedApexInfoList apexInfoList = new CompressedApexInfoList();
+            apexInfoList.apexInfos =
+            Arrays.stream(metadata.apexInfo).filter(apex -> apex.isCompressed).map(apex -> {
+                CompressedApexInfo info = new CompressedApexInfo();
+                info.moduleName = apex.packageName;
+                info.decompressedSize = apex.decompressedSize;
+                info.versionCode = apex.version;
+                return info;
+            }).toArray(CompressedApexInfo[]::new);
+            ApexManager apexManager = ApexManager.getInstance();
+            long bytesNeeded = apexManager.calculateSizeForCompressedApex(apexInfoList);
+            Log.i(TAG, "Attempting to allocate %ld bytes of storage on /data for apex"
+                    + bytesNeeded);
+            apexManager.reserveSpaceForCompressedApex(apexInfoList);
+        } catch (RemoteException e) {
+            e.rethrowAsRuntimeException();
+        }
+    }
+
     /**
      * If the package hasn't been processed (i.e. uncrypt'd), set up
      * UNCRYPT_PACKAGE_FILE and delete BLOCK_MAP_FILE to trigger uncrypt during the
@@ -657,6 +705,9 @@ public class RecoverySystem {
                 filename = "@/cache/recovery/block.map";
             }
 
+            allocateSpaceForUpdate(packageFile);
+
+
             final String filenameArg = "--update_package=" + filename + "\n";
             final String localeArg = "--locale=" + Locale.getDefault().toLanguageTag() + "\n";
             final String securityArg = "--security\n";
@@ -683,7 +734,7 @@ public class RecoverySystem {
                     reason += ",quiescent";
                 }
             }
-            pm.reboot(reason);
+//            pm.reboot(reason);
 
             throw new IOException("Reboot failed (no permissions?)");
         }
