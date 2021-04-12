@@ -596,6 +596,7 @@ public class RecoverySystem {
         installPackage(context, packageFile, false);
     }
 
+
     /**
      * If the package hasn't been processed (i.e. uncrypt'd), set up
      * UNCRYPT_PACKAGE_FILE and delete BLOCK_MAP_FILE to trigger uncrypt during the
@@ -658,6 +659,7 @@ public class RecoverySystem {
                 filename = "@/cache/recovery/block.map";
             }
 
+
             final String filenameArg = "--update_package=" + filename + "\n";
             final String localeArg = "--locale=" + Locale.getDefault().toLanguageTag() + "\n";
             final String securityArg = "--security\n";
@@ -671,6 +673,14 @@ public class RecoverySystem {
                     Context.RECOVERY_SERVICE);
             if (!rs.setupBcb(command)) {
                 throw new IOException("Setup BCB failed");
+            }
+            try {
+                if (!rs.allocateSpaceForUpdate(packageFile)) {
+                    throw new RuntimeException("Failed to allocate space for update "
+                            + packageFile.getAbsolutePath());
+                }
+            } catch (RemoteException e) {
+                e.rethrowAsRuntimeException();
             }
 
             // Having set up the BCB (bootloader control block), go ahead and reboot
@@ -1389,6 +1399,24 @@ public class RecoverySystem {
         } catch (RemoteException unused) {
         }
         return false;
+    }
+
+    /**
+     * Talks to RecoverySystemService via Binder to allocate space
+     */
+    private boolean allocateSpaceForUpdate(File packageFile) throws RemoteException {
+        return mService.allocateSpaceForUpdate(packageFile.getAbsolutePath());
+    }
+
+    /**
+     * Talks to RecoverySystemService via Binder to allocate space
+     */
+    private long calculateSizeForCompressedApex(File packageFile) {
+        try {
+            return mService.calculateSizeForCompressedApex(packageFile.getAbsolutePath());
+        } catch (RemoteException unused) {
+        }
+        return -1;
     }
 
     /**
