@@ -23,6 +23,9 @@ import android.os.IRecoverySystemProgressListener;
 /** @hide */
 
 interface IRecoverySystem {
+    boolean allocateSpaceForUpdate(in String packageFilePath);
+    long calculateSizeForCompressedApex(in String packageFilePath);
+    boolean isUpdatableApexSupported();
     boolean uncrypt(in String packageFile, IRecoverySystemProgressListener listener);
     boolean setupBcb(in String command);
     boolean clearBcb();
