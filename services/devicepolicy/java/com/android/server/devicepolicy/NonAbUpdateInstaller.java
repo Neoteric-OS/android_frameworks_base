@@ -21,6 +21,7 @@ import android.app.admin.StartInstallingUpdateCallback;
 import android.content.Context;
 import android.os.ParcelFileDescriptor;
 import android.os.RecoverySystem;
+import android.os.RemoteException;
 import android.util.Log;
 
 import java.io.IOException;
@@ -42,7 +43,7 @@ class NonAbUpdateInstaller extends UpdateInstaller {
         try {
             RecoverySystem.installPackage(mContext, mCopiedUpdateFile);
             notifyCallbackOnSuccess();
-        } catch (IOException e) {
+        } catch (IOException | RemoteException e) {
             Log.w(TAG, "IO error while trying to install non AB update.", e);
             notifyCallbackOnError(
                     InstallSystemUpdateCallback.UPDATE_ERROR_UNKNOWN,

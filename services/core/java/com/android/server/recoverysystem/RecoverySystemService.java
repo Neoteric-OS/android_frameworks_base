@@ -813,8 +813,7 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
         try {
             File packageFile = new File(packagePath);
             RecoverySystem.installPackage(mContext, packageFile);
-
-        } catch (IOException e) {
+        } catch (IOException | RemoteException e) {
             e.printStackTrace();
         }
     }
