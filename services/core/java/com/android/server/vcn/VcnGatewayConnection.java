@@ -750,6 +750,9 @@ public class VcnGatewayConnection extends StateMachine {
             // TODO(b/180132994): explore safely removing this Thread check
             mVcnContext.ensureRunningOnLooperThread();
 
+            Slog.d(TAG, "onSelectedUnderlyingNetworkChanged: "
+                    + (underlying == null ? null : underlying.network));
+
             // TODO(b/179091925): Move the delayed-message handling to BaseState
 
             // If underlying is null, all underlying networks have been lost. Disconnect VCN after a

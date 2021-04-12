@@ -148,7 +148,7 @@ import java.util.concurrent.TimeUnit;
 public class VcnManagementService extends IVcnManagementService.Stub {
     @NonNull private static final String TAG = VcnManagementService.class.getSimpleName();
 
-    public static final boolean VDBG = false; // STOPSHIP: if true
+    public static final boolean VDBG = true; // STOPSHIP: if true
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     static final String VCN_CONFIG_FILE = "/data/system/vcn/configs.xml";
@@ -435,6 +435,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             // Startup VCN instances
             synchronized (mLock) {
                 mLastSnapshot = snapshot;
+                Slog.v(TAG, "new snapshot: " + mLastSnapshot);
 
                 // Start any VCN instances as necessary
                 for (Entry<ParcelUuid, VcnConfig> entry : mConfigs.entrySet()) {
