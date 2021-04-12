@@ -2045,6 +2045,12 @@ public class VcnGatewayConnection extends StateMachine {
                 "mNetworkAgent.getNetwork(): "
                         + (mNetworkAgent == null ? null : mNetworkAgent.getNetwork()));
 
+        pw.println("mUnderlying:");
+        pw.increaseIndent();
+        mUnderlying.dump(pw);
+        pw.decreaseIndent();
+        pw.println();
+
         pw.decreaseIndent();
     }
 
