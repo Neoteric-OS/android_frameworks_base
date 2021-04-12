@@ -258,25 +258,6 @@ filegroup {
 }
 
 filegroup {
-    name: "libincident_aidl",
-    srcs: [
-        "core/java/android/os/IIncidentDumpCallback.aidl",
-        "core/java/android/os/IIncidentManager.aidl",
-        "core/java/android/os/IIncidentReportStatusListener.aidl",
-    ],
-    path: "core/java",
-}
-
-filegroup {
-    name: "libvibrator_aidl",
-    srcs: [
-        "core/java/android/os/IExternalVibrationController.aidl",
-        "core/java/android/os/IExternalVibratorService.aidl",
-    ],
-    path: "core/java",
-}
-
-filegroup {
     name: "libpowermanager_aidl",
     srcs: [
         "core/java/android/os/Temperature.aidl",
@@ -374,26 +355,6 @@ java_library {
 platform_compat_config {
     name: "framework-platform-compat-config",
     src: ":framework-minus-apex",
-}
-
-genrule {
-    name: "statslog-framework-java-gen",
-    tools: ["stats-log-api-gen"],
-    cmd: "$(location stats-log-api-gen) --java $(out) --module framework" +
-        " --javaPackage com.android.internal.util --javaClass FrameworkStatsLog --worksource",
-    out: ["com/android/internal/util/FrameworkStatsLog.java"],
-}
-
-java_library {
-    name: "uieventloggerlib",
-    srcs: [
-        "core/java/com/android/internal/logging/UiEvent.java",
-        "core/java/com/android/internal/logging/UiEventLogger.java",
-        "core/java/com/android/internal/logging/UiEventLoggerImpl.java",
-        "core/java/com/android/internal/logging/InstanceId.java",
-        "core/java/com/android/internal/logging/InstanceIdSequence.java",
-        ":statslog-framework-java-gen",
-    ],
 }
 
 gensrcs {
@@ -734,31 +695,6 @@ cc_library {
 }
 
 filegroup {
-    name: "incremental_aidl",
-    srcs: [
-        "core/java/android/os/incremental/IIncrementalServiceConnector.aidl",
-        "core/java/android/os/incremental/IncrementalFileSystemControlParcel.aidl",
-    ],
-    path: "core/java",
-}
-
-filegroup {
-    name: "dataloader_aidl",
-    srcs: [
-        "core/java/android/content/pm/DataLoaderParamsParcel.aidl",
-        "core/java/android/content/pm/DataLoaderType.aidl",
-        "core/java/android/content/pm/FileSystemControlParcel.aidl",
-        "core/java/android/content/pm/IDataLoader.aidl",
-        "core/java/android/content/pm/IDataLoaderManager.aidl",
-        "core/java/android/content/pm/InstallationFileParcel.aidl",
-        "core/java/android/content/pm/InstallationFileLocation.aidl",
-        "core/java/android/content/pm/IDataLoaderStatusListener.aidl",
-        "core/java/android/content/pm/IPackageInstallerSessionFileSystemConnector.aidl",
-    ],
-    path: "core/java",
-}
-
-filegroup {
     name: "incremental_manager_aidl",
     srcs: [
         "core/java/android/os/incremental/IIncrementalService.aidl",
@@ -904,30 +840,6 @@ filegroup {
         "core/java/com/android/internal/util/State.java",
         "core/java/com/android/internal/util/StateMachine.java",
         "core/java/com/android/internal/util/UserIcons.java",
-    ],
-}
-
-// Avoid including Parcelable classes as we don't want to have two copies of
-// Parcelable cross the process.
-filegroup {
-    name: "framework-cellbroadcast-shared-srcs",
-    srcs: [
-        "core/java/android/os/HandlerExecutor.java",
-        "core/java/android/util/LocalLog.java",
-        "core/java/com/android/internal/util/IState.java",
-        "core/java/com/android/internal/util/Preconditions.java",
-        "core/java/com/android/internal/util/State.java",
-        "core/java/com/android/internal/util/StateMachine.java",
-    ],
-}
-
-filegroup {
-    name: "framework-ims-common-shared-srcs",
-    srcs: [
-        "core/java/android/os/RegistrantList.java",
-        "core/java/android/os/Registrant.java",
-        "core/java/com/android/internal/os/SomeArgs.java",
-        "core/java/com/android/internal/util/Preconditions.java",
     ],
 }
 

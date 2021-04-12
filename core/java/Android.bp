@@ -127,3 +127,89 @@ filegroup {
     ],
     visibility: ["//frameworks/base/test-mock"],
 }
+
+
+filegroup {
+    name: "libincident_aidl",
+    srcs: [
+        "android/os/IIncidentDumpCallback.aidl",
+        "android/os/IIncidentManager.aidl",
+        "android/os/IIncidentReportStatusListener.aidl",
+    ],
+}
+
+filegroup {
+    name: "libvibrator_aidl",
+    srcs: [
+        "android/os/IExternalVibrationController.aidl",
+        "android/os/IExternalVibratorService.aidl",
+    ],
+}
+
+genrule {
+    name: "statslog-framework-java-gen",
+    tools: ["stats-log-api-gen"],
+    cmd: "$(location stats-log-api-gen) --java $(out) --module framework" +
+        " --javaPackage com.android.internal.util --javaClass FrameworkStatsLog --worksource",
+    out: ["com/android/internal/util/FrameworkStatsLog.java"],
+}
+
+java_library {
+    name: "uieventloggerlib",
+    srcs: [
+        "com/android/internal/logging/UiEvent.java",
+        "com/android/internal/logging/UiEventLogger.java",
+        "com/android/internal/logging/UiEventLoggerImpl.java",
+        "com/android/internal/logging/InstanceId.java",
+        "com/android/internal/logging/InstanceIdSequence.java",
+        ":statslog-framework-java-gen",
+    ],
+}
+
+
+filegroup {
+    name: "incremental_aidl",
+    srcs: [
+        "android/os/incremental/IIncrementalServiceConnector.aidl",
+        "android/os/incremental/IncrementalFileSystemControlParcel.aidl",
+    ],
+}
+
+filegroup {
+    name: "dataloader_aidl",
+    srcs: [
+        "android/content/pm/DataLoaderParamsParcel.aidl",
+        "android/content/pm/DataLoaderType.aidl",
+        "android/content/pm/FileSystemControlParcel.aidl",
+        "android/content/pm/IDataLoader.aidl",
+        "android/content/pm/IDataLoaderManager.aidl",
+        "android/content/pm/InstallationFileParcel.aidl",
+        "android/content/pm/InstallationFileLocation.aidl",
+        "android/content/pm/IDataLoaderStatusListener.aidl",
+        "android/content/pm/IPackageInstallerSessionFileSystemConnector.aidl",
+    ],
+}
+
+// Avoid including Parcelable classes as we don't want to have two copies of
+// Parcelable cross the process.
+filegroup {
+    name: "framework-cellbroadcast-shared-srcs",
+    srcs: [
+        "android/os/HandlerExecutor.java",
+        "android/util/LocalLog.java",
+        "com/android/internal/util/IState.java",
+        "com/android/internal/util/Preconditions.java",
+        "com/android/internal/util/State.java",
+        "com/android/internal/util/StateMachine.java",
+    ],
+}
+
+filegroup {
+    name: "framework-ims-common-shared-srcs",
+    srcs: [
+        "android/os/RegistrantList.java",
+        "android/os/Registrant.java",
+        "com/android/internal/os/SomeArgs.java",
+        "com/android/internal/util/Preconditions.java",
+    ],
+}
