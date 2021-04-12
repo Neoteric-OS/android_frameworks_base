@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06c8a892_8378a8a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-12T09:17:48Z",
+      "side": 1,
+      "message": "LGTM, but why not say \"Enables or disables\" as I suggested? setXyzEnabled does not enable xyz; it sets whether xyz is enabled.",
+      "revId": "b053b55d474393551ba60d9d7d2505b73a008d21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
