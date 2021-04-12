@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c3ffb07_3c629b42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-12T18:21:41Z",
+      "side": 1,
+      "message": "please add a public SDK alias for 7.1.4 in AudioFormat.java:\n\nCHANNEL_OUT_7POINT1POINT4",
+      "revId": "deaf04f49ab315e67127c423951ab20f75b590a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b330034c_93f53bd9",
