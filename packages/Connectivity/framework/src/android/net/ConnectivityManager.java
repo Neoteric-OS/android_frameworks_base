@@ -40,6 +40,8 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityAnnotations.MultipathPreference;
+import android.net.ConnectivityAnnotations.RestrictBackgroundStatus;
 import android.net.ConnectivityDiagnosticsManager.DataStallReport.DetectionMethod;
 import android.net.IpSecManager.UdpEncapsulationSocket;
 import android.net.SocketKeepalive.Callback;
@@ -4797,16 +4799,6 @@ public class ConnectivityManager {
             MULTIPATH_PREFERENCE_RELIABILITY |
             MULTIPATH_PREFERENCE_PERFORMANCE;
 
-    /** @hide */
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef(flag = true, value = {
-            MULTIPATH_PREFERENCE_HANDOVER,
-            MULTIPATH_PREFERENCE_RELIABILITY,
-            MULTIPATH_PREFERENCE_PERFORMANCE,
-    })
-    public @interface MultipathPreference {
-    }
-
     /**
      * Provides a hint to the calling application on whether it is desirable to use the
      * multinetwork APIs (e.g., {@link Network#openConnection}, {@link Network#bindSocket}, etc.)
@@ -5027,16 +5019,6 @@ public class ConnectivityManager {
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_RESTRICT_BACKGROUND_CHANGED =
             "android.net.conn.RESTRICT_BACKGROUND_CHANGED";
-
-    /** @hide */
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef(flag = false, value = {
-            RESTRICT_BACKGROUND_STATUS_DISABLED,
-            RESTRICT_BACKGROUND_STATUS_WHITELISTED,
-            RESTRICT_BACKGROUND_STATUS_ENABLED,
-    })
-    public @interface RestrictBackgroundStatus {
-    }
 
     /**
      * Determines if the calling application is subject to metered network restrictions while

@@ -288,6 +288,7 @@ java_library {
     libs: [
         "app-compat-annotations",
         "ext",
+        "framework-connectivity-annotations",
         "framework-updatable-stubs-module_libs_api",
         "unsupportedappusage",
     ],
