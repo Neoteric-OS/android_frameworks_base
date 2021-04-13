@@ -57,6 +57,7 @@ java_library {
     ],
     libs: [
         "android.net.ipsec.ike",
+        "framework-connectivity-annotations",
         "services.core",
         "services.net",
         "unsupportedappusage",
