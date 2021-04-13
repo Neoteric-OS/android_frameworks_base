@@ -51,6 +51,23 @@
       "message": "ping",
       "revId": "487d3f6e2fad1028476455de14d3c943f3d3f60a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9decf24_7e9e786d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2021-04-13T00:08:56Z",
+      "side": 1,
+      "message": "friendly ping @todd, this is a cp of ag/13830729",
+      "revId": "487d3f6e2fad1028476455de14d3c943f3d3f60a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
