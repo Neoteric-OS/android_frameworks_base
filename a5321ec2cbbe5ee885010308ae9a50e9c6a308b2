@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45a17648_2547b926",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-13T21:02:43Z",
+      "side": 1,
+      "message": "LGTM - feel free to address test comment in a followup",
+      "revId": "a5321ec2cbbe5ee885010308ae9a50e9c6a308b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "49e160f9_85c507be",
@@ -14,6 +31,30 @@
       "writtenOn": "2021-04-13T20:25:45Z",
       "side": 1,
       "message": "qq: is the issue that this API hasn\u0027t changed in aosp but rather the impl ignores score + providerId on internal?",
+      "range": {
+        "startLine": 92,
+        "startChar": 35,
+        "endLine": 92,
+        "endChar": 93
+      },
+      "revId": "a5321ec2cbbe5ee885010308ae9a50e9c6a308b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "043c82c5_6ddb0d45",
+        "filename": "services/core/java/com/android/server/vcn/VcnNetworkProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-13T21:02:43Z",
+      "side": 1,
+      "message": "discussed offline - this is due to NetworkScore changes in internal",
+      "parentUuid": "49e160f9_85c507be",
       "range": {
         "startLine": 92,
         "startChar": 35,
