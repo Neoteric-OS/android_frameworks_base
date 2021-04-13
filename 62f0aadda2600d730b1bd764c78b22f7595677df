@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "95fa0d20_ccce8344",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-13T21:10:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d308914a_50fc50c1",
+      "range": {
+        "startLine": 535,
+        "startChar": 3,
+        "endLine": 541,
+        "endChar": 5
+      },
+      "revId": "62f0aadda2600d730b1bd764c78b22f7595677df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ff88ba8_19cb031d",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-04-13T20:51:43Z",
       "side": 1,
       "message": "nit: can we add a class comment for this?",
+      "range": {
+        "startLine": 596,
+        "startChar": 4,
+        "endLine": 596,
+        "endChar": 70
+      },
+      "revId": "62f0aadda2600d730b1bd764c78b22f7595677df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6758756_d211e8de",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-13T21:10:21Z",
+      "side": 1,
+      "message": "Nack; it\u0027s pretty self explanatory, and for the rest of the public test classes, we have been only adding javadoc to silence the linter.",
+      "parentUuid": "4ff88ba8_19cb031d",
       "range": {
         "startLine": 596,
         "startChar": 4,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d350de13_80b07e25",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-13T21:10:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d592f6b_8c64f395",
+      "range": {
+        "startLine": 633,
+        "startChar": 32,
+        "endLine": 633,
+        "endChar": 44
+      },
+      "revId": "62f0aadda2600d730b1bd764c78b22f7595677df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44df7d46_7117288e",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-04-13T20:51:43Z",
       "side": 1,
       "message": "nit: should this be @VisibleForTesting?",
+      "range": {
+        "startLine": 634,
+        "startChar": 4,
+        "endLine": 634,
+        "endChar": 42
+      },
+      "revId": "62f0aadda2600d730b1bd764c78b22f7595677df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63250a8c_bb23c8a7",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-13T21:10:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44df7d46_7117288e",
       "range": {
         "startLine": 634,
         "startChar": 4,
