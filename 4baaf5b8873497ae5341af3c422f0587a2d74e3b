@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d47e399_b4fcf83d",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-13T18:36:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46fa5460_f9a6c031",
+      "range": {
+        "startLine": 492,
+        "startChar": 12,
+        "endLine": 492,
+        "endChar": 95
+      },
+      "revId": "4baaf5b8873497ae5341af3c422f0587a2d74e3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "189a9e07_0ecceaf5",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-04-13T04:51:15Z",
       "side": 1,
       "message": "nit: /* isMobileDataEnabled */",
+      "range": {
+        "startLine": 141,
+        "startChar": 61,
+        "endLine": 141,
+        "endChar": 65
+      },
+      "revId": "4baaf5b8873497ae5341af3c422f0587a2d74e3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4066211c_a2680361",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-13T18:36:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "189a9e07_0ecceaf5",
       "range": {
         "startLine": 141,
         "startChar": 61,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be2f9a58_009d6c7e",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-13T18:36:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "112f3f1e_c61ad20c",
+      "range": {
+        "startLine": 146,
+        "startChar": 65,
+        "endLine": 146,
+        "endChar": 69
+      },
+      "revId": "4baaf5b8873497ae5341af3c422f0587a2d74e3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c86bb702_73e4efec",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-04-13T04:51:15Z",
       "side": 1,
       "message": "nit: I think this should be SUB_IDS, since subId is normally camel-cased",
+      "range": {
+        "startLine": 81,
+        "startChar": 43,
+        "endLine": 81,
+        "endChar": 49
+      },
+      "revId": "4baaf5b8873497ae5341af3c422f0587a2d74e3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9402d8e8_43ecb5f6",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-13T18:36:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c86bb702_73e4efec",
       "range": {
         "startLine": 81,
         "startChar": 43,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c227cde7_fcc6b288",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-13T18:36:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5368736_34aa543e",
+      "range": {
+        "startLine": 205,
+        "startChar": 8,
+        "endLine": 205,
+        "endChar": 79
+      },
+      "revId": "4baaf5b8873497ae5341af3c422f0587a2d74e3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "34a2750f_0251e8ac",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-04-13T04:51:15Z",
       "side": 1,
       "message": "nit: maybe I\u0027m just tired but had a hard time reading this - is there another way we can write this to break it up a bit? \n\n(maybe store getAllExposedCaps() as a local variable and check against that?)",
+      "range": {
+        "startLine": 405,
+        "startChar": 24,
+        "endLine": 408,
+        "endChar": 66
+      },
+      "revId": "4baaf5b8873497ae5341af3c422f0587a2d74e3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6b73665_2c4900c1",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-13T18:36:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34a2750f_0251e8ac",
       "range": {
         "startLine": 405,
         "startChar": 24,
