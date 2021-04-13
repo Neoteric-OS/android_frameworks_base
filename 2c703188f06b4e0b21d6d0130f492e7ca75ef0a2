@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "670fd69c_1ca5802c",
+        "filename": "telephony/java/android/telephony/AccessNetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-04-13T05:56:56Z",
+      "side": 1,
+      "message": "Should use Rlog",
+      "range": {
+        "startLine": 601,
+        "startChar": 20,
+        "endLine": 601,
+        "endChar": 23
+      },
+      "revId": "2c703188f06b4e0b21d6d0130f492e7ca75ef0a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
