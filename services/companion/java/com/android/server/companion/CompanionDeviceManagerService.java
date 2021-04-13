@@ -688,6 +688,9 @@ public class CompanionDeviceManagerService extends SystemService implements Bind
 
         @Override
         public int onCommand(String cmd) {
+            if (cmd == null) {
+                return handleDefaultCommands(cmd);
+            }
             switch (cmd) {
                 case "list": {
                     CollectionUtils.forEach(
