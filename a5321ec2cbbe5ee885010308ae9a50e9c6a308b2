@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49e160f9_85c507be",
+        "filename": "services/core/java/com/android/server/vcn/VcnNetworkProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-13T20:25:45Z",
+      "side": 1,
+      "message": "qq: is the issue that this API hasn\u0027t changed in aosp but rather the impl ignores score + providerId on internal?",
+      "range": {
+        "startLine": 92,
+        "startChar": 35,
+        "endLine": 92,
+        "endChar": 93
+      },
+      "revId": "a5321ec2cbbe5ee885010308ae9a50e9c6a308b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "559d9f46_beb739ca",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnNetworkProviderTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-13T20:25:45Z",
+      "side": 1,
+      "message": "should we verify that the listener never receives this request below?",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 58
+      },
+      "revId": "a5321ec2cbbe5ee885010308ae9a50e9c6a308b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
