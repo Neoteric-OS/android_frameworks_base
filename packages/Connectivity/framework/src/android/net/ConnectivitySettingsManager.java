@@ -29,7 +29,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.content.Context;
-import android.net.ConnectivityManager.MultipathPreference;
+import android.net.ConnectivityAnnotations.MultipathPreference;
 import android.net.ConnectivityManager.PrivateDnsMode;
 import android.provider.Settings;
 import android.text.TextUtils;

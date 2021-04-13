@@ -52,6 +52,7 @@ cc_library_shared {
 java_library {
     name: "service-connectivity-pre-jarjar",
     srcs: [
+        ":framework-connectivity-annotations",
         ":framework-connectivity-shared-srcs",
         ":connectivity-service-srcs",
     ],

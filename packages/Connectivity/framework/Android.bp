@@ -43,6 +43,13 @@ java_library {
 }
 
 filegroup {
+    name: "framework-connectivity-annotations",
+    srcs: [
+        "src/android/net/ConnectivityAnnotations.java",
+    ],
+}
+
+filegroup {
     name: "framework-connectivity-internal-sources",
     srcs: [
         "src/**/*.java",
@@ -100,7 +107,10 @@ java_sdk_library {
     libs: [
         "unsupportedappusage",
     ],
-    permitted_packages: ["android.net", "com.android.connectivity.aidl"],
+    permitted_packages: [
+        "android.net",
+        "com.android.connectivity.aidl",
+    ],
 }
 
 java_library {
@@ -136,5 +146,8 @@ java_library {
     jarjar_rules: "jarjar-rules.txt",
     apex_available: ["com.android.tethering"],
     installable: true,
-    permitted_packages: ["android.net", "com.android.connectivity.aidl"],
+    permitted_packages: [
+        "android.net",
+        "com.android.connectivity.aidl",
+    ],
 }
