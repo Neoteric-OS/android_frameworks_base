@@ -93,6 +93,30 @@
       },
       "revId": "e1e6be9f09257c62d99b558655d5221a9d40f007",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5b3d422_b503a6a1",
+        "filename": "services/tests/servicestests/src/com/android/server/hdmi/HdmiCecLocalDeviceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-04-14T13:19:23Z",
+      "side": 1,
+      "message": "Doesn\u0027t EqualsTester verify that automatically? (I\u0027m not an expert though)",
+      "parentUuid": "b4aa8f9c_3e3a44ee",
+      "range": {
+        "startLine": 258,
+        "startChar": 24,
+        "endLine": 258,
+        "endChar": 92
+      },
+      "revId": "e1e6be9f09257c62d99b558655d5221a9d40f007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
