@@ -63,6 +63,30 @@
       },
       "revId": "9214b907c45ca7a8c20e13a6f35143e88daeb7f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61504d1c_15574089",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-04-14T15:16:22Z",
+      "side": 1,
+      "message": "uhh sorry which ones have implicit public visibility? I thought I covered everything via the defaults",
+      "parentUuid": "04ccf3e7_db270d16",
+      "range": {
+        "startLine": 532,
+        "startChar": 20,
+        "endLine": 532,
+        "endChar": 37
+      },
+      "revId": "9214b907c45ca7a8c20e13a6f35143e88daeb7f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
