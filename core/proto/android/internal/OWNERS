@@ -1,0 +1,2 @@
+# Binder
+per-file binder_latency.proto = file:/core/proto/android/internal/BINDER_OWNERS
