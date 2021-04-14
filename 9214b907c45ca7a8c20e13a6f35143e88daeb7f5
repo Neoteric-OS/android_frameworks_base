@@ -87,6 +87,30 @@
       },
       "revId": "9214b907c45ca7a8c20e13a6f35143e88daeb7f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d5090fd_e38290d1",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-04-14T15:23:24Z",
+      "side": 1,
+      "message": "I think it\u0027s because the visibility is set on defaults module, that it is not obvious.  I\u0027d say visibility should never be declared in defaults. I am okay with this change in general, it\u0027s better than not having these.",
+      "parentUuid": "61504d1c_15574089",
+      "range": {
+        "startLine": 532,
+        "startChar": 20,
+        "endLine": 532,
+        "endChar": 37
+      },
+      "revId": "9214b907c45ca7a8c20e13a6f35143e88daeb7f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
