@@ -39,6 +39,30 @@
       },
       "revId": "9214b907c45ca7a8c20e13a6f35143e88daeb7f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04ccf3e7_db270d16",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-04-14T15:06:54Z",
+      "side": 1,
+      "message": "As I read this file, I can see how this could be confusing, some modules have explicit private/specific visibilities, some have explicit public visibility, some have implicit public visibility.",
+      "parentUuid": "bf1516e5_15bf9491",
+      "range": {
+        "startLine": 532,
+        "startChar": 20,
+        "endLine": 532,
+        "endChar": 37
+      },
+      "revId": "9214b907c45ca7a8c20e13a6f35143e88daeb7f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
