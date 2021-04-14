@@ -66,6 +66,7 @@ class NetworkAgentConfigTest {
             if (isAtLeastS()) {
                 setNat64DetectionEnabled(false)
                 setProvisioningNotificationEnabled(false)
+                setBypassableVpn(true)
             }
         }.build()
 
@@ -78,6 +79,7 @@ class NetworkAgentConfigTest {
         if (isAtLeastS()) {
             assertFalse(config.isNat64DetectionEnabled())
             assertFalse(config.isProvisioningNotificationEnabled())
+            assertTrue(config.isBypassableVpn())
         } else {
             assertTrue(config.isNat64DetectionEnabled())
             assertTrue(config.isProvisioningNotificationEnabled())
