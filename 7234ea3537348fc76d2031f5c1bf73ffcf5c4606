@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6983f63a_47ce0cf5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2021-04-14T23:43:55Z",
+      "side": 1,
+      "message": "Setting Bypass-Presubmit since obviously changing OWNERS can\u0027t cause the compilation failure we see in the single failure, which is in a test that has been failing for some time.",
+      "revId": "7234ea3537348fc76d2031f5c1bf73ffcf5c4606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
