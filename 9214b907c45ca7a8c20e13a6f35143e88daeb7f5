@@ -16,6 +16,29 @@
       "message": "hang on I need to add defaults_visibility too.",
       "revId": "9214b907c45ca7a8c20e13a6f35143e88daeb7f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf1516e5_15bf9491",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-04-14T15:06:05Z",
+      "side": 1,
+      "message": "any reason you didn\u0027t mark the rest of the modules here with explciti :public?",
+      "range": {
+        "startLine": 532,
+        "startChar": 20,
+        "endLine": 532,
+        "endChar": 37
+      },
+      "revId": "9214b907c45ca7a8c20e13a6f35143e88daeb7f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
