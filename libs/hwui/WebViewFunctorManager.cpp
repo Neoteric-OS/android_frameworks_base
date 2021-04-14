@@ -19,6 +19,7 @@
 #include <private/hwui/WebViewFunctor.h>
 #include "Properties.h"
 #include "renderthread/RenderThread.h"
+#include "utils/GLUtils.h"
 
 #include <log/log.h>
 #include <utils/Trace.h>
@@ -83,6 +84,7 @@ void WebViewFunctor::drawGl(const DrawGlInfo& drawInfo) {
     if (!mHasContext) {
         mHasContext = true;
     }
+    GL_CHECKPOINT(LOW);
     mCallbacks.gles.draw(mFunctor, mData, drawInfo);
 }
 
