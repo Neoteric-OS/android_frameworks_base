@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09843696_7aba14c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-04-15T11:31:52Z",
+      "side": 1,
+      "message": "I think it\u0027s better to add the reason that why do you rename it.\nAlso, there is a build error in ClientModeImpl.java in internal branches, you may want to fix it first.",
+      "revId": "4396f900a9c616c86eaaf18cfa508c4133ec8016",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
