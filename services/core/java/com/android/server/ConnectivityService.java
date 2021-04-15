@@ -616,7 +616,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private static IDnsResolver getDnsResolver(Context context) {
-        return IDnsResolver.Stub.asInterface(DnsResolverServiceManager.getService(context));
+        return IDnsResolver.Stub.asInterface((IBinder) context.getSystemService(
+                DnsResolverServiceManager.DNS_RESOLVER_SERVICE));
     }
 
     /** Handler thread used for all of the handlers below. */

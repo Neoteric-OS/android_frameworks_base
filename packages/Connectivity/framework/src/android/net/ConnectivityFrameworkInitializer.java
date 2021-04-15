@@ -29,6 +29,9 @@ import android.content.Context;
 public final class ConnectivityFrameworkInitializer {
     private ConnectivityFrameworkInitializer() {}
 
+    /** Service name for the DNS resolver. Keep in sync with DnsResolverService.h */
+    private static final String DNSRESOLVER_SERVICE = "dnsresolver";
+
     /**
      * Called by {@link SystemServiceRegistry}'s static initializer and registers all core
      * connectivity services to {@link Context}, so that {@link Context#getSystemService} can
@@ -67,6 +70,12 @@ public final class ConnectivityFrameworkInitializer {
                             ConnectivityManager.class);
                     return cm.startOrGetTestNetworkManager();
                 }
+        );
+
+        SystemServiceRegistry.registerContextAwareService(
+                DnsResolverServiceManager.DNS_RESOLVER_SERVICE,
+                DnsResolverServiceManager.class,
+                (context, serviceBinder) -> new DnsResolverServiceManager(serviceBinder)
         );
     }
 }
