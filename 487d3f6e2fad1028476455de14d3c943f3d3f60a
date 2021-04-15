@@ -68,6 +68,23 @@
       "message": "friendly ping @todd, this is a cp of ag/13830729",
       "revId": "487d3f6e2fad1028476455de14d3c943f3d3f60a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a00aa00_5c5b3c80",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2021-04-15T22:39:52Z",
+      "side": 1,
+      "message": "toddke@ can you review this? This happens to block metalava change (aosp/1677187) as this removes Boolean return\n```\nmethod @Nullable public Boolean isNativeHeapZeroInit()\n```",
+      "revId": "487d3f6e2fad1028476455de14d3c943f3d3f60a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
