@@ -19,6 +19,9 @@ package com.android.server;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.net.INetd.IF_STATE_DOWN;
 import static android.net.INetd.IF_STATE_UP;
+import static android.net.IpSecManager.DIRECTION_FWD;
+import static android.net.IpSecManager.DIRECTION_IN;
+import static android.net.IpSecManager.DIRECTION_OUT;
 import static android.system.OsConstants.AF_INET;
 import static android.system.OsConstants.AF_INET6;
 
@@ -54,6 +57,7 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.os.Binder;
 import android.os.ParcelFileDescriptor;
+import android.os.Process;
 import android.system.Os;
 import android.test.mock.MockContext;
 
@@ -198,6 +202,7 @@ public class IpSecServiceParameterizedTest {
 
         // Injecting mock netd
         when(mMockIpSecSrvConfig.getNetdInstance()).thenReturn(mMockNetd);
+        when(mMockIpSecSrvConfig.getBinderCallingUid()).thenReturn(Process.SYSTEM_UID);
 
         // PackageManager should always return true (feature flag tests in IpSecServiceTest)
         when(mMockPkgMgr.hasSystemFeature(anyString())).thenReturn(true);
@@ -664,6 +669,21 @@ public class IpSecServiceParameterizedTest {
 
         assertNotNull(createTunnelResp);
         assertEquals(IpSecManager.Status.OK, createTunnelResp.status);
+        for (int direction : new int[] {DIRECTION_IN, DIRECTION_OUT, DIRECTION_FWD}) {
+            for (int selAddrFamily : ADDRESS_FAMILIES) {
+                verify(mMockNetd).ipSecAddSecurityPolicy(
+                        eq(mUid),
+                        eq(selAddrFamily),
+                        eq(direction),
+                        anyString(),
+                        anyString(),
+                        eq(0),
+                        anyInt(), // iKey/oKey
+                        anyInt(), // mask
+                        eq(createTunnelResp.resourceId));
+            }
+        }
+
         return createTunnelResp;
     }
 
@@ -798,16 +818,50 @@ public class IpSecServiceParameterizedTest {
     }
 
     @Test
-    public void testApplyTunnelModeTransform() throws Exception {
-        verifyApplyTunnelModeTransformCommon(false);
+    public void testApplyTunnelModeTransformOutbound() throws Exception {
+        verifyApplyTunnelModeTransformCommon(false /* closeSpiBeforeApply */, DIRECTION_OUT);
     }
 
     @Test
-    public void testApplyTunnelModeTransformReleasedSpi() throws Exception {
-        verifyApplyTunnelModeTransformCommon(true);
+    public void testApplyTunnelModeTransformOutboundNonSystemUid() throws Exception {
+        when(mMockIpSecSrvConfig.getBinderCallingUid()).thenReturn(Process.myUid());
+        verifyApplyTunnelModeTransformCommon(false /* closeSpiBeforeApply */, DIRECTION_OUT);
     }
 
-    public void verifyApplyTunnelModeTransformCommon(boolean closeSpiBeforeApply) throws Exception {
+    @Test
+    public void testApplyTunnelModeTransformOutboundReleasedSpi() throws Exception {
+        verifyApplyTunnelModeTransformCommon(true /* closeSpiBeforeApply */, DIRECTION_OUT);
+    }
+
+    @Test
+    public void testApplyTunnelModeTransformInbound() throws Exception {
+        verifyApplyTunnelModeTransformCommon(true /* closeSpiBeforeApply */, DIRECTION_IN);
+    }
+
+    @Test
+    public void testApplyTunnelModeTransformInboundNonSystemUid() throws Exception {
+        when(mMockIpSecSrvConfig.getBinderCallingUid()).thenReturn(Process.myUid());
+        verifyApplyTunnelModeTransformCommon(true /* closeSpiBeforeApply */, DIRECTION_IN);
+    }
+
+    @Test
+    public void testApplyTunnelModeTransformForward() throws Exception {
+        verifyApplyTunnelModeTransformCommon(true /* closeSpiBeforeApply */, DIRECTION_FWD);
+    }
+
+    @Test
+    public void testApplyTunnelModeTransformForwardNonSystemUid() throws Exception {
+        when(mMockIpSecSrvConfig.getBinderCallingUid()).thenReturn(Process.myUid());
+
+        try {
+            verifyApplyTunnelModeTransformCommon(true /* closeSpiBeforeApply */, DIRECTION_FWD);
+            fail("Expected security exception due to use of forward policies as non-system UID");
+        } catch (SecurityException expected) {
+        }
+    }
+
+    public void verifyApplyTunnelModeTransformCommon(boolean closeSpiBeforeApply, int direction)
+            throws Exception {
         IpSecConfig ipSecConfig = new IpSecConfig();
         ipSecConfig.setMode(IpSecTransform.MODE_TUNNEL);
         addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);
@@ -825,17 +879,17 @@ public class IpSecServiceParameterizedTest {
         int transformResourceId = createTransformResp.resourceId;
         int tunnelResourceId = createTunnelResp.resourceId;
         mIpSecService.applyTunnelModeTransform(
-                tunnelResourceId, IpSecManager.DIRECTION_OUT, transformResourceId, BLESSED_PACKAGE);
+                tunnelResourceId, direction, transformResourceId, BLESSED_PACKAGE);
 
         for (int selAddrFamily : ADDRESS_FAMILIES) {
             verify(mMockNetd)
                     .ipSecUpdateSecurityPolicy(
                             eq(mUid),
                             eq(selAddrFamily),
-                            eq(IpSecManager.DIRECTION_OUT),
+                            eq(direction),
                             anyString(),
                             anyString(),
-                            eq(TEST_SPI),
+                            eq(direction == DIRECTION_OUT ? TEST_SPI : 0),
                             anyInt(), // iKey/oKey
                             anyInt(), // mask
                             eq(tunnelResourceId));
