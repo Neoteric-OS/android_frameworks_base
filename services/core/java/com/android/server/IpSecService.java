@@ -49,6 +49,7 @@ import android.net.util.NetdService;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
+import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
 import android.system.ErrnoException;
@@ -130,6 +131,8 @@ public class IpSecService extends IIpSecService.Stub {
     interface IpSecServiceConfiguration {
         INetd getNetdInstance() throws RemoteException;
 
+        int getBinderCallingUid();
+
         static IpSecServiceConfiguration GETSRVINSTANCE =
                 new IpSecServiceConfiguration() {
                     @Override
@@ -139,6 +142,11 @@ public class IpSecService extends IIpSecService.Stub {
                             throw new RemoteException("Failed to Get Netd Instance");
                         }
                         return netd;
+                    }
+
+                    @Override
+                    public int getBinderCallingUid() {
+                        return Binder.getCallingUid();
                     }
                 };
     }
@@ -466,8 +474,7 @@ public class IpSecService extends IIpSecService.Stub {
 
         /** Safety method; guards against access of other user's UserRecords */
         private void checkCallerUid(int uid) {
-            if (uid != Binder.getCallingUid()
-                    && android.os.Process.SYSTEM_UID != Binder.getCallingUid()) {
+            if (uid != Binder.getCallingUid() && Process.SYSTEM_UID != Binder.getCallingUid()) {
                 throw new SecurityException("Attempted access of unowned resources");
             }
         }
@@ -1105,10 +1112,17 @@ public class IpSecService extends IIpSecService.Stub {
      * Checks the user-provided direction field and throws an IllegalArgumentException if it is not
      * DIRECTION_IN or DIRECTION_OUT
      */
-    private static void checkDirection(int direction) {
+    private void checkDirection(int direction) {
         switch (direction) {
             case IpSecManager.DIRECTION_OUT:
             case IpSecManager.DIRECTION_IN:
+                return;
+            case IpSecManager.DIRECTION_FWD:
+                // Only system allowed to use forward policies
+                if (mSrvConfig.getBinderCallingUid() != Process.SYSTEM_UID) {
+                    throw new SecurityException(
+                            "Only System UID allowed to set up forwarding transforms");
+                }
                 return;
         }
         throw new IllegalArgumentException("Invalid Direction: " + direction);
@@ -1347,6 +1361,16 @@ public class IpSecService extends IIpSecService.Stub {
                         callerUid,
                         selAddrFamily,
                         IpSecManager.DIRECTION_IN,
+                        remoteAddr,
+                        localAddr,
+                        0,
+                        ikey,
+                        0xffffffff,
+                        resourceId);
+                netd.ipSecAddSecurityPolicy(
+                        callerUid,
+                        selAddrFamily,
+                        IpSecManager.DIRECTION_FWD,
                         remoteAddr,
                         localAddr,
                         0,
@@ -1820,7 +1844,7 @@ public class IpSecService extends IIpSecService.Stub {
         int mark =
                 (direction == IpSecManager.DIRECTION_OUT)
                         ? tunnelInterfaceInfo.getOkey()
-                        : tunnelInterfaceInfo.getIkey();
+                        : tunnelInterfaceInfo.getIkey(); // Ikey also used for FWD policies
 
         try {
             // Default to using the invalid SPI of 0 for inbound SAs. This allows policies to skip
