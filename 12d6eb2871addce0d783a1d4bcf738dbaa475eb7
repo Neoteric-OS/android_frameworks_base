@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd734313_3c666f15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-15T12:13:38Z",
+      "side": 1,
+      "message": "While this test will count against our API coverage numbers, it test doesn\u0027t actually check any useful behaviour and so doesn\u0027t actually meaningfully contribute to code correctness.\n\nWe already have CTS tests that set up VPNs (e.g., NetworkAgentTest#testSetUnderlyingNetworksAndVpnSpecifier, HostsideVpnTests, ...). Why not extend one of these to create a bypassable VPN, and check that the code is able to bypass it by using Network#bindSocket or Network#openConnection to and checking that it works?",
+      "revId": "12d6eb2871addce0d783a1d4bcf738dbaa475eb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
