@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e2f7dfc9_33528ad5",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1456038
+      },
+      "writtenOn": "2021-04-16T06:52:34Z",
+      "side": 1,
+      "message": "It could be removed.",
+      "parentUuid": "4f902cbb_feed04c2",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "65da5de32e4ad3338892942df4fab213a7163dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b6be5fa3_fd13a0dc",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
         "patchSetId": 5
@@ -37,6 +61,30 @@
       "writtenOn": "2021-04-16T06:47:09Z",
       "side": 1,
       "message": "This flag does not exist. Did you mean `SET_MENU_LANGUAGE` instead?",
+      "range": {
+        "startLine": 108,
+        "startChar": 22,
+        "endLine": 108,
+        "endChar": 28
+      },
+      "revId": "65da5de32e4ad3338892942df4fab213a7163dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b925f55_13ad1929",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1456038
+      },
+      "writtenOn": "2021-04-16T06:52:34Z",
+      "side": 1,
+      "message": "Yes, it\u0027s a added switch related with another gerrit which https://android-review.googlesource.com/c/platform/frameworks/base/+/1566053. Well, I can remove it to make it a sperate one.",
+      "parentUuid": "b6be5fa3_fd13a0dc",
       "range": {
         "startLine": 108,
         "startChar": 22,
