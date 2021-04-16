@@ -29,6 +29,7 @@ import android.media.VolumeShaper;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.UserHandle;
 import android.util.Log;
 
 import com.android.internal.util.ArrayUtils;
@@ -154,11 +155,15 @@ public final class PlaybackActivityMonitor
     //  all listeners as oneway calls.
 
     public int trackPlayer(PlayerBase.PlayerIdCard pic) {
+        int callingUid = Binder.getCallingUid();
+        if (callingUid == android.os.Process.AUDIOSERVER_UID
+                && pic.mAppUid != UserHandle.USER_NULL) {
+            callingUid = pic.mAppUid;
+        }
         final int newPiid = AudioSystem.newAudioPlayerId();
         if (DEBUG) { Log.v(TAG, "trackPlayer() new piid=" + newPiid); }
         final AudioPlaybackConfiguration apc =
-                new AudioPlaybackConfiguration(pic, newPiid,
-                        Binder.getCallingUid(), Binder.getCallingPid());
+                new AudioPlaybackConfiguration(pic, newPiid, callingUid, Binder.getCallingPid());
         apc.init();
         synchronized (mAllowedCapturePolicies) {
             int uid = apc.getClientUid();
@@ -444,6 +449,10 @@ public final class PlaybackActivityMonitor
             final AudioPlaybackConfiguration apc, int binderUid) {
         if (apc == null) {
             return false;
+        } else if ((binderUid == android.os.Process.AUDIOSERVER_UID)
+                && (apc.getPlayerType()
+                        == AudioPlaybackConfiguration.PLAYER_TYPE_HW_SOURCE_SW_BRIDGE)) {
+            return true;
         } else if ((binderUid != 0) && (apc.getClientUid() != binderUid)) {
             Log.e(TAG, "Forbidden operation from uid " + binderUid + " for player " + piid);
             return false;
