@@ -27,6 +27,7 @@ import android.os.Parcelable;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.UserHandle;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -126,7 +127,8 @@ public abstract class PlayerBase {
         }
         try {
             mPlayerIId = getService().trackPlayer(
-                    new PlayerIdCard(mImplType, mAttributes, new IPlayerWrapper(this)));
+                    new PlayerIdCard(mImplType, UserHandle.USER_NULL, mAttributes,
+                            new IPlayerWrapper(this)));
         } catch (RemoteException e) {
             Log.e(TAG, "Error talking to audio service, player will not be tracked", e);
         }
@@ -539,10 +541,13 @@ public abstract class PlayerBase {
         public static final int AUDIO_ATTRIBUTES_NONE = 0;
         public static final int AUDIO_ATTRIBUTES_DEFINED = 1;
         public final AudioAttributes mAttributes;
+        public final int mAppUid;
         public final IPlayer mIPlayer;
 
-        PlayerIdCard(int type, @NonNull AudioAttributes attr, @NonNull IPlayer iplayer) {
+        PlayerIdCard(
+                int type, int appUid, @NonNull AudioAttributes attr, @NonNull IPlayer iplayer) {
             mPlayerType = type;
+            mAppUid = appUid;
             mAttributes = attr;
             mIPlayer = iplayer;
         }
@@ -560,6 +565,7 @@ public abstract class PlayerBase {
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeInt(mPlayerType);
+            dest.writeInt(mAppUid);
             mAttributes.writeToParcel(dest, 0);
             dest.writeStrongBinder(mIPlayer == null ? null : mIPlayer.asBinder());
         }
@@ -581,6 +587,8 @@ public abstract class PlayerBase {
 
         private PlayerIdCard(Parcel in) {
             mPlayerType = in.readInt();
+            final int appUid = in.readInt();
+            mAppUid = appUid > 0 ? appUid : UserHandle.USER_NULL;
             mAttributes = AudioAttributes.CREATOR.createFromParcel(in);
             // IPlayer can be null if unmarshalling a Parcel coming from who knows where
             final IBinder b = in.readStrongBinder();
@@ -595,7 +603,8 @@ public abstract class PlayerBase {
             PlayerIdCard that = (PlayerIdCard) o;
 
             // FIXME change to the binder player interface once supported as a member
-            return ((mPlayerType == that.mPlayerType) && mAttributes.equals(that.mAttributes));
+            return ((mPlayerType == that.mPlayerType) && (mAppUid == that.mAppUid)
+                    && mAttributes.equals(that.mAttributes));
         }
     }
 
