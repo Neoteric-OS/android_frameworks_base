@@ -1,6 +1,46 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad8b3518_3c7394b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-16T07:12:10Z",
+      "side": 1,
+      "message": "Fundamentally there isn\u0027t much wrong with testing this, but this is very low value. It does not test at all that the settings work. It only tests that the getters return the values set by the setter.\n\nWe should have tests that make sure the settings actually have an effect. Of course that\u0027s much harder, but we should also do it.\n",
+      "revId": "69201bef86df14fb8eb5121e46e218c535092807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5665476c_942e0917",
+        "filename": "tests/net/java/android/net/ConnectivitySettingsManagerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-16T07:12:10Z",
+      "side": 1,
+      "message": "Please declare a new val instead of overwriting an old var.",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "69201bef86df14fb8eb5121e46e218c535092807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9a8b8806_76cf4852",
