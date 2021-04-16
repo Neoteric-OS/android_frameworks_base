@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2695c0de_bdafe6de",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1456038
+      },
+      "writtenOn": "2021-04-16T06:59:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2f7dfc9_33528ad5",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "65da5de32e4ad3338892942df4fab213a7163dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b6be5fa3_fd13a0dc",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Yes, it\u0027s a added switch related with another gerrit which https://android-review.googlesource.com/c/platform/frameworks/base/+/1566053. Well, I can remove it to make it a sperate one.",
       "parentUuid": "b6be5fa3_fd13a0dc",
+      "range": {
+        "startLine": 108,
+        "startChar": 22,
+        "endLine": 108,
+        "endChar": 28
+      },
+      "revId": "65da5de32e4ad3338892942df4fab213a7163dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "740685d5_e4c0dd17",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1456038
+      },
+      "writtenOn": "2021-04-16T06:59:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b925f55_13ad1929",
       "range": {
         "startLine": 108,
         "startChar": 22,
