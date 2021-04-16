@@ -1301,13 +1301,16 @@ public class AudioService extends IAudioService.Stub
             final int res = AudioSystem.initStreamVolume(
                     streamType, streamState.mIndexMin / 10, streamState.mIndexMax / 10);
             if (res != AudioSystem.AUDIO_STATUS_OK) {
-                status = res;
+//                status = res;
                 Log.e(TAG, "Failed to initStreamVolume (" + res + ") for stream " + streamType);
                 // stream volume initialization failed, no need to try the others, it will be
                 // attempted again when MSG_REINIT_VOLUMES is handled
-                break;
+//                break;
+                streamState.setSupported(false);
+            } else {
+                streamState.setSupported(true);
+                streamState.applyAllVolumes();
             }
-            streamState.applyAllVolumes();
         }
 
         // did it work? check based on status
@@ -5957,6 +5960,15 @@ public class AudioService extends IAudioService.Stub
         // min index when user doesn't have permission to change audio settings
         private int mIndexMinNoPerm;
         private int mIndexMax;
+        private boolean mSupported = false;
+
+        void setSupported(boolean isValid) {
+            mSupported = isValid;
+        }
+
+        boolean isSupported() {
+            return mSupported;
+        }
 
         private boolean mIsMuted;
         private boolean mIsMutedInternally;
@@ -6006,10 +6018,12 @@ public class AudioService extends IAudioService.Stub
                 sLifecycleLogger.log(new AudioEventLogger.StringEvent(
                          "VSS() stream:" + streamType + " initStreamVolume=" + status)
                         .printLog(ALOGE, TAG));
-                sendMsg(mAudioHandler, MSG_REINIT_VOLUMES, SENDMSG_NOOP, 0, 0,
-                        "VSS()" /*obj*/, 2 * INDICATE_SYSTEM_READY_RETRY_DELAY_MS);
+                mSupported = false;
+//                sendMsg(mAudioHandler, MSG_REINIT_VOLUMES, SENDMSG_NOOP, 0, 0,
+//                        "VSS()" /*obj*/, 2 * INDICATE_SYSTEM_READY_RETRY_DELAY_MS);
+            } else {
+                setSupported(true);
             }
-
             readSettings();
             mVolumeChanged = new Intent(AudioManager.VOLUME_CHANGED_ACTION);
             mVolumeChanged.putExtra(AudioManager.EXTRA_VOLUME_STREAM_TYPE, mStreamType);
@@ -6444,6 +6458,8 @@ public class AudioService extends IAudioService.Stub
         }
 
         private void dump(PrintWriter pw) {
+            pw.print("   Associated with Volume Group (aka valid stream type: ");
+            pw.println(mSupported);
             pw.print("   Muted: ");
             pw.println(mIsMuted);
             pw.print("   Muted Internally: ");
