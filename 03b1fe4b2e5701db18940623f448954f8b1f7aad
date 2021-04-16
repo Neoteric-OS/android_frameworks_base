@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2eca16c_335cc6be",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 9692,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-16T01:34:04Z",
+      "side": 1,
+      "message": "Instead of calling a synchronized method in a loop, let\u0027s create a new `transact` method on the request counter that will decrement by that number, ensure the UID is SYSTEM_UID, and eschew the \u003c 1 test (and a symmetric method)\n\n  // Be super careful in what you do in this runnable\n  transact(int num, Runnable) {\n    lock {\n      count -\u003d num;\n      run();\n      count +\u003d num; if !∈ [0, MAX] throw\n    }\n  }",
+      "range": {
+        "startLine": 9692,
+        "startChar": 8,
+        "endLine": 9692,
+        "endChar": 11
+      },
+      "revId": "03b1fe4b2e5701db18940623f448954f8b1f7aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
