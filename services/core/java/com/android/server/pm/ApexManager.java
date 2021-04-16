@@ -25,6 +25,7 @@ import android.apex.ApexInfo;
 import android.apex.ApexInfoList;
 import android.apex.ApexSessionInfo;
 import android.apex.ApexSessionParams;
+import android.apex.CompressedApexInfoList;
 import android.apex.IApexService;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -355,6 +356,29 @@ public abstract class ApexManager {
      * Inform apexd that the boot has completed.
      */
     public abstract void markBootCompleted();
+
+    /**
+     * Does current device support updating apexes during OTA.
+     * If this method returns true, caller is expected to invoke reserveSpaceForCompressedApex()
+     * before installing an OTA.
+     * @return true if and only if current device support updating apexes during OTA
+     */
+    public abstract boolean isUpdatableApexSupported();
+
+    /**
+     * Estimate how much storage space is needed on /data/ for decompressing apexes
+     * @param infoList List of apexes that are compressed in target build.
+     * @return Size, in bytes, the amount of space needed on /data/
+     */
+    public abstract long calculateSizeForCompressedApex(CompressedApexInfoList infoList)
+            throws RemoteException, UnsupportedOperationException;
+
+    /**
+     * Reserve space on /data so that apexes can be decompressed after OTA
+     * @param infoList List of apexes that are compressed in target build.
+     */
+    public abstract void reserveSpaceForCompressedApex(CompressedApexInfoList infoList)
+            throws RemoteException, UnsupportedOperationException;
 
     /**
      * Dumps various state information to the provided {@link PrintWriter} object.
@@ -898,6 +922,23 @@ public abstract class ApexManager {
             }
         }
 
+        @Override
+        public boolean isUpdatableApexSupported() {
+            return true;
+        }
+
+        @Override
+        public long calculateSizeForCompressedApex(CompressedApexInfoList infoList)
+                throws RemoteException, UnsupportedOperationException {
+            return waitForApexService().calculateSizeForCompressedApex(infoList);
+        }
+
+        @Override
+        public void reserveSpaceForCompressedApex(CompressedApexInfoList infoList)
+                throws RemoteException, UnsupportedOperationException {
+            waitForApexService().reserveSpaceForCompressedApex(infoList);
+        }
+
         /**
          * Dump information about the packages contained in a particular cache
          * @param packagesCache the cache to print information about.
@@ -1147,6 +1188,21 @@ public abstract class ApexManager {
         @Override
         public void markBootCompleted() {
             // No-op
+        }
+
+        @Override
+        public boolean isUpdatableApexSupported() {
+            return false;
+        }
+
+        @Override
+        public long calculateSizeForCompressedApex(CompressedApexInfoList infoList) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void reserveSpaceForCompressedApex(CompressedApexInfoList infoList) {
+            throw new UnsupportedOperationException();
         }
 
         @Override
