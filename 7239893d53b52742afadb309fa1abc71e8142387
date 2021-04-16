@@ -50,6 +50,23 @@
       "message": "The change was already got +2, you can merge it. ",
       "revId": "7239893d53b52742afadb309fa1abc71e8142387",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "218ae448_2e3237f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1593864
+      },
+      "writtenOn": "2021-04-16T09:51:46Z",
+      "side": 1,
+      "message": "Verified -1 cause not be merged",
+      "revId": "7239893d53b52742afadb309fa1abc71e8142387",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
