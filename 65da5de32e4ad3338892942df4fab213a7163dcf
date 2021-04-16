@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f902cbb_feed04c2",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2021-04-16T06:47:09Z",
+      "side": 1,
+      "message": "This seems unrelated to the \u003cSet Menu Language\u003e related logic.",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "65da5de32e4ad3338892942df4fab213a7163dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6be5fa3_fd13a0dc",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevicePlayback.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2021-04-16T06:47:09Z",
+      "side": 1,
+      "message": "This flag does not exist. Did you mean `SET_MENU_LANGUAGE` instead?",
+      "range": {
+        "startLine": 108,
+        "startChar": 22,
+        "endLine": 108,
+        "endChar": 28
+      },
+      "revId": "65da5de32e4ad3338892942df4fab213a7163dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
