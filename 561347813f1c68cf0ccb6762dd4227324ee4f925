@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46091bda_c6c78d75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2021-04-16T13:42:24Z",
+      "side": 1,
+      "message": "Can you also provide a (at least manual) test case? A test in HdmiCecLocalDevicePlaybacTest would be appreciated to verify the new case.",
+      "revId": "561347813f1c68cf0ccb6762dd4227324ee4f925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
