@@ -322,7 +322,7 @@ public class SipDelegateManager {
             @NonNull DelegateConnectionStateCallback dc,
             @NonNull DelegateConnectionMessageCallback mc) throws ImsException {
         if (request == null || executor == null || dc == null || mc == null) {
-            throw new IllegalArgumentException("Invalid arguments passed into createSipDelegate");
+            throw new NullPointerException("Invalid arguments passed into createSipDelegate");
         }
         try {
             SipDelegateConnectionAidlWrapper wrapper =
@@ -356,7 +356,7 @@ public class SipDelegateManager {
             @SipDelegateDestroyReason int reason) {
 
         if (delegateConnection == null) {
-            throw new IllegalArgumentException("invalid argument passed into destroySipDelegate");
+            throw new NullPointerException("invalid argument passed into destroySipDelegate");
         }
         if (delegateConnection instanceof SipDelegateConnectionAidlWrapper) {
             SipDelegateConnectionAidlWrapper w =
@@ -396,7 +396,7 @@ public class SipDelegateManager {
     public void triggerFullNetworkRegistration(@NonNull SipDelegateConnection connection,
             @IntRange(from = 100, to = 699) int sipCode, @Nullable String sipReason) {
         if (connection == null) {
-            throw new IllegalArgumentException("invalid connection.");
+            throw new NullPointerException("invalid connection.");
         }
         if (connection instanceof SipDelegateConnectionAidlWrapper) {
             SipDelegateConnectionAidlWrapper w = (SipDelegateConnectionAidlWrapper) connection;
