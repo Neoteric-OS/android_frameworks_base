@@ -102,6 +102,22 @@ public class JobStoreTest {
     }
 
     @Test
+    public void testStringtoIntArrayAndIntArraytoString() {
+        final int[] netCapabilitiesIntArray = { 1, 3, 5, 7, 9 };
+        final String netCapabilitiesStr = "1,3,5,7,9";
+        final String emptyString = "";
+        final String str1 = JobStore.intArraytoString(netCapabilitiesIntArray);
+        if (!Arrays.equals(JobStore.stringtoIntArray(str1), netCapabilitiesIntArray)) {
+            Log.w(TAG, "First: " + JobStore.stringtoIntArray(str1));
+            Log.w(TAG, "Second: " + netCapabilitiesIntArray);
+            fail("netCapabilitiesIntArray and netCapabilitiesStr conversion exception");
+        }
+        assertEquals(JobStore.stringtoIntArray(emptyString).length, 0);
+        assertTrue("netCapabilities don't match",
+                JobStore.intArraytoString(netCapabilitiesIntArray).equals(netCapabilitiesStr));
+    }
+
+    @Test
     public void testMaybeWriteStatusToDisk() throws Exception {
         int taskId = 5;
         long runByMillis = 20000L; // 20s
