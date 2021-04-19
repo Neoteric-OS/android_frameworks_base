@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68326a0e_986a47b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-04-19T10:56:47Z",
+      "side": 1,
+      "message": "Sorry I keep uploading new PS to this CL because my LSS change is on top of a cherry-pick of this. Not sure how to not uploading more PS..",
+      "revId": "cbe7e963ab96d4fdaf91124f420f73dccc97ee51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
