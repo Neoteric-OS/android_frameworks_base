@@ -63,6 +63,30 @@
       },
       "revId": "c624484935e976327afa33be28cdc22d937966e9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1cde4a6_5fae9917",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2499,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-19T07:56:07Z",
+      "side": 1,
+      "message": "Julia,\n\nCan you confirm it is OK to add a condition based on ringer mode in volumeAdjustmentAllowedByDnd() to also disallow volume adjustments when ringer mode is silent or vibrate?",
+      "parentUuid": "564cebef_9d436490",
+      "range": {
+        "startLine": 2499,
+        "startChar": 0,
+        "endLine": 2499,
+        "endChar": 74
+      },
+      "revId": "c624484935e976327afa33be28cdc22d937966e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
