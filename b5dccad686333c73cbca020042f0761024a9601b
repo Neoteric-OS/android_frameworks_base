@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c643a20_5b99fc35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2021-04-19T06:24:54Z",
+      "side": 1,
+      "message": "mpietal@\n\nIs there anything outstanding?  If not, is it possible for you to submit this as I don\u0027t have the access rights to do that? Thanks!",
+      "revId": "b5dccad686333c73cbca020042f0761024a9601b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
