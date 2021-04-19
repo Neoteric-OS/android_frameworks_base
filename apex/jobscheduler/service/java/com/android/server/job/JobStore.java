@@ -16,6 +16,9 @@
 
 package com.android.server.job;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_TEMPORARILY_NOT_METERED;
+import static android.net.NetworkCapabilities.TRANSPORT_TEST;
+
 import static com.android.server.job.JobSchedulerService.sElapsedRealtimeClock;
 import static com.android.server.job.JobSchedulerService.sSystemClock;
 
@@ -60,6 +63,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -529,6 +533,14 @@ public final class JobStore {
             return copy;
         }
 
+        private String intArraytoString(int[] bits) {
+            String res = "[";
+            for (int b : bits) {
+                res +=  String.valueOf(b) + ",";
+            }
+            return res.substring(0, res.length() - 1) + "]";
+        }
+
         /**
          * Write out a tag with data identifying this job's constraints. If the constraint isn't here
          * it doesn't apply.
@@ -544,11 +556,22 @@ public final class JobStore {
                 // mainline cleanliness.
                 out.attribute(null, "net-capabilities", Long.toString(
                         BitUtils.packBits(network.getCapabilities())));
+                if (network.getCapabilities().length > 0) {
+                    out.attribute(null, "net-capabilities-array", intArraytoString(
+                            network.getCapabilities()));
+                }
                 out.attribute(null, "net-unwanted-capabilities", Long.toString(
                         BitUtils.packBits(network.getUnwantedCapabilities())));
-
+                if (network.getUnwantedCapabilities().length > 0) {
+                    out.attribute(null, "net-unwanted-capabilities-array", intArraytoString(
+                            network.getUnwantedCapabilities()));
+                }
                 out.attribute(null, "net-transport-types", Long.toString(
                         BitUtils.packBits(network.getTransportTypes())));
+                if (network.getTransportTypes().length > 0) {
+                    out.attribute(null, "net-transport-types-array", intArraytoString(
+                            network.getTransportTypes()));
+                }
             }
             if (jobStatus.hasIdleConstraint()) {
                 out.attribute(null, "idle", Boolean.toString(true));
@@ -964,30 +987,115 @@ public final class JobStore {
             return new JobInfo.Builder(jobId, cname);
         }
 
-        private void buildConstraintsFromXml(JobInfo.Builder jobBuilder, XmlPullParser parser) {
-            String val;
+        private int[] toBits(int[] arr) {
+            int[] bits = new int[arr.length];
+            int index = 0;
+            for (int i : arr) {
+                int bitPos = 0;
+                while (i != 0) {
+                    if ((i & 1) == 1) bits[index++] = bitPos;
+                    i = i >>> 1;
+                    bitPos++;
+                }
+            }
+            return bits;
+        }
 
-            final String netCapabilities = parser.getAttributeValue(null, "net-capabilities");
-            final String netUnwantedCapabilities = parser.getAttributeValue(
+        private int[] stringtoIntArray(String str) {
+            int[] bits = Arrays.stream(str.substring(1, str.length() - 1).split(","))
+                    .map(String::trim).mapToInt(Integer::parseInt).toArray();
+            return bits;
+        }
+
+        private void buildConstraintsFromXml(JobInfo.Builder jobBuilder, XmlPullParser parser)
+                throws XmlPullParserException, IOException {
+            String val;
+            final String netCapabilitiesIntArray = parser.getAttributeValue(
+                    null, "net-capabilities-array");
+            final String netCapabilitiesLong = parser.getAttributeValue(
+                    null, "net-capabilities");
+            final String netUnwantedCapabilitiesIntArray = parser.getAttributeValue(
+                    null, "net-unwanted-capabilities-array");
+            final String netUnwantedCapabilitiesLong = parser.getAttributeValue(
                     null, "net-unwanted-capabilities");
-            final String netTransportTypes = parser.getAttributeValue(null, "net-transport-types");
-            if (netCapabilities != null && netTransportTypes != null) {
+            final String netTransportTypesIntArray = parser.getAttributeValue(
+                    null, "net-transport-types-array");
+            final String netTransportTypesLong = parser.getAttributeValue(
+                    null, "net-transport-types");
+
+            if (DEBUG) {
+                Slog.d(TAG, " netCapabilitiesIntArray:" + netCapabilitiesIntArray
+                        + " netCapabilitiesLong:" + netCapabilitiesLong
+                        + " netUnwantedCapabilitiesIntArray:" + netUnwantedCapabilitiesIntArray
+                        + " netUnwantedCapabilitiesLong:" + netUnwantedCapabilitiesLong
+                        + " netTransportTypesIntArray:" + netTransportTypesIntArray
+                        + " netTransportTypesLong:" + netTransportTypesLong);
+            }
+            if ((netCapabilitiesLong != null || netCapabilitiesIntArray != null)
+                    && (netTransportTypesLong != null || netTransportTypesIntArray != null)) {
                 final NetworkRequest.Builder builder = new NetworkRequest.Builder()
                         .clearCapabilities();
-                final long unwantedCapabilities = netUnwantedCapabilities != null
-                        ? Long.parseLong(netUnwantedCapabilities)
-                        : BitUtils.packBits(builder.build().getUnwantedCapabilities());
+
+                final int maxNetCabilityInR = NET_CAPABILITY_TEMPORARILY_NOT_METERED;
+                final int maxTransportInR = TRANSPORT_TEST;
                 // We're okay throwing NFE here; caught by caller
-                for (int capability : BitUtils.unpackBits(Long.parseLong(netCapabilities))) {
-                    builder.addCapability(capability);
+                if (netCapabilitiesIntArray != null) {
+                    for (int capability : stringtoIntArray(netCapabilitiesIntArray)) {
+                        builder.addCapability(capability);
+                    }
+                } else if (netCapabilitiesLong != null) {
+                    for (int capability : BitUtils.unpackBits(Long.parseLong(
+                            netCapabilitiesLong))) {
+                        // The old tag netCapabilities is present, then limit the
+                        // contents to the capabilities/transports that existed in R.
+                        if (capability <= maxNetCabilityInR) {
+                            builder.addCapability(capability);
+                        }
+                    }
+                } else {
+                    if (DEBUG) {
+                        Slog.d(TAG, "No netCapabilities XML tag avaible");
+                    }
                 }
-                for (int unwantedCapability : BitUtils.unpackBits(
-                        Long.parseLong(netUnwantedCapabilities))) {
-                    builder.addUnwantedCapability(unwantedCapability);
+
+                if (netUnwantedCapabilitiesIntArray != null) {
+                    for (int capability : stringtoIntArray(netUnwantedCapabilitiesIntArray)) {
+                        builder.addUnwantedCapability(capability);
+                    }
+                } else if (netUnwantedCapabilitiesLong != null) {
+                    for (int unwantedCapability : BitUtils.unpackBits(Long.parseLong(
+                            netUnwantedCapabilitiesLong))) {
+                        // The old tag netUnwantedCapabilities is present, then limit the
+                        // contents to the capabilities/transports that existed in R.
+                        if (unwantedCapability <= maxNetCabilityInR) {
+                            builder.addUnwantedCapability(unwantedCapability);
+                        }
+                    }
+                } else {
+                    if (DEBUG) {
+                        Slog.d(TAG, "No netUnwantedCapabilities XML tag avaible");
+                    }
                 }
-                for (int transport : BitUtils.unpackBits(Long.parseLong(netTransportTypes))) {
-                    builder.addTransportType(transport);
+
+                if (netTransportTypesIntArray != null) {
+                    for (int capability : stringtoIntArray(netTransportTypesIntArray)) {
+                        builder.addTransportType(capability);
+                    }
+                } else if (netTransportTypesLong != null) {
+                    for (int transport : BitUtils.unpackBits(Long.parseLong(
+                            netTransportTypesLong))) {
+                        // The old tag netTransportTypes is present, then limit the
+                        // contents to the capabilities/transports that existed in R.
+                        if (transport <= maxTransportInR) {
+                            builder.addTransportType(transport);
+                        }
+                    }
+                } else {
+                    if (DEBUG) {
+                        Slog.d(TAG, "No netUnwantedCapabilities XML tag avaible");
+                    }
                 }
+
                 jobBuilder.setRequiredNetwork(builder.build());
             } else {
                 // Read legacy values
