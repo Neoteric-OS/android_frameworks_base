@@ -83,7 +83,8 @@
     <shortcode country="cn" premium="1066.*" free="1065.*" />
 
     <!-- Colombia: 1-6 digits (not confirmed) -->
-    <shortcode country="co" pattern="\\d{1,6}" free="890350|908160|892255|898002|898880|899960|899948|87739" />
+    <shortcode country="co" pattern="\\d{1,6}"
+      free="890350|908160|892255|898002|898880|899960|899948|87739" />
 
     <!-- Cyprus: 4-6 digits (not confirmed), known premium codes listed, plus EU -->
     <shortcode country="cy" pattern="\\d{4,6}" premium="7510" free="116\\d{3}" />
@@ -224,7 +225,8 @@
     <shortcode country="re" pattern="\\d{1,5}" free="38600,36300,36303,959" />
 
     <!-- Romania: 4 digits, plus EU: http://www.simplus.ro/en/resources/glossary-of-terms/ -->
-    <shortcode country="ro" pattern="\\d{4}" premium="12(?:63|66|88)|13(?:14|80)" free="116\\d{3}|3654|8360|3838" />
+    <shortcode country="ro" pattern="\\d{4}" premium="12(?:63|66|88)|13(?:14|80)"
+      free="116\\d{3}|3654|8360|3838" />
 
     <!-- Russia: 4 digits, known premium codes listed: http://smscoin.net/info/pricing-russia/ -->
     <shortcode country="ru" pattern="\\d{4}" premium="1(?:1[56]1|899)|2(?:09[57]|322|47[46]|880|990)|3[589]33|4161|44(?:4[3-9]|81)|77(?:33|81)|8424" free="6954|8501" standard="2037|2044"/>
