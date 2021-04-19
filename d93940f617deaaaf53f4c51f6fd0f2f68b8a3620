@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c18f3b0b_2e8579ed",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3215,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-04-19T14:17:08Z",
+      "side": 1,
+      "message": "Hm, perhaps you still want to check both methods?  That is, allow either canManageSubscriptions() or hasCarrierPrivileges()?",
+      "range": {
+        "startLine": 3215,
+        "startChar": 0,
+        "endLine": 3215,
+        "endChar": 59
+      },
+      "revId": "d93940f617deaaaf53f4c51f6fd0f2f68b8a3620",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
