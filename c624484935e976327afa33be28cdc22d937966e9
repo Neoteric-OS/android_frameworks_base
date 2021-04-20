@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15b41797_87fd45cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1422811
+      },
+      "writtenOn": "2021-04-20T01:37:28Z",
+      "side": 1,
+      "message": " private boolean volumeAdjustmentAllowedByDnd(int streamTypeAlias, int flags) {\n        switch (mNm.getZenMode()) {\n            case Settings.Global.ZEN_MODE_OFF:\n                return true;\n            case Settings.Global.ZEN_MODE_NO_INTERRUPTIONS:\n            case Settings.Global.ZEN_MODE_ALARMS:\n            case Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS:\n                return !isStreamMutedByRingerOrZenMode(streamTypeAlias)\n                        || musicVolumeAdjustmentAllowed(mNm.getZenMode(), streamTypeAlias)\n                        || streamTypeAlias \u003d\u003d getUiSoundsStreamType()\n                        || (flags \u0026 AudioManager.FLAG_ALLOW_RINGER_MODES) !\u003d 0;\n        }\n\n        return true;\n    }",
+      "revId": "c624484935e976327afa33be28cdc22d937966e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7357c59f_f63a20c6",
@@ -103,6 +120,30 @@
       "side": 1,
       "message": "I don\u0027t think this is needed, because of line 2456:\n\n// If the ringer mode or zen is muting the stream, do not change stream unless\n        // it\u0027ll cause us to exit dnd\n        if (!volumeAdjustmentAllowedByDnd(streamTypeAlias, flags)) {\n            adjustVolume \u003d false;\n        }",
       "parentUuid": "f1cde4a6_5fae9917",
+      "range": {
+        "startLine": 2499,
+        "startChar": 0,
+        "endLine": 2499,
+        "endChar": 74
+      },
+      "revId": "c624484935e976327afa33be28cdc22d937966e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0392eeda_f62c8abe",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2499,
+      "author": {
+        "id": 1422811
+      },
+      "writtenOn": "2021-04-20T01:37:28Z",
+      "side": 1,
+      "message": "Hi Julia\n   The current device is in ringer mode(vibrate or silent ),but zen mode is in zen_off mode ,volumeAdjustmentAllowedByDnd does not work ,it will return true.At this time we should keep stream mute state .\n\nprivate boolean volumeAdjustmentAllowedByDnd(int streamTypeAlias, int flags) {\n        switch (mNm.getZenMode()) {\n            case Settings.Global.ZEN_MODE_OFF:\n                return true;\n            case Settings.Global.ZEN_MODE_NO_INTERRUPTIONS:\n            case Settings.Global.ZEN_MODE_ALARMS:\n            case Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS:\n                return !isStreamMutedByRingerOrZenMode(streamTypeAlias)\n                        || musicVolumeAdjustmentAllowed(mNm.getZenMode(), streamTypeAlias)\n                        || streamTypeAlias \u003d\u003d getUiSoundsStreamType()\n                        || (flags \u0026 AudioManager.FLAG_ALLOW_RINGER_MODES) !\u003d 0;\n        }\n\n        return true;\n    }",
+      "parentUuid": "ba8d9be7_fd02591c",
       "range": {
         "startLine": 2499,
         "startChar": 0,
