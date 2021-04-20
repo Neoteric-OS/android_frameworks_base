@@ -29,6 +29,15 @@
             "file_patterns": ["NotificationManagerService\\.java"]
         },
         {
+            "name": "FrameworksTelephonyTests",
+            "file_patterns": ["TelephonyRegistry\\.java"],
+            "options": [
+                {
+                    "exclude-annotation": "androidx.test.filters.FlakyTest"
+                }
+            ]
+        },
+        {
             "name": "CtsWindowManagerDeviceTestCases",
             "options": [
                 {
