@@ -92,6 +92,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -133,6 +134,8 @@ public class AppStandbyControllerTests {
     private static final long FREQUENT_THRESHOLD = 24 * HOUR_MS;
     private static final long RARE_THRESHOLD = 48 * HOUR_MS;
     private static final long RESTRICTED_THRESHOLD = 96 * HOUR_MS;
+
+    private static final Random sRandom = new Random();
 
     /** Mock variable used in {@link MyInjector#isPackageInstalled(String, int, int)} */
     private static boolean isPackageInstalled = true;
@@ -238,7 +241,7 @@ public class AppStandbyControllerTests {
 
         @Override
         File getDataSystemDirectory() {
-            return new File(getContext().getFilesDir(), Long.toString(Math.randomLongInternal()));
+            return new File(getContext().getFilesDir(), Long.toString(sRandom.nextLong()));
         }
 
         @Override
