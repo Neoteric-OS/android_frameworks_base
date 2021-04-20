@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15047b42_4e13db71",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-04-20T03:04:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1595fa24_5f81cdf1",
+      "range": {
+        "startLine": 1128,
+        "startChar": 12,
+        "endLine": 1128,
+        "endChar": 62
+      },
+      "revId": "77447f7beac683f629fbc5a371756243e3088f79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f253f08d_3463c421",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d45c960_6463a784",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-04-20T03:04:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f253f08d_3463c421",
+      "range": {
+        "startLine": 377,
+        "startChar": 42,
+        "endLine": 377,
+        "endChar": 48
+      },
+      "revId": "77447f7beac683f629fbc5a371756243e3088f79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08746189_88e4b00f",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-04-20T01:40:55Z",
       "side": 1,
       "message": "Don\u0027t catch just to fail. Just let the exception bubble up.",
+      "range": {
+        "startLine": 12439,
+        "startChar": 11,
+        "endLine": 12441,
+        "endChar": 13
+      },
+      "revId": "77447f7beac683f629fbc5a371756243e3088f79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0216b0a6_c263eff8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 12441,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-04-20T03:04:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08746189_88e4b00f",
       "range": {
         "startLine": 12439,
         "startChar": 11,
