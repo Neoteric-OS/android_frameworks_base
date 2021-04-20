@@ -1866,7 +1866,7 @@ android_media_AudioSystem_startAudioSource(JNIEnv *env, jobject clazz,
     if (jStatus != (jint)AUDIO_JAVA_SUCCESS) {
         return jStatus;
     }
-    audio_port_handle_t handle;
+    audio_port_handle_t handle = AUDIO_PORT_HANDLE_NONE;
     status_t status = AudioSystem::startAudioSource(&nAudioPortConfig, paa.get(), &handle);
     ALOGV("AudioSystem::startAudioSource() returned %d handle %d", status, handle);
     return handle > 0 ? handle : nativeToJavaStatus(status);
