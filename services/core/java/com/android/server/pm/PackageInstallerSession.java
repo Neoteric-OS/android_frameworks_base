@@ -1802,9 +1802,15 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             localObserver = null;
         } else {
             if (!params.isMultiPackage) {
-                Objects.requireNonNull(mPackageName);
-                Objects.requireNonNull(mSigningDetails);
-                Objects.requireNonNull(mResolvedBaseFile);
+                if (mPackageName == null) {
+                    throw new PackageManagerException(INSTALL_FAILED_INTERNAL_ERROR, "mPackageName is null");
+                }
+                if (mSigningDetails == null) {
+                    throw new PackageManagerException(INSTALL_FAILED_INTERNAL_ERROR, "mSigningDetails is null");
+                }
+                if (mResolvedBaseFile == null) {
+                    throw new PackageManagerException(INSTALL_FAILED_INTERNAL_ERROR, "mResolvedBaseFile is null");
+                }
 
                 if (needToAskForPermissionsLocked()) {
                     // User needs to confirm installation;
