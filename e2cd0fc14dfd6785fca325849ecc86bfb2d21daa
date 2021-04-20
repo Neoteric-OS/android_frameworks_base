@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b05fba4a_9c3227a3",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreCipherSpiBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2021-04-20T20:54:37Z",
+      "side": 1,
+      "message": "nit: It may be better to check that inputLen \u003d\u003d 0 here instead. That way, we still barf if somebody tries to pass a length with a null pointer (bad input args).",
+      "range": {
+        "startLine": 582,
+        "startChar": 16,
+        "endLine": 582,
+        "endChar": 29
+      },
+      "revId": "e2cd0fc14dfd6785fca325849ecc86bfb2d21daa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
