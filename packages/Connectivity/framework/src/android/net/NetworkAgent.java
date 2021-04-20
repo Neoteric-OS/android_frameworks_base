@@ -881,7 +881,7 @@ public abstract class NetworkAgent {
      *
      * @param teardownDelayMs the teardown delay to set, or 0 to disable teardown delay.
      */
-    public void setTeardownDelayMs(
+    public void setTeardownDelayMillis(
             @IntRange(from = 0, to = MAX_TEARDOWN_DELAY_MS) int teardownDelayMs) {
         queueOrSendMessage(reg -> reg.sendTeardownDelayMs(teardownDelayMs));
     }
