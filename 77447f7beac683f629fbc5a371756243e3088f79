@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1595fa24_5f81cdf1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-20T01:40:55Z",
+      "side": 1,
+      "message": "Per meeting, let\u0027s just add comments.\n\n  // This probably should only be used on the handler thread (there is no\n  // foreseen use case out of it). It can\u0027t check because it doesn\u0027t have a ref\n  // to the outer ConnectivityService.",
+      "range": {
+        "startLine": 1128,
+        "startChar": 12,
+        "endLine": 1128,
+        "endChar": 62
+      },
+      "revId": "77447f7beac683f629fbc5a371756243e3088f79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f253f08d_3463c421",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-20T01:40:55Z",
+      "side": 1,
+      "message": "Forgot to revert ?",
+      "range": {
+        "startLine": 377,
+        "startChar": 42,
+        "endLine": 377,
+        "endChar": 48
+      },
+      "revId": "77447f7beac683f629fbc5a371756243e3088f79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08746189_88e4b00f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 12441,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-20T01:40:55Z",
+      "side": 1,
+      "message": "Don\u0027t catch just to fail. Just let the exception bubble up.",
+      "range": {
+        "startLine": 12439,
+        "startChar": 11,
+        "endLine": 12441,
+        "endChar": 13
+      },
+      "revId": "77447f7beac683f629fbc5a371756243e3088f79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
