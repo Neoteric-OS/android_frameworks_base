@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c02c198_4e2693da",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-20T12:16:25Z",
+      "side": 1,
+      "message": "I would fix this: the status should prevail over the handle value for error reporting.\nWe can also assert that handle is not null when status is OK",
+      "range": {
+        "startLine": 1872,
+        "startChar": 0,
+        "endLine": 1872,
+        "endChar": 60
+      },
+      "revId": "d2f480f8616a8498c51b8fa73d6d7569dd07fd2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
