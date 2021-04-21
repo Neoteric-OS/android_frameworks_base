@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5189141_45c9e162",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1842516
+      },
+      "writtenOn": "2021-04-21T00:54:50Z",
+      "side": 1,
+      "message": "Updated symbols.xml per Erik\u0027s comments.",
+      "revId": "f622e6650c9e2da6a6e0231a8ac46583ffe285e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
