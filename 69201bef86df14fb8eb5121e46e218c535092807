@@ -35,6 +35,42 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a6d2280_dd9ada46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-04-21T03:09:03Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b4cf5e37_df7f73e3",
+      "revId": "69201bef86df14fb8eb5121e46e218c535092807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28e8946e_c5152826",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-04-21T03:09:03Z",
+      "side": 1,
+      "message": "As we talked, move ConnectivitySettingsManagerTest to common test which can include on both unit and cts test.",
+      "parentUuid": "ad8b3518_3c7394b6",
+      "revId": "69201bef86df14fb8eb5121e46e218c535092807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5665476c_942e0917",
@@ -48,6 +84,30 @@
       "writtenOn": "2021-04-16T07:12:10Z",
       "side": 1,
       "message": "Please declare a new val instead of overwriting an old var.",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "69201bef86df14fb8eb5121e46e218c535092807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a21cb79_535a099e",
+        "filename": "tests/net/java/android/net/ConnectivitySettingsManagerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-04-21T03:09:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5665476c_942e0917",
       "range": {
         "startLine": 120,
         "startChar": 8,
@@ -81,6 +141,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dda5f6d0_f572e5ed",
+        "filename": "tests/net/java/android/net/ConnectivitySettingsManagerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-04-21T03:09:03Z",
+      "side": 1,
+      "message": "Update the exception message.",
+      "parentUuid": "9a8b8806_76cf4852",
+      "range": {
+        "startLine": 220,
+        "startChar": 80,
+        "endLine": 220,
+        "endChar": 83
+      },
+      "revId": "69201bef86df14fb8eb5121e46e218c535092807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3f41f14_efaa725c",
@@ -104,6 +188,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e539f2c_8f2c9685",
+        "filename": "tests/net/java/android/net/ConnectivitySettingsManagerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-04-21T03:09:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b3f41f14_efaa725c",
+      "range": {
+        "startLine": 250,
+        "startChar": 7,
+        "endLine": 251,
+        "endChar": 51
+      },
+      "revId": "69201bef86df14fb8eb5121e46e218c535092807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27a2e147_2defb5ee",
@@ -117,6 +225,30 @@
       "writtenOn": "2021-04-08T07:10:04Z",
       "side": 1,
       "message": "Do you like to also verfiy either host or pacFileUrl is empty will result in null ProxyInfo?\n\nif you\u0027re verify this via putting the setting directly, maybe do something like below?\n\n Settings.Global.putString(resolver, GLOBAL_HTTP_PROXY_PORT, 1234)\n Settings.Global.putString(resolver, GLOBAL_HTTP_PROXY_EXCLUSION_LIST, ArrayList\u003cString\u003e())\n Settings.Global.putString(resolver, GLOBAL_HTTP_PROXY_PAC, pacFileUrl)\n Settings.Global.putString(resolver, GLOBAL_HTTP_PROXY_HOST, \"\")\n assertEquals(null, getGlobalProxy(context))\n Settings.Global.putString(resolver, GLOBAL_HTTP_PROXY_PAC, null)\n Settings.Global.putString(resolver, GLOBAL_HTTP_PROXY_HOST, host)\n assertEquals(null, getGlobalProxy(context))\n\nIf we may result in updating the setting several times, maybe add a helper function to update those settings",
+      "range": {
+        "startLine": 253,
+        "startChar": 7,
+        "endLine": 257,
+        "endChar": 56
+      },
+      "revId": "69201bef86df14fb8eb5121e46e218c535092807",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49df44a8_8dc7bb61",
+        "filename": "tests/net/java/android/net/ConnectivitySettingsManagerTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-04-21T03:09:03Z",
+      "side": 1,
+      "message": "Global proxy is null only host and pacFileUrl are both empty. Add the test to verify this case.",
+      "parentUuid": "27a2e147_2defb5ee",
       "range": {
         "startLine": 253,
         "startChar": 7,
