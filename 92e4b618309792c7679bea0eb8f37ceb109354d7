@@ -22,6 +22,30 @@
       },
       "revId": "92e4b618309792c7679bea0eb8f37ceb109354d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ca54314_98888500",
+        "filename": "telephony/java/android/telephony/ims/SipDelegateConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-04-21T22:30:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80629b68_55df87c4",
+      "range": {
+        "startLine": 652,
+        "startChar": 7,
+        "endLine": 652,
+        "endChar": 52
+      },
+      "revId": "92e4b618309792c7679bea0eb8f37ceb109354d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
