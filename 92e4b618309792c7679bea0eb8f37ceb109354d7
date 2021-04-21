@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80629b68_55df87c4",
+        "filename": "telephony/java/android/telephony/ims/SipDelegateConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1633352
+      },
+      "writtenOn": "2021-04-21T18:57:02Z",
+      "side": 1,
+      "message": "required only when ipsec is enabled. Can we moved with IPsec params",
+      "range": {
+        "startLine": 652,
+        "startChar": 7,
+        "endLine": 652,
+        "endChar": 52
+      },
+      "revId": "92e4b618309792c7679bea0eb8f37ceb109354d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
