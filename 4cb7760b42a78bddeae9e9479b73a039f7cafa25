@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010114464",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1678048?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "26aafd0a_74c4cddc",
+          "description": "Change to \"media/java/android/media/HwAudioSource.java\"",
+          "replacements": [
+            {
+              "path": "media/java/android/media/HwAudioSource.java",
+              "range": {
+                "startLine": 152,
+                "startChar": 37,
+                "endLine": 152,
+                "endChar": 48
+              },
+              "replacement": "uninitialized"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "1e0d2874_ded8d5c3",
+        "filename": "media/java/android/media/HwAudioSource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-21T06:36:59Z",
+      "side": 1,
+      "message": "Common typo found: \"unitialized\" -- should it be \"uninitialized\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 152,
+        "startChar": 37,
+        "endLine": 152,
+        "endChar": 48
+      },
+      "revId": "4cb7760b42a78bddeae9e9479b73a039f7cafa25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
