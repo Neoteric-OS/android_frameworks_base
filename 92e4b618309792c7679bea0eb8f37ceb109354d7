@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2efd1d1a_ca15ff4a",
+        "filename": "telephony/java/android/telephony/ims/SipDelegateConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-04-21T23:26:32Z",
+      "side": 1,
+      "message": "Magic values nit:\ngo/android-api-guidelines#annotations-intdef",
+      "range": {
+        "startLine": 349,
+        "startChar": 51,
+        "endLine": 349,
+        "endChar": 63
+      },
+      "revId": "92e4b618309792c7679bea0eb8f37ceb109354d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d6ab3f6_2c2e6086",
+        "filename": "telephony/java/android/telephony/ims/SipDelegateConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-04-21T23:26:32Z",
+      "side": 1,
+      "message": "@IntRange(from\u003dX)?",
+      "range": {
+        "startLine": 353,
+        "startChar": 59,
+        "endLine": 353,
+        "endChar": 61
+      },
+      "revId": "92e4b618309792c7679bea0eb8f37ceb109354d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "80629b68_55df87c4",
         "filename": "telephony/java/android/telephony/ims/SipDelegateConfiguration.java",
         "patchSetId": 1
