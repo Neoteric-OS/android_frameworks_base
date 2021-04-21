@@ -42,6 +42,10 @@ per-file android_os_HwParcel* = file:platform/system/libhwbinder:/OWNERS
 per-file android_os_HwRemoteBinder* = file:platform/system/libhwbinder:/OWNERS
 per-file EphemeralStorage* = file:platform/system/libhwbinder:/OWNERS
 
+# VINTF
+per-file android_os_VintfObject* = file:platform/system/libvintf:/OWNERS
+per-file android_os_VintfRuntimeInfo* = file:platform/system/libvintf:/OWNERS
+
 # Sensor
 per-file android_hardware_SensorManager* = arthuri@google.com, bduddie@google.com, stange@google.com
 
