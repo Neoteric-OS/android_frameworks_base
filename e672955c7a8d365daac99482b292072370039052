@@ -1,0 +1,82 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010108787",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1679761?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "990d7e58_c52d8461",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1806,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-21T03:39:32Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1806,
+        "startChar": 84,
+        "endLine": 1806,
+        "endChar": 85
+      },
+      "revId": "e672955c7a8d365daac99482b292072370039052",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010108787",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1679761?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "3dfcf5ab_7fd2f405",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1810,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-21T03:39:32Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1810,
+        "startChar": 84,
+        "endLine": 1810,
+        "endChar": 85
+      },
+      "revId": "e672955c7a8d365daac99482b292072370039052",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010108787",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1679761?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d7bd5a55_6066bfe1",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-21T03:39:32Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1814,
+        "startChar": 84,
+        "endLine": 1814,
+        "endChar": 85
+      },
+      "revId": "e672955c7a8d365daac99482b292072370039052",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
