@@ -33,6 +33,24 @@
       "message": "@Dmitri, PTAL? You changed this method internally, so the CL is sort of deprecated.\n\nBut does the new code still have the same issue? If it does, let\u0027s fix it internally.\n\nEither way, we can ask @yuxi to wait for an AOSP drop. (@yuxi is from xiaomi, so I believe they can already look at sc-dev though.)\n\n@yuxi, do you see the same bug in S beta 1?",
       "revId": "fd33c794445bc98de20712f88e03d248e1e89f8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "824301b9_e02b74c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1840920
+      },
+      "writtenOn": "2021-04-22T02:24:27Z",
+      "side": 1,
+      "message": "The problem still exists in Android S DP1, the bugreport has been uploaded in the issue.",
+      "parentUuid": "c5d2f147_3cd2ada4",
+      "revId": "fd33c794445bc98de20712f88e03d248e1e89f8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
