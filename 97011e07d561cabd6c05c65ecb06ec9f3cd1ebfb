@@ -145,6 +145,30 @@
       },
       "revId": "97011e07d561cabd6c05c65ecb06ec9f3cd1ebfb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3985aef6_de8d7628",
+        "filename": "services/core/java/com/android/server/wm/ActivityStarter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2021-04-22T17:48:00Z",
+      "side": 1,
+      "message": "Could we try removing the !wasVisible instead of changing ACtivityStarter? IMO, that was probably a mistake for cases like this one.",
+      "parentUuid": "39e031c1_ba8113ef",
+      "range": {
+        "startLine": 1485,
+        "startChar": 36,
+        "endLine": 1485,
+        "endChar": 67
+      },
+      "revId": "97011e07d561cabd6c05c65ecb06ec9f3cd1ebfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
