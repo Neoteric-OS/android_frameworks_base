@@ -209,6 +209,9 @@ abstract class HdmiCecLocalDevice {
     void init() {
         assertRunOnServiceThread();
         mPreferredAddress = getPreferredAddress();
+        // Clear all pending actions.
+        mHandler.removeMessages(MSG_DISABLE_DEVICE_TIMEOUT);
+        handleDisableDeviceTimeout();
         mPendingActionClearedCallback = null;
     }
 
