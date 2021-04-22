@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "32125a89_eadb422d",
+        "filename": "telephony/java/android/telephony/ims/SipDelegateConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-04-22T00:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2efd1d1a_ca15ff4a",
+      "range": {
+        "startLine": 349,
+        "startChar": 51,
+        "endLine": 349,
+        "endChar": 63
+      },
+      "revId": "92e4b618309792c7679bea0eb8f37ceb109354d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d6ab3f6_2c2e6086",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-04-21T23:26:32Z",
       "side": 1,
       "message": "@IntRange(from\u003dX)?",
+      "range": {
+        "startLine": 353,
+        "startChar": 59,
+        "endLine": 353,
+        "endChar": 61
+      },
+      "revId": "92e4b618309792c7679bea0eb8f37ceb109354d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87f4e309_256a069f",
+        "filename": "telephony/java/android/telephony/ims/SipDelegateConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-04-22T00:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d6ab3f6_2c2e6086",
       "range": {
         "startLine": 353,
         "startChar": 59,

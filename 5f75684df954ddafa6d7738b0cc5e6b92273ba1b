@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "296f53b7_cfae4e11",
+        "filename": "telephony/java/android/telephony/ims/SipDelegateConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-04-22T00:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b9bea92_d1b5ff4e",
+      "range": {
+        "startLine": 281,
+        "startChar": 32,
+        "endLine": 281,
+        "endChar": 59
+      },
+      "revId": "5f75684df954ddafa6d7738b0cc5e6b92273ba1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "78cd36ca_86380313",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-04-21T23:26:32Z",
       "side": 1,
       "message": "Can you keep this @NonNull?  Ie they provide a value here, if needed,  otherwise it\u0027s going to keep the null semantic when built?\n\nSame comment applies to the other nullables below.",
+      "range": {
+        "startLine": 293,
+        "startChar": 57,
+        "endLine": 293,
+        "endChar": 65
+      },
+      "revId": "5f75684df954ddafa6d7738b0cc5e6b92273ba1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f82ddf7_d4194f7c",
+        "filename": "telephony/java/android/telephony/ims/SipDelegateConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-04-22T00:53:59Z",
+      "side": 1,
+      "message": "Discussed offline, this is useful for the time when creating a config from another config and Null is possible.",
+      "parentUuid": "78cd36ca_86380313",
       "range": {
         "startLine": 293,
         "startChar": 57,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7040d814_8161a1cd",
+        "filename": "telephony/java/android/telephony/ims/SipDelegateConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-04-22T00:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fe2fad0_fdc32689",
+      "range": {
+        "startLine": 375,
+        "startChar": 59,
+        "endLine": 375,
+        "endChar": 65
+      },
+      "revId": "5f75684df954ddafa6d7738b0cc5e6b92273ba1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "83a6b1ca_b8aeb443",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-04-21T23:26:32Z",
       "side": 1,
       "message": "nit:\n@IntRange(from\u003d0)",
+      "range": {
+        "startLine": 657,
+        "startChar": 11,
+        "endLine": 657,
+        "endChar": 15
+      },
+      "revId": "5f75684df954ddafa6d7738b0cc5e6b92273ba1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f2f877b_4ea3b881",
+        "filename": "telephony/java/android/telephony/ims/SipDelegateConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-04-22T00:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83a6b1ca_b8aeb443",
       "range": {
         "startLine": 657,
         "startChar": 11,
