@@ -51,6 +51,24 @@
       "message": "These should be as specific as possible, so in this case:\n\n  KEYCODE_VIDEO\n\nor if we need multiple\n\n  KEYCODE_VIDEO_APP_1.\n\nWe probably don\u0027t need 16 video apps either, so lets limit to 4 or 8.",
       "revId": "895812e5cfbec845638ad2ea93cc5687720aa3f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b1a31fc_7f92029c",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2021-04-23T04:48:02Z",
+      "side": 1,
+      "message": "Keep names with KEYCODE_APP_X according to your comment. https://partnerissuetracker.corp.google.com/issues/182532772#comment14\n\nand add the logic to prevent above keys are sent to app.",
+      "parentUuid": "657b366c_f4d0c3b9",
+      "revId": "895812e5cfbec845638ad2ea93cc5687720aa3f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
