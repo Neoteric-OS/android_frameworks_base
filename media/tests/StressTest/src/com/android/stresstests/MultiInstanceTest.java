@@ -19,6 +19,7 @@ package com.android.mediastresstest;
 import android.app.Application;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
+import android.media.MediaFormat;
 import android.os.Debug;
 import android.view.Surface;
 
@@ -37,6 +38,7 @@ import org.junit.runners.Parameterized;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -50,6 +52,7 @@ import java.util.concurrent.Future;
 
 import static com.android.mediastresstest.CodecTestBase.selectCodecs;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 @RunWith(Enclosed.class)
 public class MultiInstanceTest {
@@ -208,6 +211,140 @@ public class MultiInstanceTest {
             pool.shutdown();
         }
     }
+
+    @RunWith(Parameterized.class)
+    public static class MultiAdaptivePlaybackTest {
+        private static final String LOG_TAG = MultiAdaptivePlaybackTest.class.getSimpleName();
+        private static final int PER_TEST_TIMEOUT_LARGE_TEST_MS = 1800000;
+        private static final int MAX_WIDTH = 1920;
+        private static final int MAX_HEIGHT = 1080;
+        private static final long mSeed = 0x12b9b0a1;  // random seed
+        private static final Random rand = new Random(mSeed);
+        private final String mMime;
+        private final String[] mSrcFiles;
+        private final int mSupport;
+
+        @Parameterized.Parameters(name = "{index}({0})")
+        public static Collection<Object[]> input() {
+            final boolean isEncoder = false;
+            final boolean needAudio = false;
+            final boolean needVideo = true;
+            return CodecDecoderTestBase
+                    .prepareParamList(AdaptivePlaybackTest.exhaustiveArgsList, isEncoder, needAudio,
+                            needVideo, false);
+        }
+
+        public MultiAdaptivePlaybackTest(String mime, String[] srcFiles, int support) {
+            mMime = mime;
+            mSrcFiles = srcFiles;
+            mSupport = support;
+        }
+
+        @Rule
+        public ActivityTestRule<CodecTestActivity> mActivityRule =
+                new ActivityTestRule<>(CodecTestActivity.class);
+
+        Debug.MemoryInfo mMemInfoStart;
+        Debug.MemoryInfo mMemInfoEnd;
+
+        @Before
+        public void initMemoryUses() {
+            mMemInfoStart = CodecTestBase.getMemoryStats(Application.getProcessName());
+        }
+
+        @After
+        public void checkMemoryUses() {
+            mMemInfoEnd = CodecTestBase.getMemoryStats(Application.getProcessName());
+            CodecTestBase.assertNotLeaking(mMemInfoStart, mMemInfoEnd);
+        }
+
+        @LargeTest
+        @Test(timeout = PER_TEST_TIMEOUT_LARGE_TEST_MS)
+        public void testAdaptivePlayback()
+                throws IOException, InterruptedException, ExecutionException {
+            com.android.mediastresstest.AdaptivePlaybackTest apt = new AdaptivePlaybackTest(mMime);
+            mActivityRule.getActivity().waitTillSurfacesAreCreated();
+            ArrayList<Surface> surfaces = mActivityRule.getActivity().getSurfaces();
+            for (int i = 0; i < surfaces.size(); i++) {
+                Surface surface = surfaces.get(i);
+                assertTrue("Surface created is null for index:" + i, surface != null);
+                assertTrue("Surface created is invalid for index: " + i, surface.isValid());
+            }
+
+            ArrayList<MediaFormat> formats = new ArrayList<>();
+            if (mSupport != apt.CODEC_ALL) {
+                formats = new ArrayList<>();
+                for (String file : mSrcFiles) {
+                    formats.add(apt.setUpSource(file));
+                    apt.mExtractor.release();
+                }
+            }
+            ArrayList<String> listOfDecoders = selectCodecs(mMime, formats,
+                    new String[]{MediaCodecInfo.CodecCapabilities.FEATURE_AdaptivePlayback}, false);
+            if (listOfDecoders.isEmpty()) {
+                for (int i = 0; i < surfaces.size(); i++) {
+                    apt.tearDownSurface(i);
+                }
+                if (mSupport == apt.CODEC_OPTIONAL) return;
+                else fail("no suitable codecs found for mime: " + mMime);
+            }
+            formats.clear();
+            int totalSize = 0;
+            for (String srcFile : mSrcFiles) {
+                File file = new File(apt.mInpPrefix + srcFile);
+                totalSize += (int) file.length();
+            }
+            totalSize <<= 1;
+            long ptsOffset = 0;
+            int buffOffset = 0;
+            ArrayList<MediaCodec.BufferInfo> list = new ArrayList<>();
+            ByteBuffer buffer = ByteBuffer.allocate(totalSize);
+            for (String file : mSrcFiles) {
+                MediaFormat format =
+                        apt.createInputList(apt.setUpSource(file), buffer, list, buffOffset,
+                                ptsOffset);
+                formats.add(format);
+                apt.mExtractor.release();
+                ptsOffset = apt.mMaxPts + 1000000L;
+                buffOffset = (list.get(list.size() - 1).offset) + (list.get(list.size() - 1).size);
+            }
+
+            int cores = Runtime.getRuntime().availableProcessors();
+            int ThreadCount = cores * 2;
+            ExecutorService pool = Executors.newFixedThreadPool(ThreadCount);
+            ArrayList<AdaptivePlaybackParallel> task = new ArrayList<>();
+            for (String decoder : listOfDecoders) {
+                int instances = getMaxSupportedInstances(decoder, mMime);
+                MediaFormat format = formats.get(0);
+                format.setInteger(MediaFormat.KEY_MAX_HEIGHT, MAX_HEIGHT);
+                format.setInteger(MediaFormat.KEY_MAX_WIDTH, MAX_WIDTH);
+                for (int i = 0; i < instances; i++) {
+                    apt = new AdaptivePlaybackTest(mMime);
+                    apt.mActivityRule = mActivityRule;
+                    apt.surfaceIndex = i % 4;
+                    apt.mSurface[apt.surfaceIndex] = surfaces.get(apt.surfaceIndex);
+                    AdaptivePlaybackParallel app =
+                            new AdaptivePlaybackParallel(apt, decoder, true, format,
+                                    buffer.duplicate(), list);
+                    task.add(app);
+                }
+            }
+            Collections.shuffle(task, rand);
+            List<Future<Void>> resultList = pool.invokeAll(task);
+            OutputManager outBuff = null;
+            for (int i = 0; i < resultList.size(); i++) {
+                resultList.get(i).get();
+                if (i == 0) outBuff = task.get(i).mApt.mOutputBuff;
+                else assertTrue(outBuff.equals(task.get(i).mApt.mOutputBuff));
+            }
+            for (int i = 0; i < surfaces.size(); i++) {
+                apt.tearDownSurface(i);
+            }
+            task.clear();
+            pool.shutdown();
+        }
+    }
+
     @RunWith(Parameterized.class)
     public static class EncoderTest {
         private final String mMime;

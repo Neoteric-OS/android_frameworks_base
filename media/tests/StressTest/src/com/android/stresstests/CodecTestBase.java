@@ -518,6 +518,9 @@ abstract class CodecTestBase {
     static final long Q_DEQ_TIMEOUT_US = 5000;
     static final int UNSPECIFIED = 0;
     static final int NUM_SURFACE = 4;
+    static final int CODEC_ALL = 0; // All codecs should support
+    static final int CODEC_ANY = 1; // Atleast one codec should support
+    static final int CODEC_OPTIONAL = 2; // Codec support is optional
     static final String INPUT_PREFIX = "/data/local/tmp/StressTestRes-1.0/";
     static final PackageManager PM =
             InstrumentationRegistry.getInstrumentation().getContext().getPackageManager();
