@@ -180,6 +180,7 @@ import android.net.resolv.aidl.IDnsResolverUnsolicitedEventListener;
 import android.net.resolv.aidl.Nat64PrefixEventParcel;
 import android.net.resolv.aidl.PrivateDnsValidationEventParcel;
 import android.net.shared.PrivateDnsConfig;
+import android.net.util.KeepaliveUtils;
 import android.net.util.MultinetworkPolicyTracker;
 import android.net.util.NetdService;
 import android.os.BatteryStatsManager;
@@ -9955,5 +9956,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
             netCap.setRequestorUidAndPackageName(Process.myUid(), mContext.getPackageName());
             return netCap;
         }
+    }
+
+    @Override
+    public int getSupportedKeepalivesForNetwork(@NonNull Network network) {
+        Objects.requireNonNull(network, "Network must not be null");
+        enforceSettingsPermission();
+
+        final int[] keepAlives = KeepaliveUtils.getSupportedKeepalives(mResources);
+        final NetworkCapabilities nc = getNetworkCapabilitiesInternal(network);
+        if (nc == null) {
+            throw new IllegalStateException("Network " + network + " is not connected");
+        }
+        return KeepaliveUtils.getSupportedKeepalivesForNetworkCapabilities(keepAlives, nc);
     }
 }
