@@ -221,4 +221,6 @@ interface IConnectivityManager
             in IOnCompleteListener listener);
 
     int getRestrictBackgroundStatusByCaller();
+
+    int getSupportedKeepalivesForNetwork(in Network network);
 }
