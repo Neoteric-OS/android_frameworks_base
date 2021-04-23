@@ -374,19 +374,19 @@ public class VpnTest {
         // Set always-on with lockdown.
         assertTrue(vpn.setAlwaysOnPackage(PKGS[1], true, null));
         verify(mConnectivityManager).setRequireVpnForUids(true, toRanges(new UidRangeParcel[] {
-                new UidRangeParcel(userStart, userStart + PKG_UIDS[1] - 1),
-                new UidRangeParcel(userStart + PKG_UIDS[1] + 1, userStop)
+                new UidRangeParcel(userStart, userStart + PKG_UIDS[1] - 1, 0),
+                new UidRangeParcel(userStart + PKG_UIDS[1] + 1, userStop, 0)
         }));
 
         // Switch to another app.
         assertTrue(vpn.setAlwaysOnPackage(PKGS[3], true, null));
         verify(mConnectivityManager).setRequireVpnForUids(false, toRanges(new UidRangeParcel[] {
-                new UidRangeParcel(userStart, userStart + PKG_UIDS[1] - 1),
-                new UidRangeParcel(userStart + PKG_UIDS[1] + 1, userStop)
+                new UidRangeParcel(userStart, userStart + PKG_UIDS[1] - 1, 0),
+                new UidRangeParcel(userStart + PKG_UIDS[1] + 1, userStop, 0)
         }));
         verify(mConnectivityManager).setRequireVpnForUids(true, toRanges(new UidRangeParcel[] {
-                new UidRangeParcel(userStart, userStart + PKG_UIDS[3] - 1),
-                new UidRangeParcel(userStart + PKG_UIDS[3] + 1, userStop)
+                new UidRangeParcel(userStart, userStart + PKG_UIDS[3] - 1, 0),
+                new UidRangeParcel(userStart + PKG_UIDS[3] + 1, userStop, 0)
         }));
     }
 
@@ -400,51 +400,51 @@ public class VpnTest {
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[1], true, Collections.singletonList(PKGS[2])));
         verify(mConnectivityManager).setRequireVpnForUids(true, toRanges(new UidRangeParcel[]  {
-                new UidRangeParcel(userStart, userStart + PKG_UIDS[1] - 1),
-                new UidRangeParcel(userStart + PKG_UIDS[2] + 1, userStop)
+                new UidRangeParcel(userStart, userStart + PKG_UIDS[1] - 1, 0),
+                new UidRangeParcel(userStart + PKG_UIDS[2] + 1, userStop, 0)
         }));
         // Change allowed app list to PKGS[3].
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[1], true, Collections.singletonList(PKGS[3])));
         verify(mConnectivityManager).setRequireVpnForUids(false, toRanges(new UidRangeParcel[] {
-                new UidRangeParcel(userStart + PKG_UIDS[2] + 1, userStop)
+                new UidRangeParcel(userStart + PKG_UIDS[2] + 1, userStop, 0)
         }));
         verify(mConnectivityManager).setRequireVpnForUids(true, toRanges(new UidRangeParcel[] {
-                new UidRangeParcel(userStart + PKG_UIDS[1] + 1, userStart + PKG_UIDS[3] - 1),
-                new UidRangeParcel(userStart + PKG_UIDS[3] + 1, userStop)
+                new UidRangeParcel(userStart + PKG_UIDS[1] + 1, userStart + PKG_UIDS[3] - 1, 0),
+                new UidRangeParcel(userStart + PKG_UIDS[3] + 1, userStop, 0)
         }));
 
         // Change the VPN app.
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[0], true, Collections.singletonList(PKGS[3])));
         verify(mConnectivityManager).setRequireVpnForUids(false, toRanges(new UidRangeParcel[] {
-                new UidRangeParcel(userStart, userStart + PKG_UIDS[1] - 1),
-                new UidRangeParcel(userStart + PKG_UIDS[1] + 1, userStart + PKG_UIDS[3] - 1)
+                new UidRangeParcel(userStart, userStart + PKG_UIDS[1] - 1, 0),
+                new UidRangeParcel(userStart + PKG_UIDS[1] + 1, userStart + PKG_UIDS[3] - 1, 0)
         }));
         verify(mConnectivityManager).setRequireVpnForUids(true, toRanges(new UidRangeParcel[] {
-                new UidRangeParcel(userStart, userStart + PKG_UIDS[0] - 1),
-                new UidRangeParcel(userStart + PKG_UIDS[0] + 1, userStart + PKG_UIDS[3] - 1)
+                new UidRangeParcel(userStart, userStart + PKG_UIDS[0] - 1, 0),
+                new UidRangeParcel(userStart + PKG_UIDS[0] + 1, userStart + PKG_UIDS[3] - 1, 0)
         }));
 
         // Remove the list of allowed packages.
         assertTrue(vpn.setAlwaysOnPackage(PKGS[0], true, null));
         verify(mConnectivityManager).setRequireVpnForUids(false, toRanges(new UidRangeParcel[] {
-                new UidRangeParcel(userStart + PKG_UIDS[0] + 1, userStart + PKG_UIDS[3] - 1),
-                new UidRangeParcel(userStart + PKG_UIDS[3] + 1, userStop)
+                new UidRangeParcel(userStart + PKG_UIDS[0] + 1, userStart + PKG_UIDS[3] - 1, 0),
+                new UidRangeParcel(userStart + PKG_UIDS[3] + 1, userStop, 0)
         }));
         verify(mConnectivityManager).setRequireVpnForUids(true, toRanges(new UidRangeParcel[] {
-                new UidRangeParcel(userStart + PKG_UIDS[0] + 1, userStop),
+                new UidRangeParcel(userStart + PKG_UIDS[0] + 1, userStop, 0),
         }));
 
         // Add the list of allowed packages.
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[0], true, Collections.singletonList(PKGS[1])));
         verify(mConnectivityManager).setRequireVpnForUids(false, toRanges(new UidRangeParcel[] {
-                new UidRangeParcel(userStart + PKG_UIDS[0] + 1, userStop)
+                new UidRangeParcel(userStart + PKG_UIDS[0] + 1, userStop, 0)
         }));
         verify(mConnectivityManager).setRequireVpnForUids(true, toRanges(new UidRangeParcel[] {
-                new UidRangeParcel(userStart + PKG_UIDS[0] + 1, userStart + PKG_UIDS[1] - 1),
-                new UidRangeParcel(userStart + PKG_UIDS[1] + 1, userStop)
+                new UidRangeParcel(userStart + PKG_UIDS[0] + 1, userStart + PKG_UIDS[1] - 1, 0),
+                new UidRangeParcel(userStart + PKG_UIDS[1] + 1, userStop, 0)
         }));
 
         // Try allowing a package with a comma, should be rejected.
@@ -456,12 +456,12 @@ public class VpnTest {
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[0], true, Arrays.asList("com.foo.app", PKGS[2], "com.bar.app")));
         verify(mConnectivityManager).setRequireVpnForUids(false, toRanges(new UidRangeParcel[] {
-                new UidRangeParcel(userStart + PKG_UIDS[0] + 1, userStart + PKG_UIDS[1] - 1),
-                new UidRangeParcel(userStart + PKG_UIDS[1] + 1, userStop)
+                new UidRangeParcel(userStart + PKG_UIDS[0] + 1, userStart + PKG_UIDS[1] - 1, 0),
+                new UidRangeParcel(userStart + PKG_UIDS[1] + 1, userStop, 0)
         }));
         verify(mConnectivityManager).setRequireVpnForUids(true, toRanges(new UidRangeParcel[] {
-                new UidRangeParcel(userStart + PKG_UIDS[0] + 1, userStart + PKG_UIDS[2] - 1),
-                new UidRangeParcel(userStart + PKG_UIDS[2] + 1, userStop)
+                new UidRangeParcel(userStart + PKG_UIDS[0] + 1, userStart + PKG_UIDS[2] - 1, 0),
+                new UidRangeParcel(userStart + PKG_UIDS[2] + 1, userStop, 0)
         }));
     }
 
@@ -469,7 +469,7 @@ public class VpnTest {
     public void testLockdownRuleRepeatability() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
         final UidRangeParcel[] primaryUserRangeParcel = new UidRangeParcel[] {
-                new UidRangeParcel(PRI_USER_RANGE.getLower(), PRI_USER_RANGE.getUpper())};
+                new UidRangeParcel(PRI_USER_RANGE.getLower(), PRI_USER_RANGE.getUpper(), 0)};
         // Given legacy lockdown is already enabled,
         vpn.setLockdown(true);
         verify(mConnectivityManager, times(1)).setRequireVpnForUids(true,
@@ -501,11 +501,11 @@ public class VpnTest {
     public void testLockdownRuleReversibility() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
         final UidRangeParcel[] entireUser = {
-            new UidRangeParcel(PRI_USER_RANGE.getLower(), PRI_USER_RANGE.getUpper())
+            new UidRangeParcel(PRI_USER_RANGE.getLower(), PRI_USER_RANGE.getUpper(), 0)
         };
         final UidRangeParcel[] exceptPkg0 = {
-            new UidRangeParcel(entireUser[0].start, entireUser[0].start + PKG_UIDS[0] - 1),
-            new UidRangeParcel(entireUser[0].start + PKG_UIDS[0] + 1, entireUser[0].stop)
+            new UidRangeParcel(entireUser[0].start, entireUser[0].start + PKG_UIDS[0] - 1, 0),
+            new UidRangeParcel(entireUser[0].start + PKG_UIDS[0] + 1, entireUser[0].stop, 0)
         };
 
         final InOrder order = inOrder(mConnectivityManager);

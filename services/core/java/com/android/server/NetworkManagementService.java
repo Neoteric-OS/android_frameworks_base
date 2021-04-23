@@ -1406,7 +1406,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
             ranges = new UidRangeParcel[] {
                 // TODO: is there a better way of finding all existing users? If so, we could
                 // specify their ranges here.
-                new UidRangeParcel(Process.FIRST_APPLICATION_UID, Integer.MAX_VALUE),
+                new UidRangeParcel(Process.FIRST_APPLICATION_UID, Integer.MAX_VALUE,
+                        /* not used */ 0),
             };
             // ... except for the UIDs that have allow rules.
             synchronized (mRulesLock) {
@@ -1437,7 +1438,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
                 for (int i = 0; i < ranges.length; i++) {
                     if (rules.valueAt(i) == FIREWALL_RULE_DENY) {
                         int uid = rules.keyAt(i);
-                        ranges[numUids] = new UidRangeParcel(uid, uid);
+                        ranges[numUids] = new UidRangeParcel(uid, uid, /* not used */ 0);
                         numUids++;
                     }
                 }

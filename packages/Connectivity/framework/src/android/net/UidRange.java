@@ -34,6 +34,7 @@ import java.util.Set;
 public final class UidRange implements Parcelable {
     public final int start;
     public final int stop;
+    public final int priority;
 
     public UidRange(int startUid, int stopUid) {
         if (startUid < 0) throw new IllegalArgumentException("Invalid start UID.");
@@ -41,6 +42,7 @@ public final class UidRange implements Parcelable {
         if (startUid > stopUid) throw new IllegalArgumentException("Invalid UID range.");
         start = startUid;
         stop  = stopUid;
+        priority = 0;
     }
 
     /** Creates a UidRange for the specified user. */

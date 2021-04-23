@@ -7214,7 +7214,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final UidRangeParcel[] stableRanges = new UidRangeParcel[ranges.size()];
         int index = 0;
         for (UidRange range : ranges) {
-            stableRanges[index] = new UidRangeParcel(range.start, range.stop);
+            stableRanges[index] = new UidRangeParcel(range.start, range.stop, range.priority);
             index++;
         }
         return stableRanges;
@@ -7223,7 +7223,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static UidRangeParcel[] toUidRangeStableParcels(UidRange[] ranges) {
         final UidRangeParcel[] stableRanges = new UidRangeParcel[ranges.length];
         for (int i = 0; i < ranges.length; i++) {
-            stableRanges[i] = new UidRangeParcel(ranges[i].start, ranges[i].stop);
+            stableRanges[i] = new UidRangeParcel(ranges[i].start, ranges[i].stop,
+                    ranges[i].priority);
         }
         return stableRanges;
     }

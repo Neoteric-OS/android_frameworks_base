@@ -1367,7 +1367,8 @@ public class ConnectivityServiceTest {
 
     private UidRangeParcel[] toUidRangeStableParcels(final @NonNull Set<UidRange> ranges) {
         return ranges.stream().map(
-                r -> new UidRangeParcel(r.start, r.stop)).toArray(UidRangeParcel[]::new);
+                r -> new UidRangeParcel(r.start, r.stop, r.priority))
+                        .toArray(UidRangeParcel[]::new);
     }
 
     private VpnManagerService makeVpnManagerService() {
@@ -7766,8 +7767,8 @@ public class ConnectivityServiceTest {
                 allowList);
         waitForIdle();
 
-        UidRangeParcel firstHalf = new UidRangeParcel(1, VPN_UID - 1);
-        UidRangeParcel secondHalf = new UidRangeParcel(VPN_UID + 1, 99999);
+        UidRangeParcel firstHalf = new UidRangeParcel(1, VPN_UID - 1, 0);
+        UidRangeParcel secondHalf = new UidRangeParcel(VPN_UID + 1, 99999, 0);
         InOrder inOrder = inOrder(mMockNetd);
         expectNetworkRejectNonSecureVpn(inOrder, true, firstHalf, secondHalf);
 
@@ -7813,9 +7814,9 @@ public class ConnectivityServiceTest {
         // The following requires that the UID of this test package is greater than VPN_UID. This
         // is always true in practice because a plain AOSP build with no apps installed has almost
         // 200 packages installed.
-        final UidRangeParcel piece1 = new UidRangeParcel(1, VPN_UID - 1);
-        final UidRangeParcel piece2 = new UidRangeParcel(VPN_UID + 1, uid - 1);
-        final UidRangeParcel piece3 = new UidRangeParcel(uid + 1, 99999);
+        final UidRangeParcel piece1 = new UidRangeParcel(1, VPN_UID - 1, 0);
+        final UidRangeParcel piece2 = new UidRangeParcel(VPN_UID + 1, uid - 1, 0);
+        final UidRangeParcel piece3 = new UidRangeParcel(uid + 1, 99999, 0);
         expectNetworkRejectNonSecureVpn(inOrder, true, piece1, piece2, piece3);
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetworkForUid(VPN_UID));
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
@@ -11928,7 +11929,7 @@ public class ConnectivityServiceTest {
 
     private UidRangeParcel[] uidRangeFor(final UserHandle handle) {
         UidRange range = UidRange.createForUser(handle);
-        return new UidRangeParcel[] { new UidRangeParcel(range.start, range.stop) };
+        return new UidRangeParcel[] { new UidRangeParcel(range.start, range.stop, range.priority) };
     }
 
     private static class TestOnCompleteListener implements Runnable {

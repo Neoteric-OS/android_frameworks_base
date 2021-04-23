@@ -1683,10 +1683,12 @@ public class Vpn {
             // it through (b/69873852).
             for (Range<Integer> range : restrictedProfilesRanges) {
                 if (range.getLower() == 0 && range.getUpper() != 0) {
-                    rangesThatShouldBeBlocked.add(new UidRangeParcel(1, range.getUpper()));
+                    rangesThatShouldBeBlocked.add(new UidRangeParcel(1, range.getUpper(),
+                            /* not used */ 0));
                 } else if (range.getLower() != 0) {
                     rangesThatShouldBeBlocked.add(
-                            new UidRangeParcel(range.getLower(), range.getUpper()));
+                            new UidRangeParcel(range.getLower(), range.getUpper(),
+                            /* not used */ 0));
                 }
             }
 
