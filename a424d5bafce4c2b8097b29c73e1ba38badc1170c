@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3d0a27b_33c438e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-04-23T02:47:37Z",
+      "side": 1,
+      "message": "Almost clean cherry-pick except ConnectivityController and ConnectivityControllerTest not included because reference codes are not in aosp",
+      "revId": "a424d5bafce4c2b8097b29c73e1ba38badc1170c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
