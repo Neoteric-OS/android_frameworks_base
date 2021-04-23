@@ -5477,4 +5477,19 @@ public class ConnectivityManager {
         }
         Settings.Global.putString(context.getContentResolver(), PRIVATE_DNS_MODE, mode);
     }
+
+    /**
+     * Get supported keepalive count for the given {@link Network}.
+     *
+     * @return Supported keepalive count for the given {@link Network}.
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    public int getSupportedKeepalivesForNetwork(@NonNull Network network) {
+        try {
+            return mService.getSupportedKeepalivesForNetwork(network);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }
