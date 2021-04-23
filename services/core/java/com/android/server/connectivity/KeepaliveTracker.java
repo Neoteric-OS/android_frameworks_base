@@ -112,7 +112,8 @@ public class KeepaliveTracker {
         mConnectivityServiceHandler = handler;
         mTcpController = new TcpKeepaliveController(handler);
         mContext = context;
-        mSupportedKeepalives = KeepaliveUtils.getSupportedKeepalives(mContext);
+        final ConnectivityResources res = new ConnectivityResources(mContext);
+        mSupportedKeepalives = KeepaliveUtils.getSupportedKeepalives(res);
 
         // TODO (b/183076074): stop reading legacy resources after migrating overlays
         final int legacyReservedSlots = mContext.getResources().getInteger(
@@ -121,7 +122,6 @@ public class KeepaliveTracker {
         final int legacyAllowedSlots = mContext.getResources().getInteger(
                 mContext.getResources().getIdentifier(
                         "config_allowedUnprivilegedKeepalivePerUid", "integer", "android"));
-        final ConnectivityResources res = new ConnectivityResources(mContext);
         mReservedPrivilegedSlots = Math.min(legacyReservedSlots, res.get().getInteger(
                 R.integer.config_reservedPrivilegedKeepaliveSlots));
         mAllowedUnprivilegedSlotsForUid = Math.min(legacyAllowedSlots, res.get().getInteger(

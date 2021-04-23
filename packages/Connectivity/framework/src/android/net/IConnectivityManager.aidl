@@ -188,6 +188,8 @@ interface IConnectivityManager
 
     void stopKeepalive(in Network network, int slot);
 
+    int getSupportedKeepalivesForNetwork(in Network network);
+
     String getCaptivePortalServerUrl();
 
     byte[] getNetworkWatchlistConfigHash();

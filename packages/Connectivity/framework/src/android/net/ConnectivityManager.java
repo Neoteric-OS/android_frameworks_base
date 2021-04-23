@@ -2175,6 +2175,21 @@ public class ConnectivityManager {
     }
 
     /**
+     * Get supported keepalive count for the given {@link Network}.
+     *
+     * @return Supported keepalive count for the given {@link Network}.
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
+    public int getSupportedKeepalivesForNetwork(@NonNull Network network) {
+        try {
+            return mService.getSupportedKeepalivesForNetwork(network);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Ensure that a network route exists to deliver traffic to the specified
      * host via the specified network interface. An attempt to add a route that
      * already exists is ignored, but treated as successful.

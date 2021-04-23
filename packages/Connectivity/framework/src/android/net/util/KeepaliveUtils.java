@@ -42,21 +42,37 @@ public final class KeepaliveUtils {
     /**
      * Read supported keepalive count for each transport type from overlay resource. This should be
      * used to create a local variable store of resource customization, and use it as the input for
-     * {@link getSupportedKeepalivesForNetworkCapabilities}.
+     * {@link #getSupportedKeepalivesForNetworkCapabilities}.
      *
      * @param context The context to read resource from.
      * @return An array of supported keepalive count for each transport type.
+     * @deprecated Use android.net.ConnectivityManager#getSupportedKeepalivesForNetwork instead.
+     */
+    // TODO: after migrating callers, remove this method and move the class to service-connectivity
+    @NonNull
+    @Deprecated
+    public static int[] getSupportedKeepalives(@NonNull Context context) {
+        return getSupportedKeepalives(new ConnectivityResources(context));
+    }
+
+    /**
+     * Read supported keepalive count for each transport type from overlay resource. This should be
+     * used to create a local variable store of resource customization, and use it as the input for
+     * {@link #getSupportedKeepalivesForNetworkCapabilities}.
+     *
+     * @param resources The resources to read settings from.
+     * @return An array of supported keepalive count for each transport type.
      */
     @NonNull
-    public static int[] getSupportedKeepalives(@NonNull Context context) {
-        String[] res = null;
+    public static int[] getSupportedKeepalives(@NonNull ConnectivityResources resources) {
+        final String[] res;
         try {
-            final ConnectivityResources connRes = new ConnectivityResources(context);
             // TODO: use R.id.config_networkSupportedKeepaliveCount directly
-            final int id = connRes.get().getIdentifier("config_networkSupportedKeepaliveCount",
-                    "array", connRes.getResourcesContext().getPackageName());
-            res = new ConnectivityResources(context).get().getStringArray(id);
+            final int id = resources.get().getIdentifier("config_networkSupportedKeepaliveCount",
+                    "array", resources.getResourcesContext().getPackageName());
+            res = resources.get().getStringArray(id);
         } catch (Resources.NotFoundException unused) {
+            throw new KeepaliveDeviceConfigurationException("invalid resource");
         }
         if (res == null) throw new KeepaliveDeviceConfigurationException("invalid resource");
 
