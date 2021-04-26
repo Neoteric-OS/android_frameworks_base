@@ -30,7 +30,7 @@ import java.nio.ByteBuffer;
 /**
  * Track our app name.  We don't (currently) handle any inbound packets.
  */
-public class DdmHandleAppName extends ChunkHandler {
+public class DdmHandleAppName extends DdmHandle {
 
     public static final int CHUNK_APNM = type("APNM");
 

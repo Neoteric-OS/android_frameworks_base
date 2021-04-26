@@ -31,7 +31,7 @@ import java.nio.ByteBuffer;
 /**
  * Handle "hello" messages and feature discovery.
  */
-public class DdmHandleHello extends ChunkHandler {
+public class DdmHandleHello extends DdmHandle {
 
     public static final int CHUNK_HELO = type("HELO");
     public static final int CHUNK_WAIT = type("WAIT");
@@ -68,8 +68,7 @@ public class DdmHandleHello extends ChunkHandler {
         if (false) {
             /* test spontaneous transmission */
             byte[] data = new byte[] { 0, 1, 2, 3, 4, -4, -3, -2, -1, 127 };
-            Chunk testChunk =
-                new Chunk(ChunkHandler.type("TEST"), data, 1, data.length-2);
+            Chunk testChunk = new Chunk(type("TEST"), data, 1, data.length - 2);
             DdmServer.sendChunk(testChunk);
         }
     }
@@ -96,8 +95,7 @@ public class DdmHandleHello extends ChunkHandler {
         } else if (type == CHUNK_FEAT) {
             return handleFEAT(request);
         } else {
-            throw new RuntimeException("Unknown packet "
-                + ChunkHandler.name(type));
+            throw new RuntimeException("Unknown packet " + name(type));
         }
     }
 

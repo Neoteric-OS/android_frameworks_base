@@ -16,19 +16,15 @@
 
 package android.ddm;
 
-import org.apache.harmony.dalvik.ddmc.Chunk;
-import org.apache.harmony.dalvik.ddmc.ChunkHandler;
-import org.apache.harmony.dalvik.ddmc.DdmServer;
-import org.apache.harmony.dalvik.ddmc.DdmVmInternal;
-import android.os.Debug;
 import android.util.Log;
-import java.io.IOException;
-import java.nio.ByteBuffer;
+
+import org.apache.harmony.dalvik.ddmc.Chunk;
+import org.apache.harmony.dalvik.ddmc.DdmServer;
 
 /**
  * Handle native and virtual heap requests.
  */
-public class DdmHandleHeap extends ChunkHandler {
+public class DdmHandleHeap extends DdmHandle {
 
     public static final int CHUNK_HPGC = type("HPGC");
 
@@ -68,8 +64,7 @@ public class DdmHandleHeap extends ChunkHandler {
         if (type == CHUNK_HPGC) {
             return handleHPGC(request);
         } else {
-            throw new RuntimeException("Unknown packet "
-                + ChunkHandler.name(type));
+            throw new RuntimeException("Unknown packet " + name(type));
         }
     }
 

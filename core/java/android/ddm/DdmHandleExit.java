@@ -16,16 +16,17 @@
 
 package android.ddm;
 
-import org.apache.harmony.dalvik.ddmc.Chunk;
-import org.apache.harmony.dalvik.ddmc.ChunkHandler;
-import org.apache.harmony.dalvik.ddmc.DdmServer;
 import android.util.Log;
+
+import org.apache.harmony.dalvik.ddmc.Chunk;
+import org.apache.harmony.dalvik.ddmc.DdmServer;
+
 import java.nio.ByteBuffer;
 
 /**
  * Handle an EXIT chunk.
  */
-public class DdmHandleExit extends ChunkHandler {
+public class DdmHandleExit extends DdmHandle {
 
     public static final int CHUNK_EXIT = type("EXIT");
 

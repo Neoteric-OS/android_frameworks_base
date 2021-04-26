@@ -16,17 +16,19 @@
 
 package android.ddm;
 
-import org.apache.harmony.dalvik.ddmc.Chunk;
-import org.apache.harmony.dalvik.ddmc.ChunkHandler;
-import org.apache.harmony.dalvik.ddmc.DdmServer;
+
 import android.os.Debug;
 import android.util.Log;
+
+import org.apache.harmony.dalvik.ddmc.Chunk;
+import org.apache.harmony.dalvik.ddmc.DdmServer;
+
 import java.nio.ByteBuffer;
 
 /**
  * Handle profiling requests.
  */
-public class DdmHandleProfiling extends ChunkHandler {
+public class DdmHandleProfiling extends DdmHandle {
 
     public static final int CHUNK_MPRS = type("MPRS");
     public static final int CHUNK_MPRE = type("MPRE");
@@ -91,8 +93,7 @@ public class DdmHandleProfiling extends ChunkHandler {
         } else if (type == CHUNK_SPSE) {
             return handleMPSEOrSPSE(request, "Sample");
         } else {
-            throw new RuntimeException("Unknown packet "
-                + ChunkHandler.name(type));
+            throw new RuntimeException("Unknown packet " + name(type));
         }
     }
 

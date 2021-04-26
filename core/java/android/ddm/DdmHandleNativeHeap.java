@@ -16,15 +16,15 @@
 
 package android.ddm;
 
-import org.apache.harmony.dalvik.ddmc.Chunk;
-import org.apache.harmony.dalvik.ddmc.ChunkHandler;
-import org.apache.harmony.dalvik.ddmc.DdmServer;
 import android.util.Log;
+
+import org.apache.harmony.dalvik.ddmc.Chunk;
+import org.apache.harmony.dalvik.ddmc.DdmServer;
 
 /**
  * Handle thread-related traffic.
  */
-public class DdmHandleNativeHeap extends ChunkHandler {
+public class DdmHandleNativeHeap extends DdmHandle {
 
     public static final int CHUNK_NHGT = type("NHGT");
 
@@ -63,8 +63,7 @@ public class DdmHandleNativeHeap extends ChunkHandler {
         if (type == CHUNK_NHGT) {
             return handleNHGT(request);
         } else {
-            throw new RuntimeException("Unknown packet "
-                + ChunkHandler.name(type));
+            throw new RuntimeException("Unknown packet " + name(type));
         }
     }
 
@@ -79,7 +78,7 @@ public class DdmHandleNativeHeap extends ChunkHandler {
         if (data != null) {
             // wrap & return
             Log.i("ddm-nativeheap", "Sending " + data.length + " bytes");
-            return new Chunk(ChunkHandler.type("NHGT"), data, 0, data.length);
+            return new Chunk(type("NHGT"), data, 0, data.length);
         } else {
             // failed, return a failure error code and message
             return createFailChunk(1, "Something went wrong");

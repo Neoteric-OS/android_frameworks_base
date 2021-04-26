@@ -39,7 +39,7 @@ import java.nio.ByteBuffer;
  * Handle various requests related to profiling / debugging of the view system.
  * Support for these features are advertised via {@link DdmHandleHello}.
  */
-public class DdmHandleViewDebug extends ChunkHandler {
+public class DdmHandleViewDebug extends DdmHandle {
     /** List {@link ViewRootImpl}'s of this process. */
     private static final int CHUNK_VULW = type("VULW");
 
@@ -154,7 +154,7 @@ public class DdmHandleViewDebug extends ChunkHandler {
                     return createFailChunk(ERR_INVALID_OP, "Unknown view operation: " + op);
             }
         } else {
-            throw new RuntimeException("Unknown packet " + ChunkHandler.name(type));
+            throw new RuntimeException("Unknown packet " + name(type));
         }
     }
 

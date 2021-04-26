@@ -21,6 +21,7 @@ import android.annotation.Nullable;
 import android.app.AppGlobals;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
+import android.ddm.DdmHandle;
 import android.util.Log;
 
 import com.android.internal.util.FastPrintWriter;
@@ -30,7 +31,6 @@ import com.android.internal.util.TypedProperties;
 import dalvik.system.VMDebug;
 
 import org.apache.harmony.dalvik.ddmc.Chunk;
-import org.apache.harmony.dalvik.ddmc.ChunkHandler;
 import org.apache.harmony.dalvik.ddmc.DdmServer;
 
 import java.io.File;
@@ -996,7 +996,7 @@ public final class Debug
         // if DDMS is listening, inform them of our plight
         System.out.println("Sending WAIT chunk");
         byte[] data = new byte[] { 0 };     // 0 == "waiting for debugger"
-        Chunk waitChunk = new Chunk(ChunkHandler.type("WAIT"), data, 0, 1);
+        Chunk waitChunk = new Chunk(DdmHandle.type("WAIT"), data, 0, 1);
         DdmServer.sendChunk(waitChunk);
 
         mWaiting = true;
