@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0beeb7e7_9062315c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-04-26T02:55:59Z",
+      "side": 1,
+      "message": "frameworks/base/services/core/java/com/android/server/security/FileIntegrityService.java and\nframeworks/base/services/core/java/com/android/server/biometrics/fingerprint/FingerprintService.java are using FIRST_SDK_INT, we should rename them as well.",
+      "revId": "4d49197ecce1ada23a13a70abd4468d2f35ecc54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
