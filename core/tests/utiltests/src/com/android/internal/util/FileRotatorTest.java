@@ -67,7 +67,19 @@ public class FileRotatorTest extends AndroidTestCase {
         super.setUp();
 
         mBasePath = getContext().getFilesDir();
-        IoUtils.deleteContents(mBasePath);
+        deleteContents(mBasePath);
+    }
+
+    private static void deleteContents(File directory) {
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteContents(file);
+                }
+                file.delete();
+            }
+        }
     }
 
     public void testEmpty() throws Exception {

@@ -35,6 +35,7 @@ import static org.junit.Assert.assertEquals;
 import android.net.NetworkStats;
 import android.net.UnderlyingNetworkInfo;
 
+import java.io.File;
 import java.util.Arrays;
 
 /** Superclass with utilities for NetworkStats(Service|Factory)Test */
@@ -48,6 +49,18 @@ abstract class NetworkStatsBaseTest {
     static final int UID_BLUE = 1002;
     static final int UID_GREEN = 1003;
     static final int UID_VPN = 1004;
+
+    static void deleteContents(File directory) {
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteContents(file);
+                }
+                file.delete();
+            }
+        }
+    }
 
     void assertValues(NetworkStats stats, String iface, int uid, long rxBytes,
             long rxPackets, long txBytes, long txPackets) {

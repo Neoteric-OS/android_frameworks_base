@@ -212,7 +212,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         mServiceContext = new MockContext(context);
         mStatsDir = context.getFilesDir();
         if (mStatsDir.exists()) {
-            IoUtils.deleteContents(mStatsDir);
+            deleteContents(mStatsDir);
         }
 
         PowerManager powerManager = (PowerManager) mServiceContext.getSystemService(
@@ -282,7 +282,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
 
     @After
     public void tearDown() throws Exception {
-        IoUtils.deleteContents(mStatsDir);
+        deleteContents(mStatsDir);
 
         mServiceContext = null;
         mStatsDir = null;

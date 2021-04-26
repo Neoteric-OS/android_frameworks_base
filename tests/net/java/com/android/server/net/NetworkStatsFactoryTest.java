@@ -71,7 +71,7 @@ public class NetworkStatsFactoryTest extends NetworkStatsBaseTest {
     public void setUp() throws Exception {
         mTestProc = new File(InstrumentationRegistry.getContext().getFilesDir(), "proc");
         if (mTestProc.exists()) {
-            IoUtils.deleteContents(mTestProc);
+            deleteContents(mTestProc);
         }
 
         // The libandroid_servers which have the native method is not available to
@@ -87,7 +87,7 @@ public class NetworkStatsFactoryTest extends NetworkStatsBaseTest {
         mFactory = null;
 
         if (mTestProc.exists()) {
-            IoUtils.deleteContents(mTestProc);
+            deleteContents(mTestProc);
         }
     }
 

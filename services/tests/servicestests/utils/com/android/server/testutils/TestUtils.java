@@ -17,6 +17,8 @@ package com.android.server.testutils;
 
 import android.test.MoreAsserts;
 
+import java.io.File;
+import java.io.IOException;
 import junit.framework.Assert;
 
 import org.mockito.Mockito;
@@ -59,5 +61,23 @@ public class TestUtils {
         return Mockito.mock(c, (Answer) invocation -> {
             throw new AssertionError("Unexpected invocation: " + invocation);
         });
+    }
+
+    /**
+     * Deletes all files under a given directory. Deliberately ignores errors, on the assumption
+     * that test cleanup is only supposed to be best-effort.
+     *
+     * @param dir directory to clear its contents
+     */
+    public static void deleteContents(File dir) {
+        File[] files = dir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteContents(file);
+                }
+                file.delete();
+            }
+        }
     }
 }
