@@ -248,6 +248,11 @@ bool LoadedApk::WriteToArchive(IAaptContext* context, ResourceTable* split_table
       continue;
     }
 
+    // Always preserve compression for proto APKs, as some files (and their
+    // compressibility) may change significantly upon conversion to binary.
+    uint32_t force = format_ == ApkFormat::kProto ? ArchiveEntry::kForce : 0u;
+
+
     // The resource table needs to be re-serialized since it might have changed.
     if (format_ == ApkFormat::kBinary && path == kApkResourceTablePath) {
       BigBuffer buffer(4096);
@@ -286,6 +291,7 @@ bool LoadedApk::WriteToArchive(IAaptContext* context, ResourceTable* split_table
       }
 
       uint32_t compression_flags = file->WasCompressed() ? ArchiveEntry::kCompress : 0u;
+      compression_flags |= force;
       io::BigBufferInputStream manifest_buffer_in(&buffer);
       if (!io::CopyInputStreamToArchive(context, &manifest_buffer_in, path, compression_flags,
                                         writer)) {
@@ -293,7 +299,7 @@ bool LoadedApk::WriteToArchive(IAaptContext* context, ResourceTable* split_table
       }
     } else {
       if (!io::CopyFileToArchivePreserveCompression(
-              context, file, output_path, writer)) {
+              context, file, output_path, writer, force)) {
         return false;
       }
     }

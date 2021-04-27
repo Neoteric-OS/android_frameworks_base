@@ -36,6 +36,8 @@ struct ArchiveEntry {
   enum : uint32_t {
     kCompress = 0x01,
     kAlign = 0x02,
+    // Obey kCompress regardless of how well the data compresses.
+    kForce = 0x04,
   };
 
   std::string path;
@@ -47,6 +49,9 @@ class IArchiveWriter : public ::google::protobuf::io::CopyingOutputStream {
  public:
   virtual ~IArchiveWriter() = default;
 
+  // Write stream to given path.
+  // When kCompress is set, this will inflate poorly compressing data unless
+  // kForce is also specified.
   virtual bool WriteFile(const android::StringPiece& path, uint32_t flags, io::InputStream* in) = 0;
 
   // Starts a new entry and allows caller to write bytes to it sequentially.

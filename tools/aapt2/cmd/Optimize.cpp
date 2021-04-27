@@ -236,7 +236,7 @@ class Optimizer {
 
     io::BigBufferInputStream manifest_buffer_in(&manifest_buffer);
     if (!io::CopyInputStreamToArchive(context_, &manifest_buffer_in, "AndroidManifest.xml",
-                                      ArchiveEntry::kCompress, writer)) {
+                                      ArchiveEntry::kCompress & ArchiveEntry::kForce, writer)) {
       return false;
     }
 
@@ -268,8 +268,9 @@ class Optimizer {
 
         for (auto& entry : config_sorted_files) {
           FileReference* file_ref = entry.second;
-          if (!io::CopyFileToArchivePreserveCompression(context_, file_ref->file, *file_ref->path,
-                                                        writer)) {
+          if (!io::CopyFileToArchivePreserveCompression(
+                  context_, file_ref->file, *file_ref->path, writer,
+                  file_ref->type == ResourceFile::Type::kProtoXml ? ArchiveEntry::kForce : 0u)) {
             return false;
           }
         }

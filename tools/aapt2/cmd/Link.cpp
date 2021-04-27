@@ -252,7 +252,8 @@ static bool FlattenXml(IAaptContext* context, const xml::XmlResource& xml_res,
       SerializeXmlOptions options;
       options.remove_empty_text_nodes = (path == kAndroidManifestPath);
       SerializeXmlResourceToPb(xml_res, &pb_node);
-      return io::CopyProtoToArchive(context, &pb_node, path.to_string(), ArchiveEntry::kCompress,
+      return io::CopyProtoToArchive(context, &pb_node, path.to_string(),
+                                    ArchiveEntry::kCompress & ArchiveEntry::kForce,
                                     writer);
     } break;
   }
@@ -1075,7 +1076,8 @@ class Linker {
         SerializeTableToPb(*table, &pb_table, context_->GetDiagnostics(),
                            options_.proto_table_flattener_options);
         return io::CopyProtoToArchive(context_, &pb_table, kProtoResourceTablePath,
-                                      ArchiveEntry::kCompress, writer);
+                                      ArchiveEntry::kCompress & ArchiveEntry::kForce,
+                                      writer);
       } break;
     }
     return false;

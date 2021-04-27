@@ -206,7 +206,9 @@ class ZipFileWriter : public IArchiveWriter {
       }
 
       // Check to see if the file was compressed enough. This is preserving behavior of AAPT.
-      if ((flags & ArchiveEntry::kCompress) != 0 && in->CanRewind()) {
+      if ((flags & ArchiveEntry::kCompress) != 0 &&
+          (flags & ArchiveEntry::kForce) == 0 &&
+          in->CanRewind()) {
         ZipWriter::FileEntry last_entry;
         int32_t result = writer_->GetLastEntry(&last_entry);
         CHECK(result == 0);
