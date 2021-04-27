@@ -92,6 +92,8 @@ public class VcnGatewayConnectionTestBase {
     protected static final long ELAPSED_REAL_TIME = 123456789L;
     protected static final String TEST_IPSEC_TUNNEL_IFACE = "IPSEC_IFACE";
 
+    protected static final Network TEST_NETWORK = mock(Network.class, CALLS_REAL_METHODS);
+
     protected static final UnderlyingNetworkRecord TEST_UNDERLYING_NETWORK_RECORD_1 =
             new UnderlyingNetworkRecord(
                     mock(Network.class, CALLS_REAL_METHODS),

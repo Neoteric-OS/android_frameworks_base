@@ -200,6 +200,7 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
     @Test
     public void testMigration() throws Exception {
         triggerChildOpened();
+        doReturn(TEST_NETWORK).when(mNetworkAgent).getNetwork();
 
         getChildSessionCallback()
                 .onIpSecTransformsMigrated(makeDummyIpSecTransform(), makeDummyIpSecTransform());
@@ -229,6 +230,8 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
                         mConfig.getMaxMtu(),
                         TEST_UNDERLYING_NETWORK_RECORD_1.linkProperties.getMtu());
         verify(mNetworkAgent).sendLinkProperties(argThat(lp -> expectedMtu == lp.getMtu()));
+
+        verify(mConnMgr).reportNetworkConnectivity(eq(TEST_NETWORK), eq(false));
     }
 
     private void triggerChildOpened() {

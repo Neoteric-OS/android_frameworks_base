@@ -1736,6 +1736,16 @@ public class VcnGatewayConnection extends StateMachine {
                     IpSecManager.DIRECTION_OUT);
 
             updateNetworkAgent(mTunnelIface, mNetworkAgent, mChildConfig);
+
+            // Trigger revalidation of VCN provided network; if the new network is broken, this will
+            // help to go into safe mode more quickly
+            // TODO (b/186257328): Add a way for network owners or system server components to
+            //       trigger validation without actually reporting as not having connectivity.
+            mVcnContext
+                    .getContext()
+                    .getSystemService(ConnectivityManager.class)
+                    .reportNetworkConnectivity(
+                            mNetworkAgent.getNetwork(), false /* hasConnectivity */);
         }
 
         private void handleUnderlyingNetworkChanged(@NonNull Message msg) {
