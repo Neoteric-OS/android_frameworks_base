@@ -19,6 +19,7 @@ package android.app.compat;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.SystemApi;
+import android.content.pm.PackageInfo;
 import android.os.Parcel;
 
 import java.lang.annotation.Retention;
@@ -101,12 +102,20 @@ public final class PackageOverride {
         return VALUE_UNDEFINED;
     }
 
-    /** Returns the minimum version code the override applies to. */
+    /**
+     * Returns the minimum version code the override applies to.
+     *
+     * @see PackageInfo#getLongVersionCode()
+     */
     public long getMinVersionCode() {
         return mMinVersionCode;
     }
 
-    /** Returns the minimum version code the override applies from. */
+    /**
+     * Returns the minimum version code the override applies from.
+     *
+     * @see PackageInfo#getLongVersionCode()
+     */
     public long getMaxVersionCode() {
         return mMaxVersionCode;
     }
@@ -149,6 +158,8 @@ public final class PackageOverride {
          * Sets the minimum version code the override should apply from.
          *
          * default value: {@code Long.MIN_VALUE}.
+         *
+         * @see PackageInfo#getLongVersionCode()
          */
         @NonNull
         public Builder setMinVersionCode(long minVersionCode) {
@@ -160,6 +171,8 @@ public final class PackageOverride {
          * Sets the maximum version code the override should apply to.
          *
          * default value: {@code Long.MAX_VALUE}.
+         *
+         * @see PackageInfo#getLongVersionCode()
          */
         @NonNull
         public Builder setMaxVersionCode(long maxVersionCode) {
