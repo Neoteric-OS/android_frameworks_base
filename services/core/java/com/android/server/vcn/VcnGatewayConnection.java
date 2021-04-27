@@ -1736,6 +1736,19 @@ public class VcnGatewayConnection extends StateMachine {
                     IpSecManager.DIRECTION_OUT);
 
             updateNetworkAgent(mTunnelIface, mNetworkAgent, mChildConfig);
+
+            // Unconditionally trigger revalidation of VCN provided network. One of the calls will
+            // be ignored because it matches the system's current state.
+            // TODO (b/186257328): Add a way for network owners or system server components to
+            //       trigger validation without actually reporting as not having connectivity.
+            if (mConnectionConfig.getAllExposedCapabilities().contains(NET_CAPABILITY_INTERNET)) {
+                for (boolean hasConnectivity : new boolean[] {true, false}) {
+                    mVcnContext
+                            .getContext()
+                            .getSystemService(ConnectivityManager.class)
+                            .reportNetworkConnectivity(mNetworkAgent.getNetwork(), hasConnectivity);
+                }
+            }
         }
 
         private void handleUnderlyingNetworkChanged(@NonNull Message msg) {
