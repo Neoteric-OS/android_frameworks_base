@@ -1401,6 +1401,30 @@ package android.provider {
     field public static final String VOICE_INTERACTION_SERVICE = "voice_interaction_service";
   }
 
+  public static final class Telephony.ServiceStateTable {
+    field public static final String CDMA_DEFAULT_ROAMING_INDICATOR = "cdma_default_roaming_indicator";
+    field public static final String CDMA_ERI_ICON_INDEX = "cdma_eri_icon_index";
+    field public static final String CDMA_ERI_ICON_MODE = "cdma_eri_icon_mode";
+    field public static final String CDMA_ROAMING_INDICATOR = "cdma_roaming_indicator";
+    field public static final String CSS_INDICATOR = "css_indicator";
+    field public static final String DATA_OPERATOR_ALPHA_LONG = "data_operator_alpha_long";
+    field public static final String DATA_OPERATOR_ALPHA_SHORT = "data_operator_alpha_short";
+    field public static final String DATA_OPERATOR_NUMERIC = "data_operator_numeric";
+    field public static final String DATA_ROAMING_TYPE = "data_roaming_type";
+    field public static final String IS_DATA_ROAMING_FROM_REGISTRATION = "is_data_roaming_from_registration";
+    field public static final String IS_EMERGENCY_ONLY = "is_emergency_only";
+    field public static final String IS_USING_CARRIER_AGGREGATION = "is_using_carrier_aggregation";
+    field public static final String NETWORK_ID = "network_id";
+    field public static final String OPERATOR_ALPHA_LONG_RAW = "operator_alpha_long_raw";
+    field public static final String OPERATOR_ALPHA_SHORT_RAW = "operator_alpha_short_raw";
+    field public static final String RIL_DATA_RADIO_TECHNOLOGY = "ril_data_radio_technology";
+    field public static final String RIL_VOICE_RADIO_TECHNOLOGY = "ril_voice_radio_technology";
+    field public static final String SYSTEM_ID = "system_id";
+    field public static final String VOICE_OPERATOR_ALPHA_LONG = "voice_operator_alpha_long";
+    field public static final String VOICE_OPERATOR_ALPHA_SHORT = "voice_operator_alpha_short";
+    field public static final String VOICE_ROAMING_TYPE = "voice_roaming_type";
+  }
+
   public static final class Telephony.Sms.Intents {
     field public static final String SMS_CARRIER_PROVISION_ACTION = "android.provider.Telephony.SMS_CARRIER_PROVISION";
   }

@@ -4599,6 +4599,176 @@ public final class Telephony {
          * This is the same as {@link ServiceState#getDuplexMode()}.
          */
         public static final String DUPLEX_MODE = "duplex_mode";
+
+        /**
+         * An integer value indicating the current voice roaming type.
+         * <p>
+         * This is the same as {@link ServiceState#getVoiceRoamingType()}.
+         * @hide
+         */
+        @TestApi
+        public static final String VOICE_ROAMING_TYPE = "voice_roaming_type";
+
+        /**
+         * An integer value indicating the current data roaming type.
+         * <p>
+         * This is the same as {@link ServiceState#getDataRoamingType()}.
+         * @hide
+         */
+        @TestApi
+        public static final String DATA_ROAMING_TYPE = "data_roaming_type";
+
+        /**
+         * The current registered voice network operator name in long alphanumeric format.
+         * <p>
+         * This is the same as {@link ServiceState#getOperatorAlphaLong()}.
+         * @hide
+         */
+        @TestApi
+        public static final String VOICE_OPERATOR_ALPHA_LONG = "voice_operator_alpha_long";
+
+        /**
+         * The current registered operator name in short alphanumeric format.
+         * <p>
+         * In GSM/UMTS, short format can be up to 8 characters long. The current registered voice
+         * network operator name in long alphanumeric format.
+         * <p>
+         * This is the same as {@link ServiceState#getOperatorAlphaShort()}.
+         * @hide
+         */
+        @TestApi
+        public static final String VOICE_OPERATOR_ALPHA_SHORT = "voice_operator_alpha_short";
+
+        /**
+         * The current registered data network operator name in long alphanumeric format.
+         * <p>
+         * This is the same as {@link ServiceState#getOperatorAlphaLong()}.
+         * @hide
+         */
+        @TestApi
+        public static final String DATA_OPERATOR_ALPHA_LONG = "data_operator_alpha_long";
+
+        /**
+         * The current registered data network operator name in short alphanumeric format.
+         * <p>
+         * This is the same as {@link ServiceState#getOperatorAlphaShort()}.
+         * @hide
+         */
+        @TestApi
+        public static final String DATA_OPERATOR_ALPHA_SHORT = "data_operator_alpha_short";
+
+        /**
+         * The current registered data network operator numeric id.
+         * <p>
+         * This is the same as {@link ServiceState#getOperatorNumeric()}.
+         * @hide
+         */
+        @TestApi
+        public static final String DATA_OPERATOR_NUMERIC = "data_operator_numeric";
+
+        /**
+         * This is the same as {@link ServiceState#getRilVoiceRadioTechnology()}.
+         * @hide
+         */
+        @TestApi
+        public static final String RIL_VOICE_RADIO_TECHNOLOGY = "ril_voice_radio_technology";
+
+        /**
+         * This is the same as {@link ServiceState#getRilDataRadioTechnology()}.
+         * @hide
+         */
+        @TestApi
+        public static final String RIL_DATA_RADIO_TECHNOLOGY = "ril_data_radio_technology";
+
+        /**
+         * This is the same as {@link ServiceState#getCssIndicator()}.
+         * @hide
+         */
+        @TestApi
+        public static final String CSS_INDICATOR = "css_indicator";
+
+        /**
+         * This is the same as {@link ServiceState#getCdmaNetworkId()}.
+         * @hide
+         */
+        @TestApi
+        public static final String NETWORK_ID = "network_id";
+
+        /**
+         * This is the same as {@link ServiceState#getCdmaSystemId()}.
+         * @hide
+         */
+        @TestApi
+        public static final String SYSTEM_ID = "system_id";
+
+        /**
+         * This is the same as {@link ServiceState#getCdmaRoamingIndicator()}.
+         * @hide
+         */
+        @TestApi
+        public static final String CDMA_ROAMING_INDICATOR = "cdma_roaming_indicator";
+
+        /**
+         * This is the same as {@link ServiceState#getCdmaDefaultRoamingIndicator()}.
+         * @hide
+         */
+        @TestApi
+        public static final String CDMA_DEFAULT_ROAMING_INDICATOR =
+                "cdma_default_roaming_indicator";
+
+        /**
+         * This is the same as {@link ServiceState#getCdmaEriIconIndex()}.
+         * @hide
+         */
+        @TestApi
+        public static final String CDMA_ERI_ICON_INDEX = "cdma_eri_icon_index";
+
+        /**
+         * This is the same as {@link ServiceState#getCdmaEriIconMode()}.
+         * @hide
+         */
+        @TestApi
+        public static final String CDMA_ERI_ICON_MODE = "cdma_eri_icon_mode";
+
+        /**
+         * This is the same as {@link ServiceState#isEmergencyOnly()}.
+         * @hide
+         */
+        @TestApi
+        public static final String IS_EMERGENCY_ONLY = "is_emergency_only";
+
+        /**
+         * This is the same as {@link ServiceState#getDataRoamingFromRegistration()}.
+         * @hide
+         */
+        @TestApi
+        public static final String IS_DATA_ROAMING_FROM_REGISTRATION =
+                "is_data_roaming_from_registration";
+
+        /**
+         * This is the same as {@link ServiceState#isUsingCarrierAggregation()}.
+         * @hide
+         */
+        @TestApi
+        public static final String IS_USING_CARRIER_AGGREGATION = "is_using_carrier_aggregation";
+
+        /**
+         * The current registered raw data network operator name in long alphanumeric format.
+         * <p>
+         * This is the same as {@link ServiceState#getOperatorAlphaLongRaw()}.
+         * @hide
+         */
+        @TestApi
+        public static final String OPERATOR_ALPHA_LONG_RAW = "operator_alpha_long_raw";
+
+        /**
+         * The current registered raw data network operator name in short alphanumeric format.
+         * <p>
+         * This is the same as {@link ServiceState#getOperatorAlphaShortRaw()}.
+         * @hide
+         */
+        @TestApi
+        public static final String OPERATOR_ALPHA_SHORT_RAW = "operator_alpha_short_raw";
     }
 
     /**
