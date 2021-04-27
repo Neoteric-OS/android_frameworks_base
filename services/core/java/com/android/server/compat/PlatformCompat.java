@@ -46,6 +46,7 @@ import com.android.internal.compat.ChangeReporter;
 import com.android.internal.compat.CompatibilityChangeConfig;
 import com.android.internal.compat.CompatibilityChangeInfo;
 import com.android.internal.compat.CompatibilityOverrideConfig;
+import com.android.internal.compat.CompatibilityOverridesToRemoveConfig;
 import com.android.internal.compat.IOverrideValidator;
 import com.android.internal.compat.IPlatformCompat;
 import com.android.internal.util.DumpUtils;
@@ -54,6 +55,7 @@ import com.android.server.LocalServices;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -231,6 +233,16 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     }
 
     @Override
+    public void clearOverridesOnReleaseBuilds(
+            CompatibilityOverridesToRemoveConfig overridesToRemove,
+            String packageName) {
+        // TODO(b/183630314): Unify the permission enforcement with the other setOverrides* methods.
+        checkCompatChangeOverrideOverridablePermission();
+        checkAllCompatOverridesAreOverridable(overridesToRemove);
+        mCompatConfig.removePackageOverrides(overridesToRemove, packageName);
+    }
+
+    @Override
     public void clearOverridesForTest(String packageName) {
         checkCompatChangeOverridePermission();
         mCompatConfig.removePackageOverrides(packageName);
@@ -397,7 +409,16 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     }
 
     private void checkAllCompatOverridesAreOverridable(CompatibilityOverrideConfig overrides) {
-        for (Long changeId : overrides.overrides.keySet()) {
+        checkAllCompatOverridesAreOverridable(overrides.overrides.keySet());
+    }
+
+    private void checkAllCompatOverridesAreOverridable(
+            CompatibilityOverridesToRemoveConfig overridesToRemove) {
+        checkAllCompatOverridesAreOverridable(overridesToRemove.changeIds);
+    }
+
+    private void checkAllCompatOverridesAreOverridable(Collection<Long> changeIds) {
+        for (Long changeId : changeIds) {
             if (!mCompatConfig.isOverridable(changeId)) {
                 throw new SecurityException("Only change ids marked as Overridable can be "
                         + "overridden.");

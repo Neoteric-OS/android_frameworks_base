@@ -26,9 +26,11 @@ import android.os.ServiceManager;
 import android.os.UserHandle;
 
 import com.android.internal.compat.CompatibilityOverrideConfig;
+import com.android.internal.compat.CompatibilityOverridesToRemoveConfig;
 import com.android.internal.compat.IPlatformCompat;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * CompatChanges APIs - to be used by platform code only (including mainline
@@ -113,6 +115,30 @@ public final class CompatChanges {
         CompatibilityOverrideConfig config = new CompatibilityOverrideConfig(overrides);
         try {
             platformCompat.setOverridesOnReleaseBuilds(config, packageName);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Clear app compat overrides for a given package. This will check whether the caller is allowed
+     * to perform this operation on the given apk and build. Only the installer package is allowed
+     * to clear overrides on a non-debuggable final build and a non-test apk.
+     *
+     * <p>If {@code overridesToRemove} is empty, removes all overrides for the given package.
+     *
+     * @param packageName The package name of the app in question.
+     * @param overridesToRemove A set of change ids for which to remove overrides.
+     */
+    @RequiresPermission(android.Manifest.permission.OVERRIDE_COMPAT_CHANGE_CONFIG_ON_RELEASE_BUILD)
+    public static void clearPackageOverride(@NonNull String packageName,
+            @NonNull Set<Long> overridesToRemove) {
+        IPlatformCompat platformCompat = IPlatformCompat.Stub.asInterface(
+                ServiceManager.getService(Context.PLATFORM_COMPAT_SERVICE));
+        CompatibilityOverridesToRemoveConfig config = new CompatibilityOverridesToRemoveConfig(
+                overridesToRemove);
+        try {
+            platformCompat.clearOverridesOnReleaseBuilds(config, packageName);
         } catch (RemoteException e) {
             e.rethrowFromSystemServer();
         }
