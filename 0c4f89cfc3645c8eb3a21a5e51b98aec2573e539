@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2526011a_120b145a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047769
+      },
+      "writtenOn": "2021-04-27T17:55:18Z",
+      "side": 1,
+      "message": "IIRC these APIs are used by external testing tools extensively. I\u0027d be wary of changing them even though they are technically private.",
+      "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
