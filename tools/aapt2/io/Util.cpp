@@ -53,8 +53,13 @@ bool CopyFileToArchive(IAaptContext* context, io::IFile* file, const std::string
 }
 
 bool CopyFileToArchivePreserveCompression(IAaptContext* context, io::IFile* file,
-                                          const std::string& out_path, IArchiveWriter* writer) {
-  uint32_t compression_flags = file->WasCompressed() ? ArchiveEntry::kCompress : 0u;
+                                          const std::string& out_path, IArchiveWriter* writer,
+                                          uint32_t compression_flags) {
+  if (file->WasCompressed()) {
+    compression_flags |= ArchiveEntry::kCompress;
+  } else {
+    compression_flags &= ~ArchiveEntry::kCompress;
+  }
   return CopyFileToArchive(context, file, out_path, compression_flags, writer);
 }
 

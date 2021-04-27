@@ -36,8 +36,10 @@ bool CopyInputStreamToArchive(IAaptContext* context, InputStream* in, const std:
 bool CopyFileToArchive(IAaptContext* context, IFile* file, const std::string& out_path,
                        uint32_t compression_flags, IArchiveWriter* writer);
 
+// Sets ArchiveEntry::kCompress in compression_flags according to the source.
 bool CopyFileToArchivePreserveCompression(IAaptContext* context, IFile* file,
-                                          const std::string& out_path, IArchiveWriter* writer);
+                                          const std::string& out_path, IArchiveWriter* writer,
+                                          uint32_t compression_flags);
 
 bool CopyProtoToArchive(IAaptContext* context, ::google::protobuf::Message* proto_msg,
                         const std::string& out_path, uint32_t compression_flags,

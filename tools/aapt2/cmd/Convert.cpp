@@ -127,7 +127,8 @@ class BinaryApkSerializer : public IApkSerializer {
 
       file->type = ResourceFile::Type::kBinaryXml;
     } else {
-      if (!io::CopyFileToArchivePreserveCompression(context_, file->file, *file->path, writer)) {
+      if (!io::CopyFileToArchivePreserveCompression(context_, file->file, *file->path, writer,
+                                                    0u /*compression_flags*/)) {
         context_->GetDiagnostics()->Error(DiagMessage(source_)
                                           << "failed to copy file " << *file->path);
         return false;
@@ -153,7 +154,8 @@ class ProtoApkSerializer : public IApkSerializer {
                     IArchiveWriter* writer, uint32_t compression_flags) override {
     pb::XmlNode pb_node;
     SerializeXmlResourceToPb(*xml, &pb_node);
-    return io::CopyProtoToArchive(context_, &pb_node, path, compression_flags, writer);
+    return io::CopyProtoToArchive(context_, &pb_node, path,
+                                  compression_flags & ArchiveEntry::kForce, writer);
   }
 
   bool SerializeTable(ResourceTable* table, IArchiveWriter* writer) override {
@@ -189,7 +191,8 @@ class ProtoApkSerializer : public IApkSerializer {
 
       file->type = ResourceFile::Type::kProtoXml;
     } else {
-      if (!io::CopyFileToArchivePreserveCompression(context_, file->file, *file->path, writer)) {
+      if (!io::CopyFileToArchivePreserveCompression(context_, file->file, *file->path, writer,
+                                                    0u /*compression_flags*/)) {
         context_->GetDiagnostics()->Error(DiagMessage(source_)
                                           << "failed to copy file " << *file->path);
         return false;
@@ -339,7 +342,8 @@ int Convert(IAaptContext* context, LoadedApk* apk, IArchiveWriter* output_writer
       continue;
     }
 
-    if (!io::CopyFileToArchivePreserveCompression(context, file, path, output_writer)) {
+    if (!io::CopyFileToArchivePreserveCompression(context, file, path, output_writer,
+                                                  0u /*compression_flags*/)) {
       context->GetDiagnostics()->Error(DiagMessage(apk->GetSource())
                                            << "failed to copy file " << path);
       return 1;
