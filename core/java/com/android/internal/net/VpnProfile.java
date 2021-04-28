@@ -16,6 +16,8 @@
 
 package com.android.internal.net;
 
+import static android.net.IpSecAlgorithm.AUTH_CRYPT_CHACHA20_POLY1305;
+
 import android.annotation.NonNull;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.net.Ikev2VpnProfile;
@@ -71,6 +73,11 @@ public final class VpnProfile implements Cloneable, Parcelable {
     // Match these constants with R.array.vpn_proxy_settings.
     public static final int PROXY_NONE = 0;
     public static final int PROXY_MANUAL = 1;
+
+    // IpSecAlgorithm constant for ChaChaPoly is "rfc7539esp(chacha20,poly1305)" which contains
+    // LIST_DELIMITER. Thus VPN needs to use a modified name instead.
+    @VisibleForTesting
+    static final String MODIFIED_NAME_CHACHA20_POLY1305 = "rfc7539esp(chacha20_poly1305)";
 
     private static final String ENCODED_NULL_PROXY_INFO = "\0\0\0\0";
 
@@ -183,6 +190,27 @@ public final class VpnProfile implements Cloneable, Parcelable {
     }
 
     /**
+     * Get algorithm name with the LIST_DELIMITER replaced
+     *
+     * <p>Returns the original name if the input is not a known algorithm that contains a
+     * LIST_DELIMITER.
+     */
+    public static String getModifiedNameIfNeeded(String algorithm) {
+        if (algorithm.equals(AUTH_CRYPT_CHACHA20_POLY1305)) {
+            return MODIFIED_NAME_CHACHA20_POLY1305;
+        }
+        return algorithm;
+    }
+
+    /** Get original algorithm name */
+    public static String getOriginalName(String algorithm) {
+        if (algorithm.equals(MODIFIED_NAME_CHACHA20_POLY1305)) {
+            return AUTH_CRYPT_CHACHA20_POLY1305;
+        }
+        return algorithm;
+    }
+
+    /**
      * Retrieves the list of allowed algorithms.
      *
      * <p>The contained elements are as listed in {@link IpSecAlgorithm}
@@ -196,8 +224,8 @@ public final class VpnProfile implements Cloneable, Parcelable {
      *
      * @param allowedAlgorithms the list of allowable algorithms, as listed in {@link
      *     IpSecAlgorithm}.
-     * @throws IllegalArgumentException if any delimiters are used in algorithm names. See {@link
-     *     #VALUE_DELIMITER} and {@link LIST_DELIMITER}.
+     * @throws IllegalArgumentException if any delimiters are used in algorithm names, except
+     *     AUTH_CRYPT_CHACHA20_POLY1305. See {@link #VALUE_DELIMITER} and {@link LIST_DELIMITER}.
      */
     public void setAllowedAlgorithms(List<String> allowedAlgorithms) {
         validateAllowedAlgorithms(allowedAlgorithms);
@@ -297,7 +325,12 @@ public final class VpnProfile implements Cloneable, Parcelable {
 
             // Either all must be present, or none must be.
             if (values.length >= 24) {
-                profile.mAllowedAlgorithms = Arrays.asList(values[19].split(LIST_DELIMITER));
+                final List<String> originalAlgoNames = new ArrayList<>();
+                for (String algo : Arrays.asList(values[19].split(LIST_DELIMITER))) {
+                    originalAlgoNames.add(getOriginalName(algo));
+                }
+                profile.mAllowedAlgorithms = originalAlgoNames;
+
                 profile.isBypassable = Boolean.parseBoolean(values[20]);
                 profile.isMetered = Boolean.parseBoolean(values[21]);
                 profile.maxMtu = Integer.parseInt(values[22]);
@@ -348,7 +381,12 @@ public final class VpnProfile implements Cloneable, Parcelable {
             builder.append(ENCODED_NULL_PROXY_INFO);
         }
 
-        builder.append(VALUE_DELIMITER).append(String.join(LIST_DELIMITER, mAllowedAlgorithms));
+        final List<String> modifiedAlgoNames = new ArrayList<>();
+        for (String algo : mAllowedAlgorithms) {
+            modifiedAlgoNames.add(getModifiedNameIfNeeded(algo));
+        }
+        builder.append(VALUE_DELIMITER).append(String.join(LIST_DELIMITER, modifiedAlgoNames));
+
         builder.append(VALUE_DELIMITER).append(isBypassable);
         builder.append(VALUE_DELIMITER).append(isMetered);
         builder.append(VALUE_DELIMITER).append(maxMtu);
@@ -432,7 +470,8 @@ public final class VpnProfile implements Cloneable, Parcelable {
      */
     public static void validateAllowedAlgorithms(List<String> allowedAlgorithms) {
         for (final String alg : allowedAlgorithms) {
-            if (alg.contains(VALUE_DELIMITER) || alg.contains(LIST_DELIMITER)) {
+            final String modifiedName = getModifiedNameIfNeeded(alg);
+            if (modifiedName.contains(VALUE_DELIMITER) || modifiedName.contains(LIST_DELIMITER)) {
                 throw new IllegalArgumentException(
                         "Algorithm contained illegal ('\0' or ',') character");
             }
