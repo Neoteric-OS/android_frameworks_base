@@ -30,6 +30,7 @@ import static android.content.pm.PackageInfo.REQUESTED_PERMISSION_GRANTED;
 import static android.content.pm.PackageInfo.REQUESTED_PERMISSION_REQUIRED;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.content.pm.PackageManager.MATCH_ANY_USER;
+import static android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK;
 import static android.os.Process.SYSTEM_UID;
 
 import static com.android.server.connectivity.PermissionMonitor.NETWORK;
@@ -68,11 +69,15 @@ import android.os.Build;
 import android.os.SystemConfigManager;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.provider.Settings;
+import android.test.mock.MockContentResolver;
 import android.util.SparseIntArray;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
+
+import com.android.internal.util.test.FakeSettingsProvider;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -120,6 +125,7 @@ public class PermissionMonitorTest {
     @Mock private SystemConfigManager mSystemConfigManager;
 
     private PermissionMonitor mPermissionMonitor;
+    private MockContentResolver mContentResolver;
 
     @Before
     public void setUp() throws Exception {
@@ -137,19 +143,15 @@ public class PermissionMonitorTest {
         doReturn(UserHandle.ALL).when(asUserCtx).getUser();
         when(mContext.createContextAsUser(eq(UserHandle.ALL), anyInt())).thenReturn(asUserCtx);
 
+        FakeSettingsProvider.clearSettingsProvider();
+        mContentResolver = new MockContentResolver();
+        mContentResolver.addProvider(Settings.AUTHORITY, new FakeSettingsProvider());
+        when(mContext.getContentResolver()).thenReturn(mContentResolver);
+
         mPermissionMonitor = spy(new PermissionMonitor(mContext, mNetdService, mDeps));
 
         when(mPackageManager.getInstalledPackages(anyInt())).thenReturn(/* empty app list */ null);
         mPermissionMonitor.startMonitoring();
-    }
-
-    private boolean hasRestrictedNetworkPermission(String partition, int targetSdkVersion, int uid,
-            String... permissions) {
-        final PackageInfo packageInfo =
-                packageInfoWithPermissions(REQUESTED_PERMISSION_GRANTED, permissions, partition);
-        packageInfo.applicationInfo.targetSdkVersion = targetSdkVersion;
-        packageInfo.applicationInfo.uid = uid;
-        return mPermissionMonitor.hasRestrictedNetworkPermission(packageInfo);
     }
 
     private static PackageInfo systemPackageInfoWithPermissions(String... permissions) {
@@ -267,61 +269,84 @@ public class PermissionMonitorTest {
         assertFalse(mPermissionMonitor.hasNetworkPermission(app));
     }
 
+    private void assertRestrictedNetworkPermission(boolean hasPermission, String... permissions) {
+        final PackageInfo packageInfo = systemPackageInfoWithPermissions(permissions);
+        assertEquals(hasPermission, mPermissionMonitor.hasRestrictedNetworkPermission(packageInfo));
+    }
+
     @Test
     public void testHasRestrictedNetworkPermission() {
-        assertFalse(hasRestrictedNetworkPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1));
-        assertFalse(hasRestrictedNetworkPermission(
-                PARTITION_SYSTEM, VERSION_P, MOCK_UID1, CHANGE_NETWORK_STATE));
-        assertTrue(hasRestrictedNetworkPermission(
-                PARTITION_SYSTEM, VERSION_P, MOCK_UID1, NETWORK_STACK));
-        assertFalse(hasRestrictedNetworkPermission(
-                PARTITION_SYSTEM, VERSION_P, MOCK_UID1, CONNECTIVITY_INTERNAL));
-        assertTrue(hasRestrictedNetworkPermission(
-                PARTITION_SYSTEM, VERSION_P, MOCK_UID1, CONNECTIVITY_USE_RESTRICTED_NETWORKS));
-        assertFalse(hasRestrictedNetworkPermission(
-                PARTITION_SYSTEM, VERSION_P, MOCK_UID1, CHANGE_WIFI_STATE));
+        assertRestrictedNetworkPermission(false);
+        assertRestrictedNetworkPermission(false, CHANGE_NETWORK_STATE);
+        assertRestrictedNetworkPermission(true, NETWORK_STACK);
+        assertRestrictedNetworkPermission(false, CONNECTIVITY_INTERNAL);
+        assertRestrictedNetworkPermission(true, CONNECTIVITY_USE_RESTRICTED_NETWORKS);
+        assertRestrictedNetworkPermission(false, CHANGE_WIFI_STATE);
+        assertRestrictedNetworkPermission(true, PERMISSION_MAINLINE_NETWORK_STACK);
+    }
 
-        assertFalse(hasRestrictedNetworkPermission(PARTITION_SYSTEM, VERSION_Q, MOCK_UID1));
-        assertFalse(hasRestrictedNetworkPermission(
-                PARTITION_SYSTEM, VERSION_Q, MOCK_UID1, CONNECTIVITY_INTERNAL));
+    private boolean wouldBeCarryoverPackage(String partition, int targetSdkVersion, int uid) {
+        final PackageInfo packageInfo = packageInfoWithPermissions(
+                REQUESTED_PERMISSION_GRANTED, new String[] {}, partition);
+        packageInfo.applicationInfo.targetSdkVersion = targetSdkVersion;
+        packageInfo.applicationInfo.uid = uid;
+        return mPermissionMonitor.isCarryoverPackage(packageInfo.applicationInfo);
     }
 
     @Test
-    public void testHasRestrictedNetworkPermissionSystemUid() {
+    public void testIsCarryoverPackage() {
         doReturn(VERSION_P).when(mDeps).getDeviceFirstSdkInt();
-        assertTrue(hasRestrictedNetworkPermission(PARTITION_SYSTEM, VERSION_P, SYSTEM_UID));
-        assertTrue(hasRestrictedNetworkPermission(
-                PARTITION_SYSTEM, VERSION_P, SYSTEM_UID, CONNECTIVITY_INTERNAL));
-        assertTrue(hasRestrictedNetworkPermission(
-                PARTITION_SYSTEM, VERSION_P, SYSTEM_UID, CONNECTIVITY_USE_RESTRICTED_NETWORKS));
+        assertTrue(wouldBeCarryoverPackage(PARTITION_SYSTEM, VERSION_P, SYSTEM_UID));
+        assertTrue(wouldBeCarryoverPackage(PARTITION_VENDOR, VERSION_P, SYSTEM_UID));
+        assertFalse(wouldBeCarryoverPackage(PARTITION_SYSTEM, VERSION_P, MOCK_UID1));
+        assertTrue(wouldBeCarryoverPackage(PARTITION_VENDOR, VERSION_P, MOCK_UID1));
+        assertTrue(wouldBeCarryoverPackage(PARTITION_SYSTEM, VERSION_Q, SYSTEM_UID));
+        assertTrue(wouldBeCarryoverPackage(PARTITION_VENDOR, VERSION_Q, SYSTEM_UID));
+        assertFalse(wouldBeCarryoverPackage(PARTITION_SYSTEM, VERSION_Q, MOCK_UID1));
+        assertFalse(wouldBeCarryoverPackage(PARTITION_VENDOR, VERSION_Q, MOCK_UID1));
 
         doReturn(VERSION_Q).when(mDeps).getDeviceFirstSdkInt();
-        assertFalse(hasRestrictedNetworkPermission(PARTITION_SYSTEM, VERSION_Q, SYSTEM_UID));
-        assertFalse(hasRestrictedNetworkPermission(
-                PARTITION_SYSTEM, VERSION_Q, SYSTEM_UID, CONNECTIVITY_INTERNAL));
-        assertTrue(hasRestrictedNetworkPermission(
-                PARTITION_SYSTEM, VERSION_Q, SYSTEM_UID, CONNECTIVITY_USE_RESTRICTED_NETWORKS));
+        assertFalse(wouldBeCarryoverPackage(PARTITION_SYSTEM, VERSION_P, SYSTEM_UID));
+        assertTrue(wouldBeCarryoverPackage(PARTITION_VENDOR, VERSION_P, SYSTEM_UID));
+        assertFalse(wouldBeCarryoverPackage(PARTITION_SYSTEM, VERSION_P, MOCK_UID1));
+        assertTrue(wouldBeCarryoverPackage(PARTITION_VENDOR, VERSION_P, MOCK_UID1));
+        assertFalse(wouldBeCarryoverPackage(PARTITION_SYSTEM, VERSION_Q, SYSTEM_UID));
+        assertFalse(wouldBeCarryoverPackage(PARTITION_VENDOR, VERSION_Q, SYSTEM_UID));
+        assertFalse(wouldBeCarryoverPackage(PARTITION_SYSTEM, VERSION_Q, MOCK_UID1));
+        assertFalse(wouldBeCarryoverPackage(PARTITION_VENDOR, VERSION_Q, MOCK_UID1));
+
+        assertFalse(wouldBeCarryoverPackage(PARTITION_OEM, VERSION_Q, SYSTEM_UID));
+        assertFalse(wouldBeCarryoverPackage(PARTITION_PRODUCT, VERSION_Q, SYSTEM_UID));
+        assertFalse(wouldBeCarryoverPackage(PARTITION_OEM, VERSION_Q, MOCK_UID1));
+        assertFalse(wouldBeCarryoverPackage(PARTITION_PRODUCT, VERSION_Q, MOCK_UID1));
+    }
+
+    private boolean wouldBeRestrictedAllowedApp(String packageName) {
+        final PackageInfo packageInfo = new PackageInfo();
+        packageInfo.packageName = packageName;
+        return mPermissionMonitor.isRestrictedAllowedApps(packageInfo);
     }
 
     @Test
-    public void testHasRestrictedNetworkPermissionVendorApp() {
-        assertTrue(hasRestrictedNetworkPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID1));
-        assertTrue(hasRestrictedNetworkPermission(
-                PARTITION_VENDOR, VERSION_P, MOCK_UID1, CHANGE_NETWORK_STATE));
-        assertTrue(hasRestrictedNetworkPermission(
-                PARTITION_VENDOR, VERSION_P, MOCK_UID1, NETWORK_STACK));
-        assertTrue(hasRestrictedNetworkPermission(
-                PARTITION_VENDOR, VERSION_P, MOCK_UID1, CONNECTIVITY_INTERNAL));
-        assertTrue(hasRestrictedNetworkPermission(
-                PARTITION_VENDOR, VERSION_P, MOCK_UID1, CONNECTIVITY_USE_RESTRICTED_NETWORKS));
-        assertTrue(hasRestrictedNetworkPermission(
-                PARTITION_VENDOR, VERSION_P, MOCK_UID1, CHANGE_WIFI_STATE));
+    public void testIsRestrictedAllowedApps() {
+        mPermissionMonitor.updateRestrictedAllowedApps(new HashSet<>());
+        assertFalse(wouldBeRestrictedAllowedApp(MOCK_PACKAGE1));
+        assertFalse(wouldBeRestrictedAllowedApp(MOCK_PACKAGE2));
 
-        assertFalse(hasRestrictedNetworkPermission(PARTITION_VENDOR, VERSION_Q, MOCK_UID1));
-        assertFalse(hasRestrictedNetworkPermission(
-                PARTITION_VENDOR, VERSION_Q, MOCK_UID1, CONNECTIVITY_INTERNAL));
-        assertFalse(hasRestrictedNetworkPermission(
-                PARTITION_VENDOR, VERSION_Q, MOCK_UID1, CHANGE_NETWORK_STATE));
+        mPermissionMonitor.updateRestrictedAllowedApps(
+                new HashSet<>(Arrays.asList(new String[] { MOCK_PACKAGE1 })));
+        assertTrue(wouldBeRestrictedAllowedApp(MOCK_PACKAGE1));
+        assertFalse(wouldBeRestrictedAllowedApp(MOCK_PACKAGE2));
+
+        mPermissionMonitor.updateRestrictedAllowedApps(
+                new HashSet<>(Arrays.asList(new String[] { MOCK_PACKAGE2 })));
+        assertFalse(wouldBeRestrictedAllowedApp(MOCK_PACKAGE1));
+        assertTrue(wouldBeRestrictedAllowedApp(MOCK_PACKAGE2));
+
+        mPermissionMonitor.updateRestrictedAllowedApps(
+                new HashSet<>(Arrays.asList(new String[] { "com.android.test" })));
+        assertFalse(wouldBeRestrictedAllowedApp(MOCK_PACKAGE1));
+        assertFalse(wouldBeRestrictedAllowedApp(MOCK_PACKAGE2));
     }
 
     private void assertBackgroundPermission(boolean hasPermission, String name, int uid,
