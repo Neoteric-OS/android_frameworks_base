@@ -16,6 +16,7 @@
 
 package com.android.internal.net;
 
+
 import android.annotation.NonNull;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.net.Ikev2VpnProfile;
@@ -54,7 +55,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
     private static final String TAG = "VpnProfile";
 
     @VisibleForTesting static final String VALUE_DELIMITER = "\0";
-    @VisibleForTesting static final String LIST_DELIMITER = ",";
+    @VisibleForTesting static final String LIST_DELIMITER = ";";
 
     // Match these constants with R.array.vpn_types.
     public static final int TYPE_PPTP = 0;
@@ -434,7 +435,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
         for (final String alg : allowedAlgorithms) {
             if (alg.contains(VALUE_DELIMITER) || alg.contains(LIST_DELIMITER)) {
                 throw new IllegalArgumentException(
-                        "Algorithm contained illegal ('\0' or ',') character");
+                        "Algorithm contained illegal ('\0' or ',') character " + alg);
             }
         }
     }
