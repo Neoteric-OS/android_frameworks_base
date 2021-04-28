@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00f6a560_4634ad0a",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-04-28T22:27:08Z",
+      "side": 1,
+      "message": "\u003d__\u003d\n\nLet\u0027s consider for T how we start opting users out of these kinds of algorithms unless they explicitly want legacy compatibility.",
+      "range": {
+        "startLine": 204,
+        "startChar": 44,
+        "endLine": 204,
+        "endChar": 75
+      },
+      "revId": "4eb2e1c36bdb57e19a2d6035ff4ba0527482fafe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
