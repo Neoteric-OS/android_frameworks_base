@@ -16,6 +16,7 @@
 
 package com.android.internal.net;
 
+
 import android.annotation.NonNull;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.net.Ikev2VpnProfile;
@@ -55,6 +56,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
 
     @VisibleForTesting static final String VALUE_DELIMITER = "\0";
     @VisibleForTesting static final String LIST_DELIMITER = ",";
+    @VisibleForTesting static final String ENCODED_LIST_DELIMITER = "%";
 
     // Match these constants with R.array.vpn_types.
     public static final int TYPE_PPTP = 0;
@@ -183,6 +185,24 @@ public final class VpnProfile implements Cloneable, Parcelable {
     }
 
     /**
+     * Get algorithm name with the LIST_DELIMITER replaced.
+     *
+     * <p>This methods make sure the algorithm can be correctly serialized and de-serialized.
+     */
+    public static String getModifiedNameIfNeeded(String algorithm) {
+        if (algorithm.contains(ENCODED_LIST_DELIMITER)) {
+            throw new IllegalArgumentException("Algorithm contained illegal '%' character");
+        }
+
+        return algorithm.replace(LIST_DELIMITER, ENCODED_LIST_DELIMITER);
+    }
+
+    /** Get original algorithm name */
+    public static String getOriginalName(String algorithm) {
+        return algorithm.replace(ENCODED_LIST_DELIMITER, LIST_DELIMITER);
+    }
+
+    /**
      * Retrieves the list of allowed algorithms.
      *
      * <p>The contained elements are as listed in {@link IpSecAlgorithm}
@@ -196,8 +216,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
      *
      * @param allowedAlgorithms the list of allowable algorithms, as listed in {@link
      *     IpSecAlgorithm}.
-     * @throws IllegalArgumentException if any delimiters are used in algorithm names. See {@link
-     *     #VALUE_DELIMITER} and {@link LIST_DELIMITER}.
+     * @throws IllegalArgumentException if any delimiters ('/0' or '%') are used in algorithm names.
      */
     public void setAllowedAlgorithms(List<String> allowedAlgorithms) {
         validateAllowedAlgorithms(allowedAlgorithms);
@@ -297,7 +316,12 @@ public final class VpnProfile implements Cloneable, Parcelable {
 
             // Either all must be present, or none must be.
             if (values.length >= 24) {
-                profile.mAllowedAlgorithms = Arrays.asList(values[19].split(LIST_DELIMITER));
+                final List<String> originalAlgoNames = new ArrayList<>();
+                for (String algo : Arrays.asList(values[19].split(LIST_DELIMITER))) {
+                    originalAlgoNames.add(getOriginalName(algo));
+                }
+                profile.mAllowedAlgorithms = originalAlgoNames;
+
                 profile.isBypassable = Boolean.parseBoolean(values[20]);
                 profile.isMetered = Boolean.parseBoolean(values[21]);
                 profile.maxMtu = Integer.parseInt(values[22]);
@@ -348,7 +372,12 @@ public final class VpnProfile implements Cloneable, Parcelable {
             builder.append(ENCODED_NULL_PROXY_INFO);
         }
 
-        builder.append(VALUE_DELIMITER).append(String.join(LIST_DELIMITER, mAllowedAlgorithms));
+        final List<String> modifiedAlgoNames = new ArrayList<>();
+        for (String algo : mAllowedAlgorithms) {
+            modifiedAlgoNames.add(getModifiedNameIfNeeded(algo));
+        }
+        builder.append(VALUE_DELIMITER).append(String.join(LIST_DELIMITER, modifiedAlgoNames));
+
         builder.append(VALUE_DELIMITER).append(isBypassable);
         builder.append(VALUE_DELIMITER).append(isMetered);
         builder.append(VALUE_DELIMITER).append(maxMtu);
@@ -432,9 +461,9 @@ public final class VpnProfile implements Cloneable, Parcelable {
      */
     public static void validateAllowedAlgorithms(List<String> allowedAlgorithms) {
         for (final String alg : allowedAlgorithms) {
-            if (alg.contains(VALUE_DELIMITER) || alg.contains(LIST_DELIMITER)) {
+            if (alg.contains(VALUE_DELIMITER) || alg.contains(ENCODED_LIST_DELIMITER)) {
                 throw new IllegalArgumentException(
-                        "Algorithm contained illegal ('\0' or ',') character");
+                        "Algorithm contained illegal ('\0' or '%') character");
             }
         }
     }

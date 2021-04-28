@@ -16,6 +16,11 @@
 
 package com.android.internal.net;
 
+import static android.net.IpSecAlgorithm.AUTH_CRYPT_AES_GCM;
+import static android.net.IpSecAlgorithm.AUTH_CRYPT_CHACHA20_POLY1305;
+
+import static com.android.internal.net.VpnProfile.getModifiedNameIfNeeded;
+import static com.android.internal.net.VpnProfile.getOriginalName;
 import static com.android.testutils.ParcelUtils.assertParcelSane;
 
 import static org.junit.Assert.assertEquals;
@@ -45,6 +50,8 @@ public class VpnProfileTest {
 
     private static final int ENCODED_INDEX_AUTH_PARAMS_INLINE = 23;
     private static final int ENCODED_INDEX_RESTRICTED_TO_TEST_NETWORKS = 24;
+
+    private static final String MODIFIED_NAME_CHACHA20_POLY1305 = "rfc7539esp(chacha20%poly1305)";
 
     @Test
     public void testDefaults() throws Exception {
@@ -97,6 +104,7 @@ public class VpnProfileTest {
         p.setAllowedAlgorithms(
                 Arrays.asList(
                         IpSecAlgorithm.AUTH_CRYPT_AES_GCM,
+                        IpSecAlgorithm.AUTH_CRYPT_CHACHA20_POLY1305,
                         IpSecAlgorithm.AUTH_HMAC_SHA512,
                         IpSecAlgorithm.CRYPT_AES_CBC));
         p.isBypassable = true;
@@ -143,10 +151,25 @@ public class VpnProfileTest {
 
         try {
             profile.setAllowedAlgorithms(
-                    Arrays.asList("test" + VpnProfile.LIST_DELIMITER + "test"));
+                    Arrays.asList("test" + VpnProfile.ENCODED_LIST_DELIMITER + "test"));
             fail("Expected failure due to value separator in algorithm name");
         } catch (IllegalArgumentException expected) {
         }
+    }
+
+    @Test
+    public void testGetModifiedNameIfNeeded() {
+        assertEquals(
+                MODIFIED_NAME_CHACHA20_POLY1305,
+                getModifiedNameIfNeeded(AUTH_CRYPT_CHACHA20_POLY1305));
+        assertEquals(AUTH_CRYPT_AES_GCM, getModifiedNameIfNeeded(AUTH_CRYPT_AES_GCM));
+    }
+
+    @Test
+    public void testGetOriginalName() {
+        assertEquals(
+                AUTH_CRYPT_CHACHA20_POLY1305, getOriginalName(MODIFIED_NAME_CHACHA20_POLY1305));
+        assertEquals(AUTH_CRYPT_AES_GCM, getOriginalName(AUTH_CRYPT_AES_GCM));
     }
 
     @Test
