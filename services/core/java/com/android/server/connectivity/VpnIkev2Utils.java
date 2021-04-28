@@ -213,15 +213,23 @@ public class VpnIkev2Utils {
     private static List<ChildSaProposal> getChildSaProposals(List<String> allowedAlgorithms) {
         final List<ChildSaProposal> proposals = new ArrayList<>();
 
+        final List<Integer> aesKeyLenOptions =
+                Arrays.asList(KEY_LEN_AES_256, KEY_LEN_AES_192, KEY_LEN_AES_128);
+
         // Add non-AEAD options
         if (Ikev2VpnProfile.hasNormalModeAlgorithms(allowedAlgorithms)) {
             final ChildSaProposal.Builder normalModeBuilder = new ChildSaProposal.Builder();
 
             // Encryption Algorithms:
-            // AES-CBC is currently the only supported encryption algorithm.
-            normalModeBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_CBC, KEY_LEN_AES_256);
-            normalModeBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_CBC, KEY_LEN_AES_192);
-            normalModeBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_CBC, KEY_LEN_AES_128);
+            // AES-CBC and AES_CTR are currently the only supported encryption algorithms.
+            for (int len : aesKeyLenOptions) {
+                if (allowedAlgorithms.contains(IpSecAlgorithm.CRYPT_AES_CTR)) {
+                    normalModeBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_CTR, len);
+                }
+                if (allowedAlgorithms.contains(IpSecAlgorithm.CRYPT_AES_CBC)) {
+                    normalModeBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_CBC, len);
+                }
+            }
 
             // Authentication/Integrity Algorithms:
             // Guaranteed by Ikev2VpnProfile constructor to contain at least one of these.
@@ -233,6 +241,12 @@ public class VpnIkev2Utils {
             }
             if (allowedAlgorithms.contains(IpSecAlgorithm.AUTH_HMAC_SHA256)) {
                 normalModeBuilder.addIntegrityAlgorithm(INTEGRITY_ALGORITHM_HMAC_SHA2_256_128);
+            }
+            if (allowedAlgorithms.contains(IpSecAlgorithm.AUTH_AES_XCBC)) {
+                normalModeBuilder.addIntegrityAlgorithm(INTEGRITY_ALGORITHM_AES_XCBC_96);
+            }
+            if (allowedAlgorithms.contains(IpSecAlgorithm.AUTH_AES_CMAC)) {
+                normalModeBuilder.addIntegrityAlgorithm(INTEGRITY_ALGORITHM_AES_CMAC_96);
             }
 
             ChildSaProposal proposal = normalModeBuilder.build();
@@ -248,16 +262,27 @@ public class VpnIkev2Utils {
         if (Ikev2VpnProfile.hasAeadAlgorithms(allowedAlgorithms)) {
             final ChildSaProposal.Builder aeadBuilder = new ChildSaProposal.Builder();
 
-            // AES-GCM is currently the only supported AEAD algorithm
-            aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_16, KEY_LEN_AES_256);
-            aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_12, KEY_LEN_AES_256);
-            aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_8, KEY_LEN_AES_256);
-            aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_16, KEY_LEN_AES_192);
-            aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_12, KEY_LEN_AES_192);
-            aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_8, KEY_LEN_AES_192);
-            aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_16, KEY_LEN_AES_128);
-            aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_12, KEY_LEN_AES_128);
-            aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_8, KEY_LEN_AES_128);
+            if (allowedAlgorithms.contains(IpSecAlgorithm.AUTH_CRYPT_CHACHA20_POLY1305)) {
+                aeadBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_CHACHA20_POLY1305, KEY_LEN_UNUSED);
+            }
+            if (allowedAlgorithms.contains(IpSecAlgorithm.AUTH_CRYPT_AES_GCM)) {
+                aeadBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_GCM_16, KEY_LEN_AES_256);
+                aeadBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_GCM_12, KEY_LEN_AES_256);
+                aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_8, KEY_LEN_AES_256);
+                aeadBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_GCM_16, KEY_LEN_AES_192);
+                aeadBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_GCM_12, KEY_LEN_AES_192);
+                aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_8, KEY_LEN_AES_192);
+                aeadBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_GCM_16, KEY_LEN_AES_128);
+                aeadBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_GCM_12, KEY_LEN_AES_128);
+                aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_8, KEY_LEN_AES_128);
+            }
 
             proposals.add(aeadBuilder.build());
         }
