@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c514aca1_2b80ce9b",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4654,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-04-28T01:03:28Z",
+      "side": 1,
+      "message": "Do we actually have thes APIs for VoiceOperator and DataOperator separately? That would surprise me. The only way I know of to do this is via the NetworkRegistrationInfo.",
+      "range": {
+        "startLine": 4654,
+        "startChar": 51,
+        "endLine": 4654,
+        "endChar": 72
+      },
+      "revId": "7a705432f41130fd5457e0a7453cb129123d299a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d94ee0e5_5b977e1b",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4658,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-04-28T01:03:28Z",
+      "side": 1,
+      "message": "Rather than assuming we have to expose all these fields, could we search the Android and G3 repos and see which of these we can delete?",
+      "range": {
+        "startLine": 4658,
+        "startChar": 64,
+        "endLine": 4658,
+        "endChar": 89
+      },
+      "revId": "7a705432f41130fd5457e0a7453cb129123d299a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
