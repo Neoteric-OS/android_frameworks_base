@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ade25ce4_d35c8fd6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1258207
+      },
+      "writtenOn": "2021-04-28T23:45:31Z",
+      "side": 1,
+      "message": "Do let me know if this is OK for `master`, otherwise I don\u0027t know which would be the correct branch, since I rarely touch platform. \u003d]",
+      "revId": "3771ef8d64fd577c08c3dd2dae3f14c5e378452f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
