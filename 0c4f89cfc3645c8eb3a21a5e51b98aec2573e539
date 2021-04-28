@@ -16,6 +16,24 @@
       "message": "IIRC these APIs are used by external testing tools extensively. I\u0027d be wary of changing them even though they are technically private.",
       "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d25c6af6_32063717",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1373934
+      },
+      "writtenOn": "2021-04-28T11:06:13Z",
+      "side": 1,
+      "message": "Is there any way of testing that these changes break anything? So far I encountered only cts breakages.",
+      "parentUuid": "2526011a_120b145a",
+      "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
