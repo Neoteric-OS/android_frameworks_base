@@ -54,7 +54,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
     private static final String TAG = "VpnProfile";
 
     @VisibleForTesting static final String VALUE_DELIMITER = "\0";
-    @VisibleForTesting static final String LIST_DELIMITER = ",";
+    @VisibleForTesting static final String LIST_DELIMITER = ";";
 
     // Match these constants with R.array.vpn_types.
     public static final int TYPE_PPTP = 0;
