@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ac7a934_f85b4bb3",
+        "filename": "packages/SettingsProvider/res/values/defaults.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1608690
+      },
+      "writtenOn": "2021-04-28T15:50:41Z",
+      "side": 1,
+      "message": "I\u0027m just thinking why not override this value in vendor partition. I don\u0027t see any reason why we have to change this default value if this will only be existed on R.",
+      "range": {
+        "startLine": 242,
+        "startChar": 46,
+        "endLine": 242,
+        "endChar": 50
+      },
+      "revId": "c5226259637684916e517b366f4639e1c3b71e31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
