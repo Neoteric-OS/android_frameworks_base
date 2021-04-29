@@ -139,6 +139,19 @@ CopyResult Readback::copyImageInto(const sk_sp<SkImage>& image, Matrix4& texTran
     SkRect skiaSrcRect = srcRect.toSkRect();
     if (skiaSrcRect.isEmpty()) {
         skiaSrcRect = SkRect::MakeIWH(displayedWidth, displayedHeight);
+    } else {
+        SkMatrix texMat;
+        texTransform.copyTo(texMat);
+        SkMatrix flipV;
+        flipV.setAll(1, 0, 0, 0, -1, 1, 0, 0, 1);
+        texMat.preConcat(flipV);
+        texMat.preScale(1.0f / displayedWidth, 1.0f / displayedHeight);
+        texMat.postScale(imgWidth, imgHeight);
+        SkMatrix inv;
+        if (!texMat.invert(&inv)) {
+            inv = texMat;//XXX
+        }
+        inv.mapRect(&skiaSrcRect);
     }
     bool srcNotEmpty = skiaSrcRect.intersect(SkRect::MakeIWH(displayedWidth, displayedHeight));
     if (!srcNotEmpty) {
