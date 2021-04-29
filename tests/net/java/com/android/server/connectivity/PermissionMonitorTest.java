@@ -30,6 +30,7 @@ import static android.content.pm.PackageInfo.REQUESTED_PERMISSION_GRANTED;
 import static android.content.pm.PackageInfo.REQUESTED_PERMISSION_REQUIRED;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.content.pm.PackageManager.MATCH_ANY_USER;
+import static android.net.ConnectivitySettingsManager.RESTRICTED_ALLOWED_APPS;
 import static android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK;
 import static android.os.Process.SYSTEM_UID;
 
@@ -44,8 +45,10 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.AdditionalMatchers.aryEq;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
@@ -62,6 +65,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.ContentObserver;
 import android.net.INetd;
 import android.net.UidRange;
 import android.net.Uri;
@@ -69,16 +73,12 @@ import android.os.Build;
 import android.os.SystemConfigManager;
 import android.os.UserHandle;
 import android.os.UserManager;
-import android.provider.Settings;
-import android.test.mock.MockContentResolver;
 import android.util.ArraySet;
 import android.util.SparseIntArray;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
-
-import com.android.internal.util.test.FakeSettingsProvider;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -126,7 +126,6 @@ public class PermissionMonitorTest {
     @Mock private SystemConfigManager mSystemConfigManager;
 
     private PermissionMonitor mPermissionMonitor;
-    private MockContentResolver mContentResolver;
 
     @Before
     public void setUp() throws Exception {
@@ -143,11 +142,7 @@ public class PermissionMonitorTest {
         final Context asUserCtx = mock(Context.class, AdditionalAnswers.delegatesTo(mContext));
         doReturn(UserHandle.ALL).when(asUserCtx).getUser();
         when(mContext.createContextAsUser(eq(UserHandle.ALL), anyInt())).thenReturn(asUserCtx);
-
-        FakeSettingsProvider.clearSettingsProvider();
-        mContentResolver = new MockContentResolver();
-        mContentResolver.addProvider(Settings.AUTHORITY, new FakeSettingsProvider());
-        when(mContext.getContentResolver()).thenReturn(mContentResolver);
+        when(mDeps.getRestrictedAllowedApps(any())).thenReturn(new ArraySet<>());
 
         mPermissionMonitor = spy(new PermissionMonitor(mContext, mNetdService, mDeps));
 
@@ -903,4 +898,101 @@ public class PermissionMonitorTest {
         mNetdServiceMonitor.expectPermission(INetd.PERMISSION_UNINSTALLED, new int[] { MOCK_UID1 });
     }
 
+    @Test
+    public void testRestrictedAllowedAppsChanged() throws Exception {
+        final NetdMonitor mNetdMonitor = new NetdMonitor(mNetdService);
+        final ArgumentCaptor<ContentObserver> captor =
+                ArgumentCaptor.forClass(ContentObserver.class);
+        verify(mDeps, times(1)).registerContentObserver(
+                any(), argThat(uri -> uri.getEncodedPath().contains(RESTRICTED_ALLOWED_APPS)),
+                anyBoolean(), captor.capture());
+        final ContentObserver contentObserver = captor.getValue();
+
+        mPermissionMonitor.onUserAdded(MOCK_USER1);
+        // Prepare PackageInfo for MOCK_PACKAGE1
+        final PackageInfo packageInfo = buildPackageInfo(
+                false /* hasSystemPermission */, MOCK_UID1, MOCK_USER1);
+        packageInfo.packageName = MOCK_PACKAGE1;
+        when(mPackageManager.getPackageInfo(eq(MOCK_PACKAGE1), anyInt())).thenReturn(packageInfo);
+        when(mPackageManager.getPackagesForUid(MOCK_UID1)).thenReturn(new String[]{MOCK_PACKAGE1});
+        // Prepare PackageInfo for MOCK_PACKAGE2
+        final PackageInfo packageInfo2 = buildPackageInfo(
+                false /* hasSystemPermission */, MOCK_UID2, MOCK_USER1);
+        packageInfo2.packageName = MOCK_PACKAGE2;
+        when(mPackageManager.getPackageInfo(eq(MOCK_PACKAGE2), anyInt())).thenReturn(packageInfo2);
+        when(mPackageManager.getPackagesForUid(MOCK_UID2)).thenReturn(new String[]{MOCK_PACKAGE2});
+
+        // MOCK_PACKAGE1 is listed in restricted allowed apps, MOCK_UID1 should have SYSTEM
+        // permission.
+        when(mDeps.getRestrictedAllowedApps(any())).thenReturn(
+                new ArraySet<>(new String[] { MOCK_PACKAGE1 }));
+        contentObserver.onChange(true /* selfChange */);
+        mNetdMonitor.expectPermission(SYSTEM, new UserHandle[]{MOCK_USER1}, new int[]{MOCK_UID1});
+        mNetdMonitor.expectNoPermission(new UserHandle[]{MOCK_USER1}, new int[]{MOCK_UID2});
+
+        // MOCK_PACKAGE2 is listed in restricted allowed apps, MOCK_UID2 should have SYSTEM
+        // permission and MOCK_UID1 should revoke permission.
+        when(mDeps.getRestrictedAllowedApps(any())).thenReturn(
+                new ArraySet<>(new String[] { MOCK_PACKAGE2 }));
+        contentObserver.onChange(true /* selfChange */);
+        mNetdMonitor.expectPermission(SYSTEM, new UserHandle[]{MOCK_USER1}, new int[]{MOCK_UID2});
+        mNetdMonitor.expectNoPermission(new UserHandle[]{MOCK_USER1}, new int[]{MOCK_UID1});
+
+        // No restricted allowed app, should revoke permission from all uids.
+        when(mDeps.getRestrictedAllowedApps(any())).thenReturn(new ArraySet<>());
+        contentObserver.onChange(true /* selfChange */);
+        mNetdMonitor.expectNoPermission(
+                new UserHandle[]{MOCK_USER1}, new int[]{MOCK_UID1, MOCK_UID2});
+    }
+
+    @Test
+    public void testRestrictedAllowedAppsChangedWithSharedUid() throws Exception {
+        final NetdMonitor mNetdMonitor = new NetdMonitor(mNetdService);
+        final ArgumentCaptor<ContentObserver> captor =
+                ArgumentCaptor.forClass(ContentObserver.class);
+        verify(mDeps, times(1)).registerContentObserver(
+                any(), argThat(uri -> uri.getEncodedPath().contains(RESTRICTED_ALLOWED_APPS)),
+                anyBoolean(), captor.capture());
+        final ContentObserver contentObserver = captor.getValue();
+
+        mPermissionMonitor.onUserAdded(MOCK_USER1);
+        // Prepare PackageInfo for MOCK_PACKAGE1 and MOCK_PACKAGE2 with shared uid MOCK_UID1.
+        final PackageInfo packageInfo = systemPackageInfoWithPermissions(CHANGE_NETWORK_STATE);
+        packageInfo.applicationInfo.uid = MOCK_USER1.getUid(MOCK_UID1);
+        packageInfo.packageName = MOCK_PACKAGE1;
+        final PackageInfo packageInfo2 = buildPackageInfo(
+                false /* hasSystemPermission */, MOCK_UID1, MOCK_USER1);
+        packageInfo2.packageName = MOCK_PACKAGE2;
+        when(mPackageManager.getPackageInfo(eq(MOCK_PACKAGE1), anyInt())).thenReturn(packageInfo);
+        when(mPackageManager.getPackageInfo(eq(MOCK_PACKAGE2), anyInt())).thenReturn(packageInfo2);
+        when(mPackageManager.getPackagesForUid(MOCK_UID1))
+                .thenReturn(new String[]{MOCK_PACKAGE1, MOCK_PACKAGE2});
+
+        // MOCK_PACKAGE1 have CHANGE_NETWORK_STATE, MOCK_UID1 should have NETWORK permission.
+        addPackageForUsers(new UserHandle[]{MOCK_USER1}, MOCK_PACKAGE1, MOCK_UID1);
+        mNetdMonitor.expectPermission(NETWORK, new UserHandle[]{MOCK_USER1}, new int[]{MOCK_UID1});
+
+        // MOCK_PACKAGE2 is listed in restricted allowed apps, MOCK_UID1 should upgrade to SYSTEM
+        // permission.
+        when(mDeps.getRestrictedAllowedApps(any())).thenReturn(
+                new ArraySet<>(new String[] { MOCK_PACKAGE2 }));
+        contentObserver.onChange(true /* selfChange */);
+        mNetdMonitor.expectPermission(SYSTEM, new UserHandle[]{MOCK_USER1}, new int[]{MOCK_UID1});
+
+        // Restricted allowed app change to MOCK_PACKAGE1, MOCK_UID1 should have same permission.
+        when(mDeps.getRestrictedAllowedApps(any())).thenReturn(
+                new ArraySet<>(new String[] { MOCK_PACKAGE1 }));
+        contentObserver.onChange(true /* selfChange */);
+        mNetdMonitor.expectPermission(SYSTEM, new UserHandle[]{MOCK_USER1}, new int[]{MOCK_UID1});
+
+        // No restricted allowed app, MOCK_UID1 should downgrade to NETWORK permission.
+        when(mDeps.getRestrictedAllowedApps(any())).thenReturn(new ArraySet<>());
+        contentObserver.onChange(true /* selfChange */);
+        mNetdMonitor.expectPermission(NETWORK, new UserHandle[]{MOCK_USER1}, new int[]{MOCK_UID1});
+
+        // MOCK_PACKAGE1 removed, should revoke permission from MOCK_UID1.
+        when(mPackageManager.getPackagesForUid(MOCK_UID1)).thenReturn(new String[]{MOCK_PACKAGE2});
+        removePackageForUsers(new UserHandle[]{MOCK_USER1}, MOCK_PACKAGE1, MOCK_UID1);
+        mNetdMonitor.expectNoPermission(new UserHandle[]{MOCK_USER1}, new int[]{MOCK_UID1});
+    }
 }
