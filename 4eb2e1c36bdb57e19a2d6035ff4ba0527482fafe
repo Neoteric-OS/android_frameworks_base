@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4c77baa_c80a478d",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-04-29T21:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0af3c873_12ca7abb",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 93
+      },
+      "revId": "4eb2e1c36bdb57e19a2d6035ff4ba0527482fafe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "acaf390f_7c2a294e",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-04-29T16:48:57Z",
       "side": 1,
       "message": "Nit, suggest keeping MODP groups in one block",
+      "range": {
+        "startLine": 196,
+        "startChar": 31,
+        "endLine": 196,
+        "endChar": 51
+      },
+      "revId": "4eb2e1c36bdb57e19a2d6035ff4ba0527482fafe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1aef6cb_765213a8",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-04-29T21:02:41Z",
+      "side": 1,
+      "message": "I want to propose from strong DH to less strong DH and I found that CURVE_25519\u0027s  security strength is the same as MODP 3072 according to https://groups.google.com/g/strongswan-users/c/2r0FWbEV6po/m/9oUhyxqzAQAJ and https://groups.google.com/g/strongswan-users/c/2r0FWbEV6po/m/MwkiFOeqAQAJ\n\nSince CURVE_25519 key length is shorter than MODP 3072, I put CURVE_25519 between MODP 4096 and MODP 3072",
+      "parentUuid": "acaf390f_7c2a294e",
       "range": {
         "startLine": 196,
         "startChar": 31,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a8801020_3671a6dd",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-04-29T21:02:41Z",
+      "side": 1,
+      "message": "One way to do that is to allow user configure algorithms. Then we can exclude this algorithm in our default proposal and user can get compatibility by explicitly configuring it. Thoughts?",
+      "parentUuid": "00f6a560_4634ad0a",
+      "range": {
+        "startLine": 204,
+        "startChar": 44,
+        "endLine": 204,
+        "endChar": 75
+      },
+      "revId": "4eb2e1c36bdb57e19a2d6035ff4ba0527482fafe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "286e6675_2853501d",
         "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
         "patchSetId": 2
@@ -83,6 +155,30 @@
       "writtenOn": "2021-04-29T16:48:57Z",
       "side": 1,
       "message": "Should we also be adding to this list?",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 13
+      },
+      "revId": "4eb2e1c36bdb57e19a2d6035ff4ba0527482fafe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cffa1dc9_1d86d100",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-04-29T21:02:41Z",
+      "side": 1,
+      "message": "added in the followup CL aosp/1690265",
+      "parentUuid": "286e6675_2853501d",
       "range": {
         "startLine": 225,
         "startChar": 0,
