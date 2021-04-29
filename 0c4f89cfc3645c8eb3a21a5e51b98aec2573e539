@@ -68,6 +68,24 @@
       "message": "+Renaud who owns the debugger.",
       "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2426cb42_cda4e19d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1077723
+      },
+      "writtenOn": "2021-04-29T12:47:18Z",
+      "side": 1,
+      "message": "I am not aware of studio directly using these classes. Studio (ddmlib that is) depends on the wire-protocol (i.e. the format DDM of the packets).\n\nI suppose it is possible Studio Profilers, since they deploy an agent to the debuggee, could call this directly, but I doubt it. Shukang would know for sure.",
+      "parentUuid": "d25c6af6_32063717",
+      "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
