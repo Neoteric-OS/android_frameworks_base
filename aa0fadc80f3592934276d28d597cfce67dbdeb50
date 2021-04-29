@@ -50,6 +50,23 @@
       "message": "Hi owners, could you please take a look at this patch?",
       "revId": "aa0fadc80f3592934276d28d597cfce67dbdeb50",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fb96f85_91054b60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132658
+      },
+      "writtenOn": "2021-04-29T12:19:12Z",
+      "side": 1,
+      "message": "Thanks a lot for your time on the codereview.",
+      "revId": "aa0fadc80f3592934276d28d597cfce67dbdeb50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
