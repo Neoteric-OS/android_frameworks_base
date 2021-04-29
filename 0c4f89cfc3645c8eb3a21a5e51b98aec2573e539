@@ -86,6 +86,42 @@
       "parentUuid": "d25c6af6_32063717",
       "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9911208_712b5c24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1079424
+      },
+      "writtenOn": "2021-04-29T18:26:26Z",
+      "side": 1,
+      "message": "I\u0027m happy to flash my phone and double check the change. But can someone tell me how to get a flash link? I have a redfin phone but I don\u0027t see any \"flash\" link in https://android-build.googleplex.com/builds/build-details/P22306815/targets/redfin-userdebug.",
+      "parentUuid": "98fe1221_5f68b35c",
+      "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d527075_7f51546b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1079424
+      },
+      "writtenOn": "2021-04-29T18:26:26Z",
+      "side": 1,
+      "message": "Studio Profilers don\u0027t use these classes directly, but we indirectly depend on some of them, for example, HPGC. I\u0027m going to flash my phone to verify nothing is broken in the profilers (see my other comment).",
+      "parentUuid": "2426cb42_cda4e19d",
+      "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
