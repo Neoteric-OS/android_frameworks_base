@@ -112,6 +112,15 @@ public class VintfObject {
     public static native String getSepolicyVersion();
 
     /**
+     * @return the PLATFORM_SEPOLICY_VERSION build flag available in framework
+     * compatibility matrix.
+     *
+     * @hide
+     */
+    @TestApi
+    public static native String getPlatformSepolicyVersion();
+
+    /**
      * @return a list of VNDK snapshots supported by the framework, as
      * specified in framework manifest. For example,
      * [("27", ["libjpeg.so", "libbase.so"]),
