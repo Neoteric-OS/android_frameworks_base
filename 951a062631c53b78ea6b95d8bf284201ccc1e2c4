@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010340613",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1623183?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b96a0497_b7e55bdd",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5330,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-29T07:27:19Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 5330,
+        "startChar": 0,
+        "endLine": 5330,
+        "endChar": 8
+      },
+      "revId": "951a062631c53b78ea6b95d8bf284201ccc1e2c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
