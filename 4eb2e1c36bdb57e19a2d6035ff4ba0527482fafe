@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0af3c873_12ca7abb",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-29T16:48:57Z",
+      "side": 1,
+      "message": "Duplicate of line below?",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 93
+      },
+      "revId": "4eb2e1c36bdb57e19a2d6035ff4ba0527482fafe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acaf390f_7c2a294e",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-29T16:48:57Z",
+      "side": 1,
+      "message": "Nit, suggest keeping MODP groups in one block",
+      "range": {
+        "startLine": 196,
+        "startChar": 31,
+        "endLine": 196,
+        "endChar": 51
+      },
+      "revId": "4eb2e1c36bdb57e19a2d6035ff4ba0527482fafe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "00f6a560_4634ad0a",
         "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
         "patchSetId": 2
@@ -19,6 +65,29 @@
         "startChar": 44,
         "endLine": 204,
         "endChar": 75
+      },
+      "revId": "4eb2e1c36bdb57e19a2d6035ff4ba0527482fafe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "286e6675_2853501d",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-29T16:48:57Z",
+      "side": 1,
+      "message": "Should we also be adding to this list?",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 13
       },
       "revId": "4eb2e1c36bdb57e19a2d6035ff4ba0527482fafe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
