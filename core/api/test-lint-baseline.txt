@@ -1491,6 +1491,8 @@ MissingNullability: android.os.VibrationEffect.Waveform#writeToParcel(android.os
     
 MissingNullability: android.os.VintfObject#getHalNamesAndVersions():
     
+MissingNullability: android.os.VintfObject#getPlatformSepolicyVersion():
+    Missing nullability on method `getPlatformSepolicyVersion` return
 MissingNullability: android.os.VintfObject#getSepolicyVersion():
     
 MissingNullability: android.os.VintfObject#getTargetFrameworkCompatibilityMatrixVersion():
