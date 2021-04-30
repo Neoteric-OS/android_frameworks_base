@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e5a9d26_b762415e",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-30T23:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10b578fd_66f96b30",
+      "range": {
+        "startLine": 399,
+        "startChar": 16,
+        "endLine": 399,
+        "endChar": 82
+      },
+      "revId": "bde6b4a061b10ed65f43fbe54c2d20cc5e227cee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3ff9340_37b7f153",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-04-30T23:27:27Z",
       "side": 1,
       "message": "nit: may be worth verifying the opposite if startState \u003d\u003d endState - thoughts?",
+      "range": {
+        "startLine": 416,
+        "startChar": 12,
+        "endLine": 416,
+        "endChar": 75
+      },
+      "revId": "bde6b4a061b10ed65f43fbe54c2d20cc5e227cee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdfbb604_4f3bf270",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-30T23:29:34Z",
+      "side": 1,
+      "message": "If this one is not fired, we actually have a functional bug; the other direction is completely safe. In the interest of not having change-detector tests, I\u0027d prefer to leave it this way.",
+      "parentUuid": "b3ff9340_37b7f153",
       "range": {
         "startLine": 416,
         "startChar": 12,
