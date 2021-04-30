@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "37cdd77d_3c546001",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1132658
+      },
+      "writtenOn": "2021-04-30T23:31:38Z",
+      "side": 1,
+      "message": "Done.\nThanks for your time on the codereivew.",
+      "parentUuid": "4d8803c0_d8a9942f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 75
+      },
+      "revId": "aa0fadc80f3592934276d28d597cfce67dbdeb50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "1db8dfee_bfea472d",
