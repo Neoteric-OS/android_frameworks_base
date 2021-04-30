@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10b578fd_66f96b30",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-30T23:27:27Z",
+      "side": 1,
+      "message": "per our discussion offline, can we add a comment for why we need this double check (why it\u0027s not 100% redundant for l.376)?",
+      "range": {
+        "startLine": 399,
+        "startChar": 16,
+        "endLine": 399,
+        "endChar": 82
+      },
+      "revId": "bde6b4a061b10ed65f43fbe54c2d20cc5e227cee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3ff9340_37b7f153",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-30T23:27:27Z",
+      "side": 1,
+      "message": "nit: may be worth verifying the opposite if startState \u003d\u003d endState - thoughts?",
+      "range": {
+        "startLine": 416,
+        "startChar": 12,
+        "endLine": 416,
+        "endChar": 75
+      },
+      "revId": "bde6b4a061b10ed65f43fbe54c2d20cc5e227cee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
