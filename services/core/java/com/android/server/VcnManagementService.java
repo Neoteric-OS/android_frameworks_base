@@ -432,6 +432,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             // Startup VCN instances
             synchronized (mLock) {
                 mLastSnapshot = snapshot;
+                Slog.d(TAG, "new snapshot: " + mLastSnapshot);
 
                 // Start any VCN instances as necessary
                 for (Entry<ParcelUuid, VcnConfig> entry : mConfigs.entrySet()) {
@@ -516,7 +517,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
     @GuardedBy("mLock")
     private void startVcnLocked(@NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config) {
-        Slog.v(TAG, "Starting VCN config for subGrp: " + subscriptionGroup);
+        Slog.d(TAG, "Starting VCN config for subGrp: " + subscriptionGroup);
 
         // TODO(b/176939047): Support multiple VCNs active at the same time, or limit to one active
         //                    VCN.
@@ -538,7 +539,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @GuardedBy("mLock")
     private void startOrUpdateVcnLocked(
             @NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config) {
-        Slog.v(TAG, "Starting or updating VCN config for subGrp: " + subscriptionGroup);
+        Slog.d(TAG, "Starting or updating VCN config for subGrp: " + subscriptionGroup);
 
         if (mVcns.containsKey(subscriptionGroup)) {
             final Vcn vcn = mVcns.get(subscriptionGroup);
@@ -564,7 +565,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         if (!config.getProvisioningPackageName().equals(opPkgName)) {
             throw new IllegalArgumentException("Mismatched caller and VcnConfig creator");
         }
-        Slog.v(TAG, "VCN config updated for subGrp: " + subscriptionGroup);
+        Slog.d(TAG, "VCN config updated for subGrp: " + subscriptionGroup);
 
         mContext.getSystemService(AppOpsManager.class)
                 .checkPackage(mDeps.getBinderCallingUid(), config.getProvisioningPackageName());
@@ -589,7 +590,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     public void clearVcnConfig(@NonNull ParcelUuid subscriptionGroup, @NonNull String opPkgName) {
         requireNonNull(subscriptionGroup, "subscriptionGroup was null");
         requireNonNull(opPkgName, "opPkgName was null");
-        Slog.v(TAG, "VCN config cleared for subGrp: " + subscriptionGroup);
+        Slog.d(TAG, "VCN config cleared for subGrp: " + subscriptionGroup);
 
         mContext.getSystemService(AppOpsManager.class)
                 .checkPackage(mDeps.getBinderCallingUid(), opPkgName);
@@ -823,8 +824,14 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             }
 
             final NetworkCapabilities result = ncBuilder.build();
-            return new VcnUnderlyingNetworkPolicy(
+            final VcnUnderlyingNetworkPolicy policy = new VcnUnderlyingNetworkPolicy(
                     mTrackingNetworkCallback.requiresRestartForCarrierWifi(result), result);
+
+            if (VDBG) {
+                Slog.d(TAG, "getUnderlyingNetworkPolicy() called for caps: " + networkCapabilities
+                        + "; and lp: " + linkProperties + "; result = " + policy);
+            }
+            return policy;
         });
     }
 
