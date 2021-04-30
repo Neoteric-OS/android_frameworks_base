@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "822f93d4_0cdb3064",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-30T22:09:06Z",
+      "side": 1,
+      "message": "Then suggest documenting this.",
+      "parentUuid": "c1aef6cb_765213a8",
+      "range": {
+        "startLine": 196,
+        "startChar": 31,
+        "endLine": 196,
+        "endChar": 51
+      },
+      "revId": "4eb2e1c36bdb57e19a2d6035ff4ba0527482fafe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "00f6a560_4634ad0a",
         "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
         "patchSetId": 2
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "One way to do that is to allow user configure algorithms. Then we can exclude this algorithm in our default proposal and user can get compatibility by explicitly configuring it. Thoughts?",
       "parentUuid": "00f6a560_4634ad0a",
+      "range": {
+        "startLine": 204,
+        "startChar": 44,
+        "endLine": 204,
+        "endChar": 75
+      },
+      "revId": "4eb2e1c36bdb57e19a2d6035ff4ba0527482fafe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f212cc22_cb9ae0fc",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-30T22:09:06Z",
+      "side": 1,
+      "message": "This probably falls under the \"let\u0027s migrate to IkeTunnelConnectionConfig\" and then this becomes obsolete.",
+      "parentUuid": "a8801020_3671a6dd",
       "range": {
         "startLine": 204,
         "startChar": 44,
