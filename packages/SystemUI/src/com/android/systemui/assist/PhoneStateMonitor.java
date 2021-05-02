@@ -181,7 +181,7 @@ public final class PhoneStateMonitor {
     }
 
     private boolean isLauncherShowing(ActivityManager.RunningTaskInfo runningTaskInfo) {
-        if (runningTaskInfo == null) {
+        if (runningTaskInfo == null || runningTaskInfo.topActivity == null) {
             return false;
         } else {
             return runningTaskInfo.topActivity.equals(mDefaultHome);
