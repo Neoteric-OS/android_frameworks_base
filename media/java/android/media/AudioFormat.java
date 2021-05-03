@@ -326,8 +326,6 @@ public final class AudioFormat implements Parcelable {
     public static final int ENCODING_MPEGH_LC_L4 = 26;
     /** Audio data format: DTS UHD compressed */
     public static final int ENCODING_DTS_UHD = 27;
-    /** Audio data format: DRA compressed */
-    public static final int ENCODING_DRA = 28;
 
     /** @hide */
     public static String toLogFriendlyEncoding(int enc) {
@@ -386,8 +384,6 @@ public final class AudioFormat implements Parcelable {
                 return "ENCODING_MPEGH_LC_L4";
             case ENCODING_DTS_UHD:
                 return "ENCODING_DTS_UHD";
-            case ENCODING_DRA:
-                return "ENCODING_DRA";
             default :
                 return "invalid encoding " + enc;
         }
@@ -668,7 +664,6 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_MPEGH_LC_L3:
             case ENCODING_MPEGH_LC_L4:
             case ENCODING_DTS_UHD:
-            case ENCODING_DRA:
                 return true;
             default:
                 return false;
@@ -705,7 +700,6 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_MPEGH_LC_L3:
             case ENCODING_MPEGH_LC_L4:
             case ENCODING_DTS_UHD:
-            case ENCODING_DRA:
                 return true;
             default:
                 return false;
@@ -745,7 +739,6 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_MPEGH_LC_L3:
             case ENCODING_MPEGH_LC_L4:
             case ENCODING_DTS_UHD:
-            case ENCODING_DRA:
                 return false;
             case ENCODING_INVALID:
             default:
@@ -785,7 +778,6 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_MPEGH_LC_L3:
             case ENCODING_MPEGH_LC_L4:
             case ENCODING_DTS_UHD:
-            case ENCODING_DRA:
                 return false;
             case ENCODING_INVALID:
             default:
@@ -1073,7 +1065,6 @@ public final class AudioFormat implements Parcelable {
                 case ENCODING_MPEGH_LC_L3:
                 case ENCODING_MPEGH_LC_L4:
                 case ENCODING_DTS_UHD:
-                case ENCODING_DRA:
                     mEncoding = encoding;
                     break;
                 case ENCODING_INVALID:
@@ -1301,8 +1292,7 @@ public final class AudioFormat implements Parcelable {
         ENCODING_MPEGH_BL_L4,
         ENCODING_MPEGH_LC_L3,
         ENCODING_MPEGH_LC_L4,
-        ENCODING_DTS_UHD,
-        ENCODING_DRA }
+        ENCODING_DTS_UHD }
     )
     @Retention(RetentionPolicy.SOURCE)
     public @interface Encoding {}
@@ -1322,8 +1312,7 @@ public final class AudioFormat implements Parcelable {
             ENCODING_MPEGH_BL_L4,
             ENCODING_MPEGH_LC_L3,
             ENCODING_MPEGH_LC_L4,
-            ENCODING_DTS_UHD,
-            ENCODING_DRA
+            ENCODING_DTS_UHD
     };
 
     /** @hide */
@@ -1341,8 +1330,7 @@ public final class AudioFormat implements Parcelable {
             ENCODING_MPEGH_BL_L4,
             ENCODING_MPEGH_LC_L3,
             ENCODING_MPEGH_LC_L4,
-            ENCODING_DTS_UHD,
-            ENCODING_DRA }
+            ENCODING_DTS_UHD }
     )
     @Retention(RetentionPolicy.SOURCE)
     public @interface SurroundSoundEncoding {}
@@ -1386,8 +1374,6 @@ public final class AudioFormat implements Parcelable {
                 return "MPEG-H 3D Audio low complexity profile level 4";
             case ENCODING_DTS_UHD:
                 return "DTS UHD";
-            case ENCODING_DRA:
-                return "DRA";
             default:
                 return "Unknown surround sound format";
         }
