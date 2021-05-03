@@ -64,6 +64,7 @@ import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
+import android.util.ArraySet;
 import android.util.Log;
 import android.util.Slog;
 
@@ -87,6 +88,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -431,6 +433,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         public void onNewSnapshot(@NonNull TelephonySubscriptionSnapshot snapshot) {
             // Startup VCN instances
             synchronized (mLock) {
+                final TelephonySubscriptionSnapshot oldSnapshot = mLastSnapshot;
                 mLastSnapshot = snapshot;
 
                 // Start any VCN instances as necessary
@@ -478,8 +481,24 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                         entry.getValue().updateSubscriptionSnapshot(mLastSnapshot);
                     }
                 }
+
+                final Set<Integer> oldVcnSubIds = getVcnSubIdsFromSnapshotLocked(oldSnapshot);
+                final Set<Integer> currVcnSubIds = getVcnSubIdsFromSnapshotLocked(mLastSnapshot);
+                if (!currVcnSubIds.equals(oldVcnSubIds)) {
+                    notifyAllPolicyListenersLocked();
+                }
             }
         }
+    }
+
+    @GuardedBy("mLock")
+    private Set<Integer> getVcnSubIdsFromSnapshotLocked(
+            @NonNull TelephonySubscriptionSnapshot snapshot) {
+        final Set<Integer> vcnSubIds = new ArraySet<>();
+        for (ParcelUuid subGrp : mVcns.keySet()) {
+            vcnSubIds.addAll(snapshot.getAllSubIdsInGroup(subGrp));
+        }
+        return vcnSubIds;
     }
 
     @GuardedBy("mLock")
