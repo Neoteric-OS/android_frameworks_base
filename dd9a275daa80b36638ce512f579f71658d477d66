@@ -49,6 +49,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "041b5405_6e79ed37",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-03T23:49:31Z",
+      "side": 1,
+      "message": "this is needed for correctness - because VcnManagementService only ever removes this bit, it needs to be manually set before getting the VCN policy in case the network went from VCN-managed --\u003e not-VCN-managed",
+      "parentUuid": "69a427be_4afe17eb",
+      "range": {
+        "startLine": 453,
+        "startChar": 74,
+        "endLine": 453,
+        "endChar": 94
+      },
+      "revId": "dd9a275daa80b36638ce512f579f71658d477d66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ed9b9cc_6d3d7497",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-03T23:49:31Z",
+      "side": 1,
+      "message": "I think this is a miscommunication on my part - I meant this to be scoped to the NOT_VCN_MANAGED bit specifically (as in, the service only removes that bit, it doesn\u0027t add it when the Network is not vcn managed).",
+      "parentUuid": "340249fd_6bbaadc9",
+      "range": {
+        "startLine": 453,
+        "startChar": 54,
+        "endLine": 453,
+        "endChar": 69
+      },
+      "revId": "dd9a275daa80b36638ce512f579f71658d477d66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4c5eea6e_f59a9ecd",
         "filename": "services/core/java/com/android/server/TestNetworkService.java",
         "patchSetId": 4
@@ -60,6 +108,30 @@
       "writtenOn": "2021-04-30T22:23:50Z",
       "side": 1,
       "message": "We probably should be caching these, and just using them instead of querying; this could theoretically be racy (if the assumption that once created the caps can\u0027t change is ever altered)",
+      "range": {
+        "startLine": 456,
+        "startChar": 52,
+        "endLine": 456,
+        "endChar": 74
+      },
+      "revId": "dd9a275daa80b36638ce512f579f71658d477d66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26a972ca_5dc1e377",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-03T23:49:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c5eea6e_f59a9ecd",
       "range": {
         "startLine": 456,
         "startChar": 52,
@@ -83,6 +155,30 @@
       "writtenOn": "2021-04-30T22:23:50Z",
       "side": 1,
       "message": "Suggest copying over only the necessary bits; NOT_VCN_MANAGED and RESTRICTED",
+      "range": {
+        "startLine": 465,
+        "startChar": 66,
+        "endLine": 465,
+        "endChar": 88
+      },
+      "revId": "dd9a275daa80b36638ce512f579f71658d477d66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d76b77d7_2c5536cc",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-03T23:49:31Z",
+      "side": 1,
+      "message": "changed to copy over the NOT_VCN_MANAGED bit.\n\nFor RESTRICTED: iiuc that\u0027s an immutable capability so it shouldn\u0027t be changing on an active Network, right?",
+      "parentUuid": "5ed1239d_7c5f719d",
       "range": {
         "startLine": 465,
         "startChar": 66,

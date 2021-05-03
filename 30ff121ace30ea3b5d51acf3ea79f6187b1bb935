@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2efc023_36b8defd",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-03T23:49:31Z",
+      "side": 1,
+      "message": "Also considered \u0027getCombinedNetworkCapabilities()\u0027 - thoughts?",
+      "range": {
+        "startLine": 367,
+        "startChar": 39,
+        "endLine": 367,
+        "endChar": 70
+      },
+      "revId": "30ff121ace30ea3b5d51acf3ea79f6187b1bb935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
