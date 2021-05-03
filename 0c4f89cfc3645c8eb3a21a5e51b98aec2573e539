@@ -122,6 +122,24 @@
       "parentUuid": "2426cb42_cda4e19d",
       "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a401f86_d7766d78",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1079424
+      },
+      "writtenOn": "2021-05-03T22:39:09Z",
+      "side": 1,
+      "message": "I tried to test this change but the phone doesn\u0027t finish booting after I flash a Pixel 5 phone (redfin) from https://android-build.googleplex.com/builds/treetop/android-review/1686655?ref\u003dCOMMENT\u0026revision\u003d2.  It went into a ramdump mode. So, unfortunately I cannot test the change with Studio.",
+      "parentUuid": "d9911208_712b5c24",
+      "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
