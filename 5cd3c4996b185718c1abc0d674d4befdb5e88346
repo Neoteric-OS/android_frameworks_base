@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "509a4dc4_9633741f",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-03T17:42:49Z",
+      "side": 1,
+      "message": "nit: extra line - is this intentional?",
+      "revId": "5cd3c4996b185718c1abc0d674d4befdb5e88346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd361506_f56dc630",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-03T17:42:49Z",
+      "side": 1,
+      "message": "should we also log the current token? (since these alarms only apply to the specified token)",
+      "range": {
+        "startLine": 954,
+        "startChar": 25,
+        "endLine": 954,
+        "endChar": 55
+      },
+      "revId": "5cd3c4996b185718c1abc0d674d4befdb5e88346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec79f427_42531b72",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-03T17:42:49Z",
+      "side": 1,
+      "message": "ditto on logging token",
+      "range": {
+        "startLine": 1028,
+        "startChar": 25,
+        "endLine": 1028,
+        "endChar": 44
+      },
+      "revId": "5cd3c4996b185718c1abc0d674d4befdb5e88346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58ae61ee_ec4ded33",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-03T17:42:49Z",
+      "side": 1,
+      "message": "nit: I think this needs to be below the if/else if /else block",
+      "range": {
+        "startLine": 1123,
+        "startChar": 8,
+        "endLine": 1130,
+        "endChar": 44
+      },
+      "revId": "5cd3c4996b185718c1abc0d674d4befdb5e88346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1c9a02c_48739710",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-03T17:42:49Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we should also log some identifying info in these logs so we can tell which one entered safe mode if there are multiple VcnGatewayConnections - maybe the gateway connection name or a hash of the config?",
+      "range": {
+        "startLine": 1309,
+        "startChar": 25,
+        "endLine": 1309,
+        "endChar": 66
+      },
+      "revId": "5cd3c4996b185718c1abc0d674d4befdb5e88346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
