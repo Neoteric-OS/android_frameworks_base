@@ -97,6 +97,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c441fa4f_6ae05af0",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-04T00:20:04Z",
+      "side": 1,
+      "message": "Hmm, have we considered allowing VcnManagmentService to add the NOT_VCN_MANAGED capability? That removes reliance on the implementation to always pass that to us.",
+      "parentUuid": "2ed9b9cc_6d3d7497",
+      "range": {
+        "startLine": 453,
+        "startChar": 54,
+        "endLine": 453,
+        "endChar": 69
+      },
+      "revId": "dd9a275daa80b36638ce512f579f71658d477d66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3434bf9e_dd6f5202",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-04T00:20:04Z",
+      "side": 1,
+      "message": "Ack; see comment above for additional discussion",
+      "parentUuid": "041b5405_6e79ed37",
+      "range": {
+        "startLine": 453,
+        "startChar": 74,
+        "endLine": 453,
+        "endChar": 94
+      },
+      "revId": "dd9a275daa80b36638ce512f579f71658d477d66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4c5eea6e_f59a9ecd",
         "filename": "services/core/java/com/android/server/TestNetworkService.java",
         "patchSetId": 4
@@ -179,6 +227,30 @@
       "side": 1,
       "message": "changed to copy over the NOT_VCN_MANAGED bit.\n\nFor RESTRICTED: iiuc that\u0027s an immutable capability so it shouldn\u0027t be changing on an active Network, right?",
       "parentUuid": "5ed1239d_7c5f719d",
+      "range": {
+        "startLine": 465,
+        "startChar": 66,
+        "endLine": 465,
+        "endChar": 88
+      },
+      "revId": "dd9a275daa80b36638ce512f579f71658d477d66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba7eedc0_e2fee0a0",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-04T00:20:04Z",
+      "side": 1,
+      "message": "If we expect the teardown to have caught that change (i.e., the VcnMgmtSvc should never request a change in RESTRICTED for an active network without also setting the teardown flag), this should never fire with a change in the RESTRICTED capabilities.",
+      "parentUuid": "d76b77d7_2c5536cc",
       "range": {
         "startLine": 465,
         "startChar": 66,
