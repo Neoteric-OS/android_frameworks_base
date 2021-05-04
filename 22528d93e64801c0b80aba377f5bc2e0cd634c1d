@@ -16,6 +16,24 @@
       "message": "Any test updates necessary/possible?",
       "revId": "22528d93e64801c0b80aba377f5bc2e0cd634c1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0459804b_5e56ad24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-05-04T02:27:54Z",
+      "side": 1,
+      "message": "It will be a non-trivial work to add tests that verify setting up VPN tunnels with each algorithms. But I can add unit tests to verify SaProposal has built with expected algorithms. Thoughts?",
+      "parentUuid": "5a80214f_bd90a9c5",
+      "revId": "22528d93e64801c0b80aba377f5bc2e0cd634c1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
