@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9e23744_80a0403f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-05-05T19:37:01Z",
+      "side": 1,
+      "message": "Please continue to reviewing this topic which is parent CLs for upcoming CTS cases.\nThanks",
+      "revId": "c3062ec794439331847f22cca4de09f2d7506da5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
