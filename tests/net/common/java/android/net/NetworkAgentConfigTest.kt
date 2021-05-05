@@ -59,9 +59,11 @@ class NetworkAgentConfigTest {
 
     @Test @IgnoreUpTo(Build.VERSION_CODES.Q)
     fun testBuilder() {
+        val testExtraInfo = "mylegacyExtraInfo"
         val config = NetworkAgentConfig.Builder().apply {
             setExplicitlySelected(true)
             setLegacyType(ConnectivityManager.TYPE_ETHERNET)
+            setLegacyExtraInfo(testExtraInfo)
             setSubscriberId("MySubId")
             setPartialConnectivityAcceptable(false)
             setUnvalidatedConnectivityAcceptable(true)
@@ -79,6 +81,7 @@ class NetworkAgentConfigTest {
         assertFalse(config.isPartialConnectivityAcceptable())
         assertTrue(config.isUnvalidatedConnectivityAcceptable())
         assertEquals("TEST_NETWORK", config.getLegacyTypeName())
+        assertEquals(testExtraInfo, config.getLegacyExtraInfo())
         if (isAtLeastS()) {
             assertFalse(config.isNat64DetectionEnabled())
             assertFalse(config.isProvisioningNotificationEnabled())
