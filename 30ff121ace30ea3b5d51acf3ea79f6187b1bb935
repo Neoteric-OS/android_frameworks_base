@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2dd4663_81616a15",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-05T04:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9d84fd5_0a18c394",
+      "range": {
+        "startLine": 199,
+        "startChar": 53,
+        "endLine": 199,
+        "endChar": 70
+      },
+      "revId": "30ff121ace30ea3b5d51acf3ea79f6187b1bb935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d2efc023_36b8defd",
@@ -71,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "030f988a_4384466a",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-05T04:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06d72409_2eba6f41",
+      "range": {
+        "startLine": 367,
+        "startChar": 39,
+        "endLine": 367,
+        "endChar": 70
+      },
+      "revId": "30ff121ace30ea3b5d51acf3ea79f6187b1bb935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6161ff44_8eec5236",
@@ -84,6 +132,30 @@
       "writtenOn": "2021-05-04T00:36:41Z",
       "side": 1,
       "message": "This looks like it\u0027ll fail silently, making tests hard to debug. suggest throwing an exception, probably directly from registerTestNetworkAgent",
+      "range": {
+        "startLine": 427,
+        "startChar": 0,
+        "endLine": 429,
+        "endChar": 17
+      },
+      "revId": "30ff121ace30ea3b5d51acf3ea79f6187b1bb935",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9ba0527_2e0e6bec",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-05T04:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6161ff44_8eec5236",
       "range": {
         "startLine": 427,
         "startChar": 0,

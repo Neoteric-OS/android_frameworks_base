@@ -143,6 +143,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e082ff7e_e2cd8ae1",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-05T04:26:07Z",
+      "side": 1,
+      "message": "Fixed in aosp/1696089, added above this CL",
+      "parentUuid": "c441fa4f_6ae05af0",
+      "range": {
+        "startLine": 453,
+        "startChar": 54,
+        "endLine": 453,
+        "endChar": 69
+      },
+      "revId": "dd9a275daa80b36638ce512f579f71658d477d66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c5eea6e_f59a9ecd",
@@ -251,6 +275,30 @@
       "side": 1,
       "message": "If we expect the teardown to have caught that change (i.e., the VcnMgmtSvc should never request a change in RESTRICTED for an active network without also setting the teardown flag), this should never fire with a change in the RESTRICTED capabilities.",
       "parentUuid": "d76b77d7_2c5536cc",
+      "range": {
+        "startLine": 465,
+        "startChar": 66,
+        "endLine": 465,
+        "endChar": 88
+      },
+      "revId": "dd9a275daa80b36638ce512f579f71658d477d66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19d0f3ae_75620df8",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-05T04:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba7eedc0_e2fee0a0",
       "range": {
         "startLine": 465,
         "startChar": 66,
