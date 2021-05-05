@@ -22,6 +22,30 @@
       },
       "revId": "0ae3732b596735a1602499508c3d5a34c705d769",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d96242f_7a9cf97d",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-05T04:24:33Z",
+      "side": 1,
+      "message": "ah good point. Was originally thinking of strictly subIds changing.\n\nRev\u0027d to compare subGrp -\u003e subId mappings",
+      "parentUuid": "79358dc5_7f475168",
+      "range": {
+        "startLine": 497,
+        "startChar": 0,
+        "endLine": 501,
+        "endChar": 25
+      },
+      "revId": "0ae3732b596735a1602499508c3d5a34c705d769",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
