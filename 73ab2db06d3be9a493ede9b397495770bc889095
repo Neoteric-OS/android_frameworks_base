@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0f11eed_86cdb773",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-05T21:13:03Z",
+      "side": 1,
+      "message": "Much nicer, thank you :)",
+      "range": {
+        "startLine": 496,
+        "startChar": 0,
+        "endLine": 496,
+        "endChar": 77
+      },
+      "revId": "73ab2db06d3be9a493ede9b397495770bc889095",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
