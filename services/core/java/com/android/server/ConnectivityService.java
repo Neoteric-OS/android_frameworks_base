@@ -9065,6 +9065,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return true;
         }
 
+        for (NetworkAgentInfo virtual : mNetworkAgentInfos) {
+            if (virtual.supportsUnderlyingNetworks()
+                    && virtual.networkCapabilities.getOwnerUid() == callbackUid
+                    && CollectionUtils.contains(virtual.declaredUnderlyingNetworks, nai.network)) {
+                return true;
+            }
+        }
+
+        // Administrator UIDs also contains the Owner UID
+        final int[] administratorUids = nai.networkCapabilities.getAdministratorUids();
+        if (!CollectionUtils.contains(administratorUids, callbackUid)) {
+            return false;
+        }
+
         // LocationPermissionChecker#checkLocationPermission can throw SecurityException if the uid
         // and package name don't match. Throwing on the CS thread is not acceptable, so wrap the
         // call in a try-catch.
@@ -9077,17 +9091,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return false;
         }
 
-        for (NetworkAgentInfo virtual : mNetworkAgentInfos) {
-            if (virtual.supportsUnderlyingNetworks()
-                    && virtual.networkCapabilities.getOwnerUid() == callbackUid
-                    && CollectionUtils.contains(virtual.declaredUnderlyingNetworks, nai.network)) {
-                return true;
-            }
-        }
-
-        // Administrator UIDs also contains the Owner UID
-        final int[] administratorUids = nai.networkCapabilities.getAdministratorUids();
-        return CollectionUtils.contains(administratorUids, callbackUid);
+        return true;
     }
 
     @Override

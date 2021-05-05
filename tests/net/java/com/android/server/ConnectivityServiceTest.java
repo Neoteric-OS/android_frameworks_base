@@ -9689,28 +9689,31 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testCheckConnectivityDiagnosticsPermissionsWrongUidPackageName() throws Exception {
-        final NetworkAgentInfo naiWithoutUid = fakeMobileNai(new NetworkCapabilities());
+        final NetworkCapabilities nc = new NetworkCapabilities();
+        nc.setAdministratorUids(new int[] {Process.myUid()});
+        final NetworkAgentInfo naiWithUid = fakeMobileNai(nc);
 
         mServiceContext.setPermission(android.Manifest.permission.NETWORK_STACK, PERMISSION_DENIED);
 
         assertFalse(
                 "Mismatched uid/package name should not pass the location permission check",
                 mService.checkConnectivityDiagnosticsPermissions(
-                        Process.myPid() + 1, Process.myUid() + 1, naiWithoutUid,
+                        Process.myPid() + 1, Process.myUid() + 1, naiWithUid,
                         mContext.getOpPackageName()));
     }
 
     @Test
     public void testCheckConnectivityDiagnosticsPermissionsNoLocationPermission() throws Exception {
-        final NetworkAgentInfo naiWithoutUid = fakeMobileNai(new NetworkCapabilities());
+        final NetworkCapabilities nc = new NetworkCapabilities();
+        nc.setAdministratorUids(new int[] {Process.myUid()});
+        final NetworkAgentInfo naiWithUid = fakeMobileNai(nc);
 
         mServiceContext.setPermission(android.Manifest.permission.NETWORK_STACK, PERMISSION_DENIED);
 
         assertFalse(
                 "ACCESS_FINE_LOCATION permission necessary for Connectivity Diagnostics",
                 mService.checkConnectivityDiagnosticsPermissions(
-                        Process.myPid(), Process.myUid(), naiWithoutUid,
-                        mContext.getOpPackageName()));
+                        Process.myPid(), Process.myUid(), naiWithUid, mContext.getOpPackageName()));
     }
 
     @Test
