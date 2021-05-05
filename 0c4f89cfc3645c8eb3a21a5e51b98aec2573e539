@@ -140,6 +140,41 @@
       "parentUuid": "d9911208_712b5c24",
       "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "828b72ae_bb91c142",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1079424
+      },
+      "writtenOn": "2021-05-05T23:27:39Z",
+      "side": 1,
+      "message": "I managed to flash the build after selecting \u0027Wipe Device\u0027 and \u0027Force Flash all Partitions\u0027. Now I confirm Studio Profilers are fully working with this change (google/redfin/redfin:S/MASTER/P22306815:userdebug/dev-keys).",
+      "parentUuid": "2a401f86_d7766d78",
+      "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64029438_18a2aa8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1079424
+      },
+      "writtenOn": "2021-05-05T23:27:39Z",
+      "side": 1,
+      "message": "I confirm Studio Profilers still work with this change.",
+      "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
