@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5e26757_257e7c9a",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-05-06T08:27:42Z",
+      "side": 1,
+      "message": "Because that was missing from selinux, was that not working before?",
+      "range": {
+        "startLine": 860,
+        "startChar": 24,
+        "endLine": 860,
+        "endChar": 62
+      },
+      "revId": "f93ecde2fe404a1b67e15f8cf2d35494cf1a48e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
