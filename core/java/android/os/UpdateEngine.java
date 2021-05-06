@@ -409,16 +409,38 @@ public class UpdateEngine {
 
     /**
      * Resets the bootable flag on the non-current partition and all internal
-     * update_engine state. This can be used after an unwanted payload has been
-     * successfully applied and the device has not yet been rebooted to signal
-     * that we no longer want to boot into that updated system. After this call
-     * completes, update_engine will no longer report
+     * update_engine state. Note this call will clear the entire update
+     * progress. So a subsequent {@link #applyPayload} will apply the update
+     * from scratch.
+     *
+     * <p>After this call completes, update_engine will no longer report
      * {@code UPDATED_NEED_REBOOT}, so your callback can remove any outstanding
      * notification that rebooting into the new system is possible.
      */
     public void resetStatus() {
         try {
             mUpdateEngine.resetStatus();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Sets the A/B slot on the next boot after applying an ota update. This
+     * API can be used in the following cases.
+     * <p>1. Sets the boot slot to the source/current slot, without cancelling
+     *       the update progress. This can be called after the update is
+     *       installed, and to prevent the device from accidentally take the
+     *       update when it reboots. This is useful when users don't want to
+     *       take the update immediately; or the updater determines some
+     *       condition hasn't met, e.g. insufficient space for boot.
+     * <p>2. Sets the boot slot to the target slot. If {@link #applyPayload}
+     *       hasn't switched the slot, the updater APP can call this API to
+     *       switch the slot and apply the update on next boot.
+     */
+    public void setShouldSwitchSlotOnReboot(boolean switchSlot) {
+        try {
+            mUpdateEngine.setShouldSwitchSlotOnReboot(switchSlot);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
