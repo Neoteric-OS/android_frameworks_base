@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a5275e7_8f0228f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-05-06T14:43:50Z",
+      "side": 1,
+      "message": "We should add ourselves (ART team) to the AndroidRuntime.cpp owners.\n\nHowever it seems that the current setting set the graphics team as OWNERS\n\n`per-file AndroidRuntime.cpp \u003d file:/graphics/java/android/graphics/OWNERS`\n\nJohn, do you know if the OWNER format support a mix or file: and usernames? or if we can add 2 files there? If not we might need to expand that list.",
+      "revId": "f93ecde2fe404a1b67e15f8cf2d35494cf1a48e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5e26757_257e7c9a",
