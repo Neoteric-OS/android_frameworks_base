@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c39a7889_5aa4ad5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-05-06T21:58:07Z",
+      "side": 1,
+      "message": "Elvis, is there any update on this CL?  Can it be abandoned?  Thanks!",
+      "revId": "296f6728bd92b532700b029a637e83226e36eb4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
