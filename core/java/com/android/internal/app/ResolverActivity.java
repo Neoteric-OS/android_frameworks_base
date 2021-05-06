@@ -564,6 +564,7 @@ public class ResolverActivity extends Activity implements
         for (final UserInfo userInfo : userManager.getProfiles(ActivityManager.getCurrentUser())) {
             if (userInfo.isManagedProfile()) {
                 mWorkProfileUserHandle = userInfo.getUserHandle();
+                break;
             }
         }
         return mWorkProfileUserHandle;
