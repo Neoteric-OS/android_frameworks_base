@@ -7259,6 +7259,7 @@ package android.os {
     method @WorkerThread public int cleanupAppliedPayload();
     method public void resetStatus();
     method public void resume();
+    method public void setBootSlot(boolean);
     method public void suspend();
     method public boolean unbind();
     method public boolean verifyPayloadMetadata(String);
