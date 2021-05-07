@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3114387_ed97513c",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4114,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-05-07T01:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd60af87_5ff25471",
+      "range": {
+        "startLine": 4114,
+        "startChar": 35,
+        "endLine": 4114,
+        "endChar": 76
+      },
+      "revId": "f694f0308c00fae3fecfebedb29bb887a2533cb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93a482d9_547120ca",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8685153e_a9b41382",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4122,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-05-07T01:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93a482d9_547120ca",
+      "range": {
+        "startLine": 4122,
+        "startChar": 35,
+        "endLine": 4122,
+        "endChar": 77
+      },
+      "revId": "f694f0308c00fae3fecfebedb29bb887a2533cb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8837d4a6_c28087ca",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-05-07T00:30:01Z",
       "side": 1,
       "message": "Should this be 20 minutes or set to the non rcs cap refresh timer?",
+      "range": {
+        "startLine": 4139,
+        "startChar": 73,
+        "endLine": 4139,
+        "endChar": 87
+      },
+      "revId": "f694f0308c00fae3fecfebedb29bb887a2533cb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3bcdb5d_7bca6c38",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4139,
+      "author": {
+        "id": 1467491
+      },
+      "writtenOn": "2021-05-07T01:41:18Z",
+      "side": 1,
+      "message": "When the device is in the 489 BAD EVENT state and receive capabilities requests from applications, the UCE framework will trigger the callback\n\"CapabilitiesCallback#onError(int errorCode, long retryIntervalMillis)\".\nhttps://source.corp.google.com/android/frameworks/base/telephony/java/android/telephony/ims/RcsUceAdapter.java;l\u003d447\n\nIn this case, this carrier config KEY_RCS_REQUEST_RETRY_INTERVAL_MILLIS_LONG is for the onError callback parameter \"retryIntervalMillis\"",
+      "parentUuid": "8837d4a6_c28087ca",
       "range": {
         "startLine": 4139,
         "startChar": 73,
