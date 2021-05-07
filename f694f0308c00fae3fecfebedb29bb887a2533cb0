@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd60af87_5ff25471",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4114,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-05-07T00:30:01Z",
+      "side": 1,
+      "message": "Please also specify the default in the docs",
+      "range": {
+        "startLine": 4114,
+        "startChar": 35,
+        "endLine": 4114,
+        "endChar": 76
+      },
+      "revId": "f694f0308c00fae3fecfebedb29bb887a2533cb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93a482d9_547120ca",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4122,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-05-07T00:30:01Z",
+      "side": 1,
+      "message": "please also set the default time here",
+      "range": {
+        "startLine": 4122,
+        "startChar": 35,
+        "endLine": 4122,
+        "endChar": 77
+      },
+      "revId": "f694f0308c00fae3fecfebedb29bb887a2533cb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8837d4a6_c28087ca",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4139,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-05-07T00:30:01Z",
+      "side": 1,
+      "message": "Should this be 20 minutes or set to the non rcs cap refresh timer?",
+      "range": {
+        "startLine": 4139,
+        "startChar": 73,
+        "endLine": 4139,
+        "endChar": 87
+      },
+      "revId": "f694f0308c00fae3fecfebedb29bb887a2533cb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
