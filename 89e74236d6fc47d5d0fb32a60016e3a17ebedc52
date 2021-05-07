@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5f9fa35_56f19616",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-05-07T16:06:34Z",
+      "side": 1,
+      "message": "This comment is just me working through the implications of this change out loud.\n\nI presume that you mean that because these constants are inlined in the API we could not change them because that would change the API and break backwards compatibility.\n\nHowever, this change does mean that we could change VMRuntime.SDK_VERSION_CUR_DEVELOPMENT or VMDebug.TRACE_COUNT_ALLOCS in future because it would not affect the public API.\n\nIf these get out of sync with the API then it will cause problems.\n\nThat is the main reason why we didn\u0027t do this sooner. However, given that we do now track the stable core platform API of which they are part any changes to those variables will be detected as well so we should be ok.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "89e74236d6fc47d5d0fb32a60016e3a17ebedc52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25d93313_fc834172",
+        "filename": "core/java/android/os/Build.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-05-07T16:06:34Z",
+      "side": 1,
+      "message": "Could you add a comment here (not JavaDoc of course), and on the VMRuntime.SDK_VERSION_CUR_DEVELOPMENT fields to make it clear that they are coupled and have to stay in sync.",
+      "revId": "89e74236d6fc47d5d0fb32a60016e3a17ebedc52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed317edb_a6da9911",
+        "filename": "core/java/android/os/Debug.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-05-07T16:06:34Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "89e74236d6fc47d5d0fb32a60016e3a17ebedc52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
