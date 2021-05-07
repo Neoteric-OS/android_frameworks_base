@@ -276,9 +276,13 @@ public class NetworkTemplate implements Parcelable {
     /**
      * Template to match all carrier networks with the given IMSI.
      */
-    public static NetworkTemplate buildTemplateCarrier(@NonNull String subscriberId) {
+    public static NetworkTemplate buildTemplateCarrier(@NonNull String subscriberId,
+            boolean isMetered) {
         Objects.requireNonNull(subscriberId);
-        return new NetworkTemplate(MATCH_CARRIER, subscriberId, null);
+        return new NetworkTemplate(MATCH_CARRIER, subscriberId,
+                new String[] { subscriberId }, null /* networkId */,
+                isMetered ? METERED_YES : METERED_NO, ROAMING_ALL, DEFAULT_NETWORK_ALL,
+                NETWORK_TYPE_ALL, OEM_MANAGED_ALL, SUBSCRIBER_ID_MATCH_RULE_EXACT);
     }
 
     private final int mMatchRule;
