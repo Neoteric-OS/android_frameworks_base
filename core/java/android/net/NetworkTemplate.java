@@ -710,7 +710,8 @@ public class NetworkTemplate implements Parcelable {
      * Check if matches carrier network. The carrier networks means it includes the subscriberId.
      */
     private boolean matchesCarrier(NetworkIdentity ident) {
-        return ident.mSubscriberId != null
+        return  ((ident.mType == TYPE_MOBILE ? ident.mMetered : true))
+                && ident.mSubscriberId != null
                 && !ArrayUtils.isEmpty(mMatchSubscriberIds)
                 && ArrayUtils.contains(mMatchSubscriberIds, ident.mSubscriberId);
     }
