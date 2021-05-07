@@ -75,7 +75,7 @@ public final class Debug
      * @deprecated Accurate counting is a burden on the runtime and may be removed.
      */
     @Deprecated
-    public static final int TRACE_COUNT_ALLOCS  = VMDebug.TRACE_COUNT_ALLOCS;
+    public static final int TRACE_COUNT_ALLOCS  = 1;
 
     /**
      * Flags for printLoadedClasses().  Default behavior is to only show
