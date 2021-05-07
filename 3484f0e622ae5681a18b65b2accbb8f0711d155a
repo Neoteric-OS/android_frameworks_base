@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1fe305cd_65870c04",
+        "filename": "core/java/android/bluetooth/BluetoothProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-05-07T13:24:18Z",
+      "side": 1,
+      "message": "Recommend to use MCP or MCP_SERVER.",
+      "parentUuid": "6034853b_967e69d3",
+      "range": {
+        "startLine": 219,
+        "startChar": 7,
+        "endLine": 219,
+        "endChar": 35
+      },
+      "revId": "3484f0e622ae5681a18b65b2accbb8f0711d155a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2f08bb99_eabf2bef",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 1
