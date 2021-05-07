@@ -710,7 +710,11 @@ public class NetworkTemplate implements Parcelable {
      * Check if matches carrier network. The carrier networks means it includes the subscriberId.
      */
     private boolean matchesCarrier(NetworkIdentity ident) {
-        return ident.mSubscriberId != null
+        // Only metered mobile network would be matched regardless of metered filter.
+        // This is used to exclude non-metered APNs, e.g. IMS. See ag/908650.
+        // TODO: Respect metered filter and remove mMetered condition.
+        return  (sForceAllNetworkTypes || (ident.mType == TYPE_MOBILE ? ident.mMetered : true))
+                && ident.mSubscriberId != null
                 && !ArrayUtils.isEmpty(mMatchSubscriberIds)
                 && ArrayUtils.contains(mMatchSubscriberIds, ident.mSubscriberId);
     }

@@ -73,11 +73,12 @@ class NetworkTemplateTest {
         type: Int,
         subscriberId: String? = null,
         ssid: String? = null,
-        oemManaged: Int = OEM_NONE
+        oemManaged: Int = OEM_NONE,
+        metered: Boolean = true
     ): NetworkStateSnapshot {
         val lp = LinkProperties()
         val caps = NetworkCapabilities().apply {
-            setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED, false)
+            setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED, !metered)
             setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING, true)
             setSSID(ssid)
             setCapability(NetworkCapabilities.NET_CAPABILITY_OEM_PAID,
@@ -172,6 +173,9 @@ class NetworkTemplateTest {
 
         val identMobile1 = buildNetworkIdentity(mockContext, buildMobileNetworkState(TEST_IMSI1),
                 false, TelephonyManager.NETWORK_TYPE_UMTS)
+        val identNonMeteredMobile = buildNetworkIdentity(mockContext,
+                buildNetworkState(TYPE_MOBILE, TEST_IMSI1, null, OEM_NONE, false),
+                false, TelephonyManager.NETWORK_TYPE_UMTS)
         val identMobile2 = buildNetworkIdentity(mockContext, buildMobileNetworkState(TEST_IMSI2),
                 false, TelephonyManager.NETWORK_TYPE_UMTS)
         val identWifiSsid1 = buildNetworkIdentity(
@@ -186,6 +190,7 @@ class NetworkTemplateTest {
         templateCarrierImsi1.assertDoesNotMatch(identWifiSsid1)
         templateCarrierImsi1.assertMatches(identMobile1)
         templateCarrierImsi1.assertDoesNotMatch(identMobile2)
+        templateCarrierImsi1.assertDoesNotMatch(identNonMeteredMobile)
     }
 
     @Test
