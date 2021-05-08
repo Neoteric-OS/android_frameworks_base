@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b76eb1b_ccbebcda",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-08T00:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "509a4dc4_9633741f",
+      "revId": "5cd3c4996b185718c1abc0d674d4befdb5e88346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd361506_f56dc630",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-05-03T17:42:49Z",
       "side": 1,
       "message": "should we also log the current token? (since these alarms only apply to the specified token)",
+      "range": {
+        "startLine": 954,
+        "startChar": 25,
+        "endLine": 954,
+        "endChar": 55
+      },
+      "revId": "5cd3c4996b185718c1abc0d674d4befdb5e88346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7457d86b_f27d8e8e",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-08T00:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd361506_f56dc630",
       "range": {
         "startLine": 954,
         "startChar": 25,
@@ -64,6 +106,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a70614c_2bbd1bb4",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-08T00:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec79f427_42531b72",
+      "range": {
+        "startLine": 1028,
+        "startChar": 25,
+        "endLine": 1028,
+        "endChar": 44
+      },
+      "revId": "5cd3c4996b185718c1abc0d674d4befdb5e88346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58ae61ee_ec4ded33",
@@ -87,6 +153,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a698cf58_bee2eda7",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-08T00:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58ae61ee_ec4ded33",
+      "range": {
+        "startLine": 1123,
+        "startChar": 8,
+        "endLine": 1130,
+        "endChar": 44
+      },
+      "revId": "5cd3c4996b185718c1abc0d674d4befdb5e88346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b1c9a02c_48739710",
@@ -100,6 +190,30 @@
       "writtenOn": "2021-05-03T17:42:49Z",
       "side": 1,
       "message": "I\u0027m wondering if we should also log some identifying info in these logs so we can tell which one entered safe mode if there are multiple VcnGatewayConnections - maybe the gateway connection name or a hash of the config?",
+      "range": {
+        "startLine": 1309,
+        "startChar": 25,
+        "endLine": 1309,
+        "endChar": 66
+      },
+      "revId": "5cd3c4996b185718c1abc0d674d4befdb5e88346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05a60187_6ee1eab8",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-08T00:24:02Z",
+      "side": 1,
+      "message": "Done in separate CL; it touches too much to be done here.",
+      "parentUuid": "b1c9a02c_48739710",
       "range": {
         "startLine": 1309,
         "startChar": 25,
