@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbd024af_4a40f747",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4610,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-05-10T20:38:50Z",
+      "side": 1,
+      "message": "I think I misunderstood the ask about making these TestApi here; if these are @hide, then you shouldn\u0027t really enforce them in CTS tests.  Or am I misunderstanding this completely?",
+      "range": {
+        "startLine": 4603,
+        "startChar": 9,
+        "endLine": 4610,
+        "endChar": 77
+      },
+      "revId": "0505ab6d14ea51a16b9432bdeba682fd10261058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
