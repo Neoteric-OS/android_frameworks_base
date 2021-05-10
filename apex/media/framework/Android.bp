@@ -43,7 +43,7 @@ java_library {
     sdk_version: "module_current",
     libs: ["framework-annotations-lib"],
     static_libs: [
-        "exoplayer2-extractor"
+        "exoplayer2-extractor",
     ],
     jarjar_rules: "jarjar_rules.txt",
 
@@ -90,7 +90,7 @@ filegroup {
 filegroup {
     name: "mediaparser-srcs",
     srcs: [
-        "java/android/media/MediaParser.java"
+        "java/android/media/MediaParser.java",
     ],
     path: "java",
 }
@@ -106,6 +106,7 @@ java_sdk_library {
         ":updatable-media-srcs",
     ],
     impl_library_visibility: ["//frameworks/av/apex:__subpackages__"],
+    owner: "android",
 }
 
 cc_library_shared {
