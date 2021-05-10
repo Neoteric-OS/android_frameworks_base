@@ -33,6 +33,24 @@
       "message": "If you wanted to be paranoid (and it\u0027s always good to be paranoid), i\u0027d suggest adding a unit test that makes sure both constants have the same value. Should be easy enough to do ?",
       "revId": "4e86dcad1206e7246cef805d6251c8e4ead7a4b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8877cbca_4ebc9054",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-05-10T15:08:06Z",
+      "side": 1,
+      "message": "Don\u0027t disagree, but we arguably have some pretty substantial testing that neither of them will change already: the metalava compatibility tests. Both of these are in now-stable API surfaces.\n\nAlso, the 10.000 number is hardcoded in so many places by now already. I thought the comment was borderline overkill ;)",
+      "parentUuid": "748ffee3_3766b873",
+      "revId": "4e86dcad1206e7246cef805d6251c8e4ead7a4b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
