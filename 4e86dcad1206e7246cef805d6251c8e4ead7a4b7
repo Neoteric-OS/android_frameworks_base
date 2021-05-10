@@ -16,6 +16,23 @@
       "message": "Michael is OOO, +narayan instead",
       "revId": "4e86dcad1206e7246cef805d6251c8e4ead7a4b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "748ffee3_3766b873",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2021-05-10T14:51:21Z",
+      "side": 1,
+      "message": "If you wanted to be paranoid (and it\u0027s always good to be paranoid), i\u0027d suggest adding a unit test that makes sure both constants have the same value. Should be easy enough to do ?",
+      "revId": "4e86dcad1206e7246cef805d6251c8e4ead7a4b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
