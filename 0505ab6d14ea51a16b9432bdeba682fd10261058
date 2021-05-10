@@ -22,6 +22,30 @@
       },
       "revId": "0505ab6d14ea51a16b9432bdeba682fd10261058",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c519c5e9_e209fa0a",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4610,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-05-10T21:10:51Z",
+      "side": 1,
+      "message": "They are indeed @hide fields. But as long as the ServiceStateProvider does support those hidden filed, they are de fact public fields. As ServiceStateProvider does not have read permission protection, any application can query the value of those fields. For example:\nApps can query these fields directly:\n```\nmContentResolve.query(ServiceStateTable.CONTENT_URI, new String[]{\"voice_roaming_type\"}, null, null);\n```\nor query for \"all\" columns and get value for the hidden column:\n```\nmContentResolve.query(ServiceStateTable.CONTENT_URI, null /*projection*/, null, null);\ncursor.moveToFirst()\nint voiceRoamingType \u003d cursor.getInt(cursor.getColumnIndex(\"voice_roaming_type\"));\n```\n\nThis is where the security/privacy concern comes from.\n\nThe CTS cases will make sure:\n1. Apps without location permission will NOT get location sensitive info.\n2. ServiceStateTable should only expose exact the same columns here (no more column added by other OS provider, no modification to current column...)\n\nPlease let me know if you still have concern to make them CTS coverable.\nThanks!",
+      "parentUuid": "dbd024af_4a40f747",
+      "range": {
+        "startLine": 4603,
+        "startChar": 9,
+        "endLine": 4610,
+        "endChar": 77
+      },
+      "revId": "0505ab6d14ea51a16b9432bdeba682fd10261058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
