@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2619081a_a3fdff15",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-05-10T10:18:50Z",
+      "side": 1,
+      "message": "ack, reworded slightly",
+      "parentUuid": "b5f9fa35_56f19616",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "89e74236d6fc47d5d0fb32a60016e3a17ebedc52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25d93313_fc834172",
@@ -41,6 +65,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a96ded5_bd6fd7dd",
+        "filename": "core/java/android/os/Build.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-05-10T10:18:50Z",
+      "side": 1,
+      "message": "Done. However, 10000 is hardcoded in many many places that must stay in sync, so this comment is of very limited use.",
+      "parentUuid": "25d93313_fc834172",
+      "revId": "89e74236d6fc47d5d0fb32a60016e3a17ebedc52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed317edb_a6da9911",
@@ -54,6 +96,24 @@
       "writtenOn": "2021-05-07T16:06:34Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "89e74236d6fc47d5d0fb32a60016e3a17ebedc52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6615ba27_fb034619",
+        "filename": "core/java/android/os/Debug.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-05-10T10:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed317edb_a6da9911",
       "revId": "89e74236d6fc47d5d0fb32a60016e3a17ebedc52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
