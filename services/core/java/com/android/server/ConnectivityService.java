@@ -78,6 +78,7 @@ import static android.net.NetworkCapabilities.REDACT_FOR_NETWORK_SETTINGS;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
+import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.NetworkRequest.Type.LISTEN_FOR_BEST;
 import static android.net.shared.NetworkMonitorUtils.isPrivateDnsValidationRequired;
 import static android.os.Process.INVALID_UID;
@@ -9083,8 +9084,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // and package name don't match. Throwing on the CS thread is not acceptable, so wrap the
         // call in a try-catch.
         try {
-            if (!mLocationPermissionChecker.checkLocationPermission(
-                    callbackPackageName, null /* featureId */, callbackUid, null /* message */)) {
+            // Don't need to enforce location-permissions for non-WiFi Networks, as those transports
+            // do not have location-restrictions on them.
+            if (nai.networkCapabilities.hasTransport(TRANSPORT_WIFI)
+                    && !mLocationPermissionChecker.checkLocationPermission(callbackPackageName,
+                            null /* featureId */, callbackUid, null /* message */)) {
                 return false;
             }
         } catch (SecurityException e) {
