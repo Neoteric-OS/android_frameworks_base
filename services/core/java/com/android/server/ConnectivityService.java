@@ -78,6 +78,7 @@ import static android.net.NetworkCapabilities.REDACT_FOR_NETWORK_SETTINGS;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
+import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.NetworkRequest.Type.LISTEN_FOR_BEST;
 import static android.net.shared.NetworkMonitorUtils.isPrivateDnsValidationRequired;
 import static android.os.Process.INVALID_UID;
@@ -9058,13 +9059,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return results;
     }
 
-    private boolean hasLocationPermission(String packageName, int uid) {
+    private boolean hasLocationPermission(NetworkAgentInfo nai, String packageName, int uid) {
         // LocationPermissionChecker#checkLocationPermission can throw SecurityException if the uid
         // and package name don't match. Throwing on the CS thread is not acceptable, so wrap the
         // call in a try-catch.
         try {
-            if (!mLocationPermissionChecker.checkLocationPermission(
-                        packageName, null /* featureId */, uid, null /* message */)) {
+            // Don't need to enforce location-permissions for non-WiFi Networks, as those transports
+            // do not have location-restrictions on them.
+            if (nai.networkCapabilities.hasTransport(TRANSPORT_WIFI)
+                    && !mLocationPermissionChecker.checkLocationPermission(
+                            packageName, null /* featureId */, uid, null /* message */)) {
                 return false;
             }
         } catch (SecurityException e) {
@@ -9085,7 +9089,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (virtual.supportsUnderlyingNetworks()
                     && virtual.networkCapabilities.getOwnerUid() == callbackUid
                     && CollectionUtils.contains(virtual.declaredUnderlyingNetworks, nai.network)
-                    && hasLocationPermission(callbackPackageName, callbackUid)) {
+                    && hasLocationPermission(nai, callbackPackageName, callbackUid)) {
                 return true;
             }
         }
@@ -9096,7 +9100,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return false;
         }
 
-        return hasLocationPermission(callbackPackageName, callbackUid);
+        return hasLocationPermission(nai, callbackPackageName, callbackUid);
     }
 
     @Override
