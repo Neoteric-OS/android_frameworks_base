@@ -46,6 +46,30 @@
       },
       "revId": "0505ab6d14ea51a16b9432bdeba682fd10261058",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5311009_9b70db88",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4610,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-05-11T15:34:33Z",
+      "side": 1,
+      "message": "@hide/hidden column names are not discoverable to the developer at all.  They\u0027re not documented APIs and they\u0027re technically just a bug.  If there is no way for a user to discover them, it is not appropriate to enforce CTS tests for them.",
+      "parentUuid": "c519c5e9_e209fa0a",
+      "range": {
+        "startLine": 4603,
+        "startChar": 9,
+        "endLine": 4610,
+        "endChar": 77
+      },
+      "revId": "0505ab6d14ea51a16b9432bdeba682fd10261058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
