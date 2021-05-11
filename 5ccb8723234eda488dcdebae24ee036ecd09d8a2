@@ -22,6 +22,30 @@
       },
       "revId": "5ccb8723234eda488dcdebae24ee036ecd09d8a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b0b2553_024e92b1",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-11T23:47:14Z",
+      "side": 1,
+      "message": "used \u0027are\u0027 because params is plural. \u0027is\u0027 may be technically correct here since it is a singular object, but I think either are understandable given the context.",
+      "parentUuid": "f1286929_390dcc9c",
+      "range": {
+        "startLine": 438,
+        "startChar": 86,
+        "endLine": 438,
+        "endChar": 89
+      },
+      "revId": "5ccb8723234eda488dcdebae24ee036ecd09d8a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
