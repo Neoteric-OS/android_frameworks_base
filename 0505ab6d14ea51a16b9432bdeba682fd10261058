@@ -70,6 +70,30 @@
       },
       "revId": "0505ab6d14ea51a16b9432bdeba682fd10261058",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4752a58_b84389f7",
+        "filename": "core/java/android/provider/Telephony.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4610,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-05-11T16:51:03Z",
+      "side": 1,
+      "message": "I have no double from API\u0027s perspective. But from developer\u0027s perspective, all the column names are available to them, through at least two approaches:\n1. cursor#getColumnNames will return all of them (both public and hidden columns)\n2. developer can just hard-code the column name to retrieve the values\n\nTo illustrate, a simple Hell-world app is developed which show all hidden fields (at the build DUPLEX_MODE and DATA_NETWORK_TYPE columns are not added yet) are available and can retrieve the value of ServiceState (without any permission). Please go to end of go/service-state-table-cts to check the details.\n\nI leave this common open in case I did not convince you.\nThanks",
+      "parentUuid": "a5311009_9b70db88",
+      "range": {
+        "startLine": 4603,
+        "startChar": 9,
+        "endLine": 4610,
+        "endChar": 77
+      },
+      "revId": "0505ab6d14ea51a16b9432bdeba682fd10261058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
