@@ -111,6 +111,30 @@
       },
       "revId": "31bace15a5b5c3a9b22cf796e8c341df1e307852",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae205e7b_b8ef4842",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2296,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-11T00:00:59Z",
+      "side": 1,
+      "message": "While this comment is accurate and I see nothing particularly wrong with it (hence +2), I think it would be weird to heavily insist further on the possibility there are multiple wifis or cell concurrently at the same time. It\u0027s not like this is new in S ; many OEMs had multiple WiFis releases ago, and there are often multiple cell networks active at the same time (say, IMS \u0026 data), not to mention DS-DS devices that existed as far back as gingerbread.\nSo I don\u0027t think there is much to highlight there. It might be new to the stock WiFi stack, but for the connectivity stack and/or for some OEM wifi stacks, this is Android L, maybe even earlier.",
+      "parentUuid": "8d033c6e_6a9af283",
+      "range": {
+        "startLine": 2294,
+        "startChar": 57,
+        "endLine": 2296,
+        "endChar": 0
+      },
+      "revId": "31bace15a5b5c3a9b22cf796e8c341df1e307852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
