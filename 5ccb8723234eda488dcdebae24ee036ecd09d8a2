@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1286929_390dcc9c",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-11T22:54:26Z",
+      "side": 1,
+      "message": "I **think** this is a \"is\"? i.e. singular?\n\nThen again, i don\u0027t english",
+      "range": {
+        "startLine": 438,
+        "startChar": 86,
+        "endLine": 438,
+        "endChar": 89
+      },
+      "revId": "5ccb8723234eda488dcdebae24ee036ecd09d8a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
