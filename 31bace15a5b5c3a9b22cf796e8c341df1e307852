@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c42a2732_e758f586",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2021-05-11T15:51:19Z",
+      "side": 1,
+      "message": "Bypassing CTS failures as this is a comment-only change.",
+      "revId": "31bace15a5b5c3a9b22cf796e8c341df1e307852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2175bf7_0c6015fd",
