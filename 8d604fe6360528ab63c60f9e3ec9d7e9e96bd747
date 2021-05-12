@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c63ac573_28d3a994",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-12T08:45:19Z",
+      "side": 1,
+      "message": "AIUI, TestNetworkService is never stopped. Therefore it should simply never removes the policy change listener. You can have a comment on the add() method if you want. I don\u0027t think it\u0027s helpful to have a remove() just to have a remove(), if we\u0027re never actually going to remove it.\n\nI think the current code with the finalizer is not even correct, because really if you want to have something that follows the lifecycle correctly then you\u0027ll want to remove the listener when the last ref to TestNetworkService is lost, because then you no longer want to look up the members. Generally finalizers are hard to use and are almost never the right solution.\n\nJust remove the finalizer.",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 5
+      },
+      "revId": "8d604fe6360528ab63c60f9e3ec9d7e9e96bd747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5175d034_f5846552",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-12T08:45:19Z",
+      "side": 1,
+      "message": "What is the threading model for this mutable member (and the one below ?)\nIt\u0027s not accessed locked, and it\u0027s accessed on the handler thread in the VCN policy listener, and in some other thread (guaranteed to be different) in the constructor of NetworkAgent. That means some percentage of the time you\u0027ll see null and crash the system server in l.499.",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 66
+      },
+      "revId": "8d604fe6360528ab63c60f9e3ec9d7e9e96bd747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e01b17e_e9376cd2",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-12T08:45:19Z",
+      "side": 1,
+      "message": "Why nullable ? This never returns null, does it ?",
+      "range": {
+        "startLine": 279,
+        "startChar": 5,
+        "endLine": 279,
+        "endChar": 13
+      },
+      "revId": "8d604fe6360528ab63c60f9e3ec9d7e9e96bd747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16feafef_d892681e",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-12T08:45:19Z",
+      "side": 1,
+      "message": "Nit : I don\u0027t think we need the identity cleared for this, do you want to move it out of the try{} block (and make the VcnNetworkPolicyResult the blank final instead)",
+      "range": {
+        "startLine": 355,
+        "startChar": 40,
+        "endLine": 355,
+        "endChar": 68
+      },
+      "revId": "8d604fe6360528ab63c60f9e3ec9d7e9e96bd747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "890c4873_42e9e326",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-12T08:45:19Z",
+      "side": 1,
+      "message": "Considering the VCN only ever changes these two capabilities, is there a good reason to create a new object just to copy them instead of just returning vcnNetworkPolicy.getNetworkCapabilities() or a defensive copy thereof ?",
+      "range": {
+        "startLine": 370,
+        "startChar": 8,
+        "endLine": 386,
+        "endChar": 33
+      },
+      "revId": "8d604fe6360528ab63c60f9e3ec9d7e9e96bd747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
