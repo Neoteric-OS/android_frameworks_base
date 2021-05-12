@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "091cfa98_42b3b702",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-05-12T12:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35f83e8b_dee2b2aa",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 71
+      },
+      "revId": "fd58313101da806ca8bf3b013702fe5f3922946a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "29439adc_c72533d4",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-05-05T09:25:07Z",
       "side": 1,
       "message": "It\u0027s added in S. You should test it with at least S. Move into the if in l.71",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 45
+      },
+      "revId": "fd58313101da806ca8bf3b013702fe5f3922946a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd828bf1_0a1f9041",
+        "filename": "tests/net/common/java/android/net/NetworkAgentConfigTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-05-12T12:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29439adc_c72533d4",
       "range": {
         "startLine": 66,
         "startChar": 12,
