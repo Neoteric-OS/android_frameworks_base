@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7b9879f_3731b4f0",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-05-12T23:09:33Z",
+      "side": 1,
+      "message": "que? Also, this feels potentially racy if I\u0027m understanding the code correctly...",
+      "range": {
+        "startLine": 266,
+        "startChar": 24,
+        "endLine": 266,
+        "endChar": 50
+      },
+      "revId": "15a3805c05cfb85397fa448072361b21fc0c3e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28d87f03_6d3767d0",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-05-12T23:09:33Z",
+      "side": 1,
+      "message": "nit, this should really be something like mInitializingUnderlyingNetworks. It took me a while to figure out what was going on here.",
+      "range": {
+        "startLine": 362,
+        "startChar": 68,
+        "endLine": 362,
+        "endChar": 87
+      },
+      "revId": "15a3805c05cfb85397fa448072361b21fc0c3e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8eb06d43_d249d2d0",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-05-12T23:09:33Z",
+      "side": 1,
+      "message": "What drove the decision to have Records with Builders such that instead of a copy we do a build() each time instead of a series of POJOs that can simply be cloneable (since that\u0027s how you get a snapshot, I presume... maybe some threading thing?)?",
+      "range": {
+        "startLine": 368,
+        "startChar": 17,
+        "endLine": 368,
+        "endChar": 48
+      },
+      "revId": "15a3805c05cfb85397fa448072361b21fc0c3e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22b8a39c_4a8cfd0b",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-05-12T23:09:33Z",
+      "side": 1,
+      "message": "Something slightly funky about this. PROSPECTIVE should be for WiFi that\u0027s unconnected. I guess because the entry threshold is (correctly) assumed to be higher than the exit threshold... we lump them together?",
+      "range": {
+        "startLine": 527,
+        "startChar": 0,
+        "endLine": 535,
+        "endChar": 17
+      },
+      "revId": "15a3805c05cfb85397fa448072361b21fc0c3e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
