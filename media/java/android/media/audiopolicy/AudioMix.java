@@ -248,9 +248,9 @@ public class AudioMix {
 
         final AudioMix that = (AudioMix) o;
         return (this.mRouteFlags == that.mRouteFlags)
-                && (this.mRule == that.mRule)
+                && (this.mRule.equals(that.mRule))
                 && (this.mMixType == that.mMixType)
-                && (this.mFormat == that.mFormat);
+                && (this.mFormat.equals(that.mFormat));
     }
 
     /** @hide */
