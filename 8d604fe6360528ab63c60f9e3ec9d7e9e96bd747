@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dc35025_982537d4",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-13T01:55:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c63ac573_28d3a994",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 5
+      },
+      "revId": "8d604fe6360528ab63c60f9e3ec9d7e9e96bd747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5175d034_f5846552",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-05-12T08:45:19Z",
       "side": 1,
       "message": "What is the threading model for this mutable member (and the one below ?)\nIt\u0027s not accessed locked, and it\u0027s accessed on the handler thread in the VCN policy listener, and in some other thread (guaranteed to be different) in the constructor of NetworkAgent. That means some percentage of the time you\u0027ll see null and crash the system server in l.499.",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 66
+      },
+      "revId": "8d604fe6360528ab63c60f9e3ec9d7e9e96bd747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c19a841e_b1e6f67d",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-13T01:55:56Z",
+      "side": 1,
+      "message": "for mLinkProperties: it is now final, so nullness should not be a concern there.\n\nfor mNetworkCapabilities: I\u0027m not sure null is ever possible - the value starts as non-null and nullness is checked when the NetworkCapabilities is updated in updateNetworkCapabilities() so it will stay non-null.\n\nIn the constructor, the field is only set which runs on the binder thread. It is read+set in the policy listener on TestNetworkService\u0027s handler thread, but this is synchronized on mTestNetworkTracker. \n\nIs this sufficient, or should more explicit locking on this field be added?",
+      "parentUuid": "5175d034_f5846552",
       "range": {
         "startLine": 201,
         "startChar": 0,
@@ -72,6 +120,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "f3cbde19_c33da25b",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-13T01:55:56Z",
+      "side": 1,
+      "message": "Remnant of previous patchset. Removed.",
+      "parentUuid": "4e01b17e_e9376cd2",
+      "range": {
+        "startLine": 279,
+        "startChar": 5,
+        "endLine": 279,
+        "endChar": 13
+      },
+      "revId": "8d604fe6360528ab63c60f9e3ec9d7e9e96bd747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "16feafef_d892681e",
         "filename": "services/core/java/com/android/server/TestNetworkService.java",
         "patchSetId": 15
@@ -83,6 +155,30 @@
       "writtenOn": "2021-05-12T08:45:19Z",
       "side": 1,
       "message": "Nit : I don\u0027t think we need the identity cleared for this, do you want to move it out of the try{} block (and make the VcnNetworkPolicyResult the blank final instead)",
+      "range": {
+        "startLine": 355,
+        "startChar": 40,
+        "endLine": 355,
+        "endChar": 68
+      },
+      "revId": "8d604fe6360528ab63c60f9e3ec9d7e9e96bd747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efc9e2eb_377553c9",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-13T01:55:56Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "16feafef_d892681e",
       "range": {
         "startLine": 355,
         "startChar": 40,
@@ -106,6 +202,30 @@
       "writtenOn": "2021-05-12T08:45:19Z",
       "side": 1,
       "message": "Considering the VCN only ever changes these two capabilities, is there a good reason to create a new object just to copy them instead of just returning vcnNetworkPolicy.getNetworkCapabilities() or a defensive copy thereof ?",
+      "range": {
+        "startLine": 370,
+        "startChar": 8,
+        "endLine": 386,
+        "endChar": 33
+      },
+      "revId": "8d604fe6360528ab63c60f9e3ec9d7e9e96bd747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "535fa22f_6cf3b6e2",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-13T01:55:56Z",
+      "side": 1,
+      "message": "This was done to only transfer over the bits changed by VcnManagementService. Updated to use the VcnNetworkPolicy#getNetworkCapabilities() directly\n\nDone",
+      "parentUuid": "890c4873_42e9e326",
       "range": {
         "startLine": 370,
         "startChar": 8,
