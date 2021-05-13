@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfbef1c0_13469b7f",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-13T00:18:49Z",
+      "side": 1,
+      "message": "Done; added entry threshold as well",
+      "parentUuid": "c7b9879f_3731b4f0",
+      "range": {
+        "startLine": 266,
+        "startChar": 24,
+        "endLine": 266,
+        "endChar": 50
+      },
+      "revId": "15a3805c05cfb85397fa448072361b21fc0c3e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28d87f03_6d3767d0",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-05-12T23:09:33Z",
       "side": 1,
       "message": "nit, this should really be something like mInitializingUnderlyingNetworks. It took me a while to figure out what was going on here.",
+      "range": {
+        "startLine": 362,
+        "startChar": 68,
+        "endLine": 362,
+        "endChar": 87
+      },
+      "revId": "15a3805c05cfb85397fa448072361b21fc0c3e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee4d6338_b95dab98",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-13T00:18:49Z",
+      "side": 1,
+      "message": "Renamed to mUnderlyingNetworkRecordBuilders; thoughts?",
+      "parentUuid": "28d87f03_6d3767d0",
       "range": {
         "startLine": 362,
         "startChar": 68,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0e5d477b_85ae6d07",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-13T00:18:49Z",
+      "side": 1,
+      "message": "Just so we have the fields that can be final, and we don\u0027t have accidental modifications anywhere else in the codebase.",
+      "parentUuid": "8eb06d43_d249d2d0",
+      "range": {
+        "startLine": 368,
+        "startChar": 17,
+        "endLine": 368,
+        "endChar": 48
+      },
+      "revId": "15a3805c05cfb85397fa448072361b21fc0c3e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "22b8a39c_4a8cfd0b",
         "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
         "patchSetId": 1
@@ -83,6 +155,30 @@
       "writtenOn": "2021-05-12T23:09:33Z",
       "side": 1,
       "message": "Something slightly funky about this. PROSPECTIVE should be for WiFi that\u0027s unconnected. I guess because the entry threshold is (correctly) assumed to be higher than the exit threshold... we lump them together?",
+      "range": {
+        "startLine": 527,
+        "startChar": 0,
+        "endLine": 535,
+        "endChar": 17
+      },
+      "revId": "15a3805c05cfb85397fa448072361b21fc0c3e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9b00898_0b0920d9",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-13T00:18:49Z",
+      "side": 1,
+      "message": "It was actually cleaner to reverse this and put WIFI_IN_USE as higher priority than PROSPECTIVE",
+      "parentUuid": "22b8a39c_4a8cfd0b",
       "range": {
         "startLine": 527,
         "startChar": 0,
