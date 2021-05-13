@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9121865b_be1b40e9",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-05-13T14:57:45Z",
+      "side": 1,
+      "message": "debug leftover?",
+      "range": {
+        "startLine": 603,
+        "startChar": 7,
+        "endLine": 605,
+        "endChar": 12
+      },
+      "revId": "eb5b87640423a5b591b3e885021350e7117b39c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
