@@ -103,6 +103,23 @@
       "message": "Looking forward to your reply.\nThanks.",
       "revId": "5be656bbbc20a7cb7da0f06fe6f7bf463551ee71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38ebfbaa_4749d540",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2021-05-13T17:34:03Z",
+      "side": 1,
+      "message": "Is there a bugreport showing the ANR?\n\nI\u0027m not convinced we should be accessing the core settings without a lock being held",
+      "revId": "5be656bbbc20a7cb7da0f06fe6f7bf463551ee71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
