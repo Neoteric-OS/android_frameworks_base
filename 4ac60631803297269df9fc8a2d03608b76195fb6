@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43257c20_36e672dd",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-05-13T21:59:15Z",
+      "side": 1,
+      "message": "I thought we were going to merge these into one?",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 0
+      },
+      "revId": "4ac60631803297269df9fc8a2d03608b76195fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9b8ef29_ccb5ea43",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-05-13T21:59:15Z",
+      "side": 1,
+      "message": "Should we also check SUSPENDED?",
+      "range": {
+        "startLine": 578,
+        "startChar": 49,
+        "endLine": 578,
+        "endChar": 73
+      },
+      "revId": "4ac60631803297269df9fc8a2d03608b76195fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e7f18b1_b4d0a654",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-05-13T21:59:15Z",
+      "side": 1,
+      "message": "Do we need to consider ACTIVE_DATA_SUB_ID? I\u0027m worried about edge cases where we have both up but active data hasn\u0027t moved to the Opportunistic sub.",
+      "range": {
+        "startLine": 583,
+        "startChar": 0,
+        "endLine": 585,
+        "endChar": 13
+      },
+      "revId": "4ac60631803297269df9fc8a2d03608b76195fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29d2374a_522ccbb3",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-05-13T21:59:15Z",
+      "side": 1,
+      "message": "\u003e\u003d?",
+      "range": {
+        "startLine": 594,
+        "startChar": 45,
+        "endLine": 594,
+        "endChar": 46
+      },
+      "revId": "4ac60631803297269df9fc8a2d03608b76195fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
