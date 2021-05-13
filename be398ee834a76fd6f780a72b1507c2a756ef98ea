@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf78a573_c44209d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-13T11:20:10Z",
+      "side": 1,
+      "message": "Happy with this when the member threading issue is addressed.",
+      "revId": "be398ee834a76fd6f780a72b1507c2a756ef98ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab8d64eb_3d99d2be",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-13T11:20:10Z",
+      "side": 1,
+      "message": "Now is this still necessary in the clearCallingIdentity block ?",
+      "range": {
+        "startLine": 334,
+        "startChar": 16,
+        "endLine": 334,
+        "endChar": 54
+      },
+      "revId": "be398ee834a76fd6f780a72b1507c2a756ef98ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

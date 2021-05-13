@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3a15c563_05e9808c",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-13T11:20:10Z",
+      "side": 1,
+      "message": "It is only sufficient if you unlock mTestNetworkTracker once after you\u0027ve set the member in the constructor.\n\nBelieve it or not, it\u0027s actually a common issue to see a member being null in another thread after it\u0027s been initialized to non-null in the constructor, because many developers don\u0027t understand that the guarantee that the fields are as fresh as the object only applies to final fields. Java 17.5.\n\nAs long as you have lock that\u0027s taken before it\u0027s read, and that lock is released at least once in the thread where the constructor is run after the write to the field, you should be okay. Locking before the read is not sufficient (the writing thread is under no obligation to have flushed its caches).",
+      "parentUuid": "c19a841e_b1e6f67d",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 66
+      },
+      "revId": "8d604fe6360528ab63c60f9e3ec9d7e9e96bd747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4e01b17e_e9376cd2",
         "filename": "services/core/java/com/android/server/TestNetworkService.java",
         "patchSetId": 15
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Remnant of previous patchset. Removed.",
       "parentUuid": "4e01b17e_e9376cd2",
+      "range": {
+        "startLine": 279,
+        "startChar": 5,
+        "endLine": 279,
+        "endChar": 13
+      },
+      "revId": "8d604fe6360528ab63c60f9e3ec9d7e9e96bd747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebb32a4c_6ee22926",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-13T11:20:10Z",
+      "side": 1,
+      "message": "Could be @NonNull though 😊",
+      "parentUuid": "f3cbde19_c33da25b",
       "range": {
         "startLine": 279,
         "startChar": 5,
