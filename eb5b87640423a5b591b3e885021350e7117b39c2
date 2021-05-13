@@ -22,6 +22,30 @@
       },
       "revId": "eb5b87640423a5b591b3e885021350e7117b39c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c449ee68_fde6eaf2",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-05-13T17:56:11Z",
+      "side": 1,
+      "message": "In the internal review you asked if I could print the thermal status in the bgdexopt dumpsys information and linked to this function.  This line is supposed to accomplish that.  If it is in the wrong location or you no longer think that information is necessary I\u0027d be happy to remove it.",
+      "parentUuid": "9121865b_be1b40e9",
+      "range": {
+        "startLine": 603,
+        "startChar": 7,
+        "endLine": 605,
+        "endChar": 12
+      },
+      "revId": "eb5b87640423a5b591b3e885021350e7117b39c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
