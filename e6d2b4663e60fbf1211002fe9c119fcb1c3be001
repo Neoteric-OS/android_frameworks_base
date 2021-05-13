@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "760055c1_9270834e",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-13T11:23:25Z",
+      "side": 0,
+      "message": "Where is this file? I don\u0027t see it being moved.",
+      "range": {
+        "startLine": 211,
+        "startChar": 46,
+        "endLine": 211,
+        "endChar": 67
+      },
+      "revId": "e6d2b4663e60fbf1211002fe9c119fcb1c3be001",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
