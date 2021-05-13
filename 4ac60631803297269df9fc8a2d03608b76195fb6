@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5ee46386_d27a9bcb",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-13T23:37:46Z",
+      "side": 1,
+      "message": "Decided documenting it was just less clear/obvious, so it looked like a landmine. Flipped the orders so this is correct, even for the multiple-carrier wifi case.",
+      "parentUuid": "43257c20_36e672dd",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 0
+      },
+      "revId": "4ac60631803297269df9fc8a2d03608b76195fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e9b8ef29_ccb5ea43",
         "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
         "patchSetId": 6
@@ -37,6 +61,30 @@
       "writtenOn": "2021-05-13T21:59:15Z",
       "side": 1,
       "message": "Should we also check SUSPENDED?",
+      "range": {
+        "startLine": 578,
+        "startChar": 49,
+        "endLine": 578,
+        "endChar": 73
+      },
+      "revId": "4ac60631803297269df9fc8a2d03608b76195fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5063f711_2bb5cc52",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-13T23:37:46Z",
+      "side": 1,
+      "message": "Done, changed to require VALIDATED and NOT_SUSPENDED in the NetworkRequest (since it\u0027s a listen, we can do that)",
+      "parentUuid": "e9b8ef29_ccb5ea43",
       "range": {
         "startLine": 578,
         "startChar": 49,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ae28093_3cccbf2f",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-13T23:37:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e7f18b1_b4d0a654",
+      "range": {
+        "startLine": 583,
+        "startChar": 0,
+        "endLine": 585,
+        "endChar": 13
+      },
+      "revId": "4ac60631803297269df9fc8a2d03608b76195fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "29d2374a_522ccbb3",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-05-13T21:59:15Z",
       "side": 1,
       "message": "\u003e\u003d?",
+      "range": {
+        "startLine": 594,
+        "startChar": 45,
+        "endLine": 594,
+        "endChar": 46
+      },
+      "revId": "4ac60631803297269df9fc8a2d03608b76195fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04c22b28_57556c3f",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-13T23:37:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29d2374a_522ccbb3",
       "range": {
         "startLine": 594,
         "startChar": 45,
