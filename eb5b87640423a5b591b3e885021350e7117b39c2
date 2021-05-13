@@ -46,6 +46,30 @@
       },
       "revId": "eb5b87640423a5b591b3e885021350e7117b39c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b404395f_c1dfba80",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-05-13T18:13:11Z",
+      "side": 1,
+      "message": "I was thinking we can print that after each dexopt execution in bgdexopt service under a debug flag.\n\nThis method is usually call at random times (adb shell dumpsys package dexopt), not related to when we run dexopt.",
+      "parentUuid": "c449ee68_fde6eaf2",
+      "range": {
+        "startLine": 603,
+        "startChar": 7,
+        "endLine": 605,
+        "endChar": 12
+      },
+      "revId": "eb5b87640423a5b591b3e885021350e7117b39c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
