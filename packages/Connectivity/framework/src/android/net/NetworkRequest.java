@@ -453,6 +453,9 @@ public class NetworkRequest implements Parcelable {
                 throw new IllegalArgumentException("A MatchAllNetworkSpecifier is not permitted");
             }
             mNetworkCapabilities.setNetworkSpecifier(networkSpecifier);
+            // Do not touch NOT_VCN_MANAGED if the caller needs to access to a very specific
+            // Network.
+            mModifiedNotVcnManaged = true;
             return this;
         }
 
