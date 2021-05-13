@@ -69,6 +69,24 @@
       "parentUuid": "657b366c_f4d0c3b9",
       "revId": "895812e5cfbec845638ad2ea93cc5687720aa3f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f04c6ff_3c2e5f27",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2021-05-13T21:38:00Z",
+      "side": 1,
+      "message": "Hi Kyeongkab,\n\nAccording to Michael\u0027s suggestion, please rename these to KEYCODE_VIDEO_APP1 .. KEYCODE_VIDEO_APP_8\n\nWhat other apps (besides video) are you trying to support?",
+      "parentUuid": "9b1a31fc_7f92029c",
+      "revId": "895812e5cfbec845638ad2ea93cc5687720aa3f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
