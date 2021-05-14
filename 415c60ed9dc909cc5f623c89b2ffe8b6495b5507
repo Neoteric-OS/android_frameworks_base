@@ -22,6 +22,30 @@
       },
       "revId": "415c60ed9dc909cc5f623c89b2ffe8b6495b5507",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db254a53_f4bb7019",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-14T01:58:36Z",
+      "side": 1,
+      "message": "Done; I think the isOpportunistic() check needs to happen in the c !\u003d null block",
+      "parentUuid": "d6a830ea_425677f1",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 9
+      },
+      "revId": "415c60ed9dc909cc5f623c89b2ffe8b6495b5507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
