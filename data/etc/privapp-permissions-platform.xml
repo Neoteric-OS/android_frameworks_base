@@ -362,6 +362,7 @@ applications that come with the platform
         <permission name="android.permission.READ_PRECISE_PHONE_STATE" />
         <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
         <permission name="android.permission.READ_WIFI_CREDENTIAL"/>
+        <permission name="android.permission.READ_SYSTEM_UPDATE_INFO" />
         <permission name="android.permission.REAL_GET_TASKS"/>
         <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
         <permission name="android.permission.REGISTER_CALL_PROVIDER"/>
