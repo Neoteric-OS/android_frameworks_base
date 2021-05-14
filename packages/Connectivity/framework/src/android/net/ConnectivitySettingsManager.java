@@ -1012,7 +1012,7 @@ public class ConnectivitySettingsManager {
      *         higher-priority networks are connected or null if no setting value.
      */
     @NonNull
-    public static Set<Integer> getMobileDataPreferredUids(@NonNull Context context) {
+    public static Set<Integer> getMobileDataPreferredForUids(@NonNull Context context) {
         final String uidList = Settings.Secure.getString(
                 context.getContentResolver(), MOBILE_DATA_PREFERRED_UIDS);
         final Set<Integer> uids = new ArraySet<>();
@@ -1033,7 +1033,7 @@ public class ConnectivitySettingsManager {
      * @param uidList A list of uids that should go on cellular networks in preference even when
      *             higher-priority networks are connected.
      */
-    public static void setMobileDataPreferredUids(@NonNull Context context,
+    public static void setMobileDataPreferredForUids(@NonNull Context context,
             @NonNull Set<Integer> uidList) {
         final StringJoiner joiner = new StringJoiner(";");
         for (Integer uid : uidList) {
