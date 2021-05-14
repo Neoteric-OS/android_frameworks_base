@@ -452,6 +452,27 @@ public final class MediaCodecInfo {
         public static final int COLOR_FormatYUV420Flexible            = 0x7F420888;
 
         /**
+         * Flexible 24 allocated bits per pixel with 15 bits of data per pixel,
+         * subsampled YUV color format with 16 allocated bits (10 bits of data)
+         * for chroma and luma components.
+         * <p>
+         * Chroma planes are subsampled by 2 both horizontally and vertically.
+         * Each component has 16 allocated bits with 10 MSB of actual data.
+         * <pre>
+         *            byte                   byte
+         *  <--------- i --------> | <------ i + 1 ------>
+         * +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+         * |           Y/Cb/Cr           |     UNUSED      |
+         * +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+         *  0           4  5     7   0     2  3           7
+         * bit
+         * </pre>
+         *
+         * @hide
+         */
+        public static final int COLOR_FormatYUV420Aligned10BitFlexible = 0x7F420A10;
+
+        /**
          * Flexible 16 bits per pixel, subsampled YUV color format with 8-bit chroma and luma
          * components.
          * <p>
