@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "579ecc78_e5de9a37",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-05-14T20:40:11Z",
+      "side": 1,
+      "message": "Right here, there could be a call to create a new user, and if that happens, even with the current patch, I believe it will attempt to convert the precreated user, and then the following code will remove this now-real user.\n\nFortunately, the user has already been marked as partial on line 699. So the solution to this problem is probably to ignore any partial users when getting the list of precreated users. See my comment below, in getPreCreatedUserLU() for one possible workaround.",
+      "range": {
+        "startLine": 703,
+        "startChar": 0,
+        "endLine": 703,
+        "endChar": 58
+      },
+      "revId": "35b0509996ffd490b849315dbd544bc66150e8ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb79c0f6_36a49844",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3699,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-05-14T20:40:11Z",
+      "side": 1,
+      "message": "What if we check whether \u0027partial \u003d\u003d true\u0027 here, and skip the user if it is. That way, if a precreated user has already been slated for removal, it won\u0027t get returned here, and therefore won\u0027t end up being converted and then immediately removed.\n\nFelipe, wdyt?",
+      "revId": "35b0509996ffd490b849315dbd544bc66150e8ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
