@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "53b6f686_30b7243a",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-14T07:43:44Z",
+      "side": 1,
+      "message": "This looks like it does this; the entire constructor is created under lock (of mTestNetworkTracker), and is should be mutually exclusive with the applyVcnNetworkPolicyLocked() called from onPolicyChanged().\n\nMy understanding is that this should force a cache flush and read? Thoughts?\n\nAdded annotations to that effect.",
+      "parentUuid": "3a15c563_05e9808c",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 66
+      },
+      "revId": "8d604fe6360528ab63c60f9e3ec9d7e9e96bd747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4e01b17e_e9376cd2",
         "filename": "services/core/java/com/android/server/TestNetworkService.java",
         "patchSetId": 15
