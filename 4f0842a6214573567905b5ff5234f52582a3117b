@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2956db3f_0d3a37ab",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-14T01:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c12ed3f_96ab330b",
+      "range": {
+        "startLine": 105,
+        "startChar": 59,
+        "endLine": 105,
+        "endChar": 60
+      },
+      "revId": "4f0842a6214573567905b5ff5234f52582a3117b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18a28b50_113321d0",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-05-14T01:10:47Z",
       "side": 1,
       "message": "Well, this works unless you happen to have an ongoing switch on the macro sub at the exact moment that a VCN config is being applied and the bundle is being pulled. At that point the only active CC will be opportunistic.",
+      "range": {
+        "startLine": 173,
+        "startChar": 16,
+        "endLine": 173,
+        "endChar": 31
+      },
+      "revId": "4f0842a6214573567905b5ff5234f52582a3117b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "883076d6_26d6d5f1",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-14T01:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18a28b50_113321d0",
       "range": {
         "startLine": 173,
         "startChar": 16,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "acf6c3cf_4fa288fe",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-14T01:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d8f6ff7_9357b6a2",
+      "range": {
+        "startLine": 609,
+        "startChar": 29,
+        "endLine": 609,
+        "endChar": 89
+      },
+      "revId": "4f0842a6214573567905b5ff5234f52582a3117b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db76abe8_1fa8847c",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-05-14T01:10:47Z",
       "side": 1,
       "message": "Now that non-active-subId opportunistic can land on PRIORITY_MACRO_CELLULAR, this seems like a misnomer.\n\nAs per discussion, in the case of:\n\nopportunistic data \u003d\u003d default data subId, macro data \u003d\u003d active data subId (e.g. on a phone call) we need to ensure that opportunistic which is not ACTIVE does not match the same priority as macro, which would prevent a switch.",
+      "range": {
+        "startLine": 626,
+        "startChar": 23,
+        "endLine": 626,
+        "endChar": 46
+      },
+      "revId": "4f0842a6214573567905b5ff5234f52582a3117b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3462c93e_72617ef6",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-14T01:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db76abe8_1fa8847c",
       "range": {
         "startLine": 626,
         "startChar": 23,
