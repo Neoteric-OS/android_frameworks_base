@@ -23,6 +23,7 @@ import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
+import android.annotation.SystemApi;
 import android.content.Context;
 import android.os.Binder;
 import android.os.IBinder;
@@ -90,6 +91,20 @@ public final class BluetoothLeAudio implements BluetoothProfile, AutoCloseable {
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_LE_AUDIO_ACTIVE_DEVICE_CHANGED =
             "android.bluetooth.action.LE_AUDIO_ACTIVE_DEVICE_CHANGED";
+
+    /**
+     * TODO Update value according to Assigned Numbers
+     * Indicates conversation between humans as, for example, in telephony or video calls.
+     * @hide
+     */
+    public static final int CONTEXT_TYPE_COMMUNICATION = 0x0002;
+
+    /**
+     * TODO Update value according to Assigned Numbers
+     * Indicates media as, for example, in music, public radio, podcast or video soundtrack.
+     * @hide
+     */
+    public static final int CONTEXT_TYPE_MEDIA = 0x0004;
 
     /**
      * This represents an invalid group ID.
@@ -414,7 +429,6 @@ public final class BluetoothLeAudio implements BluetoothProfile, AutoCloseable {
             return BluetoothProfile.CONNECTION_POLICY_FORBIDDEN;
         }
     }
-
 
     /**
      * Helper for converting a state to a string.
