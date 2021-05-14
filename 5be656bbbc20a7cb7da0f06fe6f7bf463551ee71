@@ -120,6 +120,24 @@
       "message": "Is there a bugreport showing the ANR?\n\nI\u0027m not convinced we should be accessing the core settings without a lock being held",
       "revId": "5be656bbbc20a7cb7da0f06fe6f7bf463551ee71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c4caf8b_76bb2d67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132658
+      },
+      "writtenOn": "2021-05-14T12:05:51Z",
+      "side": 1,
+      "message": "Yes, a bugreport will be provided later.\n\nThe public method \u0027getPackageInfo\u0027 can be called in the work thread.\nThe public method \u0027handleApplicationInfoChanged\u0027 be called in the UI thread.\nIn the above scenario, deadlock is easy to occur.\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n\"main\" prio\u003d5 tid\u003d1 Blocked\nheld mutexes\u003d\nat android.app.ActivityThread.getStringCoreSetting(ActivityThread.java:7844)\nwaiting to lock \u003c0x0d2d8ecc\u003e (a android.app.ResourcesManager) held by thread 17\nat android.app.LoadedApk.createOrUpdateClassLoaderLocked(LoadedApk.java:836)\nat android.app.LoadedApk.updateApplicationInfo(LoadedApk.java:364)\nlocked \u003c0x0bb02515\u003e (a android.app.LoadedApk)\nat android.app.ActivityThread.handleApplicationInfoChanged(ActivityThread.java:6128)\n---------\n\"SysUiBg\" prio\u003d5 tid\u003d17 Blocked\nheld mutexes\u003d\nat android.app.LoadedApk.updateApplicationInfo(LoadedApk.java:363)\nwaiting to lock \u003c0x0bb02515\u003e (a android.app.LoadedApk) held by thread 1\nat android.app.ActivityThread.getPackageInfo(ActivityThread.java:2387)\nlocked \u003c0x0d2d8ecc\u003e (a android.app.ResourcesManager)\nat android.app.ContextImpl.createPackageContextAsUser(ContextImpl.java:2319)",
+      "parentUuid": "38ebfbaa_4749d540",
+      "revId": "5be656bbbc20a7cb7da0f06fe6f7bf463551ee71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
