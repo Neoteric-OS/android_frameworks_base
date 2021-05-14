@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be5060d0_caf1c18a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-05-14T03:20:21Z",
+      "side": 1,
+      "message": "Carry-forward +2 since this is rebasing.",
+      "revId": "0cf520416ff54bbcec3e5043b6a2444ed73ca4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
