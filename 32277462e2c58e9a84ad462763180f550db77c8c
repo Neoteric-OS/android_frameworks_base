@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03ae51dc_32ed2697",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-05-14T00:53:20Z",
+      "side": 1,
+      "message": "not quite... the WiFI could also satisfy the prospective-network threshold. :-)",
+      "range": {
+        "startLine": 92,
+        "startChar": 38,
+        "endLine": 92,
+        "endChar": 87
+      },
+      "revId": "32277462e2c58e9a84ad462763180f550db77c8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54a3142f_6ffb003d",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-05-14T00:53:20Z",
+      "side": 1,
+      "message": "Given the option, it seems that we should probably try to grab the Carrier Config from the macro subscription over any opportunistic subscriptions that are active. I am not sure this will break, but it\u0027s safer if you use that one. If it\u0027s too hard to do, let\u0027s just file a TODO.",
+      "range": {
+        "startLine": 172,
+        "startChar": 17,
+        "endLine": 172,
+        "endChar": 78
+      },
+      "revId": "32277462e2c58e9a84ad462763180f550db77c8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea908ba9_f8aff033",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-05-14T00:53:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ee4d6338_b95dab98",
+      "range": {
+        "startLine": 362,
+        "startChar": 68,
+        "endLine": 362,
+        "endChar": 87
+      },
+      "revId": "15a3805c05cfb85397fa448072361b21fc0c3e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8eb06d43_d249d2d0",
@@ -156,6 +180,30 @@
       "side": 1,
       "message": "Also this guards against us publishing a underlying network record that isn\u0027t complete; ConnectivityService feeds us one piece of information at a time",
       "parentUuid": "0e5d477b_85ae6d07",
+      "range": {
+        "startLine": 368,
+        "startChar": 17,
+        "endLine": 368,
+        "endChar": 48
+      },
+      "revId": "15a3805c05cfb85397fa448072361b21fc0c3e4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c06beb7_59658919",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-05-14T00:53:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "de478e70_c088f713",
       "range": {
         "startLine": 368,
         "startChar": 17,
