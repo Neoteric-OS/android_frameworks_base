@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17797c7b_c3f50cab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-05-14T08:01:39Z",
+      "side": 1,
+      "message": "Carry-forward +2 from patchset 1 since this is clean rebasing.",
+      "revId": "60d0f06006a5913ca50effa828bbe85ef5c430a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
