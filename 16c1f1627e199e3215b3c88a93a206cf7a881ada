@@ -22,6 +22,30 @@
       },
       "revId": "16c1f1627e199e3215b3c88a93a206cf7a881ada",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "872047c1_e55317d6",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4658,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2021-05-16T21:08:32Z",
+      "side": 1,
+      "message": "See latest patch set.",
+      "parentUuid": "4de1b537_e5d5a218",
+      "range": {
+        "startLine": 4658,
+        "startChar": 16,
+        "endLine": 4658,
+        "endChar": 39
+      },
+      "revId": "16c1f1627e199e3215b3c88a93a206cf7a881ada",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

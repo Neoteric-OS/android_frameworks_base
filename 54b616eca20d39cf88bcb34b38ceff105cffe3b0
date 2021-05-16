@@ -216,6 +216,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8daa3a1f_621acd8e",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4587,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2021-05-16T21:08:32Z",
+      "side": 1,
+      "message": "Please review the latest solution that solves the issue.",
+      "parentUuid": "04a963d0_74c33138",
+      "range": {
+        "startLine": 4587,
+        "startChar": 12,
+        "endLine": 4587,
+        "endChar": 20
+      },
+      "revId": "54b616eca20d39cf88bcb34b38ceff105cffe3b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "278f3b6e_584da803",
