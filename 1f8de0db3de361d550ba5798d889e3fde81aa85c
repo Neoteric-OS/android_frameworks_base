@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bad47be_80dd8c72",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-17T10:00:35Z",
+      "side": 1,
+      "message": "use consistent variable naming: camelCase",
+      "range": {
+        "startLine": 444,
+        "startChar": 16,
+        "endLine": 444,
+        "endChar": 28
+      },
+      "revId": "1f8de0db3de361d550ba5798d889e3fde81aa85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c24d6c0_7ef45126",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-17T10:00:35Z",
+      "side": 1,
+      "message": "The streamType is chose contextually based on the audio mode being IN_CALL or not: this does not indicate if the connected headset supports a mic or not",
+      "range": {
+        "startLine": 453,
+        "startChar": 0,
+        "endLine": 453,
+        "endChar": 69
+      },
+      "revId": "1f8de0db3de361d550ba5798d889e3fde81aa85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80a58de5_42acebf7",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-17T10:00:35Z",
+      "side": 1,
+      "message": "I am not sure we can handle input and output devices connection with the same isConnected booleans. What happens if we have an output device connected with the same address of a newly connected input device?\nWe need to clarify and document the expected behavior fo the BLE stack: how doe sit handle device connection? Do we have 2 separate notifications to audio service like for BT SCO (one for input , one for output)? Is it possible that a headset is first activated for output only and then for input (via bluetooth settings or other)?\nIt maybe clearer to have separate APIs (or an argument) for input and output LE audio devices like we have for A2DP source and A2DP sink.",
+      "range": {
+        "startLine": 491,
+        "startChar": 0,
+        "endLine": 491,
+        "endChar": 42
+      },
+      "revId": "1f8de0db3de361d550ba5798d889e3fde81aa85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a0c5d53_6b3d66eb",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-17T10:00:35Z",
+      "side": 1,
+      "message": "groupId is unused? please comment why if this is intentional.",
+      "range": {
+        "startLine": 1030,
+        "startChar": 45,
+        "endLine": 1030,
+        "endChar": 52
+      },
+      "revId": "1f8de0db3de361d550ba5798d889e3fde81aa85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c7765ed_dc727af7",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-17T10:00:35Z",
+      "side": 1,
+      "message": "we need to reset A2DP ON state here y calling:\nmDeviceBroker.setBluetoothA2dpOnInt(true, false /*fromA2dp*/, eventSource);\n\nThis i sneed until separate routing override APIs are used with audio policy manager for A2DP, Hearing aid and LE audio.",
+      "range": {
+        "startLine": 1231,
+        "startChar": 0,
+        "endLine": 1231,
+        "endChar": 12
+      },
+      "revId": "1f8de0db3de361d550ba5798d889e3fde81aa85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d726e6ad_d1085479",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-17T10:00:35Z",
+      "side": 1,
+      "message": "Sungsoo,\n\nIs MediaRoute handling LE audio routes? Are LE audio devices treated as A2DP devices?",
+      "range": {
+        "startLine": 1243,
+        "startChar": 8,
+        "endLine": 1243,
+        "endChar": 42
+      },
+      "revId": "1f8de0db3de361d550ba5798d889e3fde81aa85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d50f78a7_464099dc",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2895,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-17T10:00:35Z",
+      "side": 1,
+      "message": "If the logic is the same as for Hearing aid at this point, then we should rename and reuse the same methods for both.",
+      "range": {
+        "startLine": 2895,
+        "startChar": 20,
+        "endLine": 2895,
+        "endChar": 40
+      },
+      "revId": "1f8de0db3de361d550ba5798d889e3fde81aa85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55979ee2_f7c8d219",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5545,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-17T10:00:35Z",
+      "side": 1,
+      "message": "we need to have a common way of managing this callback with hearing aid: \n  register if either hearing aid or LE audio is connected for the first time, unregister when neither hearing aid or LE audio is connected anymore.",
+      "range": {
+        "startLine": 5545,
+        "startChar": 0,
+        "endLine": 5545,
+        "endChar": 83
+      },
+      "revId": "1f8de0db3de361d550ba5798d889e3fde81aa85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
