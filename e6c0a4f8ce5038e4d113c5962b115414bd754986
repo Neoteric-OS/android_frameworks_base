@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "448dd531_5b2c1329",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2021-05-17T19:16:23Z",
+      "side": 1,
+      "message": "I had to resolve a merge conflict to internal master and rebasing removed prior reviews. Could I get another +2?",
+      "revId": "e6c0a4f8ce5038e4d113c5962b115414bd754986",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
