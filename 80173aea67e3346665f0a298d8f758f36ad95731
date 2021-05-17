@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010853472",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1709588?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2aa79da8_4a4237fb",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8714,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-05-17T15:42:19Z",
+      "side": 1,
+      "message": "TODO statements should not reference a specific human; consider using a bug number instead; see https://source.android.com/setup/contribute/code-style#use-todo-comments for more details.",
+      "range": {
+        "startLine": 8714,
+        "startChar": 15,
+        "endLine": 8714,
+        "endChar": 31
+      },
+      "revId": "80173aea67e3346665f0a298d8f758f36ad95731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
