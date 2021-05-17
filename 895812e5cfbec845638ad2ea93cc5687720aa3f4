@@ -87,6 +87,24 @@
       "parentUuid": "9b1a31fc_7f92029c",
       "revId": "895812e5cfbec845638ad2ea93cc5687720aa3f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "213de6e2_2e366aa1",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2021-05-17T01:58:52Z",
+      "side": 1,
+      "message": "Hi Siarhei\n\n\u003eAccording to Michael\u0027s suggestion, please rename these to KEYCODE_VIDEO_APP1 .. KEYCODE_VIDEO_APP_8\n\nPlease check Michael\u0027s commit - #14\nhttps://partnerissuetracker.corp.google.com/issues/182532772#comment14\n\n\u003eWhat other apps (besides video) are you trying to support?\nOEM specific apps (i.e Bravia sync, Sony quick settings, demo mode...)\n\nSony would like to add keys to support not only for video apps but also OEM specific apps. and I understood KEYCODE_APP_X is fine from comment14.\n\nPlease let me know if you have any concern about this.",
+      "parentUuid": "9f04c6ff_3c2e5f27",
+      "revId": "895812e5cfbec845638ad2ea93cc5687720aa3f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
