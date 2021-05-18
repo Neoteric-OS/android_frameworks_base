@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b726abd3_bde49fcc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1874159
+      },
+      "writtenOn": "2021-05-18T16:11:39Z",
+      "side": 1,
+      "message": "android.os.strictmode.LeakedClosableViolation: A resource was acquired at attached stack trace but never released. See java.io.Closeable for information on avoiding resource leaks.\n\tat android.os.StrictMode$AndroidCloseGuardReporter.report(StrictMode.java:1987)\n\tat dalvik.system.CloseGuard.warnIfOpen(CloseGuard.java:303)\n\tat java.io.FileInputStream.finalize(FileInputStream.java:503)\n\tat java.lang.Daemons$FinalizerDaemon.doFinalize(Daemons.java:291)\n\tat java.lang.Daemons$FinalizerDaemon.runInternal(Daemons.java:278)\n\tat java.lang.Daemons$Daemon.run(Daemons.java:139)\n\tat java.lang.Thread.run(Thread.java:920)\nCaused by: java.lang.Throwable: Explicit termination method \u0027close\u0027 not called\n\tat dalvik.system.CloseGuard.openWithCallSite(CloseGuard.java:259)\n\tat dalvik.system.CloseGuard.open(CloseGuard.java:230)\n\tat java.io.FileInputStream.\u003cinit\u003e(FileInputStream.java:176)\n\tat com.android.server.input.InputManagerService.getExcludedDeviceNames(InputManagerService.java:2035)",
+      "revId": "618351afe12db0527b101256a9f8209d749dba47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
