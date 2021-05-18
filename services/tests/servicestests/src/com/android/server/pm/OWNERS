@@ -1,3 +1,4 @@
 include /services/core/java/com/android/server/pm/OWNERS
 
 per-file *Shortcut* = file:/core/java/android/content/pm/SHORTCUT_OWNERS
+per-file BaseShortcutManagerTest.java = adorokhine@google.com,sudheersai@google.com
