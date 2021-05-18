@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a5b94f5_9c2670d8",
+        "filename": "packages/Connectivity/service/src/com/android/server/TestNetworkService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-18T19:29:25Z",
+      "side": 1,
+      "message": "Yes - was trying to highlight the locking for this (as @GuardedBy is not supported for constructors).\n\nUpdated the class comment to clarify that it is not thread-safe.",
+      "parentUuid": "f926ed5c_876c933b",
+      "range": {
+        "startLine": 176,
+        "startChar": 4,
+        "endLine": 188,
+        "endChar": 5
+      },
+      "revId": "df4d773bb12da7866f4b71fa9635cf48ea05ca2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd52786e_8947d60c",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-05-18T02:54:00Z",
       "side": 1,
       "message": "Replacing this with (TestNetworkService).removeAgent(getNetwork().getNetId()) (which would take the mTestNetworkTracker lock and remove the agent) would put all the locking out of the TestNetworkAgent inner class, so TestNetworkAgent can just say that it must always be accessed with some lock",
+      "range": {
+        "startLine": 261,
+        "startChar": 12,
+        "endLine": 265,
+        "endChar": 13
+      },
+      "revId": "df4d773bb12da7866f4b71fa9635cf48ea05ca2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78328c35_136cf872",
+        "filename": "packages/Connectivity/service/src/com/android/server/TestNetworkService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-18T19:29:25Z",
+      "side": 1,
+      "message": "This seems reasonable - however, this means teardown() calls TNS#teardownTestNetwork() which in turn must call teardown() for correctness reasons.\n\nWhile this won\u0027t infinitely recurse due to the mBinder check on l.248 above, are we sure this is the correct approach?",
+      "parentUuid": "fd52786e_8947d60c",
       "range": {
         "startLine": 261,
         "startChar": 12,
