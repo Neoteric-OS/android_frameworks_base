@@ -12113,6 +12113,7 @@ package android.content.pm {
     field public static final String FEATURE_AUTOFILL = "android.software.autofill";
     field public static final String FEATURE_AUTOMOTIVE = "android.hardware.type.automotive";
     field public static final String FEATURE_BACKUP = "android.software.backup";
+    field public static final String FEATURE_BATTERYLESS = "android.hardware.batteryless_device";
     field public static final String FEATURE_BLUETOOTH = "android.hardware.bluetooth";
     field public static final String FEATURE_BLUETOOTH_LE = "android.hardware.bluetooth_le";
     field public static final String FEATURE_CAMERA = "android.hardware.camera";
@@ -12143,6 +12144,7 @@ package android.content.pm {
     field public static final String FEATURE_FREEFORM_WINDOW_MANAGEMENT = "android.software.freeform_window_management";
     field public static final String FEATURE_GAMEPAD = "android.hardware.gamepad";
     field public static final String FEATURE_HARDWARE_KEYSTORE = "android.hardware.hardware_keystore";
+    field public static final String FEATURE_HEADLESS = "android.hardware.headless_device";
     field public static final String FEATURE_HIFI_SENSORS = "android.hardware.sensor.hifi_sensors";
     field public static final String FEATURE_HOME_SCREEN = "android.software.home_screen";
     field public static final String FEATURE_IDENTITY_CREDENTIAL_HARDWARE = "android.hardware.identity_credential";
@@ -12153,6 +12155,7 @@ package android.content.pm {
     field public static final String FEATURE_KEYSTORE_APP_ATTEST_KEY = "android.hardware.keystore.app_attest_key";
     field public static final String FEATURE_KEYSTORE_LIMITED_USE_KEY = "android.hardware.keystore.limited_use_key";
     field public static final String FEATURE_KEYSTORE_SINGLE_USE_KEY = "android.hardware.keystore.single_use_key";
+    field public static final String FEATURE_LARGE_DISPLAY = "android.hardware.large_display";
     field public static final String FEATURE_LEANBACK = "android.software.leanback";
     field public static final String FEATURE_LEANBACK_ONLY = "android.software.leanback_only";
     field public static final String FEATURE_LIVE_TV = "android.software.live_tv";
@@ -12171,6 +12174,7 @@ package android.content.pm {
     field public static final String FEATURE_NFC_OFF_HOST_CARD_EMULATION_UICC = "android.hardware.nfc.uicc";
     field public static final String FEATURE_OPENGLES_DEQP_LEVEL = "android.software.opengles.deqp.level";
     field public static final String FEATURE_OPENGLES_EXTENSION_PACK = "android.hardware.opengles.aep";
+    field public static final String FEATURE_OTHER_FORM_FACTOR = "android.hardware.other_form_factor";
     field public static final String FEATURE_PC = "android.hardware.type.pc";
     field public static final String FEATURE_PICTURE_IN_PICTURE = "android.software.picture_in_picture";
     field public static final String FEATURE_PRINTING = "android.software.print";

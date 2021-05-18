@@ -3344,6 +3344,40 @@ public abstract class PackageManager {
     public static final String FEATURE_KEYSTORE_APP_ATTEST_KEY =
             "android.hardware.keystore.app_attest_key";
 
+    /**
+     * Feature for {@link #getSystemAvailableFeatures} and
+     * {@link #hasSystemFeature}: The device do not meet the CDD definition of handled or tablet.
+     * It is classified as non-standard form factor or other form factor for the purposes of
+     * GMS approval.
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_OTHER_FORM_FACTOR = "android.hardware.other_form_factor";
+
+    /**
+     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}:
+     * This device has no battery and adhere to
+     * <a href="https://source.android.com/devices/tech/power/batteryless">
+     * the compatibility requirements for batteryless devices</a>.
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_BATTERYLESS = "android.hardware.batteryless_device";
+
+    /**
+     * Feature for {@link #getSystemAvailableFeatures} and
+     * {@link #hasSystemFeature}: The device support displays greater than 18 inches
+     * (greater than CDD tablet specifications).
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_LARGE_DISPLAY = "android.hardware.large_display";
+
+    /**
+     * Feature for {@link #getSystemAvailableFeatures} and
+     * {@link #hasSystemFeature}: The device have a detachable display hardware and
+     * may support multiple display hardware (different screen sizes).
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_HEADLESS = "android.hardware.headless_device";
+
     /** @hide */
     public static final boolean APP_ENUMERATION_ENABLED_BY_DEFAULT = true;
 
