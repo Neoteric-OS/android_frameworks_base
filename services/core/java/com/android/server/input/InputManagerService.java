@@ -2026,14 +2026,13 @@ public class InputManagerService extends IInputManager.Stub
         };
         for (File baseDir: baseDirs) {
             File confFile = new File(baseDir, EXCLUDED_DEVICES_PATH);
-            try {
-                InputStream stream = new FileInputStream(confFile);
+            try (InputStream stream = new FileInputStream(confFile)) {
                 names.addAll(ConfigurationProcessor.processExcludedDeviceNames(stream));
             } catch (FileNotFoundException e) {
                 // It's ok if the file does not exist.
             } catch (Exception e) {
                 Slog.e(TAG, "Could not parse '" + confFile.getAbsolutePath() + "'", e);
-            }
+            } 
         }
         return names.toArray(new String[0]);
     }
@@ -2060,8 +2059,7 @@ public class InputManagerService extends IInputManager.Stub
         final File baseDir = Environment.getVendorDirectory();
         final File confFile = new File(baseDir, PORT_ASSOCIATIONS_PATH);
 
-        try {
-            final InputStream stream = new FileInputStream(confFile);
+        try(final InputStream stream = new FileInputStream(confFile)) {
             return ConfigurationProcessor.processInputPortAssociations(stream);
         } catch (FileNotFoundException e) {
             // Most of the time, file will not exist, which is expected.
