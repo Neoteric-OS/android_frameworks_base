@@ -23,10 +23,10 @@ import java.security.cert.X509Certificate;
 /**
  * A class used to specify access controls.
  */
-public class AccessControlProfile {
+public class AccessControlProfileMode {
     private AccessControlProfileId mAccessControlProfileId = new AccessControlProfileId(0);
     private X509Certificate mReaderCertificate = null;
-    private boolean mUserAuthenticationRequired = true;
+    private int mUserAuthenticationRequired = true;
     private long mUserAuthenticationTimeout = 0;
 
     private AccessControlProfile() {
