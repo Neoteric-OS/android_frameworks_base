@@ -59,8 +59,6 @@ public class ArtStatsLogUtils {
     private static final Map<Integer, Integer> COMPILATION_REASON_MAP = new HashMap();
 
     static {
-        COMPILATION_REASON_MAP.put(PackageManagerService.REASON_UNKNOWN, ArtStatsLog.
-                ART_DATUM_REPORTED__COMPILATION_REASON__ART_COMPILATION_REASON_UNKNOWN);
         COMPILATION_REASON_MAP.put(PackageManagerService.REASON_FIRST_BOOT, ArtStatsLog.
                 ART_DATUM_REPORTED__COMPILATION_REASON__ART_COMPILATION_REASON_FIRST_BOOT);
         COMPILATION_REASON_MAP.put(PackageManagerService.REASON_BOOT_AFTER_OTA, ArtStatsLog.
