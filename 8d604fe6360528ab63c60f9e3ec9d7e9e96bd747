@@ -145,6 +145,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "457fcfef_c7e6d413",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-05-18T02:54:00Z",
+      "side": 1,
+      "message": "I find it all very confusing as thread safety depends on how the inner class is used externally (in applyVcnNetworkPolicyLocked, onPolicyChanged for example), meaning that the inner class itself is not thread-safe; but the added @GuardedBy annotations seem to indicate that it has some internal way to keep thread safety.\n\nI think it would be simpler to just document this inner class as non-thread-safe, so all instances must be accessed by holding a lock (which is hinted by having the mTestNetworkTracker set guarded by itself already), and remove GuardedBy annotations on the inner class. The agent.teardown in teardownTestNetwork should be done under lock too then.",
+      "parentUuid": "53b6f686_30b7243a",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 66
+      },
+      "revId": "8d604fe6360528ab63c60f9e3ec9d7e9e96bd747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4e01b17e_e9376cd2",
         "filename": "services/core/java/com/android/server/TestNetworkService.java",
         "patchSetId": 15
