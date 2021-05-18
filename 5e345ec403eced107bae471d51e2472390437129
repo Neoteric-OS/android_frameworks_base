@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "216b6686_e86b74ac",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-05-18T07:38:38Z",
+      "side": 1,
+      "message": "I think you just need to new a NC. Verify it\u0027s not broken.\nThen set it to true and verify it\u0027s true.\n\nThe coverage is enough then.",
+      "range": {
+        "startLine": 553,
+        "startChar": 3,
+        "endLine": 553,
+        "endChar": 42
+      },
+      "revId": "5e345ec403eced107bae471d51e2472390437129",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
