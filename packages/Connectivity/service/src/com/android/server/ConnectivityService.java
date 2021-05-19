@@ -4983,22 +4983,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         // Revalidate if the app report does not match our current validated state.
         if (hasConnectivity == nai.lastValidated) {
-            // Send CONNECTIVITY_REPORTED event before SEND_CACHED_REPORT to force an ordering of
-            // ConnDiags events. This ensures that #onNetworkConnectivityReported() will be called
-            // before #onConnectivityReportAvailable().
             mConnectivityDiagnosticsHandler.sendMessage(
                     mConnectivityDiagnosticsHandler.obtainMessage(
                             ConnectivityDiagnosticsHandler.EVENT_NETWORK_CONNECTIVITY_REPORTED,
-                            encodeBool(hasConnectivity), 0, nai));
-
-            // The Network will not be revalidated so a new ConnectivityReport will not be
-            // generated. Notify ConnDiags to send the cached report instead. Note that there may
-            // not be a cached report available at the time this message is sent to the ConnDiags
-            // Handler - this will be handled in the ConnDiags Handler.
-            mConnectivityDiagnosticsHandler.sendMessage(
-                    mConnectivityDiagnosticsHandler.obtainMessage(
-                            ConnectivityDiagnosticsHandler.EVENT_SEND_CACHED_CONNECTIVITY_REPORT,
-                            nai));
+                            new ReportedNetworkConnectivityInfo(
+                                    hasConnectivity, false /* isNetworkRevalidating */, uid, nai)));
             return;
         }
         if (DBG) {
@@ -5022,7 +5011,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mConnectivityDiagnosticsHandler.sendMessage(
                 mConnectivityDiagnosticsHandler.obtainMessage(
                         ConnectivityDiagnosticsHandler.EVENT_NETWORK_CONNECTIVITY_REPORTED,
-                        encodeBool(hasConnectivity), 0, nai));
+                        new ReportedNetworkConnectivityInfo(
+                                hasConnectivity, true /* isNetworkRevalidating */, uid, nai)));
         nai.networkMonitor().forceReevaluation(uid);
     }
 
@@ -8924,17 +8914,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
          * the platform. This event will invoke {@link
          * IConnectivityDiagnosticsCallback#onNetworkConnectivityReported} for permissioned
          * callbacks.
-         * obj = Network that was reported on
-         * arg1 = boolint for the quality reported
+         * obj = ReportedNetworkConnectivityInfo with info on reported Network connectivity.
          */
         private static final int EVENT_NETWORK_CONNECTIVITY_REPORTED = 5;
-
-        /**
-         * Event for ConnectivityDiagnosticsHandler to send a previously created ConnectivityReport.
-         * obj = {@link NetworkAgentInfo} that contains the cached {@link ConnectivityReport} to be
-         * sent. If the NetworkAgentInfo does not have a cached report, this event is a no-op.
-         */
-        private static final int EVENT_SEND_CACHED_CONNECTIVITY_REPORT = 6;
 
         private ConnectivityDiagnosticsHandler(Looper looper) {
             super(looper);
@@ -8970,11 +8952,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case EVENT_NETWORK_CONNECTIVITY_REPORTED: {
-                    handleNetworkConnectivityReported((NetworkAgentInfo) msg.obj, toBool(msg.arg1));
-                    break;
-                }
-                case EVENT_SEND_CACHED_CONNECTIVITY_REPORT: {
-                    handleSendCachedConnectivityReport((NetworkAgentInfo) msg.obj);
+                    handleNetworkConnectivityReported((ReportedNetworkConnectivityInfo) msg.obj);
                     break;
                 }
                 default: {
@@ -9041,6 +9019,28 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mTimestampMillis = timestampMillis;
             mNai = nai;
             mExtras = p;
+        }
+    }
+
+    /**
+     * Class used for sending info for a call to {@link #reportNetworkConnectivity()} to {@link
+     * ConnectivityDiagnosticsHandler}.
+     */
+    private static class ReportedNetworkConnectivityInfo {
+        public final boolean hasConnectivity;
+        public final boolean isNetworkRevalidating;
+        public final int reporterUid;
+        @NonNull public final NetworkAgentInfo nai;
+
+        private ReportedNetworkConnectivityInfo(
+                boolean hasConnectivity,
+                boolean isNetworkRevalidating,
+                int reporterUid,
+                @NonNull NetworkAgentInfo nai) {
+            this.hasConnectivity = hasConnectivity;
+            this.isNetworkRevalidating = isNetworkRevalidating;
+            this.reporterUid = reporterUid;
+            this.nai = nai;
         }
     }
 
@@ -9152,33 +9152,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         extras);
         nai.setConnectivityReport(report);
 
-        handleSendCachedConnectivityReport(nai);
-    }
-
-    private void handleSendCachedConnectivityReport(@NonNull NetworkAgentInfo nai) {
-        // Remove all subsequently queued SEND_CACHED messages for this NetworkAgent to prevent
-        // races where a SEND_CACHED message is enqueued after a NETWORK_TESTED message. Without
-        // this, a duplicate report will be sent.
-        mConnectivityDiagnosticsHandler.removeMessages(
-                ConnectivityDiagnosticsHandler.EVENT_SEND_CACHED_CONNECTIVITY_REPORT, nai);
-
-        // #reportNetworkConnectivity sends the cached report for a Network if the reported
-        // connectivity matches the known connectivity. Because #reportNetworkConnectivity may be
-        // called for a Network before it has completed validation (and has a cached report
-        // available), check for null before notifying registrants.
-        //
-        // Note that it is possible for the Network's cached report to be updated between when
-        // #reportNetworkConnectivity enqueues the SEND_CACHED message and when it is handled here.
-        final ConnectivityReport report = nai.getConnectivityReport();
-        if (report == null) return;
-
         final List<IConnectivityDiagnosticsCallback> results =
                 getMatchingPermissionedCallbacks(nai);
         for (final IConnectivityDiagnosticsCallback cb : results) {
             try {
                 cb.onConnectivityReportAvailable(report);
             } catch (RemoteException ex) {
-                loge("Error invoking onConnectivityReport", ex);
+                loge("Error invoking onConnectivityReportAvailable", ex);
             }
         }
     }
@@ -9208,14 +9188,37 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void handleNetworkConnectivityReported(
-            @NonNull NetworkAgentInfo nai, boolean connectivity) {
+            @NonNull ReportedNetworkConnectivityInfo reportedNetworkConnectivityInfo) {
+        final NetworkAgentInfo nai = reportedNetworkConnectivityInfo.nai;
+        final ConnectivityReport cachedReport = nai.getConnectivityReport();
+
+        // If the Network is being re-validated as a result of this call to
+        // reportNetworkConnectivity(), notify all permissioned callbacks. Otherwise, only notify
+        // permissioned callbacks registered by the reporter.
         final List<IConnectivityDiagnosticsCallback> results =
-                getMatchingPermissionedCallbacks(nai);
+                reportedNetworkConnectivityInfo.isNetworkRevalidating
+                        ? getMatchingPermissionedCallbacks(nai)
+                        : getMatchingPermissionedCallbacks(
+                                nai, reportedNetworkConnectivityInfo.reporterUid);
+
         for (final IConnectivityDiagnosticsCallback cb : results) {
             try {
-                cb.onNetworkConnectivityReported(nai.network, connectivity);
+                cb.onNetworkConnectivityReported(
+                        nai.network, reportedNetworkConnectivityInfo.hasConnectivity);
             } catch (RemoteException ex) {
                 loge("Error invoking onNetworkConnectivityReported", ex);
+            }
+
+            // If the Network isn't re-validating, also provide the cached report. If there is no
+            // cached report, the Network is still being validated and a report will be sent once
+            // validation is complete. Note that networks which never undergo validation will still
+            // have a cached ConnectivityReport with RESULT_SKIPPED.
+            if (!reportedNetworkConnectivityInfo.isNetworkRevalidating && cachedReport != null) {
+                try {
+                    cb.onConnectivityReportAvailable(cachedReport);
+                } catch (RemoteException ex) {
+                    loge("Error invoking onConnectivityReportAvailable", ex);
+                }
             }
         }
     }
@@ -9231,18 +9234,38 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private List<IConnectivityDiagnosticsCallback> getMatchingPermissionedCallbacks(
             @NonNull NetworkAgentInfo nai) {
+        // Specify SUSTEM_UID to indicate that the System is the originator of this ConnDiags event.
+        // This will return matching ConnDiags callbacks registered by any UID.
+        return getMatchingPermissionedCallbacks(nai, Process.SYSTEM_UID);
+    }
+
+    private List<IConnectivityDiagnosticsCallback> getMatchingPermissionedCallbacks(
+            @NonNull NetworkAgentInfo nai, int srcUid) {
         final List<IConnectivityDiagnosticsCallback> results = new ArrayList<>();
         for (Entry<IBinder, ConnectivityDiagnosticsCallbackInfo> entry :
                 mConnectivityDiagnosticsCallbacks.entrySet()) {
             final ConnectivityDiagnosticsCallbackInfo cbInfo = entry.getValue();
             final NetworkRequestInfo nri = cbInfo.mRequestInfo;
+
             // Connectivity Diagnostics rejects multilayer requests at registration hence get(0).
-            if (nai.satisfies(nri.mRequests.get(0))) {
-                if (checkConnectivityDiagnosticsPermissions(
-                        nri.mPid, nri.mUid, nai, cbInfo.mCallingPackageName)) {
-                    results.add(entry.getValue().mCb);
-                }
+            if (!nai.satisfies(nri.mRequests.get(0))) {
+                continue;
             }
+
+            // Source UID for this callback must either be:
+            //  - SYSTEM_UID (the System caused this ConnDiags event), or
+            //  - The callback's owner (the owner called reportNetworkConnectivity() and is being
+            //    notified as a result)
+            if (srcUid != Process.SYSTEM_UID && srcUid != nri.mUid) {
+                continue;
+            }
+
+            if (!checkConnectivityDiagnosticsPermissions(
+                    nri.mPid, nri.mUid, nai, cbInfo.mCallingPackageName)) {
+                continue;
+            }
+
+            results.add(entry.getValue().mCb);
         }
         return results;
     }
