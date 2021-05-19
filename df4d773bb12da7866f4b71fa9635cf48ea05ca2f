@@ -117,6 +117,30 @@
       },
       "revId": "df4d773bb12da7866f4b71fa9635cf48ea05ca2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c15c781_b6816f20",
+        "filename": "packages/Connectivity/service/src/com/android/server/TestNetworkService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-19T18:35:53Z",
+      "side": 1,
+      "message": "apologies - I misunderstood removeAgent() to be a reference to teardownTestNetwork(). Done.\n\nHowever, it seems that TestNetworkAgents may still be accessed from other threads - such as binderDied() or unwanted(). afaict the current patchset is safe, but should we consider additional locking for these cases?",
+      "parentUuid": "ae744c86_e211cfac",
+      "range": {
+        "startLine": 261,
+        "startChar": 12,
+        "endLine": 265,
+        "endChar": 13
+      },
+      "revId": "df4d773bb12da7866f4b71fa9635cf48ea05ca2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
