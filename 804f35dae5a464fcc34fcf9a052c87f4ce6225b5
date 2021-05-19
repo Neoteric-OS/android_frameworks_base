@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a21e35bc_384e497e",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecKeycode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2021-05-19T09:20:08Z",
+      "side": 1,
+      "message": "Can we use a different string for each individual volume and power keycode? It\u0027s often useful during debugging to distinguish between all of them.",
+      "range": {
+        "startLine": 505,
+        "startChar": 0,
+        "endLine": 513,
+        "endChar": 31
+      },
+      "revId": "804f35dae5a464fcc34fcf9a052c87f4ce6225b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31e599f8_7e287989",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecKeycode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2021-05-19T09:20:08Z",
+      "side": 1,
+      "message": "Let\u0027s categorize this as a navigation keycode instead.",
+      "range": {
+        "startLine": 574,
+        "startChar": 17,
+        "endLine": 574,
+        "endChar": 33
+      },
+      "revId": "804f35dae5a464fcc34fcf9a052c87f4ce6225b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
