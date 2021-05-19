@@ -22,6 +22,30 @@
       },
       "revId": "89b0ae68bdba983f998b210585d8ef5726daa16d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "490ee1ee_53803e1d",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-05-19T15:26:17Z",
+      "side": 1,
+      "message": "There\u0027s some bad logic in PackageManagerCompilationMapping that assumes that :( and I didn\u0027t want to expand the change too much",
+      "parentUuid": "c834fdc1_bb1b7b5f",
+      "range": {
+        "startLine": 689,
+        "startChar": 0,
+        "endLine": 690,
+        "endChar": 47
+      },
+      "revId": "89b0ae68bdba983f998b210585d8ef5726daa16d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
