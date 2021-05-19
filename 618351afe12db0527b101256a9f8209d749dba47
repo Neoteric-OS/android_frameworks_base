@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a10163f_d019fd9f",
+        "filename": "services/core/java/com/android/server/input/InputManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2029,
+      "author": {
+        "id": 1874159
+      },
+      "writtenOn": "2021-05-19T13:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71b1a6f3_59ac6513",
+      "range": {
+        "startLine": 2029,
+        "startChar": 12,
+        "endLine": 2029,
+        "endChar": 17
+      },
+      "revId": "618351afe12db0527b101256a9f8209d749dba47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "47934bb1_577360cb",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00fe3fd7_dbd86a69",
+        "filename": "services/core/java/com/android/server/input/InputManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2072,
+      "author": {
+        "id": 1874159
+      },
+      "writtenOn": "2021-05-19T13:42:49Z",
+      "side": 1,
+      "message": "Yes. Applicable for this as well",
+      "parentUuid": "47934bb1_577360cb",
+      "range": {
+        "startLine": 2072,
+        "startChar": 7,
+        "endLine": 2072,
+        "endChar": 9
+      },
+      "revId": "618351afe12db0527b101256a9f8209d749dba47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "70ab1e0a_64c8592b",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-05-18T19:14:52Z",
       "side": 1,
       "message": "what about this one?",
+      "range": {
+        "startLine": 2180,
+        "startChar": 54,
+        "endLine": 2180,
+        "endChar": 71
+      },
+      "revId": "618351afe12db0527b101256a9f8209d749dba47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5fd93f4_e27036f9",
+        "filename": "services/core/java/com/android/server/input/InputManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2180,
+      "author": {
+        "id": 1874159
+      },
+      "writtenOn": "2021-05-19T13:42:49Z",
+      "side": 1,
+      "message": "Closeguard support is not added to this. So, Will not get Resource Leak. But, as per the code didn\u0027t close the resource. I think we need to close this as well.",
+      "parentUuid": "70ab1e0a_64c8592b",
       "range": {
         "startLine": 2180,
         "startChar": 54,
