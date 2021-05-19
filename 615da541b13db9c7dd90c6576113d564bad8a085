@@ -1,0 +1,28 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f487505_4a204c42",
+        "filename": "services/core/java/com/android/server/input/InputManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2035,
+      "author": {
+        "id": 1874159
+      },
+      "writtenOn": "2021-05-19T13:43:22Z",
+      "side": 1,
+      "message": "\u003e Please remove the trailing whitespace.\n\nPlease fix.",
+      "parentUuid": "fabe0ef1_77ec166e",
+      "range": {
+        "startLine": 2035,
+        "startChar": 13,
+        "endLine": 2035,
+        "endChar": 14
+      },
+      "revId": "615da541b13db9c7dd90c6576113d564bad8a085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
