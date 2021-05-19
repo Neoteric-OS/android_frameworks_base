@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68d219f1_8370daa8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-05-19T01:37:13Z",
+      "side": 1,
+      "message": "I don\u0027t want to block this change on bikeshedding on how to document the threading model, but please consider the suggestions (possibly in a followup); it seems Jean also found that the threading model wasn\u0027t clear enough.",
+      "revId": "f85e6ba5f4edbeb697a19541f9eb718a039706a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73c9f01e_53ed6c5a",
+        "filename": "packages/Connectivity/service/src/com/android/server/TestNetworkService.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-05-19T01:37:13Z",
+      "side": 1,
+      "message": "I\u0027d prefer removing all references to mTestNetworkTracker inside this class since it\u0027s just documented as non-thread-safe (so the caller can choose whatever lock it wants). That includes a slight preference for removing these annotations added in this change, as I mentioned in another comment it hints that the class maintains some thread safety internally while it doesn\u0027t really.",
+      "range": {
+        "startLine": 260,
+        "startChar": 8,
+        "endLine": 260,
+        "endChar": 41
+      },
+      "revId": "f85e6ba5f4edbeb697a19541f9eb718a039706a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

@@ -93,6 +93,30 @@
       },
       "revId": "df4d773bb12da7866f4b71fa9635cf48ea05ca2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae744c86_e211cfac",
+        "filename": "packages/Connectivity/service/src/com/android/server/TestNetworkService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-05-19T01:37:13Z",
+      "side": 1,
+      "message": "I meant just creating a removeAgent method in TestNetworkService:\n\n  void removeAgent(Network network) {\n      synchronized(mTestNetworkTracker) {\n          mTestNetworkTracker.remove(network.getNetId());\n      }\n  }\n\nThen call removeAgent(getNetwork()) here (so just move the 3 lines here to a method outside of TestNetworkAgent). I think this wouldn\u0027t call teardownTestNetwork, maybe you were referring to something else ?\n\nThe point of doing this is to separate TestNetworkAgent from mTestNetworkTracker, so that it is just a non-thread-safe class that must be accessed under a lock managed by the caller (TestNetworkService, which will use mTestNetworkTracker but that\u0027s not TestNetworkAgent\u0027s business). I think it simplifies how to think about the threading model a bit.",
+      "parentUuid": "78328c35_136cf872",
+      "range": {
+        "startLine": 261,
+        "startChar": 12,
+        "endLine": 265,
+        "endChar": 13
+      },
+      "revId": "df4d773bb12da7866f4b71fa9635cf48ea05ca2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
