@@ -52,6 +52,24 @@
       "parentUuid": "bb453950_1bc80b05",
       "revId": "c4099ac074e020f9998120c311e84ddd54c86d96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "836c2fd2_d21d5060",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtStatsLogUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-05-19T21:06:25Z",
+      "side": 0,
+      "message": "weird, locally it says, no branch ready to upload. Done.",
+      "parentUuid": "d7fda8cf_d999fcbb",
+      "revId": "c4099ac074e020f9998120c311e84ddd54c86d96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

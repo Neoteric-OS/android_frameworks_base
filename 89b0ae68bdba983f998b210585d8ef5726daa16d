@@ -70,6 +70,30 @@
       },
       "revId": "89b0ae68bdba983f998b210585d8ef5726daa16d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17996d7e_9ccb1e51",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-05-19T21:06:25Z",
+      "side": 1,
+      "message": "Nop. statds has a different set of constants, unrelated to these.",
+      "parentUuid": "f2eeb90c_83fe47b1",
+      "range": {
+        "startLine": 689,
+        "startChar": 0,
+        "endLine": 690,
+        "endChar": 47
+      },
+      "revId": "89b0ae68bdba983f998b210585d8ef5726daa16d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
