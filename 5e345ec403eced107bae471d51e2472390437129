@@ -22,6 +22,30 @@
       },
       "revId": "5e345ec403eced107bae471d51e2472390437129",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95372e1e_fe2685d1",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-05-20T01:55:31Z",
+      "side": 1,
+      "message": "Yes as far as the API is concerned, but this doesn\u0027t really test the functionality.\nI think the test should set an invalid private DNS configuration, disconnect/reconnect wifi, and make sure that it sees private DNS broken (so probably not in NetworkCapabilitiesTest, maybe in its own class if there\u0027s no close match)",
+      "parentUuid": "216b6686_e86b74ac",
+      "range": {
+        "startLine": 553,
+        "startChar": 3,
+        "endLine": 553,
+        "endChar": 42
+      },
+      "revId": "5e345ec403eced107bae471d51e2472390437129",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
