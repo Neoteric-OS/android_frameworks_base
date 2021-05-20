@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f17a3f8c_b14fdd2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-05-20T00:40:32Z",
+      "side": 1,
+      "message": "I have also been studying this bug (well, an identical bug; I didn\u0027t realise they were the same until last week). And I also think patch 8 might be a good solution. I am currently analysing it. I do hope to get this (or something to fix the bug) into S.",
+      "revId": "675b2f3c37cffd26e044b1e886371575d63dbb00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
