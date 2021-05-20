@@ -68,6 +68,24 @@
       "message": "Nice something 🔙",
       "revId": "2b3e940d666924cb1343365586bffaff79401c57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ec0aec5_ca0f40dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-20T19:24:05Z",
+      "side": 1,
+      "message": "Overall, I do feel that the TestNetworkService is the right place for this; it was created to be the intermediary between CTS and the networking components, and at the time the decision was predicated on the desire for CTS to not have the ability to create (any) NetworkAgents. I recognize that that has now changed, and that makes the only useful part of the TestNetworkService the methods to create the TUN/TAP devices. on a more immediate note, creating a duplicate on the other side of the CTS boundary seems like technical debt (unless we\u0027re also intending to deprecate/remove the bulk of TestNetworkService)?\n\nOn (3), it appears that TEST_NETWORK NetworkAgents are allowed to be registered by callers with MANAGE_TEST_NETWORKS, but at present, the TestNetworkService fulfills one role that CTS cannot - setting the linux TUN interface as \"up\". This is currently called when registering a Network using a given TUN/TAP interface, and requires the NETWORK_STACK permission, which CTS does not have.\n\nIn the interest of forward progress, a potential path forward is to move the setInterfaceUp() call to the creation of the TUN/TAP interface (IPsec interfaces are unconditionally set as \"up\" during the creation process), and it may be technically possible to have CTS do the rest. The cost (technical debt and rework wise) is pretty high.",
+      "parentUuid": "3db12e11_28ab0155",
+      "revId": "2b3e940d666924cb1343365586bffaff79401c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
