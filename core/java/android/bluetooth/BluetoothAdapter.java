@@ -1698,9 +1698,10 @@ public final class BluetoothAdapter {
      * <i>discoverable</i> (inquiry scan enabled). Many Bluetooth devices are
      * not discoverable by default, and need to be entered into a special mode.
      * <p>If Bluetooth state is not {@link #STATE_ON}, this API
-     * will return false. After turning on Bluetooth,
-     * wait for {@link #ACTION_STATE_CHANGED} with {@link #STATE_ON}
-     * to get the updated value.
+     * will return false. After turning on Bluetooth, wait for {@link #ACTION_STATE_CHANGED}
+     * with {@link #STATE_ON} to get the updated value.
+     * <p>If a device is currently bonding, this request will be queued and executed once that
+     * device has finished bonding. If a request is already queued, this request will be ignored.
      *
      * @return true on success, false on error
      */
@@ -1740,13 +1741,14 @@ public final class BluetoothAdapter {
      */
     @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
     public boolean cancelDiscovery() {
+        new Throwable().printStackTrace();
         if (getState() != STATE_ON) {
             return false;
         }
         try {
             mServiceLock.readLock().lock();
             if (mService != null) {
-                return mService.cancelDiscovery();
+                return mService.cancelDiscovery(getOpPackageName());
             }
         } catch (RemoteException e) {
             Log.e(TAG, "", e);
