@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fe63013_6f4b268a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2021-05-20T20:04:56Z",
+      "side": 1,
+      "message": "Hi Michael, \nPlease open a bug and add it to CL.",
+      "revId": "6e473d127bd28139857b3452a8568c30d3ea2968",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
