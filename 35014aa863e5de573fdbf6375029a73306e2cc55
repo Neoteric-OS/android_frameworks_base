@@ -16,6 +16,24 @@
       "message": "Instead of listing specific people, can you instead use an include-style directive (like \"file:\" above) to reference a team?  That\u0027ll help improve maintenance going forward in the future.",
       "revId": "35014aa863e5de573fdbf6375029a73306e2cc55",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f25aba9b_c2e84db4",
+        "filename": "services/tests/servicestests/src/com/android/server/pm/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1536014
+      },
+      "writtenOn": "2021-05-20T17:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e843dff8_d9aa7dd7",
+      "revId": "35014aa863e5de573fdbf6375029a73306e2cc55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
