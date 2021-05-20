@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d309cb3_858e1958",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-20T15:35:47Z",
+      "side": 1,
+      "message": "If possible I think we should avoid avoid adding support for VCN to TestNetworkService.\n\n- It\u0027s a substantial increase in code size and complexity (excluding imports, this CL adds almost 30% to the lines of code in this class)\n- There is really only one possible user of that support (VCN)\n- It adds a dependency from the mainline module (TestNetworkService) to the platform (VcnManager, VcnNetworkPolicyResult). As we\u0027ve seen this year, this sort of dependency is difficult to manage when mainline code automerges to mainline-branches. We solve this problem using shims, but they are quite expensive to code and maintain.\n\nI think it would be better to put this code in the VCN CTS tests themselves and manipulate NetworkAgent directly. With adoptShellPermissionIdentity, NETWORK_SETTINGS (which is enforced by CTS to be owned only by certain packages) and TRANSPORT_TEST networks, there\u0027s very little that CTS tests can\u0027t do with the NetworkAgent API.\n\nI think this will entail allowing NETWORK_SETTINGS to call applyVcnNetworkPolicy and addVcnNetworkPolicyChangeListener. This seems fine from a security perspective, since both NETWORK_FACTORY and the NETWORK_SETTINGS are signature permissions, and NETWORK_SETTINGS is additionally restricted by specific CTS tests that limit its adoption to only a few UIDs.",
+      "revId": "2b3e940d666924cb1343365586bffaff79401c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
