@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1f2dc86_c88be11d",
+        "filename": "tests/net/common/java/android/net/NetworkAgentConfigTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-05-20T01:35:00Z",
+      "side": 1,
+      "message": "This won\u0027t work before S right ?",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 64
+      },
+      "revId": "411be0d433a71c0ea07b83b101a3abc01ee49060",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
