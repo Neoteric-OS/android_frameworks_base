@@ -16,6 +16,41 @@
       "message": "If possible I think we should avoid avoid adding support for VCN to TestNetworkService.\n\n- It\u0027s a substantial increase in code size and complexity (excluding imports, this CL adds almost 30% to the lines of code in this class)\n- There is really only one possible user of that support (VCN)\n- It adds a dependency from the mainline module (TestNetworkService) to the platform (VcnManager, VcnNetworkPolicyResult). As we\u0027ve seen this year, this sort of dependency is difficult to manage when mainline code automerges to mainline-branches. We solve this problem using shims, but they are quite expensive to code and maintain.\n\nI think it would be better to put this code in the VCN CTS tests themselves and manipulate NetworkAgent directly. With adoptShellPermissionIdentity, NETWORK_SETTINGS (which is enforced by CTS to be owned only by certain packages) and TRANSPORT_TEST networks, there\u0027s very little that CTS tests can\u0027t do with the NetworkAgent API.\n\nI think this will entail allowing NETWORK_SETTINGS to call applyVcnNetworkPolicy and addVcnNetworkPolicyChangeListener. This seems fine from a security perspective, since both NETWORK_FACTORY and the NETWORK_SETTINGS are signature permissions, and NETWORK_SETTINGS is additionally restricted by specific CTS tests that limit its adoption to only a few UIDs.",
       "revId": "2b3e940d666924cb1343365586bffaff79401c57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3db12e11_28ab0155",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-05-20T17:20:25Z",
+      "side": 1,
+      "message": "A few thoughts here:\n\n1) We\u0027re trying to test the VCN API (not the lower level APIs like the NetworkAgent API). Tests should test one thing, and writing tests that are as clean as possible (which this facilitates) is a win. We also shouldn\u0027t reinvent the wheel.\n\n2) Currently, there are CTS tests in the mainline module which are testing public API behavior for APIs not in the module (e.g. IPsec). If that\u0027s a reasonable dependency between the platform code and the Connectivity module, then some improvements to the TestNetworkService seem like they should be a totally reasonable dependency.\n\n3) Ben believes that in addition to these points, it\u0027s actually technically necessary to use TestNetworkService due to permissions restrictions, which is what required him to write it in the first place (https://android-review.googlesource.com/c/platform/frameworks/base/+/826957), and he\u0027ll provide that detail in a follow-up comment.",
+      "parentUuid": "7d309cb3_858e1958",
+      "revId": "2b3e940d666924cb1343365586bffaff79401c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17ed6abb_23a5c1ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-05-20T17:20:25Z",
+      "side": 1,
+      "message": "A few thoughts here:\n1) ",
+      "revId": "2b3e940d666924cb1343365586bffaff79401c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
