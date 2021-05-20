@@ -35,6 +35,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20cb878c_4cd5f1bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-20T15:18:48Z",
+      "side": 1,
+      "message": "Maciej, any thoughts on the addition of these crypto algorithms for IKE negotiation?",
+      "revId": "40856cc5684f7768fbefad532224c2b603ba020d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f8477b9_b5b37bca",
