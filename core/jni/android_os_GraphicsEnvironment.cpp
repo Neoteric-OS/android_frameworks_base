@@ -47,16 +47,14 @@ void setGpuStats_native(JNIEnv* env, jobject clazz, jstring driverPackageName,
                                                     appPackageNameChars.c_str(), vulkanVersion);
 }
 
-void setAngleInfo_native(JNIEnv* env, jobject clazz, jstring path, jstring appName, jstring devOptIn,
-                         jobject rulesFd, jlong rulesOffset, jlong rulesLength) {
+void setAngleInfo_native(JNIEnv* env, jobject clazz, jstring path, jstring appName,
+                         jstring devOptIn) {
     ScopedUtfChars pathChars(env, path);
     ScopedUtfChars appNameChars(env, appName);
     ScopedUtfChars devOptInChars(env, devOptIn);
 
-    int rulesFd_native = jniGetFDFromFileDescriptor(env, rulesFd);
-
     android::GraphicsEnv::getInstance().setAngleInfo(pathChars.c_str(), appNameChars.c_str(),
-            devOptInChars.c_str(), rulesFd_native, rulesOffset, rulesLength);
+                                                     devOptInChars.c_str());
 }
 
 bool shouldUseAngle_native(JNIEnv* env, jobject clazz, jstring appName) {
@@ -94,16 +92,23 @@ void hintActivityLaunch_native(JNIEnv* env, jobject clazz) {
 }
 
 const JNINativeMethod g_methods[] = {
-    { "isDebuggable", "()Z", reinterpret_cast<void*>(isDebuggable_native) },
-    { "setDriverPathAndSphalLibraries", "(Ljava/lang/String;Ljava/lang/String;)V", reinterpret_cast<void*>(setDriverPathAndSphalLibraries_native) },
-    { "setGpuStats", "(Ljava/lang/String;Ljava/lang/String;JJLjava/lang/String;I)V", reinterpret_cast<void*>(setGpuStats_native) },
-    { "setInjectLayersPrSetDumpable", "()Z", reinterpret_cast<void*>(setInjectLayersPrSetDumpable_native) },
-    { "setAngleInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/io/FileDescriptor;JJ)V", reinterpret_cast<void*>(setAngleInfo_native) },
-    { "getShouldUseAngle", "(Ljava/lang/String;)Z", reinterpret_cast<void*>(shouldUseAngle_native) },
-    { "setLayerPaths", "(Ljava/lang/ClassLoader;Ljava/lang/String;)V", reinterpret_cast<void*>(setLayerPaths_native) },
-    { "setDebugLayers", "(Ljava/lang/String;)V", reinterpret_cast<void*>(setDebugLayers_native) },
-    { "setDebugLayersGLES", "(Ljava/lang/String;)V", reinterpret_cast<void*>(setDebugLayersGLES_native) },
-    { "hintActivityLaunch", "()V", reinterpret_cast<void*>(hintActivityLaunch_native) },
+        {"isDebuggable", "()Z", reinterpret_cast<void*>(isDebuggable_native)},
+        {"setDriverPathAndSphalLibraries", "(Ljava/lang/String;Ljava/lang/String;)V",
+         reinterpret_cast<void*>(setDriverPathAndSphalLibraries_native)},
+        {"setGpuStats", "(Ljava/lang/String;Ljava/lang/String;JJLjava/lang/String;I)V",
+         reinterpret_cast<void*>(setGpuStats_native)},
+        {"setInjectLayersPrSetDumpable", "()Z",
+         reinterpret_cast<void*>(setInjectLayersPrSetDumpable_native)},
+        {"setAngleInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
+         reinterpret_cast<void*>(setAngleInfo_native)},
+        {"getShouldUseAngle", "(Ljava/lang/String;)Z",
+         reinterpret_cast<void*>(shouldUseAngle_native)},
+        {"setLayerPaths", "(Ljava/lang/ClassLoader;Ljava/lang/String;)V",
+         reinterpret_cast<void*>(setLayerPaths_native)},
+        {"setDebugLayers", "(Ljava/lang/String;)V", reinterpret_cast<void*>(setDebugLayers_native)},
+        {"setDebugLayersGLES", "(Ljava/lang/String;)V",
+         reinterpret_cast<void*>(setDebugLayersGLES_native)},
+        {"hintActivityLaunch", "()V", reinterpret_cast<void*>(hintActivityLaunch_native)},
 };
 
 const char* const kGraphicsEnvironmentName = "android/os/GraphicsEnvironment";

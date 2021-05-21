@@ -26,8 +26,6 @@ import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
@@ -36,9 +34,6 @@ import dalvik.system.VMRuntime;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -73,8 +68,6 @@ public class GraphicsEnvironment {
             "com.android.graphics.developerdriver.enable";
     private static final String METADATA_INJECT_LAYERS_ENABLE =
             "com.android.graphics.injectLayers.enable";
-    private static final String ANGLE_RULES_FILE = "a4a_rules.json";
-    private static final String ANGLE_TEMP_RULES = "debug.angle.rules";
     private static final String ACTION_ANGLE_FOR_ANDROID = "android.app.action.ANGLE_FOR_ANDROID";
     private static final String ACTION_ANGLE_FOR_ANDROID_TOAST_MESSAGE =
             "android.app.action.ANGLE_FOR_ANDROID_TOAST_MESSAGE";
@@ -471,101 +464,6 @@ public class GraphicsEnvironment {
     }
 
     /**
-     * Attempt to setup ANGLE with a temporary rules file.
-     * True: Temporary rules file was loaded.
-     * False: Temporary rules file was *not* loaded.
-     */
-    private static boolean setupAngleWithTempRulesFile(Context context,
-                                                String packageName,
-                                                String paths,
-                                                String devOptIn) {
-        /**
-         * We only want to load a temp rules file for:
-         *  - apps that are marked 'debuggable' in their manifest
-         *  - devices that are running a userdebug build (ro.debuggable) or can inject libraries for
-         *    debugging (PR_SET_DUMPABLE).
-         */
-        if (!isDebuggable()) {
-            Log.v(TAG, "Skipping loading temporary rules file");
-            return false;
-        }
-
-        final String angleTempRules = SystemProperties.get(ANGLE_TEMP_RULES);
-
-        if ((angleTempRules == null) || angleTempRules.isEmpty()) {
-            Log.v(TAG, "System property '" + ANGLE_TEMP_RULES + "' is not set or is empty");
-            return false;
-        }
-
-        Log.i(TAG, "Detected system property " + ANGLE_TEMP_RULES + ": " + angleTempRules);
-
-        final File tempRulesFile = new File(angleTempRules);
-        if (tempRulesFile.exists()) {
-            Log.i(TAG, angleTempRules + " exists, loading file.");
-            try {
-                final FileInputStream stream = new FileInputStream(angleTempRules);
-
-                try {
-                    final FileDescriptor rulesFd = stream.getFD();
-                    final long rulesOffset = 0;
-                    final long rulesLength = stream.getChannel().size();
-                    Log.i(TAG, "Loaded temporary ANGLE rules from " + angleTempRules);
-
-                    setAngleInfo(paths, packageName, devOptIn, rulesFd, rulesOffset, rulesLength);
-
-                    stream.close();
-
-                    // We successfully setup ANGLE, so return with good status
-                    return true;
-                } catch (IOException e) {
-                    Log.w(TAG, "Hit IOException thrown by FileInputStream: " + e);
-                }
-            } catch (FileNotFoundException e) {
-                Log.w(TAG, "Temp ANGLE rules file not found: " + e);
-            } catch (SecurityException e) {
-                Log.w(TAG, "Temp ANGLE rules file not accessible: " + e);
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Attempt to setup ANGLE with a rules file loaded from the ANGLE APK.
-     * True: APK rules file was loaded.
-     * False: APK rules file was *not* loaded.
-     */
-    private static boolean setupAngleRulesApk(String anglePkgName,
-            ApplicationInfo angleInfo,
-            PackageManager pm,
-            String packageName,
-            String paths,
-            String devOptIn) {
-        // Pass the rules file to loader for ANGLE decisions
-        try {
-            final AssetManager angleAssets = pm.getResourcesForApplication(angleInfo).getAssets();
-
-            try {
-                final AssetFileDescriptor assetsFd = angleAssets.openFd(ANGLE_RULES_FILE);
-
-                setAngleInfo(paths, packageName, devOptIn, assetsFd.getFileDescriptor(),
-                        assetsFd.getStartOffset(), assetsFd.getLength());
-
-                assetsFd.close();
-
-                return true;
-            } catch (IOException e) {
-                Log.w(TAG, "Failed to get AssetFileDescriptor for " + ANGLE_RULES_FILE
-                        + " from '" + anglePkgName + "': " + e);
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.w(TAG, "Failed to get AssetManager for '" + anglePkgName + "': " + e);
-        }
-
-        return false;
-    }
-
-    /**
      * Pull ANGLE allowlist from GlobalSettings and compare against current package
      */
     private static boolean checkAngleAllowlist(Context context, Bundle bundle, String packageName) {
@@ -648,17 +546,8 @@ public class GraphicsEnvironment {
         // option value.
         final String devOptIn = getDriverForPkg(context, bundle, packageName);
 
-        if (setupAngleWithTempRulesFile(context, packageName, paths, devOptIn)) {
-            // We setup ANGLE with a temp rules file, so we're done here.
-            return true;
-        }
-
-        if (setupAngleRulesApk(anglePkgName, angleInfo, pm, packageName, paths, devOptIn)) {
-            // We setup ANGLE with rules from the APK, so we're done here.
-            return true;
-        }
-
-        return false;
+        setAngleInfo(paths, packageName, devOptIn);
+        return true;
     }
 
     /**
@@ -935,8 +824,7 @@ public class GraphicsEnvironment {
     private static native void setDriverPathAndSphalLibraries(String path, String sphalLibraries);
     private static native void setGpuStats(String driverPackageName, String driverVersionName,
             long driverVersionCode, long driverBuildTime, String appPackageName, int vulkanVersion);
-    private static native void setAngleInfo(String path, String appPackage, String devOptIn,
-            FileDescriptor rulesFd, long rulesOffset, long rulesLength);
+    private static native void setAngleInfo(String path, String appPackage, String devOptIn);
     private static native boolean getShouldUseAngle(String packageName);
     private static native boolean setInjectLayersPrSetDumpable();
 }
