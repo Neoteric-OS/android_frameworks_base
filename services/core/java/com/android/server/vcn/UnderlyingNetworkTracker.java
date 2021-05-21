@@ -395,12 +395,12 @@ public class UnderlyingNetworkTracker {
     }
 
     private void reevaluateNetworks() {
-        TreeSet<UnderlyingNetworkRecord> sorted =
-                new TreeSet<>(
-                        UnderlyingNetworkRecord.getComparator(
-                                mSubscriptionGroup, mLastSnapshot, mCurrentRecord, mCarrierConfig));
-        sorted.addAll(mRouteSelectionCallback.getUnderlyingNetworks());
+        if (mRouteSelectionCallback == null) {
+            return; // UnderlyingNetworkTracker has quit.
+        }
 
+        TreeSet<UnderlyingNetworkRecord> sorted =
+                mRouteSelectionCallback.getSortedUnderlyingNetworks();
         UnderlyingNetworkRecord candidate = sorted.isEmpty() ? null : sorted.first();
         if (Objects.equals(mCurrentRecord, candidate)) {
             return;
@@ -446,17 +446,23 @@ public class UnderlyingNetworkTracker {
         private final Map<Network, UnderlyingNetworkRecord.Builder>
                 mUnderlyingNetworkRecordBuilders = new ArrayMap<>();
 
-        private List<UnderlyingNetworkRecord> getUnderlyingNetworks() {
-            final List<UnderlyingNetworkRecord> records = new ArrayList<>();
+        private TreeSet<UnderlyingNetworkRecord> getSortedUnderlyingNetworks() {
+            TreeSet<UnderlyingNetworkRecord> sorted =
+                    new TreeSet<>(
+                            UnderlyingNetworkRecord.getComparator(
+                                    mSubscriptionGroup,
+                                    mLastSnapshot,
+                                    mCurrentRecord,
+                                    mCarrierConfig));
 
             for (UnderlyingNetworkRecord.Builder builder :
                     mUnderlyingNetworkRecordBuilders.values()) {
                 if (builder.isValid()) {
-                    records.add(builder.build());
+                    sorted.add(builder.build());
                 }
             }
 
-            return records;
+            return sorted;
         }
 
         @Override
@@ -660,10 +666,19 @@ public class UnderlyingNetworkTracker {
         }
 
         /** Dumps the state of this record for logging and debugging purposes. */
-        public void dump(IndentingPrintWriter pw) {
+        private void dump(
+                IndentingPrintWriter pw,
+                ParcelUuid subscriptionGroup,
+                TelephonySubscriptionSnapshot snapshot,
+                UnderlyingNetworkRecord currentlySelected,
+                PersistableBundle carrierConfig) {
             pw.println("UnderlyingNetworkRecord:");
             pw.increaseIndent();
 
+            pw.println(
+                    "Priority class: "
+                            + calculatePriorityClass(
+                                    subscriptionGroup, snapshot, currentlySelected, carrierConfig));
             pw.println("mNetwork: " + network);
             pw.println("mNetworkCapabilities: " + networkCapabilities);
             pw.println("mLinkProperties: " + linkProperties);
@@ -731,6 +746,30 @@ public class UnderlyingNetworkTracker {
                 return mCached;
             }
         }
+    }
+
+    /** Dumps the state of this record for logging and debugging purposes. */
+    public void dump(IndentingPrintWriter pw) {
+        pw.println("UnderlyingNetworkTracker:");
+        pw.increaseIndent();
+
+        pw.println("Carrier WiFi Entry Threshold: " + getWifiEntryRssiThreshold(mCarrierConfig));
+        pw.println("Carrier WiFi Exit Threshold: " + getWifiExitRssiThreshold(mCarrierConfig));
+        pw.println(
+                "Currently selected: " + (mCurrentRecord == null ? null : mCurrentRecord.network));
+
+        pw.println("Underlying networks:");
+        pw.increaseIndent();
+        if (mRouteSelectionCallback != null) {
+            for (UnderlyingNetworkRecord record :
+                    mRouteSelectionCallback.getSortedUnderlyingNetworks()) {
+                record.dump(pw, mSubscriptionGroup, mLastSnapshot, mCurrentRecord, mCarrierConfig);
+            }
+        }
+        pw.decreaseIndent();
+        pw.println();
+
+        pw.decreaseIndent();
     }
 
     private class VcnActiveDataSubscriptionIdListener extends TelephonyCallback
