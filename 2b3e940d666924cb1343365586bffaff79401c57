@@ -86,6 +86,23 @@
       "parentUuid": "3db12e11_28ab0155",
       "revId": "2b3e940d666924cb1343365586bffaff79401c57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e8f3b82_253cf6ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-21T05:20:58Z",
+      "side": 1,
+      "message": "Discussed with Nathan offline. Given where we are in the release cycle, if we instead want to file a bug to clean this up later and then merge this CL as is, that works too.",
+      "revId": "2b3e940d666924cb1343365586bffaff79401c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
