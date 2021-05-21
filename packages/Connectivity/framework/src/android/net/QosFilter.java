@@ -62,22 +62,24 @@ public abstract class QosFilter {
     public abstract int validate();
 
     /**
-     * Determines whether or not the parameters is a match for the filter.
+     * Determines whether or not the parameters is a match for the filter based on the local
+     * address of the socket.
      *
-     * @param address the local address
-     * @param startPort the start of the port range
-     * @param endPort the end of the port range
+     * @param address the local IP address in the QOS filter
+     * @param startPort the start of the local port range in the QOS filter
+     * @param endPort the end of the local port range in the QOS filter
      * @return whether the parameters match the local address of the filter
      */
     public abstract boolean matchesLocalAddress(@NonNull InetAddress address,
             int startPort, int endPort);
 
     /**
-     * Determines whether or not the parameters is a match for the filter.
+     * Determines whether or not the parameters is a match for the filter based on the remote
+     * address of the socket connection.
      *
-     * @param address the remote address
-     * @param startPort the start of the port range
-     * @param endPort the end of the port range
+     * @param address the remote IP address in the QOS filter
+     * @param startPort the start of the remote port range in the QOS filter
+     * @param endPort the end of the remote port range in the QOS filter
      * @return whether the parameters match the remote address of the filter
      */
     public abstract boolean matchesRemoteAddress(@NonNull InetAddress address,
