@@ -85,6 +85,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
 import android.os.ShellCommand;
+import android.os.storage.IStorageManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
@@ -147,6 +148,7 @@ class PackageManagerShellCommand extends ShellCommand {
     final IPermissionManager mPermissionManager;
     final private WeakHashMap<String, Resources> mResourceCache =
             new WeakHashMap<String, Resources>();
+    IStorageManager mSm;
     int mTargetUser;
     boolean mBrief;
     boolean mComponents;
@@ -1270,6 +1272,12 @@ class PackageManagerShellCommand extends ShellCommand {
 
     private int doRunInstall(final InstallParams params) throws RemoteException {
         final PrintWriter pw = getOutPrintWriter();
+
+        mSm = IStorageManager.Stub.asInterface(ServiceManager.getService("mount"));
+        if (mSm == null) {
+            pw.println("Failed to find running mount service");
+            return -1;
+        }
 
         final boolean isStreaming = params.sessionParams.dataLoaderParams != null;
         final boolean isApex =
