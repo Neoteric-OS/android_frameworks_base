@@ -48,7 +48,7 @@ public final class NetworkManagementSocketTagger extends SocketTagger {
     };
 
     public static void install() {
-        SocketTagger.set(new NetworkManagementSocketTagger());
+        SocketTagger.setCurrentSocketTagger(new NetworkManagementSocketTagger());
     }
 
     public static int setThreadSocketStatsTag(int tag) {

@@ -569,19 +569,19 @@ public class IpSecServiceTest {
 
     @Test
     public void testUidFdtagger() throws Exception {
-        SocketTagger actualSocketTagger = SocketTagger.get();
+        SocketTagger actualSocketTagger = SocketTagger.getCurrentSocketTagger();
 
         try {
             FileDescriptor sockFd = Os.socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
             // Has to be done after socket creation because BlockGuardOS calls tag on new sockets
             SocketTagger mockSocketTagger = mock(SocketTagger.class);
-            SocketTagger.set(mockSocketTagger);
+            SocketTagger.setCurrentSocketTagger(mockSocketTagger);
 
             mIpSecService.mUidFdTagger.tag(sockFd, Process.LAST_APPLICATION_UID);
             verify(mockSocketTagger).tag(eq(sockFd));
         } finally {
-            SocketTagger.set(actualSocketTagger);
+            SocketTagger.setCurrentSocketTagger(actualSocketTagger);
         }
     }
 

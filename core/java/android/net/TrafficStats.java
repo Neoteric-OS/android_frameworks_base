@@ -353,7 +353,7 @@ public class TrafficStats {
      * @see #setThreadStatsTag(int)
      */
     public static void tagSocket(Socket socket) throws SocketException {
-        SocketTagger.get().tag(socket);
+        SocketTagger.getCurrentSocketTagger().tag(socket);
     }
 
     /**
@@ -368,7 +368,7 @@ public class TrafficStats {
      * process.
      */
     public static void untagSocket(Socket socket) throws SocketException {
-        SocketTagger.get().untag(socket);
+        SocketTagger.getCurrentSocketTagger().untag(socket);
     }
 
     /**
@@ -381,14 +381,14 @@ public class TrafficStats {
      * @see #setThreadStatsTag(int)
      */
     public static void tagDatagramSocket(DatagramSocket socket) throws SocketException {
-        SocketTagger.get().tag(socket);
+        SocketTagger.getCurrentSocketTagger().tag(socket);
     }
 
     /**
      * Remove any statistics parameters from the given {@link DatagramSocket}.
      */
     public static void untagDatagramSocket(DatagramSocket socket) throws SocketException {
-        SocketTagger.get().untag(socket);
+        SocketTagger.getCurrentSocketTagger().untag(socket);
     }
 
     /**
@@ -401,7 +401,7 @@ public class TrafficStats {
      * @see #setThreadStatsTag(int)
      */
     public static void tagFileDescriptor(FileDescriptor fd) throws IOException {
-        SocketTagger.get().tag(fd);
+        SocketTagger.getCurrentSocketTagger().tag(fd);
     }
 
     /**
@@ -409,7 +409,7 @@ public class TrafficStats {
      * socket.
      */
     public static void untagFileDescriptor(FileDescriptor fd) throws IOException {
-        SocketTagger.get().untag(fd);
+        SocketTagger.getCurrentSocketTagger().untag(fd);
     }
 
     /**
