@@ -306,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8b7c77b_13cb7a28",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2895,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-05-24T17:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d50f78a7_464099dc",
+      "range": {
+        "startLine": 2895,
+        "startChar": 20,
+        "endLine": 2895,
+        "endChar": 40
+      },
+      "revId": "1f8de0db3de361d550ba5798d889e3fde81aa85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55979ee2_f7c8d219",
@@ -319,6 +343,30 @@
       "writtenOn": "2021-05-17T10:00:35Z",
       "side": 1,
       "message": "we need to have a common way of managing this callback with hearing aid: \n  register if either hearing aid or LE audio is connected for the first time, unregister when neither hearing aid or LE audio is connected anymore.",
+      "range": {
+        "startLine": 5545,
+        "startChar": 0,
+        "endLine": 5545,
+        "endChar": 83
+      },
+      "revId": "1f8de0db3de361d550ba5798d889e3fde81aa85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ccccf3d_4571b8bc",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5545,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-05-24T17:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55979ee2_f7c8d219",
       "range": {
         "startLine": 5545,
         "startChar": 0,
