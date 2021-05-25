@@ -215,6 +215,30 @@
       },
       "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80b61844_a8646c61",
+        "filename": "core/java/android/ddm/DdmHandle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2021-05-25T13:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2104a1e_06c59f9a",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 5
+      },
+      "revId": "0c4f89cfc3645c8eb3a21a5e51b98aec2573e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
