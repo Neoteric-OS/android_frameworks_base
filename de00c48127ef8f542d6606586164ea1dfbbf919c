@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71fc912a_71635a84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-05-25T14:28:34Z",
+      "side": 1,
+      "message": "Artur, can we reapply this one? I need it for my work on hidden API modularization. If it triggers a change in behavior on the device can we modify the build to avoid that until such time as you have fixed the issues?",
+      "revId": "de00c48127ef8f542d6606586164ea1dfbbf919c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
