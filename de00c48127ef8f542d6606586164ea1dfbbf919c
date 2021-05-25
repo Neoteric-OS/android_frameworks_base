@@ -16,6 +16,24 @@
       "message": "Artur, can we reapply this one? I need it for my work on hidden API modularization. If it triggers a change in behavior on the device can we modify the build to avoid that until such time as you have fixed the issues?",
       "revId": "de00c48127ef8f542d6606586164ea1dfbbf919c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18c18aa1_867db42b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-05-25T14:35:26Z",
+      "side": 1,
+      "message": "Anton and I are also okay with the to stay broken in AOSP for now. Note that the changes in sc-dev were merged already. Would that be sufficient for you? If not, I can try to re-apply this in sc-dev but submit a soong change to ignore fragments.",
+      "parentUuid": "71fc912a_71635a84",
+      "revId": "de00c48127ef8f542d6606586164ea1dfbbf919c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
