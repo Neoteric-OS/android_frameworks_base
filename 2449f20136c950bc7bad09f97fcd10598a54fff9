@@ -118,6 +118,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "87687324_b235676c",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-05-25T15:17:49Z",
+      "side": 1,
+      "message": "class of device is only optional and descriptive thing of single device, btw. having group context we may contain multiple different devices.\n\nHmm your comment triggered my to understand that even relying on class of device is wrong here.\nConsider scenario with 3 devices:\nDevice A: Left earbud (COD: Headphones)\nDevice B: Right earbud (COD: Headphones)\nDevice C: microphone (COD: Microphone)\nWhat means that group is in real: Wearable Headset Device\n\nIn my understanding the best way to describe group \"device\" possible function is to use group context type.\n\nContext type is something that LE Audio supporting devices have to have and can expose to UL (this covers PACS specification). Current development implementation checks for common contexts among its group devices and searches if this group matches internal requirements e.g.\nStep 1:\n  Setup:\n    Device A: Left earbud (contexts: media, conversational)\n    Device B: Right earbud (contexts: media, conversational)\n    Device C: microphone (contexts: conversational)\nStep 2:\n  Every device is connected\nStep 3:\n  Stack gets info about available contexts and checks if possible to cover in future such scenario related to context (also stores best possible scenario for each available context scenario)\nStep 4:\n  Settings or any related application receives intent with group configuration containing available context types.\nStep 5:\n  User sees LE Audio \"device/group\" (cause settings app received group config - saying that conversational context is \"possible\") and picks it from GUI or whatever e.g. while having GSM/cellular conversation\nStep 5:\n  AF opens device and LE Audio setup is firing up.\nStep 6:\n  Data flows to/from BT bearer",
+      "parentUuid": "b0d73900_50ce23d9",
+      "range": {
+        "startLine": 464,
+        "startChar": 0,
+        "endLine": 464,
+        "endChar": 94
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4549988f_c0ec58b9",
         "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
         "patchSetId": 4
