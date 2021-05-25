@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b315c9da_62138dc1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-05-25T18:20:37Z",
+      "side": 1,
+      "message": "Requesting +2 for CP to AOSP for this change",
+      "revId": "c390171534fbdc85861d1ec945fcbd5bc3e8f599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
