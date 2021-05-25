@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b789dc9_543bec06",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-25T13:08:24Z",
+      "side": 1,
+      "message": "if this is not used as a bit mask (which is good) we should not use the _BIT suffix.",
+      "range": {
+        "startLine": 114,
+        "startChar": 28,
+        "endLine": 114,
+        "endChar": 53
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ef06267_49016147",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-25T13:08:24Z",
+      "side": 1,
+      "message": "/** @hide */\n    @IntDef({\n        AUDIO_DIRECTION_INPUT,\n        AUDIO_DIRECTION_OUTPUT,\n    })\n    @Retention(RetentionPolicy.SOURCE)\n    public @interface AudioDirection {}",
+      "range": {
+        "startLine": 121,
+        "startChar": 58,
+        "endLine": 121,
+        "endChar": 59
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9e7f843_011212c8",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-25T13:08:24Z",
+      "side": 1,
+      "message": "wold prefer returning an empty array. \nMaybe return a List\u003c@AudioDirection Integer\u003e",
+      "range": {
+        "startLine": 459,
+        "startChar": 0,
+        "endLine": 459,
+        "endChar": 67
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17788031_30e5384a",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-25T13:08:24Z",
+      "side": 1,
+      "message": "I think it is OK to pass the group to onSetLeAudioConnectionState() and have it retrieve the direction directly from or BtHelper BluetoothLeAudio",
+      "range": {
+        "startLine": 1199,
+        "startChar": 0,
+        "endLine": 1199,
+        "endChar": 80
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0d73900_50ce23d9",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-25T13:08:24Z",
+      "side": 1,
+      "message": "why not infer the input device role from the btClass\n\nI suppose BluetoothClass.Device.AUDIO_VIDEO_WEARABLE_HEADSET or BluetoothClass.Device.AUDIO_VIDEO_HANDSFREE imply a microphone no?\n\ndetermining the device type from the context (streamType) seems risky: for instance, if you connect the headset when a call is not active you will never consider it as an input device.",
+      "range": {
+        "startLine": 464,
+        "startChar": 0,
+        "endLine": 464,
+        "endChar": 94
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4549988f_c0ec58b9",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-25T13:08:24Z",
+      "side": 1,
+      "message": "there must be a way to infer the device types (for in and out devices first and then call  handleDeviceConnection() like we do for SCO:\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/audio/BtHelper.java;l\u003d567?q\u003dhandleDeviceConnection",
+      "range": {
+        "startLine": 497,
+        "startChar": 0,
+        "endLine": 497,
+        "endChar": 0
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "492ea856_c66ccbfa",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-25T13:08:24Z",
+      "side": 1,
+      "message": "mBluetoothConnectedStateBitset",
+      "range": {
+        "startLine": 315,
+        "startChar": 11,
+        "endLine": 315,
+        "endChar": 32
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68e68b62_6fd92622",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2882,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-25T13:08:24Z",
+      "side": 1,
+      "message": "getStreamType() is too generic in this context.\n\nMaybe getBluetoothContextualVolumeStream()",
+      "range": {
+        "startLine": 2882,
+        "startChar": 20,
+        "endLine": 2882,
+        "endChar": 33
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b58ca6b6_4fb13563",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2902,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-25T13:08:24Z",
+      "side": 1,
+      "message": "Is there a reason to make it an AudioService method?\n\nBetter move to BtHelper",
+      "range": {
+        "startLine": 2902,
+        "startChar": 24,
+        "endLine": 2902,
+        "endChar": 47
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6ff1d62_e20f8a36",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2903,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-25T13:08:24Z",
+      "side": 1,
+      "message": "I don\u0027t understand how this works?",
+      "range": {
+        "startLine": 2903,
+        "startChar": 15,
+        "endLine": 2903,
+        "endChar": 38
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "093eb622_b0703db4",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5512,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-25T13:08:24Z",
+      "side": 1,
+      "message": "register only if empty\n\nset bit after",
+      "range": {
+        "startLine": 5512,
+        "startChar": 0,
+        "endLine": 5512,
+        "endChar": 83
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "698b74a5_b27728e3",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5540,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-25T13:08:24Z",
+      "side": 1,
+      "message": "register only if empty\n\nset bit after",
+      "range": {
+        "startLine": 5540,
+        "startChar": 12,
+        "endLine": 5540,
+        "endChar": 33
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

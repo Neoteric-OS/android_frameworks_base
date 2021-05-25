@@ -144,6 +144,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e15e01e9_d1fd9e1c",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-25T13:08:24Z",
+      "side": 1,
+      "message": "I think we should simply handle input and output devices separately like we do for SCO and A2DP\n\nThe device picker so far only handles output devices. So this will be the same for BLE audio. For media this is straightforward. For communication, this works because the call routing logic and APIs in AudioService expect an output device as the route selection even if the audio policy has rule to match the input and output devices based on only the output device selection.",
+      "parentUuid": "f44d7c18_273455e4",
+      "range": {
+        "startLine": 491,
+        "startChar": 0,
+        "endLine": 491,
+        "endChar": 42
+      },
+      "revId": "1f8de0db3de361d550ba5798d889e3fde81aa85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4a0c5d53_6b3d66eb",
         "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
         "patchSetId": 1
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "Yeah, it\u0027s intentional - I would like to start discussion on how to present group of LE Audio since we just satisfy here current API with device contexts (first device from LE Audio group).\n\nI\u0027m wondering if it would be possible to expose that LE Audio group with some ID rather than device.",
       "parentUuid": "4a0c5d53_6b3d66eb",
+      "range": {
+        "startLine": 1030,
+        "startChar": 45,
+        "endLine": 1030,
+        "endChar": 52
+      },
+      "revId": "1f8de0db3de361d550ba5798d889e3fde81aa85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21f89a44_dd31438f",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-25T13:08:24Z",
+      "side": 1,
+      "message": "Maybe we should introduce the API without the concept of group ID until we have a design ready about managing device groups.\nThis is not a public and system API so there is no need to make it right from the get go.",
+      "parentUuid": "0cf0c03b_2981bbc9",
       "range": {
         "startLine": 1030,
         "startChar": 45,
