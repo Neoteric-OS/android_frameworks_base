@@ -51,16 +51,6 @@ filegroup {
     visibility: ["//visibility:private"],
 }
 
-filegroup {
-    name: "services-all-sources",
-    srcs: [
-        ":services-non-updatable-sources",
-        ":service-permission-sources",
-        ":service-statsd-sources",
-    ],
-    visibility: ["//visibility:private"],
-}
-
 // merge all required services into one jar
 // ============================================================
 java_library {
