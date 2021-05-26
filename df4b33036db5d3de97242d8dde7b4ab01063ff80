@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b96a3d9d_f5e822c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-05-26T16:04:09Z",
+      "side": 1,
+      "message": "aosp cherry-pick of the already-approved change",
+      "revId": "df4b33036db5d3de97242d8dde7b4ab01063ff80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
