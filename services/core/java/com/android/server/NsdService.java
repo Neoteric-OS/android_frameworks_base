@@ -61,6 +61,7 @@ public class NsdService extends INsdManager.Stub {
     private static final String MDNS_TAG = "mDnsConnector";
 
     private static final boolean DBG = true;
+    private static final long CLEANUP_DELAY_MS = 3000;
 
     private final Context mContext;
     private final NsdSettings mNsdSettings;
@@ -77,6 +78,7 @@ public class NsdService extends INsdManager.Stub {
     private final SparseArray<ClientInfo> mIdToClientInfoMap= new SparseArray<>();
 
     private final AsyncChannel mReplyChannel = new AsyncChannel();
+    private final long mCleanupDelayMs;
 
     private static final int INVALID_ID = 0;
     private int mUniqueId = 1;
@@ -153,7 +155,7 @@ public class NsdService extends INsdManager.Stub {
                         }
                         //Last client
                         if (mClients.size() == 0) {
-                            mDaemon.stop();
+                            mDaemon.maybeStopDaemon();
                         }
                         break;
                     case AsyncChannel.CMD_CHANNEL_FULL_CONNECTION:
@@ -179,6 +181,9 @@ public class NsdService extends INsdManager.Stub {
                     case NsdManager.RESOLVE_SERVICE:
                         replyToMessage(msg, NsdManager.RESOLVE_SERVICE_FAILED,
                                 NsdManager.FAILURE_INTERNAL_ERROR);
+                        break;
+                    case NsdManager.DAEMON_CLEANUP:
+                        mDaemon.maybeStopDaemon();
                         break;
                     case NsdManager.NATIVE_DAEMON_EVENT:
                     default:
@@ -212,15 +217,12 @@ public class NsdService extends INsdManager.Stub {
             @Override
             public void enter() {
                 sendNsdStateChangeBroadcast(true);
-                if (mClients.size() > 0) {
-                    mDaemon.start();
-                }
             }
 
             @Override
             public void exit() {
                 if (mClients.size() > 0) {
-                    mDaemon.stop();
+                    mDaemon.maybeStopDaemon();
                 }
             }
 
@@ -242,6 +244,13 @@ public class NsdService extends INsdManager.Stub {
                 clientInfo.mClientIds.delete(clientId);
                 clientInfo.mClientRequests.delete(clientId);
                 mIdToClientInfoMap.remove(globalId);
+                scheduleStopDaemonIfNotUsed();
+            }
+
+            private void scheduleStopDaemonIfNotUsed() {
+                if (mIdToClientInfoMap.size() == 0) {
+                    mNsdStateMachine.sendMessageDelayed(NsdManager.DAEMON_CLEANUP, mCleanupDelayMs);
+                }
             }
 
             @Override
@@ -251,14 +260,14 @@ public class NsdService extends INsdManager.Stub {
                 int id;
                 switch (msg.what) {
                     case AsyncChannel.CMD_CHANNEL_HALF_CONNECTED:
-                        //First client
-                        if (msg.arg1 == AsyncChannel.STATUS_SUCCESSFUL &&
-                                mClients.size() == 0) {
-                            mDaemon.start();
-                        }
                         return NOT_HANDLED;
                     case AsyncChannel.CMD_CHANNEL_DISCONNECTED:
                         return NOT_HANDLED;
+                }
+                // Remove DAEMON_CLEANUP before processing any NsdManager events because
+                // DAEMON_CLEANUP would be added back if needed.
+                removeMessages(NsdManager.DAEMON_CLEANUP);
+                switch (msg.what) {
                     case NsdManager.DISABLE:
                         //TODO: cleanup clients
                         transitionTo(mDisabledState);
@@ -274,6 +283,7 @@ public class NsdService extends INsdManager.Stub {
                             break;
                         }
 
+                        mDaemon.maybeStartDaemon();
                         id = getUniqueId();
                         if (discoverServices(id, servInfo.getServiceType())) {
                             if (DBG) {
@@ -284,6 +294,7 @@ public class NsdService extends INsdManager.Stub {
                             replyToMessage(msg, NsdManager.DISCOVER_SERVICES_STARTED, servInfo);
                         } else {
                             stopServiceDiscovery(id);
+                            scheduleStopDaemonIfNotUsed();
                             replyToMessage(msg, NsdManager.DISCOVER_SERVICES_FAILED,
                                     NsdManager.FAILURE_INTERNAL_ERROR);
                         }
@@ -316,6 +327,7 @@ public class NsdService extends INsdManager.Stub {
                             break;
                         }
 
+                        mDaemon.maybeStartDaemon();
                         id = getUniqueId();
                         if (registerService(id, (NsdServiceInfo) msg.obj)) {
                             if (DBG) Slog.d(TAG, "Register " + msg.arg2 + " " + id);
@@ -323,6 +335,7 @@ public class NsdService extends INsdManager.Stub {
                             // Return success after mDns reports success
                         } else {
                             unregisterService(id);
+                            scheduleStopDaemonIfNotUsed();
                             replyToMessage(msg, NsdManager.REGISTER_SERVICE_FAILED,
                                     NsdManager.FAILURE_INTERNAL_ERROR);
                         }
@@ -357,11 +370,13 @@ public class NsdService extends INsdManager.Stub {
                             break;
                         }
 
+                        mDaemon.maybeStartDaemon();
                         id = getUniqueId();
                         if (resolveService(id, servInfo)) {
                             clientInfo.mResolvedService = new NsdServiceInfo();
                             storeRequestMap(msg.arg2, id, clientInfo, msg.what);
                         } else {
+                            scheduleStopDaemonIfNotUsed();
                             replyToMessage(msg, NsdManager.RESOLVE_SERVICE_FAILED,
                                     NsdManager.FAILURE_INTERNAL_ERROR);
                         }
@@ -538,7 +553,9 @@ public class NsdService extends INsdManager.Stub {
     }
 
     @VisibleForTesting
-    NsdService(Context ctx, NsdSettings settings, Handler handler, DaemonConnectionSupplier fn) {
+    NsdService(Context ctx, NsdSettings settings, Handler handler,
+            DaemonConnectionSupplier fn, long cleanupDelayMs) {
+        mCleanupDelayMs = cleanupDelayMs;
         mContext = ctx;
         mNsdSettings = settings;
         mNsdStateMachine = new NsdStateMachine(TAG, handler);
@@ -552,7 +569,8 @@ public class NsdService extends INsdManager.Stub {
         HandlerThread thread = new HandlerThread(TAG);
         thread.start();
         Handler handler = new Handler(thread.getLooper());
-        NsdService service = new NsdService(context, settings, handler, DaemonConnection::new);
+        NsdService service = new NsdService(context, settings, handler,
+                DaemonConnection::new, CLEANUP_DELAY_MS);
         service.mDaemonCallback.awaitConnection();
         return service;
     }
@@ -681,13 +699,14 @@ public class NsdService extends INsdManager.Stub {
     @VisibleForTesting
     public static class DaemonConnection {
         final NativeDaemonConnector mNativeConnector;
+        boolean mIsStarted = false;
 
         DaemonConnection(NativeCallbackReceiver callback) {
             mNativeConnector = new NativeDaemonConnector(callback, "mdns", 10, MDNS_TAG, 25, null);
             new Thread(mNativeConnector, MDNS_TAG).start();
         }
 
-        public boolean execute(Object... args) {
+        private boolean executeInternal(Object... args) {
             if (DBG) {
                 Slog.d(TAG, "mdnssd " + Arrays.toString(args));
             }
@@ -700,12 +719,33 @@ public class NsdService extends INsdManager.Stub {
             return true;
         }
 
-        public void start() {
-            execute("start-service");
+        /**
+         * To stop the daemon if needed.
+         */
+        public void maybeStartDaemon() {
+            if (mIsStarted) {
+                return;
+            }
+            executeInternal("start-service");
+            mIsStarted = true;
         }
 
-        public void stop() {
-            execute("stop-service");
+        /**
+         * To stop the daemon if needed.
+         */
+        public void maybeStopDaemon() {
+            if (!mIsStarted) {
+                return;
+            }
+            executeInternal("stop-service");
+            mIsStarted = false;
+        }
+
+        /**
+         * To execute the cmd on the daemon.
+         */
+        public boolean execute(Object... args) {
+            return executeInternal(args);
         }
     }
 
