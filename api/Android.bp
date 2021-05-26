@@ -24,6 +24,19 @@ package {
     default_applicable_licenses: ["frameworks_base_license"],
 }
 
+python_binary_host {
+    name: "api_versions_trimmer",
+    srcs: ["api_versions_trimmer.py"],
+    version: {
+        py2: {
+            enabled: false,
+        },
+        py3: {
+            enabled: true,
+        },
+    },
+}
+
 metalava_cmd = "$(location metalava)"
 // Silence reflection warnings. See b/168689341
 metalava_cmd += " -J--add-opens=java.base/java.util=ALL-UNNAMED "
@@ -65,7 +78,10 @@ genrule {
             dest: "current.txt",
         },
         {
-            targets: ["sdk", "win_sdk"],
+            targets: [
+                "sdk",
+                "win_sdk",
+            ],
             dir: "apistubs/android/public/api",
             dest: "android.txt",
         },
@@ -139,7 +155,10 @@ genrule {
             dest: "removed.txt",
         },
         {
-            targets: ["sdk", "win_sdk"],
+            targets: [
+                "sdk",
+                "win_sdk",
+            ],
             dir: "apistubs/android/public/api",
             dest: "removed.txt",
         },
@@ -171,7 +190,10 @@ genrule {
             dest: "system-current.txt",
         },
         {
-            targets: ["sdk", "win_sdk"],
+            targets: [
+                "sdk",
+                "win_sdk",
+            ],
             dir: "apistubs/android/system/api",
             dest: "android.txt",
         },
@@ -222,7 +244,10 @@ genrule {
             dest: "system-removed.txt",
         },
         {
-            targets: ["sdk", "win_sdk"],
+            targets: [
+                "sdk",
+                "win_sdk",
+            ],
             dir: "apistubs/android/system/api",
             dest: "removed.txt",
         },
@@ -255,7 +280,10 @@ genrule {
             dest: "module-lib-current.txt",
         },
         {
-            targets: ["sdk", "win_sdk"],
+            targets: [
+                "sdk",
+                "win_sdk",
+            ],
             dir: "apistubs/android/module-lib/api",
             dest: "android.txt",
         },
@@ -308,7 +336,10 @@ genrule {
             dest: "module-lib-removed.txt",
         },
         {
-            targets: ["sdk", "win_sdk"],
+            targets: [
+                "sdk",
+                "win_sdk",
+            ],
             dir: "apistubs/android/module-lib/api",
             dest: "removed.txt",
         },
@@ -348,7 +379,10 @@ genrule {
             dest: "system-server-current.txt",
         },
         {
-            targets: ["sdk", "win_sdk"],
+            targets: [
+                "sdk",
+                "win_sdk",
+            ],
             dir: "apistubs/android/system-server/api",
             dest: "android.txt",
         },
@@ -371,9 +405,34 @@ genrule {
             dest: "system-server-removed.txt",
         },
         {
-            targets: ["sdk", "win_sdk"],
+            targets: [
+                "sdk",
+                "win_sdk",
+            ],
             dir: "apistubs/android/system-server/api",
             dest: "removed.txt",
         },
     ],
+}
+
+genrule {
+    name: "filter-api-versions",
+    srcs: [
+        ":framework-doc-system-module-stubs{.api_versions.xml}",
+        ":android.net.ipsec.ike.stubs.module_lib{.jar}",
+        ":art.module.public.api.stubs.module_lib{.jar}",
+        ":conscrypt.module.public.api.stubs{.jar}", // Only has public stubs
+        ":framework-connectivity.stubs.module_lib{.jar}",
+        ":framework-media.stubs.module_lib{.jar}",
+        ":framework-mediaprovider.stubs.module_lib{.jar}",
+        ":framework-permission.stubs.module_lib{.jar}",
+        ":framework-sdkextensions.stubs.module_lib{.jar}",
+        ":framework-statsd.stubs.module_lib{.jar}",
+        ":framework-tethering.stubs.module_lib{.jar}",
+        ":framework-wifi.stubs.module_lib{.jar}",
+        ":i18n.module.public.api.stubs{.jar}", // Only has public stubs
+    ],
+    out: ["api-versions-filtered.xml"],
+    tools: ["api_versions_trimmer"],
+    cmd: "$(location api_versions_trimmer) $(out) $(in)",
 }
