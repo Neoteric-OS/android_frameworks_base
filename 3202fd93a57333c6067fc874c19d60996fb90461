@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e32e30d0_dd1bbb2d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-26T23:16:18Z",
+      "side": 1,
+      "message": "Code looks correct, just one nit suggestion.\n\n+2 with comments.",
+      "revId": "3202fd93a57333c6067fc874c19d60996fb90461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2df79b17_1e0fc0d9",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-26T23:16:18Z",
+      "side": 1,
+      "message": "Nit: Any chance we could use the one from PermissionUtils?\n\nSomething like this: https://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/IpSecService.java;l\u003d1116?q\u003dipsecservice\u0026ss\u003dandroid%2Fplatform%2Fsuperproject\n\n(but obviously using the enforceAnyPermissionOf method instead of the enforceNetworkStackPermission)",
+      "range": {
+        "startLine": 733,
+        "startChar": 17,
+        "endLine": 733,
+        "endChar": 39
+      },
+      "revId": "3202fd93a57333c6067fc874c19d60996fb90461",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
