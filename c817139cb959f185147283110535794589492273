@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2af412b3_6e9aa977",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1744,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-05-26T17:20:09Z",
+      "side": 1,
+      "message": "Whoops these were remnants from my local testing that snuck in without my noticing 😂 I have removed this and what you commented on below",
+      "parentUuid": "163e04c1_a7477c80",
+      "range": {
+        "startLine": 1744,
+        "startChar": 8,
+        "endLine": 1744,
+        "endChar": 42
+      },
+      "revId": "c817139cb959f185147283110535794589492273",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d53005ac_b1e1f07b",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-05-26T01:58:23Z",
       "side": 1,
       "message": "I don\u0027t see corresponding changes to the aidl?",
+      "range": {
+        "startLine": 1751,
+        "startChar": 48,
+        "endLine": 1751,
+        "endChar": 66
+      },
+      "revId": "c817139cb959f185147283110535794589492273",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f1ee334_72cd37b9",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1751,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-05-26T17:20:09Z",
+      "side": 1,
+      "message": "Same as above, done!",
+      "parentUuid": "d53005ac_b1e1f07b",
       "range": {
         "startLine": 1751,
         "startChar": 48,
