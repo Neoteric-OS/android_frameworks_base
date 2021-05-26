@@ -24,6 +24,31 @@ package {
     default_applicable_licenses: ["frameworks_base_license"],
 }
 
+python_binary_host {
+    name: "api_versions_trimmer",
+    srcs: ["api_versions_trimmer.py"],
+    version: {
+        py2: {
+            enabled: false,
+        },
+        py3: {
+            enabled: true,
+        },
+    },
+}
+
+python_test_host {
+    name: "api_versions_trimmer_unittests",
+    main: "api_versions_trimmer_unittests.py",
+    srcs: [
+        "api_versions_trimmer_unittests.py",
+        "api_versions_trimmer.py",
+    ],
+    test_options: {
+        unit_test: true,
+    },
+}
+
 metalava_cmd = "$(location metalava)"
 // Silence reflection warnings. See b/168689341
 metalava_cmd += " -J--add-opens=java.base/java.util=ALL-UNNAMED "
@@ -400,4 +425,31 @@ genrule {
             dest: "removed.txt",
         },
     ],
+}
+
+// This rule will classes present in the har files from api-versions.xml which
+// is used by lint. This is used to reduce the number of false positive NewApi
+// findings in mainline modules
+genrule {
+    name: "api-versions-xml-public-filtered",
+    srcs: [
+        // Note: order matters: first parameter is the full api-versions.xml
+        // after that the stubs files in any order
+        // stubs files are all modules that export API surfaces EXCEPT ART
+        ":framework-doc-stubs{.api_versions.xml}",
+        ":android.net.ipsec.ike.stubs.module_lib{.jar}",
+        ":conscrypt.module.public.api.stubs{.jar}", // Only has public stubs
+        ":framework-connectivity.stubs.module_lib{.jar}",
+        ":framework-media.stubs.module_lib{.jar}",
+        ":framework-mediaprovider.stubs.module_lib{.jar}",
+        ":framework-permission.stubs.module_lib{.jar}",
+        ":framework-sdkextensions.stubs.module_lib{.jar}",
+        ":framework-statsd.stubs.module_lib{.jar}",
+        ":framework-tethering.stubs.module_lib{.jar}",
+        ":framework-wifi.stubs.module_lib{.jar}",
+        ":i18n.module.public.api.stubs{.jar}", // Only has public stubs
+    ],
+    out: ["api-versions-public-filtered.xml"],
+    tools: ["api_versions_trimmer"],
+    cmd: "$(location api_versions_trimmer) $(out) $(in)",
 }
