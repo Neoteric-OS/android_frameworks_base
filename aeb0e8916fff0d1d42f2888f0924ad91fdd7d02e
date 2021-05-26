@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1e084bc_83284eb6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2021-05-26T13:40:12Z",
+      "side": 1,
+      "message": "Interesting that StorageManagerService is started so late in the boot cycle. ",
+      "revId": "aeb0e8916fff0d1d42f2888f0924ad91fdd7d02e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
