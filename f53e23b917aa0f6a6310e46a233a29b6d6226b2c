@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0073cfd2_f0df2ed0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2021-05-26T16:22:38Z",
+      "side": 1,
+      "message": "ptal, this and all CLs in the topic are clean cherry-picks from sc-dev, thanks.",
+      "revId": "f53e23b917aa0f6a6310e46a233a29b6d6226b2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
