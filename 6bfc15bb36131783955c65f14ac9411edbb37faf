@@ -70,6 +70,30 @@
       },
       "revId": "6bfc15bb36131783955c65f14ac9411edbb37faf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "250ceefb_e0687435",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-27T00:52:56Z",
+      "side": 1,
+      "message": "Yeah, but at low priority; i think the attack vector is pretty limited to apps that have MANAGE_TEST_NETWORKS, so pretty minimal risk if that\u0027s the thing that gets cut.\n\nCould use a unit test, but also low-ish priority.",
+      "parentUuid": "4d6a99d7_16e33f93",
+      "range": {
+        "startLine": 816,
+        "startChar": 41,
+        "endLine": 816,
+        "endChar": 60
+      },
+      "revId": "6bfc15bb36131783955c65f14ac9411edbb37faf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
