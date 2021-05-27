@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "655506e4_49d689c5",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-27T00:04:11Z",
+      "side": 1,
+      "message": "Can we also check that the queried capabilities has TRANSPORT_TEST if the caller only has MANAGE_TEST_NETWORKS?\n\nJust to avoid anyone being able to probe this",
+      "range": {
+        "startLine": 816,
+        "startChar": 41,
+        "endLine": 816,
+        "endChar": 60
+      },
+      "revId": "6bfc15bb36131783955c65f14ac9411edbb37faf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
