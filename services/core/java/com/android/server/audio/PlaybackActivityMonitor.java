@@ -154,7 +154,13 @@ public final class PlaybackActivityMonitor
     //  all listeners as oneway calls.
 
     public int trackPlayer(PlayerBase.PlayerIdCard pic) {
-        final int newPiid = AudioSystem.newAudioPlayerId();
+        // after audioserver restart, the piid newly acquired will be based on the initial value
+        // again, it may already exist in mPlayers.
+        int pendingPiid;
+        do {
+            pendingPiid = AudioSystem.newAudioPlayerId();
+        } while (mPlayers.containsKey(pendingPiid));
+        final int newPiid = pendingPiid;
         if (DEBUG) { Log.v(TAG, "trackPlayer() new piid=" + newPiid); }
         final AudioPlaybackConfiguration apc =
                 new AudioPlaybackConfiguration(pic, newPiid,
