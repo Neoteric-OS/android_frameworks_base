@@ -194,8 +194,14 @@ public class AudioMixingRule {
         if (cr1 == null || cr2 == null) return false;
         if (cr1 == cr2) return true;
         if (cr1.size() != cr2.size()) return false;
-        //TODO iterate over rules to check they contain the same criterion
-        return (cr1.hashCode() == cr2.hashCode());
+
+	Iterator<AudioMixMatchCriterion> it1 = cr1.iterator();
+        Iterator<AudioMixMatchCriterion> it2 = cr2.iterator();
+        boolean same = true;
+        while (it1.hasNext() && it2.hasNext()) {
+            same &= (it1.next().hashCode() == it2.next().hashCode());
+        }
+        return same;
     }
 
     private final int mTargetMixType;
