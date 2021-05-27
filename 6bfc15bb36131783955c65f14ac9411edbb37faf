@@ -94,6 +94,30 @@
       },
       "revId": "6bfc15bb36131783955c65f14ac9411edbb37faf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cd4c5e6_91d67275",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-27T16:10:37Z",
+      "side": 1,
+      "message": "CTS coverage added in aosp/1720262",
+      "parentUuid": "250ceefb_e0687435",
+      "range": {
+        "startLine": 816,
+        "startChar": 41,
+        "endLine": 816,
+        "endChar": 60
+      },
+      "revId": "6bfc15bb36131783955c65f14ac9411edbb37faf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
