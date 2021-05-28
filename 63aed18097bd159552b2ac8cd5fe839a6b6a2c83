@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92656fdd_071dd0c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1692497
+      },
+      "writtenOn": "2021-05-28T01:59:27Z",
+      "side": 1,
+      "message": "Hello Robert, Amit,\n\nI submit the new free short code recently announced in Taiwan.\n\nThe short code is to streamline the mandatory contract tracing during Covid-19 pandemic in Taiwan.\n\nI have more details in the bug, please help to review the change.\n\nThank you!\nShawn",
+      "revId": "63aed18097bd159552b2ac8cd5fe839a6b6a2c83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
