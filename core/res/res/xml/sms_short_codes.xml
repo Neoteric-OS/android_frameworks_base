@@ -253,6 +253,9 @@
 
     <!-- Turkey -->
     <shortcode country="tr" pattern="\\d{1,5}" free="7529|5528|6493|3193" />
+	
+    <!-- Taiwan -->
+    <shortcode country="tw" pattern="\\d{4}" free="1922" />
 
     <!-- Ukraine: 4 digits, known premium codes listed -->
     <shortcode country="ua" pattern="\\d{4}" premium="444[3-9]|70[579]4|7540" />
