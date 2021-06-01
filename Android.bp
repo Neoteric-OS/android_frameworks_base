@@ -520,4 +520,5 @@ build = [
     "StubLibraries.bp",
     "ApiDocs.bp",
     "ProtoLibraries.bp",
+    "TestProtoLibraries.bp",
 ]
