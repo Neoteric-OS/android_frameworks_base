@@ -16,6 +16,23 @@
       "message": "Interesting that StorageManagerService is started so late in the boot cycle. ",
       "revId": "aeb0e8916fff0d1d42f2888f0924ad91fdd7d02e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bde33ae_c7895f8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2021-06-01T15:11:48Z",
+      "side": 1,
+      "message": "Thank you for the submission.\n\n_If_ we want to fix this issue [and I would argue that it\u0027s not worth fixing ... just don\u0027t use \u0027adb install\u0027 until the device is fully booted], the provided patch is incomplete.\n\nYes, it will address the very specific case of the storage manager not being available. However, it doesn\u0027t address any of the other myriad of services package manager is dependent upon [User Manager, Activity Manager, Permission Manager, Integrity Manager, Whatever-We-Add-In-The-Future Manager, ...]. So, for a full fix, we would have to deny any `adb` installs until the device has fully booted. But, again, I question the value of adding such a check.",
+      "revId": "aeb0e8916fff0d1d42f2888f0924ad91fdd7d02e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
