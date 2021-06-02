@@ -600,9 +600,13 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
             Slog.d(TAG, "Persisting Bluetooth Setting: " + value);
         }
         // waive WRITE_SECURE_SETTINGS permission check
-        long callingIdentity = Binder.clearCallingIdentity();
-        Settings.Global.putInt(mContext.getContentResolver(), Settings.Global.BLUETOOTH_ON, value);
-        Binder.restoreCallingIdentity(callingIdentity);
+        final long callingIdentity = Binder.clearCallingIdentity();
+        try {
+            Settings.Global.putInt(mContext.getContentResolver(),
+                    Settings.Global.BLUETOOTH_ON, value);
+        } finally {
+            Binder.restoreCallingIdentity(callingIdentity);
+        }
     }
 
     /**
@@ -2417,7 +2421,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         int foregroundUser;
         int callingUser = UserHandle.getCallingUserId();
         int callingUid = Binder.getCallingUid();
-        long callingIdentity = Binder.clearCallingIdentity();
+        final long callingIdentity = Binder.clearCallingIdentity();
         UserManager um = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
         UserInfo ui = um.getProfileParent(callingUser);
         int parentUser = (ui != null) ? ui.id : UserHandle.USER_NULL;
@@ -2644,7 +2648,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     }
 
     private boolean isBluetoothDisallowed() {
-        long callingIdentity = Binder.clearCallingIdentity();
+        final long callingIdentity = Binder.clearCallingIdentity();
         try {
             return mContext.getSystemService(UserManager.class)
                     .hasUserRestriction(UserManager.DISALLOW_BLUETOOTH, UserHandle.SYSTEM);
