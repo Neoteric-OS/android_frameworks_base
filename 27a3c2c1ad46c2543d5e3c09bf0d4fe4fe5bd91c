@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c55248ad_f450b4a5",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2485,
+      "author": {
+        "id": 1822395
+      },
+      "writtenOn": "2021-06-02T16:16:35Z",
+      "side": 1,
+      "message": "Reminder to make the same change as in: https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/14796810",
+      "revId": "27a3c2c1ad46c2543d5e3c09bf0d4fe4fe5bd91c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
