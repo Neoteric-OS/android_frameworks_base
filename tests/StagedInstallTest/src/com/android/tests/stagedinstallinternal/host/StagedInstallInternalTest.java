@@ -187,6 +187,20 @@ public class StagedInstallInternalTest extends BaseHostJUnit4Test {
     }
 
     @Test
+    public void testAdbInstallMultiPackageCommandWorksWithTimeoutFlag() throws Exception {
+        assumeTrue("Device does not support updating APEX",
+                mHostUtils.isApexUpdateSupported());
+
+        final File apexFile = mHostUtils.getTestFile(SHIM_V2);
+        final File apkFile = mHostUtils.getTestFile(APK_A);
+        final String output = getDevice().executeAdbCommand("install-multi-package",
+                "--staged-ready-timeout", "0",
+                apexFile.getAbsolutePath(), apkFile.getAbsolutePath());
+        assertThat(output).contains("Success");
+        assertThat(output).doesNotContain("Reboot device to apply staged session");
+    }
+
+    @Test
     public void testStagedInstallationShouldCleanUpOnValidationFailure() throws Exception {
         List<String> before = getStagingDirectories();
         runPhase("testStagedInstallationShouldCleanUpOnValidationFailure");
