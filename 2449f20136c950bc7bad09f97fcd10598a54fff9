@@ -257,6 +257,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "250fdb0a_d71bc94a",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2903,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-06-07T18:47:19Z",
+      "side": 1,
+      "message": "--------- beginning of crash\n06-07 20:45:31.449  1568  2043 E AndroidRuntime: *** FATAL EXCEPTION IN SYSTEM PROCESS: AudioDeviceBroker\n06-07 20:45:31.449  1568  2043 E AndroidRuntime: java.lang.StackOverflowError: stack size 1039KB\n06-07 20:45:31.449  1568  2043 E AndroidRuntime: \tat com.android.server.audio.AudioService.getGroupAudioDirections(AudioService.java:3327)",
+      "range": {
+        "startLine": 2903,
+        "startChar": 7,
+        "endLine": 2903,
+        "endChar": 16
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "093eb622_b0703db4",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 4
