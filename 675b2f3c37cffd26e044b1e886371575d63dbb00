@@ -34,6 +34,23 @@
       "parentUuid": "f17a3f8c_b14fdd2f",
       "revId": "675b2f3c37cffd26e044b1e886371575d63dbb00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2469c450_94b5e689",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-06-07T17:21:38Z",
+      "side": 1,
+      "message": "I have now submitted a similar but different solution internally (ag/I0f60785a1e67945f42d8332ca4d09d06145a3347).\nThere is a merge-conflict posting it to AOSP, so if you don\u0027t need it right away, I\u0027d prefer not exert the effort of cherry-picking it to AOSP directly; you\u0027d see it when we next release the internal version publicly.",
+      "revId": "675b2f3c37cffd26e044b1e886371575d63dbb00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
