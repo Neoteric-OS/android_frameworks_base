@@ -1,23 +1,23 @@
 # This top-level list should remain narrowly defined as team leads; individual
 # teams are strongly encouraged to define narrower OWNERS files at deeper
 # levels within the source tree; see OWNERS.md for more details
-akulian@google.com
-dsandler@android.com
-dsandler@google.com
-hackbod@android.com
-hackbod@google.com
-jjaggi@google.com
-jsharkey@android.com
-jsharkey@google.com
-lorenzo@google.com
-michaelwr@google.com
-nandana@google.com
-narayan@google.com
-ogunwale@google.com
-roosa@google.com
-svetoslavganov@android.com
-svetoslavganov@google.com
-yamasani@google.com
+akulian@google.com #{NEVER_SUGGEST}
+dsandler@android.com #{NEVER_SUGGEST}
+dsandler@google.com #{NEVER_SUGGEST}
+hackbod@android.com #{NEVER_SUGGEST}
+hackbod@google.com #{NEVER_SUGGEST}
+jjaggi@google.com #{NEVER_SUGGEST}
+jsharkey@android.com #{NEVER_SUGGEST}
+jsharkey@google.com #{NEVER_SUGGEST}
+lorenzo@google.com #{NEVER_SUGGEST}
+michaelwr@google.com #{NEVER_SUGGEST}
+nandana@google.com #{NEVER_SUGGEST}
+narayan@google.com #{NEVER_SUGGEST}
+ogunwale@google.com #{NEVER_SUGGEST}
+roosa@google.com #{NEVER_SUGGEST}
+svetoslavganov@android.com #{NEVER_SUGGEST}
+svetoslavganov@google.com #{NEVER_SUGGEST}
+yamasani@google.com #{NEVER_SUGGEST}
 
 # API changes are already covered by API-Review+1 (http://mdb/android-api-council)
 # via https://android.git.corp.google.com/All-Projects/+/refs/meta/config/rules.pl.
