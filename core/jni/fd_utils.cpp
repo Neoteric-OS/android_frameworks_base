@@ -153,6 +153,9 @@ bool FileDescriptorAllowlist::IsAllowed(const std::string& path) const {
         return true;
     }
 
+    static const char* kDataMiscTraceDir = "/data/misc/trace";
+    if (android::base::StartsWith(path, kDataMiscTraceDir)) return true;
+
     return false;
 }
 
