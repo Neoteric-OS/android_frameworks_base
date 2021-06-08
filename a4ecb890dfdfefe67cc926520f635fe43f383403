@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe390dad_e7acd4be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1096713
+      },
+      "writtenOn": "2021-06-08T19:07:01Z",
+      "side": 1,
+      "message": "It\u0027s probably poor form for me to +2 a CL where I\u0027m the author.  So I\u0027ll let Suren give the +2.",
+      "revId": "a4ecb890dfdfefe67cc926520f635fe43f383403",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
