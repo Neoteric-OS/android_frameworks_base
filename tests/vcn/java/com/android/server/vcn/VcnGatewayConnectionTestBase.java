@@ -35,6 +35,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
+import static java.util.Collections.singleton;
+
 import android.annotation.NonNull;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -96,6 +98,7 @@ public class VcnGatewayConnectionTestBase {
     protected static final int TEST_IPSEC_TRANSFORM_RESOURCE_ID = 2;
     protected static final int TEST_IPSEC_TUNNEL_RESOURCE_ID = 3;
     protected static final int TEST_SUB_ID = 5;
+    protected static final String TEST_SUBSCRIBER_ID = "IMSI";
     protected static final long ELAPSED_REAL_TIME = 123456789L;
     protected static final String TEST_IPSEC_TUNNEL_IFACE = "IPSEC_IFACE";
 
@@ -103,7 +106,9 @@ public class VcnGatewayConnectionTestBase {
     protected static final UnderlyingNetworkRecord TEST_UNDERLYING_NETWORK_RECORD_1 =
             new UnderlyingNetworkRecord(
                     mock(Network.class, CALLS_REAL_METHODS),
-                    new NetworkCapabilities(),
+                    new NetworkCapabilities.Builder()
+                            .setSubscriptionIds(singleton(TEST_SUB_ID))
+                            .build(),
                     new LinkProperties(),
                     false /* blocked */);
 
@@ -116,7 +121,9 @@ public class VcnGatewayConnectionTestBase {
     protected static final UnderlyingNetworkRecord TEST_UNDERLYING_NETWORK_RECORD_2 =
             new UnderlyingNetworkRecord(
                     mock(Network.class, CALLS_REAL_METHODS),
-                    new NetworkCapabilities(),
+                    new NetworkCapabilities.Builder()
+                            .setSubscriptionIds(singleton(TEST_SUB_ID))
+                            .build(),
                     new LinkProperties(),
                     false /* blocked */);
 
