@@ -36,7 +36,6 @@ import java.security.Provider;
 import java.security.ProviderException;
 import java.security.PublicKey;
 import java.security.Security;
-import java.security.Signature;
 import java.security.UnrecoverableKeyException;
 import java.security.interfaces.ECPublicKey;
 import java.security.interfaces.RSAPublicKey;
@@ -166,15 +165,13 @@ public class AndroidKeyStoreProvider extends Provider {
             throw new NullPointerException();
         }
         Object spi;
-        if (cryptoPrimitive instanceof Signature) {
-            spi = ((Signature) cryptoPrimitive).getCurrentSpi();
-        } else if (cryptoPrimitive instanceof Mac) {
+        if (cryptoPrimitive instanceof Mac) {
             spi = ((Mac) cryptoPrimitive).getCurrentSpi();
         } else if (cryptoPrimitive instanceof Cipher) {
             spi = ((Cipher) cryptoPrimitive).getCurrentSpi();
         } else {
             throw new IllegalArgumentException("Unsupported crypto primitive: " + cryptoPrimitive
-                    + ". Supported: Signature, Mac, Cipher");
+                    + ". Supported: Mac, Cipher");
         }
         if (spi == null) {
             throw new IllegalStateException("Crypto primitive not initialized");
