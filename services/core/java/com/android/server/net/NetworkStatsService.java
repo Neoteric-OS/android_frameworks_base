@@ -1268,6 +1268,18 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
     }
 
+    private boolean isVcnNetwork(NetworkStateSnapshot snapshot) {
+        // TODO: Instead of conditioning on implementation details, consider adding a TRANSPORT_VCN
+        // as system API
+        return snapshot.getLinkProperties().getInterfaceName().startsWith("ipsec")
+                && snapshot.getNetworkCapabilities()
+                        .hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                && !snapshot.getNetworkCapabilities()
+                        .hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+                // VCN does not provide TelephonyNetworkSpecifier
+                && snapshot.getNetworkCapabilities().getNetworkSpecifier() == null;
+    }
+
     /**
      * Inspect all current {@link NetworkStateSnapshot}s to derive mapping from {@code iface} to
      * {@link NetworkStatsHistory}. When multiple networks are active on a single {@code iface},
@@ -1311,7 +1323,11 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             // both total usage and UID details.
             final String baseIface = snapshot.getLinkProperties().getInterfaceName();
             if (baseIface != null) {
-                findOrCreateNetworkIdentitySet(mActiveIfaces, baseIface).add(ident);
+                if (!isVcnNetwork(snapshot)) {
+                    // Ignore VCN for non-uid iface stats.
+                    findOrCreateNetworkIdentitySet(mActiveIfaces, baseIface).add(ident);
+                }
+
                 findOrCreateNetworkIdentitySet(mActiveUidIfaces, baseIface).add(ident);
 
                 // Build a separate virtual interface for VT (Video Telephony) data usage.
@@ -1405,7 +1421,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
      * transport types do not actually fill this value.
      */
     private int getSubTypeForStateSnapshot(@NonNull NetworkStateSnapshot state) {
-        if (!state.getNetworkCapabilities().hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+        if (!state.getNetworkCapabilities().hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                || isVcnNetwork(state)) {
             return 0;
         }
 

@@ -48,6 +48,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
@@ -60,6 +61,7 @@ import android.net.ipsec.ike.exceptions.IkeProtocolException;
 import android.net.vcn.VcnGatewayConnectionConfig;
 import android.net.vcn.VcnGatewayConnectionConfigTest;
 import android.net.vcn.VcnManager.VcnErrorCode;
+import android.telephony.TelephonyManager;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -83,6 +85,8 @@ import java.util.function.Consumer;
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnectionTestBase {
+    private final TelephonyManager mTelMgr = mock(TelephonyManager.class);
+
     private VcnIkeSession mIkeSession;
     private VcnNetworkAgent mNetworkAgent;
 
@@ -96,6 +100,10 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
                 .newNetworkAgent(any(), any(), any(), any(), any(), any(), any(), any(), any());
 
         mGatewayConnection.setUnderlyingNetwork(TEST_UNDERLYING_NETWORK_RECORD_1);
+
+        VcnTestUtils.setupSystemService(
+                mContext, mTelMgr, Context.TELEPHONY_SERVICE, TelephonyManager.class);
+        doReturn(TEST_SUBSCRIBER_ID).when(mTelMgr).getSubscriberId(anyInt());
 
         mIkeSession = mGatewayConnection.buildIkeSession(TEST_UNDERLYING_NETWORK_RECORD_1.network);
         mGatewayConnection.setIkeSession(mIkeSession);
@@ -288,7 +296,8 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
                         ncCaptor.capture(),
                         lpCaptor.capture(),
                         any(),
-                        argThat(nac -> nac.getLegacyType() == ConnectivityManager.TYPE_MOBILE),
+                        argThat(nac -> nac.getLegacyType() == ConnectivityManager.TYPE_MOBILE
+                                && TEST_SUBSCRIBER_ID.equals(nac.getSubscriberId())),
                         any(),
                         any(),
                         any());
