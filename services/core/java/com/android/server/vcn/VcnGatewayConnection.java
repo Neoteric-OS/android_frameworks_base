@@ -76,6 +76,7 @@ import android.os.ParcelUuid;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.SystemClock;
+import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 import android.util.Slog;
 
@@ -96,6 +97,7 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -1570,10 +1572,7 @@ public class VcnGatewayConnection extends StateMachine {
             final LinkProperties lp =
                     buildConnectedLinkProperties(
                             mConnectionConfig, tunnelIface, childConfig, mUnderlying);
-            final NetworkAgentConfig nac =
-                    new NetworkAgentConfig.Builder()
-                            .setLegacyType(ConnectivityManager.TYPE_MOBILE)
-                            .build();
+            final NetworkAgentConfig nac = buildNetworkAgentConfig(mVcnContext, mUnderlying);
 
             final VcnNetworkAgent agent =
                     mDeps.newNetworkAgent(
@@ -1919,6 +1918,33 @@ public class VcnGatewayConnection extends StateMachine {
 
             return retryIntervalsMs[retryDelayIndex];
         }
+    }
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    static NetworkAgentConfig buildNetworkAgentConfig(
+            @NonNull VcnContext vcnContext, @Nullable UnderlyingNetworkRecord underlying) {
+        final NetworkAgentConfig.Builder nacBuilder =
+                new NetworkAgentConfig.Builder().setLegacyType(ConnectivityManager.TYPE_MOBILE);
+
+        if (underlying != null) {
+            final List<Integer> subIds =
+                    new ArrayList<Integer>(underlying.networkCapabilities.getSubscriptionIds());
+            if (!subIds.isEmpty()) {
+                String subscriberId =
+                        vcnContext
+                                .getContext()
+                                .getSystemService(TelephonyManager.class)
+                                .getSubscriberId(subIds.get(0));
+                nacBuilder.setSubscriberId(subscriberId);
+            }
+        } else {
+            Slog.wtf(
+                    TAG,
+                    "No underlying network while building network agent config",
+                    new IllegalStateException());
+        }
+
+        return nacBuilder.build();
     }
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
