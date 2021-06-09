@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0692c0ea_2623ac94",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-06-09T15:34:13Z",
+      "side": 1,
+      "message": "Actually this is point to bit in bitset. Enabled bit 0 means that LE Audio server has audio input capability, 1 is for output.",
+      "parentUuid": "5b789dc9_543bec06",
+      "range": {
+        "startLine": 114,
+        "startChar": 28,
+        "endLine": 114,
+        "endChar": 53
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1ef06267_49016147",
         "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
         "patchSetId": 4
@@ -37,6 +61,30 @@
       "writtenOn": "2021-05-25T13:08:24Z",
       "side": 1,
       "message": "/** @hide */\n    @IntDef({\n        AUDIO_DIRECTION_INPUT,\n        AUDIO_DIRECTION_OUTPUT,\n    })\n    @Retention(RetentionPolicy.SOURCE)\n    public @interface AudioDirection {}",
+      "range": {
+        "startLine": 121,
+        "startChar": 58,
+        "endLine": 121,
+        "endChar": 59
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c352726_6abff447",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-06-09T15:34:13Z",
+      "side": 1,
+      "message": "Current usage was designed for BitSet container, those values would never been passed to functions under @AudioDirection. I\u0027m not sure if this would help here somehow.",
+      "parentUuid": "1ef06267_49016147",
       "range": {
         "startLine": 121,
         "startChar": 58,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "313a2e9f_46df6c2e",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-06-09T15:34:13Z",
+      "side": 1,
+      "message": "As discussed offline - it\u0027s not possible to pass over aidl custom annotated argument.",
+      "parentUuid": "c9e7f843_011212c8",
+      "range": {
+        "startLine": 459,
+        "startChar": 0,
+        "endLine": 459,
+        "endChar": 67
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "17788031_30e5384a",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-05-25T13:08:24Z",
       "side": 1,
       "message": "I think it is OK to pass the group to onSetLeAudioConnectionState() and have it retrieve the direction directly from or BtHelper BluetoothLeAudio",
+      "range": {
+        "startLine": 1199,
+        "startChar": 0,
+        "endLine": 1199,
+        "endChar": 80
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d0ac3f9_cf706b1a",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-06-09T15:34:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17788031_30e5384a",
       "range": {
         "startLine": 1199,
         "startChar": 0,
@@ -163,6 +259,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4292bf55_95bb02b2",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-06-09T15:34:13Z",
+      "side": 1,
+      "message": "It looks like for SCO it is device oriented connection - input and output are different devices. In LE Audio there is a group context e.g. single device may be bi-directional or two devices (one earbud and second microphone) may be grouped.",
+      "parentUuid": "4549988f_c0ec58b9",
+      "range": {
+        "startLine": 497,
+        "startChar": 0,
+        "endLine": 497,
+        "endChar": 0
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "492ea856_c66ccbfa",
@@ -176,6 +296,30 @@
       "writtenOn": "2021-05-25T13:08:24Z",
       "side": 1,
       "message": "mBluetoothConnectedStateBitset",
+      "range": {
+        "startLine": 315,
+        "startChar": 11,
+        "endLine": 315,
+        "endChar": 32
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f8848f8_aeeba08e",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-06-09T15:34:13Z",
+      "side": 1,
+      "message": "This should be no longer valid - since separated connection API for in and out direction.",
+      "parentUuid": "492ea856_c66ccbfa",
       "range": {
         "startLine": 315,
         "startChar": 11,
@@ -211,6 +355,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d45fbfb8_d989b8d9",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2882,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-06-09T15:34:13Z",
+      "side": 1,
+      "message": "Looks like this name is used in this module twice:\n1) In AudioService\n2) In AudioService/VolumeStreamState\n\nthis one which name was modified is 1)",
+      "parentUuid": "68e68b62_6fd92622",
+      "range": {
+        "startLine": 2882,
+        "startChar": 20,
+        "endLine": 2882,
+        "endChar": 33
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b58ca6b6_4fb13563",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 4
@@ -222,6 +390,30 @@
       "writtenOn": "2021-05-25T13:08:24Z",
       "side": 1,
       "message": "Is there a reason to make it an AudioService method?\n\nBetter move to BtHelper",
+      "range": {
+        "startLine": 2902,
+        "startChar": 24,
+        "endLine": 2902,
+        "endChar": 47
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bfaf138_7944165e",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2902,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-06-09T15:34:13Z",
+      "side": 1,
+      "message": "This should be no longer valid - since separated connection API for in and out direction.",
+      "parentUuid": "b58ca6b6_4fb13563",
       "range": {
         "startLine": 2902,
         "startChar": 24,
@@ -273,6 +465,30 @@
         "startChar": 7,
         "endLine": 2903,
         "endChar": 16
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1797842d_57b52442",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2903,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-06-09T15:34:13Z",
+      "side": 1,
+      "message": "This should be no longer valid - invalid cherry pick from other branch.",
+      "parentUuid": "d6ff1d62_e20f8a36",
+      "range": {
+        "startLine": 2903,
+        "startChar": 15,
+        "endLine": 2903,
+        "endChar": 38
       },
       "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
