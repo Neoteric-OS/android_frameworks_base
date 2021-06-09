@@ -90,6 +90,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.net.DataUsageRequest;
+import android.net.INetd;
 import android.net.INetworkManagementEventObserver;
 import android.net.INetworkStatsService;
 import android.net.INetworkStatsSession;
@@ -1268,6 +1269,21 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
     }
 
+    private boolean isVcnNetwork(NetworkStateSnapshot snapshot) {
+        // TODO: Instead of conditioning on implementation details, consider adding a TRANSPORT_VCN
+        // as system API (not publicly visible), and condition on TRANSPORT_VCN instead
+        return snapshot.getLinkProperties()
+                        .getInterfaceName()
+                        .startsWith(INetd.IPSEC_INTERFACE_PREFIX)
+                && snapshot.getNetworkCapabilities()
+                        .hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                && !snapshot.getNetworkCapabilities()
+                        .hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+                // VCN does not provide TelephonyNetworkSpecifier
+                && !(snapshot.getNetworkCapabilities().getNetworkSpecifier()
+                        instanceof TelephonyNetworkSpecifier);
+    }
+
     /**
      * Inspect all current {@link NetworkStateSnapshot}s to derive mapping from {@code iface} to
      * {@link NetworkStatsHistory}. When multiple networks are active on a single {@code iface},
@@ -1311,7 +1327,15 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             // both total usage and UID details.
             final String baseIface = snapshot.getLinkProperties().getInterfaceName();
             if (baseIface != null) {
-                findOrCreateNetworkIdentitySet(mActiveIfaces, baseIface).add(ident);
+                // Ignore VCN interface stats; the VCN interface stats do not account for IPsec
+                // overhead, while the underlying network will. Additionally, since the VCN and
+                // underlying networks are registered against the same subscriberId, the inner
+                // packet will be double counted (before and after IPsec encap) if the inner
+                // interface is not ignored.
+                if (!isVcnNetwork(snapshot)) {
+                    findOrCreateNetworkIdentitySet(mActiveIfaces, baseIface).add(ident);
+                }
+
                 findOrCreateNetworkIdentitySet(mActiveUidIfaces, baseIface).add(ident);
 
                 // Build a separate virtual interface for VT (Video Telephony) data usage.
@@ -1405,7 +1429,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
      * transport types do not actually fill this value.
      */
     private int getSubTypeForStateSnapshot(@NonNull NetworkStateSnapshot state) {
-        if (!state.getNetworkCapabilities().hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+        if (!state.getNetworkCapabilities().hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                || isVcnNetwork(state)) { // Prevent VCN from matching the underlying cell identity
             return 0;
         }
 
