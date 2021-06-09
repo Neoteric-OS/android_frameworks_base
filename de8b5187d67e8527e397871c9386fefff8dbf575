@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "308487e4_9e6b1f73",
+        "filename": "core/java/android/net/http/HttpResponseCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2021-06-09T12:48:45Z",
+      "side": 1,
+      "message": "nit: is this method unused after the latest patchset?",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 5
+      },
+      "revId": "de8b5187d67e8527e397871c9386fefff8dbf575",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
