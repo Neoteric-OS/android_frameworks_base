@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7b2b8a6_cabb787d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2021-06-10T15:08:47Z",
+      "side": 1,
+      "message": "Ouch -- thanks for the catch!\n\n- Unfortunately, the code seems to have moved a lot in the internal master, so we first need to fix it internally. @Yuxin, do you need this change in AOSP? I see you\u0027re from xiaomi, so I believe you can access the internal branches? If you don\u0027t need it in AOSP, I\u0027d just fix it in the internal S branch.\n",
+      "revId": "57b6ec460266f199c07d0585af616fbfaee77db3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
