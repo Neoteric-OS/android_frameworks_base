@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e892ce2d_29d94118",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-06-10T22:56:23Z",
+      "side": 1,
+      "message": "bypassing presubmit, as it is failing do to known test breakages b/190622577",
+      "revId": "1fd3dadc22119a8302295d8c802b94c8c728be75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
