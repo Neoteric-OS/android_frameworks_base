@@ -379,6 +379,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c76c7c2d_61ce948f",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-06-10T07:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac2bfc08_1743b6dc",
+      "range": {
+        "startLine": 1243,
+        "startChar": 8,
+        "endLine": 1243,
+        "endChar": 42
+      },
+      "revId": "1f8de0db3de361d550ba5798d889e3fde81aa85c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d50f78a7_464099dc",

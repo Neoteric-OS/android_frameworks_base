@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce5f4c21_967c5df2",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-06-10T07:45:25Z",
+      "side": 1,
+      "message": "This should be no longer valid - since separated connection API for in and out direction.",
+      "parentUuid": "0692c0ea_2623ac94",
+      "range": {
+        "startLine": 114,
+        "startChar": 28,
+        "endLine": 114,
+        "endChar": 53
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ef06267_49016147",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Current usage was designed for BitSet container, those values would never been passed to functions under @AudioDirection. I\u0027m not sure if this would help here somehow.",
       "parentUuid": "1ef06267_49016147",
+      "range": {
+        "startLine": 121,
+        "startChar": 58,
+        "endLine": 121,
+        "endChar": 59
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c92e2f1_a7458854",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-06-10T07:45:25Z",
+      "side": 1,
+      "message": "This should be no longer valid - since separated connection API for in and out direction.",
+      "parentUuid": "1c352726_6abff447",
       "range": {
         "startLine": 121,
         "startChar": 58,
@@ -226,6 +274,30 @@
       "side": 1,
       "message": "class of device is only optional and descriptive thing of single device, btw. having group context we may contain multiple different devices.\n\nHmm your comment triggered my to understand that even relying on class of device is wrong here.\nConsider scenario with 3 devices:\nDevice A: Left earbud (COD: Headphones)\nDevice B: Right earbud (COD: Headphones)\nDevice C: microphone (COD: Microphone)\nWhat means that group is in real: Wearable Headset Device\n\nIn my understanding the best way to describe group \"device\" possible function is to use group context type.\n\nContext type is something that LE Audio supporting devices have to have and can expose to UL (this covers PACS specification). Current development implementation checks for common contexts among its group devices and searches if this group matches internal requirements e.g.\nStep 1:\n  Setup:\n    Device A: Left earbud (contexts: media, conversational)\n    Device B: Right earbud (contexts: media, conversational)\n    Device C: microphone (contexts: conversational)\nStep 2:\n  Every device is connected\nStep 3:\n  Stack gets info about available contexts and checks if possible to cover in future such scenario related to context (also stores best possible scenario for each available context scenario)\nStep 4:\n  Settings or any related application receives intent with group configuration containing available context types.\nStep 5:\n  User sees LE Audio \"device/group\" (cause settings app received group config - saying that conversational context is \"possible\") and picks it from GUI or whatever e.g. while having GSM/cellular conversation\nStep 5:\n  AF opens device and LE Audio setup is firing up.\nStep 6:\n  Data flows to/from BT bearer",
       "parentUuid": "b0d73900_50ce23d9",
+      "range": {
+        "startLine": 464,
+        "startChar": 0,
+        "endLine": 464,
+        "endChar": 94
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6edfb74_6e7e1661",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-06-10T07:45:25Z",
+      "side": 1,
+      "message": "This should be no longer valid - since separated connection API for in and out direction.",
+      "parentUuid": "87687324_b235676c",
       "range": {
         "startLine": 464,
         "startChar": 0,
