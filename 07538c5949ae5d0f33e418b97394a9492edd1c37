@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ae17564_aac9a9d1",
+        "filename": "core/java/android/bluetooth/OobData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-06-11T01:02:00Z",
+      "side": 1,
+      "message": "import this as a static, so we can drop the Objects. prefix?",
+      "range": {
+        "startLine": 216,
+        "startChar": 12,
+        "endLine": 216,
+        "endChar": 34
+      },
+      "revId": "07538c5949ae5d0f33e418b97394a9492edd1c37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
