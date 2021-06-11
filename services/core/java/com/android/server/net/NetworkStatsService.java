@@ -110,6 +110,7 @@ import android.net.Uri;
 import android.net.netstats.provider.INetworkStatsProvider;
 import android.net.netstats.provider.INetworkStatsProviderCallback;
 import android.net.netstats.provider.NetworkStatsProvider;
+import android.net.vcn.VcnManager;
 import android.os.BestClock;
 import android.os.Binder;
 import android.os.DropBoxManager;
@@ -1268,6 +1269,13 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
     }
 
+    private boolean isVcnNetwork(NetworkStateSnapshot snapshot) {
+        // This call does NOT cross a binder boundary, and is effectively a static utility method,
+        // left as an instance method for mocking/testability.
+        return mContext.getSystemService(VcnManager.class)
+                .isVcnNetwork(snapshot.getNetworkCapabilities(), snapshot.getLinkProperties());
+    }
+
     /**
      * Inspect all current {@link NetworkStateSnapshot}s to derive mapping from {@code iface} to
      * {@link NetworkStatsHistory}. When multiple networks are active on a single {@code iface},
@@ -1311,7 +1319,15 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             // both total usage and UID details.
             final String baseIface = snapshot.getLinkProperties().getInterfaceName();
             if (baseIface != null) {
-                findOrCreateNetworkIdentitySet(mActiveIfaces, baseIface).add(ident);
+                // Ignore VCN interface stats; the VCN interface stats do not account for IPsec
+                // overhead, while the underlying network will. Additionally, since the VCN and
+                // underlying networks are registered against the same subscriberId, the inner
+                // packet will be double counted (before and after IPsec encap) if the inner
+                // interface is not ignored.
+                if (!isVcnNetwork(snapshot)) {
+                    findOrCreateNetworkIdentitySet(mActiveIfaces, baseIface).add(ident);
+                }
+
                 findOrCreateNetworkIdentitySet(mActiveUidIfaces, baseIface).add(ident);
 
                 // Build a separate virtual interface for VT (Video Telephony) data usage.
@@ -1405,7 +1421,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
      * transport types do not actually fill this value.
      */
     private int getSubTypeForStateSnapshot(@NonNull NetworkStateSnapshot state) {
-        if (!state.getNetworkCapabilities().hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+        if (!state.getNetworkCapabilities().hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                || isVcnNetwork(state)) { // Prevent VCN from matching the underlying cell identity
             return 0;
         }
 
