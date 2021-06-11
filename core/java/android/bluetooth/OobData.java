@@ -23,10 +23,9 @@ import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.android.internal.util.Preconditions;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.Objects;
 
 /**
  * Out Of Band Data for Bluetooth device pairing.
@@ -214,7 +213,7 @@ public final class OobData implements Parcelable {
         @NonNull
         @SystemApi
         public LeBuilder setDeviceName(@NonNull byte[] deviceName) {
-            Preconditions.checkNotNull(deviceName);
+            Objects.requireNonNull(deviceName);
             this.mDeviceName = deviceName;
             return this;
         }
@@ -308,8 +307,8 @@ public final class OobData implements Parcelable {
         @SystemApi
         public LeBuilder(@NonNull byte[] confirmationHash, @NonNull byte[] deviceAddressWithType,
                 @LeRole int leDeviceRole) {
-            Preconditions.checkNotNull(confirmationHash);
-            Preconditions.checkNotNull(deviceAddressWithType);
+            Objects.requireNonNull(confirmationHash);
+            Objects.requireNonNull(deviceAddressWithType);
             if (confirmationHash.length != OobData.CONFIRMATION_OCTETS) {
                 throw new IllegalArgumentException("confirmationHash must be "
                     + OobData.CONFIRMATION_OCTETS + " octets in length.");
@@ -344,7 +343,7 @@ public final class OobData implements Parcelable {
         @NonNull
         @SystemApi
         public LeBuilder setLeTemporaryKey(@NonNull byte[] leTemporaryKey) {
-            Preconditions.checkNotNull(leTemporaryKey);
+            Objects.requireNonNull(leTemporaryKey);
             if (leTemporaryKey.length != LE_TK_OCTETS) {
                 throw new IllegalArgumentException("leTemporaryKey must be "
                         + LE_TK_OCTETS + " octets in length.");
@@ -366,7 +365,7 @@ public final class OobData implements Parcelable {
         @NonNull
         @SystemApi
         public LeBuilder setRandomizerHash(@NonNull byte[] randomizerHash) {
-            Preconditions.checkNotNull(randomizerHash);
+            Objects.requireNonNull(randomizerHash);
             if (randomizerHash.length != OobData.RANDOMIZER_OCTETS) {
                 throw new IllegalArgumentException("randomizerHash must be "
                     + OobData.RANDOMIZER_OCTETS + " octets in length.");
@@ -534,9 +533,9 @@ public final class OobData implements Parcelable {
         @SystemApi
         public ClassicBuilder(@NonNull byte[] confirmationHash, @NonNull byte[] classicLength,
                 @NonNull byte[] deviceAddressWithType) {
-            Preconditions.checkNotNull(confirmationHash);
-            Preconditions.checkNotNull(classicLength);
-            Preconditions.checkNotNull(deviceAddressWithType);
+            Objects.requireNonNull(confirmationHash);
+            Objects.requireNonNull(classicLength);
+            Objects.requireNonNull(deviceAddressWithType);
             if (confirmationHash.length != OobData.CONFIRMATION_OCTETS) {
                 throw new IllegalArgumentException("confirmationHash must be "
                     + OobData.CONFIRMATION_OCTETS + " octets in length.");
@@ -567,7 +566,7 @@ public final class OobData implements Parcelable {
         @NonNull
         @SystemApi
         public ClassicBuilder setRandomizerHash(@NonNull byte[] randomizerHash) {
-            Preconditions.checkNotNull(randomizerHash);
+            Objects.requireNonNull(randomizerHash);
             if (randomizerHash.length != OobData.RANDOMIZER_OCTETS) {
                 throw new IllegalArgumentException("randomizerHash must be "
                     + OobData.RANDOMIZER_OCTETS + " octets in length.");
@@ -592,7 +591,7 @@ public final class OobData implements Parcelable {
         @NonNull
         @SystemApi
         public ClassicBuilder setDeviceName(@NonNull byte[] deviceName) {
-            Preconditions.checkNotNull(deviceName);
+            Objects.requireNonNull(deviceName);
             this.mDeviceName = deviceName;
             return this;
         }
@@ -617,7 +616,7 @@ public final class OobData implements Parcelable {
         @NonNull
         @SystemApi
         public ClassicBuilder setClassOfDevice(@NonNull byte[] classOfDevice) {
-            Preconditions.checkNotNull(classOfDevice);
+            Objects.requireNonNull(classOfDevice);
             if (classOfDevice.length != OobData.CLASS_OF_DEVICE_OCTETS) {
                 throw new IllegalArgumentException("classOfDevice must be "
                         + OobData.CLASS_OF_DEVICE_OCTETS + " octets in length.");
