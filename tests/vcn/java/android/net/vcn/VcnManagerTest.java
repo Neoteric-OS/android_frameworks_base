@@ -16,6 +16,8 @@
 
 package android.net.vcn;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED;
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.vcn.VcnManager.VCN_STATUS_CODE_ACTIVE;
 
 import static androidx.test.InstrumentationRegistry.getContext;
@@ -33,8 +35,11 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
+import android.net.INetd;
 import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
+import android.net.TelephonyNetworkSpecifier;
+import android.net.TransportInfo;
 import android.net.vcn.VcnManager.VcnStatusCallback;
 import android.net.vcn.VcnManager.VcnStatusCallbackBinder;
 import android.net.vcn.VcnManager.VcnUnderlyingNetworkPolicyListener;
@@ -214,5 +219,33 @@ public class VcnManagerTest {
                         eq(GATEWAY_CONNECTION_NAME),
                         eq(VcnManager.VCN_ERROR_CODE_NETWORK_ERROR),
                         any(UnknownHostException.class));
+    }
+
+    @Test
+    public void testIsVcnNetwork() throws Exception {
+        final NetworkCapabilities vcnCaps =
+                new NetworkCapabilities.Builder()
+                        .addTransportType(TRANSPORT_CELLULAR)
+                        .addCapability(NET_CAPABILITY_NOT_VCN_MANAGED)
+                        .setTransportInfo(new TransportInfo() {})
+                        .build();
+        final LinkProperties vcnLp = new LinkProperties();
+        vcnLp.setInterfaceName(INetd.IPSEC_INTERFACE_PREFIX);
+
+        assertTrue(mVcnManager.isVcnNetwork(vcnCaps, vcnLp));
+    }
+
+    @Test
+    public void testIsVcnNetworkTelephony() throws Exception {
+        final NetworkCapabilities vcnCaps =
+                new NetworkCapabilities.Builder()
+                        .addTransportType(TRANSPORT_CELLULAR)
+                        .addCapability(NET_CAPABILITY_NOT_VCN_MANAGED)
+                        .setNetworkSpecifier(new TelephonyNetworkSpecifier(0))
+                        .build();
+        final LinkProperties vcnLp = new LinkProperties();
+        vcnLp.setInterfaceName("rmnet_data0");
+
+        assertFalse(mVcnManager.isVcnNetwork(vcnCaps, vcnLp));
     }
 }

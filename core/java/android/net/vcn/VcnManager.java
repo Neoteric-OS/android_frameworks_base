@@ -26,6 +26,7 @@ import android.annotation.SystemService;
 import android.content.Context;
 import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
+import android.net.TelephonyNetworkSpecifier;
 import android.os.Binder;
 import android.os.ParcelUuid;
 import android.os.RemoteException;
@@ -582,6 +583,27 @@ public class VcnManager {
                 callback.mCbBinder = null;
             }
         }
+    }
+
+    /**
+     * Checks if the provided network is a VCN network.
+     *
+     * @param caps The capabilities for the network to be queried
+     * @param lp The link properties for the network to be queried
+     * @hide
+     */
+    public boolean isVcnNetwork(@NonNull NetworkCapabilities caps, @NonNull LinkProperties lp) {
+        requireNonNull(caps, "caps must not be null");
+        requireNonNull(lp, "lp must not be null");
+
+        // TODO: Make this less dependent on implementation detail, and more declarative
+        return caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                && !caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+                && caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN)
+                // VCN will have a VcnTransportInfo (telephony does not)
+                && caps.getTransportInfo() != null
+                // VCN does not provide TelephonyNetworkSpecifier
+                && !(caps.getNetworkSpecifier() instanceof TelephonyNetworkSpecifier);
     }
 
     /**
