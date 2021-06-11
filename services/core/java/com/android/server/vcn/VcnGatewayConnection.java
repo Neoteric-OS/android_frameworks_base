@@ -76,6 +76,7 @@ import android.os.ParcelUuid;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.SystemClock;
+import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 import android.util.Slog;
 
@@ -100,6 +101,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
@@ -1570,10 +1573,7 @@ public class VcnGatewayConnection extends StateMachine {
             final LinkProperties lp =
                     buildConnectedLinkProperties(
                             mConnectionConfig, tunnelIface, childConfig, mUnderlying);
-            final NetworkAgentConfig nac =
-                    new NetworkAgentConfig.Builder()
-                            .setLegacyType(ConnectivityManager.TYPE_MOBILE)
-                            .build();
+            final NetworkAgentConfig nac = buildNetworkAgentConfig(mVcnContext, mUnderlying);
 
             final VcnNetworkAgent agent =
                     mDeps.newNetworkAgent(
@@ -1919,6 +1919,31 @@ public class VcnGatewayConnection extends StateMachine {
 
             return retryIntervalsMs[retryDelayIndex];
         }
+    }
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    static NetworkAgentConfig buildNetworkAgentConfig(
+            @NonNull VcnContext vcnContext, @Nullable UnderlyingNetworkRecord underlying) {
+        Objects.requireNonNull(underlying, "Null underlying network during network agent startup");
+        final NetworkAgentConfig.Builder nacBuilder =
+                new NetworkAgentConfig.Builder().setLegacyType(ConnectivityManager.TYPE_MOBILE);
+
+        final SortedSet<Integer> subIds =
+                new TreeSet<Integer>(underlying.networkCapabilities.getSubscriptionIds());
+        if (!subIds.isEmpty()) {
+            // Get subscriber ID (IMSI) of the first (lowest) subId. There should only ever be one
+            // on underlying networks, but always use lowest subId incase there are multiple.
+            String subscriberId =
+                    vcnContext
+                            .getContext()
+                            .getSystemService(TelephonyManager.class)
+                            .getSubscriberId(subIds.first());
+            nacBuilder.setSubscriberId(subscriberId);
+        } else {
+            Slog.wtf(TAG, "No subIds in NetworkCapabilities for underlying network");
+        }
+
+        return nacBuilder.build();
     }
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
