@@ -16,6 +16,24 @@
       "message": "We should get this in sc-dev as well. ",
       "revId": "927ce1eca2b968178c7f0d41d5946d287ff3851a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7ade4a4_0bb9cdc3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-06-11T19:43:54Z",
+      "side": 1,
+      "message": "will do after AOSP. though TH is having issues, don\u0027t expect to be able to do it before they fix it.",
+      "parentUuid": "41a230f6_76b37d99",
+      "revId": "927ce1eca2b968178c7f0d41d5946d287ff3851a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
