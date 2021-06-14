@@ -67,6 +67,12 @@ public final class VcnConfig implements Parcelable {
         validate();
     }
 
+    @Override
+    public String toString() {
+        return String.format("VCN={ pkgName=%s gatewayConfigs=%s isTestMode=%s }",
+                mPackageName, mGatewayConnectionConfigs.toString(), mIsTestModeProfile);
+    }
+
     /**
      * Deserializes a VcnConfig from a PersistableBundle.
      *
