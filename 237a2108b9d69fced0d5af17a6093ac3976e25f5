@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84b7a992_16a76cf1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2021-06-14T15:00:45Z",
+      "side": 1,
+      "message": "+1 on the change in the manifest, it\u0027s just part of the API.",
+      "revId": "237a2108b9d69fced0d5af17a6093ac3976e25f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
