@@ -188,6 +188,11 @@ public final class VcnGatewayConnectionConfig {
         validate();
     }
 
+    @Override
+    public String toString() {
+        return String.format("GatewayConnectionConfig={ name=%s exposedCaps=%s }", mGatewayConnectionName, mExposedCapabilities.toString());
+    }
+
     /** @hide */
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     public VcnGatewayConnectionConfig(@NonNull PersistableBundle in) {

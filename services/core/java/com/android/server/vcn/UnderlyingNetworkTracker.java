@@ -281,6 +281,8 @@ public class UnderlyingNetworkTracker {
      */
     private NetworkRequest getRouteSelectionRequest() {
         if (mVcnContext.isInTestMode()) {
+            log("UnderlyingNetworkTracker: in test mode so requesting TestNetwork w/ subIds="
+                    + mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup));
             return getTestNetworkRequest(mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup));
         }
 
@@ -426,7 +428,12 @@ public class UnderlyingNetworkTracker {
         }
 
         mCurrentRecord = candidate;
+        log("Underlying Network changed: " + mCurrentRecord);
         mCb.onSelectedUnderlyingNetworkChanged(mCurrentRecord);
+    }
+
+    private void log(String msg) {
+        android.util.Log.e("CJK", msg);
     }
 
     private static boolean isOpportunistic(
@@ -486,12 +493,14 @@ public class UnderlyingNetworkTracker {
 
         @Override
         public void onAvailable(@NonNull Network network) {
+            log("UnderlyingNetworkListener: notified that Network=" + network + " available");
             mUnderlyingNetworkRecordBuilders.put(
                     network, new UnderlyingNetworkRecord.Builder(network));
         }
 
         @Override
         public void onLost(@NonNull Network network) {
+            log("UnderlyingNetworkListener: notified that Network=" + network + " lost");
             mUnderlyingNetworkRecordBuilders.remove(network);
 
             reevaluateNetworks();
@@ -599,6 +608,11 @@ public class UnderlyingNetworkTracker {
         @Override
         public int hashCode() {
             return Objects.hash(network, networkCapabilities, linkProperties, isBlocked);
+        }
+
+        @Override
+        public String toString() {
+            return String.format("UnderlyingNetworkRecord: network=%s caps=%s", network, networkCapabilities);
         }
 
         /**

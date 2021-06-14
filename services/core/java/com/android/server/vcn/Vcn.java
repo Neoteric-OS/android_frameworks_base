@@ -44,7 +44,7 @@ import android.os.ParcelUuid;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.ArraySet;
-import android.util.Slog;
+import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
@@ -222,7 +222,10 @@ public class Vcn extends Handler {
         mIsMobileDataEnabled = getMobileDataStatus();
 
         // Register to receive cached and future NetworkRequests
+        Log.e(TAG, "VCN registering new NetworkRequest listener");
         mVcnContext.getVcnNetworkProvider().registerListener(mRequestListener);
+
+        logc("Created VCN with configs=" + config);
     }
 
     /** Asynchronously updates the configuration and triggers a re-evaluation of Networks */
@@ -279,6 +282,8 @@ public class Vcn extends Handler {
 
     @Override
     public void handleMessage(@NonNull Message msg) {
+        logc("VCN handling msg.what=" + msg.what);
+
         if (mCurrentStatus != VCN_STATUS_CODE_ACTIVE
                 && mCurrentStatus != VCN_STATUS_CODE_SAFE_MODE) {
             return;
@@ -375,6 +380,7 @@ public class Vcn extends Handler {
     }
 
     private void handleNetworkRequested(@NonNull NetworkRequest request) {
+        logc("Vcn handleNetworkRequested: received req=" + request);
         logVdbg("Received request " + request);
 
         // If preexisting VcnGatewayConnection(s) satisfy request, return
@@ -394,6 +400,7 @@ public class Vcn extends Handler {
 
                 if (getExposedCapabilitiesForMobileDataState(gatewayConnectionConfig).isEmpty()) {
                     // Skip; this network does not provide any services if mobile data is disabled.
+                    logc("Vcn handleNetworkRequested: skipping gatewayConfig=" + gatewayConnectionConfig);
                     continue;
                 }
 
@@ -424,6 +431,10 @@ public class Vcn extends Handler {
         logVdbg("Request could not be fulfilled by VCN: " + request);
     }
 
+    private void logc(String msg) {
+        android.util.Log.e("CJK", msg);
+    }
+
     private Set<Integer> getExposedCapabilitiesForMobileDataState(
             VcnGatewayConnectionConfig gatewayConnectionConfig) {
         if (mIsMobileDataEnabled) {
@@ -450,6 +461,8 @@ public class Vcn extends Handler {
     private void handleSubscriptionsChanged(@NonNull TelephonySubscriptionSnapshot snapshot) {
         mLastSnapshot = snapshot;
 
+        logc("handleSubscriptionsChanged: snapshot=" + snapshot);
+
         for (VcnGatewayConnection gatewayConnection : mVcnGatewayConnections.values()) {
             gatewayConnection.updateSubscriptionSnapshot(mLastSnapshot);
         }
@@ -462,6 +475,7 @@ public class Vcn extends Handler {
     private void handleMobileDataToggled() {
         final boolean oldMobileDataEnabledStatus = mIsMobileDataEnabled;
         mIsMobileDataEnabled = getMobileDataStatus();
+        logDbg("Mobile data state changing from " + oldMobileDataEnabledStatus + " to " + mIsMobileDataEnabled);
 
         if (oldMobileDataEnabledStatus != mIsMobileDataEnabled) {
             // Teardown any GatewayConnections that advertise INTERNET or DUN. If they provide other
@@ -496,6 +510,7 @@ public class Vcn extends Handler {
         final TelephonyManager genericTelMan =
                 mVcnContext.getContext().getSystemService(TelephonyManager.class);
 
+        logDbg("Getting mobile data state: " + mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup));
         for (int subId : mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup)) {
             if (genericTelMan.createForSubscriptionId(subId).isDataEnabled()) {
                 return true;
@@ -523,38 +538,38 @@ public class Vcn extends Handler {
 
     private void logVdbg(String msg) {
         if (VDBG) {
-            Slog.v(TAG, getLogPrefix() + msg);
+            Log.e(TAG, getLogPrefix() + msg);
             LOCAL_LOG.log(getLogPrefix() + "VDBG: " + msg);
         }
     }
 
     private void logDbg(String msg) {
-        Slog.d(TAG, getLogPrefix() + msg);
+        Log.e(TAG, getLogPrefix() + msg);
         LOCAL_LOG.log(getLogPrefix() + "DBG: " + msg);
     }
 
     private void logDbg(String msg, Throwable tr) {
-        Slog.d(TAG, getLogPrefix() + msg, tr);
+        Log.e(TAG, getLogPrefix() + msg, tr);
         LOCAL_LOG.log(getLogPrefix() + "DBG: " + msg + tr);
     }
 
     private void logErr(String msg) {
-        Slog.e(TAG, getLogPrefix() + msg);
+        Log.e(TAG, getLogPrefix() + msg);
         LOCAL_LOG.log(getLogPrefix() + "ERR: " + msg);
     }
 
     private void logErr(String msg, Throwable tr) {
-        Slog.e(TAG, getLogPrefix() + msg, tr);
+        Log.e(TAG, getLogPrefix() + msg, tr);
         LOCAL_LOG.log(getLogPrefix() + "ERR: " + msg + tr);
     }
 
     private void logWtf(String msg) {
-        Slog.wtf(TAG, getLogPrefix() + msg);
+        Log.wtf(TAG, getLogPrefix() + msg);
         LOCAL_LOG.log(getLogPrefix() + "WTF: " + msg);
     }
 
     private void logWtf(String msg, Throwable tr) {
-        Slog.wtf(TAG, getLogPrefix() + msg, tr);
+        Log.wtf(TAG, getLogPrefix() + msg, tr);
         LOCAL_LOG.log(getLogPrefix() + "WTF: " + msg + tr);
     }
 

@@ -68,7 +68,7 @@ import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
 import android.util.LocalLog;
 import android.util.Log;
-import android.util.Slog;
+import android.util.Log;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
@@ -158,7 +158,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     // Public for use in all other VCN classes
     @NonNull public static final LocalLog LOCAL_LOG = new LocalLog(LOCAL_LOG_LINE_COUNT);
 
-    public static final boolean VDBG = false; // STOPSHIP: if true
+    public static final boolean VDBG = true; // STOPSHIP: if true
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     static final String VCN_CONFIG_FILE = "/data/system/vcn/configs.xml";
@@ -474,6 +474,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                                     entry.getKey(), config.getProvisioningPackageName())) {
                         final ParcelUuid uuidToTeardown = entry.getKey();
                         final Vcn instanceToTeardown = entry.getValue();
+                        logDbg("onNewSnapshot: initiating teardown of subGrp=" + uuidToTeardown);
+                        logDbg("onNewSnapshot: pkgName=" + config.getProvisioningPackageName());
 
                         mHandler.postDelayed(() -> {
                             synchronized (mLock) {
@@ -493,6 +495,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                         }, instanceToTeardown, CARRIER_PRIVILEGES_LOST_TEARDOWN_DELAY_MS);
                     } else {
                         // If this VCN's status has not changed, update it with the new snapshot
+                        logDbg("onNewSnapshot: updating snapshot for subGrp=" + entry.getKey());
+
                         entry.getValue().updateSubscriptionSnapshot(mLastSnapshot);
                     }
                 }
@@ -558,17 +562,22 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         //                    VCN.
 
         final VcnCallbackImpl vcnCallback = new VcnCallbackImpl(subscriptionGroup);
+        logDbg("created VcnCallback for subGrp: " + subscriptionGroup);
 
         final VcnContext vcnContext =
                 mDeps.newVcnContext(
                         mContext, mLooper, mNetworkProvider, config.isTestModeProfile());
+        logDbg("created VcnContext for subGrp: " + subscriptionGroup);
         final Vcn newInstance =
                 mDeps.newVcn(vcnContext, subscriptionGroup, config, mLastSnapshot, vcnCallback);
+        logDbg("created VCN instance for subGrp: " + subscriptionGroup);
         mVcns.put(subscriptionGroup, newInstance);
 
         // Now that a new VCN has started, notify all registered listeners to refresh their
         // UnderlyingNetworkPolicy.
         notifyAllPolicyListenersLocked();
+
+        logDbg("finished notifying policy listeners for new VCN on subGrp: " + subscriptionGroup);
 
         // TODO(b/181789060): invoke asynchronously after Vcn notifies through VcnCallback
         notifyAllPermissionedStatusCallbacksLocked(subscriptionGroup, VCN_STATUS_CODE_ACTIVE);
@@ -604,6 +613,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             throw new IllegalArgumentException("Mismatched caller and VcnConfig creator");
         }
         logDbg("VCN config updated for subGrp: " + subscriptionGroup);
+
+        android.util.Log.e("CJK", "setVcnConfig: config has test mode? " + config.isTestModeProfile());
 
         mContext.getSystemService(AppOpsManager.class)
                 .checkPackage(mDeps.getBinderCallingUid(), config.getProvisioningPackageName());
@@ -1010,38 +1021,38 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
     private void logVdbg(String msg) {
         if (VDBG) {
-            Slog.v(TAG, msg);
+            Log.e(TAG, msg);
             LOCAL_LOG.log(TAG + " VDBG: " + msg);
         }
     }
 
     private void logDbg(String msg) {
-        Slog.d(TAG, msg);
+        Log.e(TAG, msg);
         LOCAL_LOG.log(TAG + " DBG: " + msg);
     }
 
     private void logDbg(String msg, Throwable tr) {
-        Slog.d(TAG, msg, tr);
+        Log.e(TAG, msg, tr);
         LOCAL_LOG.log(TAG + " DBG: " + msg + tr);
     }
 
     private void logErr(String msg) {
-        Slog.e(TAG, msg);
+        Log.e(TAG, msg);
         LOCAL_LOG.log(TAG + " ERR: " + msg);
     }
 
     private void logErr(String msg, Throwable tr) {
-        Slog.e(TAG, msg, tr);
+        Log.e(TAG, msg, tr);
         LOCAL_LOG.log(TAG + " ERR: " + msg + tr);
     }
 
     private void logWtf(String msg) {
-        Slog.wtf(TAG, msg);
+        Log.wtf(TAG, msg);
         LOCAL_LOG.log(TAG + " WTF: " + msg);
     }
 
     private void logWtf(String msg, Throwable tr) {
-        Slog.wtf(TAG, msg, tr);
+        Log.wtf(TAG, msg, tr);
         LOCAL_LOG.log(TAG + " WTF: " + msg + tr);
     }
 
