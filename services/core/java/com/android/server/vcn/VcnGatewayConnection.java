@@ -2139,18 +2139,18 @@ public class VcnGatewayConnection extends StateMachine {
 
     private void logVdbg(String msg) {
         if (VDBG) {
-            Slog.v(TAG, getLogPrefix() + msg);
+            Slog.e(TAG, getLogPrefix() + msg);
             LOCAL_LOG.log(getLogPrefix() + "VDBG: " + msg);
         }
     }
 
     private void logDbg(String msg) {
-        Slog.d(TAG, getLogPrefix() + msg);
+        Slog.e(TAG, getLogPrefix() + msg);
         LOCAL_LOG.log(getLogPrefix() + "DBG: " + msg);
     }
 
     private void logDbg(String msg, Throwable tr) {
-        Slog.d(TAG, getLogPrefix() + msg, tr);
+        Slog.e(TAG, getLogPrefix() + msg, tr);
         LOCAL_LOG.log(getLogPrefix() + "DBG: " + msg + tr);
     }
 

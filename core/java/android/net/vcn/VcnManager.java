@@ -158,6 +158,8 @@ public class VcnManager {
         requireNonNull(subscriptionGroup, "subscriptionGroup was null");
         requireNonNull(config, "config was null");
 
+        android.util.Log.e(TAG, "setVcnConfig: using config with test mode? " + config.isTestModeProfile());
+
         try {
             mService.setVcnConfig(subscriptionGroup, config, mContext.getOpPackageName());
         } catch (ServiceSpecificException e) {
