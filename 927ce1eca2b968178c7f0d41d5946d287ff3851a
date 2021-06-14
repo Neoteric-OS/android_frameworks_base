@@ -105,6 +105,30 @@
       },
       "revId": "927ce1eca2b968178c7f0d41d5946d287ff3851a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab3886f8_94945534",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-06-14T14:32:30Z",
+      "side": 1,
+      "message": "resolved.",
+      "parentUuid": "51a37aa6_c0e5602e",
+      "range": {
+        "startLine": 1041,
+        "startChar": 44,
+        "endLine": 1042,
+        "endChar": 7
+      },
+      "revId": "927ce1eca2b968178c7f0d41d5946d287ff3851a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
