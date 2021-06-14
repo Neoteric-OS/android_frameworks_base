@@ -34,6 +34,29 @@
       "parentUuid": "41a230f6_76b37d99",
       "revId": "927ce1eca2b968178c7f0d41d5946d287ff3851a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc957388_0eff07db",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-06-14T09:12:52Z",
+      "side": 1,
+      "message": "Things would still have been freed for some files. Why not returning that amount still?",
+      "range": {
+        "startLine": 1041,
+        "startChar": 44,
+        "endLine": 1042,
+        "endChar": 7
+      },
+      "revId": "927ce1eca2b968178c7f0d41d5946d287ff3851a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
