@@ -24,7 +24,7 @@ import android.net.NetworkProvider;
 import android.net.NetworkRequest;
 import android.os.Looper;
 import android.util.ArraySet;
-import android.util.Slog;
+import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
@@ -63,6 +63,7 @@ public class VcnNetworkProvider extends NetworkProvider {
      */
     @VisibleForTesting(visibility = Visibility.PACKAGE)
     public void registerListener(@NonNull NetworkRequestListener listener) {
+        Log.e(TAG, "registering new NetworkRequest listener. Curr Reqs: " + mRequests);
         mListeners.add(listener);
 
         // Send listener all cached requests
@@ -72,6 +73,7 @@ public class VcnNetworkProvider extends NetworkProvider {
     /** Unregisters the specified listener from receiving future NetworkRequests. */
     @VisibleForTesting(visibility = Visibility.PACKAGE)
     public void unregisterListener(@NonNull NetworkRequestListener listener) {
+        Log.e(TAG, "unregistering new NetworkRequest listener");
         mListeners.remove(listener);
     }
 
@@ -91,7 +93,7 @@ public class VcnNetworkProvider extends NetworkProvider {
     @Override
     public void onNetworkRequested(@NonNull NetworkRequest request, int score, int providerId) {
         if (VDBG) {
-            Slog.v(TAG, "Network requested: Request = " + request);
+            Log.e(TAG, "Network requested: Request = " + request);
         }
 
         mRequests.add(request);
@@ -106,7 +108,7 @@ public class VcnNetworkProvider extends NetworkProvider {
     @Override
     public void onNetworkRequestWithdrawn(@NonNull NetworkRequest request) {
         if (VDBG) {
-            Slog.v(TAG, "Network request withdrawn: Request = " + request);
+            Log.e(TAG, "Network request withdrawn: Request = " + request);
         }
 
         mRequests.remove(request);
