@@ -57,6 +57,30 @@
       },
       "revId": "927ce1eca2b968178c7f0d41d5946d287ff3851a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad06d8d9_a967acc4",
+        "filename": "services/core/java/com/android/server/pm/dex/DexManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-06-14T14:27:51Z",
+      "side": 1,
+      "message": "We only fail for I/O errors which should be very rare and I think it\u0027s more important to propagate errors rather than returning a partial state. \n\nI view this similar to deleting a directory: either you succeed all, or you return error even if you deleted only some files.",
+      "parentUuid": "dc957388_0eff07db",
+      "range": {
+        "startLine": 1041,
+        "startChar": 44,
+        "endLine": 1042,
+        "endChar": 7
+      },
+      "revId": "927ce1eca2b968178c7f0d41d5946d287ff3851a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
