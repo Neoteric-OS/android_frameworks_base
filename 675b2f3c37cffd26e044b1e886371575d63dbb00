@@ -51,6 +51,24 @@
       "message": "I have now submitted a similar but different solution internally (ag/I0f60785a1e67945f42d8332ca4d09d06145a3347).\nThere is a merge-conflict posting it to AOSP, so if you don\u0027t need it right away, I\u0027d prefer not exert the effort of cherry-picking it to AOSP directly; you\u0027d see it when we next release the internal version publicly.",
       "revId": "675b2f3c37cffd26e044b1e886371575d63dbb00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d2a789c_dfe24e4c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2021-06-15T08:55:14Z",
+      "side": 1,
+      "message": "bookatz@\n\nThanks Adam.  No need to cherry pick this one to AOSP.  We have a patch the works already for R and will take your patch in S.\n\nThanks everyone for the review.",
+      "parentUuid": "2469c450_94b5e689",
+      "revId": "675b2f3c37cffd26e044b1e886371575d63dbb00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
