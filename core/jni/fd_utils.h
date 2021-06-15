@@ -17,16 +17,15 @@
 #ifndef FRAMEWORKS_BASE_CORE_JNI_FD_UTILS_H_
 #define FRAMEWORKS_BASE_CORE_JNI_FD_UTILS_H_
 
-#include <set>
-#include <string>
-#include <unordered_map>
-#include <vector>
-
+#include <android-base/macros.h>
 #include <dirent.h>
 #include <inttypes.h>
 #include <sys/stat.h>
 
-#include <android-base/macros.h>
+#include <set>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 class FileDescriptorInfo;
 
@@ -72,31 +71,30 @@ private:
 // A FileDescriptorTable is a collection of FileDescriptorInfo objects
 // keyed by their FDs.
 class FileDescriptorTable {
- public:
-  // Creates a new FileDescriptorTable. This function scans
-  // /proc/self/fd for the list of open file descriptors and collects
-  // information about them. Returns NULL if an error occurs.
-  static FileDescriptorTable* Create(const std::vector<int>& fds_to_ignore,
-                                     fail_fn_t fail_fn);
+public:
+    // Creates a new FileDescriptorTable. This function scans
+    // /proc/self/fd for the list of open file descriptors and collects
+    // information about them. Returns NULL if an error occurs.
+    static FileDescriptorTable* Create(const std::vector<int>& fds_to_ignore, fail_fn_t fail_fn);
 
-  void Restat(const std::vector<int>& fds_to_ignore, fail_fn_t fail_fn);
+    void Restat(const std::vector<int>& fds_to_ignore, fail_fn_t fail_fn);
 
-  // Reopens all file descriptors that are contained in the table. Returns true
-  // if all descriptors were successfully re-opened or detached, and false if an
-  // error occurred.
-  void ReopenOrDetach(fail_fn_t fail_fn);
+    // Reopens all file descriptors that are contained in the table. Returns true
+    // if all descriptors were successfully re-opened or detached, and false if an
+    // error occurred.
+    void ReopenOrDetach(fail_fn_t fail_fn);
 
- private:
-  explicit FileDescriptorTable(const std::unordered_map<int, FileDescriptorInfo*>& map);
+private:
+    explicit FileDescriptorTable(const std::unordered_map<int, FileDescriptorInfo*>& map);
 
-  void RestatInternal(std::set<int>& open_fds, fail_fn_t fail_fn);
+    void RestatInternal(std::set<int>& open_fds, fail_fn_t fail_fn);
 
-  static int ParseFd(dirent* e, int dir_fd);
+    static int ParseFd(dirent* e, int dir_fd);
 
-  // Invariant: All values in this unordered_map are non-NULL.
-  std::unordered_map<int, FileDescriptorInfo*> open_fd_map_;
+    // Invariant: All values in this unordered_map are non-NULL.
+    std::unordered_map<int, FileDescriptorInfo*> open_fd_map_;
 
-  DISALLOW_COPY_AND_ASSIGN(FileDescriptorTable);
+    DISALLOW_COPY_AND_ASSIGN(FileDescriptorTable);
 };
 
-#endif  // FRAMEWORKS_BASE_CORE_JNI_FD_UTILS_H_
+#endif // FRAMEWORKS_BASE_CORE_JNI_FD_UTILS_H_
