@@ -29,6 +29,7 @@
 #include <unistd.h>
 
 #include <algorithm>
+#include <string>
 
 // Static allowlist of open paths that the zygote is allowed to keep open.
 static const char* kPathAllowlist[] = {
@@ -569,18 +570,8 @@ void FileDescriptorTable::RestatInternal(std::set<int>& open_fds, fail_fn_t fail
 
     if (open_fds.size() > 0) {
         // The zygote has opened new file descriptors since our last inspection.
-        // We warn about this condition and add them to our table.
-        //
-        // TODO(narayan): This will be an error in a future android release.
-        // error = true;
-        // ALOGW("Zygote opened %zd new file descriptor(s).", open_fds.size());
-
-        // TODO(narayan): This code will be removed in a future android release.
-        std::set<int>::const_iterator it;
-        for (it = open_fds.begin(); it != open_fds.end(); ++it) {
-            const int fd = (*it);
-            open_fd_map_[fd] = FileDescriptorInfo::CreateFromFd(fd, fail_fn);
-        }
+        fail_fn("Unrecognized file descriptor(s) seen before fork event.  Total new FDs: " +
+                std::to_string(open_fds.size()));
     }
 }
 
