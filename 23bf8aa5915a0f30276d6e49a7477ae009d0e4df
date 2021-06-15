@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9270bd1_29d67bf3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2021-06-15T09:19:29Z",
+      "side": 1,
+      "message": "Bypassing presubmit as all tests are passing except for com.android.tests.apex.ApexRollbackTests#testReasonForRevertIsLoggedDuringBootloop, which is b/190710217.",
+      "revId": "23bf8aa5915a0f30276d6e49a7477ae009d0e4df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
