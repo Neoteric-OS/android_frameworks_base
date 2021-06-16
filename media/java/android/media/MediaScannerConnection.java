@@ -16,6 +16,7 @@
 
 package android.media;
 
+import android.annotation.NonNull;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.ComponentName;
 import android.content.ContentProviderClient;
@@ -149,7 +150,7 @@ public class MediaScannerConnection implements ServiceConnection {
      * @param mimeType  an optional mimeType for the file.
      * If mimeType is null, then the mimeType will be inferred from the file extension.
      */
-     public void scanFile(String path, String mimeType) {
+     public void scanFile(@NonNull String path, String mimeType) {
         synchronized (this) {
             if (mProvider == null) {
                 throw new IllegalStateException("not connected to MediaScannerService");
