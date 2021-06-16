@@ -194,7 +194,7 @@ public class AudioService extends IAudioService.Stub
         implements AccessibilityManager.TouchExplorationStateChangeListener,
             AccessibilityManager.AccessibilityServicesStateChangeListener {
 
-    private static final String TAG = "AS.AudioService";
+    private static final String TAG = "AudioService";
 
     private final AudioSystemAdapter mAudioSystem;
     private final SystemServerAdapter mSystemServer;
@@ -206,10 +206,10 @@ public class AudioService extends IAudioService.Stub
     protected static final boolean DEBUG_AP = false;
 
     /** Debug volumes */
-    protected static final boolean DEBUG_VOL = false;
+    protected static final boolean DEBUG_VOL = Log.isLoggable(TAG, Log.DEBUG);
 
     /** debug calls to devices APIs */
-    protected static final boolean DEBUG_DEVICES = false;
+    protected static final boolean DEBUG_DEVICES = Log.isLoggable(TAG, Log.DEBUG);
 
     /** Debug communication route */
     protected static final boolean DEBUG_COMM_RTE = false;
@@ -1487,6 +1487,7 @@ public class AudioService extends IAudioService.Stub
                 synchronized (mHdmiClientLock) {
                     if (mHdmiManager != null && mHdmiPlaybackClient != null) {
                         updateHdmiCecSinkLocked(mHdmiCecSink | false);
+                        mHdmiPlaybackClient.queryDisplayStatus(mHdmiDisplayStatusCallback);
                     }
                 }
             }
@@ -1496,7 +1497,7 @@ public class AudioService extends IAudioService.Stub
             if (isPlatformTelevision()) {
                 synchronized (mHdmiClientLock) {
                     if (mHdmiManager != null) {
-                        updateHdmiCecSinkLocked(mHdmiCecSink | false);
+                        updateHdmiCecSinkLocked(false);
                     }
                 }
             }
@@ -5430,7 +5431,7 @@ public class AudioService extends IAudioService.Stub
                 && mAvrcpAbsVolSupported) {
             return AudioManager.DEVICE_VOLUME_BEHAVIOR_ABSOLUTE;
         }
-        return AudioManager.DEVICE_VOLUME_BEHAVIOR_VARIABLE;
+        return AudioManager.DEVICE_VOLUME_BEHAVIOR_UNSET;
     }
 
     /*package*/ static final int CONNECTION_STATE_DISCONNECTED = 0;
@@ -7622,7 +7623,16 @@ public class AudioService extends IAudioService.Stub
         public void onStatusChange(boolean isCecEnabled, boolean isCecAvailable) {
             synchronized (mHdmiClientLock) {
                 if (mHdmiManager == null) return;
-                updateHdmiCecSinkLocked(isCecEnabled ? isCecAvailable : false);
+                boolean cecEnabled = isCecEnabled == HdmiControlManager.HDMI_CEC_CONTROL_ENABLED;
+                updateHdmiCecSinkLocked(cecEnabled ? isCecAvailable : false);
+                if (cecEnabled && !isCecAvailable) {
+                    // try again if tv is not available to avoid compat issues.
+                    synchronized (mHdmiClientLock) {
+                        if (mHdmiPlaybackClient != null) {
+                            mHdmiPlaybackClient.queryDisplayStatus(mHdmiDisplayStatusCallback);
+                        }
+                    }
+                }
             }
         }
     };
@@ -7633,6 +7643,15 @@ public class AudioService extends IAudioService.Stub
             synchronized (mHdmiClientLock) {
                 if (mHdmiManager == null) return;
                 mHdmiCecVolumeControlEnabled = enabled;
+            }
+        }
+    };
+
+    private class MyDisplayStatusCallback implements HdmiPlaybackClient.DisplayStatusCallback {
+        public void onComplete(int status) {
+            synchronized (mHdmiClientLock) {
+                if (mHdmiManager == null) return;
+                updateHdmiCecSinkLocked(status != HdmiControlManager.POWER_STATUS_UNKNOWN);
             }
         }
     };
@@ -7668,6 +7687,8 @@ public class AudioService extends IAudioService.Stub
 
     private MyHdmiCecVolumeControlFeatureListener mMyHdmiCecVolumeControlFeatureListener =
             new MyHdmiCecVolumeControlFeatureListener();
+
+    private MyDisplayStatusCallback mHdmiDisplayStatusCallback = new MyDisplayStatusCallback();
 
     @Override
     public int setHdmiSystemAudioSupported(boolean on) {
