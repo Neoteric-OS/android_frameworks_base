@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4505ff84_c0c9b6b9",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2021-06-16T17:07:09Z",
+      "side": 1,
+      "message": "btw. i don\u0027t think this is valid javadoc. i think it should be \"\u0026gt\u003d\" or {@code \u003c\u003d}",
+      "range": {
+        "startLine": 82,
+        "startChar": 52,
+        "endLine": 82,
+        "endChar": 54
+      },
+      "revId": "98253dfa985bc57b6696021a46fda6220cb74983",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
