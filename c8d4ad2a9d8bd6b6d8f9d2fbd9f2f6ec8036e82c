@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25c11c6e_1463ce26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2021-06-16T15:28:11Z",
+      "side": 1,
+      "message": "Hi Ethan,\n\nPlease help evaluate if the netlink-client deps could be removed from net-wifi-module. I added net-utils-device-common static lib dependency in the \"netlink-client\" in aosp/1729696, to leverage the Structure stuff, but there was dependency conflict issue listed in the commit message. If netlink-client is not required in the net-wifi-module, probably we can remove it from there.",
+      "revId": "c8d4ad2a9d8bd6b6d8f9d2fbd9f2f6ec8036e82c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
