@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d695a74_30fc8ca3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-06-17T10:08:13Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "4069424984956303719f5e0f7ff39afbfc157527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7af47ebd_9813c6a0",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-06-17T10:08:13Z",
+      "side": 1,
+      "message": "Any reason this can\u0027t just be:\n\n    maybeScheduleStop();\n\n? After all, if there are no clients, there are also no requests.",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 25
+      },
+      "revId": "4069424984956303719f5e0f7ff39afbfc157527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
