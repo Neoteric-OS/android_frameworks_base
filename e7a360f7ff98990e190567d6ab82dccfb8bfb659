@@ -46,6 +46,30 @@
       },
       "revId": "e7a360f7ff98990e190567d6ab82dccfb8bfb659",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a1f1499_bd4c02ea",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-06-17T08:23:17Z",
+      "side": 1,
+      "message": "we should move WakeupMessage (and the other files here) into standalone libraries that are maintained outside frameworks/base. Then framework-ike-util-lib can be assembled by a combination of these standalone libraries, and frameworks/base can use it as well.",
+      "parentUuid": "39f4eaf0_e7a1f74d",
+      "range": {
+        "startLine": 361,
+        "startChar": 64,
+        "endLine": 362,
+        "endChar": 65
+      },
+      "revId": "e7a360f7ff98990e190567d6ab82dccfb8bfb659",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
