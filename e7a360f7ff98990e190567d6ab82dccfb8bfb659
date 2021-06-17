@@ -70,6 +70,30 @@
       },
       "revId": "e7a360f7ff98990e190567d6ab82dccfb8bfb659",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9b9075b_4ecd5ea1",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-06-17T16:11:34Z",
+      "side": 1,
+      "message": "discussed on vc, we\u0027ll submit this for now and follow up with bugs / more comms about what needs doing.",
+      "parentUuid": "7a1f1499_bd4c02ea",
+      "range": {
+        "startLine": 361,
+        "startChar": 64,
+        "endLine": 362,
+        "endChar": 65
+      },
+      "revId": "e7a360f7ff98990e190567d6ab82dccfb8bfb659",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
