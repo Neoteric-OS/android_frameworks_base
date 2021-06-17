@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4361c114_efb61fa5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-06-17T21:32:53Z",
+      "side": 1,
+      "message": "Will fix new comments in separate patch.",
+      "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c9ace9b3_0f5d90ac",
