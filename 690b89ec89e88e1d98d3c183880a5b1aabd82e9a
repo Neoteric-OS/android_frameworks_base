@@ -35,6 +35,42 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66a1ef6b_28acf19f",
+        "filename": "core/api/current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 9097,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-06-17T22:17:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9ace9b3_0f5d90ac",
+      "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5d1978d_7166df5a",
+        "filename": "core/api/current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 9097,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-06-17T22:17:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9ace9b3_0f5d90ac",
+      "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d28ab8f7_1bd47b3d",
@@ -48,6 +84,24 @@
       "writtenOn": "2021-06-17T20:55:14Z",
       "side": 1,
       "message": "I want us to move away from using getProfileProxy and closeProfileProxy as they defeat having classes that are @hide or @SystemApi.\n\nInstead of getProfileProxy, can we consider using a static method in the BluetoothVolumeControl class to get a proxy object?\n\nInstead of closeProfileProxy, we can have 3P developers directly call close() on the proxy object when they are done with it (that\u0027s what closeProfileProxy does anyways).\n\nLet me know what you think!",
+      "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "069a4574_29fb4be3",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2819,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-06-17T22:17:27Z",
+      "side": 1,
+      "message": "Is there any profile with such getter where I would be able to copy the pattern ?\nI can\u0027t find one.",
+      "parentUuid": "d28ab8f7_1bd47b3d",
       "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -86,6 +140,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0586ff14_3521bf3e",
+        "filename": "core/java/android/bluetooth/BluetoothVolumeControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-06-17T22:17:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4fd7889_86972949",
+      "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "57f731b3_5302ab11",
@@ -103,6 +175,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8714458a_0b77600b",
+        "filename": "core/java/android/bluetooth/BluetoothVolumeControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-06-17T22:17:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57f731b3_5302ab11",
+      "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "418ad772_f005337c",
@@ -116,6 +206,24 @@
       "writtenOn": "2021-06-17T20:55:14Z",
       "side": 1,
       "message": "We should also remove this method",
+      "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "293fbed3_9e63515a",
+        "filename": "core/java/android/bluetooth/BluetoothVolumeControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-06-17T22:17:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "418ad772_f005337c",
       "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
