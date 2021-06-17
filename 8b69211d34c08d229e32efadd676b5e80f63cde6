@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f46fbf8a_a0f1a7d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-06-17T16:51:22Z",
+      "side": 1,
+      "message": "I suggest we create something like ART_PLATFORM_OWNERS in art/ and include that everywhere. wdyt? (similar to ZYGOTE_OWNERS)",
+      "revId": "8b69211d34c08d229e32efadd676b5e80f63cde6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
