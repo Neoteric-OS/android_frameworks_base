@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "beb0555b_9f4fded0",
+        "filename": "core/jni/fd_utils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-06-17T17:40:23Z",
+      "side": 0,
+      "message": "This should be removed.",
+      "revId": "c14325dbdc0d2bdf7a09e955204d7fa4f88a4cef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
