@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9adbe96b_1b8d833b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2021-06-17T09:56:30Z",
+      "side": 1,
+      "message": "Deferring to Jorim / Wale on this one. I think there\u0027s value of keeping the list here small given the pitfalls with changing protos.",
+      "revId": "d74a3afec957101710cf987852ed9f82b62a6352",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
