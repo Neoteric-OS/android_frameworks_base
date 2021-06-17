@@ -22,6 +22,30 @@
       },
       "revId": "98253dfa985bc57b6696021a46fda6220cb74983",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "963bb153_0d1c1b40",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2021-06-17T08:26:21Z",
+      "side": 1,
+      "message": "Oh, good point! Thanks for catching :)\nI\u0027ll update that in a follow-up CL, given that I don\u0027t want to mess up cherrypicks and automerges.",
+      "parentUuid": "4505ff84_c0c9b6b9",
+      "range": {
+        "startLine": 82,
+        "startChar": 52,
+        "endLine": 82,
+        "endChar": 54
+      },
+      "revId": "98253dfa985bc57b6696021a46fda6220cb74983",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
