@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9ace9b3_0f5d90ac",
+        "filename": "core/api/current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 9097,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-06-17T20:55:14Z",
+      "side": 1,
+      "message": "The class is @SystemApi, so the constant corresponding to it should be as well.",
+      "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d28ab8f7_1bd47b3d",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2819,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-06-17T20:55:14Z",
+      "side": 1,
+      "message": "I want us to move away from using getProfileProxy and closeProfileProxy as they defeat having classes that are @hide or @SystemApi.\n\nInstead of getProfileProxy, can we consider using a static method in the BluetoothVolumeControl class to get a proxy object?\n\nInstead of closeProfileProxy, we can have 3P developers directly call close() on the proxy object when they are done with it (that\u0027s what closeProfileProxy does anyways).\n\nLet me know what you think!",
+      "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c40e09bb_e782866f",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2906,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-06-17T20:55:14Z",
+      "side": 1,
+      "message": "Same as above",
+      "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4fd7889_86972949",
+        "filename": "core/java/android/bluetooth/BluetoothVolumeControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-06-17T20:55:14Z",
+      "side": 1,
+      "message": "We should delete this because the method is public.",
+      "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57f731b3_5302ab11",
+        "filename": "core/java/android/bluetooth/BluetoothVolumeControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-06-17T20:55:14Z",
+      "side": 1,
+      "message": "We should remove this as it\u0027s a remnant of an older pattern we used in other profile classes.",
+      "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "418ad772_f005337c",
+        "filename": "core/java/android/bluetooth/BluetoothVolumeControl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-06-17T20:55:14Z",
+      "side": 1,
+      "message": "We should also remove this method",
+      "revId": "690b89ec89e88e1d98d3c183880a5b1aabd82e9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
