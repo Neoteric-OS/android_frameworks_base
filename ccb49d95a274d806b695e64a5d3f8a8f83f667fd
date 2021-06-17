@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb588cc0_50c894f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2021-06-17T22:02:26Z",
+      "side": 1,
+      "message": "Thanks for doing this!",
+      "revId": "ccb49d95a274d806b695e64a5d3f8a8f83f667fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65209bcf_404c37e7",
+        "filename": "apct-tests/perftests/core/apps/reources_manager/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2021-06-17T22:02:26Z",
+      "side": 1,
+      "message": "Use -j to ensure that the file is not stored within the zip file as \"tmp/resources.arsc\" and instead as \"resources.arsc\".",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 17
+      },
+      "revId": "ccb49d95a274d806b695e64a5d3f8a8f83f667fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
