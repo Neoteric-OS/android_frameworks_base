@@ -1,0 +1,5 @@
+set noparent
+
+include /services/core/java/com/android/server/wm/OWNERS
+
+per-file ime*.proto = file:/core/java/android/view/inputmethod/OWNERS
