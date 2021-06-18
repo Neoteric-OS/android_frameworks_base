@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bebb765_cdf84730",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-06-18T06:51:36Z",
+      "side": 1,
+      "message": "Please don\u0027t submit this revert, I\u0027ll fix this on the broken internal branch.",
+      "revId": "8a6a8b61398613052cba86339e0c16533f62025e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
