@@ -91,7 +91,7 @@ java_library_host {
         type: "full",
     },
     errorprone: {
-        javacflags: ["-Xep:MissingOverride:OFF"], // b/72714520
+        enabled: false,
     },
 }
 
@@ -137,7 +137,7 @@ java_library {
     sdk_version: "core_current",
     // Protos have lots of MissingOverride and similar.
     errorprone: {
-        javacflags: ["-XepDisableAllChecks"],
+        enabled: false,
     },
 }
 
