@@ -17,6 +17,7 @@
 package com.android.server.vcn;
 
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.telephony.TelephonyCallback.ActiveDataSubscriptionIdListener;
 
@@ -105,6 +106,9 @@ public class UnderlyingNetworkTracker {
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     static final int PRIORITY_MACRO_CELLULAR = 3;
 
+    /** Base-priority for any test network */
+    private static final int PRIORITY_TEST = 1000;
+
     /** Priority for any other networks (including unvalidated, etc) */
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     static final int PRIORITY_ANY = Integer.MAX_VALUE;
@@ -117,6 +121,7 @@ public class UnderlyingNetworkTracker {
         PRIORITY_TO_STRING_MAP.put(PRIORITY_WIFI_IN_USE, "PRIORITY_WIFI_IN_USE");
         PRIORITY_TO_STRING_MAP.put(PRIORITY_WIFI_PROSPECTIVE, "PRIORITY_WIFI_PROSPECTIVE");
         PRIORITY_TO_STRING_MAP.put(PRIORITY_MACRO_CELLULAR, "PRIORITY_MACRO_CELLULAR");
+        PRIORITY_TO_STRING_MAP.put(PRIORITY_TEST, "PRIORITY_TEST");
         PRIORITY_TO_STRING_MAP.put(PRIORITY_ANY, "PRIORITY_ANY");
     }
 
@@ -660,6 +665,12 @@ public class UnderlyingNetworkTracker {
             if (caps.hasTransport(TRANSPORT_CELLULAR)
                     && !isOpportunistic(snapshot, caps.getSubscriptionIds())) {
                 return PRIORITY_MACRO_CELLULAR;
+            }
+
+            // For test networks, return priority test offset by the Network's netId. This allows
+            // for deterministic testing in a make-before-break approach.
+            if (caps.hasTransport(TRANSPORT_TEST) && currentlySelected != null) {
+                return PRIORITY_TEST + currentlySelected.network.getNetId();
             }
 
             return PRIORITY_ANY;
