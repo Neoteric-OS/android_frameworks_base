@@ -16,6 +16,24 @@
       "message": "Why is this needed?",
       "revId": "6b107a93e1d5a09e12fcf3f0b92e6514f55fc6b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d0b3df7_9f1804ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2021-06-18T09:26:05Z",
+      "side": 1,
+      "message": "http://b/183097033#comment11\n\nTo build other java library depending on @SystemApi(module-lib) in ART/libcore.",
+      "parentUuid": "e0b3ba70_3bad6597",
+      "revId": "6b107a93e1d5a09e12fcf3f0b92e6514f55fc6b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
