@@ -17,6 +17,7 @@
 package com.android.server.connectivity;
 
 import static android.net.ConnectivityManager.NetworkCallback;
+import static android.net.ipsec.ike.IkeSessionParams.IKE_OPTION_MOBIKE;
 import static android.net.ipsec.ike.SaProposal.DH_GROUP_2048_BIT_MODP;
 import static android.net.ipsec.ike.SaProposal.DH_GROUP_3072_BIT_MODP;
 import static android.net.ipsec.ike.SaProposal.DH_GROUP_4096_BIT_MODP;
@@ -44,6 +45,7 @@ import static android.net.ipsec.ike.SaProposal.PSEUDORANDOM_FUNCTION_SHA2_384;
 import static android.net.ipsec.ike.SaProposal.PSEUDORANDOM_FUNCTION_SHA2_512;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.content.Context;
 import android.net.Ikev2VpnProfile;
 import android.net.InetAddresses;
@@ -96,7 +98,7 @@ public class VpnIkev2Utils {
     private static final String TAG = VpnIkev2Utils.class.getSimpleName();
 
     static IkeSessionParams buildIkeSessionParams(
-            @NonNull Context context, @NonNull Ikev2VpnProfile profile, @NonNull Network network) {
+            @NonNull Context context, @NonNull Ikev2VpnProfile profile, @Nullable Network network) {
         final IkeIdentification localId = parseIkeIdentification(profile.getUserIdentity());
         final IkeIdentification remoteId = parseIkeIdentification(profile.getServerAddr());
 
@@ -105,7 +107,9 @@ public class VpnIkev2Utils {
                         .setServerHostname(profile.getServerAddr())
                         .setNetwork(network)
                         .setLocalIdentification(localId)
-                        .setRemoteIdentification(remoteId);
+                        .setRemoteIdentification(remoteId)
+                        .addIkeOption(IKE_OPTION_MOBIKE);
+
         setIkeAuth(profile, ikeOptionsBuilder);
 
         for (final IkeSaProposal ikeProposal : getIkeSaProposals()) {

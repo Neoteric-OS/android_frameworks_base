@@ -2476,8 +2476,8 @@ public class Vpn {
         /**
          * Called when an IKE Child session has been opened, signalling completion of the startup.
          *
-         * <p>This method is only ever called once per IkeSession, and MUST run on the mExecutor
-         * thread in order to ensure consistency of the Ikev2VpnRunner fields.
+         * <p>This method is called once per establishment/network change, and MUST run on the
+         * mExecutor thread in order to ensure consistency of the Ikev2VpnRunner fields.
          */
         public void onChildOpened(
                 @NonNull Network network, @NonNull ChildSessionConfiguration childConfig) {
@@ -2500,17 +2500,18 @@ public class Vpn {
 
                 final Collection<RouteInfo> newRoutes = VpnIkev2Utils.getRoutesFromTrafficSelectors(
                         childConfig.getOutboundTrafficSelectors());
-                for (final LinkAddress address : internalAddresses) {
-                    mTunnelIface.addAddress(address.getAddress(), address.getPrefixLength());
-                }
-                for (InetAddress addr : childConfig.getInternalDnsServers()) {
-                    dnsAddrStrings.add(addr.getHostAddress());
-                }
 
                 final NetworkAgent networkAgent;
                 final LinkProperties lp;
 
                 synchronized (Vpn.this) {
+                    for (final LinkAddress address : internalAddresses) {
+                        mTunnelIface.addAddress(address.getAddress(), address.getPrefixLength());
+                    }
+                    for (InetAddress addr : childConfig.getInternalDnsServers()) {
+                        dnsAddrStrings.add(addr.getHostAddress());
+                    }
+
                     mInterface = interfaceName;
                     mConfig.mtu = maxMtu;
                     mConfig.interfaze = mInterface;
@@ -2599,13 +2600,17 @@ public class Vpn {
                         return; // VPN has been shut down.
                     }
 
-                    // Without MOBIKE, we have no way to seamlessly migrate. Close on old
-                    // (non-default) network, and start the new one.
-                    resetIkeState();
                     mActiveNetwork = network;
 
+                    if (mSession != null) {
+                        // If we already have an active session, update the network and continue
+                        mTunnelIface.setUnderlyingNetwork(mActiveNetwork);
+                        mSession.setNetwork(mActiveNetwork);
+                        return;
+                    }
+
                     final IkeSessionParams ikeSessionParams =
-                            VpnIkev2Utils.buildIkeSessionParams(mContext, mProfile, network);
+                            VpnIkev2Utils.buildIkeSessionParams(mContext, mProfile, mActiveNetwork);
                     final ChildSessionParams childSessionParams =
                             VpnIkev2Utils.buildChildSessionParams(mProfile.getAllowedAlgorithms());
 
@@ -2625,13 +2630,13 @@ public class Vpn {
                             childSessionParams,
                             mExecutor,
                             new VpnIkev2Utils.IkeSessionCallbackImpl(
-                                    TAG, IkeV2VpnRunner.this, network),
+                                    TAG, IkeV2VpnRunner.this, mActiveNetwork),
                             new VpnIkev2Utils.ChildSessionCallbackImpl(
-                                    TAG, IkeV2VpnRunner.this, network));
-                    Log.d(TAG, "Ike Session started for network " + network);
+                                    TAG, IkeV2VpnRunner.this, mActiveNetwork));
+                    Log.d(TAG, "Ike Session started for network " + mActiveNetwork);
                 } catch (Exception e) {
-                    Log.i(TAG, "Setup failed for network " + network + ". Aborting", e);
-                    onSessionLost(network, e);
+                    Log.i(TAG, "Setup failed for network " + mActiveNetwork + ". Aborting", e);
+                    onSessionLost(mActiveNetwork, e);
                 }
             });
         }
