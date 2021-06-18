@@ -2815,9 +2815,6 @@ public final class BluetoothAdapter {
                 return true;
             }
             return false;
-        } else if (profile == BluetoothProfile.VOLUME_CONTROL) {
-            BluetoothVolumeControl vcs = new BluetoothVolumeControl(context, listener, this);
-            return true;
         } else {
             return false;
         }
@@ -2902,11 +2899,6 @@ public final class BluetoothAdapter {
             case BluetoothProfile.HEARING_AID:
                 BluetoothHearingAid hearingAid = (BluetoothHearingAid) proxy;
                 hearingAid.close();
-                break;
-            case BluetoothProfile.VOLUME_CONTROL:
-                BluetoothVolumeControl vcs = (BluetoothVolumeControl) proxy;
-                vcs.close();
-                break;
         }
     }
 
