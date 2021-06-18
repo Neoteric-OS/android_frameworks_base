@@ -34,6 +34,24 @@
       "parentUuid": "e0b3ba70_3bad6597",
       "revId": "6b107a93e1d5a09e12fcf3f0b92e6514f55fc6b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5589b086_d0d7f319",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-06-18T09:29:18Z",
+      "side": 1,
+      "message": "Ok, so it is needed to allow other modules that set `sdk_version: \"module_current\"` to remove an explicit dependency on the core platform API, e.g. https://r.android.com/1738354",
+      "parentUuid": "8d0b3df7_9f1804ec",
+      "revId": "6b107a93e1d5a09e12fcf3f0b92e6514f55fc6b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
