@@ -33,6 +33,24 @@
       "message": "This should be removed.",
       "revId": "ea9d1989e47228d7114bbdd9a9bb935c996c0003",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1220cf0e_4d9dbe97",
+        "filename": "core/jni/fd_utils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1054754
+      },
+      "writtenOn": "2021-06-18T15:10:02Z",
+      "side": 1,
+      "message": "Done. Removed this and all other instances in this file.",
+      "parentUuid": "a0a82d2a_a6bb8469",
+      "revId": "ea9d1989e47228d7114bbdd9a9bb935c996c0003",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

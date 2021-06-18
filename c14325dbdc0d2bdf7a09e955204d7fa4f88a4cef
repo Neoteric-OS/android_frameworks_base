@@ -16,6 +16,24 @@
       "message": "This should be removed.",
       "revId": "c14325dbdc0d2bdf7a09e955204d7fa4f88a4cef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e6e4a16_46036b29",
+        "filename": "core/jni/fd_utils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1054754
+      },
+      "writtenOn": "2021-06-18T15:10:02Z",
+      "side": 0,
+      "message": "This was a static method of FileDescriptorTable, and in this change I converted it to a static function (visibility limited to the file). Still need to use \u0027static\u0027, but we can create an anonymous namespace for it if we want (chrome style strongly prefers that, for some reason that I don\u0027t remember, perhaps mostly for consistency).",
+      "parentUuid": "beb0555b_9f4fded0",
+      "revId": "c14325dbdc0d2bdf7a09e955204d7fa4f88a4cef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
