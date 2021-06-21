@@ -161,6 +161,30 @@
       },
       "revId": "ed10978de1dda9abc85c1736e2ffbc3d995cb03c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdf222d6_d4baec3e",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2562,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-06-21T23:27:46Z",
+      "side": 1,
+      "message": "My impression is that conditional call to fail_fn would be consistent with the style here?\n\nMy personal, though controversial, opinion favors omitting explicit checks for not null when you\u0027re about to dereference something. It adds code for something that a SIGSEGV is almost as good at reporting. I think it\u0027s safe to assume that we will never again have hardware that allows nullptr derefernces to go through undetected. So I would personally just state the assumption in a comment, if that.",
+      "parentUuid": "6637f997_157deb77",
+      "range": {
+        "startLine": 2562,
+        "startChar": 8,
+        "endLine": 2562,
+        "endChar": 15
+      },
+      "revId": "ed10978de1dda9abc85c1736e2ffbc3d995cb03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
