@@ -39,6 +39,30 @@
       },
       "revId": "4069424984956303719f5e0f7ff39afbfc157527",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07dc6ad4_c1800c8c",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-06-21T02:38:57Z",
+      "side": 1,
+      "message": "Yeah, but I would like to avoid the cases that we send the DAEMON_CLEANUP every time when we recieve CMD_CHANNEL_DISCONNECTED.",
+      "parentUuid": "7af47ebd_9813c6a0",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 25
+      },
+      "revId": "4069424984956303719f5e0f7ff39afbfc157527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
