@@ -34,6 +34,24 @@
       "parentUuid": "beb0555b_9f4fded0",
       "revId": "c14325dbdc0d2bdf7a09e955204d7fa4f88a4cef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf65accf_2770c9c5",
+        "filename": "core/jni/fd_utils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-06-21T19:37:26Z",
+      "side": 0,
+      "message": "Sorry, I got over eager in my pattern matching for commented out statics.",
+      "parentUuid": "3e6e4a16_46036b29",
+      "revId": "c14325dbdc0d2bdf7a09e955204d7fa4f88a4cef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
