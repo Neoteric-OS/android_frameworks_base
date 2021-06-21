@@ -20,8 +20,10 @@ import static android.net.ipsec.ike.IkeSessionParams.IKE_OPTION_MOBIKE;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeFalse;
 
 import android.net.NetworkCapabilities;
 import android.net.ipsec.ike.IkeSessionParams;
@@ -70,6 +72,11 @@ public class VcnGatewayConnectionConfigTest {
     public static final String GATEWAY_CONNECTION_NAME_PREFIX = "gatewayConnectionName-";
     private static int sGatewayConnectionConfigCount = 0;
 
+    private static VcnGatewayConnectionConfig buildTestConfig(
+            VcnGatewayConnectionConfig.Builder builder) {
+        return buildTestConfigWithExposedCaps(builder, EXPOSED_CAPS);
+    }
+
     // Public for use in VcnGatewayConnectionTest
     public static VcnGatewayConnectionConfig buildTestConfig() {
         return buildTestConfigWithExposedCaps(EXPOSED_CAPS);
@@ -83,16 +90,20 @@ public class VcnGatewayConnectionConfigTest {
                 TUNNEL_CONNECTION_PARAMS);
     }
 
-    // Public for use in VcnGatewayConnectionTest
-    public static VcnGatewayConnectionConfig buildTestConfigWithExposedCaps(int... exposedCaps) {
-        final VcnGatewayConnectionConfig.Builder builder =
-                newBuilder().setRetryIntervalsMillis(RETRY_INTERVALS_MS).setMaxMtu(MAX_MTU);
+    private static VcnGatewayConnectionConfig buildTestConfigWithExposedCaps(
+            VcnGatewayConnectionConfig.Builder builder, int... exposedCaps) {
+        builder.setRetryIntervalsMillis(RETRY_INTERVALS_MS).setMaxMtu(MAX_MTU);
 
         for (int caps : exposedCaps) {
             builder.addExposedCapability(caps);
         }
 
         return builder.build();
+    }
+
+    // Public for use in VcnGatewayConnectionTest
+    public static VcnGatewayConnectionConfig buildTestConfigWithExposedCaps(int... exposedCaps) {
+        return buildTestConfigWithExposedCaps(newBuilder(), exposedCaps);
     }
 
     @Test
@@ -192,5 +203,26 @@ public class VcnGatewayConnectionConfigTest {
         final VcnGatewayConnectionConfig config = buildTestConfig();
 
         assertEquals(config, new VcnGatewayConnectionConfig(config.toPersistableBundle()));
+    }
+
+    @Test
+    public void testNotEqualIfTunnelConnectParamsAreDifferent() throws Exception {
+        final VcnGatewayConnectionConfig config = buildTestConfig();
+
+        // Build another VcnGatewayConnectionConfig
+        final IkeSessionParams ikeParams =
+                IkeSessionParamsUtilsTest.createBuilderMinimum()
+                        .setAuthPsk("VcnGatewayConnectionConfigTest.psk".getBytes())
+                        .build();
+        final IkeTunnelConnectionParams tunnelParams =
+                TunnelConnectionParamsUtilsTest.buildTestParams(ikeParams);
+
+        final VcnGatewayConnectionConfig.Builder otherBuilder =
+                new VcnGatewayConnectionConfig.Builder(
+                        config.getGatewayConnectionName(), tunnelParams);
+        final VcnGatewayConnectionConfig otherConfig = buildTestConfig(otherBuilder);
+
+        assumeFalse(config.getTunnelConnectionParams().equals(tunnelParams));
+        assertNotEquals(config, otherConfig);
     }
 }
