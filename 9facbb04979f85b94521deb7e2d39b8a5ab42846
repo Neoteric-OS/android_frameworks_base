@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f436389e_99e577ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1376883
+      },
+      "writtenOn": "2021-06-22T20:13:49Z",
+      "side": 1,
+      "message": "a little confused by some of the binder clear/restore identity logic - can you double check and clarify?",
+      "revId": "9facbb04979f85b94521deb7e2d39b8a5ab42846",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b039c0a_20456e44",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8077,
+      "author": {
+        "id": 1376883
+      },
+      "writtenOn": "2021-06-22T20:13:49Z",
+      "side": 1,
+      "message": "just wanted to double check some logic here...\n\nare you clearing the identity here and restoring immediately just to get the token since you\u0027re doing work on the background thread?",
+      "range": {
+        "startLine": 8076,
+        "startChar": 37,
+        "endLine": 8077,
+        "endChar": 55
+      },
+      "revId": "9facbb04979f85b94521deb7e2d39b8a5ab42846",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b98fba3_ef3e9f44",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8084,
+      "author": {
+        "id": 1376883
+      },
+      "writtenOn": "2021-06-22T20:13:49Z",
+      "side": 1,
+      "message": "related to the previous question, the calling identity isn\u0027t cleared here previously so would this call be a no-op or did you miss a clear call?",
+      "range": {
+        "startLine": 8084,
+        "startChar": 16,
+        "endLine": 8084,
+        "endChar": 63
+      },
+      "revId": "9facbb04979f85b94521deb7e2d39b8a5ab42846",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a3366ad_e00cbe24",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8106,
+      "author": {
+        "id": 1376883
+      },
+      "writtenOn": "2021-06-22T20:13:49Z",
+      "side": 1,
+      "message": "I believe this should be a restore call?",
+      "range": {
+        "startLine": 8106,
+        "startChar": 16,
+        "endLine": 8106,
+        "endChar": 46
+      },
+      "revId": "9facbb04979f85b94521deb7e2d39b8a5ab42846",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
