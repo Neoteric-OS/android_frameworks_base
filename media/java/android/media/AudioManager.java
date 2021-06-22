@@ -40,8 +40,8 @@ import android.media.AudioAttributes.AttributeSystemUsage;
 import android.media.audiopolicy.AudioPolicy;
 import android.media.audiopolicy.AudioPolicy.AudioPolicyFocusListener;
 import android.media.audiopolicy.AudioProductStrategy;
+import android.media.audiopolicy.AudioVolumeChangeDispatcher;
 import android.media.audiopolicy.AudioVolumeGroup;
-import android.media.audiopolicy.AudioVolumeGroupChangeHandler;
 import android.media.projection.MediaProjection;
 import android.media.session.MediaController;
 import android.media.session.MediaSession;
@@ -100,8 +100,9 @@ public class AudioManager {
     private static final String TAG = "AudioManager";
     private static final boolean DEBUG = false;
     private static final AudioPortEventHandler sAudioPortEventHandler = new AudioPortEventHandler();
-    private static final AudioVolumeGroupChangeHandler sAudioAudioVolumeGroupChangedHandler =
-            new AudioVolumeGroupChangeHandler();
+
+    private final AudioVolumeChangeDispatcher mAudioVolumeChangeDispatcher =
+            new AudioVolumeChangeDispatcher();
 
     private static WeakReference<Context> sContext;
 
@@ -7156,12 +7157,17 @@ public class AudioManager {
         }
     }
 
+    //====================================================================
+    // Notification of volume group changes
     /**
      * @hide
-     * Callback registered by client to be notified upon volume group change.
+     * Interface for receiving update notifications about volume group on the system.
+     * Extend this abstract class and register it with
+     * {@link AudioManager#registerAudioVolumeCallback(Executor, AudioVolumeCallback)}
+     * to be notified.
      */
     @SystemApi
-    public abstract static class VolumeGroupCallback {
+    public static abstract class VolumeGroupCallback {
         /**
          * Callback method called upon audio volume group change.
          * @param group the group for which the volume has changed
@@ -7169,33 +7175,29 @@ public class AudioManager {
         public void onAudioVolumeGroupChanged(int group, int flags) {}
     }
 
-   /**
-    * @hide
-    * Register an audio volume group change listener.
-    * @param callback the {@link VolumeGroupCallback} to register
-    */
+    /**
+     * @hide
+     * Register an audio volume group change listener.
+     * @param executor {@link Executor} to handle the callbacks
+     * @param callback the callback to receive the audio volume group changes
+     */
     @SystemApi
-    public void registerVolumeGroupCallback(
-            @NonNull Executor executor,
+    public void registerVolumeGroupCallback(@NonNull Executor executor,
             @NonNull VolumeGroupCallback callback) {
-        Preconditions.checkNotNull(executor, "executor must not be null");
-        Preconditions.checkNotNull(callback, "volume group change cb must not be null");
-        sAudioAudioVolumeGroupChangedHandler.init();
-        // TODO: make use of executor
-        sAudioAudioVolumeGroupChangedHandler.registerListener(callback);
+        mAudioVolumeChangeDispatcher.addAudioVolumeListener(executor, callback);
     }
 
-   /**
-    * @hide
-    * Unregister an audio volume group change listener.
-    * @param callback the {@link VolumeGroupCallback} to unregister
-    */
+    /**
+     * @hide
+     * Unregister an audio volume group change listener.
+     * @param callback the {@link VolumeGroupCallback} to unregister
+     */
     @SystemApi
-    public void unregisterVolumeGroupCallback(
-            @NonNull VolumeGroupCallback callback) {
-        Preconditions.checkNotNull(callback, "volume group change cb must not be null");
-        sAudioAudioVolumeGroupChangedHandler.unregisterListener(callback);
+    public void unregisterVolumeGroupCallback(@NonNull VolumeGroupCallback callback) {
+        mAudioVolumeChangeDispatcher.removeAudioVolumeListener(callback);
     }
+
+    //====================================================================
 
     /**
      * Return if an asset contains haptic channels or not.
