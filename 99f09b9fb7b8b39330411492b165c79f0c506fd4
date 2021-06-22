@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71b0a4b4_95e891ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884002
+      },
+      "writtenOn": "2021-06-22T19:35:01Z",
+      "side": 1,
+      "message": "SharedLibraryInfo#isNative() method is missing in this branch.\nIt has to be cp-ed first.\nBut it\u0027s relatively a large change. ag/Iceb038aa86872d23e9faf582ae91b1fdcaf5c64c\n",
+      "revId": "99f09b9fb7b8b39330411492b165c79f0c506fd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
