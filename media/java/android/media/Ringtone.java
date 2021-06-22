@@ -409,8 +409,7 @@ public class Ringtone {
             // (typically because ringer mode is vibrate).
             boolean isHapticOnly = AudioManager.hasHapticChannels(mContext, mUri)
                     && !mAudioAttributes.areHapticChannelsMuted() && mVolume == 0;
-            if (isHapticOnly || mAudioManager.getStreamVolume(
-                    AudioAttributes.toLegacyStreamType(mAudioAttributes)) != 0) {
+            if (isHapticOnly || mAudioManager.getVolumeIndexForAttributes(mAudioAttributes) != 0) {
                 startLocalPlayer();
             }
         } else if (mAllowRemote && (mRemotePlayer != null) && (mUri != null)) {
@@ -504,7 +503,7 @@ public class Ringtone {
     }
 
     private boolean playFallbackRingtone() {
-        if (mAudioManager.getStreamVolume(AudioAttributes.toLegacyStreamType(mAudioAttributes))
+        if (mAudioManager.getVolumeIndexForAttributes(mAudioAttributes)
                 != 0) {
             int ringtoneType = RingtoneManager.getDefaultType(mUri);
             if (ringtoneType == -1 ||
