@@ -23,6 +23,7 @@ import android.media.AudioDeviceAttributes;
 import android.media.AudioMixerAttributes;
 import android.media.AudioSystem;
 import android.media.IDevicesForAttributesCallback;
+import android.media.INativeAudioVolumeGroupCallback;
 import android.media.ISoundDose;
 import android.media.ISoundDoseCallback;
 import android.media.audiopolicy.AudioMix;
@@ -754,6 +755,31 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
 
     public void triggerSystemPropertyUpdate(long handle) {
         AudioSystem.triggerSystemPropertyUpdate(handle);
+    }
+
+    /**
+     * Same as {@link AudioSystem#registerAudioVolumeGroupCallback(INativeAudioVolumeGroupCallback)}
+     * @param callback to register
+     * @return {@link #SUCCESS} if successfully registered.
+     *
+     * @hide
+     */
+    @Nullable
+    public int registerAudioVolumeGroupCallback(INativeAudioVolumeGroupCallback callback) {
+        return AudioSystem.registerAudioVolumeGroupCallback(callback);
+    }
+
+    /**
+     * Same as
+     * {@link AudioSystem#unregisterAudioVolumeGroupCallback(INativeAudioVolumeGroupCallback)}.
+     * @param callback to register
+     * @return {@link #SUCCESS} if successfully registered.
+     *
+     * @hide
+     */
+    @Nullable
+    public int unregisterAudioVolumeGroupCallback(INativeAudioVolumeGroupCallback callback) {
+        return AudioSystem.unregisterAudioVolumeGroupCallback(callback);
     }
 
     /**

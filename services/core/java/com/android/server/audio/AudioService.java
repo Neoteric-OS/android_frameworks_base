@@ -188,6 +188,7 @@ import android.media.audiopolicy.AudioPolicyConfig;
 import android.media.audiopolicy.AudioProductStrategy;
 import android.media.audiopolicy.AudioVolumeGroup;
 import android.media.audiopolicy.IAudioPolicyCallback;
+import android.media.audiopolicy.IAudioVolumeChangeDispatcher;
 import android.media.permission.ClearCallingIdentityContext;
 import android.media.permission.SafeCloseable;
 import android.media.projection.IMediaProjection;
@@ -1280,6 +1281,7 @@ public class AudioService extends IAudioService.Stub
         mUseVolumeGroupAliases = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_handleVolumeAliasesUsingVolumeGroups);
 
+        mAudioVolumeChangeHandler = new AudioVolumeChangeHandler(mAudioSystem);
         // Initialize volume
         // Priority 1 - Android Property
         // Priority 2 - Audio Policy Service
@@ -4275,6 +4277,22 @@ public class AudioService extends IAudioService.Stub
             throw new SecurityException(
                     "Missing MODIFY_AUDIO_ROUTING or QUERY_AUDIO_STATE permissions");
         }
+    }
+
+    //================================
+    // Audio Volume Change Dispatcher
+    //================================
+    private final AudioVolumeChangeHandler mAudioVolumeChangeHandler;
+
+    /** @see AudioManager#registerVolumeGroupCallback(executor, callback) */
+    public void registerAudioVolumeCallback(IAudioVolumeChangeDispatcher callback) {
+        mAudioVolumeChangeHandler.init();
+        mAudioVolumeChangeHandler.registerListener(callback);
+    }
+
+    /** @see AudioManager#unregisterVolumeGroupCallback(callback) */
+    public void unregisterAudioVolumeCallback(IAudioVolumeChangeDispatcher callback) {
+        mAudioVolumeChangeHandler.unregisterListener(callback);
     }
 
     @Override

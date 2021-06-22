@@ -63,14 +63,16 @@ filegroup {
     name: "framework-non-updatable-sources",
     device_common_srcs: [
         // Java/AIDL sources under frameworks/base
+        ":PacProcessor-aidl-sources",
+        ":ProxyHandler-aidl-sources",
         ":framework-annotations",
         ":framework-blobstore-sources",
         ":framework-core-sources",
         ":framework-drm-sources",
         ":framework-graphics-nonupdatable-sources",
+        ":framework-identity-sources",
         ":framework-jobscheduler-sources", // jobscheduler is not a module for R
         ":framework-keystore-sources",
-        ":framework-identity-sources",
         ":framework-mca-effect-sources",
         ":framework-mca-filterfw-sources",
         ":framework-mca-filterpacks-sources",
@@ -85,21 +87,20 @@ filegroup {
         ":framework-telephony-sources",
         ":framework-wifi-annotations",
         ":framework-wifi-non-updatable-sources",
-        ":PacProcessor-aidl-sources",
-        ":ProxyHandler-aidl-sources",
-        ":vcn-utils-platform-sources",
         ":net-utils-framework-common-srcs",
 
         // AIDL from frameworks/base/native/
         ":platform-compat-native-aidl",
 
         // AIDL sources from external directories
+        ":vcn-utils-platform-sources",
         ":android.frameworks.location.altitude-V2-java-source",
         ":android.hardware.biometrics.common-V4-java-source",
+        ":android.hardware.biometrics.face-V4-java-source",
+        ":android.hardware.biometrics.face.virtualhal-java-source",
         ":android.hardware.biometrics.fingerprint-V5-java-source",
         ":android.hardware.biometrics.fingerprint.virtualhal-java-source",
-        ":android.hardware.biometrics.face.virtualhal-java-source",
-        ":android.hardware.biometrics.face-V4-java-source",
+        ":android.hardware.cas-V1-java-source",
         ":android.hardware.gnss-V2-java-source",
         ":android.hardware.graphics.common-V3-java-source",
         ":android.hardware.keymaster-V4-java-source",
@@ -115,9 +116,14 @@ filegroup {
         ":android.security.legacykeystore-java-source",
         ":android.security.maintenance-java-source",
         ":android.security.metrics-java-source",
-        ":android.hardware.cas-V1-java-source",
         ":credstore_aidl",
+        ":deviceproductinfoconstants_aidl",
+
+        // For the generated R.java and Manifest.java
         ":dumpstate_aidl",
+        ":framework-res{.aapt.srcjar}",
+
+        // Java/AIDL sources to be moved out to CrashRecovery module
         ":framework_native_aidl",
         ":gatekeeper_aidl",
         ":gsiservice_aidl",
@@ -137,18 +143,12 @@ filegroup {
         ":resourcemanager_aidl",
         ":storaged_aidl",
         ":vold_aidl",
-        ":deviceproductinfoconstants_aidl",
-
-        // For the generated R.java and Manifest.java
-        ":framework-res{.aapt.srcjar}",
-
-        // Java/AIDL sources to be moved out to CrashRecovery module
         ":framework-crashrecovery-sources",
 
         // etc.
+        ":audio_policy_configuration_V7_0",
         ":framework-javastream-protos",
         ":statslog-framework-java-gen", // FrameworkStatsLog.java
-        ":audio_policy_configuration_V7_0",
     ] + select(release_flag("RELEASE_ATTEST_MODULES"), {
         true: [
             ":android.hardware.security.keymint-V4-java-source",
@@ -215,13 +215,7 @@ java_library {
         "android.hardware.power-java_static",
     ],
     static_libs: [
-        "apex_aidl_interface-java",
-        "packagemanager_aidl-java",
-        "framework-protos",
-        "updatable-driver-protos",
-        "ota_metadata_proto_java",
-        "android.hidl.base-V1.0-java",
-        "android.hidl.manager-V1.2-java",
+        "ImmutabilityAnnotation",
         "android.hardware.cas-V1-java", // AIDL
         "android.hardware.cas-V1.0-java",
         "android.hardware.cas-V1.1-java",
@@ -241,8 +235,8 @@ java_library {
         "android.hardware.radio.network-V3-java",
         "android.hardware.radio.sim-V3-java",
         "android.hardware.radio.voice-V3-java",
-        "android.hardware.thermal-V1.0-java-constants",
         "android.hardware.thermal-V1.0-java",
+        "android.hardware.thermal-V1.0-java-constants",
         "android.hardware.thermal-V1.1-java",
         "android.hardware.thermal-V2.0-java",
         "android.hardware.tv.input-V1.0-java-constants",
@@ -258,13 +252,19 @@ java_library {
         "android.hardware.vibrator-V1.2-java",
         "android.hardware.vibrator-V1.3-java",
         "android.hardware.vibrator-V3-java",
+        "android.hidl.base-V1.0-java",
+        "android.hidl.manager-V1.2-java",
         "android.se.omapi-V1-java",
         "android.system.suspend.control.internal-java",
+        "apex_aidl_interface-java",
         "devicepolicyprotosnano",
-        "ImmutabilityAnnotation",
+        "framework-protos",
+        "ota_metadata_proto_java",
+        "packagemanager_aidl-java",
+        "updatable-driver-protos",
 
-        "com.android.sysprop.localization",
         "PlatformProperties",
+        "com.android.sysprop.localization",
     ],
     sdk_version: "core_platform",
     installable: false,
@@ -282,27 +282,32 @@ java_defaults {
     name: "framework-minus-apex-defaults",
     defaults: [
         "framework-aidl-export-defaults",
-        "latest_android_hardware_soundtrigger3_java_static",
         "framework-minus-apex-aconfig-libraries",
+        "latest_android_hardware_soundtrigger3_java_static",
     ],
     srcs: [
+        ":apex-info-list",
         ":framework-non-updatable-sources",
         "core/java/**/*.logtags",
-        ":apex-info-list",
     ],
     aidl: {
         generate_get_transaction_name: true,
         enforce_permissions: true,
         enforce_permissions_exceptions: [
             // Do not add entries to this list.
+            ":PacProcessor-aidl-sources",
+            ":ProxyHandler-aidl-sources",
+            ":credstore_aidl",
+            ":deviceproductinfoconstants_aidl",
+            ":dumpstate_aidl",
             ":framework-annotations",
             ":framework-blobstore-sources",
             ":framework-core-sources",
             ":framework-drm-sources",
             ":framework-graphics-nonupdatable-sources",
+            ":framework-identity-sources",
             ":framework-jobscheduler-sources",
             ":framework-keystore-sources",
-            ":framework-identity-sources",
             ":framework-mca-effect-sources",
             ":framework-mca-filterfw-sources",
             ":framework-mca-filterpacks-sources",
@@ -317,13 +322,6 @@ java_defaults {
             ":framework-telephony-sources",
             ":framework-wifi-annotations",
             ":framework-wifi-non-updatable-sources",
-            ":vcn-utils-platform-sources",
-            ":PacProcessor-aidl-sources",
-            ":ProxyHandler-aidl-sources",
-            ":net-utils-framework-common-srcs",
-            ":platform-compat-native-aidl",
-            ":credstore_aidl",
-            ":dumpstate_aidl",
             ":framework_native_aidl",
             ":gatekeeper_aidl",
             ":gsiservice_aidl",
@@ -338,10 +336,12 @@ java_defaults {
             ":libcamera_client_framework_aidl",
             ":libupdate_engine_aidl",
             ":logd_aidl",
+            ":net-utils-framework-common-srcs",
+            ":platform-compat-native-aidl",
             ":resourcemanager_aidl",
             ":storaged_aidl",
+            ":vcn-utils-platform-sources",
             ":vold_aidl",
-            ":deviceproductinfoconstants_aidl",
         ],
         local_include_dirs: [
             "media/aidl",
@@ -349,9 +349,6 @@ java_defaults {
         include_dirs: [
             "frameworks/av/aidl",
             "frameworks/native/libs/permission/aidl",
-            "packages/modules/Bluetooth/framework/aidl-export",
-            "packages/modules/Connectivity/framework/aidl-export",
-            "packages/modules/Media/apex/aidl/stable",
             "hardware/interfaces/biometrics/common/aidl",
             "hardware/interfaces/biometrics/fingerprint/aidl",
             "hardware/interfaces/common/aidl",
@@ -359,6 +356,9 @@ java_defaults {
             "hardware/interfaces/graphics/common/aidl",
             "hardware/interfaces/keymaster/aidl",
             "hardware/interfaces/power/aidl",
+            "packages/modules/Bluetooth/framework/aidl-export",
+            "packages/modules/Connectivity/framework/aidl-export",
+            "packages/modules/Media/apex/aidl/stable",
             "system/hardware/interfaces/media/aidl",
         ],
     },
@@ -369,18 +369,18 @@ java_defaults {
     jarjar_rules: ":framework-jarjar-rules",
     javac_shard_size: 150,
     plugins: [
-        "view-inspector-annotation-processor",
-        "staledataclass-annotation-processor",
         "error_prone_android_framework",
+        "staledataclass-annotation-processor",
         "systemfeatures-metadata-processor",
+        "view-inspector-annotation-processor",
     ],
     // Exports needed for staledataclass-annotation-processor, see b/139342589.
     javacflags: [
-        "-J--add-modules=jdk.compiler",
         "-J--add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED",
         "-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED",
         "-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED",
         "-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED",
+        "-J--add-modules=jdk.compiler",
     ],
     required: [
         // TODO(b/120066492): remove default_television.xml when the build system
@@ -388,10 +388,11 @@ java_defaults {
         "default_television.xml",
         // TODO(b/120066492): remove gps_debug and protolog.conf.json when the build
         // system propagates "required" properly.
-        "gps_debug.conf",
         "framework-res",
         // any install dependencies should go into framework-minus-apex-install-dependencies
-        // rather than here to avoid bloating incremental build time
+
+        "gps_debug.conf", // rather than here to avoid bloating incremental build time
+
     ],
     libs: [
         "androidx.annotation_annotation",
@@ -412,25 +413,26 @@ java_defaults {
         "framework-internal-utils",
         // If MimeMap ever becomes its own APEX, then this dependency would need to be removed
         // in favor of an API stubs dependency in java_library "framework" below.
-        "mimemap",
+        "aconfig_device_paths_java",
+        "audiopolicy-aidl-java",
         "av-types-aidl-java",
-        "tv_tuner_resource_manager_aidl_interface-java",
-        "soundtrigger_middleware-aidl-java",
+        "framework-permission-aidl-java",
+        "libaconfig_java_proto_nano",
+        "mimemap",
         "modules-utils-binary-xml",
         "modules-utils-build",
+        "modules-utils-expresslog",
         "modules-utils-fastxmlserializer",
+        "modules-utils-os",
         "modules-utils-preconditions",
         "modules-utils-statemachine",
-        "modules-utils-os",
         "modules-utils-uieventlogger-interface",
-        "framework-permission-aidl-java",
-        "spatializer-aidl-java",
-        "audiopolicy-aidl-java",
-        "sounddose-aidl-java",
-        "modules-utils-expresslog",
         "perfetto_trace_javastream_protos_jarjar",
-        "libaconfig_java_proto_nano",
-        "aconfig_device_paths_java",
+        "sounddose-aidl-java",
+        "soundtrigger_middleware-aidl-java",
+        "spatializer-aidl-java",
+        "tv_tuner_resource_manager_aidl_interface-java",
+        "volumegroupcallback-aidl-java",
     ],
 }
 
@@ -450,8 +452,8 @@ java_defaults {
     name: "framework-minus-apex-with-libs-defaults",
     defaults: ["framework-minus-apex-defaults"],
     libs: [
-        "framework-virtualization.stubs.module_lib",
         "framework-non-updatable-unbundled-impl-libs",
+        "framework-virtualization.stubs.module_lib",
     ],
 }
 
@@ -565,15 +567,15 @@ java_library {
 java_library {
     name: "framework-minus-apex-install-dependencies",
     required: [
-        "framework-minus-apex",
-        "framework-platform-compat-config",
-        "framework-location-compat-config",
-        "services-platform-compat-config",
-        "icu4j-platform-compat-config",
         "TeleService-platform-compat-config",
-        "documents-ui-compat-config",
         "calendar-provider-compat-config",
         "contacts-provider-platform-compat-config",
+        "documents-ui-compat-config",
+        "framework-location-compat-config",
+        "framework-minus-apex",
+        "framework-platform-compat-config",
+        "icu4j-platform-compat-config",
+        "services-platform-compat-config",
     ],
 }
 
@@ -610,8 +612,8 @@ filegroup {
         "core/java/com/android/internal/util/IndentingPrintWriter.java",
         "core/java/com/android/internal/util/MessageUtils.java",
         "core/java/com/android/internal/util/RingBufferIndices.java",
-        "core/java/com/android/internal/util/WakeupMessage.java",
         "core/java/com/android/internal/util/TokenBucket.java",
+        "core/java/com/android/internal/util/WakeupMessage.java",
     ],
 }
 
@@ -623,8 +625,8 @@ java_library {
     sdk_version: "core_platform",
     static_libs: [
         "libphonenumber-platform",
-        "tagsoup",
         "rappor",
+        "tagsoup",
     ],
     dxflags: ["--core-library"],
 }
@@ -647,8 +649,8 @@ java_library {
         "unsupportedappusage",
     ],
     visibility: [
-        "//frameworks/base/wifi",
         "//frameworks/base/services/net",
+        "//frameworks/base/wifi",
         "//packages/modules/Wifi/framework",
     ],
     lint: {
@@ -660,13 +662,13 @@ java_library {
 filegroup {
     name: "android-non-updatable-stub-sources",
     srcs: [
+        "**/package.html",
         ":framework-mime-sources", // mimemap builds separately but has no separate droidstubs.
         ":framework-minus-apex-aconfig-srcjars",
         ":framework-non-updatable-sources",
-        ":opt-telephony-srcs",
         ":opt-net-voip-srcs",
+        ":opt-telephony-srcs",
         "core/java/**/*.logtags",
-        "**/package.html",
     ],
     visibility: ["//frameworks/base/api"],
 }
@@ -684,6 +686,6 @@ java_library {
 build = [
     "AconfigFlags.bp",
     "ProtoLibraries.bp",
-    "TestProtoLibraries.bp",
     "Ravenwood.bp",
+    "TestProtoLibraries.bp",
 ]
