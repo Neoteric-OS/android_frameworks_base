@@ -2702,4 +2702,27 @@ public class AudioSystem
      * @hide
      */
     public static native void triggerSystemPropertyUpdate(long handle);
+
+    /**
+     * Registers the given {@link INativeAudioVolumeGroupCallback} to native audioserver.
+     * @param callback to register
+     * @return {@link #SUCCESS} if successfully registered.
+     *
+     * @hide
+     */
+    @Nullable
+    public static native int registerAudioVolumeGroupCallback(
+            INativeAudioVolumeGroupCallback callback);
+
+    /**
+     * Unegisters the given {@link INativeAudioVolumeGroupCallback} from native audioserver
+     * previously registerd via {@link #registerAudioVolumeGroupCallback}.
+     * @param callback to register
+     * @return {@link #SUCCESS} if successfully registered.
+     *
+     * @hide
+     */
+    @Nullable
+    public static native int unregisterAudioVolumeGroupCallback(
+            INativeAudioVolumeGroupCallback callback);
 }
