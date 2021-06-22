@@ -3301,7 +3301,6 @@ public class AudioService extends IAudioService.Stub
 
     /** @see AudioManager#getVolumeIndexForAttributes(attr) */
     public int getVolumeIndexForAttributes(@NonNull AudioAttributes attr) {
-        enforceModifyAudioRoutingPermission();
         Objects.requireNonNull(attr, "attr must not be null");
         final int volumeGroup = getVolumeGroupIdForAttributes(attr);
         if (sVolumeGroupStates.indexOfKey(volumeGroup) < 0) {
@@ -3313,14 +3312,12 @@ public class AudioService extends IAudioService.Stub
 
     /** @see AudioManager#getMaxVolumeIndexForAttributes(attr) */
     public int getMaxVolumeIndexForAttributes(@NonNull AudioAttributes attr) {
-        enforceModifyAudioRoutingPermission();
         Objects.requireNonNull(attr, "attr must not be null");
         return AudioSystem.getMaxVolumeIndexForAttributes(attr);
     }
 
     /** @see AudioManager#getMinVolumeIndexForAttributes(attr) */
     public int getMinVolumeIndexForAttributes(@NonNull AudioAttributes attr) {
-        enforceModifyAudioRoutingPermission();
         Objects.requireNonNull(attr, "attr must not be null");
         return AudioSystem.getMinVolumeIndexForAttributes(attr);
     }
