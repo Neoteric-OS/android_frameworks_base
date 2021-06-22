@@ -114,6 +114,16 @@ public final class AudioPlaybackConfiguration implements Parcelable {
     // TODO unhide for SystemApi, update getPlayerType()
     public static final int PLAYER_TYPE_EXTERNAL_PROXY = 15;
 
+    /**
+     * @hide
+     * Player backed a hardware source, whose state is visible in the Android audio policy manager.
+     * It is used only if the hardware source is implemented using a SW Bridge, hence, accessible
+     * for volume / mute operations.
+     */
+     @SystemApi
+    public static final int PLAYER_TYPE_HW_SOURCE_SW_BRIDGE = 16;
+
+
     /** @hide */
     @IntDef({
         PLAYER_TYPE_UNKNOWN,
@@ -122,6 +132,7 @@ public final class AudioPlaybackConfiguration implements Parcelable {
         PLAYER_TYPE_JAM_SOUNDPOOL,
         PLAYER_TYPE_SLES_AUDIOPLAYER_BUFFERQUEUE,
         PLAYER_TYPE_SLES_AUDIOPLAYER_URI_FD,
+        PLAYER_TYPE_HW_SOURCE_SW_BRIDGE,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface PlayerType {}
@@ -654,6 +665,7 @@ public final class AudioPlaybackConfiguration implements Parcelable {
                 return "OpenSL ES AudioPlayer (URI/FD)";
             case PLAYER_TYPE_AAUDIO: return "AAudio";
             case PLAYER_TYPE_HW_SOURCE: return "hardware source";
+            case PLAYER_TYPE_HW_SOURCE_SW_BRIDGE: return "hardware source (software bridge)";
             case PLAYER_TYPE_EXTERNAL_PROXY: return "external proxy";
             default:
                 return "unknown player type " + type + " - FIXME";
