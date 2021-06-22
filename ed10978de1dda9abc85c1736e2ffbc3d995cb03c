@@ -105,6 +105,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87deb59e_608a8e2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054754
+      },
+      "writtenOn": "2021-06-22T16:25:14Z",
+      "side": 1,
+      "message": "adding narayan@ for dr-no approval\n\nJustification (copied from the bug): will save 5 megs of Chrome RAM usage (aarch64), ashmem (frequently used - not swappable).",
+      "revId": "ed10978de1dda9abc85c1736e2ffbc3d995cb03c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4976167_d6b577f7",
