@@ -1279,16 +1279,12 @@ public class AudioManager {
     /**
      * Returns the current volume index for a particular {@link AudioAttributes}.
      *
-     * @param attr The {@link AudioAttributes} whose volume index is returned.
-     * @return The current volume index for the stream.
+     * @param attr The {@link AudioAttributes} whose volume index is requested.
+     * @return The current volume index for the given {@link AudioAttributes}..
      * @see #getMaxVolumeIndexForAttributes(AudioAttributes)
      * @see #getMinVolumeIndexForAttributes(AudioAttributes)
-     * @see #setVolumeForAttributes(AudioAttributes, int, int)
-     * @hide
      */
-    @SystemApi
     @IntRange(from = 0)
-    @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
     public int getVolumeIndexForAttributes(@NonNull AudioAttributes attr) {
         Preconditions.checkNotNull(attr, "attr must not be null");
         final IAudioService service = getService();
@@ -1302,14 +1298,11 @@ public class AudioManager {
     /**
      * Returns the maximum volume index for a particular {@link AudioAttributes}.
      *
-     * @param attr The {@link AudioAttributes} whose maximum volume index is returned.
-     * @return The maximum valid volume index for the {@link AudioAttributes}.
+     * @param attr The {@link AudioAttributes} whose maximum volume index is requested.
+     * @return The maximum valid volume index for the given {@link AudioAttributes}.
      * @see #getVolumeIndexForAttributes(AudioAttributes)
-     * @hide
      */
-    @SystemApi
     @IntRange(from = 0)
-    @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
     public int getMaxVolumeIndexForAttributes(@NonNull AudioAttributes attr) {
         Preconditions.checkNotNull(attr, "attr must not be null");
         final IAudioService service = getService();
@@ -1323,14 +1316,11 @@ public class AudioManager {
     /**
      * Returns the minimum volume index for a particular {@link AudioAttributes}.
      *
-     * @param attr The {@link AudioAttributes} whose minimum volume index is returned.
-     * @return The minimum valid volume index for the {@link AudioAttributes}.
+     * @param attr The {@link AudioAttributes} whose minimum volume index is requested.
+     * @return The minimum valid volume index for the given {@link AudioAttributes}.
      * @see #getVolumeIndexForAttributes(AudioAttributes)
-     * @hide
      */
-    @SystemApi
     @IntRange(from = 0)
-    @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
     public int getMinVolumeIndexForAttributes(@NonNull AudioAttributes attr) {
         Preconditions.checkNotNull(attr, "attr must not be null");
         final IAudioService service = getService();
