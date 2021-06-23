@@ -64,10 +64,13 @@ public class LocalBluetoothManager {
             // This will be around as long as this process is
             sInstance = new LocalBluetoothManager(adapter, context, /* handler= */ null,
                     /* userHandle= */ null);
-            if (onInitCallback != null) {
-                onInitCallback.onBluetoothManagerInitialized(context.getApplicationContext(),
-                        sInstance);
-            }
+        }
+
+	    // Need to invoke callback function each time as soon as
+        // anyone calls LocalBluetoothManager.getInstance()
+        if (onInitCallback != null) {
+            onInitCallback.onBluetoothManagerInitialized(context.getApplicationContext(),
+                    sInstance);
         }
 
         return sInstance;
