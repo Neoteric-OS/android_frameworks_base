@@ -127,6 +127,12 @@ public class ZygoteInit {
 
     private static boolean sPreloadComplete;
 
+    /**
+     * Cached classloader to use for the system server. Will only be populated in the system
+     * server process.
+     */
+    private static ClassLoader sCachedSystemServerClassLoader = null;
+
     static void preload(TimingsTraceLog bootTimingsTraceLog) {
         Log.d(TAG, "begin preload");
         bootTimingsTraceLog.traceBegin("BeginPreload");
@@ -543,12 +549,8 @@ public class ZygoteInit {
 
             throw new IllegalStateException("Unexpected return from WrapperInit.execApplication");
         } else {
-            ClassLoader cl = null;
-            if (systemServerClasspath != null) {
-                cl = createPathClassLoader(systemServerClasspath, parsedArgs.mTargetSdkVersion);
-
-                Thread.currentThread().setContextClassLoader(cl);
-            }
+            ClassLoader cl = getOrCreateSystemServerClassLoader();
+            Thread.currentThread().setContextClassLoader(cl);
 
             /*
              * Pass the remaining arguments to SystemServer.
@@ -559,6 +561,23 @@ public class ZygoteInit {
         }
 
         /* should never reach here */
+    }
+
+    /**
+     * Create the classloader for the system server and store it in
+     * {@link sCachedSystemServerClassLoader}. This function may be called through JNI in
+     * system server startup, when the runtime is in a critically low state. Do not do
+     * extended computation etc here.
+     */
+    private static ClassLoader getOrCreateSystemServerClassLoader() {
+        if (sCachedSystemServerClassLoader == null) {
+            final String systemServerClasspath = Os.getenv("SYSTEMSERVERCLASSPATH");
+            if (systemServerClasspath != null) {
+                sCachedSystemServerClassLoader = createPathClassLoader(systemServerClasspath,
+                        VMRuntime.SDK_VERSION_CUR_DEVELOPMENT);
+            }
+        }
+        return sCachedSystemServerClassLoader;
     }
 
     /**
@@ -639,7 +658,7 @@ public class ZygoteInit {
 
     /**
      * Performs dex-opt on the elements of {@code classPath}, if needed. We choose the instruction
-     * set of the current runtime.
+     * set of the current runtime. If something was compiled, return true.
      */
     private static void performSystemServerDexOpt(String classPath) {
         final String[] classPathElements = classPath.split(":");
