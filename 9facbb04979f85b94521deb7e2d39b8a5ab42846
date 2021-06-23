@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "093ffe33_de7386df",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8077,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2021-06-23T02:32:29Z",
+      "side": 1,
+      "message": "Yes.\n\nIt was because I\u0027m not sure why canClearIdentity() was really needed previouly, but to keep the new code logic the same as the old one as much as I can, I need to fake the binder calling uid and pid in the background thread, this should expains your second comment.\n\nAnd when the background work is done, I also have to clear the faked callling uid and pid, this should explains your 3rd comment.\n\nIf you guys could help clarify the canClearIdentity() in previous code is not necessary, I would happily remove all the hacks.\n\nThanks.",
+      "parentUuid": "1b039c0a_20456e44",
+      "range": {
+        "startLine": 8076,
+        "startChar": 37,
+        "endLine": 8077,
+        "endChar": 55
+      },
+      "revId": "9facbb04979f85b94521deb7e2d39b8a5ab42846",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5b98fba3_ef3e9f44",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 1
@@ -66,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5f4560de_7aec17cc",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8084,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2021-06-23T02:32:29Z",
+      "side": 1,
+      "message": "Please see above comment",
+      "parentUuid": "5b98fba3_ef3e9f44",
+      "range": {
+        "startLine": 8084,
+        "startChar": 16,
+        "endLine": 8084,
+        "endChar": 63
+      },
+      "revId": "9facbb04979f85b94521deb7e2d39b8a5ab42846",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6a3366ad_e00cbe24",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 1
@@ -77,6 +125,30 @@
       "writtenOn": "2021-06-22T20:13:49Z",
       "side": 1,
       "message": "I believe this should be a restore call?",
+      "range": {
+        "startLine": 8106,
+        "startChar": 16,
+        "endLine": 8106,
+        "endChar": 46
+      },
+      "revId": "9facbb04979f85b94521deb7e2d39b8a5ab42846",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c4c91da_7288cdcf",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8106,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2021-06-23T02:32:29Z",
+      "side": 1,
+      "message": "Please see above comment",
+      "parentUuid": "6a3366ad_e00cbe24",
       "range": {
         "startLine": 8106,
         "startChar": 16,
