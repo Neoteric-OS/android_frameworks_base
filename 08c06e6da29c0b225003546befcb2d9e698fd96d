@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0a31d9a_30d1f7b4",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-06-24T13:51:43Z",
+      "side": 1,
+      "message": "we could call this CONTEXT_TYPE_COMMUNICATION to match the use case naming in audio framework",
+      "range": {
+        "startLine": 100,
+        "startChar": 28,
+        "endLine": 100,
+        "endChar": 55
+      },
+      "revId": "08c06e6da29c0b225003546befcb2d9e698fd96d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b6687b1_686064fb",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5277,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-06-24T13:51:43Z",
+      "side": 1,
+      "message": "device connection",
+      "range": {
+        "startLine": 5277,
+        "startChar": 31,
+        "endLine": 5277,
+        "endChar": 41
+      },
+      "revId": "08c06e6da29c0b225003546befcb2d9e698fd96d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60c5ff83_c30de3c3",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5282,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-06-24T13:51:43Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 5281,
+        "startChar": 5,
+        "endLine": 5282,
+        "endChar": 58
+      },
+      "revId": "08c06e6da29c0b225003546befcb2d9e698fd96d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30a4f07a_417ceae0",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5302,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-06-24T13:51:43Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 5301,
+        "startChar": 0,
+        "endLine": 5302,
+        "endChar": 58
+      },
+      "revId": "08c06e6da29c0b225003546befcb2d9e698fd96d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad797dbc_37463b9f",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1413,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-06-24T13:51:43Z",
+      "side": 1,
+      "message": "setBluetoothLeAudioOutDeviceConnectionState",
+      "range": {
+        "startLine": 1413,
+        "startChar": 29,
+        "endLine": 1413,
+        "endChar": 60
+      },
+      "revId": "08c06e6da29c0b225003546befcb2d9e698fd96d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d43546db_86f765b4",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-06-24T13:51:43Z",
+      "side": 1,
+      "message": "setBluetoothLeAudioInDeviceConnectionState",
+      "range": {
+        "startLine": 1426,
+        "startChar": 29,
+        "endLine": 1426,
+        "endChar": 60
+      },
+      "revId": "08c06e6da29c0b225003546befcb2d9e698fd96d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "674ecff4_298efe4e",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-06-24T13:51:43Z",
+      "side": 1,
+      "message": "is there a criteria we can read from the BT device to distinguish between DEVICE_OUT_BLE_HEADSET and DEVICE_OUT_BLE_SPEAKER",
+      "range": {
+        "startLine": 457,
+        "startChar": 28,
+        "endLine": 457,
+        "endChar": 50
+      },
+      "revId": "08c06e6da29c0b225003546befcb2d9e698fd96d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b17fa19f_ef00749e",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-06-24T13:51:43Z",
+      "side": 1,
+      "message": "BLE audio devices must be added to BECOMING_NOISY_INTENT_DEVICES_SET",
+      "range": {
+        "startLine": 994,
+        "startChar": 24,
+        "endLine": 994,
+        "endChar": 55
+      },
+      "revId": "08c06e6da29c0b225003546befcb2d9e698fd96d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77385e21_077299e8",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-06-24T13:51:43Z",
+      "side": 1,
+      "message": "not needed for input devices",
+      "range": {
+        "startLine": 1005,
+        "startChar": 1,
+        "endLine": 1008,
+        "endChar": 0
+      },
+      "revId": "08c06e6da29c0b225003546befcb2d9e698fd96d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb89773a_9bc146e1",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5511,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-06-24T13:51:43Z",
+      "side": 1,
+      "message": "this does not work if hearing aid is already connected. only the playback monitor registration must be conditioned by isEmpty\n\nSame for BLE",
+      "range": {
+        "startLine": 5511,
+        "startChar": 0,
+        "endLine": 5511,
+        "endChar": 50
+      },
+      "revId": "08c06e6da29c0b225003546befcb2d9e698fd96d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
