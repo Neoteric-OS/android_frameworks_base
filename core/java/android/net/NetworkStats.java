@@ -24,6 +24,7 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.Process;
 import android.os.SystemClock;
 import android.util.SparseBooleanArray;
 
@@ -1487,8 +1488,23 @@ public final class NetworkStats implements Parcelable {
                 continue;
             }
 
-            if (recycle.uid == tunUid) {
-                // Add up traffic through tunUid's underlying interfaces.
+            if (tunUid == Process.SYSTEM_UID) {
+                // Kernel-based VPN or VCN, traffic sent by apps on the VPN/VCN network
+                //
+                // Since the data is not UID-accounted on underlying networks, just use VPN/VCN
+                // network usage as ground truth.
+                if (tunIface.equals(recycle.iface)) {
+                    tunIfaceTotal.add(recycle);
+                    underlyingIfacesTotal.add(recycle);
+
+                    if (perInterfaceTotal.length > 0) {
+                        // In lieu of stats to show which underlying network was used for in-kernel
+                        // VPNs/VCNs, always "just" add to first interface
+                        perInterfaceTotal[0].add(recycle);
+                    }
+                }
+            } else if (recycle.uid == tunUid) {
+                // VpnService VPN, traffic sent by the VPN app over underlying networks
                 for (int j = 0; j < underlyingIfaces.size(); j++) {
                     if (Objects.equals(underlyingIfaces.get(j), recycle.iface)) {
                         perInterfaceTotal[j].add(recycle);
@@ -1497,7 +1513,7 @@ public final class NetworkStats implements Parcelable {
                     }
                 }
             } else if (tunIface.equals(recycle.iface)) {
-                // Add up all tunIface traffic excluding traffic from the vpn app itself.
+                // VpnService VPN; traffic sent by apps on the VCN network
                 tunIfaceTotal.add(recycle);
             }
         }
@@ -1532,9 +1548,13 @@ public final class NetworkStats implements Parcelable {
                 // Consider only entries that go onto the VPN interface.
                 continue;
             }
-            if (uid[i] == tunUid) {
+
+            if (uid[i] == tunUid && tunUid != Process.SYSTEM_UID) {
                 // Exclude VPN app from the redistribution, as it can choose to create packet
                 // streams by writing to itself.
+                //
+                // However, for platform VPNs, do not exclude the system's usage of the VPN network,
+                // since it is never local-only, and never double counted
                 continue;
             }
             tmpEntry.uid = uid[i];
@@ -1641,6 +1661,10 @@ public final class NetworkStats implements Parcelable {
             int tunUid,
             @NonNull List<String> underlyingIfaces,
             @NonNull Entry[] moved) {
+        if (tunUid == Process.SYSTEM_UID) {
+            return; // No traffic recorded on a per-UID basis for in-kernel VPN/VCNs.
+        }
+
         for (int i = 0; i < underlyingIfaces.size(); i++) {
             moved[i].uid = tunUid;
             // Add debug info
