@@ -39,6 +39,8 @@ import android.os.RemoteException;
 import android.os.ServiceSpecificException;
 import android.util.Log;
 
+import com.android.internal.annotations.GuardedBy;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -94,6 +96,7 @@ class SoundTriggerModule implements IHwBinder.DeathRecipient {
     @NonNull private HalFactory mHalFactory;
     @NonNull private ISoundTriggerHw2 mHalService;
     @NonNull private final SoundTriggerMiddlewareImpl.AudioSessionProvider mAudioSessionProvider;
+    @GuardedBy("this")
     private final Set<Session> mActiveSessions = new HashSet<>();
     private int mNumLoadedModels = 0;
     private SoundTriggerModuleProperties mProperties;
@@ -177,8 +180,10 @@ class SoundTriggerModule implements IHwBinder.DeathRecipient {
         for (Runnable callback : callbacks) {
             callback.run();
         }
-        for (Session session : mActiveSessions) {
-            session.notifyRecognitionAvailability();
+        synchronized (this) {
+            for (Session session : mActiveSessions) {
+                session.notifyRecognitionAvailability();
+            }
         }
     }
 
