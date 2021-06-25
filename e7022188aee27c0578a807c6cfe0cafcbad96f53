@@ -33,6 +33,41 @@
       "message": "This change is already part of S and should be merged into aosp shortly\nrelevant sha: b73471b4ec9e5f338162ffb6e99e589c63b89c46",
       "revId": "e7022188aee27c0578a807c6cfe0cafcbad96f53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "120db0a7_fb7f9ea4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2021-06-25T15:04:11Z",
+      "side": 1,
+      "message": "Abandon because of internal fixed.",
+      "revId": "e7022188aee27c0578a807c6cfe0cafcbad96f53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55ab7d40_601c7428",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2021-06-25T15:04:11Z",
+      "side": 1,
+      "message": "Thanks. I will abandon this CL.\nAnother question about caption bar inset, if the app started with freeform mode, and the caption bar overlaps the app content, and the caption bar inset will be correctly after moving app with dragging caption bar. It is tested on Android 11 emulator with freeform config. Is this problem is fixed internal? If not, I can fire an issue for it. Thanks.",
+      "parentUuid": "dcb3eb7a_6da7e17a",
+      "revId": "e7022188aee27c0578a807c6cfe0cafcbad96f53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
