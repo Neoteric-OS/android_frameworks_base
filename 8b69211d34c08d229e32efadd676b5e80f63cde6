@@ -16,6 +16,24 @@
       "message": "I suggest we create something like ART_PLATFORM_OWNERS in art/ and include that everywhere. wdyt? (similar to ZYGOTE_OWNERS)",
       "revId": "8b69211d34c08d229e32efadd676b5e80f63cde6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8beadae1_ad6fef39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2021-06-25T08:51:57Z",
+      "side": 1,
+      "message": "The tricky bit here might be ART moving to unbundled: we could consider ART_FRAMEWORKS_OWNERS in frameworks/ as an alternative (?). Open to this, but would like to land the topic for now.",
+      "parentUuid": "f46fbf8a_a0f1a7d5",
+      "revId": "8b69211d34c08d229e32efadd676b5e80f63cde6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
