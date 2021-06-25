@@ -346,6 +346,8 @@ public class Editor {
     // The button state as of the last time #onTouchEvent is called.
     private int mLastButtonState;
 
+    private int mLastDownButtonState;
+
     private final EditorTouchState mTouchState = new EditorTouchState();
 
     private Runnable mInsertionActionModeRunnable;
@@ -1616,7 +1618,8 @@ public class Editor {
         final boolean primaryButtonStateChanged =
                 ((mLastButtonState ^ event.getButtonState()) & MotionEvent.BUTTON_PRIMARY) != 0;
         final int action = event.getActionMasked();
-        if ((action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP)
+        if ((mLastDownButtonState & MotionEvent.BUTTON_PRIMARY)
+                && (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP)
                 && !primaryButtonStateChanged) {
             return true;
         }
@@ -1634,6 +1637,9 @@ public class Editor {
     public void onTouchEvent(MotionEvent event) {
         final boolean filterOutEvent = shouldFilterOutTouchEvent(event);
         mLastButtonState = event.getButtonState();
+        if (event.getActionMasked == MotionEvent.ACTION_DOWN) {
+            mLastDownButtonState = event.getButtonState();
+        }
         if (filterOutEvent) {
             if (event.getActionMasked() == MotionEvent.ACTION_UP) {
                 mDiscardNextActionUp = true;
