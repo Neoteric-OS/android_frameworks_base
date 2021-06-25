@@ -6524,6 +6524,7 @@ public class Editor {
                             break;
                         }
 
+                        mStartOffset = mTextView.getOffsetForPosition(mTouchState.getLastDownX, mTouchState.getLastDownY);
                         if (mStartOffset != offset) {
                             // Start character based drag accelerator.
                             stopTextActionMode();
