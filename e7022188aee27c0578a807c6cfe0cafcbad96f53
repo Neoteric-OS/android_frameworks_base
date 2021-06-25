@@ -86,6 +86,41 @@
       "parentUuid": "55ab7d40_601c7428",
       "revId": "e7022188aee27c0578a807c6cfe0cafcbad96f53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4691982_c296c538",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2021-06-25T16:30:32Z",
+      "side": 1,
+      "message": "No problem. I will test it again on master emulator, and fire an issue if it exists too, with detailed steps to reproduce.",
+      "parentUuid": "a7dfb63a_dbac80aa",
+      "revId": "e7022188aee27c0578a807c6cfe0cafcbad96f53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69e0b9fd_113eb724",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2021-06-25T16:30:32Z",
+      "side": 1,
+      "message": "B",
+      "revId": "e7022188aee27c0578a807c6cfe0cafcbad96f53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
