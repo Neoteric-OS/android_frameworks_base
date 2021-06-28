@@ -22,6 +22,30 @@
       },
       "revId": "0520140984752f177cf73cc34b4b5a3f5051f695",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa8a7015_c97dbd46",
+        "filename": "boot/hiddenapi/hiddenapi-max-target-o.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 43680,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-06-28T10:11:20Z",
+      "side": 0,
+      "message": "Where is it? I could not find IStatsManager anywhere. The closest was IStatsManagerService.\n\nThe process I follow is:\n1. Update the bootclasspath_fragment to enable hidden API processing.\n2. Build the out/soong/hiddenapi/hiddenapi-flags.csv. That will generate a list of differences between the flags generated for the bootclasspath_fragment and the flags generated for the whole bootclasspath.\n3. Move the flag entries from frameworks/base/boot/hiddenapi*.\n\nThe ones that are left are unused, i.e. old legacy flags. I am not sure if we keeping them for historical reasons but cleaning them up is a separate task.",
+      "parentUuid": "be334fcd_f54b7da0",
+      "range": {
+        "startLine": 43668,
+        "startChar": 0,
+        "endLine": 43680,
+        "endChar": 67
+      },
+      "revId": "0520140984752f177cf73cc34b4b5a3f5051f695",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
