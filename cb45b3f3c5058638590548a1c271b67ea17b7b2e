@@ -39,6 +39,30 @@
       },
       "revId": "cb45b3f3c5058638590548a1c271b67ea17b7b2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94eda4c4_022a6150",
+        "filename": "services/core/java/com/android/server/media/MediaSessionStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1673919
+      },
+      "writtenOn": "2021-06-28T02:02:27Z",
+      "side": 1,
+      "message": "the comment says: do not search for the alternative media session within the app, I think the \"within the app\" should means \"within the same app associated with the session removed\".",
+      "parentUuid": "07d79b8f_ead1ae1b",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 71
+      },
+      "revId": "cb45b3f3c5058638590548a1c271b67ea17b7b2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
