@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07d79b8f_ead1ae1b",
+        "filename": "services/core/java/com/android/server/media/MediaSessionStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1380121
+      },
+      "writtenOn": "2021-06-28T00:53:01Z",
+      "side": 1,
+      "message": "This change looks opposed to the comment to me. Jaewan, could you provide more context on the comment?",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 71
+      },
+      "revId": "cb45b3f3c5058638590548a1c271b67ea17b7b2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
