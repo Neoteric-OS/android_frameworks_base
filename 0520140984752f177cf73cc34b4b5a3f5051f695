@@ -46,6 +46,30 @@
       },
       "revId": "0520140984752f177cf73cc34b4b5a3f5051f695",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad0b47a3_01c53d5d",
+        "filename": "boot/hiddenapi/hiddenapi-max-target-o.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 43680,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-06-28T10:24:19Z",
+      "side": 0,
+      "message": "Yeah, I think you\u0027re right. I was thinking of IStatsManagerService\n\nMaybe IStatsManager has been deleted? Artur?",
+      "parentUuid": "fa8a7015_c97dbd46",
+      "range": {
+        "startLine": 43668,
+        "startChar": 0,
+        "endLine": 43680,
+        "endChar": 67
+      },
+      "revId": "0520140984752f177cf73cc34b4b5a3f5051f695",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
