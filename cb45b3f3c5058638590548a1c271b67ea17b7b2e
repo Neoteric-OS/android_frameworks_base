@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3562d91_fe3071af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2021-06-28T01:51:20Z",
+      "side": 1,
+      "message": "Current behavior is intended. If xiaomi can keep this change as private patchset if needed.\n\nIn your step, music app should have been paused due to the audio focus, so users will expect to resume video app. Resuming music app doesn\u0027t seem to make sense to me, especially when music app was paused for a long time ago. (and it\u0027s quite common.)",
+      "revId": "cb45b3f3c5058638590548a1c271b67ea17b7b2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07d79b8f_ead1ae1b",
