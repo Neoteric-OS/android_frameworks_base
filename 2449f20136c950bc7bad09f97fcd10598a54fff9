@@ -475,6 +475,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f86e05e1_3fada7af",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2882,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-06-28T09:22:31Z",
+      "side": 1,
+      "message": "I propose to replace getHearingAidStreamType() by getBluetoothContextualVolumeStream()",
+      "parentUuid": "b5376cb0_d7350afe",
+      "range": {
+        "startLine": 2882,
+        "startChar": 20,
+        "endLine": 2882,
+        "endChar": 33
+      },
+      "revId": "2449f20136c950bc7bad09f97fcd10598a54fff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b58ca6b6_4fb13563",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 4
