@@ -123,6 +123,30 @@
       },
       "revId": "cb45b3f3c5058638590548a1c271b67ea17b7b2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaf1701f_1e60d2ad",
+        "filename": "services/core/java/com/android/server/media/MediaSessionStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1673919
+      },
+      "writtenOn": "2021-06-28T07:22:57Z",
+      "side": 1,
+      "message": "Ok, thank you for your answer.",
+      "parentUuid": "ec0dc3a0_e5ac1c4c",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 71
+      },
+      "revId": "cb45b3f3c5058638590548a1c271b67ea17b7b2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
