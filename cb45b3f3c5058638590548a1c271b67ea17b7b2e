@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8ae84b2_7aead639",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1019013
+      },
+      "writtenOn": "2021-06-28T03:37:26Z",
+      "side": 1,
+      "message": "An app can restart its playback even when it\u0027s dead by implementing MediaButtonReceiver. Process can be started by intent sent by framework.\n\nYou can submit this CL internally to xiami\u0027s resposity, but I wouldn\u0027t take this CL in the android\u0027s repository. I\u0027m very sure that you\u0027ll receive more complaints from users with this CL, but you can submit this CL to the xiaomi\u0027s repo if you\u0027re OK.\n\nLet me explain bit more background for you to decide whether to submit your CL internally:\n\n- Killing the task may not quit the process -- if an app shows the notification UX, then it may hold the media session.\n- Framework cannot determine whether an app is music or video.\n- Some apps start in the background even when it\u0027s not explicitly started. Users would never know what happened in the background.\n- Users couldn\u0027t understand complex heuristic to determine media app the receive key event. Currently rule is simplified to \u0027lastly played app would receive the key\u0027 for answering user complaint.",
+      "parentUuid": "c58b38af_381b1aef",
+      "revId": "cb45b3f3c5058638590548a1c271b67ea17b7b2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07d79b8f_ead1ae1b",
