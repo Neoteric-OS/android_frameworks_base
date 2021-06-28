@@ -54,6 +54,7 @@ import com.android.server.job.JobSchedulerService.Constants;
 import com.android.server.job.StateControllerProto;
 import com.android.server.net.NetworkPolicyManagerInternal;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -460,10 +461,17 @@ public final class ConnectivityController extends RestrictingController implemen
         }
     }
 
-    private boolean updateConstraintsSatisfied(JobStatus jobStatus) {
-        final Network network = mConnManager.getActiveNetworkForUid(jobStatus.getSourceUid());
-        final NetworkCapabilities capabilities = getNetworkCapabilities(network);
-        return updateConstraintsSatisfied(jobStatus, network, capabilities);
+    private boolean updateConstraintsSatisfied(JobStatus jobStatus)  {
+        try {
+            final Network network = (Network) mConnManager.getClass()
+                    .getMethod("getActiveNetworkForUid", int.class)
+                    .invoke(mConnManager, jobStatus.getSourceUid());
+            final NetworkCapabilities capabilities = getNetworkCapabilities(network);
+            return updateConstraintsSatisfied(jobStatus, network, capabilities);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            Slog.e(TAG, "Unable to call getActiveNetworkForUid.", e);
+            return false;
+        }
     }
 
     private boolean updateConstraintsSatisfied(JobStatus jobStatus, Network network,
@@ -521,24 +529,30 @@ public final class ConnectivityController extends RestrictingController implemen
         if (jobs == null || jobs.size() == 0) {
             return false;
         }
+        try {
+            final Network network = (Network) mConnManager.getClass()
+                    .getMethod("getActiveNetworkForUid", int.class)
+                    .invoke(mConnManager, jobs.valueAt(0).getSourceUid());
+            final NetworkCapabilities capabilities = getNetworkCapabilities(network);
+            final boolean networkMatch = (filterNetwork == null
+                    || Objects.equals(filterNetwork, network));
 
-        final Network network = mConnManager.getActiveNetworkForUid(jobs.valueAt(0).getSourceUid());
-        final NetworkCapabilities capabilities = getNetworkCapabilities(network);
-        final boolean networkMatch = (filterNetwork == null
-                || Objects.equals(filterNetwork, network));
+            boolean changed = false;
+            for (int i = jobs.size() - 1; i >= 0; i--) {
+                final JobStatus js = jobs.valueAt(i);
 
-        boolean changed = false;
-        for (int i = jobs.size() - 1; i >= 0; i--) {
-            final JobStatus js = jobs.valueAt(i);
-
-            // Update either when we have a network match, or when the
-            // job hasn't yet been evaluated against the currently
-            // active network; typically when we just lost a network.
-            if (networkMatch || !Objects.equals(js.network, network)) {
-                changed |= updateConstraintsSatisfied(js, network, capabilities);
+                // Update either when we have a network match, or when the
+                // job hasn't yet been evaluated against the currently
+                // active network; typically when we just lost a network.
+                if (networkMatch || !Objects.equals(js.network, network)) {
+                    changed |= updateConstraintsSatisfied(js, network, capabilities);
+                }
             }
+            return changed;
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            Slog.e(TAG, "Unable to call getActiveNetworkForUid.", e);
+            return false;
         }
-        return changed;
     }
 
     /**
