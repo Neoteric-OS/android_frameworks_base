@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c58b38af_381b1aef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1673919
+      },
+      "writtenOn": "2021-06-28T02:19:57Z",
+      "side": 1,
+      "message": "A session was removed generally means that the vedio app was quited or the vedio app process was clean up by user from recent task, there is no session for vedio app to handle media button session. But the music app is still in background and the music app\u0027s session is still active in the session stack. Users think the media key event shound be dispatched to music app, we have received a lot of feedback about this scene from users.",
+      "parentUuid": "b3562d91_fe3071af",
+      "revId": "cb45b3f3c5058638590548a1c271b67ea17b7b2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07d79b8f_ead1ae1b",
