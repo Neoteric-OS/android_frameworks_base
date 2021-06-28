@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be334fcd_f54b7da0",
+        "filename": "boot/hiddenapi/hiddenapi-max-target-o.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 43680,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-06-28T09:46:32Z",
+      "side": 0,
+      "message": "What about these ones? IStatsManager is in statsd too",
+      "range": {
+        "startLine": 43668,
+        "startChar": 0,
+        "endLine": 43680,
+        "endChar": 67
+      },
+      "revId": "0520140984752f177cf73cc34b4b5a3f5051f695",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
