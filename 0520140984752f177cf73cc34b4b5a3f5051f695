@@ -70,6 +70,30 @@
       },
       "revId": "0520140984752f177cf73cc34b4b5a3f5051f695",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34129d06_dddddfd6",
+        "filename": "boot/hiddenapi/hiddenapi-max-target-o.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 43680,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-06-28T10:51:40Z",
+      "side": 0,
+      "message": "Seems to have been deleted around Q timeframe: source/search?q\u003df:IStatsManager.aidl\u0026sq\u003d-file:%2F%2Fdepot%2Fgoogle3%2F(experimental%7Cobsolete).\n\nthis txt file is not managed. Around Q/R timeframe we also didn\u0027t want to clean it up, in case the rename was reverted, in which case it was important to keep hidden api bits consistent.\n\nAt this point, I\u0027d be okay if we don\u0027t move these classes to new modular txt files.",
+      "parentUuid": "ad0b47a3_01c53d5d",
+      "range": {
+        "startLine": 43668,
+        "startChar": 0,
+        "endLine": 43680,
+        "endChar": 67
+      },
+      "revId": "0520140984752f177cf73cc34b4b5a3f5051f695",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
