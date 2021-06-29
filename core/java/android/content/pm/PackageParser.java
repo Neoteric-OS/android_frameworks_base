@@ -7322,7 +7322,7 @@ public class PackageParser {
         }
 
         /**
-         * Sets the package owner and the the {@code applicationInfo} for every component
+         * Sets the package owner and the {@code applicationInfo} for every component
          * owner by this package.
          */
         public void fixupOwner(List<? extends Component<?>> list) {
