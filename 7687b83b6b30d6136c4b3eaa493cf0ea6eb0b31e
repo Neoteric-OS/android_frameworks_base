@@ -22,6 +22,30 @@
       },
       "revId": "7687b83b6b30d6136c4b3eaa493cf0ea6eb0b31e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfd0a65c_bbdde7b1",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/controllers/ConnectivityController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-06-29T05:01:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6bb4734_f75e3b43",
+      "range": {
+        "startLine": 466,
+        "startChar": 18,
+        "endLine": 466,
+        "endChar": 25
+      },
+      "revId": "7687b83b6b30d6136c4b3eaa493cf0ea6eb0b31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
