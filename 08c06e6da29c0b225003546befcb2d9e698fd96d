@@ -332,6 +332,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9485072f_82d46749",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-06-29T12:31:12Z",
+      "side": 1,
+      "message": "Can you point me to the list of device \"Appearance\" ?\nIs it mandated to be communicated by some BT profile?\nI know that the use of btClass for BT A2DP was not working supper well given lots or headset and car kits do not set the right class",
+      "parentUuid": "ee30d8a0_856ae175",
+      "range": {
+        "startLine": 457,
+        "startChar": 28,
+        "endLine": 457,
+        "endChar": 50
+      },
+      "revId": "08c06e6da29c0b225003546befcb2d9e698fd96d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b17fa19f_ef00749e",
         "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
         "patchSetId": 6
