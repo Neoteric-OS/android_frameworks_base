@@ -356,6 +356,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c1462a6c_c30120d2",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-06-29T12:34:42Z",
+      "side": 1,
+      "message": "https://specificationrefs.bluetooth.com/assigned-values/Appearance%20Values.pdf",
+      "parentUuid": "9485072f_82d46749",
+      "range": {
+        "startLine": 457,
+        "startChar": 28,
+        "endLine": 457,
+        "endChar": 50
+      },
+      "revId": "08c06e6da29c0b225003546befcb2d9e698fd96d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b17fa19f_ef00749e",
         "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
         "patchSetId": 6
