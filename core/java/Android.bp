@@ -355,3 +355,22 @@ filegroup {
         "//packages/modules/Wifi/service",
     ],
 }
+
+aidl_interface {
+    name: "ota_dexopt_aidl_interface",
+    unstable: true,
+    srcs: [
+        "android/content/pm/IOtaDexopt.aidl",
+    ],
+    backend: {
+        java: {
+            sdk_version: "28",
+        },
+        cpp: {
+            enabled: true,
+        },
+        ndk: {
+            enabled: false,
+        },
+    },
+}
