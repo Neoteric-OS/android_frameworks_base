@@ -142,14 +142,8 @@ private:
     /*
      * Thread creation helpers.
      */
-    static int javaCreateThreadEtc(
-                                android_thread_func_t entryFunction,
-                                void* userData,
-                                const char* threadName,
-                                int32_t threadPriority,
-                                size_t threadStackSize,
-                                android_thread_id_t* threadId);
-    static int javaThreadShell(void* args);
+    static int javaThreadPreHookEtc(void*, const char* name);
+    static int javaThreadPostHookEtc(void*, const char* name);
 };
 
 } // namespace android

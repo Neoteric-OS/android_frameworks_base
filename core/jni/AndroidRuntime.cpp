@@ -1369,59 +1369,22 @@ static int javaDetachThread(void)
 }
 
 /*
- * When starting a native thread that will be visible from the VM, we
- * bounce through this to get the right attach/detach action.
- * Note that this function calls free(args)
+ * This is invoked from androidCreateThreadEtc via the pre hook set with setThreadPreHook.
+ * Hook us into the VM.
  */
-/*static*/ int AndroidRuntime::javaThreadShell(void* args) {
-    void* start = ((void**)args)[0];
-    void* userData = ((void **)args)[1];
-    char* name = (char*) ((void **)args)[2];        // we own this storage
-    free(args);
+/*static*/ int AndroidRuntime::javaThreadPreHookEtc(void*, const char* name) {
+    LOG_ALWAYS_FATAL_IF(name == nullptr, "threadName not provided to javaThreadPreHookEtc");
     JNIEnv* env;
-    int result;
-
-    /* hook us into the VM */
-    if (javaAttachThread(name, &env) != JNI_OK)
-        return -1;
-
-    /* start the thread running */
-    result = (*(android_thread_func_t)start)(userData);
-
-    /* unhook us */
-    javaDetachThread();
-    free(name);
-
-    return result;
+    return javaAttachThread(name, &env) == JNI_OK ? 0 : -1;
 }
 
 /*
- * This is invoked from androidCreateThreadEtc() via the callback
- * set with androidSetCreateThreadFunc().
- *
- * We need to create the new thread in such a way that it gets hooked
- * into the VM before it really starts executing.
+ * This is invoked from androidCreateThreadEtc via the pre hook set with setThreadPostHook.
+ * Unhooks us.
  */
-/*static*/ int AndroidRuntime::javaCreateThreadEtc(
-                                android_thread_func_t entryFunction,
-                                void* userData,
-                                const char* threadName,
-                                int32_t threadPriority,
-                                size_t threadStackSize,
-                                android_thread_id_t* threadId)
-{
-    void** args = (void**) malloc(3 * sizeof(void*));   // javaThreadShell must free
-    int result;
-
-    LOG_ALWAYS_FATAL_IF(threadName == nullptr, "threadName not provided to javaCreateThreadEtc");
-
-    args[0] = (void*) entryFunction;
-    args[1] = userData;
-    args[2] = (void*) strdup(threadName);   // javaThreadShell must free
-
-    result = androidCreateRawThreadEtc(AndroidRuntime::javaThreadShell, args,
-        threadName, threadPriority, threadStackSize, threadId);
-    return result;
+/*static*/ int AndroidRuntime::javaThreadPostHookEtc(void*, const char*) {
+    javaDetachThread();
+    return 0;
 }
 
 /*
@@ -1433,8 +1396,8 @@ static int javaDetachThread(void)
     void (*start)(void *), void* arg)
 {
     android_thread_id_t threadId = 0;
-    javaCreateThreadEtc((android_thread_func_t) start, arg, name,
-        ANDROID_PRIORITY_DEFAULT, 0, &threadId);
+    androidCreateThreadEtc((android_thread_func_t)start, arg, name, ANDROID_PRIORITY_DEFAULT, 0,
+                           &threadId);
     return threadId;
 }
 
@@ -1629,7 +1592,8 @@ static const RegJNIRec gRegJNI[] = {
      * attached to the JavaVM.  (This needs to go away in favor of JNI
      * Attach calls.)
      */
-    androidSetCreateThreadFunc((android_create_thread_fn) javaCreateThreadEtc);
+    setThreadPreHook(javaThreadPreHookEtc, nullptr);
+    setThreadPostHook(javaThreadPostHookEtc, nullptr);
 
     ALOGV("--- registering native functions ---\n");
 
