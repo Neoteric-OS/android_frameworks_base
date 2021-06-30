@@ -177,6 +177,29 @@ public final class BluetoothPan implements BluetoothProfile {
      */
     public static final int PAN_OPERATION_SUCCESS = 1004;
 
+    /**
+     * Used to notify Tethering that Bluetooth PAN is ready or not to tether.
+     *
+     * @hide
+     */
+    @SystemApi
+    public interface BluetoothTetheringCallback {
+
+        /**
+         * Used to notify Tethering that Bluetooth PAN is ready to tether.
+         *
+         * @param iface is the PAN interface to configure
+         */
+        void onAvailable(@NonNull String iface);
+
+        /**
+         * Used to notify Tethering that Bluetooth PAN is not ready to tether.
+         *
+         * @param iface is the currently used PAN interface
+         */
+        void onUnavailable(@NonNull String iface);
+    }
+
     private final Context mContext;
 
     private BluetoothAdapter mAdapter;
@@ -404,6 +427,30 @@ public final class BluetoothPan implements BluetoothProfile {
         if (service != null && isEnabled()) {
             try {
                 service.setBluetoothTethering(value, pkgName, null);
+            } catch (RemoteException e) {
+                Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
+            }
+        }
+    }
+
+    /**
+     * Turns on/off bluetooth tethering
+     *
+     * @param value is whether to enable or disable bluetooth tethering
+     * @param callback is used to notify when it's ready to tether
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    public void setBluetoothTetheringCallback(boolean value,
+            @NonNull BluetoothTetheringCallback callback) {
+        String pkgName = mContext.getOpPackageName();
+        if (DBG) log("setBluetoothTethering(" + value + "), calling package:" + pkgName);
+        final IBluetoothPan service = getService();
+        if (service != null && isEnabled()) {
+            try {
+                service.setBluetoothTetheringCallback(value,
+                        (IBluetoothTetheringCallback) callback, pkgName, null);
             } catch (RemoteException e) {
                 Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
             }

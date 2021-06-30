@@ -1598,6 +1598,7 @@ package android.bluetooth {
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public int getConnectionState(@NonNull android.bluetooth.BluetoothDevice);
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public boolean isTetheringOn();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public void setBluetoothTethering(boolean);
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public void setBluetoothTetheringCallback(boolean, @NonNull android.bluetooth.BluetoothPan.BluetoothTetheringCallback);
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public boolean setConnectionPolicy(@NonNull android.bluetooth.BluetoothDevice, int);
     field public static final String ACTION_CONNECTION_STATE_CHANGED = "android.bluetooth.pan.profile.action.CONNECTION_STATE_CHANGED";
     field public static final String ACTION_TETHERING_STATE_CHANGED = "android.bluetooth.action.TETHERING_STATE_CHANGED";
@@ -1610,6 +1611,11 @@ package android.bluetooth {
     field public static final int REMOTE_PANU_ROLE = 2; // 0x2
     field public static final int TETHERING_STATE_OFF = 1; // 0x1
     field public static final int TETHERING_STATE_ON = 2; // 0x2
+  }
+
+  public static interface BluetoothPan.BluetoothTetheringCallback {
+    method public void onAvailable(@NonNull String);
+    method public void onUnavailable(@NonNull String);
   }
 
   public class BluetoothPbap implements android.bluetooth.BluetoothProfile {
