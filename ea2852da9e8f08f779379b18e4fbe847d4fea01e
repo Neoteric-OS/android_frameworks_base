@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "153b7276_9164919e",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-07-01T21:07:40Z",
+      "side": 1,
+      "message": "We should update the docs for fetchUuidsWithSdp to also reflect that requests may be queued.",
+      "revId": "ea2852da9e8f08f779379b18e4fbe847d4fea01e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
