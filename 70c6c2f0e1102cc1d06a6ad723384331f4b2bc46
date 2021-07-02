@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dfd575c_bb52b65f",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3576,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-02T17:08:21Z",
+      "side": 1,
+      "message": "these are public api change...mark them as hidden in this patch. we will cherry pick this hidden for QPR and then upload another one marking as public  for T",
+      "range": {
+        "startLine": 3575,
+        "startChar": 9,
+        "endLine": 3576,
+        "endChar": 64
+      },
+      "revId": "70c6c2f0e1102cc1d06a6ad723384331f4b2bc46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
