@@ -23,8 +23,8 @@ java_library_static {
     ],
     static_libs: [
         "netd-client",
-        "netlink-client",
         "networkstack-client",
+        "net-utils-device-common-netlink",
         "net-utils-services-common",
     ],
 }
