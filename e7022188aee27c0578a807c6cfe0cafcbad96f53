@@ -121,6 +121,24 @@
       "message": "B",
       "revId": "e7022188aee27c0578a807c6cfe0cafcbad96f53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2eaf22e_2a483996",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2021-07-03T06:41:12Z",
+      "side": 1,
+      "message": "Hi Nair, I created the issue to track it, and the link is here: https://issuetracker.google.com/issues/192636556.",
+      "parentUuid": "e4691982_c296c538",
+      "revId": "e7022188aee27c0578a807c6cfe0cafcbad96f53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
