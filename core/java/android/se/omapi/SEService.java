@@ -128,7 +128,7 @@ public final class SEService {
     private final Object mLock = new Object();
 
     /** The client context (e.g. activity). */
-    private final Context mContext;
+    private Context mContext;
 
     /** The backend system. */
     private volatile ISecureElementService mSecureElementService;
@@ -271,6 +271,9 @@ public final class SEService {
                 // that binding never succeeded in the first place.
             }
             mSecureElementService = null;
+            mSEListener.mListener = null;
+            mSEListener.mExecutor = null;
+            mContext = null;
         }
     }
 
