@@ -271,6 +271,8 @@ public final class SEService {
                 // that binding never succeeded in the first place.
             }
             mSecureElementService = null;
+            mSEListener.mListener = null;
+            mSEListener.mExecutor = null;
         }
     }
 
