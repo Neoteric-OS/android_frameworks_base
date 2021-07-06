@@ -2,6 +2,10 @@ per-file PointerLocationView.java = michaelwr@google.com, svv@google.com
 per-file RecyclerView.java = mount@google.com
 per-file ViewPager.java = mount@google.com
 
+# IME related
+per-file EditableInputConnection.java = file:/core/java/android/text/OWNERS
+per-file EditableInputConnection.java = file:/services/core/java/com/android/server/inputmethod/OWNERS
+
 # LockSettings related
 per-file *LockPattern* = file:/services/core/java/com/android/server/locksettings/OWNERS
 per-file *LockScreen* = file:/services/core/java/com/android/server/locksettings/OWNERS
