@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5af2609e_efc24f0c",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/controllers/ConnectivityController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-07-06T05:39:56Z",
+      "side": 1,
+      "message": "You may want to move the reflection code to a method, then use\nfinal Network network \u003d getActiveNetworkForUid(jobStatus.getSourceUid()); \n\nsince you have more than one place need this reflection to prevent the duplication for the reflection code.",
+      "range": {
+        "startLine": 466,
+        "startChar": 12,
+        "endLine": 468,
+        "endChar": 68
+      },
+      "revId": "76bea0669a789d98ad0d8f7895a32697c2c97afe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
