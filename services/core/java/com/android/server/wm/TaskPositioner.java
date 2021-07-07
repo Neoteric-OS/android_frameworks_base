@@ -152,6 +152,7 @@ class TaskPositioner implements IBinder.DeathRecipient {
                         }
                     } break;
 
+                    case MotionEvent.ACTION_POINTER_UP:
                     case MotionEvent.ACTION_UP: {
                         if (DEBUG_TASK_POSITIONING) {
                             Slog.w(TAG, "ACTION_UP @ {" + newX + ", " + newY + "}");
