@@ -1127,8 +1127,12 @@ public final class ActivityThread extends ClientTransactionHandler {
         }
 
         public void updateHttpProxy() {
-            ActivityThread.updateHttpProxy(
-                    getApplication() != null ? getApplication() : getSystemContext());
+            final Application app = getApplication();
+            if (null != app) {
+                ActivityThread.updateHttpProxy(app);
+            } else {
+                mH.post(() -> updateHttpProxy());
+            }
         }
 
         public void processInBackground() {
