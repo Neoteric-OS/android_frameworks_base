@@ -46,6 +46,30 @@
       },
       "revId": "70c6c2f0e1102cc1d06a6ad723384331f4b2bc46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fb978fc_af760d72",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3576,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-07-07T17:59:52Z",
+      "side": 1,
+      "message": "done. Removal of @hide tracked in b/193039778",
+      "parentUuid": "3dfd575c_bb52b65f",
+      "range": {
+        "startLine": 3575,
+        "startChar": 9,
+        "endLine": 3576,
+        "endChar": 64
+      },
+      "revId": "70c6c2f0e1102cc1d06a6ad723384331f4b2bc46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
