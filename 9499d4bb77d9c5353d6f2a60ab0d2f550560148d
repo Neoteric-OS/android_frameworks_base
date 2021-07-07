@@ -16,6 +16,46 @@
       "message": "Root cause found by Motorola for this long-standing issue. I can\u0027t be sure this fixes 100% of the occurrences, but it certainly looks like the culprit.",
       "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b12f4e3_5d329f98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-07-07T11:09:10Z",
+      "side": 1,
+      "message": "Amith, do you know who is the best person to review this?",
+      "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "123e294f_f0b9a028",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-07-07T11:09:10Z",
+      "side": 1,
+      "message": "This really needs a comment explaining why this cannot ever create an infinite loop. It\u0027s probably also a good idea to add a safety measure (e.g., maximum number of iterations).\n\nThat said - if the problem is that the proxy will only start being set after \"some event happens\" in this code, then can\u0027t we just apply the change when that event happens? Something like:\n\n\n    public void updateHttpProxy() {\n        final Application app \u003d getApplication();\n        if (app !\u003d null) {\n            ActivityThread.updateHttpProxy(app);\n        } else {\n            mUpdateHttpProxyWhenReady \u003d true;\n        }\n    }\n\nand then whenever the app is bound (perhaps when processing BIND_APPLICATION?):\n\n    if (mUpdateHttpProxyWhenReady) {\n        ActivityThread.updateHttpProxy(getApplication());\n    }",
+      "range": {
+        "startLine": 1134,
+        "startChar": 16,
+        "endLine": 1134,
+        "endChar": 49
+      },
+      "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
