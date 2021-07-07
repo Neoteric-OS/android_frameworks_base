@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa40665f_de63391e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-07-07T11:50:36Z",
+      "side": 1,
+      "message": "Paul, could you provide owners review for adding this library to Android.bp?",
+      "revId": "d7ca2fb4d471315bb549f6e4b3a11e325c56c786",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
