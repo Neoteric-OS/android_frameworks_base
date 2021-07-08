@@ -22,6 +22,30 @@
       },
       "revId": "d77589a460669c7fe182433e29022dbe5741f169",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "153ca028_5b0f32e4",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-07-08T17:32:19Z",
+      "side": 1,
+      "message": "Yes, TetheringEventCallback seems great ! I\u0027ll make isAvailable void then, and we don\u0027t need to make it synchronized as it will return immediately right ? Thanks !",
+      "parentUuid": "ada0370a_f4f8afc9",
+      "range": {
+        "startLine": 195,
+        "startChar": 8,
+        "endLine": 195,
+        "endChar": 14
+      },
+      "revId": "d77589a460669c7fe182433e29022dbe5741f169",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
