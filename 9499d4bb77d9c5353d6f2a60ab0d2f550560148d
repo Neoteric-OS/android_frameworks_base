@@ -56,6 +56,30 @@
       },
       "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e691623_092eda33",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-07-08T09:14:24Z",
+      "side": 1,
+      "message": "I had one reason explained this in the cover comment ; added the other one.\n\nAt first I thought of doing it the way you suggest (at first sight I find it a little cleaner), except without the boolean – always reading the current proxy upon bind and removing the else clause. This comes at a small performance penalty that affects all app startups instead of only in the very rare case where the race condition happens ; it\u0027s only microseconds, but it doesn\u0027t get much more critical than app startup so I thought microseconds were important.\nNow, the boolean you suggest helps with that, but raises another problem : this is a random binder thread, so there is no way to make it correct that doesn\u0027t involve a lock or an atomic. In fact, the mInitialApplication member that\u0027s ready by getApplication() isn\u0027t even volatile and the version here may be out of date, so the time to check for the boolean may already be passed, and the same is true of the boolean. Making both volatile doesn\u0027t even help because there is no non-racy way to read one then write the other, you\u0027d need a lock. The same will be true of a single volatile with a sentinel value to signal the need to read the proxy because you\u0027ll need a read and a write in both threads. The most efficient way of doing this then becomes making mInitialApplication an AtomicReference, having a sentinel value different from null to signal the issue and use compareAndSet.\n\nWhen it comes to either a lock or this bizarre AtomicReference dance, I thought the post() code was much simpler, less error-prone and more performant.\n\nAdded a comment.\n\nWe could add a limited number of iterations for safety, but I don\u0027t have a good notion of how long it typically takes to bind the app so I don\u0027t know what a safe limit would be. I guess this would be a question for owners of this code.",
+      "parentUuid": "123e294f_f0b9a028",
+      "range": {
+        "startLine": 1134,
+        "startChar": 16,
+        "endLine": 1134,
+        "endChar": 49
+      },
+      "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
