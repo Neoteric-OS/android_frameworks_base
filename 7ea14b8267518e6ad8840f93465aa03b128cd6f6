@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "107bd45b_5d9f6e83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-07-08T11:18:48Z",
+      "side": 1,
+      "message": "(Lorenzo is OOO this week, adding other owners for frameworks/base for this cherry-pick)",
+      "revId": "7ea14b8267518e6ad8840f93465aa03b128cd6f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
