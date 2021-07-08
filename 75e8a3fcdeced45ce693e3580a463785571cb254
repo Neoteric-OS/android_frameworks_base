@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3eacfdc_4dfacd82",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-08T00:35:21Z",
+      "side": 1,
+      "message": "give the @link",
+      "range": {
+        "startLine": 86,
+        "startChar": 19,
+        "endLine": 86,
+        "endChar": 38
+      },
+      "revId": "75e8a3fcdeced45ce693e3580a463785571cb254",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df11176f_451edf1f",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-08T00:35:21Z",
+      "side": 1,
+      "message": "radio access network",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 33
+      },
+      "revId": "75e8a3fcdeced45ce693e3580a463785571cb254",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2d5f519_477950c7",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-08T00:35:21Z",
+      "side": 1,
+      "message": "this is private variable, so hide is probably not needed",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 12
+      },
+      "revId": "75e8a3fcdeced45ce693e3580a463785571cb254",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2958113_23581237",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-08T00:35:21Z",
+      "side": 1,
+      "message": "instead of adding mAccessNetworkType of int,  add an object of RadioAccessSpecifier.",
+      "range": {
+        "startLine": 95,
+        "startChar": 16,
+        "endLine": 95,
+        "endChar": 34
+      },
+      "revId": "75e8a3fcdeced45ce693e3580a463785571cb254",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19fbed88_73aaca80",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-08T00:35:21Z",
+      "side": 1,
+      "message": "change as above",
+      "range": {
+        "startLine": 154,
+        "startChar": 15,
+        "endLine": 154,
+        "endChar": 35
+      },
+      "revId": "75e8a3fcdeced45ce693e3580a463785571cb254",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
