@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ada0370a_f4f8afc9",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2021-07-08T11:03:03Z",
+      "side": 1,
+      "message": "Tethering design as lock free which it run everything in single thread. So after tethering receive #onAvailable, it would post a handler message to handle this #onAvaible call. Then the code would probably like this:\n\nBluetoothTetheringCallback {\n    public String onAvailable(String iface) {\n        Handler.post(() -\u003e {\n            // handle onAvailable here\n        });\n        // If you really want return value, then I may use ConditionVariable to blocking your thread:\n        // private final ConditionVariable mWaiting \u003d new ConditionVariable();\n        // if (!mWaiting.block(TIMEOUT_MS)) {\n        //      return null;\n        // }\n        //\n        // return mTetherState.ipServer.getAddress();\n    }\n}\n\nprivate void handleInterfaceServingStateActive(int mode, IpServer who) {\n    // if (who.interfaceType() \u003d\u003d BLUETOOTH_TETHEIRNG) {\n    // mWaiting.open();\n    // }\n    ....\n}\n\nThis is not ideal that your thread would be blocked till tethering complete bluetooth tethering setup. Since tethering is single thread, if user enable multiple(e.g. usb, wifi, ethernet, bt tethering) tethering at the same time, probably your tread would be blocked a while(I don\u0027t have data how long it could be).\n\nHow about make it synchronized ? This may let your code become more complex, but it would be more safe for system health.\n\nAfter I look at the PanService code, I think you probably just want to know when tethering is setup complete or setup fail instead of using iface address.\nYou could register TetheringManager#registerTetheringEventCallback and listen onTetheredInterfacesChanged.\npublic TetheringCallback extends TetheringEventCallback {\n    @Override\n    public void onTetheredInterfacesChanged(@NonNull Set\u003cTetheringInterface\u003e interfaces) {\n        for (TetheringInterface iface: interfaces) {\n            if (iface.getType() \u003d\u003d TetheringManager.TETHERING_BLUETOOTH) {\n                // bluetooth tethering is ready to use.\n            }\n        }\n    }\n    \n    @Override\n    public void onError(@NonNull TetheringInterface iface, @TetheringIfaceError int error) {\n        if (iface.getType() \u003d\u003d TetheringManager.TETHERING_BLUETOOTH) {\n            // tethering is fail because of @TetheringIfaceError error. \n        }\n    }\n}",
+      "range": {
+        "startLine": 195,
+        "startChar": 8,
+        "endLine": 195,
+        "endChar": 14
+      },
+      "revId": "d77589a460669c7fe182433e29022dbe5741f169",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
