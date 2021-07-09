@@ -79,13 +79,12 @@ public final class SELinuxMMAC {
 
     /**
      * Allows opt-in to the latest targetSdkVersion enforced changes without changing target SDK.
-     * Turning this change off for an app targeting the latest SDK or higher is a no-op.
+     * Turning this change on for an app targeting the latest SDK or higher is a no-op.
      *
      * <p>Has no effect for apps using shared user id.
      *
      * TODO(b/143539591): Update description with relevant SELINUX changes this opts in to.
      */
-    @EnabledAfter(targetSdkVersion = android.os.Build.VERSION_CODES.R)
     @ChangeId
     static final long SELINUX_LATEST_CHANGES = 143539591L;
 
@@ -364,7 +363,8 @@ public final class SELinuxMMAC {
         }
         final ApplicationInfo appInfo = pkg.toAppInfoWithoutState();
         if (compatibility.isChangeEnabledInternal(SELINUX_LATEST_CHANGES, appInfo)) {
-            return Math.max(android.os.Build.VERSION_CODES.S, pkg.getTargetSdkVersion());
+            return Math.max(
+                    android.os.Build.VERSION_CODES.CUR_DEVELOPMENT, pkg.getTargetSdkVersion());
         } else if (compatibility.isChangeEnabledInternal(SELINUX_R_CHANGES, appInfo)) {
             return Math.max(android.os.Build.VERSION_CODES.R, pkg.getTargetSdkVersion());
         }
