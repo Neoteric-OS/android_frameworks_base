@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7444ad32_a38a79f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-07-09T00:24:12Z",
+      "side": 1,
+      "message": "Tentatively adding Jeff/Svet for owners on other framework files",
+      "revId": "670abcd53d40b2436d359a0604f0ad07aa418d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
