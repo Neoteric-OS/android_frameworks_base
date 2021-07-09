@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1113e7d5_9548bb1b",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-07-09T20:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a501e30a_aa9eb1c9",
+      "range": {
+        "startLine": 158,
+        "startChar": 15,
+        "endLine": 158,
+        "endChar": 37
+      },
+      "revId": "16bf9568bc00b9d690fc35cd63101f8595ae6a10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba2df7ee_915c21ea",

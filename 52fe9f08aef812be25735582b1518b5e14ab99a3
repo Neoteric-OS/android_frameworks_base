@@ -25,6 +25,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e592461_05bebdd2",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-07-09T20:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d99460_710b1034",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 101
+      },
+      "revId": "52fe9f08aef812be25735582b1518b5e14ab99a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ee0d8c5_a45517cc",
@@ -48,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcbeb660_a18681a1",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-07-09T20:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ee0d8c5_a45517cc",
+      "range": {
+        "startLine": 290,
+        "startChar": 8,
+        "endLine": 295,
+        "endChar": 9
+      },
+      "revId": "52fe9f08aef812be25735582b1518b5e14ab99a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d9454250_1011f30f",
@@ -61,6 +109,30 @@
       "writtenOn": "2021-07-09T20:38:58Z",
       "side": 1,
       "message": "still missing set for RadioAccessSpecifiers",
+      "range": {
+        "startLine": 296,
+        "startChar": 0,
+        "endLine": 296,
+        "endChar": 0
+      },
+      "revId": "52fe9f08aef812be25735582b1518b5e14ab99a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb7cbd29_2926a6de",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-07-09T20:48:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9454250_1011f30f",
       "range": {
         "startLine": 296,
         "startChar": 0,
