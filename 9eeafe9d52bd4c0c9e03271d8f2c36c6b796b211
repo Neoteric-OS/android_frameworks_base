@@ -22,6 +22,29 @@
       },
       "revId": "9eeafe9d52bd4c0c9e03271d8f2c36c6b796b211",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9adc4aed_d1e14050",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1415318
+      },
+      "writtenOn": "2021-07-09T16:00:55Z",
+      "side": 1,
+      "message": "This can be called from the main thread. We should never block writes.",
+      "range": {
+        "startLine": 1281,
+        "startChar": 20,
+        "endLine": 1281,
+        "endChar": 68
+      },
+      "revId": "9eeafe9d52bd4c0c9e03271d8f2c36c6b796b211",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
