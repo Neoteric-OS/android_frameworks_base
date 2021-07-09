@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "186a46c3_e581f979",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-09T20:24:59Z",
+      "side": 1,
+      "message": "clone?",
+      "range": {
+        "startLine": 158,
+        "startChar": 15,
+        "endLine": 158,
+        "endChar": 37
+      },
+      "revId": "16bf9568bc00b9d690fc35cd63101f8595ae6a10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ba2df7ee_915c21ea",
         "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
         "patchSetId": 11
@@ -19,6 +42,115 @@
         "startChar": 8,
         "endLine": 183,
         "endChar": 74
+      },
+      "revId": "16bf9568bc00b9d690fc35cd63101f8595ae6a10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cf8e99c_755432c2",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-09T20:24:59Z",
+      "side": 1,
+      "message": "change to ras",
+      "range": {
+        "startLine": 192,
+        "startChar": 46,
+        "endLine": 192,
+        "endChar": 63
+      },
+      "revId": "16bf9568bc00b9d690fc35cd63101f8595ae6a10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d56717b_cd261dad",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-09T20:24:59Z",
+      "side": 1,
+      "message": "equals?",
+      "range": {
+        "startLine": 219,
+        "startChar": 39,
+        "endLine": 219,
+        "endChar": 40
+      },
+      "revId": "16bf9568bc00b9d690fc35cd63101f8595ae6a10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b70a9812_de851d86",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-09T20:24:59Z",
+      "side": 1,
+      "message": "this will be added twice if it is not null",
+      "range": {
+        "startLine": 287,
+        "startChar": 12,
+        "endLine": 287,
+        "endChar": 37
+      },
+      "revId": "16bf9568bc00b9d690fc35cd63101f8595ae6a10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "727d8027_704f74b4",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-09T20:24:59Z",
+      "side": 1,
+      "message": "handle bands \u003d\u003d null",
+      "revId": "16bf9568bc00b9d690fc35cd63101f8595ae6a10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2de201e9_62329e40",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-09T20:24:59Z",
+      "side": 1,
+      "message": "missing set for ras",
+      "range": {
+        "startLine": 304,
+        "startChar": 20,
+        "endLine": 304,
+        "endChar": 42
       },
       "revId": "16bf9568bc00b9d690fc35cd63101f8595ae6a10",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
