@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a3ce9c9f_5ddb0317",
+        "filename": "core/java/android/bluetooth/BluetoothGatt.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1415318
+      },
+      "writtenOn": "2021-07-09T16:04:43Z",
+      "side": 1,
+      "message": "Another problem is the throughput. Sleeping 1 seconds between attempts won\u0027t lead to any goo performance.",
+      "parentUuid": "72a043d0_aee782e6",
+      "range": {
+        "startLine": 464,
+        "startChar": 36,
+        "endLine": 464,
+        "endChar": 84
+      },
+      "revId": "9eeafe9d52bd4c0c9e03271d8f2c36c6b796b211",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9adc4aed_d1e14050",
         "filename": "core/java/android/bluetooth/BluetoothGatt.java",
         "patchSetId": 2
