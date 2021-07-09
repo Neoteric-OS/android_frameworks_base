@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a501e30a_aa9eb1c9",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-09T20:36:26Z",
+      "side": 1,
+      "message": "caller can update the upject",
+      "parentUuid": "b2312a1b_e48d1144",
+      "range": {
+        "startLine": 158,
+        "startChar": 15,
+        "endLine": 158,
+        "endChar": 37
+      },
+      "revId": "16bf9568bc00b9d690fc35cd63101f8595ae6a10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ba2df7ee_915c21ea",
         "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
         "patchSetId": 11
@@ -243,6 +267,24 @@
       "side": 1,
       "message": "mbands is empty by default. We only want to add them if thy are set",
       "parentUuid": "727d8027_704f74b4",
+      "revId": "16bf9568bc00b9d690fc35cd63101f8595ae6a10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "895db137_1db0d83b",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-09T20:36:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "954baf20_610464c6",
       "revId": "16bf9568bc00b9d690fc35cd63101f8595ae6a10",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
