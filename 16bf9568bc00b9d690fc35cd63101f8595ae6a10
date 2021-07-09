@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "257f1988_973e3ed3",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-09T21:02:43Z",
+      "side": 1,
+      "message": "why are you reading mBands here?",
+      "parentUuid": "ba2df7ee_915c21ea",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 74
+      },
+      "revId": "16bf9568bc00b9d690fc35cd63101f8595ae6a10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0cf8e99c_755432c2",
         "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
         "patchSetId": 11
