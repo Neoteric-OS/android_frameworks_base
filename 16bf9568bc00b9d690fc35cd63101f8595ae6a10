@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba2df7ee_915c21ea",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-07-09T20:16:15Z",
+      "side": 1,
+      "message": "not sure how well this will play with backwards compatibility.",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 74
+      },
+      "revId": "16bf9568bc00b9d690fc35cd63101f8595ae6a10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
