@@ -261,6 +261,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c622bcca_3a006ace",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-07-09T21:45:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8b73b2d_598b1b58",
+      "range": {
+        "startLine": 285,
+        "startChar": 16,
+        "endLine": 285,
+        "endChar": 24
+      },
+      "revId": "52fe9f08aef812be25735582b1518b5e14ab99a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f82e28d2_05dac68c",
@@ -322,6 +346,30 @@
       "side": 1,
       "message": "we do not want used to use bands. bands will be deprecated. We want them to use ras",
       "parentUuid": "11cf15f9_b918b734",
+      "range": {
+        "startLine": 290,
+        "startChar": 41,
+        "endLine": 290,
+        "endChar": 42
+      },
+      "revId": "52fe9f08aef812be25735582b1518b5e14ab99a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c4bec04_c4728dd9",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-07-09T21:45:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9298626_ce952211",
       "range": {
         "startLine": 290,
         "startChar": 41,
