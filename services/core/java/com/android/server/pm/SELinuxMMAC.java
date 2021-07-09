@@ -364,7 +364,8 @@ public final class SELinuxMMAC {
         }
         final ApplicationInfo appInfo = pkg.toAppInfoWithoutState();
         if (compatibility.isChangeEnabledInternal(SELINUX_LATEST_CHANGES, appInfo)) {
-            return Math.max(android.os.Build.VERSION_CODES.S, pkg.getTargetSdkVersion());
+            return Math.max(
+                    android.os.Build.VERSION_CODES.CUR_DEVELOPMENT, pkg.getTargetSdkVersion());
         } else if (compatibility.isChangeEnabledInternal(SELINUX_R_CHANGES, appInfo)) {
             return Math.max(android.os.Build.VERSION_CODES.R, pkg.getTargetSdkVersion());
         }
