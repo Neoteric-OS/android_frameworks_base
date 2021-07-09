@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63f93d65_91a7a401",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-07-09T21:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a9c090e_2b393be7",
+      "range": {
+        "startLine": 77,
+        "startChar": 67,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "52fe9f08aef812be25735582b1518b5e14ab99a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "57814576_898b8c83",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-07-09T21:02:43Z",
       "side": 1,
       "message": "clone",
+      "range": {
+        "startLine": 158,
+        "startChar": 15,
+        "endLine": 158,
+        "endChar": 37
+      },
+      "revId": "52fe9f08aef812be25735582b1518b5e14ab99a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13f144f8_4a7668d1",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-07-09T21:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57814576_898b8c83",
       "range": {
         "startLine": 158,
         "startChar": 15,
@@ -118,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9df745c_7eab6a13",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-07-09T21:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5dd57e2_1dce4287",
+      "range": {
+        "startLine": 254,
+        "startChar": 68,
+        "endLine": 254,
+        "endChar": 92
+      },
+      "revId": "52fe9f08aef812be25735582b1518b5e14ab99a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "937a2250_2bd70641",
@@ -143,6 +215,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f748c667_ff569ccd",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-07-09T21:12:38Z",
+      "side": 1,
+      "message": "the assumption of Builders is that things are \u0027built\u0027 on top of the existing builder, rigth?",
+      "parentUuid": "937a2250_2bd70641",
+      "range": {
+        "startLine": 285,
+        "startChar": 16,
+        "endLine": 285,
+        "endChar": 24
+      },
+      "revId": "52fe9f08aef812be25735582b1518b5e14ab99a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f82e28d2_05dac68c",
         "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
         "patchSetId": 12
@@ -154,6 +250,30 @@
       "writtenOn": "2021-07-09T21:02:43Z",
       "side": 1,
       "message": "remove",
+      "range": {
+        "startLine": 290,
+        "startChar": 41,
+        "endLine": 290,
+        "endChar": 42
+      },
+      "revId": "52fe9f08aef812be25735582b1518b5e14ab99a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11cf15f9_b918b734",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-07-09T21:12:38Z",
+      "side": 1,
+      "message": "why? seems perfectly reasonable to have it here. Note: this is just a compilation time check. The null check on the next line will catch any null bands passed during runtime",
+      "parentUuid": "f82e28d2_05dac68c",
       "range": {
         "startLine": 290,
         "startChar": 41,
@@ -271,6 +391,30 @@
       "writtenOn": "2021-07-09T21:02:43Z",
       "side": 1,
       "message": "check validity of priority",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 13
+      },
+      "revId": "52fe9f08aef812be25735582b1518b5e14ab99a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1be016c5_1ea41f9f",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-07-09T21:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3996d948_350d766b",
       "range": {
         "startLine": 300,
         "startChar": 0,
