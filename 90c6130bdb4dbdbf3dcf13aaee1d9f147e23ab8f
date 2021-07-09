@@ -1,0 +1,116 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013008588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1754972?revision\u003d10",
+      "fixSuggestions": [
+        {
+          "fixId": "c4a6b7c2_b04a30e5",
+          "description": "Change to \"telephony/java/android/telephony/AvailableNetworkInfo.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+              "range": {
+                "startLine": 182,
+                "startChar": 0,
+                "endLine": 182,
+                "endChar": 29
+              },
+              "replacement": "        // TODO(jacknudelman)"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "749fb8b8_75d627b3",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-09T20:14:45Z",
+      "side": 1,
+      "message": "Common typo found: \"        // TOSO(jacknudelman)\" -- should it be \"        // TODO(jacknudelman)\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 29
+      },
+      "revId": "90c6130bdb4dbdbf3dcf13aaee1d9f147e23ab8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013008588",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1754972?revision\u003d10",
+      "fixSuggestions": [
+        {
+          "fixId": "feedbfdd_32dc7327",
+          "description": "Change to \"telephony/java/android/telephony/AvailableNetworkInfo.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+              "range": {
+                "startLine": 182,
+                "startChar": 74,
+                "endLine": 182,
+                "endChar": 86
+              },
+              "replacement": "compatibility"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "0de10188_e903f688",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-09T20:14:45Z",
+      "side": 1,
+      "message": "Common typo found: \"compatiblity\" -- should it be \"compatibility\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 182,
+        "startChar": 74,
+        "endLine": 182,
+        "endChar": 86
+      },
+      "revId": "90c6130bdb4dbdbf3dcf13aaee1d9f147e23ab8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013008586",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1754972?revision\u003d10",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c6b2d27e_322bce6a",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-09T20:14:45Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 101
+      },
+      "revId": "90c6130bdb4dbdbf3dcf13aaee1d9f147e23ab8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
