@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfffd02b_8996616b",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-09T21:24:29Z",
+      "side": 1,
+      "message": "null",
+      "range": {
+        "startLine": 190,
+        "startChar": 62,
+        "endLine": 190,
+        "endChar": 63
+      },
+      "revId": "98554af00d376b6505c53b5b8dba85f14763ac17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

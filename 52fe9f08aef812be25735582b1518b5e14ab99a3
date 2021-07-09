@@ -239,6 +239,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a8b73b2d_598b1b58",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-09T21:24:29Z",
+      "side": 1,
+      "message": "my main point is that api name is set. So let us behave like set api. Now it is like an add api.",
+      "parentUuid": "f748c667_ff569ccd",
+      "range": {
+        "startLine": 285,
+        "startChar": 16,
+        "endLine": 285,
+        "endChar": 24
+      },
+      "revId": "52fe9f08aef812be25735582b1518b5e14ab99a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f82e28d2_05dac68c",
         "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
         "patchSetId": 12
@@ -274,6 +298,30 @@
       "side": 1,
       "message": "why? seems perfectly reasonable to have it here. Note: this is just a compilation time check. The null check on the next line will catch any null bands passed during runtime",
       "parentUuid": "f82e28d2_05dac68c",
+      "range": {
+        "startLine": 290,
+        "startChar": 41,
+        "endLine": 290,
+        "endChar": 42
+      },
+      "revId": "52fe9f08aef812be25735582b1518b5e14ab99a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9298626_ce952211",
+        "filename": "telephony/java/android/telephony/AvailableNetworkInfo.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-07-09T21:24:29Z",
+      "side": 1,
+      "message": "we do not want used to use bands. bands will be deprecated. We want them to use ras",
+      "parentUuid": "11cf15f9_b918b734",
       "range": {
         "startLine": 290,
         "startChar": 41,
