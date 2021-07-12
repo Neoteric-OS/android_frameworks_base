@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ead33b76_cc32461a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-07-12T15:23:31Z",
+      "side": 1,
+      "message": "Good catch!\nI wonder why this worked at all. I think we have been testing very intermittently with USAPs enabled?\nLGTM. I gave it only a +1 because Chris should look at it, too.",
+      "revId": "3688f9590c7e48f87ca513bc8ab7b58a54d913c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
