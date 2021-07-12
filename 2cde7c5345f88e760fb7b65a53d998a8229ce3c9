@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2fb5347_49ca8b7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1216939
+      },
+      "writtenOn": "2021-07-12T01:14:26Z",
+      "side": 1,
+      "message": "Dear Guojing Yuan\n\nReview +2 has been removed when i rebase the code, please help me +2 again, Thanks BS.",
+      "revId": "2cde7c5345f88e760fb7b65a53d998a8229ce3c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
