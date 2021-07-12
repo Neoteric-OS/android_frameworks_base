@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "907a7d62_a20025ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2021-07-12T23:39:35Z",
+      "side": 1,
+      "message": "Does this need to be in a topic with the atoms? Were the atoms already submitted?",
+      "revId": "f4a9a90711aa82263e8be0e16b69b988f9009aa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
