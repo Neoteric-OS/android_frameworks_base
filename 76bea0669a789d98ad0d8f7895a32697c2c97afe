@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57245b65_659be8b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-07-12T18:26:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4afac83_fd09ee4f",
+      "revId": "76bea0669a789d98ad0d8f7895a32697c2c97afe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5af2609e_efc24f0c",
@@ -41,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "849498a5_3d7773b6",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/controllers/ConnectivityController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-07-12T18:26:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5af2609e_efc24f0c",
+      "range": {
+        "startLine": 466,
+        "startChar": 12,
+        "endLine": 468,
+        "endChar": 68
+      },
+      "revId": "76bea0669a789d98ad0d8f7895a32697c2c97afe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2a2b4f03_e7c0b5c6",
@@ -54,6 +96,54 @@
       "writtenOn": "2021-07-07T06:49:47Z",
       "side": 1,
       "message": "Would it not be better to crash the system (throw an unchecked exception) in that case, rather than continuing in a bad state ? I think this should only happen if there is a bug in the code right ?",
+      "range": {
+        "startLine": 473,
+        "startChar": 12,
+        "endLine": 473,
+        "endChar": 25
+      },
+      "revId": "76bea0669a789d98ad0d8f7895a32697c2c97afe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ff38ae0_d499bbfa",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/controllers/ConnectivityController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-07-12T18:26:34Z",
+      "side": 1,
+      "message": "yes, you are right, throw an unchecked exception in that case to crash the system",
+      "parentUuid": "2a2b4f03_e7c0b5c6",
+      "range": {
+        "startLine": 473,
+        "startChar": 12,
+        "endLine": 473,
+        "endChar": 25
+      },
+      "revId": "76bea0669a789d98ad0d8f7895a32697c2c97afe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdb6c2bd_9e595935",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/controllers/ConnectivityController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-07-12T18:26:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a2b4f03_e7c0b5c6",
       "range": {
         "startLine": 473,
         "startChar": 12,
