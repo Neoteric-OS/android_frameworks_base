@@ -3824,37 +3824,44 @@ public class AudioService extends IAudioService.Stub
             final boolean shouldZenMute = shouldZenMuteStream(streamType);
             final boolean shouldMute = shouldZenMute || (ringerModeMute
                     && isStreamAffectedByRingerMode(streamType) && muteAllowedBySco);
+            if (!shouldMute && !isMuted) {
+                restoreRingerStreamVolume(streamType);
+            }
             if (isMuted == shouldMute) continue;
             if (!shouldMute) {
                 // unmute
                 // ring and notifications volume should never be 0 when not silenced
-                if (mStreamVolumeAlias[streamType] == AudioSystem.STREAM_RING) {
-                    synchronized (VolumeStreamState.class) {
-                        final VolumeStreamState vss = mStreamStates[streamType];
-                        for (int i = 0; i < vss.mIndexMap.size(); i++) {
-                            int device = vss.mIndexMap.keyAt(i);
-                            int value = vss.mIndexMap.valueAt(i);
-                            if (value == 0) {
-                                vss.setIndex(10, device, TAG, true /*hasModifyAudioSettings*/);
-                            }
-                        }
-                        // Persist volume for stream ring when it is changed here
-                      final int device = getDeviceForStream(streamType);
-                      sendMsg(mAudioHandler,
-                              MSG_PERSIST_VOLUME,
-                              SENDMSG_QUEUE,
-                              device,
-                              0,
-                              mStreamStates[streamType],
-                              PERSIST_DELAY);
-                    }
-                }
+                restoreRingerStreamVolume(streamType);
                 mStreamStates[streamType].mute(false);
                 mRingerAndZenModeMutedStreams &= ~(1 << streamType);
             } else {
                 // mute
                 mStreamStates[streamType].mute(true);
                 mRingerAndZenModeMutedStreams |= (1 << streamType);
+            }
+        }
+    }
+
+    private void restoreRingerStreamVolume(int streamType) {
+        if (mStreamVolumeAlias[streamType] == AudioSystem.STREAM_RING) {
+            synchronized (VolumeStreamState.class) {
+                final VolumeStreamState vss = mStreamStates[streamType];
+                for (int i = 0; i < vss.mIndexMap.size(); i++) {
+                    int device = vss.mIndexMap.keyAt(i);
+                    int value = vss.mIndexMap.valueAt(i);
+                    if (value == 0) {
+                        vss.setIndex(10, device, TAG, true /*hasModifyAudioSettings*/);
+                    }
+                }
+                // Persist volume for stream ring when it is changed here
+                final int device = getDeviceForStream(streamType);
+                sendMsg(mAudioHandler,
+                        MSG_PERSIST_VOLUME,
+                        SENDMSG_QUEUE,
+                        device,
+                        0,
+                        mStreamStates[streamType],
+                        PERSIST_DELAY);
             }
         }
     }
