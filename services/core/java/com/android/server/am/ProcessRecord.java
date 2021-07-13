@@ -1484,6 +1484,10 @@ class ProcessRecord implements WindowProcessListener {
     public void updateProcessInfo(boolean updateServiceConnectionActivities, boolean activityChange,
             boolean updateOomAdj) {
         synchronized (mService) {
+            // do not add ProcessRecord to Lru list when it is remove or killed, need in synchronized
+            if ((removed || killed) && pid == 0) {
+                return;
+            }
             if (updateServiceConnectionActivities) {
                 mService.mServices.updateServiceConnectionActivitiesLocked(this);
             }
