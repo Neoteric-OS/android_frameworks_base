@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5609e368_406e8948",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-07-13T22:49:44Z",
+      "side": 1,
+      "message": "Also test CtsJobSchedulerTestCases:ConnectivityConstraintTest",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "222994dfe55de44f90d36115eba177c35013af21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
