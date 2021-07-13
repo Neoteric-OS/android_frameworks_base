@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19841bb6_9a6f9dee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-07-13T22:09:31Z",
+      "side": 1,
+      "message": "@Jing: What are the consequences of having a ProcessRecord with pid 0? Do we clean them up somewhere already? As far as I know, when we try to launch some component in an app with existing ProcessRecord, we don\u0027t consider those with pid\u003d0 as valid and start a new process anyway.",
+      "revId": "f7f320960efd252bf932fbf81957bc21ef3baf40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
