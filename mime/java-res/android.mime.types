@@ -72,6 +72,7 @@
 ?application/x-webarchive-xml webarchivexml
 ?application/x-x509-server-cert crt
 ?application/x-x509-user-cert crt
+?application/x-ssa ssa ass
 
 ?audio/3gpp 3ga 3gpp
 ?audio/aac-adts aac
