@@ -16,6 +16,24 @@
       "message": "Owners+1 got lost because I changed the commit message. Paul, could you +1 again please? Thanks!",
       "revId": "0dc6a671809a26602c116a3c5e2c2fb9503ea3ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1112b712_f437179b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-07-13T07:35:58Z",
+      "side": 1,
+      "message": "Friendly ping, Paul, could you please take a look?",
+      "parentUuid": "e1b74b6b_d4c3a91f",
+      "revId": "0dc6a671809a26602c116a3c5e2c2fb9503ea3ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
