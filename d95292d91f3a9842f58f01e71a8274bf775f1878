@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013146053",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1764286?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "281a5e67_000b6b00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-13T09:35:32Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 12,
+        "startChar": 31,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "d95292d91f3a9842f58f01e71a8274bf775f1878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013146053",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1764286?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bb814af8_2140f07e",
+        "filename": "services/core/java/com/android/server/am/ProcessRecord.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1487,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-13T09:35:32Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1487,
+        "startChar": 0,
+        "endLine": 1487,
+        "endChar": 101
+      },
+      "revId": "d95292d91f3a9842f58f01e71a8274bf775f1878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
