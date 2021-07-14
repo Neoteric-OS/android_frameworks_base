@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ec63b42_874b5ce3",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-07-14T08:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7244b3c_b499b856",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 101
+      },
+      "revId": "981225afea8745853c52af829f630ff3ce0c8c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5206446_d22efe90",
@@ -56,6 +80,30 @@
       "side": 1,
       "message": "\u003e Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.\n\nPlease fix.",
       "parentUuid": "f0b7b53d_8514c0ef",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 119
+      },
+      "revId": "981225afea8745853c52af829f630ff3ce0c8c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c41f70a_7a49d303",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-07-14T08:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5206446_d22efe90",
       "range": {
         "startLine": 173,
         "startChar": 0,
@@ -90,6 +138,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c2cf572_07dd2a79",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-07-14T08:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7af0df49_23d2aaff",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 109
+      },
+      "revId": "981225afea8745853c52af829f630ff3ce0c8c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a293ec3a_d31ffc91",
@@ -104,6 +176,30 @@
       "side": 1,
       "message": "\u003e Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.\n\nPlease fix.",
       "parentUuid": "ae519d9b_81cf035c",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 103
+      },
+      "revId": "981225afea8745853c52af829f630ff3ce0c8c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06c1fb8b_693230a0",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-07-14T08:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a293ec3a_d31ffc91",
       "range": {
         "startLine": 195,
         "startChar": 0,
@@ -138,6 +234,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c666a46a_3ec802d0",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-07-14T08:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0557f5f4_c9b85289",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 115
+      },
+      "revId": "981225afea8745853c52af829f630ff3ce0c8c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f6caaa9_29cd29d5",
@@ -162,6 +282,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb333463_cdd2f9a8",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-07-14T08:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f6caaa9_29cd29d5",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 111
+      },
+      "revId": "981225afea8745853c52af829f630ff3ce0c8c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c411d94c_6e0b36a0",
@@ -176,6 +320,30 @@
       "side": 1,
       "message": "\u003e Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.\n\nPlease fix.",
       "parentUuid": "feeb5b83_358cfbe0",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 121
+      },
+      "revId": "981225afea8745853c52af829f630ff3ce0c8c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e272dcb_05a9f3c0",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-07-14T08:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c411d94c_6e0b36a0",
       "range": {
         "startLine": 213,
         "startChar": 0,
