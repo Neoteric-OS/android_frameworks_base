@@ -106,6 +106,24 @@
       "parentUuid": "7770ff37_d1bc35dc",
       "revId": "f7f320960efd252bf932fbf81957bc21ef3baf40",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c051a9f_fedd723b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1220972
+      },
+      "writtenOn": "2021-07-14T07:55:11Z",
+      "side": 1,
+      "message": "thanks, i will abandon this patch",
+      "parentUuid": "15df9f02_ac206027",
+      "revId": "f7f320960efd252bf932fbf81957bc21ef3baf40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
