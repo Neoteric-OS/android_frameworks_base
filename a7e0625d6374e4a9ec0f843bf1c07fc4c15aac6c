@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5043d406_c6db6b58",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-07-14T07:39:25Z",
+      "side": 1,
+      "message": "Nit: that\u0027s not very specific :-)\nMaybe \"moving the netlink-client library\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "a7e0625d6374e4a9ec0f843bf1c07fc4c15aac6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "096f9893_e8261d3a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-07-14T07:39:25Z",
+      "side": 1,
+      "message": "Typo: library",
+      "range": {
+        "startLine": 11,
+        "startChar": 26,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "a7e0625d6374e4a9ec0f843bf1c07fc4c15aac6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
