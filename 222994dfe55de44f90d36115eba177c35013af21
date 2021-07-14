@@ -22,6 +22,30 @@
       },
       "revId": "222994dfe55de44f90d36115eba177c35013af21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fd3f8d2_498b2177",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-07-14T02:45:29Z",
+      "side": 1,
+      "message": "atest CtsJobSchedulerTestCases:ConnectivityConstraintTest  \u003d\u003e pass",
+      "parentUuid": "5609e368_406e8948",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "222994dfe55de44f90d36115eba177c35013af21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
