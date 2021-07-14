@@ -70,6 +70,24 @@
       "parentUuid": "c986a3f1_b52bdb22",
       "revId": "f7f320960efd252bf932fbf81957bc21ef3baf40",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7770ff37_d1bc35dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1220972
+      },
+      "writtenOn": "2021-07-14T02:58:35Z",
+      "side": 1,
+      "message": "yes, cleanUpApplicationRecordLocked need too check pendingStart, that the \"start not valid, killing pid\u003d\" will not happen in this case.\nthis patch is only for exception case that if \"start not valid\" happen, app(ProcessRecord ) should be remove from mProcessList.",
+      "parentUuid": "87d1a6f7_7116742d",
+      "revId": "f7f320960efd252bf932fbf81957bc21ef3baf40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
