@@ -164,6 +164,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
@@ -289,8 +290,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private String mActiveIface;
 
     /** Set of any ifaces associated with mobile networks since boot. */
-    @GuardedBy("mStatsLock")
-    private String[] mMobileIfaces = new String[0];
+    private CopyOnWriteArraySet<String> mMobileIfaces = new CopyOnWriteArraySet<>();
 
     /** Set of all ifaces currently used by traffic that does not explicitly specify a Network. */
     @GuardedBy("mStatsLock")
@@ -935,7 +935,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
     @Override
     public String[] getMobileIfaces() {
-        return mMobileIfaces;
+        return mMobileIfaces.toArray(new String[0]);
     }
 
     @Override
@@ -1382,7 +1382,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             }
         }
 
-        mMobileIfaces = mobileIfaces.toArray(new String[mobileIfaces.size()]);
+        mMobileIfaces.retainAll(mobileIfaces);
+        mMobileIfaces.addAll(mobileIfaces);
     }
 
     private static int getSubIdForMobile(@NonNull NetworkStateSnapshot state) {
