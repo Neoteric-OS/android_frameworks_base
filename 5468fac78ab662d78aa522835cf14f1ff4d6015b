@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9867cdc6_33531ab6",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-07-14T10:13:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "56bec778_2e165754",
+      "range": {
+        "startLine": 504,
+        "startChar": 35,
+        "endLine": 504,
+        "endChar": 68
+      },
+      "revId": "5468fac78ab662d78aa522835cf14f1ff4d6015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "529f76b9_622bcdff",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-07-13T07:18:31Z",
       "side": 1,
       "message": "This is the old way of doing it. While it would \"work\", we have a newer framework that will let us test, let apps opt-in, give us free logging : compat @ChangeId.\n\nGuide is at https://g3doc.corp.google.com/wireless/android/art/compat/g3doc/dev/compat-framework.md?cl\u003dhead\n\nIn a nutshell, what you\u0027d do is\n• Import android.compat.annotation.ChangeId and other annotations you\n  need from that package\n• Add a long equal to the buganizer bug ID annotated with @ChangeId, e.g. :\n  /**\n   * When enabled, apps targetting \u003c Android 12 are considered legacy for\n   * the NSD native daemon.\n   * The platform will only keep the daemon running as long as there are\n   * any legacy apps connected.\n   */\n  @ChangeId\n  @EnabledSince(targetSdkVersion\u003dandroid.os.Build.VERSION_CODES.S)\n  private static final long RUN_NATIVE_NSD_ONLY_IF_LEGACY_APPS \u003d 12345L;\n• Gate on the change, e.g. :\n  if (CompatChanges.isChangeEnabled(RUN_NATIVE...)) {\n    // do the new thing\n  } else {\n    // do the old thing\n  }\n• You can also have a CTS for this. Using @ChangeId will simplify writing\n  the test because you can simulate either behavior rather than having to\n  write an app with target S and one with target R.",
+      "range": {
+        "startLine": 504,
+        "startChar": 0,
+        "endLine": 505,
+        "endChar": 67
+      },
+      "revId": "5468fac78ab662d78aa522835cf14f1ff4d6015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21bc19ea_b521e1db",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-07-14T10:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "529f76b9_622bcdff",
       "range": {
         "startLine": 504,
         "startChar": 0,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3c78448_dd0a0f9f",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-07-14T10:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "630cb3fb_1da422a1",
+      "range": {
+        "startLine": 510,
+        "startChar": 22,
+        "endLine": 510,
+        "endChar": 49
+      },
+      "revId": "5468fac78ab662d78aa522835cf14f1ff4d6015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6749c009_c08c52c1",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-07-13T07:18:31Z",
       "side": 1,
       "message": "stay alive",
+      "range": {
+        "startLine": 112,
+        "startChar": 40,
+        "endLine": 112,
+        "endChar": 45
+      },
+      "revId": "5468fac78ab662d78aa522835cf14f1ff4d6015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "317d67e7_6efe9bdc",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-07-14T10:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6749c009_c08c52c1",
       "range": {
         "startLine": 112,
         "startChar": 40,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "562628cc_8d226579",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-07-14T10:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81990c40_43d23588",
+      "range": {
+        "startLine": 182,
+        "startChar": 66,
+        "endLine": 182,
+        "endChar": 72
+      },
+      "revId": "5468fac78ab662d78aa522835cf14f1ff4d6015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d44e7f7e_7b321ab1",
@@ -156,6 +276,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a5f9216_a303b4ec",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-07-14T10:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d44e7f7e_7b321ab1",
+      "range": {
+        "startLine": 183,
+        "startChar": 32,
+        "endLine": 183,
+        "endChar": 49
+      },
+      "revId": "5468fac78ab662d78aa522835cf14f1ff4d6015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07cf79f9_beb441c3",
@@ -169,6 +313,30 @@
       "writtenOn": "2021-07-13T07:18:31Z",
       "side": 1,
       "message": "As I was saying on the other file, if you test for this in HALF_CONNECT you can remove this message, initialize with the correct legacy value directly, and simplify the code.\n\nI will not insist on it if you don\u0027t have time or don\u0027t think it\u0027s a good idea, but do consider it.",
+      "range": {
+        "startLine": 221,
+        "startChar": 36,
+        "endLine": 221,
+        "endChar": 50
+      },
+      "revId": "5468fac78ab662d78aa522835cf14f1ff4d6015b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "647310de_c392b6d2",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-07-14T10:13:18Z",
+      "side": 1,
+      "message": "As discussed, we can\u0027t make it without refactoring.",
+      "parentUuid": "07cf79f9_beb441c3",
       "range": {
         "startLine": 221,
         "startChar": 36,
