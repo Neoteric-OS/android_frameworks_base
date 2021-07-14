@@ -52,6 +52,24 @@
       "parentUuid": "359c54a4_e6aea61f",
       "revId": "f7f320960efd252bf932fbf81957bc21ef3baf40",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87d1a6f7_7116742d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-07-14T02:09:24Z",
+      "side": 1,
+      "message": "Thanks. That seems to be the case I was thinking above. I think the code in the cleanUpApplicationRecordLocked() might need to be tweaked - it shouldn\u0027t set the pendingStart to false without checking if it\u0027s already true - if that\u0027s true, we shouldn\u0027t start the process again",
+      "parentUuid": "c986a3f1_b52bdb22",
+      "revId": "f7f320960efd252bf932fbf81957bc21ef3baf40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
