@@ -183,10 +183,20 @@ CopyResult Readback::copySurfaceInto(ANativeWindow* window, const Rect& inSrcRec
     SkPaint paint;
     paint.setAlpha(255);
     paint.setBlendMode(SkBlendMode::kSrc);
+<<<<<<< HEAD   (d83584 Merge "[automerger skipped] Merge "[DO NOT MERGE] Add Storag)
     const bool hasBufferCrop = cropRect.left < cropRect.right && cropRect.top < cropRect.bottom;
     auto constraint =
             hasBufferCrop ? SkCanvas::kStrict_SrcRectConstraint : SkCanvas::kFast_SrcRectConstraint;
     canvas->drawImageRect(image, imageSrcRect, imageDstRect, sampling, &paint, constraint);
+=======
+    if (srcRect.width() != bitmap->width() || srcRect.height() != bitmap->height()) {
+        paint.setFilterQuality(kLow_SkFilterQuality);
+    }
+    const bool hasBufferCrop = cropRect.left < cropRect.right && cropRect.top < cropRect.bottom;
+    auto constraint =
+            hasBufferCrop ? SkCanvas::kStrict_SrcRectConstraint : SkCanvas::kFast_SrcRectConstraint;
+    canvas->drawImageRect(image, imageSrcRect, imageDstRect, &paint, constraint);
+>>>>>>> CHANGE (f13447 Avoid sampling outside BQ crop rect)
     canvas->restore();
 
     if (!tmpSurface->readPixels(*bitmap, 0, 0)) {
