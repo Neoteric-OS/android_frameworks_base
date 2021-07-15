@@ -195,6 +195,7 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
+import java.util.NoSuchElementException;
 
 public class AppOpsService extends IAppOpsService.Stub {
     static final String TAG = "AppOps";
@@ -714,7 +715,11 @@ public class AppOpsService extends IAppOpsService.Stub {
 
         /** Clean up event */
         public void finish() {
-            mClientId.unlinkToDeath(this, 0);
+            try {
+                mClientId.unlinkToDeath(this, 0);
+            } catch (NoSuchElementException e) {
+                Slog.e(TAG, "Unable to unlinkToDeath", e);
+            }
         }
 
         @Override
