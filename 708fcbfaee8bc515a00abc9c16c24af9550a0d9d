@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51ee1819_f93122d7",
+        "filename": "core/jni/include_vm/android_runtime/vm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-07-15T20:17:34Z",
+      "side": 1,
+      "message": "or wait - if libandroid_runtime is added to the process, but the JVM is not started, this will also happen? then mJavaVM should be nullptr",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 22,
+        "endChar": 26
+      },
+      "revId": "708fcbfaee8bc515a00abc9c16c24af9550a0d9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
