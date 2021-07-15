@@ -263,6 +263,24 @@
       "message": "Not sure if this is a problem, but I just ran into a Zygote crash locally saying \"Accept failed\" with EINTR at this location.\n\nMan page of accept(2)[1] says it may fail with EINTR so I believe it should be wrapped by TEMP_FAILURE_RETRY()?\n\nThere is also a write call in L430 that doesn\u0027t seem to handle EINTR either.\n\nExcuse me if I have made a mistake, but I don\u0027t want to just let it pass as I found it suspicious.\n\n[1]: https://man7.org/linux/man-pages/man2/accept.2.html",
       "revId": "69d44b0bfd5d4a6721ab3dccf537a147af7b6d1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21bdcee5_e3f2e237",
+        "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-07-15T07:34:46Z",
+      "side": 1,
+      "message": "Thanks for reporting! I\u0027ve filed b/193753947.",
+      "parentUuid": "817f1849_84af2662",
+      "revId": "69d44b0bfd5d4a6721ab3dccf537a147af7b6d1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
