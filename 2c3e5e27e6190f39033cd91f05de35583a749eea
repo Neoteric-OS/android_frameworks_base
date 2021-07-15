@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "264925cb_41755004",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2021-07-15T16:20:58Z",
+      "side": 1,
+      "message": "i think you\u0027re the only person in OWNERS who still works here? should folks like +zyy replace toddke and patb in OWNERS?",
+      "revId": "2c3e5e27e6190f39033cd91f05de35583a749eea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
