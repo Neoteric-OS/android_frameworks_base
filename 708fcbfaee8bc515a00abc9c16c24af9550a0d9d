@@ -22,6 +22,30 @@
       },
       "revId": "708fcbfaee8bc515a00abc9c16c24af9550a0d9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a179b972_bf89b001",
+        "filename": "core/jni/include_vm/android_runtime/vm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2021-07-15T20:30:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51ee1819_f93122d7",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 22,
+        "endChar": 26
+      },
+      "revId": "708fcbfaee8bc515a00abc9c16c24af9550a0d9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
