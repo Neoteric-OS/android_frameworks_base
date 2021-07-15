@@ -16,6 +16,24 @@
       "message": "Sorry to be a pain, but I still think GetJniEnv is the right API you need, and doesn\u0027t require custom new methods offering the same things as JNI-\u003eAttach/DetachCurrentThread.",
       "revId": "aa133171c24038bc049d1a1b8178e0aebee186c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6a4e547_a2908cf0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2021-07-15T18:20:27Z",
+      "side": 1,
+      "message": "you mean exposing JavaVM right? Those functions are on JavaVM.",
+      "parentUuid": "ff27e485_5072d573",
+      "revId": "aa133171c24038bc049d1a1b8178e0aebee186c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
