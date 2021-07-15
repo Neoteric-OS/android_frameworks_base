@@ -16,6 +16,24 @@
       "message": "I think the code is fine, but can you please write a test ?",
       "revId": "6a4f66fdc57e330baa50e628eeef77cb61a4149d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca9dcb40_374acca7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-07-15T04:33:14Z",
+      "side": 1,
+      "message": "Ah I just found the test, sorry.",
+      "parentUuid": "8952fe8f_deb234d3",
+      "revId": "6a4f66fdc57e330baa50e628eeef77cb61a4149d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
