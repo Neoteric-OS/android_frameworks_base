@@ -80,6 +80,30 @@
       },
       "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbd74e59_3cbef711",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-07-16T03:56:48Z",
+      "side": 1,
+      "message": "If for some reason the system_server calls the bindApplication() a bit late - and it\u0027s totally normal because there are often quite some lock contentions within the system_server - in this case the code in line 1138 would loop for quite some times and it wastes the cpu cycles for nothing. The cost of posting a message to a message queue won\u0027t be less than using a lock word - in fact the message queue\u0027s implementation itself involves locks. When there is http proxy update (which is the most common case here), a synchronized() lock word stays as a thin lock (refer: art/runtime/monitor.cc), its cost should be minimal. \n\nSo I\u0027d like to take lorenzo@\u0027s idea above into the account. Maybe put that code block around line 6707.",
+      "parentUuid": "8e691623_092eda33",
+      "range": {
+        "startLine": 1134,
+        "startChar": 16,
+        "endLine": 1134,
+        "endChar": 49
+      },
+      "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
