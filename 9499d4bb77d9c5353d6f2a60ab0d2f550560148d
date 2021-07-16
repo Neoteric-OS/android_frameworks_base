@@ -152,6 +152,30 @@
       },
       "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e802d768_ecce2c48",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-07-16T09:15:04Z",
+      "side": 1,
+      "message": "Yeah this should be fine to me. Understood that using \u0027this\u0027 would potentially increase the possibility of lock contentions (thus the monitor object \u0027this\u0027 could become a fat lock, so each synchronized(this) won\u0027t be cheap anymore) - yet I\u0027m feeling that using a different lock might be overkilling.\n\nMaybe another idea here is, now sure if it would be okay or not: if all the updateHttpProxy() does is only to post a runnable to the main handler thread, something like this:\n\npublic void updateHttpProxy() {\n   mH.post(() -\u003e {\n       final Application app \u003d getApplication();\n       if (app \u003d\u003d null) {\n           mUpdateHttpProxyOnBind \u003d true;\n           return;\n       }\n       ActivityThread.updateHttpProxy(app);\n   });\n}\n\nmeanwhile, in the handleBindApplication():\n\nprivate void handleBindApplication(AppBindData data) {\n    ...\n    if (mUpdateHttpProxyOnBind) {\n       ActivityThread.updateHttpProxy(app);\n    }\n    ...\n}\n\nBy doing this, there is no lock needed because they\u0027re all in the main thread, the only drawback here is that, the http proxy update would take effect a little bit late than before.",
+      "parentUuid": "65ac718c_766ddd7d",
+      "range": {
+        "startLine": 1134,
+        "startChar": 16,
+        "endLine": 1134,
+        "endChar": 49
+      },
+      "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
