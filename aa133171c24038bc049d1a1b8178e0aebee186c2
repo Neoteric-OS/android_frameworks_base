@@ -88,6 +88,24 @@
       "parentUuid": "c19ba4be_387774a8",
       "revId": "aa133171c24038bc049d1a1b8178e0aebee186c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7a28ee0_47a3ec94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2021-07-16T16:55:37Z",
+      "side": 1,
+      "message": "You can\u0027t Get a JNIEnv unless the thread is attached to the VM. AttachCurrentThread is on JavaVM, not JNIEnv.\n\nhttps://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/invocation.html\n\nThe whole reason this CL exists is that we don\u0027t have a JNIEnv when the thread is not attached to the VM.",
+      "parentUuid": "fa4d0f3a_04f1a9aa",
+      "revId": "aa133171c24038bc049d1a1b8178e0aebee186c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
