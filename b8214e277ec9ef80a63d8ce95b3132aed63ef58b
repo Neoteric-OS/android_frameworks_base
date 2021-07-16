@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef9785cf_9c7ffa9e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-07-16T08:40:36Z",
+      "side": 1,
+      "message": "Please look at the inline reply, and PTAL.",
+      "revId": "b8214e277ec9ef80a63d8ce95b3132aed63ef58b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

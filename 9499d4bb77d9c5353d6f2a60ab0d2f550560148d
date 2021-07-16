@@ -128,6 +128,30 @@
       },
       "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65ac718c_766ddd7d",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-07-16T08:40:36Z",
+      "side": 1,
+      "message": "Fair enough.\n\nI used \"this\" as the lock object (in spite of go/synchronized-this-considered-harmful because this lock already escapes anyway) to avoid the overhead of creating a new object just for this. Note that there are already some instances of synchronized (this) so it increases a little bit the lock contention, but it looks rarely used and I don\u0027t think it would be significant at all.\nAlso I only locked accesses to mInitialApplication in this use case ; I didn\u0027t want to increase lock contention everywhere it\u0027s accessed. That means I made the boolean @GuardedBy, but not mInitialApplication because most of the time it\u0027s not accessed locked and doesn\u0027t need to be.\n\nLet me know if you\u0027d prefer a separate object for this lock.",
+      "parentUuid": "6ef19cfe_7647a4b2",
+      "range": {
+        "startLine": 1134,
+        "startChar": 16,
+        "endLine": 1134,
+        "endChar": 49
+      },
+      "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
