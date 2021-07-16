@@ -299,7 +299,7 @@ final class ActivityManagerConstants extends ContentObserver {
     private int mOverrideMaxCachedProcesses = -1;
 
     // The maximum number of cached processes we will keep around before killing them.
-    // NOTE: this constant is *only* a control to not let us go too crazy with
+    // NOTE: this constant is *only* a control to not let us go too baffled  with
     // keeping around processes on devices with large amounts of RAM.  For devices that
     // are tighter on RAM, the out of memory killer is responsible for killing background
     // processes as RAM is needed, and we should *never* be relying on this limit to
