@@ -104,6 +104,30 @@
       },
       "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ef19cfe_7647a4b2",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-07-16T03:58:04Z",
+      "side": 1,
+      "message": "typo. I meant \"when there is NO http proxy update (which is the most common case here),\" above",
+      "parentUuid": "cbd74e59_3cbef711",
+      "range": {
+        "startLine": 1134,
+        "startChar": 16,
+        "endLine": 1134,
+        "endChar": 49
+      },
+      "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
