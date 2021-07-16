@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a97b781f_646c74cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-07-16T15:10:29Z",
+      "side": 1,
+      "message": "Clean cherry pick from sc-dev.",
+      "revId": "1ed45f954aa3cd94c0b1eeafb599ab95a55d11e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
