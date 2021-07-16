@@ -106,6 +106,24 @@
       "parentUuid": "fa4d0f3a_04f1a9aa",
       "revId": "aa133171c24038bc049d1a1b8178e0aebee186c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8bf2651_aa1d1cad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2021-07-16T16:57:56Z",
+      "side": 1,
+      "message": "JavaVM::GetEnv() returns null when the thread is not attached. This is exactly what this CL is trying to solve.",
+      "parentUuid": "f7a28ee0_47a3ec94",
+      "revId": "aa133171c24038bc049d1a1b8178e0aebee186c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
