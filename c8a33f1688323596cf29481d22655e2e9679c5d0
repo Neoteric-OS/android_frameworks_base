@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d8b2a09_76998134",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1335,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-07-16T07:06:52Z",
+      "side": 1,
+      "message": "This is what should be exposed. JNIEnv is a proper interface.",
+      "range": {
+        "startLine": 1335,
+        "startChar": 19,
+        "endLine": 1335,
+        "endChar": 44
+      },
+      "revId": "c8a33f1688323596cf29481d22655e2e9679c5d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
