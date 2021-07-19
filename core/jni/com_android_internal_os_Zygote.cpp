@@ -190,6 +190,17 @@ static constexpr int PROCESS_PRIORITY_MIN = 19;
 /** The numeric value for the normal priority a process should have. */
 static constexpr int PROCESS_PRIORITY_DEFAULT = 0;
 
+/** Exponential back off parameters for storage dir check. */
+static constexpr unsigned int STORAGE_DIR_CHECK_RETRY_MULTIPLIER = 2;
+static constexpr unsigned int STORAGE_DIR_CHECK_INIT_INTERVAL_US = 50;
+static constexpr unsigned int STORAGE_DIR_CHECK_MAX_INTERVAL_US = 1000;
+/**
+ * Lower bound time we allow storage dir check to sleep.
+ * If it exceeds 2s, PROC_START_TIMEOUT_MSG will kill the starting app anyway,
+ * so it's fine to assume max retries is 5 mins.
+ */
+static constexpr int STORAGE_DIR_CHECK_TIMEOUT_US = 1000 * 1000 * 60 * 5;
+
 /**
  * A helper class containing accounting information for USAPs.
  */
@@ -1179,6 +1190,34 @@ static void relabelAllDirs(const char* path, security_context_t context, fail_fn
   closedir(dir);
 }
 
+static void WaitUntilDirReady(const std::string& target, fail_fn_t fail_fn) {
+  unsigned int sleepIntervalUs = STORAGE_DIR_CHECK_INIT_INTERVAL_US;
+
+  // This is just an approximate value as it doesn't need to be very accurate.
+  unsigned int sleepTotalUs = 0;
+
+  const char* dir_path = target.c_str();
+  while (sleepTotalUs < STORAGE_DIR_CHECK_TIMEOUT_US) {
+    if (access(dir_path, F_OK) == 0) {
+      if (sleepTotalUs > 0) {
+        ALOGW("wait dir %s access usleep total %d", dir_path, sleepTotalUs);
+      }
+      return;
+    }
+    // Failed, so we add exponential backoff and retry
+    usleep(sleepIntervalUs);
+    sleepTotalUs += sleepIntervalUs;
+    sleepIntervalUs = std::min<unsigned int>(
+        sleepIntervalUs * STORAGE_DIR_CHECK_RETRY_MULTIPLIER,
+        STORAGE_DIR_CHECK_MAX_INTERVAL_US);
+  }
+  // Last chance and get the latest errno if it fails.
+  if (access(dir_path, F_OK) == 0) {
+    return;
+  }
+  fail_fn(CREATE_ERROR("Error dir is not ready %s: %s", dir_path, strerror(errno)));
+}
+
 /**
  * Make other apps data directory not visible in CE, DE storage.
  *
@@ -1256,7 +1295,11 @@ static void isolateAppData(JNIEnv* env, const std::vector<std::string>& merged_d
     auto volPath = StringPrintf("%s/%s", externalPrivateMountPath, ent->d_name);
     auto cePath = StringPrintf("%s/user", volPath.c_str());
     auto dePath = StringPrintf("%s/user_de", volPath.c_str());
+    // Wait until dir user is created.
+    WaitUntilDirReady(cePath.c_str(), fail_fn);
     MountAppDataTmpFs(cePath.c_str(), fail_fn);
+    // Wait until dir user_de is created.
+    WaitUntilDirReady(dePath.c_str(), fail_fn);
     MountAppDataTmpFs(dePath.c_str(), fail_fn);
   }
   closedir(dir);
