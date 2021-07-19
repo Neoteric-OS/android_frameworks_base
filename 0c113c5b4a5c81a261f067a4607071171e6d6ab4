@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7e556e05_19b6d80d",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-07-19T23:46:07Z",
+      "side": 1,
+      "message": "No, I am not changing the behavior of the function.",
+      "parentUuid": "24543e91_b2cf882e",
+      "range": {
+        "startLine": 412,
+        "startChar": 28,
+        "endLine": 414,
+        "endChar": 20
+      },
+      "revId": "0c113c5b4a5c81a261f067a4607071171e6d6ab4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "abdfdaa9_00a9c2cb",
         "filename": "core/java/android/os/UpdateEngine.java",
         "patchSetId": 5
@@ -37,6 +61,30 @@
       "writtenOn": "2021-07-19T22:28:53Z",
       "side": 1,
       "message": "@SystemApi are usually guarded by privileged permission. How is this system API protected? Is there a permission that caller must hold in order to call this API?",
+      "range": {
+        "startLine": 436,
+        "startChar": 16,
+        "endLine": 436,
+        "endChar": 43
+      },
+      "revId": "0c113c5b4a5c81a261f067a4607071171e6d6ab4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4f7a3a7_aaaf7dea",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-07-19T23:46:07Z",
+      "side": 1,
+      "message": "That\u0027s a good question. From what I can tell, the update_engine API isn\u0027t guarded by privileged permission actually. We even have an update sample in aosp which isn\u0027t a privilege app at all.\nhttps://cs.android.com/android/platform/superproject/+/master:bootable/recovery/updater_sample/\n\nMaybe we indeed should consider a permission. But I assume we cannot narrow the required permission without breaking the backward compatibility?",
+      "parentUuid": "abdfdaa9_00a9c2cb",
       "range": {
         "startLine": 436,
         "startChar": 16,
