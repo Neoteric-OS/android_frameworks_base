@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013448944",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1683328?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "13033dc7_d4aa19a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-19T08:13:56Z",
+      "side": 1,
+      "message": "\"manual testing\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "a7e54e410a5d579567dc9c56c7d0d440f5e703a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
