@@ -52,8 +52,6 @@ import java.util.function.Consumer;
  * Use {@link ImsManager#getImsRcsManager(int)} to create an instance of this manager.
  */
 public class ImsRcsManager {
-    private static final String TAG = "ImsRcsManager";
-
     /**
      * Activity Action: Show the opt-in dialog for enabling or disabling RCS contact discovery
      * using User Capability Exchange (UCE), which enables a service that periodically shares the
@@ -75,87 +73,13 @@ public class ImsRcsManager {
      * setting will be be shown for.
      * <p>
      * Output: Nothing
+     *
      * @see RcsUceAdapter
      */
     @SdkConstant(SdkConstant.SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_SHOW_CAPABILITY_DISCOVERY_OPT_IN =
             "android.telephony.ims.action.SHOW_CAPABILITY_DISCOVERY_OPT_IN";
-
-    /**
-     * An application can use {@link #addOnAvailabilityChangedListener} to register a
-     * {@link OnAvailabilityChangedListener}, which will notify the user when the RCS feature
-     * availability status updates from the ImsService.
-     * @hide
-     */
-    @SystemApi
-    public interface OnAvailabilityChangedListener {
-        /**
-         * The availability of the feature's capabilities has changed to either available or
-         * unavailable.
-         * <p>
-         * If unavailable, the feature does not support the capability at the current time. This may
-         * be due to network or subscription provisioning changes, such as the IMS registration
-         * being lost, network type changing, or OMA-DM provisioning updates.
-         *
-         * @param capabilities The new availability of the capabilities.
-         */
-        void onAvailabilityChanged(@RcsUceAdapter.RcsImsCapabilityFlag int capabilities);
-    }
-
-    /**
-     * Receive the availability status changed from the ImsService and pass the status change to
-     * the associated {@link OnAvailabilityChangedListener}
-     */
-    private static class AvailabilityCallbackAdapter {
-
-        private static class CapabilityBinder extends IImsCapabilityCallback.Stub {
-            private final OnAvailabilityChangedListener mOnAvailabilityChangedListener;
-            private final Executor mExecutor;
-
-            CapabilityBinder(OnAvailabilityChangedListener listener, Executor executor) {
-                mExecutor = executor;
-                mOnAvailabilityChangedListener = listener;
-            }
-
-            @Override
-            public void onCapabilitiesStatusChanged(int config) {
-                if (mOnAvailabilityChangedListener == null) return;
-
-                long callingIdentity = Binder.clearCallingIdentity();
-                try {
-                    mExecutor.execute(() ->
-                            mOnAvailabilityChangedListener.onAvailabilityChanged(config));
-                } finally {
-                    restoreCallingIdentity(callingIdentity);
-                }
-            }
-
-            @Override
-            public void onQueryCapabilityConfiguration(int capability, int radioTech,
-                    boolean isEnabled) {
-                // This is not used.
-            }
-
-            @Override
-            public void onChangeCapabilityConfigurationError(int capability, int radioTech,
-                    @ImsFeature.ImsCapabilityError int reason) {
-                // This is not used.
-            }
-        }
-
-        private final CapabilityBinder mBinder;
-
-        AvailabilityCallbackAdapter(@NonNull Executor executor,
-                @NonNull OnAvailabilityChangedListener listener) {
-            mBinder = new CapabilityBinder(listener, executor);
-        }
-
-        /**@hide*/
-        public final IImsCapabilityCallback getBinder() {
-            return mBinder;
-        }
-    }
-
+    private static final String TAG = "ImsRcsManager";
     private final int mSubId;
     private final Context mContext;
     private final BinderCacheManager<IImsRcsController> mBinderCache;
@@ -164,6 +88,7 @@ public class ImsRcsManager {
 
     /**
      * Use {@link ImsManager#getImsRcsManager(int)} to create an instance of this class.
+     *
      * @hide
      */
     public ImsRcsManager(Context context, int subId,
@@ -193,12 +118,14 @@ public class ImsRcsManager {
      * (see {@link android.telephony.TelephonyManager#hasCarrierPrivileges}).
      *
      * @param executor The executor the callback events should be run on.
-     * @param c The {@link RegistrationManager.RegistrationCallback} to be added.
-     * @see #unregisterImsRegistrationCallback(RegistrationManager.RegistrationCallback)
+     * @param c        The {@link RegistrationManager.RegistrationCallback} to be added.
      * @throws ImsException if the subscription associated with this callback is valid, but
-     * the {@link ImsService} associated with the subscription is not available. This can happen if
-     * the service crashed, for example. See {@link ImsException#getCode()} for a more detailed
-     * reason.
+     *                      the {@link ImsService} associated with the subscription is not
+     *                      available. This can happen if
+     *                      the service crashed, for example. See {@link ImsException#getCode()} for
+     *                      a more detailed
+     *                      reason.
+     * @see #unregisterImsRegistrationCallback(RegistrationManager.RegistrationCallback)
      */
     @RequiresPermission(Manifest.permission.READ_PRECISE_PHONE_STATE)
     public void registerImsRegistrationCallback(
@@ -271,13 +198,16 @@ public class ImsRcsManager {
      * READ_PRECISE_PHONE_STATE} or that the calling app has carrier privileges
      * (see {@link android.telephony.TelephonyManager#hasCarrierPrivileges}).
      *
-     * @param executor The {@link Executor} that will be used to call the IMS registration state
-     * callback.
-     * @param stateCallback A callback called on the supplied {@link Executor} that will contain the
-     * registration state of the IMS service, which will be one of the
-     * following: {@link RegistrationManager#REGISTRATION_STATE_NOT_REGISTERED},
-     * {@link RegistrationManager#REGISTRATION_STATE_REGISTERING}, or
-     * {@link RegistrationManager#REGISTRATION_STATE_REGISTERED}.
+     * @param executor      The {@link Executor} that will be used to call the IMS registration
+     *                      state
+     *                      callback.
+     * @param stateCallback A callback called on the supplied {@link Executor} that will contain
+     *                      the
+     *                      registration state of the IMS service, which will be one of the
+     *                      following:
+     *                      {@link RegistrationManager#REGISTRATION_STATE_NOT_REGISTERED},
+     *                      {@link RegistrationManager#REGISTRATION_STATE_REGISTERING}, or
+     *                      {@link RegistrationManager#REGISTRATION_STATE_REGISTERED}.
      */
     @RequiresPermission(Manifest.permission.READ_PRECISE_PHONE_STATE)
     public void getRegistrationState(@NonNull @CallbackExecutor Executor executor,
@@ -299,7 +229,12 @@ public class ImsRcsManager {
             imsRcsController.getImsRcsRegistrationState(mSubId, new IIntegerConsumer.Stub() {
                 @Override
                 public void accept(int result) {
-                    executor.execute(() -> stateCallback.accept(result));
+                    final long identity = Binder.clearCallingIdentity();
+                    try {
+                        executor.execute(() -> stateCallback.accept(result));
+                    } finally {
+                        Binder.restoreCallingIdentity(identity);
+                    }
                 }
             });
         } catch (RemoteException e) {
@@ -314,12 +249,13 @@ public class ImsRcsManager {
      * READ_PRECISE_PHONE_STATE} or that the calling app has carrier privileges
      * (see {@link android.telephony.TelephonyManager#hasCarrierPrivileges}).
      *
-     * @param executor The {@link Executor} that will be used to call the transportTypeCallback.
+     * @param executor              The {@link Executor} that will be used to call the
+     *                              transportTypeCallback.
      * @param transportTypeCallback The transport type associated with the current IMS registration,
-     * which will be one of following:
-     * {@see AccessNetworkConstants#TRANSPORT_TYPE_WWAN},
-     * {@see AccessNetworkConstants#TRANSPORT_TYPE_WLAN}, or
-     * {@see AccessNetworkConstants#TRANSPORT_TYPE_INVALID}.
+     *                              which will be one of following:
+     *                              {@see AccessNetworkConstants#TRANSPORT_TYPE_WWAN},
+     *                              {@see AccessNetworkConstants#TRANSPORT_TYPE_WLAN}, or
+     *                              {@see AccessNetworkConstants#TRANSPORT_TYPE_INVALID}.
      */
     @RequiresPermission(Manifest.permission.READ_PRECISE_PHONE_STATE)
     public void getRegistrationTransportType(@NonNull @CallbackExecutor Executor executor,
@@ -343,7 +279,12 @@ public class ImsRcsManager {
                     new IIntegerConsumer.Stub() {
                         @Override
                         public void accept(int result) {
-                            executor.execute(() -> transportTypeCallback.accept(result));
+                            final long identity = Binder.clearCallingIdentity();
+                            try {
+                                executor.execute(() -> transportTypeCallback.accept(result));
+                            } finally {
+                                Binder.restoreCallingIdentity(identity);
+                            }
                         }
                     });
         } catch (RemoteException e) {
@@ -365,12 +306,15 @@ public class ImsRcsManager {
      *
      * @param executor The executor the callback events should be run on.
      * @param listener The RCS {@link OnAvailabilityChangedListener} to be registered.
-     * @see #removeOnAvailabilityChangedListener(OnAvailabilityChangedListener)
      * @throws ImsException if the subscription associated with this instance of
-     * {@link ImsRcsManager} is valid, but the ImsService associated with the subscription is not
-     * available. This can happen if the ImsService has crashed, for example, or if the subscription
-     * becomes inactive. See {@link ImsException#getCode()} for more information on the error codes.
+     *                      {@link ImsRcsManager} is valid, but the ImsService associated with the
+     *                      subscription is not
+     *                      available. This can happen if the ImsService has crashed, for example,
+     *                      or if the subscription
+     *                      becomes inactive. See {@link ImsException#getCode()} for more
+     *                      information on the error codes.
      * @hide
+     * @see #removeOnAvailabilityChangedListener(OnAvailabilityChangedListener)
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
@@ -404,17 +348,19 @@ public class ImsRcsManager {
         }
     }
 
-     /**
+    /**
      * Removes an existing RCS {@link OnAvailabilityChangedListener}.
      * <p>
      * When the subscription associated with this callback is removed (SIM removed, ESIM swap,
      * etc...), this callback will automatically be unregistered. If this method is called for an
      * inactive subscription, it will result in a no-op.
+     *
      * @param listener The RCS {@link OnAvailabilityChangedListener} to be removed.
-     * @see #addOnAvailabilityChangedListener(Executor, OnAvailabilityChangedListener)
      * @throws ImsException if the IMS service is not available when calling this method.
-     * See {@link ImsException#getCode()} for more information on the error codes.
+     *                      See {@link ImsException#getCode()} for more information on the error
+     *                      codes.
      * @hide
+     * @see #addOnAvailabilityChangedListener(Executor, OnAvailabilityChangedListener)
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
@@ -451,16 +397,17 @@ public class ImsRcsManager {
      * RCS capabilities provided over-the-top by applications.
      *
      * @param capability The RCS capability to query.
-     * @param radioTech The radio technology type that we are querying.
+     * @param radioTech  The radio technology type that we are querying.
      * @return true if the RCS capability is capable for this subscription, false otherwise. This
      * does not necessarily mean that we are registered for IMS and the capability is available, but
      * rather the subscription is capable of this service over IMS.
+     * @throws ImsException if the IMS service is not available when calling this method.
+     *                      See {@link ImsException#getCode()} for more information on the error
+     *                      codes.
+     * @hide
      * @see #isAvailable(int, int)
      * @see android.telephony.CarrierConfigManager#KEY_USE_RCS_PRESENCE_BOOL
      * @see android.telephony.CarrierConfigManager.Ims#KEY_ENABLE_PRESENCE_CAPABILITY_EXCHANGE_BOOL
-     * @throws ImsException if the IMS service is not available when calling this method.
-     * See {@link ImsException#getCode()} for more information on the error codes.
-     * @hide
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
@@ -489,14 +436,15 @@ public class ImsRcsManager {
      * RCS capabilities provided by over-the-top by applications.
      *
      * @param capability the RCS capability to query.
-     * @param radioTech The radio technology type that we are querying.
+     * @param radioTech  The radio technology type that we are querying.
      * @return true if the RCS capability is currently available for the associated subscription,
      * false otherwise. If the capability is available, IMS is registered and the service is
      * currently available over IMS.
-     * @see #isCapable(int, int)
      * @throws ImsException if the IMS service is not available when calling this method.
-     * See {@link ImsException#getCode()} for more information on the error codes.
+     *                      See {@link ImsException#getCode()} for more information on the error
+     *                      codes.
      * @hide
+     * @see #isCapable(int, int)
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
@@ -521,8 +469,9 @@ public class ImsRcsManager {
 
     /**
      * Add the {@link OnAvailabilityChangedListener} to collection for tracking.
+     *
      * @param executor The executor that will be used when the publish state is changed and the
-     * {@link OnAvailabilityChangedListener} is called.
+     *                 {@link OnAvailabilityChangedListener} is called.
      * @param listener The {@link OnAvailabilityChangedListener} to call the publish state changed.
      * @return The {@link AvailabilityCallbackAdapter} to wrapper the
      * {@link OnAvailabilityChangedListener}
@@ -538,6 +487,7 @@ public class ImsRcsManager {
 
     /**
      * Remove the existing {@link OnAvailabilityChangedListener} from the collection.
+     *
      * @param listener The {@link OnAvailabilityChangedListener} to remove from the collection.
      * @return The wrapper class {@link AvailabilityCallbackAdapter} associated with the
      * {@link OnAvailabilityChangedListener}.
@@ -555,5 +505,81 @@ public class ImsRcsManager {
                 .getTelephonyImsServiceRegisterer()
                 .get();
         return IImsRcsController.Stub.asInterface(binder);
+    }
+
+    /**
+     * An application can use {@link #addOnAvailabilityChangedListener} to register a
+     * {@link OnAvailabilityChangedListener}, which will notify the user when the RCS feature
+     * availability status updates from the ImsService.
+     *
+     * @hide
+     */
+    @SystemApi
+    public interface OnAvailabilityChangedListener {
+        /**
+         * The availability of the feature's capabilities has changed to either available or
+         * unavailable.
+         * <p>
+         * If unavailable, the feature does not support the capability at the current time. This may
+         * be due to network or subscription provisioning changes, such as the IMS registration
+         * being lost, network type changing, or OMA-DM provisioning updates.
+         *
+         * @param capabilities The new availability of the capabilities.
+         */
+        void onAvailabilityChanged(@RcsUceAdapter.RcsImsCapabilityFlag int capabilities);
+    }
+
+    /**
+     * Receive the availability status changed from the ImsService and pass the status change to
+     * the associated {@link OnAvailabilityChangedListener}
+     */
+    private static class AvailabilityCallbackAdapter {
+
+        private final CapabilityBinder mBinder;
+
+        AvailabilityCallbackAdapter(@NonNull Executor executor,
+                @NonNull OnAvailabilityChangedListener listener) {
+            mBinder = new CapabilityBinder(listener, executor);
+        }
+
+        /** @hide */
+        public final IImsCapabilityCallback getBinder() {
+            return mBinder;
+        }
+
+        private static class CapabilityBinder extends IImsCapabilityCallback.Stub {
+            private final OnAvailabilityChangedListener mOnAvailabilityChangedListener;
+            private final Executor mExecutor;
+
+            CapabilityBinder(OnAvailabilityChangedListener listener, Executor executor) {
+                mExecutor = executor;
+                mOnAvailabilityChangedListener = listener;
+            }
+
+            @Override
+            public void onCapabilitiesStatusChanged(int config) {
+                if (mOnAvailabilityChangedListener == null) return;
+
+                long callingIdentity = Binder.clearCallingIdentity();
+                try {
+                    mExecutor.execute(() ->
+                            mOnAvailabilityChangedListener.onAvailabilityChanged(config));
+                } finally {
+                    restoreCallingIdentity(callingIdentity);
+                }
+            }
+
+            @Override
+            public void onQueryCapabilityConfiguration(int capability, int radioTech,
+                    boolean isEnabled) {
+                // This is not used.
+            }
+
+            @Override
+            public void onChangeCapabilityConfigurationError(int capability, int radioTech,
+                    @ImsFeature.ImsCapabilityError int reason) {
+                // This is not used.
+            }
+        }
     }
 }

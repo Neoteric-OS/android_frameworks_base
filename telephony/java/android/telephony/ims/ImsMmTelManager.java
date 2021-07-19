@@ -59,177 +59,47 @@ import java.util.function.Consumer;
  * manager.
  */
 public class ImsMmTelManager implements RegistrationManager {
-    private static final String TAG = "ImsMmTelManager";
-
-    /**
-     * @hide
-     */
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef(prefix = "WIFI_MODE_", value = {
-            WIFI_MODE_WIFI_ONLY,
-            WIFI_MODE_CELLULAR_PREFERRED,
-            WIFI_MODE_WIFI_PREFERRED
-            })
-    public @interface WiFiCallingMode {}
-
     /**
      * Register for IMS over IWLAN if WiFi signal quality is high enough. Do not hand over to LTE
      * registration if signal quality degrades.
      */
     public static final int WIFI_MODE_WIFI_ONLY = 0;
-
     /**
      * Prefer registering for IMS over LTE if LTE signal quality is high enough.
      */
     public static final int WIFI_MODE_CELLULAR_PREFERRED = 1;
-
     /**
      * Prefer registering for IMS over IWLAN if possible if WiFi signal quality is high enough.
      */
     public static final int WIFI_MODE_WIFI_PREFERRED = 2;
-
-    /**
-     * Callback class for receiving IMS network Registration callback events.
-     * @see #registerImsRegistrationCallback(Executor, RegistrationCallback) (RegistrationCallback)
-     * @see #unregisterImsRegistrationCallback(RegistrationCallback)
-     * @deprecated Use {@link RegistrationManager.RegistrationCallback} instead.
-     * @hide
-     */
-    // Do not add to this class, add to RegistrationManager.RegistrationCallback instead.
-    @Deprecated
-    @SystemApi
-    public static class RegistrationCallback extends RegistrationManager.RegistrationCallback {
-
-        /**
-         * Notifies the framework when the IMS Provider is registered to the IMS network.
-         *
-         * @param imsTransportType the radio access technology.
-         */
-        @Override
-        public void onRegistered(@AccessNetworkConstants.TransportType int imsTransportType) {
-        }
-
-        /**
-         * Notifies the framework when the IMS Provider is trying to register the IMS network.
-         *
-         * @param imsTransportType the radio access technology.
-         */
-        @Override
-        public void onRegistering(@AccessNetworkConstants.TransportType int imsTransportType) {
-        }
-
-        /**
-         * Notifies the framework when the IMS Provider is deregistered from the IMS network.
-         *
-         * @param info the {@link ImsReasonInfo} associated with why registration was disconnected.
-         */
-        @Override
-        public void onUnregistered(@NonNull ImsReasonInfo info) {
-        }
-
-        /**
-         * A failure has occurred when trying to handover registration to another technology type.
-         *
-         * @param imsTransportType The transport type that has failed to handover registration to.
-         * @param info A {@link ImsReasonInfo} that identifies the reason for failure.
-         */
-        @Override
-        public void onTechnologyChangeFailed(
-                @AccessNetworkConstants.TransportType int imsTransportType,
-                @NonNull ImsReasonInfo info) {
-        }
-    }
-
-    /**
-     * Receives IMS capability status updates from the ImsService.
-     *
-     * @see #registerMmTelCapabilityCallback(Executor, CapabilityCallback) (CapabilityCallback)
-     * @see #unregisterMmTelCapabilityCallback(CapabilityCallback)
-     */
-    public static class CapabilityCallback {
-
-        private static class CapabilityBinder extends IImsCapabilityCallback.Stub {
-
-            private final CapabilityCallback mLocalCallback;
-            private Executor mExecutor;
-
-            CapabilityBinder(CapabilityCallback c) {
-                mLocalCallback = c;
-            }
-
-            @Override
-            public void onCapabilitiesStatusChanged(int config) {
-                if (mLocalCallback == null) return;
-
-                long callingIdentity = Binder.clearCallingIdentity();
-                try {
-                    mExecutor.execute(() -> mLocalCallback.onCapabilitiesStatusChanged(
-                            new MmTelFeature.MmTelCapabilities(config)));
-                } finally {
-                    restoreCallingIdentity(callingIdentity);
-                }
-            }
-
-            @Override
-            public void onQueryCapabilityConfiguration(int capability, int radioTech,
-                    boolean isEnabled) {
-                // This is not used for public interfaces.
-            }
-
-            @Override
-            public void onChangeCapabilityConfigurationError(int capability, int radioTech,
-                    @ImsFeature.ImsCapabilityError int reason) {
-                // This is not used for public interfaces
-            }
-
-            private void setExecutor(Executor executor) {
-                mExecutor = executor;
-            }
-        }
-
-        private final CapabilityBinder mBinder = new CapabilityBinder(this);
-
-        /**
-         * The status of the feature's capabilities has changed to either available or unavailable.
-         * If unavailable, the feature is not able to support the unavailable capability at this
-         * time.
-         *
-         * @param capabilities The new availability of the capabilities.
-         */
-        public void onCapabilitiesStatusChanged(
-                @NonNull MmTelFeature.MmTelCapabilities capabilities) {
-        }
-
-        /**@hide*/
-        public final IImsCapabilityCallback getBinder() {
-            return mBinder;
-        }
-
-        /**@hide*/
-        // Only exposed as public method for compatibility with deprecated ImsManager APIs.
-        // TODO: clean up dependencies and change back to private visibility.
-        public final void setExecutor(Executor executor) {
-            mBinder.setExecutor(executor);
-        }
-    }
-
+    private static final String TAG = "ImsMmTelManager";
     private final int mSubId;
     private final BinderCacheManager<ITelephony> mBinderCache;
+
+    /**
+     * Only visible for testing, use {@link ImsManager#getImsMmTelManager(int)} instead.
+     *
+     * @hide
+     */
+    @VisibleForTesting
+    public ImsMmTelManager(int subId, BinderCacheManager<ITelephony> binderCache) {
+        mSubId = subId;
+        mBinderCache = binderCache;
+    }
 
     /**
      * Create an instance of {@link ImsMmTelManager} for the subscription id specified.
      *
      * @param subId The ID of the subscription that this ImsMmTelManager will use.
+     * @throws IllegalArgumentException if the subscription is invalid.
+     * @hide
      * @see android.telephony.SubscriptionManager#getActiveSubscriptionInfoList()
      *
      * <p>Requires Permission: {@link android.Manifest.permission#READ_PRECISE_PHONE_STATE
      * READ_PRECISE_PHONE_STATE} or that the calling app has carrier privileges
      * (see {@link android.telephony.TelephonyManager#hasCarrierPrivileges}).
-     *
-     * @throws IllegalArgumentException if the subscription is invalid.
      * @deprecated Use {@link android.telephony.ims.ImsManager#getImsMmTelManager(int)} to get an
      * instance of this class.
-     * @hide
      */
     @SystemApi
     @Deprecated
@@ -239,7 +109,8 @@ public class ImsMmTelManager implements RegistrationManager {
             android.Manifest.permission.READ_PRECISE_PHONE_STATE
     })
     @SuppressLint("ManagerLookup")
-    public static @NonNull ImsMmTelManager createForSubscriptionId(int subId) {
+    public static @NonNull
+    ImsMmTelManager createForSubscriptionId(int subId) {
         if (!SubscriptionManager.isValidSubscriptionId(subId)) {
             throw new IllegalArgumentException("Invalid subscription ID");
         }
@@ -248,14 +119,13 @@ public class ImsMmTelManager implements RegistrationManager {
                 ImsMmTelManager::getITelephonyInterface));
     }
 
-    /**
-     * Only visible for testing, use {@link ImsManager#getImsMmTelManager(int)} instead.
-     * @hide
-     */
-    @VisibleForTesting
-    public ImsMmTelManager(int subId, BinderCacheManager<ITelephony> binderCache) {
-        mSubId = subId;
-        mBinderCache = binderCache;
+    private static ITelephony getITelephonyInterface() {
+        ITelephony binder = ITelephony.Stub.asInterface(
+                TelephonyFrameworkInitializer
+                        .getTelephonyServiceManager()
+                        .getTelephonyServiceRegisterer()
+                        .get());
+        return binder;
     }
 
     /**
@@ -268,18 +138,22 @@ public class ImsMmTelManager implements RegistrationManager {
      * current registration state.
      *
      * @param executor The executor the callback events should be run on.
-     * @param c The {@link RegistrationCallback} to be added.
-     * @see #unregisterImsRegistrationCallback(RegistrationCallback)
+     * @param c        The {@link RegistrationCallback} to be added.
      * @throws IllegalArgumentException if the subscription associated with this callback is not
-     * active (SIM is not inserted, ESIM inactive) or invalid, or a null {@link Executor} or
-     * {@link CapabilityCallback} callback.
-     * @throws ImsException if the subscription associated with this callback is valid, but
-     * the {@link ImsService} associated with the subscription is not available. This can happen if
-     * the service crashed, for example. See {@link ImsException#getCode()} for a more detailed
-     * reason.
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid, or a
+     *                                  null {@link Executor} or
+     *                                  {@link CapabilityCallback} callback.
+     * @throws ImsException             if the subscription associated with this callback is valid,
+     *                                  but
+     *                                  the {@link ImsService} associated with the subscription is
+     *                                  not available. This can happen if
+     *                                  the service crashed, for example. See {@link
+     *                                  ImsException#getCode()} for a more detailed
+     *                                  reason.
+     * @hide
+     * @see #unregisterImsRegistrationCallback(RegistrationCallback)
      * @deprecated Use {@link RegistrationManager#registerImsRegistrationCallback(Executor,
      * RegistrationManager.RegistrationCallback)} instead.
-     * @hide
      */
     @Deprecated
     @SystemApi
@@ -314,14 +188,12 @@ public class ImsMmTelManager implements RegistrationManager {
         }
     }
 
-     /**
-     *
+    /**
      * <p>Requires Permission: {@link android.Manifest.permission#READ_PRECISE_PHONE_STATE
      * READ_PRECISE_PHONE_STATE} or that the calling app has carrier privileges
      * (see {@link android.telephony.TelephonyManager#hasCarrierPrivileges}).
      *
      * {@inheritDoc}
-     *
      */
     @Override
     @SuppressAutoDoc // No support for device / profile owner or carrier privileges (b/72967236).
@@ -361,11 +233,11 @@ public class ImsMmTelManager implements RegistrationManager {
      * inactive subscription, it will result in a no-op.
      *
      * @param c The {@link RegistrationCallback} to be removed.
+     * @hide
      * @see SubscriptionManager.OnSubscriptionsChangedListener
      * @see #registerImsRegistrationCallback(Executor, RegistrationCallback)
      * @deprecated Use {@link #unregisterImsRegistrationCallback(
-     * RegistrationManager.RegistrationCallback)}.
-     * @hide
+     *RegistrationManager.RegistrationCallback)}.
      */
     @Deprecated
     @SystemApi
@@ -387,14 +259,13 @@ public class ImsMmTelManager implements RegistrationManager {
         }
     }
 
-     /**
-     *
+    /**
      * <p>Requires Permission: {@link android.Manifest.permission#READ_PRECISE_PHONE_STATE
      * READ_PRECISE_PHONE_STATE} or that the calling app has carrier privileges
      * (see {@link android.telephony.TelephonyManager#hasCarrierPrivileges}).
      * Access by profile owners is deprecated and will be removed in a future release.
      *
-     *{@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     @SuppressAutoDoc // No support for device / profile owner or carrier privileges (b/72967236).
@@ -421,6 +292,7 @@ public class ImsMmTelManager implements RegistrationManager {
 
     /**
      * {@inheritDoc}
+     *
      * @hide
      */
     @Override
@@ -444,7 +316,12 @@ public class ImsMmTelManager implements RegistrationManager {
             iTelephony.getImsMmTelRegistrationState(mSubId, new IIntegerConsumer.Stub() {
                 @Override
                 public void accept(int result) {
-                    executor.execute(() -> stateCallback.accept(result));
+                    final long identity = Binder.clearCallingIdentity();
+                    try {
+                        executor.execute(() -> stateCallback.accept(result));
+                    } finally {
+                        Binder.restoreCallingIdentity(identity);
+                    }
                 }
             });
         } catch (RemoteException e) {
@@ -458,7 +335,7 @@ public class ImsMmTelManager implements RegistrationManager {
      * (see {@link android.telephony.TelephonyManager#hasCarrierPrivileges}).
      * Access by profile owners is deprecated and will be removed in a future release.
      *
-     *{@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     @SuppressAutoDoc // No support for device / profile owner or carrier privileges (b/72967236).
@@ -485,7 +362,12 @@ public class ImsMmTelManager implements RegistrationManager {
                     new IIntegerConsumer.Stub() {
                         @Override
                         public void accept(int result) {
-                            executor.execute(() -> transportTypeCallback.accept(result));
+                            final long identity = Binder.clearCallingIdentity();
+                            try {
+                                executor.execute(() -> transportTypeCallback.accept(result));
+                            } finally {
+                                Binder.restoreCallingIdentity(identity);
+                            }
                         }
                     });
         } catch (RemoteException e) {
@@ -519,12 +401,15 @@ public class ImsMmTelManager implements RegistrationManager {
      * current capabilities.
      *
      * @param executor The executor the callback events should be run on.
-     * @param c The MmTel {@link CapabilityCallback} to be registered.
-     * @see #unregisterMmTelCapabilityCallback(CapabilityCallback)
+     * @param c        The MmTel {@link CapabilityCallback} to be registered.
      * @throws ImsException if the subscription associated with this callback is valid, but
-     * the {@link ImsService} associated with the subscription is not available. This can happen if
-     * the service crashed, for example. See {@link ImsException#getCode()} for a more detailed
-     * reason.
+     *                      the {@link ImsService} associated with the subscription is not
+     *                      available. This can happen if
+     *                      the service crashed, for example. See {@link ImsException#getCode()}
+     *                      for
+     *                      a more detailed
+     *                      reason.
+     * @see #unregisterMmTelCapabilityCallback(CapabilityCallback)
      */
     @SuppressAutoDoc // No support for device / profile owner or carrier privileges (b/72967236).
     @RequiresPermission(anyOf = {
@@ -552,7 +437,7 @@ public class ImsMmTelManager implements RegistrationManager {
             throw new ImsException(e.getMessage(), e.errorCode);
         } catch (RemoteException e) {
             throw e.rethrowAsRuntimeException();
-        }  catch (IllegalStateException e) {
+        } catch (IllegalStateException e) {
             throw new ImsException(e.getMessage(), ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
         }
     }
@@ -625,14 +510,14 @@ public class ImsMmTelManager implements RegistrationManager {
      * see <a href="https://developer.android.com/work/managed-profiles">Work profiles</a>.
      * Access by profile owners is deprecated and will be removed in a future release.
      *
+     * @return true if the user's setting for advanced calling is enabled, false otherwise.
+     * @throws IllegalArgumentException if the subscription associated with this operation is not
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
      * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_PROVISIONING_REQUIRED_BOOL
      * @see android.telephony.CarrierConfigManager#KEY_EDITABLE_ENHANCED_4G_LTE_BOOL
      * @see android.telephony.CarrierConfigManager#KEY_HIDE_ENHANCED_4G_LTE_BOOL
      * @see android.telephony.CarrierConfigManager#KEY_ENHANCED_4G_LTE_ON_BY_DEFAULT_BOOL
      * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_AVAILABLE_BOOL
-     * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
-     * @return true if the user's setting for advanced calling is enabled, false otherwise.
      */
     @SuppressAutoDoc // No support for device / profile owner or carrier privileges (b/72967236).
     @RequiresPermission(anyOf = {
@@ -672,15 +557,15 @@ public class ImsMmTelManager implements RegistrationManager {
      * Note: If the carrier configuration for advanced calling is not editable or hidden, this
      * method will do nothing and will instead always use the default value.
      *
+     * @throws IllegalArgumentException if the subscription associated with this operation is not
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
+     * @hide
      * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_PROVISIONING_REQUIRED_BOOL
      * @see android.telephony.CarrierConfigManager#KEY_EDITABLE_ENHANCED_4G_LTE_BOOL
      * @see android.telephony.CarrierConfigManager#KEY_HIDE_ENHANCED_4G_LTE_BOOL
      * @see android.telephony.CarrierConfigManager#KEY_ENHANCED_4G_LTE_ON_BY_DEFAULT_BOOL
      * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_AVAILABLE_BOOL
      * @see #isAdvancedCallingSettingEnabled()
-     * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
-     * @hide
      */
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     @SystemApi
@@ -709,15 +594,15 @@ public class ImsMmTelManager implements RegistrationManager {
      * necessarily mean that we are registered and the capability is available, but rather the
      * subscription is capable of this service over IMS.
      *
+     * @param imsRegTech The IMS registration technology.
+     * @param capability The IMS MmTel capability to query.
+     * @return {@code true} if the MmTel IMS capability is capable for this subscription, false
+     * otherwise.
+     * @hide
      * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_AVAILABLE_BOOL
      * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VT_AVAILABLE_BOOL
      * @see android.telephony.CarrierConfigManager#KEY_CARRIER_IMS_GBA_REQUIRED_BOOL
      * @see #isAvailable(int, int)
-     * @param imsRegTech The IMS registration technology.
-     * @param capability The IMS MmTel capability to query.
-     * @return {@code true} if the MmTel IMS capability is capable for this subscription, false
-     *         otherwise.
-     * @hide
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @SystemApi
@@ -739,13 +624,12 @@ public class ImsMmTelManager implements RegistrationManager {
      * Query the availability of an IMS MmTel capability for a given registration technology. If
      * a capability is available, IMS is registered and the service is currently available over IMS.
      *
-     * @see #isCapable(int, int)
-     *
      * @param imsRegTech The IMS registration technology.
      * @param capability The IMS MmTel capability to query.
      * @return {@code true} if the MmTel IMS capability is available for this subscription, false
-     *         otherwise.
+     * otherwise.
      * @hide
+     * @see #isCapable(int, int)
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
@@ -770,13 +654,15 @@ public class ImsMmTelManager implements RegistrationManager {
      * This is a configuration option and does not change. The only time this may change is if a
      * new IMS configuration is loaded when there is a
      * {@link CarrierConfigManager#ACTION_CARRIER_CONFIG_CHANGED} broadcast for this subscription.
-     * @param capability The capability that is being queried for support on the carrier network.
+     *
+     * @param capability    The capability that is being queried for support on the carrier network.
      * @param transportType The transport type of the capability to check support for.
-     * @param executor The executor that the callback will be called with.
-     * @param callback A consumer containing a Boolean result specifying whether or not the
-     *                 capability is supported on this carrier network for the transport specified.
+     * @param executor      The executor that the callback will be called with.
+     * @param callback      A consumer containing a Boolean result specifying whether or not the
+     *                      capability is supported on this carrier network for the transport
+     *                      specified.
      * @throws ImsException if the subscription is no longer valid or the IMS service is not
-     * available.
+     *                      available.
      * @hide
      */
     @SystemApi
@@ -802,7 +688,12 @@ public class ImsMmTelManager implements RegistrationManager {
             iTelephony.isMmTelCapabilitySupported(mSubId, new IIntegerConsumer.Stub() {
                 @Override
                 public void accept(int result) {
-                    executor.execute(() -> callback.accept(result == 1));
+                    final long identity = Binder.clearCallingIdentity();
+                    try {
+                        executor.execute(() -> callback.accept(result == 1));
+                    } finally {
+                        Binder.restoreCallingIdentity(identity);
+                    }
                 }
             }, capability, transportType);
         } catch (ServiceSpecificException sse) {
@@ -832,9 +723,9 @@ public class ImsMmTelManager implements RegistrationManager {
      * see <a href="https://developer.android.com/work/managed-profiles">Work profiles</a>.
      * Access by profile owners is deprecated and will be removed in a future release.
      *
-     * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
      * @return true if the user’s “Video Calling” setting is currently enabled.
+     * @throws IllegalArgumentException if the subscription associated with this operation is not
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
      */
     @RequiresPermission(anyOf = {
             android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE,
@@ -864,9 +755,9 @@ public class ImsMmTelManager implements RegistrationManager {
      * Change the user's setting for Video Telephony and enable the Video Telephony capability.
      *
      * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
-     * @see #isVtSettingEnabled()
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
      * @hide
+     * @see #isVtSettingEnabled()
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
@@ -906,9 +797,8 @@ public class ImsMmTelManager implements RegistrationManager {
      * <p>The profile owner is an app that owns a managed profile on the device; for more details
      * see <a href="https://developer.android.com/work/managed-profiles">Work profiles</a>.
      * Access by profile owners is deprecated and will be removed in a future release.
-     *
      * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
      */
     @SuppressAutoDoc // No support for device / profile owner or carrier privileges (b/72967236).
     @RequiresPermission(anyOf = {
@@ -937,11 +827,11 @@ public class ImsMmTelManager implements RegistrationManager {
     /**
      * Sets the user's setting for whether or not Voice over WiFi is enabled.
      *
-     * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
      * @param isEnabled true if the user's setting for Voice over WiFi is enabled, false otherwise=
-     * @see #isVoWiFiSettingEnabled()
+     * @throws IllegalArgumentException if the subscription associated with this operation is not
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
      * @hide
+     * @see #isVoWiFiSettingEnabled()
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
@@ -982,10 +872,10 @@ public class ImsMmTelManager implements RegistrationManager {
      * see <a href="https://developer.android.com/work/managed-profiles">Work profiles</a>.
      * Access by profile owners is deprecated and will be removed in a future release.
      *
-     * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
      * @return true if the user's setting for Voice over WiFi while roaming is enabled, false
      * if disabled.
+     * @throws IllegalArgumentException if the subscription associated with this operation is not
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
      */
     @SuppressAutoDoc // No support for device / profile owner or carrier privileges (b/72967236).
     @RequiresPermission(anyOf = {
@@ -1015,11 +905,11 @@ public class ImsMmTelManager implements RegistrationManager {
      * Change the user's setting for Voice over WiFi while roaming.
      *
      * @param isEnabled true if the user's setting for Voice over WiFi while roaming is enabled,
-     *     false otherwise.
+     *                  false otherwise.
      * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
-     * @see #isVoWiFiRoamingSettingEnabled()
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
      * @hide
+     * @see #isVoWiFiRoamingSettingEnabled()
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
@@ -1048,15 +938,16 @@ public class ImsMmTelManager implements RegistrationManager {
      * Typically used during the Voice over WiFi registration process for some carriers.
      *
      * @param isCapable true if the IMS stack should try to register for IMS over IWLAN, false
-     *     otherwise.
-     * @param mode the Voice over WiFi mode preference to set, which can be one of the following:
-     * - {@link #WIFI_MODE_WIFI_ONLY}
-     * - {@link #WIFI_MODE_CELLULAR_PREFERRED}
-     * - {@link #WIFI_MODE_WIFI_PREFERRED}
+     *                  otherwise.
+     * @param mode      the Voice over WiFi mode preference to set, which can be one of the
+     *                  following:
+     *                  - {@link #WIFI_MODE_WIFI_ONLY}
+     *                  - {@link #WIFI_MODE_CELLULAR_PREFERRED}
+     *                  - {@link #WIFI_MODE_WIFI_PREFERRED}
      * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
-     * @see #setVoWiFiSettingEnabled(boolean)
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
      * @hide
+     * @see #setVoWiFiSettingEnabled(boolean)
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
@@ -1097,19 +988,20 @@ public class ImsMmTelManager implements RegistrationManager {
      * see <a href="https://developer.android.com/work/managed-profiles">Work profiles</a>.
      * Access by profile owners is deprecated and will be removed in a future release.
      *
-     * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
      * @return The Voice over WiFi Mode preference set by the user, which can be one of the
      * following:
      * - {@link #WIFI_MODE_WIFI_ONLY}
      * - {@link #WIFI_MODE_CELLULAR_PREFERRED}
      * - {@link #WIFI_MODE_WIFI_PREFERRED}
+     * @throws IllegalArgumentException if the subscription associated with this operation is not
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
      */
     @SuppressAutoDoc // No support for device / profile owner or carrier privileges (b/72967236).
     @RequiresPermission(anyOf = {
             android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE,
             android.Manifest.permission.READ_PRECISE_PHONE_STATE})
-    public @WiFiCallingMode int getVoWiFiModeSetting() {
+    public @WiFiCallingMode
+    int getVoWiFiModeSetting() {
         ITelephony iTelephony = getITelephony();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
@@ -1131,15 +1023,16 @@ public class ImsMmTelManager implements RegistrationManager {
 
     /**
      * Set the user's preference for Voice over WiFi calling mode.
+     *
      * @param mode The user's preference for the technology to register for IMS over, can be one of
-     *    the following:
-     * - {@link #WIFI_MODE_WIFI_ONLY}
-     * - {@link #WIFI_MODE_CELLULAR_PREFERRED}
-     * - {@link #WIFI_MODE_WIFI_PREFERRED}
+     *             the following:
+     *             - {@link #WIFI_MODE_WIFI_ONLY}
+     *             - {@link #WIFI_MODE_CELLULAR_PREFERRED}
+     *             - {@link #WIFI_MODE_WIFI_PREFERRED}
      * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
-     * @see #getVoWiFiModeSetting()
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
      * @hide
+     * @see #getVoWiFiModeSetting()
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
@@ -1168,18 +1061,19 @@ public class ImsMmTelManager implements RegistrationManager {
      * another network.
      *
      * @return The user's preference for the technology to register for IMS over when roaming on
-     *     another network, can be one of the following:
-     *     - {@link #WIFI_MODE_WIFI_ONLY}
-     *     - {@link #WIFI_MODE_CELLULAR_PREFERRED}
-     *     - {@link #WIFI_MODE_WIFI_PREFERRED}
+     * another network, can be one of the following:
+     * - {@link #WIFI_MODE_WIFI_ONLY}
+     * - {@link #WIFI_MODE_CELLULAR_PREFERRED}
+     * - {@link #WIFI_MODE_WIFI_PREFERRED}
      * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
-     * @see #setVoWiFiRoamingSettingEnabled(boolean)
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
      * @hide
+     * @see #setVoWiFiRoamingSettingEnabled(boolean)
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    public @WiFiCallingMode int getVoWiFiRoamingModeSetting() {
+    public @WiFiCallingMode
+    int getVoWiFiRoamingModeSetting() {
         ITelephony iTelephony = getITelephony();
         if (iTelephony == null) {
             throw new RuntimeException("Could not find Telephony Service.");
@@ -1204,14 +1098,14 @@ public class ImsMmTelManager implements RegistrationManager {
      * network.
      *
      * @param mode The user's preference for the technology to register for IMS over when roaming on
-     *     another network, can be one of the following:
-     *     - {@link #WIFI_MODE_WIFI_ONLY}
-     *     - {@link #WIFI_MODE_CELLULAR_PREFERRED}
-     *     - {@link #WIFI_MODE_WIFI_PREFERRED}
+     *             another network, can be one of the following:
+     *             - {@link #WIFI_MODE_WIFI_ONLY}
+     *             - {@link #WIFI_MODE_CELLULAR_PREFERRED}
+     *             - {@link #WIFI_MODE_WIFI_PREFERRED}
      * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
-     * @see #getVoWiFiRoamingModeSetting()
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
      * @hide
+     * @see #getVoWiFiRoamingModeSetting()
      */
     @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
@@ -1242,9 +1136,10 @@ public class ImsMmTelManager implements RegistrationManager {
      * {@link android.provider.Settings.Secure#RTT_CALLING_MODE}, which is the global user setting
      * for RTT. That value is enabled/disabled separately by the user through the Accessibility
      * settings.
-     * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
+     *
      * @param isEnabled if true RTT should be enabled during calls made on this subscription.
+     * @throws IllegalArgumentException if the subscription associated with this operation is not
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
      * @hide
      */
     @SystemApi
@@ -1285,9 +1180,8 @@ public class ImsMmTelManager implements RegistrationManager {
      * <p>The profile owner is an app that owns a managed profile on the device; for more details
      * see <a href="https://developer.android.com/work/managed-profiles">Work profiles</a>.
      * Access by profile owners is deprecated and will be removed in a future release.
-     *
      * @throws IllegalArgumentException if the subscription associated with this operation is not
-     * active (SIM is not inserted, ESIM inactive) or invalid.
+     *                                  active (SIM is not inserted, ESIM inactive) or invalid.
      * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_TTY_SUPPORTED_BOOL
      */
     @SuppressAutoDoc // No support for device / profile owner or carrier privileges (b/72967236).
@@ -1316,15 +1210,16 @@ public class ImsMmTelManager implements RegistrationManager {
 
     /**
      * Get the status of the MmTel Feature registered on this subscription.
+     *
      * @param executor The executor that will be used to call the callback.
      * @param callback A callback containing an Integer describing the current state of the
      *                 MmTel feature, Which will be one of the following:
      *                 {@link ImsFeature#STATE_UNAVAILABLE},
-     *                {@link ImsFeature#STATE_INITIALIZING},
-     *                {@link ImsFeature#STATE_READY}. Will be called using the executor
+     *                 {@link ImsFeature#STATE_INITIALIZING},
+     *                 {@link ImsFeature#STATE_READY}. Will be called using the executor
      *                 specified when the service state has been retrieved from the IMS service.
      * @throws ImsException if the IMS service associated with this subscription is not available or
-     * the IMS service is not available.
+     *                      the IMS service is not available.
      * @hide
      */
     @SystemApi
@@ -1348,7 +1243,12 @@ public class ImsMmTelManager implements RegistrationManager {
             iTelephony.getImsMmTelFeatureState(mSubId, new IIntegerConsumer.Stub() {
                 @Override
                 public void accept(int result) {
-                    executor.execute(() -> callback.accept(result));
+                    final long identity = Binder.clearCallingIdentity();
+                    try {
+                        executor.execute(() -> callback.accept(result));
+                    } finally {
+                        Binder.restoreCallingIdentity(identity);
+                    }
                 }
             });
         } catch (ServiceSpecificException sse) {
@@ -1362,12 +1262,141 @@ public class ImsMmTelManager implements RegistrationManager {
         return mBinderCache.getBinder();
     }
 
-    private static ITelephony getITelephonyInterface() {
-        ITelephony binder = ITelephony.Stub.asInterface(
-                TelephonyFrameworkInitializer
-                        .getTelephonyServiceManager()
-                        .getTelephonyServiceRegisterer()
-                        .get());
-        return binder;
+    /**
+     * @hide
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(prefix = "WIFI_MODE_", value = {
+            WIFI_MODE_WIFI_ONLY,
+            WIFI_MODE_CELLULAR_PREFERRED,
+            WIFI_MODE_WIFI_PREFERRED
+    })
+    public @interface WiFiCallingMode {
+    }
+
+    /**
+     * Callback class for receiving IMS network Registration callback events.
+     *
+     * @hide
+     * @see #registerImsRegistrationCallback(Executor, RegistrationCallback) (RegistrationCallback)
+     * @see #unregisterImsRegistrationCallback(RegistrationCallback)
+     * @deprecated Use {@link RegistrationManager.RegistrationCallback} instead.
+     */
+    // Do not add to this class, add to RegistrationManager.RegistrationCallback instead.
+    @Deprecated
+    @SystemApi
+    public static class RegistrationCallback extends RegistrationManager.RegistrationCallback {
+
+        /**
+         * Notifies the framework when the IMS Provider is registered to the IMS network.
+         *
+         * @param imsTransportType the radio access technology.
+         */
+        @Override
+        public void onRegistered(@AccessNetworkConstants.TransportType int imsTransportType) {
+        }
+
+        /**
+         * Notifies the framework when the IMS Provider is trying to register the IMS network.
+         *
+         * @param imsTransportType the radio access technology.
+         */
+        @Override
+        public void onRegistering(@AccessNetworkConstants.TransportType int imsTransportType) {
+        }
+
+        /**
+         * Notifies the framework when the IMS Provider is deregistered from the IMS network.
+         *
+         * @param info the {@link ImsReasonInfo} associated with why registration was disconnected.
+         */
+        @Override
+        public void onUnregistered(@NonNull ImsReasonInfo info) {
+        }
+
+        /**
+         * A failure has occurred when trying to handover registration to another technology type.
+         *
+         * @param imsTransportType The transport type that has failed to handover registration to.
+         * @param info             A {@link ImsReasonInfo} that identifies the reason for failure.
+         */
+        @Override
+        public void onTechnologyChangeFailed(
+                @AccessNetworkConstants.TransportType int imsTransportType,
+                @NonNull ImsReasonInfo info) {
+        }
+    }
+
+    /**
+     * Receives IMS capability status updates from the ImsService.
+     *
+     * @see #registerMmTelCapabilityCallback(Executor, CapabilityCallback) (CapabilityCallback)
+     * @see #unregisterMmTelCapabilityCallback(CapabilityCallback)
+     */
+    public static class CapabilityCallback {
+
+        private final CapabilityBinder mBinder = new CapabilityBinder(this);
+
+        /**
+         * The status of the feature's capabilities has changed to either available or unavailable.
+         * If unavailable, the feature is not able to support the unavailable capability at this
+         * time.
+         *
+         * @param capabilities The new availability of the capabilities.
+         */
+        public void onCapabilitiesStatusChanged(
+                @NonNull MmTelFeature.MmTelCapabilities capabilities) {
+        }
+
+        /** @hide */
+        public final IImsCapabilityCallback getBinder() {
+            return mBinder;
+        }
+
+        /** @hide */
+        // Only exposed as public method for compatibility with deprecated ImsManager APIs.
+        // TODO: clean up dependencies and change back to private visibility.
+        public final void setExecutor(Executor executor) {
+            mBinder.setExecutor(executor);
+        }
+
+        private static class CapabilityBinder extends IImsCapabilityCallback.Stub {
+
+            private final CapabilityCallback mLocalCallback;
+            private Executor mExecutor;
+
+            CapabilityBinder(CapabilityCallback c) {
+                mLocalCallback = c;
+            }
+
+            @Override
+            public void onCapabilitiesStatusChanged(int config) {
+                if (mLocalCallback == null) return;
+
+                long callingIdentity = Binder.clearCallingIdentity();
+                try {
+                    mExecutor.execute(() -> mLocalCallback.onCapabilitiesStatusChanged(
+                            new MmTelFeature.MmTelCapabilities(config)));
+                } finally {
+                    restoreCallingIdentity(callingIdentity);
+                }
+            }
+
+            @Override
+            public void onQueryCapabilityConfiguration(int capability, int radioTech,
+                    boolean isEnabled) {
+                // This is not used for public interfaces.
+            }
+
+            @Override
+            public void onChangeCapabilityConfigurationError(int capability, int radioTech,
+                    @ImsFeature.ImsCapabilityError int reason) {
+                // This is not used for public interfaces
+            }
+
+            private void setExecutor(Executor executor) {
+                mExecutor = executor;
+            }
+        }
     }
 }
