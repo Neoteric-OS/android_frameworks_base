@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24543e91_b2cf882e",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2021-07-19T22:28:53Z",
+      "side": 1,
+      "message": "Just to make sure I got this correctly. You are not changing the behaviour of resetStatus, right? If you are, then the behaviour change should be gated based on the targetSdkLevel of a caller to give apps chance to migrate to the new behaviour",
+      "range": {
+        "startLine": 412,
+        "startChar": 28,
+        "endLine": 414,
+        "endChar": 20
+      },
+      "revId": "0c113c5b4a5c81a261f067a4607071171e6d6ab4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abdfdaa9_00a9c2cb",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2021-07-19T22:28:53Z",
+      "side": 1,
+      "message": "@SystemApi are usually guarded by privileged permission. How is this system API protected? Is there a permission that caller must hold in order to call this API?",
+      "range": {
+        "startLine": 436,
+        "startChar": 16,
+        "endLine": 436,
+        "endChar": 43
+      },
+      "revId": "0c113c5b4a5c81a261f067a4607071171e6d6ab4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
