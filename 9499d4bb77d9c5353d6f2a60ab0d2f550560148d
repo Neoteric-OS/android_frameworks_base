@@ -176,6 +176,30 @@
       },
       "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa789c86_e3161e97",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-07-19T03:05:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure the delay is acceptable in practice. Apps are supposed to listen to PROXY_CHANGE_ACTION to know when to read the proxy, and reading from the system properties (while not the documented way) is a common way of doing this.\n\nIf it becomes possible that the app processes the (sticky) broadcast before the system properties are set, then we\u0027re going to break apps. I get that it is very unlikely if it\u0027s a handler loop racing against a broadcast receiver, but the bug would also be very difficult to diagnose.",
+      "parentUuid": "e802d768_ecce2c48",
+      "range": {
+        "startLine": 1134,
+        "startChar": 16,
+        "endLine": 1134,
+        "endChar": 49
+      },
+      "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
