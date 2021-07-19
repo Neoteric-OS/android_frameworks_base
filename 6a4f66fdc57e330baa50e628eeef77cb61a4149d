@@ -34,6 +34,69 @@
       "parentUuid": "8952fe8f_deb234d3",
       "revId": "6a4f66fdc57e330baa50e628eeef77cb61a4149d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "690ff623_7683de06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-07-19T03:42:03Z",
+      "side": 1,
+      "message": "Code LGTM but see suggestions inline.\n\n",
+      "revId": "6a4f66fdc57e330baa50e628eeef77cb61a4149d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48337f0b_dbc7c83a",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-07-19T03:42:03Z",
+      "side": 1,
+      "message": "Could these two codepaths be combined, like so?\n\n...\n                            mClients.remove(msg.replyTo);\n                            if (cInfo.isLegacy()) {\n                                mLegacyClientCount -\u003d 1;\n                            }\n                        }\n                        maybeScheduleStop();\n                        break;\n...\n\nAs far as I can see:\n\n- The new logic you\u0027re adding in this CL shouldn\u0027t change, because mLegacyClientCount can only reach 0 if cInfo.isLegacy() is true.\n- Existing codepaths shouldn\u0027t change either:\n  - if mClients.size() \u003d\u003d 0, then isAnyRequestActive() will return false, and maybeScheduleStop will call scheduleStop.\n  - if mClients.size() !\u003d 0, then the old code wouldn\u0027t do anything, but maybeScheduleStop wouldn\u0027t do anything either.\n\nbut I might be missing something because there are lots of codepaths here.",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 25
+      },
+      "revId": "6a4f66fdc57e330baa50e628eeef77cb61a4149d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f2afbcc_926f9360",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-07-19T03:42:03Z",
+      "side": 1,
+      "message": "Could this be replaced with a call to maybeStartDaemon placed at the end of this block (after cInfo.setLegacy() is called)? If so, that would ensure that there is only one codepath that can call mDaemon.maybeStart(), making it easier to understand and reason about this code in the future.",
+      "range": {
+        "startLine": 225,
+        "startChar": 24,
+        "endLine": 225,
+        "endChar": 45
+      },
+      "revId": "6a4f66fdc57e330baa50e628eeef77cb61a4149d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
