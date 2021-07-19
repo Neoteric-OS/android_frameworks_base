@@ -78,6 +78,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a3765cce_028c450a",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-07-19T04:59:23Z",
+      "side": 1,
+      "message": "If we do that, every time a non-legacy client is disconnected(assuming no legacy client here), the code would schedule a DAEMON_CLEANUP event, but we might want the DAEMON_CLEANUP is scheduled only when \n1. the last client is disconnected.\n2. the last legacy client is disconnected.",
+      "parentUuid": "48337f0b_dbc7c83a",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 25
+      },
+      "revId": "6a4f66fdc57e330baa50e628eeef77cb61a4149d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6f2afbcc_926f9360",
         "filename": "services/core/java/com/android/server/NsdService.java",
         "patchSetId": 4
@@ -89,6 +113,30 @@
       "writtenOn": "2021-07-19T03:42:03Z",
       "side": 1,
       "message": "Could this be replaced with a call to maybeStartDaemon placed at the end of this block (after cInfo.setLegacy() is called)? If so, that would ensure that there is only one codepath that can call mDaemon.maybeStart(), making it easier to understand and reason about this code in the future.",
+      "range": {
+        "startLine": 225,
+        "startChar": 24,
+        "endLine": 225,
+        "endChar": 45
+      },
+      "revId": "6a4f66fdc57e330baa50e628eeef77cb61a4149d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a16fccc6_63d5b60a",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-07-19T04:59:23Z",
+      "side": 1,
+      "message": "Done. Also change the code a little bit to protect the count mechanism.",
+      "parentUuid": "6f2afbcc_926f9360",
       "range": {
         "startLine": 225,
         "startChar": 24,
