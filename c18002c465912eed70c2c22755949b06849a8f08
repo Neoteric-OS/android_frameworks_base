@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f2c0f6d_972d212f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-07-19T19:37:02Z",
+      "side": 1,
+      "message": "Brad, here is the CL that tries to fix the phone identity leak in the callback we discussed in the email. Please help to comment if this make sense to you.\nThanks",
+      "revId": "c18002c465912eed70c2c22755949b06849a8f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
