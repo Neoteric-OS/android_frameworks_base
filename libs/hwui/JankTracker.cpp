@@ -96,6 +96,7 @@ JankTracker::JankTracker(ProfileDataContainer* globalData) {
         mDequeueTimeForgiveness = offsetDelta + 4_ms;
     }
     setFrameInterval(frameIntervalNanos);
+    mSwapDeadline = 0;
 }
 
 void JankTracker::setFrameInterval(nsecs_t frameInterval) {
