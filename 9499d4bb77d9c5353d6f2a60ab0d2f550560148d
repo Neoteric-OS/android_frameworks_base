@@ -200,6 +200,30 @@
       },
       "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "027cea89_84a807a6",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-07-20T01:08:41Z",
+      "side": 1,
+      "message": "Sorry for my ignorance. Which system property is this about? If the delay is more likely to cause issues, I\u0027m fine with this approach 😊",
+      "parentUuid": "fa789c86_e3161e97",
+      "range": {
+        "startLine": 1134,
+        "startChar": 16,
+        "endLine": 1134,
+        "endChar": 49
+      },
+      "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
