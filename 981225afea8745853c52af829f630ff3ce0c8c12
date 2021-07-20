@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b18ac0cb_60fab69a",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-07-20T21:42:45Z",
+      "side": 1,
+      "message": "Sorry if it wasn\u0027t clear, but I\u0027m not too worried about the @RequiresPermission annotations. I am wondering whether these broadcast intents are meant to be accessible to 3P apps? If we want 3P apps to use this in the future, then it is fine as is (with the BLUETOOTH permission). If we don\u0027t want 3P apps to use these intents, they should be guarded with the BLUETOOTH_PRIVILEGED permission.",
+      "parentUuid": "0b7a3301_7701fbc4",
+      "revId": "981225afea8745853c52af829f630ff3ce0c8c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d7244b3c_b499b856",
         "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
         "patchSetId": 8
