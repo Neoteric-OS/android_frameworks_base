@@ -50,6 +50,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8d74705e_f3c145c6",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-07-20T04:00:42Z",
+      "side": 1,
+      "message": "nit: Less confusing to describe this as \"Sets the A/B slot switch for the next boot..\" Currently, it reads like the behavior is to set the switch during the next boot.",
+      "range": {
+        "startLine": 429,
+        "startChar": 7,
+        "endLine": 429,
+        "endChar": 41
+      },
+      "revId": "0c113c5b4a5c81a261f067a4607071171e6d6ab4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "abdfdaa9_00a9c2cb",
         "filename": "core/java/android/os/UpdateEngine.java",
         "patchSetId": 5
@@ -90,6 +113,29 @@
         "startChar": 16,
         "endLine": 436,
         "endChar": 43
+      },
+      "revId": "0c113c5b4a5c81a261f067a4607071171e6d6ab4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c44e1d93_abc93403",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-07-20T04:00:42Z",
+      "side": 1,
+      "message": "nit: taking",
+      "range": {
+        "startLine": 447,
+        "startChar": 43,
+        "endLine": 447,
+        "endChar": 47
       },
       "revId": "0c113c5b4a5c81a261f067a4607071171e6d6ab4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
