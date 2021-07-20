@@ -39,6 +39,24 @@
       "message": "What if we check whether \u0027partial \u003d\u003d true\u0027 here, and skip the user if it is. That way, if a precreated user has already been slated for removal, it won\u0027t get returned here, and therefore won\u0027t end up being converted and then immediately removed.\n\nFelipe, wdyt?",
       "revId": "35b0509996ffd490b849315dbd544bc66150e8ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fee549e6_cfc2dbec",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3699,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-07-20T13:32:11Z",
+      "side": 1,
+      "message": "Hi Adam, let me share my opinion.\nIn general, I agree that an additional check should be added here to prevent a possible race. I\u0027ve explored the existed code and as I can see, to mark a user as \"removal in progress\" is usually used the `UserInfo.FLAG_DISABLED` flag. So in my opinion using `!user.info.isInitialized()` would be more expressive than `user.info.partial`.\nDo you agree?",
+      "parentUuid": "bb79c0f6_36a49844",
+      "revId": "35b0509996ffd490b849315dbd544bc66150e8ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
