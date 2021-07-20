@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b7a3301_7701fbc4",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-07-20T12:24:41Z",
+      "side": 1,
+      "message": "Fixed in \"https://android-review.googlesource.com/c/platform/frameworks/base/+/1772565/1\" since this is not in scope of this CL.",
+      "parentUuid": "0f5a9ead_729fe866",
+      "revId": "981225afea8745853c52af829f630ff3ce0c8c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d7244b3c_b499b856",
