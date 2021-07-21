@@ -102,6 +102,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3c179fe1_a3bf2da5",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-07-21T05:44:18Z",
+      "side": 1,
+      "message": "I don\u0027t think this actually matters. AFAICS here\u0027s what can happen when a non-legacy client disconnects:\n\n1. There are still active requests. maybeScheduleStop will do nothing. No change.\n2. There are no active requests. Here there are two cases:\n   a. Before the client disconnected, there were active requests. In this case, maybeScheduleStop calls scheduleStop. No change.\n   b. Before the client disconnected, there were no active requests. In this case, either the demon is already stopped, or there was already a DAEMON_CLEANUP in the queue. In both cases, we will add another DAEMON_CLEANUP message to the queue. I don\u0027t think this is incorrect or harmful though, because:\n     - If the second DAEMON_CLEANUP message is processed, it will do nothing since the daemon will already be stopped. \n     - If the daemon needs to be started again, all DAEMON_CLEANUP messages will be removed from the queue.\n\nso I still think this simplification has benefit.",
+      "parentUuid": "a3765cce_028c450a",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 25
+      },
+      "revId": "6a4f66fdc57e330baa50e628eeef77cb61a4149d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6f2afbcc_926f9360",
         "filename": "services/core/java/com/android/server/NsdService.java",
         "patchSetId": 4
