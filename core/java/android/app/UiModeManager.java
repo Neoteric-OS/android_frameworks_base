@@ -76,7 +76,7 @@ public class UiModeManager {
      * This intent is broadcast when {@link #getCurrentModeType()} transitions to
      * {@link Configuration#UI_MODE_TYPE_CAR} from some other ui mode.
      */
-    public static String ACTION_ENTER_CAR_MODE = "android.app.action.ENTER_CAR_MODE";
+    public static final String ACTION_ENTER_CAR_MODE = "android.app.action.ENTER_CAR_MODE";
 
     /**
      * Broadcast sent when an app has entered car mode using either {@link #enableCarMode(int)} or
@@ -109,7 +109,7 @@ public class UiModeManager {
      * This intent is broadcast when {@link #getCurrentModeType()} transitions from
      * {@link Configuration#UI_MODE_TYPE_CAR} to some other ui mode.
      */
-    public static String ACTION_EXIT_CAR_MODE = "android.app.action.EXIT_CAR_MODE";
+    public static final String ACTION_EXIT_CAR_MODE = "android.app.action.EXIT_CAR_MODE";
 
     /**
      * Broadcast sent when an app has exited car mode using {@link #disableCarMode(int)}.
@@ -150,14 +150,14 @@ public class UiModeManager {
      * prevent the normal desk UI from being displayed by setting the result
      * of the broadcast to {@link Activity#RESULT_CANCELED}.
      */
-    public static String ACTION_ENTER_DESK_MODE = "android.app.action.ENTER_DESK_MODE";
+    public static final String ACTION_ENTER_DESK_MODE = "android.app.action.ENTER_DESK_MODE";
     
     /**
      * Broadcast sent when the device's UI has switched away from desk mode back
      * to normal mode.  Typically used by a desk mode app, to dismiss itself
      * when the user exits desk mode.
      */
-    public static String ACTION_EXIT_DESK_MODE = "android.app.action.EXIT_DESK_MODE";
+    public static final String ACTION_EXIT_DESK_MODE = "android.app.action.EXIT_DESK_MODE";
 
     /**
      * String extra used with {@link #ACTION_ENTER_CAR_MODE_PRIORITIZED} and
