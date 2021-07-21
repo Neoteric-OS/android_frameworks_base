@@ -124,6 +124,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d471660e_ea3ed6d2",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-07-21T06:12:22Z",
+      "side": 1,
+      "message": "Well, then we also need to fix the test code. Test code now expected we only get DAEMON_CLEANUP when the last client is disconnected.",
+      "parentUuid": "3c179fe1_a3bf2da5",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 25
+      },
+      "revId": "6a4f66fdc57e330baa50e628eeef77cb61a4149d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9e5b017_836e6f26",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-07-21T06:12:22Z",
+      "side": 1,
+      "message": "Well, then we also need to fix the test code. Test code now expected we only get DAEMON_CLEANUP when the last client is disconnected.",
+      "parentUuid": "3c179fe1_a3bf2da5",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 25
+      },
+      "revId": "6a4f66fdc57e330baa50e628eeef77cb61a4149d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f2afbcc_926f9360",
