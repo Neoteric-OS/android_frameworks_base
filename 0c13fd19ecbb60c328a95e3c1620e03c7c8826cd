@@ -50,6 +50,23 @@
       "message": "Hi Ilya,\nthis is synced from internal code base. Could you help to review the symbols.xml?\nThanks",
       "revId": "0c13fd19ecbb60c328a95e3c1620e03c7c8826cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2417dd3b_887d5204",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308560
+      },
+      "writtenOn": "2021-07-22T01:37:55Z",
+      "side": 1,
+      "message": "Hi Etan,\nCould you help to review the API-review?\nThanks",
+      "revId": "0c13fd19ecbb60c328a95e3c1620e03c7c8826cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
