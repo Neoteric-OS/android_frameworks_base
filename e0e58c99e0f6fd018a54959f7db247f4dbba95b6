@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cde99c68_574740b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2021-07-22T14:17:51Z",
+      "side": 1,
+      "message": "Will merge this separately after aosp/q/topic:suspend-aidl since there is automerger conflict.",
+      "revId": "e0e58c99e0f6fd018a54959f7db247f4dbba95b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

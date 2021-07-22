@@ -16,6 +16,24 @@
       "message": "would it make sense here and in the bt stack to use libpower, so that there is only one client of the interface? and it\u0027ll share the global?",
       "revId": "66025f13c334df3ce052e6a7a810bbb410401ab8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eb70a1e_e927913f",
+        "filename": "services/core/jni/com_android_server_power_PowerManagerService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2021-07-22T14:17:51Z",
+      "side": 1,
+      "message": "I think we can replace this use case with libpower, since it\u0027s only acquiring a wakelock but bt stack  needs to hold a reference to the service for registering a death recipient so libpower would need to be extended for this. Vendor code can still get the service directly though so we couldn\u0027t enforce the single client.",
+      "parentUuid": "a43fd5f2_f55445e5",
+      "revId": "66025f13c334df3ce052e6a7a810bbb410401ab8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
