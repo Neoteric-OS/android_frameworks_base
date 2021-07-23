@@ -166,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abb49601_9c0834ff",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2021-07-23T19:38:05Z",
+      "side": 1,
+      "message": "Discussed offline. Calls to update engine are protected by selinux.",
+      "parentUuid": "b4f7a3a7_aaaf7dea",
+      "range": {
+        "startLine": 436,
+        "startChar": 16,
+        "endLine": 436,
+        "endChar": 43
+      },
+      "revId": "0c113c5b4a5c81a261f067a4607071171e6d6ab4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c44e1d93_abc93403",
