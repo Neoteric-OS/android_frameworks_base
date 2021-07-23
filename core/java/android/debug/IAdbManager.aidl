@@ -17,6 +17,7 @@
 package android.debug;
 
 import android.debug.NamedPairDevice;
+import android.debug.IAdbCallback;
 
 /**
  * Interface to communicate remotely with the {@code AdbService} in the system server.
@@ -111,4 +112,9 @@ interface IAdbManager {
      * QR code.
      */
     boolean isAdbWifiQrSupported();
+
+    /**
+     * Register callback for ADB debugging changed notification.
+     */
+    void registerCallback(IAdbCallback callback);
 }
