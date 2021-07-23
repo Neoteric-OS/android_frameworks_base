@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "31212df5_74ae26fa",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-07-23T17:15:26Z",
+      "side": 1,
+      "message": "These shouldn\u0027t be publicly accessible. Please change permission to BLUETOOTH_PRIVILEGED",
+      "parentUuid": "b18ac0cb_60fab69a",
+      "revId": "981225afea8745853c52af829f630ff3ce0c8c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d7244b3c_b499b856",
         "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
         "patchSetId": 8
