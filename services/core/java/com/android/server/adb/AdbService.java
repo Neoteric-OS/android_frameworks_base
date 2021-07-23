@@ -27,14 +27,18 @@ import android.database.ContentObserver;
 import android.debug.AdbManager;
 import android.debug.AdbManagerInternal;
 import android.debug.AdbTransportType;
+import android.debug.IAdbCallback;
+import android.debug.IAdbCallbackManager;
 import android.debug.IAdbManager;
 import android.debug.IAdbTransport;
 import android.debug.PairDevice;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.os.UserHandle;
@@ -87,6 +91,8 @@ public class AdbService extends IAdbManager.Stub {
     private final AdbConnectionPortListener mPortListener = new AdbConnectionPortListener();
     private AdbDebuggingManager.AdbConnectionPortPoller mConnectionPortPoller;
 
+    private RemoteCallbackList<IAdbCallback> mCallbacks;
+    private IAdbCallbackManager mCallbackManager;
     /**
      * Manages the service lifecycle for {@code AdbService} in {@code SystemServer}.
      */
@@ -101,6 +107,12 @@ public class AdbService extends IAdbManager.Stub {
         public void onStart() {
             mAdbService = new AdbService(getContext());
             publishBinderService(Context.ADB_SERVICE, mAdbService);
+            if (Build.IS_DEBUGGABLE) {
+                mAdbService.mCallbacks = new RemoteCallbackList<>();
+                mAdbService.mCallbackManager = mAdbService.new AdbCallbackManager();
+                publishBinderService(IAdbCallbackManager.DESCRIPTOR + "/default",
+                        mAdbService.mCallbackManager.asBinder());
+            }
         }
 
         @Override
@@ -111,6 +123,16 @@ public class AdbService extends IAdbManager.Stub {
                 FgThread.getHandler().sendMessage(obtainMessage(
                         AdbService::bootCompleted, mAdbService));
             }
+        }
+    }
+
+    private class AdbCallbackManager extends IAdbCallbackManager.Stub {
+        @Override
+        public void registerCallback(IAdbCallback callback) throws RemoteException {
+            if (DEBUG) {
+                Slog.d(TAG, "Registering callback " + callback);
+            }
+            mCallbacks.register(callback);
         }
     }
 
@@ -507,6 +529,23 @@ public class AdbService extends IAdbManager.Stub {
         if (mDebuggingManager != null) {
             mDebuggingManager.setAdbEnabled(enable, transportType);
         }
+
+        if (DEBUG) {
+            Slog.d(TAG, "Broadcasting enable = " + enable + ", type = " + transportType);
+        }
+        mCallbacks.broadcast((callback) -> {
+            try {
+                if (DEBUG) {
+                    Slog.d(TAG, "Sending enable = " + enable + ", type = " + transportType + " to "
+                            + callback);
+                }
+                callback.debuggingChanged(enable, transportType);
+            } catch (RemoteException ex) {
+                if (DEBUG) {
+                    Slog.d(TAG, "Unable to send debuggingChanged:", ex);
+                }
+            }
+        });
     }
 
     @Override
