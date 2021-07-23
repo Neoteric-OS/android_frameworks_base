@@ -34,9 +34,11 @@ import android.os.UserManager;
 
 import com.android.server.pm.UserManagerService;
 
+import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -512,6 +514,9 @@ public abstract class SystemService {
      */
     protected final <T> void publishLocalService(Class<T> type, T service) {
         LocalServices.addService(type, service);
+
+        Socket socket = new Socket();
+        FileDescriptor fd = socket.getFileDescriptor$();
     }
 
     /**
