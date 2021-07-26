@@ -528,8 +528,14 @@ public class VpnService extends Service {
         }
 
         /**
-         * Sets an HTTP proxy for the VPN network. This proxy is only a recommendation
-         * and it is possible that some apps will ignore it. PAC proxies are not supported.
+         * Sets an HTTP proxy for the VPN network.
+         * <p class="note">This proxy is only a recommendation  and it is possible that some apps
+         * will ignore it.
+         * <p class="note">Apps that do use the proxy cannot distinguish between routes handled
+         * and not handled by the VPN and will try to access HTTP resources over the proxy
+         * regardless of the destination. In practice this usually means these HTTP accesses will
+         * not reach as the proxy won't be available outside of the VPN network.
+         * <p class="note">PAC proxies are not supported.
          */
         @NonNull
         public Builder setHttpProxy(@NonNull ProxyInfo proxyInfo) {
