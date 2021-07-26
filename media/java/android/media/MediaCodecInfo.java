@@ -90,6 +90,10 @@ public final class MediaCodecInfo {
         for (CodecCapabilities c: caps) {
             mCaps.put(c.getMimeType(), c);
         }
+
+        if(!isSoftwareCodec(mName)) {
+            SIZE_RANGE = Range.create(1, 32768);
+        }
     }
 
     /**
@@ -176,6 +180,13 @@ public final class MediaCodecInfo {
         return value;
     }
 
+    private static boolean isSoftwareCodec(String componentName) {
+        return componentName.toLowerCase().startsWith("OMX.google.")
+                || componentName.toLowerCase().startsWith("c2.android.")
+                || (!componentName.toLowerCase().startsWith("OMX.")
+             && !componentName.toLowerCase().startsWith("c2."));
+    }
+
     private static class Feature {
         public String mName;
         public int mValue;
@@ -195,7 +206,7 @@ public final class MediaCodecInfo {
     private static final Range<Rational> POSITIVE_RATIONALS =
             Range.create(new Rational(1, Integer.MAX_VALUE),
                          new Rational(Integer.MAX_VALUE, 1));
-    private static final Range<Integer> SIZE_RANGE =
+    private static Range<Integer> SIZE_RANGE =
             Process.is64Bit() ? Range.create(1, 32768) : Range.create(1, 4096);
     private static final Range<Integer> FRAME_RATE_RANGE = Range.create(0, 960);
     private static final Range<Integer> BITRATE_RANGE = Range.create(0, 500000000);
