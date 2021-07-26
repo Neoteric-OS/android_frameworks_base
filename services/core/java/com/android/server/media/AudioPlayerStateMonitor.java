@@ -18,8 +18,10 @@ package com.android.server.media;
 
 import android.annotation.NonNull;
 import android.content.Context;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.AudioPlaybackConfiguration;
+import android.media.audiopolicy.AudioProductStrategy;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -115,9 +117,41 @@ class AudioPlayerStateMonitor {
         }
     }
 
+    private final AudioManager mAudioManager;
+    private static final List<AudioProductStrategy> sAudioProductStrategies;
+    private static final AudioAttributes sMediaAttributes = new AudioAttributes.Builder()
+           .setUsage(AudioAttributes.USAGE_MEDIA)
+           .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+           .build();
+
+    private static int getStrategyForAudioAttributes(@NonNull AudioAttributes aa) {
+        final AudioProductStrategy strategy =
+               sAudioProductStrategies.stream()
+                        .filter(aps -> aps.supportsAudioAttributes(aa))
+                        .findFirst()
+                        .orElse(null);
+        return strategy != null ? strategy.getId() : -1;
+    }
+    private static final int sMediaStrategyId;
+
+    /**
+     * Static initializer
+     */
+    static {
+        sAudioProductStrategies = AudioManager.getAudioProductStrategies();
+        sMediaStrategyId = getStrategyForAudioAttributesOrDefault(sMediaAttributes);
+    }
+
+    public static int getStrategyForAudioAttributesOrDefault(@NonNull AudioAttributes aa) {
+        int strategyId = getStrategyForAudioAttributes(aa);
+        return strategyId < 0
+                ? getStrategyForAudioAttributes(AudioProductStrategy.sDefaultAttributes)
+                : strategyId;
+    }
+
     private AudioPlayerStateMonitor(Context context) {
-        AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        am.registerAudioPlaybackCallback(new AudioManagerPlaybackListener(), null);
+        mAudioManager = context.getSystemService(AudioManager.class);
+        mAudioManager.registerAudioPlaybackCallback(new AudioManagerPlaybackListener(), null);
     }
 
     /**
@@ -159,6 +193,47 @@ class AudioPlayerStateMonitor {
     public boolean isPlaybackActive(int uid) {
         synchronized (mLock) {
             return mActiveAudioUids.contains(uid);
+        }
+    }
+
+    private static final @NonNull AudioAttributes sDefaultAttributes =
+            new AudioAttributes.Builder().build();
+
+    /**
+     * Returns true if at least one player is found meeting all the following conditions:
+     * 1 - An audio playback is active for the given client uid
+     * 2 - The {@see AudioAttributes} of the associated client's uid
+     *     {@see AudioPlaybackConfiguration} follows the default {@see AudioProductStrategy}
+     *     (e.g. Media)
+     *
+     * @param uid client UID to be checked against
+     */
+    boolean hasMusicPlaybackActive(int uid) {
+        synchronized (mLock) {
+            return mPrevActiveAudioPlaybackConfigs.values().stream()
+                    .filter(apc -> apc.getClientUid() == uid)
+                    .filter(apc -> getStrategyForAudioAttributesOrDefault(apc.getAudioAttributes())
+                            == sMediaStrategyId)
+                    .findFirst().isPresent();
+        }
+    }
+
+    /**
+     * Returns true if at least one player is found meeting all the following conditions:
+     * 1 - An audio playback is registered (whatever its state is) for the given client uid
+     * 2 - The {@see AudioAttributes} of the associated client's uid
+     *     {@see AudioPlaybackConfiguration} follows the default {@see AudioProductStrategy}
+     *     (e.g. Media)
+     *
+     * @param uid client UID to be checked against
+     */
+    boolean hasMusicFlavoredPlayback(int uid) {
+        synchronized (mLock) {
+            return mAudioManager.getActivePlaybackConfigurations().stream()
+                    .filter(apc -> apc.getClientUid() == uid)
+                    .filter(apc -> getStrategyForAudioAttributesOrDefault(apc.getAudioAttributes())
+                            == sMediaStrategyId)
+                    .findFirst().isPresent();
         }
     }
 
