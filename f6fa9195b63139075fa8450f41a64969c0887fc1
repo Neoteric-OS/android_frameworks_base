@@ -22,6 +22,30 @@
       },
       "revId": "f6fa9195b63139075fa8450f41a64969c0887fc1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21505de7_a89a76cc",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6712,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-07-26T11:04:08Z",
+      "side": 1,
+      "message": "Moved the assignment out of the block and added the comment you suggested. I agree this should conserve the happens-before relationship. Strictly speaking, for correctness mInitialApplication would need to be accessed locked in fact, but fixing this would be well beyond the scope of this patch and I\u0027m not familiar enough with this code to evaluate contention on such a large scale. I suppose we should fix it when other call sites actually experience trouble.\n\nmUpdateHttpProxyOnBind could be made a tri-state, but that does not let me remove the lock or the local. An AtomicBoolean doesn\u0027t work as it can\u0027t store null as a value. So I don\u0027t think it would buy us anything.",
+      "parentUuid": "391c70f9_94740b50",
+      "range": {
+        "startLine": 6712,
+        "startChar": 16,
+        "endLine": 6712,
+        "endChar": 35
+      },
+      "revId": "f6fa9195b63139075fa8450f41a64969c0887fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

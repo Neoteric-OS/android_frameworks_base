@@ -224,6 +224,30 @@
       },
       "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16a7a5b5_a5e3d662",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-07-26T11:04:08Z",
+      "side": 1,
+      "message": "Ah sorry. This is the Java system properties \"http.proxyHost\" family. See : \nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/android/net/Proxy.java;l\u003d217;bpv\u003d0;bpt\u003d1\n\nThese are for all intents and purposes globals accessible to any code running in a given VM. In Android we discourage their use, but we do implement them since they are defined by the Java standard https://docs.oracle.com/javase/8/docs/technotes/guides/net/proxies.html",
+      "parentUuid": "027cea89_84a807a6",
+      "range": {
+        "startLine": 1134,
+        "startChar": 16,
+        "endLine": 1134,
+        "endChar": 49
+      },
+      "revId": "9499d4bb77d9c5353d6f2a60ab0d2f550560148d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
