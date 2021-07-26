@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "391c70f9_94740b50",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6712,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-07-26T03:56:25Z",
+      "side": 1,
+      "message": "The fact that mInitialApplication is accessed within this lock suggests that the correctness of this code might somehow depend on it being accessed only inside the lock. But that does not appear to be the case - while most accesses are on the handler thread, there are accesses that are not, such as currentOpPackageName  which can be called from outside the class and thus presumably on an arbitrary thread.\n\nCould you move \"mInitialApplication \u003d app\" before the the lock? Something like:\n\n    mInitialApplication \u003d app;\n    final boolean updateHttpProxy;\n    synchronized (this) {\n        updateHttpProxy \u003d mUpdateHttpProxyOnBind;\n        // This synchronized block ensures that any call to updateHttpProxy() will\n        // see a non-null mInitialApplication.\n    }\n    if (updateHttpProxy) {\n        ActivityThread.updateHttpProxy(app);\n    }\n\nI think this still ensures that the \"app \u003d getApplication()\" call at line 1133 is still guaranteed to observe the value of mInitialApplication set here. This is because the monitor release caused by the end of the synchronized block at line 6714 ensures that all writes to mInitialApplication are visible to any code that synchronizes on this.\n\nSpecifically, \"mInitialApplication \u003d app\" and \"updateHttpProxy \u003d mUpdateHttpProxyOnBind\" happen-before the synchronization block exit because they run on the same thread, and the synchronization block exit happens-before the synchronization block entry at line 1132, because they are synchronized on the same monitor.\n\nI don\u0027t think you can take the \"app \u003d getApplication()\" call at line 1133 out of the synchronization block as well, because then the following could happen:\n\n1. updateHttpProxy calls getApplication, gets non-null.\n2. This code acquires the lock, sees mUpdateHttpProxyOnBind false and does nothing.\n3. updateHttpProxy acquires the lock, sets mUpdateHttpProxyOnBind to true, but nothing ever reads it.\n\nI wonder though - could you fix this by making mUpdateHttpProxyOnBind a tri-state Boolean? Something like:\n- null: uninitialized; app is not bound, and updateHttpProxy has never been called\n- false: app was bound before updateHttpProxy was called\n- true: updateHttpProxy was called before app was bound\n\nThat way, this code might be able to do something like:\n\n    if (Boolean.TRUE.equals(mUpdateHttpProxyOnBind)) {\n        // update proxy\n    }",
+      "range": {
+        "startLine": 6712,
+        "startChar": 16,
+        "endLine": 6712,
+        "endChar": 35
+      },
+      "revId": "f6fa9195b63139075fa8450f41a64969c0887fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
