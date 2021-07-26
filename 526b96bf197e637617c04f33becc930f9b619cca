@@ -33,6 +33,24 @@
       "message": "Hmm, this kinda seems like an odd rule to write; these seem like really disjointed topic areas.\n\nPerhaps there is code that should be factored out of these tests, to separate shortcuts from appsearch?",
       "revId": "526b96bf197e637617c04f33becc930f9b619cca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97329150_b993fac8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1536014
+      },
+      "writtenOn": "2021-07-26T22:38:43Z",
+      "side": 1,
+      "message": "Shortcuts uses AppSearch as an additional persistent layer. In shortcut\u0027s unit tests we use mock object in respect to AppSearch\u0027s internal api, as a result the unit tests are now bound to changes in those api from AppSearch.",
+      "parentUuid": "64512cb8_ace9b952",
+      "revId": "526b96bf197e637617c04f33becc930f9b619cca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
