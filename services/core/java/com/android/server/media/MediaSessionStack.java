@@ -157,9 +157,10 @@ class MediaSessionStack {
         if (mMediaButtonSession != null && mMediaButtonSession.getUid() == record.getUid()) {
             MediaSessionRecordImpl newMediaButtonSession =
                     findMediaButtonSession(mMediaButtonSession.getUid());
-            if (newMediaButtonSession != mMediaButtonSession
-                    && (newMediaButtonSession.getSessionPolicies()
-                            & SESSION_POLICY_IGNORE_BUTTON_SESSION) == 0) {
+            final boolean ignoreNewButtonSession = ignoreMediaButtonSession(newMediaButtonSession)
+                    || ((newMediaButtonSession.getSessionPolicies()
+                            & SESSION_POLICY_IGNORE_BUTTON_SESSION) != 0);
+            if (newMediaButtonSession != mMediaButtonSession && !ignoreNewButtonSession) {
                 // Check if the policy states that this session should not be updated as a media
                 // button session.
                 updateMediaButtonSession(newMediaButtonSession);
@@ -202,8 +203,9 @@ class MediaSessionStack {
                 continue;
             }
             boolean ignoreButtonSession =
-                    (mediaButtonSession.getSessionPolicies()
-                            & SESSION_POLICY_IGNORE_BUTTON_SESSION) != 0;
+                    ((mediaButtonSession.getSessionPolicies()
+                            & SESSION_POLICY_IGNORE_BUTTON_SESSION) != 0)
+                    || ignoreMediaButtonSession(mediaButtonSession);
             if (DEBUG) {
                 Log.d(TAG, "updateMediaButtonSessionIfNeeded, checking uid=" + audioPlaybackUid
                         + ", mediaButtonSession=" + mediaButtonSession
@@ -217,6 +219,23 @@ class MediaSessionStack {
                 return;
             }
         }
+    }
+
+    /**
+     * Make this decision unaltered by non-media app's playback.
+     * Intends to fix the "Inter-UID" music flavored app media button selection
+     * Returns true if given media button session meets all the following conditions:
+     * 1 - Session is not null have the same client UID as the given {@see MediaSessionRecord} to
+     *     consider
+     * 2 - No active player whose {@see AudioAttributes} follows the default
+     *     {@see AudioProductStrategy} attributes (e.g. Music/entertainement) found for the given
+     *     session's client's UID
+     *
+     * @param session {@see MediaSessionRecord} to consider
+     */
+    private boolean ignoreMediaButtonSession(MediaSessionRecordImpl session) {
+        return (session == null) ||
+                !mAudioPlayerStateMonitor.hasMusicPlaybackActive(session.getUid());
     }
 
     // TODO: Remove this and make updateMediaButtonSessionIfNeeded() to also cover this case.
@@ -237,10 +256,53 @@ class MediaSessionStack {
      * and matches the audio playback state becomes the media button session. Otherwise the top
      * priority session becomes the media button session.
      *
+     * On prior, to fix "intra-USER Id issue", where the uid is shared among app, the first round
+     * is made on first active session using "music flavored" {@see AudioAttributes} whose player is
+     * active (aka started).
+     * It fallbacks on the first session met (so highest priority) whose player has "music flavored"
+     * {@see AudioAttributes} aka following default {@see AudioProductStrategy}
+     * (e.g. Music/entertainement).
+     * If none is found, it fallbacks on legacy code.
+     *
      * @return The media button session. Returns {@code null} if the app doesn't have a media
      *   session.
      */
     private MediaSessionRecordImpl findMediaButtonSession(int uid) {
+        MediaSessionRecordImpl musicAttributesSession = null;
+        for (MediaSessionRecordImpl session : mSessions) {
+            if (uid == session.getUid()) {
+                if (DEBUG) {
+                    Log.d(TAG, "findMediaButtonSession for uid=" + uid
+                            + ", isPlaybackActive=" + session.checkPlaybackActiveState(true)
+                            + ", hasMusicPlaybackActive="
+                            + mAudioPlayerStateMonitor.hasMusicPlaybackActive(uid)
+                            + ", hasMusicFlavoredPlayback="
+                            + mAudioPlayerStateMonitor.hasMusicFlavoredPlayback(uid));
+                }
+                if (session.checkPlaybackActiveState(true)
+                        && mAudioPlayerStateMonitor.hasMusicPlaybackActive(uid)) {
+                    // If there's a media session whose PlaybackState matches
+                    // the audio playback state, return it immediately.
+                    return session;
+                }
+                if (musicAttributesSession == null
+                        && mAudioPlayerStateMonitor.hasMusicFlavoredPlayback(uid)) {
+                    // Among the media sessions whose PlaybackState doesn't match
+                    // the audio playback state, pick the top priority.
+                    musicAttributesSession = session;
+                }
+            }
+        }
+        if (musicAttributesSession != null) {
+            if (DEBUG) {
+                Log.d(TAG, "findMediaButtonSession uid=" + uid + " has MUSIC button session");
+            }
+            return musicAttributesSession;
+        }
+        // Legacy fallback code
+        if (DEBUG) {
+            Log.d(TAG, "findMediaButtonSession uid=" + uid + " falling back on legacy code");
+        }
         MediaSessionRecordImpl mediaButtonSession = null;
         for (MediaSessionRecordImpl session : mSessions) {
             if (session instanceof MediaSession2Record) {
