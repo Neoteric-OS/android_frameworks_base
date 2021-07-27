@@ -1827,18 +1827,14 @@ public class SubscriptionManager {
      * @param subscriptionType the {@link #SUBSCRIPTION_TYPE}
      * @hide
      */
-    public void addSubscriptionInfoRecord(String uniqueId, String displayName, int slotIndex,
-            int subscriptionType) {
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public void addSubscriptionInfoRecord(@NonNull String uniqueId, @Nullable String displayName,
+            int slotIndex, int subscriptionType) {
         if (VDBG) {
             logd("[addSubscriptionInfoRecord]+ uniqueId:" + uniqueId
                     + ", displayName:" + displayName + ", slotIndex:" + slotIndex
                     + ", subscriptionType: " + subscriptionType);
         }
-        if (uniqueId == null) {
-            Log.e(LOG_TAG, "[addSubscriptionInfoRecord]- uniqueId is null");
-            return;
-        }
-
         try {
             ISub iSub = TelephonyManager.getSubscriptionService();
             if (iSub == null) {
@@ -1863,16 +1859,12 @@ public class SubscriptionManager {
      * @param subscriptionType the {@link #SUBSCRIPTION_TYPE}
      * @hide
      */
-    public void removeSubscriptionInfoRecord(String uniqueId, int subscriptionType) {
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public void removeSubscriptionInfoRecord(@NonNull String uniqueId, int subscriptionType) {
         if (VDBG) {
             logd("[removeSubscriptionInfoRecord]+ uniqueId:" + uniqueId
                     + ", subscriptionType: " + subscriptionType);
         }
-        if (uniqueId == null) {
-            Log.e(LOG_TAG, "[addSubscriptionInfoRecord]- uniqueId is null");
-            return;
-        }
-
         try {
             ISub iSub = TelephonyManager.getSubscriptionService();
             if (iSub == null) {
