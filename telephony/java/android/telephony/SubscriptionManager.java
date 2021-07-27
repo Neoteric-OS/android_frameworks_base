@@ -1827,8 +1827,9 @@ public class SubscriptionManager {
      * @param subscriptionType the {@link #SUBSCRIPTION_TYPE}
      * @hide
      */
-    public void addSubscriptionInfoRecord(String uniqueId, String displayName, int slotIndex,
-            int subscriptionType) {
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public void addSubscriptionInfoRecord(@Nullable String uniqueId, @Nullable String displayName,
+            int slotIndex, int subscriptionType) {
         if (VDBG) {
             logd("[addSubscriptionInfoRecord]+ uniqueId:" + uniqueId
                     + ", displayName:" + displayName + ", slotIndex:" + slotIndex
@@ -1863,7 +1864,8 @@ public class SubscriptionManager {
      * @param subscriptionType the {@link #SUBSCRIPTION_TYPE}
      * @hide
      */
-    public void removeSubscriptionInfoRecord(String uniqueId, int subscriptionType) {
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public void removeSubscriptionInfoRecord(@Nullable String uniqueId, int subscriptionType) {
         if (VDBG) {
             logd("[removeSubscriptionInfoRecord]+ uniqueId:" + uniqueId
                     + ", subscriptionType: " + subscriptionType);
@@ -1933,7 +1935,7 @@ public class SubscriptionManager {
      * @hide
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
-    public int setDisplayNumber(String number, int subId) {
+    public int setDisplayNumber(@Nullable String number, int subId) {
         if (number == null) {
             logd("[setDisplayNumber]- fail");
             return -1;
