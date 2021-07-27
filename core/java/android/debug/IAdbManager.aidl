@@ -16,6 +16,8 @@
 
 package android.debug;
 
+import android.debug.NamedPairDevice;
+
 /**
  * Interface to communicate remotely with the {@code AdbService} in the system server.
  *
@@ -58,9 +60,10 @@ interface IAdbManager {
     void denyWirelessDebugging();
 
     /**
-     * Returns a Map<String, PairDevice> with the key fingerprint mapped to the device information.
+     * Returns an array of NamedPairDevice with the key fingerprint mapped to the device
+     * information.
      */
-    Map getPairedDevices();
+    NamedPairDevice[] getPairedDevices();
 
     /**
      * Unpair the device identified by the key fingerprint it uses.

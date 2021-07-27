@@ -29,6 +29,7 @@ import android.debug.AdbManagerInternal;
 import android.debug.AdbTransportType;
 import android.debug.IAdbManager;
 import android.debug.IAdbTransport;
+import android.debug.NamedPairDevice;
 import android.debug.PairDevice;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
@@ -348,12 +349,21 @@ public class AdbService extends IAdbManager.Stub {
     }
 
     @Override
-    public Map<String, PairDevice> getPairedDevices() {
+    public NamedPairDevice[] getPairedDevices() {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.MANAGE_DEBUGGING, null);
-        if (mDebuggingManager != null) {
-            return mDebuggingManager.getPairedDevices();
+        if (mDebuggingManager == null) {
+            return null;
         }
-        return null;
+        Map<String, PairDevice> map = mDebuggingManager.getPairedDevices();
+        NamedPairDevice[] ret = new NamedPairDevice[map.size()];
+        int i = 0;
+        for (Map.Entry<String, PairDevice> entry : map.entrySet()) {
+            ret[i] = new NamedPairDevice();
+            ret[i].keyFingerprint = entry.getKey();
+            ret[i].device = entry.getValue();
+            i++;
+        }
+        return ret;
     }
 
     @Override
