@@ -244,6 +244,21 @@ public final class BluetoothDevice implements Parcelable {
     public static final String EXTRA_DEVICE = "android.bluetooth.device.extra.DEVICE";
 
     /**
+     * Used as a Int extra field in {@link #ACTION_ACL_DISCONNECTED} and
+     * {@link #ACTION_BLE_ACL_DISCONNECTED} intents.
+     * It contain the disconnection reason
+     */
+    public static final String EXTRA_HCI_REASON = "android.bluetooth.extra.HCI_REASON";
+
+    /**
+     * Used as a Int extra field in {@link #ACTION_ACL_DISCONNECTED} and
+     * {@link #ACTION_BLE_ACL_DISCONNECTED} intents.
+     * It contain the transport type
+     */
+    public static final String EXTRA_TRANSPORT_LINK_TYPE =
+            "android.bluetooth.extra.TRANSPORT_LINK_TYPE";
+
+    /**
      * Used as a String extra field in {@link #ACTION_NAME_CHANGED} and {@link
      * #ACTION_FOUND} intents. It contains the friendly Bluetooth name.
      */

@@ -8703,11 +8703,13 @@ package android.bluetooth {
     field public static final String EXTRA_BOND_STATE = "android.bluetooth.device.extra.BOND_STATE";
     field public static final String EXTRA_CLASS = "android.bluetooth.device.extra.CLASS";
     field public static final String EXTRA_DEVICE = "android.bluetooth.device.extra.DEVICE";
+    field public static final String EXTRA_HCI_REASON = "android.bluetooth.extra.HCI_REASON";
     field public static final String EXTRA_NAME = "android.bluetooth.device.extra.NAME";
     field public static final String EXTRA_PAIRING_KEY = "android.bluetooth.device.extra.PAIRING_KEY";
     field public static final String EXTRA_PAIRING_VARIANT = "android.bluetooth.device.extra.PAIRING_VARIANT";
     field public static final String EXTRA_PREVIOUS_BOND_STATE = "android.bluetooth.device.extra.PREVIOUS_BOND_STATE";
     field public static final String EXTRA_RSSI = "android.bluetooth.device.extra.RSSI";
+    field public static final String EXTRA_TRANSPORT_LINK_TYPE = "android.bluetooth.extra.TRANSPORT_LINK_TYPE";
     field public static final String EXTRA_UUID = "android.bluetooth.device.extra.UUID";
     field public static final int PAIRING_VARIANT_PASSKEY_CONFIRMATION = 2; // 0x2
     field public static final int PAIRING_VARIANT_PIN = 0; // 0x0
