@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d172d672_04831ea1",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-07-27T08:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcc65307_033a5c4f",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 15
+      },
+      "revId": "bf29c139a62145d02e313ad2b306670b40812eee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5180135a_b9b83d14",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef667e98_59251768",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-07-27T08:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5180135a_b9b83d14",
+      "range": {
+        "startLine": 149,
+        "startChar": 3,
+        "endLine": 149,
+        "endChar": 15
+      },
+      "revId": "bf29c139a62145d02e313ad2b306670b40812eee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4cb74494_1ce2dfd9",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-07-23T17:15:26Z",
       "side": 1,
       "message": "Please don\u0027t submit TODOs, here and below",
+      "range": {
+        "startLine": 158,
+        "startChar": 3,
+        "endLine": 158,
+        "endChar": 54
+      },
+      "revId": "bf29c139a62145d02e313ad2b306670b40812eee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e9ec8e0_6bef5d4a",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-07-27T08:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cb74494_1ce2dfd9",
       "range": {
         "startLine": 158,
         "startChar": 3,
