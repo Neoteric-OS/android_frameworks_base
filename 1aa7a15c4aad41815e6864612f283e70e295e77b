@@ -16,6 +16,23 @@
       "message": "Updated and replied to comments – PTAL.",
       "revId": "1aa7a15c4aad41815e6864612f283e70e295e77b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3aadb076_b480377d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-07-28T07:54:47Z",
+      "side": 1,
+      "message": "Moved to ag/15401698 as this should be fixed in S and conflicts in internal master on the mCompatConfiguration line.",
+      "revId": "1aa7a15c4aad41815e6864612f283e70e295e77b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

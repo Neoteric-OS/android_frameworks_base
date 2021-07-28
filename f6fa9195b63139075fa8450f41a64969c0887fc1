@@ -94,6 +94,30 @@
       },
       "revId": "f6fa9195b63139075fa8450f41a64969c0887fc1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eea572a1_ef9843c5",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6712,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-07-28T07:54:47Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s really any better. We do need to read the application object because it\u0027s the one providing the context ; what you describe lets us move the call to getApplication() after the synchronized() block, but reading it would still depend on the read happening after the lock is taken and it introduces a dependency in the order we read application and the Boolean that I think we\u0027d need to spell out in comments. So we end up with a comment like :\n\n  // When writing together with a mUpdateHttpProxyOnBind read, mApplication\n  // must be written to before mUpdateHttpProxyOnBind\u0027s lock is released.\n  // When reading together with a mUpdateHttpProxyOnBind write, mApplication\n  // must be read from after mUpdateHttpProxyOnBind\u0027s lock is taken.\n  private Application mInitialApplication;\n\n...and then the code you posted above, except we call getApplication() inline at the end of updateHttpProxy. It\u0027s even strictly equivalent since in principle the compiler is allowed to reorder reads around the lock release and writes around the lock acquire, so reading the member after releasing the lock is not any different than reading it inside the lock.\n\nAnd I think the semantics described by the comment are really difficult to follow for most developers ; the current code doesn\u0027t depend nearly as much on a minute understanding of how monitors work. In simplified terms, while we don\u0027t want to call updateHttpProxy() with the lock held, if there is an order dependency anyway, I think reads/writes inside the synchronized() tends to make it easier to understand than if they are before/after and need to remain so, and it\u0027s not any slower.",
+      "parentUuid": "7ad675ea_f3f19d39",
+      "range": {
+        "startLine": 6712,
+        "startChar": 16,
+        "endLine": 6712,
+        "endChar": 35
+      },
+      "revId": "f6fa9195b63139075fa8450f41a64969c0887fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
