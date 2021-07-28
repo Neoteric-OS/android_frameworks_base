@@ -16,6 +16,23 @@
       "message": "Dear Guojing Yuan\n\nReview +2 has been removed when i rebase the code, please help me +2 again, Thanks BS.",
       "revId": "2cde7c5345f88e760fb7b65a53d998a8229ce3c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94e4d284_8cba8ea5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1216939
+      },
+      "writtenOn": "2021-07-28T11:20:49Z",
+      "side": 1,
+      "message": "Review +2 has been removed when i rebase the code, please help me +2 again, Thanks BS.",
+      "revId": "2cde7c5345f88e760fb7b65a53d998a8229ce3c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
