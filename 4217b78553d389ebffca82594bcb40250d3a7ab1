@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "256c450b_4c1faafa",
+        "filename": "core/java/android/view/SurfaceView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1451,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2021-07-29T15:59:44Z",
+      "side": 1,
+      "message": "I don\u0027t think we should add null to the callback list. \n\nInstead of adding a null check to hide the real cause, can you please find out where the null is added, and fix it there?\n\nCan start by throwing an exception when a null is added to debug.",
+      "range": {
+        "startLine": 1451,
+        "startChar": 0,
+        "endLine": 1451,
+        "endChar": 52
+      },
+      "revId": "4217b78553d389ebffca82594bcb40250d3a7ab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
