@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ebb00d9_129db594",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2021-07-29T18:21:53Z",
+      "side": 1,
+      "message": "This should be @NonNull",
+      "range": {
+        "startLine": 1831,
+        "startChar": 42,
+        "endLine": 1831,
+        "endChar": 51
+      },
+      "revId": "f09f18caaef985e9abda65d0f8b8ac077b98f9e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0ba5d01_b8a6cabd",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1868,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2021-07-29T18:21:53Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 1868,
+        "startChar": 46,
+        "endLine": 1868,
+        "endChar": 54
+      },
+      "revId": "f09f18caaef985e9abda65d0f8b8ac077b98f9e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
