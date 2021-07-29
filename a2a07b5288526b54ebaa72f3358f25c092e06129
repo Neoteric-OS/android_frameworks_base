@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56aa7307_a1ca3550",
+        "filename": "telecomm/java/android/telecom/CallRedirectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-07-29T21:56:59Z",
+      "side": 1,
+      "message": "Minor: Think we can make this comment more explicit.\nTelecom calls this method when it times out waiting for the {@link CallRedirectionService} to call {@link #placeCallUnmodified()},\n{@link #redirectCall(Uri, PhoneAccountHandle, boolean)}, or {@link #cancelCall()}.",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 93,
+        "endChar": 30
+      },
+      "revId": "a2a07b5288526b54ebaa72f3358f25c092e06129",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e9711ee_04910f12",
+        "filename": "telecomm/java/android/telecom/CallRedirectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-07-29T21:56:59Z",
+      "side": 1,
+      "message": "Minor: \nadd break;\nIt seems like something that could be easily forgotten in the future if we add another case.",
+      "range": {
+        "startLine": 190,
+        "startChar": 20,
+        "endLine": 190,
+        "endChar": 43
+      },
+      "revId": "a2a07b5288526b54ebaa72f3358f25c092e06129",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
