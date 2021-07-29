@@ -89,6 +89,12 @@ public abstract class CallRedirectionService extends Service {
                                      boolean allowInteractiveResponse);
 
     /**
+     * Telecom calls this method when times out waiting for the {@link CallRedirectionService} to
+     * complete its operation.
+     */
+    public void onRedirectionTimeout() {}
+
+    /**
      * The implemented {@link CallRedirectionService} calls this method to response a request
      * received via {@link #onPlaceCall(Uri, PhoneAccountHandle, boolean)} to inform Telecom that
      * no changes are required to the outgoing call, and that the call should be placed as-is.
@@ -158,6 +164,12 @@ public abstract class CallRedirectionService extends Service {
     private static final int MSG_PLACE_CALL = 1;
 
     /**
+     * A handler message to process the attempt to notify the operation of redirection service timed
+     * out from Telecom
+     */
+    private static final int MSG_TIMEOUT = 2;
+
+    /**
      * A handler to process the attempt to place call with redirection service from Telecom
      */
     private final Handler mHandler = new Handler(Looper.getMainLooper()) {
@@ -174,6 +186,8 @@ public abstract class CallRedirectionService extends Service {
                         args.recycle();
                     }
                     break;
+                case MSG_TIMEOUT:
+                    onRedirectionTimeout();
             }
         }
     };
@@ -199,6 +213,15 @@ public abstract class CallRedirectionService extends Service {
             args.arg3 = initialPhoneAccount;
             args.arg4 = allowInteractiveResponse;
             mHandler.obtainMessage(MSG_PLACE_CALL, args).sendToTarget();
+        }
+
+        /**
+         * Telecom calls this method to inform the CallRedirectionService of the timeout waiting for
+         * it to complete its operation.
+         */
+        @Override
+        public void notifyTimeout() {
+            mHandler.obtainMessage(MSG_TIMEOUT).sendToTarget();
         }
     }
 
