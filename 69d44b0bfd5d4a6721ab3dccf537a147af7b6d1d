@@ -281,6 +281,24 @@
       "parentUuid": "817f1849_84af2662",
       "revId": "69d44b0bfd5d4a6721ab3dccf537a147af7b6d1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "080542bf_2b9e83ec",
+        "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-07-29T22:34:58Z",
+      "side": 1,
+      "message": "Thanks! Now fixed by aosp/1771797 .",
+      "parentUuid": "21bdcee5_e3f2e237",
+      "revId": "69d44b0bfd5d4a6721ab3dccf537a147af7b6d1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
