@@ -369,6 +369,9 @@ public final class DisconnectCause {
     @FlaggedApi(Flags.FLAG_OEM_ENABLED_SATELLITE_FLAG)
     public static final int SATELLITE_ENABLED = 82;
 
+    /** @hide */
+    public static final int CONCURRENT_CALLS_NOT_POSSIBLE = 83;
+
     //*********************************************************************************************
     // When adding a disconnect type:
     // 1) Update toString() with the newly added disconnect type.
@@ -549,6 +552,8 @@ public final class DisconnectCause {
                 return "INCOMING_AUTO_REJECTED";
             case SATELLITE_ENABLED:
                 return "SATELLITE_ENABLED";
+            case CONCURRENT_CALLS_NOT_POSSIBLE:
+                return "CONCURRENT_CALLS_NOT_POSSIBLE";
             default:
                 return "INVALID: " + cause;
         }
