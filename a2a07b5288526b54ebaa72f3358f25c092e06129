@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5b6be2b_eecbd8c6",
+        "filename": "telecomm/java/android/telecom/CallRedirectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1570596
+      },
+      "writtenOn": "2021-07-29T22:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56aa7307_a1ca3550",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 93,
+        "endChar": 30
+      },
+      "revId": "a2a07b5288526b54ebaa72f3358f25c092e06129",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e9711ee_04910f12",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-07-29T21:56:59Z",
       "side": 1,
       "message": "Minor: \nadd break;\nIt seems like something that could be easily forgotten in the future if we add another case.",
+      "range": {
+        "startLine": 190,
+        "startChar": 20,
+        "endLine": 190,
+        "endChar": 43
+      },
+      "revId": "a2a07b5288526b54ebaa72f3358f25c092e06129",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2bca9b3_8d5399f5",
+        "filename": "telecomm/java/android/telecom/CallRedirectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1570596
+      },
+      "writtenOn": "2021-07-29T22:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e9711ee_04910f12",
       "range": {
         "startLine": 190,
         "startChar": 20,
