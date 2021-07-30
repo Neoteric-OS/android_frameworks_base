@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.media.AudioDeviceAttributes;
 import android.media.AudioManager;
 import android.media.AudioSystem;
+import android.media.BtProfileConnectionInfo;
 import android.os.Binder;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -424,10 +425,10 @@ public class BtHelper {
     }
 
     /*package*/ synchronized void disconnectAllBluetoothProfiles() {
-        mDeviceBroker.postDisconnectA2dp();
-        mDeviceBroker.postDisconnectA2dpSink();
-        mDeviceBroker.postDisconnectHeadset();
-        mDeviceBroker.postDisconnectHearingAid();
+        mDeviceBroker.postBtProfileDisconnected(BluetoothProfile.A2DP);
+        mDeviceBroker.postBtProfileDisconnected(BluetoothProfile.A2DP_SINK);
+        mDeviceBroker.postBtProfileDisconnected(BluetoothProfile.HEADSET);
+        mDeviceBroker.postBtProfileDisconnected(BluetoothProfile.HEARING_AID);
     }
 
     // @GuardedBy("AudioDeviceBroker.mSetModeLock")
@@ -446,46 +447,30 @@ public class BtHelper {
         mBluetoothHeadset = null;
     }
 
-    /*package*/ synchronized void onA2dpProfileConnected(BluetoothA2dp a2dp) {
-        mA2dp = a2dp;
-        final List<BluetoothDevice> deviceList = mA2dp.getConnectedDevices();
-        if (deviceList.isEmpty()) {
+    /*package*/ synchronized void onBtProfileConnected(int profile, BluetoothProfile proxy) {
+        if (profile == BluetoothProfile.HEADSET) {
+            onHeadsetProfileConnected((BluetoothHeadset) proxy);
             return;
         }
-        final BluetoothDevice btDevice = deviceList.get(0);
-        // the device is guaranteed CONNECTED
-        mDeviceBroker.queueBluetoothA2dpDeviceConnectionStateSuppressNoisyIntent(
-                new AudioDeviceBroker.BtDeviceConnectionInfo(btDevice,
-                    BluetoothA2dp.STATE_CONNECTED, BluetoothProfile.A2DP_SINK,
-                        true, -1));
-    }
-
-    /*package*/ synchronized void onA2dpSinkProfileConnected(BluetoothProfile profile) {
-        final List<BluetoothDevice> deviceList = profile.getConnectedDevices();
+        if (profile == BluetoothProfile.A2DP) {
+            mA2dp = (BluetoothA2dp) proxy;
+        }
+        final List<BluetoothDevice> deviceList = proxy.getConnectedDevices();
         if (deviceList.isEmpty()) {
             return;
         }
         final BluetoothDevice btDevice = deviceList.get(0);
         final @BluetoothProfile.BtProfileState int state =
-                profile.getConnectionState(btDevice);
-        mDeviceBroker.postSetA2dpSourceConnectionState(
-                state, new BluetoothA2dpDeviceInfo(btDevice));
-    }
-
-    /*package*/ synchronized void onHearingAidProfileConnected(BluetoothHearingAid hearingAid) {
-        mHearingAid = hearingAid;
-        final List<BluetoothDevice> deviceList = mHearingAid.getConnectedDevices();
-        if (deviceList.isEmpty()) {
-            return;
+                proxy.getConnectionState(btDevice);
+        if (state == BluetoothProfile.STATE_CONNECTED) {
+            mDeviceBroker.queueOnBluetoothActiveDeviceChanged(
+                    new AudioDeviceBroker.BtDeviceChangedData(btDevice, null,
+                        new BtProfileConnectionInfo(profile), "mBluetoothProfileServiceListener"));
+        } else {
+            mDeviceBroker.queueOnBluetoothActiveDeviceChanged(
+                    new AudioDeviceBroker.BtDeviceChangedData(null, btDevice,
+                        new BtProfileConnectionInfo(profile), "mBluetoothProfileServiceListener"));
         }
-        final BluetoothDevice btDevice = deviceList.get(0);
-        final @BluetoothProfile.BtProfileState int state =
-                mHearingAid.getConnectionState(btDevice);
-        mDeviceBroker.postBluetoothHearingAidDeviceConnectionState(
-                btDevice, state,
-                /*suppressNoisyIntent*/ false,
-                /*musicDevice*/ android.media.AudioSystem.DEVICE_NONE,
-                /*eventSource*/ "mBluetoothProfileServiceListener");
     }
 
     // @GuardedBy("AudioDeviceBroker.mSetModeLock")
@@ -632,29 +617,15 @@ public class BtHelper {
                 public void onServiceConnected(int profile, BluetoothProfile proxy) {
                     switch(profile) {
                         case BluetoothProfile.A2DP:
-                            AudioService.sDeviceLogger.log(new AudioEventLogger.StringEvent(
-                                    "BT profile service: connecting A2DP profile"));
-                            mDeviceBroker.postBtA2dpProfileConnected((BluetoothA2dp) proxy);
-                            break;
-
                         case BluetoothProfile.A2DP_SINK:
-                            AudioService.sDeviceLogger.log(new AudioEventLogger.StringEvent(
-                                    "BT profile service: connecting A2DP_SINK profile"));
-                            mDeviceBroker.postBtA2dpSinkProfileConnected(proxy);
-                            break;
-
                         case BluetoothProfile.HEADSET:
-                            AudioService.sDeviceLogger.log(new AudioEventLogger.StringEvent(
-                                    "BT profile service: connecting HEADSET profile"));
-                            mDeviceBroker.postBtHeasetProfileConnected((BluetoothHeadset) proxy);
-                            break;
-
                         case BluetoothProfile.HEARING_AID:
                             AudioService.sDeviceLogger.log(new AudioEventLogger.StringEvent(
-                                    "BT profile service: connecting HEARING_AID profile"));
-                            mDeviceBroker.postBtHearingAidProfileConnected(
-                                    (BluetoothHearingAid) proxy);
+                                    "BT profile service: connecting "
+                                    + BluetoothProfile.getProfileName(profile) + " profile"));
+                            mDeviceBroker.postBtProfileConnected(profile, proxy);
                             break;
+
                         default:
                             break;
                     }
@@ -663,19 +634,10 @@ public class BtHelper {
 
                     switch (profile) {
                         case BluetoothProfile.A2DP:
-                            mDeviceBroker.postDisconnectA2dp();
-                            break;
-
                         case BluetoothProfile.A2DP_SINK:
-                            mDeviceBroker.postDisconnectA2dpSink();
-                            break;
-
                         case BluetoothProfile.HEADSET:
-                            mDeviceBroker.postDisconnectHeadset();
-                            break;
-
                         case BluetoothProfile.HEARING_AID:
-                            mDeviceBroker.postDisconnectHearingAid();
+                            mDeviceBroker.postBtProfileDisconnected(profile);
                             break;
 
                         default:
