@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd353973_73efe7a1",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2021-07-30T00:00:06Z",
+      "side": 1,
+      "message": "nit:\n\nlet\u0027s rearrange this comment so that it applies to the entire block:\n\n\n    /** The following set of keys 289 -\u003e 316 are used to directly launch applications. For example, KEYCODE_VIDEO_APP_X can be used to launch various video or streaming applications. \n     * Key code constant: Settings Application key #1.\n     */",
+      "range": {
+        "startLine": 827,
+        "startChar": 4,
+        "endLine": 828,
+        "endChar": 64
+      },
+      "revId": "d80fdb83b0b1c16f29bbd5d3a9d1b87aa21d4ee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
