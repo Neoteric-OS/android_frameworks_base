@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "567be448_4be93473",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1840,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2021-07-30T22:24:59Z",
+      "side": 0,
+      "message": "Don\u0027t remove this code. @NonNull does not enforce that the parameter is not null, it is just for documentation.",
+      "range": {
+        "startLine": 1837,
+        "startChar": 8,
+        "endLine": 1840,
+        "endChar": 9
+      },
+      "revId": "3923c3acc68d2d8f9beaab49122ce06cd876d1de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f1969ec_65ac6ed2",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2021-07-30T22:24:59Z",
+      "side": 0,
+      "message": "Same here.",
+      "revId": "3923c3acc68d2d8f9beaab49122ce06cd876d1de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
