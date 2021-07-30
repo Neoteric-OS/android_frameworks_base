@@ -113,8 +113,23 @@ package android.media {
   public class AudioManager {
     method public void adjustStreamVolumeForUid(int, int, int, @NonNull String, int, int, int);
     method public void adjustSuggestedStreamVolumeForUid(int, int, int, @NonNull String, int, int, int);
+    method public void onBluetoothActiveDeviceChanged(@Nullable android.bluetooth.BluetoothDevice, @Nullable android.bluetooth.BluetoothDevice, @NonNull android.media.BtProfileConnectionInfo);
     method public void setStreamVolumeForUid(int, int, int, @NonNull String, int, int, int);
     field public static final int FLAG_FROM_KEY = 4096; // 0x1000
+  }
+
+  public final class BtProfileConnectionInfo implements android.os.Parcelable {
+    ctor public BtProfileConnectionInfo(int);
+    method @NonNull public static android.media.BtProfileConnectionInfo a2dpInfo(boolean, int);
+    method public int describeContents();
+    method public boolean getIsLeOutput();
+    method public int getProfile();
+    method public boolean getSuppressNoisyIntent();
+    method public int getVolume();
+    method @NonNull public static android.media.BtProfileConnectionInfo hearingAidInfo(boolean);
+    method @NonNull public static android.media.BtProfileConnectionInfo leAudio(boolean, boolean);
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.media.BtProfileConnectionInfo> CREATOR;
   }
 
   public class MediaMetadataRetriever implements java.lang.AutoCloseable {
