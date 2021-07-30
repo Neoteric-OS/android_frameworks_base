@@ -198,6 +198,10 @@ public final class AudioAttributes implements Parcelable {
     })
     public static final int USAGE_CALL_ASSISTANT = 17;
 
+    public static final int USAGE_ENFORCED_AUDIBLE = 18;
+    public static final int USAGE_BLUETOOTH_SCO = 19;
+    public static final int USAGE_TTS = 20;
+
     private static final int SYSTEM_USAGE_OFFSET = 1000;
 
     /**
@@ -785,6 +789,9 @@ public final class AudioAttributes implements Parcelable {
                 case USAGE_GAME:
                 case USAGE_VIRTUAL_SOURCE:
                 case USAGE_ASSISTANT:
+                case USAGE_ENFORCED_AUDIBLE:
+                case USAGE_BLUETOOTH_SCO:
+                case USAGE_TTS:
                     mUsage = usage;
                     break;
                 default:
@@ -1284,6 +1291,12 @@ public final class AudioAttributes implements Parcelable {
                 return new String("USAGE_VEHICLE_STATUS");
             case USAGE_ANNOUNCEMENT:
                 return new String("USAGE_ANNOUNCEMENT");
+            case USAGE_ENFORCED_AUDIBLE:
+                return new String("USAGE_ENFORCED_AUDIBLE");
+            case USAGE_BLUETOOTH_SCO:
+                return new String("USAGE_BLUETOOTH_SCO");
+            case USAGE_TTS:
+                return new String("USAGE_TTS");
             default:
                 return new String("unknown usage " + usage);
         }
@@ -1520,6 +1533,12 @@ public final class AudioAttributes implements Parcelable {
             case USAGE_ANNOUNCEMENT:
             case USAGE_UNKNOWN:
                 return AudioSystem.STREAM_MUSIC;
+            case USAGE_ENFORCED_AUDIBLE:
+                return AudioSystem.STREAM_SYSTEM_ENFORCED;
+            case USAGE_BLUETOOTH_SCO:
+                return AudioSystem.STREAM_BLUETOOTH_SCO;
+            case USAGE_TTS:
+                return AudioSystem.STREAM_TTS;
             default:
                 if (fromGetVolumeControlStream) {
                     throw new IllegalArgumentException("Unknown usage value " + aa.getUsage() +
