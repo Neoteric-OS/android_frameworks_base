@@ -443,6 +443,38 @@ import java.util.concurrent.atomic.AtomicBoolean;
         }
     }
 
+    void postBluetoothActiveDeviceChanged(BluetoothDevice newDevice, BluetoothDevice previousDevice,
+            int profile, int a2dpVolume, boolean suppressNoisyIntent, @NonNull String eventSource) {
+        if (profile == BluetoothProfile.HEARING_AID) {
+            if (previousDevice != null) {
+                postBluetoothHearingAidDeviceConnectionState(previousDevice,
+                        BluetoothProfile.STATE_DISCONNECTED, suppressNoisyIntent, 0, eventSource);
+            }
+            if (newDevice != null) {
+                postBluetoothHearingAidDeviceConnectionState(newDevice,
+                        BluetoothProfile.STATE_CONNECTED, suppressNoisyIntent, 0, eventSource);
+            }
+        } else {
+            // if device is the same -> it's a reconfig
+            if (newDevice != null && newDevice.equals(previousDevice)) {
+                postBluetoothA2dpDeviceConfigChange(newDevice);
+            } else {
+                if (previousDevice != null) {
+                    postBluetoothA2dpDeviceConnectionStateSuppressNoisyIntent(previousDevice,
+                            BluetoothProfile.STATE_DISCONNECTED, profile, suppressNoisyIntent, -1);
+                }
+                if (newDevice != null) {
+                    postBluetoothA2dpDeviceConnectionStateSuppressNoisyIntent(newDevice,
+                            BluetoothProfile.STATE_CONNECTED, profile, suppressNoisyIntent,
+                            a2dpVolume);
+                    // because we have a new device, we must handle it's config
+                    postBluetoothA2dpDeviceConfigChange(newDevice);
+                }
+            }
+        }
+    }
+
+
     private static final class BtDeviceConnectionInfo {
         final @NonNull BluetoothDevice mDevice;
         final @AudioService.BtProfileConnectionState int mState;

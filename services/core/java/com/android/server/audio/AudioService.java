@@ -5482,61 +5482,28 @@ public class AudioService extends IAudioService.Stub
     public @interface BtProfileConnectionState {}
 
     /**
-     * See AudioManager.setBluetoothHearingAidDeviceConnectionState()
+     * See AudioManager.onBluetoothActiveDeviceChanged(...)
      */
-    public void setBluetoothHearingAidDeviceConnectionState(
-            @NonNull BluetoothDevice device, @BtProfileConnectionState int state,
-            boolean suppressNoisyIntent, int musicDevice)
+    public void onBluetoothActiveDeviceChanged(BluetoothDevice newDevice,
+            BluetoothDevice previousDevice, int profile, int volume, boolean suppressNoisyIntent)
     {
-        if (device == null) {
-            throw new IllegalArgumentException("Illegal null device");
+        if (profile == BluetoothProfile.HEARING_AID) {
+            if (previousDevice != null && newDevice == null) {
+                mPlaybackMonitor.unregisterPlaybackCallback(mVoiceActivityMonitor);
+            } else if (newDevice != null && previousDevice == null) {
+                mPlaybackMonitor.registerPlaybackCallback(mVoiceActivityMonitor, true);
+            }
+        } else if (profile != BluetoothProfile.A2DP && profile != BluetoothProfile.A2DP_SINK) {
+            throw new IllegalArgumentException("Illegal BluetoothProfile profile for device "
+                    + previousDevice + " -> " + newDevice + ". Got: " + profile);
         }
-        if (state != BluetoothProfile.STATE_CONNECTED
-                && state != BluetoothProfile.STATE_DISCONNECTED) {
-            throw new IllegalArgumentException("Illegal BluetoothProfile state for device "
-                    + " (dis)connection, got " + state);
-        }
-        if (state == BluetoothProfile.STATE_CONNECTED) {
-            mPlaybackMonitor.registerPlaybackCallback(mVoiceActivityMonitor, true);
-        } else {
-            mPlaybackMonitor.unregisterPlaybackCallback(mVoiceActivityMonitor);
-        }
-        mDeviceBroker.postBluetoothHearingAidDeviceConnectionState(
-                device, state, suppressNoisyIntent, musicDevice, "AudioService");
+        mDeviceBroker.postBluetoothActiveDeviceChanged(newDevice, previousDevice, profile,
+                volume, suppressNoisyIntent, "AudioService");
     }
 
-    /**
-     * See AudioManager.setBluetoothA2dpDeviceConnectionStateSuppressNoisyIntent()
-     */
-    public void setBluetoothA2dpDeviceConnectionStateSuppressNoisyIntent(
-            @NonNull BluetoothDevice device, @AudioService.BtProfileConnectionState int state,
-            int profile, boolean suppressNoisyIntent, int a2dpVolume) {
-        if (device == null) {
-            throw new IllegalArgumentException("Illegal null device");
-        }
-        if (state != BluetoothProfile.STATE_CONNECTED
-                && state != BluetoothProfile.STATE_DISCONNECTED) {
-            throw new IllegalArgumentException("Illegal BluetoothProfile state for device "
-                    + " (dis)connection, got " + state);
-        }
-        mDeviceBroker.postBluetoothA2dpDeviceConnectionStateSuppressNoisyIntent(device, state,
-                profile, suppressNoisyIntent, a2dpVolume);
-    }
 
     /*package*/ void setMusicMute(boolean mute) {
         mStreamStates[AudioSystem.STREAM_MUSIC].muteInternally(mute);
-    }
-
-    /**
-     * See AudioManager.handleBluetoothA2dpDeviceConfigChange()
-     * @param device
-     */
-    public void handleBluetoothA2dpDeviceConfigChange(BluetoothDevice device)
-    {
-        if (device == null) {
-            throw new IllegalArgumentException("Illegal null device");
-        }
-        mDeviceBroker.postBluetoothA2dpDeviceConfigChange(device);
     }
 
     private static final Set<Integer> DEVICE_MEDIA_UNMUTED_ON_PLUG_SET;
