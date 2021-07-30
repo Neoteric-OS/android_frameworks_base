@@ -1,0 +1,125 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package android.media;
+
+import android.annotation.NonNull;
+import android.annotation.SystemApi;
+import android.bluetooth.BluetoothProfile;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+/**
+ * Contains information about Bluetooth profile connection state changed
+ * {@hide}
+ */
+@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+public final class BtProfileConnectionInfo implements Parcelable {
+    private final int mProfile;
+    private final boolean mSupprNoisy;
+    private final int mVolume;
+    private final boolean mIsLeOutput;
+
+    private BtProfileConnectionInfo(int profile, boolean suppressNoisyIntent, int volume,
+            boolean isLeOutput) {
+        mProfile = profile;
+        mSupprNoisy = suppressNoisyIntent;
+        mVolume = volume;
+        mIsLeOutput = isLeOutput;
+    }
+
+    public BtProfileConnectionInfo(int profile) {
+        this(profile, false, -1, false);
+    }
+
+    public static final @NonNull Parcelable.Creator<BtProfileConnectionInfo> CREATOR =
+            new Parcelable.Creator<BtProfileConnectionInfo>() {
+                @Override
+                public BtProfileConnectionInfo createFromParcel(Parcel source) {
+                    return new BtProfileConnectionInfo(source.readInt(), source.readBoolean(),
+                            source.readInt(), source.readBoolean());
+                }
+
+                @Override
+                public BtProfileConnectionInfo[] newArray(int size) {
+                    return new BtProfileConnectionInfo[size];
+                }
+            };
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, @WriteFlags int flags) {
+        dest.writeInt(mProfile);
+        dest.writeBoolean(mSupprNoisy);
+        dest.writeInt(mVolume);
+        dest.writeBoolean(mIsLeOutput);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Constructor for A2dp info
+     *
+     * @param suppressNoisyIntent if true the {@link AudioManager.ACTION_AUDIO_BECOMING_NOISY}
+     * intent will not be sent.
+     *
+     * @param volume of device -1 to ignore value
+     */
+    public static @NonNull BtProfileConnectionInfo a2dpInfo(boolean suppressNoisyIntent,
+            int volume) {
+        return new BtProfileConnectionInfo(BluetoothProfile.A2DP, suppressNoisyIntent, volume,
+            false);
+    }
+
+    /**
+     * Constructor for hearing aid info
+     *
+     * @param suppressNoisyIntent if true the {@link AudioManager.ACTION_AUDIO_BECOMING_NOISY}
+     * intent will not be sent.
+     */
+    public static @NonNull BtProfileConnectionInfo hearingAidInfo(boolean suppressNoisyIntent) {
+        return new BtProfileConnectionInfo(BluetoothProfile.A2DP, suppressNoisyIntent, -1,
+            false);
+    }
+
+    /**
+     * constructor for le audio info
+     *
+     * @param suppressNoisyIntent if true the {@link AudioManager.ACTION_AUDIO_BECOMING_NOISY}
+     * intent will not be sent.
+     *
+     * @param isLeOutput if true mean the device is an output device, if false it's an input device
+     */
+    public static @NonNull BtProfileConnectionInfo leAudio(boolean suppressNoisyIntent,
+            boolean isLeOutput) {
+        return new BtProfileConnectionInfo(BluetoothProfile.A2DP, suppressNoisyIntent, -1,
+            isLeOutput);
+    }
+
+    public int getProfile() {
+        return mProfile;
+    }
+    public boolean getSuppressNoisyIntent() {
+        return mSupprNoisy;
+    }
+    public int getVolume() {
+        return mVolume;
+    }
+    public boolean getIsLeOutput() {
+        return mIsLeOutput;
+    }
+}
