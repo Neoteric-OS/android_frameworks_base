@@ -4440,4 +4440,7 @@
     <bool name="config_telephony5gStandalone">false</bool>
     <!-- Whether the device enable the non-standalone (NSA) mode of 5G NR.-->
     <bool name="config_telephony5gNonStandalone">false</bool>
+
+    <!-- Flag indicating if help links for Settings app should be enabled. -->
+    <bool name="config_settingsHelpLinksEnabled">false</bool>
 </resources>
