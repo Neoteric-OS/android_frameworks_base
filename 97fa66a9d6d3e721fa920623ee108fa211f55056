@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ef14aaa_b26ec65d",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-08-02T20:37:34Z",
+      "side": 1,
+      "message": "This can be removed. It is automatically inserted into the JavaDoc when the @RequiresPermission annotation is present. Therefore, we don\u0027t need to manually include it in the docs for any APIs.",
+      "revId": "97fa66a9d6d3e721fa920623ee108fa211f55056",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
