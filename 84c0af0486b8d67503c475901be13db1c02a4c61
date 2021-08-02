@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3bb4e7b_e7076cae",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-08-02T14:22:17Z",
+      "side": 1,
+      "message": "This won\u0027t be visible in the actual javadoc for any key other than SETTINGS_APP_1. Please appropriately document each key, e.g:\n\n    /** \n     * Key code constant: Settings Application key #1.\n     * \n     * Launches the first configured Settings app.\n     */     \n     public static final int KEYCODE_SETTINGS_APP_1 \u003d 289;",
+      "range": {
+        "startLine": 827,
+        "startChar": 8,
+        "endLine": 829,
+        "endChar": 30
+      },
+      "revId": "84c0af0486b8d67503c475901be13db1c02a4c61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6641cab_f2d3332f",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-08-02T14:22:17Z",
+      "side": 1,
+      "message": "Is it really possible to have 4 settings applications?",
+      "range": {
+        "startLine": 832,
+        "startChar": 0,
+        "endLine": 839,
+        "endChar": 0
+      },
+      "revId": "84c0af0486b8d67503c475901be13db1c02a4c61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b461aa22_c924366f",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-08-02T14:22:17Z",
+      "side": 1,
+      "message": "Is it really possible to have 4 setup apps?",
+      "range": {
+        "startLine": 872,
+        "startChar": 0,
+        "endLine": 879,
+        "endChar": 0
+      },
+      "revId": "84c0af0486b8d67503c475901be13db1c02a4c61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80ce1cde_d321ebae",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-08-02T14:22:17Z",
+      "side": 1,
+      "message": "What is a menu app? Is it possible to have 4 of them?",
+      "range": {
+        "startLine": 880,
+        "startChar": 0,
+        "endLine": 887,
+        "endChar": 0
+      },
+      "revId": "84c0af0486b8d67503c475901be13db1c02a4c61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9dea0a6_316866c0",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2764,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-08-02T14:22:17Z",
+      "side": 1,
+      "message": "If you\u0027re going to log an error that they should be handled in interceptKeyBeforeQueueing, then please actually handle these keys there.",
+      "revId": "84c0af0486b8d67503c475901be13db1c02a4c61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
