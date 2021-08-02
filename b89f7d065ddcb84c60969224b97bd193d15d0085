@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad3dd676_1f85edcb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-02T08:58:52Z",
+      "side": 1,
+      "message": "Hi Amit, Etienne is Ooo for 3 weeks.\nI did resolve the comment you wrote.",
+      "revId": "b89f7d065ddcb84c60969224b97bd193d15d0085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
