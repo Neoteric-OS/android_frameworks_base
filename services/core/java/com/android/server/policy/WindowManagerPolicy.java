@@ -513,7 +513,7 @@ public interface WindowManagerPolicy extends WindowManagerPolicyConstants {
         public void lockDeviceNow();
 
         /**
-         * Returns a code that descripbes whether the camera lens is covered or not.
+         * Returns a code that describes whether the camera lens is covered or not.
          */
         public int getCameraLensCoverState();
 

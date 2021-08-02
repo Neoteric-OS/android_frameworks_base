@@ -1127,7 +1127,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     /**
      * Sends the device to sleep as a result of a power button press.
      *
-     * @return True if the was device was sent to sleep, false if sleep was suppressed.
+     * @return True if the device was sent to sleep, false if sleep was suppressed.
      */
     private boolean goToSleepFromPowerButton(long eventTime, int flags) {
         // Before we actually go to sleep, we check the last wakeup reason.
