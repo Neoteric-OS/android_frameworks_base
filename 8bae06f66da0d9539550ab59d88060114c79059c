@@ -16,6 +16,24 @@
       "message": "When was this Exception triggered ? was it really needed ?",
       "revId": "8bae06f66da0d9539550ab59d88060114c79059c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d76ce4fc_b8321adc",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5496,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-02T18:21:54Z",
+      "side": 0,
+      "message": "Done.\nIt was not really needed as Bt was giving the state in the function call and it\u0027s always a good value.",
+      "parentUuid": "893ae789_25aef417",
+      "revId": "8bae06f66da0d9539550ab59d88060114c79059c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
