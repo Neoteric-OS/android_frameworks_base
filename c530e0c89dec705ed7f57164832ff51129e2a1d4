@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76677b6b_c0d6eca1",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5249,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-02T14:17:36Z",
+      "side": 1,
+      "message": "doc TODO",
+      "revId": "c530e0c89dec705ed7f57164832ff51129e2a1d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7161141d_29e8ff62",
+        "filename": "media/java/android/media/IAudioService.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-02T14:17:36Z",
+      "side": 1,
+      "message": "Do we want to received a list of newDevice \u0026 previousDevice ?",
+      "revId": "c530e0c89dec705ed7f57164832ff51129e2a1d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b97a03b_334dc851",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-02T14:17:36Z",
+      "side": 1,
+      "message": "We are still calling the previous method. Do we wan to keep it like this ?",
+      "revId": "c530e0c89dec705ed7f57164832ff51129e2a1d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e24aa8e_8410110d",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-02T14:17:36Z",
+      "side": 1,
+      "message": "if newDevice \u003d\u003d\u003d previousDevice, it will trigger a reconfig.\n\ncalling with newDevice \u003d null \u0026\u0026 previousDevice \u003d\u003d null is also a possibility",
+      "revId": "c530e0c89dec705ed7f57164832ff51129e2a1d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5864466_3e01de9f",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5491,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-02T14:17:36Z",
+      "side": 1,
+      "message": "In case of a device switch, do we need to stop/restart the playback monitor ?",
+      "revId": "c530e0c89dec705ed7f57164832ff51129e2a1d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
