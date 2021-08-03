@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4c6b2be0_ad865750",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2021-08-03T06:28:11Z",
+      "side": 1,
+      "message": "I will fix it. thanks",
+      "parentUuid": "e3bb4e7b_e7076cae",
+      "range": {
+        "startLine": 827,
+        "startChar": 8,
+        "endLine": 829,
+        "endChar": 30
+      },
+      "revId": "84c0af0486b8d67503c475901be13db1c02a4c61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b6641cab_f2d3332f",
         "filename": "core/java/android/view/KeyEvent.java",
         "patchSetId": 4
@@ -37,6 +61,30 @@
       "writtenOn": "2021-08-02T14:22:17Z",
       "side": 1,
       "message": "Is it really possible to have 4 settings applications?",
+      "range": {
+        "startLine": 832,
+        "startChar": 0,
+        "endLine": 839,
+        "endChar": 0
+      },
+      "revId": "84c0af0486b8d67503c475901be13db1c02a4c61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01f3ebd4_799b9256",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2021-08-03T06:28:11Z",
+      "side": 1,
+      "message": "There are currently no plans to use this.",
+      "parentUuid": "b6641cab_f2d3332f",
       "range": {
         "startLine": 832,
         "startChar": 0,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3d36490d_9d33ba02",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2021-08-03T06:28:11Z",
+      "side": 1,
+      "message": "Right now, KEYCODE_SETUP_APP_1 is enough.",
+      "parentUuid": "b461aa22_c924366f",
+      "range": {
+        "startLine": 872,
+        "startChar": 0,
+        "endLine": 879,
+        "endChar": 0
+      },
+      "revId": "84c0af0486b8d67503c475901be13db1c02a4c61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "80ce1cde_d321ebae",
         "filename": "core/java/android/view/KeyEvent.java",
         "patchSetId": 4
@@ -95,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "524b4df5_3d65dbe9",
+        "filename": "core/java/android/view/KeyEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2021-08-03T06:28:11Z",
+      "side": 1,
+      "message": "We are considering as a menu app like\ni.e) Sync MENU ON/OFF, Recorder Menu/STB Menu, ACTION MENU, DISCOVER...",
+      "parentUuid": "80ce1cde_d321ebae",
+      "range": {
+        "startLine": 880,
+        "startChar": 0,
+        "endLine": 887,
+        "endChar": 0
+      },
+      "revId": "84c0af0486b8d67503c475901be13db1c02a4c61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b9dea0a6_316866c0",
         "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
         "patchSetId": 4
@@ -106,6 +202,24 @@
       "writtenOn": "2021-08-02T14:22:17Z",
       "side": 1,
       "message": "If you\u0027re going to log an error that they should be handled in interceptKeyBeforeQueueing, then please actually handle these keys there.",
+      "revId": "84c0af0486b8d67503c475901be13db1c02a4c61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfa59d5c_b09d04cd",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2764,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2021-08-03T06:28:11Z",
+      "side": 1,
+      "message": "Here is just for blocking to be delivered to general apps.\nOEMs are going to handle these keys at interceptKeyBeforeQueueing like KEYCODE_ASSIST with their own usage.\nbut each OEMs have different specification of direct keys.\n\nPlease let me know if you have specific idea to actually handle like KEYCODE_VIDEO_APP_1...",
+      "parentUuid": "b9dea0a6_316866c0",
       "revId": "84c0af0486b8d67503c475901be13db1c02a4c61",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
