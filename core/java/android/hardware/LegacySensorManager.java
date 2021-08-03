@@ -18,6 +18,7 @@ package android.hardware;
 
 import static android.view.Display.DEFAULT_DISPLAY;
 
+import android.content.Context;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.view.IRotationWatcher;
@@ -49,7 +50,7 @@ final class LegacySensorManager {
         synchronized (SensorManager.class) {
             if (!sInitialized) {
                 sWindowManager = IWindowManager.Stub.asInterface(
-                        ServiceManager.getService("window"));
+                        ServiceManager.getService(Context.WINDOW_SERVICE));
                 if (sWindowManager != null) {
                     // if it's null we're running in the system process
                     // which won't get the rotated values
