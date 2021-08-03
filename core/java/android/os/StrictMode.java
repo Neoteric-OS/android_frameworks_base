@@ -2489,7 +2489,8 @@ public final class StrictMode {
     private static Singleton<IWindowManager> sWindowManager =
             new Singleton<IWindowManager>() {
                 protected IWindowManager create() {
-                    return IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
+                    return IWindowManager.Stub.asInterface(ServiceManager.getService(
+                            Context.WINDOW_SERVICE));
                 }
             };
 

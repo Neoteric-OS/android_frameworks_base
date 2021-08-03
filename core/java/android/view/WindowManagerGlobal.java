@@ -193,7 +193,7 @@ public final class WindowManagerGlobal {
         synchronized (WindowManagerGlobal.class) {
             if (sWindowManagerService == null) {
                 sWindowManagerService = IWindowManager.Stub.asInterface(
-                        ServiceManager.getService("window"));
+                        ServiceManager.getService(Context.WINDOW_SERVICE));
                 try {
                     if (sWindowManagerService != null) {
                         ValueAnimator.setDurationScale(
