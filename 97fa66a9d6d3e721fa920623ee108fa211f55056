@@ -16,6 +16,57 @@
       "message": "This can be removed. It is automatically inserted into the JavaDoc when the @RequiresPermission annotation is present. Therefore, we don\u0027t need to manually include it in the docs for any APIs.",
       "revId": "97fa66a9d6d3e721fa920623ee108fa211f55056",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "903125e0_879de440",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 5283,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-03T16:49:49Z",
+      "side": 1,
+      "message": "Do not add hidden apis.\nThis will block for bluetooth as a mainline module and there is work in progress to remove all of them.",
+      "revId": "97fa66a9d6d3e721fa920623ee108fa211f55056",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d852e0bc_85d5bcbe",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 5285,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-03T16:49:49Z",
+      "side": 1,
+      "message": "There is a lot of duplicate code between xxOutxx and xxInxx, and there is almost the same parameters use everytime. Only the supressNoisyIntent and delay are exclusive for xxOutxx.\nWhat do you think about merging them together and add a parameter ?",
+      "revId": "97fa66a9d6d3e721fa920623ee108fa211f55056",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d17a7bb1_b8e66e1d",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 5299,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-03T16:49:49Z",
+      "side": 1,
+      "message": "Same, do not add hidden apis",
+      "revId": "97fa66a9d6d3e721fa920623ee108fa211f55056",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
