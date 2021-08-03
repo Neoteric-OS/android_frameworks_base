@@ -16,6 +16,23 @@
       "message": "friendly ping reviewers\n",
       "revId": "69df09d4d0efe7426abe7b61caac6431100f1b96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be63e4e6_a49263ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2021-08-03T01:02:07Z",
+      "side": 1,
+      "message": "The failed aosp-master/aosp_cf_x86_64_phone-userdebug is already failing or flaky, and unrelated to this change.\n",
+      "revId": "69df09d4d0efe7426abe7b61caac6431100f1b96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
