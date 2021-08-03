@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ae8adf2_e7e1e1fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1887910
+      },
+      "writtenOn": "2021-08-03T17:59:18Z",
+      "side": 1,
+      "message": "This is probably going to cause some turbulence with internal test scripts. Please remember as an outsider I won\u0027t get to see all the glorious errors that this change creates and so will be blissfully unaware of them :D.",
+      "revId": "1b964985ebede2ac69b213eb33c8cf902e9bf238",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
