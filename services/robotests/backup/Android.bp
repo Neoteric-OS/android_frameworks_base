@@ -32,7 +32,6 @@ android_app {
 
     static_libs: [
         "bmgr",
-        "bu",
         "services.backup",
         "services.core",
         "services.net",
