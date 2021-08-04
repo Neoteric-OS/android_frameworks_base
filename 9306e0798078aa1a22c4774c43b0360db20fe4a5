@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e9256f6_cbb52395",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5251,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2021-08-04T16:49:38Z",
+      "side": 1,
+      "message": "\"set\"?",
+      "range": {
+        "startLine": 5251,
+        "startChar": 16,
+        "endLine": 5251,
+        "endChar": 22
+      },
+      "revId": "9306e0798078aa1a22c4774c43b0360db20fe4a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "072ea29f_3d5c86fb",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5252,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2021-08-04T16:49:38Z",
+      "side": 1,
+      "message": "I have mixed feelings about the naming of this parameter. Technically AudioService will not prevent audio playback, or stop existing players, it simply fires an intent telling apps that their audio output will be routed to speakers, and some choose to pause in response. Is it only true when newDevice is null?",
+      "range": {
+        "startLine": 5252,
+        "startChar": 87,
+        "endLine": 5252,
+        "endChar": 96
+      },
+      "revId": "9306e0798078aa1a22c4774c43b0360db20fe4a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
