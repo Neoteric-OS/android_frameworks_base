@@ -16,6 +16,23 @@
       "message": "please have a look",
       "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f468e89_902114d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2021-08-04T14:58:20Z",
+      "side": 1,
+      "message": "removes the  \"Learn more\" button in the USB contaminant dialog when the config is false, if not this button will try to launch the unavailable Settings HelpTrampoline and SystemUI will crash",
+      "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
