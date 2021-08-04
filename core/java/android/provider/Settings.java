@@ -6426,6 +6426,26 @@ public final class Settings {
         public static final String LOCK_TO_APP_EXIT_LOCKED = "lock_to_app_exit_locked";
 
         /**
+         * Whether secure shutdown is enabled or not.
+         * @hide
+         */
+        public static final String SECURE_SHUTDOWN_ENABLED = "secure_shutdown_enabled";
+
+        /**
+         * Whether secure shutdown is enabled only on the lock screen or not.
+         * @hide
+         */
+        public static final String SECURE_SHUTDOWN_ENABLED_ON_KEYGUARD =
+                        "secure_shutdown_enabled_on_keyguard";
+
+        /**
+         * Whether secure shutdown is enabled throughout the system or not.
+         * @hide
+         */
+        public static final String SECURE_SHUTDOWN_ENABLED_THROUGHOUT =
+                        "secure_shutdown_enabled_throughout";
+
+        /**
          * Whether autolock is enabled (0 = false, 1 = true)
          *
          * @deprecated Use {@link android.app.KeyguardManager} to determine the state and security

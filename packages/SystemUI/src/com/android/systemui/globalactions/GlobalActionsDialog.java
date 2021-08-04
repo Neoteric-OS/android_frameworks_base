@@ -54,9 +54,11 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.hardware.biometrics.BiometricPrompt;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.os.Binder;
+import android.os.CancellationSignal;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -94,6 +96,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
@@ -230,6 +233,9 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     private MyOverflowAdapter mOverflowAdapter;
     private MyPowerOptionsAdapter mPowerAdapter;
 
+    private BiometricPrompt mBiometricPrompt;
+    private BiometricPrompt.Builder mPromptInfo;
+
     private boolean mKeyguardShowing = false;
     private boolean mDeviceProvisioned = false;
     private ToggleState mAirplaneState = ToggleState.Off;
@@ -344,6 +350,11 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         mSysUiState = sysUiState;
         mMainHandler = handler;
         mCurrentUserContextTracker = currentUserContextTracker;
+        mPromptInfo = new BiometricPrompt.Builder(mContext);
+        mBiometricPrompt = mPromptInfo.setTitle(R.string.secure_shutdown_title)
+        .setSubtitle(R.string.secure_shutdown_desc)
+        .setDeviceCredentialAllowed(true)
+        .build();
 
         // receive broadcasts
         IntentFilter filter = new IntentFilter();
@@ -816,6 +827,86 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         }
     }
 
+    /**
+     * Does the authentication and then shuts down based on auth result.
+     */
+    private void doAuthForSecureShutdown() {
+        if (mPromptInfo == null) {
+            mPromptInfo = new BiometricPrompt.Builder(mContext);
+        }
+        if (mBiometricPrompt == null) {
+            mBiometricPrompt = mPromptInfo.setTitle(R.string.secure_shutdown_title)
+            .setSubtitle(R.string.secure_shutdown_desc)
+            .setDeviceCredentialAllowed(true)
+            .build();
+        }
+
+        CancellationSignal signal =  new CancellationSignal();
+
+        mBiometricPrompt.authenticate(
+                signal, mBackgroundExecutor, new BiometricPrompt.AuthenticationCallback() {
+
+                    @Override
+                    public void onAuthenticationSucceeded(
+                                BiometricPrompt.AuthenticationResult result) {
+                        super.onAuthenticationSucceeded(result);
+                        mWindowManagerFuncs.shutdown();
+                    }
+
+                    @Override
+                    public void onAuthenticationFailed() {
+                        super.onAuthenticationFailed();
+                        mContext.getMainExecutor().execute(()-> {
+                            Toast.makeText(mContext, "Authorization failed",
+                                    Toast.LENGTH_LONG).show();
+                        });
+                    }
+                    @Override
+                    public void onAuthenticationError(int errorCode,  CharSequence errString) {
+                        super.onAuthenticationError(errorCode, errString);
+                        mContext.getMainExecutor().execute(()-> {
+                            Toast.makeText(mContext, "Auth Error - " + errString,
+                                    Toast.LENGTH_LONG).show();
+                        });
+                    }
+
+                }
+        );
+
+    }
+
+    /**
+     * Logic to handle different secure shutdown setting configurations.
+     */
+    private void secureShutdown() {
+        int secureShutdownOnKeyguard = Settings.Secure.getInt(mContext.getContentResolver(),
+                Settings.Secure.SECURE_SHUTDOWN_ENABLED_ON_KEYGUARD, 0);
+        int secureShutdownThroughout = Settings.Secure.getInt(mContext.getContentResolver(),
+                Settings.Secure.SECURE_SHUTDOWN_ENABLED_THROUGHOUT, 0);
+
+        //If secure shutdown is disabled throughout system and keyguard is not showing,
+        //we can directly shutdown. Doesn't matter if the other setting is enabled or not.
+        if (secureShutdownThroughout == 0 && !mKeyguardShowing) {
+            mWindowManagerFuncs.shutdown();
+            return;
+        }
+
+        //If secure shutdown is disabled only on lockscreen and device is locked currently,
+        //we can directly shutdown. Doesn't matter if the other setting is enabled or not.
+        if (secureShutdownOnKeyguard == 0 && mKeyguardShowing) {
+            mWindowManagerFuncs.shutdown();
+            return;
+        }
+
+        //If secure shutdown is enabled on lockscreen and keyguard is showing, do authentication.
+        //(OR) If secure shutdown is enabled throughout system (in unlocked state)
+        // and keyguard isn't showing, do authentication.
+        if ((secureShutdownOnKeyguard == 1 && mKeyguardShowing)
+                || (secureShutdownThroughout == 1 && !mKeyguardShowing)) {
+            doAuthForSecureShutdown();
+        }
+    }
+
     @VisibleForTesting
     final class ShutDownAction extends SinglePressAction implements LongPressAction {
         private ShutDownAction() {
@@ -844,8 +935,18 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
         @Override
         public void onPress() {
-            // shutdown by making sure radio and power are handled accordingly.
-            mWindowManagerFuncs.shutdown();
+            //If secure shutdown is enabled but for some reason if user removed device protection,
+            //we cannot authenticate. Hence check if device protection is enabled or not too.
+            if ((Settings.Secure.getInt(mContext.getContentResolver(),
+                    Settings.Secure.SECURE_SHUTDOWN_ENABLED, 0) == 1)
+                    && !(new LockPatternUtils(mContext)
+                            .getKeyguardStoredPasswordQuality(UserHandle.myUserId())
+                                    == DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED)) {
+                secureShutdown();
+            } else {
+                // shutdown by making sure radio and power are handled accordingly.
+                mWindowManagerFuncs.shutdown();
+            }
         }
     }
 

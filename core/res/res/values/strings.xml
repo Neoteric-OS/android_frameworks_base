@@ -549,6 +549,12 @@
     <!-- Title of the Global Actions Dialog -->
     <string name="global_actions" product="default">Phone options</string>
 
+     <!-- label for secure shutdown dialog title [CHAR LIMIT=24]-->
+    <string name="secure_shutdown_title">Secure Shutdown</string>
+
+    <!-- label for secure shutdown dialog description [CHAR LIMIT=60]-->
+    <string name="secure_shutdown_desc">Authenticate to shutdown now.</string>
+
     <!-- label for item that locks the phone in the phone options dialog [CHAR LIMIT=24]-->
     <string name="global_action_lock">Screen lock</string>
 

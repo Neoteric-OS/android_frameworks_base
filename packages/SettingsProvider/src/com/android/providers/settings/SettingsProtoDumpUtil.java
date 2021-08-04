@@ -2178,6 +2178,16 @@ class SettingsProtoDumpUtil {
         p.end(lockScreenToken);
 
         dumpSetting(s, p,
+                Settings.Secure.SECURE_SHUTDOWN_ENABLED,
+                SecureSettingsProto.SECURE_SHUTDOWN_ENABLED);
+        dumpSetting(s, p,
+                Settings.Secure.SECURE_SHUTDOWN_ENABLED_ON_KEYGUARD,
+                SecureSettingsProto.SECURE_SHUTDOWN_ENABLED_ON_KEYGUARD);
+        dumpSetting(s, p,
+                Settings.Secure.SECURE_SHUTDOWN_ENABLED_THROUGHOUT,
+                SecureSettingsProto.SECURE_SHUTDOWN_ENABLED_THROUGHOUT);
+
+        dumpSetting(s, p,
                 Settings.Secure.LOCK_TO_APP_EXIT_LOCKED,
                 SecureSettingsProto.LOCK_TO_APP_EXIT_LOCKED);
         dumpSetting(s, p,
