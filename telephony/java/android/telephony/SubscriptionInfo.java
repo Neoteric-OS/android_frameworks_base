@@ -575,13 +575,6 @@ public class SubscriptionInfo implements Parcelable {
     /**
      * @hide
      */
-    public void clearGroupUuid() {
-        this.mGroupUUID = null;
-    }
-
-    /**
-     * @hide
-     */
     public List<String> getEhplmns() {
         return mEhplmns == null ? Collections.emptyList() : Arrays.asList(mEhplmns);
     }

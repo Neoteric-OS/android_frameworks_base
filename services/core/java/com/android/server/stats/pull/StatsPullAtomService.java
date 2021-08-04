@@ -3362,11 +3362,7 @@ public class StatsPullAtomService extends SystemService {
     int pullFaceSettingsLocked(int atomTag, List<StatsEvent> pulledData) {
         final long callingToken = Binder.clearCallingIdentity();
         try {
-            UserManager manager = mContext.getSystemService(UserManager.class);
-            if (manager == null) {
-                return StatsManager.PULL_SKIP;
-            }
-            List<UserInfo> users = manager.getUsers();
+            List<UserInfo> users = mContext.getSystemService(UserManager.class).getUsers();
             int numUsers = users.size();
             FaceManager faceManager = mContext.getSystemService(FaceManager.class);
 
