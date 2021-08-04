@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1694f5dd_0581e730",
+        "filename": "core/java/android/bluetooth/le/AdvertiseData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1097417
+      },
+      "writtenOn": "2021-08-04T11:01:34Z",
+      "side": 1,
+      "message": "by passing list of byte array, the onus would be on the application to parse the TDS fields. A helper class TransportBlock (see below) would be better?\n\npublic final class TransportBlock implements Parcelable {\n    private final int mOrgId;\n    private final int mTdsFlags;\n    private final int mTransportDataLength;\n    private final byte[] mTransportData;",
+      "revId": "575fcdd3389eeef5e65ec5ad29a8a1992ddd0444",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
