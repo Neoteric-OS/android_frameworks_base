@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "596dbfff_8b36e96d",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-08-04T11:59:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1ef14aaa_b26ec65d",
+      "revId": "97fa66a9d6d3e721fa920623ee108fa211f55056",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "903125e0_879de440",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-08-03T16:49:49Z",
       "side": 1,
       "message": "Do not add hidden apis.\nThis will block for bluetooth as a mainline module and there is work in progress to remove all of them.",
+      "revId": "97fa66a9d6d3e721fa920623ee108fa211f55056",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84bcf8a1_5133b10f",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 5283,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-08-04T11:59:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "903125e0_879de440",
       "revId": "97fa66a9d6d3e721fa920623ee108fa211f55056",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0785f4d8_13ac6b70",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 5285,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-08-04T11:59:41Z",
+      "side": 1,
+      "message": "I think there was such discussion about separation of handling input and output devices and I changed it after this discussion to simply separated parts. Maybe @Eric Laurent could help with this comment.",
+      "parentUuid": "d852e0bc_85d5bcbe",
+      "revId": "97fa66a9d6d3e721fa920623ee108fa211f55056",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d17a7bb1_b8e66e1d",
         "filename": "media/java/android/media/AudioManager.java",
         "patchSetId": 13
@@ -65,6 +119,24 @@
       "writtenOn": "2021-08-03T16:49:49Z",
       "side": 1,
       "message": "Same, do not add hidden apis",
+      "revId": "97fa66a9d6d3e721fa920623ee108fa211f55056",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba4aa001_ce88a45f",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 5299,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-08-04T11:59:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d17a7bb1_b8e66e1d",
       "revId": "97fa66a9d6d3e721fa920623ee108fa211f55056",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
