@@ -222,6 +222,24 @@
       "parentUuid": "b9dea0a6_316866c0",
       "revId": "84c0af0486b8d67503c475901be13db1c02a4c61",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "def417b9_d4a4553d",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2764,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2021-08-05T07:10:52Z",
+      "side": 1,
+      "message": "(We have used global key interceptor configuration as google has suggested before)",
+      "parentUuid": "dfa59d5c_b09d04cd",
+      "revId": "84c0af0486b8d67503c475901be13db1c02a4c61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
