@@ -33,6 +33,23 @@
       "message": "removes the  \"Learn more\" button in the USB contaminant dialog when the config is false, if not this button will try to launch the unavailable Settings HelpTrampoline and SystemUI will crash",
       "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9431d60_45ef16fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1429802
+      },
+      "writtenOn": "2021-08-05T09:28:11Z",
+      "side": 1,
+      "message": "I\u0027m not owner of framework, let me assign to Mady if she can +2 on this cl. ",
+      "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
