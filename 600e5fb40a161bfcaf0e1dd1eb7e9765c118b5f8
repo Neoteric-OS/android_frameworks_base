@@ -50,6 +50,24 @@
       "message": "I\u0027m not owner of framework, let me assign to Mady if she can +2 on this cl. ",
       "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98f37d22_39bbda99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2021-08-05T10:12:46Z",
+      "side": 1,
+      "message": "Thanks",
+      "parentUuid": "f9431d60_45ef16fe",
+      "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
