@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82a78a77_b7753e8c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-05T18:45:33Z",
+      "side": 1,
+      "message": "nit: generally avoid internal links on Android CLs (though this CL is already quite descriptive!)",
+      "range": {
+        "startLine": 18,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "b086d2793e1b90bb1c220f986c059d9aa11c6c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06d412cb_3bb9e3b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-05T18:45:33Z",
+      "side": 1,
+      "message": "(I ",
+      "revId": "b086d2793e1b90bb1c220f986c059d9aa11c6c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13305571_ee383996",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-05T18:45:33Z",
+      "side": 1,
+      "message": "this should be the log tag, why would it need to be public?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 46
+      },
+      "revId": "b086d2793e1b90bb1c220f986c059d9aa11c6c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c77d7641_73bbaba3",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-05T18:45:33Z",
+      "side": 1,
+      "message": "the code is much better, but is this a hot path? do we have any fwk perf tests to run (Jeff should know)?",
+      "range": {
+        "startLine": 1798,
+        "startChar": 0,
+        "endLine": 1800,
+        "endChar": 28
+      },
+      "revId": "b086d2793e1b90bb1c220f986c059d9aa11c6c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
