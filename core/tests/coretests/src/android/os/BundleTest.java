@@ -26,6 +26,8 @@ import androidx.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Objects;
+
 /**
  * Unit tests for bundle that requires accessing hidden APS.  Tests that can be written only with
  * public APIs should go in the CTS counterpart.
@@ -45,6 +47,23 @@ public class BundleTest {
         bundle.writeToParcel(p, 0);
         p.setDataPosition(0);
         return p;
+    }
+
+    private Bundle roundtrip(Bundle bundle) {
+        Parcel out = Parcel.obtain();
+        bundle.writeToParcel(out, 0);
+        Parcel in = roundtripParcel(out);
+        Bundle ans = in.readBundle();
+        ans.setClassLoader(bundle.getClassLoader());
+        return ans;
+    }
+
+    private Parcel roundtripParcel(Parcel out) {
+        byte[] buf = out.marshall();
+        Parcel in = Parcel.obtain();
+        in.unmarshall(buf, 0, buf.length);
+        in.setDataPosition(0);
+        return in;
     }
 
     /**
@@ -216,5 +235,76 @@ public class BundleTest {
         // Even though one is parcelled and the other is not, both are empty, so it should
         // return true
         assertTrue(BaseBundle.kindofEquals(bundle1, bundle2));
+    }
+
+    @Test
+    public void kindofEquals_bothPartiallyUnparcelledWithCustomTypes() {
+        Parcelable parcelable = new CustomParcelable(13, "Tiramisu");
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("key", parcelable);
+        bundle.setClassLoader(CustomParcelable.class.getClassLoader());
+        bundle = roundtrip(bundle);
+        bundle.isEmpty(); // Trigger partial deserialization
+        Bundle other = new Bundle();
+        other.putParcelable("key", parcelable);
+        other.setClassLoader(CustomParcelable.class.getClassLoader());
+        other = roundtrip(other);
+        other.isEmpty(); // Trigger partial deserialization
+
+        assertTrue(BaseBundle.kindofEquals(bundle, other));
+    }
+
+    public static class CustomParcelable implements Parcelable {
+        public final int integer;
+        public final String string;
+
+        public CustomParcelable(int integer, String string) {
+            this.integer = integer;
+            this.string = string;
+        }
+
+        protected CustomParcelable(Parcel in) {
+            integer = in.readInt();
+            string = in.readString();
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            out.writeInt(integer);
+            out.writeString(string);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (!(other instanceof CustomParcelable)) {
+                return false;
+            }
+            CustomParcelable that = (CustomParcelable) other;
+            return integer == that.integer && Objects.equals(string, that.string);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(integer, string);
+        }
+
+        public static final Creator<CustomParcelable> CREATOR = new Creator<CustomParcelable>() {
+            @Override
+            public CustomParcelable createFromParcel(Parcel in) {
+                return new CustomParcelable(in);
+            }
+            @Override
+            public CustomParcelable[] newArray(int size) {
+                return new CustomParcelable[size];
+            }
+        };
     }
 }
