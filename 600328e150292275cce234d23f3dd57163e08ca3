@@ -16,6 +16,144 @@
       "message": "Nifty!  I\u0027m a fan, so kicking off a TH run to see if this uncovers any trouble; I\u0027ll be chatting more with y\u0027all on Monday.  😊",
       "revId": "600328e150292275cce234d23f3dd57163e08ca3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "072e3a28_715dfa70",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2021-08-06T23:25:37Z",
+      "side": 1,
+      "message": "Fyi making this non-final is fairly expensive according to tim, because it means it can\u0027t be inlined and a method call is really expensive on little cores due to lacking branch prediction.\n\nI wonder if this could be arranged to avoid this...  either putting more of the logic for this stuff in the base class, or maybe having two maps, one for primitive types, the other for serializable/parcelable objects?",
+      "range": {
+        "startLine": 272,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 40
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a243bf6e_c4e71360",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2021-08-06T23:25:37Z",
+      "side": 1,
+      "message": "Hm the point of kindofEquals() is to be lighter-weight than a full comparison...  I realize this keeps the same semantics of what is being compared, but have you looked through the users of this to make sure they really need it?",
+      "range": {
+        "startLine": 459,
+        "startChar": 0,
+        "endLine": 461,
+        "endChar": 0
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07756e7e_a59a7c45",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2021-08-06T23:25:37Z",
+      "side": 1,
+      "message": "Would be nice for this to not have to deserialize/unparcel objects...  could it handle those by just copying the parcel data over?",
+      "range": {
+        "startLine": 498,
+        "startChar": 0,
+        "endLine": 498,
+        "endChar": 89
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c57cf61d_8931993d",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2021-08-06T23:25:37Z",
+      "side": 1,
+      "message": "Don\u0027t need to do this unless we end up having to handle a LazyValue.",
+      "range": {
+        "startLine": 1280,
+        "startChar": 0,
+        "endLine": 1280,
+        "endChar": 35
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0655b06_f1f903ad",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2021-08-06T23:25:37Z",
+      "side": 1,
+      "message": "I would kind-of like to keep all of this out of the common path of primitive types, and rather have those just handle the ClassCastException as appropriate.",
+      "range": {
+        "startLine": 1282,
+        "startChar": 0,
+        "endLine": 1289,
+        "endChar": 0
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4283a2f_79548253",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2021-08-06T23:25:37Z",
+      "side": 1,
+      "message": "Ungh do not like these becoming non-private. :(",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
