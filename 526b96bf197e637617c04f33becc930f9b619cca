@@ -51,6 +51,23 @@
       "parentUuid": "64512cb8_ace9b952",
       "revId": "526b96bf197e637617c04f33becc930f9b619cca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fec31d74_662c4b06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-08-06T21:45:49Z",
+      "side": 1,
+      "message": "Hm, something seems off here; the name of the file is clearly \"Shortcut\" related.  Do you perhaps want to say all the appsearch owners can modify all \"*Shortcut*\" files?",
+      "revId": "526b96bf197e637617c04f33becc930f9b619cca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
