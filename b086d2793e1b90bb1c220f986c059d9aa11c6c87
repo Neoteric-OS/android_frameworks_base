@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "32414d66_63900208",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-06T11:42:50Z",
+      "side": 1,
+      "message": "Well, I did try to convey as much context as possible in the commit message (especially for those that don\u0027t have access to the link) but I think the link is useful for reviewers and for future reference considering most people looking at it are Googlers. I think removing it is a net negative, but don\u0027t mind if you insist. Do you want me to remove it?",
+      "parentUuid": "82a78a77_b7753e8c",
+      "range": {
+        "startLine": 18,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "b086d2793e1b90bb1c220f986c059d9aa11c6c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "06d412cb_3bb9e3b5",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dad094fd_6f662e5d",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-06T11:42:50Z",
+      "side": 1,
+      "message": "Ops. Actually needed \u0027protected\u0027 to access from Bundle. Done.",
+      "parentUuid": "13305571_ee383996",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 46
+      },
+      "revId": "b086d2793e1b90bb1c220f986c059d9aa11c6c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c77d7641_73bbaba3",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-08-05T18:45:33Z",
       "side": 1,
       "message": "the code is much better, but is this a hot path? do we have any fwk perf tests to run (Jeff should know)?",
+      "range": {
+        "startLine": 1798,
+        "startChar": 0,
+        "endLine": 1800,
+        "endChar": 28
+      },
+      "revId": "b086d2793e1b90bb1c220f986c059d9aa11c6c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a570b9bb_5f87849b",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-06T11:42:50Z",
+      "side": 1,
+      "message": "Just to give a bit more context, I needed to break down writeValue(object) into getValueType(object) + writeValue(type, object) to be able to use those from Bundle since now we write the length in between the type and the value, so it was just natural to reuse those here.\n\nI\u0027m not very familiar with ART but I\u0027d sort of expect this to get inlined if it\u0027s a hot path, no?\n\nWill let Jeff respond :)",
+      "parentUuid": "c77d7641_73bbaba3",
       "range": {
         "startLine": 1798,
         "startChar": 0,
