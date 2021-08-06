@@ -50,6 +50,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "6252a221_962e2534",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-06T18:25:09Z",
+      "side": 1,
+      "message": "No, I wouldn\u0027t mandate it, and I cannot find the policy on this. Only I hope all our CLs can be understood w/o additional context like this.",
+      "parentUuid": "32414d66_63900208",
+      "range": {
+        "startLine": 18,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "b086d2793e1b90bb1c220f986c059d9aa11c6c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "06d412cb_3bb9e3b5",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 6
