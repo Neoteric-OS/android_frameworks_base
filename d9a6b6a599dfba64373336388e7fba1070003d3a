@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dead683_a8955707",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2021-08-09T19:48:32Z",
+      "side": 1,
+      "message": "TH fails due to conflict with ss-dev-plus-aosp. Need to resolve the conflict in that branch first: https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/15503926",
+      "revId": "d9a6b6a599dfba64373336388e7fba1070003d3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
