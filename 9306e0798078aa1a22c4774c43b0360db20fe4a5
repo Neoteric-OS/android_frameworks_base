@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eca4fcc0_69784c5d",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5251,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-09T13:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73d6584c_de960262",
+      "range": {
+        "startLine": 5251,
+        "startChar": 16,
+        "endLine": 5251,
+        "endChar": 22
+      },
+      "revId": "9306e0798078aa1a22c4774c43b0360db20fe4a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "072ea29f_3d5c86fb",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Yes, when stopAudio is true, newDevice is null, but when newDevice is null stopAudio can be false.\n\nI understand your issue with the naming not associated with what\u0027s being factually done. I really don\u0027t like the \u0027suppressNoisyIntent\u0027, and from A2dp I think it\u0027s much more clear.\n\nI think what can be done nicely is keeping the \u0027suppressNoisyIntent\u0027 here, as it was done before, to keep the API consistent with what is done and with it\u0027s historical way of dealing with it. And use stopAudio on A2DP side. Then I just have to send a !stopAudio from A2dpService / HearingAidService. (the \u0027!\u0027 was done anyway later)",
       "parentUuid": "072ea29f_3d5c86fb",
+      "range": {
+        "startLine": 5252,
+        "startChar": 87,
+        "endLine": 5252,
+        "endChar": 96
+      },
+      "revId": "9306e0798078aa1a22c4774c43b0360db20fe4a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ce55f96_d4f12364",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5252,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-09T13:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eec2f26b_034e936b",
       "range": {
         "startLine": 5252,
         "startChar": 87,

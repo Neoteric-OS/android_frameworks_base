@@ -70,6 +70,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d007abe2_f6b2578a",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-09T13:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b97a03b_334dc851",
+      "revId": "c530e0c89dec705ed7f57164832ff51129e2a1d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e24aa8e_8410110d",
@@ -83,6 +101,24 @@
       "writtenOn": "2021-08-02T14:17:36Z",
       "side": 1,
       "message": "if newDevice \u003d\u003d\u003d previousDevice, it will trigger a reconfig.\n\ncalling with newDevice \u003d null \u0026\u0026 previousDevice \u003d\u003d null is also a possibility",
+      "revId": "c530e0c89dec705ed7f57164832ff51129e2a1d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73401b93_fc58bf4f",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-09T13:04:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e24aa8e_8410110d",
       "revId": "c530e0c89dec705ed7f57164832ff51129e2a1d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
