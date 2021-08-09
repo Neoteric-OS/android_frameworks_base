@@ -156,6 +156,24 @@
       "message": "In case of a device switch, do we need to stop/restart the playback monitor ?",
       "revId": "c530e0c89dec705ed7f57164832ff51129e2a1d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3133bd3a_e12a8a31",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5491,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-08-09T14:48:36Z",
+      "side": 1,
+      "message": "It seems we don\u0027t need to stop/start.\n(Until someone know we need to)",
+      "parentUuid": "e5864466_3e01de9f",
+      "revId": "c530e0c89dec705ed7f57164832ff51129e2a1d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
