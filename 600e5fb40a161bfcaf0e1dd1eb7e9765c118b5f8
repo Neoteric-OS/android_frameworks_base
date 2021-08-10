@@ -68,6 +68,46 @@
       "parentUuid": "f9431d60_45ef16fe",
       "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a6772d6_55bc0c2e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1429802
+      },
+      "writtenOn": "2021-08-10T06:16:37Z",
+      "side": 1,
+      "message": "Add the owner of this file to review it.",
+      "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8524d5e7_00c6830b",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4445,
+      "author": {
+        "id": 1429802
+      },
+      "writtenOn": "2021-08-10T06:16:37Z",
+      "side": 1,
+      "message": "when will we enable this flag?",
+      "range": {
+        "startLine": 4445,
+        "startChar": 5,
+        "endLine": 4445,
+        "endChar": 61
+      },
+      "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
