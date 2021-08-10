@@ -125,6 +125,30 @@
       },
       "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da283759_015b9263",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4445,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2021-08-10T11:20:50Z",
+      "side": 1,
+      "message": "I guess you send this question for Google internally to answer. There is not much documentation for config_has_help. Sony does not use this.",
+      "parentUuid": "8524d5e7_00c6830b",
+      "range": {
+        "startLine": 4445,
+        "startChar": 5,
+        "endLine": 4445,
+        "endChar": 61
+      },
+      "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
