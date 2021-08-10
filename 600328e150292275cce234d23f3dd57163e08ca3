@@ -114,6 +114,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3458ca4a_5197519c",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-10T21:38:44Z",
+      "side": 1,
+      "message": "Another option for (2) would be to read the parcel int by int comparing.",
+      "parentUuid": "820d87ad_e4e52989",
+      "range": {
+        "startLine": 459,
+        "startChar": 0,
+        "endLine": 461,
+        "endChar": 0
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "07756e7e_a59a7c45",
         "filename": "core/java/android/os/BaseBundle.java",
         "patchSetId": 7
