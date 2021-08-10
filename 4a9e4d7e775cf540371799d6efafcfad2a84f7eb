@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5f33204_2ebcad85",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-10T17:44:25Z",
+      "side": 1,
+      "message": "Moved the lazy/length-prefix to Parcel + addressing comments. PTAL.",
+      "revId": "4a9e4d7e775cf540371799d6efafcfad2a84f7eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

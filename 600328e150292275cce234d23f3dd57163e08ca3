@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c01645f7_c4a2fdbc",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-10T17:44:25Z",
+      "side": 1,
+      "message": "Moved logic from Bundle to BaseBundle (and some of the logic to Parcel, see response to other comment for that). Now it\u0027s final. Done.",
+      "parentUuid": "072e3a28_715dfa70",
+      "range": {
+        "startLine": 272,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 40
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a243bf6e_c4e71360",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-08-06T23:25:37Z",
       "side": 1,
       "message": "Hm the point of kindofEquals() is to be lighter-weight than a full comparison...  I realize this keeps the same semantics of what is being compared, but have you looked through the users of this to make sure they really need it?",
+      "range": {
+        "startLine": 459,
+        "startChar": 0,
+        "endLine": 461,
+        "endChar": 0
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "820d87ad_e4e52989",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-10T17:44:25Z",
+      "side": 1,
+      "message": "There are only a few usages which seem fine indeed. What did you have in mind to optimize this?\n\nI\u0027m thinking we go over the map comparing and when we see a lazy value we do:\n* If the other is a live object we deserialize the lazy and compare the resulting objects.\n* If both are lazy, we can compare the payload, but I have a few questions here:\n\n1) If we use compareData(), does that handle Binder \u0026 FDs properly? If not, is there a method we could use?\n\n2) We need to compare a subsection of parcel (position + length parameters), not the entire parcel. In that case, I don\u0027t see a method for comparison (please correct me if I\u0027m wrong), is it worth copying over the parcel and comparing the copies rather than deserializing and comparing the result?",
+      "parentUuid": "a243bf6e_c4e71360",
       "range": {
         "startLine": 459,
         "startChar": 0,
@@ -89,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6a3fb644_662013fa",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-10T17:44:25Z",
+      "side": 1,
+      "message": "The problem with doing that is that the deep copy has the following contract in its javadoc (despite the name): \"[...] Other types of objects (such as Parcelable or Serializable) are referenced as-is and not copied in any way.\"\n\nSo, if we did not deserialize them here (either by referencing the same LazyValue or by copying the LazyValue and its parcel), that would mean we\u0027d be breaking that contract because the objects returned by calling getParcelable(\u003csame key\u003e) in the original and in the copy would not be the same (since they\u0027d be lazily converted in its containing bundle but not in the other).\n\nWe could try to keep track of the maps that contain a certain LazyValue in LazyValue itself but I fear that might be a recipe for disaster :)\n\nThat\u0027s a public API hence my choice to stick to the more stable / minimal change approach. Let me know if you want to change that API (targetSdk gated?).",
+      "parentUuid": "07756e7e_a59a7c45",
+      "range": {
+        "startLine": 498,
+        "startChar": 0,
+        "endLine": 498,
+        "endChar": 89
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c57cf61d_8931993d",
         "filename": "core/java/android/os/Bundle.java",
         "patchSetId": 7
@@ -100,6 +172,30 @@
       "writtenOn": "2021-08-06T23:25:37Z",
       "side": 1,
       "message": "Don\u0027t need to do this unless we end up having to handle a LazyValue.",
+      "range": {
+        "startLine": 1280,
+        "startChar": 0,
+        "endLine": 1280,
+        "endChar": 35
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0bf7748_12d47b24",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-10T17:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c57cf61d_8931993d",
       "range": {
         "startLine": 1280,
         "startChar": 0,
@@ -135,6 +231,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "96ab9962_7bb0a3ec",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-10T17:44:25Z",
+      "side": 1,
+      "message": "Is the concern about the overhead of the \u0027if\u0027 check? (Because primitives will not enter that \u0027if\u0027 branch..)\n\nIn that case, I can bypass this call and do mMap.get(\u003ckey\u003e) directly for primitive types in their getters. Because if we handle the CCE in custom types we\u0027d put custom code in those anyway (and it seems like the performance concern is with primitives, not those), would that work for you?",
+      "parentUuid": "d0655b06_f1f903ad",
+      "range": {
+        "startLine": 1282,
+        "startChar": 0,
+        "endLine": 1289,
+        "endChar": 0
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f4283a2f_79548253",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 7
@@ -146,6 +266,30 @@
       "writtenOn": "2021-08-06T23:25:37Z",
       "side": 1,
       "message": "Ungh do not like these becoming non-private. :(",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a909b5e1_2f4bf7cd",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-10T17:44:25Z",
+      "side": 1,
+      "message": "From chat w/ jsharkey@, I moved the lazy/length-prefix to Parcel, so we can keep those private. PTAL.",
+      "parentUuid": "f4283a2f_79548253",
       "range": {
         "startLine": 231,
         "startChar": 0,
