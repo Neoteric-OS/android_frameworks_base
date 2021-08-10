@@ -89,6 +89,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f9c46c77_a4679868",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1429802
+      },
+      "writtenOn": "2021-08-10T06:22:58Z",
+      "side": 1,
+      "message": "badhri@, do you know how to do a google overlay internally? \n\nIn Settings app, we will enable this config for all google devices originally.",
+      "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8524d5e7_00c6830b",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 1
