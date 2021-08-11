@@ -404,6 +404,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d9c5908b_3c7825c9",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1687135
+      },
+      "writtenOn": "2021-08-11T08:17:51Z",
+      "side": 1,
+      "message": "What would be the benefit of distinguish between HEADSET and SPEAKER ? For Audio Manager it\u0027s only kind of figure that play roles in policy and routing. Representative device doesn\u0027t describe appearance of whole group.\n\nThere is also an issue that I\u0027ve raised 3 comments before - what if in group of devices appearances would be mixed that wouldn\u0027t be clear what type should it be.",
+      "parentUuid": "397bad3b_8ed11587",
+      "range": {
+        "startLine": 457,
+        "startChar": 28,
+        "endLine": 457,
+        "endChar": 50
+      },
+      "revId": "08c06e6da29c0b225003546befcb2d9e698fd96d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b17fa19f_ef00749e",
         "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
         "patchSetId": 6
