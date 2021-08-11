@@ -494,6 +494,50 @@ public final class BluetoothAdapter {
     @SystemApi
     public static final int ACTIVE_DEVICE_ALL = 2;
 
+    /** @hide */
+    @IntDef(prefix = "ACTIVE_DEVICE_PROFILE", value = {ACTIVE_DEVICE_PROFILE_A2DP,
+            ACTIVE_DEVICE_PROFILE_HFP, ACTIVE_DEVICE_PROFILE_HEARING_AID,
+            ACTIVE_DEVICE_PROFILE_ALL})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ActiveDeviceProfileUse {}
+
+    /**
+     * Use the specified device for audio (a2dp and hearing aid profile)
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final int ACTIVE_DEVICE_PROFILE_A2DP = 1 << 0;
+
+    /**
+     * Use the specified device for phone calls (headset profile and hearing
+     * aid profile)
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final int ACTIVE_DEVICE_PROFILE_HFP = 1 << 1;
+
+    /**
+     * Use the specified device for phone calls (headset profile and hearing
+     * aid profile)
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final int ACTIVE_DEVICE_PROFILE_HEARING_AID = 1 << 2;
+
+    /**
+     * Use the specified device for a2dp, hearing aid profile, and headset profile
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final int ACTIVE_DEVICE_PROFILE_ALL =
+            ACTIVE_DEVICE_PROFILE_A2DP
+            | ACTIVE_DEVICE_PROFILE_HFP
+            | ACTIVE_DEVICE_PROFILE_HEARING_AID;
+
     /**
      * Broadcast Action: The local Bluetooth adapter has started the remote
      * device discovery process.
@@ -1877,6 +1921,49 @@ public final class BluetoothAdapter {
         }
 
         return false;
+    }
+
+    /**
+     * Get the active device for the grouping of @ActiveDeviceUse specified
+     *
+     * @param profiles represents the purpose for which we are getting this as the active device.
+     *                 Possible values are:
+     *                 {@link BluetoothAdapter#ACTIVE_DEVICE_PROFILE_A2DP},
+     *                 {@link BluetoothAdapter#ACTIVE_DEVICE_PROFILE_HFP},
+     *                 {@link BluetoothAdapter#ACTIVE_DEVICE_PROFILE_HEARING_AID},
+     *                 {@link BluetoothAdapter#ACTIVE_DEVICE_PROFILE_ALL}
+     * @return A list of active bluetooth device
+     * @throws IllegalArgumentException if profiles is not one of {@link ActiveDeviceProfileUse}
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    public @NonNull List<BluetoothDevice> getActiveDevices(@ActiveDeviceProfileUse int profiles) {
+        if ((profiles & ACTIVE_DEVICE_PROFILE_ALL) == 0
+                || (profiles & ~ACTIVE_DEVICE_PROFILE_ALL) != 0) {
+            Log.e(TAG, "Invalid profiles param value in getActiveDevices");
+            throw new IllegalArgumentException("Profiles must be one of "
+                    + "BluetoothAdapter.ACTIVE_DEVICE_PROFILE_A2DP, "
+                    + "BluetoothAdapter.ACTIVE_DEVICE_PROFILE_HFP, "
+                    + "BluetoothAdapter.ACTIVE_DEVICE_PROFILE_HEARING_AID, or"
+                    + "BluetoothAdapter.ACTIVE_DEVICE_PROFILE_ALL");
+        }
+        try {
+            mServiceLock.readLock().lock();
+            if (mService != null) {
+                if (DBG) {
+                    Log.d(TAG, "getActiveDevices(profiles= 0x"
+                            + Integer.toString(profiles, 16) + ")");
+                }
+                return mService.getActiveDevices(profiles);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "", e);
+        } finally {
+            mServiceLock.readLock().unlock();
+        }
+
+        return new ArrayList<>();
     }
 
     /**
