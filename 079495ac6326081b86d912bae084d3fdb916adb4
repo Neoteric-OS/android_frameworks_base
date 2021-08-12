@@ -16,6 +16,23 @@
       "message": "Hello everyone,\n\nCould you help me review this change? thanks.",
       "revId": "079495ac6326081b86d912bae084d3fdb916adb4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a179df6_f31b4229",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1746367
+      },
+      "writtenOn": "2021-08-12T15:41:53Z",
+      "side": 1,
+      "message": "Hello everyone, \n\nCould you please help me merge this change? \n\nThanks.",
+      "revId": "079495ac6326081b86d912bae084d3fdb916adb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
