@@ -34,6 +34,24 @@
       "parentUuid": "a43fd5f2_f55445e5",
       "revId": "66025f13c334df3ce052e6a7a810bbb410401ab8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3e86e88_42ac4344",
+        "filename": "services/core/jni/com_android_server_power_PowerManagerService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-12T22:57:15Z",
+      "side": 1,
+      "message": "Even if we can\u0027t guard against it, we should encourage vendor code to use the same client.\n\nBt might be fine for now, but if we have more versions in the future, it would be nice to centralize all the client/versioning logic.",
+      "parentUuid": "5eb70a1e_e927913f",
+      "revId": "66025f13c334df3ce052e6a7a810bbb410401ab8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cdd1fd6_3a72b9bb",
+        "filename": "services/core/jni/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-12T22:57:15Z",
+      "side": 1,
+      "message": "use -ndk now btw (sdk variants can now exist beside the platform variants - jiyong@ just fixed this!)",
+      "range": {
+        "startLine": 179,
+        "startChar": 38,
+        "endLine": 179,
+        "endChar": 47
+      },
+      "revId": "d0bd385ed80e30f7ac8137b6c55782d5916902a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
