@@ -256,6 +256,14 @@ public class HdmiCecMessageValidator {
             HdmiLogger.warning("Unexpected source: " + message);
             return ERROR_SOURCE;
         }
+
+        // Check if the source and the destination are the same.
+        if (message.getSource() == message.getDestination() &&
+                message.getSource() != Constants.ADDR_UNREGISTERED) {
+            HdmiLogger.warning("Unexpected source: message sent from device itself, " + message);
+            return ERROR_SOURCE;
+        }
+
         // Check the destination field.
         if (message.getDestination() == Constants.ADDR_BROADCAST) {
             if ((info.addressType & DEST_BROADCAST) == 0) {
