@@ -138,6 +138,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9e3111d6_af2916b1",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2021-08-12T22:53:49Z",
+      "side": 1,
+      "message": "I guess we should improve my javadoc for this to make it more clear what it does. :)  One concern I have is that with this change, people will no longer need to wrry about many of the situations now where they access a Bundle (such as the rule to never touch a user-supplied Bundle in the system process).  But if you are now thinking that way, this function is something you need to stay away from because by unparcelling everything you end up with the same old problems.\n\nThat said...  note that one of the cases where we can already (incorrectly) decide that the two are not equal is if one is parceled and the other isn\u0027t.  So I think it would be semantically consistent to say that if a particular entry in the map is parceled and the other isn\u0027t, that is also not equal.  (And likewise if they are both parceled, we already do a raw comparison of the parceled data.)\n\nOf course that *will* be a change from the current semantics, if you have received a Bundle, and do kindofEquals() after you tried to retrieve a value from it (and caused it to be unparceled).  I wonder if that is an issue, I think one of the main reasons for this method is for the system process to be able to do comparisons of bundles without unparceling things from apps?",
+      "parentUuid": "3458ca4a_5197519c",
+      "range": {
+        "startLine": 459,
+        "startChar": 0,
+        "endLine": 461,
+        "endChar": 0
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "07756e7e_a59a7c45",
         "filename": "core/java/android/os/BaseBundle.java",
         "patchSetId": 7
@@ -173,6 +197,30 @@
       "side": 1,
       "message": "The problem with doing that is that the deep copy has the following contract in its javadoc (despite the name): \"[...] Other types of objects (such as Parcelable or Serializable) are referenced as-is and not copied in any way.\"\n\nSo, if we did not deserialize them here (either by referencing the same LazyValue or by copying the LazyValue and its parcel), that would mean we\u0027d be breaking that contract because the objects returned by calling getParcelable(\u003csame key\u003e) in the original and in the copy would not be the same (since they\u0027d be lazily converted in its containing bundle but not in the other).\n\nWe could try to keep track of the maps that contain a certain LazyValue in LazyValue itself but I fear that might be a recipe for disaster :)\n\nThat\u0027s a public API hence my choice to stick to the more stable / minimal change approach. Let me know if you want to change that API (targetSdk gated?).",
       "parentUuid": "07756e7e_a59a7c45",
+      "range": {
+        "startLine": 498,
+        "startChar": 0,
+        "endLine": 498,
+        "endChar": 89
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d4a0914_406fdce0",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2021-08-12T22:53:49Z",
+      "side": 1,
+      "message": "Hm...  okay, but note that we are already violating that above where if the entire Bundle hasn\u0027t been unparceled yet, we make a copy of the parcel.",
+      "parentUuid": "6a3fb644_662013fa",
       "range": {
         "startLine": 498,
         "startChar": 0,
@@ -267,6 +315,30 @@
       "side": 1,
       "message": "Is the concern about the overhead of the \u0027if\u0027 check? (Because primitives will not enter that \u0027if\u0027 branch..)\n\nIn that case, I can bypass this call and do mMap.get(\u003ckey\u003e) directly for primitive types in their getters. Because if we handle the CCE in custom types we\u0027d put custom code in those anyway (and it seems like the performance concern is with primitives, not those), would that work for you?",
       "parentUuid": "d0655b06_f1f903ad",
+      "range": {
+        "startLine": 1282,
+        "startChar": 0,
+        "endLine": 1289,
+        "endChar": 0
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ceb6945_7ea70e48",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2021-08-12T22:53:49Z",
+      "side": 1,
+      "message": "Yeah I think for primitives we should just directly pull from the map.  Actually that seems pretty great -- we know it can only be the primitive object type, and anything else is going to be a type failure, and then we can actually avoid unparceling the data in the failure case which just doing that can be problematic (for example a security exploit trying to get the system to unparcel some type that will cause problems).  To help with debugging, we could peek in the parcel data to see the class type it would be and report that.",
+      "parentUuid": "96ab9962_7bb0a3ec",
       "range": {
         "startLine": 1282,
         "startChar": 0,

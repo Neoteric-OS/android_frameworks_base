@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fca1f93_eb9479f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2021-08-12T22:53:49Z",
+      "side": 1,
+      "message": "Looking good!  Are you looking at performance tests?  I\u0027d like to see how this impacts basic perf with Bundle...  also I wonder how much we have framework parcelables appearing in Bundles (like Rect, Point, Size, Intent, etc) that now have more overhead and would that be worth addressing?  (That could be done as a follow-up CL if it is useful.)",
+      "revId": "71747578ac836cc7df011846f17763707d15f746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0dbcfbe_4aa41c65",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2021-08-12T22:53:49Z",
+      "side": 1,
+      "message": "We should be able to keep the data parceled here, and just look to see if the parcel has file descriptors?",
+      "range": {
+        "startLine": 332,
+        "startChar": 2,
+        "endLine": 332,
+        "endChar": 47
+      },
+      "revId": "71747578ac836cc7df011846f17763707d15f746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a05782d_f4dabf44",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1907,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2021-08-12T22:53:49Z",
+      "side": 1,
+      "message": "final (oh though I guess the overall Parcel class is correctly final)",
+      "range": {
+        "startLine": 1907,
+        "startChar": 10,
+        "endLine": 1907,
+        "endChar": 11
+      },
+      "revId": "71747578ac836cc7df011846f17763707d15f746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
