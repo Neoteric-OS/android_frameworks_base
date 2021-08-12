@@ -58,6 +58,8 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
     // Some Hearing Aids (especially the 2nd device) needs more time to do service discovery
     private static final long MAX_HEARING_AIDS_DELAY_FOR_AUTO_CONNECT = 15000;
     private static final long MAX_HOGP_DELAY_FOR_AUTO_CONNECT = 30000;
+    // TODO(aliceypkuo): the timeout need to be fined tune for the fast pair requirement
+    private static final long MAX_LE_AUDIO_DELAY_FOR_AUTO_CONNECT = 15000;
     private static final long MAX_MEDIA_PROFILE_CONNECT_DELAY = 60000;
 
     private final Context mContext;
@@ -674,6 +676,8 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
             timeout = MAX_HOGP_DELAY_FOR_AUTO_CONNECT;
         } else if (ArrayUtils.contains(uuids, BluetoothUuid.HEARING_AID)) {
             timeout = MAX_HEARING_AIDS_DELAY_FOR_AUTO_CONNECT;
+        } else if (ArrayUtils.contains(uuids, BluetoothUuid.LE_AUDIO)) {
+            timeout = MAX_LE_AUDIO_DELAY_FOR_AUTO_CONNECT;
         }
 
         if (BluetoothUtils.D) {

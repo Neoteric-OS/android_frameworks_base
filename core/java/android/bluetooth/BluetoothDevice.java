@@ -1622,13 +1622,37 @@ public final class BluetoothDevice implements Parcelable {
      */
     @RequiresPermission(Manifest.permission.BLUETOOTH)
     public boolean fetchUuidsWithSdp() {
+        return fetchUuidsWithTransport(TRANSPORT_AUTO);
+    }
+
+    /**
+    * Perform a service discovery on the remote device to get the UUIDs supported with the
+    * specific transport.
+    *
+    * <p>This API is asynchronous and {@link #ACTION_UUID} intent is sent,
+    * with the UUIDs supported by the remote end. If there is an error
+    * in getting the SDP records or if the process takes a long time, or the device is bonding and
+    * we have its UUIDs cached, {@link #ACTION_UUID} intent is sent with the UUIDs that is
+    * currently present in the cache. Clients should use the {@link #getUuids} to get UUIDs
+    * if service discovery is not to be performed. If there is an ongoing bonding process,
+    * service discovery or device inquiry, the request will be queued.
+    *
+    * @param transport - Transport to use
+    * @return False if the check fails, True if the process of initiating an ACL connection
+    * to the remote device was started or cached UUIDs will be broadcast with the sepcific
+    * transport.
+    * @hide
+    */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    public boolean fetchUuidsWithTransport(int transport) {
         final IBluetooth service = sService;
         if (service == null || !isBluetoothEnabled()) {
             Log.e(TAG, "BT not enabled. Cannot fetchUuidsWithSdp");
             return false;
         }
         try {
-            return service.fetchRemoteUuids(this);
+            return service.fetchRemoteUuids(this, transport);
         } catch (RemoteException e) {
             Log.e(TAG, "", e);
         }
