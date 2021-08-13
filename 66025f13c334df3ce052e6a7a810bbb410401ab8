@@ -52,6 +52,24 @@
       "parentUuid": "5eb70a1e_e927913f",
       "revId": "66025f13c334df3ce052e6a7a810bbb410401ab8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88bd1276_e62c482a",
+        "filename": "services/core/jni/com_android_server_power_PowerManagerService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2021-08-13T14:50:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b3e86e88_42ac4344",
+      "revId": "66025f13c334df3ce052e6a7a810bbb410401ab8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
