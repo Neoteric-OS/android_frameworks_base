@@ -16,6 +16,24 @@
       "message": "Sally - this looks like an issue that you already fixed internally. Can you confirm?",
       "revId": "24252bafb3d9520a11cf66c0dab8a44547378f24",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89309a7f_79144cda",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1410358
+      },
+      "writtenOn": "2021-08-18T16:52:42Z",
+      "side": 1,
+      "message": "Yes. This was b/189010828 and fixed in S.",
+      "parentUuid": "371fc45b_2ef993be",
+      "revId": "24252bafb3d9520a11cf66c0dab8a44547378f24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
