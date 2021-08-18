@@ -82,14 +82,12 @@ public class ToastPresenter {
         mNotificationManager = notificationManager;
         mPackageName = packageName;
 
-        // We obtain AccessibilityManager manually via its constructor instead of using method
-        // AccessibilityManager.getInstance() for 2 reasons:
-        //   1. We want to be able to inject IAccessibilityManager in tests to verify behavior.
-        //   2. getInstance() caches the instance for the process even if we pass a different
-        //      context to it. This is problematic for multi-user because callers can pass a context
-        //      created via Context.createContextAsUser().
-        mAccessibilityManager = new AccessibilityManager(context, accessibilityManager,
-                context.getUserId());
+        if (accessibilityManager != null) {
+            mAccessibilityManager = AccessibilityManager.getInstanceForIAccessibilityManager(
+              context, accessibilityManager);
+        } else {
+            mAccessibilityManager = AccessibilityManager.getInstance(context);
+        }
 
         mParams = createLayoutParams();
     }

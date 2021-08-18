@@ -200,7 +200,14 @@ public final class AccessibilityManager {
     static final Object sInstanceSync = new Object();
 
     @UnsupportedAppUsage
-    private static AccessibilityManager sInstance;
+    static final Object sInstanceForIAccessibilityManagerSync = new Object();
+
+    @UnsupportedAppUsage
+    private static ArrayMap<Integer, AccessibilityManager> sInstanceForUser = new ArrayMap<>();
+
+    @UnsupportedAppUsage
+    private static ArrayMap<IAccessibilityManager, ArrayMap<Integer, AccessibilityManager>>
+            sInstanceForIAccessibilityManager = new ArrayMap<>();
 
     @UnsupportedAppUsage
     private final Object mLock = new Object();
@@ -419,24 +426,59 @@ public final class AccessibilityManager {
      */
     @UnsupportedAppUsage
     public static AccessibilityManager getInstance(Context context) {
+        final int userId;
         synchronized (sInstanceSync) {
-            if (sInstance == null) {
-                final int userId;
-                if (Binder.getCallingUid() == Process.SYSTEM_UID
-                        || context.checkCallingOrSelfPermission(
-                                Manifest.permission.INTERACT_ACROSS_USERS)
-                                        == PackageManager.PERMISSION_GRANTED
-                        || context.checkCallingOrSelfPermission(
-                                Manifest.permission.INTERACT_ACROSS_USERS_FULL)
-                                        == PackageManager.PERMISSION_GRANTED) {
-                    userId = UserHandle.USER_CURRENT;
-                } else {
-                    userId = context.getUserId();
-                }
-                sInstance = new AccessibilityManager(context, null, userId);
+            if (Binder.getCallingUid() == Process.SYSTEM_UID
+                    || context.checkCallingOrSelfPermission(
+                            Manifest.permission.INTERACT_ACROSS_USERS)
+                                    == PackageManager.PERMISSION_GRANTED
+                    || context.checkCallingOrSelfPermission(
+                            Manifest.permission.INTERACT_ACROSS_USERS_FULL)
+                                    == PackageManager.PERMISSION_GRANTED) {
+                userId = UserHandle.USER_CURRENT;
+            } else {
+                userId = context.getUserId();
+            }
+            if (sInstanceForUser.get(userId) == null) {
+                sInstanceForUser.put(userId, new AccessibilityManager(context, null, userId));
             }
         }
-        return sInstance;
+        return sInstanceForUser.get(userId);
+    }
+
+    /**
+     * Get an AccessibilityManager instance (create one if necessary).
+     *
+     * @param context Context in which this manager operates.
+     * @param accessibilityManager An interface to the backing service.
+     *
+     * @hide
+     */
+    @UnsupportedAppUsage
+    public static AccessibilityManager getInstanceForIAccessibilityManager(Context context, 
+            IAccessibilityManager accessibilityManager) {
+        final int userId;
+        synchronized (sInstanceForIAccessibilityManagerSync) {
+            if (sInstanceForIAccessibilityManager.get(accessibilityManager) == null) {
+                sInstanceForIAccessibilityManager.put(accessibilityManager, new ArrayMap<Integer, AccessibilityManager>());
+            }
+            if (Binder.getCallingUid() == Process.SYSTEM_UID
+                    || context.checkCallingOrSelfPermission(
+                            Manifest.permission.INTERACT_ACROSS_USERS)
+                                    == PackageManager.PERMISSION_GRANTED
+                    || context.checkCallingOrSelfPermission(
+                            Manifest.permission.INTERACT_ACROSS_USERS_FULL)
+                                    == PackageManager.PERMISSION_GRANTED) {
+                userId = UserHandle.USER_CURRENT;
+            } else {
+                userId = context.getUserId();
+            }
+            if (sInstanceForIAccessibilityManager.get(accessibilityManager).get(userId) == null) {
+                sInstanceForIAccessibilityManager.get(accessibilityManager).put(userId, 
+                        new AccessibilityManager(context, accessibilityManager, userId));
+            }
+        }
+        return sInstanceForIAccessibilityManager.get(accessibilityManager).get(userId);
     }
 
     /**

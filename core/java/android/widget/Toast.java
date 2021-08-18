@@ -610,9 +610,7 @@ public class Toast {
          */
         TN(Context context, String packageName, Binder token, List<Callback> callbacks,
                 @Nullable Looper looper) {
-            IAccessibilityManager accessibilityManager = IAccessibilityManager.Stub.asInterface(
-                    ServiceManager.getService(Context.ACCESSIBILITY_SERVICE));
-            mPresenter = new ToastPresenter(context, accessibilityManager, getService(),
+            mPresenter = new ToastPresenter(context, null, getService(),
                     packageName);
             mParams = mPresenter.getLayoutParams();
             mPackageName = packageName;
