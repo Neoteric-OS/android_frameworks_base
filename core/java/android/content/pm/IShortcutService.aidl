@@ -32,7 +32,7 @@ interface IShortcutService {
     boolean addDynamicShortcuts(String packageName, in ParceledListSlice shortcutInfoList,
             int userId);
 
-    void removeDynamicShortcuts(String packageName, in List shortcutIds, int userId);
+    void removeDynamicShortcuts(String packageName, in List<String> shortcutIds, int userId);
 
     void removeAllDynamicShortcuts(String packageName, int userId);
 
@@ -43,10 +43,10 @@ interface IShortcutService {
 
     Intent createShortcutResultIntent(String packageName, in ShortcutInfo shortcut, int userId);
 
-    void disableShortcuts(String packageName, in List shortcutIds, CharSequence disabledMessage,
-            int disabledMessageResId, int userId);
+    void disableShortcuts(String packageName, in List<String> shortcutIds,
+            CharSequence disabledMessage, int disabledMessageResId, int userId);
 
-    void enableShortcuts(String packageName, in List shortcutIds, int userId);
+    void enableShortcuts(String packageName, in List<String> shortcutIds, int userId);
 
     int getMaxShortcutCountPerActivity(String packageName, int userId);
 
@@ -73,7 +73,7 @@ interface IShortcutService {
 
     boolean hasShareTargets(String packageName, String packageToCheck, int userId);
 
-    void removeLongLivedShortcuts(String packageName, in List shortcutIds, int userId);
+    void removeLongLivedShortcuts(String packageName, in List<String> shortcutIds, int userId);
 
     ParceledListSlice getShortcuts(String packageName, int matchFlags, int userId);
 

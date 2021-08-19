@@ -2188,7 +2188,7 @@ public class ShortcutService extends IShortcutService.Stub {
     }
 
     @Override
-    public void disableShortcuts(String packageName, List shortcutIds,
+    public void disableShortcuts(String packageName, List<String> shortcutIds,
             CharSequence disabledMessage, int disabledMessageResId, @UserIdInt int userId) {
         verifyCaller(packageName, userId);
         Objects.requireNonNull(shortcutIds, "shortcutIds must be provided");
@@ -2201,14 +2201,13 @@ public class ShortcutService extends IShortcutService.Stub {
 
             final ShortcutPackage ps = getPackageShortcutsForPublisherLocked(packageName, userId);
 
-            ps.ensureImmutableShortcutsNotIncludedWithIds((List<String>) shortcutIds,
-                    /*ignoreInvisible=*/ true);
+            ps.ensureImmutableShortcutsNotIncludedWithIds(shortcutIds, /*ignoreInvisible=*/ true);
 
             final String disabledMessageString =
                     (disabledMessage == null) ? null : disabledMessage.toString();
 
             for (int i = shortcutIds.size() - 1; i >= 0; i--) {
-                final String id = Preconditions.checkStringNotEmpty((String) shortcutIds.get(i));
+                final String id = Preconditions.checkStringNotEmpty(shortcutIds.get(i));
                 if (!ps.isShortcutExistsAndVisibleToPublisher(id)) {
                     continue;
                 }
@@ -2241,7 +2240,8 @@ public class ShortcutService extends IShortcutService.Stub {
     }
 
     @Override
-    public void enableShortcuts(String packageName, List shortcutIds, @UserIdInt int userId) {
+    public void enableShortcuts(String packageName, List<String> shortcutIds,
+            @UserIdInt int userId) {
         verifyCaller(packageName, userId);
         Objects.requireNonNull(shortcutIds, "shortcutIds must be provided");
 
@@ -2252,11 +2252,10 @@ public class ShortcutService extends IShortcutService.Stub {
 
             final ShortcutPackage ps = getPackageShortcutsForPublisherLocked(packageName, userId);
 
-            ps.ensureImmutableShortcutsNotIncludedWithIds((List<String>) shortcutIds,
-                    /*ignoreInvisible=*/ true);
+            ps.ensureImmutableShortcutsNotIncludedWithIds(shortcutIds, /*ignoreInvisible=*/ true);
 
             for (int i = shortcutIds.size() - 1; i >= 0; i--) {
-                final String id = Preconditions.checkStringNotEmpty((String) shortcutIds.get(i));
+                final String id = Preconditions.checkStringNotEmpty(shortcutIds.get(i));
                 if (!ps.isShortcutExistsAndVisibleToPublisher(id)) {
                     continue;
                 }
@@ -2275,7 +2274,7 @@ public class ShortcutService extends IShortcutService.Stub {
     }
 
     @Override
-    public void removeDynamicShortcuts(String packageName, List shortcutIds,
+    public void removeDynamicShortcuts(String packageName, List<String> shortcutIds,
             @UserIdInt int userId) {
         verifyCaller(packageName, userId);
         Objects.requireNonNull(shortcutIds, "shortcutIds must be provided");
@@ -2288,11 +2287,10 @@ public class ShortcutService extends IShortcutService.Stub {
 
             final ShortcutPackage ps = getPackageShortcutsForPublisherLocked(packageName, userId);
 
-            ps.ensureImmutableShortcutsNotIncludedWithIds((List<String>) shortcutIds,
-                    /*ignoreInvisible=*/ true);
+            ps.ensureImmutableShortcutsNotIncludedWithIds(shortcutIds, /*ignoreInvisible=*/ true);
 
             for (int i = shortcutIds.size() - 1; i >= 0; i--) {
-                final String id = Preconditions.checkStringNotEmpty((String) shortcutIds.get(i));
+                final String id = Preconditions.checkStringNotEmpty(shortcutIds.get(i));
                 if (!ps.isShortcutExistsAndVisibleToPublisher(id)) {
                     continue;
                 }
@@ -2347,7 +2345,7 @@ public class ShortcutService extends IShortcutService.Stub {
     }
 
     @Override
-    public void removeLongLivedShortcuts(String packageName, List shortcutIds,
+    public void removeLongLivedShortcuts(String packageName, List<String> shortcutIds,
             @UserIdInt int userId) {
         verifyCaller(packageName, userId);
         Objects.requireNonNull(shortcutIds, "shortcutIds must be provided");
@@ -2360,11 +2358,10 @@ public class ShortcutService extends IShortcutService.Stub {
 
             final ShortcutPackage ps = getPackageShortcutsForPublisherLocked(packageName, userId);
 
-            ps.ensureImmutableShortcutsNotIncludedWithIds((List<String>) shortcutIds,
-                    /*ignoreInvisible=*/ true);
+            ps.ensureImmutableShortcutsNotIncludedWithIds(shortcutIds, /*ignoreInvisible=*/ true);
 
             for (int i = shortcutIds.size() - 1; i >= 0; i--) {
-                final String id = Preconditions.checkStringNotEmpty((String) shortcutIds.get(i));
+                final String id = Preconditions.checkStringNotEmpty(shortcutIds.get(i));
                 if (!ps.isShortcutExistsAndVisibleToPublisher(id)) {
                     continue;
                 }
