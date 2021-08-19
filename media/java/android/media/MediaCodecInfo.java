@@ -570,6 +570,12 @@ public final class MediaCodecInfo {
         public static final String FEATURE_LowLatency = "low-latency";
 
         /**
+         * <b>video encoder only</b>: codec supports secure encryption.
+         */
+        @SuppressLint("AllUpper")
+        public static final String FEATURE_SecureRecording = "secure-recording";
+
+        /**
          * Query codec feature capabilities.
          * <p>
          * These features are supported to be used by the codec.  These
@@ -605,6 +611,7 @@ public final class MediaCodecInfo {
             new Feature(FEATURE_IntraRefresh, (1 << 0), false),
             new Feature(FEATURE_MultipleFrames, (1 << 1), false),
             new Feature(FEATURE_DynamicTimestamp, (1 << 2), false),
+            new Feature(FEATURE_SecureRecording, (1 << 3), false),
         };
 
         /** @hide */
