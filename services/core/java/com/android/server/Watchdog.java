@@ -838,12 +838,14 @@ public class Watchdog extends Thread {
         return crashHistory.size() >= fatalCount && nowMs - firstCrashMs < fatalWindowMs;
     }
 
+    private static native void panic(String reason);
+
     private void breakCrashLoop() {
         try (FileWriter kmsg = new FileWriter("/dev/kmsg_debug", /* append= */ true)) {
             kmsg.append("Fatal reset to escape the system_server crashing loop\n");
         } catch (IOException e) {
             Slog.w(TAG, "Failed to append to kmsg", e);
         }
-        doSysRq('c');
+        panic("framework watchdog timeout-loop");
     }
 }
