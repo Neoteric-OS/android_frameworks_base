@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "14f75880_f39878de",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-19T21:10:43Z",
+      "side": 1,
+      "message": "Done. In order to do that I had to expose a hasFileDescriptors() in LazyValue, so I moved all of this inside parcel. PTAL.",
+      "parentUuid": "a0dbcfbe_4aa41c65",
+      "range": {
+        "startLine": 332,
+        "startChar": 2,
+        "endLine": 332,
+        "endChar": 47
+      },
+      "revId": "71747578ac836cc7df011846f17763707d15f746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9a05782d_f4dabf44",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 10
@@ -54,6 +78,30 @@
       "writtenOn": "2021-08-12T22:53:49Z",
       "side": 1,
       "message": "final (oh though I guess the overall Parcel class is correctly final)",
+      "range": {
+        "startLine": 1907,
+        "startChar": 10,
+        "endLine": 1907,
+        "endChar": 11
+      },
+      "revId": "71747578ac836cc7df011846f17763707d15f746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bb9c5d6_3061041e",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1907,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-19T21:10:43Z",
+      "side": 1,
+      "message": "Yeah, when I put final there, linter reminded me that Parcel is final and there was no need :)",
+      "parentUuid": "9a05782d_f4dabf44",
       "range": {
         "startLine": 1907,
         "startChar": 10,

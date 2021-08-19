@@ -160,6 +160,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "95632b74_3e96e772",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-19T21:10:43Z",
+      "side": 1,
+      "message": "Thanks for clarifying. Updated to reflect what you said. The comparison naturally falls into the control of LazyValue, so check method equals() of that class for the payload comparison. Added a comment here explaining and also updated the javadoc of readLazyValue() to reflect the contract on the suppliers returned. In case one is serialized and the other isn\u0027t we\u0027ll rely on the objects equals() implementation, which should return false.",
+      "parentUuid": "9e3111d6_af2916b1",
+      "range": {
+        "startLine": 459,
+        "startChar": 0,
+        "endLine": 461,
+        "endChar": 0
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07756e7e_a59a7c45",
@@ -221,6 +245,30 @@
       "side": 1,
       "message": "Hm...  okay, but note that we are already violating that above where if the entire Bundle hasn\u0027t been unparceled yet, we make a copy of the parcel.",
       "parentUuid": "6a3fb644_662013fa",
+      "range": {
+        "startLine": 498,
+        "startChar": 0,
+        "endLine": 498,
+        "endChar": 89
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3106c2a6_d70e882e",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-19T21:10:43Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "7d4a0914_406fdce0",
       "range": {
         "startLine": 498,
         "startChar": 0,
@@ -339,6 +387,30 @@
       "side": 1,
       "message": "Yeah I think for primitives we should just directly pull from the map.  Actually that seems pretty great -- we know it can only be the primitive object type, and anything else is going to be a type failure, and then we can actually avoid unparceling the data in the failure case which just doing that can be problematic (for example a security exploit trying to get the system to unparcel some type that will cause problems).  To help with debugging, we could peek in the parcel data to see the class type it would be and report that.",
       "parentUuid": "96ab9962_7bb0a3ec",
+      "range": {
+        "startLine": 1282,
+        "startChar": 0,
+        "endLine": 1289,
+        "endChar": 0
+      },
+      "revId": "600328e150292275cce234d23f3dd57163e08ca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01daf640_941e70be",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-19T21:10:43Z",
+      "side": 1,
+      "message": "Good point on avoiding unparceling in the failure cases. Done.",
+      "parentUuid": "1ceb6945_7ea70e48",
       "range": {
         "startLine": 1282,
         "startChar": 0,

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1172d916_43cf271e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-19T21:10:43Z",
+      "side": 1,
+      "message": "Addressed comments. \n\nI\u0027m working on the perf tests but decided to send the changes to get feedback on these already.\n\nSince I didn\u0027t find a way to compare parcel data of a specific subsection of the parcel and check for file descriptors in a specific subsection, I lazily extracted the relevant section when needed (when checking for file descriptors or when comparing two lazy values). I preferred to do that lazily and still hold a reference to the original because I expect those operations should be rare and in the majority of cases we\u0027d not need to do that. Please advise if that\u0027s not the case.",
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
