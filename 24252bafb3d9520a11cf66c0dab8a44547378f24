@@ -51,6 +51,24 @@
       "message": "Thanks, Sally. \n\nI\u0027m going to -1 this, not because the fix is bad but because it duplicates an internal fix and thus will almost certainly conflict with it. But - yes this is a real bug that needed fixing!",
       "revId": "24252bafb3d9520a11cf66c0dab8a44547378f24",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3e00d54_a884d394",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1840920
+      },
+      "writtenOn": "2021-08-19T07:13:37Z",
+      "side": 1,
+      "message": "Thanks for review!",
+      "parentUuid": "16a651fd_e30d77a2",
+      "revId": "24252bafb3d9520a11cf66c0dab8a44547378f24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
