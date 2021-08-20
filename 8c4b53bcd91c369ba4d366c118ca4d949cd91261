@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f194bac7_a996467d",
+        "filename": "telephony/common/com/android/internal/telephony/util/TelephonyUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-08-20T23:52:56Z",
+      "side": 1,
+      "message": "We\u0027re trying to filter out non-primitive values here; I think we\u0027d want to make sure the ArrayList is just of primitives like these as well.",
+      "range": {
+        "startLine": 143,
+        "startChar": 41,
+        "endLine": 143,
+        "endChar": 50
+      },
+      "revId": "8c4b53bcd91c369ba4d366c118ca4d949cd91261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
