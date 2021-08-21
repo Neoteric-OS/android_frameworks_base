@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61301ca7_e692d751",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-08-21T01:07:49Z",
+      "side": 1,
+      "message": "SIZE_RANGE on line 209 is static, modifying here will change the values for other MediaCodecInfos.",
+      "range": {
+        "startLine": 95,
+        "startChar": 12,
+        "endLine": 95,
+        "endChar": 22
+      },
+      "revId": "659a926ef9188974b1e8d3bcf0bb4e4e90370f36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7086b3f3_30fbf6af",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-08-21T01:07:49Z",
+      "side": 1,
+      "message": "won\u0027t match as toLowerCase() is used.  ditto for line 186.",
+      "range": {
+        "startLine": 184,
+        "startChar": 55,
+        "endLine": 184,
+        "endChar": 58
+      },
+      "revId": "659a926ef9188974b1e8d3bcf0bb4e4e90370f36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
