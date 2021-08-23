@@ -94,11 +94,27 @@ public abstract class HdmiClient {
     }
 
     /**
-     * Sets a listener used to receive incoming vendor-specific command.
+     * Sets a listener used to receive incoming vendor-specific command. This listener will only
+     * receive {@code <Vendor Command>} but will not receive any {@code <Vendor Command with ID>}
+     * messages.
      *
      * @param listener listener object
      */
     public void setVendorCommandListener(@NonNull VendorCommandListener listener) {
+        // Set the vendor ID to 0. This is an incorrect vendor ID and no <Vendor Command with ID>
+        // will have the vendor ID as 0.
+        setVendorCommandListener(listener, 0);
+    }
+
+    /**
+     * Sets a listener used to receive incoming vendor-specific command.
+     *
+     * @param listener listener object
+     * @param vendorId The listener will is interested in {@code <Vendor Command with ID>} received
+     *     with this vendorId. When a vendor command is received with no vendor ID, all registered
+     *     listeners get notified.
+     */
+    public void setVendorCommandListener(@NonNull VendorCommandListener listener, int vendorId) {
         if (listener == null) {
             throw new IllegalArgumentException("listener cannot be null");
         }
@@ -107,7 +123,7 @@ public abstract class HdmiClient {
         }
         try {
             IHdmiVendorCommandListener wrappedListener = getListenerWrapper(listener);
-            mService.addVendorCommandListener(wrappedListener, getDeviceType());
+            mService.addVendorCommandListener(wrappedListener, vendorId);
             mIHdmiVendorCommandListener = wrappedListener;
         } catch (RemoteException e) {
             Log.e(TAG, "failed to set vendor command listener: ", e);

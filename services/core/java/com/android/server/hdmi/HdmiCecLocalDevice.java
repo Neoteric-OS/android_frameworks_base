@@ -680,17 +680,12 @@ abstract class HdmiCecLocalDevice {
     protected boolean handleVendorCommandWithId(HdmiCecMessage message) {
         byte[] params = message.getParams();
         int vendorId = HdmiUtils.threeBytesToInt(params);
-        if (vendorId == mService.getVendorId()) {
-            if (!mService.invokeVendorCommandListenersOnReceived(
+        if (message.getDestination() == Constants.ADDR_BROADCAST
+                || message.getSource() == Constants.ADDR_UNREGISTERED) {
+            Slog.v(TAG, "Wrong broadcast vendor command. Ignoring");
+        } else if (!mService.invokeVendorCommandListenersOnReceived(
                     mDeviceType, message.getSource(), message.getDestination(), params, true)) {
                 mService.maySendFeatureAbortCommand(message, Constants.ABORT_NOT_IN_CORRECT_MODE);
-            }
-        } else if (message.getDestination() != Constants.ADDR_BROADCAST
-                && message.getSource() != Constants.ADDR_UNREGISTERED) {
-            Slog.v(TAG, "Wrong direct vendor command. Replying with <Feature Abort>");
-            mService.maySendFeatureAbortCommand(message, Constants.ABORT_UNRECOGNIZED_OPCODE);
-        } else {
-            Slog.v(TAG, "Wrong broadcast vendor command. Ignoring");
         }
         return true;
     }
