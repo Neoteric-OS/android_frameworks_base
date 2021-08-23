@@ -1582,11 +1582,11 @@ public class HdmiControlService extends SystemService {
 
     class VendorCommandListenerRecord implements IBinder.DeathRecipient {
         private final IHdmiVendorCommandListener mListener;
-        private final int mDeviceType;
+        private final int mVendorId;
 
-        public VendorCommandListenerRecord(IHdmiVendorCommandListener listener, int deviceType) {
+        VendorCommandListenerRecord(IHdmiVendorCommandListener listener, int vendorId) {
             mListener = listener;
-            mDeviceType = deviceType;
+            mVendorId = vendorId;
         }
 
         @Override
@@ -2077,10 +2077,10 @@ public class HdmiControlService extends SystemService {
         }
 
         @Override
-        public void addVendorCommandListener(final IHdmiVendorCommandListener listener,
-                final int deviceType) {
+        public void addVendorCommandListener(
+                final IHdmiVendorCommandListener listener, final int vendorId) {
             initBinderCall();
-            HdmiControlService.this.addVendorCommandListener(listener, deviceType);
+            HdmiControlService.this.addVendorCommandListener(listener, vendorId);
         }
 
         @Override
@@ -3212,8 +3212,9 @@ public class HdmiControlService extends SystemService {
         }
     }
 
-    private void addVendorCommandListener(IHdmiVendorCommandListener listener, int deviceType) {
-        VendorCommandListenerRecord record = new VendorCommandListenerRecord(listener, deviceType);
+    @VisibleForTesting
+    void addVendorCommandListener(IHdmiVendorCommandListener listener, int vendorId) {
+        VendorCommandListenerRecord record = new VendorCommandListenerRecord(listener, vendorId);
         try {
             listener.asBinder().linkToDeath(record, 0);
         } catch (RemoteException e) {
@@ -3232,8 +3233,11 @@ public class HdmiControlService extends SystemService {
                 return false;
             }
             for (VendorCommandListenerRecord record : mVendorCommandListenerRecords) {
-                if (record.mDeviceType != deviceType) {
-                    continue;
+                if (hasVendorId) {
+                    int vendorId = ((int) params[0] << 16) + (params[1] << 8) + params[2];
+                    if (record.mVendorId != vendorId) {
+                        continue;
+                    }
                 }
                 try {
                     record.mListener.onReceived(srcAddress, destAddress, params, hasVendorId);
