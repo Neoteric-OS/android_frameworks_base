@@ -210,8 +210,8 @@ public final class HdmiControlServiceWrapper {
         }
 
         @Override
-        public void addVendorCommandListener(IHdmiVendorCommandListener listener, int deviceType) {
-            HdmiControlServiceWrapper.this.addVendorCommandListener(listener, deviceType);
+        public void addVendorCommandListener(IHdmiVendorCommandListener listener, int vendorId) {
+            HdmiControlServiceWrapper.this.addVendorCommandListener(listener, vendorId);
         }
 
         @Override
@@ -416,7 +416,7 @@ public final class HdmiControlServiceWrapper {
             boolean hasVendorId) {}
 
     /** @hide */
-    public void addVendorCommandListener(IHdmiVendorCommandListener listener, int deviceType) {}
+    public void addVendorCommandListener(IHdmiVendorCommandListener listener, int vendorId) {}
 
     /** @hide */
     public void sendStandby(int deviceType, int deviceId) {}

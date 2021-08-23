@@ -278,9 +278,8 @@ public class HdmiAudioSystemClientTest {
         }
 
         @Override
-        public void addVendorCommandListener(final IHdmiVendorCommandListener listener,
-                final int deviceType) {
-        }
+        public void addVendorCommandListener(
+                final IHdmiVendorCommandListener listener, final int vendorId) {}
 
         @Override
         public void sendVendorCommand(final int deviceType, final int targetAddress,

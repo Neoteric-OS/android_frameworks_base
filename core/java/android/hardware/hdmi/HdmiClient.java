@@ -98,7 +98,7 @@ public abstract class HdmiClient {
      *
      * @param listener listener object
      */
-    public void setVendorCommandListener(@NonNull VendorCommandListener listener) {
+    public void setVendorCommandListener(@NonNull VendorCommandListener listener, int vendorId) {
         if (listener == null) {
             throw new IllegalArgumentException("listener cannot be null");
         }
@@ -107,7 +107,7 @@ public abstract class HdmiClient {
         }
         try {
             IHdmiVendorCommandListener wrappedListener = getListenerWrapper(listener);
-            mService.addVendorCommandListener(wrappedListener, getDeviceType());
+            mService.addVendorCommandListener(wrappedListener, vendorId);
             mIHdmiVendorCommandListener = wrappedListener;
         } catch (RemoteException e) {
             Log.e(TAG, "failed to set vendor command listener: ", e);
