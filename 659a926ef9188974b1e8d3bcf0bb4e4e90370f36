@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3abc97b4_570b85fd",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1854290
+      },
+      "writtenOn": "2021-08-23T09:04:18Z",
+      "side": 1,
+      "message": "Hi Andy,\nAs I know, the SIZE_RANGE is only used for resolution checking. We suppose SIZE_RANGE shall be changed in Constructor of MediaCodecInfo, that because we shall consider the hardware codec case and change the SIZE_RANGE after checking.\n\nOr would you please share the suggestion for SIZE_RANGE modification?\n\nThanks",
+      "parentUuid": "61301ca7_e692d751",
+      "range": {
+        "startLine": 95,
+        "startChar": 12,
+        "endLine": 95,
+        "endChar": 22
+      },
+      "revId": "659a926ef9188974b1e8d3bcf0bb4e4e90370f36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7086b3f3_30fbf6af",
         "filename": "media/java/android/media/MediaCodecInfo.java",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2021-08-21T01:07:49Z",
       "side": 1,
       "message": "won\u0027t match as toLowerCase() is used.  ditto for line 186.",
+      "range": {
+        "startLine": 184,
+        "startChar": 55,
+        "endLine": 184,
+        "endChar": 58
+      },
+      "revId": "659a926ef9188974b1e8d3bcf0bb4e4e90370f36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35e3b20b_d8d57952",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1854290
+      },
+      "writtenOn": "2021-08-23T09:04:18Z",
+      "side": 1,
+      "message": "Hi Andy,\nThe idea is from : https://android.googlesource.com/platform/frameworks/av/+/master/media/libstagefright/MediaCodecList.cpp\n\nMediaCodecList::isSoftwareCodec\n\nThus, it shall work, would you please let me know what kind of case would be issued ? Thanks.",
+      "parentUuid": "7086b3f3_30fbf6af",
       "range": {
         "startLine": 184,
         "startChar": 55,
