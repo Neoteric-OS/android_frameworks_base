@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5578989d_97fd3f96",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2021-08-24T01:49:31Z",
+      "side": 1,
+      "message": "\u003e 1) Would you please share which real case that consume too much memory (in byte buffer mode) \u003e 32bit address usage ?\n\nCTS cases such as anrdoid.media.cts.VideoEncoderTest#testOtherH264FlexMaxMax fails for devices that support 8K without limiting SIZE_MAX at 32-bit.\n\nAny app that uses byte buffer mode (using the decoder w/o surface set) will hit this issue when opening 8K video from 32-bit process.\n\n\u003e 2) And would you please also share the what is the real issue case that have the 64bit solution ?\n\nI\u0027m not sure if I understood the question right, but some devices have sufficient memory to use the codec in this mode and have no problem passing the CTS cases mentioned above.",
+      "parentUuid": "68b930f5_66bf857e",
+      "revId": "659a926ef9188974b1e8d3bcf0bb4e4e90370f36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "61301ca7_e692d751",
         "filename": "media/java/android/media/MediaCodecInfo.java",
         "patchSetId": 1
