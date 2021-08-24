@@ -16,6 +16,23 @@
       "message": "Addressed comments. \n\nI\u0027m working on the perf tests but decided to send the changes to get feedback on these already.\n\nSince I didn\u0027t find a way to compare parcel data of a specific subsection of the parcel and check for file descriptors in a specific subsection, I lazily extracted the relevant section when needed (when checking for file descriptors or when comparing two lazy values). I preferred to do that lazily and still hold a reference to the original because I expect those operations should be rare and in the majority of cases we\u0027d not need to do that. Please advise if that\u0027s not the case.",
       "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25a46efb_24d89817",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-24T17:31:00Z",
+      "side": 1,
+      "message": "I ran some perf tests. Results are in https://docs.google.com/document/d/1mks5OWvfBQUuOtGcowaiHfTtY4q1iYfn4PDiZRTJ7Xo/edit#heading\u003dh.vg8aiu44gss0. \n\nI will run with more iterations but so far it\u0027s looking good I think. This is the increase in serialization/deserialization time:\n\n1. small bundle with basic \u0026 custom types: 1.9%\n2. small bundle with only basic types: 0.1%\n3. large bundle with basic \u0026 custom types: 1.3%\n\nThat is executing the code here but toggling the return of isLengthPrefixed() as always returning false or returning true for the custom types (as it is in this CL).\n\nNote the we also save some bytes from deserialization because we don\u0027t eagerly deserialize everything on the bundle on first touch now. That\u0027s also in the doc. On a sdk_gphone_x86_64_arm64 a few minutes after boot roughly 10% of bytes from **custom-type items** in Bundle are not deserialized with the change.\n",
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
