@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02bfe215_b949141d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2021-08-24T22:47:44Z",
+      "side": 1,
+      "message": "you make this sound like a scary change (and one where we should change the NDK to match the platform rather than the other way round) ... but looking at internal master, it looks like you\u0027re fixing _wrong_ values in AOSP master to _match_ the internal master ones?\n\nmight be easier to get the API review +1 if you explicitly say that? :-)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "398e6f2c507b936f3c2d98c822976c4bd5b290bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
