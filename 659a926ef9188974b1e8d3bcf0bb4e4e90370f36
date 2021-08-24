@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "68b930f5_66bf857e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1854290
+      },
+      "writtenOn": "2021-08-24T01:37:09Z",
+      "side": 1,
+      "message": "Hi Mr. Kim,\n\nApps may request to use the codecs in byte buffer mode, which will consume too much memory regardless of whether the codec is in SW or HW.\n\n1) Would you please share which real case that consume too much memory (in byte buffer mode) \u003e 32bit address usage ?\n2) And would you please also share the what is the real issue case that have the 64bit solution ? \u003d\u003e  https://android.googlesource.com/platform/frameworks/base/+/aafd89eaaf1252f0f6df9e5a1bb07ddd7bf80610\n\nThank You",
+      "parentUuid": "e3e7521e_c77b2c88",
+      "revId": "659a926ef9188974b1e8d3bcf0bb4e4e90370f36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "61301ca7_e692d751",
         "filename": "media/java/android/media/MediaCodecInfo.java",
         "patchSetId": 1
