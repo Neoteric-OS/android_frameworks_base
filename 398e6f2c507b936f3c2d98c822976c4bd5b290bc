@@ -46,6 +46,30 @@
       },
       "revId": "398e6f2c507b936f3c2d98c822976c4bd5b290bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11e0e116_7a23a2de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1005967
+      },
+      "writtenOn": "2021-08-24T22:52:33Z",
+      "side": 1,
+      "message": "The numbers are auto-assigned by something, and this change was cherry-picked between branches with different API, so the numbers ended up different as well. I wonder if presubmit will tell you exactly this?",
+      "parentUuid": "02bfe215_b949141d",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "398e6f2c507b936f3c2d98c822976c4bd5b290bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
