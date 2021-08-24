@@ -34,6 +34,24 @@
       "parentUuid": "a495bf33_1c9e80b7",
       "revId": "f07e8988ab66c05a39ab3bd2600761e8ec90f928",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3c3011b_98e843c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1741425
+      },
+      "writtenOn": "2021-08-24T20:07:00Z",
+      "side": 1,
+      "message": "Nice catch, Andrzej!\n\nAnd yes, this has been fixed by ag/15395534",
+      "parentUuid": "55e34120_85bc2f9c",
+      "revId": "f07e8988ab66c05a39ab3bd2600761e8ec90f928",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
