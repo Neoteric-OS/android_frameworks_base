@@ -317,6 +317,7 @@ public class PersistentDataBlockService extends SystemService {
                 buf.flip();
                 channel.write(buf);
                 channel.force(true);
+                channel.close();
             } catch (IOException e) {
                 Slog.e(TAG, "failed to write block checksum", e);
                 return false;
@@ -384,6 +385,7 @@ public class PersistentDataBlockService extends SystemService {
             buf = ByteBuffer.allocate(payload_size);
             channel.write(buf);
             channel.force(true);
+            channel.close();
         } catch (IOException e) {
             Slog.e(TAG, "failed to format block", e);
             return;
@@ -405,6 +407,7 @@ public class PersistentDataBlockService extends SystemService {
             data.flip();
             channel.write(data);
             channel.force(true);
+            channel.close();
         } catch (IOException e) {
             Slog.e(TAG, "unable to access persistent partition", e);
             return;
@@ -486,6 +489,7 @@ public class PersistentDataBlockService extends SystemService {
                 try {
                     channel.write(headerAndData);
                     channel.force(true);
+                    channel.close();
                 } catch (IOException e) {
                     Slog.e(TAG, "failed writing to the persistent data block", e);
                     return -1;
@@ -714,6 +718,7 @@ public class PersistentDataBlockService extends SystemService {
                     channel.position(offset);
                     channel.write(dataBuffer);
                     channel.force(true);
+                    channel.close();
                 } catch (IOException e) {
                     Slog.e(TAG, "unable to access persistent partition", e);
                     return;
