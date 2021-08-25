@@ -1,0 +1,5 @@
+brufino@google.com
+pedroql@google.com
+
+per-file *CallingSettingsNonUserGetterMethods* = file:/packages/SettingsProvider/OWNERS
+
