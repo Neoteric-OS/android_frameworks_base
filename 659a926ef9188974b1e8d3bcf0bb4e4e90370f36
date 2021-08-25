@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "999c78d5_a531637d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1854290
+      },
+      "writtenOn": "2021-08-25T03:16:28Z",
+      "side": 1,
+      "message": "Hi Mr. Kim,\n\nCTS cases such as anrdoid.media.cts.VideoEncoderTest#testOtherH264FlexMaxMax fails for devices that support 8K without limiting SIZE_MAX at 32-bit.\n \n\u003d\u003e In TV case, we only support the FHD video encoding, thus we shall not meet the problem.\n\u003d\u003e Do you know which kind of devices (support 8K) might meet the issue ?\n\n\nI\u0027m not sure if I understood the question right, but some devices have sufficient memory to use the codec in this mode and have no problem passing the CTS cases mentioned above.\n \n\u003d\u003e Thus it should depend on \"sufficient memory\", right ? No matter in 32/64bit platform, once it has lower memory situation, then it might meet issue.\nAnd we think the 8K support and memory addressing are different things, since the original issue (https://android.googlesource.com/platform/frameworks/base/+/aafd89eaaf1252f0f6df9e5a1bb07ddd7bf80610)\n that virtual memory usage (32bit) is exceed.\nWe think it depends on whole system memory usage management, not only Media playback but also other applications could occupy the VM which is not released.\nMoreover, there is no defined that why \u003e4K resolution, then the 32bit addressing is not enough. And we think even \u003e4K resolution, the stream should be\nplayback until the total memory is really not enough. And in our TV MP production (8K model with Android R version), there is no issue reported that memory is not enough.\nThus we wonder have your suggestion how to support \u003e4K media playback in 32bit platform, even the memory is enough.",
+      "parentUuid": "5578989d_97fd3f96",
+      "revId": "659a926ef9188974b1e8d3bcf0bb4e4e90370f36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "61301ca7_e692d751",
         "filename": "media/java/android/media/MediaCodecInfo.java",
         "patchSetId": 1
