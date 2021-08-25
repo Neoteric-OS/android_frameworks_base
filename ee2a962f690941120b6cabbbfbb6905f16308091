@@ -72,6 +72,121 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d66b81cd_bfa66b13",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-25T17:57:20Z",
+      "side": 1,
+      "message": "is this function guaranteed to return the correct value? I thought it wasn\u0027t?",
+      "range": {
+        "startLine": 659,
+        "startChar": 22,
+        "endLine": 659,
+        "endChar": 40
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02d09ec5_99133f80",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1862,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-25T17:57:20Z",
+      "side": 1,
+      "message": "are matching changes needed in native code for this? Or we don\u0027t use \u0027Value\u0027? Makes sense",
+      "range": {
+        "startLine": 1862,
+        "startChar": 0,
+        "endLine": 1862,
+        "endChar": 37
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfbb2c1f_efcef082",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3342,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-25T17:57:20Z",
+      "side": 1,
+      "message": "nit: I might recommend adding lazy value reading in a separate CL from the major refactor here (if there is a suitable patchset to create the diff with). That might make reviewing easier. If it\u0027s not easy to get though, don\u0027t worry about it.",
+      "range": {
+        "startLine": 3342,
+        "startChar": 0,
+        "endLine": 3342,
+        "endChar": 7
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d70a3997_04fdd10b",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3371,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-25T17:57:20Z",
+      "side": 1,
+      "message": "The integer we are reading may be maliciously constructed here. If it is too large, this will result in an abort. Being beyond the bounds of the Parcel, it may also abort or cause a later error.",
+      "range": {
+        "startLine": 3371,
+        "startChar": 0,
+        "endLine": 3371,
+        "endChar": 53
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b715f8a5_c95e343a",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3472,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-25T17:57:20Z",
+      "side": 1,
+      "message": "This will be an expensive call for equality (making a copy of the entire parcel).\n\nI should mention though, the data won\u0027t be able to reflect equality for underlying objects (fds/binders).\n\nDo we really need equality?",
+      "range": {
+        "startLine": 3472,
+        "startChar": 19,
+        "endLine": 3472,
+        "endChar": 33
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8843f30f_2abb0327",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 11
