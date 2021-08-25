@@ -70,6 +70,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c2d3070_822f6f9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-08-25T18:41:09Z",
+      "side": 1,
+      "message": "Sweet, this is looking great! 😊  Just a few notes inline; I don\u0027t consider any of them to be blocking so marking CR+2, but you may want to consider looking at them before merging.",
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d66b81cd_bfa66b13",
@@ -88,6 +105,121 @@
         "startChar": 22,
         "endLine": 659,
         "endChar": 40
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdad2ce5_26c5550b",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-08-25T18:41:09Z",
+      "side": 1,
+      "message": "super nit (not blocking this CL): writing this as \"int describeContents(Object value)\" would let your |\u003d together all the discovered flags, making this a but more future-proof if we ever add more flags.  That may also avoid confusion where the multiple overloaded hasFileDescriptors() methods are being used in slightly different ways; where a \"Parcel\" isn\u0027t accepted as an argument to this method.",
+      "range": {
+        "startLine": 664,
+        "startChar": 26,
+        "endLine": 664,
+        "endChar": 44
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e18ab1e4_059a8ce8",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-08-25T18:41:09Z",
+      "side": 1,
+      "message": "To be super safe, I might suggest using a SparseArray\u003c?\u003e and then doing an instanceof check on each item during examination before strongly casting it.",
+      "range": {
+        "startLine": 683,
+        "startChar": 0,
+        "endLine": 683,
+        "endChar": 96
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eccc2946_4399e359",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-08-25T18:41:09Z",
+      "side": 1,
+      "message": "I know this logic is likely copy/pasted, but could you write a follow-up future CL that expands this to fully handle the missing List\u003c\u003e container type?  (They can be inserted via putParcelableList().)",
+      "range": {
+        "startLine": 691,
+        "startChar": 36,
+        "endLine": 691,
+        "endChar": 45
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14635910_fcbe5023",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-08-25T18:41:09Z",
+      "side": 1,
+      "message": "super nit: technically someone could bypass this by putting a \"null\" value in index 0, and a real Parcelable with an FD in index 1, etc.\n\nPerhaps safest to unconditionally check all indexes?",
+      "range": {
+        "startLine": 695,
+        "startChar": 37,
+        "endLine": 695,
+        "endChar": 71
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a3fc4d8_5eb4d662",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-08-25T18:41:09Z",
+      "side": 1,
+      "message": "Similar to above, consider doing an instanceof check on each item before strongly casting it.",
+      "range": {
+        "startLine": 697,
+        "startChar": 0,
+        "endLine": 697,
+        "endChar": 61
       },
       "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
