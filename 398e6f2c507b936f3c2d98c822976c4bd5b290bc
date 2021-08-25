@@ -70,6 +70,30 @@
       },
       "revId": "398e6f2c507b936f3c2d98c822976c4bd5b290bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41f2992b_fb9c34ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2021-08-25T17:25:12Z",
+      "side": 1,
+      "message": "Added a merge restriction so it\u0027s an AOSP-only change.",
+      "parentUuid": "11e0e116_7a23a2de",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "398e6f2c507b936f3c2d98c822976c4bd5b290bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
