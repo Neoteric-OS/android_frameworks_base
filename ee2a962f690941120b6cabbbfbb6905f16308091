@@ -91,6 +91,30 @@
       },
       "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe135108_439e2f47",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3481,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-25T17:35:48Z",
+      "side": 1,
+      "message": "This was my thought exactly :) I looked for methods that supported ranges but didn\u0027t find any. Will put this into the TODO list :)",
+      "parentUuid": "8843f30f_2abb0327",
+      "range": {
+        "startLine": 3481,
+        "startChar": 8,
+        "endLine": 3481,
+        "endChar": 39
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
