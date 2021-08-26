@@ -110,6 +110,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9209fded_ce8acdcb",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-26T17:46:58Z",
+      "side": 1,
+      "message": "I didn\u0027t know that, the javadoc seems to suggest it works \"Report whether the parcel contains any marshalled file descriptors.\". Anyway changed recommendation here from \"use\" to \"check\".",
+      "parentUuid": "d66b81cd_bfa66b13",
+      "range": {
+        "startLine": 659,
+        "startChar": 22,
+        "endLine": 659,
+        "endChar": 40
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bdad2ce5_26c5550b",
@@ -123,6 +147,30 @@
       "writtenOn": "2021-08-25T18:41:09Z",
       "side": 1,
       "message": "super nit (not blocking this CL): writing this as \"int describeContents(Object value)\" would let your |\u003d together all the discovered flags, making this a but more future-proof if we ever add more flags.  That may also avoid confusion where the multiple overloaded hasFileDescriptors() methods are being used in slightly different ways; where a \"Parcel\" isn\u0027t accepted as an argument to this method.",
+      "range": {
+        "startLine": 664,
+        "startChar": 26,
+        "endLine": 664,
+        "endChar": 44
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b167c679_e0585ccd",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-26T17:46:58Z",
+      "side": 1,
+      "message": "Ok, will leave that to a separate CL. Noted in b/195622897.",
+      "parentUuid": "bdad2ce5_26c5550b",
       "range": {
         "startLine": 664,
         "startChar": 26,
@@ -156,6 +204,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "93e45c27_835d224c",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-26T17:46:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e18ab1e4_059a8ce8",
+      "range": {
+        "startLine": 683,
+        "startChar": 0,
+        "endLine": 683,
+        "endChar": 96
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eccc2946_4399e359",
@@ -169,6 +241,30 @@
       "writtenOn": "2021-08-25T18:41:09Z",
       "side": 1,
       "message": "I know this logic is likely copy/pasted, but could you write a follow-up future CL that expands this to fully handle the missing List\u003c\u003e container type?  (They can be inserted via putParcelableList().)",
+      "range": {
+        "startLine": 691,
+        "startChar": 36,
+        "endLine": 691,
+        "endChar": 45
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e57e4a5_4852b4d8",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-26T17:46:58Z",
+      "side": 1,
+      "message": "Will do. Noted in b/195622897.",
+      "parentUuid": "eccc2946_4399e359",
       "range": {
         "startLine": 691,
         "startChar": 36,
@@ -202,6 +298,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1b373c5_9db50dbb",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-26T17:46:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14635910_fcbe5023",
+      "range": {
+        "startLine": 695,
+        "startChar": 37,
+        "endLine": 695,
+        "endChar": 71
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a3fc4d8_5eb4d662",
@@ -215,6 +335,30 @@
       "writtenOn": "2021-08-25T18:41:09Z",
       "side": 1,
       "message": "Similar to above, consider doing an instanceof check on each item before strongly casting it.",
+      "range": {
+        "startLine": 697,
+        "startChar": 0,
+        "endLine": 697,
+        "endChar": 61
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c90aa0cf_f2f2d5b0",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-26T17:46:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a3fc4d8_5eb4d662",
       "range": {
         "startLine": 697,
         "startChar": 0,
@@ -248,6 +392,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab7689ec_2d3165a7",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1862,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-26T17:46:58Z",
+      "side": 1,
+      "message": "Yeah, there is no value counterpart in https://source.corp.google.com/android/frameworks/native/libs/binder/include/binder/Parcel.h?q\u003dParcel.h\u0026sq\u003dpackage:%5Eandroid$. Let me know if I missed it.",
+      "parentUuid": "02d09ec5_99133f80",
+      "range": {
+        "startLine": 1862,
+        "startChar": 0,
+        "endLine": 1862,
+        "endChar": 37
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bfbb2c1f_efcef082",
@@ -261,6 +429,30 @@
       "writtenOn": "2021-08-25T17:57:20Z",
       "side": 1,
       "message": "nit: I might recommend adding lazy value reading in a separate CL from the major refactor here (if there is a suitable patchset to create the diff with). That might make reviewing easier. If it\u0027s not easy to get though, don\u0027t worry about it.",
+      "range": {
+        "startLine": 3342,
+        "startChar": 0,
+        "endLine": 3342,
+        "endChar": 7
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3be89972_37a0bbba",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3342,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-26T17:46:58Z",
+      "side": 1,
+      "message": "Ok, sorry. Will keep that in mind for next reviews.",
+      "parentUuid": "bfbb2c1f_efcef082",
       "range": {
         "startLine": 3342,
         "startChar": 0,
@@ -296,6 +488,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c2917a73_f803a364",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3371,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-26T17:46:58Z",
+      "side": 1,
+      "message": "Interesting case! \n\nIn the bundle case we already extract the part responsible for the bundle out of the parcel http://cs/android/frameworks/base/core/java/android/os/BaseBundle.java?l\u003d1675-1683\u0026rcl\u003d8ab91d385c451d9a24e5aa115587ae6582674807, so any length maliciously put here can\u0027t affect the parcel used to produce the bundle in the first place. In my tests an overlength results in an extra null \u003d\u003e null in the map since all the next key-value reads will produce null \u003d\u003e null.\n\nIf you\u0027re worried about it in the context of Parcel APIs themselves, you can\u0027t really trust serialized data coming from untrusted sources. For example, if you\u0027re putting an app-produced data in the same parcel as trusted data then passing that onto another component, then the trusted part could already be tainted by using a bundle (oh, the irony) and controlling its length written on the wire to make the reader position the cursor where you want.\n\nI changed the code to use MathUtils.addOrThrow() like bundle.\n\nLet me know your thoughts!",
+      "parentUuid": "d70a3997_04fdd10b",
+      "range": {
+        "startLine": 3371,
+        "startChar": 0,
+        "endLine": 3371,
+        "endChar": 53
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b715f8a5_c95e343a",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 11
@@ -307,6 +523,30 @@
       "writtenOn": "2021-08-25T17:57:20Z",
       "side": 1,
       "message": "This will be an expensive call for equality (making a copy of the entire parcel).\n\nI should mention though, the data won\u0027t be able to reflect equality for underlying objects (fds/binders).\n\nDo we really need equality?",
+      "range": {
+        "startLine": 3472,
+        "startChar": 19,
+        "endLine": 3472,
+        "endChar": 33
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cb02702_f012a3f2",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3472,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-26T17:46:58Z",
+      "side": 1,
+      "message": "It\u0027s to avoid deserializing in kindofEquals(). But see Dianne\u0027s comment on this, in my next step I\u0027ll add comparison methods and fd-check methods with range support, so we can avoid copying here. I noted this on b/195622897.",
+      "parentUuid": "b715f8a5_c95e343a",
       "range": {
         "startLine": 3472,
         "startChar": 19,
