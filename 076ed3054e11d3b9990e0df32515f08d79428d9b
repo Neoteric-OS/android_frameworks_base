@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ce67b6b_604ea110",
+        "filename": "tools/lint/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1879319
+      },
+      "writtenOn": "2021-08-26T14:25:05Z",
+      "side": 1,
+      "message": "I think it\u0027s better to remove me from the list because I\u0027ll be finishing my internship soon :(",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 18
+      },
+      "revId": "076ed3054e11d3b9990e0df32515f08d79428d9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
