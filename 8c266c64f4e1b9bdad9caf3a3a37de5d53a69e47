@@ -46,6 +46,30 @@
       },
       "revId": "8c266c64f4e1b9bdad9caf3a3a37de5d53a69e47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16f8318d_bbaf614b",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1282799
+      },
+      "writtenOn": "2021-08-26T01:29:40Z",
+      "side": 1,
+      "message": "Hi, Jack\n\nPlease review again, thanks",
+      "parentUuid": "e5b1caa7_a46dd414",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 5
+      },
+      "revId": "8c266c64f4e1b9bdad9caf3a3a37de5d53a69e47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
