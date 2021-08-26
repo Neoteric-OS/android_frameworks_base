@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7c7463f_e0f1703e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-26T18:09:27Z",
+      "side": 1,
+      "message": "Btw, I removed the tests I had added because error-prone build was erroring out saying BundleTest was inheriting from a JUnit\u0027s 3 TestCase but had JUnit\u0027s 4 annotations @Test, @RunWith (https://android-build.googleplex.com/builds/pending/P25564867/errorprone/latest/view/logs/build_error.log). It wasn\u0027t clear to me what was happening there because it wasn\u0027t inheriting anything, so I left for a future CL to introduce those tests and more.",
+      "revId": "397c2058aa38a06405bdc22cc5051c3bafddcfa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
