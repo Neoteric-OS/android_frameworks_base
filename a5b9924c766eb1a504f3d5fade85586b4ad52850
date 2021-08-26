@@ -33,6 +33,24 @@
       "message": "While I\u0027ve done some lint work, I have written no code inside this folder so I don\u0027t think I should be owner here :)",
       "revId": "a5b9924c766eb1a504f3d5fade85586b4ad52850",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7498915_5976f37a",
+        "filename": "tools/lint/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2021-08-26T19:30:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bdc10adf_81230742",
+      "revId": "a5b9924c766eb1a504f3d5fade85586b4ad52850",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
