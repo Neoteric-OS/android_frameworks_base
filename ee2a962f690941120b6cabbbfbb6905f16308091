@@ -136,6 +136,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "87c54f7b_61aba71a",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-26T19:40:23Z",
+      "side": 1,
+      "message": "Can you look into it? Parcelables self-report whether they have file descriptors.",
+      "parentUuid": "9209fded_ce8acdcb",
+      "range": {
+        "startLine": 659,
+        "startChar": 22,
+        "endLine": 659,
+        "endChar": 40
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b5e2acc_a256b53a",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-26T19:40:23Z",
+      "side": 1,
+      "message": "describeContents must be implemented by the parcelable writer. I don\u0027t know of any mechanism that ensures it must return the correct value. Would it be bad if it didn\u0027t? Can you look into it? Some of the people more familiar with Java binder might know.",
+      "parentUuid": "9209fded_ce8acdcb",
+      "range": {
+        "startLine": 659,
+        "startChar": 22,
+        "endLine": 659,
+        "endChar": 40
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bdad2ce5_26c5550b",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 11
@@ -500,6 +548,30 @@
       "side": 1,
       "message": "Interesting case! \n\nIn the bundle case we already extract the part responsible for the bundle out of the parcel http://cs/android/frameworks/base/core/java/android/os/BaseBundle.java?l\u003d1675-1683\u0026rcl\u003d8ab91d385c451d9a24e5aa115587ae6582674807, so any length maliciously put here can\u0027t affect the parcel used to produce the bundle in the first place. In my tests an overlength results in an extra null \u003d\u003e null in the map since all the next key-value reads will produce null \u003d\u003e null.\n\nIf you\u0027re worried about it in the context of Parcel APIs themselves, you can\u0027t really trust serialized data coming from untrusted sources. For example, if you\u0027re putting an app-produced data in the same parcel as trusted data then passing that onto another component, then the trusted part could already be tainted by using a bundle (oh, the irony) and controlling its length written on the wire to make the reader position the cursor where you want.\n\nI changed the code to use MathUtils.addOrThrow() like bundle.\n\nLet me know your thoughts!",
       "parentUuid": "d70a3997_04fdd10b",
+      "range": {
+        "startLine": 3371,
+        "startChar": 0,
+        "endLine": 3371,
+        "endChar": 53
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b150eb5_dd137e15",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3371,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-08-26T19:40:23Z",
+      "side": 1,
+      "message": "addOrThrow is good. If we wanted to rely on the check happening elsewhere, we would need to have some other assertion that the code is only used in the checked context.",
+      "parentUuid": "c2917a73_f803a364",
       "range": {
         "startLine": 3371,
         "startChar": 0,
