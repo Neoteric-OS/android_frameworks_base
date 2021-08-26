@@ -22,6 +22,30 @@
       },
       "revId": "076ed3054e11d3b9990e0df32515f08d79428d9b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42f03c32_8fcff9f9",
+        "filename": "tools/lint/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2021-08-26T16:06:23Z",
+      "side": 1,
+      "message": "Okay..😞 Thanks so much for your work!",
+      "parentUuid": "5ce67b6b_604ea110",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 18
+      },
+      "revId": "076ed3054e11d3b9990e0df32515f08d79428d9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
