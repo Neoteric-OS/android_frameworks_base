@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcac59ed_4ad97735",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-27T14:44:48Z",
+      "side": 1,
+      "message": "Also, owner\u0027s vote dropped, could I get owner+1 again? :) \n\nChanges in 13..14: After more testing, seems like char, short[], char[] and float[] don\u0027t have special types and are serialized via Serializable in contrast with types like boolean, short, int, long, float, double, boolean[], int[], long[], double[] who have special types. For now, I\u0027m using getValue() for them instead of retrieving them immediately from the map since they have to follow the serializable/custom path. In later CL I\u0027ll introduce special types for them to be consistent with the other types, at which point I\u0027ll change the behavior to pull them out of map immediately, like other basic types. \n\n",
+      "revId": "9ca6a5e21a1987fd3800a899c1384b22d23b6dee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
