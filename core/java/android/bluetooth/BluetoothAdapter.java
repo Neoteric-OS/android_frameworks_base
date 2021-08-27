@@ -1519,8 +1519,7 @@ public final class BluetoothAdapter {
      * @return true if the scan mode was set, false otherwise
      * @hide
      */
-    @UnsupportedAppUsage(publicAlternatives = "Use {@link #ACTION_REQUEST_DISCOVERABLE}, which "
-            + "shows UI that confirms the user wants to go into discoverable mode.")
+    @SystemApi
     @RequiresPermission(Manifest.permission.BLUETOOTH)
     public boolean setScanMode(@ScanMode int mode, long durationMillis) {
         if (getState() != STATE_ON) {
@@ -1569,7 +1568,7 @@ public final class BluetoothAdapter {
      * @return true if the scan mode was set, false otherwise
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     @RequiresPermission(Manifest.permission.BLUETOOTH)
     public boolean setScanMode(@ScanMode int mode) {
         if (getState() != STATE_ON) {
@@ -1607,8 +1606,14 @@ public final class BluetoothAdapter {
         return -1;
     }
 
-    /** @hide */
-    @UnsupportedAppUsage
+    /**
+     * Set the timeout of the discoverable mode.
+     *
+     * @param timeout time in milliseconds before stopping discoverable mode.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED)
     public void setDiscoverableTimeout(int timeout) {
         if (getState() != STATE_ON) {
             return;
