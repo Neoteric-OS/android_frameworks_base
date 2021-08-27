@@ -182,6 +182,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3946ce13_b8a669f1",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-08-27T09:31:21Z",
+      "side": 1,
+      "message": "I\u0027m not sure which method you\u0027re referring to.\n\nThe method you highlighted in this comment is the instance method Parcel.hasFileDescriptors() (no-args). That method seems to scan the parcel for file-descriptors written, so I don\u0027t think that\u0027s actually using self-reported data from parcelables.\n\nOTOH, the static method I introduced in this class Parcel.hasFileDescriptors(Object) takes a \"value\" object and in most cases does use describeContents() to decide the answer. However, note that the CL is not a behavior change in this regard. I just moved this code out of bundle so that I could deal with LazyValue here (since now it became an implementation detail of parcel). I updated the javadoc to clarify where this information is coming from. Hope that\u0027s ok now.",
+      "parentUuid": "87c54f7b_61aba71a",
+      "range": {
+        "startLine": 659,
+        "startChar": 22,
+        "endLine": 659,
+        "endChar": 40
+      },
+      "revId": "ee2a962f690941120b6cabbbfbb6905f16308091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bdad2ce5_26c5550b",
