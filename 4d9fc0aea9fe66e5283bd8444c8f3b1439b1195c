@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "365cc2aa_11b9584d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2021-08-30T23:43:46Z",
+      "side": 1,
+      "message": "A ping for review, Eran \u0026 Alex.",
+      "revId": "4d9fc0aea9fe66e5283bd8444c8f3b1439b1195c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
