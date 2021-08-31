@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a07248d_3ef5677d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1769651
+      },
+      "writtenOn": "2021-08-31T13:25:56Z",
+      "side": 1,
+      "message": "Hello there, I am just circling back to see if it is possible to have this patch accepted? I have had difficulty in getting it accepted in the past. Thank you!",
+      "revId": "c87f38c62cf084646e7d91fcf026cc01973b032c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
