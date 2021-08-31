@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecf81935_252f77c9",
+        "filename": "libs/hwui/Readback.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2021-08-31T15:58:00Z",
+      "side": 1,
+      "message": "This should be handling it. We intentionally don\u0027t want the inset, that results in crop artifacts.\n\nI could see taking an R-specific CL to avoid changing constraints mid-release, but in that case the inset should be on the buffer crop rect specifically not the imageSrcRect.",
+      "range": {
+        "startLine": 202,
+        "startChar": 38,
+        "endLine": 202,
+        "endChar": 63
+      },
+      "revId": "f3d00d84c3acb5bf6f78f3f3da3dd2dbb05111ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
