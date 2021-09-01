@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e3d29c2_fde7e2de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-09-01T16:09:01Z",
+      "side": 1,
+      "message": "Hello Felipe,\nThe issue can be reproduced on the `android11-qpr3-release` and `android-cts-11.0_r5` and this CL still helps, so I think we should proceed with this CL.",
+      "revId": "8a498f437ded3dbc962fd5fbfa45fb8e1ac47d56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
