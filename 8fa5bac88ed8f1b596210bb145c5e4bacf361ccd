@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32aac2a5_a7024119",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1681,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-09-01T22:45:54Z",
+      "side": 1,
+      "message": "This will now fire an onSafeModestatusChanged9) when the VCN connects, even if the gateway\u0027s safe mode status didn\u0027t actually change. It\u0027s effectively a signal that the connection has changed status, safe mode or otherwise.\n\nPer discussion this is harmless, but it would bewilder a poor maintenance programmer.\n\nCould this little misnomer be documented in the commit message, and perhaps we can file a cleanup bug to rename the callback?",
+      "range": {
+        "startLine": 1681,
+        "startChar": 12,
+        "endLine": 1681,
+        "endChar": 34
+      },
+      "revId": "8fa5bac88ed8f1b596210bb145c5e4bacf361ccd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
