@@ -279,6 +279,8 @@ public final class Parcel {
 
     @CriticalNative
     private static native void nativeMarkSensitive(long nativePtr);
+    @FastNative
+    private static native void nativeMarkForBinder(long nativePtr, IBinder binder);
     @CriticalNative
     private static native int nativeDataSize(long nativePtr);
     @CriticalNative
@@ -495,10 +497,29 @@ public final class Parcel {
 
     /**
      * Parcel data should be zero'd before realloc'd or deleted.
+     *
+     * Note: currently this feature requires multiple things to work in concert:
+     * - markSensitive must be called on every relative Parcel
+     * - FLAG_CLEAR_BUF must be passed into the kernel
+     * This requires having code which does the right thing in every method and in every backend
+     * of AIDL. Rather than exposing this API, it should be replaced with a single API on
+     * IBinder objects which can be called once, and the information should be fed into the
+     * Parcel using markForBinder APIs. In terms of code size and number of API calls, this is
+     * much more extensible.
+     *
      * @hide
      */
     public final void markSensitive() {
         nativeMarkSensitive(mNativePtr);
+    }
+
+    /**
+     * Associate this Parcel with a binder object. This may change the underlying format of the
+     * Parcel to work with the binder or enable options or checks that are set on the binder to
+     * the Parcel.
+     */
+    public final void markForBinder(@NonNull IBinder binder) {
+        nativeMarkForBinder(mNativePtr, binder);
     }
 
     /**
