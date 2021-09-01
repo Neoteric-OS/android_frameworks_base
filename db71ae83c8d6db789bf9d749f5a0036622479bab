@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07d09a09_d33ab9f9",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2903,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-09-01T17:27:59Z",
+      "side": 1,
+      "message": "error: [InfiniteRecursion] This method always recurses, and will cause a StackOverflowError\n        return getGroupAudioDirections(groupId);",
+      "range": {
+        "startLine": 2903,
+        "startChar": 8,
+        "endLine": 2903,
+        "endChar": 48
+      },
+      "revId": "db71ae83c8d6db789bf9d749f5a0036622479bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
