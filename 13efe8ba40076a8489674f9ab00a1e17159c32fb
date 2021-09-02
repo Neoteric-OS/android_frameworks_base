@@ -16,6 +16,24 @@
       "message": "Shouldn\u0027t we be making these @SystemApi? If not, we are going to be adding 2 new @hide API usages.",
       "revId": "13efe8ba40076a8489674f9ab00a1e17159c32fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f2211f2_7c1f7d55",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 5285,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-09-02T14:47:45Z",
+      "side": 1,
+      "message": "Resolved as per dicussions with Wiliam in previous patchsets",
+      "parentUuid": "8be8d272_a46edf18",
+      "revId": "13efe8ba40076a8489674f9ab00a1e17159c32fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
