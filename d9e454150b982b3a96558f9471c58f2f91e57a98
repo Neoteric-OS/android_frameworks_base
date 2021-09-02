@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00738c8a_7bd6febc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-02T20:56:46Z",
+      "side": 1,
+      "message": "These conflicts do not exist (I tried manually on the affected branch). Retrying",
+      "revId": "d9e454150b982b3a96558f9471c58f2f91e57a98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
