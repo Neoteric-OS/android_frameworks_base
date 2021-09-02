@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cc6f90a_808310db",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-09-02T15:00:07Z",
+      "side": 1,
+      "message": "please remove this unused parameter",
+      "range": {
+        "startLine": 461,
+        "startChar": 70,
+        "endLine": 461,
+        "endChar": 80
+      },
+      "revId": "8ba1b01fe4ff934db5f254ef088bdbbe2363a011",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
