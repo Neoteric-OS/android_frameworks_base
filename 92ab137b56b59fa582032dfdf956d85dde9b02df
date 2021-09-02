@@ -47,6 +47,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2a1aff6_738ceb37",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-02T20:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e749c92_036723be",
+      "range": {
+        "startLine": 517,
+        "startChar": 22,
+        "endLine": 517,
+        "endChar": 28
+      },
+      "revId": "92ab137b56b59fa582032dfdf956d85dde9b02df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7755ca15_7e7545b0",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-02T20:23:57Z",
+      "side": 1,
+      "message": "Done, but since I\u0027m adding this as a generic transaction, I wanted to avoid discussion about \u0027RPC\u0027 because it is not exposed in any SDK APIs (currently).",
+      "parentUuid": "94058a0b_79a83eb1",
+      "range": {
+        "startLine": 517,
+        "startChar": 7,
+        "endLine": 517,
+        "endChar": 17
+      },
+      "revId": "92ab137b56b59fa582032dfdf956d85dde9b02df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14791171_28f9dddb",
@@ -83,6 +131,54 @@
       "writtenOn": "2021-09-02T00:59:38Z",
       "side": 1,
       "message": "The term \u0027binder\u0027 here actually means the binder protocol as a local transport mechanism that the kernel binder driver implements, as opposed to the socket-based transport which isn\u0027t public yet. To most of readers that don\u0027t know about the latter, this API name might look confusing.\n\nCan we have a better name?",
+      "range": {
+        "startLine": 521,
+        "startChar": 23,
+        "endLine": 521,
+        "endChar": 29
+      },
+      "revId": "92ab137b56b59fa582032dfdf956d85dde9b02df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbfee649_7c895a5a",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-02T20:23:57Z",
+      "side": 1,
+      "message": "duped comment, replied to other.",
+      "parentUuid": "821c497a_041bc2b9",
+      "range": {
+        "startLine": 521,
+        "startChar": 23,
+        "endLine": 521,
+        "endChar": 29
+      },
+      "revId": "92ab137b56b59fa582032dfdf956d85dde9b02df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dd3411f_5f12b601",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-02T20:23:57Z",
+      "side": 1,
+      "message": "I would like to keep it. It means \u0027markForBinder\u0027 as in \u0027mark this Parcel as being built for a specific IBinder\u0027. \u0027binder\u0027 is an overloaded term. Sure, it means the kernel binder protocol, but it also represent userspace libbinder/etc concepts whether or not they are now backed by RPC calls. Hopefully the documentation update here is enough? please re-open if not.",
+      "parentUuid": "14791171_28f9dddb",
       "range": {
         "startLine": 521,
         "startChar": 23,
