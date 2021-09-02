@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f34dde5_c6b3dafe",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-09-02T13:38:00Z",
+      "side": 1,
+      "message": "this is only needed for output devices.\nlets use the convention that input devices pass streamType \u003d\u003d AudioSystem.STREAM_DEFAULT from\nonSetLeAudioInConnectionState() which does not need a streamType argument",
+      "range": {
+        "startLine": 1190,
+        "startChar": 0,
+        "endLine": 1190,
+        "endChar": 96
+      },
+      "revId": "ec812dcabf5774313a4383d4fd4f8f2a7a7f5047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b0cf47e_b06c8182",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 5516,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-09-02T13:38:00Z",
+      "side": 1,
+      "message": "we are missing some kind of synchronization mechanism to protect concurrent access to mConnectedStateBitset here and in setBluetoothLeAudioDeviceConnectionState.\nYou can synchronize on mConnectedStateBitset",
+      "range": {
+        "startLine": 5506,
+        "startChar": 8,
+        "endLine": 5516,
+        "endChar": 9
+      },
+      "revId": "ec812dcabf5774313a4383d4fd4f8f2a7a7f5047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

@@ -428,6 +428,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dc7f4b1d_30abdbc5",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-09-02T13:38:00Z",
+      "side": 1,
+      "message": "In this case leave a comment here That this problem needs to be solved and file a buganizer issue to follow up",
+      "parentUuid": "d9c5908b_3c7825c9",
+      "range": {
+        "startLine": 457,
+        "startChar": 28,
+        "endLine": 457,
+        "endChar": 50
+      },
+      "revId": "08c06e6da29c0b225003546befcb2d9e698fd96d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b17fa19f_ef00749e",
         "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
         "patchSetId": 6
