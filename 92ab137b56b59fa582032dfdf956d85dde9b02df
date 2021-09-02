@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e749c92_036723be",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2021-09-02T00:59:38Z",
+      "side": 1,
+      "message": "s/Parcel/parcel/\n\n(the same applies to the entire javadoc)",
+      "range": {
+        "startLine": 517,
+        "startChar": 22,
+        "endLine": 517,
+        "endChar": 28
+      },
+      "revId": "92ab137b56b59fa582032dfdf956d85dde9b02df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94058a0b_79a83eb1",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2021-09-02T00:59:38Z",
+      "side": 1,
+      "message": "Explain what the association means exactly. In addition, it would be beneficial to explain when this is needed and when it shouldn\u0027t be.\n\nI think the description on the native API is slightly more useful than this one.\n\n```\n    // For a \u0027data\u0027 Parcel, this should mark the Parcel as being prepared for a\n    // transaction on this specific binder object. Based on this, the format of\n    // the wire binder protocol may change (data is written differently when it\n    // is for an RPC transaction).\n```",
+      "range": {
+        "startLine": 517,
+        "startChar": 7,
+        "endLine": 517,
+        "endChar": 17
+      },
+      "revId": "92ab137b56b59fa582032dfdf956d85dde9b02df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14791171_28f9dddb",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2021-09-02T00:59:38Z",
+      "side": 1,
+      "message": "The term \u0027binder\u0027 here actually means the binder protocol as a local transport mechanism that the kernel binder driver implements, as opposed to the socket-based transport which isn\u0027t public yet. To the most of readers that don\u0027t know about the latter, this API name may look confusing.\n\nCan we have a better name?",
+      "range": {
+        "startLine": 521,
+        "startChar": 23,
+        "endLine": 521,
+        "endChar": 29
+      },
+      "revId": "92ab137b56b59fa582032dfdf956d85dde9b02df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "821c497a_041bc2b9",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2021-09-02T00:59:38Z",
+      "side": 1,
+      "message": "The term \u0027binder\u0027 here actually means the binder protocol as a local transport mechanism that the kernel binder driver implements, as opposed to the socket-based transport which isn\u0027t public yet. To most of readers that don\u0027t know about the latter, this API name might look confusing.\n\nCan we have a better name?",
+      "range": {
+        "startLine": 521,
+        "startChar": 23,
+        "endLine": 521,
+        "endChar": 29
+      },
+      "revId": "92ab137b56b59fa582032dfdf956d85dde9b02df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
