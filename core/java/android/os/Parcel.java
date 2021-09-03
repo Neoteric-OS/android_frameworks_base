@@ -523,8 +523,6 @@ public final class Parcel {
      * is called multiple times, this will only be marked for the last binder. For future
      * compatibility, it is recommended to call this on all parcels which are being sent over
      * binder.
-     *
-     * @hide
      */
     public void markForBinder(@NonNull IBinder binder) {
         nativeMarkForBinder(mNativePtr, binder);

@@ -29959,6 +29959,7 @@ package android.os {
     method public int dataSize();
     method public void enforceInterface(@NonNull String);
     method public boolean hasFileDescriptors();
+    method public void markForBinder(@NonNull android.os.IBinder);
     method public byte[] marshall();
     method @NonNull public static android.os.Parcel obtain();
     method @Nullable public Object[] readArray(@Nullable ClassLoader);

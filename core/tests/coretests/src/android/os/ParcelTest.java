@@ -34,6 +34,18 @@ public class ParcelTest {
     private static final String INTERFACE_TOKEN_2 = "Another IBinder interface token";
 
     @Test
+    public void testMarkForBinder() {
+        Parcel p = Parcel.obtain();
+        p.markForBinder(new Binder("anything"));
+        // testing does not throw an exception, Parcel still works
+
+        final int kTest = 17;
+        p.writeInt(kTest);
+        p.setDataPosition(0);
+        assertEquals(kTest, p.readInt());
+    }
+
+    @Test
     public void testCallingWorkSourceUidAfterWrite() {
         Parcel p = Parcel.obtain();
         // Method does not throw if replaceCallingWorkSourceUid is called before requests headers
