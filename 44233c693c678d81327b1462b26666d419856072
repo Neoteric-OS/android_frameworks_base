@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6958a47e_5c3fd1b9",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2021-09-03T23:56:29Z",
+      "side": 0,
+      "message": "is this part of this change and intentional?",
+      "range": {
+        "startLine": 510,
+        "startChar": 11,
+        "endLine": 510,
+        "endChar": 17
+      },
+      "revId": "44233c693c678d81327b1462b26666d419856072",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
