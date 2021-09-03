@@ -187,6 +187,30 @@
       },
       "revId": "92ab137b56b59fa582032dfdf956d85dde9b02df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ee6b2b9_53d4dc2f",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2021-09-03T04:11:03Z",
+      "side": 1,
+      "message": "Ok, then I think we need to be more explicit. I don\u0027t have an exact javadoc description, but I think the following should be mentioned:\n\nA) calling this prevents you from sending the same parcel to other binder objects\nB) in order to be future proof, you need to call this whenever you send a parcel over to ANY binder\nC) the generated code from AIDL compiler is already using this\nD) if you call this multiple times with different `binder` arguments, then the association is made only with the last binder object\n\nI wish we could enforce (B) for the clients targeting T or beyond.\n\nI also see that there is no way to cut the association.",
+      "parentUuid": "4dd3411f_5f12b601",
+      "range": {
+        "startLine": 521,
+        "startChar": 23,
+        "endLine": 521,
+        "endChar": 29
+      },
+      "revId": "92ab137b56b59fa582032dfdf956d85dde9b02df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
