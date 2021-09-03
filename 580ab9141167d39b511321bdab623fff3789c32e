@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015069873",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1816536?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bf1370f6_d2071ff2",
+        "filename": "core/jni/android_os_Parcel.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-03T18:58:41Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 780,
+        "startChar": 0,
+        "endLine": 780,
+        "endChar": 102
+      },
+      "revId": "580ab9141167d39b511321bdab623fff3789c32e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
