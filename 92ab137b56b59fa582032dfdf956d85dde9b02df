@@ -211,6 +211,30 @@
       },
       "revId": "92ab137b56b59fa582032dfdf956d85dde9b02df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eaf67dd4_4ba3ede0",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-03T18:58:36Z",
+      "side": 1,
+      "message": "Done. Though, A isn\u0027t true currently, and C is an implementation detail of another system. I\u0027ve added B/D and some related points.\n\n\u003e I wish we could enforce (B) for the clients targeting T or beyond.\n\nThe downside isn\u0027t so much. If someone wants to use RPC, they should be using AIDL anyway.\n\n\u003e I also see that there is no way to cut the association.\n\nDon\u0027t call the function in the first place :)",
+      "parentUuid": "5ee6b2b9_53d4dc2f",
+      "range": {
+        "startLine": 521,
+        "startChar": 23,
+        "endLine": 521,
+        "endChar": 29
+      },
+      "revId": "92ab137b56b59fa582032dfdf956d85dde9b02df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
