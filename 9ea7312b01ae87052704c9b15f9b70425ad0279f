@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f203da1b_53bb1cf2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-09-03T12:02:55Z",
+      "side": 1,
+      "message": "For context, here the initial hidden api we were trying to solve: aosp/1741073",
+      "revId": "9ea7312b01ae87052704c9b15f9b70425ad0279f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
