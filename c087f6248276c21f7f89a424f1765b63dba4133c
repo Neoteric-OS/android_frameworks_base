@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "461eedaf_be31bd4c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-06T08:41:41Z",
+      "side": 1,
+      "message": "Verified android.net.cts.CaptivePortalTest#testCaptivePortalIsNotDefaultNetwork fails without this fix and passes with this fix",
+      "revId": "c087f6248276c21f7f89a424f1765b63dba4133c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
