@@ -330,9 +330,47 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
                 // It's been unparcelled, so we need to walk the map
                 for (int i=mMap.size()-1; i>=0; i--) {
                     Object obj = mMap.valueAt(i);
-                    if (Parcel.hasFileDescriptors(obj)) {
-                        fdFound = true;
-                        break;
+                    if (obj instanceof Parcelable) {
+                        if ((((Parcelable)obj).describeContents()
+                                & Parcelable.CONTENTS_FILE_DESCRIPTOR) != 0) {
+                            fdFound = true;
+                            break;
+                        }
+                    } else if (obj instanceof Parcelable[]) {
+                        Parcelable[] array = (Parcelable[]) obj;
+                        for (int n = array.length - 1; n >= 0; n--) {
+                            Parcelable p = array[n];
+                            if (p != null && ((p.describeContents()
+                                    & Parcelable.CONTENTS_FILE_DESCRIPTOR) != 0)) {
+                                fdFound = true;
+                                break;
+                            }
+                        }
+                    } else if (obj instanceof SparseArray) {
+                        SparseArray<? extends Parcelable> array =
+                                (SparseArray<? extends Parcelable>) obj;
+                        for (int n = array.size() - 1; n >= 0; n--) {
+                            Parcelable p = array.valueAt(n);
+                            if (p != null && (p.describeContents()
+                                    & Parcelable.CONTENTS_FILE_DESCRIPTOR) != 0) {
+                                fdFound = true;
+                                break;
+                            }
+                        }
+                    } else if (obj instanceof ArrayList) {
+                        ArrayList array = (ArrayList) obj;
+                        // an ArrayList here might contain either Strings or
+                        // Parcelables; only look inside for Parcelables
+                        if (!array.isEmpty() && (array.get(0) instanceof Parcelable)) {
+                            for (int n = array.size() - 1; n >= 0; n--) {
+                                Parcelable p = (Parcelable) array.get(n);
+                                if (p != null && ((p.describeContents()
+                                        & Parcelable.CONTENTS_FILE_DESCRIPTOR) != 0)) {
+                                    fdFound = true;
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -353,7 +391,7 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public Bundle filterValues() {
-        unparcel(/* itemwise */ true);
+        unparcel();
         Bundle bundle = this;
         if (mMap != null) {
             ArrayMap<String, Object> map = mMap;
@@ -934,7 +972,7 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
     @Nullable
     public Bundle getBundle(@Nullable String key) {
         unparcel();
-        Object o = getValue(key);
+        Object o = mMap.get(key);
         if (o == null) {
             return null;
         }
@@ -961,7 +999,7 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
     @Nullable
     public <T extends Parcelable> T getParcelable(@Nullable String key) {
         unparcel();
-        Object o = getValue(key);
+        Object o = mMap.get(key);
         if (o == null) {
             return null;
         }
@@ -988,7 +1026,7 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
     @Nullable
     public Parcelable[] getParcelableArray(@Nullable String key) {
         unparcel();
-        Object o = getValue(key);
+        Object o = mMap.get(key);
         if (o == null) {
             return null;
         }
@@ -1015,7 +1053,7 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
     @Nullable
     public <T extends Parcelable> ArrayList<T> getParcelableArrayList(@Nullable String key) {
         unparcel();
-        Object o = getValue(key);
+        Object o = mMap.get(key);
         if (o == null) {
             return null;
         }
@@ -1039,7 +1077,7 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
     @Nullable
     public <T extends Parcelable> SparseArray<T> getSparseParcelableArray(@Nullable String key) {
         unparcel();
-        Object o = getValue(key);
+        Object o = mMap.get(key);
         if (o == null) {
             return null;
         }
@@ -1262,7 +1300,7 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
     public void writeToParcel(Parcel parcel, int flags) {
         final boolean oldAllowFds = parcel.pushAllowFds((mFlags & FLAG_ALLOW_FDS) != 0);
         try {
-            writeToParcelInner(parcel, flags);
+            super.writeToParcelInner(parcel, flags);
         } finally {
             parcel.restoreAllowFds(oldAllowFds);
         }
@@ -1274,7 +1312,7 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
      * @param parcel The parcel to overwrite this bundle from.
      */
     public void readFromParcel(Parcel parcel) {
-        readFromParcelInner(parcel);
+        super.readFromParcelInner(parcel);
         mFlags = FLAG_ALLOW_FDS;
         maybePrefillHasFds();
     }
