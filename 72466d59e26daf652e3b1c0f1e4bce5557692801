@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6dd2334a_62085582",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-09-06T15:31:55Z",
+      "side": 1,
+      "message": "Yes I want.\nBut as I understood we should make it step by step in split topic.\n1st - create the library.\n2nd - Convert all usage from custom filegroup into using this library\n3rd - Move the library from f/b to f/l/m-u\nI guess between 2nd and 3rd we also should change the import to be com.android.modules.utils",
+      "parentUuid": "1f6dc8c0_99b91576",
+      "revId": "72466d59e26daf652e3b1c0f1e4bce5557692801",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3ea22748_75dd84fa",
         "filename": "core/java/Android.bp",
         "patchSetId": 2
@@ -32,6 +50,30 @@
       "side": 1,
       "message": "\u003e Please remove the trailing whitespace.\n\nPlease fix.",
       "parentUuid": "514d3003_11490413",
+      "range": {
+        "startLine": 357,
+        "startChar": 0,
+        "endLine": 357,
+        "endChar": 4
+      },
+      "revId": "72466d59e26daf652e3b1c0f1e4bce5557692801",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bec8e3b_8f458de2",
+        "filename": "core/java/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-09-06T15:31:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea22748_75dd84fa",
       "range": {
         "startLine": 357,
         "startChar": 0,
