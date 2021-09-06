@@ -79,6 +79,8 @@ public final class MediaProjectionManagerService extends SystemService
     private final MediaRouter mMediaRouter;
     private final MediaRouterCallback mMediaRouterCallback;
     private MediaRouter.RouteInfo mMediaRouteInfo;
+    // protects the mMediaRouteInfo
+    private final Object mMediaRouterLock = new Object();
 
     private IBinder mProjectionToken;
     private MediaProjection mProjectionGrant;
@@ -124,11 +126,7 @@ public final class MediaProjectionManagerService extends SystemService
     @Override
     public void onSwitchUser(int userId) {
         mMediaRouter.rebindAsUser(userId);
-        synchronized (mLock) {
-            if (mProjectionGrant != null) {
-                mProjectionGrant.stop();
-            }
-        }
+        stopActiveProjection();
     }
 
     @Override
@@ -163,8 +161,10 @@ public final class MediaProjectionManagerService extends SystemService
         if (mProjectionGrant != null) {
             mProjectionGrant.stop();
         }
-        if (mMediaRouteInfo != null) {
-            mMediaRouter.getFallbackRoute().select();
+        synchronized (mMediaRouterLock) {
+            if (mMediaRouteInfo != null) {
+                mMediaRouter.getFallbackRoute().select();
+            }
         }
         mProjectionToken = projection.asBinder();
         mProjectionGrant = projection;
@@ -239,6 +239,14 @@ public final class MediaProjectionManagerService extends SystemService
                 return null;
             }
             return mProjectionGrant.getProjectionInfo();
+        }
+    }
+
+    public void stopActiveProjection() {
+        synchronized (mLock) {
+            if (mProjectionGrant != null) {
+                mProjectionGrant.stop();
+            }
         }
     }
 
@@ -338,9 +346,7 @@ public final class MediaProjectionManagerService extends SystemService
             }
             final long token = Binder.clearCallingIdentity();
             try {
-                if (mProjectionGrant != null) {
-                    mProjectionGrant.stop();
-                }
+                MediaProjectionManagerService.this.stopActiveProjection();
             } finally {
                 Binder.restoreCallingIdentity(token);
             }
@@ -598,19 +604,22 @@ public final class MediaProjectionManagerService extends SystemService
         @Override
         public void onRouteSelected(MediaRouter router, int type, MediaRouter.RouteInfo info) {
             synchronized (mLock) {
-                if ((type & MediaRouter.ROUTE_TYPE_REMOTE_DISPLAY) != 0) {
-                    mMediaRouteInfo = info;
-                    if (mProjectionGrant != null) {
-                        mProjectionGrant.stop();
+                synchronized (mMediaRouterLock) {
+                    if ((type & MediaRouter.ROUTE_TYPE_REMOTE_DISPLAY) != 0) {
+                        mMediaRouteInfo = info;
+                        stopActiveProjection();
                     }
                 }
             }
+
         }
 
         @Override
         public void onRouteUnselected(MediaRouter route, int type, MediaRouter.RouteInfo info) {
-            if (mMediaRouteInfo == info) {
-                mMediaRouteInfo = null;
+            synchronized (mMediaRouterLock) {
+                if (mMediaRouteInfo == info) {
+                    mMediaRouteInfo = null;
+                }
             }
         }
     }
