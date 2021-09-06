@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50bee79f_e7ef8b88",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-06T10:14:40Z",
+      "side": 1,
+      "message": "Fix submitted on aosp/1818898",
+      "revId": "9c394fb556b4c622c221ec69505f5eed8453a535",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
