@@ -798,10 +798,8 @@ public abstract class BiometricServiceBase extends SystemService
             }
         }
 
-        if (client instanceof InternalRemovalClient && !mUnknownHALTemplates.isEmpty()) {
+        if (client instanceof InternalRemovalClient) {
             startCleanupUnknownHALTemplates();
-        } else if (client instanceof InternalRemovalClient) {
-            clearEnumerateState();
         }
     }
 
