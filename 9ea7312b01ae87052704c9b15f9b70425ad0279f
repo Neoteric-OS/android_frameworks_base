@@ -16,6 +16,52 @@
       "message": "For context, here the initial hidden api we were trying to solve: aosp/1741073",
       "revId": "9ea7312b01ae87052704c9b15f9b70425ad0279f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe77d1ec_8026bc09",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 7244,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2021-09-08T17:16:41Z",
+      "side": 1,
+      "message": "We shouldn\u0027t be enforcing an arbitrary permission like this just because bluetooth is the only current consumer. Can we use a more appropriate restriction mechanism here, like restricting this to mainline API or defining / using a more appropriate permission?",
+      "range": {
+        "startLine": 7244,
+        "startChar": 20,
+        "endLine": 7244,
+        "endChar": 77
+      },
+      "revId": "9ea7312b01ae87052704c9b15f9b70425ad0279f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7289f44b_d378ebbd",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 7244,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2021-09-08T17:16:41Z",
+      "side": 1,
+      "message": "As named, this implies this is some current state. Consider renaming to getEnabledComponentOverrides or similar.",
+      "range": {
+        "startLine": 7244,
+        "startChar": 118,
+        "endLine": 7244,
+        "endChar": 138
+      },
+      "revId": "9ea7312b01ae87052704c9b15f9b70425ad0279f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
