@@ -33,6 +33,24 @@
       "message": "Thanks for the update Anthony! I was notified by Gerrit that attention is required from my end. Though I wasn\u0027t sure which steps to take? A lot of the links require SSO with a google account, at least from what I can see. ",
       "revId": "c87f38c62cf084646e7d91fcf026cc01973b032c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fab6d7e_b6673feb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074038
+      },
+      "writtenOn": "2021-09-08T17:53:44Z",
+      "side": 1,
+      "message": "No action from your side. Presubmits just need to be rerun.",
+      "parentUuid": "ac91cd5f_b5303e04",
+      "revId": "c87f38c62cf084646e7d91fcf026cc01973b032c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
