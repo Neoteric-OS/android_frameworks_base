@@ -173,6 +173,8 @@ java_library {
     ],
 }
 
+// Test
+
 // AIDL files under these paths are mixture of public and private ones.
 // They shouldn't be exported across module boundaries.
 java_defaults {
