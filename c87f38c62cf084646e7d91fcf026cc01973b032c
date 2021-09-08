@@ -16,6 +16,23 @@
       "message": "Hello there, I am just circling back to see if it is possible to have this patch accepted? I have had difficulty in getting it accepted in the past. Thank you!",
       "revId": "c87f38c62cf084646e7d91fcf026cc01973b032c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac91cd5f_b5303e04",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1769651
+      },
+      "writtenOn": "2021-09-08T15:25:03Z",
+      "side": 1,
+      "message": "Thanks for the update Anthony! I was notified by Gerrit that attention is required from my end. Though I wasn\u0027t sure which steps to take? A lot of the links require SSO with a google account, at least from what I can see. ",
+      "revId": "c87f38c62cf084646e7d91fcf026cc01973b032c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
