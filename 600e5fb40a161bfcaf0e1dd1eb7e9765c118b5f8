@@ -106,6 +106,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7eff00c7_44609764",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042384
+      },
+      "writtenOn": "2021-09-09T22:41:43Z",
+      "side": 1,
+      "message": "Missed the previous email.\n\nBy \"this config\" you are referring to config_settingsHelpLinksEnabled right ? If yes, should similar to how config_battery_percentage_setting_available is done.\nWill give it a quick try.\n\nAll the devices which have the help link would then have to set this flag through overlay.",
+      "parentUuid": "f9c46c77_a4679868",
+      "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8524d5e7_00c6830b",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 1
