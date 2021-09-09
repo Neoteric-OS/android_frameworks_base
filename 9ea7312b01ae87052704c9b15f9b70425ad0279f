@@ -62,6 +62,54 @@
       },
       "revId": "9ea7312b01ae87052704c9b15f9b70425ad0279f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e407806f_714c7e66",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 7244,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-09-09T10:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7289f44b_d378ebbd",
+      "range": {
+        "startLine": 7244,
+        "startChar": 118,
+        "endLine": 7244,
+        "endChar": 138
+      },
+      "revId": "9ea7312b01ae87052704c9b15f9b70425ad0279f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "104cdc72_775c07b4",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 7244,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-09-09T10:26:09Z",
+      "side": 1,
+      "message": "Initial method was protected by:\n```\nif (Binder.getCallingUid() !\u003d Process.BLUETOOTH_UID) {\n```\ncf https://source.corp.google.com/sc-dev/frameworks/base/services/core/java/com/android/server/BluetoothManagerService.java;l\u003d806?q\u003dbluetoothmanagerservice\u0026sq\u003dp:%5Esc-dev$\n\nIt\u0027s why I added this Bluetooth arbitrary permission.\nDo you have something particular in mind ?",
+      "parentUuid": "fe77d1ec_8026bc09",
+      "range": {
+        "startLine": 7244,
+        "startChar": 20,
+        "endLine": 7244,
+        "endChar": 77
+      },
+      "revId": "9ea7312b01ae87052704c9b15f9b70425ad0279f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
