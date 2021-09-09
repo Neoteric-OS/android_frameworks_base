@@ -255,12 +255,16 @@ public class BootReceiver extends BroadcastReceiver {
      */
     public static void addTombstoneToDropBox(Context ctx, File tombstone, boolean proto) {
         final DropBoxManager db = ctx.getSystemService(DropBoxManager.class);
-        final String bootReason = SystemProperties.get("ro.boot.bootreason", null);
+        if (db == null) {
+            Slog.e(TAG, "Can't log tombstone: DropBoxManager not available");
+            return;
+        }
+
         HashMap<String, Long> timestamps = readTimestamps();
         try {
             final String headers = getBootHeadersToLogAndUpdate();
             addFileToDropBox(db, timestamps, headers, tombstone.getPath(), LOG_SIZE,
-                    proto ? TAG_TOMBSTONE_PROTO : TAG_TOMBSTONE);
+                             proto ? TAG_TOMBSTONE_PROTO : TAG_TOMBSTONE);
         } catch (IOException e) {
             Slog.e(TAG, "Can't log tombstone", e);
         }
