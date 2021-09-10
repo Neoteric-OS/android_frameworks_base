@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "295bb6a4_a40bd272",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecMessageValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-09-10T11:07:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4dbbde7_12201ef0",
+      "range": {
+        "startLine": 261,
+        "startChar": 12,
+        "endLine": 261,
+        "endChar": 59
+      },
+      "revId": "efc50944ee25e7e02978a5a255c8ee8f35745db9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f170be11_3d102eb6",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-09-08T09:16:20Z",
       "side": 1,
       "message": "nit: Unexpected source. The destination is expected.",
+      "range": {
+        "startLine": 262,
+        "startChar": 32,
+        "endLine": 262,
+        "endChar": 65
+      },
+      "revId": "efc50944ee25e7e02978a5a255c8ee8f35745db9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d61fee25_7a5a48cc",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecMessageValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-09-10T11:07:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f170be11_3d102eb6",
       "range": {
         "startLine": 262,
         "startChar": 32,
