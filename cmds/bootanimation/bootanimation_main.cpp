@@ -44,10 +44,10 @@ int main()
         sp<ProcessState> proc(ProcessState::self());
         ProcessState::self()->startThreadPool();
 
+        waitForSurfaceFlinger();
+
         // create the boot animation object (may take up to 200ms for 2MB zip)
         sp<BootAnimation> boot = new BootAnimation(audioplay::createAnimationCallbacks());
-
-        waitForSurfaceFlinger();
 
         boot->run("BootAnimation", PRIORITY_DISPLAY);
 
