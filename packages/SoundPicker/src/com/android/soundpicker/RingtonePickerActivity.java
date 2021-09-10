@@ -558,6 +558,7 @@ public final class RingtonePickerActivity extends AlertActivity implements
                                 .setFlags(mAttributesFlags)
                                 .build());
             }
+            ringtone.setLooping(true);
             ringtone.play();
         }
     }
