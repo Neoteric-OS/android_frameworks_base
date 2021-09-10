@@ -38,6 +38,8 @@
 
 #include "core_jni_helpers.h"
 
+#include "android_view_InputEventReceiverMonitor.h"
+
 namespace android {
 
 static const bool kDebugDispatchCycle = false;
@@ -85,6 +87,8 @@ public:
     status_t consumeEvents(JNIEnv* env, bool consumeBatches, nsecs_t frameTime,
             bool* outConsumedBatch);
     std::string dump(const char* prefix);
+    sp<android_view_InputEventReceiverMonitor> mMonitor;
+    void addMonitor(const sp<MessageQueue>& messageQueue);
 
 protected:
     virtual ~NativeInputEventReceiver();
@@ -186,8 +190,17 @@ void NativeInputEventReceiver::setFdEvents(int events) {
         int fd = mInputConsumer.getChannel()->getFd();
         if (events) {
             mMessageQueue->getLooper()->addFd(fd, 0, events, this, nullptr);
+            if (mMonitor == nullptr) {
+                return;
+            }
+            mMonitor->resetMonitor();
+            mMonitor->getMessageQueue()->getLooper()->addFd(fd, 0, events, mMonitor, nullptr);
         } else {
             mMessageQueue->getLooper()->removeFd(fd);
+            if (mMonitor == nullptr) {
+                return;
+            }
+            mMonitor->getMessageQueue()->getLooper()->removeFd(fd);
         }
     }
 }
@@ -272,14 +285,20 @@ int NativeInputEventReceiver::handleEvent(int receiveFd, int events, void* data)
             ALOGD("channel '%s' ~ Publisher closed input channel or an error occurred. events=0x%x",
                   getInputChannelName().c_str(), events);
         }
+        mMonitor->removeMonitorAtNextHandle();
         return REMOVE_CALLBACK;
     }
 
     if (events & ALOOPER_EVENT_INPUT) {
         JNIEnv* env = AndroidRuntime::getJNIEnv();
         status_t status = consumeEvents(env, false /*consumeBatches*/, -1, nullptr);
+        mMonitor->receiverProcessFinish();
         mMessageQueue->raiseAndClearException(env, "handleReceiveCallback");
-        return status == OK || status == NO_MEMORY ? KEEP_CALLBACK : REMOVE_CALLBACK;
+        if (status == OK || status == NO_MEMORY) {
+            return KEEP_CALLBACK;
+        }
+        mMonitor->removeMonitorAtNextHandle();
+        return REMOVE_CALLBACK;
     }
 
     if (events & ALOOPER_EVENT_OUTPUT) {
@@ -314,10 +333,15 @@ status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
     bool skipCallbacks = false;
     for (;;) {
         uint32_t seq;
-        InputEvent* inputEvent;
 
-        status_t status = mInputConsumer.consume(&mInputEventFactory,
-                consumeBatches, frameTime, &seq, &inputEvent);
+        status_t status;
+        InputEvent* inputEvent;
+        {
+            AutoMutex _l(mMonitor->mLock);
+            status = mInputConsumer.consume(&mInputEventFactory,
+                 consumeBatches, frameTime, &seq, &inputEvent);
+            mMonitor->messageFromReceiver();
+        }
         if (status != OK && status != WOULD_BLOCK) {
             ALOGE("channel '%s' ~ Failed to consume input event.  status=%s(%d)",
                   getInputChannelName().c_str(), statusToString(status).c_str(), status);
@@ -447,6 +471,7 @@ status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
                 skipCallbacks = true;
             }
         }
+        mMonitor->receiverProcessFinish();
     }
 }
 
@@ -558,6 +583,7 @@ static jboolean nativeConsumeBatchedInputEvents(JNIEnv* env, jclass clazz, jlong
     bool consumedBatch;
     status_t status = receiver->consumeEvents(env, true /*consumeBatches*/, frameTimeNanos,
             &consumedBatch);
+    receiver->mMonitor->receiverProcessFinish();
     if (status && status != DEAD_OBJECT && !env->ExceptionCheck()) {
         std::string message =
                 android::base::StringPrintf("Failed to consume batched input event.  status=%s(%d)",
@@ -575,6 +601,24 @@ static jstring nativeDump(JNIEnv* env, jclass clazz, jlong receiverPtr, jstring 
     return env->NewStringUTF(receiver->dump(prefixChars.c_str()).c_str());
 }
 
+static void setInputEventReceiverMonitorMessageQueue(JNIEnv* env, jclass clazz, jlong receiverPtr, jobject monitorMessageQueueObj) {
+    sp<NativeInputEventReceiver> receiver =
+            reinterpret_cast<NativeInputEventReceiver*>(receiverPtr);
+    sp <MessageQueue> monitorMessageQueue = android_os_MessageQueue_getMessageQueue(env, monitorMessageQueueObj);
+    if (monitorMessageQueue == nullptr) {
+        jniThrowRuntimeException(env, "MonitorMessageQueue is not initialized.");
+        return;
+    }
+    receiver->addMonitor(monitorMessageQueue);
+}
+void NativeInputEventReceiver::addMonitor(const sp<MessageQueue>& messageQueue){
+    mMonitor = new android_view_InputEventReceiverMonitor();
+    mMonitor->setMessageQueue(messageQueue);
+    int fd = mInputConsumer.getChannel()->getFd();
+    mMonitor->setInputChannelName(getInputChannelName());
+    mMonitor->getMessageQueue()->getLooper()->addFd(fd, 0, ALOOPER_EVENT_INPUT, mMonitor, nullptr);
+}
+
 static const JNINativeMethod gMethods[] = {
         /* name, signature, funcPtr */
         {"nativeInit",
@@ -585,6 +629,8 @@ static const JNINativeMethod gMethods[] = {
         {"nativeReportTimeline", "(JIJJ)V", (void*)nativeReportTimeline},
         {"nativeConsumeBatchedInputEvents", "(JJ)Z", (void*)nativeConsumeBatchedInputEvents},
         {"nativeDump", "(JLjava/lang/String;)Ljava/lang/String;", (void*)nativeDump},
+        { "setInputEventReceiverMonitorMessageQueue", "(JLandroid/os/MessageQueue;)V",
+                (void*)setInputEventReceiverMonitorMessageQueue },
 };
 
 int register_android_view_InputEventReceiver(JNIEnv* env) {

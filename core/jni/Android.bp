@@ -38,6 +38,8 @@ cc_library_shared {
 
     cppflags: ["-Wno-conversion-null"],
 
+    logtags: ["EventLogTags.logtags"],
+
     srcs: [
         "android_animation_PropertyValuesHolder.cpp",
         "android_os_SystemClock.cpp",
@@ -224,6 +226,7 @@ cc_library_shared {
                 "fd_utils.cpp",
                 "android_hardware_input_InputWindowHandle.cpp",
                 "android_hardware_input_InputApplicationHandle.cpp",
+                "android_view_InputEventReceiverMonitor.cpp",
             ],
 
             static_libs: [

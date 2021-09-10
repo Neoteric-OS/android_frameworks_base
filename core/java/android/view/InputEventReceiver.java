@@ -18,6 +18,7 @@ package android.view;
 
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
+import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.MessageQueue;
@@ -49,6 +50,7 @@ public abstract class InputEventReceiver {
 
     // Map from InputEvent sequence numbers to dispatcher sequence numbers.
     private final SparseIntArray mSeqMap = new SparseIntArray();
+    private static HandlerThread mInputEventReceiverMonitorHandlerThread;
 
     private static native long nativeInit(WeakReference<InputEventReceiver> receiver,
             InputChannel inputChannel, MessageQueue messageQueue);
@@ -59,6 +61,14 @@ public abstract class InputEventReceiver {
     private static native boolean nativeConsumeBatchedInputEvents(long receiverPtr,
             long frameTimeNanos);
     private static native String nativeDump(long receiverPtr, String prefix);
+    private static native void setInputEventReceiverMonitorMessageQueue(long receiverPtr,
+                                                                           MessageQueue monitorMessageQueue);
+
+    private static void initInputEventReceiverMonitorThread() {
+        mInputEventReceiverMonitorHandlerThread = new HandlerThread("input_event_receiver_monitor");
+        mInputEventReceiverMonitorHandlerThread.start();
+        Log.i(TAG, "Input event receiver monitor thread start.");
+    }
 
     /**
      * Creates an input event receiver bound to the specified input channel.
@@ -76,9 +86,12 @@ public abstract class InputEventReceiver {
 
         mInputChannel = inputChannel;
         mMessageQueue = looper.getQueue();
+        if (mInputEventReceiverMonitorHandlerThread == null) {
+            initInputEventReceiverMonitorThread();
+        }
         mReceiverPtr = nativeInit(new WeakReference<InputEventReceiver>(this),
                 inputChannel, mMessageQueue);
-
+        setInputEventReceiverMonitorMessageQueue(mReceiverPtr,mInputEventReceiverMonitorHandlerThread.getLooper().getQueue());
         mCloseGuard.open("dispose");
     }
 
