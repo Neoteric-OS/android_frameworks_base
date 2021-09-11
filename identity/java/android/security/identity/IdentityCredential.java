@@ -134,6 +134,26 @@ public abstract class IdentityCredential {
     }
 
     /**
+     * Sets whether the usage count of an authentication key should be increased. This must be
+     * called prior to calling
+     * {@link #getEntries(byte[], Map, byte[])} or using a {@link BiometricPrompt.CryptoObject}
+     * which references this object.
+     *
+     * <p>By default this is set to true.
+     *
+     * <p>This is only implemented in feature version 202201 or later. If not implemented, the call
+     * fails with {@link UnsupportedOperationException}. See
+     * {@link android.content.pm.PackageManager#FEATURE_IDENTITY_CREDENTIAL_HARDWARE} for known
+     * feature versions.
+     *
+     * @param incrementKeyUsageCount whether the usage count of the key should be increased.
+     *
+     */
+    public void setIncrementKeyUsageCount(boolean incrementKeyUsageCount) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
      * Called by android.hardware.biometrics.CryptoObject#getOpId() to get an
      * operation handle.
      *

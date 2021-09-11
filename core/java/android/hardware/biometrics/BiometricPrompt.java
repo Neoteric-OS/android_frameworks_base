@@ -618,8 +618,8 @@ public class BiometricPrompt implements BiometricAuthenticator, BiometricConstan
     /**
      * A wrapper class for the cryptographic operations supported by BiometricPrompt.
      *
-     * <p>Currently the framework supports {@link Signature}, {@link Cipher}, {@link Mac}, and
-     * {@link IdentityCredential}.
+     * <p>Currently the framework supports {@link Signature}, {@link Cipher}, {@link Mac},
+     * {@link IdentityCredential}, and {@link android.security.identity.PresentationSession}.
      *
      * <p>Cryptographic operations in Android can be split into two categories: auth-per-use and
      * time-based. This is specified during key creation via the timeout parameter of the
@@ -652,6 +652,10 @@ public class BiometricPrompt implements BiometricAuthenticator, BiometricConstan
             super(credential);
         }
 
+        public CryptoObject(@NonNull android.security.identity.PresentationSession session) {
+            super(session);
+        }
+
         /**
          * Get {@link Signature} object.
          * @return {@link Signature} object or null if this doesn't contain one.
@@ -682,6 +686,15 @@ public class BiometricPrompt implements BiometricAuthenticator, BiometricConstan
          */
         public @Nullable IdentityCredential getIdentityCredential() {
             return super.getIdentityCredential();
+        }
+
+        /**
+         * Get {@link android.security.identity.PresentationSession} object.
+         * @return {@link android.security.identity.PresentationSession} object or null if this
+         * doesn't contain one.
+         */
+        public @Nullable android.security.identity.PresentationSession getPresentationSession() {
+            return super.getPresentationSession();
         }
     }
 
