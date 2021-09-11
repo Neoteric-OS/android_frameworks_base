@@ -58,14 +58,17 @@ class CredstoreIdentityCredential extends IdentityCredential {
     private @IdentityCredentialStore.Ciphersuite int mCipherSuite;
     private Context mContext;
     private ICredential mBinder;
+    private CredstorePresentationSession mSession;
 
     CredstoreIdentityCredential(Context context, String credentialName,
             @IdentityCredentialStore.Ciphersuite int cipherSuite,
-            ICredential binder) {
+            ICredential binder,
+            @Nullable CredstorePresentationSession session) {
         mContext = context;
         mCredentialName = credentialName;
         mCipherSuite = cipherSuite;
         mBinder = binder;
+        mSession = session;
     }
 
     private KeyPair mEphemeralKeyPair = null;
