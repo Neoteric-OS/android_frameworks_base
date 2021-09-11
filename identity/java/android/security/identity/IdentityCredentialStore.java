@@ -209,6 +209,21 @@ public abstract class IdentityCredentialStore {
     @Deprecated
     public abstract @Nullable byte[] deleteCredentialByName(@NonNull String credentialName);
 
+
+    /**
+     * Creates a new presentation session.
+     *
+     * <p>This method gets an object to be used for interaction with a remote verifier for
+     * presentation of one or more credentials.
+     *
+     * @param cipherSuite    the cipher suite to use for communicating with the verifier.
+     * @return The named credential, or null if not found.
+     */
+    public @Nullable PresentationSession createPresentationSession(@Ciphersuite int cipherSuite)
+            throws CipherSuiteNotSupportedException {
+        throw new UnsupportedOperationException();
+    }
+
     /** @hide */
     @IntDef(value = {CIPHERSUITE_ECDHE_HKDF_ECDSA_WITH_AES_256_GCM_SHA256})
     @Retention(RetentionPolicy.SOURCE)
