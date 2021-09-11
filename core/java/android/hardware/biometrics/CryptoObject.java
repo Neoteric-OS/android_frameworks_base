@@ -18,6 +18,7 @@ package android.hardware.biometrics;
 
 import android.annotation.NonNull;
 import android.security.identity.IdentityCredential;
+import android.security.identity.PresentationSession;
 import android.security.keystore2.AndroidKeyStoreProvider;
 
 import java.security.Signature;
@@ -27,8 +28,8 @@ import javax.crypto.Mac;
 
 /**
  * A wrapper class for the crypto objects supported by BiometricPrompt and FingerprintManager.
- * Currently the framework supports {@link Signature}, {@link Cipher}, {@link Mac} and
- * {@link IdentityCredential} objects.
+ * Currently the framework supports {@link Signature}, {@link Cipher}, {@link Mac},
+ * {@link IdentityCredential}, and {@link PresentationSession} objects.
  * @hide
  */
 public class CryptoObject {
@@ -48,6 +49,10 @@ public class CryptoObject {
 
     public CryptoObject(@NonNull IdentityCredential credential) {
         mCrypto = credential;
+    }
+
+    public CryptoObject(@NonNull PresentationSession session) {
+        mCrypto = session;
     }
 
     /**
@@ -83,6 +88,14 @@ public class CryptoObject {
     }
 
     /**
+     * Get {@link PresentationSession} object.
+     * @return {@link PresentationSession} object or null if this doesn't contain one.
+     */
+    public PresentationSession getPresentationSession() {
+        return mCrypto instanceof PresentationSession ? (PresentationSession) mCrypto : null;
+    }
+
+    /**
      * @hide
      * @return the opId associated with this object or 0 if none
      */
@@ -91,6 +104,8 @@ public class CryptoObject {
             return 0;
         } else if (mCrypto instanceof IdentityCredential) {
             return ((IdentityCredential) mCrypto).getCredstoreOperationHandle();
+        } else if (mCrypto instanceof PresentationSession) {
+            return ((PresentationSession) mCrypto).getCredstoreOperationHandle();
         }
         return AndroidKeyStoreProvider.getKeyStoreOperationHandle(mCrypto);
     }
