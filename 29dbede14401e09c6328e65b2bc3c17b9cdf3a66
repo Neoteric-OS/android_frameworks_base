@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "196539cf_9e665994",
+        "filename": "core/java/android/os/SystemConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-09-14T19:58:14Z",
+      "side": 1,
+      "message": "Hmm, I think this needs quite a bit more documentation; what kind of \"enabled\" component? What if there is more than one component? Should this return a strongly typed ComponentName object instead of a String? Can this apply to third-party apps, or only packages built into the system?",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 51
+      },
+      "revId": "29dbede14401e09c6328e65b2bc3c17b9cdf3a66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
