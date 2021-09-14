@@ -16,6 +16,24 @@
       "message": "As mentioned in the meeting today, we should not change the required permission for this unless we intend to do so \u0026 have consulted with the app compat folks. Based on the service class, this currently requires BLUETOOTH permission. It is a good idea to add the annotation \u0026 docs (should have been there in the first place).",
       "revId": "9e95f1c062452161f588bb8caa39e10b4218d358",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc59c7d2_0ef6579f",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-09-14T09:01:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75326cac_9bf6ceec",
+      "revId": "9e95f1c062452161f588bb8caa39e10b4218d358",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06e486aa_fd675a1c",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-09-14T09:01:11Z",
+      "side": 1,
+      "message": "Also added @SystemApi annotation here instead of @UnsupportedAppUsage because it is used in pair with setDiscoverableTimeout and should have the same access level",
+      "range": {
+        "startLine": 1600,
+        "startChar": 5,
+        "endLine": 1600,
+        "endChar": 14
+      },
+      "revId": "84ceae0b1247ea5fef47caeff93d0f749a56ec56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
