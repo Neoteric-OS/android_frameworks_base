@@ -27,6 +27,7 @@ import android.se.omapi.ISecureElementReader;
 import android.se.omapi.ISecureElementListener;
 
 /** @hide */
+@VintfStability
 interface ISecureElementSession {
 
     /**
@@ -61,7 +62,7 @@ interface ISecureElementSession {
      * Use interface method openLogicalChannel() to open a logical channel.
      */
     ISecureElementChannel openBasicChannel(in byte[] aid, in byte p2,
-            ISecureElementListener listener);
+            in ISecureElementListener listener);
 
     /**
      * Opens a connection using the next free logical channel of the card in the
@@ -69,5 +70,5 @@ interface ISecureElementSession {
      * Selection of other applets with this connection is not supported.
      */
     ISecureElementChannel openLogicalChannel(in byte[] aid, in byte p2,
-            ISecureElementListener listener);
+            in ISecureElementListener listener);
 }

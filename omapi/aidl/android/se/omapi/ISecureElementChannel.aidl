@@ -22,6 +22,7 @@ package android.se.omapi;
 import android.se.omapi.ISecureElementSession;
 
 /** @hide */
+@VintfStability
 interface ISecureElementChannel {
 
     /**
