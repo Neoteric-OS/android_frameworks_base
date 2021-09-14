@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa4451d1_90b85a65",
+        "filename": "core/java/android/os/ISystemConfig.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-09-14T16:02:14Z",
+      "side": 1,
+      "message": "Nit: this method name is no longer correct.",
+      "range": {
+        "startLine": 45,
+        "startChar": 32,
+        "endLine": 45,
+        "endChar": 58
+      },
+      "revId": "93bf41e351921bd6e2664278823a8bd6c477c941",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
