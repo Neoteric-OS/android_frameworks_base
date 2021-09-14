@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de4633ef_3c4b384d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-09-14T15:51:13Z",
+      "side": 1,
+      "message": "I just realized that we\u0027re missing the case where a message is broadcast from the DUT\u0027s same address, e.g. `4F:82:10:00` if DUT has LA 4. These messages should be ignored as well.\n\nThe condition should be something like `if (message.getSource() \u003d\u003d mLogicalAddress \u0026\u0026 message.getSource() !\u003d Constants.ADDR_UNREGISTERED)",
+      "revId": "bea35ce60ff0ab016cc6470e7b44589e1060489e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
