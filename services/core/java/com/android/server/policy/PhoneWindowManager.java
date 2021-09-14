@@ -2735,6 +2735,24 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         } else if (keyCode == KeyEvent.KEYCODE_VOICE_ASSIST) {
             Slog.wtf(TAG, "KEYCODE_VOICE_ASSIST should be handled in interceptKeyBeforeQueueing");
             return -1;
+        } else if (keyCode == KeyEvent.KEYCODE_VIDEO_APP_1
+                || keyCode == KeyEvent.KEYCODE_VIDEO_APP_2
+                || keyCode == KeyEvent.KEYCODE_VIDEO_APP_3
+                || keyCode == KeyEvent.KEYCODE_VIDEO_APP_4
+                || keyCode == KeyEvent.KEYCODE_VIDEO_APP_5
+                || keyCode == KeyEvent.KEYCODE_VIDEO_APP_6
+                || keyCode == KeyEvent.KEYCODE_VIDEO_APP_7
+                || keyCode == KeyEvent.KEYCODE_VIDEO_APP_8
+                || keyCode == KeyEvent.KEYCODE_FEATURED_APP_1
+                || keyCode == KeyEvent.KEYCODE_FEATURED_APP_2
+                || keyCode == KeyEvent.KEYCODE_FEATURED_APP_3
+                || keyCode == KeyEvent.KEYCODE_FEATURED_APP_4
+                || keyCode == KeyEvent.KEYCODE_DEMO_APP_1
+                || keyCode == KeyEvent.KEYCODE_DEMO_APP_2
+                || keyCode == KeyEvent.KEYCODE_DEMO_APP_3
+                || keyCode == KeyEvent.KEYCODE_DEMO_APP_4) {
+            Slog.wtf(TAG, "KEYCODE_APP_X should be handled in interceptKeyBeforeQueueing");
+            return -1;
         } else if (keyCode == KeyEvent.KEYCODE_SYSRQ) {
             if (down && repeatCount == 0) {
                 mScreenshotRunnable.setScreenshotType(TAKE_SCREENSHOT_FULLSCREEN);
@@ -3987,6 +4005,26 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         result &= ~ACTION_PASS_TO_USER;
                     }
                 }
+                break;
+            }
+            case KeyEvent.KEYCODE_VIDEO_APP_1:
+            case KeyEvent.KEYCODE_VIDEO_APP_2:
+            case KeyEvent.KEYCODE_VIDEO_APP_3:
+            case KeyEvent.KEYCODE_VIDEO_APP_4:
+            case KeyEvent.KEYCODE_VIDEO_APP_5:
+            case KeyEvent.KEYCODE_VIDEO_APP_6:
+            case KeyEvent.KEYCODE_VIDEO_APP_7:
+            case KeyEvent.KEYCODE_VIDEO_APP_8:
+            case KeyEvent.KEYCODE_FEATURED_APP_1:
+            case KeyEvent.KEYCODE_FEATURED_APP_2:
+            case KeyEvent.KEYCODE_FEATURED_APP_3:
+            case KeyEvent.KEYCODE_FEATURED_APP_4:
+            case KeyEvent.KEYCODE_DEMO_APP_1:
+            case KeyEvent.KEYCODE_DEMO_APP_2:
+            case KeyEvent.KEYCODE_DEMO_APP_3:
+            case KeyEvent.KEYCODE_DEMO_APP_4: {
+                // Just drop if keys are not intercepted for direct key.
+                result &= ~ACTION_PASS_TO_USER;
                 break;
             }
         }

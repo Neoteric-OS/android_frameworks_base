@@ -1909,7 +1909,7 @@ package android.view {
   public class KeyEvent extends android.view.InputEvent implements android.os.Parcelable {
     method public static String actionToString(int);
     method public final void setDisplayId(int);
-    field public static final int LAST_KEYCODE = 288; // 0x120
+    field public static final int LAST_KEYCODE = 304; // 0x130
   }
 
   public final class KeyboardShortcutGroup implements android.os.Parcelable {
