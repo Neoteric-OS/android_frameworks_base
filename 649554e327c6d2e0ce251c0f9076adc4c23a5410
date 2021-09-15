@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c9392a6_aae7e2d1",
+        "filename": "media/tests/EffectsTest/res/layout/bassboosttest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-09-15T00:21:09Z",
+      "side": 1,
+      "message": "nit: extra line above?",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 8
+      },
+      "revId": "649554e327c6d2e0ce251c0f9076adc4c23a5410",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c98c39e4_1a43c241",
+        "filename": "media/tests/EffectsTest/src/com/android/effectstest/VisualizerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-09-15T00:21:09Z",
+      "side": 1,
+      "message": "nit: @Override?",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "649554e327c6d2e0ce251c0f9076adc4c23a5410",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4f47ca0_d9514d77",
+        "filename": "media/tests/EffectsTest/src/com/android/effectstest/VisualizerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-09-15T00:21:09Z",
+      "side": 1,
+      "message": "nit: comment here?",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 10
+      },
+      "revId": "649554e327c6d2e0ce251c0f9076adc4c23a5410",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d5583d7_55b18b75",
+        "filename": "media/tests/EffectsTest/src/com/android/effectstest/VisualizerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-09-15T00:21:09Z",
+      "side": 1,
+      "message": "nit: a lambda would be more compact.  if really overriding, perhaps @Override?\nwondering if this could be made more generic, taking a runnable so there\u0027s less code duplication with BassBoostTest.java.",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 39
+      },
+      "revId": "649554e327c6d2e0ce251c0f9076adc4c23a5410",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
