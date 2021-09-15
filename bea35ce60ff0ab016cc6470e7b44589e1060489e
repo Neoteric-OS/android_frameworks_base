@@ -16,6 +16,23 @@
       "message": "I just realized that we\u0027re missing the case where a message is broadcast from the DUT\u0027s same address, e.g. `4F:82:10:00` if DUT has LA 4. These messages should be ignored as well.\n\nThe condition should be something like `if (message.getSource() \u003d\u003d mLogicalAddress \u0026\u0026 message.getSource() !\u003d Constants.ADDR_UNREGISTERED)",
       "revId": "bea35ce60ff0ab016cc6470e7b44589e1060489e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b25bc703_5789be47",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-09-15T14:15:00Z",
+      "side": 1,
+      "message": "Paul manually tested this and found another issue: HdmiCecMessageValidator is not just verifying incoming messages, but also outgoing messages. For the outgoing messages it is expected that the source is the LA of the DUT itself, therefore filtering them would be wrong.\n\nPaul will work on a CL and then upload it to aosp as well.",
+      "revId": "bea35ce60ff0ab016cc6470e7b44589e1060489e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
