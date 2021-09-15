@@ -22,6 +22,30 @@
       },
       "revId": "29dbede14401e09c6328e65b2bc3c17b9cdf3a66",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76a2710c_33c24664",
+        "filename": "core/java/android/os/SystemConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-09-15T11:43:27Z",
+      "side": 1,
+      "message": "\u003e I think this needs quite a bit more documentation\nAgreed. But I will need help to have an accurate description.\n+patb What about:\n```\nGet enabled components class name for a specific package\nTheses components are defined by the OEM configuration\n```\n\n---\n\u003e what kind of \"enabled\" component?\nThis return a List of \u0027component class name with a default enabled state\u0027 to true.\nTheses are defined with OEM configuration\n\n---\n\u003e What if there is more than one component?\nI suppose you are talking about the mismatch between documentation and code ? As the return type is a `List\u003cString\u003e`, it already handle multiple component.\nDo you mean I should rename the API with a \u0027s\u0027 at Component and change the comment to say: `return The list of enabled component associated with the specified package` ?\n\n---\n\u003e Should this return a strongly typed ComponentName object instead of a String?\nWhy is ComponentName preferred for return type ? The caller already knows the packageName, and it\u0027s currently easier to search for specific component in a `List\u003cString\u003e` with\n```\nenabledComponents.contains(xxx)\n```\nCurrently the return type reflect the internal data type witch is `ArrayMap\u003cString, ArrayMap\u003cString, Boolean\u003e\u003e`\nIf we use `List\u003cComponentName\u003e` as return type, should we change also the internal map to be `ArrayMap\u003cString, ArrayMap\u003cComponentName, Boolean\u003e\u003e` ? or only change it in the service.get method ?\n\n---\n\u003e Can this apply to third-party apps, or only packages built into the system?\nThe initial getter was protected with\n```\nif (Binder.getCallingUid() !\u003d Process.BLUETOOTH_UID) { \u003cERROR\u003e }\n```\nSo I suppose third-party are not supposed to call here. But in same time, as said by patb@ in another comment:\n\u003e This probably makes sense to be unprotected by permission as it only exposes what an OEM configured and so doesn\u0027t really leak any user information, so leaving it at SystemApi may be fine.",
+      "parentUuid": "196539cf_9e665994",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 51
+      },
+      "revId": "29dbede14401e09c6328e65b2bc3c17b9cdf3a66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
