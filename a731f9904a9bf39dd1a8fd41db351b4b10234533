@@ -22,6 +22,30 @@
       },
       "revId": "a731f9904a9bf39dd1a8fd41db351b4b10234533",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4dd661a1_79b23b88",
+        "filename": "services/core/java/com/android/server/wm/TaskStack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1895785
+      },
+      "writtenOn": "2021-09-15T06:47:34Z",
+      "side": 1,
+      "message": "Because getAnimationType() will revert to BOUNDS mode after invoked, so it will return BOUNDS mode invoked getAnimationType() again.",
+      "parentUuid": "3bfa11cf_ba611272",
+      "range": {
+        "startLine": 1743,
+        "startChar": 8,
+        "endLine": 1743,
+        "endChar": 93
+      },
+      "revId": "a731f9904a9bf39dd1a8fd41db351b4b10234533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
