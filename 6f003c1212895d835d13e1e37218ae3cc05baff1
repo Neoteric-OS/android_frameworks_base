@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "a9d71d74_9243018e",
         "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
@@ -20,10 +21,10 @@
         "endChar": 16
       },
       "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "d4d96b44_7e79d78d",
         "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
@@ -43,10 +44,10 @@
         "endChar": 5
       },
       "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "88caab8a_fbd81534",
         "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
@@ -66,10 +67,10 @@
         "endChar": 68
       },
       "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "40f38ea1_4f65a4bc",
         "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
@@ -89,10 +90,34 @@
         "endChar": 92
       },
       "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3be45076_4b6d2f63",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-09-15T02:35:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40f38ea1_4f65a4bc",
+      "range": {
+        "startLine": 497,
+        "startChar": 49,
+        "endLine": 497,
+        "endChar": 92
+      },
+      "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
       "key": {
         "uuid": "7b2e26ae_87041975",
         "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
@@ -112,10 +137,10 @@
         "endChar": 37
       },
       "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "b46d2dcd_53548534",
         "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
@@ -135,10 +160,10 @@
         "endChar": 13
       },
       "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "3beaf007_6b02e95e",
         "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
@@ -159,10 +184,10 @@
         "endChar": 13
       },
       "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "1429666e_ffd53776",
         "filename": "tests/net/integration/src/com/android/server/net/integrationtests/NetworkStackInstrumentationConnector.kt",
@@ -182,10 +207,10 @@
         "endChar": 5
       },
       "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "c7425224_0193c0dc",
         "filename": "tests/net/integration/src/com/android/server/net/integrationtests/TestNetworkStackService.kt",
@@ -205,10 +230,34 @@
         "endChar": 16
       },
       "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4c16074_64cd6987",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/TestNetworkStackService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-09-15T02:35:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7425224_0193c0dc",
+      "range": {
+        "startLine": 72,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 16
+      },
+      "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "2ebb6bbe_31d40f3a",
         "filename": "tests/net/integration/src/com/android/server/net/integrationtests/TestNetworkStackService.kt",
@@ -228,8 +277,7 @@
         "endChar": 20
       },
       "revId": "6f003c1212895d835d13e1e37218ae3cc05baff1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
