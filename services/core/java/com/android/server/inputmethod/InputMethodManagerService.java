@@ -3492,10 +3492,12 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
         // by the IME) or if running on a large screen where there
         // is more room for the target window + IME.
         final boolean doAutoShow =
-                (softInputMode & LayoutParams.SOFT_INPUT_MASK_ADJUST)
+                ((softInputMode & LayoutParams.SOFT_INPUT_MASK_ADJUST)
                         == LayoutParams.SOFT_INPUT_ADJUST_RESIZE
                 || mRes.getConfiguration().isLayoutSizeAtLeast(
-                        Configuration.SCREENLAYOUT_SIZE_LARGE);
+                        Configuration.SCREENLAYOUT_SIZE_LARGE))
+                && computeImeDisplayIdForTarget(cs.selfReportedDisplayId,
+                        mImeDisplayValidator) != INVALID_DISPLAY;
 
         // We want to start input before showing the IME, but after closing
         // it.  We want to do this after closing it to help the IME disappear
