@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11c7e114_0b183370",
+        "filename": "media/tests/EffectsTest/res/layout/bassboosttest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-09-15T00:56:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c9392a6_aae7e2d1",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 8
+      },
+      "revId": "649554e327c6d2e0ce251c0f9076adc4c23a5410",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c98c39e4_1a43c241",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-09-15T00:21:09Z",
       "side": 1,
       "message": "nit: @Override?",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "649554e327c6d2e0ce251c0f9076adc4c23a5410",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "661aa1e1_65db6e55",
+        "filename": "media/tests/EffectsTest/src/com/android/effectstest/VisualizerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-09-15T00:56:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c98c39e4_1a43c241",
       "range": {
         "startLine": 91,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b228432b_46876f8b",
+        "filename": "media/tests/EffectsTest/src/com/android/effectstest/VisualizerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-09-15T00:56:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4f47ca0_d9514d77",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 10
+      },
+      "revId": "649554e327c6d2e0ce251c0f9076adc4c23a5410",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3d5583d7_55b18b75",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-09-15T00:21:09Z",
       "side": 1,
       "message": "nit: a lambda would be more compact.  if really overriding, perhaps @Override?\nwondering if this could be made more generic, taking a runnable so there\u0027s less code duplication with BassBoostTest.java.",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 39
+      },
+      "revId": "649554e327c6d2e0ce251c0f9076adc4c23a5410",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4dafc07_34e4917a",
+        "filename": "media/tests/EffectsTest/src/com/android/effectstest/VisualizerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-09-15T00:56:42Z",
+      "side": 1,
+      "message": "Thanks, I forgot about lambdas in Java.\n\nRegarding de-duplication with BassBoost test--note that Visualizer doesn\u0027t inherit from AudioEffect, and doesn\u0027t provide setControlStatusListener method. So trying to create a generic \"HammerReleaseTest\" would require a lot of parametrization which I think will hurt readability in the end.\n\nAlso, please note use of Thread.yield inside the loop. That means, the code in the HammerReleaseTest.run can\u0027t be passed in as a Runnable.",
+      "parentUuid": "3d5583d7_55b18b75",
       "range": {
         "startLine": 265,
         "startChar": 0,
