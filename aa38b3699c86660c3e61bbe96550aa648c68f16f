@@ -16,6 +16,29 @@
       "message": "Move Jack and Chinmay to cc list firstly before the internal review is done.\n\nJust want to make sure the patch is ready before spend their time.\nThanks!",
       "revId": "aa38b3699c86660c3e61bbe96550aa648c68f16f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7237e13a_bc4da06e",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-09-15T20:03:44Z",
+      "side": 1,
+      "message": "If some weirdo tried to set the thresholds for CDMA2000 and GSM, this will magically break. I think to do this correctly, the uniqueness needs to be checked for the pair of (ran, measurementType).",
+      "range": {
+        "startLine": 262,
+        "startChar": 26,
+        "endLine": 262,
+        "endChar": 47
+      },
+      "revId": "aa38b3699c86660c3e61bbe96550aa648c68f16f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
