@@ -39,6 +39,30 @@
       },
       "revId": "aa38b3699c86660c3e61bbe96550aa648c68f16f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "683a8bf6_890afb23",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-09-15T20:13:24Z",
+      "side": 1,
+      "message": "Oh, right. I almost forget the fact that RSSI is available for both GERAN and CDMA2000.  We need to allow (GERAN, RSSI) and (CDMA2000, RSSI) to be set in the same request (although it is a pretty rare case). \n\nI will update the logic with a new patch. Thanks!",
+      "parentUuid": "7237e13a_bc4da06e",
+      "range": {
+        "startLine": 262,
+        "startChar": 26,
+        "endLine": 262,
+        "endChar": 47
+      },
+      "revId": "aa38b3699c86660c3e61bbe96550aa648c68f16f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
