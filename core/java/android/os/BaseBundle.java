@@ -275,10 +275,7 @@ public class BaseBundle {
     final Object getValueAt(int i) {
         Object object = mMap.valueAt(i);
         if (object instanceof Supplier<?>) {
-            Supplier<?> supplier = (Supplier<?>) object;
-            synchronized (this) {
-                object = supplier.get();
-            }
+            object = ((Supplier<?>) object).get();
             mMap.setValueAt(i, object);
         }
         return object;

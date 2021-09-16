@@ -3426,26 +3426,30 @@ public final class Parcel {
 
         @Override
         public Object get() {
-            if (mObject == null) {
-                int restore = mSource.dataPosition();
-                try {
-                    mSource.setDataPosition(mPosition);
-                    mObject = mSource.readValue(mLoader);
-                } finally {
-                    mSource.setDataPosition(restore);
-                }
-                mSource = null;
-                if (mValueParcel != null) {
-                    mValueParcel.recycle();
-                    mValueParcel = null;
+            Parcel source = mSource;
+            if (source != null) {
+                synchronized (source) {
+                    int restore = source.dataPosition();
+                    try {
+                        source.setDataPosition(mPosition);
+                        mObject = source.readValue(mLoader);
+                    } finally {
+                        source.setDataPosition(restore);
+                    }
+                    mSource = null;
+                    if (mValueParcel != null) {
+                        mValueParcel.recycle();
+                        mValueParcel = null;
+                    }
                 }
             }
             return mObject;
         }
 
         public void writeToParcel(Parcel out) {
-            if (mObject == null) {
-                out.appendFrom(mSource, mPosition, mLength + 8);
+            Parcel source = mSource;
+            if (source != null) {
+                out.appendFrom(source, mPosition, mLength + 8);
             } else {
                 out.writeValue(mObject);
             }
@@ -3457,7 +3461,7 @@ public final class Parcel {
 
         @Override
         public String toString() {
-            return mObject == null
+            return mSource != null
                     ? "Supplier{" + valueTypeToString(mType) + "@" + mPosition + "+" + mLength + '}'
                     : "Supplier{" + mObject + "}";
         }
@@ -3477,11 +3481,11 @@ public final class Parcel {
             }
             LazyValue value = (LazyValue) other;
             // Check if they are either both serialized or both deserialized
-            if ((mObject == null) != (value.mObject == null)) {
+            if ((mSource == null) != (value.mSource == null)) {
                 return false;
             }
             // If both are deserialized, compare the live objects
-            if (mObject != null) {
+            if (mSource == null) {
                 return mObject.equals(value.mObject);
             }
             // Better safely fail here since this could mean we get different objects
