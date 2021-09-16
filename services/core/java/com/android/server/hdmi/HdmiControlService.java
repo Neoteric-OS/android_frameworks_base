@@ -215,6 +215,10 @@ public class HdmiControlService extends SystemService {
     @GuardedBy("mLock")
     private boolean mSystemAudioActivated = false;
 
+    // Whether system is in EARC_ENABLED mode or not.
+    @GuardedBy("mLock")
+    private int mEarcMode = Constants.HDMI_EARC_IDLE;
+
     // Whether HDMI CEC volume control is enabled or not.
     @GuardedBy("mLock")
     @HdmiControlManager.VolumeControl
@@ -763,6 +767,8 @@ public class HdmiControlService extends SystemService {
     private void registerContentObserver() {
         ContentResolver resolver = getContext().getContentResolver();
         String[] settings = new String[] {
+                Global.HDMI_EARC_CONTROL_ENABLED,
+                Global.HDMI_EARC_CONNECTED,
                 Global.HDMI_CONTROL_VOLUME_CONTROL_ENABLED,
                 Global.HDMI_SYSTEM_AUDIO_CONTROL_ENABLED,
                 Global.MHL_INPUT_SWITCHING_ENABLED,
@@ -787,6 +793,42 @@ public class HdmiControlService extends SystemService {
             String option = uri.getLastPathSegment();
             boolean enabled = readBooleanSetting(option, true);
             switch (option) {
+                case Global.HDMI_EARC_CONTROL_ENABLED:
+                    writeBooleanSetting(Global.HDMI_ARC_SWITCH_TO_EARC, false);
+                    int earcControl = readIntSetting(option, Constants.PREFER_EARC);
+                    Slog.i(TAG, "eARC control enabled changed:" + earcControl);
+                    // Disable ARC before system enables EARC
+                    if (isTvDeviceEnabled() && (tv().getAvrDeviceInfo() != null) &&
+                        tv().isArcEstablished()) {
+                        if (earcControl == Constants.PREFER_EARC) {
+                            Slog.i(TAG,"Start to disable ARC.");
+                            tv().startArcAction(false,
+                            new IHdmiControlCallback.Stub() {
+                                @Override
+                                public void onComplete(int error) {
+                                    if (error == HdmiControlManager.RESULT_SUCCESS) {
+                                        Slog.i(TAG, "ARC is terminated!, earcControl:" + earcControl);
+                                        writeBooleanSetting(Global.HDMI_ARC_SWITCH_TO_EARC, true);
+                                    } else {
+                                        Slog.i(TAG, "ARC failed to terminated!!! error:" + error);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    break;
+                case Global.HDMI_EARC_CONNECTED:
+                    int flag = readIntSetting(option, Constants.HDMI_EARC_ENABLED);
+                    setEarcMode(flag);
+                    Slog.i(TAG,"setEarcMode:" + flag);
+                    if (isTvDeviceEnabled() && (tv().getAvrDeviceInfo() != null)) {
+                        if (flag == Constants.HDMI_EARC_ENABLED
+                                    || flag == Constants.HDMI_EARC_NOT_ENABLED) {
+                            Slog.i(TAG,"Need to re-create ARC or request SAM.");
+                            tv().onNewAvrAdded(tv().getAvrDeviceInfo());
+                        }
+                    }
+                    break;
                 case Global.HDMI_CONTROL_VOLUME_CONTROL_ENABLED:
                     setHdmiCecVolumeControlEnabledInternal(getHdmiCecConfig().getIntValue(
                             HdmiControlManager.CEC_SETTING_NAME_VOLUME_CONTROL_MODE));
@@ -1228,7 +1270,6 @@ public class HdmiControlService extends SystemService {
     @ServiceThreadOnly
     void onHotplug(int portId, boolean connected) {
         assertRunOnServiceThread();
-
         if (connected && !isTvDevice()
                 && getPortInfo(portId).getType() == HdmiPortInfo.PORT_OUTPUT) {
             if (isSwitchDevice()) {
@@ -2316,6 +2357,7 @@ public class HdmiControlService extends SystemService {
             pw.println("mHdmiCecVolumeControlEnabled: " + mHdmiCecVolumeControl);
             pw.decreaseIndent();
 
+            pw.println("mEarcMode: " + mEarcMode);
             // CEC settings
             pw.println("CEC settings:");
             pw.increaseIndent();
@@ -3010,6 +3052,18 @@ public class HdmiControlService extends SystemService {
         }
     }
 
+    void setEarcMode(int earcMode) {
+        synchronized (mLock) {
+            mEarcMode = earcMode;
+        }
+    }
+
+    int getEarcMode() {
+        synchronized (mLock) {
+            return mEarcMode;
+        }
+    }
+
     @ServiceThreadOnly
     int getPowerStatus() {
         assertRunOnServiceThread();
@@ -3361,6 +3415,11 @@ public class HdmiControlService extends SystemService {
     void setCecOption(int key, boolean value) {
         assertRunOnServiceThread();
         mCecController.setOption(key, value);
+    }
+
+    @ServiceThreadOnly
+    void notifyAtmosSupported(boolean supported) {
+        HdmiControlService.this.writeBooleanSetting(Constants.AVR_CAPABILITY_DDP_ATMOS, supported);
     }
 
     @ServiceThreadOnly
