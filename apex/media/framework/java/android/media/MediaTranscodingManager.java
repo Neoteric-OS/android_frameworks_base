@@ -971,7 +971,10 @@ public final class MediaTranscodingManager {
 
                 float frameRate = 30.0f; // default to 30fps.
                 if (mSrcVideoFormatHint.containsKey(MediaFormat.KEY_FRAME_RATE)) {
-                    frameRate = mSrcVideoFormatHint.getFloat(MediaFormat.KEY_FRAME_RATE);
+                    Number value = mSrcVideoFormatHint.getNumber(MediaFormat.KEY_FRAME_RATE, 0);
+                    if (value != null) {
+                        frameRate = value.floatValue();
+                    }
                     if (frameRate <= 0) {
                         throw new IllegalArgumentException(
                                 "frameRate must be larger than 0");
