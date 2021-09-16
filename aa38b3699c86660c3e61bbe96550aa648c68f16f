@@ -63,6 +63,30 @@
       },
       "revId": "aa38b3699c86660c3e61bbe96550aa648c68f16f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "853efc5e_633021e8",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-09-16T04:11:08Z",
+      "side": 1,
+      "message": "Patch updated to make sure IAE is thrown when the SignalMeasurementType for the same RAN is not unique.\n\nAlso throw IAE if the SignalThresholdInfo collection is empty. This is expected behavior specified in javadoc of Builder#build.",
+      "parentUuid": "683a8bf6_890afb23",
+      "range": {
+        "startLine": 262,
+        "startChar": 26,
+        "endLine": 262,
+        "endChar": 47
+      },
+      "revId": "aa38b3699c86660c3e61bbe96550aa648c68f16f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
