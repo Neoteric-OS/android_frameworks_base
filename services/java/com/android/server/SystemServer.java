@@ -119,6 +119,7 @@ import com.android.server.dreams.DreamManagerService;
 import com.android.server.emergency.EmergencyAffordanceService;
 import com.android.server.gpu.GpuService;
 import com.android.server.hdmi.HdmiControlService;
+import com.android.server.hdmi.HdmiAudioService;
 import com.android.server.incident.IncidentCompanionService;
 import com.android.server.input.InputManagerService;
 import com.android.server.inputmethod.InputMethodManagerService;
@@ -2018,6 +2019,12 @@ public final class SystemServer {
             if (mPackageManager.hasSystemFeature(PackageManager.FEATURE_HDMI_CEC)) {
                 t.traceBegin("StartHdmiControlService");
                 mSystemServiceManager.startService(HdmiControlService.class);
+                t.traceEnd();
+            }
+
+            if (mPackageManager.hasSystemFeature(PackageManager.FEATURE_HDMI_CEC)) {
+                t.traceBegin("StartHdmiAudioService");
+                mSystemServiceManager.startService(HdmiAudioService.class);
                 t.traceEnd();
             }
 

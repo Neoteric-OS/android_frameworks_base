@@ -540,6 +540,17 @@ final class Constants {
     static final int DISABLED = 0;
     static final int ENABLED = 1;
 
+    // eARC Status
+    static final int HDMI_EARC_IDLE = 0;        // IDLE1
+    static final int HDMI_EARC_WAITING = 1;     // DISC1_DISC2
+    static final int HDMI_EARC_NOT_ENABLED = 2; // IDLE2 for ARC
+    static final int HDMI_EARC_ENABLED = 3;     // eARC connected
+
+    // eARC Status
+    static final int NO_WAY = 0;        // Do not enable EARC
+    static final int ARC_ONLY = 1;      // Enable ARC only
+    static final int PREFER_EARC = 2;   // Auto mode. If eARC can't connect, fallback to ARC.
+
     private Constants() {
         /* cannot be instantiated */
     }

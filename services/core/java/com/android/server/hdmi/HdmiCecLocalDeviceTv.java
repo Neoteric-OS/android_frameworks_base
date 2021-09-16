@@ -1095,6 +1095,9 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                 mDelayedMessageBuffer.add(message);
                 return true;
             }
+            if (mService.getEarcMode() == Constants.HDMI_EARC_ENABLED) {
+                Slog.i(TAG, "System is in eARC mode. Don't initiate ARC.");
+            }
             mService.maySendFeatureAbortCommand(message, Constants.ABORT_REFUSED);
             if (!isConnectedToArcPort(avrDeviceInfo.getPhysicalAddress())) {
                 displayOsd(OSD_MESSAGE_ARC_CONNECTED_INVALID_PORT);
@@ -1112,6 +1115,10 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     }
 
     private boolean canStartArcUpdateAction(int avrAddress, boolean enabled) {
+        if (enabled && (mService.getEarcMode() == Constants.HDMI_EARC_ENABLED)) {
+            Slog.i(TAG, "System is in eARC mode. Don't initiate ARC.");
+            return false;
+        }
         HdmiDeviceInfo avr = getAvrDeviceInfo();
         if (avr != null
                 && (avrAddress == avr.getLogicalAddress())
