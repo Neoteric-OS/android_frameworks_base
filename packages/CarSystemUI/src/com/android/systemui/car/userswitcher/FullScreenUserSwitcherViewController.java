@@ -98,7 +98,7 @@ public class FullScreenUserSwitcherViewController extends OverlayViewController 
 
     @Override
     protected boolean shouldFocusWindow() {
-        return true;
+        return false;
     }
 
     @Override
