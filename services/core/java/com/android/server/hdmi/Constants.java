@@ -505,6 +505,9 @@ final class Constants {
     static final String PROPERTY_STRIP_AUDIO_TV_NO_SYSTEM_AUDIO =
         "persist.sys.hdmi.property_strip_audio_tv_no_system_audio";
 
+    static final String AUDIO_PARAMETER_AVR_CAPS = "avr_capability=";
+    static final String AUDIO_PARAMETER_AVR_LATENCY = "avr_latency=";
+
     static final int RECORDING_TYPE_DIGITAL_RF = 1;
     static final int RECORDING_TYPE_ANALOGUE_RF = 2;
     static final int RECORDING_TYPE_EXTERNAL_PHYSICAL_ADDRESS = 3;
@@ -596,6 +599,17 @@ final class Constants {
             RC_PROFILE_SOURCE_HANDLES_MEDIA_CONTEXT_SENSITIVE_MENU
     })
     @interface RcProfileSource {}
+
+    // eARC Status
+    static final int HDMI_EARC_IDLE = 0;        // IDLE1
+    static final int HDMI_EARC_WAITING = 1;     // DISC1_DISC2
+    static final int HDMI_EARC_NOT_ENABLED = 2; // IDLE2 for ARC
+    static final int HDMI_EARC_ENABLED = 3;     // eARC connected
+
+    // eARC Control Features
+    static final int NO_WAY = 0;        // Do not enable EARC
+    static final int ARC_ONLY = 1;      // Enable ARC only
+    static final int PREFER_EARC = 2;   // Auto mode. If eARC can't connect, fallback to ARC.
 
     private Constants() {
         /* cannot be instantiated */

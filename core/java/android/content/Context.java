@@ -5351,6 +5351,16 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve a
+     * {@link android.hardware.hdmi.HdmiAudioServiceManager} for controlling and managing
+     * HDMI-eARC protocol.
+     *
+     * @see #getSystemService(String)
+     * @see android.hardware.hdmi.HdmiAudioServiceManager
+     * @hide
+     */
+    public static final String HDMI_AUDIO_SERVICE = "hdmi_audio";
+    /**
+     * Use with {@link #getSystemService(String)} to retrieve a
      * {@link android.hardware.input.InputManager} for interacting with input devices.
      *
      * @see #getSystemService(String)
