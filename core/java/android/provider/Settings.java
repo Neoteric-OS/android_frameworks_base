@@ -11075,6 +11075,28 @@ public final class Settings {
         public static final String HDMI_CONTROL_ENABLED = "hdmi_control_enabled";
 
         /**
+        * Whether HDMI eARC control shall be enabled. If disabled, no eARC connection will be
+        * created. (0 = NO_WAY, 1 = ARC_ONLY, 2 = PREFER_EARC)
+        * @hide
+        */
+        @Readable
+        public static final String HDMI_EARC_CONTROL_ENABLED = "hdmi_earc_control_enabled";
+
+        /**
+        * Whether HDMI eARC is connected or not. (0 = disconnect, 1 = connect)
+        * @hide
+        */
+        @Readable
+        public static final String HDMI_EARC_CONNECTED = "hdmi_earc_connected";
+
+        /**
+        * Whether HDMI ARC is terminated for switching or not. (0 = not ready, 1 = ready)
+        * @hide
+        */
+        @Readable
+        public static final String HDMI_ARC_SWITCH_TO_EARC = "hdmi_arc_switch_to_earc";
+
+        /**
          * Controls whether volume control commands via HDMI CEC are enabled. (0 = false, 1 =
          * true).
          *
