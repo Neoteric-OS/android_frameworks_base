@@ -16,7 +16,9 @@
 
 package com.android.server.hdmi;
 
+import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.tv.cec.V1_0.SendMessageResult;
+import android.hardware.hdmi.IHdmiControlCallback;
 
 /**
  * Feature action to handle <Request ARC Termination>.
@@ -25,6 +27,7 @@ import android.hardware.tv.cec.V1_0.SendMessageResult;
  */
 final class RequestArcTerminationAction extends RequestArcAction {
     private static final String TAG = "RequestArcTerminationAction";
+    private final IHdmiControlCallback mCallback;
 
     /**
      * @Constructor
@@ -33,13 +36,20 @@ final class RequestArcTerminationAction extends RequestArcAction {
      */
     RequestArcTerminationAction(HdmiCecLocalDevice source, int avrAddress) {
         super(source, avrAddress);
+        mCallback = null;
+    }
+
+    RequestArcTerminationAction(HdmiCecLocalDevice source, int avrAddress,
+                                    IHdmiControlCallback callback) {
+        super(source, avrAddress, callback);
+        mCallback = callback;
     }
 
     @Override
     boolean start() {
         mState = STATE_WATING_FOR_REQUEST_ARC_REQUEST_RESPONSE;
         addTimer(mState, HdmiConfig.TIMEOUT_MS);
-
+        HdmiLogger.debug("SEND buildRequestArcTermination");
         HdmiCecMessage command =
                 HdmiCecMessageBuilder.buildRequestArcTermination(getSourceAddress(), mAvrAddress);
         sendCommand(command, new HdmiControlService.SendMessageCallback() {
@@ -49,7 +59,16 @@ final class RequestArcTerminationAction extends RequestArcAction {
                     // If failed to send <Request ARC Termination>, start "Disabled" ARC
                     // transmission action.
                     disableArcTransmission();
-                    finish();
+                    if (mCallback == null) {
+                        finish();
+                    }
+                } else {
+                    if (mCallback != null) {
+                        tv().clearSad();
+                        HdmiLogger.debug(TAG,"Add timer");
+                        mState = STATE_WATING_FOR_TERMINATE_ARC_RESPONSE;
+                        addTimer(mState, HdmiConfig.TIMEOUT_MS);
+                    }
                 }
             }
         });
