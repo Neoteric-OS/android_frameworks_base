@@ -16,7 +16,9 @@
 
 package com.android.server.hdmi;
 
+import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
+import android.hardware.hdmi.IHdmiControlCallback;
 
 /**
  * Base feature action class for &lt;Request ARC Initiation&gt;/&lt;Request ARC Termination&gt;.
@@ -26,9 +28,11 @@ abstract class RequestArcAction extends HdmiCecFeatureAction {
 
     // State in which waits for ARC response.
     protected static final int STATE_WATING_FOR_REQUEST_ARC_REQUEST_RESPONSE = 1;
+    protected static final int STATE_WATING_FOR_TERMINATE_ARC_RESPONSE = 2;
 
     // Logical address of AV Receiver.
     protected final int mAvrAddress;
+    protected final IHdmiControlCallback mCallback;
 
     /**
      * @Constructor
@@ -40,6 +44,15 @@ abstract class RequestArcAction extends HdmiCecFeatureAction {
      */
     RequestArcAction(HdmiCecLocalDevice source, int avrAddress) {
         super(source);
+        mCallback = null;
+        HdmiUtils.verifyAddressType(getSourceAddress(), HdmiDeviceInfo.DEVICE_TV);
+        HdmiUtils.verifyAddressType(avrAddress, HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
+        mAvrAddress = avrAddress;
+    }
+
+    RequestArcAction(HdmiCecLocalDevice source, int avrAddress, IHdmiControlCallback callback) {
+        super(source, callback);
+        mCallback = callback;
         HdmiUtils.verifyAddressType(getSourceAddress(), HdmiDeviceInfo.DEVICE_TV);
         HdmiUtils.verifyAddressType(avrAddress, HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
         mAvrAddress = avrAddress;
@@ -47,8 +60,11 @@ abstract class RequestArcAction extends HdmiCecFeatureAction {
 
     @Override
     boolean processCommand(HdmiCecMessage cmd) {
-        if (mState != STATE_WATING_FOR_REQUEST_ARC_REQUEST_RESPONSE
+        HdmiLogger.debug("first mState: %d", mState);
+        if ((mState != STATE_WATING_FOR_REQUEST_ARC_REQUEST_RESPONSE
+                && mState != STATE_WATING_FOR_TERMINATE_ARC_RESPONSE)
                 || !HdmiUtils.checkCommandSource(cmd, mAvrAddress, TAG)) {
+            HdmiLogger.debug("mState: %d", mState);
             return false;
         }
         int opcode = cmd.getOpcode();
@@ -60,14 +76,30 @@ abstract class RequestArcAction extends HdmiCecFeatureAction {
                 int originalOpcode = cmd.getParams()[0] & 0xFF;
                 if (originalOpcode == Constants.MESSAGE_REQUEST_ARC_TERMINATION) {
                     disableArcTransmission();
-                    finish();
+                    if (mCallback == null) {
+                        finish();
+                    } else {
+                        HdmiLogger.debug("MESSAGE_FEATURE_ABORT");
+                        finishWithCallback(HdmiControlManager.RESULT_COMMUNICATION_FAILED);
+                    }
                     return true;
                 } else if (originalOpcode == Constants.MESSAGE_REQUEST_ARC_INITIATION) {
-                    tv().disableArc();
-                    finish();
+                    tv().setArcStatus(false);
+                    if (mCallback == null) {
+                        finish();
+                    } else {
+                        HdmiLogger.debug("MESSAGE_FEATURE_ABORT");
+                        finishWithCallback(HdmiControlManager.RESULT_COMMUNICATION_FAILED);
+                    }
                     return true;
                 }
                 return false;
+            case Constants.MESSAGE_TERMINATE_ARC:
+                if (mState == STATE_WATING_FOR_TERMINATE_ARC_RESPONSE
+                        && mCallback != null) {
+                    HdmiLogger.debug("MESSAGE_TERMINATE_ARC");
+                    finishWithCallback(HdmiControlManager.RESULT_SUCCESS);
+                }
         }
         return false;
     }
@@ -86,6 +118,11 @@ abstract class RequestArcAction extends HdmiCecFeatureAction {
         }
         HdmiLogger.debug("[T] RequestArcAction.");
         disableArcTransmission();
-        finish();
+        if (mCallback == null) {
+            finish();
+        } else {
+            HdmiLogger.debug("[T] RequestArcAction.");
+            finishWithCallback(HdmiControlManager.RESULT_INCORRECT_MODE);
+        }
     }
 }

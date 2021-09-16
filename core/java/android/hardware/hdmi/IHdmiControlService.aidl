@@ -71,12 +71,13 @@ interface IHdmiControlService {
     void setInputChangeListener(IHdmiInputChangeListener listener);
     List<HdmiDeviceInfo> getInputDevices();
     List<HdmiDeviceInfo> getDeviceList();
+    void setEarcConnectionState(int state);
     void powerOffRemoteDevice(int logicalAddress, int powerStatus);
     void powerOnRemoteDevice(int logicalAddress, int powerStatus);
     void askRemoteDeviceToBecomeActiveSource(int physicalAddress);
     void sendVendorCommand(int deviceType, int targetAddress, in byte[] params,
             boolean hasVendorId);
-    void addVendorCommandListener(IHdmiVendorCommandListener listener, int vendorId);
+    void addVendorCommandListener(IHdmiVendorCommandListener listener, int deviceType);
     void sendStandby(int deviceType, int deviceId);
     void setHdmiRecordListener(IHdmiRecordListener callback);
     void startOneTouchRecord(int recorderAddress, in byte[] recordSource);

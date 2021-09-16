@@ -34,6 +34,7 @@ import static android.hardware.hdmi.HdmiControlManager.TIMER_RECORDING_TYPE_EXTE
 
 import android.annotation.Nullable;
 import android.hardware.hdmi.DeviceFeatures;
+import android.text.TextUtils;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.HdmiPortInfo;
@@ -45,6 +46,18 @@ import android.media.AudioDescriptor;
 import android.media.AudioDeviceAttributes;
 import android.media.AudioDeviceInfo;
 import android.media.AudioProfile;
+import com.android.server.hdmi.HdmiUtils.CodecSad;
+import com.android.server.hdmi.HdmiUtils.DeviceConfig;
+import com.android.server.hdmi.Constants.AudioCodec;
+
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import android.media.AudioManager;
+import android.media.AudioSystem;
 import android.media.tv.TvInputInfo;
 import android.media.tv.TvInputManager.TvInputCallback;
 import android.util.Slog;
@@ -74,9 +87,14 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     private boolean mArcEstablished = false;
 
+    private boolean mAtmosSupported = false;
+
     // Stores whether ARC feature is enabled per port.
     // True by default for all the ARC-enabled ports.
     private final SparseBooleanArray mArcFeatureEnabled = new SparseBooleanArray();
+
+    protected List<Byte> mAvrSupportedFormats = new ArrayList<Byte>();
+
 
     // Whether the System Audio Control feature is enabled or not. True by default.
     @GuardedBy("mLock")
@@ -96,6 +114,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @GuardedBy("mLock")
     private boolean mSystemAudioMute = false;
 
+    private final HdmiCecStandbyModeHandler mStandbyHandler;
+
     // If true, do not do routing control/send active source for internal source.
     // Set to true when the device was woken up by <Text/Image View On>.
     private boolean mSkipRoutingControl;
@@ -105,6 +125,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     // discovered yet. The buffered commands are taken out and when they are ready to
     // handle.
     private final DelayedMessageBuffer mDelayedMessageBuffer = new DelayedMessageBuffer(this);
+
+    private static final String SHORT_AUDIO_DESCRIPTOR_CONFIG_PATH = "/vendor/etc/sadConfig.xml";
 
     // Defines the callback invoked when TV input framework is updated with input status.
     // We are interested in the notification for HDMI input addition event, in order to
@@ -187,6 +209,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         mSkipRoutingControl = (reason == HdmiControlService.INITIATED_BY_WAKE_UP_MESSAGE);
         launchRoutingControl(reason != HdmiControlService.INITIATED_BY_ENABLE_CEC &&
                 reason != HdmiControlService.INITIATED_BY_BOOT_UP);
+        notifyAtmosSupported(mAtmosSupported);
         resetSelectRequestBuffer();
         launchDeviceDiscovery();
         startQueuedActions();
@@ -648,6 +671,105 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         return Constants.HANDLED;
     }
 
+    void notifySadSupported(boolean supported) {
+        // The format of values to AudioManager().setParameters() is      
+        // avr_capability= [SAD_byte, byte of SADB+VSADB, Port_number, ARC Mode(0)]
+        //                 [SAD raw data][SADB+VSADB]
+        String keyValue = Constants.AUDIO_PARAMETER_AVR_CAPS;
+        byte[] buf = new byte[4];
+        String sadList = "[" + TextUtils.join(" ", mAvrSupportedFormats) + "][]";
+
+        if (getAvrDeviceInfo() == null) {
+            Slog.w(TAG, "Failed to notify SAD: No AVR device.");
+            return;
+        }
+        if (!supported || mAvrSupportedFormats == null || mAvrSupportedFormats.size() == 0) {
+            buf[0] = (byte) 0x00;
+            buf[1] = (byte) 0x00;
+            buf[2] = (byte) 0x00;
+            buf[3] = (byte) 0x00;
+            keyValue += Arrays.toString(buf);
+            keyValue += "[][]";
+        } else {
+            buf[0] = (byte) mAvrSupportedFormats.size();
+            buf[1] = (byte) 0x00;
+            buf[2] = (byte) (getAvrDeviceInfo().getPortId());
+            buf[3] = (byte) 0x00;
+            keyValue += Arrays.toString(buf);
+            keyValue += sadList;
+        }
+        Slog.w(TAG,"keyValue:" + keyValue);
+        mService.getAudioManager().setParameters(keyValue);
+    }
+
+    @Override
+    @ServiceThreadOnly
+    protected int handleReportShortAudioDescriptor(HdmiCecMessage message) {
+            assertRunOnServiceThread();
+            Slog.w(TAG, "handleReportShortAudioDescriptor");
+            if (mService.getEarcMode() != Constants.HDMI_EARC_NOT_ENABLED) {
+                Slog.w(TAG, "System is in eARC mode, do not handle SAD by CEC command.");
+                return Constants.NOT_HANDLED;
+            }
+           // Even if TV not asked, still deal with <Report SAD> on Received
+
+           byte params[] = message.getParams();
+           setShortAudioDescriptor(params);
+           return Constants.HANDLED;
+    }
+
+    void setShortAudioDescriptor(byte[] params) {
+        Slog.w(TAG, "setShortAudioDescriptor");
+        if (params == null) {
+            Slog.e(TAG, "Failed to setShortAudioDescriptor, params is null");
+            notifySadSupported(false);
+            return;
+        }
+        int size = params.length;
+        int num = size / 3;
+        if (num < 1 || (params.length % 3) != 0 ) {
+            notifySadSupported(false);
+            return;
+        }
+
+        for (int i = 0; i < size; i++ ) {
+            Slog.i(TAG, "SAD[" + i + "]:" + params[i]);
+            mAvrSupportedFormats.add(params[i]);
+            if( i % 3 == 0 ) {
+                switch (params[i] & Constants.AUDIO_FORMAT_MASK) {
+                    case Constants.AUDIO_FORMAT_DDP:
+                        Slog.i(TAG, "AVR supports DDP");
+                        setAtmosSupported(params[i + 2] % 2);
+                        break;
+                    default:
+                        break;
+                 }
+             }
+        }
+        notifySadSupported(true);
+    }
+
+    private void setAtmosSupported(int atmosBit) {
+        assertRunOnServiceThread();
+        if (atmosBit != 0) {
+            Slog.w(TAG, "AVR supports ATMOS");
+            mAtmosSupported = true;
+        } else {
+            mAtmosSupported = false;
+        }
+        notifyAtmosSupported(mAtmosSupported);
+    }
+
+    boolean isAtmosSupported() {
+        synchronized (mLock) {
+            return mAtmosSupported;
+        }
+    }
+
+    private void notifyAtmosSupported(boolean atmosEnable) {
+        mService.notifyAtmosSupported(atmosEnable);
+    }
+
     @Override
     @ServiceThreadOnly
     @Constants.HandleMessageResult
@@ -729,6 +851,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     void onNewAvrAdded(HdmiDeviceInfo avr) {
         assertRunOnServiceThread();
+        mAvrSupportedFormats.clear();
         addAndStartAction(new SystemAudioAutoInitiationAction(this, avr.getLogicalAddress()));
         if (!isDirectConnectAddress(avr.getPhysicalAddress())) {
             startArcAction(false);
@@ -758,6 +881,98 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                 new SystemAudioActionFromTv(this, avr.getLogicalAddress(), enabled, callback));
     }
 
+      private void sendRequestShortAudioDescriptor() {
+        mAvrSupportedFormats.clear();
+        List<DeviceConfig> config = null;
+        File file = new File(SHORT_AUDIO_DESCRIPTOR_CONFIG_PATH);
+        @AudioCodec int[] codecToAsk;
+        if (file.exists()) {
+            try {
+                InputStream in = new FileInputStream(file);
+                config = HdmiUtils.ShortAudioDescriptorXmlParser.parse(in);
+                in.close();
+            } catch (IOException e) {
+                Slog.e(TAG, "Error reading file: " + file, e);
+            } catch (XmlPullParserException e) {
+                Slog.e(TAG, "Unable to parse file: " + file, e);
+            }
+        }
+        if (config != null && config.size() > 0) {
+            Slog.i(TAG, "Find SAD config file");
+            codecToAsk = getAudioCodecFromConfig(config);
+        } else {
+            // Default audio codec to ask
+            // Codec DD, DDP, AAC, DTS
+            Slog.i(TAG, "Use default codecToAsk{DD, DDP, AAC, DTS}");
+            codecToAsk = new int[] {(int)Constants.AUDIO_CODEC_DD, (int)Constants.AUDIO_CODEC_DDP,
+                            (int)Constants.AUDIO_CODEC_AAC, (int)Constants.AUDIO_CODEC_DTS};
+        }
+        HdmiDeviceInfo avr = getAvrDeviceInfo();
+        if (avr != null) {
+            if (codecToAsk.length >=0 && codecToAsk.length <= 4) {
+                mService.sendCecCommand(
+                        HdmiCecMessageBuilder.buildRequestShortAudioDescriptor(mAddress,
+                            getAvrDeviceInfo().getLogicalAddress(), codecToAsk),
+                        new HdmiControlService.SendMessageCallback() {
+                            @Override
+                            public void onSendCompleted(int error) {
+                                if (error != SendMessageResult.SUCCESS) {
+                                    HdmiLogger.debug("Failed to send "
+                                            + "<Request Short Audio Descriptor>:" + error);
+                                }
+                            }
+                        });
+            } else if (codecToAsk.length > 4) {
+                for (int i = 0; i < codecToAsk.length; i += 4 ){
+                    int[] chunkCodecToAsk =
+                        Arrays.copyOfRange(codecToAsk, i, Math.min(codecToAsk.length, i+4));
+
+                    mService.sendCecCommand(
+                            HdmiCecMessageBuilder.buildRequestShortAudioDescriptor(mAddress,
+                                getAvrDeviceInfo().getLogicalAddress(), chunkCodecToAsk),
+                            new HdmiControlService.SendMessageCallback() {
+                                @Override
+                                public void onSendCompleted(int error) {
+                                    if (error != SendMessageResult.SUCCESS) {
+                                        HdmiLogger.debug("Failed to send "
+                                                + "<Request Short Audio Descriptor>:" + error);
+                                    }
+                                }
+                            });
+                }
+            }
+        }
+    }
+
+    @AudioCodec
+    private int[] getAudioCodecFromConfig(List<DeviceConfig> deviceConfig){
+        DeviceConfig deviceConfigToUse = null;
+        for (DeviceConfig device : deviceConfig) {
+            if (device.name.equals("VX_AUDIO_DEVICE_IN_HDMI_ARC")) {
+                deviceConfigToUse = device;
+                break;
+            }
+        }
+        if (deviceConfigToUse == null) {
+            Slog.w(TAG, "sadConfig.xml does not have required device info for "
+                    + "VX_AUDIO_DEVICE_IN_HDMI_ARC");
+            return new int[0];
+        }
+        int[] codecs = new int[ deviceConfigToUse.supportedCodecs.size() ];
+        for (int i = 0; i < deviceConfigToUse.supportedCodecs.size(); i++ ){
+            codecs[i] = deviceConfigToUse.supportedCodecs.get(i).audioCodec;
+        }
+
+        return codecs;
+    }
+
+    void clearSad() {
+        mAvrSupportedFormats.clear();
+        notifySadSupported(false);
+        if (isAtmosSupported()) {
+            setAtmosSupported(0);
+        }
+    }
     // # Seq 25
     void setSystemAudioMode(boolean on) {
         if (!isSystemAudioControlFeatureEnabled() && on) {
@@ -768,10 +983,16 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         HdmiLogger.debug("System Audio Mode change[old:%b new:%b]",
                 mService.isSystemAudioActivated(), on);
         updateAudioManagerForSystemAudio(on);
+        if ((mService.getEarcMode() == Constants.HDMI_EARC_NOT_ENABLED) && on) {
+            sendRequestShortAudioDescriptor();
+        }
         synchronized (mLock) {
             if (mService.isSystemAudioActivated() != on) {
                 mService.setSystemAudioActivated(on);
                 mService.announceSystemAudioModeChange(on);
+                if (on == false) {
+                    clearSad();
+                }
             }
             if (on && !mArcEstablished) {
                 startArcAction(true);
@@ -899,10 +1120,16 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
 
     @ServiceThreadOnly
     void startArcAction(boolean enabled) {
+        startArcAction(enabled, null);
+    }
+
+    @ServiceThreadOnly
+    void startArcAction(boolean enabled, IHdmiControlCallback callback) {
         assertRunOnServiceThread();
         HdmiDeviceInfo info = getAvrDeviceInfo();
         if (info == null) {
             Slog.w(TAG, "Failed to start arc action; No AVR device.");
+            invokeCallback(callback, HdmiControlManager.RESULT_TARGET_NOT_AVAILABLE);
             return;
         }
         if (!canStartArcUpdateAction(info.getLogicalAddress(), enabled)) {
@@ -910,6 +1137,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
             if (enabled && !isConnectedToArcPort(info.getPhysicalAddress())) {
                 displayOsd(OSD_MESSAGE_ARC_CONNECTED_INVALID_PORT);
             }
+            invokeCallback(callback, HdmiControlManager.RESULT_INCORRECT_MODE);
             return;
         }
 
@@ -921,8 +1149,9 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
             }
         } else {
             removeAction(RequestArcInitiationAction.class);
+            Slog.i(TAG,"startArcAction FALSE");
             if (!hasAction(RequestArcTerminationAction.class)) {
-                addAndStartAction(new RequestArcTerminationAction(this, info.getLogicalAddress()));
+                addAndStartAction(new RequestArcTerminationAction(this, info.getLogicalAddress(), callback));
             }
         }
     }
@@ -1017,6 +1246,12 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                 mDelayedMessageBuffer.add(message);
                 return Constants.HANDLED;
             }
+
+            if (mService.getEarcMode() != Constants.HDMI_EARC_NOT_ENABLED) {
+                Slog.i(TAG, "System is in eARC mode. Don't initiate ARC.");
+                return Constants.ABORT_NOT_IN_CORRECT_MODE;
+            }
+
             if (!isConnectedToArcPort(avrDeviceInfo.getPhysicalAddress())) {
                 displayOsd(OSD_MESSAGE_ARC_CONNECTED_INVALID_PORT);
             }
@@ -1033,6 +1268,13 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     }
 
     private boolean canStartArcUpdateAction(int avrAddress, boolean enabled) {
+
+        mService.updateEarcMode();
+
+        if (enabled && (mService.getEarcMode() != Constants.HDMI_EARC_NOT_ENABLED)) {
+            Slog.i(TAG, "System is in eARC mode. Don't initiate ARC.");
+            return false;
+        }
         HdmiDeviceInfo avr = getAvrDeviceInfo();
         if (avr != null
                 && (avrAddress == avr.getLogicalAddress())

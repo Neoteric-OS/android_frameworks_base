@@ -1291,6 +1291,17 @@ public final class HdmiControlManager {
     }
 
     /**
+    * @hide
+    */
+    public void setEarcConnectionState(int state) {
+        try {
+            mService.setEarcConnectionState(state);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Power off the target device by sending CEC commands. Note that this device can't be the
      * current device itself.
      *

@@ -199,6 +199,11 @@ public final class HdmiControlServiceWrapper {
         }
 
         @Override
+        public void setEarcConnectionState(int state) {
+            HdmiControlServiceWrapper.this.setEarcConnectionState(state);
+        }
+
+        @Override
         public void powerOffRemoteDevice(int logicalAddress, int powerStatus) {
             HdmiControlServiceWrapper.this.powerOffRemoteDevice(logicalAddress, powerStatus);
         }
@@ -221,8 +226,8 @@ public final class HdmiControlServiceWrapper {
         }
 
         @Override
-        public void addVendorCommandListener(IHdmiVendorCommandListener listener, int vendorId) {
-            HdmiControlServiceWrapper.this.addVendorCommandListener(listener, vendorId);
+        public void addVendorCommandListener(IHdmiVendorCommandListener listener, int deviceType) {
+            HdmiControlServiceWrapper.this.addVendorCommandListener(listener, deviceType);
         }
 
         @Override
@@ -468,6 +473,9 @@ public final class HdmiControlServiceWrapper {
     }
 
     /** @hide */
+    public void setEarcConnectionState(int state) {}
+
+    /** @hide */
     public void powerOffRemoteDevice(int logicalAddress, int powerStatus) {}
 
     /** @hide */
@@ -481,7 +489,7 @@ public final class HdmiControlServiceWrapper {
             boolean hasVendorId) {}
 
     /** @hide */
-    public void addVendorCommandListener(IHdmiVendorCommandListener listener, int vendorId) {}
+    public void addVendorCommandListener(IHdmiVendorCommandListener listener, int deviceType) {}
 
     /** @hide */
     public void sendStandby(int deviceType, int deviceId) {}

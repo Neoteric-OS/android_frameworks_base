@@ -101,6 +101,8 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.hardware.fingerprint.IFingerprintService;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.IHdmiControlService;
+import android.hardware.hdmi.HdmiAudioServiceManager;
+import android.hardware.hdmi.IHdmiAudioService;
 import android.hardware.input.InputManager;
 import android.hardware.iris.IIrisService;
 import android.hardware.iris.IrisManager;
@@ -359,6 +361,14 @@ public final class SystemServiceRegistry {
             public HdmiControlManager createService() throws ServiceNotFoundException {
                 IBinder b = ServiceManager.getServiceOrThrow(Context.HDMI_CONTROL_SERVICE);
                 return new HdmiControlManager(IHdmiControlService.Stub.asInterface(b));
+            }});
+
+        registerService(Context.HDMI_AUDIO_SERVICE, HdmiAudioServiceManager.class,
+                new StaticServiceFetcher<HdmiAudioServiceManager>() {
+            @Override
+            public HdmiAudioServiceManager createService() throws ServiceNotFoundException {
+                IBinder b = ServiceManager.getServiceOrThrow(Context.HDMI_AUDIO_SERVICE);
+                return new HdmiAudioServiceManager(IHdmiAudioService.Stub.asInterface(b));
             }});
 
         registerService(Context.TEXT_CLASSIFICATION_SERVICE, TextClassificationManager.class,
