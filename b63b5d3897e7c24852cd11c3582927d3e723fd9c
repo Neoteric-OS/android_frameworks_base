@@ -22,6 +22,30 @@
       },
       "revId": "b63b5d3897e7c24852cd11c3582927d3e723fd9c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8213cb2_8054c5ca",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-09-17T03:44:54Z",
+      "side": 1,
+      "message": "The hashes solution will shine if there are huge number of ran/measurement (one example is the git commit). But here we have fixed number of items. And hash solution may need a little extra explanation why we calculate RAN and Measurement type together. I argue the set solution here is more self-explained.",
+      "parentUuid": "41bb9a57_8e867de4",
+      "range": {
+        "startLine": 273,
+        "startChar": 8,
+        "endLine": 273,
+        "endChar": 76
+      },
+      "revId": "b63b5d3897e7c24852cd11c3582927d3e723fd9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
