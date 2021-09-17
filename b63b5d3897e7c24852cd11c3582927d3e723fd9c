@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41bb9a57_8e867de4",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-09-17T01:57:01Z",
+      "side": 1,
+      "message": "This works. Is it simpler than generating a unique hash for each one and comparing the hashes (probably still fine to just use an ArraySet).\n\ne.g. hashValue \u003d ran * 100 + measurementType",
+      "range": {
+        "startLine": 273,
+        "startChar": 8,
+        "endLine": 273,
+        "endChar": 76
+      },
+      "revId": "b63b5d3897e7c24852cd11c3582927d3e723fd9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
