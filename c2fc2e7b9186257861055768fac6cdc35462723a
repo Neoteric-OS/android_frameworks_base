@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "698b199c_6364fa0b",
+        "filename": "ApiDocs.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-09-17T16:15:53Z",
+      "side": 1,
+      "message": "framework-doc-module-stubs-stubs or something a bit more meaningful?",
+      "range": {
+        "startLine": 155,
+        "startChar": 25,
+        "endLine": 155,
+        "endChar": 30
+      },
+      "revId": "c2fc2e7b9186257861055768fac6cdc35462723a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
