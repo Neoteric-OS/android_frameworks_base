@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015473497",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1820432?revision\u003d7",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8dfe5e1c_5d27a420",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-18T01:03:08Z",
+      "side": 1,
+      "message": "Change must include a \"Tag:\" stanza. Valid tags are #compatibility #stability #security #feature #floss #gd-refactor #refactor",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "399c36babb26084afb97debac8e8077fa15e5cae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015473497",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1820432?revision\u003d7",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e133096c_d26f48ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-18T01:03:08Z",
+      "side": 1,
+      "message": "\"Discover and pair with the CSIP supported device, and check the\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 69
+      },
+      "revId": "399c36babb26084afb97debac8e8077fa15e5cae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
