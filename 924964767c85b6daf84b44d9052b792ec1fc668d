@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2ca6113_bfd06823",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-09-20T21:23:40Z",
+      "side": 1,
+      "message": "Jack \u0026 Chinmay,\n\nPlease help to review the patch for S QPR1.\nThanks",
+      "revId": "924964767c85b6daf84b44d9052b792ec1fc668d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
