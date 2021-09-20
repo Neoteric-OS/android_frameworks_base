@@ -33,6 +33,29 @@
       "message": "Mind taking a look/routing Heemin?",
       "revId": "2f6089582525ae649c71d4b55c73ab1bb7604cda",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "695575d4_49703738",
+        "filename": "packages/CarSystemUI/src/com/android/systemui/car/userswitcher/FullScreenUserSwitcherViewController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1448200
+      },
+      "writtenOn": "2021-09-20T17:53:21Z",
+      "side": 1,
+      "message": "I think this needs to be true in order to ensure that the window insets controller can hide the status bar insets (via shouldShowStatusBarInsets which is false by default).\n\nHow does the window focus impact the view focus that requires the double tap?",
+      "range": {
+        "startLine": 101,
+        "startChar": 15,
+        "endLine": 101,
+        "endChar": 20
+      },
+      "revId": "2f6089582525ae649c71d4b55c73ab1bb7604cda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
