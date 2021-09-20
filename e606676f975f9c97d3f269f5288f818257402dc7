@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b674b533_be098beb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2021-09-20T18:42:51Z",
+      "side": 1,
+      "message": "Can I get another +2 on this?  It lost the approvals on the new patch set for some reason.",
+      "revId": "e606676f975f9c97d3f269f5288f818257402dc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
