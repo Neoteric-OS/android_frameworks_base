@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7c4cfc68_cfa85ca2",
+        "filename": "core/tests/hosttests/test-apps/MultiDexLegacyAndException/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1121678
+      },
+      "writtenOn": "2021-09-20T06:34:08Z",
+      "side": 1,
+      "message": "See below.",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "f3c1cb02776f53b8ad9d7ad375659477e5461278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "038bd4c7_8bf25e35",
         "filename": "core/tests/hosttests/test-apps/MultiDexLegacyAndException/Android.bp",
         "patchSetId": 2
@@ -14,6 +37,23 @@
       "writtenOn": "2021-09-20T06:10:35Z",
       "side": 1,
       "message": "I believe this flag is always removed again in the `dex.go` build system code? It was the right flag for dx but d8 does not use it. Therefore, I believe that we can remove that flag for all these new files.",
+      "revId": "f3c1cb02776f53b8ad9d7ad375659477e5461278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac639b66_6719be69",
+        "filename": "core/tests/hosttests/test-apps/MultiDexLegacyAndException/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1121678
+      },
+      "writtenOn": "2021-09-20T06:34:08Z",
+      "side": 1,
+      "message": "Not that it is very important, but maybe use the same number for all tests. For D8 main dex splitting it should not matter as long as it is 19 or below. Maybe 16 (Jelly Bean), as that is what Google Play Services still support (but is ending https://android-developers.googleblog.com/2021/07/google-play-services-discontinuing-jelly-bean.html).",
       "revId": "f3c1cb02776f53b8ad9d7ad375659477e5461278",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
