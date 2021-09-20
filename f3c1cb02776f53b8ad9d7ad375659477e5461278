@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "038bd4c7_8bf25e35",
+        "filename": "core/tests/hosttests/test-apps/MultiDexLegacyAndException/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1095168
+      },
+      "writtenOn": "2021-09-20T06:10:35Z",
+      "side": 1,
+      "message": "I believe this flag is always removed again in the `dex.go` build system code? It was the right flag for dx but d8 does not use it. Therefore, I believe that we can remove that flag for all these new files.",
+      "revId": "f3c1cb02776f53b8ad9d7ad375659477e5461278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
