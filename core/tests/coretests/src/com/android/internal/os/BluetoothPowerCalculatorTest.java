@@ -24,6 +24,7 @@ import android.bluetooth.UidTraffic;
 import android.os.BatteryConsumer;
 import android.os.BatteryStats;
 import android.os.BatteryUsageStatsQuery;
+import android.os.Parcel;
 import android.os.Process;
 
 import androidx.test.filters.SmallTest;
@@ -32,6 +33,8 @@ import androidx.test.runner.AndroidJUnit4;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -102,13 +105,40 @@ public class BluetoothPowerCalculatorTest {
     }
 
     private void setupBluetoothEnergyInfo(long reportedEnergyUc, long consumedEnergyUc) {
-        final BluetoothActivityEnergyInfo info = new BluetoothActivityEnergyInfo(1000,
-                BluetoothActivityEnergyInfo.BT_STACK_STATE_STATE_ACTIVE, 7000, 5000, 0,
-                reportedEnergyUc);
-        info.setUidTraffic(new UidTraffic[]{
-                new UidTraffic(Process.BLUETOOTH_UID, 1000, 2000),
-                new UidTraffic(APP_UID, 3000, 4000)
-        });
+        Parcel parcel = Parcel.obtain();
+        parcel.writeLong(1000);
+        parcel.writeInt(BluetoothActivityEnergyInfo.BT_STACK_STATE_STATE_ACTIVE);
+        parcel.writeLong(7000);
+        parcel.writeLong(5000);
+        parcel.writeLong(0);
+        parcel.writeLong(reportedEnergyUc);
+        parcel.setDataPosition(0);
+        final BluetoothActivityEnergyInfo info =
+                BluetoothActivityEnergyInfo.CREATOR.createFromParcel(parcel);
+        parcel.recycle();
+
+        parcel = Parcel.obtain();
+        parcel.writeInt(Process.BLUETOOTH_UID);
+        parcel.writeLong(1000);
+        parcel.writeLong(2000);
+        parcel.setDataPosition(0);
+        final UidTraffic bluetoothUidTraffic =
+                UidTraffic.CREATOR.createFromParcel(parcel);
+        parcel.recycle();
+
+        parcel = Parcel.obtain();
+        parcel.writeInt(APP_UID);
+        parcel.writeLong(3000);
+        parcel.writeLong(4000);
+        parcel.setDataPosition(0);
+        final UidTraffic appUidTraffic =
+                UidTraffic.CREATOR.createFromParcel(parcel);
+        parcel.recycle();
+
+        info.setUidTraffic(new ArrayList<UidTraffic>(){{
+                add(bluetoothUidTraffic);
+                add(appUidTraffic);
+            }});
         mStatsRule.getBatteryStats().updateBluetoothStateLocked(info,
                 consumedEnergyUc, 1000, 1000);
     }
