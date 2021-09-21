@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8633c83a_5217d3fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-09-21T22:44:05Z",
+      "side": 1,
+      "message": "Hey Bernado, here is the CL I drafted; I still need to test it, but would like to keep you posted here.",
+      "revId": "abc8399b00f0f8e6c574b07d6d341eb09c6acdb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
