@@ -16,6 +16,24 @@
       "message": "is this only present in AOSP? don\u0027t remember this removal in the internal patch?",
       "revId": "ef483e49cd3072693fe0cf6a0a89743057ef80b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8076f4b0_69ec9891",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-09-21T12:36:16Z",
+      "side": 0,
+      "message": "Correct, it\u0027s already been removed in stage-aosp.\n\nFYI:\nag/14348119 removed this line to add the filegroup then\nag/15796089 removed the filegroug (I should have removed here at this time but because of the diff it did not come to my mind)",
+      "parentUuid": "3a516fe3_6c13a404",
+      "revId": "ef483e49cd3072693fe0cf6a0a89743057ef80b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
