@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a516fe3_6c13a404",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-09-21T12:24:30Z",
+      "side": 0,
+      "message": "is this only present in AOSP? don\u0027t remember this removal in the internal patch?",
+      "revId": "ef483e49cd3072693fe0cf6a0a89743057ef80b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
