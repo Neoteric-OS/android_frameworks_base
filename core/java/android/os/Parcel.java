@@ -2754,7 +2754,18 @@ public final class Parcel {
      */
     public final void readList(@NonNull List outVal, @Nullable ClassLoader loader) {
         int N = readInt();
-        readListInternal(outVal, N, loader);
+        readListInternal(outVal, N, loader, null);
+    }
+
+    /**
+     * Read into an existing List object from the parcel at the current
+     * dataPosition(), using the given class loader to load any enclosed
+     * Parcelables.  If it is null, the default class loader is used.
+     */
+    public <T extends Parcelable> void readList(@NonNull List outVal,
+            @Nullable ClassLoader loader, @NonNull Class<T> clazz) {
+        int N = readInt();
+        readListInternal(outVal, N, loader, clazz);
     }
 
     /**
@@ -2953,7 +2964,7 @@ public final class Parcel {
             return null;
         }
         ArrayList l = new ArrayList(N);
-        readListInternal(l, N, loader);
+        readListInternal(l, N, loader, null);
         return l;
     }
 
@@ -3353,12 +3364,28 @@ public final class Parcel {
      */
     @Nullable
     public final Object readValue(@Nullable ClassLoader loader) {
+        return readValueInternal(loader, null);
+    }
+
+    /**
+     * Read a typed object from a parcel.  The given class loader will be
+     * used to load any enclosed Parcelables.  If it is null, the default class
+     * loader will be used.
+     * @param clazz : A class that the parcelable class is a descendant from it
+     */
+    @Nullable
+    public final <T extends Parcelable> Object readValue(@Nullable ClassLoader loader, @NonNull Class<T> clazz) {
+        return readValueInternal(loader, clazz);
+    }
+
+    @Nullable
+    private final <T extends Parcelable> Object readValueInternal(@Nullable ClassLoader loader, @Nullable Class<T> clazz) {
         int type = readInt();
         final Object object;
         if (isLengthPrefixed(type)) {
             int length = readInt();
             int start = dataPosition();
-            object = readValue(type, loader);
+            object = readValue(type, loader, clazz);
             int actual = dataPosition() - start;
             if (actual != length) {
                 Log.w(TAG,
@@ -3366,7 +3393,7 @@ public final class Parcel {
                                 + "  consumed " + actual + " bytes, but " + length + " expected.");
             }
         } else {
-            object = readValue(type, loader);
+            object = readValue(type, loader, clazz);
         }
         return object;
     }
@@ -3403,7 +3430,7 @@ public final class Parcel {
             setDataPosition(MathUtils.addOrThrow(dataPosition(), length));
             return new LazyValue(this, start, length, type, loader);
         } else {
-            return readValue(type, loader);
+            return readValue(type, loader, null);
         }
     }
 
@@ -3519,7 +3546,7 @@ public final class Parcel {
      * type first.
      */
     @Nullable
-    private Object readValue(int type, @Nullable ClassLoader loader) {
+    private <T extends Parcelable> Object readValue(int type, @Nullable ClassLoader loader, @Nullable Class<T> clazz) {
         switch (type) {
         case VAL_NULL:
             return null;
@@ -3534,7 +3561,11 @@ public final class Parcel {
             return readHashMap(loader);
 
         case VAL_PARCELABLE:
-            return readParcelable(loader);
+            if (clazz == null) {
+                return readParcelable(loader);
+            } else {
+                return readParcelable(loader, clazz);
+            }
 
         case VAL_SHORT:
             return (short) readInt();
@@ -3646,14 +3677,38 @@ public final class Parcel {
     @SuppressWarnings("unchecked")
     @Nullable
     public final <T extends Parcelable> T readParcelable(@Nullable ClassLoader loader) {
-        Parcelable.Creator<?> creator = readParcelableCreator(loader);
+        return readParcelableInternal(loader, null);
+    }
+
+    /**
+     * Read and return a new Parcelable from the parcel.  The given class loader
+     * will be used to load any enclosed Parcelables.  If it is null, the default
+     * class loader will be used.
+     * @param loader A ClassLoader from which to instantiate the Parcelable
+     * object, or null for the default class loader.
+     * @param clazz A class that the parcelable class is a descendant from it
+     * @return Returns the newly created Parcelable, or null if a null
+     * object has been written.
+     * @throws BadParcelableException Throws BadParcelableException if there
+     * was an error trying to instantiate the Parcelable.
+     */
+    @SuppressWarnings("unchecked")
+    @Nullable
+    public final <T extends Parcelable> T readParcelable(@Nullable ClassLoader loader, @NonNull Class<T> clazz) {
+        return readParcelableInternal(loader, clazz);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Nullable
+    private final <T extends Parcelable> T readParcelableInternal(@Nullable ClassLoader loader, @Nullable Class<T> clazz) {
+        Parcelable.Creator<?> creator = readParcelableCreator(loader, clazz);
         if (creator == null) {
             return null;
         }
         if (creator instanceof Parcelable.ClassLoaderCreator<?>) {
-          Parcelable.ClassLoaderCreator<?> classLoaderCreator =
-              (Parcelable.ClassLoaderCreator<?>) creator;
-          return (T) classLoaderCreator.createFromParcel(this, loader);
+            Parcelable.ClassLoaderCreator<?> classLoaderCreator =
+                    (Parcelable.ClassLoaderCreator<?>) creator;
+            return (T) classLoaderCreator.createFromParcel(this, loader);
         }
         return (T) creator.createFromParcel(this);
     }
@@ -3687,6 +3742,32 @@ public final class Parcel {
      */
     @Nullable
     public final Parcelable.Creator<?> readParcelableCreator(@Nullable ClassLoader loader) {
+        return readParcelableCreatorInternal(loader, /* clazz */ null);
+    }
+
+    /**
+     * Read and return a Parcelable.Creator from the parcel. The given class loader will be used to
+     * load the {@link Parcelable.Creator}. If it is null, the default class loader will be used.
+     * The given clazz will be used to make sure the parcelable class is a descendant from it
+     *
+     * @param loader A ClassLoader from which to instantiate the {@link Parcelable.Creator}
+     * object, or null for the default class loader.
+     * @param clazz A class that the parcelable class is a descendant from it
+     * @return the previously written {@link Parcelable.Creator}, or null if a null Creator was
+     * written.
+     * @throws BadParcelableException Throws BadParcelableException if there was an error trying to
+     * read the {@link Parcelable.Creator}.
+     * @throws BadParcelableException Throws BadParcelableException if the parcelable class isn't a
+     * descendant from the specified class
+     *
+     */
+    @Nullable
+    public final <T extends Parcelable> Parcelable.Creator<?> readParcelableCreator(@Nullable ClassLoader loader, @NonNull Class<T> clazz) {
+        return readParcelableCreatorInternal(loader, clazz);
+    }
+
+    @Nullable
+    private final <T extends Parcelable> Parcelable.Creator<?> readParcelableCreatorInternal(@Nullable ClassLoader loader, @Nullable Class<T> clazz) {
         String name = readString();
         if (name == null) {
             return null;
@@ -3718,6 +3799,13 @@ public final class Parcel {
                 throw new BadParcelableException("Parcelable protocol requires subclassing "
                         + "from Parcelable on class " + name);
             }
+            if (clazz != null) {
+                if (!clazz.isAssignableFrom(parcelableClass)) {
+                    throw new BadParcelableException("Parcelable protocol requires subclassing "
+                            + "from " + clazz.getName() + " on class " + name);
+                }
+            }
+
             Field f = parcelableClass.getField("CREATOR");
             if ((f.getModifiers() & Modifier.STATIC) == 0) {
                 throw new BadParcelableException("Parcelable protocol requires "
@@ -3757,7 +3845,6 @@ public final class Parcel {
 
         return creator;
     }
-
     /**
      * Read and return a new Parcelable array from the parcel.
      * The given class loader will be used to load any enclosed
@@ -4001,10 +4088,15 @@ public final class Parcel {
         return result;
     }
 
-    private void readListInternal(@NonNull List outVal, int N,
-            @Nullable ClassLoader loader) {
+    private <T extends Parcelable> void readListInternal(@NonNull List outVal, int N,
+            @Nullable ClassLoader loader, @Nullable Class<T> clazz) {
         while (N > 0) {
-            Object value = readValue(loader);
+            Object value = null;
+            if (clazz == null) {
+                value = readValue(loader);
+            } else {
+                value = readValue(loader, clazz);
+            }
             //Log.d(TAG, "Unmarshalling value=" + value);
             outVal.add(value);
             N--;
