@@ -2754,7 +2754,19 @@ public final class Parcel {
      */
     public final void readList(@NonNull List outVal, @Nullable ClassLoader loader) {
         int N = readInt();
-        readListInternal(outVal, N, loader);
+        readListInternal(outVal, N, loader, /* clazz */ null);
+    }
+
+    /**
+     * Same as {@link #readList(List, ClassLoader)} but accepts {@code clazz} parameter as
+     * the type required for each item. If the item to be deserialized is not an instance
+     * of that class or any of its children class
+     * a {@link BadParcelableException} will be thrown.
+     */
+    public <T extends Parcelable> void readList(@NonNull List<T> outVal,
+            @Nullable ClassLoader loader, @NonNull Class<T> clazz) {
+        int n = readInt();
+        readListInternal(outVal, n, loader, clazz);
     }
 
     /**
@@ -2953,7 +2965,7 @@ public final class Parcel {
             return null;
         }
         ArrayList l = new ArrayList(N);
-        readListInternal(l, N, loader);
+        readListInternal(l, N, loader, /* clazz */ null);
         return l;
     }
 
@@ -3353,12 +3365,19 @@ public final class Parcel {
      */
     @Nullable
     public final Object readValue(@Nullable ClassLoader loader) {
+        return readValueInternal(loader, /* clazz */ null);
+    }
+
+
+    @Nullable
+    private <T extends Parcelable> Object readValueInternal(@Nullable ClassLoader loader,
+            @Nullable Class<T> clazz) {
         int type = readInt();
         final Object object;
         if (isLengthPrefixed(type)) {
             int length = readInt();
             int start = dataPosition();
-            object = readValue(type, loader);
+            object = readValue(type, loader, clazz);
             int actual = dataPosition() - start;
             if (actual != length) {
                 Log.w(TAG,
@@ -3366,7 +3385,7 @@ public final class Parcel {
                                 + "  consumed " + actual + " bytes, but " + length + " expected.");
             }
         } else {
-            object = readValue(type, loader);
+            object = readValue(type, loader, clazz);
         }
         return object;
     }
@@ -3403,7 +3422,7 @@ public final class Parcel {
             setDataPosition(MathUtils.addOrThrow(dataPosition(), length));
             return new LazyValue(this, start, length, type, loader);
         } else {
-            return readValue(type, loader);
+            return readValue(type, loader, /* clazz */ null);
         }
     }
 
@@ -3519,102 +3538,104 @@ public final class Parcel {
      * type first.
      */
     @Nullable
-    private Object readValue(int type, @Nullable ClassLoader loader) {
+    private <T extends Parcelable> Object readValue(int type, @Nullable ClassLoader loader,
+            @Nullable Class<T> clazz) {
         switch (type) {
-        case VAL_NULL:
-            return null;
+            case VAL_NULL:
+                return null;
 
-        case VAL_STRING:
-            return readString();
+            case VAL_STRING:
+                return readString();
 
-        case VAL_INTEGER:
-            return readInt();
+            case VAL_INTEGER:
+                return readInt();
 
-        case VAL_MAP:
-            return readHashMap(loader);
+            case VAL_MAP:
+                return readHashMap(loader);
 
-        case VAL_PARCELABLE:
-            return readParcelable(loader);
+            case VAL_PARCELABLE:
+                return readParcelableInternal(loader, clazz);
 
-        case VAL_SHORT:
-            return (short) readInt();
+            case VAL_SHORT:
+                return (short) readInt();
 
-        case VAL_LONG:
-            return readLong();
+            case VAL_LONG:
+                return readLong();
 
-        case VAL_FLOAT:
-            return readFloat();
+            case VAL_FLOAT:
+                return readFloat();
 
-        case VAL_DOUBLE:
-            return readDouble();
+            case VAL_DOUBLE:
+                return readDouble();
 
-        case VAL_BOOLEAN:
-            return readInt() == 1;
+            case VAL_BOOLEAN:
+                return readInt() == 1;
 
-        case VAL_CHARSEQUENCE:
-            return readCharSequence();
+            case VAL_CHARSEQUENCE:
+                return readCharSequence();
 
-        case VAL_LIST:
-            return readArrayList(loader);
+            case VAL_LIST:
+                return readArrayList(loader);
 
-        case VAL_BOOLEANARRAY:
-            return createBooleanArray();
+            case VAL_BOOLEANARRAY:
+                return createBooleanArray();
 
-        case VAL_BYTEARRAY:
-            return createByteArray();
+            case VAL_BYTEARRAY:
+                return createByteArray();
 
-        case VAL_STRINGARRAY:
-            return readStringArray();
+            case VAL_STRINGARRAY:
+                return readStringArray();
 
-        case VAL_CHARSEQUENCEARRAY:
-            return readCharSequenceArray();
+            case VAL_CHARSEQUENCEARRAY:
+                return readCharSequenceArray();
 
-        case VAL_IBINDER:
-            return readStrongBinder();
+            case VAL_IBINDER:
+                return readStrongBinder();
 
-        case VAL_OBJECTARRAY:
-            return readArray(loader);
+            case VAL_OBJECTARRAY:
+                return readArray(loader);
 
-        case VAL_INTARRAY:
-            return createIntArray();
+            case VAL_INTARRAY:
+                return createIntArray();
 
-        case VAL_LONGARRAY:
-            return createLongArray();
+            case VAL_LONGARRAY:
+                return createLongArray();
 
-        case VAL_BYTE:
-            return readByte();
+            case VAL_BYTE:
+                return readByte();
 
-        case VAL_SERIALIZABLE:
-            return readSerializable(loader);
+            case VAL_SERIALIZABLE:
+                return readSerializable(loader);
 
-        case VAL_PARCELABLEARRAY:
-            return readParcelableArray(loader);
+            case VAL_PARCELABLEARRAY:
+                return readParcelableArray(loader);
 
-        case VAL_SPARSEARRAY:
-            return readSparseArray(loader);
+            case VAL_SPARSEARRAY:
+                return readSparseArray(loader);
 
-        case VAL_SPARSEBOOLEANARRAY:
-            return readSparseBooleanArray();
+            case VAL_SPARSEBOOLEANARRAY:
+                return readSparseBooleanArray();
 
-        case VAL_BUNDLE:
-            return readBundle(loader); // loading will be deferred
+            case VAL_BUNDLE:
+                return readBundle(loader); // loading will be deferred
 
-        case VAL_PERSISTABLEBUNDLE:
-            return readPersistableBundle(loader);
+            case VAL_PERSISTABLEBUNDLE:
+                return readPersistableBundle(loader);
 
-        case VAL_SIZE:
-            return readSize();
+            case VAL_SIZE:
+                return readSize();
 
-        case VAL_SIZEF:
-            return readSizeF();
+            case VAL_SIZEF:
+                return readSizeF();
 
-        case VAL_DOUBLEARRAY:
-            return createDoubleArray();
+            case VAL_DOUBLEARRAY:
+                return createDoubleArray();
 
-        default:
-            int off = dataPosition() - 4;
-            throw new RuntimeException(
-                "Parcel " + this + ": Unmarshalling unknown type code " + type + " at offset " + off);
+            default:
+                int off = dataPosition() - 4;
+                throw new RuntimeException(
+                    "Parcel " + this + ": Unmarshalling unknown type code " + type
+                            + " at offset " + off);
         }
     }
 
@@ -3643,17 +3664,33 @@ public final class Parcel {
      * @throws BadParcelableException Throws BadParcelableException if there
      * was an error trying to instantiate the Parcelable.
      */
-    @SuppressWarnings("unchecked")
     @Nullable
     public final <T extends Parcelable> T readParcelable(@Nullable ClassLoader loader) {
-        Parcelable.Creator<?> creator = readParcelableCreator(loader);
+        return readParcelableInternal(loader, /* clazz */ null);
+    }
+
+    /**
+     * Same as {@link #readParcelable(ClassLoader)} but accepts {@code clazz} parameter as the type
+     * required for each item. If the item to be deserialized is not an instance of that class or
+     * any of its children class a {@link BadParcelableException} will be thrown.
+     */
+    @Nullable
+    public <T extends Parcelable> T readParcelable(@Nullable ClassLoader loader,
+            @NonNull Class<T> clazz) {
+        return readParcelableInternal(loader, clazz);
+    }
+
+    @Nullable
+    private <T extends Parcelable> T readParcelableInternal(@Nullable ClassLoader loader,
+            @Nullable Class<T> clazz) {
+        Parcelable.Creator<?> creator = readParcelableCreatorInternal(loader, clazz);
         if (creator == null) {
             return null;
         }
         if (creator instanceof Parcelable.ClassLoaderCreator<?>) {
-          Parcelable.ClassLoaderCreator<?> classLoaderCreator =
-              (Parcelable.ClassLoaderCreator<?>) creator;
-          return (T) classLoaderCreator.createFromParcel(this, loader);
+            Parcelable.ClassLoaderCreator<?> classLoaderCreator =
+                    (Parcelable.ClassLoaderCreator<?>) creator;
+            return (T) classLoaderCreator.createFromParcel(this, loader);
         }
         return (T) creator.createFromParcel(this);
     }
@@ -3687,6 +3724,23 @@ public final class Parcel {
      */
     @Nullable
     public final Parcelable.Creator<?> readParcelableCreator(@Nullable ClassLoader loader) {
+        return readParcelableCreatorInternal(loader, /* clazz */ null);
+    }
+
+    /**
+     * Same as {@link #readParcelableCreator(ClassLoader)} but accepts {@code clazz} parameter
+     * as the required type. If the item to be deserialized is not an instance of that class
+     * or any of its children class a {@link BadParcelableException} will be thrown.
+     */
+    @Nullable
+    public <T extends Parcelable> Parcelable.Creator<?> readParcelableCreator(
+            @Nullable ClassLoader loader, @NonNull Class<T> clazz) {
+        return readParcelableCreatorInternal(loader, clazz);
+    }
+
+    @Nullable
+    private <T extends Parcelable> Parcelable.Creator<?> readParcelableCreatorInternal(
+            @Nullable ClassLoader loader, @Nullable Class<T> clazz) {
         String name = readString();
         if (name == null) {
             return null;
@@ -3718,6 +3772,14 @@ public final class Parcel {
                 throw new BadParcelableException("Parcelable protocol requires subclassing "
                         + "from Parcelable on class " + name);
             }
+            if (clazz != null) {
+                if (!clazz.isAssignableFrom(parcelableClass)) {
+                    throw new BadParcelableException("Parcelable creator <" + name + "> is not "
+                            + "a subclass of required class " + clazz.getName()
+                            + " provided in the parameter");
+                }
+            }
+
             Field f = parcelableClass.getField("CREATOR");
             if ((f.getModifiers() & Modifier.STATIC) == 0) {
                 throw new BadParcelableException("Parcelable protocol requires "
@@ -4001,13 +4063,13 @@ public final class Parcel {
         return result;
     }
 
-    private void readListInternal(@NonNull List outVal, int N,
-            @Nullable ClassLoader loader) {
-        while (N > 0) {
-            Object value = readValue(loader);
+    private <T extends Parcelable> void readListInternal(@NonNull List outVal, int n,
+            @Nullable ClassLoader loader, @Nullable Class<T> clazz) {
+        while (n > 0) {
+            Object value = readValueInternal(loader, clazz);
             //Log.d(TAG, "Unmarshalling value=" + value);
             outVal.add(value);
-            N--;
+            n--;
         }
     }
 
