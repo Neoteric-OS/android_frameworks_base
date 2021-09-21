@@ -56,6 +56,30 @@
       },
       "revId": "2f6089582525ae649c71d4b55c73ab1bb7604cda",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22bd09b1_8ed4f9c0",
+        "filename": "packages/CarSystemUI/src/com/android/systemui/car/userswitcher/FullScreenUserSwitcherViewController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1259532
+      },
+      "writtenOn": "2021-09-21T11:25:33Z",
+      "side": 1,
+      "message": "Yes, you are right. When shouldFocusWindow is true, window insets controller hides the status and navigation bar insets.\nIn this case, when FullscreenUserSwitcher is shown, first tap anywhere on it\u0027s view just reveals navigation bar in the bottom of the screen. Second tap selects user.\nNavigation bar is not visible, because car_fullscreen_user_switcher background color is black. Navigation bar becomes clearly visible when changing car_fullscreen_user_switcher background color to white.\n\nWhen shouldFocusWindow is false, navigation bar is already on the screen when FullscreenUserSwitcher is shown. No double tap is needed to select item from RecyclerView.",
+      "parentUuid": "695575d4_49703738",
+      "range": {
+        "startLine": 101,
+        "startChar": 15,
+        "endLine": 101,
+        "endChar": 20
+      },
+      "revId": "2f6089582525ae649c71d4b55c73ab1bb7604cda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
