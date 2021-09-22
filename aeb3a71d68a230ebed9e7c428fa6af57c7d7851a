@@ -22,6 +22,30 @@
       },
       "revId": "aeb3a71d68a230ebed9e7c428fa6af57c7d7851a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ab823fc_135fc698",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-09-22T17:20:42Z",
+      "side": 1,
+      "message": "oh right nvm, this is AOSP so the permissions are not exported yet.\n\nBut the privileged permission question is still there 😊",
+      "parentUuid": "f11573d4_c442f0a7",
+      "range": {
+        "startLine": 1572,
+        "startChar": 4,
+        "endLine": 1572,
+        "endChar": 54
+      },
+      "revId": "aeb3a71d68a230ebed9e7c428fa6af57c7d7851a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
