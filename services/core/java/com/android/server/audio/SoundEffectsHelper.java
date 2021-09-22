@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.media.AudioAttributes;
+import android.media.AudioEventLogger;
 import android.media.AudioManager;
 import android.media.AudioSystem;
 import android.media.MediaPlayer;
