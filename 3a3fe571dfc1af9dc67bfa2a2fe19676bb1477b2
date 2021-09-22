@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c640d9dd_4e590641",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-09-22T22:03:48Z",
+      "side": 1,
+      "message": "Tested using aosp/1833534 and everything seems working fine.",
+      "revId": "3a3fe571dfc1af9dc67bfa2a2fe19676bb1477b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
