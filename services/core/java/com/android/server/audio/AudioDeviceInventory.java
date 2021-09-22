@@ -22,6 +22,7 @@ import android.bluetooth.BluetoothProfile;
 import android.content.Intent;
 import android.media.AudioDeviceAttributes;
 import android.media.AudioDevicePort;
+import android.media.AudioEventLogger;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioPort;

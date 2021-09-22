@@ -98,6 +98,11 @@ public final class AudioFocusInfo implements Parcelable {
         return mPackageName;
     }
 
+    /** @hide */
+    public boolean hasSameUid(int uid) {
+        return mClientUid == uid;
+    }
+
     /**
      * The type of audio focus gain request.
      * @return one of {@link AudioManager#AUDIOFOCUS_GAIN},
@@ -121,6 +126,11 @@ public final class AudioFocusInfo implements Parcelable {
 
     /** @hide */
     public void clearLossReceived() { mLossReceived = 0; }
+
+    /** @hide */
+    public void setLossReceived(int lossReceived) {
+        mLossReceived = lossReceived;
+    }
 
     /**
      * The flags set in the audio focus request.
@@ -213,4 +223,59 @@ public final class AudioFocusInfo implements Parcelable {
             return new AudioFocusInfo[size];
         }
     };
+
+    private static String flagsToString(int flags) {
+        String msg = new String();
+        if ((flags & AudioManager.AUDIOFOCUS_FLAG_DELAY_OK) != 0) {
+            msg += "DELAY_OK";
+        }
+        if ((flags & AudioManager.AUDIOFOCUS_FLAG_LOCK) != 0)     {
+            if (!msg.isEmpty()) {
+                msg += "|";
+            }
+            msg += "LOCK";
+        }
+        if ((flags & AudioManager.AUDIOFOCUS_FLAG_PAUSES_ON_DUCKABLE_LOSS) != 0) {
+            if (!msg.isEmpty()) {
+                msg += "|";
+            }
+            msg += "PAUSES_ON_DUCKABLE_LOSS";
+        }
+        return msg;
+    }
+    /** @hide */
+    public static String focusChangeToString(int focus) {
+        switch(focus) {
+            case AudioManager.AUDIOFOCUS_NONE:
+                return "none";
+            case AudioManager.AUDIOFOCUS_GAIN:
+                return "GAIN";
+            case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT:
+                return "GAIN_TRANSIENT";
+            case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK:
+                return "GAIN_TRANSIENT_MAY_DUCK";
+            case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE:
+                return "GAIN_TRANSIENT_EXCLUSIVE";
+            case AudioManager.AUDIOFOCUS_LOSS:
+                return "LOSS";
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                return "LOSS_TRANSIENT";
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                return "LOSS_TRANSIENT_CAN_DUCK";
+            default:
+                return "[invalid focus change" + focus + "]";
+        }
+    }
+    @Override
+    public String toString() {
+        return new String("AudioFocusInfo:"
+                + " -- pack: " + getPackageName()
+                + " -- client: " + getClientId()
+                + " -- gain: " + focusChangeToString(getGainRequest())
+                + " -- flags: " + flagsToString(getFlags())
+                + " -- loss: " + focusChangeToString(getLossReceived())
+                + " -- uid: " + getClientUid()
+                + " -- attr: " + getAttributes()
+                + " -- sdk:" + getSdkTarget());
+    }
 }

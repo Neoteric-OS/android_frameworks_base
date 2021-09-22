@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.audio;
+package android.media;
 
 import android.annotation.NonNull;
 import android.media.AudioAttributes;
@@ -31,13 +31,14 @@ import java.util.HashMap;
 
 /**
  * Class to handle fading out players
+ * @hide
  */
 public final class FadeOutManager {
 
-    public static final String TAG = "AudioService.FadeOutManager";
+    public static final String TAG = "AudioManager.FadeOutManager";
 
     /** duration of the fade out curve */
-    /*package*/ static final long FADE_OUT_DURATION_MS = 2000;
+    public static final long FADE_OUT_DURATION_MS = 2000;
     /**
      * delay after which a faded out player will be faded back in. This will be heard by the user
      * only in the case of unmuting players that didn't respect audio focus and didn't stop/pause
@@ -45,13 +46,15 @@ public final class FadeOutManager {
      * This is the amount of time between the app being notified of
      * the focus loss (when its muted by the fade out), and the time fade in (to unmute) starts
      */
-    /*package*/ static final long DELAY_FADE_IN_OFFENDERS_MS = 2000;
+    public static final long DELAY_FADE_IN_OFFENDERS_MS = 2000;
 
-    private static final boolean DEBUG = PlaybackActivityMonitor.DEBUG;
+    private static final boolean DEBUG = PlayerFocusEnforcerImpl.DEBUG;
+
+    private final AudioEventLogger mEventLogger;
 
     private static final VolumeShaper.Configuration FADEOUT_VSHAPE =
             new VolumeShaper.Configuration.Builder()
-                    .setId(PlaybackActivityMonitor.VOLUME_SHAPER_SYSTEM_FADEOUT_ID)
+                    .setId(PlayerFocusEnforcerImpl.VOLUME_SHAPER_SYSTEM_FADEOUT_ID)
                     .setCurve(new float[]{0.f, 0.25f, 1.0f} /* times */,
                             new float[]{1.f, 0.65f, 0.0f} /* volumes */)
                     .setOptionFlags(VolumeShaper.Configuration.OPTION_FLAG_CLOCK_TIME)
@@ -89,14 +92,14 @@ public final class FadeOutManager {
      * @param requester the parameters for the focus request
      * @return true if there can be a fade out over the requester starting to play
      */
-    static boolean canCauseFadeOut(@NonNull FocusRequester requester,
-            @NonNull FocusRequester loser) {
-        if (requester.getAudioAttributes().getContentType() == AudioAttributes.CONTENT_TYPE_SPEECH)
+    static boolean canCauseFadeOut(@NonNull AudioFocusInfo requester,
+            @NonNull AudioFocusInfo loser) {
+        if (requester.getAttributes().getContentType() == AudioAttributes.CONTENT_TYPE_SPEECH)
         {
             if (DEBUG) { Log.i(TAG, "not fading out: new focus is for speech"); }
             return false;
         }
-        if ((loser.getGrantFlags() & AudioManager.AUDIOFOCUS_FLAG_PAUSES_ON_DUCKABLE_LOSS) != 0) {
+        if ((loser.getFlags() & AudioManager.AUDIOFOCUS_FLAG_PAUSES_ON_DUCKABLE_LOSS) != 0) {
             if (DEBUG) { Log.i(TAG, "not fading out: loser has PAUSES_ON_DUCKABLE_LOSS"); }
             return false;
         }
@@ -131,7 +134,8 @@ public final class FadeOutManager {
         return true;
     }
 
-    static long getFadeOutDurationOnFocusLossMillis(AudioAttributes aa) {
+    /** hide */
+    public static long getFadeOutDurationOnFocusLossMillis(AudioAttributes aa) {
         if (ArrayUtils.contains(UNFADEABLE_CONTENT_TYPES, aa.getContentType())) {
             return 0;
         }
@@ -146,10 +150,14 @@ public final class FadeOutManager {
      */
     private final HashMap<Integer, FadedOutApp> mFadedApps = new HashMap<Integer, FadedOutApp>();
 
+    FadeOutManager(AudioEventLogger eventLogger) {
+        mEventLogger = eventLogger;
+    }
+
     synchronized void fadeOutUid(int uid, ArrayList<AudioPlaybackConfiguration> players) {
         Log.i(TAG, "fadeOutUid() uid:" + uid);
         if (!mFadedApps.containsKey(uid)) {
-            mFadedApps.put(uid, new FadedOutApp(uid));
+            mFadedApps.put(uid, new FadedOutApp(uid, mEventLogger));
         }
         final FadedOutApp fa = mFadedApps.get(uid);
         for (AudioPlaybackConfiguration apc : players) {
@@ -172,7 +180,7 @@ public final class FadeOutManager {
     }
 
     // pre-condition: apc.getPlayerState() == AudioPlaybackConfiguration.PLAYER_STATE_STARTED
-    //   see {@link PlaybackActivityMonitor#playerEvent}
+    //   see {@link PlayerFocusEnforcerImpl#playerEvent}
     synchronized void checkFade(@NonNull AudioPlaybackConfiguration apc) {
         if (DEBUG) {
             Log.v(TAG, "checkFade() player piid:"
@@ -215,9 +223,11 @@ public final class FadeOutManager {
     private static final class FadedOutApp {
         private final int mUid;
         private final ArrayList<Integer> mFadedPlayers = new ArrayList<Integer>();
+        private AudioEventLogger mEventLogger;
 
-        FadedOutApp(int uid) {
+        FadedOutApp(int uid, AudioEventLogger eventLogger) {
             mUid = uid;
+            mEventLogger = eventLogger;
         }
 
         void dump(PrintWriter pw) {
@@ -244,8 +254,7 @@ public final class FadeOutManager {
                 return;
             }
             try {
-                PlaybackActivityMonitor.sEventLogger.log(
-                        (new PlaybackActivityMonitor.FadeOutEvent(apc, skipRamp)).printLog(TAG));
+                mEventLogger.log((new FadeOutEvent(apc, skipRamp)).printLog(TAG));
                 apc.getPlayerProxy().applyVolumeShaper(
                         FADEOUT_VSHAPE,
                         skipRamp ? PLAY_SKIP_RAMP : PLAY_CREATE_IF_NEEDED);
@@ -261,7 +270,7 @@ public final class FadeOutManager {
                 final AudioPlaybackConfiguration apc = players.get(piid);
                 if (apc != null) {
                     try {
-                        PlaybackActivityMonitor.sEventLogger.log(
+                        mEventLogger.log(
                                 (new AudioEventLogger.StringEvent("unfading out piid:"
                                         + piid)).printLog(TAG));
                         apc.getPlayerProxy().applyVolumeShaper(
@@ -283,6 +292,17 @@ public final class FadeOutManager {
 
         void removeReleased(@NonNull AudioPlaybackConfiguration apc) {
             mFadedPlayers.remove(new Integer(apc.getPlayerInterfaceId()));
+        }
+    }
+
+    static final class FadeOutEvent extends PlayerFocusEnforcerImpl.VolumeShaperEvent {
+        @Override
+        String getVSAction() {
+            return "fading out";
+        }
+
+        FadeOutEvent(@NonNull AudioPlaybackConfiguration apc, boolean skipRamp) {
+            super(apc, skipRamp);
         }
     }
 }

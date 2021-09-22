@@ -29,6 +29,7 @@ import android.bluetooth.BluetoothLeAudio;
 import android.bluetooth.BluetoothProfile;
 import android.content.Intent;
 import android.media.AudioDeviceAttributes;
+import android.media.AudioEventLogger;
 import android.media.AudioManager;
 import android.media.AudioSystem;
 import android.media.BluetoothProfileConnectionInfo;

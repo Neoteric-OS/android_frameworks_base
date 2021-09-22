@@ -21,6 +21,7 @@ import android.annotation.Nullable;
 import android.media.AudioAttributes;
 import android.media.AudioFocusInfo;
 import android.media.AudioManager;
+import android.media.FadeOutManager;
 import android.media.IAudioFocusDispatcher;
 import android.os.IBinder;
 import android.util.Log;
@@ -45,26 +46,21 @@ public class FocusRequester {
     private AudioFocusDeathHandler mDeathHandler; // may be null
     private IAudioFocusDispatcher mFocusDispatcher; // may be null
     private final IBinder mSourceRef; // may be null
-    private final @NonNull String mClientId;
-    private final @NonNull String mPackageName;
-    private final int mCallingUid;
     private final MediaFocusControl mFocusController; // never null
-    private final int mSdkTarget;
 
     /**
-     * the audio focus gain request that caused the addition of this object in the focus stack.
+     * The AudioFocusInformation associated with this gain request that caused the addition of this
+     * object in the focus stack..
+     * It is qualified by:
+     *      - client ID / packageName / SDK Target / calling UID (or client UID) / Audio Attributes
+     *      - audio focus gain request
+     *      - flags associated with the gain request that qualify the type of grant (e.g. accepting
+     *              delay vs grant must be immediate)
+     *      - loss received by mFocusDispatcher,
+     *              is AudioManager.AUDIOFOCUS_NONE if it never lost focus.
      */
-    private final int mFocusGainRequest;
-    /**
-     * the flags associated with the gain request that qualify the type of grant (e.g. accepting
-     * delay vs grant must be immediate)
-     */
-    private final int mGrantFlags;
-    /**
-     * the audio focus loss received my mFocusDispatcher, is AudioManager.AUDIOFOCUS_NONE if
-     *  it never lost focus.
-     */
-    private int mFocusLossReceived;
+    private final @NonNull AudioFocusInfo mAudioFocusInfo;
+
     /**
      * whether this focus owner listener was notified when it lost focus
      */
@@ -74,10 +70,6 @@ public class FocusRequester {
      * dispatch occurs. It's in "limbo" mode: has lost focus but not released yet until notified
      */
     boolean mFocusLossFadeLimbo;
-    /**
-     * the audio attributes associated with the focus request
-     */
-    private final @NonNull AudioAttributes mAttributes;
 
     /**
      * Class constructor
@@ -96,47 +88,38 @@ public class FocusRequester {
             IAudioFocusDispatcher afl, IBinder source, @NonNull String id,
             AudioFocusDeathHandler hdlr, @NonNull String pn, int uid,
             @NonNull MediaFocusControl ctlr, int sdk) {
-        mAttributes = aa;
         mFocusDispatcher = afl;
         mSourceRef = source;
-        mClientId = id;
         mDeathHandler = hdlr;
-        mPackageName = pn;
-        mCallingUid = uid;
-        mFocusGainRequest = focusRequest;
-        mGrantFlags = grantFlags;
-        mFocusLossReceived = AudioManager.AUDIOFOCUS_NONE;
         mFocusLossWasNotified = true;
         mFocusLossFadeLimbo = false;
         mFocusController = ctlr;
-        mSdkTarget = sdk;
+        mAudioFocusInfo = new AudioFocusInfo(
+                aa, uid, id, pn, focusRequest, AudioManager.AUDIOFOCUS_NONE, grantFlags, sdk);
     }
 
-    FocusRequester(AudioFocusInfo afi, IAudioFocusDispatcher afl,
+    FocusRequester(@NonNull AudioFocusInfo afi, IAudioFocusDispatcher afl,
              IBinder source, AudioFocusDeathHandler hdlr, @NonNull MediaFocusControl ctlr) {
-        mAttributes = afi.getAttributes();
-        mClientId = afi.getClientId();
-        mPackageName = afi.getPackageName();
-        mCallingUid = afi.getClientUid();
-        mFocusGainRequest = afi.getGainRequest();
-        mFocusLossReceived = AudioManager.AUDIOFOCUS_NONE;
         mFocusLossWasNotified = true;
         mFocusLossFadeLimbo = false;
-        mGrantFlags = afi.getFlags();
-        mSdkTarget = afi.getSdkTarget();
 
         mFocusDispatcher = afl;
         mSourceRef = source;
         mDeathHandler = hdlr;
         mFocusController = ctlr;
+        mAudioFocusInfo = afi;
+    }
+
+    AudioFocusInfo getAudioFocusInfo() {
+         return mAudioFocusInfo;
     }
 
     boolean hasSameClient(String otherClient) {
-        return mClientId.compareTo(otherClient) == 0;
+        return getClientId().compareTo(otherClient) == 0;
     }
 
     boolean isLockedFocusOwner() {
-        return ((mGrantFlags & AudioManager.AUDIOFOCUS_FLAG_LOCK) != 0);
+        return ((getGrantFlags() & AudioManager.AUDIOFOCUS_FLAG_LOCK) != 0);
     }
 
     /**
@@ -155,100 +138,53 @@ public class FocusRequester {
     }
 
     @NonNull String getPackageName() {
-        return mPackageName;
+        return mAudioFocusInfo.getPackageName();
     }
 
     boolean hasSamePackage(@NonNull String pack) {
-        return mPackageName.compareTo(pack) == 0;
+        return mAudioFocusInfo.getPackageName().compareTo(pack) == 0;
     }
 
     boolean hasSameUid(int uid) {
-        return mCallingUid == uid;
+        return mAudioFocusInfo.getClientUid() == uid;
     }
 
     int getClientUid() {
-        return mCallingUid;
+        return mAudioFocusInfo.getClientUid();
     }
 
     String getClientId() {
-        return mClientId;
+        return mAudioFocusInfo.getClientId();
     }
 
     int getGainRequest() {
-        return mFocusGainRequest;
+        return mAudioFocusInfo.getGainRequest();
     }
 
     int getGrantFlags() {
-        return mGrantFlags;
+        return mAudioFocusInfo.getFlags();
     }
 
     @NonNull AudioAttributes getAudioAttributes() {
-        return mAttributes;
+        return mAudioFocusInfo.getAttributes();
     }
 
     int getSdkTarget() {
-        return mSdkTarget;
-    }
-
-    private static String focusChangeToString(int focus) {
-        switch(focus) {
-            case AudioManager.AUDIOFOCUS_NONE:
-                return "none";
-            case AudioManager.AUDIOFOCUS_GAIN:
-                return "GAIN";
-            case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT:
-                return "GAIN_TRANSIENT";
-            case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK:
-                return "GAIN_TRANSIENT_MAY_DUCK";
-            case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE:
-                return "GAIN_TRANSIENT_EXCLUSIVE";
-            case AudioManager.AUDIOFOCUS_LOSS:
-                return "LOSS";
-            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                return "LOSS_TRANSIENT";
-            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                return "LOSS_TRANSIENT_CAN_DUCK";
-            default:
-                return "[invalid focus change" + focus + "]";
-        }
+        return mAudioFocusInfo.getSdkTarget();
     }
 
     private String focusGainToString() {
-        return focusChangeToString(mFocusGainRequest);
+        return AudioFocusInfo.focusChangeToString(getGainRequest());
     }
 
     private String focusLossToString() {
-        return focusChangeToString(mFocusLossReceived);
-    }
-
-    private static String flagsToString(int flags) {
-        String msg = new String();
-        if ((flags & AudioManager.AUDIOFOCUS_FLAG_DELAY_OK) != 0) {
-            msg += "DELAY_OK";
-        }
-        if ((flags & AudioManager.AUDIOFOCUS_FLAG_LOCK) != 0)     {
-            if (!msg.isEmpty()) { msg += "|"; }
-            msg += "LOCK";
-        }
-        if ((flags & AudioManager.AUDIOFOCUS_FLAG_PAUSES_ON_DUCKABLE_LOSS) != 0) {
-            if (!msg.isEmpty()) { msg += "|"; }
-            msg += "PAUSES_ON_DUCKABLE_LOSS";
-        }
-        return msg;
+        return AudioFocusInfo.focusChangeToString(mAudioFocusInfo.getLossReceived());
     }
 
     void dump(PrintWriter pw) {
-        pw.println("  source:" + mSourceRef
-                + " -- pack: " + mPackageName
-                + " -- client: " + mClientId
-                + " -- gain: " + focusGainToString()
-                + " -- flags: " + flagsToString(mGrantFlags)
-                + " -- loss: " + focusLossToString()
+        pw.println("  source:" + mSourceRef + " -- " + mAudioFocusInfo
                 + " -- notified: " + mFocusLossWasNotified
-                + " -- limbo" + mFocusLossFadeLimbo
-                + " -- uid: " + mCallingUid
-                + " -- attr: " + mAttributes
-                + " -- sdk:" + mSdkTarget);
+                + " -- limbo" + mFocusLossFadeLimbo);
     }
 
     /**
@@ -288,7 +224,7 @@ public class FocusRequester {
     private int focusLossForGainRequest(int gainRequest) {
         switch(gainRequest) {
             case AudioManager.AUDIOFOCUS_GAIN:
-                switch(mFocusLossReceived) {
+                switch(mAudioFocusInfo.getLossReceived()) {
                     case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                     case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                     case AudioManager.AUDIOFOCUS_LOSS:
@@ -297,7 +233,7 @@ public class FocusRequester {
                 }
             case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE:
             case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT:
-                switch(mFocusLossReceived) {
+                switch(mAudioFocusInfo.getLossReceived()) {
                     case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                     case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                     case AudioManager.AUDIOFOCUS_NONE:
@@ -306,7 +242,7 @@ public class FocusRequester {
                         return AudioManager.AUDIOFOCUS_LOSS;
                 }
             case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK:
-                switch(mFocusLossReceived) {
+                switch(mAudioFocusInfo.getLossReceived()) {
                     case AudioManager.AUDIOFOCUS_NONE:
                     case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                         return AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK;
@@ -338,21 +274,22 @@ public class FocusRequester {
     @GuardedBy("MediaFocusControl.mAudioFocusLock")
     void handleFocusGain(int focusGain) {
         try {
-            mFocusLossReceived = AudioManager.AUDIOFOCUS_NONE;
+            mAudioFocusInfo.setLossReceived(AudioManager.AUDIOFOCUS_NONE);
             mFocusLossFadeLimbo = false;
-            mFocusController.notifyExtPolicyFocusGrant_syncAf(toAudioFocusInfo(),
+            mFocusController.notifyExtPolicyFocusGrant_syncAf(mAudioFocusInfo,
                     AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
             final IAudioFocusDispatcher fd = mFocusDispatcher;
             if (fd != null) {
                 if (DEBUG) {
-                    Log.v(TAG, "dispatching " + focusChangeToString(focusGain) + " to "
-                        + mClientId);
+                    Log.v(TAG, "dispatching " + AudioFocusInfo.focusChangeToString(focusGain)
+                        + " to "
+                        + getClientId());
                 }
                 if (mFocusLossWasNotified) {
-                    fd.dispatchAudioFocusChange(focusGain, mClientId);
+                    fd.dispatchAudioFocusChange(focusGain, getClientId());
                 }
             }
-            mFocusController.restoreVShapedPlayers(this);
+            mFocusController.restoreVShapedPlayers(this.getAudioFocusInfo());
         } catch (android.os.RemoteException e) {
             Log.e(TAG, "Failure to signal gain of audio focus due to: ", e);
         }
@@ -361,7 +298,7 @@ public class FocusRequester {
     @GuardedBy("MediaFocusControl.mAudioFocusLock")
     void handleFocusGainFromRequest(int focusRequestResult) {
         if (focusRequestResult == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-            mFocusController.restoreVShapedPlayers(this);
+            mFocusController.restoreVShapedPlayers(this.getAudioFocusInfo());
         }
     }
 
@@ -369,8 +306,8 @@ public class FocusRequester {
     void handleFocusLoss(int focusLoss, @Nullable final FocusRequester frWinner, boolean forceDuck)
     {
         try {
-            if (focusLoss != mFocusLossReceived) {
-                mFocusLossReceived = focusLoss;
+            if (focusLoss != mAudioFocusInfo.getLossReceived()) {
+                mAudioFocusInfo.setLossReceived(focusLoss);
                 mFocusLossWasNotified = false;
                 // before dispatching a focus loss, check if the following conditions are met:
                 // 1/ the framework is not supposed to notify the focus loser on a DUCK loss
@@ -379,15 +316,16 @@ public class FocusRequester {
                 // 3/ the focus loser isn't flagged as pausing in a DUCK loss
                 // if they are, do not notify the focus loser
                 if (!mFocusController.mustNotifyFocusOwnerOnDuck()
-                        && mFocusLossReceived == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK
-                        && (mGrantFlags
+                        && mAudioFocusInfo.getLossReceived()
+                                == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK
+                        && (getGrantFlags()
                                 & AudioManager.AUDIOFOCUS_FLAG_PAUSES_ON_DUCKABLE_LOSS) == 0) {
                     if (DEBUG) {
-                        Log.v(TAG, "NOT dispatching " + focusChangeToString(mFocusLossReceived)
-                                + " to " + mClientId + ", to be handled externally");
+                        Log.v(TAG, "NOT dispatching " + focusLossToString()
+                                + " to " + getClientId() + ", to be handled externally");
                     }
                     mFocusController.notifyExtPolicyFocusLoss_syncAf(
-                            toAudioFocusInfo(), false /* wasDispatched */);
+                            mAudioFocusInfo, false /* wasDispatched */);
                     return;
                 }
 
@@ -399,24 +337,24 @@ public class FocusRequester {
 
                 if (handled) {
                     if (DEBUG) {
-                        Log.v(TAG, "NOT dispatching " + focusChangeToString(mFocusLossReceived)
-                                + " to " + mClientId + ", response handled by framework");
+                        Log.v(TAG, "NOT dispatching " + focusLossToString()
+                                + " to " + getClientId() + ", response handled by framework");
                     }
                     mFocusController.notifyExtPolicyFocusLoss_syncAf(
-                            toAudioFocusInfo(), false /* wasDispatched */);
+                            mAudioFocusInfo, false /* wasDispatched */);
                     return; // with mFocusLossWasNotified = false
                 }
 
                 final IAudioFocusDispatcher fd = mFocusDispatcher;
                 if (fd != null) {
                     if (DEBUG) {
-                        Log.v(TAG, "dispatching " + focusChangeToString(mFocusLossReceived) + " to "
-                            + mClientId);
+                        Log.v(TAG, "dispatching " + focusLossToString() + " to "
+                            + getClientId());
                     }
                     mFocusController.notifyExtPolicyFocusLoss_syncAf(
-                            toAudioFocusInfo(), true /* wasDispatched */);
+                            mAudioFocusInfo, true /* wasDispatched */);
                     mFocusLossWasNotified = true;
-                    fd.dispatchAudioFocusChange(mFocusLossReceived, mClientId);
+                    fd.dispatchAudioFocusChange(mAudioFocusInfo.getLossReceived(), getClientId());
                 }
             }
         } catch (android.os.RemoteException e) {
@@ -434,7 +372,7 @@ public class FocusRequester {
     @GuardedBy("MediaFocusControl.mAudioFocusLock")
     private boolean frameworkHandleFocusLoss(int focusLoss, @NonNull final FocusRequester frWinner,
                                              boolean forceDuck) {
-        if (frWinner.mCallingUid == this.mCallingUid) {
+        if (frWinner.getClientUid() == this.getClientUid()) {
             // the focus change is within the same app, so let the dispatching
             // happen as if the framework was not involved.
             return false;
@@ -446,21 +384,22 @@ public class FocusRequester {
             }
 
             // candidate for enforcement by the framework
-            if (!forceDuck && ((mGrantFlags
+            if (!forceDuck && ((getGrantFlags()
                     & AudioManager.AUDIOFOCUS_FLAG_PAUSES_ON_DUCKABLE_LOSS) != 0)) {
                 // the focus loser declared it would pause instead of duck, let it
                 // handle it (the framework doesn't pause for apps)
-                Log.v(TAG, "not ducking uid " + this.mCallingUid + " - flags");
+                Log.v(TAG, "not ducking uid " + this.getClientUid() + " - flags");
                 return false;
             }
             if (!forceDuck && (MediaFocusControl.ENFORCE_DUCKING_FOR_NEW
                     && this.getSdkTarget() <= MediaFocusControl.DUCKING_IN_APP_SDK_LEVEL)) {
                 // legacy behavior, apps used to be notified when they should be ducking
-                Log.v(TAG, "not ducking uid " + this.mCallingUid + " - old SDK");
+                Log.v(TAG, "not ducking uid " + this.getClientUid() + " - old SDK");
                 return false;
             }
 
-            return mFocusController.duckPlayers(frWinner, /*loser*/ this, forceDuck);
+            return mFocusController.duckPlayers(
+                    frWinner.getAudioFocusInfo(), /*loser*/ this.getAudioFocusInfo(), forceDuck);
         }
 
         if (focusLoss == AudioManager.AUDIOFOCUS_LOSS) {
@@ -469,7 +408,8 @@ public class FocusRequester {
             }
 
             // candidate for fade-out before a receiving a loss
-            boolean playersAreFaded =  mFocusController.fadeOutPlayers(frWinner, /* loser */ this);
+            boolean playersAreFaded =  mFocusController.fadeOutPlayers(
+                    frWinner.getAudioFocusInfo(), /* loser */ this.getAudioFocusInfo());
             if (playersAreFaded) {
                 // active players are being faded out, delay the dispatch of focus loss
                 // mark this instance as being faded so it's not released yet as the focus loss
@@ -497,18 +437,18 @@ public class FocusRequester {
                 || focusChange == AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE
                 || focusChange == AudioManager.AUDIOFOCUS_GAIN_TRANSIENT
                 || focusChange == AudioManager.AUDIOFOCUS_GAIN)
-                && (mFocusGainRequest != focusChange)){
-            Log.w(TAG, "focus gain was requested with " + mFocusGainRequest
+                && (getGainRequest() != focusChange)){
+            Log.w(TAG, "focus gain was requested with " + getGainRequest()
                     + ", dispatching " + focusChange);
         } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK
                 || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT
                 || focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-            mFocusLossReceived = focusChange;
+            mAudioFocusInfo.setLossReceived(focusChange);
         }
         try {
-            fd.dispatchAudioFocusChange(focusChange, mClientId);
+            fd.dispatchAudioFocusChange(focusChange, getClientId());
         } catch (android.os.RemoteException e) {
-            Log.e(TAG, "dispatchFocusChange: error talking to focus listener " + mClientId, e);
+            Log.e(TAG, "dispatchFocusChange: error talking to focus listener " + getClientId(), e);
             return AudioManager.AUDIOFOCUS_REQUEST_FAILED;
         }
         return AudioManager.AUDIOFOCUS_REQUEST_GRANTED;
@@ -523,18 +463,13 @@ public class FocusRequester {
             return;
         }
         if (DEBUG) {
-            Log.v(TAG, "dispatching result" + requestResult + " to " + mClientId);
+            Log.v(TAG, "dispatching result" + requestResult + " to " + getClientId());
         }
         try {
-            fd.dispatchFocusResultFromExtPolicy(requestResult, mClientId);
+            fd.dispatchFocusResultFromExtPolicy(requestResult, getClientId());
         } catch (android.os.RemoteException e) {
             Log.e(TAG, "dispatchFocusResultFromExtPolicy: error talking to focus listener"
-                    + mClientId, e);
+                    + getClientId(), e);
         }
-    }
-
-    AudioFocusInfo toAudioFocusInfo() {
-        return new AudioFocusInfo(mAttributes, mCallingUid, mClientId, mPackageName,
-                mFocusGainRequest, mFocusLossReceived, mGrantFlags, mSdkTarget);
     }
 }

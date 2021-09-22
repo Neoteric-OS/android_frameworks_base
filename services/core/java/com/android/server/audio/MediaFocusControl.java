@@ -22,11 +22,14 @@ import android.app.AppOpsManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.media.AudioAttributes;
+import android.media.AudioEventLogger;
 import android.media.AudioFocusInfo;
 import android.media.AudioManager;
 import android.media.AudioSystem;
+import android.media.FadeOutManager;
 import android.media.IAudioFocusDispatcher;
 import android.media.MediaMetrics;
+import android.media.PlayerFocusEnforcer;
 import android.media.audiopolicy.IAudioPolicyCallback;
 import android.os.Binder;
 import android.os.Build;
@@ -123,13 +126,13 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
     //=================================================================
     // PlayerFocusEnforcer implementation
     @Override
-    public boolean duckPlayers(@NonNull FocusRequester winner, @NonNull FocusRequester loser,
+    public boolean duckPlayers(@NonNull AudioFocusInfo winner, @NonNull AudioFocusInfo loser,
                                boolean forceDuck) {
         return mFocusEnforcer.duckPlayers(winner, loser, forceDuck);
     }
 
     @Override
-    public void restoreVShapedPlayers(@NonNull FocusRequester winner) {
+    public void restoreVShapedPlayers(@NonNull AudioFocusInfo winner) {
         mFocusEnforcer.restoreVShapedPlayers(winner);
         // remove scheduled events to unfade out offending players (if any) corresponding to
         // this uid, as we're removing any effects of muting/ducking/fade out now
@@ -149,7 +152,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
     }
 
     @Override
-    public boolean fadeOutPlayers(@NonNull FocusRequester winner, @NonNull FocusRequester loser) {
+    public boolean fadeOutPlayers(@NonNull AudioFocusInfo winner, @NonNull AudioFocusInfo loser) {
         return mFocusEnforcer.fadeOutPlayers(winner, loser);
     }
 
@@ -321,7 +324,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
             FocusRequester fr = mFocusStack.pop();
             fr.maybeRelease();
             if (notifyFocusFollowers) {
-                abandonSource = fr.toAudioFocusInfo();
+                abandonSource = fr.getAudioFocusInfo();
             }
             if (signal) {
                 // notify the new top of the stack it gained focus
@@ -340,7 +343,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                             + clientToRemove);
                     stackIterator.remove();
                     if (notifyFocusFollowers) {
-                        abandonSource = fr.toAudioFocusInfo();
+                        abandonSource = fr.getAudioFocusInfo();
                     }
                     // stack entry not used anymore, clear references
                     fr.maybeRelease();
@@ -390,7 +393,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                                 + " in uid:" + fr.getClientUid()
                                 + " pack:" + fr.getPackageName()
                                 + " died"));
-                notifyExtPolicyFocusLoss_syncAf(fr.toAudioFocusInfo(), false);
+                notifyExtPolicyFocusLoss_syncAf(fr.getAudioFocusInfo(), false);
 
                 stackIterator.remove();
                 // stack entry not used anymore, clear references
@@ -428,7 +431,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                                 + " pack:" + fr.getPackageName()
                                 + " died"));
                 fr.release();
-                notifyExtFocusPolicyFocusAbandon_syncAf(fr.toAudioFocusInfo());
+                notifyExtFocusPolicyFocusAbandon_syncAf(fr.getAudioFocusInfo());
                 break;
             }
         }
@@ -626,7 +629,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                         return;
                     }
                     try {
-                        pcb2.notifyAudioFocusGrant(mFocusStack.peek().toAudioFocusInfo(),
+                        pcb2.notifyAudioFocusGrant(mFocusStack.peek().getAudioFocusInfo(),
                                 // top of focus stack always has focus
                                 AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
                     } catch (RemoteException e) {
@@ -749,7 +752,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
             }
             if (fr != null) {
                 fr.dispatchFocusResultFromExtPolicy(requestResult);
-                notifyExtPolicyFocusGrant_syncAf(fr.toAudioFocusInfo(), requestResult);
+                notifyExtPolicyFocusGrant_syncAf(fr.getAudioFocusInfo(), requestResult);
             }
         }
     }
@@ -771,7 +774,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
             //oneway
             mFocusPolicy.notifyAudioFocusAbandon(afi);
             if (fr != null) {
-                notifyExtPolicyFocusLoss_syncAf(fr.toAudioFocusInfo(), false);
+                notifyExtPolicyFocusLoss_syncAf(fr.getAudioFocusInfo(), false);
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Can't call notifyAudioFocusAbandon() on IAudioPolicyCallback "
@@ -806,11 +809,11 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                     || focusChange == AudioManager.AUDIOFOCUS_GAIN_TRANSIENT
                     || focusChange == AudioManager.AUDIOFOCUS_GAIN) {
                 notifyExtPolicyFocusGrant_syncAf(
-                        fr.toAudioFocusInfo(), AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
+                        fr.getAudioFocusInfo(), AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK
                     || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT
                     || focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-                notifyExtPolicyFocusLoss_syncAf(fr.toAudioFocusInfo(), false);
+                notifyExtPolicyFocusLoss_syncAf(fr.getAudioFocusInfo(), false);
             }
             return fr.dispatchFocusChange(focusChange);
         }
@@ -847,42 +850,6 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
      */
     private final static int[] USAGES_TO_MUTE_IN_RING_OR_CALL =
         { AudioAttributes.USAGE_MEDIA, AudioAttributes.USAGE_GAME };
-
-    /**
-     * Return the volume ramp time expected before playback with the given AudioAttributes would
-     * start after gaining audio focus.
-     * @param attr attributes of the sound about to start playing
-     * @return time in ms
-     */
-    protected static int getFocusRampTimeMs(int focusGain, AudioAttributes attr) {
-        switch (attr.getUsage()) {
-            case AudioAttributes.USAGE_MEDIA:
-            case AudioAttributes.USAGE_GAME:
-                return 1000;
-            case AudioAttributes.USAGE_ALARM:
-            case AudioAttributes.USAGE_NOTIFICATION_RINGTONE:
-            case AudioAttributes.USAGE_ASSISTANT:
-            case AudioAttributes.USAGE_ASSISTANCE_ACCESSIBILITY:
-            case AudioAttributes.USAGE_ASSISTANCE_NAVIGATION_GUIDANCE:
-            case AudioAttributes.USAGE_ANNOUNCEMENT:
-                return 700;
-            case AudioAttributes.USAGE_VOICE_COMMUNICATION:
-            case AudioAttributes.USAGE_VOICE_COMMUNICATION_SIGNALLING:
-            case AudioAttributes.USAGE_NOTIFICATION:
-            case AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_REQUEST:
-            case AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_INSTANT:
-            case AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_DELAYED:
-            case AudioAttributes.USAGE_NOTIFICATION_EVENT:
-            case AudioAttributes.USAGE_ASSISTANCE_SONIFICATION:
-            case AudioAttributes.USAGE_VEHICLE_STATUS:
-                return 500;
-            case AudioAttributes.USAGE_EMERGENCY:
-            case AudioAttributes.USAGE_SAFETY:
-            case AudioAttributes.USAGE_UNKNOWN:
-            default:
-                return 0;
-        }
-    }
 
     /** @see AudioManager#requestAudioFocus(AudioManager.OnAudioFocusChangeListener, int, int, int)
      * @param aa
@@ -1007,7 +974,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                     // unlink death handler so it can be gc'ed.
                     // linkToDeath() creates a JNI global reference preventing collection.
                     cb.unlinkToDeath(afdh, 0);
-                    notifyExtPolicyFocusGrant_syncAf(fr.toAudioFocusInfo(),
+                    notifyExtPolicyFocusGrant_syncAf(fr.getAudioFocusInfo(),
                             AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
                     return AudioManager.AUDIOFOCUS_REQUEST_GRANTED;
                 }
@@ -1048,7 +1015,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                         mMultiAudioFocusList.add(nfr);
                     }
                     nfr.handleFocusGainFromRequest(AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
-                    notifyExtPolicyFocusGrant_syncAf(nfr.toAudioFocusInfo(),
+                    notifyExtPolicyFocusGrant_syncAf(nfr.getAudioFocusInfo(),
                             AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
                     return AudioManager.AUDIOFOCUS_REQUEST_GRANTED;
                 }
@@ -1059,7 +1026,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                 // which implies the focus stack is not empty.
                 final int requestResult = pushBelowLockedFocusOwners(nfr);
                 if (requestResult != AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
-                    notifyExtPolicyFocusGrant_syncAf(nfr.toAudioFocusInfo(), requestResult);
+                    notifyExtPolicyFocusGrant_syncAf(nfr.getAudioFocusInfo(), requestResult);
                 }
                 return requestResult;
             } else {
@@ -1070,7 +1037,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                 mFocusStack.push(nfr);
                 nfr.handleFocusGainFromRequest(AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
             }
-            notifyExtPolicyFocusGrant_syncAf(nfr.toAudioFocusInfo(),
+            notifyExtPolicyFocusGrant_syncAf(nfr.getAudioFocusInfo(),
                     AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
 
             if (ENFORCE_MUTING_FOR_RING_OR_CALL & enteringRingOrCall) {
@@ -1213,8 +1180,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
             Log.v(TAG, "postDelayedLossAfterFade loser=" + focusLoser.getPackageName());
         }
         mFocusHandler.sendMessageDelayed(
-                mFocusHandler.obtainMessage(MSG_L_FOCUS_LOSS_AFTER_FADE, focusLoser),
-                FadeOutManager.FADE_OUT_DURATION_MS);
+                mFocusHandler.obtainMessage(MSG_L_FOCUS_LOSS_AFTER_FADE, focusLoser), delayMs);
     }
 
     private void postForgetUidLater(int uid) {

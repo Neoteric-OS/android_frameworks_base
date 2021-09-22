@@ -17,6 +17,9 @@
 package com.android.server.audio;
 
 import static android.Manifest.permission.REMOTE_AUDIO_PLAYBACK;
+import static android.media.AudioEventLogger.Event.ALOGE;
+import static android.media.AudioEventLogger.Event.ALOGI;
+import static android.media.AudioEventLogger.Event.ALOGW;
 import static android.media.AudioManager.RINGER_MODE_NORMAL;
 import static android.media.AudioManager.RINGER_MODE_SILENT;
 import static android.media.AudioManager.RINGER_MODE_VIBRATE;
@@ -25,10 +28,6 @@ import static android.os.Process.FIRST_APPLICATION_UID;
 import static android.provider.Settings.Secure.VOLUME_HUSH_MUTE;
 import static android.provider.Settings.Secure.VOLUME_HUSH_OFF;
 import static android.provider.Settings.Secure.VOLUME_HUSH_VIBRATE;
-
-import static com.android.server.audio.AudioEventLogger.Event.ALOGE;
-import static com.android.server.audio.AudioEventLogger.Event.ALOGI;
-import static com.android.server.audio.AudioEventLogger.Event.ALOGW;
 
 import android.Manifest;
 import android.annotation.IntDef;
@@ -74,6 +73,7 @@ import android.media.AudioAttributes;
 import android.media.AudioAttributes.AttributeSystemUsage;
 import android.media.AudioDeviceAttributes;
 import android.media.AudioDeviceInfo;
+import android.media.AudioEventLogger;
 import android.media.AudioFocusInfo;
 import android.media.AudioFocusRequest;
 import android.media.AudioFormat;
@@ -103,6 +103,7 @@ import android.media.IVolumeController;
 import android.media.MediaMetrics;
 import android.media.MediaRecorder.AudioSource;
 import android.media.PlayerBase;
+import android.media.PlayerFocusEnforcerImpl;
 import android.media.Spatializer;
 import android.media.VolumePolicy;
 import android.media.audiofx.AudioEffect;
@@ -8643,7 +8644,7 @@ public class AudioService extends IAudioService.Stub
     }
 
     public int getFocusRampTimeMs(int focusGain, AudioAttributes attr) {
-        return mMediaFocusControl.getFocusRampTimeMs(focusGain, attr);
+        return PlayerFocusEnforcerImpl.getFocusRampTimeMs(focusGain, attr);
     }
 
     /** only public for mocking/spying, do not call outside of AudioService */

@@ -17,6 +17,7 @@
 package com.android.server.audio;
 
 import android.media.AudioAttributes;
+import android.media.AudioEventLogger;
 import android.media.AudioManager;
 import android.media.AudioSystem;
 import android.media.MediaMetrics;

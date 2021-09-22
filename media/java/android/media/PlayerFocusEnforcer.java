@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The Android Open Source Project
+ * Copyright (C) 2021 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 
-package com.android.server.audio;
+package android.media;
 
 import android.annotation.NonNull;
 
+/**
+ * An interface to implement a Focus enforcer in charge of automatic ducking / mute.
+ * It prevents from relying on client to perform the ducking.
+ *
+ * @hide
+ */
 public interface PlayerFocusEnforcer {
 
     /**
@@ -26,26 +32,34 @@ public interface PlayerFocusEnforcer {
      * @param winner
      * @param loser
      * @return
+     *
+     * @hide
      */
-    boolean duckPlayers(@NonNull FocusRequester winner, @NonNull FocusRequester loser,
-                               boolean forceDuck);
+    boolean duckPlayers(
+            @NonNull AudioFocusInfo winner, @NonNull AudioFocusInfo loser, boolean forceDuck);
 
     /**
      * Restore the initial state of any players that had had a volume ramp applied as the result
      * of a duck or fade out through {@link #duckPlayers(FocusRequester, FocusRequester, boolean)}
      * or {@link #fadeOutPlayers(FocusRequester, FocusRequester)}
      * @param winner
+     *
+     * @hide
      */
-    void restoreVShapedPlayers(@NonNull FocusRequester winner);
+    void restoreVShapedPlayers(@NonNull AudioFocusInfo winner);
 
     /**
      * Mute players at the beginning of a call
      * @param usagesToMute array of {@link android.media.AudioAttributes} usages to mute
+     *
+     * @hide
      */
     void mutePlayersForCall(int[] usagesToMute);
 
     /**
      * Unmute players at the end of a call
+     *
+     * @hide
      */
     void unmutePlayersForCall();
 
@@ -57,7 +71,7 @@ public interface PlayerFocusEnforcer {
      *         faded out (because of audio attributes, or player types), and as such were faded
      *         out.
      */
-    boolean fadeOutPlayers(@NonNull FocusRequester winner, @NonNull FocusRequester loser);
+    boolean fadeOutPlayers(@NonNull AudioFocusInfo winner, @NonNull AudioFocusInfo loser);
 
     /**
      * Mark this UID as no longer playing a role in focus enforcement
