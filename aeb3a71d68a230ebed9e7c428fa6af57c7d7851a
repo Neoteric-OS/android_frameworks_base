@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f11573d4_c442f0a7",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-09-22T17:20:03Z",
+      "side": 1,
+      "message": "I think system APIs should generally have privileged permissions?\n\nalso might be missing something, but I thought it\u0027d all be BLUETOOTH_CONNECT, etc now with the permissions refactor instead of BLUETOOTH? (but I see it in already existing code too?)",
+      "range": {
+        "startLine": 1572,
+        "startChar": 4,
+        "endLine": 1572,
+        "endChar": 54
+      },
+      "revId": "aeb3a71d68a230ebed9e7c428fa6af57c7d7851a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
