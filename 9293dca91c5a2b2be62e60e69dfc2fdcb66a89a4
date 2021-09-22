@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e5d279e_95b2aedf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-09-22T15:29:53Z",
+      "side": 1,
+      "message": "Wow, thanks for such a carefully crafted CL and thoughtful write-up in the commit description!  😄  I wish more CLs were written like this one  😊",
+      "revId": "9293dca91c5a2b2be62e60e69dfc2fdcb66a89a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
