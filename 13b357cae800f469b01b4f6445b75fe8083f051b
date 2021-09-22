@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31a3549c_ba95584d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-09-22T15:55:54Z",
+      "side": 1,
+      "message": "Resolved all comments, thanks Bernado! I will run some test locally then add code owners.",
+      "revId": "13b357cae800f469b01b4f6445b75fe8083f051b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
