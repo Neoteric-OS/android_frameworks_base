@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.audio;
+package android.media;
 
 import android.util.Log;
 
@@ -23,6 +23,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 
+/**
+ * @hide
+ */
 public class AudioEventLogger {
 
     // ring buffer of events to log.
@@ -33,16 +36,20 @@ public class AudioEventLogger {
     // the maximum number of events to keep in log
     private final int mMemSize;
 
+    /**
+     * @hide
+     */
     public static abstract class Event {
         // formatter for timestamps
         private final static SimpleDateFormat sFormat = new SimpleDateFormat("MM-dd HH:mm:ss:SSS");
 
         private final long mTimestamp;
 
-        Event() {
+        public Event() {
             mTimestamp = System.currentTimeMillis();
         }
 
+        @Override
         public String toString() {
             return (new StringBuilder(sFormat.format(new Date(mTimestamp))))
                     .append(" ").append(eventToString()).toString();
@@ -101,9 +108,12 @@ public class AudioEventLogger {
          * Timestamp information will be automatically added, do not include it.
          * @return a string representation of the event that occurred.
          */
-        abstract public String eventToString();
+        public abstract String eventToString();
     }
 
+    /**
+     * @hide
+     */
     public static class StringEvent extends Event {
         private final String mMsg;
 
@@ -128,6 +138,9 @@ public class AudioEventLogger {
         mTitle = title;
     }
 
+    /**
+     * @hide
+     */
     public synchronized void log(Event evt) {
         if (mEvents.size() >= mMemSize) {
             mEvents.removeFirst();
@@ -135,6 +148,11 @@ public class AudioEventLogger {
         mEvents.add(evt);
     }
 
+    /**
+     * For AudioService dump
+     * @param pw
+     * @hide
+     */
     public synchronized void dump(PrintWriter pw) {
         pw.println("Audio event log: " + mTitle);
         for (Event evt : mEvents) {
