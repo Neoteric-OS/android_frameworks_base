@@ -16,6 +16,24 @@
       "message": "Hi Rajesh,\nAre we able to assign different uid to different test cases?\nIn CTS, there are three test apks because we sign the three test apks with different keys so that we can validate different access rule combinations.\nIf we can not assign different uid to these three VTS test cases, I feel we do not need to keep three test cases here.\n ",
       "revId": "c17eff841aec9001fd829f480306a3325aca9694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9aceeb5b_4eb3552e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1611900
+      },
+      "writtenOn": "2021-09-23T16:57:55Z",
+      "side": 1,
+      "message": "I think all tests run under same UID 0 in VTS, it may not possible to assign different UIDs for each. \n\n@Steven, Could you please help us to understand in case if you have any idea about changing UID for each tests modules.",
+      "parentUuid": "c31bbda2_728ab5ff",
+      "revId": "c17eff841aec9001fd829f480306a3325aca9694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
