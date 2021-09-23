@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "911a2135_dc06e323",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2763,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-23T16:23:55Z",
+      "side": 1,
+      "message": "classes\n\n(also format to use as much line limit as possible)",
+      "range": {
+        "startLine": 2763,
+        "startChar": 44,
+        "endLine": 2763,
+        "endChar": 49
+      },
+      "revId": "671726f254326315797383a16c03c7b47c8b8dee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
