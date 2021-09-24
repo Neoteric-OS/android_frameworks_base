@@ -52,6 +52,24 @@
       "parentUuid": "9aceeb5b_4eb3552e",
       "revId": "c17eff841aec9001fd829f480306a3325aca9694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3316788f_bf643c5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1611900
+      },
+      "writtenOn": "2021-09-24T16:57:14Z",
+      "side": 1,
+      "message": "Hi Steven, requirement is to assign predefined unique UID to each VTS test module (like we assign for predfined UID for services in its .rc file) instead of running them with shell UID, if we assign predidefined UID then using that rules shall be defined in secure element rules file to control the access to secure element. (Could you please share any references in case it can achieved).",
+      "parentUuid": "f76b00f6_4a1194f7",
+      "revId": "c17eff841aec9001fd829f480306a3325aca9694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
