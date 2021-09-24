@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a707710_772e55ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-24T14:53:56Z",
+      "side": 1,
+      "message": "Hey Artur, we\u0027re getting the Non-SDK API warning on this CL saying \"WARNING: Consider keeping @UnsupportedAppUsage on the new signature.\", because of the addition of Class\u003cT\u003e parameter in the private Parcel.readListInternal(), but the method didn\u0027t have @UnsupportedAppUsage before, any ideas about what\u0027s going on?",
+      "revId": "772766e4167a8b0fd4ae3e26ec607d7e6f0d5ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "468865a3_e298a323",
