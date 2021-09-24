@@ -22,6 +22,30 @@
       },
       "revId": "f3d00d84c3acb5bf6f78f3f3da3dd2dbb05111ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b34cde83_9b295fe4",
+        "filename": "libs/hwui/Readback.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1355299
+      },
+      "writtenOn": "2021-09-24T03:06:43Z",
+      "side": 1,
+      "message": "We tested it based on the kStrict_SrcRectConstraint. But it seems inset from kStrict_SrcRectConstraint is not enough for YUV textures.\nThat\u0027s why we tried a modified source rectangle to do similar flow like GLConsumer\u0027s shrinking pixel before texture coordinate calculation.\nWill Google provide new patch on this to replace kStrict_SrcRectConstraint?",
+      "parentUuid": "ecf81935_252f77c9",
+      "range": {
+        "startLine": 202,
+        "startChar": 38,
+        "endLine": 202,
+        "endChar": 63
+      },
+      "revId": "f3d00d84c3acb5bf6f78f3f3da3dd2dbb05111ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
