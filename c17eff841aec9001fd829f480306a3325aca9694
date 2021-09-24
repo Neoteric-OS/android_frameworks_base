@@ -34,6 +34,24 @@
       "parentUuid": "c31bbda2_728ab5ff",
       "revId": "c17eff841aec9001fd829f480306a3325aca9694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f76b00f6_4a1194f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-24T02:49:25Z",
+      "side": 1,
+      "message": "These tests will run as root, since \u0027require_root\u0027 is specified in the \u0027cc_test\u0027. Otherwise, they will run from the shell UID.",
+      "parentUuid": "9aceeb5b_4eb3552e",
+      "revId": "c17eff841aec9001fd829f480306a3325aca9694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
