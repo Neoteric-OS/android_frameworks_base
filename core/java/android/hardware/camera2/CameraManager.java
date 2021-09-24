@@ -424,7 +424,8 @@ public final class CameraManager {
                     // parameters
                     int id = Integer.parseInt(cameraId);
 
-                    String parameters = cameraService.getLegacyParameters(id);
+                    String parameters =
+                        cameraService.getLegacyParametersOverride(id, mContext.getAttributionTag());
 
                     CameraInfo info = cameraService.getCameraInfo(id);
 
