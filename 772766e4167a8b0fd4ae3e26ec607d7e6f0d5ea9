@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "468865a3_e298a323",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2766,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-24T10:07:23Z",
+      "side": 1,
+      "message": "? super T",
+      "range": {
+        "startLine": 2766,
+        "startChar": 43,
+        "endLine": 2766,
+        "endChar": 44
+      },
+      "revId": "772766e4167a8b0fd4ae3e26ec607d7e6f0d5ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92c4429e_9c3a7be9",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3374,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-24T10:07:23Z",
+      "side": 1,
+      "message": "Nit: Fits in line above",
+      "range": {
+        "startLine": 3374,
+        "startChar": 12,
+        "endLine": 3374,
+        "endChar": 39
+      },
+      "revId": "772766e4167a8b0fd4ae3e26ec607d7e6f0d5ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2cfed2d_3026b0da",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3376,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-24T10:07:23Z",
+      "side": 1,
+      "message": "T",
+      "range": {
+        "startLine": 3376,
+        "startChar": 14,
+        "endLine": 3376,
+        "endChar": 20
+      },
+      "revId": "772766e4167a8b0fd4ae3e26ec607d7e6f0d5ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d48d38ca_80d84d50",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3390,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-24T10:07:23Z",
+      "side": 1,
+      "message": "Can remove after changing type of object",
+      "range": {
+        "startLine": 3390,
+        "startChar": 15,
+        "endLine": 3390,
+        "endChar": 19
+      },
+      "revId": "772766e4167a8b0fd4ae3e26ec607d7e6f0d5ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7657a963_3e75b41d",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3543,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-24T10:07:23Z",
+      "side": 1,
+      "message": "Nit: Fits in line above",
+      "range": {
+        "startLine": 3543,
+        "startChar": 12,
+        "endLine": 3543,
+        "endChar": 39
+      },
+      "revId": "772766e4167a8b0fd4ae3e26ec607d7e6f0d5ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f49266d_5e1eb683",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3717,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-24T10:07:23Z",
+      "side": 1,
+      "message": "@SuppressWarnings(\"unchecked\")",
+      "range": {
+        "startLine": 3717,
+        "startChar": 18,
+        "endLine": 3717,
+        "endChar": 40
+      },
+      "revId": "772766e4167a8b0fd4ae3e26ec607d7e6f0d5ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ac2de86_9121a6a0",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3718,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-24T10:07:23Z",
+      "side": 1,
+      "message": "Nit: Fits in line above",
+      "range": {
+        "startLine": 3718,
+        "startChar": 12,
+        "endLine": 3718,
+        "endChar": 39
+      },
+      "revId": "772766e4167a8b0fd4ae3e26ec607d7e6f0d5ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e65be835_89ebe3ae",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3775,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-24T10:07:23Z",
+      "side": 1,
+      "message": "@SuppressWarnings(\"unchecked\")",
+      "range": {
+        "startLine": 3775,
+        "startChar": 38,
+        "endLine": 3775,
+        "endChar": 67
+      },
+      "revId": "772766e4167a8b0fd4ae3e26ec607d7e6f0d5ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49977454_d11c4a6a",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4099,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-24T10:07:23Z",
+      "side": 1,
+      "message": "? super T",
+      "range": {
+        "startLine": 4099,
+        "startChar": 52,
+        "endLine": 4099,
+        "endChar": 53
+      },
+      "revId": "772766e4167a8b0fd4ae3e26ec607d7e6f0d5ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
