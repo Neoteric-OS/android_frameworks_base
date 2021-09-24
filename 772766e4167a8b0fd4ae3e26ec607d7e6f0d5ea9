@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fed447a0_91f201e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-09-24T15:13:14Z",
+      "side": 1,
+      "message": "This signature is part of max-target-o list, which doesn\u0027t have annotations in code. It was added when hiddenapi were just introduced. See go/nonsdk-lists#max-o.\n\nTHe entry lives in\ncs/codesearch/f/android/frameworks/base/boot/hiddenapi/hiddenapi-max-target-o.txt.",
+      "parentUuid": "9a707710_772e55ad",
+      "revId": "772766e4167a8b0fd4ae3e26ec607d7e6f0d5ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "468865a3_e298a323",
