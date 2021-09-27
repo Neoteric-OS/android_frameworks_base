@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9664b35a_b9338752",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2021-09-27T14:15:33Z",
+      "side": 1,
+      "message": "My only concern with this is that it doesn\u0027t clear existing actions. What do you think about replacing lines 201-205 with the following: \n\u003e mHandler.removeMessages(MSG_DISABLE_DEVICE_TIMEOUT);\n\u003e handleDisableDeviceTimeout();\n\nI believe this would accomplish the same thing, with the additional effect of clearing all existing actions.",
+      "range": {
+        "startLine": 201,
+        "startChar": 8,
+        "endLine": 204,
+        "endChar": 9
+      },
+      "revId": "3b3a1a1f8c92e8d62729c1338035159b3e3299d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
