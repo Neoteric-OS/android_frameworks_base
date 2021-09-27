@@ -46,6 +46,30 @@
       },
       "revId": "aeb3a71d68a230ebed9e7c428fa6af57c7d7851a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e3027d2_d5f12758",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-09-27T17:43:12Z",
+      "side": 1,
+      "message": "Yes, I will add privileged permission when re-creating this CL !",
+      "parentUuid": "0ab823fc_135fc698",
+      "range": {
+        "startLine": 1572,
+        "startChar": 4,
+        "endLine": 1572,
+        "endChar": 54
+      },
+      "revId": "aeb3a71d68a230ebed9e7c428fa6af57c7d7851a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
