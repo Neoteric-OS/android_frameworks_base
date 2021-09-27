@@ -20,6 +20,7 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.DeadSystemException;
 
@@ -105,8 +106,12 @@ public final class Log {
      * Exception class used to capture a stack trace in {@link #wtf}.
      * @hide
      */
+    @TestApi
+    @SuppressWarnings("ExceptionName")
     public static class TerribleFailure extends Exception {
-        TerribleFailure(String msg, Throwable cause) { super(msg, cause); }
+        TerribleFailure(@NonNull String msg, @Nullable Throwable cause) {
+            super(msg, cause);
+        }
     }
 
     /**
@@ -114,15 +119,13 @@ public final class Log {
      *
      * @hide
      */
+    @TestApi
     public interface TerribleFailureHandler {
-        void onTerribleFailure(String tag, TerribleFailure what, boolean system);
+        /** Called when there is a terrible failure. */
+        void onTerribleFailure(@NonNull String tag, @NonNull TerribleFailure what, boolean system);
     }
 
-    private static TerribleFailureHandler sWtfHandler = new TerribleFailureHandler() {
-            public void onTerribleFailure(String tag, TerribleFailure what, boolean system) {
-                RuntimeInit.wtf(tag, what, system);
-            }
-        };
+    private static TerribleFailureHandler sWtfHandler = RuntimeInit::wtf;
 
     private Log() {
     }
@@ -332,6 +335,7 @@ public final class Log {
      * @hide
      */
     @NonNull
+    @TestApi
     public static TerribleFailureHandler setWtfHandler(@NonNull TerribleFailureHandler handler) {
         if (handler == null) {
             throw new NullPointerException("handler == null");
