@@ -1029,6 +1029,10 @@ package android.net {
 
 package android.os {
 
+  public class BaseBundle {
+    method public static boolean kindofEquals(@Nullable android.os.BaseBundle, @Nullable android.os.BaseBundle);
+  }
+
   public class Build {
     method public static boolean is64BitAbi(String);
     method public static boolean isDebuggable();
@@ -1791,6 +1795,17 @@ package android.util {
     field public static final String SEAMLESS_TRANSFER = "settings_seamless_transfer";
     field public static final String SETTINGS_FUSE_FLAG = "settings_fuse";
     field public static final String SETTINGS_WIFITRACKER2 = "settings_wifitracker2";
+  }
+
+  public final class Log {
+    method @NonNull public static android.util.Log.TerribleFailureHandler setWtfHandler(@NonNull android.util.Log.TerribleFailureHandler);
+  }
+
+  public static class Log.TerribleFailure extends java.lang.Exception {
+  }
+
+  public static interface Log.TerribleFailureHandler {
+    method public void onTerribleFailure(@NonNull String, @NonNull android.util.Log.TerribleFailure, boolean);
   }
 
   public class SparseArrayMap<T> {

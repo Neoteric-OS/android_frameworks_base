@@ -18,6 +18,7 @@ package android.os;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -431,7 +432,8 @@ public class BaseBundle {
      *
      * @hide
      */
-    public static boolean kindofEquals(BaseBundle a, BaseBundle b) {
+    @TestApi
+    public static boolean kindofEquals(@Nullable BaseBundle a, @Nullable BaseBundle b) {
         return (a == b) || (a != null && a.kindofEquals(b));
     }
 
