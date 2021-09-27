@@ -70,6 +70,24 @@
       "parentUuid": "f76b00f6_4a1194f7",
       "revId": "c17eff841aec9001fd829f480306a3325aca9694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e82cbedd_76af73ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-27T22:26:36Z",
+      "side": 1,
+      "message": "in \u0027main\u0027, you might be able to change users with exec (or system as an alternative). Though, you might have a hard time finding UIDs to work as alternatives:\n\n    if (getuid() !....) return execl( ... su ... argv .... );\n    \n    \nOr you could use apps for these test cases. Why is it that different UIDs matter here?",
+      "parentUuid": "3316788f_bf643c5a",
+      "revId": "c17eff841aec9001fd829f480306a3325aca9694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
