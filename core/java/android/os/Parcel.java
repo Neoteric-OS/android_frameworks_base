@@ -3470,14 +3470,22 @@ public final class Parcel {
             Parcel source = mSource;
             if (source != null) {
                 synchronized (source) {
-                    int restore = source.dataPosition();
-                    try {
-                        source.setDataPosition(mPosition);
-                        mObject = source.readValue(mLoader);
-                    } finally {
-                        source.setDataPosition(restore);
+                    // This extra check (mSource != null) guarantees that there will always be only
+                    // one valid value for mObject. Otherwise, without it, two threads could end up
+                    // entering this synchronized block (at different times ofc) and producing two
+                    // values for mObject that would escape to the caller. Which is ok, but we'd
+                    // like to guarantee that only one object will ever be produced and seen by
+                    // different threads.
+                    if (mSource != null) {
+                        int restore = source.dataPosition();
+                        try {
+                            source.setDataPosition(mPosition);
+                            mObject = source.readValue(mLoader);
+                        } finally {
+                            source.setDataPosition(restore);
+                        }
+                        mSource = null;
                     }
-                    mSource = null;
                 }
             }
             return mObject;
