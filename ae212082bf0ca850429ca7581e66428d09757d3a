@@ -16,6 +16,23 @@
       "message": "Addressed the comments, also fixed a bug:\n\nreadParcelableCreator caches the \u003cloader, \u003cclassname, creator\u003e\u003e; and would skip the typed clazz check if the creator is pre-loaded. Hence I have added another check for that situation. See line#3791",
       "revId": "ae212082bf0ca850429ca7581e66428d09757d3a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa1eb3de_14300beb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-27T11:02:02Z",
+      "side": 1,
+      "message": "Still LGTM",
+      "revId": "ae212082bf0ca850429ca7581e66428d09757d3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
