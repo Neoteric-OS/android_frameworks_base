@@ -88,6 +88,24 @@
       "parentUuid": "3316788f_bf643c5a",
       "revId": "c17eff841aec9001fd829f480306a3325aca9694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b271f6f0_1459f6b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1611900
+      },
+      "writtenOn": "2021-09-28T00:53:33Z",
+      "side": 1,
+      "message": "UIDs are mapped to UUIDs and using those UUIDs they can define access rules in secure element, so with multiple UIDs they can define and validate different combinations of access rules in secure lement. \n\nThis usecase is taken care in OMAPI CTS test cases by signing test APKs with different keys. where they use app-cert hash instead of UUID. \n\nSince HAL services can\u0027t be signed like APKs, we map service UID to UUID and use it while defining access rules in secure element.\n\n(Could you please provide any references if available where VTS tests can be implemented as apps)",
+      "parentUuid": "e82cbedd_76af73ef",
+      "revId": "c17eff841aec9001fd829f480306a3325aca9694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
