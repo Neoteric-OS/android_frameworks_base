@@ -124,6 +124,24 @@
       "parentUuid": "b271f6f0_1459f6b8",
       "revId": "c17eff841aec9001fd829f480306a3325aca9694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "504eabf3_0fb6326d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1611900
+      },
+      "writtenOn": "2021-09-28T23:46:14Z",
+      "side": 1,
+      "message": "Not exactly, we don\u0027t want to define interfaces like this.\nWith mapping binder instaces with UUIDs might not suit our use case where we expect to map them before hand for SE access rules.\n\nAfter discussing with OMAPI team, it is decided that lot of duplicate test cases are included with multiple VTS test modules, so will create one VTS test module with unique test cases in VTS. Also will take care of tests such that all tests shall run on single terminal eSE. With this we can use root UID and test it. Anyway access control cobinations are already tested with CTS tests, we can skip it here.",
+      "parentUuid": "8590fe5f_e19b23fd",
+      "revId": "c17eff841aec9001fd829f480306a3325aca9694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
