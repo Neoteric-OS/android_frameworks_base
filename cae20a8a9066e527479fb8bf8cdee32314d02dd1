@@ -16,6 +16,69 @@
       "message": "I have checked in with dshi@ and the only failing presubmit test was `android.os.cts.AutoRevokeTest`; the test was flaky and is tracked at b/194872401\n\nHence doing Bypass-Presubmit here.",
       "revId": "cae20a8a9066e527479fb8bf8cdee32314d02dd1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e1a0f11_7c3b351c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-09-28T23:59:42Z",
+      "side": 1,
+      "message": "LG! 😊 See notes inside with two questions.",
+      "revId": "cae20a8a9066e527479fb8bf8cdee32314d02dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a967875_9036f2c8",
+        "filename": "core/api/current.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 29980,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-09-28T23:59:42Z",
+      "side": 1,
+      "message": "I like the direction this change is going, by adding overloads that help enforce the types of objects unpacked.  Not blocking this CL, but are you thinking of adding more support for some of the other methods in this class?  Here\u0027s a few that might benefit:\n\n  readArrayList()\n  readParcelableArray()\n  readParcelableList()\n  \nAnd possibly other methods that aren\u0027t already offering strong type enforcement.",
+      "range": {
+        "startLine": 29980,
+        "startChar": 0,
+        "endLine": 29980,
+        "endChar": 85
+      },
+      "revId": "cae20a8a9066e527479fb8bf8cdee32314d02dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d39e117_23867ecb",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4106,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-09-28T23:59:42Z",
+      "side": 1,
+      "message": "Hm, is the old method signature already being used via @UnsupportedAppUsage?  If so, we may need to keep that old signature intact and call into the new 4-argument variant you\u0027re creating below.",
+      "range": {
+        "startLine": 4106,
+        "startChar": 0,
+        "endLine": 4106,
+        "endChar": 62
+      },
+      "revId": "cae20a8a9066e527479fb8bf8cdee32314d02dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
