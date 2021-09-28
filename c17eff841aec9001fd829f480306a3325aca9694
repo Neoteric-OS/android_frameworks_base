@@ -106,6 +106,24 @@
       "parentUuid": "e82cbedd_76af73ef",
       "revId": "c17eff841aec9001fd829f480306a3325aca9694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8590fe5f_e19b23fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-28T21:30:16Z",
+      "side": 1,
+      "message": "There are a couple:\nhttps://cs.android.com/search?q\u003df:bp$%20app.*%7B%20%20%5C%22vts%5C%22\n\n\u003e UIDs are mapped to UUIDs and using those UUIDs they can define access rules in secure element, so with multiple UIDs they can define and validate different combinations of access rules in secure lement. \n\nDo we want an interface like this? Vendor UIDs are typically shared. It won\u0027t be like with apps. One alternative might be to map binder instances (sessions) with UUIDs.",
+      "parentUuid": "b271f6f0_1459f6b8",
+      "revId": "c17eff841aec9001fd829f480306a3325aca9694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
