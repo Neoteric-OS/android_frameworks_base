@@ -263,6 +263,10 @@ public final class Parcel {
     private static final int VAL_SIZE = 26;
     private static final int VAL_SIZEF = 27;
     private static final int VAL_DOUBLEARRAY = 28;
+    private static final int VAL_CHAR = 29;
+    private static final int VAL_SHORTARRAY = 30;
+    private static final int VAL_CHARARRAY = 31;
+    private static final int VAL_FLOATARRAY = 32;
 
     // The initial int32 in a Binder call's reply Parcel header:
     // Keep these in sync with libbinder's binder/Status.h.
@@ -1309,6 +1313,46 @@ public final class Parcel {
         }
     }
 
+    /** @hide */
+    public void writeShortArray(@Nullable short[] val) {
+        if (val != null) {
+            int n = val.length;
+            writeInt(n);
+            for (int i = 0; i < n; i++) {
+                writeInt(val[i]);
+            }
+        } else {
+            writeInt(-1);
+        }
+    }
+
+    /** @hide */
+    @Nullable
+    public short[] createShortArray() {
+        int n = readInt();
+        if (n >= 0 && n <= (dataAvail() >> 2)) {
+            short[] val = new short[n];
+            for (int i = 0; i < n; i++) {
+                val[i] = (short) readInt();
+            }
+            return val;
+        } else {
+            return null;
+        }
+    }
+
+    /** @hide */
+    public void readShortArray(@NonNull short[] val) {
+        int n = readInt();
+        if (n == val.length) {
+            for (int i = 0; i < n; i++) {
+                val[i] = (short) readInt();
+            }
+        } else {
+            throw new RuntimeException("bad array lengths");
+        }
+    }
+
     public final void writeCharArray(@Nullable char[] val) {
         if (val != null) {
             int N = val.length;
@@ -1974,6 +2018,14 @@ public final class Parcel {
             return VAL_SIZE;
         } else if (v instanceof double[]) {
             return VAL_DOUBLEARRAY;
+        } else if (v instanceof Character) {
+            return VAL_CHAR;
+        } else if (v instanceof short[]) {
+            return VAL_SHORTARRAY;
+        } else if (v instanceof char[]) {
+            return VAL_CHARARRAY;
+        } else  if (v instanceof float[]) {
+            return VAL_FLOATARRAY;
         } else {
             Class<?> clazz = v.getClass();
             if (clazz.isArray() && clazz.getComponentType() == Object.class) {
@@ -2075,6 +2127,18 @@ public final class Parcel {
                 break;
             case VAL_DOUBLEARRAY:
                 writeDoubleArray((double[]) v);
+                break;
+            case VAL_CHAR:
+                writeInt((Character) v);
+                break;
+            case VAL_SHORTARRAY:
+                writeShortArray((short[]) v);
+                break;
+            case VAL_CHARARRAY:
+                writeCharArray((char[]) v);
+                break;
+            case VAL_FLOATARRAY:
+                writeFloatArray((float[]) v);
                 break;
             case VAL_OBJECTARRAY:
                 writeArray((Object[]) v);
@@ -3541,110 +3605,129 @@ public final class Parcel {
     @Nullable
     private Object readValue(int type, @Nullable ClassLoader loader) {
         switch (type) {
-        case VAL_NULL:
-            return null;
+            case VAL_NULL:
+                return null;
 
-        case VAL_STRING:
-            return readString();
+            case VAL_STRING:
+                return readString();
 
-        case VAL_INTEGER:
-            return readInt();
+            case VAL_INTEGER:
+                return readInt();
 
-        case VAL_MAP:
-            return readHashMap(loader);
+            case VAL_MAP:
+                return readHashMap(loader);
 
-        case VAL_PARCELABLE:
-            return readParcelable(loader);
+            case VAL_PARCELABLE:
+                return readParcelable(loader);
 
-        case VAL_SHORT:
-            return (short) readInt();
+            case VAL_SHORT:
+                return (short) readInt();
 
-        case VAL_LONG:
-            return readLong();
+            case VAL_LONG:
+                return readLong();
 
-        case VAL_FLOAT:
-            return readFloat();
+            case VAL_FLOAT:
+                return readFloat();
 
-        case VAL_DOUBLE:
-            return readDouble();
+            case VAL_DOUBLE:
+                return readDouble();
 
-        case VAL_BOOLEAN:
-            return readInt() == 1;
+            case VAL_BOOLEAN:
+                return readInt() == 1;
 
-        case VAL_CHARSEQUENCE:
-            return readCharSequence();
+            case VAL_CHARSEQUENCE:
+                return readCharSequence();
 
-        case VAL_LIST:
-            return readArrayList(loader);
+            case VAL_LIST:
+                return readArrayList(loader);
 
-        case VAL_BOOLEANARRAY:
-            return createBooleanArray();
+            case VAL_BOOLEANARRAY:
+                return createBooleanArray();
 
-        case VAL_BYTEARRAY:
-            return createByteArray();
+            case VAL_BYTEARRAY:
+                return createByteArray();
 
-        case VAL_STRINGARRAY:
-            return readStringArray();
+            case VAL_STRINGARRAY:
+                return readStringArray();
 
-        case VAL_CHARSEQUENCEARRAY:
-            return readCharSequenceArray();
+            case VAL_CHARSEQUENCEARRAY:
+                return readCharSequenceArray();
 
-        case VAL_IBINDER:
-            return readStrongBinder();
+            case VAL_IBINDER:
+                return readStrongBinder();
 
-        case VAL_OBJECTARRAY:
-            return readArray(loader);
+            case VAL_OBJECTARRAY:
+                return readArray(loader);
 
-        case VAL_INTARRAY:
-            return createIntArray();
+            case VAL_INTARRAY:
+                return createIntArray();
 
-        case VAL_LONGARRAY:
-            return createLongArray();
+            case VAL_LONGARRAY:
+                return createLongArray();
 
-        case VAL_BYTE:
-            return readByte();
+            case VAL_BYTE:
+                return readByte();
 
-        case VAL_SERIALIZABLE:
-            return readSerializable(loader);
+            case VAL_SERIALIZABLE:
+                return readSerializable(loader);
 
-        case VAL_PARCELABLEARRAY:
-            return readParcelableArray(loader);
+            case VAL_PARCELABLEARRAY:
+                return readParcelableArray(loader);
 
-        case VAL_SPARSEARRAY:
-            return readSparseArray(loader);
+            case VAL_SPARSEARRAY:
+                return readSparseArray(loader);
 
-        case VAL_SPARSEBOOLEANARRAY:
-            return readSparseBooleanArray();
+            case VAL_SPARSEBOOLEANARRAY:
+                return readSparseBooleanArray();
 
-        case VAL_BUNDLE:
-            return readBundle(loader); // loading will be deferred
+            case VAL_BUNDLE:
+                return readBundle(loader); // loading will be deferred
 
-        case VAL_PERSISTABLEBUNDLE:
-            return readPersistableBundle(loader);
+            case VAL_PERSISTABLEBUNDLE:
+                return readPersistableBundle(loader);
 
-        case VAL_SIZE:
-            return readSize();
+            case VAL_SIZE:
+                return readSize();
 
-        case VAL_SIZEF:
-            return readSizeF();
+            case VAL_SIZEF:
+                return readSizeF();
 
-        case VAL_DOUBLEARRAY:
-            return createDoubleArray();
+            case VAL_DOUBLEARRAY:
+                return createDoubleArray();
 
-        default:
-            int off = dataPosition() - 4;
-            throw new RuntimeException(
-                "Parcel " + this + ": Unmarshalling unknown type code " + type + " at offset " + off);
+            case VAL_CHAR:
+                return (char) readInt();
+
+            case VAL_SHORTARRAY:
+                return createShortArray();
+
+            case VAL_CHARARRAY:
+                return createCharArray();
+
+            case VAL_FLOATARRAY:
+                return createFloatArray();
+
+
+            default:
+                int off = dataPosition() - 4;
+                throw new RuntimeException(
+                        "Parcel " + this + ": Unmarshalling unknown type code " + type
+                                + " at offset " + off);
         }
     }
 
     private boolean isLengthPrefixed(int type) {
+        // In general, we want custom types and containers of custom types to be length-prefixed,
+        // this allows clients (eg. Bundle) to skip their content during deserialization. The
+        // exception to this is Bundle, since Bundle is already length-prefixed and already copies
+        // the correspondent section of the parcel internally.
         switch (type) {
+            case VAL_MAP:
             case VAL_PARCELABLE:
-            case VAL_PARCELABLEARRAY:
             case VAL_LIST:
             case VAL_SPARSEARRAY:
-            case VAL_BUNDLE:
+            case VAL_PARCELABLEARRAY:
+            case VAL_OBJECTARRAY:
             case VAL_SERIALIZABLE:
                 return true;
             default:
@@ -4106,6 +4189,10 @@ public final class Parcel {
             case VAL_SIZE: return "VAL_SIZE";
             case VAL_SIZEF: return "VAL_SIZEF";
             case VAL_DOUBLEARRAY: return "VAL_DOUBLEARRAY";
+            case VAL_CHAR: return "VAL_CHAR";
+            case VAL_SHORTARRAY: return "VAL_SHORTARRAY";
+            case VAL_CHARARRAY: return "VAL_CHARARRAY";
+            case VAL_FLOATARRAY: return "VAL_FLOATARRAY";
             case VAL_OBJECTARRAY: return "VAL_OBJECTARRAY";
             case VAL_SERIALIZABLE: return "VAL_SERIALIZABLE";
             default: return "UNKNOWN(" + type + ")";
