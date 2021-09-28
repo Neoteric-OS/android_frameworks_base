@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2eddbaa9_b72d3a44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-09-28T17:41:28Z",
+      "side": 1,
+      "message": "I have checked in with dshi@ and the only failing presubmit test was `android.os.cts.AutoRevokeTest`; the test was flaky and is tracked at b/194872401\n\nHence doing Bypass-Presubmit here.",
+      "revId": "cae20a8a9066e527479fb8bf8cdee32314d02dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
