@@ -17,6 +17,7 @@
 package com.android.server.connectivity;
 
 import static android.Manifest.permission.BIND_VPN_SERVICE;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.RouteInfo.RTN_THROW;
 import static android.net.RouteInfo.RTN_UNREACHABLE;
@@ -33,12 +34,10 @@ import android.app.AppOpsManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -405,6 +404,15 @@ public class Vpn {
 
         public boolean isInterfacePresent(final Vpn vpn, final String iface) {
             return vpn.jniCheck(iface) != 0;
+        }
+
+        public PendingIntent prepareStatusIntent(final Context context) {
+            final long token = Binder.clearCallingIdentity();
+            try {
+                return VpnConfig.getIntentForStatusPanel(context);
+            } finally {
+                Binder.restoreCallingIdentity(token);
+            }
         }
     }
 
@@ -1242,7 +1250,7 @@ public class Vpn {
         // behaves the same as when it uses the default network.
         final NetworkCapabilities.Builder capsBuilder =
                 new NetworkCapabilities.Builder(mNetworkCapabilities);
-        capsBuilder.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+        capsBuilder.addCapability(NET_CAPABILITY_INTERNET);
 
         mLegacyState = LegacyVpnInfo.STATE_CONNECTING;
         updateState(DetailedState.CONNECTING, "agentConnect");
@@ -1754,25 +1762,7 @@ public class Vpn {
         return mConfig;
     }
 
-    @Deprecated
-    public synchronized void interfaceStatusChanged(String iface, boolean up) {
-        try {
-            mObserver.interfaceStatusChanged(iface, up);
-        } catch (RemoteException e) {
-            // ignored; target is local
-        }
-    }
-
     private INetworkManagementEventObserver mObserver = new BaseNetworkObserver() {
-        @Override
-        public void interfaceStatusChanged(String interfaze, boolean up) {
-            synchronized (Vpn.this) {
-                if (!up && mVpnRunner != null && mVpnRunner instanceof LegacyVpnRunner) {
-                    ((LegacyVpnRunner) mVpnRunner).exitIfOuterInterfaceIs(interfaze);
-                }
-            }
-        }
-
         @Override
         public void interfaceRemoved(String interfaze) {
             synchronized (Vpn.this) {
@@ -1828,15 +1818,6 @@ public class Vpn {
         @Override
         public void onServiceDisconnected(ComponentName name) {
             mService = null;
-        }
-    }
-
-    private void prepareStatusIntent() {
-        final long token = Binder.clearCallingIdentity();
-        try {
-            mStatusIntent = mDeps.getIntentForStatusPanel(mContext);
-        } finally {
-            Binder.restoreCallingIdentity(token);
         }
     }
 
@@ -2466,7 +2447,7 @@ public class Vpn {
                 // network. b/147280869 is used for tracking the new API.
                 // TODO: Use the new API to register default physical network.
                 req = new NetworkRequest.Builder()
-                        .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                        .addCapability(NET_CAPABILITY_INTERNET)
                         .build();
             }
 
@@ -2537,7 +2518,7 @@ public class Vpn {
                     // isRunningLocked() will be racy.
                     if (networkAgent == null) {
                         if (isSettingsVpnLocked()) {
-                            prepareStatusIntent();
+                            mStatusIntent = mDeps.prepareStatusIntent(mContext);
                         }
                         agentConnect();
                         return; // Link properties are already sent.
@@ -2791,13 +2772,13 @@ public class Vpn {
      */
     private class LegacyVpnRunner extends VpnRunner {
         private static final String TAG = "LegacyVpnRunner";
-
+        // Keep it sync NETID_UNSET in system/netd/include/netid_client.h
+        private static final int NETID_UNSET = 0;
         private final String[] mDaemons;
         private final String[][] mArguments;
         private final LocalSocket[] mSockets;
         private final String mOuterInterface;
-        private final AtomicInteger mOuterConnection =
-                new AtomicInteger(ConnectivityManager.TYPE_NONE);
+        private final AtomicInteger mOuterConnectionNetId = new AtomicInteger(NETID_UNSET);
         private final VpnProfile mProfile;
 
         private long mBringupStartTime = -1;
@@ -2805,23 +2786,18 @@ public class Vpn {
         /**
          * Watch for the outer connection (passing in the constructor) going away.
          */
-        private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        private final ConnectivityManager.NetworkCallback
+                mNetworkCallback = new ConnectivityManager.NetworkCallback() {
+            // This callback is registered with registerNetworkCallback with an INTERNET
+            // capability, so this will be called any time an internet-providing network is lost.
+            // Then notify the interface down event to disconnect from vpn.
             @Override
-            public void onReceive(Context context, Intent intent) {
+            public void onLost(Network network) {
                 if (!mEnableTeardown) return;
 
-                if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-                    if (intent.getIntExtra(ConnectivityManager.EXTRA_NETWORK_TYPE,
-                            ConnectivityManager.TYPE_NONE) == mOuterConnection.get()) {
-                        NetworkInfo info = (NetworkInfo)intent.getExtra(
-                                ConnectivityManager.EXTRA_NETWORK_INFO);
-                        if (info != null && !info.isConnectedOrConnecting()) {
-                            try {
-                                mObserver.interfaceStatusChanged(mOuterInterface, false);
-                            } catch (RemoteException e) {}
-                        }
-                    }
-                }
+                if (network.getNetId() != mOuterConnectionNetId.get()) return;
+
+                exitIfOuterInterfaceIs(mOuterInterface);
             }
         };
 
@@ -2848,21 +2824,17 @@ public class Vpn {
             mProfile = profile;
 
             if (!TextUtils.isEmpty(mOuterInterface)) {
-                for (Network network : mConnectivityManager.getAllNetworks()) {
+                for (final Network network : mConnectivityManager.getAllNetworks()) {
                     final LinkProperties lp = mConnectivityManager.getLinkProperties(network);
                     if (lp != null && lp.getAllInterfaceNames().contains(mOuterInterface)) {
-                        final NetworkInfo netInfo = mConnectivityManager.getNetworkInfo(network);
-                        if (netInfo != null) {
-                            mOuterConnection.set(netInfo.getType());
-                            break;
-                        }
+                        mOuterConnectionNetId.set(network.getNetId());
+                        break;
                     }
                 }
             }
-
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-            mContext.registerReceiver(mBroadcastReceiver, filter);
+            final NetworkRequest request =
+                    new NetworkRequest.Builder().addCapability(NET_CAPABILITY_INTERNET).build();
+            mConnectivityManager.registerNetworkCallback(request, mNetworkCallback);
         }
 
         /**
@@ -2887,9 +2859,7 @@ public class Vpn {
             // Always disconnect. This may be called again in cleanupVpnStateLocked() if
             // exitVpnRunner() was called from exit(), but it will be a no-op.
             agentDisconnect();
-            try {
-                mContext.unregisterReceiver(mBroadcastReceiver);
-            } catch (IllegalArgumentException e) {}
+            mConnectivityManager.unregisterNetworkCallback(mNetworkCallback);
         }
 
         @Override
@@ -3085,7 +3055,7 @@ public class Vpn {
 
                     // Now INetworkManagementEventObserver is watching our back.
                     mInterface = mConfig.interfaze;
-                    prepareStatusIntent();
+                    mStatusIntent = mDeps.prepareStatusIntent(mContext);
 
                     agentConnect();
 
