@@ -16,6 +16,144 @@
       "message": "Please refer to aosp/1840133 for testing part. ",
       "revId": "9ff2eca993c4b3740548dd49ccb63056dea7593c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb9073b0_9912a2af",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2775,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-29T10:46:48Z",
+      "side": 1,
+      "message": "netd",
+      "range": {
+        "startLine": 2775,
+        "startChar": 59,
+        "endLine": 2775,
+        "endChar": 64
+      },
+      "revId": "9ff2eca993c4b3740548dd49ccb63056dea7593c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d4eedc1_b742cd79",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2781,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-29T10:46:48Z",
+      "side": 1,
+      "message": "Wait I\u0027m confused. This is only ever set in the contructor. Shouldn\u0027t it just be a final int ?\n\nBut see below. I think you might be able to remove this completely.",
+      "range": {
+        "startLine": 2781,
+        "startChar": 22,
+        "endLine": 2781,
+        "endChar": 35
+      },
+      "revId": "9ff2eca993c4b3740548dd49ccb63056dea7593c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a0474c2_4c8e03b5",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2790,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-29T10:46:48Z",
+      "side": 1,
+      "message": "Style says to cut after \u003d\n\n  private final ConnectivityManager.NetworkCallback mNetworkCallback \u003d\n          new ...",
+      "range": {
+        "startLine": 2790,
+        "startChar": 32,
+        "endLine": 2790,
+        "endChar": 33
+      },
+      "revId": "9ff2eca993c4b3740548dd49ccb63056dea7593c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7aad101_1b861223",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2800,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-29T10:46:48Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to make sense : by definition the outer interface always is mOuterInterface.",
+      "range": {
+        "startLine": 2800,
+        "startChar": 16,
+        "endLine": 2800,
+        "endChar": 55
+      },
+      "revId": "9ff2eca993c4b3740548dd49ccb63056dea7593c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fa37e7c_b53bfe11",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2836,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-29T10:46:48Z",
+      "side": 1,
+      "message": "Why INTERNET ? I find this puzzling.",
+      "range": {
+        "startLine": 2836,
+        "startChar": 63,
+        "endLine": 2836,
+        "endChar": 86
+      },
+      "revId": "9ff2eca993c4b3740548dd49ccb63056dea7593c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4056380d_26ef366b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2837,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-29T10:46:48Z",
+      "side": 1,
+      "message": "IIUC the entire point of this callback is to tear down the VPN when the network it is running on goes away.\n\nIf that\u0027s the case, shouldn\u0027t this always be the default network ? If so, should we use registerSystemDefaultNetworkCallback instead, and tear down the VPN any time it changes ?",
+      "range": {
+        "startLine": 2837,
+        "startChar": 33,
+        "endLine": 2837,
+        "endChar": 56
+      },
+      "revId": "9ff2eca993c4b3740548dd49ccb63056dea7593c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

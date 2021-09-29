@@ -46,6 +46,30 @@
       },
       "revId": "97a1a022e66e7951391d78e55f73793ad1f16cd5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "103ad73e_29f18360",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-29T10:46:48Z",
+      "side": 1,
+      "message": "\"status\" is just about where this will be used. I think Paul\u0027s comment is about the return type.\n\nThat being said, the return type is checked by the compiler. I don\u0027t think methods should generally insist on reflecting the return type of the object, and in this case I don\u0027t think it\u0027s confusing.\n\nHowever, the old method was called \"prepareStatusIntent\" because it was preparing the member (which is an anti-pattern). Now the code just returns the intent, so it should just be called getIntentForStatusPanel.",
+      "parentUuid": "795c8e6e_79559a3e",
+      "range": {
+        "startLine": 386,
+        "startChar": 29,
+        "endLine": 386,
+        "endChar": 48
+      },
+      "revId": "97a1a022e66e7951391d78e55f73793ad1f16cd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
