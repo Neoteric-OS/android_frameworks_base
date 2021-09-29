@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4089dd86_409e8d91",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3373,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-29T16:54:39Z",
+      "side": 1,
+      "message": "question from the longer comment, in other words, if \u0027T\u0027 is Integer here, what would we expect to be passed for Class?\n\n- Integer.class \u003d\u003e we\u0027ll get ClassCastException (different than BadParcelableException for the parcelable case, but because of b/150808347, specifically getExceptionCode returns success for this exception type, as far as I can tell, the exception would be silently dropped from clients). We should prefer to have the same exception types, and we should only throw exception types that won\u0027t be dropped.\n- null \u003d\u003e it would be allowed to read any parcelable type",
+      "range": {
+        "startLine": 3373,
+        "startChar": 18,
+        "endLine": 3373,
+        "endChar": 27
+      },
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4722d862_76ba3309",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3416,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-29T16:54:39Z",
+      "side": 1,
+      "message": "should we have a typed version of this (and only have a typed version of this, since it is private)",
+      "range": {
+        "startLine": 3416,
+        "startChar": 18,
+        "endLine": 3416,
+        "endChar": 31
+      },
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "966ab518_3f591548",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3561,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-29T16:54:39Z",
+      "side": 1,
+      "message": "If \u0027T\u0027 is Integer, then \u0027type\u0027 may actually be VAL_PARCELABLE, and we will still try to unparcel the parcelable. Technically, we could know here to stop work, but in the current situation, we still try to read the parcelable. This means, we rely on partially reading the parcelable (reading the classloader), and we\u0027ll get an error there.\n\nHowever, what I\u0027m concerned about is the \"clazz \u003d\u003d null\" case (which represents a lot of existing code), if we could stop here earlier, we could prevent situations where we expect to read an integer value, but there is actually a parcelable. However, it seems now, if someone is trying to read an integer, they\u0027ll pass \u0027null\u0027 as a clazz. What they want is \"don\u0027t allow any class to be read\", but what they\u0027ll get is \"allow any parcelable to be read\".",
+      "range": {
+        "startLine": 3561,
+        "startChar": 25,
+        "endLine": 3561,
+        "endChar": 47
+      },
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
