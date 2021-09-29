@@ -142,6 +142,24 @@
       "parentUuid": "8590fe5f_e19b23fd",
       "revId": "c17eff841aec9001fd829f480306a3325aca9694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0256643_a399b648",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1611900
+      },
+      "writtenOn": "2021-09-29T20:12:20Z",
+      "side": 1,
+      "message": "@Jack,\nremoved duplicate test cases. AccessControl tests performed against only eSE embeded secure element.\nStill tests under omapi module perform tests against all available secure elements. Please let me know in case I need to restrict it also to perform only with eSE.",
+      "parentUuid": "504eabf3_0fb6326d",
+      "revId": "c17eff841aec9001fd829f480306a3325aca9694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
