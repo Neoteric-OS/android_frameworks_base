@@ -127,6 +127,30 @@
       },
       "revId": "cae20a8a9066e527479fb8bf8cdee32314d02dd1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63662d63_228cc0fa",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4106,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-09-29T06:28:41Z",
+      "side": 1,
+      "message": "Sorry, if there was any confusion. This is a @UnsupportedAppUsage for maxtargetsdk \u003d O apps. For historic reasons we have not annotated all of them, and instead still keep them in a .txt files. This method has an implicit annotation basically.\n\nIf you can keep the old method and behaviour, that would be ideal from appcompat perspective.",
+      "parentUuid": "ca97545e_2bc7f7bf",
+      "range": {
+        "startLine": 4106,
+        "startChar": 0,
+        "endLine": 4106,
+        "endChar": 62
+      },
+      "revId": "cae20a8a9066e527479fb8bf8cdee32314d02dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
