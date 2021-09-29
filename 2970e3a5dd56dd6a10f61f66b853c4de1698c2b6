@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8cf39252_a8ea4e3f",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 2769,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-29T17:38:44Z",
+      "side": 1,
+      "message": "Objects.requireNonNull(clazz)",
+      "range": {
+        "startLine": 2769,
+        "startChar": 44,
+        "endLine": 2769,
+        "endChar": 49
+      },
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4089dd86_409e8d91",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 15
@@ -14,6 +37,30 @@
       "writtenOn": "2021-09-29T16:54:39Z",
       "side": 1,
       "message": "question from the longer comment, in other words, if \u0027T\u0027 is Integer here, what would we expect to be passed for Class?\n\n- Integer.class \u003d\u003e we\u0027ll get ClassCastException (different than BadParcelableException for the parcelable case, but because of b/150808347, specifically getExceptionCode returns success for this exception type, as far as I can tell, the exception would be silently dropped from clients). We should prefer to have the same exception types, and we should only throw exception types that won\u0027t be dropped.\n- null \u003d\u003e it would be allowed to read any parcelable type",
+      "range": {
+        "startLine": 3373,
+        "startChar": 18,
+        "endLine": 3373,
+        "endChar": 27
+      },
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f850aea3_cf25fe09",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3373,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-29T17:38:44Z",
+      "side": 1,
+      "message": "I thought about this, but I\u0027m not sure the bug you linked should guide what we throw here. That seems like a problem that should be separately addressed (or not and it\u0027s WAI) and we throw what semantically makes sense here, after all we\u0027re not necessarily always in a binder thread and there are probably other places that throw CCE too.\n\nThinking about the semantics: BadParcelableException will be thrown if the object on the wire is a parcelable and this agrees with the javadoc (\"Exception thrown when a **Parcelable** is malformed or otherwise invalid\"). For non-parcelable cases I\u0027m not sure BadParcelableException makes sense since it doesn\u0027t involve parcelables and ClassCastException is the natural choice in Java. For example, this is what would happen if you tried to use old API and cast to int:\n\n  int integer \u003d (int) p.readValue(null);\n\nThis throws CCE. I think we should stick to this behavior?",
+      "parentUuid": "4089dd86_409e8d91",
       "range": {
         "startLine": 3373,
         "startChar": 18,
@@ -49,6 +96,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "022e3be4_87a54940",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3416,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-29T17:38:44Z",
+      "side": 1,
+      "message": "This is @hide and only used in Bundle, where we don\u0027t have domain knowledge of types and have to handle generic objects, so we\u0027d just pass null and it would be type-erased to Object anyway. Also, to make this really type-safe we\u0027d have to separate lazy vs non-lazy because you can expect a parcelable T but receive a Supplier\u003cT\u003e for the lazy value. Since this is only used in bundle, I\u0027m not sure it justifies the trouble now, at least not in this CL.",
+      "parentUuid": "4722d862_76ba3309",
+      "range": {
+        "startLine": 3416,
+        "startChar": 18,
+        "endLine": 3416,
+        "endChar": 31
+      },
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "966ab518_3f591548",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 15
@@ -65,6 +136,76 @@
         "startChar": 25,
         "endLine": 3561,
         "endChar": 47
+      },
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f895a9dd_a049db0b",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3561,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-29T17:38:44Z",
+      "side": 1,
+      "message": "Good point on stopping early. I actually suggested this before :P (https://android-review.googlesource.com/c/platform/frameworks/base/+/1832336/9..15/core/java/android/os/Parcel.java#b3638). We can do:\n\n  clazz \u003d (clazz !\u003d null) ? clazz.asSubclass(Parcelable.class) : null;\n  \nbefore calling readParcelableInternal().\n\nclazz \u003d null doesn\u0027t mean \"don\u0027t allow any class to be read\", it means don\u0027t perform any class check. Hao, can you make this clear in the javadoc of the internal methods that accept clazz \u003d null? Also, I added comments to the public APIs to call Objects.requireNonNull(clazz) before calling into the internal methods.",
+      "parentUuid": "966ab518_3f591548",
+      "range": {
+        "startLine": 3561,
+        "startChar": 25,
+        "endLine": 3561,
+        "endChar": 47
+      },
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33bc36d6_50d67079",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3711,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-29T17:38:44Z",
+      "side": 1,
+      "message": "Objects.requireNonNull(clazz)",
+      "range": {
+        "startLine": 3711,
+        "startChar": 46,
+        "endLine": 3711,
+        "endChar": 51
+      },
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "891e8e03_690f8c8b",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3769,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-29T17:38:44Z",
+      "side": 1,
+      "message": "Objects.requireNonNull(clazz)",
+      "range": {
+        "startLine": 3769,
+        "startChar": 53,
+        "endLine": 3769,
+        "endChar": 58
       },
       "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
