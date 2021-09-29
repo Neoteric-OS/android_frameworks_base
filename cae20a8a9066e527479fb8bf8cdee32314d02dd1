@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba9e22e7_73e226db",
+        "filename": "core/api/current.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 29980,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-09-29T01:26:41Z",
+      "side": 1,
+      "message": "Yup, I am splitting these into 2 CLs; this one mainly adding internal APIs, and the next one would add support for other methods.",
+      "parentUuid": "7a967875_9036f2c8",
+      "range": {
+        "startLine": 29980,
+        "startChar": 0,
+        "endLine": 29980,
+        "endChar": 85
+      },
+      "revId": "cae20a8a9066e527479fb8bf8cdee32314d02dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d39e117_23867ecb",
@@ -71,6 +95,30 @@
       "writtenOn": "2021-09-28T23:59:42Z",
       "side": 1,
       "message": "Hm, is the old method signature already being used via @UnsupportedAppUsage?  If so, we may need to keep that old signature intact and call into the new 4-argument variant you\u0027re creating below.",
+      "range": {
+        "startLine": 4106,
+        "startChar": 0,
+        "endLine": 4106,
+        "endChar": 62
+      },
+      "revId": "cae20a8a9066e527479fb8bf8cdee32314d02dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca97545e_2bc7f7bf",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 4106,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-09-29T01:26:41Z",
+      "side": 1,
+      "message": "Hey Jeff, I also pinged you over chat about this:\n\nThe old readListInternal was only used in Parcel.java, I changed all the invocations to call the new one within that; but let me know if you are concerned about this being used elsewhere other than Android codebase, I could keep the old one as is.\n\nAnd the reason I added (maxTargetSdk...) in the annotation was because Artur thought this would make the NonSDK warning go away, but seems it didnt work any way and I could change the annotation back as it was.",
+      "parentUuid": "8d39e117_23867ecb",
       "range": {
         "startLine": 4106,
         "startChar": 0,
