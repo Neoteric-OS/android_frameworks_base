@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c895289_6e69387f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2021-09-29T22:34:32Z",
+      "side": 1,
+      "message": "I haven\u0027t read through all the comments, but where is this going to be used?  I don\u0027t think it can be used by Bundle, unless we are going to add corresponding methods there.  Is that the plan?\n\nThough if we are going to be added typed methods to Bundle, I would tend to lean towards the equivalents of readTypedList()/writeTypedList() on Parcel, which also allow for a much more efficient implementation.\n\nOther than that I don\u0027t really have any comments on this. 😊",
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8cf39252_a8ea4e3f",
