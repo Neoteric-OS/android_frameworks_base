@@ -73,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b79dd2d0_14e1e9b3",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3373,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-29T18:15:00Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure the bug you linked should guide what we throw here\n\nI think this is Parcel#getExceptionCode. Though, maybe we should have a test of this case in any case?\n\nIt\u0027s not really possible to fix that bug or change the semantics of how errors are thrown here, because the behavior is essentially frozen in the API and 1,000s of call sites. We need to choose pragmatic errors. ClassCastException is incidental here, and it is related to the fact that we parse the parcel, and then we try to cast the class. If we detected the mismatch earlier (and we do have the information to do this), then there would be no class to cast incorrectly. Either way, the parcelable is malformed.\n\nBtw - does that mean implicitly that if we want to read Integer, we should pass Integer.class?",
+      "parentUuid": "f850aea3_cf25fe09",
+      "range": {
+        "startLine": 3373,
+        "startChar": 18,
+        "endLine": 3373,
+        "endChar": 27
+      },
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4722d862_76ba3309",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 15
@@ -155,6 +179,30 @@
       "side": 1,
       "message": "Good point on stopping early. I actually suggested this before :P (https://android-review.googlesource.com/c/platform/frameworks/base/+/1832336/9..15/core/java/android/os/Parcel.java#b3638). We can do:\n\n  clazz \u003d (clazz !\u003d null) ? clazz.asSubclass(Parcelable.class) : null;\n  \nbefore calling readParcelableInternal().\n\nclazz \u003d null doesn\u0027t mean \"don\u0027t allow any class to be read\", it means don\u0027t perform any class check. Hao, can you make this clear in the javadoc of the internal methods that accept clazz \u003d null? Also, I added comments to the public APIs to call Objects.requireNonNull(clazz) before calling into the internal methods.",
       "parentUuid": "966ab518_3f591548",
+      "range": {
+        "startLine": 3561,
+        "startChar": 25,
+        "endLine": 3561,
+        "endChar": 47
+      },
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c896e33d_e02bbe54",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3561,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-29T18:15:00Z",
+      "side": 1,
+      "message": "\u003e clazz.asSubclass(Parcelable.class)\n\nThis would address my concern (since it throws if it\u0027s not a subclass), yes.",
+      "parentUuid": "f895a9dd_a049db0b",
       "range": {
         "startLine": 3561,
         "startChar": 25,
