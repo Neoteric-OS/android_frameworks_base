@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dc966ce_ed603a9f",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1731,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-09-29T09:48:58Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "5ac94592_8e20d059",
+      "range": {
+        "startLine": 1731,
+        "startChar": 29,
+        "endLine": 1731,
+        "endChar": 51
+      },
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e4a29ad_89f3d694",
@@ -54,6 +78,30 @@
       "writtenOn": "2020-10-12T09:51:48Z",
       "side": 1,
       "message": "Do we still need this ? It looks like this is better inlined now.",
+      "range": {
+        "startLine": 1807,
+        "startChar": 17,
+        "endLine": 1807,
+        "endChar": 36
+      },
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1d9d4e0_1e3bae47",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1807,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-09-29T09:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e4a29ad_89f3d694",
       "range": {
         "startLine": 1807,
         "startChar": 17,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49d04896_31f76c52",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2734,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-09-29T09:48:58Z",
+      "side": 1,
+      "message": "Remove the observer and call exitVpnRunner directly here.",
+      "parentUuid": "b729d486_eab86e43",
+      "range": {
+        "startLine": 2734,
+        "startChar": 38,
+        "endLine": 2734,
+        "endChar": 60
+      },
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "843bf7c6_a272bd6c",
@@ -100,6 +172,30 @@
       "writtenOn": "2020-10-12T09:51:48Z",
       "side": 1,
       "message": "Do you want to at least log something ?",
+      "range": {
+        "startLine": 2735,
+        "startChar": 52,
+        "endLine": 2735,
+        "endChar": 55
+      },
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bba74e0_0a6a9878",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2735,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-09-29T09:48:58Z",
+      "side": 1,
+      "message": "Not exist now",
+      "parentUuid": "843bf7c6_a272bd6c",
       "range": {
         "startLine": 2735,
         "startChar": 52,
@@ -156,6 +252,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3f1313c_56907475",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-09-29T09:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5de3473_b4275668",
+      "range": {
+        "startLine": 1133,
+        "startChar": 48,
+        "endLine": 1133,
+        "endChar": 74
+      },
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41608473_5623b290",
@@ -169,6 +289,30 @@
       "writtenOn": "2020-10-12T09:51:48Z",
       "side": 1,
       "message": "I think this is overspecified and dangerously approaches the change-detector category. Why do you care that getLinkProperties was called with an irrelevant network ? What matters is that the correct network is detected. So when you call onLost(undesiredNetwork1) in l.1145, you get the assurance that it has no impact – this is the correct way to do it. I don\u0027t think you should check that getLinkProperties is called here.\n\nMy point is : it would probably be more correct if the implementation waited for onLinkPropertiesChanged to get the LP. But if someone makes that change in the future, your test will refuse that implementation, even if it\u0027s correct.\n(you don\u0027t need to go and make that change)",
+      "range": {
+        "startLine": 1135,
+        "startChar": 8,
+        "endLine": 1136,
+        "endChar": 58
+      },
+      "revId": "df7f4a3ab57d83ff35a170404882c31fab8db9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "981508e1_1d4f9486",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1136,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-09-29T09:48:58Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "41608473_5623b290",
       "range": {
         "startLine": 1135,
         "startChar": 8,

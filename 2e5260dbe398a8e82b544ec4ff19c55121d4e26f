@@ -119,6 +119,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fae3282_453f8f32",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2719,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-09-29T09:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60e8e3c3_d68a1783",
+      "range": {
+        "startLine": 2719,
+        "startChar": 62,
+        "endLine": 2719,
+        "endChar": 69
+      },
+      "revId": "2e5260dbe398a8e82b544ec4ff19c55121d4e26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35a106a4_d486706d",
@@ -213,6 +237,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "538036f4_28642818",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-09-29T09:48:58Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "cf62e677_2c6bba7e",
+      "range": {
+        "startLine": 1119,
+        "startChar": 8,
+        "endLine": 1121,
+        "endChar": 25
+      },
+      "revId": "2e5260dbe398a8e82b544ec4ff19c55121d4e26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c65061fc_950a8e89",
@@ -250,6 +298,30 @@
       "side": 1,
       "message": "rename to buildTestL2TPVpnProfile",
       "parentUuid": "c65061fc_950a8e89",
+      "range": {
+        "startLine": 1160,
+        "startChar": 70,
+        "endLine": 1160,
+        "endChar": 71
+      },
+      "revId": "2e5260dbe398a8e82b544ec4ff19c55121d4e26f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fcb8824_7404cac5",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-09-29T09:48:58Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "0dee3126_672b158e",
       "range": {
         "startLine": 1160,
         "startChar": 70,

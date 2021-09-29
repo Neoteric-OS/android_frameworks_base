@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79380887_c034393d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-09-29T09:48:58Z",
+      "side": 1,
+      "message": "Please refer to aosp/1840133 for testing part. ",
+      "revId": "9ff2eca993c4b3740548dd49ccb63056dea7593c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
