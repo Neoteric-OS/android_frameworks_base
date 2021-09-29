@@ -33,6 +33,24 @@
       "message": "Make sense to me to call \nAs voice interaction service only relies on display configuration without activity overrided configuration, and should clear the merged configuration if the service started by the activity.",
       "revId": "438068802de13a2ee1a43aa21addbd42d05ae84a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2955af86_7d9a40a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1315793
+      },
+      "writtenOn": "2021-09-29T12:02:20Z",
+      "side": 1,
+      "message": "+1, should be a safe fix?",
+      "parentUuid": "a3b46cc1_9cf9bbea",
+      "revId": "438068802de13a2ee1a43aa21addbd42d05ae84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
