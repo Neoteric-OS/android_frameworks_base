@@ -160,6 +160,24 @@
       "parentUuid": "504eabf3_0fb6326d",
       "revId": "c17eff841aec9001fd829f480306a3325aca9694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c4805ec_06928e8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-09-30T15:23:07Z",
+      "side": 1,
+      "message": "@Rajesh,\nHow do you perform the OMAPI test to SIM OMAPI reader?\nDo you write ARs to a physical SIM?",
+      "parentUuid": "f0256643_a399b648",
+      "revId": "c17eff841aec9001fd829f480306a3325aca9694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
