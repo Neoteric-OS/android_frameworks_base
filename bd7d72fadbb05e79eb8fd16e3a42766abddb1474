@@ -16,6 +16,115 @@
       "message": "Made changes, added CTS tests; and replied to the comments. PTAL",
       "revId": "bd7d72fadbb05e79eb8fd16e3a42766abddb1474",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d13617fb_4f1114d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-30T16:28:17Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "bd7d72fadbb05e79eb8fd16e3a42766abddb1474",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "982d592b_e93db6da",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 3374,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-30T16:28:17Z",
+      "side": 1,
+      "message": "Nit: Can remove line here",
+      "range": {
+        "startLine": 3374,
+        "startChar": 0,
+        "endLine": 3374,
+        "endChar": 6
+      },
+      "revId": "bd7d72fadbb05e79eb8fd16e3a42766abddb1474",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "307950cf_1299a8c0",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 3735,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-30T16:28:17Z",
+      "side": 1,
+      "message": "\" but\n\n(space between \u0027\"\u0027 and \u0027b\u0027)",
+      "range": {
+        "startLine": 3735,
+        "startChar": 22,
+        "endLine": 3735,
+        "endChar": 26
+      },
+      "revId": "bd7d72fadbb05e79eb8fd16e3a42766abddb1474",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb6a3712_9128d0c9",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 3794,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-30T16:28:17Z",
+      "side": 1,
+      "message": "Nit: Can remove a line here",
+      "range": {
+        "startLine": 3794,
+        "startChar": 0,
+        "endLine": 3794,
+        "endChar": 6
+      },
+      "revId": "bd7d72fadbb05e79eb8fd16e3a42766abddb1474",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00067b3d_fc94ef7d",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4137,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-30T16:28:17Z",
+      "side": 1,
+      "message": "Nit: Can remove a line here",
+      "range": {
+        "startLine": 4137,
+        "startChar": 0,
+        "endLine": 4137,
+        "endChar": 6
+      },
+      "revId": "bd7d72fadbb05e79eb8fd16e3a42766abddb1474",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
