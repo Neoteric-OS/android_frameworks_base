@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a202264_07d83a35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-30T09:38:59Z",
+      "side": 1,
+      "message": "Yeah, not for bundle. \n\nSome vulnerabilities exploit the fact that there are quite a few parcelables that use the untyped read/write container APIs (https://developer.android.com/reference/android/os/Parcel#untyped-containers) and that those APIs trigger deserialization regardless of the type expected [1] [2]. Our goal is to move developers to the APIs you mentioned readTypedXXX() / writeTypedXXX() since they are also more performant and that will be our 1st recommendation indeed. If most parcelables respected http://go/android-api-guidelines#parcelable-final, this would be sufficient. However, a quick code-search tells us that our codebase from ~4k parcelables in our codebase (https://source.corp.google.com/search?q\u003dclass.*implements%5CsParcelable\u0026sq\u003dpackage:%5Eandroid$), only around ~1.5k are final (https://source.corp.google.com/search?q\u003dclass.*implements%5CsParcelable\u0026sq\u003dpackage:%5Eandroid$), one such example we\u0027ve hit is here (https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/15778315/3..5/core/java/android/content/pm/InstantAppIntentFilter.java#b62), so we also want to provide a way to migrate to safe deserialization of these types too, especially the ones where the work to ensure final classes is realistically not get done. So, in summary, the plan is to point developers away from untyped APIs to the ones you mentioned readTypedXXX() / writeTypedXXX() and to migrate (and ask owners to migrate) inside the platform, but for the cases where this isn\u0027t possible we are going to migrate to the ones being introduced here. \n\n[1] You can see in https://docs.google.com/presentation/d/12XbcaOJzi2aD27efKy4XDZ3OM44U3Q812rykUFVbhOo/edit#slide\u003did.gdf637bd3fe_1_193 that the attacker use the fact that OutputConfiguration was using Parcel.readList() to insert a certain vulnerable parcelable responsible for part of the exploit chain.\n[2] This is also summarized in http://go/safer-parcel#heading\u003dh.emkgx0ugb6hh.",
+      "parentUuid": "5c895289_6e69387f",
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8cf39252_a8ea4e3f",
@@ -102,6 +120,30 @@
       "side": 1,
       "message": "\u003e I\u0027m not sure the bug you linked should guide what we throw here\n\nI think this is Parcel#getExceptionCode. Though, maybe we should have a test of this case in any case?\n\nIt\u0027s not really possible to fix that bug or change the semantics of how errors are thrown here, because the behavior is essentially frozen in the API and 1,000s of call sites. We need to choose pragmatic errors. ClassCastException is incidental here, and it is related to the fact that we parse the parcel, and then we try to cast the class. If we detected the mismatch earlier (and we do have the information to do this), then there would be no class to cast incorrectly. Either way, the parcelable is malformed.\n\nBtw - does that mean implicitly that if we want to read Integer, we should pass Integer.class?",
       "parentUuid": "f850aea3_cf25fe09",
+      "range": {
+        "startLine": 3373,
+        "startChar": 18,
+        "endLine": 3373,
+        "endChar": 27
+      },
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57ab2c63_4954b6f9",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3373,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-30T09:38:59Z",
+      "side": 1,
+      "message": "We wouldn\u0027t change the semantics of the current errors thrown here as the CCE would only be thrown in new APIs (which incorporate the example I mentioned earlier into the class), but ack if the semantics around this class revolve around BPE. I\u0027m not strongly opposed to your suggestion and since you\u0027re the expert, let\u0027s change to BPE :) \n\nIf you want to read an Integer you can:\n\n1. Use the old API and cast yourself (if fail CCE will be thrown)\n  int x \u003d (int) p.readValue(null);\n\n2. Use the new API and a BPE will be thrown (as agreed above) \n  int x \u003d p.readValue(null, Integer.class);",
+      "parentUuid": "b79dd2d0_14e1e9b3",
       "range": {
         "startLine": 3373,
         "startChar": 18,
