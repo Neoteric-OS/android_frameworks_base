@@ -178,6 +178,24 @@
       "parentUuid": "f0256643_a399b648",
       "revId": "c17eff841aec9001fd829f480306a3325aca9694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "427f1bf7_9cbe5d3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1611900
+      },
+      "writtenOn": "2021-09-30T15:48:06Z",
+      "side": 1,
+      "message": "We have orange SIM card where it is provisioned with required applets.\nRight now I am updating CTS AR file with UUID mapped to VTS and using it for my testing.",
+      "parentUuid": "7c4805ec_06928e8c",
+      "revId": "c17eff841aec9001fd829f480306a3325aca9694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
