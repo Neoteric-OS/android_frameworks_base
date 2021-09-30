@@ -156,6 +156,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4636a856_6cfe1f9f",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3373,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-09-30T10:08:29Z",
+      "side": 1,
+      "message": "Ops, sorry, we\u0027re not actually introducing a new readValue() API, this is just internal for use by the actual APIs (readList() and readParcelable() here). So, if we\u0027re reading an integer list we could:\n\n  1: List\u003cInteger\u003e ints \u003d ...\n  2: p.readList(ints, null, Integer.class); // New API\n  3: p.readList(ints, null);                // Old API\n  4: int x \u003d ints.get(0);\n  \nIf the list on the payload is not of integers, a CCE will be thrown on L4 if using the old API, otherwise a BPE will be thrown on L2 using the new API.",
+      "parentUuid": "57ab2c63_4954b6f9",
+      "range": {
+        "startLine": 3373,
+        "startChar": 18,
+        "endLine": 3373,
+        "endChar": 27
+      },
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4722d862_76ba3309",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 15
