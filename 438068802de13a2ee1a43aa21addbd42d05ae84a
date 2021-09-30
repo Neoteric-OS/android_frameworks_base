@@ -51,6 +51,24 @@
       "parentUuid": "a3b46cc1_9cf9bbea",
       "revId": "438068802de13a2ee1a43aa21addbd42d05ae84a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2c304f4_9cb1e1f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1717755
+      },
+      "writtenOn": "2021-09-30T10:22:26Z",
+      "side": 1,
+      "message": "I have verify this code on foldable device, it runs ok.",
+      "parentUuid": "2955af86_7d9a40a5",
+      "revId": "438068802de13a2ee1a43aa21addbd42d05ae84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
