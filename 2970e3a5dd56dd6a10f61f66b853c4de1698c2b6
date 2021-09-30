@@ -370,6 +370,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "20a056f9_b18a341a",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3561,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-30T21:06:38Z",
+      "side": 1,
+      "message": "Thank you! The only other thing is, I would like to have some tests for this (e.g. write something, setDataPosition(0), read something). android.os.ParcelTest might be a good place for this - this way we can make sure we get all the behaviors we want.",
+      "parentUuid": "8085aa43_bc4ee070",
+      "range": {
+        "startLine": 3561,
+        "startChar": 25,
+        "endLine": 3561,
+        "endChar": 47
+      },
+      "revId": "2970e3a5dd56dd6a10f61f66b853c4de1698c2b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "33bc36d6_50d67079",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 15
