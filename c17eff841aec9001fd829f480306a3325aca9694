@@ -214,6 +214,24 @@
       "parentUuid": "427f1bf7_9cbe5d3a",
       "revId": "c17eff841aec9001fd829f480306a3325aca9694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32964ea4_55ccaa7e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1611900
+      },
+      "writtenOn": "2021-10-01T13:15:20Z",
+      "side": 1,
+      "message": "Actually I am not provisioning AR on SIM explicitly, just updating the AR file (vendor/google_devices/sunfish/proprietary/esim/ST_PreProcess/st54j_aram_cts.txt,) with UUID used for mapping VTS UID in mapping config, with that I am able to run tests on pixel device having eSE1 and SIM1.\n\nI usually replace existing ARs to make it work for VTS by doing below change -\nUsually I replace existing appacert hash with UUID for testing as mentioned below -\nreplace 4bbe31beb2f753cfe71ec6bf112548687bb6c34e \u003d\u003e ffffffff9f36407ead0639fc966f14dde7970f68\nReplace 5cc49e0bc83927486fbb3a17ed37276cbbceb290 \u003d\u003e ffffffff9f36407ead0639fc966f14dde7970f68\n\nWe are reusing existing CTS applets for running VTS also, while provisioning we should take care of AR for running VTS also.",
+      "parentUuid": "df32569a_f4b1c015",
+      "revId": "c17eff841aec9001fd829f480306a3325aca9694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
