@@ -20,6 +20,7 @@ import android.annotation.DurationMillisLong;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SdkConstant;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.Intent;
@@ -160,7 +161,7 @@ public abstract class ResumeOnRebootService extends Service {
 
     @Nullable
     @Override
-    public IBinder onBind(@Nullable Intent intent) {
+    public IBinder onBind(@SuppressLint("InvalidNullability") @Nullable Intent intent) {
         return mInterface.asBinder();
     }
 }
