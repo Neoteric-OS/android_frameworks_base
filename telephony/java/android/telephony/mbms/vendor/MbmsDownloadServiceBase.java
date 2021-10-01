@@ -17,6 +17,7 @@
 package android.telephony.mbms.vendor;
 
 import android.annotation.NonNull;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.content.Intent;
 import android.os.Binder;
@@ -231,7 +232,7 @@ public class MbmsDownloadServiceBase extends IMbmsDownloadService.Stub {
     // TODO: are there any public specifications of what the file format is that I can link to?
     @Override
     public @MbmsErrors.MbmsError int addServiceAnnouncement(
-            int subscriptionId, @NonNull byte[] contents) {
+            int subscriptionId, @SuppressLint("InvalidNullability") @NonNull byte[] contents) {
         throw new UnsupportedOperationException("addServiceAnnouncement not supported by"
                 + " this middleware.");
     }

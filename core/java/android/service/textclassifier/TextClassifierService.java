@@ -21,6 +21,7 @@ import android.annotation.IntDef;
 import android.annotation.MainThread;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.ComponentName;
@@ -227,7 +228,7 @@ public abstract class TextClassifierService extends Service {
     }
 
     @Override
-    public boolean onUnbind(@NonNull Intent intent) {
+    public boolean onUnbind(@SuppressLint("InvalidNullability") @NonNull Intent intent) {
         onDisconnected();
         return super.onUnbind(intent);
     }
