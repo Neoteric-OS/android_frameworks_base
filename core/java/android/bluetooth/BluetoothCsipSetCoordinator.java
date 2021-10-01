@@ -24,6 +24,7 @@ import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.content.Context;
 import android.os.Binder;
@@ -420,7 +421,7 @@ public final class BluetoothCsipSetCoordinator implements BluetoothProfile, Auto
     @Override
     public
     @NonNull List<BluetoothDevice> getDevicesMatchingConnectionStates(
-            @NonNull int[] states) {
+            @SuppressLint("InvalidNullability") @NonNull int[] states) {
         if (VDBG) {
             log("getDevicesMatchingStates(states=" + Arrays.toString(states) + ")");
         }
