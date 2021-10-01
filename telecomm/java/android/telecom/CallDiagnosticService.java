@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package android.telecom;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SdkConstant;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.Intent;
@@ -135,9 +135,10 @@ public abstract class CallDiagnosticService extends Service {
     private final Map<String, DiagnosticCall> mDiagnosticCallByTelecomCallId = new ArrayMap<>();
     private ICallDiagnosticServiceAdapter mAdapter;
 
+    @SuppressLint("InvalidNullability")
     @Nullable
     @Override
-    public IBinder onBind(@NonNull Intent intent) {
+    public IBinder onBind(@SuppressLint("InvalidNullability") @NonNull Intent intent) {
         Log.i(this, "onBind!");
         return new CallDiagnosticServiceBinder();
     }

@@ -23,6 +23,7 @@ import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Binder;
 import android.os.IBinder;
@@ -363,7 +364,7 @@ public final class BluetoothLeAudio implements BluetoothProfile, AutoCloseable {
      */
     @Override
     public @NonNull List<BluetoothDevice> getDevicesMatchingConnectionStates(
-            @NonNull int[] states) {
+            @SuppressLint("InvalidNullability") @NonNull int[] states) {
         if (VDBG) log("getDevicesMatchingStates()");
         try {
             final IBluetoothLeAudio service = getService();
@@ -383,7 +384,8 @@ public final class BluetoothLeAudio implements BluetoothProfile, AutoCloseable {
      */
     @Override
     @RequiresPermission(Manifest.permission.BLUETOOTH)
-    public @BtProfileState int getConnectionState(@NonNull BluetoothDevice device) {
+    public @BtProfileState int getConnectionState(
+            @SuppressLint("InvalidNullability") @NonNull BluetoothDevice device) {
         if (VDBG) log("getState(" + device + ")");
         try {
             final IBluetoothLeAudio service = getService();

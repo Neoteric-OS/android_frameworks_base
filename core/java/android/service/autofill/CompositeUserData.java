@@ -19,6 +19,7 @@ import static android.view.autofill.Helper.sDebug;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.annotation.TestApi;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -77,6 +78,7 @@ public final class CompositeUserData implements FieldClassificationUserData, Par
         values.toArray(mValues);
     }
 
+    @SuppressLint("InvalidNullability")
     @Nullable
     @Override
     public String getFieldClassificationAlgorithm() {
@@ -100,9 +102,11 @@ public final class CompositeUserData implements FieldClassificationUserData, Par
         }
     }
 
+    @SuppressLint("InvalidNullability")
     @Nullable
     @Override
-    public String getFieldClassificationAlgorithmForCategory(@NonNull String categoryId) {
+    public String getFieldClassificationAlgorithmForCategory(
+        @SuppressLint("InvalidNullability") @NonNull String categoryId) {
         Preconditions.checkNotNull(categoryId);
         final ArrayMap<String, String> categoryAlgorithms = getFieldClassificationAlgorithms();
         if (categoryAlgorithms == null || !categoryAlgorithms.containsKey(categoryId)) {
