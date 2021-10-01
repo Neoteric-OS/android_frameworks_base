@@ -196,6 +196,24 @@
       "parentUuid": "7c4805ec_06928e8c",
       "revId": "c17eff841aec9001fd829f480306a3325aca9694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df32569a_f4b1c015",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-10-01T08:24:26Z",
+      "side": 1,
+      "message": "@Rajesh,\nDont you need to provision new ARs to the Orange SIM for the VTS test?\nCould you share how to provision the Orange SIM?",
+      "parentUuid": "427f1bf7_9cbe5d3a",
+      "revId": "c17eff841aec9001fd829f480306a3325aca9694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
