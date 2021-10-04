@@ -22,6 +22,30 @@
       },
       "revId": "fce313359644161d24e1c94fde1796865ea2aa20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dc8ca03_b40409dc",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1060415
+      },
+      "writtenOn": "2021-10-04T22:58:40Z",
+      "side": 1,
+      "message": "I believe fields were already added to androidx.tvprovider.media.tv.TvContractCompat. Can you please check --- https://developer.android.com/reference/androidx/tvprovider/media/tv/TvContractCompat.PreviewPrograms ? Thanks.",
+      "parentUuid": "c9ff5cfd_d70f0558",
+      "range": {
+        "startLine": 1669,
+        "startChar": 15,
+        "endLine": 1669,
+        "endChar": 43
+      },
+      "revId": "fce313359644161d24e1c94fde1796865ea2aa20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
