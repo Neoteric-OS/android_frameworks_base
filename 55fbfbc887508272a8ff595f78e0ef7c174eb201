@@ -16,6 +16,23 @@
       "message": "ah. since santiago edited the comment, that makes him an uploader and therefore means his +2 is not sufficient. (the second-party-review bit)",
       "revId": "55fbfbc887508272a8ff595f78e0ef7c174eb201",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07832f99_86748a9a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2021-10-04T20:42:45Z",
+      "side": 1,
+      "message": "kevin\u0027s on the list of folks who can +2 this.",
+      "revId": "55fbfbc887508272a8ff595f78e0ef7c174eb201",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
