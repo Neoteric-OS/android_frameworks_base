@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9ff5cfd_d70f0558",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1101748
+      },
+      "writtenOn": "2021-10-04T22:16:54Z",
+      "side": 1,
+      "message": "In another CL, we may also need to add these 2 fields to\nandroidx.tvprovider.media.tv.TvContractCompat",
+      "range": {
+        "startLine": 1669,
+        "startChar": 15,
+        "endLine": 1669,
+        "endChar": 43
+      },
+      "revId": "fce313359644161d24e1c94fde1796865ea2aa20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
