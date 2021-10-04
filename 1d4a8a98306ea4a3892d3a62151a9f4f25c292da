@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "091eee91_37d18324",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-10-04T07:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23001e6f_aa6d7eba",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "1d4a8a98306ea4a3892d3a62151a9f4f25c292da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b13a4c7e_fad2c601",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-10-04T07:16:24Z",
       "side": 1,
       "message": "In fact... do we need to know about these failures. They are never actionable. I doubt the people who send us the message really read this in detail.\n\nIsn\u0027t it going to be more useful in practice to just Log.e() ?",
+      "range": {
+        "startLine": 281,
+        "startChar": 0,
+        "endLine": 284,
+        "endChar": 49
+      },
+      "revId": "1d4a8a98306ea4a3892d3a62151a9f4f25c292da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d676a52_89d23214",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-10-04T07:55:22Z",
+      "side": 1,
+      "message": "The idea here is to crash the system on purpose, as the network_stack process is dead, so it\u0027s only a matter of time until wifi or something else crashes it; and the device will be in a very bad state until that happens. This way at least bugreports are fresh enough to know what happened, so we can fix what crashed the network_stack (the earlier crash has to be a bug, although it\u0027s often not a problem in network_stack code).\n\nLog.e would not achieve that, since the system would not crash, so we may get bugs where the device has no networking for hours, and it\u0027s hard to find what originally caused it.",
+      "parentUuid": "b13a4c7e_fad2c601",
       "range": {
         "startLine": 281,
         "startChar": 0,
