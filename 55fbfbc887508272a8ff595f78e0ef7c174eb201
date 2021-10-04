@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8362a53_88f53cbc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2021-10-04T20:42:07Z",
+      "side": 1,
+      "message": "ah. since santiago edited the comment, that makes him an uploader and therefore means his +2 is not sufficient. (the second-party-review bit)",
+      "revId": "55fbfbc887508272a8ff595f78e0ef7c174eb201",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
