@@ -46,6 +46,30 @@
       },
       "revId": "fce313359644161d24e1c94fde1796865ea2aa20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2434a1c_791c3bd0",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1101748
+      },
+      "writtenOn": "2021-10-04T23:49:58Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right. Thanks!",
+      "parentUuid": "5dc8ca03_b40409dc",
+      "range": {
+        "startLine": 1669,
+        "startChar": 15,
+        "endLine": 1669,
+        "endChar": 43
+      },
+      "revId": "fce313359644161d24e1c94fde1796865ea2aa20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
