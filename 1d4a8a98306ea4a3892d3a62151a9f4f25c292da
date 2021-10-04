@@ -22,6 +22,29 @@
       },
       "revId": "1d4a8a98306ea4a3892d3a62151a9f4f25c292da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b13a4c7e_fad2c601",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-10-04T07:16:24Z",
+      "side": 1,
+      "message": "In fact... do we need to know about these failures. They are never actionable. I doubt the people who send us the message really read this in detail.\n\nIsn\u0027t it going to be more useful in practice to just Log.e() ?",
+      "range": {
+        "startLine": 281,
+        "startChar": 0,
+        "endLine": 284,
+        "endChar": 49
+      },
+      "revId": "1d4a8a98306ea4a3892d3a62151a9f4f25c292da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
