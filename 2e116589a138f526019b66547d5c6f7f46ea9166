@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c80c6139_571ad016",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-05T10:42:21Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "43a5d98e_9c796652",
+      "revId": "2e116589a138f526019b66547d5c6f7f46ea9166",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98b74390_67812d75",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-10-04T20:58:53Z",
       "side": 1,
       "message": "I think we actually have an opportunity here to preserve the key/value pair for any eventual transport to a target destination process, instead of clobbering it just because it\u0027s unrecognized.\n\nSo I think it\u0027s reasonable to just return \"null\" in this sShouldDefuse clause, without removing the value.",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 307,
+        "endChar": 0
+      },
+      "revId": "2e116589a138f526019b66547d5c6f7f46ea9166",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea1e4e7b_c84f067e",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-05T10:42:21Z",
+      "side": 1,
+      "message": "Oh, good point, I like that. Done.",
+      "parentUuid": "98b74390_67812d75",
       "range": {
         "startLine": 303,
         "startChar": 0,
