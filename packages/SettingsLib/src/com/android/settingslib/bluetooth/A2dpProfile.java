@@ -34,7 +34,7 @@ import android.util.Log;
 import com.android.settingslib.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class A2dpProfile implements LocalBluetoothProfile {
@@ -280,18 +280,18 @@ public class A2dpProfile implements LocalBluetoothProfile {
         }
         // We want to get the highest priority codec, since that's the one that will be used with
         // this device, and see if it is high-quality (ie non-mandatory).
-        BluetoothCodecConfig[] selectable = null;
+        List<BluetoothCodecConfig> selectable = null;
         if (mService.getCodecStatus(device) != null) {
             selectable = mService.getCodecStatus(device).getCodecsSelectableCapabilities();
             // To get the highest priority, we sort in reverse.
-            Arrays.sort(selectable,
+            Collections.sort(selectable,
                     (a, b) -> {
                         return b.getCodecPriority() - a.getCodecPriority();
                     });
         }
 
-        final BluetoothCodecConfig codecConfig = (selectable == null || selectable.length < 1)
-                ? null : selectable[0];
+        final BluetoothCodecConfig codecConfig = (selectable == null || selectable.size() < 1)
+                ? null : selectable.get(0);
         final int codecType = (codecConfig == null || codecConfig.isMandatoryCodec())
                 ? BluetoothCodecConfig.SOURCE_CODEC_TYPE_INVALID : codecConfig.getCodecType();
 
