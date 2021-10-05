@@ -232,6 +232,24 @@
       "parentUuid": "df32569a_f4b1c015",
       "revId": "c17eff841aec9001fd829f480306a3325aca9694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47524aa1_0f39cab7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1611900
+      },
+      "writtenOn": "2021-10-05T01:12:50Z",
+      "side": 1,
+      "message": "Jack, Updated OMAPI tests also make it work with eSE only.\nAnd we restricted access to SIM card from Vendor modules (HAls).\n(CL takes care of it - https://android-review.googlesource.com/c/platform/packages/apps/SecureElement/+/1844197)",
+      "parentUuid": "32964ea4_55ccaa7e",
+      "revId": "c17eff841aec9001fd829f480306a3325aca9694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
