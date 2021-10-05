@@ -250,6 +250,24 @@
       "parentUuid": "32964ea4_55ccaa7e",
       "revId": "c17eff841aec9001fd829f480306a3325aca9694",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2efa9fc2_5a2019a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-10-05T13:02:15Z",
+      "side": 1,
+      "message": "As discussed, please help to refine the vts test implementation to avoid running with duplicate entries.",
+      "parentUuid": "47524aa1_0f39cab7",
+      "revId": "c17eff841aec9001fd829f480306a3325aca9694",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
