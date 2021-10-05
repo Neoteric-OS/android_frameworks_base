@@ -6850,7 +6850,8 @@ public class AudioManager {
             int btSourceCodec = AudioSystem.audioFormatToBluetoothSourceCodec(format);
             if (btSourceCodec
                     != BluetoothCodecConfig.SOURCE_CODEC_TYPE_INVALID) {
-                codecConfigList.add(new BluetoothCodecConfig(btSourceCodec));
+                codecConfigList.add(
+                        new BluetoothCodecConfig.Builder().setCodecType(btSourceCodec).build());
             }
         }
         return codecConfigList;
