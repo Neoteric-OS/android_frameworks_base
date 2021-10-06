@@ -39,13 +39,15 @@ import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.SettingObserver;
 import com.android.systemui.qs.logging.QSLogger;
-import com.android.systemui.qs.tileimpl.QSTileImpl;
 import com.android.systemui.statusbar.policy.BatteryController;
+import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.util.settings.SecureSettings;
 
 import javax.inject.Inject;
 
-public class BatterySaverTile extends QSTileImpl<BooleanState> implements
+import com.android.systemui.qs.tiles.SecureQSTile;
+
+public class BatterySaverTile extends SecureQSTile<BooleanState> implements
         BatteryController.BatteryStateChangeCallback {
 
     public static final String TILE_SPEC = "battery";
@@ -70,10 +72,11 @@ public class BatterySaverTile extends QSTileImpl<BooleanState> implements
             ActivityStarter activityStarter,
             QSLogger qsLogger,
             BatteryController batteryController,
-            SecureSettings secureSettings
+            SecureSettings secureSettings,
+            KeyguardStateController keyguardStateController
     ) {
         super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
-                statusBarStateController, activityStarter, qsLogger);
+                statusBarStateController, activityStarter, qsLogger, keyguardStateController);
         mBatteryController = batteryController;
         mBatteryController.observe(getLifecycle(), this);
         int currentUser = host.getUserContext().getUserId();
@@ -129,7 +132,11 @@ public class BatterySaverTile extends QSTileImpl<BooleanState> implements
     }
 
     @Override
-    protected void handleClick(@Nullable View view) {
+    protected void handleClick(@Nullable View view, boolean keyguardShowing) {
+        if (checkKeyguard(view, keyguardShowing)) {
+            return;
+        }
+
         if (getState().state == Tile.STATE_UNAVAILABLE) {
             return;
         }

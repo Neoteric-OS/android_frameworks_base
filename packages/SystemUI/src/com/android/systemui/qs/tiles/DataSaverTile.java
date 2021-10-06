@@ -39,13 +39,15 @@ import com.android.systemui.plugins.qs.QSTile.BooleanState;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.logging.QSLogger;
-import com.android.systemui.qs.tileimpl.QSTileImpl;
 import com.android.systemui.statusbar.phone.SystemUIDialog;
 import com.android.systemui.statusbar.policy.DataSaverController;
+import com.android.systemui.statusbar.policy.KeyguardStateController;
 
 import javax.inject.Inject;
 
-public class DataSaverTile extends QSTileImpl<BooleanState> implements
+import com.android.systemui.qs.tiles.SecureQSTile;
+
+public class DataSaverTile extends SecureQSTile<BooleanState> implements
         DataSaverController.Listener{
 
     public static final String TILE_SPEC = "saver";
@@ -66,10 +68,11 @@ public class DataSaverTile extends QSTileImpl<BooleanState> implements
             ActivityStarter activityStarter,
             QSLogger qsLogger,
             DataSaverController dataSaverController,
-            DialogLaunchAnimator dialogLaunchAnimator
+            DialogLaunchAnimator dialogLaunchAnimator,
+            KeyguardStateController keyguardStateController
     ) {
         super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
-                statusBarStateController, activityStarter, qsLogger);
+                statusBarStateController, activityStarter, qsLogger, keyguardStateController);
         mDataSaverController = dataSaverController;
         mDialogLaunchAnimator = dialogLaunchAnimator;
         mDataSaverController.observe(getLifecycle(), this);
@@ -85,7 +88,11 @@ public class DataSaverTile extends QSTileImpl<BooleanState> implements
         return new Intent(Settings.ACTION_DATA_SAVER_SETTINGS);
     }
     @Override
-    protected void handleClick(@Nullable View view) {
+    protected void handleClick(@Nullable View view, boolean keyguardShowing) {
+        if (checkKeyguard(view, keyguardShowing)) {
+            return;
+        }
+
         if (mState.value
                 || Prefs.getBoolean(mContext, Prefs.Key.QS_DATA_SAVER_DIALOG_SHOWN, false)) {
             // Do it right away.

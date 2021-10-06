@@ -58,7 +58,6 @@ import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.qs.AlphaControlledSignalTileView;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.logging.QSLogger;
-import com.android.systemui.qs.tileimpl.QSTileImpl;
 import com.android.systemui.qs.tiles.dialog.InternetDialogFactory;
 import com.android.systemui.statusbar.connectivity.AccessPointController;
 import com.android.systemui.statusbar.connectivity.IconState;
@@ -68,13 +67,16 @@ import com.android.systemui.statusbar.connectivity.SignalCallback;
 import com.android.systemui.statusbar.connectivity.WifiIcons;
 import com.android.systemui.statusbar.connectivity.WifiIndicators;
 import com.android.systemui.util.CarrierNameCustomization;
+import com.android.systemui.statusbar.policy.KeyguardStateController;
 
 import java.io.PrintWriter;
 
 import javax.inject.Inject;
 
+import com.android.systemui.qs.tiles.SecureQSTile;
+
 /** Quick settings tile: Internet **/
-public class InternetTile extends QSTileImpl<SignalState> {
+public class InternetTile extends SecureQSTile<SignalState> {
 
     public static final String TILE_SPEC = "internet";
 
@@ -108,10 +110,11 @@ public class InternetTile extends QSTileImpl<SignalState> {
             NetworkController networkController,
             AccessPointController accessPointController,
             InternetDialogFactory internetDialogFactory,
-            CarrierNameCustomization carrierNameCustomization
+            CarrierNameCustomization carrierNameCustomization,
+            KeyguardStateController keyguardStateController
     ) {
         super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
-                statusBarStateController, activityStarter, qsLogger);
+                statusBarStateController, activityStarter, qsLogger, keyguardStateController);
         mInternetDialogFactory = internetDialogFactory;
         mHandler = mainHandler;
         mController = networkController;
@@ -139,7 +142,10 @@ public class InternetTile extends QSTileImpl<SignalState> {
     }
 
     @Override
-    protected void handleClick(@Nullable View view) {
+    protected void handleClick(@Nullable View view, boolean keyguardShowing) {
+        if (checkKeyguard(view, keyguardShowing)) {
+            return;
+        }
         mHandler.post(() -> mInternetDialogFactory.create(true,
                 mAccessPointController.canConfigMobileData(),
                 mAccessPointController.canConfigWifi(), view));

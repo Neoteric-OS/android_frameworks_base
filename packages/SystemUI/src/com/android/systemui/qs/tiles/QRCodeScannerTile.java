@@ -38,12 +38,14 @@ import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.qrcodescanner.controller.QRCodeScannerController;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.logging.QSLogger;
-import com.android.systemui.qs.tileimpl.QSTileImpl;
+import com.android.systemui.statusbar.policy.KeyguardStateController;
 
 import javax.inject.Inject;
 
+import com.android.systemui.qs.tiles.SecureQSTile;
+
 /** Quick settings tile: QR Code Scanner **/
-public class QRCodeScannerTile extends QSTileImpl<QSTile.State> {
+public class QRCodeScannerTile extends SecureQSTile<QSTile.State> {
 
     public static final String TILE_SPEC = "qr_code_scanner";
 
@@ -69,9 +71,10 @@ public class QRCodeScannerTile extends QSTileImpl<QSTile.State> {
             StatusBarStateController statusBarStateController,
             ActivityStarter activityStarter,
             QSLogger qsLogger,
-            QRCodeScannerController qrCodeScannerController) {
+            QRCodeScannerController qrCodeScannerController,
+            KeyguardStateController keyguardStateController) {
         super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
-                statusBarStateController, activityStarter, qsLogger);
+                statusBarStateController, activityStarter, qsLogger, keyguardStateController);
         mQRCodeScannerController = qrCodeScannerController;
         mQRCodeScannerController.observe(getLifecycle(), mCallback);
     }
@@ -97,7 +100,11 @@ public class QRCodeScannerTile extends QSTileImpl<QSTile.State> {
     }
 
     @Override
-    protected void handleClick(@Nullable View view) {
+    protected void handleClick(@Nullable View view, boolean keyguardShowing) {
+        if (checkKeyguard(view, keyguardShowing)) {
+            return;
+        }
+
         Intent intent = mQRCodeScannerController.getIntent();
         if (intent == null) {
             // This should never happen as the fact that we are handling clicks means that the
