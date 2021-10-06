@@ -74,8 +74,6 @@ public final class KeymasterDefs {
             Tag.ORIGINATION_EXPIRE_DATETIME; // KM_DATE | 401;
     public static final int KM_TAG_USAGE_EXPIRE_DATETIME =
             Tag.USAGE_EXPIRE_DATETIME; // KM_DATE | 402;
-    public static final int KM_TAG_MIN_SECONDS_BETWEEN_OPS =
-            Tag.MIN_SECONDS_BETWEEN_OPS; // KM_UINT | 403;
     public static final int KM_TAG_MAX_USES_PER_BOOT = Tag.MAX_USES_PER_BOOT; // KM_UINT | 404;
     public static final int KM_TAG_USAGE_COUNT_LIMIT = Tag.USAGE_COUNT_LIMIT; // KM_UINT | 405;
 
@@ -124,12 +122,10 @@ public final class KeymasterDefs {
     public static final int KM_TAG_DEVICE_UNIQUE_ATTESTATION =
             Tag.DEVICE_UNIQUE_ATTESTATION; // KM_BOOL | 720;
 
-    public static final int KM_TAG_ASSOCIATED_DATA = Tag.ASSOCIATED_DATA; // KM_BYTES | 1000;
     public static final int KM_TAG_NONCE = Tag.NONCE; // KM_BYTES | 1001;
     public static final int KM_TAG_MAC_LENGTH = Tag.MAC_LENGTH; // KM_UINT | 1003;
     public static final int KM_TAG_RESET_SINCE_ID_ROTATION =
             Tag.RESET_SINCE_ID_ROTATION;     // KM_BOOL | 1004
-    public static final int KM_TAG_CONFIRMATION_TOKEN = Tag.CONFIRMATION_TOKEN; // KM_BYTES | 1005;
     public static final int KM_TAG_CERTIFICATE_SERIAL = Tag.CERTIFICATE_SERIAL; // KM_UINT | 1006;
     public static final int KM_TAG_CERTIFICATE_SUBJECT = Tag.CERTIFICATE_SUBJECT; // KM_UINT | 1007;
     public static final int KM_TAG_CERTIFICATE_NOT_BEFORE =
