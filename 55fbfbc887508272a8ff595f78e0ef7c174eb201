@@ -33,6 +33,23 @@
       "message": "kevin\u0027s on the list of folks who can +2 this.",
       "revId": "55fbfbc887508272a8ff595f78e0ef7c174eb201",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf288a9d_5ca98c5e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2021-10-06T20:27:16Z",
+      "side": 1,
+      "message": "hangyu ... can you +2 this as a current owner",
+      "revId": "55fbfbc887508272a8ff595f78e0ef7c174eb201",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
