@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8b1b1fc_4b8d0267",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2021-10-06T10:09:30Z",
+      "side": 1,
+      "message": "See discussion on bug. The bug here is with IME visibility, not IME surface removal (which must never happen while the IME is still visible, otherwise we\u0027ll get a flicker)\n\nAlso the responsibility of removing the IME surface when it\u0027s not needed is with `DisplayImeController` in multi-window mode.\n\n",
+      "revId": "0be7e7c63370d8ce8a073097614be2b57fb338db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
