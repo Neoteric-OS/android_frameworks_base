@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "95717e93_ccc4f285",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060415
+      },
+      "writtenOn": "2021-10-07T15:37:52Z",
+      "side": 1,
+      "message": "Hi Sungsoo, please review and AP+1. Thanks.",
+      "revId": "fce313359644161d24e1c94fde1796865ea2aa20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c9ff5cfd_d70f0558",
         "filename": "media/java/android/media/tv/TvContract.java",
         "patchSetId": 2
