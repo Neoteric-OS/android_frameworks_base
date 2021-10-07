@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f2bbebd_f2ba0d39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-10-07T18:45:53Z",
+      "side": 1,
+      "message": "could you specify that the offsets should only ever be passed in from dataPosition?\n\n\u0027length\u0027 is always going to be a delta between two dataPosition values, right? I wonder if we should use those, so that people don\u0027t have to subtract the lengths.\n\nAlso, can you specify what happens if invalid values are used (exceptions thrown, or always false)?",
+      "range": {
+        "startLine": 9,
+        "startChar": 37,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "b5d39dce915432a70673c8de30ab910b90c4167e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6ae1287_5b2a07d0",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3582,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-10-07T18:45:53Z",
+      "side": 1,
+      "message": "can we avoid this and below, by calling dataPosition? read/write don\u0027t promise to write specific lengths (though the ship has sailed)",
+      "range": {
+        "startLine": 3582,
+        "startChar": 67,
+        "endLine": 3582,
+        "endChar": 70
+      },
+      "revId": "b5d39dce915432a70673c8de30ab910b90c4167e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
