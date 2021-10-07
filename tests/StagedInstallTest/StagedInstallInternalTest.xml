@@ -20,6 +20,9 @@
         <option name="cleanup-apks" value="true" />
         <option name="test-file-name" value="StagedInstallInternalTestApp.apk" />
     </target_preparer>
+    <target_preparer class="com.android.tradefed.targetprep.InstallApexModuleTargetPreparer" >
+         <option name="test-file-name" value="com.android.apex.cts.shim.v2.apex" />
+    </target_preparer>
     <target_preparer class="com.android.tradefed.targetprep.RunCommandTargetPreparer">
         <option name="run-command" value="pm uninstall com.android.cts.install.lib.testapp.A" />
         <option name="run-command" value="pm uninstall com.android.cts.install.lib.testapp.B" />
