@@ -67,6 +67,23 @@
       "message": "hard to imaging that an OWNERS file causes runtime failures.\nI\u0027ll give TH another chance here before I think about overriding it.",
       "revId": "55fbfbc887508272a8ff595f78e0ef7c174eb201",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23f366c4_d49366c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2021-10-07T16:45:54Z",
+      "side": 1,
+      "message": "TH failures are runtime failures; this OWNERS change would not affect\nruntime behavior.",
+      "revId": "55fbfbc887508272a8ff595f78e0ef7c174eb201",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
