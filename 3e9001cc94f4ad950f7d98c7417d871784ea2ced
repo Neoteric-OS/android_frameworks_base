@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34d4d6d0_46ff3206",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStorePublicKey.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2021-10-07T22:31:53Z",
+      "side": 1,
+      "message": "nit: Arrays.hashCode does a null check for you",
+      "range": {
+        "startLine": 65,
+        "startChar": 63,
+        "endLine": 65,
+        "endChar": 80
+      },
+      "revId": "3e9001cc94f4ad950f7d98c7417d871784ea2ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
