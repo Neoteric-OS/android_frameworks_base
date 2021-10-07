@@ -361,6 +361,8 @@ public final class Parcel {
             long thisNativePtr, long otherNativePtr, int offset, int length);
     @CriticalNative
     private static native boolean nativeHasFileDescriptors(long nativePtr);
+    private static native boolean nativeHasFileDescriptorsInRange(
+            long nativePtr, int offset, int length);
     private static native void nativeWriteInterfaceToken(long nativePtr, String interfaceName);
     private static native void nativeEnforceInterface(long nativePtr, String interfaceName);
 
@@ -687,8 +689,16 @@ public final class Parcel {
     /**
      * Report whether the parcel contains any marshalled file descriptors.
      */
-    public final boolean hasFileDescriptors() {
+    public boolean hasFileDescriptors() {
         return nativeHasFileDescriptors(mNativePtr);
+    }
+
+    /**
+     * Report whether the parcel contains any marshalled file descriptors in the range defined by
+     * {@code offset} and {@code length}.
+     */
+    public boolean hasFileDescriptors(int offset, int length) {
+        return nativeHasFileDescriptorsInRange(mNativePtr, offset, length);
     }
 
     /**
@@ -3503,7 +3513,15 @@ public final class Parcel {
         }
     }
 
+
     private static final class LazyValue implements Supplier<Object> {
+        /**
+         *                      |   4B   |   4B   |
+         * mSource = Parcel{... |  type  | length | object | ...}
+         *                      a        b        c        d
+         * mPosition = a
+         * mLength = d - c
+         */
         private final int mPosition;
         private final int mLength;
         private final int mType;
@@ -3560,7 +3578,7 @@ public final class Parcel {
         public boolean hasFileDescriptors() {
             Parcel source = mSource;
             return (source != null)
-                    ? getValueParcel(source).hasFileDescriptors()
+                    ? source.hasFileDescriptors(mPosition, mLength + 8)
                     : Parcel.hasFileDescriptors(mObject);
         }
 
@@ -3621,9 +3639,6 @@ public final class Parcel {
             Parcel parcel = mValueParcel;
             if (parcel == null) {
                 parcel = Parcel.obtain();
-                // mLength is the length of object representation, excluding the type and length.
-                // mPosition is the position of the entire value container, right before the type.
-                // So, we add 4 bytes for the type + 4 bytes for the length written.
                 parcel.appendFrom(source, mPosition, mLength + 8);
                 mValueParcel = parcel;
             }
