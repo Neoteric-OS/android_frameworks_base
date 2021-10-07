@@ -36,6 +36,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.CursorEntityIterator;
 import android.content.Entity;
+import android.content.Entity.NamedContentValues;
 import android.content.EntityIterator;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -51,6 +52,7 @@ import android.os.RemoteException;
 import android.telecom.PhoneAccountHandle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
@@ -58,7 +60,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -5127,6 +5131,8 @@ public final class ContactsContract {
      */
     public final static class RawContactsEntity
             implements BaseColumns, DataColumns, RawContactsColumns {
+        private static final String TAG = "ContactsContract.RawContactsEntity";
+
         /**
          * This utility class cannot be instantiated
          */
@@ -5179,6 +5185,71 @@ public final class ContactsContract {
          * <P>Type: INTEGER</P>
          */
         public static final String DATA_ID = "data_id";
+
+        /**
+         * Query the contact and match with entrprise field
+         *
+         * @param context A context to get the ContentResolver from
+         * @param contactId Contact Id used to compare with entreprise contact id
+         *
+         * @return A map to be pass to the vCardComposer
+         * {@hide}
+         */
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        public static @NonNull Map<String, List<ContentValues>> queryRawContactEntity(
+                @NonNull Context context, long contactId) {
+            Uri uri = RawContactsEntity.CONTENT_URI;
+            long realContactId = contactId;
+
+            if (Contacts.isEnterpriseContactId(contactId)) {
+                uri = RawContactsEntity.CORP_CONTENT_URI;
+                realContactId = contactId - Contacts.ENTERPRISE_CONTACT_ID_BASE;
+            }
+            final Map<String, List<ContentValues>> contentValuesListMap =
+                    new HashMap<String, List<ContentValues>>();
+            // The resolver may return the entity iterator with no data. It is possible.
+            // e.g. If all the data in the contact of the given contact id are not exportable ones,
+            //      they are hidden from the view of this method, though contact id itself exists.
+            EntityIterator entityIterator = null;
+            try {
+                final String selection = Data.CONTACT_ID + "=?";
+                final String[] selectionArgs = new String[] {String.valueOf(realContactId)};
+
+                entityIterator = RawContacts.newEntityIterator(context.getContentResolver().query(
+                            uri, null, selection, selectionArgs, null));
+
+                if (entityIterator == null) {
+                    Log.e(TAG, "EntityIterator is null");
+                    return contentValuesListMap;
+                }
+
+                if (!entityIterator.hasNext()) {
+                    Log.w(TAG, "Data does not exist. contactId: " + realContactId);
+                    return contentValuesListMap;
+                }
+
+                while (entityIterator.hasNext()) {
+                    Entity entity = entityIterator.next();
+                    for (NamedContentValues namedContentValues : entity.getSubValues()) {
+                        ContentValues contentValues = namedContentValues.values;
+                        String key = contentValues.getAsString(Data.MIMETYPE);
+                        if (key != null) {
+                            List<ContentValues> contentValuesList = contentValuesListMap.get(key);
+                            if (contentValuesList == null) {
+                                contentValuesList = new ArrayList<ContentValues>();
+                                contentValuesListMap.put(key, contentValuesList);
+                            }
+                            contentValuesList.add(contentValues);
+                        }
+                    }
+                }
+            } finally {
+                if (entityIterator != null) {
+                    entityIterator.close();
+                }
+            }
+            return contentValuesListMap;
+        }
     }
 
     /**
