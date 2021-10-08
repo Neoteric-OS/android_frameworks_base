@@ -371,7 +371,10 @@ final public class MediaMuxer {
      * @param fd The FileDescriptor of the output media file.
      * @param format The format of the output media file.
      * @see android.media.MediaMuxer.OutputFormat
-     * @throws IllegalArgumentException if fd is invalid or format is not supported.
+     * @throws IllegalArgumentException if format is not supported or if there is a
+     * format-specific requirement that is not met. When outputting webm files, the
+     * file descriptor must be open in read-write mode. Else, the file descriptor must be
+     * open in write only or read-write mode.
      * @throws IOException if failed to open the file for write.
      */
     public MediaMuxer(@NonNull FileDescriptor fd, @Format int format) throws IOException {
