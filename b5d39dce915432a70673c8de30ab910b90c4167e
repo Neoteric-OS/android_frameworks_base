@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "99e0e767_0665a9bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-08T14:45:46Z",
+      "side": 1,
+      "message": "I used offset and length because that\u0027s what we use in appendFrom() and it\u0027s also the parameters we have in LazyValue. Is that ok?\n\nRe documenting invalid values: Done.",
+      "parentUuid": "3f2bbebd_f2ba0d39",
+      "range": {
+        "startLine": 9,
+        "startChar": 37,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "b5d39dce915432a70673c8de30ab910b90c4167e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d6ae1287_5b2a07d0",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2021-10-07T18:45:53Z",
       "side": 1,
       "message": "can we avoid this and below, by calling dataPosition? read/write don\u0027t promise to write specific lengths (though the ship has sailed)",
+      "range": {
+        "startLine": 3582,
+        "startChar": 67,
+        "endLine": 3582,
+        "endChar": 70
+      },
+      "revId": "b5d39dce915432a70673c8de30ab910b90c4167e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3cbd3c7_7b7eb9b0",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3582,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-08T14:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6ae1287_5b2a07d0",
       "range": {
         "startLine": 3582,
         "startChar": 67,
