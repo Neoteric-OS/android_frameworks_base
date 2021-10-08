@@ -69,6 +69,23 @@
       "parentUuid": "2955af86_7d9a40a5",
       "revId": "438068802de13a2ee1a43aa21addbd42d05ae84a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61a23933_6cc04471",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1717755
+      },
+      "writtenOn": "2021-10-08T02:48:57Z",
+      "side": 1,
+      "message": "Hi @Ming-Shin，please help to merge this change, thanks.\n ",
+      "revId": "438068802de13a2ee1a43aa21addbd42d05ae84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
