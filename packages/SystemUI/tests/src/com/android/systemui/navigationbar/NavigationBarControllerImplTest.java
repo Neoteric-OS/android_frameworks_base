@@ -59,6 +59,7 @@ import com.android.systemui.shared.system.TaskStackChangeListeners;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.phone.AutoHideControllerStore;
 import com.android.systemui.statusbar.phone.LightBarController;
+import com.android.systemui.statusbar.policy.BurnInProtectionController;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.util.concurrency.FakeExecutor;
 import com.android.systemui.util.settings.SecureSettings;
@@ -130,7 +131,8 @@ public class NavigationBarControllerImplTest extends SysuiTestCase {
                         mDisplayTracker,
                         mDeviceStateManager,
                         mock(DisplaysWithDecorationsRepositoryCompat.class),
-                        mock(CoroutineDispatcher.class)));
+                        mock(CoroutineDispatcher.class),
+                        () -> mock(BurnInProtectionController.class)));
         initializeNavigationBars();
         mMockitoSession = mockitoSession().mockStatic(Utilities.class).startMocking();
     }

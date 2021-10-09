@@ -61,12 +61,14 @@ import com.android.systemui.shared.system.TaskStackChangeListeners;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.phone.AutoHideControllerStore;
 import com.android.systemui.statusbar.phone.LightBarController;
+import com.android.systemui.statusbar.policy.BurnInProtectionController;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.util.Utils;
 import com.android.systemui.util.settings.SecureSettings;
 import com.android.wm.shell.back.BackAnimation;
 import com.android.wm.shell.pip.Pip;
 
+import dagger.Lazy;
 import dalvik.annotation.optimization.NeverCompile;
 
 import kotlinx.coroutines.CoroutineDispatcher;
@@ -93,6 +95,7 @@ public class NavigationBarControllerImpl implements
     private final DisplayManager mDisplayManager;
     private final TaskbarDelegate mTaskbarDelegate;
     private final NavBarHelper mNavBarHelper;
+    private final Lazy<BurnInProtectionController> mBurnInProtectionController;
     private int mNavMode;
     /**
      * Indicates whether the active display is a large screen, e.g. tablets, foldable devices in
@@ -138,13 +141,15 @@ public class NavigationBarControllerImpl implements
             DisplayTracker displayTracker,
             DeviceStateManager deviceStateManager,
             DisplaysWithDecorationsRepositoryCompat displaysWithDecorationsRepositoryCompat,
-            @Main CoroutineDispatcher mainCoroutineDispatcher) {
+            @Main CoroutineDispatcher mainCoroutineDispatcher,
+            Lazy<BurnInProtectionController> burnInProtectionController) {
         mContext = context;
         mExecutor = mainExecutor;
         mNavigationBarComponentFactory = navigationBarComponentFactory;
         mSecureSettings = secureSettings;
         mDisplayTracker = displayTracker;
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
+        mBurnInProtectionController = burnInProtectionController;
         commandQueue.addCallback(mCommandQueueCallbacks);
         if (WmCallbackForSysDecorFlag.isEnabled()) {
             displaysWithDecorationsRepositoryCompat.registerDisplayDecorationListener(
@@ -438,6 +443,9 @@ public class NavigationBarControllerImpl implements
         NavigationBar navBar = component.getNavigationBar();
         navBar.init();
         mNavigationBars.put(displayId, navBar);
+        if (isOnDefaultDisplay) {
+            mBurnInProtectionController.get().setNavigationBarView(navBar.getView());
+        }
 
         navBar.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override
@@ -461,6 +469,9 @@ public class NavigationBarControllerImpl implements
         if (navBar != null) {
             navBar.destroyView();
             mNavigationBars.remove(displayId);
+            if (displayId == mDisplayTracker.getDefaultDisplayId()) {
+                mBurnInProtectionController.get().setNavigationBarView(null);
+            }
         }
     }
 

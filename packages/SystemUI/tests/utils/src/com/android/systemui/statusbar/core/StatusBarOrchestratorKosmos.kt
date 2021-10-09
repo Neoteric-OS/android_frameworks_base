@@ -41,11 +41,13 @@ import com.android.systemui.statusbar.multiDisplayStatusBarLogger
 import com.android.systemui.statusbar.phone.fakeAutoHideControllerStore
 import com.android.systemui.statusbar.phone.mockAutoHideController
 import com.android.systemui.statusbar.phone.ui.statusBarIconController
+import com.android.systemui.statusbar.policy.BurnInProtectionController
 import com.android.systemui.statusbar.policy.statusBarConfigurationController
 import com.android.systemui.statusbar.window.data.repository.fakeStatusBarWindowStatePerDisplayRepository
 import com.android.systemui.statusbar.window.fakeStatusBarWindowController
 import com.android.systemui.statusbar.window.statusBarWindowControllerStore
 import com.android.wm.shell.bubbles.bubblesOptional
+import org.mockito.kotlin.mock
 
 val Kosmos.multiDisplayStatusBarOrchestratorStore by
     Kosmos.Fixture {
@@ -99,8 +101,11 @@ val Kosmos.statusBarOrchestrator by
             dumpManager,
             powerInteractor,
             primaryBouncerInteractor,
+            burnInProtectionController,
         )
     }
+
+val Kosmos.burnInProtectionController by Kosmos.Fixture { mock<BurnInProtectionController>() }
 
 val Kosmos.fakeStatusBarOrchestratorFactory by Kosmos.Fixture { FakeStatusBarOrchestratorFactory() }
 
