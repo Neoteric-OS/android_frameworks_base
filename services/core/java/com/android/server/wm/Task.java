@@ -1761,7 +1761,8 @@ class Task extends WindowContainer<WindowContainer> {
         }
         super.removeChild(r);
 
-        if (inPinnedWindowingMode()) {
+        if (inPinnedWindowingMode() || inSplitScreenPrimaryWindowingMode() ||
+                inSplitScreenSecondaryWindowingMode()) {
             // We normally notify listeners of task stack changes on pause, however root pinned task
             // activities are normally in the paused state so no notification will be sent there
             // before the activity is removed. We send it here so instead.
