@@ -160,6 +160,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d516f169_9d65865b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042384
+      },
+      "writtenOn": "2021-10-12T19:39:24Z",
+      "side": 1,
+      "message": "The overlay value is present in most in-market Pixel devices. Not sure if there is a better example.",
+      "parentUuid": "024932ea_61f34251",
+      "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8524d5e7_00c6830b",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 1
