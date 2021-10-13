@@ -752,47 +752,58 @@ public final class Parcel {
      * @hide
      */
     public static boolean hasFileDescriptors(Object value) {
+        return hasFileDescriptors(value, /* throw */ true);
+    }
+
+    private static boolean hasFileDescriptors(Object value, boolean throwIfUnsupportedType) {
         if (value instanceof LazyValue) {
-            return ((LazyValue) value).hasFileDescriptors();
+            LazyValue lazy = (LazyValue) value;
+            if (lazy.hasFileDescriptors()) {
+                return true;
+            }
         } else if (value instanceof Parcelable) {
-            if ((((Parcelable) value).describeContents()
-                    & Parcelable.CONTENTS_FILE_DESCRIPTOR) != 0) {
+            Parcelable parcelable = (Parcelable) value;
+            if ((parcelable.describeContents() & Parcelable.CONTENTS_FILE_DESCRIPTOR) != 0) {
                 return true;
             }
         } else if (value instanceof Parcelable[]) {
             Parcelable[] array = (Parcelable[]) value;
-            for (int n = array.length - 1; n >= 0; n--) {
-                Parcelable p = array[n];
-                if (p != null && ((p.describeContents()
-                        & Parcelable.CONTENTS_FILE_DESCRIPTOR) != 0)) {
+            for (int i = 0, n = array.length - 1; i < n; i++) {
+                if (hasFileDescriptors(array[i], /* throw */ false)) {
                     return true;
                 }
             }
         } else if (value instanceof SparseArray<?>) {
             SparseArray<?> array = (SparseArray<?>) value;
-            for (int n = array.size() - 1; n >= 0; n--) {
-                Object object = array.valueAt(n);
-                if (object instanceof Parcelable) {
-                    Parcelable p = (Parcelable) object;
-                    if (p != null && (p.describeContents()
-                            & Parcelable.CONTENTS_FILE_DESCRIPTOR) != 0) {
-                        return true;
-                    }
+            for (int i = 0, n = array.size() - 1; i < n; i++) {
+                if (hasFileDescriptors(array.valueAt(i), /* throw */ false)) {
+                    return true;
                 }
             }
-        } else if (value instanceof ArrayList<?>) {
-            ArrayList<?> array = (ArrayList<?>) value;
-            for (int n = array.size() - 1; n >= 0; n--) {
-                Object object = array.get(n);
-                if (object instanceof Parcelable) {
-                    Parcelable p = (Parcelable) object;
-                    if (p != null && ((p.describeContents()
-                            & Parcelable.CONTENTS_FILE_DESCRIPTOR) != 0)) {
-                        return true;
-                    }
+        } else if (value instanceof List<?>) {
+            List<?> list = (List<?>) value;
+            for (int i = 0, n = list.size() - 1; i < n; i++) {
+                if (hasFileDescriptors(list.get(i), /* throw */ false)) {
+                    return true;
                 }
             }
-        } else {
+        } else if (value instanceof ArrayMap<?, ?>) {
+            ArrayMap<?, ?> map = (ArrayMap<?, ?>) value;
+            for (int i = 0, n = map.size(); i < n; i++) {
+                if (hasFileDescriptors(map.keyAt(i), /* throw */ false)
+                        || hasFileDescriptors(map.valueAt(i), /* throw */ false)) {
+                    return true;
+                }
+            }
+        } else if (value instanceof Map<?, ?>) {
+            Map<?, ?> map = (Map<?, ?>) value;
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                if (hasFileDescriptors(entry.getKey(), /* throw */ false)
+                        || hasFileDescriptors(entry.getValue(), /* throw */ false)) {
+                    return true;
+                }
+            }
+        } else if (throwIfUnsupportedType) {
             getValueType(value); // Will throw if value is not supported
         }
         return false;
