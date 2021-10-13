@@ -829,6 +829,28 @@ public final class CardEmulation {
     /**
      * @hide
      */
+    public boolean setDefaultForNextTap(int userId, ComponentName service) {
+        try {
+            return sService.setDefaultForNextTap(userId, service);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return false;
+            }
+            try {
+                return sService.setDefaultForNextTap(userId, service);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return false;
+            }
+        }
+    }
+
+    /**
+     * @hide
+     */
     public List<ApduServiceInfo> getServices(String category) {
         try {
             return sService.getServices(mContext.getUserId(), category);
@@ -841,6 +863,28 @@ public final class CardEmulation {
             }
             try {
                 return sService.getServices(mContext.getUserId(), category);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return null;
+            }
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public List<ApduServiceInfo> getServices(String category, int userId) {
+        try {
+            return sService.getServices(userId, category);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return null;
+            }
+            try {
+                return sService.getServices(userId, category);
             } catch (RemoteException ee) {
                 Log.e(TAG, "Failed to reach CardEmulationService.");
                 return null;
