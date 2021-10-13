@@ -155,11 +155,9 @@ public final class PersistableBundle extends BaseBundle implements Cloneable, Pa
         mFlags = FLAG_DEFUSABLE;
     }
 
-    /**
-     * Constructs a PersistableBundle without initializing it.
-     */
-    PersistableBundle(boolean doInit) {
-        super(doInit);
+    /** @hide */
+    PersistableBundle(PersistableBundle from, boolean deep) {
+        super(from, deep);
     }
 
     /**
@@ -190,9 +188,7 @@ public final class PersistableBundle extends BaseBundle implements Cloneable, Pa
      * are referenced as-is and not copied in any way.
      */
     public PersistableBundle deepCopy() {
-        PersistableBundle b = new PersistableBundle(false);
-        b.copyInternal(this, true);
-        return b;
+        return new PersistableBundle(this, /* deep */ false);
     }
 
     /**
