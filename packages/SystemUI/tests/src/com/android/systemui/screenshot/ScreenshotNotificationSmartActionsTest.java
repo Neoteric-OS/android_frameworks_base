@@ -101,11 +101,12 @@ public class ScreenshotNotificationSmartActionsTest extends SysuiTestCase {
     @Test
     public void testExceptionHandlingInGetSmartActions()
             throws Exception {
-        CompletableFuture<List<Notification.Action>> smartActionsFuture = mock(
-                CompletableFuture.class);
+        CompletableFuture<List<Notification.Action>> smartActionsFuture = new CompletableFuture() {
+            @Override public List<Notification.Action> get(long timeout, TimeUnit unit) {
+                throw new RuntimeException();
+            }
+        };
         int timeoutMs = 1000;
-        when(smartActionsFuture.get(timeoutMs, TimeUnit.MILLISECONDS)).thenThrow(
-                RuntimeException.class);
         List<Notification.Action> actions = mScreenshotSmartActions.getSmartActions(
                 "", smartActionsFuture, timeoutMs, mSmartActionsProvider, REGULAR_SMART_ACTIONS);
         assertEquals(Collections.emptyList(), actions);
