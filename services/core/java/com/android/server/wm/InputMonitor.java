@@ -315,8 +315,13 @@ final class InputMonitor {
                 // the surface hierarchy.
                 // TODO(b/168252846): we have some issues with modal-windows, so we need to cross
                 // that bridge now that we organize full-screen Tasks.
-                inputWindowHandle.setTouchableRegionCrop(null /* Use this surfaces crop */);
-                inputWindowHandle.setReplaceTouchableRegionWithCrop(true);
+                if (task.inSplitScreenWindowingMode()){inputWindowHandle
+                      .setTouchableRegionCrop(task.getRootTask().getSurfaceControl());
+                    inputWindowHandle.setReplaceTouchableRegionWithCrop(false);
+                } else {
+                    inputWindowHandle.setTouchableRegionCrop(null /* Use this surfaces crop */);
+                    inputWindowHandle.setReplaceTouchableRegionWithCrop(true);
+                }
                 useSurfaceCrop = true;
             } else if (task.cropWindowsToRootTaskBounds() && !w.inFreeformWindowingMode()) {
                 inputWindowHandle.setTouchableRegionCrop(task.getRootTask().getSurfaceControl());
