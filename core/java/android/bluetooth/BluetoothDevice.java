@@ -58,7 +58,7 @@ import java.util.UUID;
  * <p>This class is really just a thin wrapper for a Bluetooth hardware
  * address. Objects of this class are immutable. Operations on this class
  * are performed on the remote Bluetooth hardware address, using the
- * {@link BluetoothAdapter} that was used to create this {@link
+ * {@link BluetoothAdapter} that was used to create this {@linkz
  * BluetoothDevice}.
  *
  * <p>To get a {@link BluetoothDevice}, use

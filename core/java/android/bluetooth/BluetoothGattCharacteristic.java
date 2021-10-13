@@ -451,8 +451,8 @@ public class BluetoothGattCharacteristic implements Parcelable {
      * Set the write type for this characteristic
      *
      * <p>Setting the write type of a characteristic determines how the
-     * {@link BluetoothGatt#writeCharacteristic} function write this
-     * characteristic.
+     * {@link BluetoothGatt#writeCharacteristic(BluetoothGattCharacteristic, byte[], int)} function
+     * write this characteristic.
      *
      * @param writeType The write type to for this characteristic. Can be one of: {@link
      * #WRITE_TYPE_DEFAULT}, {@link #WRITE_TYPE_NO_RESPONSE} or {@link #WRITE_TYPE_SIGNED}.
