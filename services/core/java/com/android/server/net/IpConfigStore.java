@@ -40,6 +40,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -321,6 +322,15 @@ public class IpConfigStore {
                                 if (in.readInt() == 1) {
                                     gateway = InetAddresses.parseNumericAddress(in.readUTF());
                                 }
+
+                                if (dest == null && gateway != null) {
+                                    if (gateway instanceof Inet4Address) {
+                                        dest = new LinkAddress(Inet4Address.ANY, 0);
+                                    } else {
+                                        dest = new LinkAddress(Inet6Address.ANY, 0);
+                                    }
+                                }
+
                                 // If the destination is a default IPv4 route, use the gateway
                                 // address unless already set.
                                 if (dest.getAddress() instanceof Inet4Address
