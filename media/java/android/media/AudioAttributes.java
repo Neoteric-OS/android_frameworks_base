@@ -823,6 +823,17 @@ public final class AudioAttributes implements Parcelable {
         }
 
         /**
+         * @hide
+         * Sets all flags, including non public flags in order to allow strategies & volume
+         * groups introspection and identify strategies with specific flags (e.g. BLUETOOTH_SCO).
+         */
+         @NonNull Builder setAllFlags(int flags) {
+             flags &= AudioAttributes.FLAG_ALL;
+             mFlags |= flags;
+             return this;
+         }
+
+        /**
          * Sets the attribute describing the content type of the audio signal, such as speech,
          * or music.
          * @param contentType the content type values, one of
