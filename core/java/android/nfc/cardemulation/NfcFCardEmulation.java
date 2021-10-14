@@ -25,7 +25,6 @@ import android.content.pm.PackageManager;
 import android.nfc.INfcFCardEmulation;
 import android.nfc.NfcAdapter;
 import android.os.RemoteException;
-import android.os.UserHandle;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -391,6 +390,28 @@ public final class NfcFCardEmulation {
             }
             try {
                 return sService.getNfcFServices(mContext.getUserId());
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to reach CardEmulationService.");
+                return null;
+            }
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public List<NfcFServiceInfo> getNfcFServices(int userId) {
+        try {
+            return sService.getNfcFServices(userId);
+        } catch (RemoteException e) {
+            // Try one more time
+            recoverService();
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover CardEmulationService.");
+                return null;
+            }
+            try {
+                return sService.getNfcFServices(userId);
             } catch (RemoteException ee) {
                 Log.e(TAG, "Failed to reach CardEmulationService.");
                 return null;
