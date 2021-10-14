@@ -409,6 +409,7 @@ public:
     // If activeStreamIDToMatch is nonzero, it will only move to the restart queue
     // if the streamIDToMatch is found on the active queue.
     void moveToRestartQueue(Stream* stream, int32_t activeStreamIDToMatch = 0);
+    bool isQueueForPlay();
 
 private:
 
@@ -485,6 +486,7 @@ private:
     // The paired stream may be active or restarting.
     // No particular order.
     std::unordered_set<Stream*> mProcessingStreams GUARDED_BY(mStreamManagerLock);
+    bool                        mInsideQueueForPlay = false;
 };
 
 } // namespace android::soundpool
