@@ -212,6 +212,9 @@ public final class ActiveServices {
 
     private IServicetracker mServicetracker;
 
+    private final boolean isLowRamDevice =
+             SystemProperties.getBoolean("ro.config.low_ram", false);
+
     String mLastAnrDump;
 
     AppWidgetManagerInternal mAppWidgetManagerInternal;
@@ -770,11 +773,8 @@ public final class ActiveServices {
         }
         ComponentName cmp = startServiceInnerLocked(smap, service, r, callerFg, addToStarting);
 
-        if (!r.mAllowWhileInUsePermissionInFgs) {
-            r.mAllowWhileInUsePermissionInFgs =
-                    shouldAllowWhileInUsePermissionInFgsLocked(callingPackage, callingPid,
-                            callingUid, service, r, allowBackgroundActivityStarts);
-        }
+        setFgsRestrictionLocked(callingPackage, callingPid, callingUid, r,
+                allowBackgroundActivityStarts);
 
         return cmp;
     }
@@ -1447,14 +1447,6 @@ public final class ActiveServices {
                         +  String.format("0x%08X", manifestType)
                         + " in service element of manifest file");
                 }
-                // If the foreground service is not started from TOP process, do not allow it to
-                // have while-in-use location/camera/microphone access.
-                if (!r.mAllowWhileInUsePermissionInFgs) {
-                    Slog.w(TAG,
-                            "Foreground service started from background can not have "
-                                    + "location/camera/microphone access: service "
-                                    + r.shortInstanceName);
-                }
             }
             boolean alreadyStartedOp = false;
             boolean stopProcStatsOp = false;
@@ -1502,6 +1494,57 @@ public final class ActiveServices {
                     ignoreForeground = true;
                 }
 
+                if (!ignoreForeground) {
+                    if (r.mStartForegroundCount == 0) {
+                        /*
+                        If the service was started with startService(), not
+                        startForegroundService(), and if startForeground() isn't called within
+                        mFgsStartForegroundTimeoutMs, then we check the state of the app
+                        (who owns the service, which is the app that called startForeground())
+                        again. If the app is in the foreground, or in any other cases where
+                        FGS-starts are allowed, then we still allow the FGS to be started.
+                        Otherwise, startForeground() would fail.
+
+                        If the service was started with startForegroundService(), then the service
+                        must call startForeground() within a timeout anyway, so we don't need this
+                        check.
+                        */
+                        if (!r.fgRequired) {
+                            final long delayMs = SystemClock.elapsedRealtime() - r.createRealTime;
+                            if (delayMs > mAm.mConstants.mFgsStartForegroundTimeoutMs) {
+                                resetFgsRestrictionLocked(r);
+                                setFgsRestrictionLocked(r.serviceInfo.packageName, r.app.pid,
+                                        r.appInfo.uid, r, false);
+                                EventLog.writeEvent(0x534e4554, "183147114",
+                                        r.appInfo.uid,
+                                        "call setFgsRestrictionLocked again due to "
+                                                + "startForegroundTimeout");
+                            }
+                        }
+                    } else if (r.mStartForegroundCount >= 1) {
+                        // The second or later time startForeground() is called after service is
+                        // started. Check for app state again.
+                        final long delayMs = SystemClock.elapsedRealtime() -
+                                r.mLastSetFgsRestrictionTime;
+                        if (delayMs > mAm.mConstants.mFgsStartForegroundTimeoutMs) {
+                            resetFgsRestrictionLocked(r);
+                            setFgsRestrictionLocked(r.serviceInfo.packageName, r.app.pid,
+                                    r.appInfo.uid, r, false);
+                            EventLog.writeEvent(0x534e4554, "183147114", r.appInfo.uid,
+                                    "call setFgsRestrictionLocked for "
+                                            + (r.mStartForegroundCount + 1) + "th startForeground");
+                        }
+                    }
+                    // If the foreground service is not started from TOP process, do not allow it to
+                    // have while-in-use location/camera/microphone access.
+                    if (!r.mAllowWhileInUsePermissionInFgs) {
+                        Slog.w(TAG,
+                                "Foreground service started from background can not have "
+                                        + "location/camera/microphone access: service "
+                                        + r.shortInstanceName);
+                    }
+                }
+
                 // Apps under strict background restrictions simply don't get to have foreground
                 // services, so now that we've enforced the startForegroundService() contract
                 // we only do the machinery of making the service foreground when the app
@@ -1537,6 +1580,7 @@ public final class ActiveServices {
                             active.mNumActive++;
                         }
                         r.isForeground = true;
+                        r.mStartForegroundCount++;
                         if (!stopProcStatsOp) {
                             ServiceState stracker = r.getTracker();
                             if (stracker != null) {
@@ -1595,6 +1639,7 @@ public final class ActiveServices {
                     decActiveForegroundAppLocked(smap, r);
                 }
                 r.isForeground = false;
+                resetFgsRestrictionLocked(r);
                 ServiceState stracker = r.getTracker();
                 if (stracker != null) {
                     stracker.setForeground(false, mAm.mProcessStats.getMemFactorLocked(),
@@ -2146,28 +2191,30 @@ public final class ActiveServices {
             }
             clist.add(c);
 
-            ServiceData sData = new ServiceData();
-            sData.packageName = s.packageName;
-            sData.processName = s.shortInstanceName;
-            sData.lastActivity = s.lastActivity;
-            if (s.app != null) {
-                sData.pid = s.app.pid;
-                sData.serviceB = s.app.serviceb;
-            } else {
-                 sData.pid = -1;
-                 sData.serviceB = false;
-            }
-
-            ClientData cData = new ClientData();
-            cData.processName = callerApp.processName;
-            cData.pid = callerApp.pid;
-            try {
-                if (getServicetrackerInstance()) {
-                   mServicetracker.bindService(sData, cData);
+            if (!isLowRamDevice) {
+                ServiceData sData = new ServiceData();
+                sData.packageName = s.packageName;
+                sData.processName = s.shortInstanceName;
+                sData.lastActivity = s.lastActivity;
+                if (s.app != null) {
+                    sData.pid = s.app.pid;
+                    sData.serviceB = s.app.serviceb;
+                } else {
+                     sData.pid = -1;
+                     sData.serviceB = false;
                 }
-            } catch (RemoteException e) {
-                Slog.e(TAG, "Failed to send bind details to servicetracker HAL", e);
-                mServicetracker = null;
+
+                ClientData cData = new ClientData();
+                cData.processName = callerApp.processName;
+                cData.pid = callerApp.pid;
+                try {
+                    if (getServicetrackerInstance()) {
+                        mServicetracker.bindService(sData, cData);
+                    }
+                } catch (RemoteException e) {
+                    Slog.e(TAG, "Failed to send bind details to servicetracker HAL", e);
+                    mServicetracker = null;
+                }
             }
 
             if ((flags&Context.BIND_AUTO_CREATE) != 0) {
@@ -2178,12 +2225,7 @@ public final class ActiveServices {
                 }
             }
 
-            if (!s.mAllowWhileInUsePermissionInFgs) {
-                s.mAllowWhileInUsePermissionInFgs =
-                        shouldAllowWhileInUsePermissionInFgsLocked(callingPackage,
-                                callingPid, callingUid,
-                                service, s, false);
-            }
+            setFgsRestrictionLocked(callingPackage, callingPid, callingUid, s, false);
 
             if (s.app != null) {
                 if ((flags&Context.BIND_TREAT_LIKE_ACTIVITY) != 0) {
@@ -2348,28 +2390,30 @@ public final class ActiveServices {
         try {
             while (clist.size() > 0) {
                 ConnectionRecord r = clist.get(0);
-                ServiceData sData = new ServiceData();
-                sData.packageName = r.binding.service.packageName;
-                sData.processName = r.binding.service.shortInstanceName;
-                sData.lastActivity = r.binding.service.lastActivity;
-                if(r.binding.service.app != null) {
-                    sData.pid = r.binding.service.app.pid;
-                    sData.serviceB = r.binding.service.app.serviceb;
-                } else {
-                    sData.pid = -1;
-                    sData.serviceB = false;
-                }
-
-                ClientData cData = new ClientData();
-                cData.processName = r.binding.client.processName;
-                cData.pid = r.binding.client.pid;
-                try {
-                    if (getServicetrackerInstance()) {
-                        mServicetracker.unbindService(sData, cData);
+                if (!isLowRamDevice) {
+                    ServiceData sData = new ServiceData();
+                    sData.packageName = r.binding.service.packageName;
+                    sData.processName = r.binding.service.shortInstanceName;
+                    sData.lastActivity = r.binding.service.lastActivity;
+                    if(r.binding.service.app != null) {
+                        sData.pid = r.binding.service.app.pid;
+                        sData.serviceB = r.binding.service.app.serviceb;
+                    } else {
+                        sData.pid = -1;
+                        sData.serviceB = false;
                     }
-                } catch (RemoteException e) {
-                    Slog.e(TAG, "Failed to send unbind details to servicetracker HAL", e);
-                    mServicetracker = null;
+
+                    ClientData cData = new ClientData();
+                    cData.processName = r.binding.client.processName;
+                    cData.pid = r.binding.client.pid;
+                    try {
+                        if (getServicetrackerInstance()) {
+                            mServicetracker.unbindService(sData, cData);
+                        }
+                    } catch (RemoteException e) {
+                        Slog.e(TAG, "Failed to send unbind details to servicetracker HAL", e);
+                        mServicetracker = null;
+                    }
                 }
                 removeConnectionLocked(r, null, null);
                 if (clist.size() > 0 && clist.get(0) == r) {
@@ -3232,20 +3276,22 @@ public final class ActiveServices {
             r.postNotification();
             created = true;
 
-            ServiceData sData = new ServiceData();
-            sData.packageName = r.packageName;
-            sData.processName = r.shortInstanceName;
-            sData.pid = r.app.pid;
-            sData.lastActivity = r.lastActivity;
-            sData.serviceB = r.app.serviceb;
+            if (!isLowRamDevice) {
+                ServiceData sData = new ServiceData();
+                sData.packageName = r.packageName;
+                sData.processName = r.shortInstanceName;
+                sData.pid = r.app.pid;
+                sData.lastActivity = r.lastActivity;
+                sData.serviceB = r.app.serviceb;
 
-            try {
-                if (getServicetrackerInstance()) {
-                    mServicetracker.startService(sData);
+                try {
+                    if (getServicetrackerInstance()) {
+                        mServicetracker.startService(sData);
+                    }
+                } catch (RemoteException e) {
+                    Slog.e(TAG, "Failed to send start details to servicetracker HAL", e);
+                    mServicetracker = null;
                 }
-            } catch (RemoteException e) {
-                Slog.e(TAG, "Failed to send start details to servicetracker HAL", e);
-                mServicetracker = null;
             }
         } catch (DeadObjectException e) {
             Slog.w(TAG, "Application dead when creating service " + r);
@@ -3444,24 +3490,26 @@ public final class ActiveServices {
     private final void bringDownServiceLocked(ServiceRecord r) {
         //Slog.i(TAG, "Bring down service:");
         //r.dump("  ");
-        ServiceData sData = new ServiceData();
-        sData.packageName = r.packageName;
-        sData.processName = r.shortInstanceName;
-        sData.lastActivity = r.lastActivity;
-        if (r.app != null) {
-            sData.pid = r.app.pid;
-        } else {
-            sData.pid = -1;
-            sData.serviceB = false;
-        }
-
-        try {
-            if (getServicetrackerInstance()) {
-                mServicetracker.destroyService(sData);
+        if (!isLowRamDevice) {
+            ServiceData sData = new ServiceData();
+            sData.packageName = r.packageName;
+            sData.processName = r.shortInstanceName;
+            sData.lastActivity = r.lastActivity;
+            if (r.app != null) {
+                sData.pid = r.app.pid;
+            } else {
+                sData.pid = -1;
+                sData.serviceB = false;
             }
-        } catch (RemoteException e) {
-            Slog.e(TAG, "Failed to send destroy details to servicetracker HAL", e);
-            mServicetracker = null;
+
+            try {
+                if (getServicetrackerInstance()) {
+                    mServicetracker.destroyService(sData);
+                }
+            } catch (RemoteException e) {
+                Slog.e(TAG, "Failed to send destroy details to servicetracker HAL", e);
+                mServicetracker = null;
+            }
         }
         // Report to all of the connections that the service is no longer
         // available.
@@ -3597,7 +3645,7 @@ public final class ActiveServices {
         r.isForeground = false;
         r.foregroundId = 0;
         r.foregroundNoti = null;
-        r.mAllowWhileInUsePermissionInFgs = false;
+        resetFgsRestrictionLocked(r);
 
         // Clear start entries.
         r.clearDeliveredStartsLocked();
@@ -4131,7 +4179,7 @@ public final class ActiveServices {
         }
 
         try {
-            if (getServicetrackerInstance()) {
+            if (!isLowRamDevice && getServicetrackerInstance()) {
                 mServicetracker.killProcess(app.pid);
             }
         } catch (RemoteException e) {
@@ -5087,7 +5135,7 @@ public final class ActiveServices {
      * @return true if allow, false otherwise.
      */
     private boolean shouldAllowWhileInUsePermissionInFgsLocked(String callingPackage,
-            int callingPid, int callingUid, Intent intent, ServiceRecord r,
+            int callingPid, int callingUid, ServiceRecord r,
             boolean allowBackgroundActivityStarts) {
         // Is the background FGS start restriction turned on?
         if (!mAm.mConstants.mFlagBackgroundFgsStartRestrictionEnabled) {
@@ -5173,6 +5221,28 @@ public final class ActiveServices {
     boolean canAllowWhileInUsePermissionInFgsLocked(int callingPid, int callingUid,
             String callingPackage) {
         return shouldAllowWhileInUsePermissionInFgsLocked(
-                callingPackage, callingPid, callingUid, null, null, false);
+                callingPackage, callingPid, callingUid, null, false);
+    }
+
+    /**
+     * In R, mAllowWhileInUsePermissionInFgs is to allow while-in-use permissions in foreground
+     *  service or not. while-in-use permissions in FGS started from background might be restricted.
+     * @param callingPackage caller app's package name.
+     * @param callingUid caller app's uid.
+     * @param r the service to start.
+     * @return true if allow, false otherwise.
+     */
+    private void setFgsRestrictionLocked(String callingPackage,
+            int callingPid, int callingUid, ServiceRecord r,
+            boolean allowBackgroundActivityStarts) {
+        r.mLastSetFgsRestrictionTime = SystemClock.elapsedRealtime();
+        if (!r.mAllowWhileInUsePermissionInFgs) {
+            r.mAllowWhileInUsePermissionInFgs = shouldAllowWhileInUsePermissionInFgsLocked(
+                    callingPackage, callingPid, callingUid, r, allowBackgroundActivityStarts);
+        }
+    }
+
+    private void resetFgsRestrictionLocked(ServiceRecord r) {
+        r.mAllowWhileInUsePermissionInFgs = false;
     }
 }
