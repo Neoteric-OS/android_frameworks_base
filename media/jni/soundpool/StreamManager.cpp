@@ -148,6 +148,10 @@ StreamManager::~StreamManager()
     forEach([](Stream *stream) { stream->clearAudioTrack(); });
 }
 
+bool StreamManager::isQueueForPlay()
+{
+    return mInsideQueueForPlay;
+}
 
 int32_t StreamManager::queueForPlay(const std::shared_ptr<Sound> &sound,
         int32_t soundID, float leftVolume, float rightVolume,

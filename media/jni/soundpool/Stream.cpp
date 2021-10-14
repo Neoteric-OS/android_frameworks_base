@@ -449,7 +449,7 @@ void Stream::callback(int event, void* info, int toggle, int tries)
             break;
         }
     } // lock ends here.  This is on the callback thread, no need to be precise.
-    if (activeStreamIDToRestart > 0) {
+    if (activeStreamIDToRestart > 0 && !mStreamManager->isQueueForPlay()) {
         // Restart only if a particular streamID is still current and active.
         ALOGV("%s: moveToRestartQueue %d", __func__, activeStreamIDToRestart);
         mStreamManager->moveToRestartQueue(this, activeStreamIDToRestart);
