@@ -5388,7 +5388,8 @@ public class Intent implements Parcelable, Cloneable {
      *
      * <p>Targets provided in this way will be presented inline with all other targets provided
      * by services from other apps. They will be prioritized before other service targets, but
-     * after those targets provided by sources that the user has manually pinned to the front.</p>
+     * after those targets provided by sources that the user has manually pinned to the front.
+     * You can choose up to two additional targets to present before those suggested by the app.</p>
      *
      * @see #ACTION_CHOOSER
      */
@@ -5499,9 +5500,10 @@ public class Intent implements Parcelable, Cloneable {
     /**
      * A Parcelable[] of {@link Intent} or
      * {@link android.content.pm.LabeledIntent} objects as set with
-     * {@link #putExtra(String, Parcelable[])} of additional activities to place
-     * a the front of the list of choices, when shown to the user with a
-     * {@link #ACTION_CHOOSER}.
+     * {@link #putExtra(String, Parcelable[])} to place
+     * at the front of the list of choices, when shown to the user with an
+     * {@link #ACTION_CHOOSER}. You can choose up to two additional activities to
+     * show before the app suggestions.
      */
     public static final String EXTRA_INITIAL_INTENTS = "android.intent.extra.INITIAL_INTENTS";
 
