@@ -3255,6 +3255,49 @@ public class AudioManager {
     }
 
     /**
+     * @hide
+     */
+    @SystemApi
+    public void setHfpEnabled(boolean enable) {
+        AudioSystem.setParameters("hfp_enable=" + enable);
+    }
+
+    /**
+     * @hide
+     */
+    @SystemApi
+    public void setHfpVolume(int volume) {
+        AudioSystem.setParameters("hfp_volume=" + volume);
+    }
+
+    /**
+     * @hide
+     */
+    @SystemApi
+    public void setHfpSamplingRate(int rate) {
+        AudioSystem.setParameters("hfp_set_sampling_rate=" + rate);
+    }
+
+    /**
+     * @hide
+     */
+    @SystemApi
+    public void setHeadsetProperties(@NonNull String name, boolean hasNrecEnabled,
+            boolean hasWbsEnabled) {
+        AudioSystem.setParameters("bt_headset_name=" + name
+                + ";bt_headset_nrec=" + (hasNrecEnabled ? "on" : "off")
+                + ";bt_wbs=" + (hasWbsEnabled ? "on" : "off"));
+    }
+
+    /**
+     * @hide
+     */
+    @SystemApi
+    public void setA2dpSuspended(boolean enable) {
+        AudioSystem.setParameters("A2dpSuspended=" + enable);
+    }
+
+    /**
      * Gets a variable number of parameter values from audio hardware.
      *
      * @param keys list of parameters
