@@ -16,6 +16,23 @@
       "message": "Hi Tracy, could you help comment on the fix?",
       "revId": "9c63e994eb32fa00241e6e29991d07cefa442ac1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da979d68_70530992",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2021-10-15T10:11:22Z",
+      "side": 1,
+      "message": "Hongwei, could you help take a look at the change?",
+      "revId": "9c63e994eb32fa00241e6e29991d07cefa442ac1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
