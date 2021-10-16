@@ -294,7 +294,8 @@ public class PlatLogoActivity extends Activity {
                     if (mOverrideMinute == 0 && (mOverrideHour % 12) == 0) {
                         Log.v(TAG, "12:00 let's gooooo");
                         performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                        launchNextStage(false);
+                        launchNextStage(Settings.System.getLong(getContentResolver(), 
+                            S_EGG_UNLOCK_SETTING, 0) != 0);
                     }
                     return true;
             }
