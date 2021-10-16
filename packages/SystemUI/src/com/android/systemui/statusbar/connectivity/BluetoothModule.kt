@@ -24,6 +24,7 @@ import com.android.systemui.qs.tiles.CaffeineTile
 import com.android.systemui.qs.tiles.DataSwitchTile
 import com.android.systemui.qs.tiles.HeadsUpTile
 import com.android.systemui.qs.tiles.RefreshRateTile
+import com.android.systemui.qs.tiles.SoundTile
 import com.android.systemui.qs.tiles.SyncTile
 import com.android.systemui.qs.tiles.UsbTetherTile
 import com.android.systemui.qs.tiles.VpnTile
@@ -85,4 +86,9 @@ interface BluetoothModule {
     @IntoMap
     @StringKey(DataSwitchTile.TILE_SPEC)
     fun bindDataSwitchTile(dataSwitchTile: DataSwitchTile): QSTileImpl<*>
+
+    @Binds
+    @IntoMap
+    @StringKey(SoundTile.TILE_SPEC)
+    fun bindSoundTile(soundTile: SoundTile): QSTileImpl<*>
 }
