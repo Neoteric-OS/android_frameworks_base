@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016300711",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1860293?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "3a021d8f_7dbaaee2",
+        "filename": "core/java/com/android/internal/app/PlatLogoActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-16T01:42:49Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 297,
+        "startChar": 85,
+        "endLine": 297,
+        "endChar": 86
+      },
+      "revId": "f61914b6e50b6ac233b2b146ad7fb4121a0e4277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
