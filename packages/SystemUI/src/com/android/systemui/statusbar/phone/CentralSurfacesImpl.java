@@ -41,12 +41,17 @@ import android.app.TaskInfo;
 import android.app.UiModeManager;
 import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
 import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.drawable.GradientDrawable;
 import android.hardware.devicestate.DeviceStateManager;
+import android.hardware.display.DisplayManager;
 import android.metrics.LogMaker;
 import android.net.Uri;
 import android.os.Bundle;
@@ -76,7 +81,16 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 import android.view.accessibility.AccessibilityManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.widget.DateTimeView;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
+import android.widget.TextSwitcher;
 import android.window.IRemoteTransition;
 
 import androidx.annotation.NonNull;
@@ -151,6 +165,7 @@ import com.android.systemui.scrim.ScrimView;
 import com.android.systemui.settings.UserTracker;
 import com.android.systemui.shade.CameraLauncher;
 import com.android.systemui.shade.GlanceableHubContainerController;
+import com.android.systemui.shade.NotificationPanelViewController;
 import com.android.systemui.shade.NotificationShadeWindowView;
 import com.android.systemui.shade.NotificationShadeWindowViewController;
 import com.android.systemui.shade.QuickSettingsController;
@@ -178,13 +193,19 @@ import com.android.systemui.statusbar.SysuiStatusBarStateController;
 import com.android.systemui.statusbar.notification.NotificationActivityStarter;
 import com.android.systemui.statusbar.notification.NotificationLaunchAnimatorControllerProvider;
 import com.android.systemui.statusbar.notification.NotificationWakeUpCoordinator;
+import com.android.systemui.statusbar.notification.collection.NotifCollection.CancellationReason;
+import com.android.systemui.statusbar.notification.collection.NotifPipeline;
+import com.android.systemui.statusbar.notification.collection.notifcollection.NotifCollectionListener;
+import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 import com.android.systemui.statusbar.notification.headsup.HeadsUpManager;
 import com.android.systemui.statusbar.notification.init.NotificationsController;
+import com.android.systemui.statusbar.notification.interruption.VisualInterruptionDecisionProvider;
 import com.android.systemui.statusbar.notification.row.ExpandableNotificationRow;
 import com.android.systemui.statusbar.notification.row.NotificationGutsManager;
 import com.android.systemui.statusbar.notification.stack.NotificationListContainer;
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout;
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayoutController;
+import com.android.systemui.statusbar.phone.Ticker;
 import com.android.systemui.statusbar.phone.dagger.StatusBarPhoneModule;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.BurnInProtectionController;
@@ -216,6 +237,7 @@ import dagger.Lazy;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Executor;
@@ -255,6 +277,20 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
     private CentralSurfacesCommandQueueCallbacks mCommandQueueCallbacks;
     private float mTransitionToFullShadeProgress = 0f;
     private final NotificationListContainer mNotifListContainer;
+
+    private NotifCollectionListener mNotifCollectionListener;
+    private final NotifPipeline mNotifPipeline;
+    private final VisualInterruptionDecisionProvider mVisualInterruptionDecisionProvider;
+
+    // viewgroup containing the normal contents of the statusbar
+    FrameLayout mStatusBarStartSideContent;
+
+    // status bar notification ticker
+    private boolean mTickerEnabled;
+    private Ticker mTicker;
+    private boolean mTicking;
+    private int mTickerAnimationMode;
+    private int mTickerTickDuration;
 
     private final KeyguardStateController.Callback mKeyguardStateControllerCallback =
             new KeyguardStateController.Callback() {
@@ -373,6 +409,8 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
     private final FalsingManager mFalsingManager;
     private final BroadcastDispatcher mBroadcastDispatcher;
     private final ConfigurationController mConfigurationController;
+    private final Lazy<NotificationPanelViewController>
+            mNotificationPanelViewControllerLazy;
     private final Lazy<NotificationShadeWindowViewController>
             mNotificationShadeWindowViewControllerLazy;
     private final DozeParameters mDozeParameters;
@@ -428,6 +466,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
     protected boolean mUserSetup = false;
 
     private final DelayableExecutor mMainExecutor;
+    private Handler mMainHandler;
 
     private int mInteractingWindows;
 
@@ -518,6 +557,8 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
 
     private final BurnInProtectionController mBurnInProtectionController;
 
+    private final CsiSettingsObserver mCsiSettingsObserver;
+
     /**
      * Public constructor for CentralSurfaces.
      *
@@ -527,6 +568,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     @Inject
     public CentralSurfacesImpl(
+            @Main Handler mainHandler,
             Context context,
             NotificationsController notificationsController,
             FragmentService fragmentService,
@@ -571,6 +613,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
             //  the one for other windows.
             ConfigurationController configurationController,
             NotificationShadeWindowController notificationShadeWindowController,
+            Lazy<NotificationPanelViewController> notificationPanelViewControllerLazy,
             Lazy<NotificationShadeWindowViewController> notificationShadeWindowViewControllerLazy,
             TopUiController topUiController,
             NotificationStackScrollLayoutController notificationStackScrollLayoutController,
@@ -625,7 +668,9 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
             WindowManager windowManager,
             WindowManagerProvider windowManagerProvider,
             SessionTracker sessionTracker,
-            BurnInProtectionController burnInProtectionController
+            BurnInProtectionController burnInProtectionController,
+            NotifPipeline notifPipeline,
+            VisualInterruptionDecisionProvider visualInterruptionDecisionProvider
     ) {
         mContext = context;
         mNotificationsController = notificationsController;
@@ -670,6 +715,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         mAccessibilityFloatingMenuController = accessibilityFloatingMenuController;
         mAssistManagerLazy = assistManagerLazy;
         mConfigurationController = configurationController;
+        mNotificationPanelViewControllerLazy = notificationPanelViewControllerLazy;
         mNotificationShadeWindowController = notificationShadeWindowController;
         mTopUiController = topUiController;
         mNotificationShadeWindowViewControllerLazy = notificationShadeWindowViewControllerLazy;
@@ -702,6 +748,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         mStatusBarHideIconsForBouncerManager = statusBarHideIconsForBouncerManager;
         mKeyguardUnlockAnimationController = keyguardUnlockAnimationController;
         mMainExecutor = delayableExecutor;
+        mMainHandler = mainHandler;
         mMessageRouter = messageRouter;
         mWallpaperManager = wallpaperManager;
         mCameraLauncherLazy = cameraLauncherLazy;
@@ -717,6 +764,8 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         mEmergencyGestureIntentFactory = emergencyGestureIntentFactory;
         mWalletController = walletController;
         mBurnInProtectionController = burnInProtectionController;
+        mNotifPipeline = notifPipeline;
+        mVisualInterruptionDecisionProvider = visualInterruptionDecisionProvider;
         mLockscreenShadeTransitionController = lockscreenShadeTransitionController;
         mStartingSurfaceOptional = startingSurfaceOptional;
         mDreamManager = dreamManager;
@@ -749,6 +798,19 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         mWindowManager = windowManager;
         mWindowManagerProvider = windowManagerProvider;
         mSessionTracker = sessionTracker;
+
+        mCsiSettingsObserver = new CsiSettingsObserver(mMainHandler);
+
+	ContentResolver resolver = mContext.getContentResolver();
+        mTickerEnabled = Settings.System.getIntForUser(
+                        resolver, Settings.System.STATUS_BAR_SHOW_TICKER,
+                        0, UserHandle.USER_CURRENT) == 1;
+	mTickerAnimationMode = Settings.System.getIntForUser(
+                        resolver, Settings.System.STATUS_BAR_TICKER_ANIMATION_MODE,
+			0, UserHandle.USER_CURRENT);
+        mTickerTickDuration = Settings.System.getIntForUser(
+                        resolver, Settings.System.STATUS_BAR_TICKER_TICK_DURATION,
+                        3000, UserHandle.USER_CURRENT);
     }
 
     private void initBubbles(Bubbles bubbles) {
@@ -793,6 +855,8 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         mWallpaperSupported = mWallpaperManager.isWallpaperSupported();
 
         createAndAddWindows();
+
+        mCsiSettingsObserver.observe();
 
         // Set up the initial notification state. This needs to happen before CommandQueue.disable()
         setUpPresenter();
@@ -1241,6 +1305,10 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         getNotificationShadeWindowViewController().setupCommunalHubLayout();
     }
 
+    protected NotificationPanelViewController getNotificationPanelViewController() {
+        return mNotificationPanelViewControllerLazy.get();
+    }
+
     protected NotificationShadeWindowViewController getNotificationShadeWindowViewController() {
         return mNotificationShadeWindowViewControllerLazy.get();
     }
@@ -1438,6 +1506,297 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         }
     }
 
+    private void initEntryListener() {
+         mNotifCollectionListener = new NotifCollectionListener() {
+            @Override
+            public void onEntryAdded(@NonNull NotificationEntry entry) {
+                if (shouldFilterHeadsUpNotification(entry)) {
+                    return;
+                }
+                tick(entry);
+            }
+
+            @Override
+            public void onEntryUpdated(@NonNull NotificationEntry entry) {
+                if (mDemoModeController.isInDemoMode()) {
+                    return;
+                }
+                if (shouldFilterHeadsUpNotification(entry)) {
+                    return;
+                }
+                tick(entry);
+            }
+
+            @Override
+            public void onEntryRemoved(@NonNull NotificationEntry entry, @CancellationReason int reason) {
+                mTicker.removeEntry(entry.getSbn());
+            }
+        };
+        mNotifPipeline.addCollectionListener(mNotifCollectionListener);
+    }
+
+    private boolean shouldFilterHeadsUpNotification(NotificationEntry entry) {
+        if (mHeadsUpManager.shouldHeadsUpBecomePinned(entry) &&
+                mVisualInterruptionDecisionProvider.makeUnloggedHeadsUpDecision(entry).getShouldInterrupt() &&
+                !mHeadsUpManager.isSnoozed(entry.getSbn().getPackageName())) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void createTicker(Context ctx, View statusBarView,
+                             TextSwitcher textSwitcher, ImageSwitcher tickerIcon, View tickerView) {
+        if (mNotifCollectionListener != null) {
+            mNotifPipeline.removeCollectionListener(mNotifCollectionListener);
+        }
+
+        mStatusBarStartSideContent = statusBarView.findViewById(R.id.status_bar_start_side_content);
+
+        if (mTicker == null) {
+            mTicker = new MyTicker(ctx, statusBarView);
+        }
+
+        ((MyTicker) mTicker).setView(tickerView);
+        mTicker.setViews(textSwitcher, tickerIcon);
+
+        if (isTickerEnabled()) {
+            initEntryListener();
+        }
+    }
+
+    public void tick(NotificationEntry notificationEntry) {
+        final StatusBarNotification n = notificationEntry.getSbn();
+        final int notificationUserId = n.getUserId();
+
+        if (mTicker == null) {
+            if (DEBUG && MULTIUSER_DEBUG) {
+                Log.d(TAG, "tick, return: mTicker is null");
+            }
+            return;
+        }
+
+        if (!mTickerEnabled) {
+            if (DEBUG && MULTIUSER_DEBUG) {
+                Log.d(TAG, "tick, return: ticker not enabled");
+            }
+            return;
+        }
+
+        if (mDemoModeController.isInDemoMode()) {
+            if (DEBUG && MULTIUSER_DEBUG) {
+                Log.d(TAG, "tick, return: in demo mode");
+            }
+            return;
+        }
+
+        if (!mDeviceProvisionedController.isDeviceProvisioned()) {
+            if (DEBUG && MULTIUSER_DEBUG) {
+                Log.d(TAG, "tick, return: device is not provisioned");
+            }
+            return;
+        }
+
+        if (!mLockscreenUserManager.isCurrentProfile(notificationUserId)) {
+            if (DEBUG && MULTIUSER_DEBUG) {
+                Log.d(TAG, "tick, return: not for current user");
+            }
+            return;
+        }
+
+        if (mHeadsUpManager.hasPinnedHeadsUp()) {
+            if (DEBUG && MULTIUSER_DEBUG) {
+                Log.d(TAG, "tick, return: already has pinned heads up");
+            }
+            return;
+        }
+
+        if (mKeyguardStateController.isShowing() && !mKeyguardStateController.isOccluded()) {
+            if (DEBUG && MULTIUSER_DEBUG) {
+                Log.d(TAG, "tick, return: keyguard showing and not occluded");
+            }
+            return;
+        }
+
+        if (mShadeSurface.isFullyExpanded()) {
+            if (DEBUG && MULTIUSER_DEBUG) {
+                Log.d(TAG, "tick, return: notification panel is fully expanded");
+            }
+            return;
+        }
+
+        if (mLockscreenUserManager.isAnyProfilePublicMode()) {
+            if (DEBUG && MULTIUSER_DEBUG) {
+                Log.d(TAG, "tick, return: any of the profiles are in public mode");
+            }
+            return;
+        }
+
+        if (n.getNotification().tickerText == null ||
+                n.getNotification().tickerText.toString().isEmpty()) {
+            if (DEBUG && MULTIUSER_DEBUG) {
+            	Log.d(TAG, "tick, return: tickerText is empty");
+            }
+            return;
+        }
+
+        if (getNotificationShadeWindowView().getWindowToken() == null) {
+            if (DEBUG && MULTIUSER_DEBUG) {
+                Log.d(TAG, "tick, return: window token is null");
+            }
+            return;
+        }
+
+        if ((getDisabled1() & (StatusBarManager.DISABLE_NOTIFICATION_ICONS |
+                StatusBarManager.DISABLE_NOTIFICATION_TICKER)) != 0) {
+            if (DEBUG && MULTIUSER_DEBUG) {
+                Log.d(TAG, "tick, return: notification icon/ticker disabled");
+            }
+            return;
+        }
+
+        mTicker.addEntry(n);
+    }
+
+    private class MyTicker extends Ticker {
+        // the inflated ViewStub
+        public View mTickerView;
+
+        MyTicker(Context context, View sb) {
+            super(context, sb, mTickerAnimationMode, mTickerTickDuration);
+
+            if (!mTickerEnabled) {
+                Log.w(TAG, "MyTicker instantiated with !mTickerEnabled", new Throwable());
+            }
+        }
+
+        public void setView(View tv) {
+            mTickerView = tv;
+        }
+
+        @Override
+        public void tickerStarting() {
+            if (mTicker == null || !mTickerEnabled) return;
+
+            mTicking = true;
+            Animation outAnim, inAnim;
+
+            if (mTickerAnimationMode == 1) {
+                outAnim = loadAnim(com.android.internal.R.anim.push_up_out, null);
+                inAnim = loadAnim(com.android.internal.R.anim.push_up_in, null);
+            } else {
+                outAnim = loadAnim(true, null);
+                inAnim = loadAnim(false, null);
+            }
+
+            if (mStatusBarStartSideContent != null) {
+                mStatusBarStartSideContent.setVisibility(View.GONE);
+                mStatusBarStartSideContent.startAnimation(outAnim);
+            }
+
+            if (mTickerView != null) {
+                mTickerView.setVisibility(View.VISIBLE);
+                mTickerView.startAnimation(inAnim);
+            }
+        }
+
+        @Override
+        public void tickerDone() {
+            Animation outAnim, inAnim;
+
+            if (mTickerAnimationMode == 1) {
+                outAnim = loadAnim(com.android.internal.R.anim.push_up_out, mTickingDoneListener);
+                inAnim = loadAnim(com.android.internal.R.anim.push_up_in, null);
+            } else {
+                outAnim = loadAnim(true, mTickingDoneListener);
+                inAnim = loadAnim(false, null);
+            }
+
+            if (mStatusBarStartSideContent != null) {
+                mStatusBarStartSideContent.setVisibility(View.VISIBLE);
+                mStatusBarStartSideContent.startAnimation(inAnim);
+            }
+
+            if (mTickerView != null) {
+                mTickerView.setVisibility(View.GONE);
+                mTickerView.startAnimation(outAnim);
+            }
+        }
+
+        @Override
+        public void tickerHalting() {
+            if (mStatusBarStartSideContent != null && mStatusBarStartSideContent.getVisibility() != View.VISIBLE) {
+                mStatusBarStartSideContent.setVisibility(View.VISIBLE);
+                mStatusBarStartSideContent.startAnimation(loadAnim(false, null));
+            }
+
+            if (mTickerView != null) {
+                mTickerView.setVisibility(View.GONE);
+                // we do not animate the ticker away at this point, just get rid of it (b/6992707)
+            }
+        }
+
+        @Override
+        public void onDarkChanged(ArrayList<Rect> area, float darkIntensity, int tint) {
+            applyDarkIntensity(area, mTickerView, tint);
+        }
+
+        Animation.AnimationListener mTickingDoneListener = new Animation.AnimationListener() {
+            public void onAnimationEnd(Animation animation) {
+                mTicking = false;
+            }
+
+            public void onAnimationRepeat(Animation animation) {}
+
+            public void onAnimationStart(Animation animation) {}
+        };
+    }
+
+    private Animation loadAnim(boolean outAnim, Animation.AnimationListener listener) {
+        AlphaAnimation animation = new AlphaAnimation((outAnim ? 1.0f : 0.0f), (outAnim ? 0.0f : 1.0f));
+        Interpolator interpolator = AnimationUtils.loadInterpolator(mContext,
+                (outAnim ? android.R.interpolator.accelerate_quad : android.R.interpolator.decelerate_quad));
+
+        animation.setInterpolator(interpolator);
+        animation.setDuration(350);
+
+        if (listener != null) {
+            animation.setAnimationListener(listener);
+        }
+
+        return animation;
+    }
+
+    private Animation loadAnim(int id, Animation.AnimationListener listener) {
+        Animation anim = AnimationUtils.loadAnimation(mContext, id);
+
+        if (listener != null) {
+            anim.setAnimationListener(listener);
+        }
+
+        return anim;
+    }
+
+    public Ticker getTicker() {
+        return mTicker;
+    }
+
+    @Override
+    public boolean isTickerTicking() {
+        return mTicking;
+    }
+
+    public boolean isTickerEnabled() {
+        return mTicker != null && mTickerEnabled;
+    }
+
+    @Override
+    public void haltTicker() {
+        if (isTickerEnabled()) {
+            mTicker.halt();
+        }
+    }
+
     @NeverCompile
     @Override
     public void dump(PrintWriter pwOriginal, String[] args) {
@@ -1450,6 +1809,10 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
             pw.print(" scroll " + mStackScroller.getScrollX()
                     + "," + mStackScroller.getScrollY());
             pw.println(" translationX " + mStackScroller.getTranslationX());
+            pw.println("  mTickerEnabled=" + mTickerEnabled);
+            if (mTickerEnabled) {
+                pw.println("  mTicking=" + mTicking);
+            }
         }
 
         pw.print("  mInteractingWindows="); pw.println(mInteractingWindows);
@@ -1954,6 +2317,8 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
      * Switches theme from light to dark and vice-versa.
      */
     protected void updateTheme() {
+        haltTicker();
+
         if (!SceneContainerFlag.isEnabled()) {
             // Set additional scrim only if the lock and system wallpaper are different to prevent
             // applying the dimming effect twice.
@@ -2176,6 +2541,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
             }
 
             DejankUtils.stopDetectingBlockingIpcs(tag);
+            haltTicker();
         }
 
         @Override
@@ -2507,6 +2873,55 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         return mDeviceInteractive;
     }
 
+    private class CsiSettingsObserver extends ContentObserver {
+        CsiSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_TICKER),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_TICKER_ANIMATION_MODE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_TICKER_TICK_DURATION),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            ContentResolver resolver = mContext.getContentResolver();
+	    if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_TICKER))) {
+                mTickerEnabled = Settings.System.getIntForUser(
+                        resolver, Settings.System.STATUS_BAR_SHOW_TICKER,
+                        0, UserHandle.USER_CURRENT) == 1;
+                if (!mTickerEnabled && mNotifCollectionListener != null) {
+		    mNotifPipeline.removeCollectionListener(mNotifCollectionListener);
+                } else if (isTickerEnabled()) {
+                    initEntryListener();
+                }
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_TICKER_ANIMATION_MODE))) {
+                mTickerAnimationMode = Settings.System.getIntForUser(
+                        resolver, Settings.System.STATUS_BAR_TICKER_ANIMATION_MODE,
+			0, UserHandle.USER_CURRENT);
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_TICKER_TICK_DURATION))) {
+                mTickerTickDuration = Settings.System.getIntForUser(
+                        resolver, Settings.System.STATUS_BAR_TICKER_TICK_DURATION,
+                        3000, UserHandle.USER_CURRENT);
+                if (mTicker != null) {
+                    mTicker.updateTickDuration(mTickerTickDuration);
+                }
+            }
+        }
+    }
+
     @Override
     public void handleExternalShadeWindowTouch(MotionEvent event) {
         getNotificationShadeWindowViewController().handleExternalTouch(event);
@@ -2530,6 +2945,9 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         });
     }
 
+    protected int getDisabled1() {
+        return mCommandQueueCallbacks.getDisabled1();
+    }
     private void clearNotificationEffects() {
         try {
             mBarService.clearNotificationEffects();
@@ -2787,6 +3205,11 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
             };
 
     private final DemoMode mDemoModeCallback = new DemoMode() {
+	@Override
+        public void onDemoModeStarted() {
+            haltTicker();
+        }
+
         @Override
         public void onDemoModeFinished() {
             checkBarModes();

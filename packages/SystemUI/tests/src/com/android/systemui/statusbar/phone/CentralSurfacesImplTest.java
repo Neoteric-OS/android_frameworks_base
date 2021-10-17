@@ -158,6 +158,7 @@ import com.android.systemui.statusbar.StatusBarStateControllerImpl;
 import com.android.systemui.statusbar.notification.NotificationActivityStarter;
 import com.android.systemui.statusbar.notification.NotificationLaunchAnimatorControllerProvider;
 import com.android.systemui.statusbar.notification.NotificationWakeUpCoordinator;
+import com.android.systemui.statusbar.notification.collection.NotifPipeline;
 import com.android.systemui.statusbar.notification.headsup.HeadsUpManager;
 import com.android.systemui.statusbar.notification.init.NotificationsController;
 import com.android.systemui.statusbar.notification.interruption.AvalancheProvider;
@@ -590,7 +591,9 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
                 mWindowManager,
                 mWindowManagerProvider,
                 mock(SessionTracker.class),
-                mock(BurnInProtectionController.class)
+                mock(BurnInProtectionController.class),
+                mock(NotifPipeline.class),
+                mVisualInterruptionDecisionProvider
         );
         mScreenLifecycle.addObserver(mCentralSurfaces.mScreenObserver);
         mCentralSurfaces.initShadeVisibilityListener();

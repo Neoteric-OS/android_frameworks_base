@@ -106,6 +106,9 @@ interface HeadsUpManager : Dumpable {
     /** Returns whether or not the given notification was pinned by the user. */
     fun isPinnedByUser(key: String): Boolean
 
+    /** Determines if a heads-up notification should be promoted to a pinned state based on system and notification conditions. */
+    fun shouldHeadsUpBecomePinned(entry: NotificationEntry?): Boolean
+
     /** @see setHeadsUpAnimatingAway */
     fun isHeadsUpAnimatingAwayValue(): Boolean
 
@@ -297,6 +300,8 @@ class HeadsUpManagerEmptyImpl @Inject constructor() : HeadsUpManager {
     override fun isHeadsUpEntry(key: String) = false
 
     override fun isPinnedByUser(key: String) = false
+
+    override fun shouldHeadsUpBecomePinned(entry: NotificationEntry?) = false
 
     override fun isHeadsUpAnimatingAwayValue() = false
 

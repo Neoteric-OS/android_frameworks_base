@@ -24,6 +24,9 @@ import android.view.InputDevice
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.view.ViewStub
+import android.widget.ImageSwitcher
+import android.widget.TextSwitcher
 import androidx.annotation.VisibleForTesting
 import com.android.systemui.Gefingerpoken
 import com.android.systemui.display.dagger.SystemUIDisplaySubcomponent.DisplayAware
@@ -197,8 +200,31 @@ private constructor(
         if (!StatusBarEventForwardingModernization.isEnabled) {
             mView.setLongPressGestureDetector(statusBarLongPressGestureDetector.get())
         }
+        if (mView.context.getDisplayId() == DEFAULT_DISPLAY) {
+            initTickerView()
+        }
         progressProvider?.setReadyToHandleTransition(true)
         configurationController.addCallback(configurationListener)
+    }
+
+    private fun initTickerView() {
+        val tickerStub: ViewStub? = mView.findViewById(R.id.ticker_stub)
+        val tickerViewFromStub = if (tickerStub != null) {
+            tickerStub.inflate()
+        } else {
+            mView.findViewById(R.id.ticker)
+        }
+        val textSwitcher = mView.findViewById<TextSwitcher>(R.id.tickerText)
+        val tickerIcon = mView.findViewById<ImageSwitcher>(R.id.tickerIcon)
+        if (textSwitcher != null && tickerIcon != null && tickerViewFromStub != null) {
+            centralSurfaces.createTicker(
+                mView.context,
+                mView,
+                textSwitcher,
+                tickerIcon,
+                tickerViewFromStub,
+            )
+        }
     }
 
     private fun addCursorSupportToIconContainers() {
@@ -253,6 +279,7 @@ private constructor(
 
     @VisibleForTesting
     public override fun onViewDetached() {
+        centralSurfaces.haltTicker()
         removeDarkReceivers()
         startSideContainer.setOnHoverListener(null)
         endSideContainer.setOnHoverListener(null)

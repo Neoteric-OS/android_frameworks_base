@@ -17,8 +17,11 @@
 package com.android.systemui.statusbar.phone;
 
 import android.annotation.Nullable;
+import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageSwitcher;
+import android.widget.TextSwitcher;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
@@ -92,6 +95,20 @@ public interface CentralSurfaces extends Dumpable, LifecycleOwner, CoreStartable
 
     /** Default impl for CoreStartable. */
     default void start() {}
+
+    default boolean isTickerTicking() {
+        return false;
+    }
+
+    default void haltTicker() {}
+
+    default void createTicker(
+            Context ctx,
+            View statusBarView,
+            TextSwitcher textSwitcher,
+            ImageSwitcher tickerIcon,
+            View tickerView
+    ) {}
 
     boolean updateIsKeyguard();
 
