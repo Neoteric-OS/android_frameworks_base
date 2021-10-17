@@ -30,7 +30,10 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.widget.ImageSwitcher;
 import android.widget.LinearLayout;
+import android.widget.TextSwitcher;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.core.animation.Animator;
@@ -57,6 +60,7 @@ import com.android.systemui.statusbar.events.SystemStatusAnimationCallback;
 import com.android.systemui.statusbar.events.SystemStatusAnimationScheduler;
 import com.android.systemui.statusbar.notification.icon.ui.viewbinder.NotificationIconContainerStatusBarViewBinder;
 import com.android.systemui.statusbar.notification.shared.NotificationIconContainerRefactor;
+import com.android.systemui.statusbar.phone.CentralSurfacesImpl;
 import com.android.systemui.statusbar.phone.NotificationIconAreaController;
 import com.android.systemui.statusbar.phone.NotificationIconContainer;
 import com.android.systemui.statusbar.phone.PhoneStatusBarView;
@@ -121,6 +125,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private LinearLayout mEndSideContent;
     private View mClockView;
     private View mOngoingActivityChip;
+    private View mTickerViewFromStub;
+    private View mTickerViewContainer;
     private View mNotificationIconAreaInner;
     // Visibilities come in from external system callers via disable flags, but we also sometimes
     // modify the visibilities internally. We need to store both so that we don't accidentally
@@ -155,6 +161,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     private List<String> mBlockedIcons = new ArrayList<>();
     private Map<Startable, Startable.State> mStartableStates = new ArrayMap<>();
+
+    private CentralSurfacesImpl mCentralSurfacesImpl;
 
     private final OngoingCallListener mOngoingCallListener = new OngoingCallListener() {
         @Override
@@ -247,7 +255,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             DumpManager dumpManager,
             StatusBarWindowStateController statusBarWindowStateController,
             KeyguardUpdateMonitor keyguardUpdateMonitor,
-            DemoModeController demoModeController) {
+            DemoModeController demoModeController,
+	    CentralSurfacesImpl centralSurfacesImpl) {
         mStatusBarFragmentComponentFactory = statusBarFragmentComponentFactory;
         mOngoingCallController = ongoingCallController;
         mAnimationScheduler = animationScheduler;
@@ -273,6 +282,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mStatusBarWindowStateController = statusBarWindowStateController;
         mKeyguardUpdateMonitor = keyguardUpdateMonitor;
         mDemoModeController = demoModeController;
+	mCentralSurfacesImpl = centralSurfacesImpl;
     }
 
     private final DemoMode mDemoModeCallback = new DemoMode() {
@@ -357,6 +367,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         showEndSideContent(false);
         showClock(false);
         initOperatorName();
+        initTickerView();
         initNotificationIconArea();
         mSystemEventAnimator = getSystemEventAnimator();
         mCarrierConfigTracker.addCallback(mCarrierConfigCallback);
@@ -847,6 +858,18 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                 hideOperatorName(false);
             }
         }
+    }
+
+   private void initTickerView() {
+        mTickerViewContainer = mStatusBar.findViewById(R.id.ticker_container);
+        View tickerStub = mStatusBar.findViewById(R.id.ticker_stub);
+        if (mTickerViewFromStub == null && tickerStub != null) {
+            mTickerViewFromStub = ((ViewStub) tickerStub).inflate();
+        }
+        TextSwitcher textSwitcher = (TextSwitcher) mStatusBar.findViewById(R.id.tickerText);
+        ImageSwitcher tickerIcon = (ImageSwitcher) mStatusBar.findViewById(R.id.tickerIcon);
+        mCentralSurfacesImpl.createTicker(
+                getContext(), mStatusBar, textSwitcher, tickerIcon, mTickerViewFromStub);
     }
 
     private void initOngoingCallChip() {

@@ -121,6 +121,8 @@ public class CentralSurfacesCommandQueueCallbacks implements CommandQueue.Callba
 
     private final EmergencyGestureIntentFactory mEmergencyGestureIntentFactory;
 
+    private CentralSurfacesImpl mCentralSurfacesImpl;
+
     @Inject
     CentralSurfacesCommandQueueCallbacks(
             CentralSurfaces centralSurfaces,
@@ -153,7 +155,8 @@ public class CentralSurfacesCommandQueueCallbacks implements CommandQueue.Callba
             QSHost qsHost,
             ActivityStarter activityStarter,
             EmergencyGestureIntentFactory emergencyGestureIntentFactory,
-            FlashlightController flashlightController) {
+            FlashlightController flashlightController,
+	    CentralSurfacesImpl centralSurfacesImpl) {
         mCentralSurfaces = centralSurfaces;
         mQsController = quickSettingsController;
         mContext = context;
@@ -182,6 +185,7 @@ public class CentralSurfacesCommandQueueCallbacks implements CommandQueue.Callba
         mUserTracker = userTracker;
         mQSHost = qsHost;
         mFlashlightController = flashlightController;
+        mCentralSurfacesImpl = centralSurfacesImpl;
 
         mVibrateOnOpening = resources.getBoolean(R.bool.config_vibrateOnIconAnimation);
         mCameraLaunchGestureVibrationEffect = getCameraGestureVibrationEffect(
@@ -288,6 +292,12 @@ public class CentralSurfacesCommandQueueCallbacks implements CommandQueue.Callba
             if ((state1 & StatusBarManager.DISABLE_NOTIFICATION_ALERTS) != 0) {
                 mHeadsUpManager.releaseAllImmediately();
             }
+        }
+
+	if ((diff1 & StatusBarManager.DISABLE_NOTIFICATION_ICONS) != 0
+                && (state1 & StatusBarManager.DISABLE_NOTIFICATION_ICONS) != 0
+                && mCentralSurfacesImpl.isTickerTicking()) {
+            mCentralSurfacesImpl.haltTicker();
         }
 
         if ((diff2 & StatusBarManager.DISABLE2_NOTIFICATION_SHADE) != 0) {
@@ -570,6 +580,10 @@ public class CentralSurfacesCommandQueueCallbacks implements CommandQueue.Callba
             timings[i] = pattern[i];
         }
         return VibrationEffect.createWaveform(timings, /* repeat= */ -1);
+    }
+
+    int getDisabled1() {
+        return mDisabled1;
     }
 
     @VisibleForTesting
