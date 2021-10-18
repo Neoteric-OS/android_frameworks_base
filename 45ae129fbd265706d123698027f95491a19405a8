@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19dc77f7_fc313366",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-10-18T16:51:42Z",
+      "side": 1,
+      "message": "We\u0027re killing the client process if it sends too many binder proxies already: https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/am/ActivityManagerService.java;l\u003d7744",
+      "revId": "45ae129fbd265706d123698027f95491a19405a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
