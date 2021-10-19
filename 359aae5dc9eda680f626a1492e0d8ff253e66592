@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6d9bac2_31a24f3f",
+        "filename": "core/java/android/bluetooth/BluetoothActivityEnergyInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-19T11:41:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d8c90ed_65c867cd",
+      "revId": "359aae5dc9eda680f626a1492e0d8ff253e66592",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6582a9ca_c8751504",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-10-18T21:08:55Z",
       "side": 1,
       "message": "same nit here",
+      "revId": "359aae5dc9eda680f626a1492e0d8ff253e66592",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1d312ba_f17efdba",
+        "filename": "core/java/android/bluetooth/BluetoothActivityEnergyInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-19T11:41:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6582a9ca_c8751504",
       "revId": "359aae5dc9eda680f626a1492e0d8ff253e66592",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
