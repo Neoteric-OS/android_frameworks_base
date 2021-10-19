@@ -508,7 +508,7 @@ public class NsdService extends INsdManager.Stub {
                         removeRequestMap(clientId, id, clientInfo);
 
                         int id2 = getUniqueId();
-                        if (getAddrInfo(id2, cooked[3])) {
+                        if (getAddrInfo(id2, cooked[3], cooked[7])) {
                             storeRequestMap(clientId, id2, clientInfo, NsdManager.RESOLVE_SERVICE);
                         } else {
                             clientInfo.mChannel.sendMessage(NsdManager.RESOLVE_SERVICE_FAILED,
@@ -812,8 +812,8 @@ public class NsdService extends INsdManager.Stub {
         return mDaemon.execute("stop-resolve", resolveId);
     }
 
-    private boolean getAddrInfo(int resolveId, String hostname) {
-        return mDaemon.execute("getaddrinfo", resolveId, hostname);
+    private boolean getAddrInfo(int resolveId, String hostname, String interfaceName) {
+        return mDaemon.execute("getaddrinfo", resolveId, hostname, interfaceName);
     }
 
     private boolean stopGetAddrInfo(int resolveId) {
