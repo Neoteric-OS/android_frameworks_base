@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c5b11bc_77c69d28",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1900958
+      },
+      "writtenOn": "2021-10-19T10:01:36Z",
+      "side": 1,
+      "message": "A multihomed host with connections to two different links may be able to communicate with two different hosts that are validly using the same host name. To support this case needs APIs that allow to specify on what interface to perform.",
+      "revId": "02391b1daef51fc6baee964260b5a4769bfd0ebc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
