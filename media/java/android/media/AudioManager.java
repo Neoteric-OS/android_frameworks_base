@@ -1172,6 +1172,7 @@ public class AudioManager {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public int getLastAudibleStreamVolume(int streamType) {
         final IAudioService service = getService();
         try {
