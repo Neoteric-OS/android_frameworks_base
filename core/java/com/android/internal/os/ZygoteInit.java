@@ -819,6 +819,7 @@ public class ZygoteInit {
             bootTimingsTraceLog.traceBegin("ZygoteInit");
             RuntimeInit.preForkInit();
 
+            boolean oneshot = false;
             boolean startSystemServer = false;
             String zygoteSocketName = "zygote";
             String abiList = null;
@@ -828,6 +829,8 @@ public class ZygoteInit {
                     startSystemServer = true;
                 } else if ("--enable-lazy-preload".equals(argv[i])) {
                     enableLazyPreload = true;
+                } else if ("--oneshot".equals(argv[i])) {
+                    oneshot = true;
                 } else if (argv[i].startsWith(ABI_LIST_ARG)) {
                     abiList = argv[i].substring(ABI_LIST_ARG.length());
                 } else if (argv[i].startsWith(SOCKET_NAME_ARG)) {
@@ -894,7 +897,7 @@ public class ZygoteInit {
 
             // The select loop returns early in the child process after a fork and
             // loops forever in the zygote.
-            caller = zygoteServer.runSelectLoop(abiList);
+            caller = zygoteServer.runSelectLoop(abiList, oneshot);
         } catch (Throwable ex) {
             Log.e(TAG, "System zygote died with fatal exception", ex);
             throw ex;

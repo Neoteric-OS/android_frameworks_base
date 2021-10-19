@@ -122,7 +122,7 @@ public class ChildZygoteInit {
 
             // The select loop returns early in the child process after a fork and
             // loops forever in the zygote.
-            caller = server.runSelectLoop(abiList);
+            caller = server.runSelectLoop(abiList, /*oneshot=*/false);
         } catch (RuntimeException e) {
             Log.e(TAG, "Fatal exception:", e);
             throw e;

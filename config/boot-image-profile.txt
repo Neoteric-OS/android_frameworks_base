@@ -21919,7 +21919,7 @@ HSPLcom/android/internal/os/ZygoteServer;->fetchUsapPoolPolicyProps()V
 HSPLcom/android/internal/os/ZygoteServer;->fetchUsapPoolPolicyPropsWithMinInterval()V
 HSPLcom/android/internal/os/ZygoteServer;->getZygoteSocketFileDescriptor()Ljava/io/FileDescriptor;
 HSPLcom/android/internal/os/ZygoteServer;->isUsapPoolEnabled()Z
-HSPLcom/android/internal/os/ZygoteServer;->runSelectLoop(Ljava/lang/String;)Ljava/lang/Runnable;
+HSPLcom/android/internal/os/ZygoteServer;->runSelectLoop(Ljava/lang/String;Z)Ljava/lang/Runnable;
 HSPLcom/android/internal/os/ZygoteServer;->setForkChild()V
 HSPLcom/android/internal/policy/DecorContext;-><init>(Landroid/content/Context;Lcom/android/internal/policy/PhoneWindow;)V
 HSPLcom/android/internal/policy/DecorContext;->getAutofillOptions()Landroid/content/AutofillOptions;

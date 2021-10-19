@@ -422,7 +422,7 @@ class ZygoteServer {
      * worth at a time.
      * @param abiList list of ABIs supported by this zygote.
      */
-    Runnable runSelectLoop(String abiList) {
+    Runnable runSelectLoop(String abiList, boolean oneshot) {
         ArrayList<FileDescriptor> socketFDs = new ArrayList<>();
         ArrayList<ZygoteConnection> peers = new ArrayList<>();
 
@@ -574,6 +574,11 @@ class ZygoteServer {
                                     connection.closeSocket();
                                     peers.remove(pollIndex);
                                     socketFDs.remove(pollIndex);
+                                }
+
+                                if (oneshot) {
+                                    Log.i(TAG, "Zygote was spawned as oneshot: exiting!");
+                                    return null;
                                 }
                             }
                         } catch (Exception e) {
