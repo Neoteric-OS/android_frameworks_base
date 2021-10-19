@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a433de1_5dc6dd84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2021-10-19T11:17:17Z",
+      "side": 1,
+      "message": "This seems to make sense to me; WDYT?\nOwnership of the tests would have been useful for https://r.android.com/1856813.",
+      "revId": "b37222025132ebf7faf6baa6cea0c5645bda4ce9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
