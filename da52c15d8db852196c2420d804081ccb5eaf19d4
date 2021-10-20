@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b1e65c5_e042b7fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-10-20T09:22:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand the use case. NsdManager itself is not multinetwork-aware, so the caller cannot pass in what network to resolve the service on.\n\nFrom looking at r.android.com/1862337 it looks like the daemon will try to resolve the service on all interfaces and return the interface on which the service was resolved. After that it looks like NsdService will try to get the IP address of the service on the interface where the service was discovered.\n\nThat seems like an improvement but there is still no way for the app (i.e., the caller of NsdManager#resolveService) to request discovering the service on a particular interface. Worse, the app doesn\u0027t know what interface the service was discovered on, so even if it gets the right IP address, it won\u0027t be able to connect to the service unless the service is on the default network.\n\nIf that\u0027s true and the app can\u0027t really connect to the service anyway, then what does this change do?",
+      "revId": "da52c15d8db852196c2420d804081ccb5eaf19d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
