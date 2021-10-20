@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c138e5b8_7b1edb37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-10-20T18:02:03Z",
+      "side": 1,
+      "message": "who consumes these artifacts? Should they check the changes?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 60
+      },
+      "revId": "4863931934083f806a6627600d1d91bb6edd42cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3d6e75c0_4338bcbd",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
