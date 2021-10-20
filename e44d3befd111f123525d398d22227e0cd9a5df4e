@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34a39f08_50a4c515",
+        "filename": "core/java/android/bluetooth/BluetoothActivityEnergyInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-20T18:02:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09304e78_1a1e6406",
+      "range": {
+        "startLine": 36,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "e44d3befd111f123525d398d22227e0cd9a5df4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b67c6076_e43705c1",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-10-20T17:24:43Z",
       "side": 1,
       "message": "nit: I would refrain from enumerating the constants explicitly. There is a good chance we will forget to update this comment when the list of constants changes.  Perhaps just a reference to @BluetoothStackState?",
+      "range": {
+        "startLine": 118,
+        "startChar": 15,
+        "endLine": 118,
+        "endChar": 37
+      },
+      "revId": "e44d3befd111f123525d398d22227e0cd9a5df4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33f6aee3_b938bb8e",
+        "filename": "core/java/android/bluetooth/BluetoothActivityEnergyInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-20T18:02:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b67c6076_e43705c1",
       "range": {
         "startLine": 118,
         "startChar": 15,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f48d34d_3ffe35ff",
+        "filename": "core/java/android/bluetooth/UidTraffic.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-20T18:02:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "003bd06e_4294c6ae",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 26,
+        "endChar": 29
+      },
+      "revId": "e44d3befd111f123525d398d22227e0cd9a5df4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d4ad9d04_8b6ca08d",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-10-20T17:24:43Z",
       "side": 1,
       "message": "Have you considered keeping the constructor and marking it with default visibility and @VisibleForTesting? This trick with a parcel feels a bit contrived and potentially fragile: if we introduce additional fields, the parcel produced by the test may end up being incomplete, whereas if we add a new parameter to the constructor the discrepancy will be caught by the compiler.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 77
+      },
+      "revId": "e44d3befd111f123525d398d22227e0cd9a5df4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4be7c9b_51e220cc",
+        "filename": "core/tests/coretests/src/com/android/internal/os/BluetoothPowerCalculatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-20T18:02:12Z",
+      "side": 1,
+      "message": "I was originally planning to do so, but as per the old CL comments, Parcelable classes should have their constructors private and be instantiated via their CREATOR.",
+      "parentUuid": "d4ad9d04_8b6ca08d",
       "range": {
         "startLine": 117,
         "startChar": 0,
