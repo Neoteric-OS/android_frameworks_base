@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6446bd6a_783c9bd9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2021-10-20T11:13:47Z",
+      "side": 1,
+      "message": "Providing owners review, but someone from telephony should have a look at this, I\u0027m not sure what the conditions are for these codes to be included and if they are generally free on all providers.",
+      "revId": "f25e656f277cc43aecc9b637090e74cc6426a18b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
