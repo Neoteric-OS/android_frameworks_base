@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016421907",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1859355?revision\u003d4",
+      "fixSuggestions": [
+        {
+          "fixId": "ef630975_86d7c019",
+          "description": "Change to \"core/java/android/os/Parcel.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/os/Parcel.java",
+              "range": {
+                "startLine": 751,
+                "startChar": 67,
+                "endLine": 751,
+                "endChar": 75
+              },
+              "replacement": "container"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "585b2f84_51a6e223",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-20T15:44:18Z",
+      "side": 1,
+      "message": "Common typo found: \"cotainer\" -- should it be \"container\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 751,
+        "startChar": 67,
+        "endLine": 751,
+        "endChar": 75
+      },
+      "revId": "70977780d5699a5dd29887eb81ec3d5fff37b6da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
