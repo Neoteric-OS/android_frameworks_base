@@ -16,6 +16,24 @@
       "message": "I\u0027m not sure I understand the use case. NsdManager itself is not multinetwork-aware, so the caller cannot pass in what network to resolve the service on.\n\nFrom looking at r.android.com/1862337 it looks like the daemon will try to resolve the service on all interfaces and return the interface on which the service was resolved. After that it looks like NsdService will try to get the IP address of the service on the interface where the service was discovered.\n\nThat seems like an improvement but there is still no way for the app (i.e., the caller of NsdManager#resolveService) to request discovering the service on a particular interface. Worse, the app doesn\u0027t know what interface the service was discovered on, so even if it gets the right IP address, it won\u0027t be able to connect to the service unless the service is on the default network.\n\nIf that\u0027s true and the app can\u0027t really connect to the service anyway, then what does this change do?",
       "revId": "da52c15d8db852196c2420d804081ccb5eaf19d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60478539_80fcfb1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1900958
+      },
+      "writtenOn": "2021-10-20T10:59:36Z",
+      "side": 1,
+      "message": "In this case, the app needn\u0027t to known what interface the service was discovered on, but it needs an right IP address.\n\nWhithout this change, the app can discover two different services from different network (i.e., the device use two interface connect to different network) with same hostname. After two services be resolved, thay will use same hostname to get the IP address, the IP address must be wrong for one of them. If the interface is specified, two services will all get right IP address.\n\nBecause service resolve and get IP address is combined into NsdManager#resolveService, so this change isn\u0027t aware for the user app.\n \nWhen the app gets the right IP address, it can connect to service by IP address. (The app doesn\u0027t care what interface be used to connect service. That is the job of the routing.)\n\nThe above is my opinion, please correct me. Thanks.",
+      "parentUuid": "9b1e65c5_e042b7fc",
+      "revId": "da52c15d8db852196c2420d804081ccb5eaf19d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
