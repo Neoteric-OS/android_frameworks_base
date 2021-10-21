@@ -86,6 +86,24 @@
       "message": "Hi @Ming-Shin，please help to merge this change, thanks.\n ",
       "revId": "438068802de13a2ee1a43aa21addbd42d05ae84a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cb8a55f_cf6810ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2021-10-21T01:27:23Z",
+      "side": 1,
+      "message": "ag/16091133. Because there is no auto merge between aosp and 12L, I think we need submit in both branches.",
+      "parentUuid": "e2c304f4_9cb1e1f7",
+      "revId": "438068802de13a2ee1a43aa21addbd42d05ae84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
