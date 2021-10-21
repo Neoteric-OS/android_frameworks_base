@@ -69,6 +69,30 @@
       },
       "revId": "1cbf1b2650014ccfad28d4857fb8a5938b41e2f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61bf05ac_6cb068f8",
+        "filename": "core/res/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1870696
+      },
+      "writtenOn": "2021-10-21T22:40:06Z",
+      "side": 1,
+      "message": "Done. Thanks. I thought that we could not refer to a file from a different package.",
+      "parentUuid": "2dd9d9ae_c0b688b9",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 104
+      },
+      "revId": "1cbf1b2650014ccfad28d4857fb8a5938b41e2f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
