@@ -39,6 +39,7 @@ static const char* kPathAllowlist[] = {
         "/dev/socket/usap_pool_primary",
         "/dev/socket/usap_pool_secondary",
         "/dev/socket/webview_zygote",
+        "/dev/socket/stub_zygote",
         "/dev/socket/heapprofd",
         "/sys/kernel/debug/tracing/trace_marker",
         "/sys/kernel/tracing/trace_marker",
