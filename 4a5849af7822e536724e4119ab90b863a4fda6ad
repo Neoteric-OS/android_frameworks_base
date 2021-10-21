@@ -3,6 +3,29 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "3a192892_07af408f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-10-21T05:55:22Z",
+      "side": 1,
+      "message": "Do you need merged-in ? I guess git is smart enough to understand this one is already in",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 6
+      },
+      "revId": "4a5849af7822e536724e4119ab90b863a4fda6ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "dcf24526_8c32a880",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
