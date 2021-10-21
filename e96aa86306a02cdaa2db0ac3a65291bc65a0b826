@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f83f186_a083e6a9",
+        "filename": "core/java/android/bluetooth/BluetoothActivityEnergyInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2021-10-21T20:01:09Z",
+      "side": 1,
+      "message": "Aka\n\n+ \" mUidTraffic\u003d\" + mUidTraffic",
+      "range": {
+        "startLine": 94,
+        "startChar": 36,
+        "endLine": 94,
+        "endChar": 98
+      },
+      "revId": "e96aa86306a02cdaa2db0ac3a65291bc65a0b826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
