@@ -627,6 +627,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     boolean mVolBtnMusicControls;
     boolean mVolBtnLongPress;
 
+    private boolean mTorchGesture;
+
     private boolean mPendingKeyguardOccluded;
 
     Intent mHomeIntent;
@@ -949,6 +951,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.VOLBTN_MUSIC_CONTROLS), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.TORCH_POWER_BUTTON_GESTURE), false, this,
+                    UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -1128,7 +1133,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 || handledByPowerManager || isKeyGestureTriggered;
 
         if (!mPowerKeyHandled) {
-            if (!interactive) {
+            if (!interactive && !mTorchGesture) {
                 wakeUpFromWakeKey(event);
             }
         } else {
@@ -1167,6 +1172,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
 
         final boolean interactive = mDefaultDisplayPolicy.isAwake();
+        final boolean beganFromNonInteractive = mSingleKeyGestureDetector.beganFromNonInteractive();
 
         Slog.d(
                 TAG,
@@ -1283,6 +1289,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     break;
                 }
             }
+        } else if (mTorchGesture && beganFromNonInteractive) {
+            wakeUpFromWakeKey(
+                    displayId,
+                    eventTime,
+                    KEYCODE_POWER,
+                    /* isDown = */ true,
+                    /* keyEventFlags = */ 0);
         }
     }
 
@@ -2602,7 +2615,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         @Override
         public boolean supportLongPress() {
-            return hasLongPressOnPowerBehavior();
+            return hasLongPressOnPowerBehavior() || mTorchGesture || isFlashLightIsOn();
         }
 
         @Override
@@ -2662,10 +2675,19 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
 
         private void onLongPress(@NonNull SingleKeyGestureEvent event) {
-            if (mSingleKeyGestureDetector.beganFromNonInteractive()
-                    && !mSupportLongPressPowerWhenNonInteractive) {
-                Slog.v(TAG, "Not support long press power when device is not interactive.");
-                return;
+            if (mSingleKeyGestureDetector.beganFromNonInteractive() || isFlashLightIsOn()) {
+                if (mTorchGesture) {
+                    if (event.getAction() == ACTION_COMPLETE) {
+                        performHapticFeedback(HapticFeedbackConstants.LONG_PRESS,
+                                "Power - Long Press - Torch");
+                        toggleCameraFlash();
+                    }
+                    return;
+                }
+                if (!mSupportLongPressPowerWhenNonInteractive) {
+                    Slog.v(TAG, "Not support long press power when device is not interactive.");
+                    return;
+                }
             }
             // If Assistant mapped to long press, we send start, complete and cancel gesture
             // This is done to allow Assistant launch animation in SysUI. Will extend
@@ -2694,6 +2716,22 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         public void onKeyUp(int count, KeyEvent event) {
             if (mShouldEarlyShortPressOnPower && count == 1) {
                 powerPress(event.getDownTime(), 1 /*pressCount*/, event.getDisplayId());
+            }
+        }
+    }
+
+    private boolean isFlashLightIsOn() {
+        return Settings.Secure.getInt(mContext.getContentResolver(),
+                Settings.Secure.FLASHLIGHT_ENABLED, 0) != 0;
+    }
+
+    public void toggleCameraFlash() {
+        IStatusBarService service = getStatusBarService();
+        if (service != null) {
+            try {
+                service.toggleCameraFlash();
+            } catch (RemoteException e) {
+                Log.e(TAG, "Unable to toggle camera flash:", e);
             }
         }
     }
@@ -3137,6 +3175,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mVolBtnMusicControls = Settings.System.getIntForUser(resolver,
                     Settings.System.VOLBTN_MUSIC_CONTROLS, 0,
                     UserHandle.USER_CURRENT) == 1;
+            mTorchGesture = Settings.System.getIntForUser(resolver,
+                    Settings.System.TORCH_POWER_BUTTON_GESTURE,
+                    0, UserHandle.USER_CURRENT) != 0;
         }
         if (updateKidsModeSettings) {
             updateKidsModeSettings(kidsModeEnabled);
