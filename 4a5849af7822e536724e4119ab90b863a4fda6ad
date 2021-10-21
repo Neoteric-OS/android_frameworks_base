@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "f9e5bf99_248531f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1240997
+      },
+      "writtenOn": "2021-10-21T17:44:00Z",
+      "side": 1,
+      "message": "Thanks, I added the merged-in. I find that sometimes git figures out how to merge even without this tag, but sometimes it does not and results in merge conflict.",
+      "parentUuid": "3a192892_07af408f",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 6
+      },
+      "revId": "4a5849af7822e536724e4119ab90b863a4fda6ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "dcf24526_8c32a880",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
