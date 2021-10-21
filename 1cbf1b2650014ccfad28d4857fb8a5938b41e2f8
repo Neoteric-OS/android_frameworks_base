@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09fd7062_72af9825",
+        "filename": "core/res/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1870696
+      },
+      "writtenOn": "2021-10-21T20:59:42Z",
+      "side": 1,
+      "message": "I could not find a good OWNERS file to point to under the frameworks/base package, therefore just copied this list from here: http://cs/android/frameworks/base/services/core/java/com/android/server/am/OWNERS;l\u003d40;rcl\u003d027cd69cd51f96b7870eca209af0a46dfe891c6a\n\nShould we create a new file, something like frameworks/base/CAR_OWNERS?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 104
+      },
+      "revId": "1cbf1b2650014ccfad28d4857fb8a5938b41e2f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
