@@ -137,7 +137,8 @@ public class SystemSettings {
                 Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM,
                 Settings.System.POWER_SHARE_THRESHOLD,
                 Settings.System.THREE_FINGER_GESTURE,
-                Settings.System.VOLBTN_MUSIC_CONTROLS
+                Settings.System.VOLBTN_MUSIC_CONTROLS,
+                Settings.System.TORCH_POWER_BUTTON_GESTURE
         ));
         return settings.toArray(new String[0]);
     }
