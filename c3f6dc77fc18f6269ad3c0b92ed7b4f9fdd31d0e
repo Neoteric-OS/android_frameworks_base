@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ebbf496_8c3840e5",
+        "filename": "core/java/android/bluetooth/BluetoothActivityEnergyInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2021-10-21T17:03:33Z",
+      "side": 1,
+      "message": "Can throw an NPE since mUidTraffic is uninitialized in the constructor",
+      "range": {
+        "startLine": 94,
+        "startChar": 36,
+        "endLine": 94,
+        "endChar": 56
+      },
+      "revId": "c3f6dc77fc18f6269ad3c0b92ed7b4f9fdd31d0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
