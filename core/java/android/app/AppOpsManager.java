@@ -9186,10 +9186,12 @@ public class AppOpsManager {
      * @param attributionTag The attribution tag the op is noted for
      */
     private void collectNotedOpForSelf(SyncNotedAppOp syncOp) {
+        final OnOpNotedCallback callback;
         synchronized (sLock) {
-            if (sOnOpNotedCallback != null) {
-                sOnOpNotedCallback.onSelfNoted(syncOp);
-            }
+            callback = sOnOpNotedCallback;
+        }
+        if (callbck != null) {
+            callback.onSelfNoted(syncOp);
         }
         sMessageCollector.onSelfNoted(syncOp);
     }
@@ -9337,12 +9339,14 @@ public class AppOpsManager {
 
             if (rawNotedAppOps[0] != 0 || rawNotedAppOps[1] != 0) {
                 BitSet notedAppOps = BitSet.valueOf(rawNotedAppOps);
-
+                OnOpNotedCallback callback = null;
+                SyncNotedAppOp syncOp = null;
                 synchronized (sLock) {
                     for (int code = notedAppOps.nextSetBit(0); code != -1;
                             code = notedAppOps.nextSetBit(code + 1)) {
                         if (sOnOpNotedCallback != null) {
-                            sOnOpNotedCallback.onNoted(new SyncNotedAppOp(code, attributionTag));
+                            callback = sOnOpNotedCallback;
+                            syncOp = new SyncNotedAppOp(code, attributionTag);
                         } else {
                             String message = getFormattedStackTrace();
                             sUnforwardedOps.add(
@@ -9353,6 +9357,9 @@ public class AppOpsManager {
                             }
                         }
                     }
+                }
+                if (callback != null) {
+                    callback.onNoted(syncOp);
                 }
                 for (int code = notedAppOps.nextSetBit(0); code != -1;
                         code = notedAppOps.nextSetBit(code + 1)) {
