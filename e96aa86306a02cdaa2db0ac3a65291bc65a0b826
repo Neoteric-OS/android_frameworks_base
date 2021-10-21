@@ -22,6 +22,30 @@
       },
       "revId": "e96aa86306a02cdaa2db0ac3a65291bc65a0b826",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8b73259_9690363f",
+        "filename": "core/java/android/bluetooth/BluetoothActivityEnergyInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-21T20:09:15Z",
+      "side": 1,
+      "message": "I thought the #toString method on List was formatting the output a bit, but no, you\u0027re right.",
+      "parentUuid": "4f83f186_a083e6a9",
+      "range": {
+        "startLine": 94,
+        "startChar": 36,
+        "endLine": 94,
+        "endChar": 98
+      },
+      "revId": "e96aa86306a02cdaa2db0ac3a65291bc65a0b826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
