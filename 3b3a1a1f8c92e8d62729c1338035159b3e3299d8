@@ -22,6 +22,30 @@
       },
       "revId": "3b3a1a1f8c92e8d62729c1338035159b3e3299d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6942ed7d_1650c440",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1707594
+      },
+      "writtenOn": "2021-10-23T03:46:42Z",
+      "side": 1,
+      "message": "I\u0027ve tested with pass result and updated the patch. Thanks.",
+      "parentUuid": "9664b35a_b9338752",
+      "range": {
+        "startLine": 201,
+        "startChar": 8,
+        "endLine": 204,
+        "endChar": 9
+      },
+      "revId": "3b3a1a1f8c92e8d62729c1338035159b3e3299d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
