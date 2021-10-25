@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3115080b_f1c1ae56",
+        "filename": "core/java/android/bluetooth/le/AdvertiseData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-25T14:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d5146fe_455878e8",
+      "range": {
+        "startLine": 106,
+        "startChar": 3,
+        "endLine": 110,
+        "endChar": 54
+      },
+      "revId": "912a0a91d51823d8673ead436dd67df1f6f9ff5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56e9b3a2_9636490b",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-10-25T12:14:51Z",
       "side": 1,
       "message": "List\u003cTransportDiscoveryData\u003e ?",
+      "range": {
+        "startLine": 332,
+        "startChar": 58,
+        "endLine": 332,
+        "endChar": 64
+      },
+      "revId": "912a0a91d51823d8673ead436dd67df1f6f9ff5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ce54455_dbbb5ca4",
+        "filename": "core/java/android/bluetooth/le/AdvertiseData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-25T14:41:32Z",
+      "side": 1,
+      "message": "This adds only one TransportDiscoveryData so not a list but I\u0027ve changed it to TransportDiscoveryData instead of byte[], thanks",
+      "parentUuid": "56e9b3a2_9636490b",
       "range": {
         "startLine": 332,
         "startChar": 58,
