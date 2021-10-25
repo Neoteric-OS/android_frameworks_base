@@ -3794,7 +3794,7 @@ public final class Parcel {
                 break;
 
             case VAL_SERIALIZABLE:
-                object = readSerializable(loader);
+                object = readSerializable(loader, clazz);
                 break;
 
             case VAL_PARCELABLEARRAY:
@@ -4113,12 +4113,47 @@ public final class Parcel {
      * wasn't found in the parcel.
      */
     @Nullable
-    public final Serializable readSerializable() {
-        return readSerializable(null);
+    public Serializable readSerializable() {
+        return readSerializableInternal(
+                null, /* clazz */ null);
+    }
+
+    /**
+     * Same as {@link #readSerializable()} but accepts {@code loader} parameter
+     * as the primary classLoader for resolving the Serializable class.
+     *
+     * @throws RuntimeException Throws RuntimeException when there there was an error
+     * deserializing the object.
+     */
+    @Nullable
+    public Serializable readSerializable(@NonNull ClassLoader loader) {
+        Objects.requireNonNull(loader);
+        return readSerializableInternal(loader, /* clazz */ null);
+    }
+
+    /**
+     * Same as {@link #readSerializable(ClassLoader)} but accepts {@code clazz} parameter as the
+     * required type.
+     *
+     * @throws RuntimeException Throws RuntimeException if the item to be deserialized
+     * is not an instance of that class or any of its children class or there there was an error
+     * deserializing the object.
+     */
+    @Nullable
+    public <T> Serializable readSerializable(@Nullable ClassLoader loader,
+            @NonNull Class<T> clazz) {
+        Objects.requireNonNull(clazz);
+        return readSerializableInternal(loader, clazz);
     }
 
     @Nullable
-    private final Serializable readSerializable(@Nullable final ClassLoader loader) {
+    private <T> Serializable readSerializableInternal(@Nullable final ClassLoader loader,
+            @Nullable Class<T> clazz) {
+        if (clazz != null && !Serializable.class.isAssignableFrom(clazz)) {
+            throw new RuntimeException("About to unparcel a serializable object "
+                    + " but class required " + clazz.getName() + " is not Serializable");
+        }
+
         String name = readString();
         if (name == null) {
             // For some reason we were unable to read the name of the Serializable (either there
@@ -4138,10 +4173,33 @@ public final class Parcel {
                     if (loader != null) {
                         Class<?> c = Class.forName(osClass.getName(), false, loader);
                         if (c != null) {
+                            if (clazz != null) {
+                                if (!clazz.isAssignableFrom(c)) {
+                                    throw new RuntimeException("Serializable object " + c.getName()
+                                        + " is not a subclass of required class " + clazz.getName()
+                                        + " provided in the parameter");
+                                }
+                            }
+                            if (!c.getName().equals(name)) {
+                                throw new RuntimeException("Deserialized object is not an"
+                                        + "instance of expected class " + name);
+                            }
                             return c;
                         }
                     }
-                    return super.resolveClass(osClass);
+                    Class<?> c = super.resolveClass(osClass);
+                    if (clazz != null) {
+                        if (!clazz.isAssignableFrom(c)) {
+                            throw new RuntimeException("Serializable object " + c.getName()
+                                + " is not a subclass of required class " + clazz.getName()
+                                + " provided in the parameter");
+                        }
+                    }
+                    if (!c.getName().equals(name)) {
+                        throw new RuntimeException("Deserialized object is not an"
+                                + "instance of expected class " + name);
+                    }
+                    return c;
                 }
             };
             return (Serializable) ois.readObject();
