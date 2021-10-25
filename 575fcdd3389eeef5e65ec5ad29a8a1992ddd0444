@@ -16,6 +16,24 @@
       "message": "by passing list of byte array, the onus would be on the application to parse the TDS fields. A helper class TransportBlock (see below) would be better?\n\npublic final class TransportBlock implements Parcelable {\n    private final int mOrgId;\n    private final int mTdsFlags;\n    private final int mTransportDataLength;\n    private final byte[] mTransportData;",
       "revId": "575fcdd3389eeef5e65ec5ad29a8a1992ddd0444",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0b244b2_12f03400",
+        "filename": "core/java/android/bluetooth/le/AdvertiseData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-25T14:44:33Z",
+      "side": 1,
+      "message": "Hello Ravi, I\u0027ve updated the CL to add TransportDiscoveryData and TransportBlock classes to replace the byte array list, let me know what you think about this, thank you.",
+      "parentUuid": "1694f5dd_0581e730",
+      "revId": "575fcdd3389eeef5e65ec5ad29a8a1992ddd0444",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
