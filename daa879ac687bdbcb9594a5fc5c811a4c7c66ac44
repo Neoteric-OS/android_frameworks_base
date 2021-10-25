@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe6e5824_d47e9cd7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1352498
+      },
+      "writtenOn": "2021-10-25T13:48:40Z",
+      "side": 1,
+      "message": "Hi Lajos, \n\nPer comment from MTK, this CL could fix their issue. Could you please help to merge this one into master and then I will ask GSI team to CP to the S GSI branch? Thanks",
+      "revId": "daa879ac687bdbcb9594a5fc5c811a4c7c66ac44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
