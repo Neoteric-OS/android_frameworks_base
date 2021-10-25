@@ -377,6 +377,22 @@ public class AudioService extends IAudioService.Stub
         0   // STREAM_ASSISTANT
     };
 
+    /** volume adjust step values for audio streams */
+    protected static int[] STREAM_VOLUME_STEP = new int[] {
+            1,  // STREAM_VOICE_CALL
+            1,  // STREAM_SYSTEM
+            1,  // STREAM_RING
+            1,  // STREAM_MUSIC
+            1,  // STREAM_ALARM
+            1,  // STREAM_NOTIFICATION
+            1,  // STREAM_BLUETOOTH_SCO
+            1,  // STREAM_SYSTEM_ENFORCED
+            1,  // STREAM_DTMF
+            1,  // STREAM_TTS
+            1,  // STREAM_ACCESSIBILITY
+            1   // STREAM_ASSISTANT
+    };
+
     /* mStreamVolumeAlias[] indicates for each stream if it uses the volume settings
      * of another stream: This avoids multiplying the volume settings for hidden
      * stream types that follow other stream behavior for volume settings
@@ -926,6 +942,11 @@ public class AudioService extends IAudioService.Stub
         int maxMusicVolume = SystemProperties.getInt("ro.config.media_vol_steps", -1);
         if (maxMusicVolume != -1) {
             MAX_STREAM_VOLUME[AudioSystem.STREAM_MUSIC] = maxMusicVolume;
+        }
+
+        int musicVolumeAdjustStep = SystemProperties.getInt("ro.config.media_vol_adjust_step", -1);
+        if (musicVolumeAdjustStep != -1) {
+            STREAM_VOLUME_STEP[AudioSystem.STREAM_MUSIC] = musicVolumeAdjustStep;
         }
 
         int defaultMusicVolume = SystemProperties.getInt("ro.config.media_vol_default", -1);
@@ -2855,7 +2876,7 @@ public class AudioService extends IAudioService.Stub
             }
         } else {
             // convert one UI step (+/-1) into a number of internal units on the stream alias
-            step = rescaleStep(10, streamType, streamTypeAlias);
+            step = rescaleStep(STREAM_VOLUME_STEP[streamType] * 10, streamType, streamTypeAlias);
         }
 
         // If either the client forces allowing ringer modes for this adjustment,
