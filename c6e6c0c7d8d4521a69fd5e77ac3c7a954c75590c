@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e13dbed1_9f3614df",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-26T22:41:56Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this much detail in the docs. This should be implied by the IntDef being associated with each corresponding method in the builder and the getter methods.",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d854107_50776593",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-26T22:41:56Z",
+      "side": 1,
+      "message": "We should change this to a method so its value can be changed without triggering an API change",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09edd92a_e9149815",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-26T22:41:56Z",
+      "side": 1,
+      "message": "We should remove the notion of a \"valid\" Config. Instead, we should require these to be passed into the builder constructor so it is impossible to have an invalid Config. Then, we can remove this method altogether.",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1755d3b7_152b3738",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-26T22:41:56Z",
+      "side": 1,
+      "message": "I\u0027d keep this @hide to avoid bloating the API surface as it\u0027s just a basic utility method.",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2515820d_49301e09",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-26T22:41:56Z",
+      "side": 1,
+      "message": "Don\u0027t need to reference the IntDef, values will auto insert.",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5dc83691_d1f06951",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-26T22:41:56Z",
+      "side": 1,
+      "message": "I\u0027d keep this @hide as well because its functionality can be replicated with the use of getCodecType().",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69ac0ec0_cb8d794d",
+        "filename": "core/java/android/bluetooth/BluetoothCodecStatus.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-26T22:41:56Z",
+      "side": 1,
+      "message": "We can keep this @hide and even consider making it private. The equals method is exposed as the public way to access this functionality (otherwise this is a generic list comparison method).",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27498c04_f44b1d4f",
+        "filename": "core/java/android/bluetooth/BluetoothCodecStatus.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-26T22:41:56Z",
+      "side": 1,
+      "message": "Can we just keep this @hide? Doesn\u0027t serve any functional purpose.",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
