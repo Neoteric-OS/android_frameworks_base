@@ -134,8 +134,9 @@ public final class BluetoothServerSocket implements Closeable {
      * @param uuid uuid
      * @throws IOException On error, for example Bluetooth not available, or insufficient
      * privileges
+     * @hide
      */
-    /*package*/ BluetoothServerSocket(int type, boolean auth, boolean encrypt, ParcelUuid uuid)
+    public BluetoothServerSocket(int type, boolean auth, boolean encrypt, ParcelUuid uuid)
             throws IOException {
         mSocket = new BluetoothSocket(type, -1, auth, encrypt, null, -1, uuid);
         // TODO: This is the same as mChannel = -1 - is this intentional?
@@ -194,8 +195,14 @@ public final class BluetoothServerSocket implements Closeable {
         mMessage = message;
     }
 
-    /*package*/ void setServiceName(String serviceName) {
+    /** @hide */
+    public void setServiceName(String serviceName) {
         mSocket.setServiceName(serviceName);
+    }
+
+    /** @hide */
+    public int bindListen() {
+        return mSocket.bindListen();
     }
 
     /**

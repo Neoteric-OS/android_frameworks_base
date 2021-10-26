@@ -5049,4 +5049,8 @@
 
     <!-- the number of the max cached processes in the system. -->
     <integer name="config_customizedMaxCachedProcesses">32</integer>
+
+    <!-- The service ID used for the RFCOMM listener which handles incoming bluetooth connections
+        for the app that holds the CAR_PROJECTION role. -->
+    <string name="config_carProjectionServiceId" translatable="false"></string>
 </resources>

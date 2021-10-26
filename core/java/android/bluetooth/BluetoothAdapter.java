@@ -2833,7 +2833,7 @@ public final class BluetoothAdapter {
         socket = new BluetoothServerSocket(BluetoothSocket.TYPE_RFCOMM, auth, encrypt,
                 new ParcelUuid(uuid));
         socket.setServiceName(name);
-        int errno = socket.mSocket.bindListen();
+        int errno = socket.bindListen();
         if (errno != 0) {
             //TODO(BT): Throw the same exception error code
             // that the previous code was using.
