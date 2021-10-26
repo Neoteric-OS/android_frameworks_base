@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b9d725aa_3b6624b7",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2821,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2021-10-26T18:42:09Z",
+      "side": 1,
+      "message": "It\u0027s needed to implement the BiFunction interface required for Map#compute",
+      "parentUuid": "73138b8b_75df1d4b",
+      "range": {
+        "startLine": 2821,
+        "startChar": 35,
+        "endLine": 2821,
+        "endChar": 64
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2fee8268_3f0e9158",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 1
@@ -66,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9d3b519e_14e62f11",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2836,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2021-10-26T18:42:09Z",
+      "side": 1,
+      "message": "I had some concerns about this because BluetoothAdapter using this class as the binder interface for bt calls.",
+      "parentUuid": "2fee8268_3f0e9158",
+      "range": {
+        "startLine": 2831,
+        "startChar": 11,
+        "endLine": 2836,
+        "endChar": 50
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1dbac907_17f1fbc6",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 1
@@ -77,6 +125,30 @@
       "writtenOn": "2021-10-26T18:16:11Z",
       "side": 1,
       "message": "Potentially we can use non-blocking API for this, so we don\u0027t have to create threads per UUID... You can look at select/poll",
+      "range": {
+        "startLine": 2860,
+        "startChar": 16,
+        "endLine": 2860,
+        "endChar": 47
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83bf08ad_d6c22f27",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2860,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2021-10-26T18:42:09Z",
+      "side": 1,
+      "message": "I looked into this, but since BluetoothServerSocket doesn\u0027t provide an fd, I don\u0027t think there\u0027s a way to select/poll easily.",
+      "parentUuid": "1dbac907_17f1fbc6",
       "range": {
         "startLine": 2860,
         "startChar": 16,
@@ -135,6 +207,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e974d32d_bf129e22",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2900,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2021-10-26T18:42:09Z",
+      "side": 1,
+      "message": "Yes, I plan on changing this if the general approach is validated",
+      "parentUuid": "5a7bc5af_5bc0ee1a",
+      "range": {
+        "startLine": 2900,
+        "startChar": 12,
+        "endLine": 2900,
+        "endChar": 68
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0a1b2fdc_8811bd2e",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 1
@@ -158,6 +254,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f6aad881_0bbb4394",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2936,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2021-10-26T18:42:09Z",
+      "side": 1,
+      "message": "Unfortunately, the only way to pass FDs between different UIDs that I know of is to use a LocalSocket. This is just for handing off the BluetoothSocket FDs.\n\nUnder the hood, this is using a UNIX domain socket and doing SCM_RIGHT to dup the FDs.",
+      "parentUuid": "0a1b2fdc_8811bd2e",
+      "range": {
+        "startLine": 2936,
+        "startChar": 16,
+        "endLine": 2936,
+        "endChar": 58
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dbe04c1e_cb17150c",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 1
@@ -169,6 +289,30 @@
       "writtenOn": "2021-10-26T18:16:11Z",
       "side": 1,
       "message": "We may want to wrap this into AIDL + Java class and make it system API",
+      "range": {
+        "startLine": 2948,
+        "startChar": 16,
+        "endLine": 2949,
+        "endChar": 56
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ef40644_d69c78bd",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2949,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2021-10-26T18:42:09Z",
+      "side": 1,
+      "message": "Good idea, I\u0027ll add this.",
+      "parentUuid": "dbe04c1e_cb17150c",
       "range": {
         "startLine": 2948,
         "startChar": 16,
