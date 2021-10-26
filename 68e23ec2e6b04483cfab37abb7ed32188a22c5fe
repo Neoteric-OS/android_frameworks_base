@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b80c2990_1dc53ee6",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2021-10-26T15:30:47Z",
+      "side": 1,
+      "message": "Hi Eric, after internal review I\u0027ve uploaded some changes - all of them are renames/comments, except for this added condition. \n\nThe reasoning behind the condition is that if there is no queued MSG_DISABLE_DEVICE_TIMEOUT, pending messages were successfully cleared during standby and so we don\u0027t need to do anything.\n\nPlease let me know if you\u0027re ok with the updated change. Thanks!",
+      "range": {
+        "startLine": 212,
+        "startChar": 8,
+        "endLine": 212,
+        "endChar": 63
+      },
+      "revId": "68e23ec2e6b04483cfab37abb7ed32188a22c5fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
