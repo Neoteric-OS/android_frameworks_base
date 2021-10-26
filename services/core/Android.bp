@@ -17,6 +17,7 @@ filegroup {
 filegroup {
     name: "services.core-sources",
     srcs: ["java/**/*.java"],
+//    exclude_srcs: [":connectivity-t-service-srcs"],
     path: "java",
     visibility: ["//frameworks/base/services"],
 }
@@ -203,5 +204,33 @@ genrule {
 prebuilt_etc {
     name: "protolog.conf.json.gz",
     src: ":services.core.json.gz",
+}
+
+// TODO: Move NetworkStats service sources to independent directory.
+filegroup {
+    name: "connectivity-t-service-srcs",
+    srcs: [
+        "java/com/android/server/net/NetworkStatsAccess.java",
+        "java/com/android/server/net/NetworkStatsCollection.java",
+        "java/com/android/server/net/NetworkStatsFactory.java",
+        "java/com/android/server/net/NetworkStatsManagerInternal.java",
+        "java/com/android/server/net/NetworkStatsObservers.java",
+        "java/com/android/server/net/NetworkStatsRecorder.java",
+        "java/com/android/server/net/NetworkStatsService.java",
+        "java/com/android/server/net/NetworkStatsSubscriptionsMonitor.java",
+    ],
+}
+
+java_library {
+    name: "service-connectivity-t",
+    srcs: [
+        ":connectivity-t-service-srcs",
+    ],
+    installable: true,
+    libs: [
+        "unsupportedappusage",
+        "services.core",
+        "services.net",
+    ],
 }
 
