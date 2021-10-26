@@ -16,6 +16,167 @@
       "message": "Sending this out for an initial pass.\n\nCode is not complete, but we want to make sure we are going down the right path before making extensive changes.\n\nBig area of concern at the moment is passing file descriptors for the bluetooth sockets between the framework and the car projection app. Seems like the only way we can do this is with `LocalSocket`s due to them supporting UNIX SCM_RIGHTS.",
       "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73138b8b_75df1d4b",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2821,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2021-10-26T18:16:11Z",
+      "side": 1,
+      "message": "Not clear why you had to pass socket here? I think you should close it before calling this method.",
+      "range": {
+        "startLine": 2821,
+        "startChar": 35,
+        "endLine": 2821,
+        "endChar": 64
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fee8268_3f0e9158",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2836,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2021-10-26T18:16:11Z",
+      "side": 1,
+      "message": "Wondering why we can\u0027t just call `BluetoothAdapter.listenUsingRfcommWithServiceRecord(...)` instead? In this case we don\u0027t have to expose all those methods.  It looks like it is doing almost the same.",
+      "range": {
+        "startLine": 2831,
+        "startChar": 11,
+        "endLine": 2836,
+        "endChar": 50
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1dbac907_17f1fbc6",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2860,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2021-10-26T18:16:11Z",
+      "side": 1,
+      "message": "Potentially we can use non-blocking API for this, so we don\u0027t have to create threads per UUID... You can look at select/poll",
+      "range": {
+        "startLine": 2860,
+        "startChar": 16,
+        "endLine": 2860,
+        "endChar": 47
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eeec900_0331cad6",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2876,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2021-10-26T18:16:11Z",
+      "side": 1,
+      "message": "I guess we can add some flags here at least to create service",
+      "range": {
+        "startLine": 2876,
+        "startChar": 89,
+        "endLine": 2876,
+        "endChar": 91
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a7bc5af_5bc0ee1a",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2900,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2021-10-26T18:16:11Z",
+      "side": 1,
+      "message": "Should we check this earlier and do not start RFCOMM server in the first place if there\u0027s no projection services available?",
+      "range": {
+        "startLine": 2900,
+        "startChar": 12,
+        "endLine": 2900,
+        "endChar": 68
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a1b2fdc_8811bd2e",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2936,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2021-10-26T18:16:11Z",
+      "side": 1,
+      "message": "Why we are doing this instead of just using binder interface?",
+      "range": {
+        "startLine": 2936,
+        "startChar": 16,
+        "endLine": 2936,
+        "endChar": 58
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbe04c1e_cb17150c",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2949,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2021-10-26T18:16:11Z",
+      "side": 1,
+      "message": "We may want to wrap this into AIDL + Java class and make it system API",
+      "range": {
+        "startLine": 2948,
+        "startChar": 16,
+        "endLine": 2949,
+        "endChar": 56
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
