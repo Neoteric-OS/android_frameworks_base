@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56f30556_9f9f46f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2021-10-26T14:23:04Z",
+      "side": 1,
+      "message": "Sending this out for an initial pass.\n\nCode is not complete, but we want to make sure we are going down the right path before making extensive changes.\n\nBig area of concern at the moment is passing file descriptors for the bluetooth sockets between the framework and the car projection app. Seems like the only way we can do this is with `LocalSocket`s due to them supporting UNIX SCM_RIGHTS.",
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
