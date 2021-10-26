@@ -58,7 +58,6 @@ import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Range;
-import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 
@@ -1056,9 +1055,9 @@ public class IpSecService extends IIpSecService.Stub {
 
     public void systemReady() {
         if (isNetdAlive()) {
-            Slog.d(TAG, "IpSecService is ready");
+            Log.d(TAG, "IpSecService is ready");
         } else {
-            Slog.wtf(TAG, "IpSecService not ready: failed to connect to NetD Native Service!");
+            Log.wtf(TAG, "IpSecService not ready: failed to connect to NetD Native Service!");
         }
     }
 
@@ -1332,9 +1331,12 @@ public class IpSecService extends IIpSecService.Stub {
             final INetd netd = mSrvConfig.getNetdInstance();
             netd.ipSecAddTunnelInterface(intfName, localAddr, remoteAddr, ikey, okey, resourceId);
 
-            Binder.withCleanCallingIdentity(() -> {
+            final long token = Binder.clearCallingIdentity();
+            try {
                 NetdUtils.setInterfaceUp(netd, intfName);
-            });
+            } finally {
+                Binder.restoreCallingIdentity(token);
+            }
 
             for (int selAddrFamily : ADDRESS_FAMILIES) {
                 // Always send down correct local/remote addresses for template.
