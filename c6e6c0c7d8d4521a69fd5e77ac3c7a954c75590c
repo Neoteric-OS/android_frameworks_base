@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66ce6691_bacbad7c",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-27T11:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e13dbed1_9f3614df",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d854107_50776593",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-10-26T22:41:56Z",
       "side": 1,
       "message": "We should change this to a method so its value can be changed without triggering an API change",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d066d7ff_e1cd7174",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-27T11:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d854107_50776593",
       "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -52,6 +88,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd64724e_1f465a32",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-27T11:39:24Z",
+      "side": 1,
+      "message": "This method was only used in tests, so I just removed it.",
+      "parentUuid": "09edd92a_e9149815",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1755d3b7_152b3738",
@@ -65,6 +119,24 @@
       "writtenOn": "2021-10-26T22:41:56Z",
       "side": 1,
       "message": "I\u0027d keep this @hide to avoid bloating the API surface as it\u0027s just a basic utility method.",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f1b31b7_7aa5c4ea",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-27T11:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1755d3b7_152b3738",
       "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -86,6 +158,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "410bf6d3_9ade694c",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-27T11:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2515820d_49301e09",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5dc83691_d1f06951",
@@ -99,6 +189,24 @@
       "writtenOn": "2021-10-26T22:41:56Z",
       "side": 1,
       "message": "I\u0027d keep this @hide as well because its functionality can be replicated with the use of getCodecType().",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03ed22c8_3339dcff",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-27T11:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dc83691_d1f06951",
       "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -120,6 +228,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c81de7f_f68ed870",
+        "filename": "core/java/android/bluetooth/BluetoothCodecStatus.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-27T11:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69ac0ec0_cb8d794d",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27498c04_f44b1d4f",
@@ -133,6 +259,24 @@
       "writtenOn": "2021-10-26T22:41:56Z",
       "side": 1,
       "message": "Can we just keep this @hide? Doesn\u0027t serve any functional purpose.",
+      "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d1cdee1_4d530a66",
+        "filename": "core/java/android/bluetooth/BluetoothCodecStatus.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-10-27T11:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27498c04_f44b1d4f",
       "revId": "c6e6c0c7d8d4521a69fd5e77ac3c7a954c75590c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
