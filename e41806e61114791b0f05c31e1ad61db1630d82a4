@@ -22,6 +22,30 @@
       },
       "revId": "e41806e61114791b0f05c31e1ad61db1630d82a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc0f792a_e002164c",
+        "filename": "services/accessibility/java/com/android/server/accessibility/AccessibilityServiceConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1390168
+      },
+      "writtenOn": "2021-10-27T02:08:58Z",
+      "side": 1,
+      "message": "resetLocked() is called asynchronously by binderDied() and unbindLocked() in other threads, and dispatchGesture waits for the mLock object lock in the Binder thread. \n\nWhen dispatchGesture holds the object lock and starts to execute, there is a situation where mServiceInterface is null.\n\n\nThe historical version of the code analysis also has the same current low probability problem.\n\nWhen it reappears again, we try to get more logs and upload them, thank you for your review！",
+      "parentUuid": "d6c9bf46_724e8d48",
+      "range": {
+        "startLine": 410,
+        "startChar": 16,
+        "endLine": 410,
+        "endChar": 41
+      },
+      "revId": "e41806e61114791b0f05c31e1ad61db1630d82a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
