@@ -3649,6 +3649,35 @@ public class CarrierConfigManager {
             "show_wifi_calling_icon_in_status_bar_bool";
 
     /**
+     * Configuration to indicate that the carrier supports opportunistic data.
+     * Based on this flag, the device downloads and activates corresponding
+     * opportunistic profile.
+     */
+    public static final String KEY_CARRIER_SUPPORTS_OPPORTUNISTIC_DATA_BOOL =
+            "carrier_supports_opportunistic_data_bool";
+
+    /**
+     * SMDP+ server address for downloading opportunistic eSIM profile.
+     */
+    public static final String KEY_SMDP_SERVER_ADDRESS_STRING =
+            "smdp_server_address_string";
+
+    /**
+     * This timer value is used in the Exponential Backoff download retry algorithm.
+     * Value should be in seconds.
+     */
+    public static final String KEY_ESIM_DOWNLOAD_RETRY_BACKOFF_TIMER_VALUE_INT =
+            "esim_download_retry_backoff_timer_value_int";
+
+    /**
+     * When eSIM profile download fails, UE will retry based on this value.
+     * If download still fails even after the configured attempts.
+     * Retry is postponed until next device bootup.
+     */
+    public static final String KEY_ESIM_MAX_DOWNLOAD_RETRY_ATTEMPTS_INT =
+            "esim_max_download_retry_attempts_int";
+
+    /**
      * Controls RSRP threshold at which OpportunisticNetworkService will decide whether
      * the opportunistic network is good enough for internet data.
      */
@@ -5665,6 +5694,11 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_UNMETERED_NR_SA_SUB6_BOOL, false);
         sDefaults.putBoolean(KEY_ASCII_7_BIT_SUPPORT_FOR_LONG_MESSAGE_BOOL, false);
         sDefaults.putBoolean(KEY_SHOW_WIFI_CALLING_ICON_IN_STATUS_BAR_BOOL, false);
+        /* Default value is false for KEY_CARRIER_SUPPORTS_OPPORTUNISTIC_DATA */
+        sDefaults.putBoolean(KEY_CARRIER_SUPPORTS_OPPORTUNISTIC_DATA_BOOL, false);
+        sDefaults.putString(KEY_SMDP_SERVER_ADDRESS_STRING, "");
+        sDefaults.putInt(KEY_ESIM_MAX_DOWNLOAD_RETRY_ATTEMPTS_INT, 5);
+        sDefaults.putInt(KEY_ESIM_DOWNLOAD_RETRY_BACKOFF_TIMER_VALUE_INT, 1);
         /* Default value is minimum RSRP level needed for SIGNAL_STRENGTH_GOOD */
         sDefaults.putInt(KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_RSRP_INT, -108);
         /* Default value is minimum RSRP level needed for SIGNAL_STRENGTH_MODERATE */
