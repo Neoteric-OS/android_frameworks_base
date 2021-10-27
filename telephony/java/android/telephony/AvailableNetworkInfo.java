@@ -155,9 +155,8 @@ public final class AvailableNetworkInfo implements Parcelable {
      * AccessNetworkConstants.AccessNetworkType.NGRAN} with bands 48 and 71 on each will be assumed
      * by Opportunistic network service.
      * @return the access network type associated with the available network.
-     * @hide
      */
-    public List<RadioAccessSpecifier>  getRadioAccessSpecifiers() {
+    public @NonNull List<RadioAccessSpecifier> getRadioAccessSpecifiers() {
         return (List<RadioAccessSpecifier>) mRadioAccessSpecifiers.clone();
     }
 
@@ -192,8 +191,7 @@ public final class AvailableNetworkInfo implements Parcelable {
                 new ArrayList<RadioAccessSpecifier>());
     }
 
-    /** @hide */
-    private AvailableNetworkInfo(int subId, int priority, @NonNull List<String> mccMncs,
+    public AvailableNetworkInfo(int subId, int priority, @NonNull List<String> mccMncs,
             @NonNull List<Integer> bands, @NonNull List<RadioAccessSpecifier>
             radioAccessSpecifiers) {
         mSubId = subId;
@@ -266,8 +264,6 @@ public final class AvailableNetworkInfo implements Parcelable {
      *     .setPriority(AvailableNetworkInfo.PRIORITY_MED)
      *     .build();
      * </code></pre>
-     *
-     * @hide
      */
     public static final class Builder {
         private int mSubId = Integer.MIN_VALUE;
@@ -290,21 +286,21 @@ public final class AvailableNetworkInfo implements Parcelable {
             return this;
         }
 
-        public @NonNull Builder setMccMncs(@NonNull ArrayList<String> mccMncs) {
-            Objects.requireNonNull(mccMncs, "A non-null ArrayList of mccmncs must be set. An empty "
+        public @NonNull Builder setMccMncs(@NonNull List<String> mccMncs) {
+            Objects.requireNonNull(mccMncs, "A non-null List of mccmncs must be set. An empty "
                     + "list is still accepted. Please read documentation in "
-                    + "AvailableNetworkService to see consequences of an empty Arraylist.");
-            mMccMncs = mccMncs;
+                    + "AvailableNetworkService to see consequences of an empty List.");
+            mMccMncs.addAll(mccMncs);
             return this;
         }
 
         public @NonNull Builder setRadioAccessSpecifiers(
-                @NonNull ArrayList<RadioAccessSpecifier> radioAccessSpecifiers) {
-            Objects.requireNonNull(radioAccessSpecifiers, "A non-null ArrayList of "
-                    + "RadioAccessSpecifiers must be set. An empty list is still accepted. Please "
+                @NonNull List<RadioAccessSpecifier> radioAccessSpecifiers) {
+            Objects.requireNonNull(radioAccessSpecifiers, "A non-null List of "
+                    + "RadioAccessSpecifiers must be set. An empty List is still accepted. Please "
                     + "read documentation in AvailableNetworkService to see consequences of an "
-                    + "empty Arraylist.");
-            mRadioAccessSpecifiers = radioAccessSpecifiers;
+                    + "empty List.");
+            mRadioAccessSpecifiers.addAll(radioAccessSpecifiers);
             return this;
         }
 
