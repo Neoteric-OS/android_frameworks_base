@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "725ba6f4_48810ead",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-28T20:29:39Z",
+      "side": 1,
+      "message": "Actually, hold off on this. I am consulting with the API council and seeing what they think.",
+      "parentUuid": "4e219184_d1e9a878",
+      "revId": "4daa71a2229e427e976f8b8dcf04399a1b0b76b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d371ac1b_c3ef7684",
         "filename": "core/java/android/bluetooth/BluetoothCodecStatus.java",
         "patchSetId": 5
@@ -48,6 +66,24 @@
       "writtenOn": "2021-10-28T18:48:21Z",
       "side": 1,
       "message": "Same nit as BluetoothCodecConfig about no period at the end for @param and @return summaries:\n\ngo/android-api-guidelines#docs-param-return",
+      "revId": "4daa71a2229e427e976f8b8dcf04399a1b0b76b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2f25604_cf40412d",
+        "filename": "core/java/android/bluetooth/BluetoothCodecStatus.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-28T20:29:39Z",
+      "side": 1,
+      "message": "Same as for Config, hold off on this until I can confirm with the API council.",
+      "parentUuid": "d371ac1b_c3ef7684",
       "revId": "4daa71a2229e427e976f8b8dcf04399a1b0b76b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
