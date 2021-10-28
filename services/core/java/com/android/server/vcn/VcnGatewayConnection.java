@@ -2039,6 +2039,7 @@ public class VcnGatewayConnection extends StateMachine {
                         "Unknown transport type or missing TransportInfo/NetworkSpecifier for"
                                 + " non-null underlying network");
             }
+            builder.setUnderlyingNetworks(List.of(underlying.network));
         } else {
             Slog.wtf(
                     TAG,
