@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "808c8e57_d50c80c8",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-28T18:48:21Z",
+      "side": 1,
+      "message": "Whoops I meant we should still keep some docs detailing what each constant represents, but just not in that much detail :) The methods should tell you where each constant is to be used.",
+      "revId": "4daa71a2229e427e976f8b8dcf04399a1b0b76b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e219184_d1e9a878",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-28T18:48:21Z",
+      "side": 1,
+      "message": "Nit: heads up the API council guidelines mention @param and @return summaries should be a single sentence fragment (so no period at the end). It creates strange formatting for the IntDef values, but it is what they recommend:\n\ngo/android-api-guidelines#docs-param-return",
+      "revId": "4daa71a2229e427e976f8b8dcf04399a1b0b76b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d371ac1b_c3ef7684",
+        "filename": "core/java/android/bluetooth/BluetoothCodecStatus.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-28T18:48:21Z",
+      "side": 1,
+      "message": "Same nit as BluetoothCodecConfig about no period at the end for @param and @return summaries:\n\ngo/android-api-guidelines#docs-param-return",
+      "revId": "4daa71a2229e427e976f8b8dcf04399a1b0b76b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
