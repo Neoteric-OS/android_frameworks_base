@@ -438,7 +438,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mStatsObservers = Objects.requireNonNull(statsObservers, "missing NetworkStatsObservers");
         mSystemDir = Objects.requireNonNull(systemDir, "missing systemDir");
         mBaseDir = Objects.requireNonNull(baseDir, "missing baseDir");
-        mUseBpfTrafficStats = new File("/sys/fs/bpf/map_netd_app_uid_stats_map").exists();
+        mUseBpfTrafficStats = new File("/sys/fs/bpf/tethering/map_netd_modular_app_uid_stats_map")
+                .exists();
         mDeps = Objects.requireNonNull(deps, "missing Dependencies");
 
         final HandlerThread handlerThread = mDeps.makeHandlerThread();

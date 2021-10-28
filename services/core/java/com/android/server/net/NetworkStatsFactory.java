@@ -159,7 +159,8 @@ public class NetworkStatsFactory {
     }
 
     public NetworkStatsFactory() {
-        this(new File("/proc/"), new File("/sys/fs/bpf/map_netd_app_uid_stats_map").exists());
+        this(new File("/proc/"),
+                new File("/sys/fs/bpf/tethering/map_netd_modular_app_uid_stats_map").exists());
     }
 
     @VisibleForTesting
