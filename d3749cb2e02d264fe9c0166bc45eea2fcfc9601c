@@ -114,6 +114,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a4734bdd_64f23f4e",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2836,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-28T22:29:49Z",
+      "side": 1,
+      "message": "It should be fine to call into the BluetoothAdapter methods from the manager service. I would also prefer we do this to avoid exposing this constructor and duplicating the logic.",
+      "parentUuid": "9d3b519e_14e62f11",
+      "range": {
+        "startLine": 2831,
+        "startChar": 11,
+        "endLine": 2836,
+        "endChar": 50
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1dbac907_17f1fbc6",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 1
