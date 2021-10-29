@@ -81,7 +81,6 @@ import com.android.server.FgThread;
 import com.android.server.LocalServices;
 import com.android.server.SystemConfig;
 import com.android.server.SystemService;
-
 import com.android.server.pm.UserManagerService;
 import com.android.server.pm.parsing.pkg.AndroidPackage;
 
@@ -307,10 +306,9 @@ public final class OverlayManagerService extends SystemService {
             final int userCount = users.size();
             for (int i = 0; i < userCount; i++) {
                 final UserInfo userInfo = users.get(i);
-                if (!userInfo.supportsSwitchTo() && userInfo.id != UserHandle.USER_SYSTEM) {
-                    // Initialize any users that can't be switched to, as their state would
-                    // never be setup in onSwitchUser(). We will switch to the system user right
-                    // after this, and its state will be setup there.
+                if (userInfo.id != UserHandle.USER_SYSTEM) {
+                    // Initialize all users except for the system user. We will switch to the
+                    // system user right after this, and its state will be setup there.
                     updatePackageManagerLocked(mImpl.updateOverlaysForUser(users.get(i).id));
                 }
             }
