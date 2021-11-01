@@ -819,6 +819,18 @@ public final class Parcel {
     }
 
     /**
+     * Verify there are no bytes left to be read on the Parcel.
+     *
+     * @throws BadParcelableException If the current position not reaching the end of the stream.
+     * When used over binder, this exception should propagate to the caller.
+     */
+    public void enforceEndOfStream() {
+        if (dataAvail() != 0) {
+            throw new BadParcelableException("Parcel data not fully consumed.");
+        }
+    }
+
+    /**
      * Writes the work source uid to the request headers.
      *
      * <p>It requires the headers to have been written/read already to replace the work source.
