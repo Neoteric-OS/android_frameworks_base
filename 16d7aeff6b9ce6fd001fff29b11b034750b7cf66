@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c041f9c7_dff25fe9",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-11-01T23:11:21Z",
+      "side": 1,
+      "message": "PRESENTATION_UNAVAILABLE\n\nI think the TelecomMgr consts happened to line up 1:1 to the call log constants, but we should be explicit.",
+      "range": {
+        "startLine": 1222,
+        "startChar": 23,
+        "endLine": 1222,
+        "endChar": 35
+      },
+      "revId": "16d7aeff6b9ce6fd001fff29b11b034750b7cf66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb86f88f_30856172",
+        "filename": "telephony/java/com/android/internal/telephony/PhoneConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-11-01T23:11:21Z",
+      "side": 1,
+      "message": "Don\u0027t put this annotation on; it is new so we don\u0027t need to mark it as such.",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 24
+      },
+      "revId": "16d7aeff6b9ce6fd001fff29b11b034750b7cf66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
