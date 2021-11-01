@@ -17,6 +17,7 @@
 package android.net;
 
 import static android.net.ConnectivityManager.TYPE_MOBILE;
+import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 import android.service.NetworkIdentitySetProto;
 import android.util.proto.ProtoOutputStream;
@@ -40,6 +41,7 @@ public class NetworkIdentitySet extends HashSet<NetworkIdentity> implements
     private static final int VERSION_ADD_METERED = 4;
     private static final int VERSION_ADD_DEFAULT_NETWORK = 5;
     private static final int VERSION_ADD_OEM_MANAGED_NETWORK = 6;
+    private static final int VERSION_ADD_SUB_ID = 7;
 
     public NetworkIdentitySet() {
     }
@@ -91,8 +93,15 @@ public class NetworkIdentitySet extends HashSet<NetworkIdentity> implements
                 oemNetCapabilities = NetworkIdentity.OEM_NONE;
             }
 
+            final int subId;
+            if (version >= VERSION_ADD_SUB_ID) {
+                subId = in.readInt();
+            } else {
+                subId = INVALID_SUBSCRIPTION_ID;
+            }
+
             add(new NetworkIdentity(type, subType, subscriberId, networkId, roaming, metered,
-                    defaultNetwork, oemNetCapabilities));
+                    defaultNetwork, oemNetCapabilities, subId));
         }
     }
 
@@ -100,7 +109,7 @@ public class NetworkIdentitySet extends HashSet<NetworkIdentity> implements
      * Method to serialize this object into a {@code DataOutput}.
      */
     public void writeToStream(DataOutput out) throws IOException {
-        out.writeInt(VERSION_ADD_OEM_MANAGED_NETWORK);
+        out.writeInt(VERSION_ADD_SUB_ID);
         out.writeInt(size());
         for (NetworkIdentity ident : this) {
             out.writeInt(ident.getType());
@@ -111,6 +120,7 @@ public class NetworkIdentitySet extends HashSet<NetworkIdentity> implements
             out.writeBoolean(ident.getMetered());
             out.writeBoolean(ident.getDefaultNetwork());
             out.writeInt(ident.getOemManaged());
+            out.writeInt(ident.getSubId());
         }
     }
 

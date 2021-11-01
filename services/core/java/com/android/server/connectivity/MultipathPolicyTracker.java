@@ -29,7 +29,6 @@ import static android.net.NetworkTemplate.NETWORK_TYPE_ALL;
 import static android.net.NetworkTemplate.OEM_MANAGED_ALL;
 import static android.net.NetworkTemplate.SUBSCRIBER_ID_MATCH_RULE_EXACT;
 import static android.provider.Settings.Global.NETWORK_DEFAULT_DAILY_MULTIPATH_QUOTA_BYTES;
-import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 import static com.android.server.net.NetworkPolicyManagerInternal.QUOTA_TYPE_MULTIPATH;
 import static com.android.server.net.NetworkPolicyManagerService.OPPORTUNISTIC_QUOTA_UNKNOWN;
@@ -193,6 +192,7 @@ public class MultipathPolicyTracker {
     class MultipathTracker {
         final Network network;
         final String subscriberId;
+        private final int mSubId;
 
         private long mQuota;
         /** Current multipath budget. Nonzero iff we have budget and a UsageCallback is armed. */
@@ -205,9 +205,8 @@ public class MultipathPolicyTracker {
             this.network = network;
             this.mNetworkCapabilities = new NetworkCapabilities(nc);
             NetworkSpecifier specifier = nc.getNetworkSpecifier();
-            int subId = INVALID_SUBSCRIPTION_ID;
             if (specifier instanceof TelephonyNetworkSpecifier) {
-                subId = ((TelephonyNetworkSpecifier) specifier).getSubscriptionId();
+                mSubId = ((TelephonyNetworkSpecifier) specifier).getSubscriptionId();
             } else {
                 throw new IllegalStateException(String.format(
                         "Can't get subId from mobile network %s (%s)",
@@ -218,10 +217,10 @@ public class MultipathPolicyTracker {
             if (tele == null) {
                 throw new IllegalStateException(String.format("Missing TelephonyManager"));
             }
-            tele = tele.createForSubscriptionId(subId);
+            tele = tele.createForSubscriptionId(mSubId);
             if (tele == null) {
                 throw new IllegalStateException(String.format(
-                        "Can't get TelephonyManager for subId %d", subId));
+                        "Can't get TelephonyManager for subId %d", mSubId));
             }
 
             subscriberId = tele.getSubscriberId();
@@ -278,7 +277,7 @@ public class MultipathPolicyTracker {
                     !nc.hasCapability(NET_CAPABILITY_NOT_ROAMING),
                     !nc.hasCapability(NET_CAPABILITY_NOT_METERED),
                     false /* defaultNetwork, templates should have DEFAULT_NETWORK_ALL */,
-                    OEM_MANAGED_ALL);
+                    OEM_MANAGED_ALL, mSubId);
         }
 
         private long getRemainingDailyBudget(long limitBytes,
