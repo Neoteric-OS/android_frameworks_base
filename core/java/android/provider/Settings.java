@@ -11227,6 +11227,14 @@ public final class Settings {
         public static final String NITZ_UPDATE_DIFF = "nitz_update_diff";
 
         /**
+         * TODO
+         * @hide
+         */
+        @Readable
+        public static final String NITZ_NETWORK_DISCONNECT_UPDATE_DIFF =
+                "nitz_network_disconnect_update_diff";
+
+        /**
         * The length of time in milli-seconds that automatic small adjustments to
         * SystemClock are ignored if NITZ_UPDATE_DIFF is not exceeded.
         * @hide
