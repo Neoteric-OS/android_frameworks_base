@@ -232,7 +232,8 @@ package android.net {
     method @NonNull public android.net.LinkProperties getLinkProperties();
     method @NonNull public android.net.Network getNetwork();
     method @NonNull public android.net.NetworkCapabilities getNetworkCapabilities();
-    method @Nullable public String getSubscriberId();
+    method public int getSubId();
+    method @Deprecated @Nullable public String getSubscriberId();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkStateSnapshot> CREATOR;
   }
