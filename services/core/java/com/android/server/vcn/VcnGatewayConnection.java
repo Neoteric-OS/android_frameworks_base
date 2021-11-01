@@ -98,6 +98,7 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -2049,7 +2050,8 @@ public class VcnGatewayConnection extends StateMachine {
         return builder.build();
     }
 
-    private static LinkProperties buildConnectedLinkProperties(
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    LinkProperties buildConnectedLinkProperties(
             @NonNull VcnGatewayConnectionConfig gatewayConnectionConfig,
             @NonNull IpSecTunnelInterface tunnelIface,
             @NonNull VcnChildSessionConfiguration childConfig,
@@ -2077,6 +2079,15 @@ public class VcnGatewayConnection extends StateMachine {
 
             lp.setTcpBufferSizes(underlyingLp.getTcpBufferSizes());
             underlyingMtu = underlyingLp.getMtu();
+
+            // If LinkProperties didn't have an MTU, attempt to use Java APIs to get it.
+            if (underlyingMtu == 0 && underlyingLp.getInterfaceName() != null) {
+                try {
+                    underlyingMtu = mDeps.getUnderlyingIfaceMtu(underlyingLp.getInterfaceName());
+                } catch (IOException e) {
+                    Slog.d(TAG, "Could not get MTU of underlying network", e);
+                }
+            }
         } else {
             Slog.wtf(
                     TAG,
@@ -2417,6 +2428,12 @@ public class VcnGatewayConnection extends StateMachine {
         /** Gets the elapsed real time since boot, in millis. */
         public long getElapsedRealTime() {
             return SystemClock.elapsedRealtime();
+        }
+
+        /** Gets the MTU for the given underlying interface. */
+        public int getUnderlyingIfaceMtu(String ifaceName) throws IOException {
+            final NetworkInterface underlyingIface = NetworkInterface.getByName(ifaceName);
+            return underlyingIface == null ? 0 : underlyingIface.getMTU();
         }
     }
 
