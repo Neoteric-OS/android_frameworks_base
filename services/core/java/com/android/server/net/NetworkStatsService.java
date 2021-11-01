@@ -24,6 +24,7 @@ import static android.content.Intent.ACTION_UID_REMOVED;
 import static android.content.Intent.ACTION_USER_REMOVED;
 import static android.content.Intent.EXTRA_UID;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkIdentity.SUBTYPE_COMBINED;
 import static android.net.NetworkStack.checkNetworkStackPermission;
 import static android.net.NetworkStats.DEFAULT_NETWORK_ALL;
@@ -1273,6 +1274,17 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
     }
 
+    private int parseSubId(@NonNull NetworkStateSnapshot snapshot) {
+        int subId = INVALID_SUBSCRIPTION_ID;
+        if (snapshot.getNetworkCapabilities().hasTransport(TRANSPORT_CELLULAR)) {
+            NetworkSpecifier spec = snapshot.getNetworkCapabilities().getNetworkSpecifier();
+            if (spec instanceof TelephonyNetworkSpecifier) {
+                subId = ((TelephonyNetworkSpecifier) spec).getSubscriptionId();
+            }
+        }
+        return subId;
+    }
+
     /**
      * Inspect all current {@link NetworkStateSnapshot}s to derive mapping from {@code iface} to
      * {@link NetworkStatsHistory}. When multiple networks are active on a single {@code iface},
@@ -1310,7 +1322,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             final int subType = combineSubtypeEnabled ? SUBTYPE_COMBINED
                     : getSubTypeForStateSnapshot(snapshot);
             final NetworkIdentity ident = NetworkIdentity.buildNetworkIdentity(mContext, snapshot,
-                    isDefault, subType);
+                    isDefault, subType, parseSubId(snapshot));
 
             // Traffic occurring on the base interface is always counted for
             // both total usage and UID details.
@@ -1331,7 +1343,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                     NetworkIdentity vtIdent = new NetworkIdentity(ident.getType(),
                             ident.getSubType(), ident.getSubscriberId(), ident.getNetworkId(),
                             ident.getRoaming(), true /* metered */,
-                            true /* onDefaultNetwork */, ident.getOemManaged());
+                            true /* onDefaultNetwork */, ident.getOemManaged(), ident.getSubId());
                     final String ifaceVt = IFACE_VT + getSubIdForMobile(snapshot);
                     findOrCreateNetworkIdentitySet(mActiveIfaces, ifaceVt).add(vtIdent);
                     findOrCreateNetworkIdentitySet(mActiveUidIfaces, ifaceVt).add(vtIdent);

@@ -61,6 +61,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
 
     final int mType;
     final int mSubType;
+    final int mSubId;
     final String mSubscriberId;
     final String mNetworkId;
     final boolean mRoaming;
@@ -70,7 +71,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
 
     public NetworkIdentity(
             int type, int subType, String subscriberId, String networkId, boolean roaming,
-            boolean metered, boolean defaultNetwork, int oemManaged) {
+            boolean metered, boolean defaultNetwork, int oemManaged, int subId) {
         mType = type;
         mSubType = subType;
         mSubscriberId = subscriberId;
@@ -79,12 +80,13 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
         mMetered = metered;
         mDefaultNetwork = defaultNetwork;
         mOemManaged = oemManaged;
+        mSubId = subId;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(mType, mSubType, mSubscriberId, mNetworkId, mRoaming, mMetered,
-                mDefaultNetwork, mOemManaged);
+                mDefaultNetwork, mOemManaged, mSubId);
     }
 
     @Override
@@ -96,7 +98,8 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
                     && Objects.equals(mNetworkId, ident.mNetworkId)
                     && mMetered == ident.mMetered
                     && mDefaultNetwork == ident.mDefaultNetwork
-                    && mOemManaged == ident.mOemManaged;
+                    && mOemManaged == ident.mOemManaged
+                    && mSubId == ident.mSubId;
         }
         return false;
     }
@@ -170,6 +173,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
         proto.write(NetworkIdentityProto.METERED, mMetered);
         proto.write(NetworkIdentityProto.DEFAULT_NETWORK, mDefaultNetwork);
         proto.write(NetworkIdentityProto.OEM_MANAGED_NETWORK, mOemManaged);
+        proto.write(NetworkIdentityProto.SUB_ID, mSubId);
 
         proto.end(start);
     }
@@ -206,6 +210,10 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
         return mOemManaged;
     }
 
+    public int getSubId() {
+        return mSubId;
+    }
+
     /**
      * Build a {@link NetworkIdentity} from the given {@link NetworkStateSnapshot} and
      * {@code subType}, assuming that any mobile networks are using the current IMSI.
@@ -213,7 +221,8 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
      * constants, or {@link android.telephony.TelephonyManager#NETWORK_TYPE_UNKNOWN} if not.
      */
     public static NetworkIdentity buildNetworkIdentity(Context context,
-            NetworkStateSnapshot snapshot, boolean defaultNetwork, @NetworkType int subType) {
+            NetworkStateSnapshot snapshot, boolean defaultNetwork, @NetworkType int subType,
+            int subId) {
         final int legacyType = snapshot.getLegacyType();
 
         final String subscriberId = snapshot.getSubscriberId();
@@ -235,7 +244,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
         }
 
         return new NetworkIdentity(legacyType, subType, subscriberId, networkId, roaming, metered,
-                defaultNetwork, oemManaged);
+                defaultNetwork, oemManaged, subId);
     }
 
     /**
@@ -278,6 +287,10 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
         }
         if (res == 0) {
             res = Integer.compare(mOemManaged, another.mOemManaged);
+        }
+
+        if (res == 0) {
+            res = Integer.compare(mSubId, another.mSubId);
         }
         return res;
     }
