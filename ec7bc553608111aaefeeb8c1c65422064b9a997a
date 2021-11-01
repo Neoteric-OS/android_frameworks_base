@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8af19a1_17af4892",
+        "filename": "rs/jni/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1863140
+      },
+      "writtenOn": "2021-11-01T20:30:07Z",
+      "side": 1,
+      "message": "I was suggested to remove this before, but I did not meet this so often.",
+      "range": {
+        "startLine": 48,
+        "startChar": 36,
+        "endLine": 48,
+        "endChar": 41
+      },
+      "revId": "ec7bc553608111aaefeeb8c1c65422064b9a997a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff263b40_e75425b2",
+        "filename": "rs/jni/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1863140
+      },
+      "writtenOn": "2021-11-01T20:30:07Z",
+      "side": 1,
+      "message": "I think this is not needed, since it is included in the shared_libs.",
+      "revId": "ec7bc553608111aaefeeb8c1c65422064b9a997a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
