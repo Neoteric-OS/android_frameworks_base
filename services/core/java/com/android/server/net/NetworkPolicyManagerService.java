@@ -1461,7 +1461,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             final String subscriberId = mSubIdToSubscriberId.valueAt(i);
             final NetworkIdentity probeIdent = new NetworkIdentity(TYPE_MOBILE,
                     TelephonyManager.NETWORK_TYPE_UNKNOWN, subscriberId, null, false, true,
-                    true, OEM_NONE);
+                    true, OEM_NONE, subId);
             /* While OEM_NONE indicates "any non OEM managed network", OEM_NONE is meant to be a
              * placeholder value here. The probeIdent is matched against a NetworkTemplate which
              * should have its OEM managed value set to OEM_MANAGED_ALL, which will cause the
@@ -1700,7 +1700,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         boolean policyUpdated = false;
         final NetworkIdentity probeIdent = new NetworkIdentity(TYPE_MOBILE,
                 TelephonyManager.NETWORK_TYPE_UNKNOWN, subscriberId, null, false, true, true,
-                OEM_NONE);
+                OEM_NONE, subId);
         for (int i = mNetworkPolicy.size() - 1; i >= 0; i--) {
             final NetworkTemplate template = mNetworkPolicy.keyAt(i);
             if (template.matches(probeIdent)) {
@@ -1931,7 +1931,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
                     final NetworkIdentity probeIdent = new NetworkIdentity(TYPE_MOBILE,
                             TelephonyManager.NETWORK_TYPE_UNKNOWN, subscriberId, null, false, true,
-                            true, OEM_NONE);
+                            true, OEM_NONE, subId);
                     // Template is matched when subscriber id matches.
                     if (template.matches(probeIdent)) {
                         matchingSubIds.add(subId);
@@ -2033,13 +2033,14 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         mNetIdToSubId.clear();
         final ArrayMap<NetworkStateSnapshot, NetworkIdentity> identified = new ArrayMap<>();
         for (final NetworkStateSnapshot snapshot : snapshots) {
-            mNetIdToSubId.put(snapshot.getNetwork().getNetId(), parseSubId(snapshot));
+            int subId = parseSubId(snapshot);
+            mNetIdToSubId.put(snapshot.getNetwork().getNetId(), subId);
 
             // Policies matched by NPMS only match by subscriber ID or by ssid. Thus subtype
             // in the object created here is never used and its value doesn't matter, so use
             // NETWORK_TYPE_UNKNOWN.
             final NetworkIdentity ident = NetworkIdentity.buildNetworkIdentity(mContext, snapshot,
-                    true, TelephonyManager.NETWORK_TYPE_UNKNOWN /* subType */);
+                    true, TelephonyManager.NETWORK_TYPE_UNKNOWN /* subType */, subId);
             identified.put(snapshot, ident);
         }
 
@@ -2238,7 +2239,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         // Poke around to see if we already have a policy
         final NetworkIdentity probeIdent = new NetworkIdentity(TYPE_MOBILE,
                 TelephonyManager.NETWORK_TYPE_UNKNOWN, subscriberId, null, false, true, true,
-                OEM_NONE);
+                OEM_NONE, subId);
         for (int i = mNetworkPolicy.size() - 1; i >= 0; i--) {
             final NetworkTemplate template = mNetworkPolicy.keyAt(i);
             if (template.matches(probeIdent)) {

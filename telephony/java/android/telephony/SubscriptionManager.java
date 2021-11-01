@@ -1499,6 +1499,7 @@ public class SubscriptionManager {
 
         try {
             ISub iSub = TelephonyManager.getSubscriptionService();
+            Log.e(LOG_TAG, "frank getSubscriptionService = " + iSub);
             if (iSub != null) {
                 result = iSub.getAllSubInfoList(mContext.getOpPackageName(),
                         mContext.getAttributionTag());

@@ -14831,6 +14831,8 @@ public class TelephonyManager {
     */
     static ISub getSubscriptionService() {
         // Keeps cache disabled until test fixes are checked into AOSP.
+        Log.e(TAG, "frank getSubscriptionService  sServiceHandleCacheEnabled: "
+                + sServiceHandleCacheEnabled); //frank
         if (!sServiceHandleCacheEnabled) {
             return ISub.Stub.asInterface(
                     TelephonyFrameworkInitializer
@@ -14839,19 +14841,26 @@ public class TelephonyManager {
                             .get());
         }
 
+        Log.e(TAG, "frank getSubscriptionService  sISub" + sISub); //frank
         if (sISub == null) {
             ISub temp = ISub.Stub.asInterface(
                     TelephonyFrameworkInitializer
                             .getTelephonyServiceManager()
                             .getSubscriptionServiceRegisterer()
                             .get());
+            Log.e(TAG, "frank0 getSubscriptionService  sISub=" + sISub); //frank
+            Log.e(TAG, "frank0 getSubscriptionService  temp=" + temp);   //frank
             synchronized (sCacheLock) {
                 if (sISub == null && temp != null) {
                     try {
+                        Log.e(TAG, "frank1 getSubscriptionService  sISub=" + sISub);
+                        Log.e(TAG, "frank1 getSubscriptionService  temp=" + temp);
                         sISub = temp;
                         sISub.asBinder().linkToDeath(sServiceDeath, 0);
                     } catch (Exception e) {
                         // something has gone horribly wrong
+                        Log.e(TAG, "frank2 getSubscriptionService  sISub=" + sISub);
+                        Log.e(TAG, "frank2 getSubscriptionService  temp=" + temp);
                         sISub = null;
                     }
                 }

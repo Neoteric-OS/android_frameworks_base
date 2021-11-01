@@ -193,6 +193,7 @@ public class MultipathPolicyTracker {
     class MultipathTracker {
         final Network network;
         final String subscriberId;
+        private int mSubId = INVALID_SUBSCRIPTION_ID;
 
         private long mQuota;
         /** Current multipath budget. Nonzero iff we have budget and a UsageCallback is armed. */
@@ -205,9 +206,8 @@ public class MultipathPolicyTracker {
             this.network = network;
             this.mNetworkCapabilities = new NetworkCapabilities(nc);
             NetworkSpecifier specifier = nc.getNetworkSpecifier();
-            int subId = INVALID_SUBSCRIPTION_ID;
             if (specifier instanceof TelephonyNetworkSpecifier) {
-                subId = ((TelephonyNetworkSpecifier) specifier).getSubscriptionId();
+                mSubId = ((TelephonyNetworkSpecifier) specifier).getSubscriptionId();
             } else {
                 throw new IllegalStateException(String.format(
                         "Can't get subId from mobile network %s (%s)",
@@ -218,10 +218,10 @@ public class MultipathPolicyTracker {
             if (tele == null) {
                 throw new IllegalStateException(String.format("Missing TelephonyManager"));
             }
-            tele = tele.createForSubscriptionId(subId);
+            tele = tele.createForSubscriptionId(mSubId);
             if (tele == null) {
                 throw new IllegalStateException(String.format(
-                        "Can't get TelephonyManager for subId %d", subId));
+                        "Can't get TelephonyManager for subId %d", mSubId));
             }
 
             subscriberId = tele.getSubscriberId();
@@ -278,7 +278,7 @@ public class MultipathPolicyTracker {
                     !nc.hasCapability(NET_CAPABILITY_NOT_ROAMING),
                     !nc.hasCapability(NET_CAPABILITY_NOT_METERED),
                     false /* defaultNetwork, templates should have DEFAULT_NETWORK_ALL */,
-                    OEM_MANAGED_ALL);
+                    OEM_MANAGED_ALL, mSubId);
         }
 
         private long getRemainingDailyBudget(long limitBytes,
