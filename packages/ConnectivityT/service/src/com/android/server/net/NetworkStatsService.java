@@ -1427,7 +1427,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                     NetworkIdentity vtIdent = new NetworkIdentity(ident.getType(),
                             ident.getRatType(), ident.getSubscriberId(), ident.getWifiNetworkKey(),
                             ident.isRoaming(), true /* metered */,
-                            true /* onDefaultNetwork */, ident.getOemManaged());
+                            true /* onDefaultNetwork */, ident.getOemManaged(), ident.getSubId());
                     final String ifaceVt = IFACE_VT + getSubIdForMobile(snapshot);
                     findOrCreateNetworkIdentitySet(mActiveIfaces, ifaceVt).add(vtIdent);
                     findOrCreateNetworkIdentitySet(mActiveUidIfaces, ifaceVt).add(vtIdent);
