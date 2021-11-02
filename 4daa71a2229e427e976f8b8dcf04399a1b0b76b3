@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c2b636f_29cd15d3",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-02T11:26:13Z",
+      "side": 1,
+      "message": "I re-uploaded the docs removing the excess details. However I\u0027m not sure about just saying \"Source codec type AAC\" or \"Codec channel mode MONO\", but I don\u0027t know what to add to this, should I describe what these constants are used for in more details ?",
+      "parentUuid": "808c8e57_d50c80c8",
+      "revId": "4daa71a2229e427e976f8b8dcf04399a1b0b76b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e219184_d1e9a878",
