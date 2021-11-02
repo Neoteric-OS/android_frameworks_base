@@ -23,7 +23,6 @@ import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.service.NetworkIdentityProto;
-import android.telephony.Annotation.NetworkType;
 import android.util.proto.ProtoOutputStream;
 
 import com.android.net.module.util.NetworkCapabilitiesUtils;
@@ -213,7 +212,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
      * constants, or {@link android.telephony.TelephonyManager#NETWORK_TYPE_UNKNOWN} if not.
      */
     public static NetworkIdentity buildNetworkIdentity(Context context,
-            NetworkStateSnapshot snapshot, boolean defaultNetwork, @NetworkType int subType) {
+            NetworkStateSnapshot snapshot, boolean defaultNetwork, int subType) {
         final int legacyType = snapshot.getLegacyType();
 
         final String subscriberId = snapshot.getSubscriberId();
