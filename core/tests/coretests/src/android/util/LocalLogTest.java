@@ -25,41 +25,68 @@ import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @LargeTest
 public class LocalLogTest extends TestCase {
 
-    public void testA_localTimestamps() {
+    public void testLog_underCapacity_localTimestamps() {
         boolean localTimestamps = true;
-        doTestA(localTimestamps);
+        doLog_underCapacityWithNoOverflow(localTimestamps);
     }
 
-    public void testA_nonLocalTimestamps() {
+    public void testLog_underCapacity_nonLocalTimestamps() {
         boolean localTimestamps = false;
-        doTestA(localTimestamps);
+        doLog_underCapacityWithNoOverflow(localTimestamps);
     }
 
-    private void doTestA(boolean localTimestamps) {
+    private void doLog_underCapacityWithNoOverflow(boolean localTimestamps) {
         String[] lines = {
                 "foo",
                 "bar",
                 "baz"
         };
         String[] want = lines;
-        testcase(new LocalLog(10, localTimestamps), lines, want);
+        checkLogDumpAndDumpReverse(new LocalLog(10, localTimestamps), lines, want);
     }
 
-    public void testB() {
+    public void testLog_atCapacityWithNoOverflow_localTimestamps() {
+        boolean localTimestamps = true;
+        doLog_atCapacityWithNoOverflow(localTimestamps);
+    }
+
+    public void testLog_atCapacityWithNoOverflow_nonLocalTimestamps() {
+        boolean localTimestamps = false;
+        doLog_atCapacityWithNoOverflow(localTimestamps);
+    }
+
+    private void doLog_atCapacityWithNoOverflow(boolean localTimestamps) {
+        String[] lines = {
+                "foo",
+                "bar",
+                "baz"
+        };
+        String[] want = lines;
+        checkLogDumpAndDumpReverse(new LocalLog(3, localTimestamps), lines, want);
+    }
+
+    public void testMaxLinesZero() {
         String[] lines = {
             "foo",
             "bar",
             "baz"
         };
         String[] want = {};
-        testcase(new LocalLog(0), lines, want);
+        checkLogDumpAndDumpReverse(new LocalLog(0), lines, want);
     }
 
-    public void testC() {
+    public void testEmpty() {
+        String[] lines = {};
+        String[] want = {};
+        checkLogDumpAndDumpReverse(new LocalLog(10), lines, want);
+    }
+
+    public void testLog_overCapacity() {
         String[] lines = {
             "dropped",
             "dropped",
@@ -76,10 +103,10 @@ public class LocalLogTest extends TestCase {
             "bar",
             "baz",
         };
-        testcase(new LocalLog(3), lines, want);
+        checkLogDumpAndDumpReverse(new LocalLog(3), lines, want);
     }
 
-    void testcase(LocalLog logger, String[] input, String[] want) {
+    void checkLogDumpAndDumpReverse(LocalLog logger, String[] input, String[] want) {
         for (String l : input) {
             logger.log(l);
         }
@@ -87,10 +114,44 @@ public class LocalLogTest extends TestCase {
         verifyAllLines(reverse(want), reverseDump(logger).split("\n"));
     }
 
-    void verifyAllLines(String[] wantLines, String[] gotLines) {
+    public void testLogObject() {
+        Object[] lines = {
+                1,
+                2,
+                3.0,
+                4.0,
+                "Five",
+                "dropped",
+                createStringWrapper("foo"),
+                createStringWrapper("bar"),
+                createStringWrapper("baz"),
+        };
+        String[] want = {
+                "foo",
+                "bar",
+                "baz",
+        };
+        checkLogObjectDumpAndDumpReverse(new LocalLog(3), lines, want);
+    }
+
+    private Object createStringWrapper(String toWrap) {
+        // AtomicReference is a class where toString() is delegated to the held value, so it is not
+        // a string, but has the expected toString() behavior.
+        return new AtomicReference<>(toWrap);
+    }
+
+    void checkLogObjectDumpAndDumpReverse(LocalLog logger, Object[] input, String[] want) {
+        for (Object l : input) {
+            logger.logObject(l);
+        }
+        verifyAllLines(want, dump(logger).split("\n"));
+        verifyAllLines(reverse(want), reverseDump(logger).split("\n"));
+    }
+
+    void verifyAllLines(String[] wantLines, String[] toLog) {
         for (int i = 0; i < wantLines.length; i++) {
             String want = wantLines[i];
-            String got = gotLines[i];
+            String got = toLog[i];
             String msg = String.format("%s did not contain %s", quote(got), quote(want));
             assertTrue(msg, got.contains(want));
         }
