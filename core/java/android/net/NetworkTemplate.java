@@ -41,7 +41,6 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.telephony.Annotation.NetworkType;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
@@ -159,7 +158,7 @@ public class NetworkTemplate implements Parcelable {
      * filtering. See {@code TelephonyManager.NETWORK_TYPE_*}.
      */
     public static NetworkTemplate buildTemplateMobileWithRatType(@Nullable String subscriberId,
-            @NetworkType int ratType, int metered) {
+            int ratType, int metered) {
         if (TextUtils.isEmpty(subscriberId)) {
             return new NetworkTemplate(MATCH_MOBILE_WILDCARD, null, null, null,
                     metered, ROAMING_ALL, DEFAULT_NETWORK_ALL, ratType, OEM_MANAGED_ALL,
