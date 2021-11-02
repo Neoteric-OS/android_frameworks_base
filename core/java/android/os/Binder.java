@@ -519,7 +519,8 @@ public class Binder implements IBinder {
 
     /**
      * Restores the work source on this thread using a token returned by
-     * {@link #setCallingWorkSourceUid(int) or {@link clearCallingWorkSource()}.
+     * {@link Binder#setCallingWorkSourceUid(int)} or
+     * {@link Binder#clearCallingWorkSource()}.
      *
      * <p>A typical use case would be
      * <pre>
@@ -561,7 +562,7 @@ public class Binder implements IBinder {
 
     /**
      * Flush any Binder commands pending in the current thread to the kernel
-     * driver.  This can be
+     * driver. This can be
      * useful to call before performing an operation that may block for a long
      * time, to ensure that any pending object references have been released
      * in order to prevent the process from holding on to objects longer than
@@ -631,8 +632,8 @@ public class Binder implements IBinder {
 
     /**
      * Convenience method for associating a specific interface with the Binder.
-     * After calling, queryLocalInterface() will be implemented for you
-     * to return the given owner IInterface when the corresponding
+     * After calling, {@link IBinder#queryLocalInterface()} will be implemented
+     * for you to return the given owner IInterface when the corresponding
      * descriptor is requested.
      */
     public void attachInterface(@Nullable IInterface owner, @Nullable String descriptor) {
