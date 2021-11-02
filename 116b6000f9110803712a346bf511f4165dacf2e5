@@ -16,6 +16,29 @@
       "message": "Hi, look at a small change please :)",
       "revId": "116b6000f9110803712a346bf511f4165dacf2e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63c5b7ba_2cfc45f6",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-11-02T20:02:29Z",
+      "side": 1,
+      "message": "lint: Unresolved link/see tag \"android.os.IBinder#queryLocalInterface() IBinder#queryLocalInterface()\" in android.os.Binder [101]",
+      "range": {
+        "startLine": 635,
+        "startChar": 37,
+        "endLine": 635,
+        "endChar": 56
+      },
+      "revId": "116b6000f9110803712a346bf511f4165dacf2e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
