@@ -16,6 +16,13 @@
 
 package android.net;
 
+import static android.net.NetworkStats.METERED_ALL;
+import static android.net.NetworkStats.METERED_YES;
+import static android.net.NetworkTemplate.MATCH_CARRIER;
+import static android.net.NetworkTemplate.MATCH_MOBILE;
+import static android.net.NetworkTemplate.SUBSCRIBER_ID_MATCH_RULE_EXACT;
+
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
@@ -255,7 +262,7 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
         DataOutputStream out = new DataOutputStream(baos);
 
         out.writeInt(VERSION_RAPID);
-        out.write(template.getBytesForBackup());
+        out.write(getNetworkTemplateBytesForBackup());
         cycleRule.writeToStream(out);
         out.writeLong(warningBytes);
         out.writeLong(limitBytes);
@@ -274,7 +281,7 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
             throw new BackupUtils.BadVersionException("Unknown backup version: " + version);
         }
 
-        final NetworkTemplate template = NetworkTemplate.getNetworkTemplateFromBackup(in);
+        final NetworkTemplate template = getNetworkTemplateFromBackup(in);
         final RecurrenceRule cycleRule;
         if (version >= VERSION_RULE) {
             cycleRule = new RecurrenceRule(in);
@@ -297,5 +304,65 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
         final boolean inferred = in.readInt() == 1;
         return new NetworkPolicy(template, cycleRule, warningBytes, limitBytes, lastWarningSnooze,
                 lastLimitSnooze, lastRapidSnooze, metered, inferred);
+    }
+
+    @NonNull
+    private byte[] getNetworkTemplateBytesForBackup()
+            throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(baos);
+
+        if (!template.isPersistable()) {
+            throw new IllegalStateException(
+                    "Trying to backup non-persistable template: " + template);
+        }
+
+        out.writeInt(NetworkTemplate.getBackupVersion());
+
+        out.writeInt(template.getMatchRule());
+        BackupUtils.writeString(out, template.getSubscriberId());
+        BackupUtils.writeString(out, template.getNetworkId());
+        out.writeInt(template.getMeteredness());
+        out.writeInt(template.getSubscriberIdMatchRule());
+
+        return baos.toByteArray();
+    }
+
+    @NonNull
+    private static NetworkTemplate getNetworkTemplateFromBackup(DataInputStream in)
+            throws IOException, BackupUtils.BadVersionException {
+        final int version = in.readInt();
+        if (version < NetworkTemplate.BACKUP_VERSION_INIT
+                || version > NetworkTemplate.getBackupVersion()) {
+            throw new BackupUtils.BadVersionException("Unknown Backup Serialization Version");
+        }
+
+        final int matchRule = in.readInt();
+        String subscriberId = BackupUtils.readString(in);
+        String networkId = BackupUtils.readString(in);
+
+        final int metered;
+        final int subscriberIdMatchRule;
+        if (version >= NetworkTemplate.BACKUP_VERSION_SUPPORT_CARRIER_TEMPLATE) {
+            metered = in.readInt();
+            subscriberIdMatchRule = in.readInt();
+        } else {
+            // Try to guess filters from match rules.
+            metered = (matchRule == MATCH_MOBILE || matchRule == MATCH_CARRIER)
+                    ? METERED_YES : METERED_ALL;
+            subscriberIdMatchRule = SUBSCRIBER_ID_MATCH_RULE_EXACT;
+        }
+
+        final NetworkTemplate ret;
+        try {
+            return new NetworkTemplate(matchRule,
+                    subscriberId, new String[] { subscriberId },
+                    networkId, metered, NetworkStats.ROAMING_ALL,
+                    NetworkStats.DEFAULT_NETWORK_ALL, NetworkTemplate.NETWORK_TYPE_ALL,
+                    NetworkTemplate.OEM_MANAGED_ALL, subscriberIdMatchRule);
+        } catch (IllegalArgumentException e) {
+            throw new BackupUtils.BadVersionException(
+                    "Restored network template contains unknown match rule " + matchRule);
+        }
     }
 }
