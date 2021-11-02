@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72b3a063_96a4831b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2021-11-02T16:10:00Z",
+      "side": 1,
+      "message": "Narayan for LocalLog OWNERS + review if you like.\nAlmaz for review",
+      "revId": "85c2e3c5d5ce72857e23b8fbff89b023845c6677",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
