@@ -88,6 +88,9 @@ constructor(
     // Show blur if the flag is enabled and the volume dialog is vertical
     val showBlur = isVolumeAndPowerBlurEnabled() && isVolumeDialogVertical
 
+    val hasAlertSlider: Boolean =
+        applicationContext.resources.getBoolean(internalR.bool.config_hasAlertSlider)
+
     private val drawerState = MutableStateFlow<RingerDrawerState>(RingerDrawerState.Initial)
     private val orientation: StateFlow<Int> =
         configurationController.onConfigChanged
@@ -141,6 +144,7 @@ constructor(
     }
 
     fun onRingerButtonClicked(ringerMode: RingerMode, isSelectedButton: Boolean = false) {
+        if (hasAlertSlider) return
         val currentTime = systemClock.currentTimeMillis()
         if (currentTime - lastClickTime < DRAWER_STATE_ANIMATION_DURATION) return
         lastClickTime = currentTime

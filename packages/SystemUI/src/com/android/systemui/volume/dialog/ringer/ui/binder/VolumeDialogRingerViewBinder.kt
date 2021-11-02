@@ -460,7 +460,7 @@ constructor(
         val ringerContentDesc = context.getString(buttonViewModel.contentDescriptionResId)
         setImageResource(buttonViewModel.imageResId)
         contentDescription =
-            if (isSelected && !isOpen) {
+            if (isSelected && !isOpen && !viewModel.hasAlertSlider) {
                 context.getString(
                     R.string.volume_ringer_drawer_closed_content_description,
                     ringerContentDesc,
@@ -477,8 +477,13 @@ constructor(
             setColorFilter(context.getColor(internalR.color.materialColorOnSurface))
             background = background.mutate()
         }
-        setOnClickListener {
-            viewModel.onRingerButtonClicked(buttonViewModel.ringerMode, isSelected)
+        if (!viewModel.hasAlertSlider) {
+            setOnClickListener {
+                viewModel.onRingerButtonClicked(buttonViewModel.ringerMode, isSelected)
+            }
+        } else {
+            setOnClickListener(null)
+            isClickable = false
         }
     }
 

@@ -16,11 +16,13 @@
 
 package com.android.systemui.volume.dialog.ringer.ui.viewmodel
 
+import android.content.testableContext
 import android.media.AudioManager.RINGER_MODE_NORMAL
 import android.media.AudioManager.RINGER_MODE_SILENT
 import android.media.AudioManager.RINGER_MODE_VIBRATE
 import android.media.AudioManager.STREAM_RING
 import android.testing.TestableLooper
+import com.android.internal.R as internalR
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.settingslib.volume.shared.model.RingerMode
@@ -136,6 +138,29 @@ class VolumeDialogRingerDrawerViewModelTest : SysuiTestCase() {
             setUpRingerMode(RingerMode(RINGER_MODE_NORMAL))
 
             assertThat(ringerViewModel).isInstanceOf(RingerViewModelState.Unavailable::class.java)
+        }
+
+    @Test
+    fun onSelectedRingerButtonClicked_hasAlertSlider_doesNotOpenDrawer() =
+        testScope.runTest {
+            val newKosmos = testKosmos()
+            newKosmos.testableContext.orCreateTestableResources.addOverride(
+                internalR.bool.config_hasAlertSlider,
+                true,
+            )
+            val underTestWithAlertSlider = newKosmos.volumeDialogRingerDrawerViewModel
+            val ringerViewModel by collectLastValue(underTestWithAlertSlider.ringerViewModel)
+            val normalRingerMode = RingerMode(RINGER_MODE_NORMAL)
+
+            setUpRingerMode(normalRingerMode)
+            newKosmos.fakeSystemClock.advanceTime(400L)
+            underTestWithAlertSlider.onRingerButtonClicked(normalRingerMode)
+            controller.getState()
+            runCurrent()
+
+            assertThat(ringerViewModel).isInstanceOf(RingerViewModelState.Available::class.java)
+            assertThat((ringerViewModel as RingerViewModelState.Available).uiModel.drawerState)
+                .isEqualTo(RingerDrawerState.Initial)
         }
 
     private fun TestScope.setUpRingerModeAndOpenDrawer(selectedRingerMode: RingerMode) {
