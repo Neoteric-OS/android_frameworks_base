@@ -44,16 +44,10 @@ import android.os.Parcelable;
 import android.telephony.Annotation.NetworkType;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.BackupUtils;
-import android.util.Log;
 
 import com.android.internal.util.ArrayUtils;
 import com.android.net.module.util.NetworkIdentityUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -348,7 +342,7 @@ public class NetworkTemplate implements Parcelable {
         mSubscriberIdMatchRule = subscriberIdMatchRule;
         checkValidSubscriberIdMatchRule();
         if (!isKnownMatchRule(matchRule)) {
-            Log.e(TAG, "Unknown network template rule " + matchRule
+            throw new IllegalArgumentException("Unknown network template rule " + matchRule
                     + " will not match any identity.");
         }
     }
@@ -504,6 +498,8 @@ public class NetworkTemplate implements Parcelable {
     public int getMeteredness() {
         return mMetered;
     }
+
+    public static int getBackupVersion() { return BACKUP_VERSION; }
 
     /**
      * Test if given {@link NetworkIdentity} matches this template.
@@ -837,36 +833,4 @@ public class NetworkTemplate implements Parcelable {
             return new NetworkTemplate[size];
         }
     };
-
-    public byte[] getBytesForBackup() throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        DataOutputStream out = new DataOutputStream(baos);
-
-        out.writeInt(BACKUP_VERSION);
-
-        out.writeInt(mMatchRule);
-        BackupUtils.writeString(out, mSubscriberId);
-        BackupUtils.writeString(out, mNetworkId);
-
-        return baos.toByteArray();
-    }
-
-    public static NetworkTemplate getNetworkTemplateFromBackup(DataInputStream in)
-            throws IOException, BackupUtils.BadVersionException {
-        int version = in.readInt();
-        if (version < 1 || version > BACKUP_VERSION) {
-            throw new BackupUtils.BadVersionException("Unknown Backup Serialization Version");
-        }
-
-        int matchRule = in.readInt();
-        String subscriberId = BackupUtils.readString(in);
-        String networkId = BackupUtils.readString(in);
-
-        if (!isKnownMatchRule(matchRule)) {
-            throw new BackupUtils.BadVersionException(
-                    "Restored network template contains unknown match rule " + matchRule);
-        }
-
-        return new NetworkTemplate(matchRule, subscriberId, networkId);
-    }
 }
