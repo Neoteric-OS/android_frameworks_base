@@ -21,6 +21,7 @@ import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.annotation.TestApi;
@@ -215,6 +216,7 @@ public class NetworkStatsManager {
      * @return Bucket object or null if permissions are insufficient or error happened during
      *         statistics collection.
      */
+    @SuppressLint({"BannedThrow", "RethrowRemoteException"})
     @WorkerThread
     public Bucket querySummaryForDevice(int networkType, String subscriberId,
             long startTime, long endTime) throws SecurityException, RemoteException {
@@ -260,6 +262,7 @@ public class NetworkStatsManager {
      * @return Bucket object or null if permissions are insufficient or error happened during
      *         statistics collection.
      */
+    @SuppressLint({"BannedThrow", "RethrowRemoteException"})
     @WorkerThread
     public Bucket querySummaryForUser(int networkType, String subscriberId, long startTime,
             long endTime) throws SecurityException, RemoteException {
@@ -309,6 +312,7 @@ public class NetworkStatsManager {
      * @return Statistics object or null if permissions are insufficient or error happened during
      *         statistics collection.
      */
+    @SuppressLint({"BannedThrow", "RethrowRemoteException"})
     @WorkerThread
     public NetworkStats querySummary(int networkType, String subscriberId, long startTime,
             long endTime) throws SecurityException, RemoteException {
@@ -339,6 +343,7 @@ public class NetworkStatsManager {
      *
      * @see #queryDetailsForUidTagState(int, String, long, long, int, int, int)
      */
+    @SuppressLint("BannedThrow")
     @WorkerThread
     public NetworkStats queryDetailsForUid(int networkType, String subscriberId,
             long startTime, long endTime, int uid) throws SecurityException {
@@ -359,6 +364,7 @@ public class NetworkStatsManager {
      *
      * @see #queryDetailsForUidTagState(int, String, long, long, int, int, int)
      */
+    @SuppressLint("BannedThrow")
     @WorkerThread
     public NetworkStats queryDetailsForUidTag(int networkType, String subscriberId,
             long startTime, long endTime, int uid, int tag) throws SecurityException {
@@ -405,6 +411,7 @@ public class NetworkStatsManager {
      * @return Statistics object or null if an error happened during statistics collection.
      * @throws SecurityException if permissions are insufficient to read network statistics.
      */
+    @SuppressLint("BannedThrow")
     @WorkerThread
     public NetworkStats queryDetailsForUidTagState(int networkType, String subscriberId,
             long startTime, long endTime, int uid, int tag, int state) throws SecurityException {
@@ -467,6 +474,7 @@ public class NetworkStatsManager {
      * @return Statistics object or null if permissions are insufficient or error happened during
      *         statistics collection.
      */
+    @SuppressLint({"BannedThrow", "RethrowRemoteException"})
     @WorkerThread
     public NetworkStats queryDetails(int networkType, String subscriberId, long startTime,
             long endTime) throws SecurityException, RemoteException {
@@ -551,6 +559,7 @@ public class NetworkStatsManager {
      * @param handler to dispatch callback events through, otherwise if {@code null} it uses
      *            the calling thread.
      */
+    @SuppressLint("ExecutorRegistration")
     public void registerUsageCallback(int networkType, String subscriberId, long thresholdBytes,
             UsageCallback callback, @Nullable Handler handler) {
         NetworkTemplate template = createTemplate(networkType, subscriberId);
