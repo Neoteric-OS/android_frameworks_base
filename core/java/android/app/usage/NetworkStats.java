@@ -17,6 +17,7 @@
 package android.app.usage;
 
 import android.annotation.IntDef;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.INetworkStatsService;
 import android.net.INetworkStatsSession;
@@ -113,6 +114,7 @@ public final class NetworkStats implements AutoCloseable {
     }
 
     @Override
+    @SuppressLint("GenericException")
     protected void finalize() throws Throwable {
         try {
             if (mCloseGuard != null) {

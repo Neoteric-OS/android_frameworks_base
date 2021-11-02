@@ -53,6 +53,7 @@ import java.net.SocketException;
  * after every reboot. To access more robust historical network statistics data,
  * use {@link NetworkStatsManager} instead.
  */
+@SuppressLint("StaticUtils")
 public class TrafficStats {
     /**
      * The return value to indicate that the device does not support the statistic.
