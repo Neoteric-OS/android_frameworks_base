@@ -2096,7 +2096,7 @@ package android.bluetooth {
     method @NonNull @RequiresPermission(allOf={android.Manifest.permission.BLUETOOTH_CONNECT, android.Manifest.permission.BLUETOOTH_PRIVILEGED}) public java.util.List<android.bluetooth.BluetoothDevice> getConnectedDevices();
     method @RequiresPermission(allOf={android.Manifest.permission.BLUETOOTH_CONNECT, android.Manifest.permission.BLUETOOTH_PRIVILEGED}) public int getConnectionState(@NonNull android.bluetooth.BluetoothDevice);
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT) public boolean isTetheringOn();
-    method @RequiresPermission(allOf={android.Manifest.permission.BLUETOOTH_CONNECT, android.Manifest.permission.BLUETOOTH_PRIVILEGED, android.Manifest.permission.TETHER_PRIVILEGED}) public void setBluetoothTethering(boolean);
+    method @Deprecated @RequiresPermission(allOf={android.Manifest.permission.BLUETOOTH_CONNECT, android.Manifest.permission.BLUETOOTH_PRIVILEGED, android.Manifest.permission.TETHER_PRIVILEGED}) public void setBluetoothTethering(boolean);
     method @RequiresPermission(allOf={android.Manifest.permission.BLUETOOTH_CONNECT, android.Manifest.permission.BLUETOOTH_PRIVILEGED}) public boolean setConnectionPolicy(@NonNull android.bluetooth.BluetoothDevice, int);
     field @RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT) public static final String ACTION_CONNECTION_STATE_CHANGED = "android.bluetooth.pan.profile.action.CONNECTION_STATE_CHANGED";
     field public static final String ACTION_TETHERING_STATE_CHANGED = "android.bluetooth.action.TETHERING_STATE_CHANGED";
@@ -2109,6 +2109,15 @@ package android.bluetooth {
     field public static final int REMOTE_PANU_ROLE = 2; // 0x2
     field public static final int TETHERING_STATE_OFF = 1; // 0x1
     field public static final int TETHERING_STATE_ON = 2; // 0x2
+  }
+
+  public static interface BluetoothPan.TetheredInterfaceCallback {
+    method public void onAvailable(@NonNull String);
+    method public void onUnavailable();
+  }
+
+  public class BluetoothPan.TetheredInterfaceRequest {
+    method public void release();
   }
 
   public class BluetoothPbap implements android.bluetooth.BluetoothProfile {

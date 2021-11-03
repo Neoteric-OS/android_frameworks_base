@@ -61,6 +61,16 @@ public class BluetoothTestUtils extends Assert {
     /** Timeout to set map message status in ms. */
     private static final int SET_MESSAGE_STATUS_TIMEOUT = 2000;
 
+    private class PanCallback implements BluetoothPan.TetheredInterfaceCallback {
+        @Override
+        public void onAvailable(String iface) {
+        }
+
+        @Override
+        public void onUnavailable() {
+        }
+    }
+
     private abstract class FlagReceiver extends BroadcastReceiver {
         private int mExpectedFlags = 0;
         private int mFiredFlags = 0;
@@ -407,6 +417,8 @@ public class BluetoothTestUtils extends Assert {
     private BluetoothPan mPan = null;
     private BluetoothMapClient mMce = null;
     private String mMsgHandle = null;
+    private PanCallback mPanCallback = null;
+    private BluetoothPan.TetheredInterfaceRequest mBluetoothIfaceRequest;
 
     /**
      * Creates a utility instance for testing Bluetooth.
@@ -740,7 +752,9 @@ public class BluetoothTestUtils extends Assert {
         assertNotNull(mPan);
 
         long start = System.currentTimeMillis();
-        mPan.setBluetoothTethering(true);
+        mPanCallback = new PanCallback();
+        mBluetoothIfaceRequest = mPan.requestTetheredInterface(mContext.getMainExecutor(),
+                mPanCallback);
         long stop = System.currentTimeMillis();
         assertTrue(mPan.isTetheringOn());
 
@@ -756,9 +770,11 @@ public class BluetoothTestUtils extends Assert {
     public void disablePan(BluetoothAdapter adapter) {
         if (mPan == null) mPan = (BluetoothPan) connectProxy(adapter, BluetoothProfile.PAN);
         assertNotNull(mPan);
-
         long start = System.currentTimeMillis();
-        mPan.setBluetoothTethering(false);
+        if (mBluetoothIfaceRequest != null) {
+            mBluetoothIfaceRequest.release();
+            mBluetoothIfaceRequest = null;
+        }
         long stop = System.currentTimeMillis();
         assertFalse(mPan.isTetheringOn());
 
