@@ -16,6 +16,29 @@
       "message": "Narayan for LocalLog OWNERS + review if you like.\nAlmaz for review",
       "revId": "85c2e3c5d5ce72857e23b8fbff89b023845c6677",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bffa6968_5b9df7ba",
+        "filename": "core/java/android/util/LocalLog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2021-11-03T11:01:35Z",
+      "side": 1,
+      "message": "nit: should it be a separate CL? Just in case if it will have system health implications.",
+      "range": {
+        "startLine": 67,
+        "startChar": 22,
+        "endLine": 67,
+        "endChar": 70
+      },
+      "revId": "85c2e3c5d5ce72857e23b8fbff89b023845c6677",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
