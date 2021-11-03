@@ -3817,4 +3817,33 @@ public class SubscriptionManager {
                 RESTORE_SIM_SPECIFIC_SETTINGS_METHOD_NAME,
                 null, bundle);
     }
+
+    /**
+     * Set the preferred usage setting.
+     *
+     * The cellular usage setting is a switch which controls the mode of operation for the cellular
+     * radio to either require or not require voice service. It is not managed via Android’s
+     * Settings.
+     *
+     * @param subscriptionId the subId of the subscription.
+     * @param usageSetting the requested usage setting.
+     *
+     * @throws IllegalStateException if a specific mode or setting the mode is not supported on a
+     * particular device.
+     *
+     * Requires MODIFY_PHONE_STATE or that the calling app has CarrierPrivileges for the given
+     * subscription.
+     *
+     * @see FEATURE_TELEPHONY_VOICE // needs to be updated
+     * @see FEATURE_TELEPHONY_DATA // needs to be updated
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    void setUsageSetting(int subscriptionId, @UsageSetting int usageSetting) {
+        if (VDBG) logd("[setUsageSetting]+ setting:" + usageSetting + " subId:" + subscriptionId);
+        setSubscriptionPropertyHelper(subscriptionId, "setUsageSetting",
+                (iSub)-> iSub.setUsageSetting(
+                        usageSetting, subscriptionId, mContext.getOpPackageName()));
+    }
 }
+
