@@ -16,9 +16,11 @@
 
 package android.bluetooth;
 
-import android.Manifest;
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
@@ -30,6 +32,9 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Attributable;
 import android.content.AttributionSource;
 import android.content.Context;
+import android.net.ITetheredInterfaceCallback;
+import android.net.TetheringManager.TetheredInterfaceCallback;
+import android.net.TetheringManager.TetheredInterfaceRequest;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
@@ -40,6 +45,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.Executor;
 
 /**
  * This class provides the APIs to control the Bluetooth Pan
@@ -181,6 +188,35 @@ public final class BluetoothPan implements BluetoothProfile {
      */
     public static final int PAN_OPERATION_SUCCESS = 1004;
 
+    /**
+     * Request class used by Tethering to notify that the interface is closed.
+     *
+     * @see #requestTetheredInterface
+     * @hide
+     */
+    public class BluetoothTetheredInterfaceRequest implements TetheredInterfaceRequest {
+        private final IBluetoothPan mService;
+        private final ITetheredInterfaceCallback mCb;
+
+        private BluetoothTetheredInterfaceRequest(@NonNull IBluetoothPan service,
+                @NonNull ITetheredInterfaceCallback cb) {
+            this.mService = service;
+            this.mCb = cb;
+        }
+
+        /**
+         * Called when the Tethering interface has been released.
+         */
+        @Override
+        public void release() {
+            try {
+                mService.setBluetoothTethering(mCb, false, mAttributionSource);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+    }
+
     private final Context mContext;
 
     private final BluetoothAdapter mAdapter;
@@ -193,7 +229,6 @@ public final class BluetoothPan implements BluetoothProfile {
                     return IBluetoothPan.Stub.asInterface(Binder.allowBlocking(service));
                 }
     };
-
 
     /**
      * Create a BluetoothPan proxy object for interacting with the local
@@ -424,9 +459,12 @@ public final class BluetoothPan implements BluetoothProfile {
     }
 
     /**
-     * Turns on/off bluetooth tethering
+     * Turns on/off bluetooth tethering.
      *
      * @param value is whether to enable or disable bluetooth tethering
+     *
+     * @deprecated Use {@link #requestTetheredInterface} with
+     *             {@link TetheredInterfaceCallback} instead.
      * @hide
      */
     @SystemApi
@@ -436,17 +474,73 @@ public final class BluetoothPan implements BluetoothProfile {
             android.Manifest.permission.BLUETOOTH_PRIVILEGED,
             android.Manifest.permission.TETHER_PRIVILEGED,
     })
+    @Deprecated
     public void setBluetoothTethering(boolean value) {
         String pkgName = mContext.getOpPackageName();
         if (DBG) log("setBluetoothTethering(" + value + "), calling package:" + pkgName);
         final IBluetoothPan service = getService();
         if (service != null && isEnabled()) {
             try {
-                service.setBluetoothTethering(value, mAttributionSource);
+                service.setBluetoothTethering(null, value, mAttributionSource);
             } catch (RemoteException e) {
                 Log.e(TAG, "Stack:" + Log.getStackTraceString(new Throwable()));
             }
         }
+    }
+
+    /**
+     * Turns on Bluetooth tethering.
+     *
+     * <p>When one or more devices are connected, the PAN service will trigger
+     * {@link TetheredInterfaceCallback#onAvailable} to inform the caller that
+     * it is ready to tether. On the contrary, when all devices have been disconnected,
+     * the PAN service will trigger {@link TetheredInterfaceCallback#onUnavailable}.
+     * <p>To turn off Bluetooth tethering, the caller must use
+     * {@link TetheredInterfaceRequest#release} method.
+     *
+     * @param executor thread to execute callback methods
+     * @param callback is the tethering callback to indicate PAN service is ready
+     *                 or not to tether to one or more devices
+     *
+     * @return new instance of {@link TetheredInterfaceRequest} which can be
+     *         used to turn off Bluetooth tethering or {@code null} if service
+     *         is not enabled
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    @RequiresBluetoothConnectPermission
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.BLUETOOTH_PRIVILEGED,
+            android.Manifest.permission.TETHER_PRIVILEGED,
+    })
+    @Nullable
+    public TetheredInterfaceRequest requestTetheredInterface(
+            @NonNull final Executor executor,
+            @NonNull final TetheredInterfaceCallback callback) {
+        Objects.requireNonNull(callback, "Callback must be non-null");
+        Objects.requireNonNull(executor, "Executor must be non-null");
+        final IBluetoothPan service = getService();
+        if (service == null || !isEnabled()) {
+            return null;
+        }
+        final ITetheredInterfaceCallback cbInternal = new ITetheredInterfaceCallback.Stub() {
+            @Override
+            public void onAvailable(String iface) {
+                executor.execute(() -> callback.onAvailable(iface));
+            }
+
+            @Override
+            public void onUnavailable() {
+                executor.execute(() -> callback.onUnavailable());
+            }
+        };
+        try {
+            service.setBluetoothTethering(cbInternal, true, mAttributionSource);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+        return new BluetoothTetheredInterfaceRequest(service, cbInternal);
     }
 
     /**
