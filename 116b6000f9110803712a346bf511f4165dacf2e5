@@ -39,6 +39,30 @@
       },
       "revId": "116b6000f9110803712a346bf511f4165dacf2e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6790f89_19cfd0fd",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1752641
+      },
+      "writtenOn": "2021-11-03T19:12:32Z",
+      "side": 1,
+      "message": "Corrected the remark.\nI made the javadoc formatting in the same style so as not to touch the file several times.\nThe only thing I did not make references to the onTransact method, since I did not quite understand from which places it should be specified. Please tell me if you need to do it and where.",
+      "parentUuid": "63c5b7ba_2cfc45f6",
+      "range": {
+        "startLine": 635,
+        "startChar": 37,
+        "endLine": 635,
+        "endChar": 56
+      },
+      "revId": "116b6000f9110803712a346bf511f4165dacf2e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
