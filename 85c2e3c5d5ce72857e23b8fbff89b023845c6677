@@ -39,6 +39,30 @@
       },
       "revId": "85c2e3c5d5ce72857e23b8fbff89b023845c6677",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "525ab7ed_92c71e12",
+        "filename": "core/java/android/util/LocalLog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2021-11-03T12:01:49Z",
+      "side": 1,
+      "message": "Yes, good idea. Will split it out.",
+      "parentUuid": "bffa6968_5b9df7ba",
+      "range": {
+        "startLine": 67,
+        "startChar": 22,
+        "endLine": 67,
+        "endChar": 70
+      },
+      "revId": "85c2e3c5d5ce72857e23b8fbff89b023845c6677",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
