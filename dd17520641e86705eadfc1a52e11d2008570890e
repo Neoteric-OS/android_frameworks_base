@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93160229_325fb8dc",
+        "filename": "core/java/android/util/Log.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2021-11-03T00:33:02Z",
+      "side": 1,
+      "message": "I think it would be better to document it here. It\u0027s unfortunate that a hacky optimization is requiring a documentation change. Ideally we should just remove this exception for UnknownHostException, but I don\u0027t know if it will cause log spam to return.",
+      "revId": "dd17520641e86705eadfc1a52e11d2008570890e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
