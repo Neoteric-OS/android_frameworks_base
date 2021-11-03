@@ -93,6 +93,9 @@ class CallLogQueryHelper {
                     hasResults = true;
                 }
             }
+        } catch (SecurityException ex) {
+            Slog.w(TAG, "Query call log failed: " + ex);
+            return false;
         }
         return hasResults;
     }
