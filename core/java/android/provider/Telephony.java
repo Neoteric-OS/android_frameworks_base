@@ -5365,5 +5365,13 @@ public final class Telephony {
          */
         public static final String COLUMN_D2D_STATUS_SHARING_SELECTED_CONTACTS =
                 "d2d_sharing_contacts";
+
+        /**
+         * TelephonyProvider column name for the device's preferred usage setting.
+         *
+         * @hide
+         */
+        public static final String COLUMN_USAGE_SETTING =
+                "usage_setting";
     }
 }
