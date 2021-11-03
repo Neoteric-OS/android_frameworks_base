@@ -304,4 +304,15 @@ interface ISub {
     int setDeviceToDeviceStatusSharing(int sharing, int subId);
 
     int setDeviceToDeviceStatusSharingContacts(String contacts, int subscriptionId);
+
+    /**
+     * Set the Usage Setting for this subscription.
+     *
+     * @param usageSetting the usage setting for this subscription
+     * @param subId the unique SubscriptionInfo index in database
+     * @param callingPackage The package making the IPC.
+     *
+     * @throws SecurityException if doesn't have MODIFY_PHONE_STATE or Carrier Privileges
+     */
+    int setUsageSetting(int usageSetting, int subId, String callingPackage);
 }
