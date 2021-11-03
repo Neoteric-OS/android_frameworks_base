@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b20001c8_e7836986",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-03T22:42:15Z",
+      "side": 1,
+      "message": "As mentioned on call, we decided that we should follow this recommendation and the tooling will be updated to fix the formatting. Therefore, I would suggest removing the period in all @return and @param summaries.",
+      "parentUuid": "725ba6f4_48810ead",
+      "revId": "4daa71a2229e427e976f8b8dcf04399a1b0b76b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d371ac1b_c3ef7684",
         "filename": "core/java/android/bluetooth/BluetoothCodecStatus.java",
         "patchSetId": 5
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Same as for Config, hold off on this until I can confirm with the API council.",
       "parentUuid": "d371ac1b_c3ef7684",
+      "revId": "4daa71a2229e427e976f8b8dcf04399a1b0b76b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5a69266_9031593f",
+        "filename": "core/java/android/bluetooth/BluetoothCodecStatus.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-03T22:42:15Z",
+      "side": 1,
+      "message": "As mentioned in the config comment, let\u0027s remove all periods to make it a fragment.",
+      "parentUuid": "f2f25604_cf40412d",
       "revId": "4daa71a2229e427e976f8b8dcf04399a1b0b76b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
