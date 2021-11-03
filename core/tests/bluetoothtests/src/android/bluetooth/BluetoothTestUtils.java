@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
+import android.net.TetheringManager;
 import android.os.Environment;
 import android.util.Log;
 
@@ -407,6 +408,8 @@ public class BluetoothTestUtils extends Assert {
     private BluetoothPan mPan = null;
     private BluetoothMapClient mMce = null;
     private String mMsgHandle = null;
+    private TetheringManager.TetheredInterfaceCallback mPanCallback = null;
+    private BluetoothPan.BluetoothTetheredInterfaceRequest mBluetoothIfaceRequest;
 
     /**
      * Creates a utility instance for testing Bluetooth.
@@ -740,7 +743,17 @@ public class BluetoothTestUtils extends Assert {
         assertNotNull(mPan);
 
         long start = System.currentTimeMillis();
-        mPan.setBluetoothTethering(true);
+        mPanCallback = new TetheringManager.TetheredInterfaceCallback() {
+                    @Override
+                    public void onAvailable(String iface) {
+                    }
+
+                    @Override
+                    public void onUnavailable() {
+                    }
+                };
+        mBluetoothIfaceRequest = mPan.requestTetheredInterface(mContext.getMainExecutor(),
+                mPanCallback);
         long stop = System.currentTimeMillis();
         assertTrue(mPan.isTetheringOn());
 
@@ -756,9 +769,11 @@ public class BluetoothTestUtils extends Assert {
     public void disablePan(BluetoothAdapter adapter) {
         if (mPan == null) mPan = (BluetoothPan) connectProxy(adapter, BluetoothProfile.PAN);
         assertNotNull(mPan);
-
         long start = System.currentTimeMillis();
-        mPan.setBluetoothTethering(false);
+        if (mBluetoothIfaceRequest != null) {
+            mBluetoothIfaceRequest.release();
+            mBluetoothIfaceRequest = null;
+        }
         long stop = System.currentTimeMillis();
         assertFalse(mPan.isTetheringOn());
 
