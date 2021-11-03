@@ -407,6 +407,8 @@ public class BluetoothTestUtils extends Assert {
     private BluetoothPan mPan = null;
     private BluetoothMapClient mMce = null;
     private String mMsgHandle = null;
+    private BluetoothPan.TetheredInterfaceCallback mPanCallback = null;
+    private BluetoothPan.TetheredInterfaceRequest mBluetoothIfaceRequest;
 
     /**
      * Creates a utility instance for testing Bluetooth.
@@ -740,7 +742,9 @@ public class BluetoothTestUtils extends Assert {
         assertNotNull(mPan);
 
         long start = System.currentTimeMillis();
-        mPan.setBluetoothTethering(true);
+        mPanCallback = new BluetoothPan.TetheredInterfaceCallback();
+        mBluetoothIfaceRequest = mPan.requestTetheredInterface(mContext.getMainExecutor(),
+                mPanCallback);
         long stop = System.currentTimeMillis();
         assertTrue(mPan.isTetheringOn());
 
@@ -756,9 +760,11 @@ public class BluetoothTestUtils extends Assert {
     public void disablePan(BluetoothAdapter adapter) {
         if (mPan == null) mPan = (BluetoothPan) connectProxy(adapter, BluetoothProfile.PAN);
         assertNotNull(mPan);
-
         long start = System.currentTimeMillis();
-        mPan.setBluetoothTethering(false);
+        if (mBluetoothIfaceRequest != null) {
+            mBluetoothIfaceRequest.release();
+            mBluetoothIfaceRequest = null;
+        }
         long stop = System.currentTimeMillis();
         assertFalse(mPan.isTetheringOn());
 
