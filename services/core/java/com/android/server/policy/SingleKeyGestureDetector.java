@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
 
+import com.android.internal.annotations.GuardedBy;
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -47,14 +48,20 @@ public final class SingleKeyGestureDetector {
     private final long mLongPressTimeout;
     private final long mVeryLongPressTimeout;
 
+    @GuardedBy("this")
     private volatile int mKeyPressCounter;
+    @GuardedBy("this")
     private boolean mBeganFromNonInteractive = false;
 
     private final ArrayList<SingleKeyRule> mRules = new ArrayList();
+    @GuardedBy("this")
     private SingleKeyRule mActiveRule = null;
+    private int mModCount;
 
     // Key code of current key down event, reset when key up.
+    @GuardedBy("this")
     private int mDownKeyCode = KeyEvent.KEYCODE_UNKNOWN;
+    @GuardedBy("this")
     private volatile boolean mHandledByLongPress = false;
     private final Handler mHandler;
     private static final long MULTI_PRESS_TIMEOUT = ViewConfiguration.getMultiPressTimeout();
@@ -162,7 +169,7 @@ public final class SingleKeyGestureDetector {
         mRules.add(rule);
     }
 
-    void interceptKey(KeyEvent event, boolean interactive) {
+    synchronized void interceptKey(KeyEvent event, boolean interactive) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             // Store the non interactive state when first down.
             if (mDownKeyCode == KeyEvent.KEYCODE_UNKNOWN || mDownKeyCode != event.getKeyCode()) {
@@ -211,6 +218,7 @@ public final class SingleKeyGestureDetector {
                         Log.i(TAG, "Intercept key by rule " + rule);
                     }
                     mActiveRule = rule;
+                    mModCount++;
                     break;
                 }
             }
@@ -222,14 +230,14 @@ public final class SingleKeyGestureDetector {
         final long eventTime = event.getEventTime();
         if (mKeyPressCounter == 0) {
             if (mActiveRule.supportLongPress()) {
-                final Message msg = mHandler.obtainMessage(MSG_KEY_LONG_PRESS, keyCode, 0,
+                final Message msg = mHandler.obtainMessage(MSG_KEY_LONG_PRESS, keyCode, mModCount,
                         eventTime);
                 msg.setAsynchronous(true);
                 mHandler.sendMessageDelayed(msg, mLongPressTimeout);
             }
 
             if (mActiveRule.supportVeryLongPress()) {
-                final Message msg = mHandler.obtainMessage(MSG_KEY_VERY_LONG_PRESS, keyCode, 0,
+                final Message msg = mHandler.obtainMessage(MSG_KEY_VERY_LONG_PRESS, keyCode, mModCount,
                         eventTime);
                 msg.setAsynchronous(true);
                 mHandler.sendMessageDelayed(msg, mVeryLongPressTimeout);
@@ -273,7 +281,7 @@ public final class SingleKeyGestureDetector {
                     Log.i(TAG, "press key " + KeyEvent.keyCodeToString(event.getKeyCode()));
                 }
                 Message msg = mHandler.obtainMessage(MSG_KEY_DELAYED_PRESS, mActiveRule.mKeyCode,
-                        1, downTime);
+                        mModCount, downTime);
                 msg.setAsynchronous(true);
                 mHandler.sendMessage(msg);
                 return true;
@@ -282,7 +290,7 @@ public final class SingleKeyGestureDetector {
             // This could be a multi-press.  Wait a little bit longer to confirm.
             mKeyPressCounter++;
             Message msg = mHandler.obtainMessage(MSG_KEY_DELAYED_PRESS, mActiveRule.mKeyCode,
-                    mKeyPressCounter, downTime);
+                    mModCount, downTime);
             msg.setAsynchronous(true);
             mHandler.sendMessageDelayed(msg, MULTI_PRESS_TIMEOUT);
             return true;
@@ -291,7 +299,7 @@ public final class SingleKeyGestureDetector {
         return false;
     }
 
-    int getKeyPressCounter(int keyCode) {
+    synchronized int getKeyPressCounter(int keyCode) {
         if (mActiveRule != null && mActiveRule.mKeyCode == keyCode) {
             return mKeyPressCounter;
         } else {
@@ -300,6 +308,15 @@ public final class SingleKeyGestureDetector {
     }
 
     void reset() {
+        reset(mModCount);
+    }
+
+    synchronized void reset(long modCount) {
+        if (modCount != mModCount) {
+            Log.i(TAG, "Skipping reset, expected mod count is "
+                    + modCount + ", but actually is "+ mModCount);
+            return;
+        }
         if (mActiveRule != null) {
             if (mDownKeyCode != KeyEvent.KEYCODE_UNKNOWN) {
                 mHandler.removeMessages(MSG_KEY_LONG_PRESS);
@@ -311,17 +328,18 @@ public final class SingleKeyGestureDetector {
                 mKeyPressCounter = 0;
             }
             mActiveRule = null;
+            mModCount++;
         }
 
         mHandledByLongPress = false;
         mDownKeyCode = KeyEvent.KEYCODE_UNKNOWN;
     }
 
-    boolean isKeyIntercepted(int keyCode) {
+    synchronized boolean isKeyIntercepted(int keyCode) {
         return mActiveRule != null && mActiveRule.shouldInterceptKey(keyCode);
     }
 
-    boolean beganFromNonInteractive() {
+    synchronized boolean beganFromNonInteractive() {
         return mBeganFromNonInteractive;
     }
 
@@ -339,38 +357,65 @@ public final class SingleKeyGestureDetector {
 
         @Override
         public void handleMessage(Message msg) {
-            if (mActiveRule == null) {
-                return;
-            }
             final int keyCode = msg.arg1;
             final long eventTime = (long) msg.obj;
+            final int modCount = msg.arg2;
+            SingleKeyRule rule = null;
             switch(msg.what) {
                 case MSG_KEY_LONG_PRESS:
                     if (DEBUG) {
                         Log.i(TAG, "Detect long press " + KeyEvent.keyCodeToString(keyCode));
                     }
-                    mHandledByLongPress = true;
-                    mActiveRule.onLongPress(eventTime);
+                    synchronized (SingleKeyGestureDetector.this) {
+                        if (modCount != mModCount || mActiveRule == null) {
+                            Log.i(TAG, "Active rule changed, skipping long pressed "
+                                + KeyEvent.keyCodeToString(keyCode));
+                            return;
+                        }
+                        rule = mActiveRule;
+                        mHandledByLongPress = true;
+                    }
+                    rule.onLongPress(eventTime);
                     break;
                 case MSG_KEY_VERY_LONG_PRESS:
                     if (DEBUG) {
                         Log.i(TAG, "Detect very long press "
                                 + KeyEvent.keyCodeToString(keyCode));
                     }
-                    mHandledByLongPress = true;
-                    mActiveRule.onVeryLongPress(eventTime);
+                    synchronized (SingleKeyGestureDetector.this) {
+                        if (modCount != mModCount || mActiveRule == null) {
+                            Log.i(TAG, "Active rule changed, skipping very long pressed "
+                                + KeyEvent.keyCodeToString(keyCode));
+                            return;
+                        }
+                        rule = mActiveRule;
+                        mHandledByLongPress = true;
+                    }
+                    rule.onVeryLongPress(eventTime);
                     break;
                 case MSG_KEY_DELAYED_PRESS:
+                    int keyPressCounter = 0;
+                    synchronized (SingleKeyGestureDetector.this) {
+                        if (modCount == mModCount) {
+                            rule = mActiveRule;
+                            keyPressCounter = mKeyPressCounter;
+                        }
+                    }
+                    if (rule == null) {
+                        Log.i(TAG, "Active rule changed, skipping pressed "
+                            + KeyEvent.keyCodeToString(keyCode));
+                        return;
+                    }
                     if (DEBUG) {
                         Log.i(TAG, "Detect press " + KeyEvent.keyCodeToString(keyCode)
-                                + ", count " + mKeyPressCounter);
+                                + ", count " + keyPressCounter);
                     }
-                    if (mKeyPressCounter == 1) {
-                        mActiveRule.onPress(eventTime);
+                    if (keyPressCounter == 1) {
+                        rule.onPress(eventTime);
                     } else {
-                        mActiveRule.onMultiPress(eventTime, mKeyPressCounter);
+                        rule.onMultiPress(eventTime, keyPressCounter);
                     }
-                    reset();
+                    reset(modCount);
                     break;
             }
         }
