@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "190a8f1f_d78401b9",
+        "filename": "core/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-11-04T06:00:44Z",
+      "side": 1,
+      "message": "Why you use different order for category and userId?\n\nLine 877 getServices(String category, int userId)\nLine 879 sService.getServices(userId, category)",
+      "range": {
+        "startLine": 877,
+        "startChar": 33,
+        "endLine": 877,
+        "endChar": 75
+      },
+      "revId": "2341866fec37b9a87d2d51490fd6f5c7b5082568",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
