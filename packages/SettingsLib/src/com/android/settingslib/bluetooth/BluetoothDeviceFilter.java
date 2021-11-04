@@ -19,8 +19,11 @@ package com.android.settingslib.bluetooth;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothUuid;
+import android.os.Build;
 import android.os.ParcelUuid;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.android.internal.util.ArrayUtils;
 
@@ -109,6 +112,7 @@ public final class BluetoothDeviceFilter {
     /** Filter that matches devices that support AUDIO profiles. */
     private static final class AudioFilter extends ClassUuidFilter {
         @Override
+        @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         boolean matches(ParcelUuid[] uuids, BluetoothClass btClass) {
             if (uuids != null) {
                 if (BluetoothUuid.containsAnyUuid(uuids, A2dpProfile.SINK_UUIDS)) {
@@ -130,6 +134,7 @@ public final class BluetoothDeviceFilter {
     /** Filter that matches devices that support Object Transfer. */
     private static final class TransferFilter extends ClassUuidFilter {
         @Override
+        @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         boolean matches(ParcelUuid[] uuids, BluetoothClass btClass) {
             if (uuids != null) {
                 if (ArrayUtils.contains(uuids, BluetoothUuid.OBEX_OBJECT_PUSH)) {
@@ -144,6 +149,7 @@ public final class BluetoothDeviceFilter {
     /** Filter that matches devices that support PAN User (PANU) profile. */
     private static final class PanuFilter extends ClassUuidFilter {
         @Override
+        @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         boolean matches(ParcelUuid[] uuids, BluetoothClass btClass) {
             if (uuids != null) {
                 if (ArrayUtils.contains(uuids, BluetoothUuid.PANU)) {
@@ -158,6 +164,7 @@ public final class BluetoothDeviceFilter {
     /** Filter that matches devices that support NAP profile. */
     private static final class NapFilter extends ClassUuidFilter {
         @Override
+        @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         boolean matches(ParcelUuid[] uuids, BluetoothClass btClass) {
             if (uuids != null) {
                 if (ArrayUtils.contains(uuids, BluetoothUuid.NAP)) {

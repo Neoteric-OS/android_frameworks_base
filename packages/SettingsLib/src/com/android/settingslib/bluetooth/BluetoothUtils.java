@@ -13,6 +13,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.DeviceConfig;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import android.util.Pair;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.graphics.drawable.IconCompat;
 
 import com.android.settingslib.R;
@@ -70,6 +72,10 @@ public class BluetoothUtils {
         void onShowError(Context context, String name, int messageResId);
     }
 
+    /**
+     * Get Bluetooth class-of-device Drawable with description
+     */
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     public static Pair<Drawable, String> getBtClassDrawableWithDescription(Context context,
             CachedBluetoothDevice cachedDevice) {
         BluetoothClass btClass = cachedDevice.getBtClass();
