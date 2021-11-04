@@ -89,6 +89,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e900de93_c50bcf0f",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-04T15:15:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b20001c8_e7836986",
+      "revId": "4daa71a2229e427e976f8b8dcf04399a1b0b76b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d371ac1b_c3ef7684",
@@ -138,6 +156,24 @@
       "side": 1,
       "message": "As mentioned in the config comment, let\u0027s remove all periods to make it a fragment.",
       "parentUuid": "f2f25604_cf40412d",
+      "revId": "4daa71a2229e427e976f8b8dcf04399a1b0b76b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f0f28b1_ac9bb010",
+        "filename": "core/java/android/bluetooth/BluetoothCodecStatus.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-04T15:15:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5a69266_9031593f",
       "revId": "4daa71a2229e427e976f8b8dcf04399a1b0b76b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
