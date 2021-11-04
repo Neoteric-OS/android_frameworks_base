@@ -204,6 +204,26 @@ public final class BluetoothStatusCodes {
     public static final int ERROR_DISCONNECT_REASON_BAD_PARAMETERS = 1109;
 
     /**
+     * Indicates that setting the BAP Broadcast mode failed.
+     * <p>
+     * Example solution: Change parameters and try again. If error persists, the app can report
+     * telemetry and/or log the error in a bugreport.
+     *
+     * @hide
+     */
+    public static final int ERROR_BAP_BROADCAST_SOURCE_SET_BROADCAST_MODE_FAILED = 1110;
+
+    /**
+     * Indicates that setting a new encryption key for Bluetooth BAP Broadcast Source failed.
+     * <p>
+     * Example solution: Change parameters and try again. If error persists, the app can report
+     * telemetry and/or log the error in a bugreport.
+     *
+     * @hide
+     */
+    public static final int ERROR_BAP_BROADCAST_SOURCE_SET_ENCRYTION_KEY_FAILED = 1111;
+
+    /**
      * Indicates that an unknown error has occurred has occurred.
      */
     public static final int ERROR_UNKNOWN = Integer.MAX_VALUE;
