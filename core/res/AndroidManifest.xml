@@ -1199,9 +1199,17 @@
         android:description="@string/permdesc_readPhoneState"
         android:protectionLevel="dangerous" />
 
+    <!-- Allows read only access to phone state with a non dangerous permission,
+         including the information like cellular network type, software version. -->
+    <permission android:name="android.permission.READ_NON_DANGEROUS_PHONE_STATE"
+            android:permissionGroup="android.permission-group.UNDEFINED"
+            android:label="@string/permlab_readNonDangerousPhoneState"
+            android:description="@string/permdesc_readNonDangerousPhoneState"
+            android:protectionLevel="normal" />
+
     <!-- Allows read access to the device's phone number(s). This is a subset of the capabilities
-         granted by {@link #READ_PHONE_STATE} but is exposed to instant applications.
-         <p>Protection level: dangerous-->
+     granted by {@link #READ_PHONE_STATE} but is exposed to instant applications.
+     <p>Protection level: dangerous-->
     <permission android:name="android.permission.READ_PHONE_NUMBERS"
         android:permissionGroup="android.permission-group.UNDEFINED"
         android:label="@string/permlab_readPhoneNumbers"
