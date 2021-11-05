@@ -16,6 +16,29 @@
       "message": "PTAL, this just adds some SuppressLint annotations to pass presubmit for the other CL in the chain.",
       "revId": "212647f2ee3ff62b2b083ce497a3892fc211f4c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0aa87b19_de717218",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/BluetoothDeviceFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1388435
+      },
+      "writtenOn": "2021-11-05T16:17:54Z",
+      "side": 1,
+      "message": "Can we use @RequiresApi(Build.VERSION_CODES.S) instead of suppress lint checker?",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 113,
+        "endChar": 31
+      },
+      "revId": "212647f2ee3ff62b2b083ce497a3892fc211f4c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
