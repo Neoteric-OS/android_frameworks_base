@@ -127,17 +127,17 @@ import java.util.function.Consumer;
 
 /**
  * The interface that apps use to talk to the window manager.
- * </p><p>
+ * <p>
  * Each window manager instance is bound to a particular {@link Display}.
- * To obtain a {@link WindowManager} for a different display, use
- * {@link Context#createDisplayContext} to obtain a {@link Context} for that
- * display, then use <code>Context.getSystemService(Context.WINDOW_SERVICE)</code>
- * to get the WindowManager.
- * </p><p>
+ * To obtain a {@link WindowManager} for a different display: use
+ * {@link Context#createWindowContext(Display, int, Bundle)} to obtain a
+ * UI context for the display, then
+ * <code>context.getSystemService(Context.WINDOW_SERVICE)</code> to get
+ * the WindowManager.
+ * <p>
  * The simplest way to show a window on another display is to create a
- * {@link Presentation}.  The presentation will automatically obtain a
+ * {@link Presentation}. The presentation automatically obtains a
  * {@link WindowManager} and {@link Context} for that display.
- * </p>
  */
 @SystemService(Context.WINDOW_SERVICE)
 public interface WindowManager extends ViewManager {
