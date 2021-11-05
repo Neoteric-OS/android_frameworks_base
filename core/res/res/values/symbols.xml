@@ -4444,4 +4444,6 @@
 
   <java-symbol type="bool" name="config_disableTaskSnapshots" />
 
+  <java-symbol type="array" name="config_collapsed_statusbar_icon_blocklist" />
+  <java-symbol type="array" name="config_keyguard_statusbar_icon_blocklist" />
 </resources>
