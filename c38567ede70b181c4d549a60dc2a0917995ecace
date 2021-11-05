@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56044da2_d4041ee0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2021-11-05T15:51:53Z",
+      "side": 1,
+      "message": "Hi Jeff, requesting API-review for this Identity Credential change. I\u0027ll also send email separately explaining the background for this change.",
+      "revId": "c38567ede70b181c4d549a60dc2a0917995ecace",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
