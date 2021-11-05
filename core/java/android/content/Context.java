@@ -6441,30 +6441,30 @@ public abstract class Context {
             @NonNull Configuration overrideConfiguration);
 
     /**
-     * Return a new Context object for the current Context but whose resources
-     * are adjusted to match the metrics of the given Display.  Each call to this method
-     * returns a new instance of a Context object; Context objects are not
-     * shared, however common state (ClassLoader, other Resources for the
-     * same configuration) may be so the Context itself can be fairly lightweight.
-     *
-     * To obtain an instance of a {@link WindowManager} (see {@link #getSystemService(String)}) that
-     * is configured to show windows on the given display call
-     * {@link #createWindowContext(int, Bundle)} on the returned display Context or use an
-     * {@link android.app.Activity}.
-     *
+     * Returns a new <code>Context</code> object from the current context but with resources
+     * adjusted to match the metrics of <code>display</code>. Each call to this method
+     * returns a new instance of a context object. Context objects are not shared, however
+     * common state (<code>ClassLoader</code> and other resources for the same configuration)
+     * can be shared, so the <code>Context</code> itself can be fairly lightweight.
      * <p>
-     * Note that invoking #createDisplayContext(Display) from an UI context is not regarded
-     * as an UI context. In other words, it is not suggested to access UI components (such as
-     * obtain a {@link WindowManager} by {@link #getSystemService(String)})
-     * from the context created from #createDisplayContext(Display).
+     * To obtain an instance of a {@link WindowManager} (see {@link #getSystemService(String)}) that
+     * is configured to show windows on the given display, call
+     * {@link #createWindowContext(int, Bundle)} on the returned display context or on an
+     * {@link android.app.Activity}.
+     * <p>
+     * <b>Note:</b> Invoking <code>createDisplayContext(Display)</code> from a UI context returns a
+     * context that is not regarded as a UI context. Do not access UI components or obtain a
+     * {@link WindowManager} (using {@link #getSystemService}) from the context created by
+     * <code>createDisplayContext(Display)</code>.
      * </p>
      *
-     * @param display A {@link Display} object specifying the display for whose metrics the
-     * Context's resources should be tailored.
+     * @param display The display to which the current context's resources are adjusted.
      *
-     * @return A {@link Context} for the display.
+     * @return A context for the display.
      *
+     * @see #WindowManager
      * @see #getSystemService(String)
+     * @see #getSystemService(Class)
      */
     @DisplayContext
     public abstract Context createDisplayContext(@NonNull Display display);
