@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94cdffb2_3e4264b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2021-11-05T00:53:32Z",
+      "side": 1,
+      "message": "Hi Folks, I was trying to fix an issue with one our test in SC-V2 and it was suggested to adopt permission from shell. Thus I added it there but gerrit gave this error: \"The source of truth for \u0027packages/Shell/AndroidManifest.xml\u0027 is in AOSP.\". So I\u0027m submitting here and cherry picking to SC-V2 after. Let me know if that is not the right process.",
+      "revId": "b72e663c96256e8e2017ff80aae9396c6bc90118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
