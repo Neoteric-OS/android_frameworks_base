@@ -98,8 +98,6 @@ public class HealthServiceWrapperHidlTest extends AndroidTestCase {
                 .doThrow(new RuntimeException("Should not call getService for more than 4 times"))
                 .when(mHealthServiceSupplier)
                 .get(argThat(isOneOf(instanceNames)));
-
-        mWrapper = new HealthServiceWrapperHidl();
     }
 
     private void waitHandlerThreadFinish() throws Exception {
@@ -122,7 +120,8 @@ public class HealthServiceWrapperHidlTest extends AndroidTestCase {
     @SmallTest
     public void testWrapPreferVendor() throws Exception {
         initForInstances(VENDOR);
-        mWrapper.init(mCallback, mManagerSupplier, mHealthServiceSupplier);
+        mWrapper =
+                new HealthServiceWrapperHidl(mCallback, mManagerSupplier, mHealthServiceSupplier);
         waitHandlerThreadFinish();
         verify(mCallback, times(1)).onRegistration(same(null), same(mMockedHal), eq(VENDOR));
         verify(mCallback, never()).onRegistration(same(mMockedHal), same(mMockedHal), anyString());
@@ -133,7 +132,9 @@ public class HealthServiceWrapperHidlTest extends AndroidTestCase {
     public void testNoService() throws Exception {
         initForInstances("unrelated");
         try {
-            mWrapper.init(mCallback, mManagerSupplier, mHealthServiceSupplier);
+            mWrapper =
+                    new HealthServiceWrapperHidl(
+                            mCallback, mManagerSupplier, mHealthServiceSupplier);
             fail("Expect NoSuchElementException");
         } catch (NoSuchElementException ex) {
             // expected
