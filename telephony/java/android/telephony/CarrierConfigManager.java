@@ -4329,6 +4329,24 @@ public class CarrierConfigManager {
             "subscription_group_uuid_string";
 
     /**
+     * Controls the cellular usage setting.
+     *
+     * The usage setting indicates whether a device will remain attached to a network based on
+     * the primary use case for the service. A device will detach and search for a more-preferred
+     * network if the primary use case (voice or data) is not satisfied. Depending on the type
+     * of device, it may operate in a voice or data-centric mode by default.
+     *
+     * {@link SubscriptionManager#USAGE_SETTING_DEFAULT default},
+     * {@link SubscriptionManager#USAGE_SETTING_VOICE_CENTRIC voice-centric},
+     * or {@link SubscriptionManager#USAGE_SETTING_DATA_CENTRIC data-centric}.
+     * {@see SubscriptionInfo#getUsageSetting}
+     *
+     * @hide
+     */
+    public static final String KEY_CELLULAR_USAGE_SETTING_INT =
+            "cellular_usage_setting_int";
+
+    /**
      * Data switch validation minimal gap time, in milliseconds.
      *
      * Which means, if the same subscription on the same network (based on MCC+MNC+TAC+subId)
@@ -5806,6 +5824,8 @@ public class CarrierConfigManager {
         sDefaults.putString(KEY_CARRIER_PROVISIONING_APP_STRING, "");
         sDefaults.putBoolean(KEY_DISPLAY_NO_DATA_NOTIFICATION_ON_PERMANENT_FAILURE_BOOL, false);
         sDefaults.putBoolean(KEY_UNTHROTTLE_DATA_RETRY_WHEN_TAC_CHANGES_BOOL, false);
+        sDefaults.putInt(KEY_CELLULAR_USAGE_SETTING_INT,
+                SubscriptionManager.USAGE_SETTING_UNKNOWN);
     }
 
     /**
