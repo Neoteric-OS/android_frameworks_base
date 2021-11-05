@@ -41,15 +41,6 @@ import java.util.NoSuchElementException;
  */
 public interface HealthServiceWrapper {
     /**
-     * Initialize the wrapper.
-     * @param healthInfoCallback
-     * @throws RemoteException
-     * @throws NoSuchElementException
-     */
-    void init(@Nullable HealthInfoCallback healthInfoCallback)
-            throws RemoteException, NoSuchElementException;
-
-    /**
      * @return the handler thread. Exposed for testing.
      */
     @VisibleForTesting
@@ -85,8 +76,7 @@ public interface HealthServiceWrapper {
      */
     static HealthServiceWrapper create(@Nullable HealthInfoCallback healthInfoCallback)
             throws RemoteException, NoSuchElementException {
-        HealthServiceWrapper service = new HealthServiceWrapperHidl();
-        service.init(healthInfoCallback);
+        HealthServiceWrapper service = new HealthServiceWrapperHidl(healthInfoCallback);
         return service;
     }
 }

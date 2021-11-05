@@ -167,9 +167,8 @@ final class HealthServiceWrapperHidl implements HealthServiceWrapper {
         return ret.value;
     }
 
-    /** See {@link #init(Callback, IServiceManagerSupplier, IHealthSupplier)} */
-    @Override
-    public void init(@Nullable HealthInfoCallback healthInfoCallback)
+    /** See {@link #HealthServiceWrapperHidl(Callback, IServiceManagerSupplier, IHealthSupplier)} */
+    HealthServiceWrapperHidl(@Nullable HealthInfoCallback healthInfoCallback)
             throws RemoteException, NoSuchElementException {
         init(
                 healthInfoCallback == null ? null : new HealthHalCallbackHidl(healthInfoCallback),
@@ -191,7 +190,7 @@ final class HealthServiceWrapperHidl implements HealthServiceWrapper {
      * @throws NullPointerException when supplier is null
      */
     @VisibleForTesting
-    void init(
+    HealthServiceWrapperHidl(
             @Nullable Callback callback,
             @NonNull IServiceManagerSupplier managerSupplier,
             @NonNull IHealthSupplier healthSupplier)
