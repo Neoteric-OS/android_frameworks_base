@@ -20,6 +20,7 @@ import static java.util.Objects.requireNonNull;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.annotation.TestApi;
 import android.app.AppOpsManager;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -2875,8 +2876,22 @@ public final class Parcel {
      * from the parcel at the current dataPosition().
      */
     public final void readMap(@NonNull Map outVal, @Nullable ClassLoader loader) {
-        int N = readInt();
-        readMapInternal(outVal, N, loader);
+        int n = readInt();
+        readMapInternal(outVal, n, loader, /* clazzKey */null, /* clazzValue */null);
+    }
+
+    /**
+     * Same as {@link #readMap(Map, ClassLoader)} but accepts {@code clazzKey} and
+     * {@code clazzValue} parameter as the types required for each key and value pair.
+     * If the item to be deserialized is not an instance of that class or any of its children class
+     * a {@link BadParcelableException} will be thrown.
+     */
+    public <K, V> void readMap(@NonNull Map<K, V> outVal, @Nullable ClassLoader loader,
+            @NonNull Class<K> clazzKey, @NonNull Class<V> clazzValue) {
+        Objects.requireNonNull(clazzKey);
+        Objects.requireNonNull(clazzValue);
+        int n = readInt();
+        readMapInternal(outVal, n, loader, clazzKey, clazzValue);
     }
 
     /**
@@ -2914,12 +2929,33 @@ public final class Parcel {
     @Nullable
     public final HashMap readHashMap(@Nullable ClassLoader loader)
     {
-        int N = readInt();
-        if (N < 0) {
+        int n = readInt();
+        if (n < 0) {
             return null;
         }
-        HashMap m = new HashMap(N);
-        readMapInternal(m, N, loader);
+        HashMap m = new HashMap(n);
+        readMapInternal(m, n, loader, /* clazzKey */null, /* clazzValue */null);
+        return m;
+    }
+
+    /**
+     * Same as {@link #readHashMap(ClassLoader)} but accepts {@code clazzKey} and
+     * {@code clazzValue} parameter as the types required for each key and value pair.
+     * If the item to be deserialized is not an instance of that class or any of its children class
+     * a {@link BadParcelableException} will be thrown.
+     */
+    @SuppressLint({"ConcreteCollection", "NullableCollection"})
+    @Nullable
+    public <K, V> HashMap readHashMap(@Nullable ClassLoader loader, @NonNull Class<K> clazzKey,
+            @NonNull Class<V> clazzValue) {
+        Objects.requireNonNull(clazzKey);
+        Objects.requireNonNull(clazzValue);
+        int n = readInt();
+        if (n < 0) {
+            return null;
+        }
+        HashMap<K, V> m = new HashMap(n);
+        readMapInternal(m, n, loader, clazzKey, clazzValue);
         return m;
     }
 
@@ -4239,13 +4275,19 @@ public final class Parcel {
         destroy();
     }
 
-    /* package */ void readMapInternal(@NonNull Map outVal, int N,
+    /* package */ void readMapInternal(@NonNull Map outVal, int n,
             @Nullable ClassLoader loader) {
-        while (N > 0) {
-            Object key = readValue(loader);
-            Object value = readValue(loader);
+        readMapInternal(outVal, n, loader, /* clazzKey */null, /* clazzValue */null);
+    }
+
+    /* package */ <K, V> void readMapInternal(@NonNull Map<K, V> outVal, int n,
+            @Nullable ClassLoader loader, @Nullable Class<K> clazzKey,
+            @Nullable Class<V> clazzValue) {
+        while (n > 0) {
+            K key = readValue(loader, clazzKey);
+            V value = readValue(loader, clazzValue);
             outVal.put(key, value);
-            N--;
+            n--;
         }
     }
 
