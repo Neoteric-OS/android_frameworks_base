@@ -232,13 +232,19 @@ public interface BluetoothProfile {
      */
     int CSIP_SET_COORDINATOR = 25;
 
+    /*
+     * Hearing Access Profile Client
+     *
+     */
+    int HAP_CLIENT = 26;
+
     /**
      * Max profile ID. This value should be updated whenever a new profile is added to match
      * the largest value assigned to a profile.
      *
      * @hide
      */
-    int MAX_PROFILE_ID = 25;
+    int MAX_PROFILE_ID = 26;
 
     /**
      * Default priority for devices that we try to auto-connect to and
@@ -436,6 +442,8 @@ public interface BluetoothProfile {
                 return "OPP";
             case HEARING_AID:
                 return "HEARING_AID";
+            case HAP_CLIENT:
+                return "HAP_CLIENT";
             default:
                 return "UNKNOWN_PROFILE";
         }

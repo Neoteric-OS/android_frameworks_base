@@ -158,6 +158,12 @@ public final class BluetoothUuid {
     /** @hide */
     @NonNull
     @SystemApi
+    /* FIXME: Not known yet, using a placeholder instead. */
+    public static final ParcelUuid HAS =
+            ParcelUuid.fromString("00007F6F-0000-1000-8000-00805f9b34fb");
+    /** @hide */
+    @NonNull
+    @SystemApi
     public static final ParcelUuid LE_AUDIO =
             ParcelUuid.fromString("0000184E-0000-1000-8000-00805F9B34FB");
     /** @hide */
