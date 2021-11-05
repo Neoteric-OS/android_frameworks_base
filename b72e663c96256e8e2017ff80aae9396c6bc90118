@@ -16,6 +16,23 @@
       "message": "Hi Folks, I was trying to fix an issue with one our test in SC-V2 and it was suggested to adopt permission from shell. Thus I added it there but gerrit gave this error: \"The source of truth for \u0027packages/Shell/AndroidManifest.xml\u0027 is in AOSP.\". So I\u0027m submitting here and cherry picking to SC-V2 after. Let me know if that is not the right process.",
       "revId": "b72e663c96256e8e2017ff80aae9396c6bc90118",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a68a65d5_a6675951",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2021-11-05T22:05:26Z",
+      "side": 1,
+      "message": "Looks like auto has a different file, will try that first.",
+      "revId": "b72e663c96256e8e2017ff80aae9396c6bc90118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
