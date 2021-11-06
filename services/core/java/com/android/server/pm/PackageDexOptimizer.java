@@ -45,6 +45,7 @@ import static dalvik.system.DexFile.isProfileGuidedCompilerFilter;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.SharedLibraryInfo;
@@ -63,6 +64,7 @@ import android.util.Slog;
 import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
+import com.android.internal.content.F2fsUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.pm.Installer.InstallerException;
 import com.android.server.pm.dex.ArtManagerService;
@@ -108,10 +110,12 @@ public class PackageDexOptimizer {
 
     private final ArtStatsLogger mArtStatsLogger = new ArtStatsLogger();
 
+    private final Context mContext;
     private static final Random sRandom = new Random();
 
     PackageDexOptimizer(Installer installer, Object installLock, Context context,
             String wakeLockTag) {
+        this.mContext = context;
         this.mInstaller = installer;
         this.mInstallLock = installLock;
 
@@ -350,6 +354,10 @@ public class PackageDexOptimizer {
                 long endTime = System.currentTimeMillis();
                 packageStats.setCompileTime(path, (int)(endTime - startTime));
             }
+            // Release odex/vdex compressed blocks to save user space.
+            // Compression support will be checked in F2fsUtils.
+            final ContentResolver resolver = mContext.getContentResolver();
+            F2fsUtils.releaseCompressedBlocks(resolver, new File(oatDir));
             return DEX_OPT_PERFORMED;
         } catch (InstallerException e) {
             Slog.w(TAG, "Failed to dexopt", e);
