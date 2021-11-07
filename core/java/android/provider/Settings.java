@@ -6346,6 +6346,12 @@ public final class Settings {
          */
         public static final String RECENTS_LOCKED_TASKS = "recents_locked_tasks";
 
+	/**
+        * Whether to enable or disable vibration during calls
+        * @hide
+        */
+        public static final String INCALL_FEEDBACK_VIBRATE = "incall_feeedback_vibrate";
+
         /**
          * Whether to take partial screenshot with volume down + power click.
          * @hide
