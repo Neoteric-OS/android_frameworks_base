@@ -6446,18 +6446,15 @@ public abstract class Context {
      * returns a new instance of a Context object; Context objects are not
      * shared, however common state (ClassLoader, other Resources for the
      * same configuration) may be so the Context itself can be fairly lightweight.
-     *
-     * To obtain an instance of a {@link WindowManager} (see {@link #getSystemService(String)}) that
-     * is configured to show windows on the given display call
-     * {@link #createWindowContext(int, Bundle)} on the returned display Context or use an
-     * {@link android.app.Activity}.
-     *
+     * <p>
+     * To obtain an instance of {@link WindowManager} that is configured to show windows on the
+     * given display call {@link #createWindowContext(int, Bundle)} on the returned display
+     * context.
      * <p>
      * Note that invoking #createDisplayContext(Display) from an UI context is not regarded
      * as an UI context. In other words, it is not suggested to access UI components (such as
      * obtain a {@link WindowManager} by {@link #getSystemService(String)})
      * from the context created from #createDisplayContext(Display).
-     * </p>
      *
      * @param display A {@link Display} object specifying the display for whose metrics the
      * Context's resources should be tailored.
