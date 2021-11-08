@@ -4405,13 +4405,27 @@ public class ActivityManagerService extends IActivityManager.Stub
         // if configured we set the flag ScaledPid to true
         float dssScale = 1.0f;
         CompatibilityInfo compat = app.info != null ?
-                    compatibilityInfoForPackage(app.info) : null;
+                compatibilityInfoForPackage(app.info) : null;
         boolean compatIsEnabled = compat != null &&
                 (compat.isScalingRequired() || !compat.supportsScreen());
-        if (!compatIsEnabled && app.info.packageName != null &&
-                getConfiguration().semMobileKeyboardCovered !=
-                        Configuration.SEM_MOBILE_KEYBOARD_COVERED_YES) {
-            String packageName = app.info.packageName;
+        String packageName = app.info.packageName;
+        Set<String> games = new HashSet<>();
+        games.add("com.tothegreat.LudoLegend");
+        games.add("com.king.candycrushsaga");
+        games.add("com.supercell.clashofclans");
+        games.add("com.supercell.clashroyale");
+        games.add("com.pixonic.wwr");
+        games.add("com.tencent.ig");
+        games.add("com.monomob.jangki");
+        games.add("com.apps2us.slither.slink.io");
+        games.add("sg.bigo.ludolegend");
+        games.add("com.nexon.kart");
+        games.add("com.google.android.calculator");
+        //!compatIsEnabled && app.info.packageName != null &&
+        //                getConfiguration().semMobileKeyboardCovered !=
+        //                        Configuration.SEM_MOBILE_KEYBOARD_COVERED_YES
+        if (games.contains(packageName)) {
+            mDssController.addPackageData(packageName, 0.3f);
             dssScale = mDssController.onApplicationStarted(packageName, pid,
                     false);
             if (dssScale == 1.0f){
