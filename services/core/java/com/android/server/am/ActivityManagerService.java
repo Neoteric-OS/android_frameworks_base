@@ -438,6 +438,8 @@ import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.android.server.DssController;
+
 public class ActivityManagerService extends IActivityManager.Stub
         implements Watchdog.Monitor, BatteryStatsImpl.BatteryCallback, ActivityManagerGlobalLock {
 
@@ -623,6 +625,8 @@ public class ActivityManagerService extends IActivityManager.Stub
     // we still create this new offload queue, but never ever put anything on it.
     final boolean mEnableOffloadQueue;
 
+    static final boolean IS_USER_BUILD = "user".equals(Build.TYPE);
+
     final BroadcastQueue mFgBroadcastQueue;
     final BroadcastQueue mBgBroadcastQueue;
     final BroadcastQueue mOffloadBroadcastQueue;
@@ -692,6 +696,8 @@ public class ActivityManagerService extends IActivityManager.Stub
      */
     @GuardedBy("mActiveCameraUids")
     final IntArray mActiveCameraUids = new IntArray(4);
+
+    DssController mDssController;
 
     /**
      * Helper class which strips out priority and proto arguments then calls the dump function with
@@ -2250,6 +2256,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         mUseFifoUiScheduling = false;
         mEnableOffloadQueue = false;
         mFgBroadcastQueue = mBgBroadcastQueue = mOffloadBroadcastQueue = null;
+        mDssController = null;
     }
 
     // Note: This method is invoked on the main thread but may need to attach various
@@ -2322,6 +2329,8 @@ public class ActivityManagerService extends IActivityManager.Stub
         mUidObserverController = new UidObserverController(mUiHandler);
 
         final File systemDir = SystemServiceManager.ensureSystemDir();
+
+        mDssController = DssController.getService();
 
         // TODO: Move creation of battery stats service outside of activity manager service.
         mBatteryStatsService = new BatteryStatsService(systemContext, systemDir,
@@ -2522,6 +2531,13 @@ public class ActivityManagerService extends IActivityManager.Stub
                 }
                 data2.recycle();
             }
+        } else if (code == (IBinder.FIRST_CALL_TRANSACTION + 9902)&& !IS_USER_BUILD) {
+            data.enforceInterface("android.app.IActivityManager");
+            final String packageName = data.readString();
+            final float scalingFactor = data.readFloat();
+            mDssController.setDssForPackage(packageName, scalingFactor);
+            reply.writeNoException();
+            return true;
         }
         try {
             return super.onTransact(code, data, reply, flags);
@@ -3065,6 +3081,9 @@ public class ActivityManagerService extends IActivityManager.Stub
             info.putString("shortMsg", "Process crashed.");
             finishInstrumentationLocked(app, Activity.RESULT_CANCELED, info);
         });
+
+        // if the process dies we remove it from the configured ScaledPid list
+        mDssController.onApplicationStopped(app.info.packageName, pid);
     }
 
     @GuardedBy(anyOf = {"this", "mProcLock"})
@@ -4381,6 +4400,28 @@ public class ActivityManagerService extends IActivityManager.Stub
             return false;
         }
 
+        // the below lines should been uncommented if we nable the DSS per app
+        // Here we find out if the current app is configured in the mScaleKeyword,
+        // if configured we set the flag ScaledPid to true
+        float dssScale = 1.0f;
+        CompatibilityInfo compat = app.info != null ?
+                    compatibilityInfoForPackage(app.info) : null;
+        boolean compatIsEnabled = compat != null &&
+                (compat.isScalingRequired() || !compat.supportsScreen());
+        if (!compatIsEnabled && app.info.packageName != null &&
+                getConfiguration().semMobileKeyboardCovered !=
+                        Configuration.SEM_MOBILE_KEYBOARD_COVERED_YES) {
+            String packageName = app.info.packageName;
+            dssScale = mDssController.onApplicationStarted(packageName, pid,
+                    false);
+            if (dssScale == 1.0f){
+                Slog.i(TAG,"DSS OFF for " + packageName);
+            } else {
+                Slog.i(TAG,"DSS on for " + packageName + " and scale is " + dssScale);
+
+            }
+        }
+
         // If this application record is still attached to a previous
         // process, clean it up now.
         if (app.getThread() != null) {
@@ -4493,6 +4534,10 @@ public class ActivityManagerService extends IActivityManager.Stub
 
             ProfilerInfo profilerInfo = mAppProfiler.setupProfilerInfoLocked(thread, app, instr);
 
+            Configuration config = new Configuration(app.getWindowProcessController().
+                    getConfiguration());
+            mDssController.scaleExistingConfiguration(config, app.info.packageName);
+
             // We deprecated Build.SERIAL and it is not accessible to
             // Instant Apps and target APIs higher than O MR1. Since access to the serial
             // is now behind a permission we push down the value.
@@ -4546,9 +4591,10 @@ public class ActivityManagerService extends IActivityManager.Stub
                         instr2.mUiAutomationConnection, testMode,
                         mBinderTransactionTrackingEnabled, enableTrackAllocation,
                         isRestrictedBackupMode || !normalMode, app.isPersistent(),
-                        new Configuration(app.getWindowProcessController().getConfiguration()),
+                        config,
                         app.getCompat(), getCommonServicesLocked(app.isolated),
                         mCoreSettingsObserver.getCoreSettingsLocked(),
+                        dssScale,
                         buildSerial, autofillOptions, contentCaptureOptions,
                         app.getDisabledCompatChanges(), serializedSystemFontMap);
             } else {
@@ -4556,9 +4602,10 @@ public class ActivityManagerService extends IActivityManager.Stub
                         null, null, null, testMode,
                         mBinderTransactionTrackingEnabled, enableTrackAllocation,
                         isRestrictedBackupMode || !normalMode, app.isPersistent(),
-                        new Configuration(app.getWindowProcessController().getConfiguration()),
+                        config,
                         app.getCompat(), getCommonServicesLocked(app.isolated),
                         mCoreSettingsObserver.getCoreSettingsLocked(),
+                        dssScale,
                         buildSerial, autofillOptions, contentCaptureOptions,
                         app.getDisabledCompatChanges(), serializedSystemFontMap);
             }
@@ -17360,5 +17407,68 @@ public class ActivityManagerService extends IActivityManager.Stub
         if (Trace.isTagEnabled(traceTag)) {
             Trace.traceBegin(traceTag, methodName + subInfo);
         }
+    }
+
+    @Override
+    public void setDssForPackage(String packageName, float scale) throws RemoteException {
+        enforceCallingDSSPermission("setDssForPackage");
+        mDssController.setDssForPackage(packageName, scale);
+    }
+
+    @Override
+    public void showAllDSSInfo() throws RemoteException {
+        enforceCallingDSSPermission("showAllDSSInfo");
+        mDssController.showAllDSSInfo();
+    }
+
+    @Override
+    public void addPackageData(String packageName, float scalingFactor) throws RemoteException {
+        enforceCallingDSSPermission("addPackageData");
+        mDssController.addPackageData(packageName, scalingFactor);
+    }
+
+    @Override
+    public boolean isScaledApp(int pid) throws RemoteException {
+        enforceCallingDSSPermission("isScaledApp");
+        return mDssController.isScaledApp(pid);
+    }
+
+    @Override
+    public boolean isScaledAppByPackageName(String packageName) throws RemoteException {
+        enforceCallingDSSPermission("isScaledAppByPackageName");
+        return mDssController.isScaledApp(packageName);
+    }
+
+    @Override
+    public float getScalingFactor(String packageName) throws RemoteException {
+        enforceCallingDSSPermission("getScalingFactor");
+        return mDssController.getScalingFactor(packageName);
+    }
+
+    private void enforceCallingDSSPermission(String method) {
+        int pid = Binder.getCallingPid();
+        int uid = Binder.getCallingUid();
+
+        if (pid == Process.myPid()) {
+            return;
+        }
+
+        if (uid == Process.SYSTEM_UID || uid == Process.ROOT_UID) {
+            return;
+        }
+
+        if ("eng".equals(Build.TYPE) || "userdebug".equals(Build.TYPE)) {
+            return;
+        }
+
+        if (mContext.getPackageManager().checkSignatures(Process.SYSTEM_UID, uid) ==
+                PackageManager.SIGNATURE_MATCH) {
+            return;
+        }
+
+        Slog.e(TAG, "Permission denied:" + method + " uid=" + uid + ", " +
+                "you need system uid or to be signed we the system certificate.");
+        throw new SecurityException("Permission denied:" + method + " uid=" + uid + ", " +
+                "you need system uid or to be signed we the system certificate.");
     }
 }
