@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1406533b_864a3172",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2021-11-08T08:56:29Z",
+      "side": 1,
+      "message": "Why create BluetoothPan.TetheredInterfaceCallback and BluetoothPan.TetheredInterfaceRequest APIs ? I think you could just use TetheringManager one. Is it because you met below build error ?\nout/soong/.intermediates/frameworks/base/android-non-updatable.stubs.module_lib/android_common/javac/srcjars/android/bluetooth/BluetoothPan.java:40: error: cannot find symbol\npublic TetheredInterfaceRequest requestTetheredInterface(@android.annotation.NonNull java.util.concurrent.Executor executor, @android.annotation.NonNull TetheredInterfaceCallback callback) { throw new RuntimeException(\"Stub!\"); }\n                                                                                                                                                         ^\n  symbol:   class TetheredInterfaceCallback\n  location: class BluetoothPan\nout/soong/.intermediates/frameworks/base/android-non-updatable.stubs.module_lib/android_common/javac/srcjars/android/bluetooth/BluetoothPan.java:40: error: cannot find symbol\npublic TetheredInterfaceRequest requestTetheredInterface(@android.annotation.NonNull java.util.concurrent.Executor executor, @android.annotation.NonNull TetheredInterfaceCallback callback) { throw new RuntimeException(\"Stub!\"); }\n\nIf so, it could be fix after https://android-review.googlesource.com/c/platform/packages/modules/Connectivity/+/1873874 get merged and update prebuilt/sdk (Will have follow up change after that CL merged because it need build id to update prebuilt sdk).",
+      "revId": "1cca8e08c7d0d616a9088353558c4d0a3a9ba3fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5c7e85a_e49f99d0",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2021-11-08T08:56:29Z",
+      "side": 1,
+      "message": "This seems redundant. You could just use TetheringManager.TetheredInterfaceCallback, right ?",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 5
+      },
+      "revId": "1cca8e08c7d0d616a9088353558c4d0a3a9ba3fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbc623ac_77e308c5",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2021-11-08T08:56:29Z",
+      "side": 1,
+      "message": "Why expose this API ? I think you could make this private.",
+      "range": {
+        "startLine": 216,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 33
+      },
+      "revId": "1cca8e08c7d0d616a9088353558c4d0a3a9ba3fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
