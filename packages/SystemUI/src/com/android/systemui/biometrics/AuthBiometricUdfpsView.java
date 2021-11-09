@@ -21,12 +21,19 @@ import android.annotation.Nullable;
 import android.content.Context;
 import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import com.android.systemui.R;
 
 /**
  * Manages the layout for under-display fingerprint sensors (UDFPS). Ensures that UI elements
  * do not overlap with
  */
 public class AuthBiometricUdfpsView extends AuthBiometricFingerprintView {
+    private static final String TAG = "AuthBiometricUdfpsView";
+
     @Nullable private UdfpsDialogMeasureAdapter mMeasureAdapter;
 
     public AuthBiometricUdfpsView(Context context) {
@@ -50,5 +57,22 @@ public class AuthBiometricUdfpsView extends AuthBiometricFingerprintView {
         return mMeasureAdapter != null
                 ? mMeasureAdapter.onMeasureInternal(width, height, layoutParams)
                 : layoutParams;
+    }
+
+    @Override
+    void onLayoutInternal() {
+        super.onLayoutInternal();
+
+        // Move the UDFPS icon and indicator text if necessary. This probably only needs to happen
+        // for devices where the UDFPS sensor is too low.
+        final int bottomSpacerHeight = mMeasureAdapter.getBottomSpacerHeight();
+        Log.d(TAG, "bottomSpacerHeight: " + bottomSpacerHeight);
+        if (bottomSpacerHeight < 0) {
+            FrameLayout iconFrame = findViewById(R.id.biometric_icon_frame);
+            iconFrame.setTranslationY(-bottomSpacerHeight);
+
+            TextView indicator = findViewById(R.id.indicator);
+            indicator.setTranslationY(-bottomSpacerHeight);
+        }
     }
 }
