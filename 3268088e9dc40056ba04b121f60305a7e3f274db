@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53a66011_ab769de7",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4339,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-09T20:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7913e157_7889b3a8",
+      "range": {
+        "startLine": 4339,
+        "startChar": 8,
+        "endLine": 4339,
+        "endChar": 13
+      },
+      "revId": "3268088e9dc40056ba04b121f60305a7e3f274db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d7bf7730_c8570c7f",
@@ -37,6 +61,24 @@
       "writtenOn": "2021-11-09T00:05:31Z",
       "side": 1,
       "message": "SubscriptionInfo#getUsageSetting is @hide. No trouble to g build javaodc (\"m offline-sdk-doc\")?",
+      "revId": "3268088e9dc40056ba04b121f60305a7e3f274db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1671b917_ec92cdec",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4342,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-09T20:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7bf7730_c8570c7f",
       "revId": "3268088e9dc40056ba04b121f60305a7e3f274db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
