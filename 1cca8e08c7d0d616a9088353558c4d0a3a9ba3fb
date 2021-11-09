@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bd72d8a_86905e6e",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-09T18:05:07Z",
+      "side": 1,
+      "message": "This will be done in another topic as TetheringManager#TetheredInterfaceCallback is inaccessible for now",
+      "parentUuid": "f5c7e85a_e49f99d0",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 5
+      },
+      "revId": "1cca8e08c7d0d616a9088353558c4d0a3a9ba3fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bbc623ac_77e308c5",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed289ec9_d5baeefb",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-09T18:05:07Z",
+      "side": 1,
+      "message": "This will be done in another topic as TetheringManager#TetheredInterfaceRequest is inaccessible for now",
+      "parentUuid": "bbc623ac_77e308c5",
+      "range": {
+        "startLine": 216,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 33
+      },
+      "revId": "1cca8e08c7d0d616a9088353558c4d0a3a9ba3fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c74a4233_31495479",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-11-09T13:49:04Z",
       "side": 1,
       "message": "Maybe expose this as module_lib instead ? module_libraries means this only used for platform and mainline modules.\n\n@SystemApi(client \u003d MODULE_LIBRARIES)",
+      "range": {
+        "startLine": 532,
+        "startChar": 5,
+        "endLine": 532,
+        "endChar": 14
+      },
+      "revId": "1cca8e08c7d0d616a9088353558c4d0a3a9ba3fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82e9078b_33ff6906",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-09T18:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c74a4233_31495479",
       "range": {
         "startLine": 532,
         "startChar": 5,
