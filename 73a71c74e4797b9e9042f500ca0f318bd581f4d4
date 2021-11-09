@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2e111ce_c6f0f693",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-09T20:54:55Z",
+      "side": 1,
+      "message": "\"Update SubscriptionInfo with Usage Setting\"?\n\nOverall, the description of the commit msgs in the topic deserve a update to more descriptive before submit.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "73a71c74e4797b9e9042f500ca0f318bd581f4d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12eb7abc_324ce572",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-09T20:54:55Z",
+      "side": 1,
+      "message": "If the title is updated, this line can be removed I think. No additional info provide here.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "73a71c74e4797b9e9042f500ca0f318bd581f4d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
