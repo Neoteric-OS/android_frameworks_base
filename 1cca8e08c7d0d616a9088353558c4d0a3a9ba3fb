@@ -62,6 +62,29 @@
       },
       "revId": "1cca8e08c7d0d616a9088353558c4d0a3a9ba3fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c74a4233_31495479",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2021-11-09T13:49:04Z",
+      "side": 1,
+      "message": "Maybe expose this as module_lib instead ? module_libraries means this only used for platform and mainline modules.\n\n@SystemApi(client \u003d MODULE_LIBRARIES)",
+      "range": {
+        "startLine": 532,
+        "startChar": 5,
+        "endLine": 532,
+        "endChar": 14
+      },
+      "revId": "1cca8e08c7d0d616a9088353558c4d0a3a9ba3fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
