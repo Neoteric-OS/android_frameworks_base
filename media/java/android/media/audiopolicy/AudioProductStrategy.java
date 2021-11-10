@@ -16,6 +16,8 @@
 
 package android.media.audiopolicy;
 
+import static java.util.stream.Collectors.toList;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
@@ -30,8 +32,10 @@ import android.util.Log;
 import com.android.internal.annotations.GuardedBy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @hide
@@ -186,12 +190,13 @@ public final class AudioProductStrategy implements Parcelable {
     }
 
     private static List<AudioProductStrategy> initializeAudioProductStrategies() {
-        ArrayList<AudioProductStrategy> apsList = new ArrayList<AudioProductStrategy>();
+        ArrayList<AudioProductStrategy> apsList = new ArrayList<>();
         int status = native_list_audio_product_strategies(apsList);
         if (status != AudioSystem.SUCCESS) {
             Log.w(TAG, ": initializeAudioProductStrategies failed");
         }
-        return apsList;
+        return apsList.stream().filter(aps -> !aps.isInternalStrategy())
+                .collect(Collectors.toList());
     }
 
     private static native int native_list_audio_product_strategies(
@@ -391,6 +396,9 @@ public final class AudioProductStrategy implements Parcelable {
             new AudioAttributes.Builder().setCapturePreset(MediaRecorder.AudioSource.DEFAULT)
                                          .build();
 
+    /** Internal strategies to AudioPolicy, no external volume control allowed */
+    private static final String sInternalTag = "reserved_internal_strategy";
+
     /**
      * To avoid duplicating the logic in java and native, we shall make use of
      * native API native_get_product_strategies_from_audio_attributes
@@ -417,6 +425,17 @@ public final class AudioProductStrategy implements Parcelable {
             && ((refFormattedTags.length() == 0) || refFormattedTags.equals(cliFormattedTags));
     }
 
+    private boolean isInternalStrategy() {
+        return Arrays.stream(mAudioAttributesGroups).filter(aag -> aag.isInternalStrategy())
+                .findFirst().isPresent();
+    }
+
+    /** private package */ static boolean isInternalAttributesForStrategy(
+            @NonNull AudioAttributes aa) {
+        final String formattedTags = TextUtils.join(";", aa.getTags());
+        return formattedTags.equals(sInternalTag);
+    }
+
     private static final class AudioAttributesGroup implements Parcelable {
         private int mVolumeGroupId;
         private int mLegacyStreamType;
@@ -427,6 +446,11 @@ public final class AudioProductStrategy implements Parcelable {
             mVolumeGroupId = volumeGroupId;
             mLegacyStreamType = streamType;
             mAudioAttributes = audioAttributes;
+        }
+
+        private boolean isInternalStrategy() {
+            return Arrays.stream(mAudioAttributes).filter(aa -> isInternalAttributesForStrategy(aa))
+                    .findFirst().isPresent();
         }
 
         @Override
