@@ -176,6 +176,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac5c89e7_42db3fae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2021-11-10T15:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98f37d22_39bbda99",
+      "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8524d5e7_00c6830b",
@@ -213,6 +231,30 @@
       "side": 1,
       "message": "I guess you send this question for Google internally to answer. There is not much documentation for config_has_help. Sony does not use this.",
       "parentUuid": "8524d5e7_00c6830b",
+      "range": {
+        "startLine": 4445,
+        "startChar": 5,
+        "endLine": 4445,
+        "endChar": 61
+      },
+      "revId": "600e5fb40a161bfcaf0e1dd1eb7e9765c118b5f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "869b98bc_769034de",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4445,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2021-11-10T15:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da283759_015b9263",
       "range": {
         "startLine": 4445,
         "startChar": 5,
