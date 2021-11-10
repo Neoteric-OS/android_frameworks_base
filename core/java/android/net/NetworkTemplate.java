@@ -37,6 +37,7 @@ import static android.net.wifi.WifiInfo.sanitizeSsid;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
@@ -59,21 +60,30 @@ import java.util.Objects;
  *
  * @hide
  */
-public class NetworkTemplate implements Parcelable {
+// TODO: Expose this as @SystemApi when ready.
+public final class NetworkTemplate implements Parcelable {
     private static final String TAG = "NetworkTemplate";
 
     /**
      * Current Version of the Backup Serializer.
+     * @hide
      */
     private static final int BACKUP_VERSION = 1;
-
+    /** Match rule value to match mobile networks. */
     public static final int MATCH_MOBILE = 1;
+    /** Match rule value to match wifi networks. */
     public static final int MATCH_WIFI = 4;
+    /** Match rule value to match ethernet networks. */
     public static final int MATCH_ETHERNET = 5;
+    /** Match rule value to match mobile networks regardless of subscriber Id. */
     public static final int MATCH_MOBILE_WILDCARD = 6;
+    /** Match rule value to match wifi networks regardless of network Id. */
     public static final int MATCH_WIFI_WILDCARD = 7;
+    /** Match rule value to match ethernet usage. */
     public static final int MATCH_BLUETOOTH = 8;
+    /** @hide */
     public static final int MATCH_PROXY = 9;
+    /** Match rule value to match carrier networks. */
     public static final int MATCH_CARRIER = 10;
 
     /**
@@ -91,6 +101,8 @@ public class NetworkTemplate implements Parcelable {
      * should be fixed), so it's not possible to want to match null vs
      * non-null. Therefore it's fine to use null as a sentinel for Network ID.
      */
+    @Nullable
+    @SuppressLint("CompileTimeConstant")
     public static final String WIFI_NETWORKID_ALL = null;
 
     /**
@@ -147,8 +159,9 @@ public class NetworkTemplate implements Parcelable {
      * Template to match {@link ConnectivityManager#TYPE_MOBILE} networks with
      * the given IMSI.
      */
+    @NonNull
     @UnsupportedAppUsage
-    public static NetworkTemplate buildTemplateMobileAll(String subscriberId) {
+    public static NetworkTemplate buildTemplateMobileAll(@Nullable String subscriberId) {
         return new NetworkTemplate(MATCH_MOBILE, subscriberId, null);
     }
 
@@ -157,6 +170,7 @@ public class NetworkTemplate implements Parcelable {
      * {@code metered}. Use {@link #NETWORK_TYPE_ALL} to include all network types when
      * filtering. See {@code TelephonyManager.NETWORK_TYPE_*}.
      */
+    @NonNull
     public static NetworkTemplate buildTemplateMobileWithRatType(@Nullable String subscriberId,
             int ratType, int metered) {
         if (TextUtils.isEmpty(subscriberId)) {
@@ -173,6 +187,7 @@ public class NetworkTemplate implements Parcelable {
      * Template to match metered {@link ConnectivityManager#TYPE_MOBILE} networks,
      * regardless of IMSI.
      */
+    @NonNull
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public static NetworkTemplate buildTemplateMobileWildcard() {
         return new NetworkTemplate(MATCH_MOBILE_WILDCARD, null, null);
@@ -182,6 +197,7 @@ public class NetworkTemplate implements Parcelable {
      * Template to match all metered {@link ConnectivityManager#TYPE_WIFI} networks,
      * regardless of SSID.
      */
+    @NonNull
     @UnsupportedAppUsage
     public static NetworkTemplate buildTemplateWifiWildcard() {
         // TODO: Consider replace this with MATCH_WIFI with NETWORK_ID_ALL
@@ -198,6 +214,7 @@ public class NetworkTemplate implements Parcelable {
     /**
      * Template to match {@link ConnectivityManager#TYPE_WIFI} networks with the
      * given SSID.
+     * @hide
      */
     public static NetworkTemplate buildTemplateWifi(@NonNull String networkId) {
         Objects.requireNonNull(networkId);
@@ -213,6 +230,7 @@ public class NetworkTemplate implements Parcelable {
      * and IMSI.
      *
      * Call with {@link #WIFI_NETWORKID_ALL} for {@code networkId} to get result regardless of SSID.
+     * @hide
      */
     public static NetworkTemplate buildTemplateWifi(@Nullable String networkId,
             @Nullable String subscriberId) {
@@ -226,6 +244,7 @@ public class NetworkTemplate implements Parcelable {
      * Template to combine all {@link ConnectivityManager#TYPE_ETHERNET} style
      * networks together.
      */
+    @NonNull
     @UnsupportedAppUsage
     public static NetworkTemplate buildTemplateEthernet() {
         return new NetworkTemplate(MATCH_ETHERNET, null, null);
@@ -235,6 +254,7 @@ public class NetworkTemplate implements Parcelable {
      * Template to combine all {@link ConnectivityManager#TYPE_BLUETOOTH} style
      * networks together.
      */
+    @NonNull
     public static NetworkTemplate buildTemplateBluetooth() {
         return new NetworkTemplate(MATCH_BLUETOOTH, null, null);
     }
@@ -242,7 +262,9 @@ public class NetworkTemplate implements Parcelable {
     /**
      * Template to combine all {@link ConnectivityManager#TYPE_PROXY} style
      * networks together.
+     * @hide
      */
+    @NonNull
     public static NetworkTemplate buildTemplateProxy() {
         return new NetworkTemplate(MATCH_PROXY, null, null);
     }
@@ -250,6 +272,7 @@ public class NetworkTemplate implements Parcelable {
     /**
      * Template to match all metered carrier networks with the given IMSI.
      */
+    @NonNull
     public static NetworkTemplate buildTemplateCarrierMetered(@NonNull String subscriberId) {
         Objects.requireNonNull(subscriberId);
         return new NetworkTemplate(MATCH_CARRIER, subscriberId,
@@ -298,14 +321,17 @@ public class NetworkTemplate implements Parcelable {
         }
     }
 
+    /** @hide */
     // TODO: Deprecate this constructor, mark it @UnsupportedAppUsage(maxTargetSdk = S)
     @UnsupportedAppUsage
-    public NetworkTemplate(int matchRule, String subscriberId, String networkId) {
+    public NetworkTemplate(int matchRule, @Nullable String subscriberId,
+            @Nullable String networkId) {
         this(matchRule, subscriberId, new String[] { subscriberId }, networkId);
     }
 
-    public NetworkTemplate(int matchRule, String subscriberId, String[] matchSubscriberIds,
-            String networkId) {
+    /** @hide */
+    public NetworkTemplate(int matchRule, @Nullable String subscriberId,
+            @Nullable String[] matchSubscriberIds, String networkId) {
         // Older versions used to only match MATCH_MOBILE and MATCH_MOBILE_WILDCARD templates
         // to metered networks. It is now possible to match mobile with any meteredness, but
         // in order to preserve backward compatibility of @UnsupportedAppUsage methods, this
@@ -316,17 +342,19 @@ public class NetworkTemplate implements Parcelable {
                 OEM_MANAGED_ALL, SUBSCRIBER_ID_MATCH_RULE_EXACT);
     }
 
+    /** @hide */
     // TODO: Remove it after updating all of the caller.
-    public NetworkTemplate(int matchRule, String subscriberId, String[] matchSubscriberIds,
-            String networkId, int metered, int roaming, int defaultNetwork, int subType,
-            int oemManaged) {
+    public NetworkTemplate(int matchRule, @Nullable String subscriberId,
+            @Nullable String[] matchSubscriberIds, String networkId, int metered, int roaming,
+            int defaultNetwork, int subType, int oemManaged) {
         this(matchRule, subscriberId, matchSubscriberIds, networkId, metered, roaming,
                 defaultNetwork, subType, oemManaged, SUBSCRIBER_ID_MATCH_RULE_EXACT);
     }
 
-    public NetworkTemplate(int matchRule, String subscriberId, String[] matchSubscriberIds,
-            String networkId, int metered, int roaming, int defaultNetwork, int subType,
-            int oemManaged, int subscriberIdMatchRule) {
+    public NetworkTemplate(int matchRule, @Nullable String subscriberId,
+            @Nullable String[] matchSubscriberIds, @Nullable String networkId,
+            int metered, int roaming, int defaultNetwork, int subType, int oemManaged,
+            int subscriberIdMatchRule) {
         mMatchRule = matchRule;
         mSubscriberId = subscriberId;
         // TODO: Check whether mMatchSubscriberIds = null or mMatchSubscriberIds = {null} when
@@ -360,7 +388,7 @@ public class NetworkTemplate implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeInt(mMatchRule);
         dest.writeString(mSubscriberId);
         dest.writeStringArray(mMatchSubscriberIds);
@@ -481,11 +509,13 @@ public class NetworkTemplate implements Parcelable {
         return mMatchRule;
     }
 
+    @Nullable
     @UnsupportedAppUsage
     public String getSubscriberId() {
         return mSubscriberId;
     }
 
+    @Nullable
     public String getNetworkId() {
         return mNetworkId;
     }
@@ -503,7 +533,7 @@ public class NetworkTemplate implements Parcelable {
     /**
      * Test if given {@link NetworkIdentity} matches this template.
      */
-    public boolean matches(NetworkIdentity ident) {
+    public boolean matches(@NonNull NetworkIdentity ident) {
         if (!matchesMetered(ident)) return false;
         if (!matchesRoaming(ident)) return false;
         if (!matchesDefaultNetwork(ident)) return false;
@@ -781,9 +811,12 @@ public class NetworkTemplate implements Parcelable {
      * active merge set [A,B], we'd return a new template that primarily matches
      * A, but also matches B.
      * TODO: remove and use {@link #normalize(NetworkTemplate, List)}.
+     * @hide
      */
+    @NonNull
     @UnsupportedAppUsage
-    public static NetworkTemplate normalize(NetworkTemplate template, String[] merged) {
+    public static NetworkTemplate normalize(
+            @NonNull NetworkTemplate template, @NonNull String[] merged) {
         return normalize(template, Arrays.<String[]>asList(merged));
     }
 
@@ -800,7 +833,9 @@ public class NetworkTemplate implements Parcelable {
      * active merge set [A,B], we'd return a new template that primarily matches
      * A, but also matches B.
      */
-    public static NetworkTemplate normalize(NetworkTemplate template, List<String[]> mergedList) {
+    @NonNull
+    public static NetworkTemplate normalize(
+            @NonNull NetworkTemplate template, @NonNull List<String[]> mergedList) {
         if (!template.isMatchRuleMobile()) return template;
 
         for (String[] merged : mergedList) {

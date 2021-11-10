@@ -18,6 +18,7 @@ package android.net;
 
 import static android.net.ConnectivityManager.TYPE_WIFI;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
 import android.net.wifi.WifiInfo;
@@ -37,6 +38,7 @@ import java.util.Objects;
  *
  * @hide
  */
+// TODO: Expose this as @SystemApi when ready.
 public class NetworkIdentity implements Comparable<NetworkIdentity> {
     private static final String TAG = "NetworkIdentity";
 
@@ -68,8 +70,8 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
     final int mOemManaged;
 
     public NetworkIdentity(
-            int type, int subType, String subscriberId, String networkId, boolean roaming,
-            boolean metered, boolean defaultNetwork, int oemManaged) {
+            int type, int subType, @Nullable String subscriberId, @Nullable String networkId,
+            boolean roaming, boolean metered, boolean defaultNetwork, int oemManaged) {
         mType = type;
         mSubType = subType;
         mSubscriberId = subscriberId;
@@ -153,6 +155,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
         }
     }
 
+    /** @hide */
     public void dumpDebug(ProtoOutputStream proto, long tag) {
         final long start = proto.start(tag);
 
@@ -181,11 +184,11 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
         return mSubType;
     }
 
-    public String getSubscriberId() {
+    @Nullable public String getSubscriberId() {
         return mSubscriberId;
     }
 
-    public String getNetworkId() {
+    @Nullable public String getNetworkId() {
         return mNetworkId;
     }
 
@@ -211,8 +214,10 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
      * The subType if applicable, should be set as one of the TelephonyManager.NETWORK_TYPE_*
      * constants, or {@link android.telephony.TelephonyManager#NETWORK_TYPE_UNKNOWN} if not.
      */
-    public static NetworkIdentity buildNetworkIdentity(Context context,
-            NetworkStateSnapshot snapshot, boolean defaultNetwork, int subType) {
+    @NonNull public static NetworkIdentity buildNetworkIdentity(@NonNull Context context,
+            @NonNull NetworkStateSnapshot snapshot, boolean defaultNetwork, int subType) {
+        Objects.requireNonNull(context);
+        Objects.requireNonNull(snapshot);
         final int legacyType = snapshot.getLegacyType();
 
         final String subscriberId = snapshot.getSubscriberId();
@@ -257,7 +262,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
     }
 
     @Override
-    public int compareTo(NetworkIdentity another) {
+    public int compareTo(@NonNull NetworkIdentity another) {
         int res = Integer.compare(mType, another.mType);
         if (res == 0) {
             res = Integer.compare(mSubType, another.mSubType);
