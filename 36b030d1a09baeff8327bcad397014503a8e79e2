@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53dee458_c09c3c72",
+        "filename": "core/java/android/os/IStatsBootstrapAtomService.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2021-11-10T09:00:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "872ba815_6c21dc43",
+      "revId": "36b030d1a09baeff8327bcad397014503a8e79e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a5278358_10b63645",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-11-10T01:25:42Z",
       "side": 1,
       "message": "bool is also primitive type in the Java programming language and is supported by AIDL, should we add it here?",
+      "revId": "36b030d1a09baeff8327bcad397014503a8e79e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae143232_7b5ddef3",
+        "filename": "core/java/android/os/StatsBootstrapAtomValue.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2021-11-10T09:00:28Z",
+      "side": 1,
+      "message": "good catch, thanks. The vendor api is missing this as well, but added it here.",
+      "parentUuid": "a5278358_10b63645",
       "revId": "36b030d1a09baeff8327bcad397014503a8e79e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
