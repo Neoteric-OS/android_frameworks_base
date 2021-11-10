@@ -3277,8 +3277,8 @@ public class AudioService extends IAudioService.Stub
         final VolumeGroupState vgs = sVolumeGroupStates.get(volumeGroup);
 
         sVolumeLogger.log(new VolumeEvent(VolumeEvent.VOL_SET_GROUP_VOL, attr, vgs.name(),
-                index/*val1*/, flags/*val2*/, callingPackage));
-
+                index/*val1*/, flags/*val2*/, callingPackage + ", user "
+                + ActivityManager.getCurrentUser()));
         vgs.setVolumeIndex(index, flags);
 
         // For legacy reason, propagate to all streams associated to this volume group
@@ -3310,13 +3310,15 @@ public class AudioService extends IAudioService.Stub
     /** @see AudioManager#getVolumeIndexForAttributes(attr) */
     public int getVolumeIndexForAttributes(@NonNull AudioAttributes attr) {
         Objects.requireNonNull(attr, "attr must not be null");
-        final int volumeGroup =
-                AudioProductStrategy.getVolumeGroupIdForAudioAttributes(attr, false);
-        if (sVolumeGroupStates.indexOfKey(volumeGroup) < 0) {
-            throw new IllegalArgumentException("No volume group for attributes " + attr);
+        synchronized (VolumeStreamState.class) {
+            final int volumeGroup =
+                    AudioProductStrategy.getVolumeGroupIdForAudioAttributes(attr, false);
+            if (sVolumeGroupStates.indexOfKey(volumeGroup) < 0) {
+                throw new IllegalArgumentException("No volume group for attributes " + attr);
+            }
+            final VolumeGroupState vgs = sVolumeGroupStates.get(volumeGroup);
+            return vgs.isMuted() ? vgs.getMinIndex() : vgs.getVolumeIndex();
         }
-        final VolumeGroupState vgs = sVolumeGroupStates.get(volumeGroup);
-        return vgs.getVolumeIndex();
     }
 
     /** @see AudioManager#getMaxVolumeIndexForAttributes(attr) */
@@ -5148,7 +5150,7 @@ public class AudioService extends IAudioService.Stub
             }
         }
 
-        readVolumeGroupsSettings();
+        readVolumeGroupsSettings(userSwitch);
 
         if (DEBUG_VOL) {
             Log.d(TAG, "Restoring device volume behavior");
@@ -6415,6 +6417,7 @@ public class AudioService extends IAudioService.Stub
             try {
                 // if no valid attributes, this volume group is not controllable, throw exception
                 ensureValidAttributes(avg);
+                sVolumeGroupStates.append(avg.getId(), new VolumeGroupState(avg));
             } catch (IllegalArgumentException e) {
                 // Volume Groups without attributes are not controllable through set/get volume
                 // using attributes. Do not append them.
@@ -6423,11 +6426,10 @@ public class AudioService extends IAudioService.Stub
                 }
                 continue;
             }
-            sVolumeGroupStates.append(avg.getId(), new VolumeGroupState(avg));
         }
         for (int i = 0; i < sVolumeGroupStates.size(); i++) {
             final VolumeGroupState vgs = sVolumeGroupStates.valueAt(i);
-            vgs.applyAllVolumes();
+            vgs.applyAllVolumes(false/*userSwitch*/);
         }
     }
 
@@ -6440,14 +6442,30 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
-    private void readVolumeGroupsSettings() {
-        if (DEBUG_VOL) {
-            Log.v(TAG, "readVolumeGroupsSettings");
-        }
-        for (int i = 0; i < sVolumeGroupStates.size(); i++) {
-            final VolumeGroupState vgs = sVolumeGroupStates.valueAt(i);
-            vgs.readSettings();
-            vgs.applyAllVolumes();
+    private void readVolumeGroupsSettings(boolean userSwitch) {
+        synchronized (mSettingsLock) {
+            synchronized (VolumeStreamState.class) {
+                if (DEBUG_VOL) {
+                    Log.v(TAG, "readVolumeGroupsSettings userSwitch=" + userSwitch);
+                }
+                for (int i = 0; i < sVolumeGroupStates.size(); i++) {
+                    // as for STREAM_MUSIC, preserve volume from one user to the next.
+                    if (userSwitch && sVolumeGroupStates.valueAt(i).isMusic()) {
+                        continue;
+                    }
+                    sVolumeGroupStates.valueAt(i).clearIndexCache();
+                }
+                for (int i = 0; i < sVolumeGroupStates.size(); i++) {
+                    final VolumeGroupState vgs = sVolumeGroupStates.valueAt(i);
+                    // as for STREAM_MUSIC, preserve volume from one user to the next.
+                    if (userSwitch && vgs.isMusic()) {
+                        vgs.applyAllVolumes(userSwitch);
+                    } else {
+                        vgs.readSettings();
+                        vgs.applyAllVolumes(userSwitch);
+                    }
+                }
+            }
         }
     }
 
@@ -6458,7 +6476,7 @@ public class AudioService extends IAudioService.Stub
         }
         for (int i = 0; i < sVolumeGroupStates.size(); i++) {
             final VolumeGroupState vgs = sVolumeGroupStates.valueAt(i);
-            vgs.applyAllVolumes();
+            vgs.applyAllVolumes(false/*userSwitch*/);
         }
     }
 
@@ -6473,15 +6491,17 @@ public class AudioService extends IAudioService.Stub
 
     // NOTE: Locking order for synchronized objects related to volume management:
     //  1     mSettingsLock
-    //  2       VolumeGroupState.class
+    //  2       VolumeStreamState.class
     private class VolumeGroupState {
         private final AudioVolumeGroup mAudioVolumeGroup;
         private final SparseIntArray mIndexMap = new SparseIntArray(8);
         private int mIndexMin;
         private int mIndexMax;
-        private int mLegacyStreamType = AudioSystem.STREAM_DEFAULT;
+        private boolean mHasValidStreamType = false;
         private int mPublicStreamType = AudioSystem.STREAM_MUSIC;
         private AudioAttributes mAudioAttributes = AudioProductStrategy.sDefaultAttributes;
+        private boolean mIsMuted = false;
+        private final String mSettingName;
 
         // No API in AudioSystem to get a device from strategy or from attributes.
         // Need a valid public stream type to use current API getDeviceForStream
@@ -6501,13 +6521,15 @@ public class AudioService extends IAudioService.Stub
                 }
             }
             final int[] streamTypes = mAudioVolumeGroup.getLegacyStreamTypes();
+            String streamSettingName = "";
             if (streamTypes.length != 0) {
                 // Uses already initialized MIN / MAX if a stream type is attached to group
-                mLegacyStreamType = streamTypes[0];
                 for (final int streamType : streamTypes) {
                     if (streamType != AudioSystem.STREAM_DEFAULT
                             && streamType < AudioSystem.getNumStreamTypes()) {
                         mPublicStreamType = streamType;
+                        mHasValidStreamType = true;
+                        streamSettingName = System.VOLUME_SETTINGS_INT[mPublicStreamType];
                         break;
                     }
                 }
@@ -6517,10 +6539,10 @@ public class AudioService extends IAudioService.Stub
                 mIndexMin = AudioSystem.getMinVolumeIndexForAttributes(mAudioAttributes);
                 mIndexMax = AudioSystem.getMaxVolumeIndexForAttributes(mAudioAttributes);
             } else {
-                Log.e(TAG, "volume group: " + mAudioVolumeGroup.name()
+                throw new IllegalArgumentException("volume group: " + mAudioVolumeGroup.name()
                         + " has neither valid attributes nor valid stream types assigned");
-                return;
             }
+            mSettingName = !streamSettingName.isEmpty() ? streamSettingName : ("volume_" + name());
             // Load volume indexes from data base
             readSettings();
         }
@@ -6533,40 +6555,94 @@ public class AudioService extends IAudioService.Stub
             return mAudioVolumeGroup.name();
         }
 
+        /**
+         * Volume group with non null minimum index are considered as non mutable, thus
+         * bijectivity is broken with potential associated stream type.
+         */
+        private boolean isVssMuteBijective(int stream) {
+            return mStreamStates[stream].mIndexMin == 0 && isStreamAffectedByMute(stream)
+                    && getMinIndex() == 0;
+        }
+
+        /**
+         * Mute/unmute the volume group
+         * @param muted the new mute state
+         */
+        @GuardedBy("VolumeStreamState.class")
+        public boolean mute(boolean muted) {
+            if (mIndexMin != 0) {
+                // Non mutable volume group
+                if (DEBUG_VOL) {
+                    Log.w(TAG, "invalid mute on unmutable volume group " + name());
+                }
+                return false;
+            }
+            final boolean changed = (mIsMuted != muted);
+            // As for VSS, mute shall apply minIndex to all devices found in IndexMap and default.
+            if (changed) {
+                mIsMuted = muted;
+                applyAllVolumes(false /*userSwitch*/);
+            }
+            return changed;
+        }
+
+        public boolean isMuted() {
+            return mIsMuted;
+        }
+
         public int getVolumeIndex() {
-            return getIndex(getDeviceForVolume());
+            synchronized (VolumeStreamState.class) {
+                return getIndex(getDeviceForVolume());
+            }
         }
 
         public void setVolumeIndex(int index, int flags) {
-            if (mUseFixedVolume) {
-                return;
+            synchronized (VolumeStreamState.class) {
+                if (mUseFixedVolume) {
+                    return;
+                }
+                setVolumeIndex(index, getDeviceForVolume(), flags);
             }
-            setVolumeIndex(index, getDeviceForVolume(), flags);
         }
 
+        @GuardedBy("VolumeStreamState.class")
         private void setVolumeIndex(int index, int device, int flags) {
-            // Set the volume index
-            setVolumeIndexInt(index, device, flags);
-
-            // Update local cache
-            mIndexMap.put(device, index);
-
-            // update data base - post a persist volume group msg
-            sendMsg(mAudioHandler,
-                    MSG_PERSIST_VOLUME_GROUP,
-                    SENDMSG_QUEUE,
-                    device,
-                    0,
-                    this,
-                    PERSIST_DELAY);
+            // Update cache & persist (muted by volume 0 shall be persisted)
+            updateVolumeIndex(index, device);
+            // setting non-zero volume for a muted stream unmutes the stream and vice versa,
+            final boolean changed = mute(index == 0);
+            if (!changed) {
+                // Set the volume index only if mute operation is a no-op
+                setVolumeIndexInt(index, device, flags);
+            }
         }
 
+        @GuardedBy("VolumeStreamState.class")
+        public void updateVolumeIndex(int index, int device) {
+            // Filter persistency if already exist and the index has not changed
+            if (mIndexMap.indexOfKey(device) < 0 || mIndexMap.get(device) != index) {
+                // Update local cache
+                mIndexMap.put(device, index);
+
+                // update data base - post a persist volume group msg
+                sendMsg(mAudioHandler,
+                        MSG_PERSIST_VOLUME_GROUP,
+                        SENDMSG_QUEUE,
+                        device,
+                        0,
+                        this,
+                        PERSIST_DELAY);
+            }
+        }
+
+        @GuardedBy("VolumeStreamState.class")
         private void setVolumeIndexInt(int index, int device, int flags) {
             // Reflect mute state of corresponding stream by forcing index to 0 if muted
             // Only set audio policy BT SCO stream volume to 0 when the stream is actually muted.
             // This allows RX path muting by the audio HAL only when explicitly muted but not when
             // index is just set to 0 to repect BT requirements
-            if (mStreamStates[mPublicStreamType].isFullyMuted()) {
+            if (mHasValidStreamType && isVssMuteBijective(mPublicStreamType)
+                    && mStreamStates[mPublicStreamType].isFullyMuted()) {
                 index = 0;
             } else if (mPublicStreamType == AudioSystem.STREAM_BLUETOOTH_SCO && index == 0) {
                 index = 1;
@@ -6575,18 +6651,16 @@ public class AudioService extends IAudioService.Stub
             AudioSystem.setVolumeIndexForAttributes(mAudioAttributes, index, device);
         }
 
-        public int getIndex(int device) {
-            synchronized (VolumeGroupState.class) {
-                int index = mIndexMap.get(device, -1);
-                // there is always an entry for AudioSystem.DEVICE_OUT_DEFAULT
-                return (index != -1) ? index : mIndexMap.get(AudioSystem.DEVICE_OUT_DEFAULT);
-            }
+        @GuardedBy("VolumeStreamState.class")
+        private int getIndex(int device) {
+            int index = mIndexMap.get(device, -1);
+            // there is always an entry for AudioSystem.DEVICE_OUT_DEFAULT
+            return (index != -1) ? index : mIndexMap.get(AudioSystem.DEVICE_OUT_DEFAULT);
         }
 
-        public boolean hasIndexForDevice(int device) {
-            synchronized (VolumeGroupState.class) {
-                return (mIndexMap.get(device, -1) != -1);
-            }
+        @GuardedBy("VolumeStreamState.class")
+        private boolean hasIndexForDevice(int device) {
+            return (mIndexMap.get(device, -1) != -1);
         }
 
         public int getMaxIndex() {
@@ -6597,53 +6671,106 @@ public class AudioService extends IAudioService.Stub
             return mIndexMin;
         }
 
-        private boolean isValidLegacyStreamType() {
-            return (mLegacyStreamType != AudioSystem.STREAM_DEFAULT)
-                    && (mLegacyStreamType < mStreamStates.length);
+        private boolean isValidStream(int stream) {
+            return (stream != AudioSystem.STREAM_DEFAULT) && (stream < mStreamStates.length);
         }
 
-        public void applyAllVolumes() {
-            synchronized (VolumeGroupState.class) {
-                int deviceForStream = AudioSystem.DEVICE_NONE;
-                int volumeIndexForStream = 0;
-                if (isValidLegacyStreamType()) {
-                    // Prevent to apply settings twice when group is associated to public stream
-                    deviceForStream = getDeviceForStream(mLegacyStreamType);
-                    volumeIndexForStream = getStreamVolume(mLegacyStreamType);
-                }
+        public boolean isMusic() {
+            return mHasValidStreamType && mPublicStreamType == AudioSystem.STREAM_MUSIC;
+        }
+
+        public void applyAllVolumes(boolean userSwitch) {
+            final String caller = "from vgs";
+            synchronized (VolumeStreamState.class) {
                 // apply device specific volumes first
-                int index;
                 for (int i = 0; i < mIndexMap.size(); i++) {
                     final int device = mIndexMap.keyAt(i);
+                    final int index = mIndexMap.valueAt(i);
+                    boolean synced = false;
                     if (device != AudioSystem.DEVICE_OUT_DEFAULT) {
-                        index = mIndexMap.valueAt(i);
-                        if (device == deviceForStream && volumeIndexForStream == index) {
-                            continue;
+                        for (int stream : getLegacyStreamTypes()) {
+                            if (isValidStream(stream)) {
+                                final boolean streamMuted = mStreamStates[stream].mIsMuted;
+                                final int deviceForStream = getDeviceForStream(stream);
+                                final int indexForStream =
+                                        (mStreamStates[stream].getIndex(deviceForStream) + 5) / 10;
+                                if (device == deviceForStream) {
+                                    if (indexForStream == index && (isMuted() == streamMuted)
+                                            && isVssMuteBijective(stream)) {
+                                        synced = true;
+                                        continue;
+                                    }
+                                    if (indexForStream != index) {
+                                        mStreamStates[stream].setIndex(index * 10, device, caller,
+                                                true /*hasModifyAudioSettings*/);
+                                    }
+                                    if ((isMuted() != streamMuted) && isVssMuteBijective(stream)) {
+                                        mStreamStates[stream].mute(isMuted());
+                                    }
+                                }
+                            }
                         }
-                        if (DEBUG_VOL) {
-                            Log.v(TAG, "applyAllVolumes: restore index " + index + " for group "
-                                    + mAudioVolumeGroup.name() + " and device "
-                                    + AudioSystem.getOutputDeviceName(device));
+                        if (!synced) {
+                            if (DEBUG_VOL) {
+                                Log.v(TAG, "applyAllVolumes: apply index " + index + ", group "
+                                        + mAudioVolumeGroup.name() + " and device "
+                                        + AudioSystem.getOutputDeviceName(device));
+                            }
+                            setVolumeIndexInt(isMuted() ? 0 : index, device, 0 /*flags*/);
                         }
-                        setVolumeIndexInt(index, device, 0 /*flags*/);
                     }
                 }
                 // apply default volume last: by convention , default device volume will be used
                 // by audio policy manager if no explicit volume is present for a given device type
-                index = getIndex(AudioSystem.DEVICE_OUT_DEFAULT);
-                if (DEBUG_VOL) {
-                    Log.v(TAG, "applyAllVolumes: restore default device index " + index
-                            + " for group " + mAudioVolumeGroup.name());
-                }
-                if (isValidLegacyStreamType()) {
-                    int defaultStreamIndex = (mStreamStates[mLegacyStreamType]
-                            .getIndex(AudioSystem.DEVICE_OUT_DEFAULT) + 5) / 10;
-                    if (defaultStreamIndex == index) {
-                        return;
+                final int index = getIndex(AudioSystem.DEVICE_OUT_DEFAULT);
+                boolean synced = false;
+                final int deviceForVolume = getDeviceForVolume();
+                boolean forceDeviceSync = userSwitch && (mIndexMap.indexOfKey(deviceForVolume) < 0);
+                for (int stream : getLegacyStreamTypes()) {
+                    if (isValidStream(stream)) {
+                        final boolean streamMuted = mStreamStates[stream].mIsMuted;
+                        final int defaultStreamIndex = (mStreamStates[stream].getIndex(
+                                        AudioSystem.DEVICE_OUT_DEFAULT) + 5) / 10;
+                        if (forceDeviceSync) {
+                            mStreamStates[stream].setIndex(index * 10, deviceForVolume, caller,
+                                    true /*hasModifyAudioSettings*/);
+                        }
+                        if (defaultStreamIndex == index && (isMuted() == streamMuted)
+                                && isVssMuteBijective(stream)) {
+                            synced = true;
+                            continue;
+                        }
+                        if (defaultStreamIndex != index) {
+                            mStreamStates[stream].setIndex(
+                                    index * 10, AudioSystem.DEVICE_OUT_DEFAULT, caller,
+                                    true /*hasModifyAudioSettings*/);
+                        }
+                        if ((isMuted() != streamMuted) && isVssMuteBijective(stream)) {
+                            mStreamStates[stream].mute(isMuted());
+                        }
                     }
                 }
-                setVolumeIndexInt(index, AudioSystem.DEVICE_OUT_DEFAULT, 0 /*flags*/);
+                if (!synced) {
+                    if (DEBUG_VOL) {
+                        Log.v(TAG, "applyAllVolumes: apply default device index " + index
+                                + ", group " + mAudioVolumeGroup.name());
+                    }
+                    setVolumeIndexInt(
+                            isMuted() ? 0 : index, AudioSystem.DEVICE_OUT_DEFAULT, 0 /*flags*/);
+                }
+                if (forceDeviceSync) {
+                    if (DEBUG_VOL) {
+                        Log.v(TAG, "applyAllVolumes: forceDeviceSync index " + index
+                                + ", device " + AudioSystem.getOutputDeviceName(deviceForVolume)
+                                + ", group " + mAudioVolumeGroup.name());
+                    }
+                    setVolumeIndexInt(isMuted() ? 0 : index, deviceForVolume, 0);
+                }
             }
+        }
+
+        public void clearIndexCache() {
+            mIndexMap.clear();
         }
 
         private void persistVolumeGroup(int device) {
@@ -6659,16 +6786,14 @@ public class AudioService extends IAudioService.Stub
             boolean success = Settings.System.putIntForUser(mContentResolver,
                     getSettingNameForDevice(device),
                     getIndex(device),
-                    UserHandle.USER_CURRENT);
+                    isMusic() ? UserHandle.USER_SYSTEM : UserHandle.USER_CURRENT);
             if (!success) {
                 Log.e(TAG, "persistVolumeGroup failed for group " +  mAudioVolumeGroup.name());
             }
         }
 
         public void readSettings() {
-            synchronized (VolumeGroupState.class) {
-                // First clear previously loaded (previous user?) settings
-                mIndexMap.clear();
+            synchronized (VolumeStreamState.class) {
                 // force maximum volume on all streams if fixed volume property is set
                 if (mUseFixedVolume) {
                     mIndexMap.put(AudioSystem.DEVICE_OUT_DEFAULT, mIndexMax);
@@ -6683,7 +6808,8 @@ public class AudioService extends IAudioService.Stub
                     int index;
                     String name = getSettingNameForDevice(device);
                     index = Settings.System.getIntForUser(
-                            mContentResolver, name, defaultIndex, UserHandle.USER_CURRENT);
+                            mContentResolver, name, defaultIndex,
+                            isMusic() ? UserHandle.USER_SYSTEM : UserHandle.USER_CURRENT);
                     if (index == -1) {
                         continue;
                     }
@@ -6701,6 +6827,7 @@ public class AudioService extends IAudioService.Stub
             }
         }
 
+        @GuardedBy("VolumeStreamState.class")
         private int getValidIndex(int index) {
             if (index < mIndexMin) {
                 return mIndexMin;
@@ -6713,13 +6840,15 @@ public class AudioService extends IAudioService.Stub
         public @NonNull String getSettingNameForDevice(int device) {
             final String suffix = AudioSystem.getOutputDeviceName(device);
             if (suffix.isEmpty()) {
-                return mAudioVolumeGroup.name();
+                return mSettingName;
             }
-            return mAudioVolumeGroup.name() + "_" + AudioSystem.getOutputDeviceName(device);
+            return mSettingName + "_" + AudioSystem.getOutputDeviceName(device);
         }
 
         private void dump(PrintWriter pw) {
             pw.println("- VOLUME GROUP " + mAudioVolumeGroup.name() + ":");
+            pw.print("   Muted: ");
+            pw.println(mIsMuted);
             pw.print("   Min: ");
             pw.println(mIndexMin);
             pw.print("   Max: ");
@@ -6753,6 +6882,10 @@ public class AudioService extends IAudioService.Stub
                     pw.print(AudioSystem.getOutputDeviceName(device));
                 }
             }
+            pw.println();
+            pw.print("   Streams: ");
+            Arrays.stream(getLegacyStreamTypes())
+                    .forEach(stream -> pw.print(AudioSystem.streamToString(stream) + " "));
         }
     }
 
