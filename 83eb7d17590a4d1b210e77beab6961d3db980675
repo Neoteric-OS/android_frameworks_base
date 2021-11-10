@@ -16,6 +16,29 @@
       "message": "Thank you both.",
       "revId": "83eb7d17590a4d1b210e77beab6961d3db980675",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8025969f_0958f7fa",
+        "filename": "config/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2021-11-10T21:36:54Z",
+      "side": 1,
+      "message": "Oops.",
+      "range": {
+        "startLine": 4,
+        "startChar": 35,
+        "endLine": 4,
+        "endChar": 36
+      },
+      "revId": "83eb7d17590a4d1b210e77beab6961d3db980675",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
