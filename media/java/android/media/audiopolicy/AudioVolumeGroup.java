@@ -30,6 +30,7 @@ import com.android.internal.util.Preconditions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A class to create the association between different playback attributes
@@ -83,11 +84,18 @@ public final class AudioVolumeGroup implements Parcelable {
         if (status != AudioSystem.SUCCESS) {
             Log.w(TAG, ": listAudioVolumeGroups failed");
         }
-        return avgList;
+        return avgList.stream().filter(avg -> !avg.isInternalGroup())
+                .collect(Collectors.toList());
     }
 
     private static native int native_list_audio_volume_groups(
             ArrayList<AudioVolumeGroup> groups);
+
+    private boolean isInternalGroup() {
+        return Arrays.stream(mAudioAttributes)
+                .filter(aa -> AudioProductStrategy.isInternalAttributesForStrategy(aa))
+                .findFirst().isPresent();
+    }
 
     /**
      * @param name of the volume group
