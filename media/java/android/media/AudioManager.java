@@ -1334,6 +1334,64 @@ public class AudioManager {
     }
 
     /**
+     * Adjusts the volume of a particular group associated to given {@link AudioAttributes} by one
+     *    step in a direction.
+     * <p>
+     * If the volume group is associated to a stream type, it fallbacks on
+     * see {@link AudioManager#adjustStreamVolume()} for compatibility reason.
+     *
+     * @param attr The {@link AudioAttributes} whose volume index should be adjusted.
+     * @param direction The direction to adjust the volume. One of
+     *            {@link #ADJUST_LOWER}, {@link #ADJUST_RAISE}, or
+     *            {@link #ADJUST_SAME}.
+     * @param flags One or more flags.
+     * @throws SecurityException if the adjustment triggers a Do Not Disturb change
+     *   and the caller is not granted notification policy access.
+     * @hide
+     */
+    public void adjustAttributesVolume(@NonNull AudioAttributes attr, int direction, int flags) {
+        final IAudioService service = getService();
+        try {
+            service.adjustAttributesVolume(attr, direction, flags, getContext().getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Get last audible volume before group associated to given {@link AudioAttributes} was muted.
+     *
+     * @hide
+     */
+    @UnsupportedAppUsage
+    @IntRange(from = 0)
+    public int getLastAudibleAttributesVolume(@NonNull AudioAttributes attr) {
+        final IAudioService service = getService();
+        try {
+            return service.getLastAudibleAttributesVolume(attr);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Returns the current mute state for a particular stream.
+     *
+     * @param attr The {@link AudioAttributes} to get mute state for.
+     * @return The mute state for the given stream.
+     * @see #adjustAttributesVolume(AudioAttributes, int, int)
+     * @hide
+     */
+    public boolean isAttributesMuted(@NonNull AudioAttributes attr) {
+        final IAudioService service = getService();
+        try {
+            return service.isAttributesMuted(attr);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Set the system usages to be supported on this device.
      * @param systemUsages array of system usages to support {@link AttributeSystemUsage}
      * @hide
