@@ -3333,6 +3333,54 @@ public class AudioService extends IAudioService.Stub
         return AudioSystem.getMinVolumeIndexForAttributes(attr);
     }
 
+    /** @see AudioManager#adjustAttributesVolume(int, int, int) */
+    public void adjustAttributesVolume(@NonNull AudioAttributes attr, int direction, int flags,
+            String callingPackage) {
+        Preconditions.checkNotNull(attr, "attr must not be null");
+        ensureValidDirection(direction);
+        final int volumeGroup = AudioProductStrategy.getVolumeGroupIdForAudioAttributes(attr, false);
+        if (volumeGroup == AudioVolumeGroup.DEFAULT_VOLUME_GROUP
+                || sVolumeGroupStates.indexOfKey(volumeGroup) < 0) {
+            Log.e(TAG, ": no volume group found for attributes " + attr.toString());
+            return;
+        }
+        final VolumeGroupState vgs = sVolumeGroupStates.get(volumeGroup);
+        sVolumeLogger.log(new VolumeEvent(VolumeEvent.VOL_ADJUST_GROUP_VOL, attr, vgs.name(),
+                direction/*val1*/, flags/*val2*/, callingPackage));
+        vgs.adjustVolume(direction, flags);
+    }
+
+    /**
+     * Get last audible volume before group associated to given {@link AudioAttrributes} was muted.
+     */
+    public int getLastAudibleAttributesVolume(@NonNull AudioAttributes attr) {
+        Preconditions.checkNotNull(attr, "attr must not be null");
+        synchronized (VolumeStreamState.class) {
+            final int volumeGroup =
+                    AudioProductStrategy.getVolumeGroupIdForAudioAttributes(attr, false);
+            if (sVolumeGroupStates.indexOfKey(volumeGroup) < 0) {
+                Log.e(TAG, ": no volume group found for attributes " + attr.toString());
+                return 0;
+            }
+            final VolumeGroupState vgs = sVolumeGroupStates.get(volumeGroup);
+            return vgs.getVolumeIndex();
+        }
+    }
+
+    /** get group mute state. */
+    public boolean isAttributesMuted(@NonNull AudioAttributes attr) {
+        synchronized (VolumeStreamState.class) {
+            final int volumeGroup =
+                    AudioProductStrategy.getVolumeGroupIdForAudioAttributes(attr, false);
+            if (sVolumeGroupStates.indexOfKey(volumeGroup) < 0) {
+                Log.e(TAG, ": no volume group found for attributes " + attr.toString());
+                return false;
+            }
+            final VolumeGroupState vgs = sVolumeGroupStates.get(volumeGroup);
+            return vgs.isMuted();
+        }
+    }
+
     /** @see AudioManager#setStreamVolume(int, int, int)
      * Part of service interface, check permissions here */
     public void setStreamVolume(int streamType, int index, int flags, String callingPackage) {
@@ -6588,6 +6636,52 @@ public class AudioService extends IAudioService.Stub
 
         public boolean isMuted() {
             return mIsMuted;
+        }
+
+        public void adjustVolume(int direction, int flags) {
+            synchronized (VolumeStreamState.class) {
+                final int device = getDeviceForVolume();
+                final int previousIndex = getIndex(device);
+
+                switch (direction) {
+                    case AudioManager.ADJUST_TOGGLE_MUTE: {
+                        // @TODO: If muted by volume mIndexMin, why not unmute with mIndexMin + 1
+                        mute(!mIsMuted);
+                        break;
+                    }
+                    case AudioManager.ADJUST_UNMUTE:
+                        // @TODO: If muted by volume mIndexMin, why not unmute with mIndexMin + 1
+                        mute(false);
+                        break;
+                    case AudioManager.ADJUST_MUTE:
+                        // May be already muted by setvolume 0, prevent from setting same value
+                        if (previousIndex != 0) {
+                            // bypass persist
+                            mute(true);
+                        }
+                        break;
+                    case AudioManager.ADJUST_RAISE:
+                        if (isMuted()) {
+                            // As for stream, RAISE during mute will increment the index
+                            updateVolumeIndex(previousIndex + 1, device);
+                            mute(false);
+                        } else {
+                            setVolumeIndex(Math.min(previousIndex + 1, mIndexMax),  device, flags);
+                        }
+                        break;
+                    case AudioManager.ADJUST_LOWER:
+                        // For stream, ADJUST_LOWER on mute group is a no-op
+                        // If we decide to support it, cannot fallback on adjustStreamVolume
+                        // for group associated to legacy stream type
+                        if (isMuted() && previousIndex != 0) {
+                            mute(false);
+                        } else {
+                            final int newIndex = Math.max(previousIndex - 1, mIndexMin);
+                            setVolumeIndex(newIndex, device, flags);
+                        }
+                        break;
+                }
+            }
         }
 
         public int getVolumeIndex() {
