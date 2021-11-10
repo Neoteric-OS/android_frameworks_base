@@ -3268,7 +3268,8 @@ public class AudioService extends IAudioService.Stub
                                             String callingPackage) {
         enforceModifyAudioRoutingPermission();
         Objects.requireNonNull(attr, "attr must not be null");
-        final int volumeGroup = getVolumeGroupIdForAttributes(attr);
+        final int volumeGroup =
+                AudioProductStrategy.getVolumeGroupIdForAudioAttributes(attr, false);
         if (sVolumeGroupStates.indexOfKey(volumeGroup) < 0) {
             Log.e(TAG, ": no volume group found for attributes " + attr.toString());
             return;
@@ -3309,7 +3310,8 @@ public class AudioService extends IAudioService.Stub
     /** @see AudioManager#getVolumeIndexForAttributes(attr) */
     public int getVolumeIndexForAttributes(@NonNull AudioAttributes attr) {
         Objects.requireNonNull(attr, "attr must not be null");
-        final int volumeGroup = getVolumeGroupIdForAttributes(attr);
+        final int volumeGroup =
+                AudioProductStrategy.getVolumeGroupIdForAudioAttributes(attr, false);
         if (sVolumeGroupStates.indexOfKey(volumeGroup) < 0) {
             throw new IllegalArgumentException("No volume group for attributes " + attr);
         }
@@ -3704,32 +3706,6 @@ public class AudioService extends IAudioService.Stub
         }
         sendVolumeUpdate(streamType, oldIndex, index, flags, device);
     }
-
-
-
-    private int getVolumeGroupIdForAttributes(@NonNull AudioAttributes attributes) {
-        Objects.requireNonNull(attributes, "attributes must not be null");
-        int volumeGroupId = getVolumeGroupIdForAttributesInt(attributes);
-        if (volumeGroupId != AudioVolumeGroup.DEFAULT_VOLUME_GROUP) {
-            return volumeGroupId;
-        }
-        // The default volume group is the one hosted by default product strategy, i.e.
-        // supporting Default Attributes
-        return getVolumeGroupIdForAttributesInt(AudioProductStrategy.sDefaultAttributes);
-    }
-
-    private int getVolumeGroupIdForAttributesInt(@NonNull AudioAttributes attributes) {
-        Objects.requireNonNull(attributes, "attributes must not be null");
-        for (final AudioProductStrategy productStrategy :
-                AudioProductStrategy.getAudioProductStrategies()) {
-            int volumeGroupId = productStrategy.getVolumeGroupIdForAudioAttributes(attributes);
-            if (volumeGroupId != AudioVolumeGroup.DEFAULT_VOLUME_GROUP) {
-                return volumeGroupId;
-            }
-        }
-        return AudioVolumeGroup.DEFAULT_VOLUME_GROUP;
-    }
-
 
     // No ringer or zen muted stream volumes can be changed unless it'll exit dnd
     private boolean volumeAdjustmentAllowedByDnd(int streamTypeAlias, int flags) {
