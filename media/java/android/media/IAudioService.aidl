@@ -117,6 +117,13 @@ interface IAudioService {
 
     int getMinVolumeIndexForAttributes(in AudioAttributes aa);
 
+    int getLastAudibleAttributesVolume(in AudioAttributes aa);
+
+    boolean isAttributesMuted(in AudioAttributes aa);
+
+    void adjustAttributesVolume(in AudioAttributes aa, int direction, int flags,
+            String callingPackage);
+
     int getLastAudibleStreamVolume(int streamType);
 
     void setSupportedSystemUsages(in int[] systemUsages);
