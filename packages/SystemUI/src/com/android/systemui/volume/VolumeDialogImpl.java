@@ -352,8 +352,6 @@ public class VolumeDialogImpl implements VolumeDialog,
         if (view == mTopContainer && !mIsRingerDrawerOpen) {
             if (!isLandscape()) {
                 y += getRingerDrawerOpenExtraSize();
-            } else {
-                x += getRingerDrawerOpenExtraSize();
             }
         }
 
