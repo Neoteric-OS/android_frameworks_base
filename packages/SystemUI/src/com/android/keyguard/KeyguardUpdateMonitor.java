@@ -1937,7 +1937,8 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         mBackgroundExecutor.execute(() -> {
             int subId = SubscriptionManager.getDefaultSubscriptionId();
             ServiceState serviceState = mContext.getSystemService(TelephonyManager.class)
-                    .getServiceStateForSubscriber(subId);
+                    .getServiceStateForSubscriber(subId, false /* renounceFineLocationAccess */,
+                            false /* renounceCoarseLocationAccess */);
             mHandler.sendMessage(
                     mHandler.obtainMessage(MSG_SERVICE_STATE_CHANGE, subId, 0, serviceState));
 

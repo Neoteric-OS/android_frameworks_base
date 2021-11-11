@@ -224,7 +224,7 @@ public class KeyguardUpdateMonitorTest extends SysuiTestCase {
         when(mStrongAuthTracker
                 .isUnlockingWithBiometricAllowed(anyBoolean() /* isStrongBiometric */))
                 .thenReturn(true);
-        when(mTelephonyManager.getServiceStateForSubscriber(anyInt()))
+        when(mTelephonyManager.getServiceStateForSubscriber(anyInt(), anyBoolean(), anyBoolean()))
                 .thenReturn(new ServiceState());
         when(mLockPatternUtils.getLockSettings()).thenReturn(mLockSettings);
         when(mAuthController.isUdfpsEnrolled(anyInt())).thenReturn(false);
