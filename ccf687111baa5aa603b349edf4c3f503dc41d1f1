@@ -22,6 +22,76 @@
       },
       "revId": "ccf687111baa5aa603b349edf4c3f503dc41d1f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad68eb35_513dcb81",
+        "filename": "services/core/java/com/android/server/stats/bootstrap/StatsBootstrapAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1431413
+      },
+      "writtenOn": "2021-11-11T19:47:13Z",
+      "side": 1,
+      "message": "+1 can use the for-each loop here",
+      "parentUuid": "aa6f4794_14f3b07b",
+      "range": {
+        "startLine": 45,
+        "startChar": 13,
+        "endLine": 45,
+        "endChar": 51
+      },
+      "revId": "ccf687111baa5aa603b349edf4c3f503dc41d1f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51c70458_dec72f6d",
+        "filename": "services/core/java/com/android/server/stats/bootstrap/StatsBootstrapAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1431413
+      },
+      "writtenOn": "2021-11-11T19:47:13Z",
+      "side": 1,
+      "message": "Do we want to handle default case? Useful if we add another type to aidl but forget to cover it here?",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 13
+      },
+      "revId": "ccf687111baa5aa603b349edf4c3f503dc41d1f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ef3d9fd_74af6611",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2492,
+      "author": {
+        "id": 1431413
+      },
+      "writtenOn": "2021-11-11T19:47:13Z",
+      "side": 1,
+      "message": "update comment",
+      "range": {
+        "startLine": 2492,
+        "startChar": 18,
+        "endLine": 2492,
+        "endChar": 24
+      },
+      "revId": "ccf687111baa5aa603b349edf4c3f503dc41d1f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
