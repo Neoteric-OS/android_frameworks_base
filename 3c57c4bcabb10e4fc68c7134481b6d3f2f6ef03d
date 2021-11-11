@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b86bce77_01e781d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060062
+      },
+      "writtenOn": "2021-11-11T22:19:04Z",
+      "side": 1,
+      "message": "This LGTM, but please make sure to R+ any relevant area owners when making changes to places like lockscreen, shade, etc. Thanks!",
+      "revId": "3c57c4bcabb10e4fc68c7134481b6d3f2f6ef03d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
