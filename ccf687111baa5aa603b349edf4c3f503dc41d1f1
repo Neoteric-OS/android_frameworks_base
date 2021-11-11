@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa6f4794_14f3b07b",
+        "filename": "services/core/java/com/android/server/stats/bootstrap/StatsBootstrapAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1242539
+      },
+      "writtenOn": "2021-11-11T18:55:06Z",
+      "side": 1,
+      "message": "nit: can we use an iterator here?",
+      "range": {
+        "startLine": 45,
+        "startChar": 13,
+        "endLine": 45,
+        "endChar": 51
+      },
+      "revId": "ccf687111baa5aa603b349edf4c3f503dc41d1f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
