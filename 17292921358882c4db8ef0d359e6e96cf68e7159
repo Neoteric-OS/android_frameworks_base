@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51cd8af4_9d5ad27a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-11-11T06:50:40Z",
+      "side": 1,
+      "message": "Can you instead import from an existing OWNERS file?",
+      "revId": "17292921358882c4db8ef0d359e6e96cf68e7159",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
