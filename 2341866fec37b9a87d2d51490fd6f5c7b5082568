@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d10da339_caa0e3a2",
+        "filename": "core/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-11-11T01:58:48Z",
+      "side": 1,
+      "message": "Just want to confirm: you explicitly want to use the process\u0027s userId, not the context\u0027s userId for some reason?",
+      "range": {
+        "startLine": 274,
+        "startChar": 64,
+        "endLine": 274,
+        "endChar": 86
+      },
+      "revId": "2341866fec37b9a87d2d51490fd6f5c7b5082568",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "190a8f1f_d78401b9",
         "filename": "core/java/android/nfc/cardemulation/CardEmulation.java",
         "patchSetId": 3
