@@ -39,6 +39,30 @@
       },
       "revId": "83eb7d17590a4d1b210e77beab6961d3db980675",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8184e54d_1622ce48",
+        "filename": "config/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-11-11T10:28:49Z",
+      "side": 1,
+      "message": "Fixed here https://android-review.googlesource.com/c/platform/frameworks/base/+/1888735",
+      "parentUuid": "8025969f_0958f7fa",
+      "range": {
+        "startLine": 4,
+        "startChar": 35,
+        "endLine": 4,
+        "endChar": 36
+      },
+      "revId": "83eb7d17590a4d1b210e77beab6961d3db980675",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
