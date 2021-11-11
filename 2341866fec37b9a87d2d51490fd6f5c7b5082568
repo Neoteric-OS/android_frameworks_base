@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1ad27985_ec6769c0",
+        "filename": "core/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-11-11T19:47:08Z",
+      "side": 1,
+      "message": "Yes, this is the caller\u0027s userId.\nPreviously, I think it was implicitly using the context\u0027s userId, right? In most cases, they would be identical. If the context had been created via createContextAsUser, however, they could differ. So, yes, if you always want the caller\u0027s userId, regardless of the context, then using myUserId() is correct.",
+      "parentUuid": "1f1c3351_0cfe4a0d",
+      "range": {
+        "startLine": 274,
+        "startChar": 64,
+        "endLine": 274,
+        "endChar": 86
+      },
+      "revId": "2341866fec37b9a87d2d51490fd6f5c7b5082568",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "190a8f1f_d78401b9",
         "filename": "core/java/android/nfc/cardemulation/CardEmulation.java",
         "patchSetId": 3
