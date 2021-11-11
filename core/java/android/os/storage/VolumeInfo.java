@@ -63,6 +63,14 @@ import java.util.UUID;
  * time to index them. In particular, transient volumes like USB OTG devices
  * <em>should not</em> be marked as visible; their contents should be surfaced
  * to apps through the Storage Access Framework.
+ * <li>{@link @MOUNT_FLAG_VISIBLE_READ_ONLY} is almost equivalent to
+ * {@link #MOUNT_FLAG_VISIBLE}. The system should send out relevant storage
+ * broadcasts and index any media on volumes mounted with this flag. The
+ * difference is that {@link #isVisible()} returns {@code false} for such
+ * volumes, while {@link #isVisibleForRead()} returns {@code true}. Note that
+ * the flag does not necessarily correspond to {@link #STATE_MOUNTED_READ_ONLY}.
+ * So, volumes mounted with {@link #MOUNT_FLAG_VISIBLE_READ_ONLY} might still be
+ * mounted as writable and might be edited by third-party apps.
  * </ul>
  *
  * @hide
@@ -101,6 +109,7 @@ public class VolumeInfo implements Parcelable {
 
     public static final int MOUNT_FLAG_PRIMARY = IVold.MOUNT_FLAG_PRIMARY;
     public static final int MOUNT_FLAG_VISIBLE = IVold.MOUNT_FLAG_VISIBLE;
+    public static final int MOUNT_FLAG_VISIBLE_READ_ONLY = IVold.MOUNT_FLAG_VISIBLE_READ_ONLY;
 
     private static SparseArray<String> sStateToEnvironment = new SparseArray<>();
     private static ArrayMap<String, String> sEnvironmentToBroadcast = new ArrayMap<>();
@@ -317,12 +326,33 @@ public class VolumeInfo implements Parcelable {
         return (mountFlags & MOUNT_FLAG_VISIBLE) != 0;
     }
 
-    public boolean isVisibleForUser(int userId) {
-        if ((type == TYPE_PUBLIC || type == TYPE_STUB || type == TYPE_EMULATED)
-                && mountUserId == userId) {
-            return isVisible();
+    @UnsupportedAppUsage
+    public boolean isVisibleForRead() {
+        return (mountFlags & (MOUNT_FLAG_VISIBLE | MOUNT_FLAG_VISIBLE_READ_ONLY)) != 0;
+    }
+
+    private boolean maybeVisibleForUser(int userId) {
+        if (mountUserId != userId) {
+            return false;
         }
-        return false;
+        return type == TYPE_PUBLIC || type == TYPE_STUB || type == TYPE_EMULATED;
+    }
+
+    /**
+     * Returns {@code true} if and only if this volume is visible for {@code userId}. For the
+     * meaning of "visible", see the explanation on {@link #MOUNT_FLAG_VISIBLE}.
+     */
+    public boolean isVisibleForUser(int userId) {
+        return maybeVisibleForUser(userId) && isVisible();
+    }
+
+    /**
+     * Returns {@code true} if and only if this volume is visible for read for {@code userId}. For
+     * the meaning of "visible for read", see the explanation on
+     * {@link #MOUNT_FLAG_VISIBLE_READ_ONLY}.
+     */
+    public boolean isVisibleForReadForUser(int userId) {
+        return maybeVisibleForUser(userId) && isVisibleForRead();
     }
 
     /**
@@ -335,7 +365,7 @@ public class VolumeInfo implements Parcelable {
     }
 
     public boolean isVisibleForRead(int userId) {
-        return isVisibleForUser(userId);
+        return isVisibleForReadForUser(userId);
     }
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
