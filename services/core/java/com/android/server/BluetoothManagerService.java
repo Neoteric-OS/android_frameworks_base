@@ -140,6 +140,8 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     private static final int MESSAGE_BLUETOOTH_SERVICE_DISCONNECTED = 41;
     private static final int MESSAGE_RESTART_BLUETOOTH_SERVICE = 42;
     private static final int MESSAGE_BLUETOOTH_STATE_CHANGE = 60;
+    private static final int MESSAGE_BLUETOOTH_NAME_CHANGE = 61;
+    private static final int MESSAGE_BLUETOOTH_ADDRESS_CHANGE = 62;
     private static final int MESSAGE_TIMEOUT_BIND = 100;
     private static final int MESSAGE_TIMEOUT_UNBIND = 101;
     private static final int MESSAGE_GET_NAME_AND_ADDRESS = 200;
@@ -264,6 +266,20 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         public void onBluetoothStateChange(int prevState, int newState) throws RemoteException {
             Message msg =
                     mHandler.obtainMessage(MESSAGE_BLUETOOTH_STATE_CHANGE, prevState, newState);
+            mHandler.sendMessage(msg);
+        }
+
+        @Override
+        public void onBluetoothNameChanged(String newName) throws RemoteException {
+            Message msg =
+                    mHandler.obtainMessage(MESSAGE_BLUETOOTH_NAME_CHANGE, newName);
+            mHandler.sendMessage(msg);
+        }
+
+        @Override
+        public void onBluetoothAddressChanged(String newAddress) throws RemoteException {
+            Message msg =
+                    mHandler.obtainMessage(MESSAGE_BLUETOOTH_ADDRESS_CHANGE, newAddress);
             mHandler.sendMessage(msg);
         }
     };
@@ -413,28 +429,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (BluetoothAdapter.ACTION_LOCAL_NAME_CHANGED.equals(action)) {
-                String newName = intent.getStringExtra(BluetoothAdapter.EXTRA_LOCAL_NAME);
-                if (DBG) {
-                    Slog.d(TAG, "Bluetooth Adapter name changed to " + newName + " by "
-                            + mContext.getPackageName());
-                }
-                if (newName != null) {
-                    storeNameAndAddress(newName, null);
-                }
-            } else if (BluetoothAdapter.ACTION_BLUETOOTH_ADDRESS_CHANGED.equals(action)) {
-                String newAddress = intent.getStringExtra(BluetoothAdapter.EXTRA_BLUETOOTH_ADDRESS);
-                if (newAddress != null) {
-                    if (DBG) {
-                        Slog.d(TAG, "Bluetooth Adapter address changed to " + newAddress);
-                    }
-                    storeNameAndAddress(null, newAddress);
-                } else {
-                    if (DBG) {
-                        Slog.e(TAG, "No Bluetooth Adapter address parameter found");
-                    }
-                }
-            } else if (Intent.ACTION_SETTING_RESTORED.equals(action)) {
+            if (Intent.ACTION_SETTING_RESTORED.equals(action)) {
                 final String name = intent.getStringExtra(Intent.EXTRA_SETTING_NAME);
                 if (Settings.Global.BLUETOOTH_ON.equals(name)) {
                     // The Bluetooth On state may be changed during system restore.
@@ -513,8 +508,6 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         }
 
         IntentFilter filter = new IntentFilter();
-        filter.addAction(BluetoothAdapter.ACTION_LOCAL_NAME_CHANGED);
-        filter.addAction(BluetoothAdapter.ACTION_BLUETOOTH_ADDRESS_CHANGED);
         filter.addAction(Intent.ACTION_SETTING_RESTORED);
         filter.addAction(BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED);
         filter.addAction(BluetoothHearingAid.ACTION_CONNECTION_STATE_CHANGED);
@@ -2162,6 +2155,26 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                             Slog.w(TAG, "bluetooth is recovered from error");
                             mErrorRecoveryRetryCounter = 0;
                         }
+                    }
+                    break;
+                }
+                case MESSAGE_BLUETOOTH_NAME_CHANGE: {
+                    String newName = (String) msg.obj;
+                    if (DBG) {
+                        Slog.d(TAG, "Bluetooth Adapter name changed to " + newName);
+                    }
+                    if (newName != null) {
+                        storeNameAndAddress(newName, null);
+                    }
+                    break;
+                }
+                case MESSAGE_BLUETOOTH_ADDRESS_CHANGE: {
+                    String newAddress = (String) msg.obj;
+                    if (DBG) {
+                        Slog.d(TAG, "Bluetooth Adapter address changed to " + newAddress);
+                    }
+                    if (newAddress != null) {
+                        storeNameAndAddress(null, newAddress);
                     }
                     break;
                 }
