@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cac2f310_6b15faf8",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-11-12T08:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f94d92f_8ea8c47e",
+      "range": {
+        "startLine": 176,
+        "startChar": 22,
+        "endLine": 176,
+        "endChar": 68
+      },
+      "revId": "c49a506a1043d24490732ed5e48771f78ccfb867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f404400f_8dc60d49",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d57533b2_c1a3313f",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-11-12T08:59:14Z",
+      "side": 1,
+      "message": "The value is returned by getTransports(), and 0 means nc is null, which also means that the given network is lost or we never get the nc of the given netid.\nAnd passing 0 to NetworkMetrics will make NetworkMetrics.Summary#toString() print nothing to transports.\nSomething like: \n{netId\u003d101, transports\u003d{} ....\n\nYou can refer to https://source.corp.google.com/aosp-master/frameworks/base/core/java/android/net/metrics/NetworkMetrics.java;l\u003d145?q\u003dnetworkmetrics.java\u0026sq\u003dpackage:%5Eaosp-master$ and https://source.corp.google.com/aosp-master/libcore/ojluni/src/main/java/java/util/BitSet.java;l\u003d196?q\u003dpackage:%5E(aosp-master)$%20file:(%2F%7C%5E)java%2Futil%2FBitSet%5C.java$\n\nSo that\u0027s why I checked \"transports !\u003d 0\".",
+      "parentUuid": "f404400f_8dc60d49",
+      "range": {
+        "startLine": 177,
+        "startChar": 17,
+        "endLine": 177,
+        "endChar": 33
+      },
+      "revId": "c49a506a1043d24490732ed5e48771f78ccfb867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f57bbe6c_f7c4a5c0",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-11-12T08:07:51Z",
       "side": 1,
       "message": "forceCollect",
+      "range": {
+        "startLine": 191,
+        "startChar": 68,
+        "endLine": 191,
+        "endChar": 84
+      },
+      "revId": "c49a506a1043d24490732ed5e48771f78ccfb867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfd99581_a7e5ba6d",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-11-12T08:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f57bbe6c_f7c4a5c0",
       "range": {
         "startLine": 191,
         "startChar": 68,
