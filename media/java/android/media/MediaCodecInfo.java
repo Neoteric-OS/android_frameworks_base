@@ -597,6 +597,13 @@ public final class MediaCodecInfo {
         public static final String FEATURE_QpBounds = "qp-bounds";
 
         /**
+         * <b>video encoder only</b>: codec supports exporting encoder statistics.
+         * @see MediaFormat#KEY_ENCODING_STATISTICS
+         */
+        @SuppressLint("AllUpper")
+        public static final String FEATURE_EncodingStatistics = "encoding-statistics";
+
+        /**
          * Query codec feature capabilities.
          * <p>
          * These features are supported to be used by the codec.  These
@@ -635,6 +642,7 @@ public final class MediaCodecInfo {
             new Feature(FEATURE_MultipleFrames, (1 << 1), false),
             new Feature(FEATURE_DynamicTimestamp, (1 << 2), false),
             new Feature(FEATURE_QpBounds, (1 << 3), false),
+            new Feature(FEATURE_EncodingStatistics, (1 << 4), false),
             // feature to exclude codec from REGULAR codec list
             new Feature(FEATURE_SpecialCodec,     (1 << 30), false, true),
         };
