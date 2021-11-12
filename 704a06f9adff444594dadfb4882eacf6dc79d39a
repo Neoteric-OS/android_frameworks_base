@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59951fc5_7e829262",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1669779
+      },
+      "writtenOn": "2021-11-12T05:12:14Z",
+      "side": 1,
+      "message": "The plan is to set this flag for StubVolumes by aosp/1889176 so that they can be indexed by MediaProvider without having the \"Android\" directory. PTAL. Thanks!",
+      "revId": "704a06f9adff444594dadfb4882eacf6dc79d39a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
