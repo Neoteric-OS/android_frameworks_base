@@ -16,6 +16,23 @@
       "message": "please add both the CLs to a topic branch, so that they get merged together.",
       "revId": "0e1e69fbc7142d9b4ccd0fcc023b00167980ca87",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24baf5f9_cba8d16a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2021-11-12T20:27:35Z",
+      "side": 1,
+      "message": "transferred to aosp from\nhttps://partner-android-review.googlesource.com/c/platform/frameworks/base/+/2009580",
+      "revId": "0e1e69fbc7142d9b4ccd0fcc023b00167980ca87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
