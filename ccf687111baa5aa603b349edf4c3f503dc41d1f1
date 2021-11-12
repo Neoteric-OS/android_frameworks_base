@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "52b503e3_f918d41c",
+        "filename": "services/core/java/com/android/server/stats/bootstrap/StatsBootstrapAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2021-11-12T03:23:05Z",
+      "side": 1,
+      "message": "Done. I initially avoided using the for-each here because I thought it created additional objects, but did a bit more digging and I think for-each over primitive arrays don\u0027t allocate additional objects, but doing it over collections does. \nSome references: \ngo/framework-code-guide\nhttps://stackoverflow.com/questions/14265888/how-does-primitive-array-work-with-new-for-each-loop-in-java",
+      "parentUuid": "ad68eb35_513dcb81",
+      "range": {
+        "startLine": 45,
+        "startChar": 13,
+        "endLine": 45,
+        "endChar": 51
+      },
+      "revId": "ccf687111baa5aa603b349edf4c3f503dc41d1f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51c70458_dec72f6d",
@@ -71,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "acde8e5c_51dd4ddb",
+        "filename": "services/core/java/com/android/server/stats/bootstrap/StatsBootstrapAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2021-11-12T03:23:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51c70458_dec72f6d",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 13
+      },
+      "revId": "ccf687111baa5aa603b349edf4c3f503dc41d1f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ef3d9fd_74af6611",
@@ -84,6 +132,30 @@
       "writtenOn": "2021-11-11T19:47:13Z",
       "side": 1,
       "message": "update comment",
+      "range": {
+        "startLine": 2492,
+        "startChar": 18,
+        "endLine": 2492,
+        "endChar": 24
+      },
+      "revId": "ccf687111baa5aa603b349edf4c3f503dc41d1f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5862dbb4_282ce65f",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2492,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2021-11-12T03:23:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ef3d9fd_74af6611",
       "range": {
         "startLine": 2492,
         "startChar": 18,
