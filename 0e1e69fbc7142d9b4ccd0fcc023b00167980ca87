@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62bdea67_dad986dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2021-11-12T19:10:27Z",
+      "side": 1,
+      "message": "please add both the CLs to a topic branch, so that they get merged together.",
+      "revId": "0e1e69fbc7142d9b4ccd0fcc023b00167980ca87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
