@@ -117,6 +117,8 @@ import com.android.internal.telephony.ISms;
 import com.android.internal.telephony.ISub;
 import com.android.internal.telephony.ITelephony;
 import com.android.internal.telephony.IUpdateAvailableNetworksCallback;
+import com.android.internal.telephony.IccCloseLogicalChannelRequest;
+import com.android.internal.telephony.IccOpenLogicalChannelRequest;
 import com.android.internal.telephony.OperatorInfo;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.RILConstants;
@@ -6548,8 +6550,11 @@ public class TelephonyManager {
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
-                return telephony.iccOpenLogicalChannelBySlot(slotIndex, getOpPackageName(), aid,
-                        p2);
+                return telephony.iccOpenLogicalChannel(
+                        new IccOpenLogicalChannelRequest(
+                                SubscriptionManager.INVALID_SUBSCRIPTION_ID, slotIndex,
+                                getOpPackageName(),
+                                aid, p2));
             }
         } catch (RemoteException ex) {
         } catch (NullPointerException ex) {
@@ -6626,8 +6631,12 @@ public class TelephonyManager {
     public IccOpenLogicalChannelResponse iccOpenLogicalChannel(int subId, String AID, int p2) {
         try {
             ITelephony telephony = getITelephony();
-            if (telephony != null)
-                return telephony.iccOpenLogicalChannel(subId, getOpPackageName(), AID, p2);
+            if (telephony != null) {
+                return telephony.iccOpenLogicalChannel(
+                        new IccOpenLogicalChannelRequest(subId,
+                                SubscriptionManager.INVALID_SIM_SLOT_INDEX, getOpPackageName(), AID,
+                                p2));
+            }
         } catch (RemoteException ex) {
         } catch (NullPointerException ex) {
         }
@@ -6660,7 +6669,9 @@ public class TelephonyManager {
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
-                return telephony.iccCloseLogicalChannelBySlot(slotIndex, channel);
+                return telephony.iccCloseLogicalChannel(
+                        new IccCloseLogicalChannelRequest(
+                                SubscriptionManager.INVALID_SUBSCRIPTION_ID, slotIndex, channel));
             }
         } catch (RemoteException ex) {
         } catch (NullPointerException ex) {
@@ -6709,8 +6720,11 @@ public class TelephonyManager {
     public boolean iccCloseLogicalChannel(int subId, int channel) {
         try {
             ITelephony telephony = getITelephony();
-            if (telephony != null)
-                return telephony.iccCloseLogicalChannel(subId, channel);
+            if (telephony != null) {
+                return telephony.iccCloseLogicalChannel(
+                        new IccCloseLogicalChannelRequest(subId,
+                                SubscriptionManager.INVALID_SIM_SLOT_INDEX, channel));
+            }
         } catch (RemoteException ex) {
         } catch (NullPointerException ex) {
         }
