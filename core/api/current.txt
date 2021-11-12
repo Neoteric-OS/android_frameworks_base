@@ -21585,9 +21585,11 @@ package android.media {
     field @Deprecated public static final int INFO_OUTPUT_BUFFERS_CHANGED = -3; // 0xfffffffd
     field public static final int INFO_OUTPUT_FORMAT_CHANGED = -2; // 0xfffffffe
     field public static final int INFO_TRY_AGAIN_LATER = -1; // 0xffffffff
+    field public static final String PARAMETER_KEY_AVERAGE_QP = "average-qp";
     field public static final String PARAMETER_KEY_HDR10_PLUS_INFO = "hdr10-plus-info";
     field public static final String PARAMETER_KEY_LOW_LATENCY = "low-latency";
     field public static final String PARAMETER_KEY_OFFSET_TIME = "time-offset-us";
+    field public static final String PARAMETER_KEY_PICTURE_TYPE = "picture_type";
     field public static final String PARAMETER_KEY_REQUEST_SYNC_FRAME = "request-sync";
     field public static final String PARAMETER_KEY_SUSPEND = "drop-input-frames";
     field public static final String PARAMETER_KEY_SUSPEND_TIME = "drop-start-time-us";
@@ -21806,6 +21808,7 @@ package android.media {
     field @Deprecated public static final int COLOR_TI_FormatYUV420PackedSemiPlanar = 2130706688; // 0x7f000100
     field public static final String FEATURE_AdaptivePlayback = "adaptive-playback";
     field public static final String FEATURE_DynamicTimestamp = "dynamic-timestamp";
+    field public static final String FEATURE_EncodingStatistics = "encoding-statistics";
     field public static final String FEATURE_FrameParsing = "frame-parsing";
     field public static final String FEATURE_IntraRefresh = "intra-refresh";
     field public static final String FEATURE_LowLatency = "low-latency";
@@ -22530,6 +22533,7 @@ package android.media {
     field public static final String KEY_AAC_SBR_MODE = "aac-sbr-mode";
     field public static final String KEY_ALLOW_FRAME_DROP = "allow-frame-drop";
     field public static final String KEY_AUDIO_SESSION_ID = "audio-session-id";
+    field public static final String KEY_AVERAGE_QP = "average-qp";
     field public static final String KEY_BITRATE_MODE = "bitrate-mode";
     field public static final String KEY_BIT_RATE = "bitrate";
     field public static final String KEY_CAPTION_SERVICE_NUMBER = "caption-service-number";
@@ -22579,6 +22583,7 @@ package android.media {
     field public static final String KEY_OPERATING_RATE = "operating-rate";
     field public static final String KEY_OUTPUT_REORDER_DEPTH = "output-reorder-depth";
     field public static final String KEY_PCM_ENCODING = "pcm-encoding";
+    field public static final String KEY_PICTURE_TYPE = "picture_type";
     field public static final String KEY_PIXEL_ASPECT_RATIO_HEIGHT = "sar-height";
     field public static final String KEY_PIXEL_ASPECT_RATIO_WIDTH = "sar-width";
     field public static final String KEY_PREPEND_HEADER_TO_SYNC_FRAMES = "prepend-sps-pps-to-idr-frames";

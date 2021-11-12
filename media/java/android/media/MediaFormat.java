@@ -1102,6 +1102,24 @@ public final class MediaFormat {
     public static final String KEY_VIDEO_QP_B_MIN = "video-qp-b-min";
 
     /**
+     * A key describing the per frame average block QP.
+     * This is a part of a video 'Encoder Statistics' export feature.
+     * This value is emmited from H/W video encoder for a video frame.
+     *
+     * The associated value is an integer.
+     */
+    public static final String KEY_AVERAGE_QP = "average-qp";
+
+    /**
+     * A key describing the picture type of the encoded frame.
+     * This is a part of a video 'Encoder Statistics' export feature.
+     * This value is emmited from H/W video encoder for a video frame.
+     *
+     * The associated value is an integer.
+     */
+    public static final String KEY_PICTURE_TYPE = "picture_type";
+
+    /**
      * A key describing the audio session ID of the AudioTrack associated
      * to a tunneled video codec.
      * The associated value is an integer.
