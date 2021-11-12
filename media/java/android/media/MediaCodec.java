@@ -4478,6 +4478,28 @@ final public class MediaCodec {
             MediaFormat.KEY_LOW_LATENCY;
 
     /**
+     * Enable/disable an export of per-frame average QP by a H/W video encoder.
+     * When enabled, the H/W encoder is requested to export a per-frame average QP.
+     * The value is an Integer object containing the value 1 to enable
+     * or the value 0 to disable.
+     *
+     * @see #setParameters(Bundle)
+     * @see MediaFormat#KEY_VIDEO_QP_AVERAGE
+     */
+    public static final String PARAMETER_KEY_VIDEO_QP_AVERAGE = MediaFormat.KEY_VIDEO_QP_AVERAGE;
+
+    /**
+     * Enable/disable an export of picture type for a frame by a H/W video encoder.
+     * When enabled, the H/W encoder is requested to export a picture type for a frame.
+     * The value is an Integer object containing the value 1 to enable
+     * or the value 0 to disable.
+     *
+     * @see #setParameters(Bundle)
+     * @see MediaFormat#KEY_PICTURE_TYPE
+     */
+    public static final String PARAMETER_KEY_PICTURE_TYPE = MediaFormat.KEY_PICTURE_TYPE;
+
+    /**
      * Control video peek of the first frame when a codec is configured for tunnel mode with
      * {@link MediaFormat#KEY_AUDIO_SESSION_ID} while the {@link AudioTrack} is paused.
      *<p>

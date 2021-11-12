@@ -1101,6 +1101,47 @@ public final class MediaFormat {
      */
     public static final String KEY_VIDEO_QP_B_MIN = "video-qp-b-min";
 
+    /** Picture Type is undefined. */
+    public static final int PICTURE_TYPE_NONE = 0;
+
+    /** Picture Type is I Frame. */
+    public static final int PICTURE_TYPE_I = 1;
+
+    /** Picture Type is P Frame. */
+    public static final int PICTURE_TYPE_P = 2;
+
+    /** Picture Type is B Frame. */
+    public static final int PICTURE_TYPE_B =  3;
+
+    /** @hide */
+    @IntDef({
+        PICTURE_TYPE_NONE,
+        PICTURE_TYPE_I,
+        PICTURE_TYPE_P,
+        PICTURE_TYPE_B,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface PictureType {}
+
+    /**
+     * A key describing the per frame average block QP.
+     * This is a part of a video 'Encoding Statistics' export feature.
+     * This value is emmited from H/W video encoder for a video frame.
+     * The average value is rounding down (using floor()) to integer value.
+     *
+     * The associated value is an integer.
+     */
+    public static final String KEY_VIDEO_QP_AVERAGE = "video-qp-average";
+
+    /**
+     * A key describing the picture type of the encoded frame.
+     * This is a part of a video 'Encoding Statistics' export feature.
+     * This value is emmited from H/W video encoder for a video frame.
+     *
+     * The associated value is an integer.
+     */
+    public static final String KEY_PICTURE_TYPE = "picture_type";
+
     /**
      * A key describing the audio session ID of the AudioTrack associated
      * to a tunneled video codec.
