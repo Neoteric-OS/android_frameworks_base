@@ -179,6 +179,7 @@ public class AlarmManagerService extends SystemService {
     static final String TIME_TICK_TAG = "TIME_TICK";
     static final boolean localLOGV = false;
     static final boolean DEBUG_BATCH = localLOGV || false;
+    static final boolean DEBUG_WAKEUPS = localLOGV || true;
     static final boolean DEBUG_ALARM_CLOCK = localLOGV || false;
     static final boolean DEBUG_LISTENER_CALLBACK = localLOGV || false;
     static final boolean DEBUG_WAKELOCK = localLOGV || false;
@@ -5045,6 +5046,10 @@ public class AlarmManagerService extends SystemService {
                 mActivityManagerInternal.noteWakeupAlarm(
                         alarm.operation, alarm.workSource, alarm.uid, alarm.packageName,
                         alarm.statsTag);
+                if (DEBUG_WAKEUPS) {
+                    Slog.d(TAG, "Wakeup alarm [" + alarm.statsTag + "] sent to ["
+                           + alarm.packageName + "]");
+                }
             }
         }
     }
