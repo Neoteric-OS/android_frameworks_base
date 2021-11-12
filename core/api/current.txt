@@ -21585,6 +21585,7 @@ package android.media {
     field @Deprecated public static final int INFO_OUTPUT_BUFFERS_CHANGED = -3; // 0xfffffffd
     field public static final int INFO_OUTPUT_FORMAT_CHANGED = -2; // 0xfffffffe
     field public static final int INFO_TRY_AGAIN_LATER = -1; // 0xffffffff
+    field public static final String PARAMETER_KEY_ENCODING_STATISTICS = "encoding-statistics";
     field public static final String PARAMETER_KEY_HDR10_PLUS_INFO = "hdr10-plus-info";
     field public static final String PARAMETER_KEY_LOW_LATENCY = "low-latency";
     field public static final String PARAMETER_KEY_OFFSET_TIME = "time-offset-us";
@@ -21806,6 +21807,7 @@ package android.media {
     field @Deprecated public static final int COLOR_TI_FormatYUV420PackedSemiPlanar = 2130706688; // 0x7f000100
     field public static final String FEATURE_AdaptivePlayback = "adaptive-playback";
     field public static final String FEATURE_DynamicTimestamp = "dynamic-timestamp";
+    field public static final String FEATURE_EncodingStatistics = "encoding-statistics";
     field public static final String FEATURE_FrameParsing = "frame-parsing";
     field public static final String FEATURE_IntraRefresh = "intra-refresh";
     field public static final String FEATURE_LowLatency = "low-latency";
@@ -22547,6 +22549,7 @@ package android.media {
     field public static final String KEY_DURATION = "durationUs";
     field public static final String KEY_ENCODER_DELAY = "encoder-delay";
     field public static final String KEY_ENCODER_PADDING = "encoder-padding";
+    field public static final String KEY_ENCODING_STATISTICS = "encoding-statistics";
     field public static final String KEY_FLAC_COMPRESSION_LEVEL = "flac-compression-level";
     field public static final String KEY_FRAME_RATE = "frame-rate";
     field public static final String KEY_GRID_COLUMNS = "grid-cols";
