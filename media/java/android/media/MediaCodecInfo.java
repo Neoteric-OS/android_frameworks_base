@@ -603,6 +603,17 @@ public final class MediaCodecInfo {
         public static final String FEATURE_QpBounds = "qp-bounds";
 
         /**
+         * <b>video encoder only</b>: codec supports exporting encoding statistics.
+         * For devices launching {@link android.os.Build.VERSION_CODES#TIRAMISU} or later,
+         * encoders with this feature support encoding statistics levels up to
+         * the desinated API level.
+         *
+         * @see MediaFormat#KEY_VIDEO_ENCODING_STATISTICS_LEVEL
+         */
+        @SuppressLint("AllUpper")
+        public static final String FEATURE_EncodingStatistics = "encoding-statistics";
+
+        /**
          * Query codec feature capabilities.
          * <p>
          * These features are supported to be used by the codec.  These
@@ -641,6 +652,7 @@ public final class MediaCodecInfo {
             new Feature(FEATURE_MultipleFrames, (1 << 1), false),
             new Feature(FEATURE_DynamicTimestamp, (1 << 2), false),
             new Feature(FEATURE_QpBounds, (1 << 3), false),
+            new Feature(FEATURE_EncodingStatistics, (1 << 4), false),
             // feature to exclude codec from REGULAR codec list
             new Feature(FEATURE_SpecialCodec,     (1 << 30), false, true),
         };
