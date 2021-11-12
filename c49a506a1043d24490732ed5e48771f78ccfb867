@@ -119,6 +119,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc77e6f1_e2f21639",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-11-12T10:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ff8ca5a_f2ba652f",
+      "range": {
+        "startLine": 177,
+        "startChar": 17,
+        "endLine": 177,
+        "endChar": 33
+      },
+      "revId": "c49a506a1043d24490732ed5e48771f78ccfb867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f57bbe6c_f7c4a5c0",
