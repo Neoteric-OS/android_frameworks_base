@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f94d92f_8ea8c47e",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-11-12T08:07:51Z",
+      "side": 1,
+      "message": "Maybe just \"forceCollect\", or \"updateTransports\"",
+      "range": {
+        "startLine": 176,
+        "startChar": 22,
+        "endLine": 176,
+        "endChar": 68
+      },
+      "revId": "c49a506a1043d24490732ed5e48771f78ccfb867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f404400f_8dc60d49",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-11-12T08:07:51Z",
+      "side": 1,
+      "message": "Why do we not do this if transports \u003d\u003d 0 ?",
+      "range": {
+        "startLine": 177,
+        "startChar": 17,
+        "endLine": 177,
+        "endChar": 33
+      },
+      "revId": "c49a506a1043d24490732ed5e48771f78ccfb867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f57bbe6c_f7c4a5c0",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-11-12T08:07:51Z",
+      "side": 1,
+      "message": "forceCollect",
+      "range": {
+        "startLine": 191,
+        "startChar": 68,
+        "endLine": 191,
+        "endChar": 84
+      },
+      "revId": "c49a506a1043d24490732ed5e48771f78ccfb867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
