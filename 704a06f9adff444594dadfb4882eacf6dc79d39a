@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4072746_7a80ec37",
+        "filename": "core/java/android/os/storage/VolumeInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1669779
+      },
+      "writtenOn": "2021-11-12T18:02:06Z",
+      "side": 1,
+      "message": "Done. One thing to note is that now the meaning of isVisibleForRead() has changed so that it\u0027s not implied by isVisibleForWrite(); they are mutually exclusive.",
+      "parentUuid": "c9bb16f9_169a5b26",
+      "range": {
+        "startLine": 330,
+        "startChar": 29,
+        "endLine": 330,
+        "endChar": 50
+      },
+      "revId": "704a06f9adff444594dadfb4882eacf6dc79d39a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9815c47_d12cf09f",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-11-12T14:30:02Z",
       "side": 1,
       "message": "nit: isVolumeSupportedForUser",
+      "range": {
+        "startLine": 333,
+        "startChar": 20,
+        "endLine": 333,
+        "endChar": 39
+      },
+      "revId": "704a06f9adff444594dadfb4882eacf6dc79d39a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69e0edf9_1ba3dc8e",
+        "filename": "core/java/android/os/storage/VolumeInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1669779
+      },
+      "writtenOn": "2021-11-12T18:02:06Z",
+      "side": 1,
+      "message": "Done. Thanks for suggesting a better name!",
+      "parentUuid": "f9815c47_d12cf09f",
       "range": {
         "startLine": 333,
         "startChar": 20,
