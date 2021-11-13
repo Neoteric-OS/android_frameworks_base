@@ -52,6 +52,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8da92859_23112459",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1069064
+      },
+      "writtenOn": "2021-11-13T00:17:21Z",
+      "side": 1,
+      "message": "IllegalArgumentException is a subclass of RuntimeException.\n\nQuoting the link below:\"RuntimeException and its subclasses are unchecked exceptions. Unchecked exceptions do not need to be declared in a method or constructor\u0027s throws clause if they can be thrown by the execution of the method or constructor and propagate outside the method or constructor boundary.\"\n\nhttps://developer.android.com/reference/java/lang/IllegalArgumentException\nhttps://developer.android.com/reference/java/lang/RuntimeException",
+      "parentUuid": "a00db3e1_0b791c02",
+      "revId": "0e1e69fbc7142d9b4ccd0fcc023b00167980ca87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c96d1310_7b08500e",
