@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1aae2d13_ad45038f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2021-11-13T15:21:54Z",
+      "side": 1,
+      "message": "this looks good; goes to +2 when the matching test CL is ready.",
+      "revId": "6c2516781de2d595259d0ef8a6efefc88205c51b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
