@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "031549e8_6774e92a",
+        "filename": "media/native/midi/amidi.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1880185
+      },
+      "writtenOn": "2021-11-13T00:11:06Z",
+      "side": 0,
+      "message": "Return value will never be EINTR",
+      "revId": "a8c0faa12041eddf2c99e3f8e2bee7056a9af1a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
