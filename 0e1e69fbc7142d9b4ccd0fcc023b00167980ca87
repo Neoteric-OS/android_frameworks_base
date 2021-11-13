@@ -35,6 +35,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a00db3e1_0b791c02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2021-11-13T00:05:27Z",
+      "side": 1,
+      "message": "the bit about documenting the exception.\n\nshould the function change its signature to include \"... throws ...\";\ni\u0027m not sure about that.",
+      "revId": "0e1e69fbc7142d9b4ccd0fcc023b00167980ca87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c96d1310_7b08500e",
