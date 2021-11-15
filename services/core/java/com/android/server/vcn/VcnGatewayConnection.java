@@ -30,6 +30,7 @@ import static android.net.vcn.VcnManager.VCN_ERROR_CODE_CONFIG_ERROR;
 import static android.net.vcn.VcnManager.VCN_ERROR_CODE_INTERNAL_ERROR;
 import static android.net.vcn.VcnManager.VCN_ERROR_CODE_NETWORK_ERROR;
 
+import static com.android.net.module.util.NetworkStackConstants.IPV6_MIN_MTU;
 import static com.android.server.VcnManagementService.LOCAL_LOG;
 import static com.android.server.VcnManagementService.VDBG;
 
@@ -2060,18 +2061,18 @@ public class VcnGatewayConnection extends StateMachine {
                 gatewayConnectionConfig.getTunnelConnectionParams();
         final LinkProperties lp = new LinkProperties();
 
+        boolean enableIpv6 = false;
+
         lp.setInterfaceName(tunnelIface.getInterfaceName());
         for (LinkAddress addr : childConfig.getInternalAddresses()) {
+            if (addr.getAddress() instanceof Inet6Address) {
+                enableIpv6 |= true;
+            }
             lp.addLinkAddress(addr);
         }
         for (InetAddress addr : childConfig.getInternalDnsServers()) {
             lp.addDnsServer(addr);
         }
-
-        lp.addRoute(new RouteInfo(new IpPrefix(Inet4Address.ANY, 0), null /*gateway*/,
-                null /*iface*/, RouteInfo.RTN_UNICAST));
-        lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), null /*gateway*/,
-                null /*iface*/, RouteInfo.RTN_UNICAST));
 
         int underlyingMtu = 0;
         if (underlying != null) {
@@ -2092,11 +2093,30 @@ public class VcnGatewayConnection extends StateMachine {
                     "No underlying network while building link properties",
                     new IllegalStateException());
         }
-        lp.setMtu(
+
+        final int resultMtu =
                 MtuUtils.getMtu(
                         ikeTunnelParams.getTunnelModeChildSessionParams().getSaProposals(),
                         gatewayConnectionConfig.getMaxMtu(),
-                        underlyingMtu));
+                        underlyingMtu);
+
+        enableIpv6 &= (resultMtu >= IPV6_MIN_MTU);
+        lp.setMtu(resultMtu);
+
+        lp.addRoute(
+                new RouteInfo(
+                        new IpPrefix(Inet4Address.ANY, 0),
+                        null /*gateway*/,
+                        null /*iface*/,
+                        RouteInfo.RTN_UNICAST));
+        if (enableIpv6) {
+            lp.addRoute(
+                    new RouteInfo(
+                            new IpPrefix(Inet6Address.ANY, 0),
+                            null /*gateway*/,
+                            null /*iface*/,
+                            RouteInfo.RTN_UNICAST));
+        }
 
         return lp;
     }
