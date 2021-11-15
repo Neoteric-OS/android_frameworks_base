@@ -2035,7 +2035,7 @@ public final class BluetoothDevice implements Parcelable, Attributable {
      *
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     @RequiresLegacyBluetoothAdminPermission
     @RequiresBluetoothConnectPermission
     @RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT)
@@ -2520,11 +2520,8 @@ public final class BluetoothDevice implements Parcelable, Attributable {
      * @return the pin code as a UTF-8 byte array, or null if it is an invalid Bluetooth pin.
      * @hide
      */
-    @UnsupportedAppUsage
-    public static byte[] convertPinToBytes(String pin) {
-        if (pin == null) {
-            return null;
-        }
+    @SystemApi
+    public static @Nullable byte[] convertPinToBytes(@NonNull String pin) {
         byte[] pinBytes;
         try {
             pinBytes = pin.getBytes("UTF-8");

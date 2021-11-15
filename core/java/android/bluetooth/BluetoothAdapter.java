@@ -1651,8 +1651,7 @@ public final class BluetoothAdapter {
      * @return true if the scan mode was set, false otherwise
      * @hide
      */
-    @UnsupportedAppUsage(publicAlternatives = "Use {@link #ACTION_REQUEST_DISCOVERABLE}, which "
-            + "shows UI that confirms the user wants to go into discoverable mode.")
+    @SystemApi
     @RequiresLegacyBluetoothPermission
     @RequiresBluetoothScanPermission
     @RequiresPermission(android.Manifest.permission.BLUETOOTH_SCAN)
@@ -1703,7 +1702,7 @@ public final class BluetoothAdapter {
      * @return true if the scan mode was set, false otherwise
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     @RequiresLegacyBluetoothPermission
     @RequiresBluetoothScanPermission
     @RequiresPermission(android.Manifest.permission.BLUETOOTH_SCAN)
@@ -2560,6 +2559,8 @@ public final class BluetoothAdapter {
      * BluetoothProfile}.
      * @hide
      */
+    @SystemApi
+    @ConnectionPolicy
     @RequiresNoPermission
     public @NonNull List<Integer> getSupportedProfiles() {
         final ArrayList<Integer> supportedProfiles = new ArrayList<Integer>();
