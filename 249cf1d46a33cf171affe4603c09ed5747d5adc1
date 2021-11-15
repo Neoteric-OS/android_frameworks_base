@@ -22,6 +22,30 @@
       },
       "revId": "249cf1d46a33cf171affe4603c09ed5747d5adc1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2880f95f_19f01b25",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5828,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-11-15T18:25:49Z",
+      "side": 1,
+      "message": "UNKNOWN will result in no changes being made. Default will actually result in the system default value being requested, so if the modem value doesn\u0027t match the system default, then DEFAULT will override the current setting.\n\nUNKNOWN will ensure that no settings changes should be made (it\u0027s essentially an \"invalid\" value, leaving the previous value intact.",
+      "parentUuid": "70437987_11c7e350",
+      "range": {
+        "startLine": 5828,
+        "startChar": 36,
+        "endLine": 5828,
+        "endChar": 57
+      },
+      "revId": "249cf1d46a33cf171affe4603c09ed5747d5adc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
