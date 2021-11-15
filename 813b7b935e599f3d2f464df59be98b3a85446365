@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "446df0d1_dbaa1896",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1669779
+      },
+      "writtenOn": "2021-11-15T03:20:00Z",
+      "side": 1,
+      "message": "Looks like this CL causes merge conflicts due to divergence in StorageManagerService.java.\nLet me first send CLs to internal master and then cherry-pick them to AOSP (with the same Change-Id + Merged-In) once they are submitted.",
+      "revId": "813b7b935e599f3d2f464df59be98b3a85446365",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
