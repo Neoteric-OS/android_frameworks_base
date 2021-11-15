@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1453131b_16929e17",
+        "filename": "services/core/java/com/android/server/net/IpConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-11-15T09:56:58Z",
+      "side": 1,
+      "message": "dest is only used in the test below. Maybe we can do the same thing in a more readable and economical way by simply amending the test ?\n\n  // If the destination is a default IPv4 route, use the gateway\n  // address unless already set. If there is no destination, use the\n  // gateway address in all cases.\n  if (dest \u003d\u003d null) {\n      gatewayAddress \u003d gateway;\n  } else if (dest.getAddress() instance of Inet4Address\n          \u0026\u0026 dest.getPrefixLength() \u003d\u003d 0 \u0026\u0026 gatewayAddress \u003d\u003d null) {\n      gatewayAddress \u003d\u003d gateway;\n  } else {\n      loge(\"Non-IPv4 default or duplicate route: \" + dest.getAddress());\n  }\n\nWDYT ?",
+      "range": {
+        "startLine": 326,
+        "startChar": 36,
+        "endLine": 326,
+        "endChar": 49
+      },
+      "revId": "9d3392ea00ba3babad26b6acd23b4566a7992075",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
