@@ -501,6 +501,8 @@ applications that come with the platform
         <permission name="android.permission.UPDATE_DEVICE_STATS" />
         <!-- Permission required for GTS test - PendingSystemUpdateTest -->
         <permission name="android.permission.NOTIFY_PENDING_SYSTEM_UPDATE" />
+        <!-- Permission required for CTS test - SettingsMultiPaneDeepLinkTest -->
+        <permission name="android.permission.LAUNCH_MULTI_PANE_SETTINGS_DEEP_LINK" />
     </privapp-permissions>
 
     <privapp-permissions package="com.android.statementservice">
