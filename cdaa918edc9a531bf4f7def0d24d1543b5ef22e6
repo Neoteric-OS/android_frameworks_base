@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03980197_5dd0150a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2021-11-16T21:26:45Z",
+      "side": 1,
+      "message": "Cherrypick from internal http://ag/15972579, fixes http://b/206551398 that was introduced by https://android-review.googlesource.com/q/topic:vapex-multi-config",
+      "revId": "cdaa918edc9a531bf4f7def0d24d1543b5ef22e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
