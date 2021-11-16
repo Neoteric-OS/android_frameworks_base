@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fca660c5_b34f144c",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-11-16T20:32:56Z",
+      "side": 1,
+      "message": "This addition in this file should not be required, since the permission is not defined as \"privileged\":\n\n    \u003cpermission android:name\u003d\"android.permission.LAUNCH_MULTI_PANE_SETTINGS_DEEP_LINK\"\n                android:protectionLevel\u003d\"signature|preinstalled\" /\u003e\n\nPlease remove the edit to this file; thanks!",
+      "range": {
+        "startLine": 504,
+        "startChar": 0,
+        "endLine": 506,
+        "endChar": 0
+      },
+      "revId": "12e671f24270193f81336552fe11f976b9b30630",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
