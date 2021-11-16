@@ -34,6 +34,24 @@
       "parentUuid": "7625cbf1_0a1b656b",
       "revId": "a52a76cacfff94d9c38be897ebaa6d35f850b538",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bca7dd21_35c2b9c5",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-16T21:48:49Z",
+      "side": 1,
+      "message": "Discussed over GVC: we will clear mCb and mService and throw an IllegalStateException if either are null when calling the method.",
+      "parentUuid": "eca73f92_abd812a2",
+      "revId": "a52a76cacfff94d9c38be897ebaa6d35f850b538",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
