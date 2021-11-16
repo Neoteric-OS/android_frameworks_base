@@ -19,8 +19,11 @@ package com.android.settingslib.bluetooth;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothUuid;
+import android.os.Build;
 import android.os.ParcelUuid;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.android.internal.util.ArrayUtils;
 
@@ -107,6 +110,7 @@ public final class BluetoothDeviceFilter {
     }
 
     /** Filter that matches devices that support AUDIO profiles. */
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private static final class AudioFilter extends ClassUuidFilter {
         @Override
         boolean matches(ParcelUuid[] uuids, BluetoothClass btClass) {
@@ -128,6 +132,7 @@ public final class BluetoothDeviceFilter {
     }
 
     /** Filter that matches devices that support Object Transfer. */
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private static final class TransferFilter extends ClassUuidFilter {
         @Override
         boolean matches(ParcelUuid[] uuids, BluetoothClass btClass) {
@@ -142,6 +147,7 @@ public final class BluetoothDeviceFilter {
     }
 
     /** Filter that matches devices that support PAN User (PANU) profile. */
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private static final class PanuFilter extends ClassUuidFilter {
         @Override
         boolean matches(ParcelUuid[] uuids, BluetoothClass btClass) {
@@ -156,6 +162,7 @@ public final class BluetoothDeviceFilter {
     }
 
     /** Filter that matches devices that support NAP profile. */
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private static final class NapFilter extends ClassUuidFilter {
         @Override
         boolean matches(ParcelUuid[] uuids, BluetoothClass btClass) {
