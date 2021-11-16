@@ -16,6 +16,24 @@
       "message": "readBuffer and remainingBytes shouldn\u0027t be updated when EINTR occurs",
       "revId": "5f91507b2b13c0132ad198d22db75c2b51a9a663",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "939b235c_43b2deab",
+        "filename": "packages/PrintSpooler/jni/com_android_printspooler_util_BitmapSerializeUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1880185
+      },
+      "writtenOn": "2021-11-16T23:53:02Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "d2a188bb_e0e5d387",
+      "revId": "5f91507b2b13c0132ad198d22db75c2b51a9a663",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
