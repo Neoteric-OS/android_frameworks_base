@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "053424d1_d8b6c248",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 12033,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-16T07:03:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "637c4fad_e072805d",
+      "range": {
+        "startLine": 12033,
+        "startChar": 0,
+        "endLine": 12033,
+        "endChar": 199
+      },
+      "revId": "f3d3732cd1546e4df1f3360f0f53512e2ef78e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c04126ab_803d1186",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-11-16T02:05:47Z",
       "side": 1,
       "message": "is the indent wrong, or is this a gerrit bug?",
+      "range": {
+        "startLine": 1210,
+        "startChar": 0,
+        "endLine": 1210,
+        "endChar": 93
+      },
+      "revId": "f3d3732cd1546e4df1f3360f0f53512e2ef78e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e4bdf97_c3ef9864",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-16T07:03:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c04126ab_803d1186",
       "range": {
         "startLine": 1210,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f7b5e23_6439ae50",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-16T07:03:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6ecc692_1c7a3838",
+      "range": {
+        "startLine": 1354,
+        "startChar": 0,
+        "endLine": 1354,
+        "endChar": 119
+      },
+      "revId": "f3d3732cd1546e4df1f3360f0f53512e2ef78e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fcb53bc_d0e656db",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-11-16T02:05:47Z",
       "side": 1,
       "message": "also too specific.",
+      "range": {
+        "startLine": 1356,
+        "startChar": 70,
+        "endLine": 1357,
+        "endChar": 56
+      },
+      "revId": "f3d3732cd1546e4df1f3360f0f53512e2ef78e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e09df73_143a67e1",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-16T07:03:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fcb53bc_d0e656db",
       "range": {
         "startLine": 1356,
         "startChar": 70,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28c82f7f_548f70d0",
+        "filename": "telephony/common/com/android/internal/telephony/TelephonyPermissions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-16T07:03:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd76b91e_e843dc7f",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 113,
+        "endChar": 35
+      },
+      "revId": "f3d3732cd1546e4df1f3360f0f53512e2ef78e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd09b4d5_2aa8a11f",
@@ -139,6 +259,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd302bce_913bf3c2",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1892,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-16T07:03:28Z",
+      "side": 1,
+      "message": "Ideally this documentation is not needed as javadocs will autogenerate it. Hence did not add it. But for completion, let me add",
+      "parentUuid": "dd09b4d5_2aa8a11f",
+      "range": {
+        "startLine": 1892,
+        "startChar": 0,
+        "endLine": 1892,
+        "endChar": 98
+      },
+      "revId": "f3d3732cd1546e4df1f3360f0f53512e2ef78e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "240cf669_ac429eac",
@@ -152,6 +296,30 @@
       "writtenOn": "2021-11-16T02:05:47Z",
       "side": 1,
       "message": "why the different in permission location?  Maybe convert both to start with Manifest or both start with android.Manifest",
+      "range": {
+        "startLine": 1896,
+        "startChar": 12,
+        "endLine": 1896,
+        "endChar": 20
+      },
+      "revId": "f3d3732cd1546e4df1f3360f0f53512e2ef78e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b34837a1_e418bef9",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1896,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-16T07:03:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "240cf669_ac429eac",
       "range": {
         "startLine": 1896,
         "startChar": 12,
