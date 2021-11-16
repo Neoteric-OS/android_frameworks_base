@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "637c4fad_e072805d",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 12033,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2021-11-16T02:05:47Z",
+      "side": 1,
+      "message": "why are we changing a system API?",
+      "range": {
+        "startLine": 12033,
+        "startChar": 0,
+        "endLine": 12033,
+        "endChar": 199
+      },
+      "revId": "f3d3732cd1546e4df1f3360f0f53512e2ef78e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c04126ab_803d1186",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2021-11-16T02:05:47Z",
+      "side": 1,
+      "message": "is the indent wrong, or is this a gerrit bug?",
+      "range": {
+        "startLine": 1210,
+        "startChar": 0,
+        "endLine": 1210,
+        "endChar": 93
+      },
+      "revId": "f3d3732cd1546e4df1f3360f0f53512e2ef78e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6ecc692_1c7a3838",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2021-11-16T02:05:47Z",
+      "side": 1,
+      "message": "I think this is too specific.  It could give out any non-dangerous phone info.  I\u0027d probably take the read_phone_state description and add non-dangerous to it..",
+      "range": {
+        "startLine": 1354,
+        "startChar": 0,
+        "endLine": 1354,
+        "endChar": 119
+      },
+      "revId": "f3d3732cd1546e4df1f3360f0f53512e2ef78e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fcb53bc_d0e656db",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2021-11-16T02:05:47Z",
+      "side": 1,
+      "message": "also too specific.",
+      "range": {
+        "startLine": 1356,
+        "startChar": 70,
+        "endLine": 1357,
+        "endChar": 56
+      },
+      "revId": "f3d3732cd1546e4df1f3360f0f53512e2ef78e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd76b91e_e843dc7f",
+        "filename": "telephony/common/com/android/internal/telephony/TelephonyPermissions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2021-11-16T02:05:47Z",
+      "side": 1,
+      "message": "I think documenting the params and return would be useful",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 113,
+        "endChar": 35
+      },
+      "revId": "f3d3732cd1546e4df1f3360f0f53512e2ef78e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd09b4d5_2aa8a11f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1892,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2021-11-16T02:05:47Z",
+      "side": 1,
+      "message": "update to include non-dangerous?",
+      "range": {
+        "startLine": 1892,
+        "startChar": 0,
+        "endLine": 1892,
+        "endChar": 98
+      },
+      "revId": "f3d3732cd1546e4df1f3360f0f53512e2ef78e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "240cf669_ac429eac",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1896,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2021-11-16T02:05:47Z",
+      "side": 1,
+      "message": "why the different in permission location?  Maybe convert both to start with Manifest or both start with android.Manifest",
+      "range": {
+        "startLine": 1896,
+        "startChar": 12,
+        "endLine": 1896,
+        "endChar": 20
+      },
+      "revId": "f3d3732cd1546e4df1f3360f0f53512e2ef78e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
