@@ -16,6 +16,24 @@
       "message": "There seems to be no reuse after this point, so can we also set mService and mCb to null here?",
       "revId": "a52a76cacfff94d9c38be897ebaa6d35f850b538",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eca73f92_abd812a2",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-16T10:16:48Z",
+      "side": 1,
+      "message": "It could still be used again to turn off Bluetooth tethering if it had been turned on by another process or if the first call had failed for an unknown reason. This is not the \"normal\" use case (which is to set the class instance itself to null once release() has been called) but I\u0027m not sure I\u0027d prefer leave a useless instance of the class instead. Let\u0027s discuss this",
+      "parentUuid": "7625cbf1_0a1b656b",
+      "revId": "a52a76cacfff94d9c38be897ebaa6d35f850b538",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
