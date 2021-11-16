@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7625cbf1_0a1b656b",
+        "filename": "core/java/android/bluetooth/BluetoothPan.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-16T01:12:07Z",
+      "side": 1,
+      "message": "There seems to be no reuse after this point, so can we also set mService and mCb to null here?",
+      "revId": "a52a76cacfff94d9c38be897ebaa6d35f850b538",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
