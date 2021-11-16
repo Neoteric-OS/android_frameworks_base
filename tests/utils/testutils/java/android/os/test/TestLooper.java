@@ -19,12 +19,13 @@ package android.os.test;
 import static org.junit.Assert.assertTrue;
 
 import android.os.Handler;
-import android.os.HandlerExecutor;
 import android.os.Looper;
 import android.os.Message;
 import android.os.MessageQueue;
 import android.os.SystemClock;
 import android.util.Log;
+
+import com.android.modules.utils.HandlerExecutor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

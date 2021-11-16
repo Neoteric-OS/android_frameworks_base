@@ -23,6 +23,16 @@ package {
     default_applicable_licenses: ["frameworks_base_license"],
 }
 
+filegroup {
+    name: "frameworks-base-testutils-srcs-for-modules-utils",
+    srcs: [
+        "java/android/os/test/TestLooper.java",
+    ],
+    visibility: [
+        "//frameworks/libs/modules-utils/javatests",
+    ],
+}
+
 java_library {
     name: "frameworks-base-testutils",
 
@@ -32,6 +42,7 @@ java_library {
         "junit",
         "hamcrest-library",
         "androidx.test.runner",
+        "modules-utils-handlerexecutor",
     ],
 
     libs: [
