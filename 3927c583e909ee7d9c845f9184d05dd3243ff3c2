@@ -16,6 +16,24 @@
       "message": "Just curious if there was a reason for why the constructors were made public? It feels like it defeat the point of having a builder and limits changes to the constructors (which is possible if we keep them private). Just want to make sure I didn\u0027t miss anything here!",
       "revId": "3927c583e909ee7d9c845f9184d05dd3243ff3c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41280216_0b2c86dd",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-16T22:11:38Z",
+      "side": 1,
+      "message": "Discussed over GVC: Keeping this @UnsupportedAppUsage, clearing all usages in aosp and internal, and then making this constructor private.",
+      "parentUuid": "58e3adce_628694b5",
+      "revId": "3927c583e909ee7d9c845f9184d05dd3243ff3c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
