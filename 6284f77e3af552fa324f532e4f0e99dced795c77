@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8a91140_0c2f01a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-11-16T01:34:47Z",
+      "side": 1,
+      "message": "You mentioned this CL combines a bunch of internal CLs, there should be one Merged-In tag corresponding to each internal CL Change-ID that this is covering.\n\nSame with other CLs in this topic.",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 52
+      },
+      "revId": "6284f77e3af552fa324f532e4f0e99dced795c77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4beafaf_5ef90bea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-11-16T01:34:47Z",
+      "side": 1,
+      "message": "Any merge conflicts here?",
+      "revId": "6284f77e3af552fa324f532e4f0e99dced795c77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
