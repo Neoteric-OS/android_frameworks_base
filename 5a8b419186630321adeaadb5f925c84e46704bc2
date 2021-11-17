@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e7d2c08_5c2a56c9",
+        "filename": "core/java/android/bluetooth/le/AdvertiseData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-17T22:28:32Z",
+      "side": 1,
+      "message": "nit: data is plural (datum is singular), so this and all others should just end in \"Data\"",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2a509c6_edb49cf0",
+        "filename": "core/java/android/bluetooth/le/TransportBlock.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-17T22:28:32Z",
+      "side": 1,
+      "message": "Add each param to the docs",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d9fe520_aa4292e7",
+        "filename": "core/java/android/bluetooth/le/TransportBlock.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-17T22:28:32Z",
+      "side": 1,
+      "message": "This should be @hide as there is no practical use for it",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69b9c787_40484782",
+        "filename": "core/java/android/bluetooth/le/TransportBlock.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-17T22:28:32Z",
+      "side": 1,
+      "message": "Add docs for each of these explaining what these fields represent. Also, as per API council guidelines, you can omit the @return tag if \"a method takes no parameters, has no special considerations, and simply returns what the method name says it does\"",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ac53cef_e66e386f",
+        "filename": "core/java/android/bluetooth/le/TransportBlock.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-17T22:28:32Z",
+      "side": 1,
+      "message": "Note it returns null if there is a buffer overflow during conversion",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdd7776d_addeb905",
+        "filename": "core/java/android/bluetooth/le/TransportDiscoveryData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-17T22:28:32Z",
+      "side": 1,
+      "message": "Missing @param tag in docs",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f01d5492_92218279",
+        "filename": "core/java/android/bluetooth/le/TransportDiscoveryData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-17T22:28:32Z",
+      "side": 1,
+      "message": "Make this @hide as there is no present, practical use for it",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "396be853_94e928ab",
+        "filename": "core/java/android/bluetooth/le/TransportDiscoveryData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-17T22:28:32Z",
+      "side": 1,
+      "message": "Add docs, omit @return tag",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1687ea48_35a92618",
+        "filename": "core/java/android/bluetooth/le/TransportDiscoveryData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-17T22:28:32Z",
+      "side": 1,
+      "message": "Clarify in docs that it returns an empty list if one does not exist",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "727e2da2_4ea0ec77",
+        "filename": "core/java/android/bluetooth/le/TransportDiscoveryData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-17T22:28:32Z",
+      "side": 1,
+      "message": "Similarly, document that we return null in the case that we have a buffer overflow while performing the conversion",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
