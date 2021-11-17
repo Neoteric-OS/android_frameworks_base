@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc59375e_8bdb9457",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-11-17T16:35:54Z",
+      "side": 1,
+      "message": "Can you please link to a bug # that this CL is fixing?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "9fe6e3663b04b67f71e003bb2d2d54ab707445c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b4ee419_dbcd1a4f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-11-17T16:35:54Z",
+      "side": 1,
+      "message": "Can you find some relevant CTS tests to execute?  For example, CtsPrintTestCases seems like it might be useful to test with to confirm no regressions.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "9fe6e3663b04b67f71e003bb2d2d54ab707445c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d506093_16798ce5",
+        "filename": "packages/PrintSpooler/jni/com_android_printspooler_util_BitmapSerializeUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-11-17T16:35:54Z",
+      "side": 1,
+      "message": "Technically I\u0027ve seen recommendations of wrapping these calls (both write() and read()) in the TEMP_FAILURE_RETRY() macro as a way to automatically handle EINTR.\n\nI know you\u0027re only maintaining this code, so the current CL seems reasonable, but if you\u0027re taking longer-term ownership of this area I\u0027d recommend pivoting to TEMP_FAILURE_RETRY.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 69
+      },
+      "revId": "9fe6e3663b04b67f71e003bb2d2d54ab707445c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
