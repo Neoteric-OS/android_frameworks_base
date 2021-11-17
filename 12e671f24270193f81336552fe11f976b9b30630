@@ -22,6 +22,30 @@
       },
       "revId": "12e671f24270193f81336552fe11f976b9b30630",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b925ca1_cb628bbd",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1356080
+      },
+      "writtenOn": "2021-11-17T02:37:28Z",
+      "side": 1,
+      "message": "I test the solution without it, the solution still works.\nI removed it at patch set 2.\nThank you.",
+      "parentUuid": "fca660c5_b34f144c",
+      "range": {
+        "startLine": 504,
+        "startChar": 0,
+        "endLine": 506,
+        "endChar": 0
+      },
+      "revId": "12e671f24270193f81336552fe11f976b9b30630",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
