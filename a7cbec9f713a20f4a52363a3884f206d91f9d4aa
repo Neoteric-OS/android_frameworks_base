@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017398086",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/786357?revision\u003d32",
+      "fixSuggestions": [
+        {
+          "fixId": "218f5b53_e77eb420",
+          "description": "Change to \"packages/SystemUI/src/com/android/systemui/statusbar/phone/CollapsedStatusBarFragment.java\"",
+          "replacements": [
+            {
+              "path": "packages/SystemUI/src/com/android/systemui/statusbar/phone/CollapsedStatusBarFragment.java",
+              "range": {
+                "startLine": 132,
+                "startChar": 69,
+                "endLine": 132,
+                "endChar": 76
+              },
+              "replacement": "Listener"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "4f269bad_8daaf5d0",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/CollapsedStatusBarFragment.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-11-17T22:04:15Z",
+      "side": 1,
+      "message": "Common typo found: \"Listner\" -- should it be \"Listener\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 132,
+        "startChar": 69,
+        "endLine": 132,
+        "endChar": 76
+      },
+      "revId": "a7cbec9f713a20f4a52363a3884f206d91f9d4aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
