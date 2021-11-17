@@ -169,10 +169,13 @@ public class AtomicFile {
      * commit the new data.  The next attempt to read the atomic file
      * will return the new file stream.
      */
-    public void finishWrite(FileOutputStream str) {
+    public void finishWrite(FileOutputStream str) throws IOException {
         if (str == null) {
             return;
         }
+        // Flushing the buffer is a no-op for the current implementation of FileOutputStream, but
+        // FileOutputStream doesn't have any guarantees that it isn't buffered.
+        str.flush();
         if (!FileUtils.sync(str)) {
             Log.e(LOG_TAG, "Failed to sync file output stream");
         }
