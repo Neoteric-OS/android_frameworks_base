@@ -171,10 +171,12 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     }
 
     private NetworkMetrics getMetricsForNetwork(long timeMs, int netId) {
-        collectPendingMetricsSnapshot(timeMs);
         NetworkMetrics metrics = mNetworkMetrics.get(netId);
-        if (metrics == null) {
-            // TODO: allow to change transport for a given netid.
+        final boolean forceCollect =
+                (metrics != null && mCallback.getNetworkCapabilities(netId) != null
+                        && metrics.transports != getTransports(netId));
+        collectPendingMetricsSnapshot(timeMs, forceCollect);
+        if (metrics == null || forceCollect) {
             metrics = new NetworkMetrics(netId, getTransports(netId), mConnectTb);
             mNetworkMetrics.put(netId, metrics);
         }
@@ -182,14 +184,14 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     }
 
     private NetworkMetricsSnapshot[] getNetworkMetricsSnapshots() {
-        collectPendingMetricsSnapshot(System.currentTimeMillis());
+        collectPendingMetricsSnapshot(System.currentTimeMillis(), false /* enforcingCollect */);
         return mNetworkMetricsSnapshots.toArray();
     }
 
-    private void collectPendingMetricsSnapshot(long timeMs) {
+    private void collectPendingMetricsSnapshot(long timeMs, boolean forceCollect) {
         // Detects time differences larger than the snapshot collection period.
         // This is robust against clock jumps and long inactivity periods.
-        if (Math.abs(timeMs - mLastSnapshot) <= METRICS_SNAPSHOT_SPAN_MS) {
+        if (!forceCollect && Math.abs(timeMs - mLastSnapshot) <= METRICS_SNAPSHOT_SPAN_MS) {
             return;
         }
         mLastSnapshot = projectSnapshotTime(timeMs);
