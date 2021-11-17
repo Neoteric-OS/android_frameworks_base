@@ -4651,23 +4651,20 @@ public class PermissionManagerService extends IPermissionManager.Stub {
         }
     }
 
-    private void readLegacyPermissionState() {
-        final int[] userIds = getAllUserIds();
+    private void readLegacyPermissionState(int userId) {
         mPackageManagerInt.forEachPackageSetting(ps -> {
             final int appId = ps.getAppId();
             final LegacyPermissionState legacyState = ps.getLegacyPermissionState();
 
             synchronized (mLock) {
-                for (final int userId : userIds) {
-                    final UserPermissionState userState = mState.getOrCreateUserState(userId);
+                final UserPermissionState userState = mState.getOrCreateUserState(userId);
 
-                    userState.setInstallPermissionsFixed(ps.name, ps.areInstallPermissionsFixed());
-                    final UidPermissionState uidState = userState.getOrCreateUidState(appId);
-                    uidState.reset();
-                    uidState.setMissing(legacyState.isMissing(userId));
-                    readLegacyPermissionStatesLocked(uidState,
-                            legacyState.getPermissionStates(userId));
-                }
+                userState.setInstallPermissionsFixed(ps.name, ps.areInstallPermissionsFixed());
+                final UidPermissionState uidState = userState.getOrCreateUidState(appId);
+                uidState.reset();
+                uidState.setMissing(legacyState.isMissing(userId));
+                readLegacyPermissionStatesLocked(uidState,
+                        legacyState.getPermissionStates(userId));
             }
         });
     }
@@ -4687,51 +4684,51 @@ public class PermissionManagerService extends IPermissionManager.Stub {
         }
     }
 
-    private void writeLegacyPermissionState() {
-        final int[] userIds;
+    private void writeLegacyPermissionState(int userId) {
+        Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "writeLegacyPermState-"+userId);
+
         synchronized (mLock) {
-            userIds = mState.getUserIds();
+            final UserPermissionState userState = mState.getUserState(userId);
+            if (userState == null) {
+                Slog.e(TAG, "Missing user state for " + userId);
+                return;
+            }
         }
+
         mPackageManagerInt.forEachPackageSetting(ps -> {
             ps.setInstallPermissionsFixed(false);
             final LegacyPermissionState legacyState = ps.getLegacyPermissionState();
-            legacyState.reset();
+            legacyState.reset(userId);
             final int appId = ps.getAppId();
 
             synchronized (mLock) {
-                for (final int userId : userIds) {
-                    final UserPermissionState userState = mState.getUserState(userId);
-                    if (userState == null) {
-                        Slog.e(TAG, "Missing user state for " + userId);
-                        continue;
-                    }
+                final UserPermissionState userState = mState.getUserState(userId);
+                if (userState.areInstallPermissionsFixed(ps.name)) {
+                    ps.setInstallPermissionsFixed(true);
+                }
 
-                    if (userState.areInstallPermissionsFixed(ps.name)) {
-                        ps.setInstallPermissionsFixed(true);
-                    }
+                final UidPermissionState uidState = userState.getUidState(appId);
+                if (uidState == null) {
+                    Slog.e(TAG, "Missing permission state for " + ps.name + " and user "
+                            + userId);
+                    return;
+                }
 
-                    final UidPermissionState uidState = userState.getUidState(appId);
-                    if (uidState == null) {
-                        Slog.e(TAG, "Missing permission state for " + ps.name + " and user "
-                                + userId);
-                        continue;
-                    }
+                legacyState.setMissing(uidState.isMissing(), userId);
+                final List<PermissionState> permissionStates = uidState.getPermissionStates();
+                final int permissionStatesSize = permissionStates.size();
+                for (int i = 0; i < permissionStatesSize; i++) {
+                    final PermissionState permissionState = permissionStates.get(i);
 
-                    legacyState.setMissing(uidState.isMissing(), userId);
-                    final List<PermissionState> permissionStates = uidState.getPermissionStates();
-                    final int permissionStatesSize = permissionStates.size();
-                    for (int i = 0; i < permissionStatesSize; i++) {
-                        final PermissionState permissionState = permissionStates.get(i);
-
-                        final LegacyPermissionState.PermissionState legacyPermissionState =
-                                new LegacyPermissionState.PermissionState(permissionState.getName(),
-                                        permissionState.getPermission().isRuntime(),
-                                        permissionState.isGranted(), permissionState.getFlags());
-                        legacyState.putPermissionState(legacyPermissionState, userId);
-                    }
+                    final LegacyPermissionState.PermissionState legacyPermissionState =
+                        new LegacyPermissionState.PermissionState(permissionState.getName(),
+                                permissionState.getPermission().isRuntime(),
+                                permissionState.isGranted(), permissionState.getFlags());
+                    legacyState.putPermissionState(legacyPermissionState, userId);
                 }
             }
         });
+        Trace.traceEnd(TRACE_TAG_PACKAGE_MANAGER);
     }
 
     private void readLegacyPermissions(@NonNull LegacyPermissionSettings legacyPermissionSettings) {
@@ -5050,12 +5047,12 @@ public class PermissionManagerService extends IPermissionManager.Stub {
         }
 
         @Override
-        public void readLegacyPermissionStateTEMP() {
-            PermissionManagerService.this.readLegacyPermissionState();
+        public void readLegacyPermissionStateTEMP(int userId) {
+            PermissionManagerService.this.readLegacyPermissionState(userId);
         }
         @Override
-        public void writeLegacyPermissionStateTEMP() {
-            PermissionManagerService.this.writeLegacyPermissionState();
+        public void writeLegacyPermissionStateTEMP(int userId) {
+            PermissionManagerService.this.writeLegacyPermissionState(userId);
         }
         @Override
         public void onUserRemoved(@UserIdInt int userId) {

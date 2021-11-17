@@ -76,6 +76,17 @@ public final class LegacyPermissionState {
         mMissing.clear();
     }
 
+    /**
+     * Reset this permission state for userId.
+     *
+     * @hide
+     */
+    public void reset(int userId) {
+        mUserStates.set(userId, null);
+        mMissing.put(userId, false);
+    }
+
+
     @Override
     public boolean equals(@Nullable Object object) {
         if (this == object) {

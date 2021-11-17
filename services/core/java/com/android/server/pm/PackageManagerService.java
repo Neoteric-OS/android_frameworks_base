@@ -7644,7 +7644,10 @@ public class PackageManagerService extends IPackageManager.Stub
                     + ((SystemClock.uptimeMillis()-startTime)/1000f)
                     + " seconds");
 
-            mPermissionManager.readLegacyPermissionStateTEMP();
+            for (int userId : mUserManager.getUserIdsIncludingPreCreated()) {
+                mPermissionManager.readLegacyPermissionStateTEMP(userId);
+            }
+
             // If the build fingerprint has changed since the last time we booted,
             // we need to re-grant app permission to catch any new ones that
             // appear.  This is really a hack, and means that apps can in some
@@ -26503,9 +26506,9 @@ public class PackageManagerService extends IPackageManager.Stub
 
     boolean readPermissionStateForUser(@UserIdInt int userId) {
         synchronized (mLock) {
-            mPermissionManager.writeLegacyPermissionStateTEMP();
+            mPermissionManager.writeLegacyPermissionStateTEMP(userId);
             mSettings.readPermissionStateForUserSyncLPr(userId);
-            mPermissionManager.readLegacyPermissionStateTEMP();
+            mPermissionManager.readLegacyPermissionStateTEMP(userId);
             return mPmInternal.isPermissionUpgradeNeeded(userId);
         }
     }

@@ -70,5 +70,5 @@ public interface LegacyPermissionDataProvider {
      *
      * @see PermissionManagerServiceInternal#writeLegacyPermissionStateTEMP()
      */
-    void writeLegacyPermissionStateTEMP();
+    void writeLegacyPermissionStateTEMP(int userId);
 }

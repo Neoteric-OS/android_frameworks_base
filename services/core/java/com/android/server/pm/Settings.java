@@ -5385,7 +5385,7 @@ public final class Settings implements Watchable, Snappable {
             mHandler.removeMessages(userId);
             mWriteScheduled.delete(userId);
 
-            mPermissionDataProvider.writeLegacyPermissionStateTEMP();
+            mPermissionDataProvider.writeLegacyPermissionStateTEMP(userId);
 
             int version = mVersions.get(userId, INITIAL_VERSION);
 

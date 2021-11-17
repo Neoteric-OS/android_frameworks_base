@@ -108,7 +108,7 @@ public interface PermissionManagerServiceInternal extends PermissionManagerInter
      * {@code PackageSetting} which is a implementation detail that permission should not know.
      * Instead, it should retrieve the legacy state via a defined API.
      */
-    void readLegacyPermissionStateTEMP();
+    void readLegacyPermissionStateTEMP(int userId);
 
     /**
      * Write legacy permission state to package settings.
@@ -116,7 +116,7 @@ public interface PermissionManagerServiceInternal extends PermissionManagerInter
      * TODO(zhanghai): This is a temporary method and should be removed once we migrated persistence
      * for permission.
      */
-    void writeLegacyPermissionStateTEMP();
+    void writeLegacyPermissionStateTEMP(int userId);
 
     /**
      * Get all the permissions granted to a package.
