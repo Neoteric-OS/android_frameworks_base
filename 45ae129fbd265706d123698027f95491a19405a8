@@ -16,6 +16,24 @@
       "message": "We\u0027re killing the client process if it sends too many binder proxies already: https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/am/ActivityManagerService.java;l\u003d7744",
       "revId": "45ae129fbd265706d123698027f95491a19405a8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92bfea10_7f5ae9b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1092759
+      },
+      "writtenOn": "2021-11-17T06:39:39Z",
+      "side": 1,
+      "message": "Yes, if any client sends too many binder proxies to system process, we should killing it. But here the global reference is PendingIntentRecord which is not binder proxy, just JavaBBinder. \n\nThe system aborting backtrace from tombstones can explain everything.\nAnd I can easy to reproduce the crash in pixel, as the reproduction steps in #1532198.\n\n#04 (art::JavaVMExt::AddGlobalRef(art::Thread*, art::ObjPtr\u003cart::mirror::Object\u003e))\n#05 (art::JNI\u003cfalse\u003e::NewGlobalRef(_JNIEnv*, _jobject*)+652)\n#06 (JavaBBinder::JavaBBinder(_JNIEnv*, _jobject*)+152)\n#07 (JavaBBinderHolder::get(_JNIEnv*, _jobject*)+116)\n#08 (android::ibinderForJavaObject(_JNIEnv*, _jobject*)+116)\n#09 (android::android_os_Parcel_writeStrongBinder(_JNIEnv*, _jclass*, long, _jobject*)+56)\n#12 (android.app.IActivityManager$Stub.onTransact+35136)\n#13 (com.android.server.am.ActivityManagerService.onTransact+1228)",
+      "parentUuid": "19dc77f7_fc313366",
+      "revId": "45ae129fbd265706d123698027f95491a19405a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
