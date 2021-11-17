@@ -173,6 +173,8 @@ public class AtomicFile {
         if (str == null) {
             return;
         }
+        // Flush anything that might be in the buffer.
+        str.flush();
         if (!FileUtils.sync(str)) {
             Log.e(LOG_TAG, "Failed to sync file output stream");
         }
