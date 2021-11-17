@@ -34,6 +34,24 @@
       "parentUuid": "19dc77f7_fc313366",
       "revId": "45ae129fbd265706d123698027f95491a19405a8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f4aa703_016cdc00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-11-17T18:12:31Z",
+      "side": 1,
+      "message": "+maco here. I\u0027m wondering if we could introduce similar mechanism for the binder stubs",
+      "parentUuid": "92bfea10_7f5ae9b2",
+      "revId": "45ae129fbd265706d123698027f95491a19405a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
