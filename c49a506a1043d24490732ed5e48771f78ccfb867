@@ -169,6 +169,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4e48a32a_22385333",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-11-17T15:09:25Z",
+      "side": 1,
+      "message": "Oh sorry, I think I misunderstood what you meant.\nPlease see if the latest patch matches what you meant.",
+      "parentUuid": "90ab5f64_e1b04d44",
+      "range": {
+        "startLine": 177,
+        "startChar": 17,
+        "endLine": 177,
+        "endChar": 33
+      },
+      "revId": "c49a506a1043d24490732ed5e48771f78ccfb867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f57bbe6c_f7c4a5c0",
         "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
         "patchSetId": 4
