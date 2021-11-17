@@ -118,7 +118,6 @@ public class QuickStatusBarHeader extends FrameLayout implements
     private boolean mConfigShowBatteryEstimate;
 
     private boolean mUseCombinedQSHeader;
-
     private final ActivityStarter mActivityStarter;
     private final Vibrator mVibrator;
 
@@ -149,6 +148,7 @@ public class QuickStatusBarHeader extends FrameLayout implements
         mIconContainer = findViewById(R.id.statusIcons);
         mPrivacyChip = findViewById(R.id.privacy_chip);
         mDateView = findViewById(R.id.date);
+        mDateView.setOnClickListener(this);
         mClockDateView = findViewById(R.id.date_clock);
         mDateView.setOnClickListener(this);
         mClockIconsSeparator = findViewById(R.id.separator);
