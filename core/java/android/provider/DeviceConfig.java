@@ -197,6 +197,14 @@ public final class DeviceConfig {
     public static final String NAMESPACE_TETHERING = "tethering";
 
     /**
+     * Native namespace for Tethering module, which is available on T+ releases.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String NAMESPACE_TETHERING_NATIVE = "tethering_native";
+
+    /**
      * Namespace for content capture feature used by on-device machine intelligence
      * to provide suggestions in a privacy-safe manner.
      *
