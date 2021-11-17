@@ -16,6 +16,29 @@
       "message": "Cherrypick from internal http://ag/15972579, fixes http://b/206551398 that was introduced by https://android-review.googlesource.com/q/topic:vapex-multi-config",
       "revId": "cdaa918edc9a531bf4f7def0d24d1543b5ef22e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d7df626_d5651d85",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3542,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2021-11-17T16:01:35Z",
+      "side": 1,
+      "message": "Is the set of inactive packages always a pure subset of factory packages? This feels like incorrect logic if not.\n\nPerhaps we fix this by using an ArraySet instead of a list to ensure no duplicates but make sure that if the sets aren\u0027t identical, we don\u0027t risk losing important information.",
+      "range": {
+        "startLine": 3542,
+        "startChar": 24,
+        "endLine": 3542,
+        "endChar": 72
+      },
+      "revId": "cdaa918edc9a531bf4f7def0d24d1543b5ef22e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
