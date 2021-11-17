@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5d4b77d_e75b8fbd",
+        "filename": "services/core/java/com/android/server/net/IpConfigStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-11-17T08:26:27Z",
+      "side": 1,
+      "message": "nit: ...If there is no destination, assume it is default route and use the gateway address in all cases.\nNo strong opinion?",
+      "range": {
+        "startLine": 325,
+        "startChar": 90,
+        "endLine": 325,
+        "endChar": 91
+      },
+      "revId": "d19ba0ecf7f127e55c0eeb949823412cf4d4aec8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
