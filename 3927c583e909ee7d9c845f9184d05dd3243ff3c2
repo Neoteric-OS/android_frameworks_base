@@ -34,6 +34,24 @@
       "parentUuid": "58e3adce_628694b5",
       "revId": "3927c583e909ee7d9c845f9184d05dd3243ff3c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f6d218d_e0e1c17d",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-17T14:23:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41280216_0b2c86dd",
+      "revId": "3927c583e909ee7d9c845f9184d05dd3243ff3c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
