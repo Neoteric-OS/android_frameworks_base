@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d59a8b0_06358e81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1429802
+      },
+      "writtenOn": "2021-11-17T23:45:05Z",
+      "side": 1,
+      "message": "It looks like you need to submit a cl to master branch first.",
+      "revId": "0d7cc7a8a6c4a80b4106cad46912e2ebc9d488a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
