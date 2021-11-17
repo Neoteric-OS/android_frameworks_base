@@ -34,6 +34,23 @@
       "parentUuid": "6bffa80a_30b4da78",
       "revId": "9fda707679bddd381afb83bcf3646a09caebc12d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c8741e2_71930bd8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-17T22:02:21Z",
+      "side": 1,
+      "message": "Chen, here is the CLs that un-deprecate the Telephony SIMIO APIs. I would like your +1 before asking API council\u0027s approval.\nThanks ",
+      "revId": "9fda707679bddd381afb83bcf3646a09caebc12d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
