@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bafe27a_8f1c87d7",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6642,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-11-18T01:33:36Z",
+      "side": 1,
+      "message": "I\u0027m surprised to see we don\u0027t get some magic Builder class auto-generated for us, I filed b/206870005 for the team to consider.",
+      "range": {
+        "startLine": 6642,
+        "startChar": 41,
+        "endLine": 6642,
+        "endChar": 48
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5f3957e_00632e8e",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-11-18T01:33:36Z",
+      "side": 1,
+      "message": "Do we need to change the param on this one? imo it makes the Request class a bit messier to support @Nullable package/binder for this use case",
+      "range": {
+        "startLine": 604,
+        "startChar": 12,
+        "endLine": 604,
+        "endChar": 72
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bef264bc_5d57209d",
+        "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-11-18T01:33:36Z",
+      "side": 1,
+      "message": "Question mainly for Tyler - should we be defining these little AIDL data classes in their own AIDL files or nested inside ITelephony?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8ae606b_25da5a8d",
+        "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-11-18T01:33:36Z",
+      "side": 1,
+      "message": "Suggest comments that exactly one of (subId, slotIndex) must be set.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "445078a8_cff1e9f8",
+        "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-11-18T01:33:36Z",
+      "side": 1,
+      "message": "Will anybody actually be passing null here?",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 13
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
