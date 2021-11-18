@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2df5551c_55a71da1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-11-18T05:40:21Z",
+      "side": 1,
+      "message": "LGTM but it would have been much clearer if you had squashed this into aosp/1888337.",
+      "revId": "2593d407a52f62f90453cca330b899abd0ccbcf0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
