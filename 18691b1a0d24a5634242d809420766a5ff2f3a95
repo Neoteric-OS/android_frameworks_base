@@ -16,6 +16,52 @@
       "message": "Friendly ping for review. We only need owners for the aidl files. Michael could you take a look or suggest a better owner?",
       "revId": "18691b1a0d24a5634242d809420766a5ff2f3a95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2175152_8225d2f4",
+        "filename": "core/java/android/os/IStatsBootstrapAtomService.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-11-18T14:09:53Z",
+      "side": 1,
+      "message": "nit: Mark the interface as oneway, not the method.\n\nIn general we recommend avoiding mixing oneway and non-oneway calls on interfaces these days as calls between them aren\u0027t ordered, which makes for some really subtle and hard to track down race conditions. Marking the whole interface as one way makes it easier to avoid accidentally introducing this.",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 10
+      },
+      "revId": "18691b1a0d24a5634242d809420766a5ff2f3a95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0539ee26_ac24c890",
+        "filename": "services/core/java/com/android/server/stats/bootstrap/StatsBootstrapAtomService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-11-18T14:09:53Z",
+      "side": 1,
+      "message": "nit: private",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "18691b1a0d24a5634242d809420766a5ff2f3a95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
