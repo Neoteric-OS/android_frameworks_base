@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81f4721c_b2d43a4a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6642,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-18T19:33:53Z",
+      "side": 1,
+      "message": "Yeah. the aidl tool is usable for far from perfect. If the parcelable is mutable, we only get a default constructor to start.",
+      "parentUuid": "1bafe27a_8f1c87d7",
+      "range": {
+        "startLine": 6642,
+        "startChar": 41,
+        "endLine": 6642,
+        "endChar": 48
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5f3957e_00632e8e",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-11-18T01:33:36Z",
       "side": 1,
       "message": "Do we need to change the param on this one? imo it makes the Request class a bit messier to support @Nullable package/binder for this use case",
+      "range": {
+        "startLine": 604,
+        "startChar": 12,
+        "endLine": 604,
+        "endChar": 72
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bdde4af_a03dec48",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-18T19:33:53Z",
+      "side": 1,
+      "message": "Indeed. All four options has its own Pros/Cons:\nhttps://docs.google.com/document/d/1PXd3RDxWx3D9g8EBnfhR591FDnrC8aH8arHzCQL1l_I/edit#\n\nThe unified mutable parcelable does have a little mass to organize all info, but this is a typical usage of parcelable. We get benefits:\n1. A unified/symmetric ITelephony APIs to open/close channel\n2. Expendable for support more features\n3. Serve as a reusable containers for pass through process boundary (e.g. TelephonyRegister can re-use it to support the phone process crash case)\n4. No boilerplate logic to maintain",
+      "parentUuid": "b5f3957e_00632e8e",
       "range": {
         "startLine": 604,
         "startChar": 12,
@@ -93,6 +141,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e8b7fe3_cf3b8bf3",
+        "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-18T19:33:53Z",
+      "side": 1,
+      "message": "Yes, @JavaOnlyImmutable is one of four options discussed here:\nhttps://docs.google.com/document/d/1PXd3RDxWx3D9g8EBnfhR591FDnrC8aH8arHzCQL1l_I/edit#\n\nAlternative 3 with patch at https://android-review.googlesource.com/q/topic:sim_itelephony_pass_immutable explored this option. \n\nThe drawbacks are:\n1. Our binder object here is NOT allow in immutable parcelable and we have to pass it separately (e.g. as the additional parameter to ITelephony API)...\n2. We can only put input parameter. When we open channel, channel ID can not retrieve later, even we put here, it is not modifiable at all.\n\nDiscussed with Nathan, the mutable solution (Alternative 4) is picked. All infos are put into the mutable parcelable with a flat structure which may not the best organized but support all scenarios without any boilerplate.",
+      "parentUuid": "51f3424c_993ed293",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ce8c14e_6e2cbf6e",
+        "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-18T19:33:53Z",
+      "side": 1,
+      "message": "Yeah, let\u0027s leave this for Chen/Tyler to see their preference.\n\nCurrently it is defined separately with one reason that it not only used to serve as the parameter of IccOpen/CloseLogicalChannel but also as the data wrapper to send to hander thread of PhoneInterfaceManager.",
+      "parentUuid": "bef264bc_5d57209d",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f8ae606b_25da5a8d",
@@ -140,6 +236,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cee4d2b7_19668041",
+        "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-18T19:33:53Z",
+      "side": 1,
+      "message": "union does get support starting from Android 12, but the generated java look quite costy:\nhttps://paste.googleplex.com/4645269179203584\n\nThis is a bit too much (separate parcelabe with value/tag for the the union, a more level of reference...)\n\nWe can even organize the request in more hierarchy (e.g. separate open/close parameter). But it will generate more complicated data class.\n\nA flat parcelable is much simpler and easier to use. In the future, if the AIDL support get better and we get more complicated cases, may be we can try. For now, it looks not worthy it.",
+      "parentUuid": "1344ba44_21eced19",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "445078a8_cff1e9f8",
@@ -153,6 +273,30 @@
       "writtenOn": "2021-11-18T01:33:36Z",
       "side": 1,
       "message": "Will anybody actually be passing null here?",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 13
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3de4ae1a_d0bd370d",
+        "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-18T19:33:53Z",
+      "side": 1,
+      "message": "Binder object is only used for open request, not close request.",
+      "parentUuid": "445078a8_cff1e9f8",
       "range": {
         "startLine": 48,
         "startChar": 4,
