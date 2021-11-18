@@ -16,6 +16,23 @@
       "message": "Don\u0027t we have tests in NetworkStatsFactory that use this code?",
       "revId": "caeef9ba39284d2cf05933ccabc6c6a33ed158f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "847fa620_28566788",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-11-18T05:34:31Z",
+      "side": 1,
+      "message": "LGTM but please update the commit message to explain that the tests still work because they use a legacy codepath that is even older than the one being deleted here.",
+      "revId": "caeef9ba39284d2cf05933ccabc6c6a33ed158f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
