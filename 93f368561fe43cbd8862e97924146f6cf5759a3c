@@ -95,6 +95,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1344ba44_21eced19",
+        "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-11-18T01:36:15Z",
+      "side": 1,
+      "message": "Actually, looks like AIDL supports unions - how about switching to `union Target { int subId; int slotIndex; }` ?",
+      "parentUuid": "f8ae606b_25da5a8d",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "445078a8_cff1e9f8",
         "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
         "patchSetId": 2
