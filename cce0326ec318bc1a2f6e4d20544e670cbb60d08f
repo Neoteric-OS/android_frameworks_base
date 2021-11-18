@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75e530b0_741c8811",
+        "filename": "core/java/android/bluetooth/BluetoothGattServer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-11-18T01:01:31Z",
+      "side": 1,
+      "message": "do we want to be more explicit? e.g. what number means success, when failed, what is the namespace of the failure code?",
+      "range": {
+        "startLine": 758,
+        "startChar": 7,
+        "endLine": 758,
+        "endChar": 71
+      },
+      "revId": "cce0326ec318bc1a2f6e4d20544e670cbb60d08f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
