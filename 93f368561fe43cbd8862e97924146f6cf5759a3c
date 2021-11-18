@@ -72,6 +72,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "51f3424c_993ed293",
+        "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-11-18T01:50:41Z",
+      "side": 1,
+      "message": "Suggest making this `@JavaOnlyImmutable` as well, then we just specify everything in the ctor and fields are declared `final`. No more \u0027A a \u003d new A(); a.b \u003d X; a.c \u003d Y; a.d \u003d Z; ...` pattern that way",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f8ae606b_25da5a8d",
         "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
         "patchSetId": 2
