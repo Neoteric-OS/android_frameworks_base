@@ -94,6 +94,7 @@ filegroup {
         ":PacProcessor-aidl-sources",
         ":ProxyHandler-aidl-sources",
         ":net-utils-framework-common-srcs",
+        ":framework-connectivity-nsd-sources",
 
         // AIDL from frameworks/base/native/
         ":platform-compat-native-aidl",
