@@ -29,7 +29,6 @@ import android.util.LocalLog;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.server.power.ShutdownThread;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -147,8 +146,7 @@ final class NativeDaemonConnector implements Runnable, Handler.Callback {
     }
 
     private static boolean isShuttingDown() {
-        String shutdownAct = SystemProperties.get(
-            ShutdownThread.SHUTDOWN_ACTION_PROPERTY, "");
+        final String shutdownAct = SystemProperties.get("sys.shutdown.requested", "");
         return shutdownAct != null && shutdownAct.length() > 0;
     }
 

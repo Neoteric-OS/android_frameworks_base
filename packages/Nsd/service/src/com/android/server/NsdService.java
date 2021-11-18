@@ -132,7 +132,8 @@ public class NsdService extends INsdManager.Stub {
                 }
             };
 
-            final Uri uri = Settings.Global.getUriFor(Settings.Global.NSD_ON);
+            // TODO: Add NSD_ON to ConnectivitySettingsManager
+            final Uri uri = Settings.Global.getUriFor("nsd_on" /* Settings.Global.NSD_ON */);
             mNsdSettings.registerContentObserver(uri, contentObserver);
         }
 
@@ -1089,12 +1090,16 @@ public class NsdService extends INsdManager.Stub {
             return new NsdSettings() {
                 @Override
                 public boolean isEnabled() {
-                    return Settings.Global.getInt(resolver, Settings.Global.NSD_ON, 1) == 1;
+                    // TODO: Add NSD_ON to ConnectivitySettingsManager
+                    return Settings.Global.getInt(
+                            resolver, "nsd_on" /* Settings.Global.NSD_ON */, 1) == 1;
                 }
 
                 @Override
                 public void putEnabledStatus(boolean isEnabled) {
-                    Settings.Global.putInt(resolver, Settings.Global.NSD_ON, isEnabled ? 1 : 0);
+                    // TODO: Add NSD_ON to ConnectivitySettingsManager
+                    Settings.Global.putInt(
+                            resolver, "nsd_on" /* Settings.Global.NSD_ON */, isEnabled ? 1 : 0);
                 }
 
                 @Override
