@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017422229",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1454977?revision\u003d7",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9aac75a1_0492e4fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-11-18T09:54:14Z",
+      "side": 1,
+      "message": "\"called the API in test app, verified advertisement content\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 64
+      },
+      "revId": "3327af5d7b1bd96494bf243cde8fc72e1293bca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017422201",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1454977?revision\u003d7",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "97745455_9c560c54",
+        "filename": "core/api/current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-11-18T09:54:14Z",
+      "side": 1,
+      "message": "This CL adds new API(s), but it doesn\u0027t include any CTS test to test them. Please add CTS test(s) in a change and include the change in the same topic. After adding that change, you may need to upload a new patchset such as updating commit message to rerun this presubmit test. If you are unable to add CTS test(s) now, please file a tracking bug via go/new-cts-coverage-bug and add \"CTS-Coverage-Bug: \u003cbug id\u003e\" in this CL\u0027s commit message to pass this presubmit. For more information, please refer to go/api-test-coverage.",
+      "revId": "3327af5d7b1bd96494bf243cde8fc72e1293bca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
