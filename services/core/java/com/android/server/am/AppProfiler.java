@@ -1562,7 +1562,19 @@ public class AppProfiler {
         final long gpuUsage = Debug.getGpuTotalUsageKb();
         if (gpuUsage >= 0) {
             final long gpuPrivateUsage = Debug.getGpuPrivateMemoryKb();
-            if (gpuPrivateUsage >= 0) {
+
+            int apiLevel = SystemProperties.getInt("ro.product.first_api_level",
+                    Build.VERSION_CODES.CUR_DEVELOPMENT);
+            apiLevel = Math.min(apiLevel, SystemProperties.getInt("ro.board.api_level",
+                        SystemProperties.getInt("ro.first_board.api_level",
+                            Build.VERSION_CODES.CUR_DEVELOPMENT)));
+
+            // Check the first API level is at least S.
+            // Upgrading devices are not required to update their memtrack HAL version,
+            // as the policy is to not change old compatibility matrices
+            // Old HAL implementations may return 0 for GPU private memory if not supported
+            if (gpuPrivateUsage > 0
+                    || (apiLevel >= Build.VERSION_CODES.S && gpuPrivateUsage >= 0)) {
                 final long gpuDmaBufUsage = gpuUsage - gpuPrivateUsage;
                 memInfoBuilder.append("      GPU: ");
                 memInfoBuilder.append(stringifyKBSize(gpuUsage));
