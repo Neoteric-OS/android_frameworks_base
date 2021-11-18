@@ -125,6 +125,7 @@ java_library {
         "service-blobstore",
         "service-jobscheduler",
         "android.hidl.base-V1.0-java",
+        "services.connectivity-nsd",
     ],
 
     libs: [
