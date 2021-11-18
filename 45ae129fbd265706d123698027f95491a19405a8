@@ -52,6 +52,24 @@
       "parentUuid": "92bfea10_7f5ae9b2",
       "revId": "45ae129fbd265706d123698027f95491a19405a8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6145aecb_dd4610d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2021-11-18T12:51:01Z",
+      "side": 1,
+      "message": "The reason we have this mechanism for binder proxies is mainly because having many binder proxies makes the binder kernel driver quite a bit slower (for lookup), and this is in the critical path of a binder call. For stubs this is less of an issue, because once you know the proxy, it\u0027s a O(1) operation to get the stub.\n\nWe\u0027ve also found that the proxy limit mechanism is quite error-prone; for example, it\u0027s really hard to take into account the effect of the garbage collector.\n\nThat is also something I worry about with this change; what if there are a significant amount of Pending Intents stuck waiting to be GCd?",
+      "parentUuid": "5f4aa703_016cdc00",
+      "revId": "45ae129fbd265706d123698027f95491a19405a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
