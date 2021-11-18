@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd736717_d99f228e",
+        "filename": "core/java/android/bluetooth/le/AdvertiseData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-18T09:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e7d2c08_5c2a56c9",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2a509c6_edb49cf0",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-11-17T22:28:32Z",
       "side": 1,
       "message": "Add each param to the docs",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17f8066b_839431a9",
+        "filename": "core/java/android/bluetooth/le/TransportBlock.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-18T09:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2a509c6_edb49cf0",
       "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -52,6 +88,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed078645_fef69aa3",
+        "filename": "core/java/android/bluetooth/le/TransportBlock.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-18T09:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d9fe520_aa4292e7",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69b9c787_40484782",
@@ -65,6 +119,24 @@
       "writtenOn": "2021-11-17T22:28:32Z",
       "side": 1,
       "message": "Add docs for each of these explaining what these fields represent. Also, as per API council guidelines, you can omit the @return tag if \"a method takes no parameters, has no special considerations, and simply returns what the method name says it does\"",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "277ece07_7102c75f",
+        "filename": "core/java/android/bluetooth/le/TransportBlock.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-18T09:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69b9c787_40484782",
       "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -86,6 +158,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5383da68_2c226511",
+        "filename": "core/java/android/bluetooth/le/TransportBlock.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-18T09:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ac53cef_e66e386f",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cdd7776d_addeb905",
@@ -99,6 +189,24 @@
       "writtenOn": "2021-11-17T22:28:32Z",
       "side": 1,
       "message": "Missing @param tag in docs",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7920ac70_bb7af23a",
+        "filename": "core/java/android/bluetooth/le/TransportDiscoveryData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-18T09:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdd7776d_addeb905",
       "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -120,6 +228,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "90527f66_e6a7b7f1",
+        "filename": "core/java/android/bluetooth/le/TransportDiscoveryData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-18T09:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f01d5492_92218279",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "396be853_94e928ab",
@@ -133,6 +259,24 @@
       "writtenOn": "2021-11-17T22:28:32Z",
       "side": 1,
       "message": "Add docs, omit @return tag",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36df0919_3ccef117",
+        "filename": "core/java/android/bluetooth/le/TransportDiscoveryData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-18T09:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "396be853_94e928ab",
       "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -167,6 +311,24 @@
       "writtenOn": "2021-11-17T22:28:32Z",
       "side": 1,
       "message": "Similarly, document that we return null in the case that we have a buffer overflow while performing the conversion",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d9a8ca9_5cef2f69",
+        "filename": "core/java/android/bluetooth/le/TransportDiscoveryData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-18T09:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "727e2da2_4ea0ec77",
       "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
