@@ -34,6 +34,24 @@
       "parentUuid": "67f61995_790f96d3",
       "revId": "32549ab14e8c566382f3a24b67fa01889e2a89e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1369e849_ec6bb803",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2021-11-18T03:07:38Z",
+      "side": 1,
+      "message": "The list of people who can approve changes to this file is at https://android.googlesource.com/platform/frameworks/base/+/master/OWNERS (since there\u0027s no explicit owner for this file it goes back to the root directory of this project).\n\nDianne was the original author of this file back in 2009 but she\u0027s quite busy. Jeff was kind enough to help reviewing my fix to AtomicFile (ag/11534162), but I\u0027m not sure if he has the capacity this time.\n\nI\u0027m still personally leaning against this change because doing unnecessary things confuses future code readers (is this call doing anything important/writing to disk/impacting performance?), while in fact the flush() call added here will just be a call to the empty OutputStream.flush() and I don\u0027t see the likelihood for Android to run on any JRE other than libcore. So if you want to add this flush() call, could you clarify in code comment that the call is unnecessary on Android libcore but just here for stricter compliance?",
+      "parentUuid": "713f0137_21271c00",
+      "revId": "32549ab14e8c566382f3a24b67fa01889e2a89e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
