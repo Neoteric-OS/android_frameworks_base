@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "114682b8_b56ee8a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-11-18T05:49:14Z",
+      "side": 1,
+      "message": "Actually I think the reason is even worse: it doesn\u0027t look like there are any no tests for this code. The tests I was thinking of are for NetworkStatsFactory, not NetworkStatsService.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 36
+      },
+      "revId": "37a4f9d8b2de6762b24f71e36094cc53a642b3bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
