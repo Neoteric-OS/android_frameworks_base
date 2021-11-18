@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67f61995_790f96d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2021-11-18T02:05:11Z",
+      "side": 1,
+      "message": "Both Android and OpenJDK FileOutputStream don\u0027t have any buffering - I think conventionally one would need BufferedOutputStream to do that. So I suppose if the JDK implementation changes FileOutputStream to be buffered, that would break a lot of applications as well.\n\nMeanwhile, the FileOutputStream here should be the same one that\u0027s created inside startWrite(), so the stream can\u0027t be a subclass (or wrapped) and has to be the original FileOutputStream class that doesn\u0027t having any buffering.\n\nSo it seems to me not flushing the stream is fine (I actually had this same thought one year ago). That being said, I\u0027m not the owner of AtomicFile and you\u0027ll need the review from one of the senior framework engineers that can owner +1 this file. If they are happy with adding a flush() here, I won\u0027t object to it anyway.",
+      "revId": "32549ab14e8c566382f3a24b67fa01889e2a89e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
