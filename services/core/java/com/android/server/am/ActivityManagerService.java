@@ -11059,7 +11059,14 @@ public class ActivityManagerService extends IActivityManager.Stub
             final long gpuUsage = Debug.getGpuTotalUsageKb();
             if (gpuUsage >= 0) {
                 final long gpuPrivateUsage = Debug.getGpuPrivateMemoryKb();
-                if (gpuPrivateUsage >= 0) {
+                final int firstApiLevel = SystemProperties.getInt("ro.product.first_api_level", 0);
+
+                // Check the first API level is at least S.
+                // Upgrading devices are not required to update their memtrack HAL version,
+                // as the policy is to not change old compatibility matrices
+                // Old HAL implementations may return 0 for GPU private memory if not supported
+                if (gpuPrivateUsage > 0
+                        || (firstApiLevel >= Build.VERSION_CODES.S && gpuPrivateUsage >= 0)) {
                     final long gpuDmaBufUsage = gpuUsage - gpuPrivateUsage;
                     pw.print("      GPU: ");
                     pw.print(stringifyKBSize(gpuUsage));
