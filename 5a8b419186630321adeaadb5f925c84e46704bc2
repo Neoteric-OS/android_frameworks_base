@@ -298,6 +298,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8e68a4b_a79ef614",
+        "filename": "core/java/android/bluetooth/le/TransportDiscoveryData.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-11-18T09:53:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1687ea48_35a92618",
+      "revId": "5a8b419186630321adeaadb5f925c84e46704bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "727e2da2_4ea0ec77",
