@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "21676fb4_cb4fcb2e",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-19T21:15:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4b0f1aad_ae73c8af",
+      "range": {
+        "startLine": 1204,
+        "startChar": 49,
+        "endLine": 1204,
+        "endChar": 79
+      },
+      "revId": "a53708f7dc8935f8581b439aad519423ec211633",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "faa1ad82_9ffdbf5f",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-11-18T00:10:03Z",
       "side": 1,
       "message": "This will be shown to a user, so should likely be something like:\nread basic phone status and identity\n\nOr something.  Someway to communicate that it\u0027s less sensitive than the dangerous version.  But using \"dangerous\" is not something a user will get.",
+      "range": {
+        "startLine": 1354,
+        "startChar": 54,
+        "endLine": 1354,
+        "endChar": 102
+      },
+      "revId": "a53708f7dc8935f8581b439aad519423ec211633",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "263e7455_21e24285",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-19T21:15:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faa1ad82_9ffdbf5f",
       "range": {
         "startLine": 1354,
         "startChar": 54,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "07cdfd88_62ea900d",
+        "filename": "core/res/res/values/strings.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-19T21:15:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5efb67c3_6f4ba17e",
+      "range": {
+        "startLine": 1356,
+        "startChar": 56,
+        "endLine": 1357,
+        "endChar": 40
+      },
+      "revId": "a53708f7dc8935f8581b439aad519423ec211633",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d370431f_a1070afd",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-11-18T00:10:03Z",
       "side": 1,
       "message": "The @RequiresPermission annotation generates the permission requirements text in the docs, so you can remove this entirely.",
+      "range": {
+        "startLine": 1898,
+        "startChar": 7,
+        "endLine": 1900,
+        "endChar": 39
+      },
+      "revId": "a53708f7dc8935f8581b439aad519423ec211633",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ef1a4d7_8e3f8686",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-19T21:15:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d370431f_a1070afd",
       "range": {
         "startLine": 1898,
         "startChar": 7,
