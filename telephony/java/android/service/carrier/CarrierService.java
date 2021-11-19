@@ -126,6 +126,33 @@ public abstract class CarrierService extends Service {
     }
 
     /**
+     * Informs the system of an intentional upcoming carrier network change by
+     * a carrier app with the subscription. This call is optional and is only used to
+     * allow the system to provide alternative UI while telephony is performing an
+     * action that may result in intentional, temporary network lack of connectivity.
+     *
+     * <p>Based on the active parameter passed in, this method will either show or
+     * hide the alternative UI. There is no timeout associated with showing
+     * this UX, so a carrier app must be sure to call with active set to false
+     * sometime after calling with it set to true.
+     *
+     * <p>Requires Permission: calling app has carrier privileges.
+     *
+     * @param subId the subscription of the carrier network.
+     * @param active whether the carrier network change is or shortly will be
+     *               active. Set this value to true to begin showing
+     *               alternative UI and false to stop.
+     * @see android.telephony.TelephonyManager#hasCarrierPrivileges
+     */
+    public final void notifyCarrierNetworkChange(int subId, boolean active) {
+        TelephonyRegistryManager telephonyRegistryMgr = this.getSystemService(
+                TelephonyRegistryManager.class);
+        if (telephonyRegistryMgr != null) {
+            telephonyRegistryMgr.notifyCarrierNetworkChange(subId, active);
+        }
+    }
+
+    /**
      * If overriding this method, call through to the super method for any unknown actions.
      * {@inheritDoc}
      */
