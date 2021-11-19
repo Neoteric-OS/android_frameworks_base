@@ -39,6 +39,30 @@
       },
       "revId": "09c10d18bf318f5f0c6b3f1f10f0430336014722",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09fe09c8_b1e98573",
+        "filename": "services/core/java/com/android/server/notification/ManagedServices.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1259532
+      },
+      "writtenOn": "2021-11-19T11:56:57Z",
+      "side": 1,
+      "message": "testReadXml_noLongerMigrateFromSettings from the original change uses TestManagedServicesNoSettings which overrides shouldReflectToSettings() method, added in the following CL:\nhttps://android.googlesource.com/platform/frameworks/base/+/cf389e73435d24ac1629cf77af34bd5bf450906f\n\nThis CL changes default logic of ManagedServices: by default ManagedServices don\u0027t write values to settings.\nWithout this change testReadXml_noLongerMigrateFromSettings is not valid.\nSo, test cannot be included without merging the above CL on android10-dev.",
+      "parentUuid": "0d3b5195_d350a3d2",
+      "range": {
+        "startLine": 425,
+        "startChar": 47,
+        "endLine": 425,
+        "endChar": 64
+      },
+      "revId": "09c10d18bf318f5f0c6b3f1f10f0430336014722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
