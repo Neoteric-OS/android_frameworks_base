@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed181f2e_99b78d95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1901704
+      },
+      "writtenOn": "2021-11-19T06:59:33Z",
+      "side": 1,
+      "message": "DO NOT MERGE.\n\nThis CL is only applicable to R and earlier, and is uploaded only to share a workaround for older systems.\n\nDO NOT MERGE.",
+      "revId": "5fb353302014d140fe55ffd5907a52087d9c747f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
