@@ -364,7 +364,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
 
     private List<BarringInfo> mBarringInfo = null;
 
-    private boolean mCarrierNetworkChangeState = false;
+    private boolean[] mCarrierNetworkChangeState = null;
 
     private PhoneCapability mPhoneCapability = null;
 
@@ -673,6 +673,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         mOutgoingCallEmergencyNumber = copyOf(mOutgoingCallEmergencyNumber, mNumPhones);
         mOutgoingSmsEmergencyNumber = copyOf(mOutgoingSmsEmergencyNumber, mNumPhones);
         mTelephonyDisplayInfos = copyOf(mTelephonyDisplayInfos, mNumPhones);
+        mCarrierNetworkChangeState = copyOf(mCarrierNetworkChangeState, mNumPhones);
         mIsDataEnabled= copyOf(mIsDataEnabled, mNumPhones);
         mDataEnabledReason = copyOf(mDataEnabledReason, mNumPhones);
         mAllowedNetworkTypeReason = copyOf(mAllowedNetworkTypeReason, mNumPhones);
@@ -718,6 +719,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             mBackgroundCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
             mPreciseDataConnectionStates.add(new ArrayMap<>());
             mBarringInfo.add(i, new BarringInfo());
+            mCarrierNetworkChangeState[i] = false;
             mTelephonyDisplayInfos[i] = null;
             mIsDataEnabled[i] = false;
             mDataEnabledReason[i] = TelephonyManager.DATA_ENABLED_REASON_USER;
@@ -782,6 +784,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         mOutgoingCallEmergencyNumber = new EmergencyNumber[numPhones];
         mOutgoingSmsEmergencyNumber = new EmergencyNumber[numPhones];
         mBarringInfo = new ArrayList<>();
+        mCarrierNetworkChangeState = new boolean[numPhones];
         mTelephonyDisplayInfos = new TelephonyDisplayInfo[numPhones];
         mPhysicalChannelConfigs = new ArrayList<>();
         mAllowedNetworkTypeReason = new int[numPhones];
@@ -818,6 +821,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             mBackgroundCallState[i] = PreciseCallState.PRECISE_CALL_STATE_IDLE;
             mPreciseDataConnectionStates.add(new ArrayMap<>());
             mBarringInfo.add(i, new BarringInfo());
+            mCarrierNetworkChangeState[i] = false;
             mTelephonyDisplayInfos[i] = null;
             mIsDataEnabled[i] = false;
             mDataEnabledReason[i] = TelephonyManager.DATA_ENABLED_REASON_USER;
@@ -1215,7 +1219,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                 }
                 if (events.contains(TelephonyCallback.EVENT_CARRIER_NETWORK_CHANGED)) {
                     try {
-                        r.callback.onCarrierNetworkChange(mCarrierNetworkChangeState);
+                        r.callback.onCarrierNetworkChange(mCarrierNetworkChangeState[r.phoneId]);
                     } catch (RemoteException ex) {
                         remove(r.binder);
                     }
@@ -1709,23 +1713,37 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             throw new SecurityException("notifyCarrierNetworkChange without carrier privilege");
         }
 
-        synchronized (mRecords) {
-            mCarrierNetworkChangeState = active;
-            for (int subId : subIds) {
-                int phoneId = getPhoneIdFromSubId(subId);
+        for (int subId : subIds) {
+            notifyCarrierNetworkChangeWithPermission(subId, active);
+        }
+    }
 
-                if (VDBG) {
-                    log("notifyCarrierNetworkChange: active=" + active + "subId: " + subId);
-                }
-                for (Record r : mRecords) {
-                    if (r.matchTelephonyCallbackEvent(
-                            TelephonyCallback.EVENT_CARRIER_NETWORK_CHANGED)
-                            && idMatch(r, subId, phoneId)) {
-                        try {
-                            r.callback.onCarrierNetworkChange(active);
-                        } catch (RemoteException ex) {
-                            mRemoveList.add(r.binder);
-                        }
+    @Override
+    public void notifyCarrierNetworkChangeWithSubId(int subId, boolean active) {
+        if (!TelephonyPermissions.checkCarrierPrivilegeForSubId(mContext, subId)) {
+            throw new SecurityException(
+                    "notifyCarrierNetworkChange without carrier privilege on subId " + subId);
+        }
+
+        notifyCarrierNetworkChangeWithPermission(subId, active);
+    }
+
+    private void notifyCarrierNetworkChangeWithPermission(int subId, boolean active) {
+        synchronized (mRecords) {
+            int phoneId = getPhoneIdFromSubId(subId);
+            mCarrierNetworkChangeState[phoneId] = active;
+
+            if (VDBG) {
+                log("notifyCarrierNetworkChange: active=" + active + "subId: " + subId);
+            }
+            for (Record r : mRecords) {
+                if (r.matchTelephonyCallbackEvent(
+                        TelephonyCallback.EVENT_CARRIER_NETWORK_CHANGED)
+                        && idMatch(r, subId, phoneId)) {
+                    try {
+                        r.callback.onCarrierNetworkChange(active);
+                    } catch (RemoteException ex) {
+                        mRemoveList.add(r.binder);
                     }
                 }
             }
@@ -2772,6 +2790,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                 pw.println("mOutgoingCallEmergencyNumber=" + mOutgoingCallEmergencyNumber[i]);
                 pw.println("mOutgoingSmsEmergencyNumber=" + mOutgoingSmsEmergencyNumber[i]);
                 pw.println("mBarringInfo=" + mBarringInfo.get(i));
+                pw.println("mCarrierNetworkChangeState=" + mCarrierNetworkChangeState[i]);
                 pw.println("mTelephonyDisplayInfo=" + mTelephonyDisplayInfos[i]);
                 pw.println("mIsDataEnabled=" + mIsDataEnabled);
                 pw.println("mDataEnabledReason=" + mDataEnabledReason);
@@ -2781,7 +2800,7 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                 pw.println("mLinkCapacityEstimateList=" + mLinkCapacityEstimateLists.get(i));
                 pw.decreaseIndent();
             }
-            pw.println("mCarrierNetworkChangeState=" + mCarrierNetworkChangeState);
+
             pw.println("mPhoneCapability=" + mPhoneCapability);
             pw.println("mActiveDataSubId=" + mActiveDataSubId);
             pw.println("mRadioPowerState=" + mRadioPowerState);
