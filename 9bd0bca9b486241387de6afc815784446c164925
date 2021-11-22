@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8055862_46f7c5d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1289143
+      },
+      "writtenOn": "2021-11-22T21:44:24Z",
+      "side": 1,
+      "message": "The usecase that helped me discover this bug is download manager. I allowlisted it and the app requesting the download but the download job connectivity constraint was not met due to the restricted mode blocked reason (which should have been removed in the effectiveBlockedReasons given the allowed reason).",
+      "revId": "9bd0bca9b486241387de6afc815784446c164925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "345fa11f_c48a3e60",
