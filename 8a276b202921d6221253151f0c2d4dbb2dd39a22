@@ -34,6 +34,46 @@
       "parentUuid": "2edbddbd_492b1021",
       "revId": "8a276b202921d6221253151f0c2d4dbb2dd39a22",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01f377eb_faa08d1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-11-22T13:01:15Z",
+      "side": 1,
+      "message": "TH unhappy on mainline branch because this is platform change. It\u0027s still package com.android.server.net on mainline branch.",
+      "revId": "8a276b202921d6221253151f0c2d4dbb2dd39a22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "260e3f94_32873b3f",
+        "filename": "core/java/android/net/NetworkIdentitySet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-11-22T13:01:15Z",
+      "side": 1,
+      "message": "nit: description?",
+      "range": {
+        "startLine": 101,
+        "startChar": 14,
+        "endLine": 101,
+        "endChar": 17
+      },
+      "revId": "8a276b202921d6221253151f0c2d4dbb2dd39a22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
