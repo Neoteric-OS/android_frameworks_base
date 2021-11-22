@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "345fa11f_c48a3e60",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4702,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2021-11-22T21:07:56Z",
+      "side": 1,
+      "message": "This looks incorrect. Only blocked reasons for metered networks are handled here.",
+      "revId": "9bd0bca9b486241387de6afc815784446c164925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6568cc2c_bd793d45",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4707,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2021-11-22T21:07:56Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9bd0bca9b486241387de6afc815784446c164925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "294f1123_d256eb7e",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4897,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2021-11-22T21:07:56Z",
+      "side": 1,
+      "message": "I think this is indeed an issue. But power restrictions should not influence restricted mode, so I would prefer adjusting the masking in lines 4941 \u0026 4943.",
+      "revId": "9bd0bca9b486241387de6afc815784446c164925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
