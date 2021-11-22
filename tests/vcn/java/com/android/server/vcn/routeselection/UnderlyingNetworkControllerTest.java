@@ -53,7 +53,6 @@ import com.android.server.vcn.VcnNetworkProvider;
 import com.android.server.vcn.routeselection.UnderlyingNetworkController.NetworkBringupCallback;
 import com.android.server.vcn.routeselection.UnderlyingNetworkController.UnderlyingNetworkControllerCallback;
 import com.android.server.vcn.routeselection.UnderlyingNetworkController.UnderlyingNetworkListener;
-import com.android.server.vcn.routeselection.UnderlyingNetworkController.UnderlyingNetworkRecord;
 
 import org.junit.Before;
 import org.junit.Test;
