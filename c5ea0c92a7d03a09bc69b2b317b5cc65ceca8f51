@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea81eb08_84479fc3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-11-22T12:26:38Z",
+      "side": 1,
+      "message": "LGTM but it would be better to have another reviewer to take a look.",
+      "revId": "c5ea0c92a7d03a09bc69b2b317b5cc65ceca8f51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5fd699b_ad197a51",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2117,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-11-22T12:26:38Z",
+      "side": 1,
+      "message": "IIUC, this path eventually goes to NSS.forceUpdate and it will check READ_NETWORK_USAGE_HISTORY permission there. Then forceUpdate calls performPoll with clearCallingIdentity/restoreCallingIdentity as well which means that this path will clear and restore calling identity twice and it\u0027s nested. I think this probably fine.",
+      "range": {
+        "startLine": 2117,
+        "startChar": 29,
+        "endLine": 2117,
+        "endChar": 65
+      },
+      "revId": "c5ea0c92a7d03a09bc69b2b317b5cc65ceca8f51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
