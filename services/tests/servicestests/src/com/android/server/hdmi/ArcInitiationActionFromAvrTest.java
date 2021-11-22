@@ -135,6 +135,7 @@ public class ArcInitiationActionFromAvrTest {
         mAction = new ArcInitiationActionFromAvr(mHdmiCecLocalDeviceAudioSystem);
 
         mLocalDevices.add(mHdmiCecLocalDeviceAudioSystem);
+        hdmiControlService.onBootPhase(PHASE_SYSTEM_SERVICES_READY);
         hdmiControlService.allocateLogicalAddress(mLocalDevices, INITIATED_BY_ENABLE_CEC);
         mTestLooper.dispatchAll();
     }

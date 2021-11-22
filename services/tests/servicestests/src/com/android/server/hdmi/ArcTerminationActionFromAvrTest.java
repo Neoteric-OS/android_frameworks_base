@@ -136,6 +136,7 @@ public class ArcTerminationActionFromAvrTest {
         mAction = new ArcTerminationActionFromAvr(mHdmiCecLocalDeviceAudioSystem);
 
         mLocalDevices.add(mHdmiCecLocalDeviceAudioSystem);
+        hdmiControlService.onBootPhase(PHASE_SYSTEM_SERVICES_READY);
         hdmiControlService.allocateLogicalAddress(mLocalDevices, INITIATED_BY_ENABLE_CEC);
         mHdmiCecLocalDeviceAudioSystem.setArcStatus(true);
         mTestLooper.dispatchAll();
