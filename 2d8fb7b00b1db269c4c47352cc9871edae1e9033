@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017561717",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1893661?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "dab8fddf_01fe4c74",
+        "filename": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-11-22T14:42:36Z",
+      "side": 1,
+      "message": "Wrong casing for \"sInternalTag\". static final variables should be ALL_UPPERCASE.",
+      "range": {
+        "startLine": 400,
+        "startChar": 12,
+        "endLine": 400,
+        "endChar": 75
+      },
+      "revId": "2d8fb7b00b1db269c4c47352cc9871edae1e9033",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
