@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2edbddbd_492b1021",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-11-22T08:34:55Z",
+      "side": 1,
+      "message": "Test might not be passed because they are different package.",
+      "revId": "8a276b202921d6221253151f0c2d4dbb2dd39a22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
