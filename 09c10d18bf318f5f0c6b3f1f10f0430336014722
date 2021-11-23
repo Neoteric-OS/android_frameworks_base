@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a58bd339_402aacc9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-11-23T12:50:09Z",
+      "side": 1,
+      "message": "Hello Julia,\nCould you help us with the further proceed of this CL (we don\u0027t have enough power to vote \u0027Verified\u0027 and \u0027Autosubmit\u0027)?",
+      "revId": "09c10d18bf318f5f0c6b3f1f10f0430336014722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d3b5195_d350a3d2",
