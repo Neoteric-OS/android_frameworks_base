@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "789900a9_4fdc7b4f",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-11-23T03:57:25Z",
+      "side": 1,
+      "message": "So the open call doesn\u0027t use the channel ID (6/7 fields used), and then the close call only uses slot/sub + package + channel ID (3/7 fields used). I don\u0027t think there\u0027s really enough overlap here to reasonably say we need to use the same object for both open and close but I defer to a telephony reviewer here.",
+      "parentUuid": "4bdde4af_a03dec48",
+      "range": {
+        "startLine": 604,
+        "startChar": 12,
+        "endLine": 604,
+        "endChar": 72
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bef264bc_5d57209d",
         "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
         "patchSetId": 2
