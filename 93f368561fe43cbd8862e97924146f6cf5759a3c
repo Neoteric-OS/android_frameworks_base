@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "427adde3_b6be95ea",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-23T17:24:41Z",
+      "side": 1,
+      "message": "The 4 options in the doc explored multiple way on how to organize the input/output parameters:\n1. Keep all parameters separated (as it is) (Alternative 1)\n2. Put open parameters into a parcelable (manually constructed) but leave close parameters as is (Alternative 2)\n3. Use immutable AIDL parcelable to separate open/close requests(Alternative 3)\n4 Use mutable AIDL parcelable to organize both open/close parameters into a union request (Alternative 4)\n\nAgain, all options has Pros./Cons. but Alternative 4 seems be best suitable for our case without boilerplate.\n\nLet\u0027s check if telephony reviewers have any preference here.\nThanks",
+      "parentUuid": "789900a9_4fdc7b4f",
+      "range": {
+        "startLine": 604,
+        "startChar": 12,
+        "endLine": 604,
+        "endChar": 72
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bef264bc_5d57209d",
         "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
         "patchSetId": 2
