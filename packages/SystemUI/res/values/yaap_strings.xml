@@ -17,6 +17,7 @@
  */
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="global_action_reboot_more">Advanced</string>
     <!-- Power menu reboot -->
     <string name="global_action_reboot">Restart</string>
     <string name="global_action_reboot_sub">System</string>
