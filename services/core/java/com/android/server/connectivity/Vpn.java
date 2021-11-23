@@ -511,6 +511,27 @@ public class Vpn {
         loadAlwaysOnPackage();
     }
 
+    private boolean sendEventToVpnManagerApp(String packageName, @NonNull String category,
+            String sessionKey, @Nullable ArrayList<Network> underlyingNetworks,
+            NetworkCapabilities nc, int errorType, int errorCode) {
+        Intent intent = new Intent(VpnManager.ACTION_VPN_MANAGER_ERROR);
+        intent.setPackage(packageName);
+        if (category != null) intent.addCategory(category);
+        intent.putExtra(VpnManager.EXTRA_SESSION_KEY, sessionKey);
+        intent.putParcelableArrayListExtra(VpnManager.EXTRA_UNDERLYING_NETWORK,
+                underlyingNetworks);
+        intent.putExtra(VpnManager.EXTRA_UNDERLYING_NETWORK_CAPABILITIES, nc);
+        intent.putExtra(VpnManager.EXTRA_TIMESTAMP, SystemClock.elapsedRealtime());
+        intent.putExtra(VpnManager.EXTRA_ERROR_TYPE, errorType);
+        intent.putExtra(VpnManager.EXTRA_ERROR_CODE, errorCode);
+        try {
+            return mUserIdContext.startService(intent) != null;
+        } catch (RuntimeException e) {
+            Log.e(TAG, "Service of VpnManager app " + intent + " failed to start", e);
+            return false;
+        }
+    }
+
     /**
      * Set whether this object is responsible for watching for {@link NetworkInfo}
      * teardown. When {@code false}, teardown is handled externally by someone
@@ -2744,6 +2765,7 @@ public class Vpn {
                     case IkeProtocolException.ERROR_TYPE_TS_UNACCEPTABLE:
                         // All the above failures are configuration errors, and are terminal
                         markFailedAndDisconnect(exception);
+
                         return;
                     // All other cases possibly recoverable.
                 }
@@ -3403,6 +3425,9 @@ public class Vpn {
         // To stop the VPN profile, the caller must be the current prepared package and must be
         // running an Ikev2VpnProfile.
         if (isCurrentIkev2VpnLocked(packageName)) {
+            sendEventToVpnManagerApp(packageName, VpnManager.ERROR_CATEGORY_USER_DEACTIVATED,
+                    "" /* sessionKey */, null /* underlyingNetworks */, mNetworkCapabilities,
+                    VpnManager.ERROR_NOT_RECOVERABLE, 0 /* errorCode */);
             prepareInternal(VpnConfig.LEGACY_VPN);
         }
     }
