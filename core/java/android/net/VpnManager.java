@@ -96,6 +96,102 @@ public class VpnManager {
      */
     public static final String NOTIFICATION_CHANNEL_VPN = "VPN";
 
+    /**
+     * Action sent in the intent when an error occurred.
+     */
+    public static final String ACTION_VPN_MANAGER_ERROR =
+            "android.net.action.VPN_MANAGER_ERROR";
+
+    /**
+     * An IKE protocol error. Codes are the codes from IkeProtocolException, RFC 7296.
+     */
+    public static final String CATEGORY_ERROR_IKE = "android.net.category.ERROR_IKE";
+
+    /**
+     * User deactivated the VPN, either by turning it off or selecting a different VPN provider.
+     * The error code is always 0.
+     */
+    public static final String CATEGORY_ERROR_USER_DEACTIVATED =
+            "android.net.category.ERROR_USER_DEACTIVATED";
+
+    /**
+     * Network error. Error codes are ERROR_CODE_NETWORK_*.
+     */
+    public static final String CATEGORY_ERROR_NETWORK =
+            "android.net.category.ERROR_NETWORK";
+
+    /**
+     * The key of the session that experienced this error, as returned by
+     * startProvisionedVpnProfile.
+     */
+    public static final String EXTRA_SESSION_KEY = "android.net.extra.SESSION_KEY";
+
+    /**
+     * Extra for the Network object that was the underlying network at the time of the failure, or
+     * null if none.
+     */
+    public static final String EXTRA_UNDERLYING_NETWORK =
+            "android.net.extra.UNDERLYING_NETWORK";
+
+    /**
+     * The network capabilities of the underlying network.
+     */
+    public static final String EXTRA_UNDERLYING_NETWORK_CAPABILITIES =
+            "android.net.extra.UNDERLYING_NETWORK_CAPABILITIES";
+
+    /**
+     * A long timestamp with SystemClock.elapsedRealtime base for when the event happened.
+     */
+    public static final String EXTRA_TIMESTAMP = "android.net.extra.TIMESTAMP";
+
+    /**
+     * Extra for the error type. This is ERROR_NOT_RECOVERABLE or ERROR_RECOVERABLE.
+     */
+    public static final String EXTRA_ERROR_TYPE = "android.net.extra.ERROR_TYPE";
+
+    /**
+     * Extra for the error code. The value should be 0 for ERROR_CATEGORY_USER_DEACTIVATED, one of
+     * ERROR_CODE_NETWORK_* for ERROR_CATEGORY_NETWORK or one of values defined in
+     * IkeProtocolException#ErrorType.
+     */
+    public static final String EXTRA_ERROR_CODE = "android.net.extra.ERROR_CODE";
+
+    /**
+     * This error is fatal, e.g. the VPN was disabled or configuration error. The stack will not
+     * retry connection.
+     */
+    public static final int ERROR_NOT_RECOVERABLE = 1;
+
+    /**
+     * The stack experienced an error but will retry with exponential backoff, e.g. network timeout.
+     */
+    public static final int ERROR_RECOVERABLE = 2;
+
+    /**
+     * An error code to indicate that there is an UnknownHostException.
+     */
+    public static final int ERROR_CODE_NETWORK_UNKNOWN_HOST = 0;
+
+    /**
+     * An error code to indicate that there is a SocketTimeoutException.
+     */
+    public static final int ERROR_CODE_NETWORK_TIMEOUT = 1;
+
+    /**
+     * An error code to indicate that the connection is refused.
+     */
+    public static final int ERROR_CODE_NETWORK_REFUSED = 2;
+
+    /**
+     * An error code to indicate that there is a SocketException.
+     */
+    public static final int ERROR_CODE_NETWORK_RESET = 3;
+
+    /**
+     * An error code to indicate that there is an IOException.
+     */
+    public static final int ERROR_CODE_NETWORK_IO = 4;
+
     /** @hide */
     @IntDef(value = {TYPE_VPN_NONE, TYPE_VPN_SERVICE, TYPE_VPN_PLATFORM, TYPE_VPN_LEGACY,
             TYPE_VPN_OEM})

@@ -26744,6 +26744,23 @@ package android.net {
     method @Nullable public android.content.Intent provisionVpnProfile(@NonNull android.net.PlatformVpnProfile);
     method public void startProvisionedVpnProfile();
     method public void stopProvisionedVpnProfile();
+    field public static final String ACTION_VPN_MANAGER_ERROR = "android.net.action.VPN_MANAGER_ERROR";
+    field public static final String CATEGORY_ERROR_IKE = "android.net.category.ERROR_IKE";
+    field public static final String CATEGORY_ERROR_NETWORK = "android.net.category.ERROR_NETWORK";
+    field public static final String CATEGORY_ERROR_USER_DEACTIVATED = "android.net.category.ERROR_USER_DEACTIVATED";
+    field public static final int ERROR_CODE_NETWORK_IO = 4; // 0x4
+    field public static final int ERROR_CODE_NETWORK_REFUSED = 2; // 0x2
+    field public static final int ERROR_CODE_NETWORK_RESET = 3; // 0x3
+    field public static final int ERROR_CODE_NETWORK_TIMEOUT = 1; // 0x1
+    field public static final int ERROR_CODE_NETWORK_UNKNOWN_HOST = 0; // 0x0
+    field public static final int ERROR_NOT_RECOVERABLE = 1; // 0x1
+    field public static final int ERROR_RECOVERABLE = 2; // 0x2
+    field public static final String EXTRA_ERROR_CODE = "android.net.extra.ERROR_CODE";
+    field public static final String EXTRA_ERROR_TYPE = "android.net.extra.ERROR_TYPE";
+    field public static final String EXTRA_SESSION_KEY = "android.net.extra.SESSION_KEY";
+    field public static final String EXTRA_TIMESTAMP = "android.net.extra.TIMESTAMP";
+    field public static final String EXTRA_UNDERLYING_NETWORK = "android.net.extra.UNDERLYING_NETWORK";
+    field public static final String EXTRA_UNDERLYING_NETWORK_CAPABILITIES = "android.net.extra.UNDERLYING_NETWORK_CAPABILITIES";
   }
 
   public class VpnService extends android.app.Service {
