@@ -22,6 +22,30 @@
       },
       "revId": "cce0326ec318bc1a2f6e4d20544e670cbb60d08f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b730d663_97936023",
+        "filename": "core/java/android/bluetooth/BluetoothGattServer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-11-23T20:01:48Z",
+      "side": 1,
+      "message": "We should be good here. We used the IntDef annotation (@NotifyCharacteristicReturnValues), so the possible returned constants will automatically be inserted at the end of the @return summary. See https://developer.android.com/reference/android/bluetooth/BluetoothDevice#setAlias(java.lang.String) for an example :)",
+      "parentUuid": "75e530b0_741c8811",
+      "range": {
+        "startLine": 758,
+        "startChar": 7,
+        "endLine": 758,
+        "endChar": 71
+      },
+      "revId": "cce0326ec318bc1a2f6e4d20544e670cbb60d08f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
