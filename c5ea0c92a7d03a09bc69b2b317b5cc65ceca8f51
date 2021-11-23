@@ -18,6 +18,29 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "e952e2ce_17a95e9d",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2108,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-11-23T08:18:01Z",
+      "side": 1,
+      "message": "What provides security here ? IIUC, it\u0027s the fact that this binder object can only have been obtained by a process that holds NETWORK_STATS_PROVIDER. If so, you should probably say so in a comment.",
+      "range": {
+        "startLine": 2108,
+        "startChar": 24,
+        "endLine": 2108,
+        "endChar": 48
+      },
+      "revId": "c5ea0c92a7d03a09bc69b2b317b5cc65ceca8f51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "b5fd699b_ad197a51",
