@@ -22,7 +22,6 @@ package android.se.omapi;
 import android.se.omapi.ISecureElementSession;
 
 /** @hide */
-@VintfStability
 interface ISecureElementChannel {
 
     /**
@@ -59,9 +58,6 @@ interface ISecureElementChannel {
      * Transmits the specified command APDU and returns the response APDU.
      * MANAGE channel commands are not supported.
      * Selection of applets is not supported in logical channels.
-     *
-     * @param command Command APDU, its structure is defined in  ISO/IEC 7816-4
-     *                in Standard byte format
      */
     byte[] transmit(in byte[] command);
 
