@@ -15,6 +15,8 @@
 package android.service.carrier;
 
 import android.annotation.CallSuper;
+import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -22,8 +24,11 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PersistableBundle;
 import android.os.ResultReceiver;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyRegistryManager;
 import android.util.Log;
+
+import com.android.internal.util.ArrayUtils;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -87,7 +92,51 @@ public abstract class CarrierService extends Service {
      * PersistableBundle} may be overridden by the system's default configuration service.
      * </p>
      *
-     * @param id contains details about the current carrier that can be used do decide what
+     * @param id contains details about the current carrier that can be used to decide what
+     *           configuration values to return. Instead of using details like MCCMNC to decide
+     *           current carrier, it also contains subscription carrier id
+     *           {@link android.telephony.TelephonyManager#getSimCarrierId()}, a platform-wide
+     *           unique identifier for each carrier, CarrierConfigService can directly use carrier
+     *           id as the key to look up the carrier info.
+     * @return a {@link PersistableBundle} object containing the configuration or null if default
+     *         values should be used.
+     * @deprecated use {@link #onLoadConfig(int, CarrierIdentifier)} instead.
+     */
+    @Deprecated
+    public abstract PersistableBundle onLoadConfig(CarrierIdentifier id);
+
+    /**
+     * Override this method to set carrier configuration for the specified {@code subId}.
+     * <p>
+     * This method will be called by telephony services to get carrier-specific configuration
+     * values. The returned config will be saved by the system until,
+     * <ol>
+     * <li>The carrier app package is updated, or</li>
+     * <li>The carrier app requests a reload with
+     * {@link android.telephony.CarrierConfigManager#notifyConfigChangedForSubId
+     * notifyConfigChangedForSubId}.</li>
+     * </ol>
+     * This method can be called after a SIM card loads, which may be before or after boot.
+     * </p>
+     * <p>
+     * This method should not block for a long time. If expensive operations (e.g. network access)
+     * are required, this method can schedule the work and return null. Then, use
+     * {@link android.telephony.CarrierConfigManager#notifyConfigChangedForSubId
+     * notifyConfigChangedForSubId} to trigger a reload when the config is ready.
+     * </p>
+     * <p>
+     * Implementations should use the keys defined in {@link android.telephony.CarrierConfigManager
+     * CarrierConfigManager}. Any configuration values not set in the returned {@link
+     * PersistableBundle} may be overridden by the system's default configuration service.
+     * </p>
+     * <p>
+     * By default, this method just call {@link #onLoadConfig(CarrierIdentifier)} with specified
+     * {@code id}. Carrier app should override this method to load carrier config for the specified
+     * subscription {@code subId}.
+     * </p>
+     *
+     * @param subId the subscription from the carrier
+     * @param id contains details about the current carrier that can be used to decide what
      *           configuration values to return. Instead of using details like MCCMNC to decide
      *           current carrier, it also contains subscription carrier id
      *           {@link android.telephony.TelephonyManager#getSimCarrierId()}, a platform-wide
@@ -96,7 +145,12 @@ public abstract class CarrierService extends Service {
      * @return a {@link PersistableBundle} object containing the configuration or null if default
      *         values should be used.
      */
-    public abstract PersistableBundle onLoadConfig(CarrierIdentifier id);
+    // onLoadConfig returns null to indicate using default values, the behavior should not break
+    @SuppressLint("NullableCollection")
+    @Nullable
+    public PersistableBundle onLoadConfig(int subId, @Nullable CarrierIdentifier id) {
+        return onLoadConfig(id);
+    }
 
     /**
      * Informs the system of an intentional upcoming carrier network change by
@@ -149,10 +203,15 @@ public abstract class CarrierService extends Service {
         public static final String KEY_CONFIG_BUNDLE = "config_bundle";
 
         @Override
-        public void getCarrierConfig(CarrierIdentifier id, ResultReceiver result) {
+        public void getCarrierConfig(int phoneId, CarrierIdentifier id, ResultReceiver result) {
             try {
+                int subId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+                int[] subIds = SubscriptionManager.getSubId(phoneId);
+                if (!ArrayUtils.isEmpty(subIds)) {
+                    subId = subIds[0];
+                }
                 Bundle data = new Bundle();
-                data.putParcelable(KEY_CONFIG_BUNDLE, CarrierService.this.onLoadConfig(id));
+                data.putParcelable(KEY_CONFIG_BUNDLE, CarrierService.this.onLoadConfig(subId, id));
                 result.send(RESULT_OK, data);
             } catch (Exception e) {
                 Log.e(LOG_TAG, "Error in onLoadConfig: " + e.getMessage(), e);
