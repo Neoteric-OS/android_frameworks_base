@@ -32,6 +32,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.TelephonyNetworkSpecifier;
+import android.net.vcn.VcnGatewayConnectionConfig;
 import android.os.Handler;
 import android.os.HandlerExecutor;
 import android.os.ParcelUuid;
@@ -101,6 +102,7 @@ public class UnderlyingNetworkController {
     }
 
     @NonNull private final VcnContext mVcnContext;
+    @NonNull private final VcnGatewayConnectionConfig mConnectionConfig;
     @NonNull private final ParcelUuid mSubscriptionGroup;
     @NonNull private final UnderlyingNetworkControllerCallback mCb;
     @NonNull private final Dependencies mDeps;
@@ -124,24 +126,22 @@ public class UnderlyingNetworkController {
 
     public UnderlyingNetworkController(
             @NonNull VcnContext vcnContext,
+            @NonNull VcnGatewayConnectionConfig connectionConfig,
             @NonNull ParcelUuid subscriptionGroup,
             @NonNull TelephonySubscriptionSnapshot snapshot,
             @NonNull UnderlyingNetworkControllerCallback cb) {
-        this(
-                vcnContext,
-                subscriptionGroup,
-                snapshot,
-                cb,
-                new Dependencies());
+        this(vcnContext, connectionConfig, subscriptionGroup, snapshot, cb, new Dependencies());
     }
 
     private UnderlyingNetworkController(
             @NonNull VcnContext vcnContext,
+            @NonNull VcnGatewayConnectionConfig connectionConfig,
             @NonNull ParcelUuid subscriptionGroup,
             @NonNull TelephonySubscriptionSnapshot snapshot,
             @NonNull UnderlyingNetworkControllerCallback cb,
             @NonNull Dependencies deps) {
         mVcnContext = Objects.requireNonNull(vcnContext, "Missing vcnContext");
+        mConnectionConfig = Objects.requireNonNull(connectionConfig, "Missing connectionConfig");
         mSubscriptionGroup = Objects.requireNonNull(subscriptionGroup, "Missing subscriptionGroup");
         mLastSnapshot = Objects.requireNonNull(snapshot, "Missing snapshot");
         mCb = Objects.requireNonNull(cb, "Missing cb");
@@ -432,6 +432,7 @@ public class UnderlyingNetworkController {
             TreeSet<UnderlyingNetworkRecord> sorted =
                     new TreeSet<>(
                             UnderlyingNetworkRecord.getComparator(
+                                    mConnectionConfig,
                                     mSubscriptionGroup,
                                     mLastSnapshot,
                                     mCurrentRecord,
@@ -533,7 +534,13 @@ public class UnderlyingNetworkController {
         if (mRouteSelectionCallback != null) {
             for (UnderlyingNetworkRecord record :
                     mRouteSelectionCallback.getSortedUnderlyingNetworks()) {
-                record.dump(pw, mSubscriptionGroup, mLastSnapshot, mCurrentRecord, mCarrierConfig);
+                record.dump(
+                        pw,
+                        mConnectionConfig,
+                        mSubscriptionGroup,
+                        mLastSnapshot,
+                        mCurrentRecord,
+                        mCarrierConfig);
             }
         }
         pw.decreaseIndent();

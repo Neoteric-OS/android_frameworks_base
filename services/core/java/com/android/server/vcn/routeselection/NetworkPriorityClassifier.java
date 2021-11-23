@@ -15,15 +15,22 @@
  */
 package com.android.server.vcn.routeselection;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+import static android.net.vcn.networkpriority.NetworkPriority.NETWORK_QUALITY_ANY;
 
 import static com.android.server.VcnManagementService.LOCAL_LOG;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.NetworkCapabilities;
+import android.net.vcn.VcnGatewayConnectionConfig;
 import android.net.vcn.VcnManager;
+import android.net.vcn.networkpriority.CellNetworkPriority;
+import android.net.vcn.networkpriority.NetworkPriority;
+import android.net.vcn.networkpriority.WifiNetworkPriority;
 import android.os.ParcelUuid;
 import android.os.PersistableBundle;
 import android.telephony.SubscriptionManager;
@@ -83,6 +90,55 @@ public class NetworkPriorityClassifier {
         PRIORITY_TO_STRING_MAP.put(PRIORITY_ANY, "PRIORITY_ANY");
     }
 
+    public static int calculatePriorityClass(
+            UnderlyingNetworkRecord networkRecord,
+            VcnGatewayConnectionConfig connectionConfig,
+            ParcelUuid subscriptionGroup,
+            TelephonySubscriptionSnapshot snapshot,
+            UnderlyingNetworkRecord currentlySelected,
+            PersistableBundle carrierConfig) {
+
+        final NetworkCapabilities caps = networkRecord.networkCapabilities;
+
+        // mRouteSelectionNetworkRequest requires a network be both VALIDATED and NOT_SUSPENDED
+
+        if (networkRecord.isBlocked) {
+            logWtf("Network blocked for System Server: " + networkRecord.network);
+            return PRIORITY_ANY;
+        }
+
+        if (connectionConfig.getNetworkPriorities().isEmpty()) {
+            return calculatePriorityClassDefault(
+                    networkRecord, subscriptionGroup, snapshot, currentlySelected, carrierConfig);
+        }
+
+        for (int i = 0; i < connectionConfig.getNetworkPriorities().size(); i++) {
+            NetworkPriority nwPriority = connectionConfig.getNetworkPriorities().get(i);
+            if (nwPriority instanceof WifiNetworkPriority
+                    && matchWifi(
+                            (WifiNetworkPriority) nwPriority,
+                            networkRecord,
+                            subscriptionGroup,
+                            snapshot,
+                            currentlySelected,
+                            carrierConfig)) {
+                return i;
+            }
+
+            if (nwPriority instanceof CellNetworkPriority
+                    && matchCell(
+                            (CellNetworkPriority) nwPriority,
+                            caps,
+                            subscriptionGroup,
+                            snapshot,
+                            currentlySelected,
+                            carrierConfig)) {
+                return i;
+            }
+        }
+        return PRIORITY_ANY;
+    }
+
     /**
      * Gives networks a priority class, based on the following priorities:
      *
@@ -94,21 +150,13 @@ public class NetworkPriorityClassifier {
      *   <li>Any others
      * </ol>
      */
-    public static int calculatePriorityClass(
+    private static int calculatePriorityClassDefault(
             UnderlyingNetworkRecord networkRecord,
             ParcelUuid subscriptionGroup,
             TelephonySubscriptionSnapshot snapshot,
             UnderlyingNetworkRecord currentlySelected,
             PersistableBundle carrierConfig) {
         final NetworkCapabilities caps = networkRecord.networkCapabilities;
-
-        // mRouteSelectionNetworkRequest requires a network be both VALIDATED and NOT_SUSPENDED
-
-        if (networkRecord.isBlocked) {
-            logWtf("Network blocked for System Server: " + networkRecord.network);
-            return PRIORITY_ANY;
-        }
-
         if (caps.hasTransport(TRANSPORT_CELLULAR)
                 && isOpportunistic(snapshot, caps.getSubscriptionIds())) {
             // If this carrier is the active data provider, ensure that opportunistic is only
@@ -151,6 +199,69 @@ public class NetworkPriorityClassifier {
         }
 
         return PRIORITY_ANY;
+    }
+
+    private static boolean matchWifi(
+            WifiNetworkPriority networkPriority,
+            UnderlyingNetworkRecord networkRecord,
+            ParcelUuid subscriptionGroup,
+            TelephonySubscriptionSnapshot snapshot,
+            UnderlyingNetworkRecord currentlySelected,
+            PersistableBundle carrierConfig) {
+        final NetworkCapabilities caps = networkRecord.networkCapabilities;
+        if (!caps.hasTransport(TRANSPORT_WIFI)) {
+            return false;
+        }
+
+        if (!networkPriority.allowMetered() && !caps.hasCapability(NET_CAPABILITY_NOT_METERED)) {
+            return false;
+        }
+
+        if (networkPriority.getSsid() != caps.getSsid()) {
+            return false;
+        }
+
+        if (networkPriority.getNetworkQuality() != NETWORK_QUALITY_ANY
+                && caps.getSignalStrength() < getWifiExitRssiThreshold(carrierConfig)
+                && currentlySelected != null
+                && networkRecord.network.equals(currentlySelected.network)) {
+            return false;
+        }
+
+        if (networkPriority.getNetworkQuality() != NETWORK_QUALITY_ANY
+                && caps.getSignalStrength() < getWifiEntryRssiThreshold(carrierConfig)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private static boolean matchCell(
+            CellNetworkPriority networkPriority,
+            NetworkCapabilities caps,
+            ParcelUuid subscriptionGroup,
+            TelephonySubscriptionSnapshot snapshot,
+            UnderlyingNetworkRecord currentlySelected,
+            PersistableBundle carrierConfig) {
+        if (!caps.hasTransport(TRANSPORT_CELLULAR)) {
+            return false;
+        }
+
+        if (!networkPriority.allowMetered() && !caps.hasCapability(NET_CAPABILITY_NOT_METERED)) {
+            return false;
+        }
+
+        if (!networkPriority.isRoamingAllowed()
+                && !caps.hasCapability(NET_CAPABILITY_NOT_ROAMING)) {
+            return false;
+        }
+
+        if (isOpportunistic(snapshot, caps.getSubscriptionIds())
+                != networkPriority.isOpportunisticRequired()) {
+            return false;
+        }
+
+        return true;
     }
 
     public static boolean isOpportunistic(

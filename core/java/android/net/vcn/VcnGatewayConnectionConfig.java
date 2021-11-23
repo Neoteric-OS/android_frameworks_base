@@ -27,6 +27,7 @@ import android.annotation.SuppressLint;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.ipsec.ike.IkeTunnelConnectionParams;
+import android.net.vcn.networkpriority.NetworkPriority;
 import android.net.vcn.persistablebundleutils.TunnelConnectionParamsUtils;
 import android.os.PersistableBundle;
 import android.util.ArraySet;
@@ -41,6 +42,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
@@ -166,6 +168,9 @@ public final class VcnGatewayConnectionConfig {
     private static final String EXPOSED_CAPABILITIES_KEY = "mExposedCapabilities";
     @NonNull private final SortedSet<Integer> mExposedCapabilities;
 
+    private static final String NETWORK_PRIORITIES = "mNetworkPriorities";
+    @NonNull private final List<NetworkPriority> mNetworkPriorities;
+
     private static final String MAX_MTU_KEY = "mMaxMtu";
     private final int mMaxMtu;
 
@@ -177,11 +182,13 @@ public final class VcnGatewayConnectionConfig {
             @NonNull String gatewayConnectionName,
             @NonNull IkeTunnelConnectionParams tunnelConnectionParams,
             @NonNull Set<Integer> exposedCapabilities,
+            @NonNull List<NetworkPriority> networkPriorities,
             @NonNull long[] retryIntervalsMs,
             @IntRange(from = MIN_MTU_V6) int maxMtu) {
         mGatewayConnectionName = gatewayConnectionName;
         mTunnelConnectionParams = tunnelConnectionParams;
         mExposedCapabilities = new TreeSet(exposedCapabilities);
+        mNetworkPriorities = networkPriorities;
         mRetryIntervalsMs = retryIntervalsMs;
         mMaxMtu = maxMtu;
 
@@ -206,6 +213,9 @@ public final class VcnGatewayConnectionConfig {
                 exposedCapsBundle, PersistableBundleUtils.INTEGER_DESERIALIZER));
         mRetryIntervalsMs = in.getLongArray(RETRY_INTERVAL_MS_KEY);
         mMaxMtu = in.getInt(MAX_MTU_KEY);
+
+        // STOPSHIP: Decode NETWORK_PRIORITIES
+        mNetworkPriorities = new ArrayList<>();
 
         validate();
     }
@@ -302,6 +312,12 @@ public final class VcnGatewayConnectionConfig {
         return Collections.unmodifiableSet(mExposedCapabilities);
     }
 
+    /** @hide */
+    @NonNull
+    public List<NetworkPriority> getNetworkPriorities() {
+        return Collections.unmodifiableList(mNetworkPriorities);
+    }
+
     /**
      * Retrieves the configured retry intervals.
      *
@@ -345,6 +361,8 @@ public final class VcnGatewayConnectionConfig {
         result.putLongArray(RETRY_INTERVAL_MS_KEY, mRetryIntervalsMs);
         result.putInt(MAX_MTU_KEY, mMaxMtu);
 
+        // STOPSHIP: Encode NETWORK_PRIORITIES
+
         return result;
     }
 
@@ -354,6 +372,7 @@ public final class VcnGatewayConnectionConfig {
                 mGatewayConnectionName,
                 mTunnelConnectionParams,
                 mExposedCapabilities,
+                mNetworkPriorities,
                 Arrays.hashCode(mRetryIntervalsMs),
                 mMaxMtu);
     }
@@ -368,6 +387,7 @@ public final class VcnGatewayConnectionConfig {
         return mGatewayConnectionName.equals(rhs.mGatewayConnectionName)
                 && mTunnelConnectionParams.equals(rhs.mTunnelConnectionParams)
                 && mExposedCapabilities.equals(rhs.mExposedCapabilities)
+                && mNetworkPriorities.equals(rhs.mNetworkPriorities)
                 && Arrays.equals(mRetryIntervalsMs, rhs.mRetryIntervalsMs)
                 && mMaxMtu == rhs.mMaxMtu;
     }
@@ -379,6 +399,7 @@ public final class VcnGatewayConnectionConfig {
         @NonNull private final String mGatewayConnectionName;
         @NonNull private final IkeTunnelConnectionParams mTunnelConnectionParams;
         @NonNull private final Set<Integer> mExposedCapabilities = new ArraySet();
+        @NonNull private final List<NetworkPriority> mNetworkPriorities = new ArrayList<>();
         @NonNull private long[] mRetryIntervalsMs = DEFAULT_RETRY_INTERVALS_MS;
         private int mMaxMtu = DEFAULT_MAX_MTU;
 
@@ -449,6 +470,13 @@ public final class VcnGatewayConnectionConfig {
             return this;
         }
 
+        /** @hide */
+        @NonNull
+        public Builder setNetworkPriorities(@NonNull List<NetworkPriority> priorities) {
+            mNetworkPriorities.addAll(priorities);
+            return this;
+        }
+
         /**
          * Set the retry interval between VCN establishment attempts upon successive failures.
          *
@@ -513,6 +541,7 @@ public final class VcnGatewayConnectionConfig {
                     mGatewayConnectionName,
                     mTunnelConnectionParams,
                     mExposedCapabilities,
+                    mNetworkPriorities,
                     mRetryIntervalsMs,
                     mMaxMtu);
         }

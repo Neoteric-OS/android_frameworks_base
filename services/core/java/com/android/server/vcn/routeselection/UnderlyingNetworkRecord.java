@@ -21,6 +21,7 @@ import android.annotation.Nullable;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
+import android.net.vcn.VcnGatewayConnectionConfig;
 import android.os.ParcelUuid;
 import android.os.PersistableBundle;
 
@@ -81,15 +82,22 @@ public class UnderlyingNetworkRecord {
      * </ol>
      */
     private int calculatePriorityClass(
+            VcnGatewayConnectionConfig connectionConfig,
             ParcelUuid subscriptionGroup,
             TelephonySubscriptionSnapshot snapshot,
             UnderlyingNetworkRecord currentlySelected,
             PersistableBundle carrierConfig) {
         return NetworkPriorityClassifier.calculatePriorityClass(
-                this, subscriptionGroup, snapshot, currentlySelected, carrierConfig);
+                this,
+                connectionConfig,
+                subscriptionGroup,
+                snapshot,
+                currentlySelected,
+                carrierConfig);
     }
 
     public static Comparator<UnderlyingNetworkRecord> getComparator(
+            VcnGatewayConnectionConfig connectionConfig,
             ParcelUuid subscriptionGroup,
             TelephonySubscriptionSnapshot snapshot,
             UnderlyingNetworkRecord currentlySelected,
@@ -97,15 +105,24 @@ public class UnderlyingNetworkRecord {
         return (left, right) -> {
             return Integer.compare(
                     left.calculatePriorityClass(
-                            subscriptionGroup, snapshot, currentlySelected, carrierConfig),
+                            connectionConfig,
+                            subscriptionGroup,
+                            snapshot,
+                            currentlySelected,
+                            carrierConfig),
                     right.calculatePriorityClass(
-                            subscriptionGroup, snapshot, currentlySelected, carrierConfig));
+                            connectionConfig,
+                            subscriptionGroup,
+                            snapshot,
+                            currentlySelected,
+                            carrierConfig));
         };
     }
 
     /** Dumps the state of this record for logging and debugging purposes. */
     public void dump(
             IndentingPrintWriter pw,
+            VcnGatewayConnectionConfig connectionConfig,
             ParcelUuid subscriptionGroup,
             TelephonySubscriptionSnapshot snapshot,
             UnderlyingNetworkRecord currentlySelected,
@@ -115,7 +132,11 @@ public class UnderlyingNetworkRecord {
 
         final int priorityClass =
                 calculatePriorityClass(
-                        subscriptionGroup, snapshot, currentlySelected, carrierConfig);
+                        connectionConfig,
+                        subscriptionGroup,
+                        snapshot,
+                        currentlySelected,
+                        carrierConfig);
         pw.println(
                 "Priority class: "
                         + NetworkPriorityClassifier.priorityClassToString(priorityClass)
