@@ -129,6 +129,8 @@ import com.android.server.utils.WatchedSparseArray;
 import com.android.server.utils.WatchedSparseIntArray;
 import com.android.server.utils.Watcher;
 
+import dalvik.annotation.optimization.NeverCompile;
+
 import libcore.io.IoUtils;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -4372,6 +4374,7 @@ public final class Settings implements Watchable, Snappable {
         pw.decreaseIndent();
     }
 
+    @NeverCompile
     void dumpPackageLPr(PrintWriter pw, String prefix, String checkinTag,
             ArraySet<String> permissionNames, PackageSetting ps,
             LegacyPermissionState permissionsState, SimpleDateFormat sdf, Date date,
@@ -4857,6 +4860,7 @@ public final class Settings implements Watchable, Snappable {
         }
     }
 
+    @NeverCompile
     void dumpPackagesLPr(PrintWriter pw, String packageName, ArraySet<String> permissionNames,
             DumpState dumpState, boolean checkin) {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
