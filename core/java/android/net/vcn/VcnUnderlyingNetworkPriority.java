@@ -91,7 +91,7 @@ public abstract class VcnUnderlyingNetworkPriority {
             case NETWORK_PRIORITY_TYPE_WIFI:
                 return WifiUnderlyingNetworkPriority.fromPersistableBundle(in);
             case NETWORK_PRIORITY_TYPE_CELL:
-                throw new UnsupportedOperationException("Not implemented");
+                return CellUnderlyingNetworkPriority.fromPersistableBundle(in);
             default:
                 throw new IllegalArgumentException(
                         "Invalid networkPriorityType:" + networkPriorityType);
