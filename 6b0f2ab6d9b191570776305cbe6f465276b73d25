@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd8e662f_45cc6fd7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-11-24T17:42:32Z",
+      "side": 1,
+      "message": "Looks ok except there is quite a lot of unnecessary churn in the change which made it a little confusing to review. I spent about 5 minutes wondering why the libs were being added until I scrolled down a little further and saw that they had just been moved.",
+      "revId": "6b0f2ab6d9b191570776305cbe6f465276b73d25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4a53711_d54f24e4",
+        "filename": "test-mock/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-11-24T17:42:32Z",
+      "side": 1,
+      "message": "These do not need to be moved.",
+      "revId": "6b0f2ab6d9b191570776305cbe6f465276b73d25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03e32568_5591e368",
+        "filename": "test-mock/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-11-24T17:42:32Z",
+      "side": 1,
+      "message": "These do not need to be changed.",
+      "revId": "6b0f2ab6d9b191570776305cbe6f465276b73d25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
