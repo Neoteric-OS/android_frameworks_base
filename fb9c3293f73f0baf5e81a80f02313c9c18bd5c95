@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ae1d254_fe2081be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-11-24T14:01:18Z",
+      "side": 1,
+      "message": "Android.bp lgtm",
+      "revId": "fb9c3293f73f0baf5e81a80f02313c9c18bd5c95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dfda2a5_b86dcf24",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-11-24T14:01:18Z",
+      "side": 1,
+      "message": "Please put it at the correct (sorted) place, further up",
+      "revId": "fb9c3293f73f0baf5e81a80f02313c9c18bd5c95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db2a185e_a1e8bb74",
+        "filename": "packages/Nsd/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-11-24T14:01:18Z",
+      "side": 1,
+      "message": "Please don\u0027t use noparent",
+      "revId": "fb9c3293f73f0baf5e81a80f02313c9c18bd5c95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5f41e96_a633d541",
+        "filename": "packages/Nsd/service/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-11-24T14:01:18Z",
+      "side": 1,
+      "message": "probably not? looks like it\u0027s included statically atm.",
+      "revId": "fb9c3293f73f0baf5e81a80f02313c9c18bd5c95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
