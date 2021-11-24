@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae7b75fb_b97a484b",
+        "filename": "test-mock/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-11-24T18:02:06Z",
+      "side": 1,
+      "message": "They\u0027re not really being moved. libs is still under \"srcs\", just that api_srcs was added under libs..? I\u0027ve edited it to make the diff smaller, for the convenience of the reviewers.",
+      "parentUuid": "b4a53711_d54f24e4",
+      "revId": "6b0f2ab6d9b191570776305cbe6f465276b73d25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03e32568_5591e368",
@@ -48,6 +66,24 @@
       "writtenOn": "2021-11-24T17:42:32Z",
       "side": 1,
       "message": "These do not need to be changed.",
+      "revId": "6b0f2ab6d9b191570776305cbe6f465276b73d25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b467dcd_baa89d72",
+        "filename": "test-mock/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-11-24T18:02:06Z",
+      "side": 1,
+      "message": "it\u0027s a noop formatting change though. Is that disallowed?",
+      "parentUuid": "03e32568_5591e368",
       "revId": "6b0f2ab6d9b191570776305cbe6f465276b73d25",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
