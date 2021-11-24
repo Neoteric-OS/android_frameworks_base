@@ -17,6 +17,7 @@
 package android.bluetooth;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -103,7 +104,7 @@ public abstract class BluetoothProfileConnector<T> {
                             mContext.getPackageManager(), 0);
                     intent.setComponent(comp);
                     if (comp == null || !mContext.bindServiceAsUser(intent, mConnection, 0,
-                            UserHandle.CURRENT_OR_SELF)) {
+                            UserHandle.of(ActivityManager.getCurrentUser()))) {
                         logError("Could not bind to Bluetooth Service with " + intent);
                         return false;
                     }

@@ -22,8 +22,8 @@ import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
+import android.app.ActivityManager;
 import android.bluetooth.annotations.RequiresBluetoothConnectPermission;
-import android.bluetooth.annotations.RequiresLegacyBluetoothPermission;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Attributable;
 import android.content.AttributionSource;
@@ -170,7 +170,7 @@ public class BluetoothPbap implements BluetoothProfile {
                             mContext.getPackageManager(), 0);
                     intent.setComponent(comp);
                     if (comp == null || !mContext.bindServiceAsUser(intent, mConnection, 0,
-                            UserHandle.CURRENT_OR_SELF)) {
+                            UserHandle.of(ActivityManager.getCurrentUser()))) {
                         Log.e(TAG, "Could not bind to Bluetooth Pbap Service with " + intent);
                         return false;
                     }
