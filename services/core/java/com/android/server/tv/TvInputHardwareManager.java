@@ -1255,7 +1255,8 @@ class TvInputHardwareManager implements TvInputHal.Callback {
                         mListener.onHdmiDeviceUpdated(inputId, info);
                     } else {
                         Slog.w(TAG, "Could not resolve input ID matching the device info; "
-                                + "ignoring.");
+                                + "adding the device instead.");
+                        mListener.onHdmiDeviceAdded(info);
                     }
                     break;
                 }
@@ -1324,12 +1325,14 @@ class TvInputHardwareManager implements TvInputHal.Callback {
         @Override
         public void onStatusChanged(HdmiDeviceInfo deviceInfo, int status) {
             if (!deviceInfo.isSourceType()) return;
+            int id = deviceInfo.getId();
             synchronized (mLock) {
+                HdmiDeviceInfo originalDeviceInfo = findHdmiDeviceInfo(id);
                 int messageType = 0;
                 Object obj = null;
                 switch (status) {
                     case HdmiControlManager.DEVICE_EVENT_ADD_DEVICE: {
-                        if (findHdmiDeviceInfo(deviceInfo.getId()) == null) {
+                        if (originalDeviceInfo == null) {
                             mHdmiDeviceList.add(deviceInfo);
                         } else {
                             Slog.w(TAG, "The list already contains " + deviceInfo + "; ignoring.");
@@ -1340,7 +1343,6 @@ class TvInputHardwareManager implements TvInputHal.Callback {
                         break;
                     }
                     case HdmiControlManager.DEVICE_EVENT_REMOVE_DEVICE: {
-                        HdmiDeviceInfo originalDeviceInfo = findHdmiDeviceInfo(deviceInfo.getId());
                         if (!mHdmiDeviceList.remove(originalDeviceInfo)) {
                             Slog.w(TAG, "The list doesn't contain " + deviceInfo + "; ignoring.");
                             return;
@@ -1350,13 +1352,13 @@ class TvInputHardwareManager implements TvInputHal.Callback {
                         break;
                     }
                     case HdmiControlManager.DEVICE_EVENT_UPDATE_DEVICE: {
-                        HdmiDeviceInfo originalDeviceInfo = findHdmiDeviceInfo(deviceInfo.getId());
                         if (!mHdmiDeviceList.remove(originalDeviceInfo)) {
-                            Slog.w(TAG, "The list doesn't contain " + deviceInfo + "; ignoring.");
-                            return;
+                            Slog.w(TAG, "The list doesn't contain " + deviceInfo + "; adding.");
+                            mHdmiDeviceList.add(deviceInfo);
+                            messageType = ListenerHandler.HDMI_DEVICE_ADDED;
+                        } else {
+                            messageType = ListenerHandler.HDMI_DEVICE_UPDATED;
                         }
-                        mHdmiDeviceList.add(deviceInfo);
-                        messageType = ListenerHandler.HDMI_DEVICE_UPDATED;
                         obj = deviceInfo;
                         break;
                     }
