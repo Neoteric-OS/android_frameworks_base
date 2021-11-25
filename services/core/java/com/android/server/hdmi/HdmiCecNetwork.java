@@ -498,6 +498,34 @@ public class HdmiCecNetwork {
     }
 
     /**
+     * Attempts to deduce the device type of a device given its logical address.
+     * If multiple types are possible, returns {@link HdmiDeviceInfo#DEVICE_RESERVED}.
+     */
+    private static int logicalAddressToDeviceType(int logicalAddress) {
+        switch (logicalAddress) {
+            case Constants.ADDR_TV:
+                return HdmiDeviceInfo.DEVICE_TV;
+            case Constants.ADDR_RECORDER_1:
+            case Constants.ADDR_RECORDER_2:
+            case Constants.ADDR_RECORDER_3:
+                return HdmiDeviceInfo.DEVICE_RECORDER;
+            case Constants.ADDR_TUNER_1:
+            case Constants.ADDR_TUNER_2:
+            case Constants.ADDR_TUNER_3:
+            case Constants.ADDR_TUNER_4:
+                return HdmiDeviceInfo.DEVICE_TUNER;
+            case Constants.ADDR_PLAYBACK_1:
+            case Constants.ADDR_PLAYBACK_2:
+            case Constants.ADDR_PLAYBACK_3:
+                return HdmiDeviceInfo.DEVICE_PLAYBACK;
+            case Constants.ADDR_AUDIO_SYSTEM:
+                return HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM;
+            default:
+                return HdmiDeviceInfo.DEVICE_RESERVED;
+        }
+    }
+
+    /**
      * Passively listen to incoming CEC messages.
      *
      * This shall not result in any CEC messages being sent.
@@ -510,7 +538,7 @@ public class HdmiCecNetwork {
         if (getCecDeviceInfo(sourceAddress) == null) {
             HdmiDeviceInfo newDevice = new HdmiDeviceInfo(sourceAddress,
                     HdmiDeviceInfo.PATH_INVALID, HdmiDeviceInfo.PORT_INVALID,
-                    HdmiDeviceInfo.DEVICE_RESERVED, Constants.UNKNOWN_VENDOR_ID,
+                    logicalAddressToDeviceType(sourceAddress), Constants.UNKNOWN_VENDOR_ID,
                     HdmiUtils.getDefaultDeviceName(sourceAddress));
             addCecDevice(newDevice);
         }
