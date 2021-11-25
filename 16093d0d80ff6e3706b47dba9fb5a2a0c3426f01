@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f688e69b_9dbd6ac1",
+        "filename": "core/java/android/net/vcn/networkpriority/CellNetworkPriority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-11-25T00:16:56Z",
+      "side": 1,
+      "message": "This will need to be a copy; otherwise if the builder changes, the CellNetworkPriority will change too (same above for plmnids)",
+      "range": {
+        "startLine": 58,
+        "startChar": 37,
+        "endLine": 58,
+        "endChar": 62
+      },
+      "revId": "16093d0d80ff6e3706b47dba9fb5a2a0c3426f01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
