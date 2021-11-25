@@ -86,6 +86,24 @@
       "parentUuid": "03e32568_5591e368",
       "revId": "6b0f2ab6d9b191570776305cbe6f465276b73d25",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97087a01_3dea5c36",
+        "filename": "test-mock/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-11-25T18:44:54Z",
+      "side": 1,
+      "message": "No, it just distracts from the functional changes. Was that an automated reformatting or a manual one? I thought that bpfmt would keep them on a single line.",
+      "parentUuid": "3b467dcd_baa89d72",
+      "revId": "6b0f2ab6d9b191570776305cbe6f465276b73d25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
