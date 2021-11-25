@@ -382,6 +382,8 @@ public final class SystemServer implements Dumpable {
             "com.android.server.connectivity.IpConnectivityMetrics";
     private static final String MEDIA_COMMUNICATION_SERVICE_CLASS =
             "com.android.server.media.MediaCommunicationService";
+    private static final String CONNECTIVITY_SERVICE_INITIALIZER_TIRAMISU_CLASS =
+            "com.android.connectivity.ConnectivityServiceInitializerTiramisu";
 
     private static final String ROLE_SERVICE_CLASS = "com.android.role.RoleService";
     private static final String GAME_MANAGER_SERVICE_CLASS =
@@ -1339,7 +1341,6 @@ public final class SystemServer implements Dumpable {
         VcnManagementService vcnManagement = null;
         NetworkStatsService networkStats = null;
         NetworkPolicyManagerService networkPolicy = null;
-        NsdService serviceDiscovery = null;
         WindowManagerService wm = null;
         SerialService serial = null;
         NetworkTimeUpdateService networkTimeUpdater = null;
@@ -1942,13 +1943,11 @@ public final class SystemServer implements Dumpable {
             }
             t.traceEnd();
 
-            t.traceBegin("StartNsdService");
+            t.traceBegin("StartConnectivityServiceTiramisu");
             try {
-                serviceDiscovery = NsdService.create(context);
-                ServiceManager.addService(
-                        Context.NSD_SERVICE, serviceDiscovery);
+                mSystemServiceManager.startService(CONNECTIVITY_SERVICE_INITIALIZER_TIRAMISU_CLASS);
             } catch (Throwable e) {
-                reportWtf("starting Service Discovery Service", e);
+                reportWtf("starting ConnectivityServiceTiramisu", e);
             }
             t.traceEnd();
 

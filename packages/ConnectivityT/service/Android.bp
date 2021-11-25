@@ -55,6 +55,7 @@ filegroup {
     srcs: [
         ":services.connectivity-netstats-sources",
         ":services.connectivity-nsd-sources",
+        "src/com/android/connectivity/ConnectivityServiceInitializerTiramisu.java",
     ],
     path: "src",
     visibility: [
