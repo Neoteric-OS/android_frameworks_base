@@ -35,6 +35,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8de4545_13312cee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1259532
+      },
+      "writtenOn": "2021-11-26T10:28:13Z",
+      "side": 1,
+      "message": "Hello, Julia. Could you please help with further promoting this patch? Thanks.",
+      "revId": "09c10d18bf318f5f0c6b3f1f10f0430336014722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d3b5195_d350a3d2",
