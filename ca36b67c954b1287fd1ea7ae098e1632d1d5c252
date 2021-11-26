@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7a006e6_e190aed4",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-11-26T08:40:56Z",
+      "side": 1,
+      "message": "This is going to lack the newly updated data I think ? Since now you\u0027re calling mNetworkMetrics.get() before collectPendingMetricsSnapshot.",
+      "range": {
+        "startLine": 182,
+        "startChar": 39,
+        "endLine": 182,
+        "endChar": 46
+      },
+      "revId": "ca36b67c954b1287fd1ea7ae098e1632d1d5c252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9319010b_b9e82f43",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-11-26T08:40:56Z",
+      "side": 1,
+      "message": "forceCollect",
+      "range": {
+        "startLine": 188,
+        "startChar": 75,
+        "endLine": 188,
+        "endChar": 91
+      },
+      "revId": "ca36b67c954b1287fd1ea7ae098e1632d1d5c252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
