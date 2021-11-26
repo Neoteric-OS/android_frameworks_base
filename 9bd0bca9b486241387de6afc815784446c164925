@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64e79c6e_7a1914be",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4702,
+      "author": {
+        "id": 1289143
+      },
+      "writtenOn": "2021-11-26T17:50:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50735edf_f247f334",
+      "revId": "9bd0bca9b486241387de6afc815784446c164925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6568cc2c_bd793d45",
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Yes, since power restrictions doesn\u0027t affect this, we just need to copy restricted mode specific reasons as is. So, I\u0027d prefer leaving this code as is and modifying the line:4905 similar to this. I\u0027m also okay with what Patrick suggested about masking in lines 4941 \u0026 4943 but we should still use the restricted mode specific reasons already in old uidBlockedState and shouldn\u0027t use mRestrictedNetworkMode \u0026 hasRestrictedModeAccess() here.",
       "parentUuid": "294f1123_d256eb7e",
+      "revId": "9bd0bca9b486241387de6afc815784446c164925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0d62e24_77a29e07",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4897,
+      "author": {
+        "id": 1289143
+      },
+      "writtenOn": "2021-11-26T17:50:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "448e0413_2ff75a31",
       "revId": "9bd0bca9b486241387de6afc815784446c164925",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
