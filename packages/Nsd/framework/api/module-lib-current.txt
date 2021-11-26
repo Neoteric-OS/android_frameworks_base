@@ -1,0 +1,9 @@
+// Signature format: 2.0
+package android.net {
+
+  public final class Connectivity33Initializer {
+    method public static void registerServiceWrappers();
+  }
+
+}
+
