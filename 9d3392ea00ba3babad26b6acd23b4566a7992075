@@ -46,6 +46,30 @@
       },
       "revId": "9d3392ea00ba3babad26b6acd23b4566a7992075",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14b98a62_d71fe4ce",
+        "filename": "services/core/java/com/android/server/net/IpConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1903302
+      },
+      "writtenOn": "2021-11-26T01:28:15Z",
+      "side": 1,
+      "message": "That looks good to me.\nI will resolve this shortly.",
+      "parentUuid": "1453131b_16929e17",
+      "range": {
+        "startLine": 326,
+        "startChar": 36,
+        "endLine": 326,
+        "endChar": 49
+      },
+      "revId": "9d3392ea00ba3babad26b6acd23b4566a7992075",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

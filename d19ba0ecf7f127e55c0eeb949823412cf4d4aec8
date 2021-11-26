@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a90e735_2911aeba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1903302
+      },
+      "writtenOn": "2021-11-26T01:28:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bfe7244_413c1b5b",
+      "revId": "d19ba0ecf7f127e55c0eeb949823412cf4d4aec8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5d4b77d_e75b8fbd",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-11-17T08:26:27Z",
       "side": 1,
       "message": "nit: ...If there is no destination, assume it is default route and use the gateway address in all cases.\nNo strong opinion?",
+      "range": {
+        "startLine": 325,
+        "startChar": 90,
+        "endLine": 325,
+        "endChar": 91
+      },
+      "revId": "d19ba0ecf7f127e55c0eeb949823412cf4d4aec8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff7942db_84167105",
+        "filename": "services/core/java/com/android/server/net/IpConfigStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1903302
+      },
+      "writtenOn": "2021-11-26T01:28:15Z",
+      "side": 1,
+      "message": "+1.",
+      "parentUuid": "e5d4b77d_e75b8fbd",
       "range": {
         "startLine": 325,
         "startChar": 90,
