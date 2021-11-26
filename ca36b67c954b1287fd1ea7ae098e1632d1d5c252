@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "84c37b0c_c709dbd3",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-11-26T09:15:41Z",
+      "side": 1,
+      "message": "I think the new data won\u0027t be updated is expected because updating the \"pending\" data is what collectPendingMetricsSnapshot() does.\nThe idea is: if the transport type is changed then we should forcing collect the old(pending) data before putting the new data into mNetworkMetrics.",
+      "parentUuid": "c7a006e6_e190aed4",
+      "range": {
+        "startLine": 182,
+        "startChar": 39,
+        "endLine": 182,
+        "endChar": 46
+      },
+      "revId": "ca36b67c954b1287fd1ea7ae098e1632d1d5c252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9319010b_b9e82f43",
         "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
         "patchSetId": 8
@@ -37,6 +61,30 @@
       "writtenOn": "2021-11-26T08:40:56Z",
       "side": 1,
       "message": "forceCollect",
+      "range": {
+        "startLine": 188,
+        "startChar": 75,
+        "endLine": 188,
+        "endChar": 91
+      },
+      "revId": "ca36b67c954b1287fd1ea7ae098e1632d1d5c252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3de28867_f31cc508",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-11-26T09:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9319010b_b9e82f43",
       "range": {
         "startLine": 188,
         "startChar": 75,
