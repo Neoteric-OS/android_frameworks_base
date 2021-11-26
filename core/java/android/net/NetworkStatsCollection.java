@@ -32,6 +32,7 @@ import static android.text.format.DateUtils.WEEK_IN_MILLIS;
 
 import static com.android.internal.net.NetworkUtilsInternal.multiplySafeByRational;
 
+import android.annotation.NonNull;
 import android.os.Binder;
 import android.service.NetworkStatsCollectionKeyProto;
 import android.service.NetworkStatsCollectionProto;
@@ -389,7 +390,7 @@ public class NetworkStatsCollection implements FileRotator.Reader, FileRotator.W
     /**
      * Record given {@link NetworkStatsHistory} into this collection.
      */
-    private void recordHistory(Key key, NetworkStatsHistory history) {
+    public void recordHistory(Key key, NetworkStatsHistory history) {
         if (history.size() == 0) return;
         noteRecordedHistory(history.getStart(), history.getEnd(), history.getTotalBytes());
 
@@ -411,6 +412,14 @@ public class NetworkStatsCollection implements FileRotator.Reader, FileRotator.W
             final NetworkStatsHistory value = another.mStats.valueAt(i);
             recordHistory(key, value);
         }
+    }
+
+    /**
+     * Replace data which intersects with the time range of the given collection.
+     * @param another
+     */
+    public void replaceIntersection(@NonNull NetworkStatsCollection another) {
+
     }
 
     private NetworkStatsHistory findOrCreateHistory(
@@ -513,57 +522,13 @@ public class NetworkStatsCollection implements FileRotator.Reader, FileRotator.W
     }
 
     /**
-     * Read legacy network summary statistics file format into the collection,
-     * See {@code NetworkStatsService#maybeUpgradeLegacyStatsLocked}.
-     *
-     * @deprecated
-     */
-    @Deprecated
-    public void readLegacyNetwork(File file) throws IOException {
-        final AtomicFile inputFile = new AtomicFile(file);
-
-        DataInputStream in = null;
-        try {
-            in = new DataInputStream(new BufferedInputStream(inputFile.openRead()));
-
-            // verify file magic header intact
-            final int magic = in.readInt();
-            if (magic != FILE_MAGIC) {
-                throw new ProtocolException("unexpected magic: " + magic);
-            }
-
-            final int version = in.readInt();
-            switch (version) {
-                case VERSION_NETWORK_INIT: {
-                    // network := size *(NetworkIdentitySet NetworkStatsHistory)
-                    final int size = in.readInt();
-                    for (int i = 0; i < size; i++) {
-                        final NetworkIdentitySet ident = new NetworkIdentitySet(in);
-                        final NetworkStatsHistory history = new NetworkStatsHistory(in);
-
-                        final Key key = new Key(ident, UID_ALL, SET_ALL, TAG_NONE);
-                        recordHistory(key, history);
-                    }
-                    break;
-                }
-                default: {
-                    throw new ProtocolException("unexpected version: " + version);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            // missing stats is okay, probably first boot
-        } finally {
-            IoUtils.closeQuietly(in);
-        }
-    }
-
-    /**
      * Read legacy Uid statistics file format into the collection,
      * See {@code NetworkStatsService#maybeUpgradeLegacyStatsLocked}.
      *
      * @deprecated
      */
     @Deprecated
+    // FIXME: Move to NetworkStatsDataMigrationUtil
     public void readLegacyUid(File file, boolean onlyTags) throws IOException {
         final AtomicFile inputFile = new AtomicFile(file);
 
@@ -771,7 +736,8 @@ public class NetworkStatsCollection implements FileRotator.Reader, FileRotator.W
         return false;
     }
 
-    private static class Key implements Comparable<Key> {
+    // FIXME: Class 'Key' is public, should be declared in a file named 'Key.java'
+    public static class Key implements Comparable<Key> {
         public final NetworkIdentitySet ident;
         public final int uid;
         public final int set;
@@ -779,7 +745,7 @@ public class NetworkStatsCollection implements FileRotator.Reader, FileRotator.W
 
         private final int mHashCode;
 
-        Key(NetworkIdentitySet ident, int uid, int set, int tag) {
+        public Key(NetworkIdentitySet ident, int uid, int set, int tag) {
             this.ident = ident;
             this.uid = uid;
             this.set = set;

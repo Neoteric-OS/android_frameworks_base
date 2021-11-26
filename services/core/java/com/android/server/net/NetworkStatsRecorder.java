@@ -21,6 +21,7 @@ import static android.net.TrafficStats.KB_IN_BYTES;
 import static android.net.TrafficStats.MB_IN_BYTES;
 import static android.text.format.DateUtils.YEAR_IN_MILLIS;
 
+import android.annotation.NonNull;
 import android.net.NetworkIdentitySet;
 import android.net.NetworkStats;
 import android.net.NetworkStats.NonMonotonicObserver;
@@ -29,6 +30,7 @@ import android.net.NetworkStatsCollection;
 import android.net.NetworkStatsHistory;
 import android.net.NetworkTemplate;
 import android.net.TrafficStats;
+import android.net.netstats.NetworkStatsDataMigrationUtils;
 import android.os.Binder;
 import android.os.DropBoxManager;
 import android.service.NetworkStatsRecorderProto;
@@ -157,6 +159,15 @@ public class NetworkStatsRecorder {
 
     public NetworkStatsCollection getSinceBoot() {
         return mSinceBoot;
+    }
+
+    public long getBucketDuration() {
+        return mBucketDuration;
+    }
+
+    @NonNull
+    public String getCookie() {
+        return mCookie;
     }
 
     /**
@@ -418,44 +429,30 @@ public class NetworkStatsRecorder {
         }
     }
 
-    public void importLegacyNetworkLocked(File file) throws IOException {
-        Objects.requireNonNull(mRotator, "missing FileRotator");
+    public void importCollectionLocked(@NonNull NetworkStatsCollection collection)
+            throws IOException {
+        if (mRotator != null) {
+            try {
+                // Create a rewriter which will clean original data within the timestamp range of
+                // the specified collection, and replace it with the provided collection.
+                mRotator.rewriteAll(new ImportCollectionRewriter(collection));
+            } catch (IOException e) {
+                Log.wtf(TAG, "problem importing netstats", e);
+                recoverFromWtf();
+            } catch (OutOfMemoryError e) {
+                Log.wtf(TAG, "problem importing netstats", e);
+                recoverFromWtf();
+            }
+        }
 
-        // legacy file still exists; start empty to avoid double importing
-        mRotator.deleteAll();
-
-        final NetworkStatsCollection collection = new NetworkStatsCollection(mBucketDuration);
-        collection.readLegacyNetwork(file);
-
-        final long startMillis = collection.getStartMillis();
-        final long endMillis = collection.getEndMillis();
-
-        if (!collection.isEmpty()) {
-            // process legacy data, creating active file at starting time, then
-            // using end time to possibly trigger rotation.
-            mRotator.rewriteActive(new CombiningRewriter(collection), startMillis);
-            mRotator.maybeRotate(endMillis);
+        final NetworkStatsCollection complete = mComplete != null ? mComplete.get() : null;
+        if (complete != null) {
+            complete.replaceIntersection(collection);
         }
     }
 
-    public void importLegacyUidLocked(File file) throws IOException {
-        Objects.requireNonNull(mRotator, "missing FileRotator");
-
-        // legacy file still exists; start empty to avoid double importing
-        mRotator.deleteAll();
-
-        final NetworkStatsCollection collection = new NetworkStatsCollection(mBucketDuration);
-        collection.readLegacyUid(file, mOnlyTags);
-
-        final long startMillis = collection.getStartMillis();
-        final long endMillis = collection.getEndMillis();
-
-        if (!collection.isEmpty()) {
-            // process legacy data, creating active file at starting time, then
-            // using end time to possibly trigger rotation.
-            mRotator.rewriteActive(new CombiningRewriter(collection), startMillis);
-            mRotator.maybeRotate(endMillis);
-        }
+    public void clearWithInTimeRangeLocked(long start, long end) {
+        // TODO: Iterate through histories and remove items within the given time range.
     }
 
     public void dumpLocked(IndentingPrintWriter pw, boolean fullHistory) {

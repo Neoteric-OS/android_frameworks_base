@@ -11155,6 +11155,9 @@ public final class Settings {
         /** {@hide} */
         @Readable
         public static final String NETSTATS_UID_DELETE_AGE = "netstats_uid_delete_age";
+        /** {@hide} */
+        @Readable
+        public static final String NETSTATS_LEGACY_FILE_IMPORTED = "netstats_legacy_file_imported";
 
         /** {@hide} */
         @Readable

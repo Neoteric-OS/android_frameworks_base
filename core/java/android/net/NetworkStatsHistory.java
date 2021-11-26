@@ -89,6 +89,24 @@ public class NetworkStatsHistory implements Parcelable {
     private long[] operations;
     private long totalBytes;
 
+    // Constructor that allows partners could create the object to import their usage.
+    // FIXME: Should use Lists at the API surface.
+    // TODO: @SystemApi when ready. Or replace with more suitable one.
+    public NetworkStatsHistory(long bucketDuration, long[] bucketStart, long[] activeTime,
+            long[] rxBytes, long[] rxPackets, long[] txBytes, long[] txPackets,
+            long[] operations, int bucketCount, long totalBytes) {
+        this.bucketDuration = bucketDuration;
+        this.bucketStart= bucketStart;
+        this.activeTime = activeTime;
+        this.rxBytes = rxBytes;
+        this.rxPackets= rxPackets;
+        this.txBytes = txBytes;
+        this.txPackets = txPackets;
+        this.operations = operations;
+        this.bucketCount = bucketCount;
+        this.totalBytes = totalBytes;
+    }
+
     public static class Entry {
         public static final long UNKNOWN = -1;
 
