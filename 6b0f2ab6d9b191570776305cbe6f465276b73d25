@@ -104,6 +104,24 @@
       "parentUuid": "3b467dcd_baa89d72",
       "revId": "6b0f2ab6d9b191570776305cbe6f465276b73d25",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10792728_22fe1f4b",
+        "filename": "test-mock/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-11-26T12:19:48Z",
+      "side": 1,
+      "message": "I did it manually. I dislike excessive whitespace :-)",
+      "parentUuid": "97087a01_3dea5c36",
+      "revId": "6b0f2ab6d9b191570776305cbe6f465276b73d25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
