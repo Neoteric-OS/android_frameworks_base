@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017701709",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1903791?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6ff0925b_5ad7b69f",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-11-26T12:03:56Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 105
+      },
+      "revId": "c521237f134a44cbe469cab32d7cc929c28881e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017701709",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1903791?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "446f87f3_9bebb66f",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-11-26T12:03:56Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 113
+      },
+      "revId": "c521237f134a44cbe469cab32d7cc929c28881e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
