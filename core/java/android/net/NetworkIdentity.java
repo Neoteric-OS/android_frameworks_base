@@ -68,6 +68,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
     final boolean mDefaultNetwork;
     final int mOemManaged;
 
+    // TODO: @SystemApi when ready.
     public NetworkIdentity(
             int type, int subType, String subscriberId, String networkId, boolean roaming,
             boolean metered, boolean defaultNetwork, int oemManaged) {

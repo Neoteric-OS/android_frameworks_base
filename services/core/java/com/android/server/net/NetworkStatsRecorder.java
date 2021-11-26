@@ -21,6 +21,7 @@ import static android.net.TrafficStats.KB_IN_BYTES;
 import static android.net.TrafficStats.MB_IN_BYTES;
 import static android.text.format.DateUtils.YEAR_IN_MILLIS;
 
+import android.annotation.NonNull;
 import android.net.NetworkIdentitySet;
 import android.net.NetworkStats;
 import android.net.NetworkStats.NonMonotonicObserver;
@@ -45,7 +46,6 @@ import com.google.android.collect.Sets;
 import libcore.io.IoUtils;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -157,6 +157,15 @@ public class NetworkStatsRecorder {
 
     public NetworkStatsCollection getSinceBoot() {
         return mSinceBoot;
+    }
+
+    public long getBucketDuration() {
+        return mBucketDuration;
+    }
+
+    @NonNull
+    public String getCookie() {
+        return mCookie;
     }
 
     /**
@@ -418,43 +427,85 @@ public class NetworkStatsRecorder {
         }
     }
 
-    public void importLegacyNetworkLocked(File file) throws IOException {
-        Objects.requireNonNull(mRotator, "missing FileRotator");
+    /**
+     * Rewriter that will remove any {@link NetworkStatsHistory} attributed to
+     * the requested UID, only writing data back when modified.
+     */
+    public static class RemoveDataBeforeRewriter implements FileRotator.Rewriter {
+        private final NetworkStatsCollection mTemp;
+        private final long mCutoffMills;
 
-        // legacy file still exists; start empty to avoid double importing
-        mRotator.deleteAll();
+        public RemoveDataBeforeRewriter(long bucketDuration, long cutoffMills) {
+            mTemp = new NetworkStatsCollection(bucketDuration);
+            mCutoffMills = cutoffMills;
+        }
 
-        final NetworkStatsCollection collection = new NetworkStatsCollection(mBucketDuration);
-        collection.readLegacyNetwork(file);
+        @Override
+        public void reset() {
+            mTemp.reset();
+        }
 
-        final long startMillis = collection.getStartMillis();
-        final long endMillis = collection.getEndMillis();
+        @Override
+        public void read(InputStream in) throws IOException {
+            mTemp.read(in);
+            mTemp.clearDirty();
+            mTemp.removeHistoryBefore(mCutoffMills);
+        }
 
-        if (!collection.isEmpty()) {
-            // process legacy data, creating active file at starting time, then
-            // using end time to possibly trigger rotation.
-            mRotator.rewriteActive(new CombiningRewriter(collection), startMillis);
-            mRotator.maybeRotate(endMillis);
+        @Override
+        public boolean shouldWrite() {
+            return mTemp.isDirty();
+        }
+
+        @Override
+        public void write(OutputStream out) throws IOException {
+            mTemp.write(out);
         }
     }
 
-    public void importLegacyUidLocked(File file) throws IOException {
-        Objects.requireNonNull(mRotator, "missing FileRotator");
+    public void importCollectionLocked(@NonNull NetworkStatsCollection collection)
+            throws IOException {
+        if (mRotator != null) {
+            mRotator.rewriteSingle(new CombiningRewriter(collection), collection.getStartMillis(),
+                    collection.getEndMillis());
+        }
 
-        // legacy file still exists; start empty to avoid double importing
-        mRotator.deleteAll();
+        // Also record against complete dataset when present.
+        final NetworkStatsCollection complete = mComplete != null ? mComplete.get() : null;
+        if (complete != null) {
+            complete.recordCollection(collection);
+        }
+    }
 
-        final NetworkStatsCollection collection = new NetworkStatsCollection(mBucketDuration);
-        collection.readLegacyUid(file, mOnlyTags);
+    /**
+     * Remove data which contains or is before the cutoff timestamp.
+     */
+    public void removeDataBefore(long cutoffMillis)
+            throws IOException {
+        if (mRotator != null) {
+            try {
+                mRotator.rewriteAll(new RemoveDataBeforeRewriter(
+                        mBucketDuration, cutoffMillis));
+            } catch (IOException e) {
+                Log.wtf(TAG, "problem importing netstats", e);
+                recoverFromWtf();
+            } catch (OutOfMemoryError e) {
+                Log.wtf(TAG, "problem importing netstats", e);
+                recoverFromWtf();
+            }
+        }
 
-        final long startMillis = collection.getStartMillis();
-        final long endMillis = collection.getEndMillis();
+        // Clean up any pending stats
+        if (mPending != null) {
+            mPending.removeHistoryBefore(cutoffMillis);
+        }
+        if (mSinceBoot != null) {
+            mSinceBoot.removeHistoryBefore(cutoffMillis);
+        }
 
-        if (!collection.isEmpty()) {
-            // process legacy data, creating active file at starting time, then
-            // using end time to possibly trigger rotation.
-            mRotator.rewriteActive(new CombiningRewriter(collection), startMillis);
-            mRotator.maybeRotate(endMillis);
+        final NetworkStatsCollection complete = mComplete != null ? mComplete.get() : null;
+        if (complete != null) {
+            complete.removeHistoryBefore(cutoffMillis);
         }
     }
 
