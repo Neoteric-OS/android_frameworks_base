@@ -114,13 +114,43 @@ filegroup {
 }
 
 filegroup {
-    name: "framework-connectivity-tiramisu-sources",
+    name: "framework-connectivity-tiramisu-non-updatable-sources",
     srcs: [
         ":framework-connectivity-netstats-sources",
+    ],
+    visibility: [
+        "//frameworks/base",
+    ],
+}
+
+filegroup {
+    name: "framework-connectivity-tiramisu-updatable-sources",
+    srcs: [
         ":framework-connectivity-nsd-sources",
         ":framework-connectivity-tiramisu-internal-sources",
     ],
     visibility: [
         "//frameworks/base",
+    ],
+}
+
+java_sdk_library {
+    name: "framework-connectivity-tiramisu",
+    sdk_version: "module_current",
+    min_sdk_version: "current",
+    defaults: ["framework-module-defaults"],
+    srcs: [
+        ":framework-connectivity-tiramisu-updatable-sources",
+    ],
+    libs: [
+        "unsupportedappusage",
+        "app-compat-annotations",
+    ],
+    permitted_packages: [
+        "android.net",
+        "android.net.nsd",
+    ],
+    apex_available: [
+        "com.android.tethering",
     ],
 }
