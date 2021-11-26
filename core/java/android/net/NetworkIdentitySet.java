@@ -41,6 +41,7 @@ public class NetworkIdentitySet extends HashSet<NetworkIdentity> implements
     private static final int VERSION_ADD_DEFAULT_NETWORK = 5;
     private static final int VERSION_ADD_OEM_MANAGED_NETWORK = 6;
 
+    // TODO: @SystemApi when ready.
     public NetworkIdentitySet() {
     }
 

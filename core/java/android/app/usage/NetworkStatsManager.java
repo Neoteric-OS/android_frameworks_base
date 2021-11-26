@@ -126,6 +126,19 @@ public class NetworkStatsManager {
     private final Context mContext;
     private final INetworkStatsService mService;
 
+    /**
+     * Type constants for reading different types of Data Usage.
+     * @hide
+     */
+    // TODO: @SystemApi when ready.
+    public static final String PREFIX_DEV = "dev";
+    /** @hide */
+    public static final String PREFIX_XT = "xt";
+    /** @hide */
+    public static final String PREFIX_UID = "uid";
+    /** @hide */
+    public static final String PREFIX_UID_TAG = "uid_tag";
+
     /** @hide */
     public static final int FLAG_POLL_ON_OPEN = 1 << 0;
     /** @hide */

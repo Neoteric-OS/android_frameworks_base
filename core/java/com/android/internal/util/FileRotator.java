@@ -16,6 +16,7 @@
 
 package com.android.internal.util;
 
+import android.annotation.NonNull;
 import android.os.FileUtils;
 import android.util.Slog;
 
@@ -32,7 +33,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import libcore.io.IoUtils;
-import libcore.io.Streams;
 
 /**
  * Utility that rotates files over time, similar to {@code logrotate}. There is
@@ -278,6 +278,18 @@ public class FileRotator {
                 throw rethrowAsIoException(t);
             }
         }
+    }
+
+    /**
+     * Process a single file atomically, with the given start and end timestamps.
+     */
+    public void rewriteSingle(@NonNull Rewriter rewriter, long startTimeMillis, long endTimeMillis)
+            throws IOException {
+        final FileInfo info = new FileInfo(mPrefix);
+
+        info.startMillis = startTimeMillis;
+        info.endMillis = endTimeMillis;
+        rewriteSingle(rewriter, info.build());
     }
 
     /**

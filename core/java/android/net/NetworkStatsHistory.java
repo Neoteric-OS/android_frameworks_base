@@ -89,6 +89,24 @@ public class NetworkStatsHistory implements Parcelable {
     private long[] operations;
     private long totalBytes;
 
+    // Constructor that allows partners could create the object to import their usage.
+    // FIXME: Should use Lists at the API surface.
+    // TODO: @SystemApi when ready. Or replace with more suitable one.
+    public NetworkStatsHistory(long bucketDuration, long[] bucketStart, long[] activeTime,
+            long[] rxBytes, long[] rxPackets, long[] txBytes, long[] txPackets,
+            long[] operations, int bucketCount, long totalBytes) {
+        this.bucketDuration = bucketDuration;
+        this.bucketStart = bucketStart;
+        this.activeTime = activeTime;
+        this.rxBytes = rxBytes;
+        this.rxPackets = rxPackets;
+        this.txBytes = txBytes;
+        this.txPackets = txPackets;
+        this.operations = operations;
+        this.bucketCount = bucketCount;
+        this.totalBytes = totalBytes;
+    }
+
     public static class Entry {
         public static final long UNKNOWN = -1;
 
@@ -496,8 +514,8 @@ public class NetworkStatsHistory implements Parcelable {
     /**
      * Remove buckets older than requested cutoff.
      */
-    @Deprecated
     public void removeBucketsBefore(long cutoff) {
+        // TODO: Consider use getIndexBefore.
         int i;
         for (i = 0; i < bucketCount; i++) {
             final long curStart = bucketStart[i];
@@ -519,7 +537,9 @@ public class NetworkStatsHistory implements Parcelable {
             if (operations != null) operations = Arrays.copyOfRange(operations, i, length);
             bucketCount -= i;
 
-            // TODO: subtract removed values from totalBytes
+            totalBytes = 0;
+            if (rxBytes != null) totalBytes += Arrays.stream(rxBytes).sum();
+            if (txBytes != null) totalBytes += Arrays.stream(txBytes).sum();
         }
     }
 
