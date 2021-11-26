@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c66273f9_4eaea141",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-11-26T12:20:45Z",
+      "side": 1,
+      "message": "Nandana, could you please stamp for the jarjar-rules.txt change? Thanks",
+      "revId": "7a4b9d91f9f02216701be6bba3b7c0dd993fb962",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
