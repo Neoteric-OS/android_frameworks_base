@@ -607,9 +607,11 @@ public class DisplayModeDirector {
             mAppRequestObserver.dumpLocked(pw);
             mBrightnessObserver.dumpLocked(pw);
             mUdfpsObserver.dumpLocked(pw);
-            mSensorObserver.dumpLocked(pw);
             mHbmObserver.dumpLocked(pw);
         }
+
+        // Notice: Don't make this in synchronize mLock scope, else could cause deadlock issue
+        mSensorObserver.dump(pw);
     }
 
     private void updateVoteLocked(int priority, Vote vote) {
@@ -2200,7 +2202,7 @@ public class DisplayModeDirector {
             }
         }
 
-        void dumpLocked(PrintWriter pw) {
+        void dump(PrintWriter pw) {
             pw.println("  SensorObserver");
             synchronized (mSensorObserverLock) {
                 pw.println("    mIsProxActive=" + mIsProxActive);
