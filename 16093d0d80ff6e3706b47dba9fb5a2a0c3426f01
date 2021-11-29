@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3de6fd0b_f413e334",
+        "filename": "core/java/android/net/vcn/networkpriority/CellNetworkPriority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-11-29T19:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f688e69b_9dbd6ac1",
+      "range": {
+        "startLine": 58,
+        "startChar": 37,
+        "endLine": 58,
+        "endChar": 62
+      },
+      "revId": "16093d0d80ff6e3706b47dba9fb5a2a0c3426f01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "027c12a7_7a4a8637",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-11-25T00:19:09Z",
       "side": 1,
       "message": "Extra spaces would help 😊 We\u0027re not paying by LOC :P\n\nvalidate and assignment can be separate logical blocks",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 14
+      },
+      "revId": "16093d0d80ff6e3706b47dba9fb5a2a0c3426f01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44cfbb10_ba465c17",
+        "filename": "core/java/android/net/vcn/networkpriority/CellNetworkPriority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-11-29T19:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "027c12a7_7a4a8637",
       "range": {
         "startLine": 200,
         "startChar": 12,
