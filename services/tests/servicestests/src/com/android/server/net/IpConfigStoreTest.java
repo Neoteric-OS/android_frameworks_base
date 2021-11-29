@@ -102,16 +102,44 @@ public class IpConfigStoreTest {
         expectedNetworks.put(IFACE_1, expectedConfig1);
         expectedNetworks.put(IFACE_2, expectedConfig2);
 
-        MockedDelayedDiskWrite writer = new MockedDelayedDiskWrite();
-        IpConfigStore store = new IpConfigStore(writer);
-        store.writeIpConfigurations("file/path/not/used/", expectedNetworks);
-
-        InputStream in = new ByteArrayInputStream(writer.byteStream.toByteArray());
-        ArrayMap<String, IpConfiguration> actualNetworks = IpConfigStore.readIpConfigurations(in);
+        ArrayMap<String, IpConfiguration> actualNetworks =
+                writeAndReadIpConfigurations(expectedNetworks);
         assertNotNull(actualNetworks);
         assertEquals(2, actualNetworks.size());
         assertEquals(expectedNetworks.get(IFACE_1), actualNetworks.get(IFACE_1));
         assertEquals(expectedNetworks.get(IFACE_2), actualNetworks.get(IFACE_2));
+    }
+
+    @Test
+    public void staticIpWithGateway() throws Exception {
+        final StaticIpConfiguration staticIpConfiguration = new StaticIpConfiguration.Builder()
+                .setIpAddress(new LinkAddress("192.0.2.123/24"))
+                .setGateway(InetAddresses.parseNumericAddress("192.0.2.2"))
+                .build();
+
+        final IpConfiguration expectedConfig = newIpConfiguration(IpAssignment.STATIC,
+                ProxySettings.STATIC, staticIpConfiguration, null /* proxyInfo */);
+
+        final String iface = "eth0";
+        final ArrayMap<String, IpConfiguration> expectedNetworks = new ArrayMap<>();
+        expectedNetworks.put(iface, expectedConfig);
+
+        final ArrayMap<String, IpConfiguration> actualNetworks =
+                writeAndReadIpConfigurations(expectedNetworks);
+
+        assertNotNull(actualNetworks);
+        assertEquals(1, actualNetworks.size());
+        assertEquals(expectedConfig, actualNetworks.get(iface));
+    }
+
+    private static ArrayMap<String, IpConfiguration> writeAndReadIpConfigurations(
+            ArrayMap<String, IpConfiguration> networks) {
+        MockedDelayedDiskWrite writer = new MockedDelayedDiskWrite();
+        IpConfigStore store = new IpConfigStore(writer);
+        store.writeIpConfigurations("file/path/not/used/", networks);
+
+        InputStream in = new ByteArrayInputStream(writer.byteStream.toByteArray());
+        return IpConfigStore.readIpConfigurations(in);
     }
 
     private IpConfiguration newIpConfiguration(IpAssignment ipAssignment,
