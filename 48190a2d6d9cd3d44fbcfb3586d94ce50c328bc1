@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83ad8067_7f35a816",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-29T11:15:41Z",
+      "side": 1,
+      "message": "Could you file a blocking bug for T to move this call to ConnectivityFrameworkInitializer ?\n\nThis will only be doable when framework-connectivity builds against the module-lib stubs for framework-32, so the framework-32 library needs to be created first.",
+      "range": {
+        "startLine": 1479,
+        "startChar": 12,
+        "endLine": 1479,
+        "endChar": 62
+      },
+      "revId": "48190a2d6d9cd3d44fbcfb3586d94ce50c328bc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb09784f_cba516d3",
+        "filename": "packages/Nsd/framework/src/android/net/nsd/NsdFrameworkInitializer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-29T11:15:41Z",
+      "side": 1,
+      "message": "We\u0027ll probably want to put other T+ classes in there, so \"Nsd\" may be too restrictive; multiplying the classes for each service would not be great for system health too.\n\nI\u0027m not sure what would be an acceptable naming for API council though (Lorenzo/Jean first), even if it\u0027s only internal to our module. ConnectivityTiramisuInitializer (yummy !) ?",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "48190a2d6d9cd3d44fbcfb3586d94ce50c328bc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
