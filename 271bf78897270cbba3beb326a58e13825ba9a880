@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a54585d_42e954db",
+        "filename": "packages/Nsd/service/src/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-29T10:28:24Z",
+      "side": 1,
+      "message": "Previous code would log some error in the dump: could you pw.println with error and the UID instead ? This may make it easier to understand why the dump is empty.",
+      "range": {
+        "startLine": 884,
+        "startChar": 12,
+        "endLine": 884,
+        "endChar": 18
+      },
+      "revId": "271bf78897270cbba3beb326a58e13825ba9a880",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
