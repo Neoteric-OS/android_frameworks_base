@@ -1282,6 +1282,12 @@ abstract class HdmiCecLocalDevice {
 
     void addActiveSourceHistoryItem(ActiveSource activeSource, boolean isActiveSource,
             String caller) {
+        HdmiLogger.debug("ActiveSourceHistoryRecord active source=" + activeSource
+                        + " isActiveSource=" + isActiveSource
+                        + " from=" + caller);
+        // Update activeness value for NTS.
+        updateActiveness(isActiveSource);
+
         ActiveSourceHistoryRecord record = new ActiveSourceHistoryRecord(activeSource,
                 isActiveSource, caller);
         if (!mActiveSourceHistory.offer(record)) {
@@ -1325,6 +1331,15 @@ abstract class HdmiCecLocalDevice {
             }
         }
         return finalMask | myPhysicalAddress;
+    }
+
+    @ServiceThreadOnly
+    private void updateActiveness(boolean on) {
+        if (on) {
+            mService.setActiveness(HdmiCecActiveness.CEC_ACTIVE);
+        } else {
+            mService.setActiveness(HdmiCecActiveness.CEC_INACTIVE);
+        }
     }
 
     private static final class ActiveSourceHistoryRecord extends HdmiCecController.Dumpable {

@@ -422,6 +422,8 @@ public class HdmiControlService extends SystemService {
     // Set to true if the logical address allocation is completed.
     private boolean mAddressAllocated = false;
 
+    private HdmiCecActiveness mActiveness;
+
     // Whether a CEC-enabled sink is connected to the playback device
     private boolean mIsCecAvailable = false;
 
@@ -445,6 +447,9 @@ public class HdmiControlService extends SystemService {
         mLocalDevices = readDeviceTypes();
         mSettingsObserver = new SettingsObserver(mHandler);
         mHdmiCecConfig = new HdmiCecConfig(context);
+        if (isPlaybackDevice()) {
+            mActiveness = new HdmiCecActiveness(context);
+        }
     }
 
     @VisibleForTesting
@@ -594,6 +599,7 @@ public class HdmiControlService extends SystemService {
             initializeCec(INITIATED_BY_BOOT_UP);
         } else {
             mCecController.setOption(OptionKey.ENABLE_CEC, false);
+            setActiveness(HdmiCecActiveness.CEC_DISABLED);
         }
         mMhlDevices = Collections.emptyList();
 
@@ -887,6 +893,12 @@ public class HdmiControlService extends SystemService {
         mCecController.setOption(OptionKey.SYSTEM_CEC_CONTROL, true);
         mCecController.setLanguage(mMenuLanguage);
         initializeLocalDevices(initiatedBy);
+    }
+
+    void setActiveness(String state) {
+        if (mActiveness != null) {
+            mActiveness.setState(state);
+        }
     }
 
     @ServiceThreadOnly
@@ -3059,6 +3071,7 @@ public class HdmiControlService extends SystemService {
         if (!canGoToStandby()) {
             return;
         }
+        setActiveness(HdmiCecActiveness.CEC_INACTIVE);
         mStandbyMessageReceived = true;
         mPowerManager.goToSleep(SystemClock.uptimeMillis(), PowerManager.GO_TO_SLEEP_REASON_HDMI, 0);
         // PowerManger will send the broadcast Intent.ACTION_SCREEN_OFF and after this gets
@@ -3110,6 +3123,7 @@ public class HdmiControlService extends SystemService {
     protected void onStandby(final int standbyAction) {
         mWakeUpMessageReceived = false;
         assertRunOnServiceThread();
+        setActiveness(HdmiCecActiveness.CEC_INACTIVE);
         mPowerStatusController.setPowerStatus(HdmiControlManager.POWER_STATUS_TRANSIENT_TO_STANDBY,
                 false);
         invokeVendorCommandListenersOnControlStateChanged(false,
@@ -3410,6 +3424,8 @@ public class HdmiControlService extends SystemService {
                         mCecController.setOption(OptionKey.SYSTEM_CEC_CONTROL, false);
                         mMhlController.setOption(OPTION_MHL_ENABLE, DISABLED);
                         clearLocalDevices();
+
+                        setActiveness(HdmiCecActiveness.CEC_DISABLED);
                     }
                 });
             }
