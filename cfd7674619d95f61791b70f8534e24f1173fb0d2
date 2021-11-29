@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed41166c_66b7721e",
+        "filename": "packages/Nsd/service/src/com/android/server/NativeDaemonConnector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-29T10:57:41Z",
+      "side": 1,
+      "message": "Is this actually necessary ? Most services don\u0027t do this kind of checks; the system just pulls the plug when shutting down and that could be fine.\n\nLooks like the check was added in aosp/68742327, but this was in Oreo, where Netd was still using NativeDaemonConnector, and it assumed that the daemon was there after receiving onDaemonConnected. Netd doesn\u0027t use NativeDaemonConnector now, so the check may be necessary.\n\nThis is also the suspected root cause of b/203800164.\n\nWould it be OK to just keep looping and expect the system to shut down this process ?",
+      "range": {
+        "startLine": 148,
+        "startChar": 27,
+        "endLine": 148,
+        "endChar": 41
+      },
+      "revId": "cfd7674619d95f61791b70f8534e24f1173fb0d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62a4a7d8_67a8157e",
+        "filename": "packages/Nsd/service/src/com/android/server/NsdService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-29T10:57:41Z",
+      "side": 1,
+      "message": "Is this setting actually still necessary ? Looks like it was added in 2012 to have a killswitch (b/6606274), but it seems unused, and CTS expects NsdManager to be available anyway. Maybe it\u0027s better to just always make it on ?",
+      "range": {
+        "startLine": 135,
+        "startChar": 21,
+        "endLine": 135,
+        "endChar": 62
+      },
+      "revId": "cfd7674619d95f61791b70f8534e24f1173fb0d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
