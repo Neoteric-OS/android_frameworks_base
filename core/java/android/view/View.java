@@ -28843,27 +28843,27 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     }
 
     /**
-     * Interface definition for a callback to be invoked when a drag is being dispatched
-     * to this view.  The callback will be invoked before the hosting view's own
-     * onDrag(event) method.  If the listener wants to fall back to the hosting view's
-     * onDrag(event) behavior, it should return 'false' from this callback.
+     * Interface definition for a listener to be invoked when a drag event is dispatched to this
+     * view. The listener is invoked before the hosting view's own {@link onDragEvent(DragEvent)}
+     * method. To fall back to the hosting view's {@code onDragEvent(DragEvent)} behavior, return
+     * {@code false} from the listener method.
      *
      * <div class="special reference">
      * <h3>Developer Guides</h3>
-     * <p>For a guide to implementing drag and drop features, read the
-     * <a href="{@docRoot}guide/topics/ui/drag-drop.html">Drag and Drop</a> developer guide.</p>
+     * <p>For a guide to implementing drag and drop features, see the
+     * <a href="{@docRoot}guide/topics/ui/drag-drop.html">Drag and drop</a> developer guide.</p>
      * </div>
      */
     public interface OnDragListener {
         /**
-         * Called when a drag event is dispatched to a view. This allows listeners
-         * to get a chance to override base View behavior.
+         * Called when a drag event is dispatched to a view. Enables listeners to override base
+         * View behavior.
          *
          * @param v The View that received the drag event.
          * @param event The {@link android.view.DragEvent} object for the drag event.
          * @return {@code true} if the drag event was handled successfully, or {@code false}
-         * if the drag event was not handled. Note that {@code false} will trigger the View
-         * to call its {@link #onDragEvent(DragEvent) onDragEvent()} handler.
+         * if the drag event was not handled. Note that {@code false} triggers the View
+         * to call its {@link #onDragEvent(DragEvent)} handler.
          */
         boolean onDrag(View v, DragEvent event);
     }
