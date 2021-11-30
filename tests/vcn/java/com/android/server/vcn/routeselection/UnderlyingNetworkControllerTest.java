@@ -42,6 +42,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.TelephonyNetworkSpecifier;
+import android.net.vcn.VcnGatewayConnectionConfigTest;
 import android.os.ParcelUuid;
 import android.os.test.TestLooper;
 import android.telephony.CarrierConfigManager;
@@ -145,7 +146,11 @@ public class UnderlyingNetworkControllerTest {
 
         mUnderlyingNetworkController =
                 new UnderlyingNetworkController(
-                        mVcnContext, SUB_GROUP, mSubscriptionSnapshot, mNetworkControllerCb);
+                        mVcnContext,
+                        VcnGatewayConnectionConfigTest.buildTestConfig(),
+                        SUB_GROUP,
+                        mSubscriptionSnapshot,
+                        mNetworkControllerCb);
     }
 
     private void resetVcnContext() {
@@ -153,7 +158,8 @@ public class UnderlyingNetworkControllerTest {
         doNothing().when(mVcnContext).ensureRunningOnLooperThread();
     }
 
-    private static LinkProperties getLinkPropertiesWithName(String iface) {
+    // Package private for use in NetworkPriorityClassifier
+    static LinkProperties getLinkPropertiesWithName(String iface) {
         LinkProperties linkProperties = new LinkProperties();
         linkProperties.setInterfaceName(iface);
         return linkProperties;
@@ -182,7 +188,11 @@ public class UnderlyingNetworkControllerTest {
                         true /* isInTestMode */);
 
         new UnderlyingNetworkController(
-                vcnContext, SUB_GROUP, mSubscriptionSnapshot, mNetworkControllerCb);
+                vcnContext,
+                VcnGatewayConnectionConfigTest.buildTestConfig(),
+                SUB_GROUP,
+                mSubscriptionSnapshot,
+                mNetworkControllerCb);
 
         verify(cm)
                 .registerNetworkCallback(
