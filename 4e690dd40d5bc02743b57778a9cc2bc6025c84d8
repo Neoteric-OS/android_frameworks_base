@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e908b6ad_ac770acd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-11-30T07:51:16Z",
+      "side": 1,
+      "message": "LGTM assuming Remi has no further comments, but I was chatting about this with Remi just now and I think we\u0027ll need some sort of replacement for NativeDaemonConnector.",
+      "revId": "4e690dd40d5bc02743b57778a9cc2bc6025c84d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "854d067c_1041cc97",
