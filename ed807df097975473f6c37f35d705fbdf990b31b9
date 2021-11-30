@@ -16,6 +16,46 @@
       "message": "Thanks!",
       "revId": "ed807df097975473f6c37f35d705fbdf990b31b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d118f52_023a2d7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1882920
+      },
+      "writtenOn": "2021-11-30T11:04:18Z",
+      "side": 1,
+      "message": "Thanks",
+      "revId": "ed807df097975473f6c37f35d705fbdf990b31b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d2894cc_1d824a67",
+        "filename": "services/core/java/com/android/server/vibrator/VibratorManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1882920
+      },
+      "writtenOn": "2021-11-30T11:04:18Z",
+      "side": 1,
+      "message": "Could you please introduce a new status IGNORED_FOR_RINGTONE, and you can move this check to be straight after the alarm check.\n\nThis keeps it consistent with the alarm exception, and gives a direct attribution for the condition - many ringtones are likely to be repeating, but it\u0027s probably better to have the direct attribution to ringtone first, so that the repeating exception only applies to a smaller non-overlapping set.",
+      "range": {
+        "startLine": 635,
+        "startChar": 40,
+        "endLine": 635,
+        "endChar": 59
+      },
+      "revId": "ed807df097975473f6c37f35d705fbdf990b31b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
