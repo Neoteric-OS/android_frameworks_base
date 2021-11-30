@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3d420f2_a16ec57b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-11-30T21:55:38Z",
+      "side": 1,
+      "message": "Sweet, overall idea LGTM, but could you also add CTS tests for this new method?  See inline note about slight name tweak.",
+      "revId": "f2b15c239d200250179195a95bfeb8341842efa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29060a42_795b2f95",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-11-30T21:55:38Z",
+      "side": 1,
+      "message": "Hm, the word \"Stream\" is more closely associated with Input/OutputStream other places across the Java programming language, so I\u0027d recommend choosing a different distinct word here.\n\nAn alternative I\u0027d suggest is \"enforceNoDataAvail()\" since that connects clearly to the underlying API of dataAvail().\n\nFinally, I\u0027d recommend updating the javadoc to omit reference to \"Stream\" and describe it similar to how the docs for \"dataAvail()\" are written.",
+      "range": {
+        "startLine": 827,
+        "startChar": 23,
+        "endLine": 827,
+        "endChar": 34
+      },
+      "revId": "f2b15c239d200250179195a95bfeb8341842efa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
