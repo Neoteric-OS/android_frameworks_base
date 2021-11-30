@@ -46,6 +46,7 @@ import android.system.OsConstants;
 import android.system.StructCapUserData;
 import android.system.StructCapUserHeader;
 import android.text.Hyphenator;
+import android.text.TextUtils;
 import android.util.EventLog;
 import android.util.Log;
 import android.util.Slog;
@@ -573,6 +574,30 @@ public class ZygoteInit {
             }
         }
         return sCachedSystemServerClassLoader;
+    }
+
+    /**
+     * Creates class loaders for standalone system server jars. This function may be called through
+     * JNI in system server startup, when the runtime is in a critically low state. Do not do
+     * extended computation etc here.
+     */
+    private static void prefetchStandaloneSystemServerJars() {
+        String envStr = Os.getenv("STANDALONE_SYSTEMSERVER_JARS");
+        if (TextUtils.isEmpty(envStr)) {
+            return;
+        }
+        for (String jar : envStr.split(":")) {
+            try {
+                SystemServerClassLoaderFactory.getOrCreateClassLoader(
+                        jar, getOrCreateSystemServerClassLoader());
+            } catch (Error e) {
+                // We don't want the process to crash for this error because prefetching is just an
+                // optimization.
+                Log.e(TAG,
+                        String.format("Failed to prefetch standalone system server jar \"%s\": %s",
+                                jar, e.toString()));
+            }
+        }
     }
 
     /**
