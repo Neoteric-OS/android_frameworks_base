@@ -718,6 +718,11 @@ public final class BluetoothSocket implements Closeable {
         }
     }
 
+    /** @hide */
+    public ParcelFileDescriptor getParcelFileDescriptor() {
+        return mPfd;
+    }
+
     private String convertAddr(final byte[] addr) {
         return String.format(Locale.US, "%02X:%02X:%02X:%02X:%02X:%02X",
                 addr[0], addr[1], addr[2], addr[3], addr[4], addr[5]);
