@@ -19,6 +19,8 @@ package com.android.server;
 import static android.Manifest.permission.BLUETOOTH_CONNECT;
 import static android.content.PermissionChecker.PERMISSION_HARD_DENIED;
 import static android.content.PermissionChecker.PID_UNKNOWN;
+import static android.content.pm.PackageManager.GET_META_DATA;
+import static android.content.pm.PackageManager.GET_SERVICES;
 import static android.content.pm.PackageManager.MATCH_SYSTEM_ONLY;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.os.PowerExemptionManager.TEMPORARY_ALLOW_LIST_TYPE_FOREGROUND_SERVICE_ALLOWED;
@@ -32,14 +34,18 @@ import android.app.ActivityManager;
 import android.app.AppGlobals;
 import android.app.AppOpsManager;
 import android.app.BroadcastOptions;
+import android.app.role.RoleManager;
 import android.bluetooth.BluetoothA2dp;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothHearingAid;
 import android.bluetooth.BluetoothLeAudio;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothProtoEnums;
+import android.bluetooth.BluetoothServerSocket;
+import android.bluetooth.BluetoothSocket;
 import android.bluetooth.IBluetooth;
 import android.bluetooth.IBluetoothCallback;
+import android.bluetooth.IBluetoothCarProjection;
 import android.bluetooth.IBluetoothGatt;
 import android.bluetooth.IBluetoothHeadset;
 import android.bluetooth.IBluetoothManager;
@@ -58,13 +64,17 @@ import android.content.PermissionChecker;
 import android.content.ServiceConnection;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManagerInternal;
+import android.content.pm.ServiceInfo;
 import android.content.pm.UserInfo;
 import android.database.ContentObserver;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerExecutor;
+import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
@@ -93,15 +103,24 @@ import com.android.server.pm.UserManagerInternal.UserRestrictionsListener;
 import com.android.server.pm.UserRestrictionsUtils;
 
 import java.io.FileDescriptor;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.function.Consumer;
 
 class BluetoothManagerService extends IBluetoothManager.Stub {
     private static final String TAG = "BluetoothManagerService";
@@ -157,6 +176,8 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     private static final int MAX_ERROR_RESTART_RETRIES = 6;
     private static final int MAX_WAIT_FOR_ENABLE_DISABLE_RETRIES = 10;
 
+    private static final String CAR_PROJECTION_BT_ADDR_KEY = "bt_addr";
+
     // Bluetooth persisted setting is off
     private static final int BLUETOOTH_OFF = 0;
     // Bluetooth persisted setting is on
@@ -187,12 +208,26 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     private final ReentrantReadWriteLock mBluetoothLock = new ReentrantReadWriteLock();
     private boolean mBinding;
     private boolean mUnbinding;
+    private final PackageManager mPackageManager;
+    private final RoleManager mRoleManager;
 
     private BluetoothModeChangeHelper mBluetoothModeChangeHelper;
 
     private BluetoothAirplaneModeListener mBluetoothAirplaneModeListener;
 
     private BluetoothDeviceConfigListener mBluetoothDeviceConfigListener;
+
+    private BluetoothAdapter mBluetoothAdapter;
+
+    private final Map<UUID, BluetoothServerSocket> mBluetoothServerSockets =
+            Collections.synchronizedMap(new HashMap<>());
+
+    private final Executor mSocketServersExecutor;
+
+    private final CarProjectionServiceConnection mCarProjectionServiceConnection =
+            new CarProjectionServiceConnection();
+
+    private Intent mProjectionServiceIntent;
 
     // used inside handler thread
     private boolean mQuietEnable = false;
@@ -498,6 +533,11 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         registerForBleScanModeChange();
         mCallbacks = new RemoteCallbackList<IBluetoothManagerCallback>();
         mStateChangeCallbacks = new RemoteCallbackList<IBluetoothStateChangeCallback>();
+        mRoleManager = mContext.getSystemService(RoleManager.class);
+        mPackageManager = mContext.getSystemService(PackageManager.class);
+        // Each socket must listen for incoming connections. Since accept() blocks, each must run in
+        // its own thread.
+        mSocketServersExecutor = r -> new Thread(r).start();
 
         mIsHearingAidProfileSupported = context.getResources()
                 .getBoolean(com.android.internal.R.bool.config_hearing_aid_profile_supported);
@@ -2423,7 +2463,16 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
             } else if (mBluetooth != null) {
                 //Enable bluetooth
                 try {
-                    if (!mBluetooth.enable(mQuietEnable, mContext.getAttributionSource())) {
+                    if (mBluetooth.enable(mQuietEnable, mContext.getAttributionSource())) {
+                        // Start the Car Projection RFCOMM listener if we successfully enable BT
+                        String uuid = getCarProjectionUuid();
+                        if (!TextUtils.isEmpty(uuid)) {
+                            startRfcommServerSocket(
+                                    "car-projection",
+                                    UUID.fromString(uuid),
+                                    this::handleCarProjectionConnections);
+                        }
+                    } else {
                         Slog.e(TAG, "IBluetooth.enable() returned false");
                     }
                 } catch (RemoteException e) {
@@ -2453,6 +2502,8 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                 if (DBG) {
                     Slog.d(TAG, "Sending off request.");
                 }
+                stopRfcommServerSockets();
+                unbindAutomotiveService();
                 if (!mBluetooth.disable(mContext.getAttributionSource())) {
                     Slog.e(TAG, "IBluetooth.disable() returned false");
                 }
@@ -2766,6 +2817,219 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
 
     private int getServiceRestartMs() {
         return (mErrorRecoveryRetryCounter + 1) * SERVICE_RESTART_TIME_MS;
+    }
+
+    private void startRfcommServerSocket(
+            String name, UUID uuid, Consumer<BluetoothServerSocket> connectionHandler) {
+        mBluetoothServerSockets.compute(
+                uuid,
+                (uuidKey, socket) ->
+                        createNewServerSocket(name, uuidKey, socket, connectionHandler));
+    }
+
+    private void stopRfcommServerSockets() {
+        mBluetoothServerSockets.forEach((uuid, socket) -> {
+            try {
+                if (socket != null) {
+                    socket.close();
+                }
+            } catch (IOException e) {
+                Slog.e(TAG, "Failed to close bt server socket with UUID: " + uuid, e);
+            }
+        });
+    }
+
+    private void unbindAutomotiveService() {
+        if (mCarProjectionServiceConnection.bound()) {
+            mContext.unbindService(mCarProjectionServiceConnection);
+            mContext.stopService(mProjectionServiceIntent);
+        }
+    }
+
+    private BluetoothServerSocket createNewServerSocket(
+            String name,
+            UUID uuid,
+            BluetoothServerSocket socket,
+            Consumer<BluetoothServerSocket> connectionHandler) {
+        if (socket != null) {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                Slog.e(TAG, "Failed to close existing RFCOMM socket server on UUID " + uuid, e);
+            }
+        }
+
+        if (mBluetoothAdapter == null) {
+            mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        }
+
+        final BluetoothServerSocket newSocket;
+        try {
+            newSocket = mBluetoothAdapter.listenUsingRfcommWithServiceRecord(name, uuid);
+        } catch (IOException e) {
+            Slog.e(TAG, "Failed to create RFCOMM socket server on UUID " + uuid, e);
+            return null;
+        }
+
+        mSocketServersExecutor.execute(() -> connectionHandler.accept(newSocket));
+
+        return newSocket;
+    }
+
+    private void handleCarProjectionConnections(BluetoothServerSocket serverSocket) {
+        for (;;) {
+            BluetoothSocket socket;
+            try {
+                socket = serverSocket.accept();
+            } catch (IOException e) {
+                Slog.e(TAG, "Failed to accept socket on " + serverSocket, e);
+                // accept will fail when the server socket closes, so we can break here
+                break;
+            }
+
+            mCarProjectionServiceConnection.addSocketToProcess(socket);
+
+            if (!mCarProjectionServiceConnection.bound()) {
+                ServiceInfo carProjectionService = getCarProjectionService();
+
+                if (carProjectionService == null) {
+                    // No car projection service registered, so just stop listening.
+                    try {
+                        serverSocket.close();
+                    } catch (IOException e) {
+                        Slog.e(TAG, "Failed to close bt rfcomm socket for car projection", e);
+                    }
+                    return;
+                }
+
+                mProjectionServiceIntent = new Intent();
+                mProjectionServiceIntent.setClassName(
+                        carProjectionService.packageName, carProjectionService.name);
+
+                if (mContext.startService(mProjectionServiceIntent) == null) {
+                    Slog.e(TAG, "Failed to find the automotive projection role service");
+                    return;
+                }
+                if (!mContext.bindService(
+                        mProjectionServiceIntent,
+                        mCarProjectionServiceConnection,
+                        Context.BIND_AUTO_CREATE)) {
+                    Slog.e(
+                            TAG,
+                            "Failed to bind to the car projection role service "
+                                    + carProjectionService);
+                    return;
+                }
+            } else {
+                mCarProjectionServiceConnection.sendPendingSockets();
+            }
+        }
+    }
+
+    private PackageInfo getCarProjectionPackage() {
+        List<String> carRoleHolders =
+                mRoleManager.getRoleHolders("android.app.role.SYSTEM_AUTOMOTIVE_PROJECTION");
+
+        String carProjectionPackage = carRoleHolders.stream().findAny().orElse("");
+
+        if (carProjectionPackage.isEmpty()) {
+            return null;
+        }
+
+        try {
+            return
+                    mPackageManager.getPackageInfo(
+                            carProjectionPackage, GET_SERVICES | GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            Slog.e(TAG, "Failed to find car projection package", e);
+            return null;
+        }
+    }
+
+    private ServiceInfo getCarProjectionService() {
+        PackageInfo carProjectionPackage = getCarProjectionPackage();
+
+        if (carProjectionPackage != null) {
+            return Arrays.stream(carProjectionPackage.services)
+                    .filter(serviceInfo -> serviceInfo.metaData.getBoolean(
+                            "android.bluetooth.AUTO_PROJECTION_HANDLER", false))
+                    .findFirst()
+                    .orElse(null);
+        }
+
+        return null;
+    }
+
+    private String getCarProjectionUuid() {
+        ServiceInfo carProjectionService = getCarProjectionService();
+
+        if (carProjectionService != null) {
+            return carProjectionService
+                    .metaData
+                    .getString("android.bluetooth.AUTO_PROJECTION_UUID", "");
+        }
+
+        return "";
+    }
+
+    private static class CarProjectionServiceConnection implements ServiceConnection {
+        private final BlockingQueue<BluetoothSocket> mSocketsToProcess;
+        private boolean mBound;
+        private HandlerThread mHandlerThread;
+        private IBluetoothCarProjection mService;
+
+        CarProjectionServiceConnection() {
+            mSocketsToProcess = new LinkedBlockingQueue<>();
+            mBound = false;
+        }
+
+        @Override
+        public synchronized void onServiceConnected(ComponentName name, IBinder service) {
+            mService = (IBluetoothCarProjection) service;
+            mBound = true;
+
+            mHandlerThread = new HandlerThread("car-projection-local-listener");
+            mHandlerThread.start();
+            Executor executor = new HandlerExecutor(mHandlerThread.getThreadHandler());
+
+            executor.execute(this::sendPendingSockets);
+        }
+
+        @Override
+        public synchronized void onServiceDisconnected(ComponentName name) {
+            mBound = false;
+            mService = null;
+            mHandlerThread.quit();
+        }
+
+        synchronized void addSocketToProcess(BluetoothSocket socket) {
+            mSocketsToProcess.add(socket);
+        }
+
+        synchronized void sendPendingSockets() {
+            while (!mSocketsToProcess.isEmpty()) {
+                BluetoothSocket socket;
+                try {
+                    socket = mSocketsToProcess.take();
+                } catch (InterruptedException e) {
+                    Slog.d(TAG, "Processing pending RFCOMM socket interrupted", e);
+                    break;
+                }
+
+                try {
+                    mService.sendSocketFileDescriptor(
+                            socket.getParcelFileDescriptor(),
+                            socket.getRemoteDevice().getAddress());
+                } catch (RemoteException e) {
+                    Slog.e(TAG, "Failed to send RFCOMM socket to car projection service", e);
+                    break;
+                }
+            }
+        }
+
+        synchronized boolean bound() {
+            return mBound;
+        }
     }
 
     @Override

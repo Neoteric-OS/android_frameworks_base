@@ -91,6 +91,8 @@ OnNameExpected: android.service.smartspace.SmartspaceService#notifySmartspaceEve
     Methods implemented by developers should follow the on<Something> style, was `notifySmartspaceEvent`
 
 
+ProtectedMember: android.bluetooth.BluetoothCarProjectionService#onSocketReceived(android.os.ParcelFileDescriptor, String):
+    Protected methods not allowed; must be public: method android.bluetooth.BluetoothCarProjectionService.onSocketReceived(android.os.ParcelFileDescriptor,String)}
 ProtectedMember: android.printservice.recommendation.RecommendationService#attachBaseContext(android.content.Context):
 
 ProtectedMember: android.service.contentcapture.ContentCaptureService#dump(java.io.FileDescriptor, java.io.PrintWriter, String[]):

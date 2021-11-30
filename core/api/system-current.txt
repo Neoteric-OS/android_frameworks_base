@@ -1983,6 +1983,12 @@ package android.bluetooth {
     method public void onOobData(int, @NonNull android.bluetooth.OobData);
   }
 
+  public abstract class BluetoothCarProjectionService extends android.app.Service {
+    ctor public BluetoothCarProjectionService();
+    method @Nullable public android.os.IBinder onBind(@NonNull android.content.Intent);
+    method protected abstract void onSocketReceived(@NonNull android.os.ParcelFileDescriptor, @NonNull String);
+  }
+
   public final class BluetoothCsipSetCoordinator implements java.lang.AutoCloseable android.bluetooth.BluetoothProfile {
     method @NonNull @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public java.util.List<java.lang.Integer> getAllGroupIds(@Nullable android.os.ParcelUuid);
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public int getConnectionPolicy(@Nullable android.bluetooth.BluetoothDevice);
