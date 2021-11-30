@@ -22,6 +22,30 @@
       },
       "revId": "271bf78897270cbba3beb326a58e13825ba9a880",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e6bcfdf_66ecf58e",
+        "filename": "packages/Nsd/service/src/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-11-30T01:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a54585d_42e954db",
+      "range": {
+        "startLine": 884,
+        "startChar": 12,
+        "endLine": 884,
+        "endChar": 18
+      },
+      "revId": "271bf78897270cbba3beb326a58e13825ba9a880",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
