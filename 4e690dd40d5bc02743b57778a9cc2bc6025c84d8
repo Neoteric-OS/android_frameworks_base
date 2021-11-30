@@ -56,6 +56,30 @@
       },
       "revId": "4e690dd40d5bc02743b57778a9cc2bc6025c84d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "713400d6_1e1e7cac",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-11-30T09:36:02Z",
+      "side": 1,
+      "message": "that filegroup is only used to generate the non-updatable system server APIs. Since there are none at the moment, I think it\u0027d be better to migrate out of here before adding any.",
+      "parentUuid": "854d067c_1041cc97",
+      "range": {
+        "startLine": 114,
+        "startChar": 10,
+        "endLine": 114,
+        "endChar": 43
+      },
+      "revId": "4e690dd40d5bc02743b57778a9cc2bc6025c84d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
