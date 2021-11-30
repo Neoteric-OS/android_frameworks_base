@@ -22,6 +22,30 @@
       },
       "revId": "b7b469bb281b9f804c397f89b9ce1cf18311ed77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1898c725_aec04c9e",
+        "filename": "core/java/android/hardware/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2021-11-30T23:49:31Z",
+      "side": 1,
+      "message": "https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/16034844 has the context (already API reviewed fwiw).\n\nIt\u0027s the DataSpace of the HardwareBuffer and isn\u0027t strictly speaking \"graphics\"",
+      "parentUuid": "8639317e_1f1e1310",
+      "range": {
+        "startLine": 12,
+        "startChar": 9,
+        "endLine": 12,
+        "endChar": 18
+      },
+      "revId": "b7b469bb281b9f804c397f89b9ce1cf18311ed77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
