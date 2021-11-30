@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8639317e_1f1e1310",
+        "filename": "core/java/android/hardware/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-11-30T23:47:38Z",
+      "side": 1,
+      "message": "Hmm, this seems really oddly named; is there a better scoped name we could use instead?  For example, GraphicsDataSpace?  Could you link to more details on what this class is?",
+      "range": {
+        "startLine": 12,
+        "startChar": 9,
+        "endLine": 12,
+        "endChar": 18
+      },
+      "revId": "b7b469bb281b9f804c397f89b9ce1cf18311ed77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
