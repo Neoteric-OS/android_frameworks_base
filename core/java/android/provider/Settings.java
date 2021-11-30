@@ -12598,7 +12598,10 @@ public final class Settings {
          * Whether network service discovery is enabled.
          *
          * @hide
+         * @deprecated No longer needed due to having never been set and cts tests assumes this
+         *             setting should be enabled always for testing.
          */
+        @Deprecated
         @Readable
         public static final String NSD_ON = "nsd_on";
 

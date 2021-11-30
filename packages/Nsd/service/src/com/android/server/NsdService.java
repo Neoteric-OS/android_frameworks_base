@@ -33,7 +33,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.UserHandle;
-import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Pair;
@@ -121,21 +120,6 @@ public class NsdService extends INsdManager.Stub {
             this.removeMessages(NsdManager.DAEMON_CLEANUP);
         }
 
-        /**
-         * Observes the NSD on/off setting, and takes action when changed.
-         */
-        private void registerForNsdSetting() {
-            final ContentObserver contentObserver = new ContentObserver(this.getHandler()) {
-                @Override
-                public void onChange(boolean selfChange) {
-                    notifyEnabled(isNsdEnabled());
-                }
-            };
-
-            final Uri uri = Settings.Global.getUriFor(Settings.Global.NSD_ON);
-            mNsdSettings.registerContentObserver(uri, contentObserver);
-        }
-
         NsdStateMachine(String name, Handler handler) {
             super(name, handler);
             addState(mDefaultState);
@@ -144,7 +128,6 @@ public class NsdService extends INsdManager.Stub {
             State initialState = isNsdEnabled() ? mEnabledState : mDisabledState;
             setInitialState(initialState);
             setLogRecSize(25);
-            registerForNsdSetting();
         }
 
         class DefaultState extends State {
@@ -1079,6 +1062,9 @@ public class NsdService extends INsdManager.Stub {
     /**
      * Interface which encapsulates dependencies of NsdService that are hard to mock, hard to
      * override, or have side effects on global state in unit tests.
+     *
+     * TODO: Remove this interface because nsd_on setting has never been set since it created.
+     *       Besides, CTS tests assume that nsd service is always enabled.
      */
     @VisibleForTesting
     public interface NsdSettings {
@@ -1091,12 +1077,13 @@ public class NsdService extends INsdManager.Stub {
             return new NsdSettings() {
                 @Override
                 public boolean isEnabled() {
-                    return Settings.Global.getInt(resolver, Settings.Global.NSD_ON, 1) == 1;
+                    //return Settings.Global.getInt(resolver, Settings.Global.NSD_ON, 1) == 1;
+                    return true;
                 }
 
                 @Override
                 public void putEnabledStatus(boolean isEnabled) {
-                    Settings.Global.putInt(resolver, Settings.Global.NSD_ON, isEnabled ? 1 : 0);
+                    //Settings.Global.putInt(resolver, Settings.Global.NSD_ON, isEnabled ? 1 : 0);
                 }
 
                 @Override
