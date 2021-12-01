@@ -239,6 +239,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "62b34b78_bca1d75b",
+        "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2021-12-01T01:32:03Z",
+      "side": 1,
+      "message": "defining this aidl separately (not in telephony.aidl) makes more sense to me",
+      "parentUuid": "4ce8c14e_6e2cbf6e",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f8ae606b_25da5a8d",
         "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
         "patchSetId": 2
@@ -345,6 +369,30 @@
       "side": 1,
       "message": "Binder object is only used for open request, not close request.",
       "parentUuid": "445078a8_cff1e9f8",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 13
+      },
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61a72ba9_68ed4ae9",
+        "filename": "telephony/java/com/android/internal/telephony/IccLogicalChannelRequest.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2021-12-01T01:32:03Z",
+      "side": 1,
+      "message": "consider adding some documentation?",
+      "parentUuid": "3de4ae1a_d0bd370d",
       "range": {
         "startLine": 48,
         "startChar": 4,
