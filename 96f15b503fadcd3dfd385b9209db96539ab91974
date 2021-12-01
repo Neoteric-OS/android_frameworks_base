@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4f6e203_0aad126a",
+        "filename": "core/java/android/net/vcn/CellUnderlyingNetworkPriority.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-01T02:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f23e284_82b6e464",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "96f15b503fadcd3dfd385b9209db96539ab91974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8fa850c0_36b5fcfa",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-11-30T02:26:13Z",
       "side": 1,
       "message": "Nit, use ArraySet if possible for performance",
+      "range": {
+        "startLine": 57,
+        "startChar": 41,
+        "endLine": 57,
+        "endChar": 48
+      },
+      "revId": "96f15b503fadcd3dfd385b9209db96539ab91974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4a583fd_a82429de",
+        "filename": "core/java/android/net/vcn/CellUnderlyingNetworkPriority.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-01T02:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fa850c0_36b5fcfa",
       "range": {
         "startLine": 57,
         "startChar": 41,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1014bbb8_90ae708d",
+        "filename": "core/java/android/net/vcn/CellUnderlyingNetworkPriority.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-01T02:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9d4d7d0_96c3cea6",
+      "range": {
+        "startLine": 116,
+        "startChar": 69,
+        "endLine": 116,
+        "endChar": 76
+      },
+      "revId": "96f15b503fadcd3dfd385b9209db96539ab91974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7fab3a35_99e807c0",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-11-30T02:26:13Z",
       "side": 1,
       "message": "Specifically, this is where the fromList() would be nice; so we don\u0027t have to do mapping back and forth.\n\nNotably, streams are actually pretty low performance.\n\nThere\u0027s also an INT_SERIALIZER in the PersistableBundleUtils class for convenience :)",
+      "range": {
+        "startLine": 119,
+        "startChar": 52,
+        "endLine": 119,
+        "endChar": 60
+      },
+      "revId": "96f15b503fadcd3dfd385b9209db96539ab91974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bcefa79_b4a16cf0",
+        "filename": "core/java/android/net/vcn/CellUnderlyingNetworkPriority.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-01T02:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fab3a35_99e807c0",
       "range": {
         "startLine": 119,
         "startChar": 52,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e160006_4e0e2722",
+        "filename": "core/java/android/net/vcn/CellUnderlyingNetworkPriority.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-01T02:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e0bdce1_a2b4e5d8",
+      "range": {
+        "startLine": 190,
+        "startChar": 23,
+        "endLine": 190,
+        "endChar": 32
+      },
+      "revId": "96f15b503fadcd3dfd385b9209db96539ab91974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae849c5a_4e8a8a88",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-11-30T02:26:13Z",
       "side": 1,
       "message": "Suggest adding \"Defaults to the empty set, allowing ANY PLMN ID\"",
+      "range": {
+        "startLine": 195,
+        "startChar": 47,
+        "endLine": 195,
+        "endChar": 48
+      },
+      "revId": "96f15b503fadcd3dfd385b9209db96539ab91974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "460f7ffc_5aae8a03",
+        "filename": "core/java/android/net/vcn/CellUnderlyingNetworkPriority.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-01T02:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae849c5a_4e8a8a88",
       "range": {
         "startLine": 195,
         "startChar": 47,
