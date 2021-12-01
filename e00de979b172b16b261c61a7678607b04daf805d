@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22055237_92312ee0",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkPriority.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T02:37:01Z",
+      "side": 1,
+      "message": "Nit: Validate should be on the outer class :)",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 15
+      },
+      "revId": "e00de979b172b16b261c61a7678607b04daf805d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
