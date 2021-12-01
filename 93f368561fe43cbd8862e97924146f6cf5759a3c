@@ -20,6 +20,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "ae12c5e6_35138a4f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-12-01T16:02:36Z",
+      "side": 1,
+      "message": "+ Tyler for a API review (Telephony internal API change only).\n\nConfirmed with telephony mini API council that the usage of AIDL parcelable is allowed as implementation detail (not leak to public surface).",
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "1bafe27a_8f1c87d7",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
