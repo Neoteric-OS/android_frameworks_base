@@ -109,6 +109,29 @@
       },
       "revId": "f2b15c239d200250179195a95bfeb8341842efa5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "335da802_50afa58e",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1010465
+      },
+      "writtenOn": "2021-12-01T18:56:37Z",
+      "side": 1,
+      "message": "log how much data is left as well? That will help debugging,",
+      "range": {
+        "startLine": 829,
+        "startChar": 22,
+        "endLine": 829,
+        "endChar": 80
+      },
+      "revId": "f2b15c239d200250179195a95bfeb8341842efa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
