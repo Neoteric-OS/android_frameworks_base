@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "9158272f_2d4a9e8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-12-01T15:57:19Z",
+      "side": 1,
+      "message": "+2 to supress lint -1. The complain is about ITelephony#IccCloseLogicalChannel has @UnsupportedAppUsage. \n\nQuery the usage from the link below, there is no concern to replace the method:\nhttp://nonsdk/usage/Lcom%2Fandroid%2Finternal%2Ftelephony%2FITelephony%3B-%3EiccCloseLogicalChannel%28II%29Z\n\n",
+      "revId": "93f368561fe43cbd8862e97924146f6cf5759a3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "1bafe27a_8f1c87d7",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 2
