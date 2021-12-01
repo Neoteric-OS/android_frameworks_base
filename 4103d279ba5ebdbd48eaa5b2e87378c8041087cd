@@ -3,6 +3,282 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bdebab09_a52cce18",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T05:54:02Z",
+      "side": 1,
+      "message": "Nit VcnContext should always come first",
+      "range": {
+        "startLine": 79,
+        "startChar": 12,
+        "endLine": 79,
+        "endChar": 34
+      },
+      "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "560829d5_6d7abd4c",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T05:54:02Z",
+      "side": 1,
+      "message": "Generic type?",
+      "range": {
+        "startLine": 80,
+        "startChar": 25,
+        "endLine": 80,
+        "endChar": 26
+      },
+      "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8b896c7_43e6a955",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T05:54:02Z",
+      "side": 1,
+      "message": "Suggest a todo to check NETWORK_QUALITY. Right now, that\u0027s guaranteed by the NetworkRequest, but that may not always be the case.",
+      "range": {
+        "startLine": 85,
+        "startChar": 68,
+        "endLine": 85,
+        "endChar": 77
+      },
+      "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ab49cd1_2530a88b",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T05:54:02Z",
+      "side": 1,
+      "message": "Suggestion: I think we could structure this as a singular top level match to start; it\u0027ll remove the conditional reflection typing out of this layer, which would make it simpler.\n\nif (checkMatchesPriorityRule(nwPriority, networkRecord, currentlySelected, carrierConfig)) {\n    return i;\n}\n\n\n...\n\n\nboolean checkMatchesPriorityRule (...) {\n    if (nwPriority instanceof \u003cCLASS\u003e \u0026\u0026 caps.hasTransport(\u003cTYPE\u003e) {\n        return checkMatchesCellPriorityRule();\n    } else if ...\n        ...\n    }\n    \n    return false;\n}",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 70
+      },
+      "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "101b2623_ce0b1bfa",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T05:54:02Z",
+      "side": 1,
+      "message": "Nit, matchesWifiUnderlying... or",
+      "range": {
+        "startLine": 98,
+        "startChar": 23,
+        "endLine": 98,
+        "endChar": 57
+      },
+      "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1be222ef_f6690d8f",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T05:54:02Z",
+      "side": 1,
+      "message": "Why does this matter in this condition?",
+      "range": {
+        "startLine": 135,
+        "startChar": 12,
+        "endLine": 135,
+        "endChar": 70
+      },
+      "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "783c59dd_3765cabf",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T05:54:02Z",
+      "side": 1,
+      "message": "Can this be package?",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 10
+      },
+      "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29c7c3f4_f4e4ded9",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T05:54:02Z",
+      "side": 1,
+      "message": "Suggest moving this up one level; otherwise it\u0027ll trigger multiple times to a calculatePriorityClass call",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 9
+      },
+      "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4846ad5f_e529c8c3",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T05:54:02Z",
+      "side": 1,
+      "message": "Suggest getting the TelephonyNetworkSpecifier (you\u0027ll have to cast), and using that instead. It\u0027s guaranteed to be singular, which is the right semantics for a operator check.",
+      "range": {
+        "startLine": 183,
+        "startChar": 12,
+        "endLine": 183,
+        "endChar": 57
+      },
+      "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01564f6b_55fed252",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T05:54:02Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 57
+      },
+      "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba048590_5bf61257",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T05:54:02Z",
+      "side": 1,
+      "message": "Shoot. I just realized one downside of this API is that requireOpportunistic can only convey:\n1. REQUIRED, or \n2. DONT_CARE\n\nBut in the case where we want specifically OPPORTUNISTIC -\u003e MACRO, we can\u0027t express that.\n\nCould you file a bug for this, I need to think about it more; i\u0027m not sure if that actually is necessary.",
+      "range": {
+        "startLine": 210,
+        "startChar": 28,
+        "endLine": 210,
+        "endChar": 50
+      },
+      "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ef66181_a23b2230",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T05:54:02Z",
+      "side": 1,
+      "message": "Will this work if both fall into the same priority class? Perhaps add a todo to differentiate?",
+      "range": {
+        "startLine": 85,
+        "startChar": 27,
+        "endLine": 85,
+        "endChar": 34
+      },
+      "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e67ace06_8aa13133",
         "filename": "services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkRecord.java",
         "patchSetId": 3
@@ -19,6 +295,53 @@
         "startChar": 9,
         "endLine": 127,
         "endChar": 52
+      },
+      "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "030b8d43_cb15e992",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T05:54:02Z",
+      "side": 1,
+      "message": "The linked hash set, yes; otherwise it\u0027ll be impossible to debug :)",
+      "parentUuid": "e67ace06_8aa13133",
+      "range": {
+        "startLine": 127,
+        "startChar": 9,
+        "endLine": 127,
+        "endChar": 52
+      },
+      "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a0b2668_80282c85",
+        "filename": "tests/vcn/java/com/android/server/vcn/routeselection/NetworkPriorityClassifierTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-01T05:54:02Z",
+      "side": 1,
+      "message": "Nit, suggest \"expectMatch\"\n\nOtherwise it isn\u0027t exactly clear what \"true\" means",
+      "range": {
+        "startLine": 139,
+        "startChar": 80,
+        "endLine": 139,
+        "endChar": 90
       },
       "revId": "4103d279ba5ebdbd48eaa5b2e87378c8041087cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
