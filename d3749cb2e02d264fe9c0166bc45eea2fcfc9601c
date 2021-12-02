@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e023f09_11d48043",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2821,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2021-12-02T04:08:27Z",
+      "side": 1,
+      "message": "Resolved",
+      "parentUuid": "b9d725aa_3b6624b7",
+      "range": {
+        "startLine": 2821,
+        "startChar": 35,
+        "endLine": 2821,
+        "endChar": 64
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2fee8268_3f0e9158",
@@ -136,6 +160,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ea2518a_668bd9e6",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2836,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2021-12-02T04:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4734bdd_64f23f4e",
+      "range": {
+        "startLine": 2831,
+        "startChar": 11,
+        "endLine": 2836,
+        "endChar": 50
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1dbac907_17f1fbc6",
@@ -183,6 +231,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72791e1a_99413305",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2860,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2021-12-02T04:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83bf08ad_d6c22f27",
+      "range": {
+        "startLine": 2860,
+        "startChar": 16,
+        "endLine": 2860,
+        "endChar": 47
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5eeec900_0331cad6",
@@ -196,6 +268,30 @@
       "writtenOn": "2021-10-26T18:16:11Z",
       "side": 1,
       "message": "I guess we can add some flags here at least to create service",
+      "range": {
+        "startLine": 2876,
+        "startChar": 89,
+        "endLine": 2876,
+        "endChar": 91
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d88fffd1_7d0e38b5",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2876,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2021-12-02T04:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5eeec900_0331cad6",
       "range": {
         "startLine": 2876,
         "startChar": 89,
@@ -253,6 +349,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cf8daa2_bdc9f861",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2900,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2021-12-02T04:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e974d32d_bf129e22",
+      "range": {
+        "startLine": 2900,
+        "startChar": 12,
+        "endLine": 2900,
+        "endChar": 68
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a1b2fdc_8811bd2e",
@@ -300,6 +420,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c376aba_bc205219",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2936,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2021-12-02T04:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6aad881_0bbb4394",
+      "range": {
+        "startLine": 2936,
+        "startChar": 16,
+        "endLine": 2936,
+        "endChar": 58
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbe04c1e_cb17150c",
@@ -337,6 +481,30 @@
       "side": 1,
       "message": "Good idea, I\u0027ll add this.",
       "parentUuid": "dbe04c1e_cb17150c",
+      "range": {
+        "startLine": 2948,
+        "startChar": 16,
+        "endLine": 2949,
+        "endChar": 56
+      },
+      "revId": "d3749cb2e02d264fe9c0166bc45eea2fcfc9601c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8f2e9cf_5c69b6ac",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2949,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2021-12-02T04:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ef40644_d69c78bd",
       "range": {
         "startLine": 2948,
         "startChar": 16,
