@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017896089",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1908636?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "373688ec_5bd9f516",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-02T03:48:24Z",
+      "side": 1,
+      "message": "Change must include a \"Sponsor:\" stanza indicating who at Google has personally signed up to take responsibility in case of any potential fallout.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "0f8ec53d9afa8dc6e968b6257e0fde55b0f37830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017896089",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1908636?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bc908d84_4ace5b88",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-02T03:48:24Z",
+      "side": 1,
+      "message": "Must include a \"Test:\" stanza indicating how you tested this change.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "0f8ec53d9afa8dc6e968b6257e0fde55b0f37830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017896089",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1908636?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d5e2fc0e_4ae43572",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-02T03:48:24Z",
+      "side": 1,
+      "message": "Change must include a \"Tag:\" stanza. Valid tags are #compatibility #stability #security #feature #floss #gd-refactor #refactor. See: go/managing-bluetooth-cl-risk",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "0f8ec53d9afa8dc6e968b6257e0fde55b0f37830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017896084",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1908636?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "1ec84821_8251924c",
+          "description": "Change to \"core/java/android/bluetooth/le/PeriodicAdvertisingCallback.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/le/PeriodicAdvertisingCallback.java",
+              "range": {
+                "startLine": 83,
+                "startChar": 35,
+                "endLine": 83,
+                "endChar": 45
+              },
+              "replacement": "transferred"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "184ee12f_faacc43e",
+        "filename": "core/java/android/bluetooth/le/PeriodicAdvertisingCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-02T03:48:24Z",
+      "side": 1,
+      "message": "Common typo found: \"transfered\" -- should it be \"transferred\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 83,
+        "startChar": 35,
+        "endLine": 83,
+        "endChar": 45
+      },
+      "revId": "0f8ec53d9afa8dc6e968b6257e0fde55b0f37830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017896084",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1908636?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "c010830e_6cb6c3ef",
+          "description": "Change to \"core/java/android/bluetooth/le/PeriodicAdvertisingCallback.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/le/PeriodicAdvertisingCallback.java",
+              "range": {
+                "startLine": 88,
+                "startChar": 22,
+                "endLine": 88,
+                "endChar": 32
+              },
+              "replacement": "Transferred"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "618fc39c_13a2bb9a",
+        "filename": "core/java/android/bluetooth/le/PeriodicAdvertisingCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-02T03:48:24Z",
+      "side": 1,
+      "message": "Common typo found: \"Transfered\" -- should it be \"Transferred\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 88,
+        "startChar": 22,
+        "endLine": 88,
+        "endChar": 32
+      },
+      "revId": "0f8ec53d9afa8dc6e968b6257e0fde55b0f37830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017896084",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1908636?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "de7bdc6f_2153e762",
+          "description": "Change to \"core/java/android/bluetooth/le/PeriodicAdvertisingManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/le/PeriodicAdvertisingManager.java",
+              "range": {
+                "startLine": 229,
+                "startChar": 31,
+                "endLine": 229,
+                "endChar": 41
+              },
+              "replacement": "Transferred"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "3a780ae9_80a6e32b",
+        "filename": "core/java/android/bluetooth/le/PeriodicAdvertisingManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-02T03:48:24Z",
+      "side": 1,
+      "message": "Common typo found: \"Transfered\" -- should it be \"Transferred\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 229,
+        "startChar": 31,
+        "endLine": 229,
+        "endChar": 41
+      },
+      "revId": "0f8ec53d9afa8dc6e968b6257e0fde55b0f37830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017896084",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1908636?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "01b2f1c4_ed6b3964",
+          "description": "Change to \"core/java/android/bluetooth/le/PeriodicAdvertisingManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/le/PeriodicAdvertisingManager.java",
+              "range": {
+                "startLine": 320,
+                "startChar": 30,
+                "endLine": 320,
+                "endChar": 40
+              },
+              "replacement": "Transferred"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "60bd0013_20fd3812",
+        "filename": "core/java/android/bluetooth/le/PeriodicAdvertisingManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-02T03:48:24Z",
+      "side": 1,
+      "message": "Common typo found: \"Transfered\" -- should it be \"Transferred\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 320,
+        "startChar": 30,
+        "endLine": 320,
+        "endChar": 40
+      },
+      "revId": "0f8ec53d9afa8dc6e968b6257e0fde55b0f37830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017896084",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1908636?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "01cfc6e0_11e10818",
+          "description": "Change to \"core/java/android/bluetooth/le/PeriodicAdvertisingManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/le/PeriodicAdvertisingManager.java",
+              "range": {
+                "startLine": 324,
+                "startChar": 39,
+                "endLine": 324,
+                "endChar": 49
+              },
+              "replacement": "Transferred"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "f6a35243_6ecf9e50",
+        "filename": "core/java/android/bluetooth/le/PeriodicAdvertisingManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-02T03:48:24Z",
+      "side": 1,
+      "message": "Common typo found: \"Transfered\" -- should it be \"Transferred\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 324,
+        "startChar": 39,
+        "endLine": 324,
+        "endChar": 49
+      },
+      "revId": "0f8ec53d9afa8dc6e968b6257e0fde55b0f37830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
