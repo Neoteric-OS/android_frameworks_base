@@ -22,6 +22,30 @@
       },
       "revId": "e05895ec98d9d94c4181d415c36023469948d844",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d86930a_e044fc4e",
+        "filename": "packages/Nsd/service/src/com/android/server/NativeDaemonConnector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-12-02T14:49:04Z",
+      "side": 1,
+      "message": "\u003e Could you pass in the handler as argument instead ? Would it be fine to use the NsdService handler, or a new handler on the same looper ?\nNo, it needs a looper to create a new handler in NativeDaemonConnector and it would be used to handle the messagin inside (see l.130). We can pass the looper from NsdService but I don\u0027t think it\u0027s good because NativeDaemonConnector is running on another thread. If the handler is running on the same thread with NsdService, that may make a unsync problem. So I think using a new thread here shoulb be better.\nhttps://source.corp.google.com/aosp-master/frameworks/base/packages/Nsd/service/src/com/android/server/NsdService.java;l\u003d790",
+      "parentUuid": "86506d05_5f2528ae",
+      "range": {
+        "startLine": 96,
+        "startChar": 14,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "e05895ec98d9d94c4181d415c36023469948d844",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
