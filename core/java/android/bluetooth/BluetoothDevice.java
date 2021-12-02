@@ -1116,6 +1116,8 @@ public final class BluetoothDevice implements Parcelable, Attributable {
 
     private final String mAddress;
     @AddressType private final int mAddressType;
+    private final String mIdentityAddress = null;
+    private final Integer mHashCode = null;
 
     private AttributionSource mAttributionSource;
 
@@ -1132,12 +1134,15 @@ public final class BluetoothDevice implements Parcelable, Attributable {
     }
 
     static IBluetoothManagerCallback sStateChangeCallback = new IBluetoothManagerCallback.Stub() {
-
         public void onBluetoothServiceUp(IBluetooth bluetoothService)
                 throws RemoteException {
             synchronized (BluetoothDevice.class) {
                 if (sService == null) {
                     sService = bluetoothService;
+                    // Call into adapter service even though the callback is from manager service
+                    for (String address : sRegisteredAddresses) {
+                        sService.registerAddressConsolidateCallback(sBluetoothConsolidateCallback, address);
+                    }
                 }
             }
         }
@@ -1155,6 +1160,19 @@ public final class BluetoothDevice implements Parcelable, Attributable {
 
         public void onOobData(@Transport int transport, OobData oobData) {
             if (DBG) Log.d(TAG, "onOobData: got data");
+        }
+    };
+
+    static final HashSet<String> sRegisteredAddresses = new HashSet<>();
+    static final HashMap<String, String> sIdentityAddressMap = new HashMap<>();
+    static final HashMap<String, int> sHashcodeMap = new HashMap<>();
+
+    static IBluetoothConsolidateCallback sBluetoothConsolidateCallback = new IBluetoothConsolidateCallback.Stub() {
+        public void onIdentityAddressFound(String rpaAddress, String identityAddress) throws RemoteException {
+            synchronized (BluetoothDevice.class) {
+                sIdentityAddressMap.put(rpaAddress, identityAddress);
+                sHashcodeMap.put(identityAddress, sHashcodeMap.get(rpaAddress));
+            }
         }
     };
 
@@ -1179,6 +1197,13 @@ public final class BluetoothDevice implements Parcelable, Attributable {
         mAddress = address;
         mAddressType = ADDRESS_TYPE_PUBLIC;
         mAttributionSource = BluetoothManager.resolveAttributionSource(null);
+        synchronized (BluetoothDevice.class) {
+            sRegisteredAddresses.add(address);
+            if (getService() != null) {
+                sService.registerAddressConsolidateCallback(sBluetoothConsolidateCallback, address);
+            }
+            sHashcodeMap.put(address, Object.this.hashCode());
+        }
     }
 
     /** {@hide} */
@@ -1194,14 +1219,27 @@ public final class BluetoothDevice implements Parcelable, Attributable {
     @Override
     public boolean equals(@Nullable Object o) {
         if (o instanceof BluetoothDevice) {
-            return mAddress.equals(((BluetoothDevice) o).getAddress());
+            BluetoothDevice device = (BluetoothDevice) o;
+            synchronized(BluetoothDevice.class) {
+                return mAddress.equals(device.mAddress) 
+                    || mAddress.equals(device.getAddress())
+                    || getAddress().equals(device.mAddress)
+                    || getAddress().equals(device.getAddress());
+            }
+            
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return mAddress.hashCode();
+        if (mHashCode != null) {
+            return mHashCode;
+        }
+        synchronized(BluetoothDevice.class) {
+            mHashCode = sHashcodeMap.get(getAddress());
+            return mHashCode;
+        }
     }
 
     /**
@@ -1215,7 +1253,7 @@ public final class BluetoothDevice implements Parcelable, Attributable {
      */
     @Override
     public String toString() {
-        return mAddress;
+        return getAddress();
     }
 
     @Override
@@ -1236,7 +1274,7 @@ public final class BluetoothDevice implements Parcelable, Attributable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        out.writeString(mAddress);
+        out.writeString(getAddress());
     }
 
     /**
@@ -1247,6 +1285,15 @@ public final class BluetoothDevice implements Parcelable, Attributable {
      */
     public String getAddress() {
         if (DBG) Log.d(TAG, "mAddress: " + mAddress);
+        if (mIdentityAddress  != null) {
+            return mIdentityAddress;
+        }
+        synchronized(BluetoothDevice.class) {
+            if (sIdentityAddressMap.containsKey(mAddress)) {
+                mIdentityAddress = sIdentityAddressMap.get(mAddress);
+                return mIdentityAddress;
+            }
+        }
         return mAddress;
     }
 
