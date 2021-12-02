@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7d6874ae_4f3c83d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-12-02T14:55:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f3d420f2_a16ec57b",
+      "revId": "f2b15c239d200250179195a95bfeb8341842efa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e170bc7c_847a0d98",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 2
@@ -31,6 +49,30 @@
       "writtenOn": "2021-12-01T10:02:19Z",
       "side": 1,
       "message": "hasn\u0027t reached",
+      "range": {
+        "startLine": 824,
+        "startChar": 62,
+        "endLine": 824,
+        "endChar": 74
+      },
+      "revId": "f2b15c239d200250179195a95bfeb8341842efa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a981780_52b38a06",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-12-02T14:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e170bc7c_847a0d98",
       "range": {
         "startLine": 824,
         "startChar": 62,
@@ -88,6 +130,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a38ea39f_03a9b4d8",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-12-02T14:55:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "29060a42_795b2f95",
+      "range": {
+        "startLine": 827,
+        "startChar": 23,
+        "endLine": 827,
+        "endChar": 34
+      },
+      "revId": "f2b15c239d200250179195a95bfeb8341842efa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cffc6ca6_dddcf8ff",
@@ -111,6 +177,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef51c6ca_54000da6",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-12-02T14:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cffc6ca6_dddcf8ff",
+      "range": {
+        "startLine": 828,
+        "startChar": 24,
+        "endLine": 828,
+        "endChar": 26
+      },
+      "revId": "f2b15c239d200250179195a95bfeb8341842efa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "335da802_50afa58e",
@@ -124,6 +214,30 @@
       "writtenOn": "2021-12-01T18:56:37Z",
       "side": 1,
       "message": "log how much data is left as well? That will help debugging,",
+      "range": {
+        "startLine": 829,
+        "startChar": 22,
+        "endLine": 829,
+        "endChar": 80
+      },
+      "revId": "f2b15c239d200250179195a95bfeb8341842efa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b55260c_1cfee686",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-12-02T14:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "335da802_50afa58e",
       "range": {
         "startLine": 829,
         "startChar": 22,
