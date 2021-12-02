@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f055686_420293ec",
+        "filename": "packages/Nsd/service/src/com/android/server/NativeDaemonConnector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-12-02T07:25:42Z",
+      "side": 1,
+      "message": "I have checked the issue, the issue has happend on netd and the repo rate seems very low. Like you said, netd is not using NativeDaemonConnector now. NsdService is the only user and the flow is totally different. I think we can remove it first and request sony to verify if it\u0027s still reproducible. I move the modification to aosp/1899031 because the NsdService change is simple but NativeDaemonConnector one should be more risky.",
+      "parentUuid": "ed41166c_66b7721e",
+      "range": {
+        "startLine": 148,
+        "startChar": 27,
+        "endLine": 148,
+        "endChar": 41
+      },
+      "revId": "cfd7674619d95f61791b70f8534e24f1173fb0d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62a4a7d8_67a8157e",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-11-29T10:57:41Z",
       "side": 1,
       "message": "Is this setting actually still necessary ? Looks like it was added in 2012 to have a killswitch (b/6606274), but it seems unused, and CTS expects NsdManager to be available anyway. Maybe it\u0027s better to just always make it on ?",
+      "range": {
+        "startLine": 135,
+        "startChar": 21,
+        "endLine": 135,
+        "endChar": 62
+      },
+      "revId": "cfd7674619d95f61791b70f8534e24f1173fb0d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b15b09f0_e0b06753",
+        "filename": "packages/Nsd/service/src/com/android/server/NsdService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-12-02T07:25:42Z",
+      "side": 1,
+      "message": "After check, I think we can deprecate the setting becasue no one have set the value. Update commit accordingly.",
+      "parentUuid": "62a4a7d8_67a8157e",
       "range": {
         "startLine": 135,
         "startChar": 21,
