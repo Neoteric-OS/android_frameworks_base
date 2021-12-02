@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7074965_30f8a98c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1388435
+      },
+      "writtenOn": "2021-12-02T05:42:34Z",
+      "side": 1,
+      "message": "LGTM for SettingsLib part",
+      "revId": "4ebac9304936667c5beaaaeae8a51c9dd7f5d183",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
