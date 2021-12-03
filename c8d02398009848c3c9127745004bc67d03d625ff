@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02597936_a9e5e165",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-03T10:35:58Z",
+      "side": 1,
+      "message": "LGTM but IIUC Jean should have a look.",
+      "revId": "c8d02398009848c3c9127745004bc67d03d625ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12b868ac_f66c55b9",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-03T10:35:58Z",
+      "side": 1,
+      "message": "nit: Can these fit two lines?\nNo strong opinion. Feel free to ignore.",
+      "range": {
+        "startLine": 701,
+        "startChar": 19,
+        "endLine": 705,
+        "endChar": 65
+      },
+      "revId": "c8d02398009848c3c9127745004bc67d03d625ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
