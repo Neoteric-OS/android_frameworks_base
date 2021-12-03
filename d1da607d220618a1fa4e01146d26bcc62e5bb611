@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa2b4ab8_2b4d68c5",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-03T01:04:11Z",
+      "side": 1,
+      "message": "It is little bit weird because a lower quality bar has a higher integer value. Should we change that?",
+      "range": {
+        "startLine": 160,
+        "startChar": 16,
+        "endLine": 160,
+        "endChar": 17
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
