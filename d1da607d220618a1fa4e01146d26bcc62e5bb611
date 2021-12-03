@@ -87,6 +87,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d95e8ec8_c4ff41aa",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkPriority.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-03T23:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9f87ad8_ab60caa9",
+      "range": {
+        "startLine": 212,
+        "startChar": 13,
+        "endLine": 212,
+        "endChar": 21
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "febc7480_ab2e296a",
@@ -100,6 +124,30 @@
       "writtenOn": "2021-12-03T01:24:53Z",
       "side": 1,
       "message": "FYI, you can also just do this.getClass().getSimpleName()\n\nDynamic typing should fix that for you. (but double check me)\n\nThat removes the getTag() method that we honestly don\u0027t really need.",
+      "range": {
+        "startLine": 141,
+        "startChar": 19,
+        "endLine": 141,
+        "endChar": 27
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8972c63_d767bd90",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkPriority.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-03T23:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "febc7480_ab2e296a",
       "range": {
         "startLine": 141,
         "startChar": 19,
@@ -127,6 +175,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd9b7593_79362310",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkPriority.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-03T23:25:34Z",
+      "side": 1,
+      "message": "oops I forgot it",
+      "parentUuid": "b5bb84c3_630b9608",
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b8aeb75_f5bd4f4a",
@@ -140,6 +206,30 @@
       "writtenOn": "2021-12-03T01:24:53Z",
       "side": 1,
       "message": "This check would probably belong in checkMatchesPriorityRule()",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 75
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c896970d_c6bd4384",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-03T23:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b8aeb75_f5bd4f4a",
       "range": {
         "startLine": 89,
         "startChar": 0,
@@ -173,6 +263,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa0af7dc_5c9a1d71",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-03T23:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "927e6846_d171d224",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 61
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c55ce10e_e7cbad8e",
@@ -186,6 +300,30 @@
       "writtenOn": "2021-12-03T01:24:53Z",
       "side": 1,
       "message": "Probably worth logging here; if we get an unknown priority class, it\u0027s a wtf.",
+      "range": {
+        "startLine": 144,
+        "startChar": 8,
+        "endLine": 144,
+        "endChar": 21
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5db59e7_913b3ec5",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-03T23:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c55ce10e_e7cbad8e",
       "range": {
         "startLine": 144,
         "startChar": 8,
@@ -243,6 +381,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "692abee7_160dd08b",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-03T23:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "150ed049_adecac1e",
+      "range": {
+        "startLine": 160,
+        "startChar": 16,
+        "endLine": 160,
+        "endChar": 17
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81e13168_758c5410",
@@ -268,6 +430,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "45ecaea0_32347892",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-03T23:25:34Z",
+      "side": 1,
+      "message": "Does it mean exit RSSI might be higher than entry RSSI?",
+      "parentUuid": "81e13168_758c5410",
+      "range": {
+        "startLine": 189,
+        "startChar": 12,
+        "endLine": 189,
+        "endChar": 30
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "070d01a4_0a8561e3",
         "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
         "patchSetId": 5
@@ -279,6 +465,30 @@
       "writtenOn": "2021-12-03T01:24:53Z",
       "side": 1,
       "message": "Nit, this could be done once by flipping the subid and defaultTelephonyMgr allocations:\n\nsubId \u003d ...\nsubidSpecificTelMgr \u003d getSystemService(TelMgr).createForSubscriptionId(subId);",
+      "range": {
+        "startLine": 221,
+        "startChar": 20,
+        "endLine": 221,
+        "endChar": 70
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "857aed42_61d0f9f0",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-03T23:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "070d01a4_0a8561e3",
       "range": {
         "startLine": 221,
         "startChar": 20,
