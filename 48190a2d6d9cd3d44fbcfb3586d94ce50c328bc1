@@ -93,6 +93,30 @@
       },
       "revId": "48190a2d6d9cd3d44fbcfb3586d94ce50c328bc1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "198dc81a_3f388064",
+        "filename": "packages/Nsd/framework/src/android/net/nsd/NsdFrameworkInitializer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-12-03T06:38:47Z",
+      "side": 1,
+      "message": "Thanks, I\u0027m not sure what API council will think of the naming, but I think we don\u0027t really have great choices - and it\u0027s only module API.",
+      "parentUuid": "b2f2e3dd_27abb6be",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "48190a2d6d9cd3d44fbcfb3586d94ce50c328bc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
