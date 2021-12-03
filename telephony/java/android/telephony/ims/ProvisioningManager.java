@@ -20,6 +20,7 @@ import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresFeature;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.StringDef;
@@ -62,6 +63,9 @@ import java.util.concurrent.Executor;
  * @hide
  */
 @SystemApi
+@RequiresFeature(
+        enforcement = "android.telephony.TelephonyManager#isTelephonyFeatureSupported",
+        value = TelephonyManager.FEATURE_TELEPHONY_IMS)
 public class ProvisioningManager {
 
     /**@hide*/

@@ -18,11 +18,13 @@ package android.telephony;
 import android.annotation.CallbackExecutor;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresFeature;
 import android.annotation.RequiresPermission;
 import android.compat.Compatibility;
 import android.compat.annotation.ChangeId;
 import android.compat.annotation.EnabledAfter;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.RemoteException;
@@ -60,6 +62,7 @@ import java.util.concurrent.Executor;
  *
  * @hide
  */
+@RequiresFeature(PackageManager.FEATURE_TELEPHONY)
 public class TelephonyRegistryManager {
 
     private static final String TAG = "TelephonyRegistryManager";

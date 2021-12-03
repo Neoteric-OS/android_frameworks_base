@@ -21,6 +21,7 @@ import android.annotation.CallSuper;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresFeature;
 import android.annotation.SdkConstant;
 import android.annotation.SystemApi;
 import android.app.Service;
@@ -90,6 +91,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @hide
  */
 @SystemApi
+@RequiresFeature(
+        enforcement = "android.telephony.TelephonyManager#isTelephonyFeatureSupported",
+        value = TelephonyManager.FEATURE_TELEPHONY_SUBSCRIPTION)
 public abstract class EuiccService extends Service {
     private static final String TAG = "EuiccService";
 

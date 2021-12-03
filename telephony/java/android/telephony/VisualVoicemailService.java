@@ -17,13 +17,13 @@
 package android.telephony;
 
 import android.annotation.MainThread;
+import android.annotation.RequiresFeature;
 import android.annotation.SdkConstant;
 import android.annotation.SystemApi;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -58,6 +58,9 @@ import android.util.Log;
  * }
  * </pre>
  */
+@RequiresFeature(
+        enforcement = "android.telephony.TelephonyManager#isTelephonyFeatureSupported",
+        value = TelephonyManager.FEATURE_TELEPHONY_CALLING)
 public abstract class VisualVoicemailService extends Service {
 
     private static final String TAG = "VvmService";

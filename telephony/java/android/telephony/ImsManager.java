@@ -17,6 +17,7 @@
 package android.telephony.ims;
 
 import android.annotation.NonNull;
+import android.annotation.RequiresFeature;
 import android.annotation.SdkConstant;
 import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
@@ -25,6 +26,7 @@ import android.content.Context;
 import android.telephony.BinderCacheManager;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyFrameworkInitializer;
+import android.telephony.TelephonyManager;
 import android.telephony.ims.aidl.IImsRcsController;
 
 import com.android.internal.telephony.ITelephony;
@@ -33,6 +35,9 @@ import com.android.internal.telephony.ITelephony;
  * Provides access to information about Telephony IMS services on the device.
  */
 @SystemService(Context.TELEPHONY_IMS_SERVICE)
+@RequiresFeature(
+        enforcement = "android.telephony.TelephonyManager#isTelephonyFeatureSupported",
+        value = TelephonyManager.FEATURE_TELEPHONY_IMS)
 public class ImsManager {
 
     /**

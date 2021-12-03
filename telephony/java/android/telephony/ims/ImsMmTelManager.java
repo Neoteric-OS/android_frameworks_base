@@ -21,6 +21,7 @@ import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.RequiresFeature;
 import android.annotation.RequiresPermission;
 import android.annotation.SuppressAutoDoc;
 import android.annotation.SuppressLint;
@@ -34,6 +35,7 @@ import android.telephony.BinderCacheManager;
 import android.telephony.CarrierConfigManager;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyFrameworkInitializer;
+import android.telephony.TelephonyManager;
 import android.telephony.ims.aidl.IImsCapabilityCallback;
 import android.telephony.ims.feature.ImsFeature;
 import android.telephony.ims.feature.MmTelFeature;
@@ -61,6 +63,9 @@ import java.util.function.Consumer;
  * Use {@link android.telephony.ims.ImsManager#getImsMmTelManager(int)} to get an instance of this
  * manager.
  */
+@RequiresFeature(
+        enforcement = "android.telephony.TelephonyManager#isTelephonyFeatureSupported",
+        value = TelephonyManager.FEATURE_TELEPHONY_IMS)
 public class ImsMmTelManager implements RegistrationManager {
     private static final String TAG = "ImsMmTelManager";
 

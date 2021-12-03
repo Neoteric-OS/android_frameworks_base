@@ -19,6 +19,7 @@ package android.telephony;
 import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.Nullable;
+import android.annotation.RequiresFeature;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,6 +43,9 @@ import java.util.concurrent.Executor;
 /**
  * Manages the radio access network scan requests and callbacks.
  */
+@RequiresFeature(
+        enforcement = "android.telephony.TelephonyManager#isTelephonyFeatureSupported",
+        value = TelephonyManager.FEATURE_TELEPHONY_RADIO_ACCESS)
 public final class TelephonyScanManager {
 
     private static final String TAG = "TelephonyScanManager";

@@ -17,6 +17,7 @@
 package android.telephony.data;
 
 import android.annotation.NonNull;
+import android.annotation.RequiresFeature;
 import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.telephony.AccessNetworkConstants.AccessNetworkType;
 import android.telephony.Annotation.ApnType;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -56,6 +58,9 @@ import java.util.List;
  * @hide
  */
 @SystemApi
+@RequiresFeature(
+        enforcement = "android.telephony.TelephonyManager#isTelephonyFeatureSupported",
+        value = TelephonyManager.FEATURE_TELEPHONY_DATA)
 public abstract class QualifiedNetworksService extends Service {
     private static final String TAG = QualifiedNetworksService.class.getSimpleName();
 

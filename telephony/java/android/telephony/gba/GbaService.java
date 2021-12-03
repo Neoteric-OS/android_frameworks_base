@@ -17,6 +17,7 @@
 package android.telephony.gba;
 
 import android.annotation.NonNull;
+import android.annotation.RequiresFeature;
 import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.Intent;
@@ -60,6 +61,9 @@ import android.util.SparseArray;
   * {@hide}
   */
 @SystemApi
+@RequiresFeature(
+        enforcement = "android.telephony.TelephonyManager#isTelephonyFeatureSupported",
+        value = TelephonyManager.FEATURE_TELEPHONY_IMS_SINGLE_REGISTRATION)
 public class GbaService extends Service  {
     private static final boolean DBG = Build.IS_DEBUGGABLE;
     private static final String TAG = "GbaService";

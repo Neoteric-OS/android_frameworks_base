@@ -21,6 +21,7 @@ import android.annotation.IntDef;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresFeature;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.content.Context;
@@ -28,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
 import android.telephony.BinderCacheManager;
+import android.telephony.TelephonyManager;
 import android.telephony.ims.aidl.IImsRcsController;
 import android.telephony.ims.aidl.SipDelegateConnectionAidlWrapper;
 import android.telephony.ims.feature.ImsFeature;
@@ -57,6 +59,9 @@ import java.util.concurrent.Executor;
  * @hide
  */
 @SystemApi
+@RequiresFeature(
+        enforcement = "android.telephony.TelephonyManager#isTelephonyFeatureSupported",
+        value = TelephonyManager.FEATURE_TELEPHONY_IMS_SINGLE_REGISTRATION)
 public class SipDelegateManager {
 
     /**

@@ -19,6 +19,7 @@ package android.telephony.ims;
 import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.NonNull;
+import android.annotation.RequiresFeature;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SystemApi;
@@ -32,6 +33,7 @@ import android.provider.Settings;
 import android.telephony.AccessNetworkConstants;
 import android.telephony.BinderCacheManager;
 import android.telephony.TelephonyFrameworkInitializer;
+import android.telephony.TelephonyManager;
 import android.telephony.ims.aidl.IImsCapabilityCallback;
 import android.telephony.ims.aidl.IImsRcsController;
 import android.telephony.ims.feature.ImsFeature;
@@ -53,6 +55,9 @@ import java.util.function.Consumer;
  *
  * Use {@link ImsManager#getImsRcsManager(int)} to create an instance of this manager.
  */
+@RequiresFeature(
+        enforcement = "android.telephony.TelephonyManager#isTelephonyFeatureSupported",
+        value = TelephonyManager.FEATURE_TELEPHONY_IMS)
 public class ImsRcsManager {
     private static final String TAG = "ImsRcsManager";
 

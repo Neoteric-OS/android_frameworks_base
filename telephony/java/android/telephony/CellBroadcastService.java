@@ -19,6 +19,7 @@ package android.telephony;
 import android.annotation.CallSuper;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresFeature;
 import android.annotation.SystemApi;
 import android.annotation.WorkerThread;
 import android.app.Service;
@@ -63,6 +64,9 @@ import java.util.function.Consumer;
  * @hide
  */
 @SystemApi
+@RequiresFeature(
+        enforcement = "android.telephony.TelephonyManager#isTelephonyFeatureSupported",
+        value = TelephonyManager.FEATURE_TELEPHONY_MESSAGING)
 public abstract class CellBroadcastService extends Service {
 
     public static final String CELL_BROADCAST_SERVICE_INTERFACE =
