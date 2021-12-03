@@ -1,6 +1,155 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7561725_07da0c14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-03T01:24:53Z",
+      "side": 1,
+      "message": "Need to still review tests, but my brain is done for the day.",
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9f87ad8_ab60caa9",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkPriority.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-03T01:24:53Z",
+      "side": 1,
+      "message": "What does \"Specific\" mean?\n\nPerhaps dumpTransportSpecificFields?",
+      "range": {
+        "startLine": 212,
+        "startChar": 13,
+        "endLine": 212,
+        "endChar": 21
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "febc7480_ab2e296a",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkPriority.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-03T01:24:53Z",
+      "side": 1,
+      "message": "FYI, you can also just do this.getClass().getSimpleName()\n\nDynamic typing should fix that for you. (but double check me)\n\nThat removes the getTag() method that we honestly don\u0027t really need.",
+      "range": {
+        "startLine": 141,
+        "startChar": 19,
+        "endLine": 141,
+        "endChar": 27
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5bb84c3_630b9608",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkPriority.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-03T01:24:53Z",
+      "side": 1,
+      "message": "Do we need to dump NetworkQuality or allowMetered?",
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b8aeb75_f5bd4f4a",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-03T01:24:53Z",
+      "side": 1,
+      "message": "This check would probably belong in checkMatchesPriorityRule()",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 75
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "927e6846_d171d224",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-03T01:24:53Z",
+      "side": 1,
+      "message": "Hmm, performance wise, kinda hurts to have to reallocate a list every single time",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 61
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c55ce10e_e7cbad8e",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-03T01:24:53Z",
+      "side": 1,
+      "message": "Probably worth logging here; if we get an unknown priority class, it\u0027s a wtf.",
+      "range": {
+        "startLine": 144,
+        "startChar": 8,
+        "endLine": 144,
+        "endChar": 21
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa2b4ab8_2b4d68c5",
@@ -19,6 +168,76 @@
         "startChar": 16,
         "endLine": 160,
         "endChar": 17
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "150ed049_adecac1e",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-03T01:24:53Z",
+      "side": 1,
+      "message": "Sure, feel free to change the constants. Just one suggestion, always good to leave room for expansion. (use large multiples, like 100,000)",
+      "parentUuid": "aa2b4ab8_2b4d68c5",
+      "range": {
+        "startLine": 160,
+        "startChar": 16,
+        "endLine": 160,
+        "endChar": 17
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81e13168_758c5410",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-03T01:24:53Z",
+      "side": 1,
+      "message": "Optional: Not necessary; if it is the selected network, and above the wifi entry RSSI threshold, it\u0027ll be marked as QUALITY_OK",
+      "range": {
+        "startLine": 189,
+        "startChar": 12,
+        "endLine": 189,
+        "endChar": 30
+      },
+      "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "070d01a4_0a8561e3",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-03T01:24:53Z",
+      "side": 1,
+      "message": "Nit, this could be done once by flipping the subid and defaultTelephonyMgr allocations:\n\nsubId \u003d ...\nsubidSpecificTelMgr \u003d getSystemService(TelMgr).createForSubscriptionId(subId);",
+      "range": {
+        "startLine": 221,
+        "startChar": 20,
+        "endLine": 221,
+        "endChar": 70
       },
       "revId": "d1da607d220618a1fa4e01146d26bcc62e5bb611",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
