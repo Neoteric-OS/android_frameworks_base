@@ -46,6 +46,30 @@
       },
       "revId": "e05895ec98d9d94c4181d415c36023469948d844",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f520429d_10d82f9e",
+        "filename": "packages/Nsd/service/src/com/android/server/NativeDaemonConnector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-12-03T04:29:44Z",
+      "side": 1,
+      "message": "After the move to the module jar you could use ConnectivityThread instead, but it\u0027s probably not too important since we should refactor the code to get rid of this class anyway. Could you file a bug to make sure that\u0027s handled later ?",
+      "parentUuid": "7d86930a_e044fc4e",
+      "range": {
+        "startLine": 96,
+        "startChar": 14,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "e05895ec98d9d94c4181d415c36023469948d844",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
