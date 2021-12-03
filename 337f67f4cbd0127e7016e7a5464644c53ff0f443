@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5855d611_75e9a088",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 12606,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-12-03T04:17:49Z",
+      "side": 1,
+      "message": "Is it possible to just remove the constant ?",
+      "range": {
+        "startLine": 12606,
+        "startChar": 35,
+        "endLine": 12606,
+        "endChar": 41
+      },
+      "revId": "337f67f4cbd0127e7016e7a5464644c53ff0f443",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2134a2e0_896f9702",
+        "filename": "packages/Nsd/service/src/com/android/server/NsdService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-12-03T04:17:49Z",
+      "side": 1,
+      "message": "Would it be significantly more difficult to remove it now ?",
+      "range": {
+        "startLine": 1066,
+        "startChar": 7,
+        "endLine": 1066,
+        "endChar": 11
+      },
+      "revId": "337f67f4cbd0127e7016e7a5464644c53ff0f443",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
