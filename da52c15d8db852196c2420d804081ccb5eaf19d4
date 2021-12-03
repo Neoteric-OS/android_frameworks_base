@@ -52,6 +52,24 @@
       "parentUuid": "60478539_80fcfb1a",
       "revId": "da52c15d8db852196c2420d804081ccb5eaf19d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbd0fb84_4eda77c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-12-03T06:02:36Z",
+      "side": 1,
+      "message": "Yes I was planning to do that. I can rebase this change to have it together with that new parameter, so it fixes the problem.",
+      "parentUuid": "0a25df5d_e9cc7614",
+      "revId": "da52c15d8db852196c2420d804081ccb5eaf19d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
