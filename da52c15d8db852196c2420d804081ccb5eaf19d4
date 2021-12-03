@@ -34,6 +34,24 @@
       "parentUuid": "9b1e65c5_e042b7fc",
       "revId": "da52c15d8db852196c2420d804081ccb5eaf19d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a25df5d_e9cc7614",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-12-03T05:58:17Z",
+      "side": 1,
+      "message": "No, that\u0027s not correct. On Android, all traffic goes on the default network unless the app says otherwise. So if a service is discovered on an interface that is not the default network, the app won\u0027t be able to connect to that service even if it has the right IP address. If it tries to connect, the packet will be sent on the default network, and it will not reach the service.\n\nRemi - I think you were planning to add a Network parameter to NsdServiceInfo or similar? If so, then I think this change would make more sense.",
+      "parentUuid": "60478539_80fcfb1a",
+      "revId": "da52c15d8db852196c2420d804081ccb5eaf19d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
