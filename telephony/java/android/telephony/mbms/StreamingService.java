@@ -18,6 +18,8 @@ package android.telephony.mbms;
 
 import android.annotation.IntDef;
 import android.annotation.Nullable;
+import android.annotation.RequiresFeature;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.telephony.MbmsStreamingSession;
@@ -33,6 +35,7 @@ import java.lang.annotation.RetentionPolicy;
  * StreamingServiceCallback)},
  * this class is used to hold information about the stream and control it.
  */
+@RequiresFeature(PackageManager.FEATURE_TELEPHONY_MBMS)
 public class StreamingService implements AutoCloseable {
     private static final String LOG_TAG = "MbmsStreamingService";
 

@@ -15,9 +15,11 @@
 package android.service.carrier;
 
 import android.annotation.CallSuper;
+import android.annotation.RequiresFeature;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PersistableBundle;
@@ -50,6 +52,7 @@ import java.io.PrintWriter;
  * </service>
  * }</pre>
  */
+@RequiresFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION)
 public abstract class CarrierService extends Service {
 
     private static final String LOG_TAG = "CarrierService";

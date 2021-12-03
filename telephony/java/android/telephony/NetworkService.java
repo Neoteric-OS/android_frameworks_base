@@ -18,10 +18,12 @@ package android.telephony;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresFeature;
 import android.annotation.SdkConstant;
 import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -52,6 +54,7 @@ import java.util.List;
  * @hide
  */
 @SystemApi
+@RequiresFeature(PackageManager.FEATURE_TELEPHONY_RADIO_ACCESS)
 public abstract class NetworkService extends Service {
 
     private final String TAG = NetworkService.class.getSimpleName();

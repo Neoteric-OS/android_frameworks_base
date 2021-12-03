@@ -17,9 +17,11 @@
 package android.telephony.data;
 
 import android.annotation.NonNull;
+import android.annotation.RequiresFeature;
 import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -56,6 +58,7 @@ import java.util.List;
  * @hide
  */
 @SystemApi
+@RequiresFeature(PackageManager.FEATURE_TELEPHONY_DATA)
 public abstract class QualifiedNetworksService extends Service {
     private static final String TAG = QualifiedNetworksService.class.getSimpleName();
 

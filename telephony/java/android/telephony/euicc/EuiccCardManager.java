@@ -18,8 +18,10 @@ package android.telephony.euicc;
 import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
 import android.annotation.Nullable;
+import android.annotation.RequiresFeature;
 import android.annotation.SystemApi;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.RemoteException;
 import android.service.euicc.EuiccProfileInfo;
@@ -59,6 +61,7 @@ import java.util.concurrent.Executor;
  * @hide
  */
 @SystemApi
+@RequiresFeature(PackageManager.FEATURE_TELEPHONY_EUICC)
 public class EuiccCardManager {
     private static final String TAG = "EuiccCardManager";
 

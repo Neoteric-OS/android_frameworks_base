@@ -18,10 +18,12 @@ package android.telephony.ims;
 
 import android.annotation.LongDef;
 import android.annotation.Nullable;
+import android.annotation.RequiresFeature;
 import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.telephony.CarrierConfigManager;
@@ -101,6 +103,7 @@ import java.util.Map;
  * @hide
  */
 @SystemApi
+@RequiresFeature(PackageManager.FEATURE_TELEPHONY_IMS)
 public class ImsService extends Service {
 
     private static final String LOG_TAG = "ImsService";

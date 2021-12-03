@@ -17,9 +17,11 @@
 package android.telephony.gba;
 
 import android.annotation.NonNull;
+import android.annotation.RequiresFeature;
 import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -60,6 +62,7 @@ import android.util.SparseArray;
   * {@hide}
   */
 @SystemApi
+@RequiresFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION)
 public class GbaService extends Service  {
     private static final boolean DBG = Build.IS_DEBUGGABLE;
     private static final String TAG = "GbaService";

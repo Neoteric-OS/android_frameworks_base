@@ -20,10 +20,12 @@ import android.annotation.IntDef;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresFeature;
 import android.annotation.SdkConstant;
 import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.LinkProperties;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -58,6 +60,7 @@ import java.util.Objects;
  * @hide
  */
 @SystemApi
+@RequiresFeature(PackageManager.FEATURE_TELEPHONY_DATA)
 public abstract class DataService extends Service {
     private static final String TAG = DataService.class.getSimpleName();
 
