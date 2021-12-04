@@ -6926,7 +6926,8 @@ public class AudioService extends IAudioService.Stub
             if (isFullyMuted()) {
                 index = 0;
             } else if (AudioSystem.DEVICE_OUT_ALL_A2DP_SET.contains(device)
-                    && mAvrcpAbsVolSupported) {
+                    && mAvrcpAbsVolSupported
+                    && mStreamVolumeAlias[mStreamType] == AudioSystem.STREAM_MUSIC) {
                 index = getAbsoluteVolumeIndex((getIndex(device) + 5)/10);
             } else if (isFullVolumeDevice(device)) {
                 index = (mIndexMax + 5)/10;
@@ -6948,7 +6949,8 @@ public class AudioService extends IAudioService.Stub
                         if (isFullyMuted()) {
                             index = 0;
                         } else if (AudioSystem.DEVICE_OUT_ALL_A2DP_SET.contains(device)
-                                && mAvrcpAbsVolSupported) {
+                                && mAvrcpAbsVolSupported
+                                && mStreamVolumeAlias[mStreamType] == AudioSystem.STREAM_MUSIC) {
                             index = getAbsoluteVolumeIndex((getIndex(device) + 5)/10);
                         } else if (isFullVolumeDevice(device)) {
                             index = (mIndexMax + 5)/10;
