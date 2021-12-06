@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d0d94c3_565be7bc",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-06T23:13:37Z",
+      "side": 1,
+      "message": "Nit: the configuration always comes from the caller; we can omit the word caller:\n\n\"... based on configured VcnGatewayConnectionConfig\"",
+      "range": {
+        "startLine": 76,
+        "startChar": 49,
+        "endLine": 76,
+        "endChar": 69
+      },
+      "revId": "a3ed42b52645f12a458a00b061317b33417a4ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f492bf37_09815eb1",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-06T23:13:37Z",
+      "side": 1,
+      "message": "This probably needs a null check",
+      "range": {
+        "startLine": 217,
+        "startChar": 16,
+        "endLine": 217,
+        "endChar": 72
+      },
+      "revId": "a3ed42b52645f12a458a00b061317b33417a4ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae399a3f_c87473e3",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkRecord.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-06T23:13:37Z",
+      "side": 1,
+      "message": "Nit: Suggest having a comment explaining why we do this:\n\nIn the case of networks in the same priority class, prioritize based on other criteria (eg. actively selected network, link metrics, etc)",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 42
+      },
+      "revId": "a3ed42b52645f12a458a00b061317b33417a4ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
