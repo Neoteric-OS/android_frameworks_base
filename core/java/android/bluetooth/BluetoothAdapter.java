@@ -2524,14 +2524,20 @@ public final class BluetoothAdapter {
      * BluetoothProfile}.
      * @hide
      */
-    @RequiresNoPermission
+    @SystemApi
+    @ConnectionPolicy
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.BLUETOOTH_PRIVILEGED,
+    })
     public @NonNull List<Integer> getSupportedProfiles() {
         final ArrayList<Integer> supportedProfiles = new ArrayList<Integer>();
 
         try {
             synchronized (mManagerCallback) {
                 if (mService != null) {
-                    final long supportedProfilesBitMask = mService.getSupportedProfiles();
+                    final long supportedProfilesBitMask =
+                            mService.getSupportedProfiles(mAttributionSource);
 
                     for (int i = 0; i <= BluetoothProfile.MAX_PROFILE_ID; i++) {
                         if ((supportedProfilesBitMask & (1 << i)) != 0) {
