@@ -15,6 +15,8 @@
  */
 package android.net.vcn;
 
+import static android.annotation.RequiresPermission.Role.CARRIER_PRIVILEGES;
+
 import static java.util.Objects.requireNonNull;
 
 import android.annotation.NonNull;
@@ -107,7 +109,7 @@ public class VcnManager {
      *     exception should attempt to retry (possibly after a delay).
      * @hide
      */
-    @RequiresPermission("carrier privileges") // TODO (b/72967236): Define a system-wide constant
+    @RequiresPermission(CARRIER_PRIVILEGES)
     public void setVcnConfig(@NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config)
             throws IOException {
         requireNonNull(subscriptionGroup, "subscriptionGroup was null");
@@ -137,7 +139,7 @@ public class VcnManager {
      *     exception should attempt to retry (possibly after a delay).
      * @hide
      */
-    @RequiresPermission("carrier privileges") // TODO (b/72967236): Define a system-wide constant
+    @RequiresPermission(CARRIER_PRIVILEGES)
     public void clearVcnConfig(@NonNull ParcelUuid subscriptionGroup) throws IOException {
         requireNonNull(subscriptionGroup, "subscriptionGroup was null");
 
