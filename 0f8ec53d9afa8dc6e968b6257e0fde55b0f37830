@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0fce39f_456be1a0",
+        "filename": "core/java/android/bluetooth/le/PeriodicAdvertisingCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-06T20:04:07Z",
+      "side": 1,
+      "message": "\u003e Common typo found: \"transfered\" -- should it be \"transferred\"?\n\u003e Note: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.\n\nPlease fix.",
+      "parentUuid": "184ee12f_faacc43e",
+      "range": {
+        "startLine": 83,
+        "startChar": 35,
+        "endLine": 83,
+        "endChar": 45
+      },
+      "revId": "0f8ec53d9afa8dc6e968b6257e0fde55b0f37830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "279c3335_ff3f91ac",
+        "filename": "core/java/android/bluetooth/le/PeriodicAdvertisingCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-06T20:04:07Z",
+      "side": 1,
+      "message": "\u003e Common typo found: \"Transfered\" -- should it be \"Transferred\"?\n\u003e Note: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.\n\nPlease fix.",
+      "parentUuid": "618fc39c_13a2bb9a",
+      "range": {
+        "startLine": 88,
+        "startChar": 22,
+        "endLine": 88,
+        "endChar": 32
+      },
+      "revId": "0f8ec53d9afa8dc6e968b6257e0fde55b0f37830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38967284_f2efb3e7",
+        "filename": "core/java/android/bluetooth/le/PeriodicAdvertisingManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-06T20:04:07Z",
+      "side": 1,
+      "message": "\u003e Common typo found: \"Transfered\" -- should it be \"Transferred\"?\n\u003e Note: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.\n\nPlease fix.",
+      "parentUuid": "3a780ae9_80a6e32b",
+      "range": {
+        "startLine": 229,
+        "startChar": 31,
+        "endLine": 229,
+        "endChar": 41
+      },
+      "revId": "0f8ec53d9afa8dc6e968b6257e0fde55b0f37830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "303f8e4a_6c9c7769",
+        "filename": "core/java/android/bluetooth/le/PeriodicAdvertisingManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-06T20:04:07Z",
+      "side": 1,
+      "message": "\u003e Common typo found: \"Transfered\" -- should it be \"Transferred\"?\n\u003e Note: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.\n\nPlease fix.",
+      "parentUuid": "60bd0013_20fd3812",
+      "range": {
+        "startLine": 320,
+        "startChar": 30,
+        "endLine": 320,
+        "endChar": 40
+      },
+      "revId": "0f8ec53d9afa8dc6e968b6257e0fde55b0f37830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cac9c95c_1a354365",
+        "filename": "core/java/android/bluetooth/le/PeriodicAdvertisingManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-06T20:04:07Z",
+      "side": 1,
+      "message": "\u003e Common typo found: \"Transfered\" -- should it be \"Transferred\"?\n\u003e Note: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.\n\nPlease fix.",
+      "parentUuid": "f6a35243_6ecf9e50",
+      "range": {
+        "startLine": 324,
+        "startChar": 39,
+        "endLine": 324,
+        "endChar": 49
+      },
+      "revId": "0f8ec53d9afa8dc6e968b6257e0fde55b0f37830",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
