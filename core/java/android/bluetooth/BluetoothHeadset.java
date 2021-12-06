@@ -1170,14 +1170,14 @@ public final class BluetoothHeadset implements BluetoothProfile {
      *
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
+    @SystemApi
     @RequiresBluetoothConnectPermission
     @RequiresPermission(allOf = {
             android.Manifest.permission.BLUETOOTH_CONNECT,
             android.Manifest.permission.MODIFY_PHONE_STATE,
     })
-    public void phoneStateChanged(int numActive, int numHeld, int callState, String number,
-            int type, String name) {
+    public void phoneStateChanged(int numActive, int numHeld, int callState,
+            @Nullable String number, int type, @Nullable String name) {
         final IBluetoothHeadset service = mService;
         if (service != null && isEnabled()) {
             try {
@@ -1197,13 +1197,14 @@ public final class BluetoothHeadset implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     @RequiresBluetoothConnectPermission
     @RequiresPermission(allOf = {
             android.Manifest.permission.BLUETOOTH_CONNECT,
             android.Manifest.permission.MODIFY_PHONE_STATE,
     })
     public void clccResponse(int index, int direction, int status, int mode, boolean mpty,
-            String number, int type) {
+            @NonNull String number, int type) {
         final IBluetoothHeadset service = mService;
         if (service != null && isEnabled()) {
             try {

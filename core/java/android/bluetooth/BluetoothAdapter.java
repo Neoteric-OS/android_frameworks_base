@@ -2528,6 +2528,8 @@ public final class BluetoothAdapter {
      * BluetoothProfile}.
      * @hide
      */
+    @SystemApi
+    @ConnectionPolicy
     @RequiresNoPermission
     public @NonNull List<Integer> getSupportedProfiles() {
         final ArrayList<Integer> supportedProfiles = new ArrayList<Integer>();
