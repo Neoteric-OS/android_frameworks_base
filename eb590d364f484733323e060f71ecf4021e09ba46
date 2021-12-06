@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b77f11fd_b5f46207",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2021-12-06T14:41:53Z",
+      "side": 1,
+      "message": "Chad: I think this is reasonable, wdyt?\nSee also my question on aosp/1909681",
+      "revId": "eb590d364f484733323e060f71ecf4021e09ba46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f296f1f8_5d3720e0",
+        "filename": "data/etc/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2021-12-06T14:41:53Z",
+      "side": 1,
+      "message": "Wow! Nice spot.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "eb590d364f484733323e060f71ecf4021e09ba46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
