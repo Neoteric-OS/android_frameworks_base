@@ -16,8 +16,11 @@
 
 package android.media;
 
-import android.media.AudioManager;
+import android.content.Context;
 import android.media.SoundPool;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.util.Log;
 
 /**
@@ -237,6 +240,27 @@ public class MediaActionSound {
                 break;
             }
         }
+    }
+    /**
+     * <p>Returns true if the application must play the shutter sound in accordance
+     * to certain regional restrictions. </p>
+     *
+     * <p>This method can be used when developing applications with Camera2. Unlike Camera 1,
+     * application develoeprs are responsible for determining when it's appropriate to play
+     * the shutter sound</p>
+     *
+     */
+    public boolean mustPlayShutterSound() {
+        boolean result = false;
+        IBinder b = ServiceManager.getService(Context.AUDIO_SERVICE);
+        IAudioService audioService = IAudioService.Stub.asInterface(b);
+        try {
+            result = audioService.isCameraSoundForced();
+            Log.d(TAG, "audio service provided a value for camera sound forced:" + result);
+        } catch (RemoteException e) {
+            Log.e(TAG, "audio service is unavailable for queries, default result to false");
+        }
+        return result;
     }
 
     private SoundPool.OnLoadCompleteListener mLoadCompleteListener =
