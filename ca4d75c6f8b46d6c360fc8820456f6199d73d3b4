@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf850764_a5316283",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-12-07T20:19:17Z",
+      "side": 1,
+      "message": "Don\u0027t require T to extend Parcelable or Serializable in Parcel\n\nThis is because we want to support the use-case where the caller enforces a specific class type that doesn\u0027t implement Parcelable or Serializable but the child classes written on the payload actually implement them.\n\nOne such use-case that needs this before migrating is https://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/com/android/internal/infra/AndroidFuture.java;l\u003d596;drc\u003d2d6a545e3042d7cc91b54746e774681a05e0ff22: we need to enforce Throwable class but it doesn\u0027t implement Parcelable itself (while its children written on the wire are expected to).",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "ca4d75c6f8b46d6c360fc8820456f6199d73d3b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
