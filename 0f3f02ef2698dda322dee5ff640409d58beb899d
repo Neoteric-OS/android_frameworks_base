@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4161cb52_769c781b",
+        "filename": "core/api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 26783,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-07T11:31:02Z",
+      "side": 1,
+      "message": "You can\u0027t add public API until there is an implementation. You can keep this patch but @hide the constants, and when there is an implementation we\u0027ll expose them",
+      "range": {
+        "startLine": 26783,
+        "startChar": 37,
+        "endLine": 26783,
+        "endChar": 61
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bbda7ab_e0c7d2ac",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-07T11:31:02Z",
+      "side": 1,
+      "message": "NetworkCapabilities\n\n(the point is to clarify this will be an instance of this class)",
+      "range": {
+        "startLine": 134,
+        "startChar": 11,
+        "endLine": 134,
+        "endChar": 31
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05a3ce63_f70f80c2",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-07T11:31:02Z",
+      "side": 1,
+      "message": "likewise LinkProperties",
+      "range": {
+        "startLine": 140,
+        "startChar": 11,
+        "endLine": 140,
+        "endChar": 26
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e22465e2_ffcc2899",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-07T11:31:02Z",
+      "side": 1,
+      "message": "will",
+      "range": {
+        "startLine": 156,
+        "startChar": 43,
+        "endLine": 156,
+        "endChar": 49
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d5f7c93_a2b9b598",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-07T11:31:02Z",
+      "side": 1,
+      "message": "CATEGORY_ERROR",
+      "range": {
+        "startLine": 156,
+        "startChar": 59,
+        "endLine": 156,
+        "endChar": 73
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7dac079_9dfa66f9",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-07T11:31:02Z",
+      "side": 1,
+      "message": "...for CATEGORY_ERROR_IKE",
+      "range": {
+        "startLine": 158,
+        "startChar": 37,
+        "endLine": 158,
+        "endChar": 38
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "548343ec_223ebc76",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-07T11:31:02Z",
+      "side": 1,
+      "message": "was",
+      "range": {
+        "startLine": 174,
+        "startChar": 44,
+        "endLine": 174,
+        "endChar": 46
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "650d80b3_a30ad5cd",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-07T11:31:02Z",
+      "side": 1,
+      "message": "CONNECTION_REFUSED",
+      "range": {
+        "startLine": 186,
+        "startChar": 47,
+        "endLine": 186,
+        "endChar": 54
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "227779be_358a8b5c",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-07T11:31:02Z",
+      "side": 1,
+      "message": "RESET and SocketException don\u0027t sound very much alike. Suggest\n\n  * An error code to indicate the connection was reset (e.g. SocketException)\n  ERROR_CODE_NETWORK_CONNECTION_RESET",
+      "range": {
+        "startLine": 191,
+        "startChar": 47,
+        "endLine": 191,
+        "endChar": 52
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
