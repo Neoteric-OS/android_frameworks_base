@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "5ec2c57a_0118c4a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-12-07T05:53:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e32e86c_613042c0",
+      "revId": "0200d3d429fdee039107c7fa36f321c478420b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "1488a469_927a10c6",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 5
@@ -48,6 +66,30 @@
       "writtenOn": "2021-12-03T06:38:47Z",
       "side": 1,
       "message": "more accurately, which are exposed via updatable APIs since SDK 33.",
+      "range": {
+        "startLine": 26,
+        "startChar": 69,
+        "endLine": 26,
+        "endChar": 85
+      },
+      "revId": "0200d3d429fdee039107c7fa36f321c478420b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b456424_5daa0151",
+        "filename": "packages/Nsd/framework/src/android/net/Connectivity33Initializer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-12-07T05:53:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e62d8be_b7a285ea",
       "range": {
         "startLine": 26,
         "startChar": 69,
