@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c82cb11a_521af387",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2021-12-07T05:56:10Z",
+      "side": 1,
+      "message": "We should make them configurable instead of replacing the original values",
+      "revId": "af0f9b08d0e18327cf9b5fa6771ab693973aa6cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
