@@ -3718,6 +3718,14 @@ public class CarrierConfigManager {
             "esim_max_download_retry_attempts_int";
 
     /**
+     * List of opportunistic carriers associated with CBRS Primary SIM. This information
+     * is used for grouping pSIM and opportunistic eSIM. Also, used to delete old
+     * opportunistic eSIMs when a new pSIM is inserted.
+     */
+    public static final String KEY_OPPORTUNISTIC_CARRIER_IDS_INT_ARRAY =
+            "esim_opportunistic_carrier_ids_int_array";
+
+    /**
      * Controls RSRP threshold at which OpportunisticNetworkService will decide whether
      * the opportunistic network is good enough for internet data.
      */
@@ -5774,6 +5782,7 @@ public class CarrierConfigManager {
         sDefaults.putString(KEY_SMDP_SERVER_ADDRESS_STRING, "");
         sDefaults.putInt(KEY_ESIM_MAX_DOWNLOAD_RETRY_ATTEMPTS_INT, 5);
         sDefaults.putInt(KEY_ESIM_DOWNLOAD_RETRY_BACKOFF_TIMER_SEC_INT, 60);
+        sDefaults.putIntArray(KEY_OPPORTUNISTIC_CARRIER_IDS_INT_ARRAY, new int[] {0});
         /* Default value is minimum RSRP level needed for SIGNAL_STRENGTH_GOOD */
         sDefaults.putInt(KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_RSRP_INT, -108);
         /* Default value is minimum RSRP level needed for SIGNAL_STRENGTH_MODERATE */
