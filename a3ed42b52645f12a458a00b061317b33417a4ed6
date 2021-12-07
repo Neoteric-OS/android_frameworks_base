@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cea95661_38b8c9d3",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-07T00:10:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d0d94c3_565be7bc",
+      "range": {
+        "startLine": 76,
+        "startChar": 49,
+        "endLine": 76,
+        "endChar": 69
+      },
+      "revId": "a3ed42b52645f12a458a00b061317b33417a4ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f492bf37_09815eb1",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e214ab81_423e06d6",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/NetworkPriorityClassifier.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-07T00:10:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f492bf37_09815eb1",
+      "range": {
+        "startLine": 217,
+        "startChar": 16,
+        "endLine": 217,
+        "endChar": 72
+      },
+      "revId": "a3ed42b52645f12a458a00b061317b33417a4ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae399a3f_c87473e3",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-12-06T23:13:37Z",
       "side": 1,
       "message": "Nit: Suggest having a comment explaining why we do this:\n\nIn the case of networks in the same priority class, prioritize based on other criteria (eg. actively selected network, link metrics, etc)",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 42
+      },
+      "revId": "a3ed42b52645f12a458a00b061317b33417a4ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28e561b9_e5248db7",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkRecord.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-07T00:10:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae399a3f_c87473e3",
       "range": {
         "startLine": 105,
         "startChar": 0,
