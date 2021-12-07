@@ -70,6 +70,30 @@
       },
       "revId": "e05895ec98d9d94c4181d415c36023469948d844",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63204210_57196a06",
+        "filename": "packages/Nsd/service/src/com/android/server/NativeDaemonConnector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-12-07T05:54:46Z",
+      "side": 1,
+      "message": "Done. b/209368525",
+      "parentUuid": "f520429d_10d82f9e",
+      "range": {
+        "startLine": 96,
+        "startChar": 14,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "e05895ec98d9d94c4181d415c36023469948d844",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
