@@ -56,6 +56,30 @@
       },
       "revId": "ed807df097975473f6c37f35d705fbdf990b31b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f32a109d_bb770d72",
+        "filename": "services/core/java/com/android/server/vibrator/VibratorManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1626367
+      },
+      "writtenOn": "2021-12-08T08:28:49Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6d2894cc_1d824a67",
+      "range": {
+        "startLine": 635,
+        "startChar": 40,
+        "endLine": 635,
+        "endChar": 59
+      },
+      "revId": "ed807df097975473f6c37f35d705fbdf990b31b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
