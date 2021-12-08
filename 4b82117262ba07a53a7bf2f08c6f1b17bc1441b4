@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35892a94_4dc0c782",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-08T10:05:50Z",
+      "side": 1,
+      "message": "Don\u0027t really like the idea since it creates unnecessary dependencies for the 4 independent sub-modules, e.g:\n   Everyone modifies the same Android.bp causes conflict that slow down the development process.\n   A sub-module want to build a separate jar to verify when others are not ready.\n   A sub-module want to move first into the mainline module when others are not ready.\n   Additional error-prone per-file src rules need to be introduced to the Android.bp files.\n   \nBut no strong opinion since this is a temporary folder which will be eventually deleted after moving everything into the module.",
+      "revId": "4b82117262ba07a53a7bf2f08c6f1b17bc1441b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
