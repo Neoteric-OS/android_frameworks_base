@@ -16,6 +16,24 @@
       "message": "Don\u0027t really like the idea since it creates unnecessary dependencies for the 4 independent sub-modules, e.g:\n   Everyone modifies the same Android.bp causes conflict that slow down the development process.\n   A sub-module want to build a separate jar to verify when others are not ready.\n   A sub-module want to move first into the mainline module when others are not ready.\n   Additional error-prone per-file src rules need to be introduced to the Android.bp files.\n   \nBut no strong opinion since this is a temporary folder which will be eventually deleted after moving everything into the module.",
       "revId": "4b82117262ba07a53a7bf2f08c6f1b17bc1441b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3546880_6acc0c06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-08T11:38:54Z",
+      "side": 1,
+      "message": "Based on discussion with Jean for ag/16340545, if we have tests in the module but the code is currently in the platform, then we\u0027ll need to merge into sc-mainline-prod first for some cases. Consider we\u0027ll have multiple changes afterwards, this might be a hazard.\nOne of Jean\u0027s brilliant idea is to put the NetworkStats code into the module first, but referred by the platform.\n However, IIUC this problem is common for NetworkStats/IpSec and NSD. It seems we should have a common solution for these sub-modules. A proposal for this is to:\n  1. Gether the files into ConnectivityT, with sub-folders like Nsd/IpSec/etc.\n  2. Ask build team to move the whole ConnectivityT folder into the module to a temporary folder inside the Connectivity git.\n  3. Develop each sub-module in the Connectivity git separately, move them into frmework-T/services folder when ready.\n\n IIUC this also address the concern mentioned above. But not sure if we have other problem.\n Let\u0027s discuss in the meeting.",
+      "parentUuid": "35892a94_4dc0c782",
+      "revId": "4b82117262ba07a53a7bf2f08c6f1b17bc1441b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
