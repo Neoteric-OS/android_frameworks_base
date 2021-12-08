@@ -227,6 +227,28 @@ package android.net {
     field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkStateSnapshot> CREATOR;
   }
 
+  public final class NetworkTemplate implements android.os.Parcelable {
+    ctor public NetworkTemplate(int, @Nullable String, @Nullable String[], @Nullable String, int, int, int, int, int, int);
+    method public int describeContents();
+    method public int getMatchRule();
+    method public int getMeteredness();
+    method @Nullable public String getNetworkId();
+    method @Nullable public String getSubscriberId();
+    method public int getSubscriberIdMatchRule();
+    method public boolean isPersistable();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkTemplate> CREATOR;
+    field public static final int MATCH_BLUETOOTH = 8; // 0x8
+    field public static final int MATCH_CARRIER = 10; // 0xa
+    field public static final int MATCH_ETHERNET = 5; // 0x5
+    field public static final int MATCH_MOBILE = 1; // 0x1
+    field public static final int MATCH_MOBILE_WILDCARD = 6; // 0x6
+    field public static final int MATCH_WIFI = 4; // 0x4
+    field public static final int MATCH_WIFI_WILDCARD = 7; // 0x7
+    field public static final int SUBSCRIBER_ID_MATCH_RULE_ALL = 1; // 0x1
+    field public static final int SUBSCRIBER_ID_MATCH_RULE_EXACT = 0; // 0x0
+  }
+
   public class NetworkWatchlistManager {
     method @Nullable public byte[] getWatchlistConfigHash();
   }
