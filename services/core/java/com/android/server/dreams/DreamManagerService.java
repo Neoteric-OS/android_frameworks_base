@@ -418,7 +418,7 @@ public final class DreamManagerService extends SystemService {
                 .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "startDream");
         mHandler.post(wakeLock.wrap(() -> {
             mAtmInternal.notifyDreamStateChanged(true);
-            if (!mCurrentDreamName.equals(mAmbientDisplayComponent)) {
+            if (!Objects.equals(mCurrentDreamName, mAmbientDisplayComponent)) {
                 mUiEventLogger.log(DreamManagerEvent.DREAM_START);
             }
             mController.startDream(newToken, name, isTest, canDoze, userId, wakeLock);
