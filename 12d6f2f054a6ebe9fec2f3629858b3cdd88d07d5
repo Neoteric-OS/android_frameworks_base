@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c5048fd_bc901370",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2864,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-12-08T03:04:58Z",
+      "side": 1,
+      "message": "Use BluetoothAdapter.getDefaultAdapter() instead here. Getting the BluetoothManager system service will create a new instance of BluetoothManager and then bind it to BluetoothManagerService. I know BluetoothAdapter.getDefaultAdapter() is deprecated, but it is kept for rare use cases like this.",
+      "revId": "12d6f2f054a6ebe9fec2f3629858b3cdd88d07d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
