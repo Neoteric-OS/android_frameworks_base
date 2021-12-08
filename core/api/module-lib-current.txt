@@ -227,6 +227,19 @@ package android.net {
     field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkStateSnapshot> CREATOR;
   }
 
+  public final class NetworkTemplate implements android.os.Parcelable {
+    ctor public NetworkTemplate(int, @Nullable String, @Nullable String[], @Nullable String, int, int, int, int, int, int);
+    method public int describeContents();
+    method public int getMatchRule();
+    method public int getMeteredness();
+    method @Nullable public String getNetworkId();
+    method @Nullable public String getSubscriberId();
+    method public int getSubscriberIdMatchRule();
+    method public boolean isPersistable();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkTemplate> CREATOR;
+  }
+
   public class NetworkWatchlistManager {
     method @Nullable public byte[] getWatchlistConfigHash();
   }
