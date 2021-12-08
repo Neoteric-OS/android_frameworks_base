@@ -3522,6 +3522,14 @@ public class CarrierConfigManager {
             "5g_icon_display_secondary_grace_period_string";
 
     /**
+     * For some specific operators which show 5G only if primary cell has ULI.
+     * If cell doesn't has ULI, and device camps on 5G. Then, it must show 4G.
+     * @hide
+     */
+    public static final String KEY_5G_ICON_DISPLAY_WITH_ULI_ONLY_BOOL =
+            "5g_icon_display_with_uli_only_bool";
+
+    /**
      * Whether device reset all of NR timers when device camped on a network that haven't 5G
      * capability and RRC currently in IDLE state.
      *
@@ -5754,6 +5762,7 @@ public class CarrierConfigManager {
                         + "not_restricted_rrc_con:5G");
         sDefaults.putString(KEY_5G_ICON_DISPLAY_GRACE_PERIOD_STRING, "");
         sDefaults.putString(KEY_5G_ICON_DISPLAY_SECONDARY_GRACE_PERIOD_STRING, "");
+        sDefaults.putBoolean(KEY_5G_ICON_DISPLAY_WITH_ULI_ONLY_BOOL, false);
         sDefaults.putBoolean(KEY_NR_TIMERS_RESET_IF_NON_ENDC_AND_RRC_IDLE_BOOL, false);
         /* Default value is 1 hour. */
         sDefaults.putLong(KEY_5G_WATCHDOG_TIME_MS_LONG, 3600000);
