@@ -505,6 +505,7 @@ genrule {
         ":conscrypt.module.public.api.stubs{.jar}",
         ":framework-appsearch.stubs{.jar}",
         ":framework-connectivity.stubs{.jar}",
+        ":framework-connectivity-tiramisu.stubs{.jar}",
         ":framework-graphics.stubs{.jar}",
         ":framework-media.stubs{.jar}",
         ":framework-mediaprovider.stubs{.jar}",
