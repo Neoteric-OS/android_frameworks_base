@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b761080_cf0774b5",
+        "filename": "tests/vcn/java/android/net/vcn/VcnGatewayConnectionConfigTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-08T01:10:58Z",
+      "side": 1,
+      "message": "Do we have one to test that it is equal?\n\nMaybe create 3 configs, two that equal, and one that doesn\u0027t, and just call this method \"test.*Equality()\"",
+      "range": {
+        "startLine": 276,
+        "startChar": 50,
+        "endLine": 276,
+        "endChar": 58
+      },
+      "revId": "f515559ec1463f9d772e06e9fe7f15ebf8844e44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
