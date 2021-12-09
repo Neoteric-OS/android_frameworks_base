@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37bbca38_3f2522b9",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3013,
+      "author": {
+        "id": 1112054
+      },
+      "writtenOn": "2021-12-09T19:01:12Z",
+      "side": 1,
+      "message": "This thread may block waiting for elements appear in the queue, this also holds the lock (synchronized method).\n\nI guess, in this case, if other thread will attempt to put socket with addSocketToProcess - this will block that thread because that method is also synchronized.",
+      "range": {
+        "startLine": 3013,
+        "startChar": 20,
+        "endLine": 3013,
+        "endChar": 54
+      },
+      "revId": "b22e144abc30835ca75c6e135bf37918a56f7d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
