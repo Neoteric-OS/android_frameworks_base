@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff4f3d6b_4d9b466c",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-10T06:27:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acdd49e_2c07932f",
+      "range": {
+        "startLine": 72,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 44
+      },
+      "revId": "d1bdb70c0ea2c8f25fbc129d6b06295c0335839d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8795bd3_459e39e5",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-12-10T06:16:43Z",
       "side": 1,
       "message": "Ditto with framework sources.",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 44
+      },
+      "revId": "d1bdb70c0ea2c8f25fbc129d6b06295c0335839d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "434efcdf_a1d9e7cf",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-10T06:27:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8795bd3_459e39e5",
       "range": {
         "startLine": 114,
         "startChar": 8,
