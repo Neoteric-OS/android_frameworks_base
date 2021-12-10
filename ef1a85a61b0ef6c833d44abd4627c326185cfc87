@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d04a7e49_c33c2c5c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-10T09:28:17Z",
+      "side": 1,
+      "message": "util, abbreviation for utility",
+      "parentUuid": "4fb94c53_da6b3663",
+      "revId": "ef1a85a61b0ef6c833d44abd4627c326185cfc87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "b9ee0941_a0834cd1",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 7
@@ -31,6 +49,24 @@
       "writtenOn": "2021-12-10T09:15:05Z",
       "side": 1,
       "message": "LGTM but as was mentioned in the design review let\u0027s try and find ways we can expose less classes – for example we might be able to avoid exposing NetworkStatsAccess",
+      "revId": "ef1a85a61b0ef6c833d44abd4627c326185cfc87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46b9145d_ac09a9de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-10T09:28:17Z",
+      "side": 1,
+      "message": "Yes as you expected, NetworkStatsAccess is not needed.\nUpdated commit message accordingly.",
+      "parentUuid": "b9ee0941_a0834cd1",
       "revId": "ef1a85a61b0ef6c833d44abd4627c326185cfc87",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
