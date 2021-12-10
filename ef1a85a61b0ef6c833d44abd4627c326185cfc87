@@ -16,6 +16,23 @@
       "message": "until?",
       "revId": "ef1a85a61b0ef6c833d44abd4627c326185cfc87",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9ee0941_a0834cd1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-10T09:15:05Z",
+      "side": 1,
+      "message": "LGTM but as was mentioned in the design review let\u0027s try and find ways we can expose less classes – for example we might be able to avoid exposing NetworkStatsAccess",
+      "revId": "ef1a85a61b0ef6c833d44abd4627c326185cfc87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
