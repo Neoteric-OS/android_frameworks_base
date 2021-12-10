@@ -22,6 +22,30 @@
       },
       "revId": "9f8e6cfad6c04d9610de4aa82e14d89c61977728",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da629d6c_045ecb66",
+        "filename": "packages/ConnectivityT/framework-t/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-10T07:11:53Z",
+      "side": 1,
+      "message": "Fixed at patch 7.\nprovider should be covered by \"src/android/net/netstats/**/*.*\", below.",
+      "parentUuid": "daf936d2_0efcd3ab",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 8
+      },
+      "revId": "9f8e6cfad6c04d9610de4aa82e14d89c61977728",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
