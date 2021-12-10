@@ -18259,6 +18259,9 @@ public class PackageManagerService extends IPackageManager.Stub
                 // Apex packages get verified in StagingManager currently.
                 // TODO(b/136257624): Move apex verification logic out of StagingManager
                 mRet = INSTALL_SUCCEEDED;
+                if ((installFlags & PackageManager.INSTALL_ENABLE_ROLLBACK) != 0) {
+                    sendEnableRollbackRequest();
+                }
                 return;
             }
 

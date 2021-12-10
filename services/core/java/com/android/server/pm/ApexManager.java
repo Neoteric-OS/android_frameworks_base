@@ -1097,7 +1097,8 @@ public abstract class ApexManager {
                             "It is forbidden to install new APEX packages");
                 }
                 checkApexSignature(existingApexPkg, newApexPkg);
-                checkDowngrade(existingApexPkg, newApexPkg);
+                // TODO: Allow downgrade only for rebootless rollbacks
+                // checkDowngrade(existingApexPkg, newApexPkg);
                 ApexInfo apexInfo = waitForApexService().installAndActivatePackage(
                         apexFile.getAbsolutePath());
                 final ParsedPackage parsedPackage2 = packageParser.parsePackage(
