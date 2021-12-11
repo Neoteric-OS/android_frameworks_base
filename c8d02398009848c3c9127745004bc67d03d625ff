@@ -39,6 +39,30 @@
       },
       "revId": "c8d02398009848c3c9127745004bc67d03d625ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01be25fa_c6708d49",
+        "filename": "services/core/java/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-11T05:07:52Z",
+      "side": 1,
+      "message": "This will be addressed by follow-up patch.",
+      "parentUuid": "12b868ac_f66c55b9",
+      "range": {
+        "startLine": 701,
+        "startChar": 19,
+        "endLine": 705,
+        "endChar": 65
+      },
+      "revId": "c8d02398009848c3c9127745004bc67d03d625ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
