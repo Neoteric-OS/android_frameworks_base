@@ -18,12 +18,12 @@
 
 #include <vector>
 
+#include "ResourceUtils.h"
+#include "ValueVisitor.h"
+#include "android-base/file.h"
 #include "android-base/logging.h"
 #include "androidfw/ConfigDescription.h"
 #include "androidfw/Locale.h"
-
-#include "ResourceUtils.h"
-#include "ValueVisitor.h"
 #include "split/TableSplitter.h"
 #include "util/Maybe.h"
 #include "util/Util.h"
@@ -440,6 +440,26 @@ std::regex GetRegularExpression(const std::string &input) {
   std::regex case_insensitive(
       input, std::regex_constants::ECMAScript);
   return case_insensitive;
+}
+
+std::string GetExecutablePath() {
+#if defined(__linux__)
+  // Bazel test runner will set TEST_SRCDIR. This is a clue that test is run
+  // under Bazel.
+  std::string test_srcdir = getenv("TEST_SRCDIR");
+  if (test_srcdir.empty()) {
+    return android::base::GetExecutablePath();
+  } else {
+    // When test is run under Bazel, use the real execution path
+    // (program_invocation_name is initilized from argv[0]) instead of
+    // following symlink to find the executable path (which could live outside
+    // of Bazel sandbox).
+    std::string path = program_invocation_name;
+    return path;
+  }
+#else
+  return android::base::GetExecutablePath();
+#endif
 }
 
 }  // namespace aapt
