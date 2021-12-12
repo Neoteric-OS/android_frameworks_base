@@ -77,6 +77,8 @@ void SetLongVersionCode(xml::Element* manifest, uint64_t version_code);
 // Returns a case insensitive regular expression based on the input.
 std::regex GetRegularExpression(const std::string &input);
 
+std::string GetExecutablePath();
+
 }  // namespace aapt
 
 #endif /* AAPT_SPLIT_UTIL_H */

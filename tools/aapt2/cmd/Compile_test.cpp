@@ -19,12 +19,12 @@
 #include "android-base/file.h"
 #include "android-base/stringprintf.h"
 #include "android-base/utf8.h"
-
+#include "cmd/Util.h"
+#include "format/proto/ProtoDeserialize.h"
 #include "io/StringStream.h"
 #include "io/ZipArchive.h"
 #include "java/AnnotationProcessor.h"
 #include "test/Test.h"
-#include "format/proto/ProtoDeserialize.h"
 
 namespace aapt {
 
@@ -57,8 +57,8 @@ int TestCompile(const std::string& path, const std::string& outDir, bool legacy,
 TEST_F(CompilerTest, MultiplePeriods) {
   StdErrDiagnostics diag;
   std::unique_ptr<IAaptContext> context = test::ContextBuilder().Build();
-  const std::string kResDir = BuildPath({android::base::Dirname(android::base::GetExecutablePath()),
-                                         "integration-tests", "CompileTest", "res"});
+  const std::string kResDir = BuildPath(
+      {android::base::Dirname(GetExecutablePath()), "integration-tests", "CompileTest", "res"});
 
   // Resource files without periods in the file name should not throw errors
   const std::string path0 = BuildPath({kResDir, "values", "values.xml"});
@@ -114,11 +114,11 @@ TEST_F(CompilerTest, MultiplePeriods) {
 TEST_F(CompilerTest, DirInput) {
   StdErrDiagnostics diag;
   std::unique_ptr<IAaptContext> context = test::ContextBuilder().Build();
-  const std::string kResDir = BuildPath({android::base::Dirname(android::base::GetExecutablePath()),
+  const std::string kResDir = BuildPath({android::base::Dirname(GetExecutablePath()),
                                          "integration-tests", "CompileTest", "DirInput", "res"});
   const std::string kOutputFlata =
-      BuildPath({android::base::Dirname(android::base::GetExecutablePath()), "integration-tests",
-                 "CompileTest", "DirInput", "compiled.flata"});
+      BuildPath({android::base::Dirname(GetExecutablePath()), "integration-tests", "CompileTest",
+                 "DirInput", "compiled.flata"});
   ::android::base::utf8::unlink(kOutputFlata.c_str());
 
   std::vector<android::StringPiece> args;
@@ -145,11 +145,11 @@ TEST_F(CompilerTest, ZipInput) {
   StdErrDiagnostics diag;
   std::unique_ptr<IAaptContext> context = test::ContextBuilder().Build();
   const std::string kResZip =
-      BuildPath({android::base::Dirname(android::base::GetExecutablePath()), "integration-tests",
-                 "CompileTest", "ZipInput", "res.zip"});
+      BuildPath({android::base::Dirname(GetExecutablePath()), "integration-tests", "CompileTest",
+                 "ZipInput", "res.zip"});
   const std::string kOutputFlata =
-      BuildPath({android::base::Dirname(android::base::GetExecutablePath()), "integration-tests",
-                 "CompileTest", "ZipInput", "compiled.flata"});
+      BuildPath({android::base::Dirname(GetExecutablePath()), "integration-tests", "CompileTest",
+                 "ZipInput", "compiled.flata"});
 
   ::android::base::utf8::unlink(kOutputFlata.c_str());
 
@@ -258,8 +258,7 @@ TEST_F(CompilerTest, DoNotTranslateTest) {
 TEST_F(CompilerTest, RelativePathTest) {
   StdErrDiagnostics diag;
   const std::string res_path = BuildPath(
-      {android::base::Dirname(android::base::GetExecutablePath()),
-       "integration-tests", "CompileTest", "res"});
+      {android::base::Dirname(GetExecutablePath()), "integration-tests", "CompileTest", "res"});
 
   const std::string path_values_colors = GetTestPath("values/colors.xml");
   WriteFile(path_values_colors, "<resources>"
@@ -272,9 +271,9 @@ TEST_F(CompilerTest, RelativePathTest) {
                    "<TextBox android:id=\"@+id/text_one\" android:background=\"@color/color_one\"/>"
                    "</LinearLayout>");
 
-  const std::string compiled_files_dir  = BuildPath(
-      {android::base::Dirname(android::base::GetExecutablePath()),
-       "integration-tests", "CompileTest", "compiled"});
+  const std::string compiled_files_dir =
+      BuildPath({android::base::Dirname(GetExecutablePath()), "integration-tests", "CompileTest",
+                 "compiled"});
   CHECK(file::mkdirs(compiled_files_dir.data()));
 
   const std::string path_values_colors_out =
@@ -284,8 +283,7 @@ TEST_F(CompilerTest, RelativePathTest) {
   ::android::base::utf8::unlink(path_values_colors_out.c_str());
   ::android::base::utf8::unlink(path_layout_layout_one_out.c_str());
   const std::string apk_path = BuildPath(
-      {android::base::Dirname(android::base::GetExecutablePath()),
-       "integration-tests", "CompileTest", "out.apk"});
+      {android::base::Dirname(GetExecutablePath()), "integration-tests", "CompileTest", "out.apk"});
 
   const std::string source_set_res = BuildPath({"main", "res"});
   const std::string relative_path_values_colors =
