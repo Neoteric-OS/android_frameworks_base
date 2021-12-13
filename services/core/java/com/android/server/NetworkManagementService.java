@@ -16,6 +16,7 @@
 
 package com.android.server;
 
+
 import static android.Manifest.permission.CONNECTIVITY_INTERNAL;
 import static android.Manifest.permission.NETWORK_SETTINGS;
 import static android.Manifest.permission.OBSERVE_NETWORK_POLICY;
@@ -38,6 +39,8 @@ import static android.net.NetworkStats.SET_DEFAULT;
 import static android.net.NetworkStats.STATS_PER_UID;
 import static android.net.NetworkStats.TAG_NONE;
 import static android.net.TrafficStats.UID_TETHERING;
+
+import static com.android.net.module.util.NetworkStatsUtils.LIMIT_GLOBAL_ALERT;
 
 import android.annotation.NonNull;
 import android.app.ActivityManager;
@@ -132,12 +135,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     private static final boolean DBG = Log.isLoggable(TAG, Log.DEBUG);
 
     private static final int MAX_UID_RANGES_PER_COMMAND = 10;
-
-    /**
-     * Name representing {@link #setGlobalAlert(long)} limit when delivered to
-     * {@link INetworkManagementEventObserver#limitReached(String, String)}.
-     */
-    public static final String LIMIT_GLOBAL_ALERT = "globalAlert";
 
     static final int DAEMON_MSG_MOBILE_CONN_REAL_TIME_INFO = 1;
 
