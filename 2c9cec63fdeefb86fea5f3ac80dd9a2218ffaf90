@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f73e2ba_76cb5a16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-13T03:18:48Z",
+      "side": 1,
+      "message": "LGTM with nit that could be ignored.",
+      "revId": "2c9cec63fdeefb86fea5f3ac80dd9a2218ffaf90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42659319_9c7ef1e0",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-13T03:18:48Z",
+      "side": 1,
+      "message": "not sure why you cannot link to the class in the same file, does {@link ResourceUnavailableException} work?\nIf no, maybe {@code ResourceUnavailableException}?",
+      "range": {
+        "startLine": 310,
+        "startChar": 15,
+        "endLine": 310,
+        "endChar": 43
+      },
+      "revId": "2c9cec63fdeefb86fea5f3ac80dd9a2218ffaf90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
