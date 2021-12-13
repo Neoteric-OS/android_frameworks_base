@@ -1,0 +1,24 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018354293",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1920741?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "49e270e6_e0f4a86b",
+        "filename": "core/api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-13T21:41:51Z",
+      "side": 1,
+      "message": "This CL adds new API(s), but it doesn\u0027t include any CTS test to test them. Please add CTS test(s) in a change and include the change in the same topic. After adding that change, you may need to upload a new patchset such as updating commit message to rerun this presubmit test. If you are unable to add CTS test(s) now, please file a tracking bug via go/new-cts-coverage-bug and add \"CTS-Coverage-Bug: \u003cbug id\u003e\" in this CL\u0027s commit message to pass this presubmit. For more information, please refer to go/api-test-coverage.",
+      "revId": "11e46b87869142d448c7c09a13aeedb55ac3a899",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
