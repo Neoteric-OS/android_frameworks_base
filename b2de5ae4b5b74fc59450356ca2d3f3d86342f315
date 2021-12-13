@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8f1c62e_a1427b28",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-13T08:59:30Z",
+      "side": 1,
+      "message": "nit: extra symbol.",
+      "range": {
+        "startLine": 16,
+        "startChar": 14,
+        "endLine": 16,
+        "endChar": 15
+      },
+      "revId": "b2de5ae4b5b74fc59450356ca2d3f3d86342f315",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c00ba49_1a2a77c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-13T08:59:30Z",
+      "side": 1,
+      "message": "Move to libs/net is another alternative but this patch is fine to me too. ",
+      "revId": "b2de5ae4b5b74fc59450356ca2d3f3d86342f315",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
