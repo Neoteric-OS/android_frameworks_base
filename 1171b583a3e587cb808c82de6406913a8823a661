@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "545c0eff_44acd568",
+        "filename": "services/core/java/com/android/server/wm/RefreshRatePolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1388190
+      },
+      "writtenOn": "2021-12-13T23:55:20Z",
+      "side": 1,
+      "message": "yes, the same applied for the max as well",
+      "parentUuid": "09e79de0_14404565",
+      "range": {
+        "startLine": 167,
+        "startChar": 12,
+        "endLine": 167,
+        "endChar": 56
+      },
+      "revId": "1171b583a3e587cb808c82de6406913a8823a661",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13127299_e0af2b32",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-12-13T23:02:47Z",
       "side": 1,
       "message": "nit: personally i would drop the final modifier, since it only prevents reassignment but does not prevent internal mutable state in Objects so it\u0027s noisy for method variables",
+      "range": {
+        "startLine": 171,
+        "startChar": 8,
+        "endLine": 171,
+        "endChar": 13
+      },
+      "revId": "1171b583a3e587cb808c82de6406913a8823a661",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c60e0e6_e737d5da",
+        "filename": "services/core/java/com/android/server/wm/RefreshRatePolicy.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1388190
+      },
+      "writtenOn": "2021-12-13T23:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13127299_e0af2b32",
       "range": {
         "startLine": 171,
         "startChar": 8,
