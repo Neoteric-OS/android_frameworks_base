@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd351ed1_d294af50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-12-13T04:31:04Z",
+      "side": 1,
+      "message": "API approving because this is a module-lib API that is not accessible to apps.\n\nThe name is definitely unusual but it is required to be different from the existing ConnectivityFrameworkInitializer class because it must be in a different JAR which is loaded only on T+ devices.\n\nThere don\u0027t seem to be any better options at the moment:\n- Using \"33\" (i.e., the SDK version) is incorrect because T may not be 33.\n- We could use \"per-manager\" initializers instead of of \"per-Android-version\", and add NsdManagerInitializer, NetworkStatsManagerInitializer, EthernetManagerInitializer, IpSecManagerInitializer, etc. However:\n  - This would needlessly clutter the API surface\n  - It ouwl prevent us from adding any new ones after T ships because SystemServer.java is not updatable.",
+      "revId": "166e27988d07434307f131a39f13447b22a33631",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
