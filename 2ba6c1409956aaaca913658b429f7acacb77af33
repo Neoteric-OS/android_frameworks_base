@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d287078_530348ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2021-12-13T20:49:29Z",
+      "side": 1,
+      "message": "see https://android-review.googlesource.com/c/platform/frameworks/base/+/1843421/ for an even bigger timeout bump :-)\n\n(see also the bug, where i\u0027ve commented in more detail, and asked the Go folks where the above CL should be cherrypicked to so that you have it...)",
+      "revId": "2ba6c1409956aaaca913658b429f7acacb77af33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
