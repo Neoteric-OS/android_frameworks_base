@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "180ba355_63c8d101",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-14T11:06:04Z",
+      "side": 1,
+      "message": "Since you\u0027ve been able to change the signature of the only constructor without changing any other files, I think this can be made private ?\n\n(in another change is fine)",
+      "range": {
+        "startLine": 811,
+        "startChar": 4,
+        "endLine": 811,
+        "endChar": 9
+      },
+      "revId": "69faf5526d56081898a8dbeaf8d7843b653003d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
