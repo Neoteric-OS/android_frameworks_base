@@ -5609,6 +5609,12 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
                 }
             }
             mTaskSupervisor.checkReadyForSleepLocked(true /* allowDelay */);
+            // Notify task stack changed when activity stop.
+            if (mTaskSupervisor.mAppVisibilitiesChangedSinceLastPause
+                    || (getDisplayArea() != null && getDisplayArea().hasPinnedTask())) {
+                mAtmService.getTaskChangeNotificationController().notifyTaskStackChanged();
+                mTaskSupervisor.mAppVisibilitiesChangedSinceLastPause = false;
+    }
         }
     }
 
