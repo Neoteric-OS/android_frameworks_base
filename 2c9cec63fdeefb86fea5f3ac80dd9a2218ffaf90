@@ -39,6 +39,30 @@
       },
       "revId": "2c9cec63fdeefb86fea5f3ac80dd9a2218ffaf90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1a5a65d_6a81ba3a",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-14T10:55:26Z",
+      "side": 1,
+      "message": "I think @throws already linkifies ?",
+      "parentUuid": "42659319_9c7ef1e0",
+      "range": {
+        "startLine": 310,
+        "startChar": 15,
+        "endLine": 310,
+        "endChar": 43
+      },
+      "revId": "2c9cec63fdeefb86fea5f3ac80dd9a2218ffaf90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
