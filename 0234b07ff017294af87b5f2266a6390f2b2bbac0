@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f072c923_b70d2cc7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-14T09:01:36Z",
+      "side": 1,
+      "message": "Sorry to be annoying, but I think this should go in frameworks/libs/net and also have some basic unit tests",
+      "revId": "0234b07ff017294af87b5f2266a6390f2b2bbac0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d53fdf41_61f3c6fe",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/netstats/NetworkStatsUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-14T09:01:36Z",
+      "side": 1,
+      "message": "I think this should be in frameworks/libs/net",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "0234b07ff017294af87b5f2266a6390f2b2bbac0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
