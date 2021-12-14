@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0de1073_10c79d76",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-14T09:57:57Z",
+      "side": 1,
+      "message": "Please remove duplicate line",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "e631db45c36279df73b5ec74d3450b7b0083190e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ef37cfb_c19a7158",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-14T09:57:57Z",
+      "side": 1,
+      "message": "Please add the following stanza to the commit message\n\nTest: \u003cwhat test was performed before uploading this CL\u003e\nTag: #feature\nsponsor: siyuanh@",
+      "revId": "e631db45c36279df73b5ec74d3450b7b0083190e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aef18b9d_2d3bf0ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-14T09:57:57Z",
+      "side": 1,
+      "message": "small nits to resolve, otherwise LGTM",
+      "revId": "e631db45c36279df73b5ec74d3450b7b0083190e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbc537ab_0db3f8af",
+        "filename": "core/java/android/bluetooth/le/PeriodicAdvertisingManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-14T09:57:57Z",
+      "side": 1,
+      "message": "please remove empty space here",
+      "range": {
+        "startLine": 247,
+        "startChar": 31,
+        "endLine": 247,
+        "endChar": 32
+      },
+      "revId": "e631db45c36279df73b5ec74d3450b7b0083190e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
