@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19ba594a_ecca4186",
+        "filename": "services/core/java/com/android/server/wm/RefreshRatePolicy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2021-12-14T22:55:12Z",
+      "side": 1,
+      "message": "curious why this is not an exact check",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 64
+      },
+      "revId": "3e7b0969ab06258b986b71d80700d9777700277c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
