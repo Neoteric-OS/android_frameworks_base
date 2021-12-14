@@ -39,6 +39,30 @@
       },
       "revId": "4474c3f82ca61e6ce53b29ee6f4d185f8f391ac0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dacc3f2_ce81ef25",
+        "filename": "media/jni/soundpool/Stream.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-12-14T18:34:24Z",
+      "side": 1,
+      "message": "It is generally correct for now. I created bug b/210682934 for a cleanup of this method.",
+      "parentUuid": "ed55c53e_54d9ac69",
+      "range": {
+        "startLine": 377,
+        "startChar": 4,
+        "endLine": 377,
+        "endChar": 62
+      },
+      "revId": "4474c3f82ca61e6ce53b29ee6f4d185f8f391ac0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
