@@ -851,7 +851,7 @@ public final class Parcel {
      * @throws BadParcelableException If the current position hasn't reached the end of the Parcel.
      * When used over binder, this exception should propagate to the caller.
      */
-    public void enforceNoDataAvail() {
+    public void enforceNoDataAvailable() {
         final int n = dataAvail();
         if (n > 0) {
             throw new BadParcelableException("Parcel data not fully consumed, unread size: " + n);
