@@ -48,5 +48,13 @@ public final class ConnectivityFrameworkInitializerTiramisu {
                     return new NsdManager(context, service);
                 }
         );
+        SystemServiceRegistry.registerContextAwareService(
+                Context.IPSEC_SERVICE,
+                IpSecManager.class,
+                (context, serviceBinder) -> {
+                    IIpSecService service = IIpSecService.Stub.asInterface(serviceBinder);
+                    return new IpSecManager(context, service);
+                }
+        );
     }
 }
