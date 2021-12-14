@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc561a71_d5044334",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-14T08:22:48Z",
+      "side": 1,
+      "message": "LGTM assuming commit message will indicate which symbol is not accessible.",
+      "revId": "99d1b99075054f20cb6490c27600f67fd65f7240",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
