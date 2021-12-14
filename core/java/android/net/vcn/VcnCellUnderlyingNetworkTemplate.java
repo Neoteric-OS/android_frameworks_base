@@ -47,8 +47,6 @@ import java.util.Set;
  * This class represents a configuration for a priority rule class of underlying cellular networks.
  *
  * <p>See {@link VcnUnderlyingNetworkTemplate}
- *
- * @hide
  */
 public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetworkTemplate {
     private static final String ALLOWED_NETWORK_PLMN_IDS_KEY = "mAllowedNetworkPlmnIds";

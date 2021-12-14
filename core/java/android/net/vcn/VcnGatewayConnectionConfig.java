@@ -376,7 +376,6 @@ public final class VcnGatewayConnectionConfig {
      * Retrieve the VcnUnderlyingNetworkTemplate list, or a default list if it is not configured.
      *
      * @see Builder#setVcnUnderlyingNetworkTemplates(List)
-     * @hide
      */
     @NonNull
     public List<VcnUnderlyingNetworkTemplate> getVcnUnderlyingNetworkTemplates() {
@@ -562,7 +561,6 @@ public final class VcnGatewayConnectionConfig {
          *     prioritization. The default network prioritization order is Opportunistic cellular,
          *     Carrier WiFi and then Macro cellular.
          * @return this {@link Builder} instance, for chaining
-         * @hide
          */
         @NonNull
         public Builder setVcnUnderlyingNetworkTemplates(

@@ -27269,6 +27269,22 @@ package android.net.sip {
 
 package android.net.vcn {
 
+  public final class VcnCellUnderlyingNetworkTemplate extends android.net.vcn.VcnUnderlyingNetworkTemplate {
+    method @NonNull public java.util.Set<java.lang.String> getMatchingOperatorPlmnIds();
+    method @NonNull public java.util.Set<java.lang.Integer> getMatchingSpecificCarrierIds();
+    method public int getNotRoamingMatch();
+    method public int getOpportunisticMatch();
+  }
+
+  public static final class VcnCellUnderlyingNetworkTemplate.Builder extends android.net.vcn.VcnUnderlyingNetworkTemplate.Builder<android.net.vcn.VcnCellUnderlyingNetworkTemplate.Builder> {
+    ctor public VcnCellUnderlyingNetworkTemplate.Builder();
+    method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkTemplate build();
+    method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkTemplate.Builder setMatchingOperatorPlmnIds(@NonNull java.util.Set<java.lang.String>);
+    method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkTemplate.Builder setMatchingSpecificCarrierIds(@NonNull java.util.Set<java.lang.Integer>);
+    method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkTemplate.Builder setNotRoamingMatch(int);
+    method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkTemplate.Builder setOpportunisticMatch(int);
+  }
+
   public final class VcnConfig implements android.os.Parcelable {
     method public int describeContents();
     method @NonNull public java.util.Set<android.net.vcn.VcnGatewayConnectionConfig> getGatewayConnectionConfigs();
@@ -27287,6 +27303,7 @@ package android.net.vcn {
     method @NonNull public String getGatewayConnectionName();
     method @IntRange(from=0x500) public int getMaxMtu();
     method @NonNull public long[] getRetryIntervalsMillis();
+    method @NonNull public java.util.List<android.net.vcn.VcnUnderlyingNetworkTemplate> getVcnUnderlyingNetworkTemplates();
   }
 
   public static final class VcnGatewayConnectionConfig.Builder {
@@ -27296,6 +27313,7 @@ package android.net.vcn {
     method @NonNull public android.net.vcn.VcnGatewayConnectionConfig.Builder removeExposedCapability(int);
     method @NonNull public android.net.vcn.VcnGatewayConnectionConfig.Builder setMaxMtu(@IntRange(from=0x500) int);
     method @NonNull public android.net.vcn.VcnGatewayConnectionConfig.Builder setRetryIntervalsMillis(@NonNull long[]);
+    method @NonNull public android.net.vcn.VcnGatewayConnectionConfig.Builder setVcnUnderlyingNetworkTemplates(@NonNull java.util.List<android.net.vcn.VcnUnderlyingNetworkTemplate>);
   }
 
   public class VcnManager {
@@ -27317,6 +27335,27 @@ package android.net.vcn {
     ctor public VcnManager.VcnStatusCallback();
     method public abstract void onGatewayConnectionError(@NonNull String, int, @Nullable Throwable);
     method public abstract void onStatusChanged(int);
+  }
+
+  public abstract class VcnUnderlyingNetworkTemplate {
+    method public int getNotMeteredMatch();
+    field public static final int MATCH_ANY = 0; // 0x0
+    field public static final int MATCH_FORBIDDEN = 2; // 0x2
+    field public static final int MATCH_REQUIRED = 1; // 0x1
+  }
+
+  public abstract static class VcnUnderlyingNetworkTemplate.Builder<T extends android.net.vcn.VcnUnderlyingNetworkTemplate.Builder<T>> {
+    method @NonNull public T setNotMeteredMatch(int);
+  }
+
+  public final class VcnWifiUnderlyingNetworkTemplate extends android.net.vcn.VcnUnderlyingNetworkTemplate {
+    method @NonNull public java.util.Set<java.lang.String> getMatchingSsids();
+  }
+
+  public static class VcnWifiUnderlyingNetworkTemplate.Builder extends android.net.vcn.VcnUnderlyingNetworkTemplate.Builder<android.net.vcn.VcnWifiUnderlyingNetworkTemplate.Builder> {
+    ctor public VcnWifiUnderlyingNetworkTemplate.Builder();
+    method @NonNull public android.net.vcn.VcnWifiUnderlyingNetworkTemplate build();
+    method @NonNull public android.net.vcn.VcnWifiUnderlyingNetworkTemplate.Builder setMatchingSsids(@NonNull java.util.Set<java.lang.String>);
   }
 
 }

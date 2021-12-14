@@ -42,8 +42,6 @@ import java.util.Objects;
  * Connection by setting a list (in priority order, most to least preferred) of the appropriate
  * subclasses in the VcnGatewayConnectionConfig. See {@link
  * VcnGatewayConnectionConfig.Builder#setVcnUnderlyingNetworkTemplates}
- *
- * @hide
  */
 public abstract class VcnUnderlyingNetworkTemplate {
     /** @hide */
