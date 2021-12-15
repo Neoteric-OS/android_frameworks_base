@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13e6582d_583af8c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112679
+      },
+      "writtenOn": "2021-12-15T05:02:32Z",
+      "side": 1,
+      "message": "Rahul, could you take a look and give +1? Thanks!",
+      "revId": "0bb257f78575105189acee2d42c14e96d6819773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
