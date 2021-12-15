@@ -131,6 +131,16 @@ filegroup {
     ],
 }
 
+filegroup {
+    name: "net-utils-annotations-srcs",
+    srcs: [
+        "src/android/net/annotations/PolicyDirection.java",
+    ],
+    visibility: [
+        "//frameworks/base",
+    ],
+}
+
 // Connectivity-T common libraries.
 
 filegroup {
