@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc6f2707_7fd7a66e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-12-15T02:34:35Z",
+      "side": 1,
+      "message": "The naming of the objects are a slight departure from the original design.\n\nUpdateRequest -\u003e InternalNetworkUpdateRequest\nUpdateNetworkException -\u003e InternalNetworkManagementException\n\nRationale for this was to not bloat the EthernetManager code with boilerplate Parcelable code however when splitting them out of EthernetManager, original naming no longer made sense hence the rename.",
+      "revId": "e487ddd694c8d92a256780d6550f6889d0da16e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
