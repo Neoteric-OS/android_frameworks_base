@@ -54,7 +54,6 @@ import android.net.NetworkScore;
 import android.net.RouteInfo;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.Uri;
-import android.net.annotations.PolicyDirection;
 import android.net.ipsec.ike.ChildSessionCallback;
 import android.net.ipsec.ike.ChildSessionConfiguration;
 import android.net.ipsec.ike.ChildSessionParams;
@@ -319,11 +318,11 @@ public class VcnGatewayConnection extends StateMachine {
     private static final int EVENT_TRANSFORM_CREATED = 5;
 
     private static class EventTransformCreatedInfo implements EventInfo {
-        @PolicyDirection public final int direction;
-        @NonNull public final IpSecTransform transform;
+        public final int direction;
+        @NonNull
+        public final IpSecTransform transform;
 
-        EventTransformCreatedInfo(
-                @PolicyDirection int direction, @NonNull IpSecTransform transform) {
+        EventTransformCreatedInfo(int direction, @NonNull IpSecTransform transform) {
             this.direction = direction;
             this.transform = Objects.requireNonNull(transform);
         }
