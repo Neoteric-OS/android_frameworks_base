@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95973c5d_50903523",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-15T10:20:06Z",
+      "side": 1,
+      "message": "Generally happy with the code but I don\u0027t think we should deprecate the setMaxManifestReceiver API",
+      "revId": "83f993d26b4f67b113eb8abb478812bb9d88067e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83502d39_9d132b87",
+        "filename": "core/java/android/app/BroadcastOptions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-15T10:20:06Z",
+      "side": 1,
+      "message": "This is an unrelated bug ID. I guess it will work ^^; but maybe we want to file a specific bug for this.",
+      "range": {
+        "startLine": 78,
+        "startChar": 54,
+        "endLine": 78,
+        "endChar": 64
+      },
+      "revId": "83f993d26b4f67b113eb8abb478812bb9d88067e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "722fbae4_b6abd02f",
+        "filename": "core/java/android/app/BroadcastOptions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-15T10:20:06Z",
+      "side": 1,
+      "message": "Can we obviate the need for this by, say, storing -changeId if it\u0027s required to be false ? Change IDs already must be positive. Not feeling strongly.",
+      "range": {
+        "startLine": 172,
+        "startChar": 8,
+        "endLine": 172,
+        "endChar": 33
+      },
+      "revId": "83f993d26b4f67b113eb8abb478812bb9d88067e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1f1eb91_878b9da7",
+        "filename": "core/java/android/app/BroadcastOptions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-15T10:20:06Z",
+      "side": 1,
+      "message": "You can\u0027t do the same thing with setRequireCompatChange* though. The point of these methods is to not send to apps that declare the receiver in their manifest, but send it to apps that register dynamically. This was done for performance purposes, to avoid spinning up apps with broadcasts like CONNECTIVITY_ACTION which can be frequent.\n\nI think there is still a use case for this.",
+      "range": {
+        "startLine": 274,
+        "startChar": 8,
+        "endLine": 274,
+        "endChar": 18
+      },
+      "revId": "83f993d26b4f67b113eb8abb478812bb9d88067e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03bee780_ebf88c8a",
+        "filename": "core/java/android/app/BroadcastOptions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-15T10:20:06Z",
+      "side": 1,
+      "message": "I was thinking about this limitation while looking at the API ; I was thinking we may have cases where we need Or(change1, change2) or And(change1, change2).\n\nMaybe YAGNI, and we add it if a use case arises",
+      "range": {
+        "startLine": 375,
+        "startChar": 0,
+        "endLine": 377,
+        "endChar": 38
+      },
+      "revId": "83f993d26b4f67b113eb8abb478812bb9d88067e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
