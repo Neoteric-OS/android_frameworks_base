@@ -22,6 +22,30 @@
       },
       "revId": "6be5432c521b096657c800e3af887af54e663353",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef2be938_c1b801f8",
+        "filename": "media/jni/soundpool/Stream.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-12-15T18:18:47Z",
+      "side": 1,
+      "message": "To correct myself, it\u0027s actually the move constructor of sp\u003c\u003e which resets mAudioTrack, but I still think we need to add an assert so if someone changes the type of the smart pointer, the assumption still holds.",
+      "parentUuid": "4be1db42_8f8d11dd",
+      "range": {
+        "startLine": 305,
+        "startChar": 67,
+        "endLine": 305,
+        "endChar": 81
+      },
+      "revId": "6be5432c521b096657c800e3af887af54e663353",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
