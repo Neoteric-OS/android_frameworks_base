@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48228f8a_be003af3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-12-15T15:51:54Z",
+      "side": 1,
+      "message": "Here\u0027s a note I just left on the linked bug:\n\n\u003e API council folks, thanks for this feedback, but the reason we chose the name enforceNoDataAvail() was to be locally consistent with the long-existing dataAvail() method.\n\u003e \n\u003e So while I\u0027d normally agree with the naming suggestion offered here, I feel that local consistency is more important here to help link the two concepts together.\n\n",
+      "revId": "c40eea30d2f35eec151a292aa3c708dde4f9a404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
