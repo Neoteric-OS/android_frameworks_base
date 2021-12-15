@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4be1db42_8f8d11dd",
+        "filename": "media/jni/soundpool/Stream.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-12-15T16:37:05Z",
+      "side": 1,
+      "message": "Are you expecting std::move to reset mAudioTrack? I would suggest adding an assert to ensure that.",
+      "range": {
+        "startLine": 305,
+        "startChar": 67,
+        "endLine": 305,
+        "endChar": 81
+      },
+      "revId": "6be5432c521b096657c800e3af887af54e663353",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
