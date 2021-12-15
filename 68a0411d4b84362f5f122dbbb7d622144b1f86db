@@ -16,6 +16,23 @@
       "message": "(wrong Victor Chang) :)",
       "revId": "68a0411d4b84362f5f122dbbb7d622144b1f86db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22989e5d_49175303",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2021-12-15T14:10:28Z",
+      "side": 1,
+      "message": "So it\u0027s just the public API surface of ICU4J in android.icu package? It looks fine to me",
+      "revId": "68a0411d4b84362f5f122dbbb7d622144b1f86db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
