@@ -63,6 +63,30 @@
       },
       "revId": "2c9cec63fdeefb86fea5f3ac80dd9a2218ffaf90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9144d728_b6269510",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-15T04:48:15Z",
+      "side": 1,
+      "message": "Not sure, but I checked the public document, and it has formatting problem when using {@link}\nhttps://developer.android.com/reference/android/net/IpSecManager#allocateSecurityParameterIndex(java.net.InetAddress,%20int)\n\nThis one just \"@throws IOException\" and the format looks fine.\nhttps://developer.android.com/reference/android/net/IpSecManager#applyTransportModeTransform(java.net.DatagramSocket,%20int,%20android.net.IpSecTransform)",
+      "parentUuid": "d1a5a65d_6a81ba3a",
+      "range": {
+        "startLine": 310,
+        "startChar": 15,
+        "endLine": 310,
+        "endChar": 43
+      },
+      "revId": "2c9cec63fdeefb86fea5f3ac80dd9a2218ffaf90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
