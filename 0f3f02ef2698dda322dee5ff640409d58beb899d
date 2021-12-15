@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5197fd92_c015928a",
+        "filename": "core/api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 26783,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-12-15T07:59:59Z",
+      "side": 1,
+      "message": "ok, let me add @hide for all of them first.",
+      "parentUuid": "4161cb52_769c781b",
+      "range": {
+        "startLine": 26783,
+        "startChar": 37,
+        "endLine": 26783,
+        "endChar": 61
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bbda7ab_e0c7d2ac",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9df0539_6a11248b",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-12-15T07:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bbda7ab_e0c7d2ac",
+      "range": {
+        "startLine": 134,
+        "startChar": 11,
+        "endLine": 134,
+        "endChar": 31
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05a3ce63_f70f80c2",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-12-07T11:31:02Z",
       "side": 1,
       "message": "likewise LinkProperties",
+      "range": {
+        "startLine": 140,
+        "startChar": 11,
+        "endLine": 140,
+        "endChar": 26
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ed7332a_ee63bfa7",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-12-15T07:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05a3ce63_f70f80c2",
       "range": {
         "startLine": 140,
         "startChar": 11,
@@ -116,6 +188,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "731dd692_03897588",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-12-15T07:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d5f7c93_a2b9b598",
+      "range": {
+        "startLine": 156,
+        "startChar": 59,
+        "endLine": 156,
+        "endChar": 73
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "451d5ecb_e3a79b6a",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-12-15T07:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e22465e2_ffcc2899",
+      "range": {
+        "startLine": 156,
+        "startChar": 43,
+        "endLine": 156,
+        "endChar": 49
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d7dac079_9dfa66f9",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-12-07T11:31:02Z",
       "side": 1,
       "message": "...for CATEGORY_ERROR_IKE",
+      "range": {
+        "startLine": 158,
+        "startChar": 37,
+        "endLine": 158,
+        "endChar": 38
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aaae2b09_f525075d",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-12-15T07:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7dac079_9dfa66f9",
       "range": {
         "startLine": 158,
         "startChar": 37,
@@ -162,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e546489b_314335f8",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-12-15T07:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "548343ec_223ebc76",
+      "range": {
+        "startLine": 174,
+        "startChar": 44,
+        "endLine": 174,
+        "endChar": 46
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "650d80b3_a30ad5cd",
@@ -185,6 +353,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea674c44_c25f9532",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-12-15T07:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "650d80b3_a30ad5cd",
+      "range": {
+        "startLine": 186,
+        "startChar": 47,
+        "endLine": 186,
+        "endChar": 54
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "227779be_358a8b5c",
@@ -198,6 +390,30 @@
       "writtenOn": "2021-12-07T11:31:02Z",
       "side": 1,
       "message": "RESET and SocketException don\u0027t sound very much alike. Suggest\n\n  * An error code to indicate the connection was reset (e.g. SocketException)\n  ERROR_CODE_NETWORK_CONNECTION_RESET",
+      "range": {
+        "startLine": 191,
+        "startChar": 47,
+        "endLine": 191,
+        "endChar": 52
+      },
+      "revId": "0f3f02ef2698dda322dee5ff640409d58beb899d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f0b262b_61b9a22c",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-12-15T07:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "227779be_358a8b5c",
       "range": {
         "startLine": 191,
         "startChar": 47,
