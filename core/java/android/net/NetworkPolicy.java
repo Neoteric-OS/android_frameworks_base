@@ -20,13 +20,13 @@ import static android.net.NetworkStats.METERED_ALL;
 import static android.net.NetworkStats.METERED_YES;
 import static android.net.NetworkTemplate.MATCH_CARRIER;
 import static android.net.NetworkTemplate.MATCH_MOBILE;
-import static android.net.NetworkTemplate.SUBSCRIBER_ID_MATCH_RULE_EXACT;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.ArraySet;
 import android.util.BackupUtils;
 import android.util.Log;
 import android.util.Range;
@@ -334,10 +334,10 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
         out.writeInt(TEMPLATE_BACKUP_VERSION_LATEST);
 
         out.writeInt(template.getMatchRule());
-        BackupUtils.writeString(out, template.getSubscriberId());
-        BackupUtils.writeString(out, template.getNetworkId());
+        BackupUtils.writeString(out, template.getSubscriberIds().iterator().next());
+        BackupUtils.writeString(out, template.getWifiNetworkKey());
         out.writeInt(template.getMeteredness());
-        out.writeInt(template.getSubscriberIdMatchRule());
+        out.writeInt(0); // Unused.
 
         return baos.toByteArray();
     }
@@ -352,27 +352,29 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
 
         int matchRule = in.readInt();
         final String subscriberId = BackupUtils.readString(in);
-        final String networkId = BackupUtils.readString(in);
+        final String wifiNetworkKey = BackupUtils.readString(in);
 
         final int metered;
-        final int subscriberIdMatchRule;
         if (version >= TEMPLATE_BACKUP_VERSION_2_SUPPORT_CARRIER_TEMPLATE) {
             metered = in.readInt();
-            subscriberIdMatchRule = in.readInt();
+            final int unused = in.readInt();
         } else {
             // For backward compatibility, fill the missing filters from match rules.
             metered = (matchRule == MATCH_MOBILE
                     || matchRule == NetworkTemplate.MATCH_MOBILE_WILDCARD
                     || matchRule == MATCH_CARRIER) ? METERED_YES : METERED_ALL;
-            subscriberIdMatchRule = SUBSCRIBER_ID_MATCH_RULE_EXACT;
         }
 
         try {
-            return new NetworkTemplate(matchRule,
-                    subscriberId, new String[]{subscriberId},
-                    networkId, metered, NetworkStats.ROAMING_ALL,
-                    NetworkStats.DEFAULT_NETWORK_ALL, NetworkTemplate.NETWORK_TYPE_ALL,
-                    NetworkTemplate.OEM_MANAGED_ALL, subscriberIdMatchRule);
+            final NetworkTemplate.Builder builder = new NetworkTemplate.Builder(matchRule)
+                    .setWifiNetworkKey(wifiNetworkKey)
+                    .setMeteredness(metered);
+            if (subscriberId != null) {
+                final ArraySet<String> ids = new ArraySet<>();
+                ids.add(subscriberId);
+                builder.setSubscriberIds(ids);
+            }
+            return builder.build();
         } catch (IllegalArgumentException e) {
             throw new BackupUtils.BadVersionException(
                     "Restored network template contains unknown match rule " + matchRule, e);
