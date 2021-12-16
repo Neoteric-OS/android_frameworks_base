@@ -143,6 +143,8 @@ public final class VpnProfile implements Cloneable, Parcelable {
     public boolean areAuthParamsInline = false;                  // 23
     public final boolean isRestrictedToTestNetworks;             // 24
 
+    public boolean isExcludeLocalRoutes = false;                 // 25
+
     // Helper fields.
     @UnsupportedAppUsage
     public transient boolean saveLogin = false;
@@ -183,6 +185,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
         maxMtu = in.readInt();
         areAuthParamsInline = in.readBoolean();
         isRestrictedToTestNetworks = in.readBoolean();
+        isExcludeLocalRoutes = in.readBoolean();
     }
 
     /**
@@ -230,6 +233,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
         out.writeInt(maxMtu);
         out.writeBoolean(areAuthParamsInline);
         out.writeBoolean(isRestrictedToTestNetworks);
+        out.writeBoolean(isExcludeLocalRoutes);
     }
 
     /**
@@ -249,8 +253,9 @@ public final class VpnProfile implements Cloneable, Parcelable {
             // 14-19: Standard profile, with option for serverCert, proxy
             // 24: Standard profile with serverCert, proxy and platform-VPN parameters
             // 25: Standard profile with platform-VPN parameters and isRestrictedToTestNetworks
+            // 26: Standard profile with platform-VPN parameters and isExcludeLocalRoutes
             if ((values.length < 14 || values.length > 19)
-                    && values.length != 24 && values.length != 25) {
+                    && values.length != 24 && values.length != 25 && values.length != 26) {
                 return null;
             }
 
@@ -311,6 +316,10 @@ public final class VpnProfile implements Cloneable, Parcelable {
             // isRestrictedToTestNetworks (values[24]) assigned as part of the constructor
 
             profile.saveLogin = !profile.username.isEmpty() || !profile.password.isEmpty();
+
+            if (values.length >= 26) {
+                profile.isExcludeLocalRoutes = Boolean.parseBoolean(values[25]);
+            }
             return profile;
         } catch (Exception e) {
             // ignore
@@ -370,6 +379,8 @@ public final class VpnProfile implements Cloneable, Parcelable {
         builder.append(VALUE_DELIMITER).append(maxMtu);
         builder.append(VALUE_DELIMITER).append(areAuthParamsInline);
         builder.append(VALUE_DELIMITER).append(isRestrictedToTestNetworks);
+
+        builder.append(VALUE_DELIMITER).append(isExcludeLocalRoutes);
 
         return builder.toString().getBytes(StandardCharsets.UTF_8);
     }
@@ -451,7 +462,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
             key, type, server, username, password, dnsServers, searchDomains, routes, mppe,
             l2tpSecret, ipsecIdentifier, ipsecSecret, ipsecUserCert, ipsecCaCert, ipsecServerCert,
             proxy, mAllowedAlgorithms, isBypassable, isMetered, maxMtu, areAuthParamsInline,
-            isRestrictedToTestNetworks);
+            isRestrictedToTestNetworks, isExcludeLocalRoutes);
     }
 
     /** Checks VPN profiles for interior equality. */
@@ -484,7 +495,8 @@ public final class VpnProfile implements Cloneable, Parcelable {
                 && isMetered == other.isMetered
                 && maxMtu == other.maxMtu
                 && areAuthParamsInline == other.areAuthParamsInline
-                && isRestrictedToTestNetworks == other.isRestrictedToTestNetworks;
+                && isRestrictedToTestNetworks == other.isRestrictedToTestNetworks
+                && isExcludeLocalRoutes == other.isExcludeLocalRoutes;
     }
 
     @NonNull

@@ -66,13 +66,28 @@ public abstract class PlatformVpnProfile {
     @PlatformVpnType protected final int mType;
 
     /** @hide */
-    PlatformVpnProfile(@PlatformVpnType int type) {
+    protected final boolean mIsExcludeLocalRoutes;
+
+    /** @hide */
+    PlatformVpnProfile(@PlatformVpnType int type, boolean excludeLocalRoutes) {
         mType = type;
+        mIsExcludeLocalRoutes = excludeLocalRoutes;
     }
+
     /** Returns the profile integer type. */
     @PlatformVpnType
     public final int getType() {
         return mType;
+    }
+
+
+    /**
+     * Returns if the local traffic is exempted from the VPN.
+     *
+     * @hide TODO(184750836): unhide once the implementation is completed
+     */
+    public final boolean isExcludeLocalRoutes() {
+        return mIsExcludeLocalRoutes;
     }
 
     /** Returns a type string describing the VPN profile type */
