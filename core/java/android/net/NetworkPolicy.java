@@ -40,6 +40,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -335,7 +336,7 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
 
         out.writeInt(template.getMatchRule());
         BackupUtils.writeString(out, template.getSubscriberId());
-        BackupUtils.writeString(out, template.getNetworkId());
+        BackupUtils.writeString(out, template.getWifiNetworkKey());
         out.writeInt(template.getMeteredness());
         out.writeInt(template.getSubscriberIdMatchRule());
 
@@ -352,7 +353,7 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
 
         int matchRule = in.readInt();
         final String subscriberId = BackupUtils.readString(in);
-        final String networkId = BackupUtils.readString(in);
+        final String wifiNetworkKey = BackupUtils.readString(in);
 
         final int metered;
         final int subscriberIdMatchRule;
@@ -368,11 +369,14 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
         }
 
         try {
-            return new NetworkTemplate(matchRule,
-                    subscriberId, new String[]{subscriberId},
-                    networkId, metered, NetworkStats.ROAMING_ALL,
-                    NetworkStats.DEFAULT_NETWORK_ALL, NetworkTemplate.NETWORK_TYPE_ALL,
-                    NetworkTemplate.OEM_MANAGED_ALL, subscriberIdMatchRule);
+            return new NetworkTemplate.Builder(matchRule)
+                    .setSubscriberIds(new ArrayList<String>() {{
+                        add(subscriberId);
+                    }})
+                    .setWifiNetworkKey(wifiNetworkKey)
+                    .setMeteredness(metered)
+                    .setSubscriberIdMatchRule(subscriberIdMatchRule)
+                    .build();
         } catch (IllegalArgumentException e) {
             throw new BackupUtils.BadVersionException(
                     "Restored network template contains unknown match rule " + matchRule, e);
