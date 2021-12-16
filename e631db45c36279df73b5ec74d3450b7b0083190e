@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cb9cc45_10764170",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1903070
+      },
+      "writtenOn": "2021-12-16T06:35:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0de1073_10c79d76",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "e631db45c36279df73b5ec74d3450b7b0083190e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ef37cfb_c19a7158",
@@ -37,6 +61,24 @@
       "writtenOn": "2021-12-14T09:57:57Z",
       "side": 1,
       "message": "Please add the following stanza to the commit message\n\nTest: \u003cwhat test was performed before uploading this CL\u003e\nTag: #feature\nsponsor: siyuanh@",
+      "revId": "e631db45c36279df73b5ec74d3450b7b0083190e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8d3c462_80b0aa38",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1903070
+      },
+      "writtenOn": "2021-12-16T06:35:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ef37cfb_c19a7158",
       "revId": "e631db45c36279df73b5ec74d3450b7b0083190e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -71,6 +113,30 @@
       "writtenOn": "2021-12-14T09:57:57Z",
       "side": 1,
       "message": "please remove empty space here",
+      "range": {
+        "startLine": 247,
+        "startChar": 31,
+        "endLine": 247,
+        "endChar": 32
+      },
+      "revId": "e631db45c36279df73b5ec74d3450b7b0083190e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2615dd7_b4243ea3",
+        "filename": "core/java/android/bluetooth/le/PeriodicAdvertisingManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1903070
+      },
+      "writtenOn": "2021-12-16T06:35:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbc537ab_0db3f8af",
       "range": {
         "startLine": 247,
         "startChar": 31,
