@@ -39,9 +39,12 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
@@ -333,6 +336,49 @@ public class SystemConfigTest {
         assertThat(mSysConfig.getAllowedVendorApexes()).isEmpty();
     }
 
+    @Test
+    public void readApexPrivAppPermissions_addAllPermissions()
+            throws IOException, XmlPullParserException {
+        final String contents =
+                "<privapp-permissions package=\"com.android.apk_in_apex\">"
+                        + "<permission name=\"android.permission.FOO\"/>"
+                        + "<deny-permission name=\"android.permission.BAR\"/>"
+                        + "</privapp-permissions>";
+        File apexDir = createTempSubfolder("apex");
+        File permDir = createTempSubfolder("apex", "com.android.my_module", "etc", "permissions");
+        createTempFile(permDir, "permissions.xml", contents);
+        File permFile = new File(permDir, "permissions.xml");
+
+        XmlPullParser parser = readXmlUntilStartTag(permFile);
+        mSysConfig.readApexPrivAppPermissions(parser, permFile, apexDir.toPath());
+        assertThat(mSysConfig.getApexPrivAppPermissions("com.android.my_module",
+                "com.android.apk_in_apex"))
+            .containsExactly("android.permission.FOO");
+        assertThat(mSysConfig.getApexPrivAppDenyPermissions("com.android.my_module",
+                "com.android.apk_in_apex"))
+            .containsExactly("android.permission.BAR");
+    }
+
+    private XmlPullParser readXmlUntilStartTag(File permFile)
+            throws IOException, XmlPullParserException {
+        FileReader permReader = null;
+        try {
+            permReader = new FileReader(permFile);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Couldn't find or open permissions file " + permFile);
+        }
+        XmlPullParser parser = Xml.newPullParser();
+        parser.setInput(permReader);
+        int type;
+        do {
+            type = parser.next();
+        } while (type != parser.START_TAG && type != parser.END_DOCUMENT);
+        if (type != parser.START_TAG) {
+            throw new XmlPullParserException("No start tag found");
+        }
+        return parser;
+    }
+
     /**
      * Tests that readPermissions works correctly for a library with on-bootclasspath-before
      * and on-bootclasspath-since.
@@ -497,10 +543,15 @@ public class SystemConfigTest {
      * @param folderName subdirectory of mTemporaryFolder to put the file, creating if needed
      * @return the folder
      */
-    private File createTempSubfolder(String folderName)
+    private File createTempSubfolder(String... folderName)
             throws IOException {
-        File folder = new File(mTemporaryFolder.getRoot(), folderName);
-        folder.mkdir();
+        File folder = mTemporaryFolder.getRoot();
+        for (String subFolder : folderName) {
+            folder = new File(folder, subFolder);
+            if (!folder.exists()) {
+                folder.mkdir();
+            }
+        }
         return folder;
     }
 
