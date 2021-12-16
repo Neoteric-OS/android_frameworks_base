@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018475416",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1926897?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "52e1209c_cecab6d8",
+          "description": "Change to \"packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java\"",
+          "replacements": [
+            {
+              "path": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+              "range": {
+                "startLine": 934,
+                "startChar": 36,
+                "endLine": 934,
+                "endChar": 42
+              },
+              "replacement": "require"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "c51b3b68_61469629",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-16T02:27:15Z",
+      "side": 1,
+      "message": "Common typo found: \"reqire\" -- should it be \"require\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 934,
+        "startChar": 36,
+        "endLine": 934,
+        "endChar": 42
+      },
+      "revId": "829a0d9db86da1e912ee04b9cc896a3292e781b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018475416",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1926897?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "49e3201d_d4137a85",
+          "description": "Change to \"packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java\"",
+          "replacements": [
+            {
+              "path": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+              "range": {
+                "startLine": 948,
+                "startChar": 20,
+                "endLine": 948,
+                "endChar": 26
+              },
+              "replacement": "require"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "db791ea7_cfa294bc",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-16T02:27:15Z",
+      "side": 1,
+      "message": "Common typo found: \"reqire\" -- should it be \"require\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 948,
+        "startChar": 20,
+        "endLine": 948,
+        "endChar": 26
+      },
+      "revId": "829a0d9db86da1e912ee04b9cc896a3292e781b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
