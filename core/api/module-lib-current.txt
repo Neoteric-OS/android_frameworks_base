@@ -129,6 +129,7 @@ package android.media {
     method @NonNull public static android.media.BluetoothProfileConnectionInfo createA2dpInfo(boolean, int);
     method @NonNull public static android.media.BluetoothProfileConnectionInfo createA2dpSinkInfo(int);
     method @NonNull public static android.media.BluetoothProfileConnectionInfo createHearingAidInfo(boolean);
+    method @NonNull public static android.media.BluetoothProfileConnectionInfo createLeAudioBroadcastInfo(boolean);
     method @NonNull public static android.media.BluetoothProfileConnectionInfo createLeAudioInfo(boolean, boolean);
     method public int describeContents();
     method public int getProfile();

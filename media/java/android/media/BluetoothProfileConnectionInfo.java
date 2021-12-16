@@ -126,6 +126,18 @@ public final class BluetoothProfileConnectionInfo implements Parcelable {
     }
 
     /**
+     * constructor for le audio broadcast info
+     *
+     * @param suppressNoisyIntent if true the {@link AudioManager.ACTION_AUDIO_BECOMING_NOISY}
+     * intent will not be sent.
+     */
+    public static @NonNull BluetoothProfileConnectionInfo createLeAudioBroadcastInfo(
+            boolean suppressNoisyIntent) {
+        return new BluetoothProfileConnectionInfo(BluetoothProfile.LE_AUDIO_BROADCAST,
+            suppressNoisyIntent, -1, true);
+    }
+
+    /**
      * @return The profile connection
      */
     public int getProfile() {
