@@ -368,11 +368,13 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
         }
 
         try {
-            return new NetworkTemplate(matchRule,
-                    subscriberId, new String[]{subscriberId},
-                    networkId, metered, NetworkStats.ROAMING_ALL,
-                    NetworkStats.DEFAULT_NETWORK_ALL, NetworkTemplate.NETWORK_TYPE_ALL,
-                    NetworkTemplate.OEM_MANAGED_ALL, subscriberIdMatchRule);
+            return new NetworkTemplate.Builder()
+                    .setMatchRule(matchRule)
+                    .setSubscriberId(subscriberId)
+                    .setWifiKey(networkId)
+                    .setMetered(metered)
+                    .setSubscriberIdMatchRule(subscriberIdMatchRule)
+                    .build();
         } catch (IllegalArgumentException e) {
             throw new BackupUtils.BadVersionException(
                     "Restored network template contains unknown match rule " + matchRule, e);

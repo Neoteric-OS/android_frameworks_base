@@ -37,6 +37,7 @@ import static android.net.wifi.WifiInfo.sanitizeSsid;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.IntDef;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
@@ -48,6 +49,8 @@ import android.text.TextUtils;
 import com.android.internal.util.ArrayUtils;
 import com.android.net.module.util.NetworkIdentityUtils;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -63,13 +66,45 @@ import java.util.Objects;
 public class NetworkTemplate implements Parcelable {
     private static final String TAG = "NetworkTemplate";
 
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(prefix = { "MATCH_" }, value = {
+            MATCH_MOBILE,
+            MATCH_WIFI,
+            MATCH_ETHERNET,
+            MATCH_MOBILE_WILDCARD,
+            MATCH_WIFI_WILDCARD,
+            MATCH_BLUETOOTH,
+            MATCH_PROXY,
+            MATCH_CARRIER
+    })
+    public @interface TemplateMatchRule{}
+
+    /** @hide */
+    static final int MATCH_UNINITIALIZED = -1;
+    /** Match rule to match cellular networks. */
     public static final int MATCH_MOBILE = 1;
+    /** Match rule to match wifi networks. */
     public static final int MATCH_WIFI = 4;
+    /** Match rule to match ethernet networks. */
     public static final int MATCH_ETHERNET = 5;
+    /**
+     * Match rule to match all cellular networks.
+     *
+     * @hide
+     */
     public static final int MATCH_MOBILE_WILDCARD = 6;
+    /**
+     * Match rule to match all wifi networks.
+     *
+     * @hide
+     */
     public static final int MATCH_WIFI_WILDCARD = 7;
+    /** Match rule to match bluetooth networks. */
     public static final int MATCH_BLUETOOTH = 8;
+    /** @hide */
     public static final int MATCH_PROXY = 9;
+    /** Match rule to match all networks with subscriberId inside the template. */
     public static final int MATCH_CARRIER = 10;
 
     /**
@@ -283,14 +318,14 @@ public class NetworkTemplate implements Parcelable {
     // Bitfield containing OEM network properties{@code NetworkIdentity#OEM_*}.
     private final int mOemManaged;
 
-    private void checkValidSubscriberIdMatchRule() {
-        switch (mMatchRule) {
+    private static void checkValidSubscriberIdMatchRule(int matchRule, int subscriberIdMatchRule) {
+        switch (matchRule) {
             case MATCH_MOBILE:
             case MATCH_CARRIER:
                 // MOBILE and CARRIER templates must always specify a subscriber ID.
-                if (mSubscriberIdMatchRule == SUBSCRIBER_ID_MATCH_RULE_ALL) {
+                if (subscriberIdMatchRule == SUBSCRIBER_ID_MATCH_RULE_ALL) {
                     throw new IllegalArgumentException("Invalid SubscriberIdMatchRule"
-                            + "on match rule: " + getMatchRuleName(mMatchRule));
+                            + "on match rule: " + getMatchRuleName(matchRule));
                 }
                 return;
             default:
@@ -339,7 +374,7 @@ public class NetworkTemplate implements Parcelable {
         mSubType = subType;
         mOemManaged = oemManaged;
         mSubscriberIdMatchRule = subscriberIdMatchRule;
-        checkValidSubscriberIdMatchRule();
+        checkValidSubscriberIdMatchRule(matchRule, subscriberIdMatchRule);
         if (!isKnownMatchRule(matchRule)) {
             throw new IllegalArgumentException("Unknown network template rule " + matchRule
                     + " will not match any identity.");
@@ -830,4 +865,162 @@ public class NetworkTemplate implements Parcelable {
             return new NetworkTemplate[size];
         }
     };
+
+    /**
+     * Builder class for NetworkTemplate.
+     *
+     * @hide
+     */
+    // TODO: @SystemApi
+    public static final class Builder {
+        private int mMatchRule;
+        private String mSubscriberId;
+        private String[] mMatchSubscriberIds;
+        private String mNetworkId;
+
+        // Matches for the NetworkStats constants METERED_*, ROAMING_* and DEFAULT_NETWORK_*.
+        private int mMetered;
+        private int mRoaming;
+        private int mDefaultNetwork;
+        private int mSubType;
+        /**
+         * The subscriber Id match rule defines how the template should match networks with
+         * specific subscriberId(s). See NetworkTemplate#SUBSCRIBER_ID_MATCH_RULE_* for more detail.
+         */
+        private int mSubscriberIdMatchRule;
+
+        // Bitfield containing OEM network properties{@code NetworkIdentity#OEM_*}.
+        private int mOemManaged;
+
+        /**
+         * Creates a new Builder to construct NetworkTemplate objects.
+         */
+        public Builder() {
+            // Initialize members with default values.
+            mMatchRule = MATCH_UNINITIALIZED;
+            mSubscriberId = null;
+            mMatchSubscriberIds = null;
+            mNetworkId = null;
+            mMetered = METERED_ALL;
+            mRoaming = ROAMING_ALL;
+            mDefaultNetwork = DEFAULT_NETWORK_ALL;
+            mSubType = NETWORK_TYPE_ALL;
+            mSubscriberIdMatchRule = SUBSCRIBER_ID_MATCH_RULE_ALL;
+            mOemManaged = OEM_MANAGED_ALL;
+        }
+
+        /**
+         * Set the given match rule.
+         *
+         * @param matchRule the match rule.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setMatchRule(@TemplateMatchRule final int matchRule) {
+            // Wildcard match rules are not allowed but check that when building the template.
+            isValidMatchRule(false /*includeWildcard*/);
+            mMatchRule = matchRule;
+            return this;
+        }
+
+        /**
+         * Set the Subscriber Id.
+         *
+         * @param subscriberId the Subscriber Id.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setSubscriberId(@NonNull String subscriberId) {
+            mSubscriberId = Objects.reqireNonNull(subscriberId);
+            mMatchSubscriberIds = new String[]{subscriberId};
+            mSubscriberIdMatchRule = SUBSCRIBER_ID_MATCH_RULE_EXACT;
+            return this;
+        }
+
+        /**
+         * Set the Subscriber Ids.
+         *
+         * @param subscriberIds the Subscriber Ids.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setSubscriberIds(@NonNull List<String> subscriberIds) {
+            Objects.reqireNonNull(subscriberIds);
+            if (subscriberIds.size() == 0) {
+                throw new IllegalArgumentException(
+                        "Zero length list of Subscriber Id is not allowed.");
+            }
+            mSubscriberId = subscriberIds.get(0);
+            mMatchSubscriberIds = subscriberIds.toArray(new String[0]);
+            mSubscriberIdMatchRule = SUBSCRIBER_ID_MATCH_RULE_EXACT;
+            return this;
+        }
+
+        /**
+         * Set the Wifi Key.
+         *
+         * @param wifiKey the Wifi Key, See ...FIXME....
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setWifiKey(@NonNull String key) {
+            // FIXME: setWifiKey? setNetworkId? Decide by API council?
+            mNetworkId = key;
+            return this;
+        }
+
+        /**
+         * Set the metered filter.
+         *
+         * @param metered the metered filter.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setMetered(@NetworkStats.Meteredness int metered) {
+            mMetered = metered;
+            return this;
+        }
+
+        private void enforceRequestableParameters() {
+            // TODO: Only allow current use cases. Throw IllegalArgumentException otherwise.
+            //  Security checks like enforce location permission will not be checked here.
+            // TODO: Check all the input are within @IntDef.
+
+            // Check whether the match rule is one of the exposed rules.
+            if (!isKnownMatchRule(mMatchRule) || mMatchRule == MATCH_MOBILE_WILDCARD
+                    || mMatchRule == MATCH_WIFI_WILDCARD || mMatchRule == MATCH_PROXY) {
+                throw new IllegalArgumentException("Invalid match rule: "
+                        + getMatchRuleName(mMatchRule));
+            }
+
+            // Check if the subscriberId match rule is valid.
+            checkValidSubscriberIdMatchRule(mMatchRule, mSubscriberIdMatchRule);
+        }
+
+        /**
+         * Override the match rule to a wildcard match rule for backward compatibility.
+         */
+        private void maybeMarkMatchRuleWildcard() {
+            if (mMatchRule == MATCH_MOBILE && TextUtil.isEmpty(mSubscriberId)) {
+                mMatchRule = MATCH_MOBILE_WILDCARD;
+            } else if (mMatchRule == MATCH_WIFI && TextUtil.isEmpty(mSubscriberId)
+                    && TextUtil.isEmpty(mNetworkId)) {
+                mMatchRule = MATCH_WIFI_WILDCARD;
+            }
+        }
+
+        /**
+         * Builds the instance of the NetworkTemplate.
+         *
+         * @return the built instance of NetworkTemplate.
+         */
+        @NonNull
+        public NetworkTemplate build() {
+            enforceRequestableParameters();
+            maybeMarkMatchRuleWildcard();
+            return new NetworkTemplate(matchRule, subscriberId, mMatchSubscriberIds, networkId,
+                    mMetered, mRoaming, mDefaultNetwork, mSubType, mOemManaged,
+                    mSubscriberIdMatchRule);
+        }
+    }
 }
