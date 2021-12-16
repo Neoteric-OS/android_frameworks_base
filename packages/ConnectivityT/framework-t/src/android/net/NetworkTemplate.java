@@ -51,6 +51,7 @@ import com.android.net.module.util.NetworkIdentityUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -121,12 +122,18 @@ public final class NetworkTemplate implements Parcelable {
      */
     public static final int SUBSCRIBER_ID_MATCH_RULE_ALL = 1;
 
-    /**
-     * Wi-Fi Network ID is never supposed to be null (if it is, it is a bug that
-     * should be fixed), so it's not possible to want to match null vs
-     * non-null. Therefore it's fine to use null as a sentinel for Network ID.
-     */
+    // TODO: Remove this and replace all callers with WIFI_NETWORK_KEY_ALL.
+    /** @hide */
     public static final String WIFI_NETWORKID_ALL = null;
+
+    /**
+     * Wi-Fi Network Key is never supposed to be null (if it is, it is a bug that
+     * should be fixed), so it's not possible to want to match null vs
+     * non-null. Therefore it's fine to use null as a sentinel for Wifi Network Key.
+     *
+     * @hide
+     */
+    public static final String WIFI_NETWORK_KEY_ALL = WIFI_NETWORKID_ALL;
 
     /**
      * Include all network types when filtering. This is meant to merge in with the
@@ -256,7 +263,9 @@ public final class NetworkTemplate implements Parcelable {
      * Template to match all {@link ConnectivityManager#TYPE_WIFI} networks with the given SSID,
      * and IMSI.
      *
-     * Call with {@link #WIFI_NETWORKID_ALL} for {@code networkId} to get result regardless of SSID.
+     * Call with {@link #WIFI_NETWORK_ALL} for {@code networkId} to get result regardless of SSID.
+     *
+     * @hide
      */
     public static NetworkTemplate buildTemplateWifi(@Nullable String networkId,
             @Nullable String subscriberId) {
@@ -323,6 +332,7 @@ public final class NetworkTemplate implements Parcelable {
      */
     private final String[] mMatchSubscriberIds;
 
+    // TODO: Change variable name to match the Api surface.
     private final String mNetworkId;
 
     // Matches for the NetworkStats constants METERED_*, ROAMING_* and DEFAULT_NETWORK_*.
@@ -339,14 +349,14 @@ public final class NetworkTemplate implements Parcelable {
     // Bitfield containing OEM network properties{@code NetworkIdentity#OEM_*}.
     private final int mOemManaged;
 
-    private void checkValidSubscriberIdMatchRule() {
-        switch (mMatchRule) {
+    private static void checkValidSubscriberIdMatchRule(int matchRule, int subscriberIdMatchRule) {
+        switch (matchRule) {
             case MATCH_MOBILE:
             case MATCH_CARRIER:
                 // MOBILE and CARRIER templates must always specify a subscriber ID.
-                if (mSubscriberIdMatchRule == SUBSCRIBER_ID_MATCH_RULE_ALL) {
-                    throw new IllegalArgumentException("Invalid SubscriberIdMatchRule"
-                            + "on match rule: " + getMatchRuleName(mMatchRule));
+                if (subscriberIdMatchRule == SUBSCRIBER_ID_MATCH_RULE_ALL) {
+                    throw new IllegalArgumentException("Invalid SubscriberIdMatchRule "
+                            + "on match rule: " + getMatchRuleName(matchRule));
                 }
                 return;
             default:
@@ -399,7 +409,7 @@ public final class NetworkTemplate implements Parcelable {
         mSubType = subType;
         mOemManaged = oemManaged;
         mSubscriberIdMatchRule = subscriberIdMatchRule;
-        checkValidSubscriberIdMatchRule();
+        checkValidSubscriberIdMatchRule(matchRule, subscriberIdMatchRule);
         if (!isKnownMatchRule(matchRule)) {
             throw new IllegalArgumentException("Unknown network template rule " + matchRule
                     + " will not match any identity.");
@@ -497,7 +507,7 @@ public final class NetworkTemplate implements Parcelable {
         return false;
     }
 
-    private String subscriberIdMatchRuleToString(int rule) {
+    private static String subscriberIdMatchRuleToString(int rule) {
         switch (rule) {
             case SUBSCRIBER_ID_MATCH_RULE_EXACT:
                 return "EXACT_MATCH";
@@ -530,7 +540,7 @@ public final class NetworkTemplate implements Parcelable {
             case MATCH_CARRIER:
                 return mSubscriberId != null;
             case MATCH_WIFI:
-                if (Objects.equals(mNetworkId, WIFI_NETWORKID_ALL)
+                if (Objects.equals(mNetworkId, WIFI_NETWORK_KEY_ALL)
                         && mSubscriberIdMatchRule == SUBSCRIBER_ID_MATCH_RULE_ALL) {
                     return false;
                 }
@@ -557,6 +567,26 @@ public final class NetworkTemplate implements Parcelable {
         return mSubscriberId;
     }
 
+    /**
+     * Get list of subscriber Ids of the template.
+     */
+    @NonNull
+    public List<String> getSubscriberIds() {
+        return mMatchSubscriberIds == null ? new ArrayList<String>() :
+                Arrays.asList(mMatchSubscriberIds);
+    }
+
+    /**
+     * Get Wifi Network Key of the template. See {@link WifiInfo#getCurrentNetworkKey()}.
+     */
+    @Nullable
+    public String getWifiNetworkKey() {
+        return mNetworkId;
+    }
+
+    /** @hide */
+    // TODO: Remove this and replace all callers with {@link #getWifiNetworkKey()}.
+    @Nullable
     public String getNetworkId() {
         return mNetworkId;
     }
@@ -574,6 +604,38 @@ public final class NetworkTemplate implements Parcelable {
     @NetworkStats.Meteredness
     public int getMeteredness() {
         return mMetered;
+    }
+
+    /**
+     * Get roaming filter of the template.
+     */
+    @NetworkStats.Roaming
+    public int getRoaming() {
+        return mRoaming;
+    }
+
+    /**
+     * Get the default network status filter of the template.
+     */
+    @NetworkStats.DefaultNetwork
+    public int getDefaultNetworkStatus() {
+        return mDefaultNetwork;
+    }
+
+    /**
+     * Get the Radio Access Technology(RAT) type filter of the template.
+     */
+    public int getRatType() {
+        return mSubType;
+    }
+
+    /**
+     * Get the OEM managed filter of the template. See {@code OEM_MANAGED_*} or
+     * {@code android.net.NetworkIdentity#OEM_*}.
+     */
+    @NonNull
+    public int getOemManaged() {
+        return mOemManaged;
     }
 
     /**
@@ -655,10 +717,10 @@ public final class NetworkTemplate implements Parcelable {
 
     /**
      * Check if network with matching SSID. Returns true when the SSID matches, or when
-     * {@code mNetworkId} is {@code WIFI_NETWORKID_ALL}.
+     * {@code mNetworkId} is {@code WIFI_NETWORK_KEY_ALL}.
      */
     private boolean matchesWifiNetworkId(@Nullable String networkId) {
-        return Objects.equals(mNetworkId, WIFI_NETWORKID_ALL)
+        return Objects.equals(mNetworkId, WIFI_NETWORK_KEY_ALL)
                 || Objects.equals(sanitizeSsid(mNetworkId), sanitizeSsid(networkId));
     }
 
@@ -923,4 +985,261 @@ public final class NetworkTemplate implements Parcelable {
             return new NetworkTemplate[size];
         }
     };
+
+    /**
+     * Builder class for NetworkTemplate.
+     */
+    public static final class Builder {
+        private int mMatchRule;
+        @Nullable
+        private String mSubscriberId;
+        @Nullable
+        private String[] mMatchSubscriberIds;
+        @Nullable
+        private String mWifiNetworkKey;
+
+        // Matches for the NetworkStats constants METERED_*, ROAMING_* and DEFAULT_NETWORK_*.
+        private int mMetered;
+        private int mRoaming;
+        private int mDefaultNetwork;
+        private int mRatType;
+        /**
+         * The subscriber Id match rule defines how the template should match networks with
+         * specific subscriberId(s). See NetworkTemplate#SUBSCRIBER_ID_MATCH_RULE_* for more detail.
+         */
+        private int mSubscriberIdMatchRule;
+
+        // Bitfield containing OEM network properties{@code NetworkIdentity#OEM_*}.
+        private int mOemManaged;
+
+        /**
+         * Creates a new Builder with given match rule to construct NetworkTemplate objects.
+         *
+         * @param matchRule the match rule of the template, see {@code MATCH_*}.
+         */
+        public Builder(@TemplateMatchRule final int matchRule) {
+            assertRequestableMatchRule(matchRule, false /*includeWildcard*/);
+            // Initialize members with default values.
+            mMatchRule = matchRule;
+            mSubscriberId = null;
+            mMatchSubscriberIds = null;
+            mWifiNetworkKey = WIFI_NETWORK_KEY_ALL;
+            mMetered = METERED_ALL;
+            mRoaming = ROAMING_ALL;
+            mDefaultNetwork = DEFAULT_NETWORK_ALL;
+            mRatType = NETWORK_TYPE_ALL;
+            mSubscriberIdMatchRule = SUBSCRIBER_ID_MATCH_RULE_ALL;
+            mOemManaged = OEM_MANAGED_ALL;
+        }
+
+        /**
+         * Set the Subscriber Ids. Note that calling this function also sets the Subscriber Id
+         * match rule to {@link SUBSCRIBER_ID_MATCH_RULE_EXACT}.
+         *
+         * @param subscriberIds the list of Subscriber Ids.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setSubscriberIds(@NonNull List<String> subscriberIds) {
+            Objects.requireNonNull(subscriberIds);
+            if (subscriberIds.size() == 0) {
+                throw new IllegalArgumentException(
+                        "Zero length list of Subscriber Id is not allowed.");
+            }
+            mSubscriberId = subscriberIds.get(0);
+            mMatchSubscriberIds = subscriberIds.toArray(new String[0]);
+            mSubscriberIdMatchRule = SUBSCRIBER_ID_MATCH_RULE_EXACT;
+            return this;
+        }
+
+        /**
+         * Clear the Subscriber Ids. Note that calling this function also sets the Subscriber Id
+         * match rule to {@link SUBSCRIBER_ID_MATCH_RULE_ALL}.
+         *
+         * @return this builder.
+         */
+        @NonNull
+        public Builder clearSubscriberIds() {
+            mSubscriberId = null;
+            mMatchSubscriberIds = null;
+            mSubscriberIdMatchRule = SUBSCRIBER_ID_MATCH_RULE_ALL;
+            return this;
+        }
+
+        /**
+         * Set the Wifi Network Key.
+         *
+         * @param wifiNetworkKey the Wifi Network Key, see {@link WifiInfo#getCurrentNetworkKey()}.
+         *                       Or null to match all networks.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setWifiNetworkKey(@Nullable String wifiNetworkKey) {
+            mWifiNetworkKey = wifiNetworkKey;
+            return this;
+        }
+
+        /**
+         * Set the meteredness filter.
+         *
+         * @param metered the meteredness filter.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setMeteredness(@NetworkStats.Meteredness int metered) {
+            mMetered = metered;
+            return this;
+        }
+
+        /**
+         * Set the roaming filter.
+         *
+         * @param roaming the roaming filter.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setRoaming(@NetworkStats.Roaming int roaming) {
+            mRoaming = roaming;
+            return this;
+        }
+
+        /**
+         * Set the default network status filter.
+         *
+         * @param defaultNetwork the default network status filter.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setDefaultNetworkStatus(@NetworkStats.DefaultNetwork int defaultNetwork) {
+            mDefaultNetwork = defaultNetwork;
+            return this;
+        }
+
+        /**
+         * Set the Radio Access Technology(RAT) type filter.
+         *
+         * @param ratType the Radio Access Technology(RAT) type filter. Use
+         *                {@link #NETWORK_TYPE_ALL} to include all network types when filtering.
+         *                See {@code TelephonyManager.NETWORK_TYPE_*}.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setRatType(@NetworkType int ratType) {
+            // Input will be validated with the match rule when building the template.
+            mRatType = ratType;
+            return this;
+        }
+
+        /**
+         * Set the Subscriber Id match rule.
+         *
+         * @param subscriberIdMatchRule the match rule of the subscriberId to match
+         *                              networks with any subscriberId which includes null and
+         *                              non-null.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setSubscriberIdMatchRule(@SubscriberIdMatchRule int subscriberIdMatchRule) {
+            mSubscriberIdMatchRule = subscriberIdMatchRule;
+            return this;
+        }
+
+        /**
+         * Set the OEM managed filter.
+         *
+         * @param oemManaged the match rule to match different type of OEM managed network or
+         *                   unmanaged networks. See {@code OEM_MANAGED_*} or
+         *                   {@code android.net.NetworkIdentity#OEM_*}.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setOemManaged(int oemManaged) {
+            mOemManaged = oemManaged;
+            return this;
+        }
+
+        /**
+         * Check whether the match rule is requestable.
+         *
+         * @param matchRule the target match rule to be checked.
+         * @param includeWildcard whether to allow wildcard rules.
+         */
+        private static void assertRequestableMatchRule(final int matchRule,
+                boolean includeWildcard) {
+            if (matchRule == MATCH_MOBILE_WILDCARD || matchRule == MATCH_WIFI_WILDCARD) {
+                if (includeWildcard) {
+                    return;
+                }
+            } else if (isKnownMatchRule(matchRule) && matchRule != MATCH_PROXY) {
+                return;
+            }
+
+            throw new IllegalArgumentException("Invalid match rule: "
+                    + getMatchRuleName(matchRule));
+        }
+
+        private static boolean isRatTypeSupported(int ratType) {
+            if (ratType == NETWORK_TYPE_ALL) return true;
+
+            final int[] supportedRatTypes = TelephonyManager.getAllNetworkTypes();
+            for (int supportedRatType : supportedRatTypes) {
+                if (ratType == supportedRatType) return true;
+            }
+            return false;
+        }
+
+        private void assertRatType() {
+            if (mRatType == NETWORK_TYPE_ALL) return;
+            if ((mMatchRule == MATCH_MOBILE || mMatchRule == MATCH_MOBILE_WILDCARD
+                    || mMatchRule == MATCH_CARRIER) && isRatTypeSupported(mRatType)) {
+                return;
+            }
+
+            throw new IllegalArgumentException("Invalid ratType(" + mRatType
+                    + ") for match rule " + getMatchRuleName(mMatchRule));
+        }
+
+        private void assertRequestableParameters() {
+            // TODO: Only allow current use cases. Throw IllegalArgumentException otherwise.
+            //  Security checks like enforce location permission will not be checked here.
+            // TODO: Check all the input are within @IntDef.
+
+            // Include wildcard rules after the wildcard rule adjustments.
+            assertRequestableMatchRule(mMatchRule, true /*includeWildcard*/);
+
+            assertRatType();
+
+            // Check if the subscriberId match rule is valid. This has to be called after
+            // wildcard rules adjustment.
+            checkValidSubscriberIdMatchRule(mMatchRule, mSubscriberIdMatchRule);
+        }
+
+        /**
+         * Override the match rule to a wildcard match rule for backward compatibility.
+         */
+        private void maybeMarkMatchRuleWildcard() {
+            if (mMatchRule == MATCH_MOBILE
+                    && mSubscriberIdMatchRule == SUBSCRIBER_ID_MATCH_RULE_ALL) {
+                mMatchRule = MATCH_MOBILE_WILDCARD;
+            } else if (mMatchRule == MATCH_WIFI
+                    && mSubscriberIdMatchRule == SUBSCRIBER_ID_MATCH_RULE_ALL
+                    && mWifiNetworkKey == WIFI_NETWORK_KEY_ALL) {
+                mMatchRule = MATCH_WIFI_WILDCARD;
+            }
+        }
+
+        /**
+         * Builds the instance of the NetworkTemplate.
+         *
+         * @return the built instance of NetworkTemplate.
+         */
+        @NonNull
+        public NetworkTemplate build() {
+            maybeMarkMatchRuleWildcard();
+            assertRequestableParameters();
+            return new NetworkTemplate(mMatchRule, mSubscriberId, mMatchSubscriberIds,
+                    mWifiNetworkKey, mMetered, mRoaming, mDefaultNetwork, mRatType, mOemManaged,
+                    mSubscriberIdMatchRule);
+        }
+    }
 }
