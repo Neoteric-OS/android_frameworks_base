@@ -1034,8 +1034,9 @@ public final class Parcel {
      * Write a boolean value into the parcel at the current dataPosition(),
      * growing dataCapacity() if needed.
      *
-     * <p>Note: This method currently delegates to writeInt with a value of 1 or 0
-     * for true or false, respectively, but may change in the future.
+     * <p>Note: This method delegates to writeInt with a value of 1 or 0
+     * for true or false, for compatibility with {@link androidx.core.os.ParcelCompat}
+     * and AIDL generated code.
      */
     public final void writeBoolean(boolean val) {
         writeInt(val ? 1 : 0);
@@ -2921,6 +2922,9 @@ public final class Parcel {
 
     /**
      * Read a boolean value from the parcel at the current dataPosition().
+     * <p>Note: This method delegates to readInt with a value of 1 or 0
+     * for true or false, for compatibility with {@link androidx.core.os.ParcelCompat}
+     * and AIDL generated code.
      */
     public final boolean readBoolean() {
         return readInt() != 0;
