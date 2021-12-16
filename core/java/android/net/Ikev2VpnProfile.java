@@ -142,8 +142,9 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
             boolean isBypassable,
             boolean isMetered,
             int maxMtu,
-            boolean restrictToTestNetworks) {
-        super(type);
+            boolean restrictToTestNetworks,
+            boolean excludeLocalRoute) {
+        super(type, excludeLocalRoute);
 
         checkNotNull(serverAddr, MISSING_PARAM_MSG_TMPL, "Server address");
         checkNotNull(userIdentity, MISSING_PARAM_MSG_TMPL, "User Identity");
@@ -657,6 +658,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         private boolean mIsMetered = true;
         private int mMaxMtu = PlatformVpnProfile.MAX_MTU_DEFAULT;
         private boolean mIsRestrictedToTestNetworks = false;
+        private boolean mIsExcludeLocalRoute = false;
 
         /**
          * Creates a new builder with the basic parameters of an IKEv2/IPsec VPN.
@@ -902,6 +904,16 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         }
 
         /**
+         *  Sets whether the local traffic is exempted from the VPN.
+         */
+        @NonNull
+        @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
+        public Builder setExcludeLocalRoute(boolean excludeLocalRoute) {
+            mIsExcludeLocalRoute = excludeLocalRoute;
+            return this;
+        }
+
+        /**
          * Validates, builds and provisions the VpnProfile.
          *
          * @throws IllegalArgumentException if any of the required keys or values were invalid
@@ -924,7 +936,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
                     mIsBypassable,
                     mIsMetered,
                     mMaxMtu,
-                    mIsRestrictedToTestNetworks);
+                    mIsRestrictedToTestNetworks,
+                    mIsExcludeLocalRoute);
         }
     }
 }
