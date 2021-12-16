@@ -361,6 +361,29 @@ public class SystemConfigTest {
     }
 
     @Test
+    public void readApexPrivAppPermissions_ignoreAllowlistInWrongPath()
+            throws IOException, XmlPullParserException {
+        final String contents =
+                "<privapp-permissions package=\"com.android.apk_in_apex\">"
+                        + "<permission name=\"android.permission.FOO\"/>"
+                        + "<deny-permission name=\"android.permission.BAR\"/>"
+                        + "</privapp-permissions>";
+        File apexDir = createTempSubfolder("apex");
+        File permFile = createTempFile(
+                createTempSubfolder("apex/com.android.my_module/some/path"), "permissions.xml",
+                        contents);
+
+        XmlPullParser parser = readXmlUntilStartTag(permFile);
+        mSysConfig.readApexPrivAppPermissions(parser, permFile, apexDir.toPath());
+        assertThat(mSysConfig.getApexPrivAppPermissions("com.android.my_module",
+                "com.android.apk_in_apex"))
+            .isNull();
+        assertThat(mSysConfig.getApexPrivAppDenyPermissions("com.android.my_module",
+                "com.android.apk_in_apex"))
+            .isNull();
+    }
+
+    @Test
     public void pruneVendorApexPrivappAllowlists_removeVendor()
             throws Exception {
         File apexDir = createTempSubfolder("apex");
