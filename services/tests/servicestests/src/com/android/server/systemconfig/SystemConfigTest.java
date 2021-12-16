@@ -25,6 +25,7 @@ import android.platform.test.annotations.Presubmit;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.Log;
+import android.util.Xml;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -36,9 +37,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
@@ -322,16 +327,125 @@ public class SystemConfigTest {
         assertThat(mSysConfig.getAllowedVendorApexes()).isEmpty();
     }
 
+    @Test
+    public void readApexPrivAppPermissions_addAllPermissions()
+            throws IOException, XmlPullParserException {
+        final String contents =
+                "<privapp-permissions package=\"com.android.apk_in_apex\">"
+                        + "<permission name=\"android.permission.FOO\"/>"
+                        + "<deny-permission name=\"android.permission.BAR\"/>"
+                        + "</privapp-permissions>";
+        File apexDir = createTempSubfolder("apex");
+        File permDir = createTempSubfolder("apex", "com.android.my_module", "etc", "permissions");
+        createTempFile(permDir, "permissions.xml", contents);
+        File permFile = new File(permDir, "permissions.xml");
+
+        XmlPullParser parser = readXmlUntilStartTag(permFile);
+        mSysConfig.readApexPrivAppPermissions(parser, permFile, apexDir.toPath());
+        assertThat(mSysConfig.getApexPrivAppPermissions("com.android.my_module",
+                "com.android.apk_in_apex"))
+            .containsExactly("android.permission.FOO");
+        assertThat(mSysConfig.getApexPrivAppDenyPermissions("com.android.my_module",
+                "com.android.apk_in_apex"))
+            .containsExactly("android.permission.BAR");
+    }
+
+    @Test
+    public void pruneVendorApexPrivappAllowlists_removeVendor()
+            throws IOException, XmlPullParserException {
+        File apexDir = createTempSubfolder("apex");
+
+        // Read non-vendor apex permission allowlists
+        final String allowlistNonVendorContents =
+                "<privapp-permissions package=\"com.android.apk_in_non_vendor_apex\">"
+                        + "<permission name=\"android.permission.FOO\"/>"
+                        + "<deny-permission name=\"android.permission.BAR\"/>"
+                        + "</privapp-permissions>";
+        File nonVendorPermDir =
+                createTempSubfolder("apex", "com.android.non_vendor", "etc", "permissions");
+        createTempFile(nonVendorPermDir, "permissions.xml", allowlistNonVendorContents);
+        File nonVendorPermFile = new File(nonVendorPermDir, "permissions.xml");
+        XmlPullParser nonVendorParser = readXmlUntilStartTag(nonVendorPermFile);
+        mSysConfig.readApexPrivAppPermissions(nonVendorParser, nonVendorPermFile,
+                apexDir.toPath());
+
+        // Read vendor apex permission allowlists
+        final String allowlistVendorContents =
+                "<privapp-permissions package=\"com.android.apk_in_vendor_apex\">"
+                        + "<permission name=\"android.permission.BAZ\"/>"
+                        + "<deny-permission name=\"android.permission.BAT\"/>"
+                        + "</privapp-permissions>";
+        File vendorPermDir =
+                createTempSubfolder("apex", "com.android.vendor", "etc", "permissions");
+        createTempFile(vendorPermDir, "permissions.xml", allowlistNonVendorContents);
+        File vendorPermFile = new File(vendorPermDir, "permissions.xml");
+        XmlPullParser vendorParser = readXmlUntilStartTag(vendorPermFile);
+        mSysConfig.readApexPrivAppPermissions(vendorParser, vendorPermFile, apexDir.toPath());
+
+        // Read allowed vendor apex list
+        final String allowedVendorContents =
+                "<config>\n"
+                        + "    <allowed-vendor-apex package=\"com.android.vendor\" "
+                        + "installerPackage=\"com.installer\" />\n"
+                        + "</config>";
+        final File allowedVendorFolder = createTempSubfolder("folder");
+        createTempFile(allowedVendorFolder, "vendor-apex-allowlist.xml", allowedVendorContents);
+        mSysConfig.readPermissions(allowedVendorFolder, /* Grant all permission flags */ ~0);
+
+        // Finally, prune non-vendor allowlists.
+        // There is no guarantee in which order the above reads will be done, however pruning
+        // will always happen last.
+        mSysConfig.pruneVendorApexPrivappAllowlists();
+
+        assertThat(mSysConfig.getApexPrivAppPermissions("com.android.non_vendor",
+                "com.android.apk_in_non_vendor_apex"))
+            .containsExactly("android.permission.FOO");
+        assertThat(mSysConfig.getApexPrivAppDenyPermissions("com.android.non_vendor",
+                "com.android.apk_in_non_vendor_apex"))
+            .containsExactly("android.permission.BAR");
+        assertThat(mSysConfig.getApexPrivAppPermissions("com.android.vendor",
+                "com.android.apk_in_vendor_apex"))
+            .isNull();
+        assertThat(mSysConfig.getApexPrivAppDenyPermissions("com.android.vendor",
+                "com.android.apk_in_vendor_apex"))
+            .isNull();
+    }
+
+    private XmlPullParser readXmlUntilStartTag(File permFile)
+            throws IOException, XmlPullParserException {
+        FileReader permReader = null;
+        try {
+            permReader = new FileReader(permFile);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Couldn't find or open permissions file " + permFile);
+        }
+        XmlPullParser parser = Xml.newPullParser();
+        parser.setInput(permReader);
+        int type;
+        do {
+            type = parser.next();
+        } while (type != parser.START_TAG && type != parser.END_DOCUMENT);
+        if (type != parser.START_TAG) {
+            throw new XmlPullParserException("No start tag found");
+        }
+        return parser;
+    }
+
     /**
      * Creates folderName/fileName in the mTemporaryFolder and fills it with the contents.
      *
      * @param folderName subdirectory of mTemporaryFolder to put the file, creating if needed
      * @return the folder
      */
-    private File createTempSubfolder(String folderName)
+    private File createTempSubfolder(String... folderName)
             throws IOException {
-        File folder = new File(mTemporaryFolder.getRoot(), folderName);
-        folder.mkdir();
+        File folder = mTemporaryFolder.getRoot();
+        for (String subFolder : folderName) {
+            folder = new File(folder, subFolder);
+            if (!folder.exists()) {
+                folder.mkdir();
+            }
+        }
         return folder;
     }
 
