@@ -1167,36 +1167,11 @@ public class NetworkTemplate implements Parcelable {
                     + getMatchRuleName(matchRule));
         }
 
-        private static boolean isRatTypeSupported(int ratType) {
-            if (ratType == NETWORK_TYPE_ALL) return true;
-
-            final int[] supportedRatTypes = TelephonyManager.getAllNetworkTypes();
-            for (int supportedRatType : supportedRatTypes) {
-                if (ratType == supportedRatType) return true;
-            }
-            return false;
-        }
-
-        private void assertRatType() {
-            if (mRatType == NETWORK_TYPE_ALL) return;
-            if ((mMatchRule == MATCH_MOBILE || mMatchRule == MATCH_MOBILE_WILDCARD
-                    || mMatchRule == MATCH_CARRIER) && isRatTypeSupported(mRatType)) {
-                return;
-            }
-
-            throw new IllegalArgumentException("Invalid ratType(" + mRatType
-                    + ") for match rule " + getMatchRuleName(mMatchRule));
-        }
-
         private void assertRequestableParameters() {
-            // TODO: Only allow current use cases. Throw IllegalArgumentException otherwise.
-            //  Security checks like enforce location permission will not be checked here.
-            // TODO: Check all the input are within @IntDef.
+            // TODO: Check all the input are legitimate.
 
             // Include wildcard rules after the wildcard rule adjustments.
             assertRequestableMatchRule(mMatchRule, true /*includeWildcard*/);
-
-            assertRatType();
 
             // Check if the subscriberId match rule is valid. This has to be called after
             // wildcard rules adjustment.
