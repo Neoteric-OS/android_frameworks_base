@@ -1149,8 +1149,30 @@ public final class NetworkTemplate implements Parcelable {
             }
         }
 
+        private static boolean isRatTypeSupported(int ratType) {
+            if (ratType == NETWORK_TYPE_ALL) return true;
+
+            final int[] supportedRatTypes = TelephonyManager.getAllNetworkTypes();
+            for (int supportedRatType : supportedRatTypes) {
+                if (ratType == supportedRatType) return true;
+            }
+            return false;
+        }
+
+        private void assertRatType() {
+            if (mRatType == NETWORK_TYPE_ALL) return;
+            if ((mMatchRule == MATCH_MOBILE || mMatchRule == MATCH_MOBILE_WILDCARD
+                    || mMatchRule == MATCH_CARRIER) && isRatTypeSupported(mRatType)) {
+                return;
+            }
+
+            throw new IllegalArgumentException("Invalid ratType(" + mRatType
+                    + ") for match rule " + getMatchRuleName(mMatchRule));
+        }
+
         private void assertRequestableParameters() {
             // TODO: Check all the input are legitimate.
+            assertRatType();
         }
 
         /**
