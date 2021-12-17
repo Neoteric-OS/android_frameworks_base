@@ -33,8 +33,9 @@ public final class ConnectivityFrameworkInitializerTiramisu {
     private ConnectivityFrameworkInitializerTiramisu() {}
 
     /**
-     * Called by {@link SystemServiceRegistry}'s static initializer and registers nsd services to
-     * {@link Context}, so that {@link Context#getSystemService} can return them.
+     * Called by {@link SystemServiceRegistry}'s static initializer and registers nsd, ipsec and
+     * ethernet services to {@link Context}, so that {@link Context#getSystemService} can return
+     * them.
      *
      * @throws IllegalStateException if this is called anywhere besides
      * {@link SystemServiceRegistry}.
@@ -46,6 +47,15 @@ public final class ConnectivityFrameworkInitializerTiramisu {
                 (context, serviceBinder) -> {
                     INsdManager service = INsdManager.Stub.asInterface(serviceBinder);
                     return new NsdManager(context, service);
+                }
+        );
+
+        SystemServiceRegistry.registerContextAwareService(
+                Context.ETHERNET_SERVICE,
+                EthernetManager.class,
+                (context, serviceBinder) -> {
+                    IEthernetManager service = IEthernetManager.Stub.asInterface(serviceBinder);
+                    return new EthernetManager(context, service);
                 }
         );
     }
