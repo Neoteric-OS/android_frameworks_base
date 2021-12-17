@@ -16,6 +16,7 @@
 
 package android.net;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 import static android.net.ConnectivityManager.TYPE_BLUETOOTH;
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
@@ -38,6 +39,7 @@ import static android.net.wifi.WifiInfo.sanitizeSsid;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
@@ -64,7 +66,7 @@ import java.util.Objects;
  *
  * @hide
  */
-// @SystemApi(client = MODULE_LIBRARIES)
+@SystemApi(client = MODULE_LIBRARIES)
 public final class NetworkTemplate implements Parcelable {
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
