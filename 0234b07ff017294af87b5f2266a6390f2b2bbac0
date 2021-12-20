@@ -111,6 +111,30 @@
       },
       "revId": "0234b07ff017294af87b5f2266a6390f2b2bbac0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a8d4429_80f6eaba",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/netstats/NetworkStatsUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T09:15:37Z",
+      "side": 1,
+      "message": "Done\nSee the sibling CL MS10.3",
+      "parentUuid": "a83e2681_d44c7c06",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "0234b07ff017294af87b5f2266a6390f2b2bbac0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
