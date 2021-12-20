@@ -5610,6 +5610,11 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
             }
             mTaskSupervisor.checkReadyForSleepLocked(true /* allowDelay */);
         }
+        // Notify task stack change when activity stop.
+        if (mTaskSupervisor.mAppVisibilitiesChangedSinceLastPause) {
+            mAtmService.getTaskChangeNotificationController().notifyTaskStackChanged();
+            mTaskSupervisor.mAppVisibilitiesChangedSinceLastPause = false;
+        }
     }
 
     void addToStopping(boolean scheduleIdle, boolean idleDelayed, String reason) {
@@ -8289,7 +8294,9 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
         }
 
         // The activity may be waiting for stop, but that is no longer appropriate for it.
-        mTaskSupervisor.mStoppingActivities.remove(this);
+        if (andResume) {
+            mTaskSupervisor.mStoppingActivities.remove(this);
+        }
 
         configChangeFlags = 0;
         deferRelaunchUntilPaused = false;
