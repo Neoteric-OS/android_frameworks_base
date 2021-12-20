@@ -286,6 +286,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ef6d4232_98070b3b",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-20T12:08:08Z",
+      "side": 1,
+      "message": "I was thinking exactly the same thing.\n\nI think it\u0027s a poor idea to expose a setter in a builder, but also have other methods mutating it. Instead, normally you check all arguments at the end. The rule of thumb is : order of setters on a Builder should make no difference. I\u0027m not saying there can\u0027t be exceptions, but it\u0027s a good general rule.\n\nSo I think there are two possibilities here :\n• Either expose setSubscriberIdMatchRule(), but do not touch it in setters and only validate it when building\n• Do not expose setSubscriberIdMatchRule() (in effect, make it an implementation detail) and deduce it when building\n\nI like the second option better, as it seems harder to get wrong for the caller.",
+      "parentUuid": "72628e8c_00be7c5c",
+      "range": {
+        "startLine": 1049,
+        "startChar": 0,
+        "endLine": 1049,
+        "endChar": 68
+      },
+      "revId": "5896a2895570548284f561414f012867a37d7921",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "480c13b8_5d7db0bd",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
         "patchSetId": 11

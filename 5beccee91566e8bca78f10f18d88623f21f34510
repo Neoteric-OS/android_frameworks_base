@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2053946_bf7ead0f",
+        "filename": "core/java/android/net/NetworkPolicy.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-20T12:08:08Z",
+      "side": 1,
+      "message": "Suggest keeping this argument on the previous line and aligning the setters",
+      "range": {
+        "startLine": 373,
+        "startChar": 19,
+        "endLine": 373,
+        "endChar": 30
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b70d4bb_4e31a768",
+        "filename": "core/java/android/net/NetworkPolicy.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-20T12:08:08Z",
+      "side": 1,
+      "message": "This is a little bit heavyweight ; can\u0027t we live with\n\n  if (...) {\n    final ArraySet\u003cString\u003e ids \u003d new ArraySet\u003c\u003e();\n    ids.add(subscriberId);\n    builder.setSubscriberIds(ids);\n  }\n\nNo very strong opinion as this isn\u0027t called very often",
+      "range": {
+        "startLine": 377,
+        "startChar": 45,
+        "endLine": 377,
+        "endChar": 52
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2508d59e_7b6895dd",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-20T12:08:08Z",
+      "side": 1,
+      "message": "This will become the wifi key right ? Maybe we should update the doc ? Or do you want to do it in a later patch ?",
+      "range": {
+        "startLine": 286,
+        "startChar": 91,
+        "endLine": 286,
+        "endChar": 95
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d30b9e2_d57b6382",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-20T12:08:08Z",
+      "side": 1,
+      "message": "Why specifically this class ? Are you by any chance trying to provide guarantees of iteration order ? If so, why ? Be careful of Hyrum\u0027s law.",
+      "range": {
+        "startLine": 602,
+        "startChar": 19,
+        "endLine": 602,
+        "endChar": 32
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab533f78_3a112871",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-20T12:08:08Z",
+      "side": 1,
+      "message": "NonNull makes no sense for a method returning an int",
+      "range": {
+        "startLine": 662,
+        "startChar": 5,
+        "endLine": 662,
+        "endChar": 12
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "689af0c3_02f4acca",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-20T12:08:08Z",
+      "side": 1,
+      "message": "Why is this desirable ?",
+      "range": {
+        "startLine": 1021,
+        "startChar": 32,
+        "endLine": 1021,
+        "endChar": 90
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5c43a7c_2ede31f3",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-20T12:08:08Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 1038,
+        "startChar": 53,
+        "endLine": 1038,
+        "endChar": 54
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41f76c24_6f26527e",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-20T12:08:08Z",
+      "side": 1,
+      "message": "accept ? allow ?",
+      "range": {
+        "startLine": 1190,
+        "startChar": 24,
+        "endLine": 1190,
+        "endChar": 31
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ed49750_61652a29",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-20T12:08:08Z",
+      "side": 1,
+      "message": "Let\u0027s return it instead of mutating it. This will simplify your code because you can make mMatchRule final and you won\u0027t have to pass the includeWildcard argument to assertRequestableMatchRule ; instead you\u0027ll pass the deduced rule to assertRequestableParameters which is easier to understand.\n\nThere are also other reasons it\u0027s a poor idea to mutate it :\n• It\u0027s hard for readers to understand the flow in assertRequestableParameters because a reader needs to understand that the member has been mutated first.\n• It would make it very hard to create a copy constructor for the builder, which is something we sometimes do",
+      "range": {
+        "startLine": 1220,
+        "startChar": 16,
+        "endLine": 1220,
+        "endChar": 26
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
