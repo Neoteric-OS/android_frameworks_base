@@ -16,6 +16,23 @@
       "message": "Responding to b/206754964.\n\nThe JetPlayer developer guide was removed from DAC some time ago in cl/142700838. We could restore it if necessary.",
       "revId": "7a9a7cbe8572f9b7130d376c4b6c1fff1e1f23b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb822966_4b5256a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1903265
+      },
+      "writtenOn": "2021-12-20T15:43:05Z",
+      "side": 1,
+      "message": "Thanks for the code review Sungsoo Lim. Approval still needed.",
+      "revId": "7a9a7cbe8572f9b7130d376c4b6c1fff1e1f23b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
