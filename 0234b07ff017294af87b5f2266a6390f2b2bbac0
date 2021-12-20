@@ -39,6 +39,30 @@
       },
       "revId": "0234b07ff017294af87b5f2266a6390f2b2bbac0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98bd3324_fbee6658",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/netstats/NetworkStatsUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T02:53:27Z",
+      "side": 1,
+      "message": "May I ask what is the concern here?\nAs described in previous comment I think it is better to put in this place since it minimize the scope, since:\n 1. This looks more like a pure util class inside the module to me, similar to\npackages/modules/Connectivity/framework/src/android/net/NetworkUtils.java, where we don\u0027t need to share it with anyone outside the module.\n 2. For libs/net utils, we put utils class into a shared/static library target, which is shared with another framework component. But it looks like we don\u0027t need to add such visibility here since the callers will be purely inside the module.\n\n \nBut given that I don\u0027t have strong opinion.\nReopen if feel strongly then I\u0027ll do it.",
+      "parentUuid": "d53fdf41_61f3c6fe",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "0234b07ff017294af87b5f2266a6390f2b2bbac0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
