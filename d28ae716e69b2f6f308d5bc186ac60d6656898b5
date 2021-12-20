@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a66c945b_8375a2a8",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T08:19:58Z",
+      "side": 1,
+      "message": "If there is no other uses cases, should we name this more specifically?\ne.g. AlertObserver?",
+      "range": {
+        "startLine": 523,
+        "startChar": 18,
+        "endLine": 523,
+        "endChar": 30
+      },
+      "revId": "d28ae716e69b2f6f308d5bc186ac60d6656898b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2b787ba_208498d4",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T08:19:58Z",
+      "side": 1,
+      "message": "Should we delete this as well?\nIIUC this is unused.",
+      "range": {
+        "startLine": 1256,
+        "startChar": 4,
+        "endLine": 1257,
+        "endChar": 17
+      },
+      "revId": "d28ae716e69b2f6f308d5bc186ac60d6656898b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
