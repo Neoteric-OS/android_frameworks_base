@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dff66a49_1a296375",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-20T06:22:05Z",
+      "side": 1,
+      "message": "Consider to do deep copy",
+      "parentUuid": "f0bb5f20_10eabebe",
+      "range": {
+        "startLine": 1066,
+        "startChar": 49,
+        "endLine": 1066,
+        "endChar": 53
+      },
+      "revId": "6c836e8eb2b932e53f1a1e8e2032fea17b19442e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "910f3734_e27d504b",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
         "patchSetId": 12
