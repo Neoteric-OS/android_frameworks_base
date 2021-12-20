@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efc6691b_e9f64bbb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-12-20T17:01:50Z",
+      "side": 1,
+      "message": "Should we modify the connectivity test as well ? (if so we could delete the old method taking a FileDescriptor as argument)\nI uploaded a WIP here: aosp/1927445. But because connectivity is automerging in sc-mainline-prod and base is not, we will need to cherry-pick base on it",
+      "revId": "ce53ba9e32371db61f5980edf06eb82f49b787b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
