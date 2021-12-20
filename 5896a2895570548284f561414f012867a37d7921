@@ -308,6 +308,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "354ce64c_cb684fad",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T15:10:49Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ef6d4232_98070b3b",
+      "range": {
+        "startLine": 1049,
+        "startChar": 0,
+        "endLine": 1049,
+        "endChar": 68
+      },
+      "revId": "5896a2895570548284f561414f012867a37d7921",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "480c13b8_5d7db0bd",

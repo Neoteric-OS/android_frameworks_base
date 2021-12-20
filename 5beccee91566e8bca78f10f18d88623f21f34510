@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee176dea_dfb8b6fb",
+        "filename": "core/java/android/net/NetworkPolicy.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T15:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2053946_bf7ead0f",
+      "range": {
+        "startLine": 373,
+        "startChar": 19,
+        "endLine": 373,
+        "endChar": 30
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b70d4bb_4e31a768",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b13e62fc_f5e63c33",
+        "filename": "core/java/android/net/NetworkPolicy.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T15:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b70d4bb_4e31a768",
+      "range": {
+        "startLine": 377,
+        "startChar": 45,
+        "endLine": 377,
+        "endChar": 52
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2508d59e_7b6895dd",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-12-20T12:08:08Z",
       "side": 1,
       "message": "This will become the wifi key right ? Maybe we should update the doc ? Or do you want to do it in a later patch ?",
+      "range": {
+        "startLine": 286,
+        "startChar": 91,
+        "endLine": 286,
+        "endChar": 95
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b19eafcf_c13b89eb",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T15:10:49Z",
+      "side": 1,
+      "message": "It will be updated by later patches.\naosp/1916817",
+      "parentUuid": "2508d59e_7b6895dd",
       "range": {
         "startLine": 286,
         "startChar": 91,
@@ -95,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9e6f1d8a_47ee1276",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T15:10:49Z",
+      "side": 1,
+      "message": "Yes.\nThe reason for this is we still rely on the first IMSI to be the major one,\ne.g. normalize(...) {\n   ...\n   new NetworkTemplate(template.mMatchRule, merged[0], merged,\n                        template.mNetworkId); \n}\n                        \nIIUC that means our internal implementation should have stable order of IMSIs.\nOtherwise, each time we call normalize() might result in a different template.\n\nIIUC this can be resolved after we remove all single IMSI logic in NPMS.\nBut for now it seems to me can: \n  1. Make sure the order is deterministic.\n  2. Or, use SortedSet which always choose the same IMSI among multiple IMSIs. e.g. smallest.\nIIUC either way suffers from Hyrum\u0027s law.\n  \nSimilar to normalize()\nCurrently, most of the callers currently only support single SIM, e.g. NPMS.\nIf we don\u0027t provide a stable order, then:\n 1. What should we return if the caller tried to get a single IMSI among multiple IMSIs, (l.593)?\n 2. If the caller calls build() twice with multiple IMSI, the result NetworkTemplate might be differed. (before we remove the signle IMSI variable in NetworkTemplate)",
+      "parentUuid": "3d30b9e2_d57b6382",
+      "range": {
+        "startLine": 602,
+        "startChar": 19,
+        "endLine": 602,
+        "endChar": 32
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab533f78_3a112871",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
         "patchSetId": 13
@@ -106,6 +202,30 @@
       "writtenOn": "2021-12-20T12:08:08Z",
       "side": 1,
       "message": "NonNull makes no sense for a method returning an int",
+      "range": {
+        "startLine": 662,
+        "startChar": 5,
+        "endLine": 662,
+        "endChar": 12
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0107c9db_bdc6a4d3",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T15:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab533f78_3a112871",
       "range": {
         "startLine": 662,
         "startChar": 5,
@@ -139,6 +259,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae5fd493_823a5a11",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T15:10:49Z",
+      "side": 1,
+      "message": "replied in the other comment.",
+      "parentUuid": "689af0c3_02f4acca",
+      "range": {
+        "startLine": 1021,
+        "startChar": 32,
+        "endLine": 1021,
+        "endChar": 90
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5c43a7c_2ede31f3",
@@ -162,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7308e59_098e60d1",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T15:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5c43a7c_2ede31f3",
+      "range": {
+        "startLine": 1038,
+        "startChar": 53,
+        "endLine": 1038,
+        "endChar": 54
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41f76c24_6f26527e",
@@ -175,6 +343,30 @@
       "writtenOn": "2021-12-20T12:08:08Z",
       "side": 1,
       "message": "accept ? allow ?",
+      "range": {
+        "startLine": 1190,
+        "startChar": 24,
+        "endLine": 1190,
+        "endChar": 31
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0457a86b_9fed02ba",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T15:10:49Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "41f76c24_6f26527e",
       "range": {
         "startLine": 1190,
         "startChar": 24,
@@ -221,6 +413,30 @@
       "writtenOn": "2021-12-20T13:56:59Z",
       "side": 1,
       "message": "Example :\n\n  private static void assertRequestableParameters(int matchRule, int sIdMRule) {\n    // TODO: Check all the input are legitimate.\n\n    // Include wildcard rules after the wildcard rule adjustments.\n    assertRequestableMatchRule(matchRule);\n\n    // Check if the subscriberId match rule is valid. This has to be called after\n    // wildcard rules adjustment.\n    checkValidSubscriberIdMatchRule(matchRule, sIdMRule);\n  }\n        \n  private int computeFinalMatchRule(int builderMatchRule) {\n    if (mMatchRule \u003d\u003d MATCH_MOBILE\n     \u0026\u0026 mSubscriberIdMatchRule \u003d\u003d SUBSCRIBER_ID_MATCH_RULE_ALL) {\n      return MATCH_MOBILE_WILDCARD;\n    } else if (mMatchRule \u003d\u003d MATCH_WIFI\n     \u0026\u0026 mSubscriberIdMatchRule \u003d\u003d SUBSCRIBER_ID_MATCH_RULE_ALL\n     \u0026\u0026 mWifiNetworkKey \u003d\u003d WIFI_NETWORK_KEY_ALL) {\n      return MATCH_WIFI_WILDCARD;\n    }\n    return builderMatchRule;\n  }\n\n  public NetworkTemplate build() {\n    final int finalMatchRule \u003d computeFinalMatchRule(mMatchRule);\n    assertRequestableParameters(finalMatchRule, mSubscriberIdMatchRule);\n    return new NetworkTemplate(finalMatchRule, ...",
+      "parentUuid": "0ed49750_61652a29",
+      "range": {
+        "startLine": 1220,
+        "startChar": 16,
+        "endLine": 1220,
+        "endChar": 26
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0eb4838_2fc653b7",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T15:10:49Z",
+      "side": 1,
+      "message": "Thanks.\nDone.",
       "parentUuid": "0ed49750_61652a29",
       "range": {
         "startLine": 1220,
