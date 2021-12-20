@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a953b02f_06b3a81a",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T09:55:40Z",
+      "side": 1,
+      "message": "IIUC register callbacks should be put in systemReady phase to ensure other services are ready to take the request.\nIs there any specific reason to move it to the constructor?",
+      "range": {
+        "startLine": 461,
+        "startChar": 12,
+        "endLine": 461,
+        "endChar": 66
+      },
+      "revId": "d28ae716e69b2f6f308d5bc186ac60d6656898b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a66c945b_8375a2a8",
         "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 1
