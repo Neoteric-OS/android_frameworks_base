@@ -87,6 +87,30 @@
       },
       "revId": "0234b07ff017294af87b5f2266a6390f2b2bbac0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a83e2681_d44c7c06",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/netstats/NetworkStatsUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-20T07:27:05Z",
+      "side": 1,
+      "message": "The thinking was just that this is a general math util that\u0027s decidedly not specific to the network stack, so I thought it would be better in a static lib.\n\nI don\u0027t feel strongly about this though ; I know how annoying it is to move such a function.\n\nI do feel strongly that we should have unit tests though.",
+      "parentUuid": "f76594ed_f84268a7",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "0234b07ff017294af87b5f2266a6390f2b2bbac0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
