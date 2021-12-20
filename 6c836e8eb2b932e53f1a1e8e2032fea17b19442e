@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "855fbbe3_95ed171b",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-20T06:01:35Z",
+      "side": 1,
+      "message": "It seems to me that it is not correct.\nThe default value is \nsubscriberId \u003d null and mMatchSubscriberIds \u003d an empty list\nSo it means that the mMatchSubscriberIds excludes subscriberId. You will face more issue. I think we should guarantee  mMatchSubscriberIds includes subscriberId for all case.",
+      "range": {
+        "startLine": 1022,
+        "startChar": 35,
+        "endLine": 1022,
+        "endChar": 54
+      },
+      "revId": "6c836e8eb2b932e53f1a1e8e2032fea17b19442e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0bb5f20_10eabebe",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-20T06:01:35Z",
+      "side": 1,
+      "message": "Maybe Set?\nhttps://engdoc.corp.google.com/eng/doc/devguide/java/practices/choosing-collections.md?cl\u003dhead#which_subtype",
+      "range": {
+        "startLine": 1066,
+        "startChar": 49,
+        "endLine": 1066,
+        "endChar": 53
+      },
+      "revId": "6c836e8eb2b932e53f1a1e8e2032fea17b19442e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "910f3734_e27d504b",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-20T06:01:35Z",
+      "side": 1,
+      "message": "IIUC, it never happen.",
+      "range": {
+        "startLine": 1236,
+        "startChar": 51,
+        "endLine": 1236,
+        "endChar": 70
+      },
+      "revId": "6c836e8eb2b932e53f1a1e8e2032fea17b19442e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "475ed8d8_91b9cb83",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-20T06:01:35Z",
+      "side": 1,
+      "message": "Here will happen array index out of bound because the default value is a empty array list",
+      "range": {
+        "startLine": 1237,
+        "startChar": 20,
+        "endLine": 1237,
+        "endChar": 46
+      },
+      "revId": "6c836e8eb2b932e53f1a1e8e2032fea17b19442e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

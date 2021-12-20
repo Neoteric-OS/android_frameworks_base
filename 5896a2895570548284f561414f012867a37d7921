@@ -238,6 +238,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a9121450_5d81e155",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-20T06:01:35Z",
+      "side": 1,
+      "message": "It depends on what is your implementation plan on matchesWifiWildcard.\n\nDo you plan to expose type: MATCH_WIFI_WILDCARD ??\n https://source.corp.google.com/android/frameworks/base/packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java;rcl\u003dHEAD;l\u003d709?q\u003dNetworkTemplate\n \nBut I think it is fine to use SUBSCRIBER_ID_MATCH_RULE_ALL but you will need update all caller since the previous design is using SUBSCRIBER_ID_MATCH_RULE_EXACT as a default value.",
+      "parentUuid": "4961b5a5_1263a0f5",
+      "range": {
+        "startLine": 1049,
+        "startChar": 0,
+        "endLine": 1049,
+        "endChar": 68
+      },
+      "revId": "5896a2895570548284f561414f012867a37d7921",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "480c13b8_5d7db0bd",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
         "patchSetId": 11
@@ -285,6 +309,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0a14f506_c31ea8ae",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-20T06:01:35Z",
+      "side": 1,
+      "message": "Ack. No strong opinion about this.",
+      "parentUuid": "e0ce2f2d_1eed9408",
+      "range": {
+        "startLine": 1060,
+        "startChar": 23,
+        "endLine": 1060,
+        "endChar": 41
+      },
+      "revId": "5896a2895570548284f561414f012867a37d7921",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e45bb0df_c20bac71",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
         "patchSetId": 11
@@ -320,6 +368,30 @@
       "side": 1,
       "message": "Not sure how to expose constants that assigned as null.\nI\u0027ll get CompileTimeConstant lint error which breaks the build. And even @SuppressLint(\"CompileTimeConstant\") cannot fix that.\n\nAny idea?",
       "parentUuid": "e45bb0df_c20bac71",
+      "range": {
+        "startLine": 1071,
+        "startChar": 36,
+        "endLine": 1071,
+        "endChar": 40
+      },
+      "revId": "5896a2895570548284f561414f012867a37d7921",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f004483_016e6f67",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-20T06:01:35Z",
+      "side": 1,
+      "message": "Maybe {@code #WIFI_NETWORKID_ALL} if the error is happening on {@link} ??",
+      "parentUuid": "4a915382_1ad20bab",
       "range": {
         "startLine": 1071,
         "startChar": 36,
