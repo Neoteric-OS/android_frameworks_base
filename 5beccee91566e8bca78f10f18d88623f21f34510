@@ -206,6 +206,30 @@
       },
       "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbdbd80a_cdf94c40",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-20T13:56:59Z",
+      "side": 1,
+      "message": "Example :\n\n  private static void assertRequestableParameters(int matchRule, int sIdMRule) {\n    // TODO: Check all the input are legitimate.\n\n    // Include wildcard rules after the wildcard rule adjustments.\n    assertRequestableMatchRule(matchRule);\n\n    // Check if the subscriberId match rule is valid. This has to be called after\n    // wildcard rules adjustment.\n    checkValidSubscriberIdMatchRule(matchRule, sIdMRule);\n  }\n        \n  private int computeFinalMatchRule(int builderMatchRule) {\n    if (mMatchRule \u003d\u003d MATCH_MOBILE\n     \u0026\u0026 mSubscriberIdMatchRule \u003d\u003d SUBSCRIBER_ID_MATCH_RULE_ALL) {\n      return MATCH_MOBILE_WILDCARD;\n    } else if (mMatchRule \u003d\u003d MATCH_WIFI\n     \u0026\u0026 mSubscriberIdMatchRule \u003d\u003d SUBSCRIBER_ID_MATCH_RULE_ALL\n     \u0026\u0026 mWifiNetworkKey \u003d\u003d WIFI_NETWORK_KEY_ALL) {\n      return MATCH_WIFI_WILDCARD;\n    }\n    return builderMatchRule;\n  }\n\n  public NetworkTemplate build() {\n    final int finalMatchRule \u003d computeFinalMatchRule(mMatchRule);\n    assertRequestableParameters(finalMatchRule, mSubscriberIdMatchRule);\n    return new NetworkTemplate(finalMatchRule, ...",
+      "parentUuid": "0ed49750_61652a29",
+      "range": {
+        "startLine": 1220,
+        "startChar": 16,
+        "endLine": 1220,
+        "endChar": 26
+      },
+      "revId": "5beccee91566e8bca78f10f18d88623f21f34510",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
