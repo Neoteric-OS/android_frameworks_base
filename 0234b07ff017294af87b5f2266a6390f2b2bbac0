@@ -63,6 +63,30 @@
       },
       "revId": "0234b07ff017294af87b5f2266a6390f2b2bbac0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f76594ed_f84268a7",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/netstats/NetworkStatsUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T07:22:54Z",
+      "side": 1,
+      "message": "On second thought.\nIt will be more flexible to add new things into the class if we put the util into the libs/net.\nWill update in next patch.",
+      "parentUuid": "98bd3324_fbee6658",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "0234b07ff017294af87b5f2266a6390f2b2bbac0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
