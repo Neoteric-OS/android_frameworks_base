@@ -3532,7 +3532,8 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
         }
         // Exclude toast because legacy apps may show toast window by themselves, so the misused
         // apps won't always be considered as foreground state.
-        if (mAttrs.type >= FIRST_SYSTEM_WINDOW && mAttrs.type != TYPE_TOAST) {
+        if (mAttrs.type >= FIRST_SYSTEM_WINDOW && mAttrs.type != TYPE_TOAST
+                && !getDisplayContent().isPrivate()) {
             mWmService.mAtmService.mActiveUids.onNonAppSurfaceVisibilityChanged(mOwnerUid, shown);
         }
         if (mIsImWindow && mWmService.mAccessibilityController != null) {
