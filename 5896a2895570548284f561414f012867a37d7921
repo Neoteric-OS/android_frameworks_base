@@ -262,6 +262,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "72628e8c_00be7c5c",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T09:56:09Z",
+      "side": 1,
+      "message": "Just discussed with Les.\nWe think it might be better if we hide setSubscriberIdMatchRule()\nand only expose setSubscriberIds() to represent the intension of matching any network.\ne.g. setSubscriberIds(new HashSet()) -\u003e SUBSCRIBER_ID_MATCH_RULE_ALL\nsetSubscriberIds(Set.of(IMSI1, IMSI2)) -\u003e SUBSCRIBER_ID_MATCH_RULE_EXACT + match IMSI1 or IMSI2\n\nIn this way we could deprecate SUBSCRIBER_ID_MATCH_RULEs and mSubscriberId.\nAnd only use mMatchSubscriberIds to represent each use cases (match any, match single, match multiple).\nAlso we could apply the same sematics to wifi network key(s).\n\n+jchalard@ to input if this is a good(bad) idea.",
+      "parentUuid": "a9121450_5d81e155",
+      "range": {
+        "startLine": 1049,
+        "startChar": 0,
+        "endLine": 1049,
+        "endChar": 68
+      },
+      "revId": "5896a2895570548284f561414f012867a37d7921",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "480c13b8_5d7db0bd",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
         "patchSetId": 11
@@ -321,6 +345,30 @@
       "side": 1,
       "message": "Ack. No strong opinion about this.",
       "parentUuid": "e0ce2f2d_1eed9408",
+      "range": {
+        "startLine": 1060,
+        "startChar": 23,
+        "endLine": 1060,
+        "endChar": 41
+      },
+      "revId": "5896a2895570548284f561414f012867a37d7921",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b26dbdbb_534fc567",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T09:56:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a14f506_c31ea8ae",
       "range": {
         "startLine": 1060,
         "startChar": 23,
@@ -392,6 +440,30 @@
       "side": 1,
       "message": "Maybe {@code #WIFI_NETWORKID_ALL} if the error is happening on {@link} ??",
       "parentUuid": "4a915382_1ad20bab",
+      "range": {
+        "startLine": 1071,
+        "startChar": 36,
+        "endLine": 1071,
+        "endChar": 40
+      },
+      "revId": "5896a2895570548284f561414f012867a37d7921",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b728056_ce7d4da5",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T09:56:09Z",
+      "side": 1,
+      "message": "It seems to me the caller who is outside the module cannot even use WIFI_NETWORKID_ALL. Hence the reference dosn\u0027t really make sense.",
+      "parentUuid": "5f004483_016e6f67",
       "range": {
         "startLine": 1071,
         "startChar": 36,

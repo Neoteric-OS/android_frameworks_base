@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f006cf5_bf9d2b3c",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T09:56:09Z",
+      "side": 1,
+      "message": "Ignored as discussed in the meeting.",
+      "parentUuid": "855fbbe3_95ed171b",
+      "range": {
+        "startLine": 1022,
+        "startChar": 35,
+        "endLine": 1022,
+        "endChar": 54
+      },
+      "revId": "6c836e8eb2b932e53f1a1e8e2032fea17b19442e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0bb5f20_10eabebe",
@@ -71,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2c58588_5a1236a7",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T09:56:09Z",
+      "side": 1,
+      "message": "1. Done\n     \n2. On second thought.\nWe are importing them by addAll. So we should be fine if the caller change the content, right?",
+      "parentUuid": "dff66a49_1a296375",
+      "range": {
+        "startLine": 1066,
+        "startChar": 49,
+        "endLine": 1066,
+        "endChar": 53
+      },
+      "revId": "6c836e8eb2b932e53f1a1e8e2032fea17b19442e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "910f3734_e27d504b",
@@ -94,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62aa1286_1fbf6cb0",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T09:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "910f3734_e27d504b",
+      "range": {
+        "startLine": 1236,
+        "startChar": 51,
+        "endLine": 1236,
+        "endChar": 70
+      },
+      "revId": "6c836e8eb2b932e53f1a1e8e2032fea17b19442e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "475ed8d8_91b9cb83",
@@ -107,6 +179,30 @@
       "writtenOn": "2021-12-20T06:01:35Z",
       "side": 1,
       "message": "Here will happen array index out of bound because the default value is a empty array list",
+      "range": {
+        "startLine": 1237,
+        "startChar": 20,
+        "endLine": 1237,
+        "endChar": 46
+      },
+      "revId": "6c836e8eb2b932e53f1a1e8e2032fea17b19442e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3af94d5_7def33da",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-20T09:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "475ed8d8_91b9cb83",
       "range": {
         "startLine": 1237,
         "startChar": 20,
