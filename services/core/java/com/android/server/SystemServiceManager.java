@@ -20,6 +20,8 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.UserInfo;
 import android.os.Environment;
 import android.os.SystemClock;
@@ -34,6 +36,7 @@ import com.android.internal.os.SystemServerClassLoaderFactory;
 import com.android.internal.util.Preconditions;
 import com.android.server.SystemService.TargetUser;
 import com.android.server.am.EventLogTags;
+import com.android.server.pm.ApexManager;
 import com.android.server.pm.UserManagerInternal;
 import com.android.server.utils.TimingsTraceAndSlog;
 
@@ -43,6 +46,8 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Manages creating, starting, and other lifecycle events of
@@ -114,10 +119,30 @@ public final class SystemServiceManager implements Dumpable {
      * @return The service instance.
      */
     public SystemService startServiceFromJar(String className, String path) {
-        PathClassLoader pathClassLoader = SystemServerClassLoaderFactory.getOrCreateClassLoader(
-                path, this.getClass().getClassLoader());
+        PathClassLoader pathClassLoader =
+                SystemServerClassLoaderFactory.getOrMaybeCreateClassLoader(
+                        path, this.getClass().getClassLoader(), isInTestApex(path));
         final Class<SystemService> serviceClass = loadClassFromLoader(className, pathClassLoader);
         return startService(serviceClass);
+    }
+
+    /**
+     * Returns true if the jar is in a test APEX.
+     */
+    private static boolean isInTestApex(String path) {
+        Pattern p = Pattern.compile("^/apex/(.*?)/");
+        Matcher m = p.matcher(path);
+        if (m.find()) {
+            String packageName = m.group(1);
+            PackageInfo packageInfo = ApexManager.getInstance()
+                    .getPackageInfo(packageName, ApexManager.MATCH_ACTIVE_PACKAGE);
+            if (packageInfo != null) {
+                if ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_TEST_ONLY) != 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /*
