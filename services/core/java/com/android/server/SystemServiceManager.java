@@ -114,8 +114,9 @@ public final class SystemServiceManager implements Dumpable {
      * @return The service instance.
      */
     public SystemService startServiceFromJar(String className, String path) {
-        PathClassLoader pathClassLoader = SystemServerClassLoaderFactory.getOrCreateClassLoader(
-                path, this.getClass().getClassLoader());
+        PathClassLoader pathClassLoader =
+                SystemServerClassLoaderFactory.getOrMaybeCreateClassLoader(
+                        path, this.getClass().getClassLoader());
         final Class<SystemService> serviceClass = loadClassFromLoader(className, pathClassLoader);
         return startService(serviceClass);
     }
