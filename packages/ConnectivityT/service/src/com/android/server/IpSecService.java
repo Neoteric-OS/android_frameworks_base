@@ -72,6 +72,7 @@ import libcore.io.IoUtils;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.DatagramSocket;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -1237,12 +1238,17 @@ public class IpSecService extends IIpSecService.Stub {
         UserRecord userRecord = mUserResourceTracker.getUserRecord(callingUid);
         final int resourceId = mNextResourceId++;
         FileDescriptor sockFd = null;
+        DatagramSocket socket = null;
         try {
             if (!userRecord.mSocketQuotaTracker.isAvailable()) {
                 return new IpSecUdpEncapResponse(IpSecManager.Status.RESOURCE_UNAVAILABLE);
             }
 
-            sockFd = Os.socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+            // Creates an unbound datagram socket.
+            socket = new DatagramSocket(null);
+            Log.e(TAG, "socket fd int: " + socket.getFileDescriptor$().getInt$());
+            final ParcelFileDescriptor pfd = ParcelFileDescriptor.fromDatagramSocket(socket);
+            sockFd = pfd.getFileDescriptor();
             mUidFdTagger.tag(sockFd, callingUid);
 
             // This code is common to both the unspecified and specified port cases
@@ -1252,21 +1258,27 @@ public class IpSecService extends IIpSecService.Stub {
                     OsConstants.UDP_ENCAP,
                     OsConstants.UDP_ENCAP_ESPINUDP);
 
-            mNetd.ipSecSetEncapSocketOwner(new ParcelFileDescriptor(sockFd), callingUid);
+            mNetd.ipSecSetEncapSocketOwner(pfd, callingUid);
+            Log.e(TAG, "port: " + port + ", fd int: " + sockFd.getInt$());
             if (port != 0) {
                 Log.v(TAG, "Binding to port " + port);
                 Os.bind(sockFd, INADDR_ANY, port);
             } else {
                 port = bindToRandomPort(sockFd);
+                Log.e(TAG, "bind to random port: " + port);
             }
 
             userRecord.mEncapSocketRecords.put(
                     resourceId,
                     new RefcountedResource<EncapSocketRecord>(
                             new EncapSocketRecord(resourceId, sockFd, port), binder));
-            return new IpSecUdpEncapResponse(IpSecManager.Status.OK, resourceId, port, sockFd);
+            final IpSecUdpEncapResponse udpEncapResp =
+                    new IpSecUdpEncapResponse(IpSecManager.Status.OK, resourceId, port, sockFd);
+            return udpEncapResp;
         } catch (IOException | ErrnoException e) {
             IoUtils.closeQuietly(sockFd);
+        } finally {
+            socket.close();
         }
         // If we make it to here, then something has gone wrong and we couldn't open a socket.
         // The only reasonable condition that would cause that is resource unavailable.
