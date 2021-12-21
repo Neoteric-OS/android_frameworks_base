@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d365801a_dabfb3da",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-21T07:32:15Z",
+      "side": 1,
+      "message": "I think you can even remove it (optional)",
+      "range": {
+        "startLine": 1165,
+        "startChar": 0,
+        "endLine": 1167,
+        "endChar": 9
+      },
+      "revId": "7a266d0bf84beca0478d3a6114cfdd7f01fafc01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
