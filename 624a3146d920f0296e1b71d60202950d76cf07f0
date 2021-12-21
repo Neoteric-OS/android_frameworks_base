@@ -22,6 +22,30 @@
       },
       "revId": "624a3146d920f0296e1b71d60202950d76cf07f0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60ea793c_53b891f7",
+        "filename": "core/java/android/net/NetworkPolicy.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-21T01:41:15Z",
+      "side": 1,
+      "message": "Per discuss with Les, for wifi templates, IMSI \u003d\u003d null means to match non-carrier networks. Thus this doesn\u0027t work.",
+      "parentUuid": "54140436_43b959ef",
+      "range": {
+        "startLine": 360,
+        "startChar": 12,
+        "endLine": 360,
+        "endChar": 44
+      },
+      "revId": "624a3146d920f0296e1b71d60202950d76cf07f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
