@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31009f7b_48b5bb73",
+        "filename": "packages/ConnectivityT/framework-t/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-12-21T03:56:20Z",
+      "side": 1,
+      "message": "Comment on aosp/1925683. I don\u0027t think you need to export this.",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 52,
+        "endChar": 58
+      },
+      "revId": "2032aa5d19da74842ff379374d7a078fd5d86d68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
