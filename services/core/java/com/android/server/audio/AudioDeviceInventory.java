@@ -1088,6 +1088,10 @@ public class AudioDeviceInventory {
     private void makeLeAudioDeviceAvailable(String address, String name, int streamType, int device,
             String eventSource) {
         if (device != AudioSystem.DEVICE_NONE) {
+
+            /* Workaround as in audio policy Le Audio device is handled as A2DP */
+            mDeviceBroker.setBluetoothA2dpOnInt(true, false /*fromA2dp*/, eventSource);
+
             AudioSystem.setDeviceConnectionState(device, AudioSystem.DEVICE_STATE_AVAILABLE,
                     address, name, AudioSystem.AUDIO_FORMAT_DEFAULT);
             mConnectedDevices.put(DeviceInfo.makeDeviceListKey(device, address),
