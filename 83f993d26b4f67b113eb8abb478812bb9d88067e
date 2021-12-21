@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "118e77b1_3640aa9a",
+        "filename": "core/java/android/app/BroadcastOptions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2021-12-21T22:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83502d39_9d132b87",
+      "range": {
+        "startLine": 78,
+        "startChar": 54,
+        "endLine": 78,
+        "endChar": 64
+      },
+      "revId": "83f993d26b4f67b113eb8abb478812bb9d88067e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "722fbae4_b6abd02f",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-12-15T10:20:06Z",
       "side": 1,
       "message": "Can we obviate the need for this by, say, storing -changeId if it\u0027s required to be false ? Change IDs already must be positive. Not feeling strongly.",
+      "range": {
+        "startLine": 172,
+        "startChar": 8,
+        "endLine": 172,
+        "endChar": 33
+      },
+      "revId": "83f993d26b4f67b113eb8abb478812bb9d88067e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f43dc9bb_2e8baba8",
+        "filename": "core/java/android/app/BroadcastOptions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2021-12-21T22:37:30Z",
+      "side": 1,
+      "message": "Good thought, but for maintainability I\u0027d prefer to keep it slightly more readable.  (It\u0027s going to be pretty minor overhead sending it in Bundles where needed.)",
+      "parentUuid": "722fbae4_b6abd02f",
       "range": {
         "startLine": 172,
         "startChar": 8,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bdfc346_85b17427",
+        "filename": "core/java/android/app/BroadcastOptions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2021-12-21T22:37:30Z",
+      "side": 1,
+      "message": "If we had to deploy that feature today, I think we\u0027d build it as follows:\n\n* Define a new change ID named something like MY_CHANGE_ID which was @EnabledAfter a particular SDK level\n* Send CONNECTIVITY_ACTION with Intent.FLAG_RECEIVER_REGISTERED_ONLY and setRequireCompatChangeEnabled(MY_CHANGE_ID), which would be the \"modern\" behavior of only sending to registered filters\n* Send plain CONNECTIVITY_ACTION with setRequireCompatChangeDisabled(MY_CHANGE_ID), which will give the \"legacy\" behavior of sending to both manifest and registered receivers\n\nSo I think we do have all the tools we need?",
+      "parentUuid": "b1f1eb91_878b9da7",
+      "range": {
+        "startLine": 274,
+        "startChar": 8,
+        "endLine": 274,
+        "endChar": 18
+      },
+      "revId": "83f993d26b4f67b113eb8abb478812bb9d88067e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "03bee780_ebf88c8a",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-12-15T10:20:06Z",
       "side": 1,
       "message": "I was thinking about this limitation while looking at the API ; I was thinking we may have cases where we need Or(change1, change2) or And(change1, change2).\n\nMaybe YAGNI, and we add it if a use case arises",
+      "range": {
+        "startLine": 375,
+        "startChar": 0,
+        "endLine": 377,
+        "endChar": 38
+      },
+      "revId": "83f993d26b4f67b113eb8abb478812bb9d88067e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35ee4f34_e5dc70bd",
+        "filename": "core/java/android/app/BroadcastOptions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2021-12-21T22:37:30Z",
+      "side": 1,
+      "message": "I hear your point, but we should generally be allocating a new unique ID for each behavior change, instead of trying to mix/match multiple existing IDs.\n\nThus I think it\u0027s reasonable to limit this to a single ID.",
+      "parentUuid": "03bee780_ebf88c8a",
       "range": {
         "startLine": 375,
         "startChar": 0,

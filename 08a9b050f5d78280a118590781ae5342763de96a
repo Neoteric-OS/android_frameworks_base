@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9eb48473_46b3e6f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2021-12-21T22:37:30Z",
+      "side": 1,
+      "message": "Thanks for the detailed review; due to merge conflicts I\u0027m going to be moving this into an internal branch.  😊",
+      "revId": "08a9b050f5d78280a118590781ae5342763de96a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
