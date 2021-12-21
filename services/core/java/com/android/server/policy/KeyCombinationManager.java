@@ -22,6 +22,7 @@ import android.util.Log;
 import android.util.SparseLongArray;
 import android.view.KeyEvent;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.ToBooleanFunction;
 
 import java.io.PrintWriter;
@@ -39,6 +40,7 @@ public class KeyCombinationManager {
     private final ArrayList<TwoKeysCombinationRule> mRules = new ArrayList();
 
     // Selected rules according to current key down.
+    @GuardedBy("mActiveRules")
     private final ArrayList<TwoKeysCombinationRule> mActiveRules = new ArrayList();
     // The rule has been triggered by current keys.
     private TwoKeysCombinationRule mTriggeredRule;
@@ -109,72 +111,75 @@ public class KeyCombinationManager {
      * Return true if any active rule could be triggered by the key event, otherwise false.
      */
     boolean interceptKey(KeyEvent event, boolean interactive) {
-        final boolean down = event.getAction() == KeyEvent.ACTION_DOWN;
-        final int keyCode = event.getKeyCode();
-        final int count = mActiveRules.size();
-        final long eventTime = event.getEventTime();
+        // MIUI ADD:
+        synchronized (mActiveRules) {
+            final boolean down = event.getAction() == KeyEvent.ACTION_DOWN;
+            final int keyCode = event.getKeyCode();
+            final int count = mActiveRules.size();
+            final long eventTime = event.getEventTime();
 
-        if (interactive && down) {
-            if (mDownTimes.size() > 0) {
-                if (count > 0
-                        && eventTime > mDownTimes.valueAt(0) + COMBINE_KEY_DELAY_MILLIS) {
-                    // exceed time from first key down.
-                    forAllRules(mActiveRules, (rule)-> rule.cancel());
-                    mActiveRules.clear();
-                    return false;
-                } else if (count == 0) { // has some key down but no active rule exist.
-                    return false;
-                }
-            }
-
-            if (mDownTimes.get(keyCode) == 0) {
-                mDownTimes.put(keyCode, eventTime);
-            } else {
-                // ignore old key, maybe a repeat key.
-                return false;
-            }
-
-            if (mDownTimes.size() == 1) {
-                mTriggeredRule = null;
-                // check first key and pick active rules.
-                forAllRules(mRules, (rule)-> {
-                    if (rule.shouldInterceptKey(keyCode)) {
-                        mActiveRules.add(rule);
-                    }
-                });
-            } else {
-                // Ignore if rule already triggered.
-                if (mTriggeredRule != null) {
-                    return true;
-                }
-
-                // check if second key can trigger rule, or remove the non-match rule.
-                forAllActiveRules((rule) -> {
-                    if (!rule.shouldInterceptKeys(mDownTimes)) {
+            if (interactive && down) {
+                if (mDownTimes.size() > 0) {
+                    if (count > 0
+                            && eventTime > mDownTimes.valueAt(0) + COMBINE_KEY_DELAY_MILLIS) {
+                        // exceed time from first key down.
+                        forAllRules(mActiveRules, (rule) -> rule.cancel());
+                        mActiveRules.clear();
+                        return false;
+                    } else if (count == 0) { // has some key down but no active rule exist.
                         return false;
                     }
-                    Log.v(TAG, "Performing combination rule : " + rule);
-                    rule.execute();
-                    mTriggeredRule = rule;
-                    return true;
-                });
-                mActiveRules.clear();
-                if (mTriggeredRule != null) {
-                    mActiveRules.add(mTriggeredRule);
-                    return true;
+                }
+
+                if (mDownTimes.get(keyCode) == 0) {
+                    mDownTimes.put(keyCode, eventTime);
+                } else {
+                    // ignore old key, maybe a repeat key.
+                    return false;
+                }
+
+                if (mDownTimes.size() == 1) {
+                    mTriggeredRule = null;
+                    // check first key and pick active rules.
+                    forAllRules(mRules, (rule) -> {
+                        if (rule.shouldInterceptKey(keyCode)) {
+                            mActiveRules.add(rule);
+                        }
+                    });
+                } else {
+                    // Ignore if rule already triggered.
+                    if (mTriggeredRule != null) {
+                        return true;
+                    }
+
+                    // check if second key can trigger rule, or remove the non-match rule.
+                    forAllActiveRules((rule) -> {
+                        if (!rule.shouldInterceptKeys(mDownTimes)) {
+                            return false;
+                        }
+                        Log.v(TAG, "Performing combination rule : " + rule);
+                        rule.execute();
+                        mTriggeredRule = rule;
+                        return true;
+                    });
+                    mActiveRules.clear();
+                    if (mTriggeredRule != null) {
+                        mActiveRules.add(mTriggeredRule);
+                        return true;
+                    }
+                }
+            } else {
+                mDownTimes.delete(keyCode);
+                for (int index = count - 1; index >= 0; index--) {
+                    final TwoKeysCombinationRule rule = mActiveRules.get(index);
+                    if (rule.shouldInterceptKey(keyCode)) {
+                        rule.cancel();
+                        mActiveRules.remove(index);
+                    }
                 }
             }
-        } else {
-            mDownTimes.delete(keyCode);
-            for (int index = count - 1; index >= 0; index--) {
-                final TwoKeysCombinationRule rule = mActiveRules.get(index);
-                if (rule.shouldInterceptKey(keyCode)) {
-                    rule.cancel();
-                    mActiveRules.remove(index);
-                }
-            }
+            return false;
         }
-        return false;
     }
 
     /**
@@ -224,14 +229,17 @@ public class KeyCombinationManager {
      * Traverse each item of active rules until some rule can be applied, otherwise return false.
      */
     private boolean forAllActiveRules(ToBooleanFunction<TwoKeysCombinationRule> callback) {
-        final int count = mActiveRules.size();
-        for (int index = 0; index < count; index++) {
-            final TwoKeysCombinationRule rule = mActiveRules.get(index);
-            if (callback.apply(rule)) {
-                return true;
+        // MIUI ADD:
+        synchronized (mActiveRules) {
+            final int count = mActiveRules.size();
+            for (int index = 0; index < count; index++) {
+                final TwoKeysCombinationRule rule = mActiveRules.get(index);
+                if (callback.apply(rule)) {
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
     }
 
     void dump(String prefix, PrintWriter pw) {
