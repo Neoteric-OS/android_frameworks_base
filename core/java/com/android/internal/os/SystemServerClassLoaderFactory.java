@@ -16,6 +16,7 @@
 
 package com.android.internal.os;
 
+import android.annotation.Nullable;
 import android.os.Build;
 import android.util.ArrayMap;
 
@@ -46,5 +47,15 @@ public final class SystemServerClassLoaderFactory {
             sLoadedPaths.put(path, pathClassLoader);
         }
         return pathClassLoader;
+    }
+
+    /**
+     * Returns a cached ClassLoader if it exists, or null if it does not exist.
+     *
+     * @hide for internal use only
+     */
+    @Nullable
+    public static PathClassLoader getClassLoader(String path) {
+        return sLoadedPaths.get(path);
     }
 }
