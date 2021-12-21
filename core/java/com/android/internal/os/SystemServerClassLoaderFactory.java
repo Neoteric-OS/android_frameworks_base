@@ -29,22 +29,67 @@ public final class SystemServerClassLoaderFactory {
     private static final ArrayMap<String, PathClassLoader> sLoadedPaths = new ArrayMap<>();
 
     /**
-     * Creates and caches a ClassLoader for the jar at the given path, or returns a cached
-     * ClassLoader if it exists.
+     * Creates and caches a ClassLoader for the jar at the given path.
+     *
+     * This method should only be called by ZygoteInit to prefetch jars. For other users, use
+     * `getOrMaybeCreateClassLoader` instead.
      *
      * The parent class loader should always be the system server class loader. Changing it has
      * implications that require discussion with the mainline team.
      *
      * @hide for internal use only
      */
-    public static PathClassLoader getOrCreateClassLoader(String path, ClassLoader parent) {
-        PathClassLoader pathClassLoader = sLoadedPaths.get(path);
-        if (pathClassLoader == null) {
-            pathClassLoader = (PathClassLoader) ClassLoaderFactory.createClassLoader(
-                    path, /*librarySearchPath=*/null, /*libraryPermittedPath=*/null, parent,
-                    Build.VERSION.SDK_INT, /*isNamespaceShared=*/true , /*classLoaderName=*/null);
-            sLoadedPaths.put(path, pathClassLoader);
+    /* package */ static PathClassLoader createClassLoader(String path, ClassLoader parent) {
+        if (sLoadedPaths.containsKey(path)) {
+            throw new RuntimeException("A ClassLoader for " + path + " already exists");
         }
+        PathClassLoader pathClassLoader = (PathClassLoader) ClassLoaderFactory.createClassLoader(
+                path, /*librarySearchPath=*/null, /*libraryPermittedPath=*/null, parent,
+                Build.VERSION.SDK_INT, /*isNamespaceShared=*/true , /*classLoaderName=*/null);
+        sLoadedPaths.put(path, pathClassLoader);
         return pathClassLoader;
+    }
+
+    /**
+     * Returns a cached ClassLoader to be used at runtime for the jar at the given path. Or, creates
+     * one if it is not prefetched and is allowed to be created at runtime.
+     *
+     * The parent class loader should always be the system server class loader. Changing it has
+     * implications that require discussion with the mainline team.
+     *
+     * @hide for internal use only
+     */
+    public static PathClassLoader getOrMaybeCreateClassLoader(String path, ClassLoader parent) {
+        PathClassLoader pathClassLoader = sLoadedPaths.get(path);
+        if (pathClassLoader != null) {
+            return pathClassLoader;
+        }
+        if (!allowClassLoaderCreation(path)) {
+            throw new RuntimeException("Creating a ClassLoader from " + path + " is not allowed. "
+                    + "Please make sure that the jar is listed in "
+                    + "`PRODUCT_APEX_STANDALONE_SYSTEM_SERVER_JARS` in the Makefile and added as a "
+                    + "`standalone_contents` of a `systemserverclasspath_fragment` in "
+                    + "`Android.bp`.");
+        }
+        return createClassLoader(path, parent);
+    }
+
+    /**
+     * Returns true if a class loader for the jar is allowed to be created at runtime if the jar is
+     * not prefetched on startup.
+     */
+    private static boolean allowClassLoaderCreation(String path) {
+        if (!Build.IS_DEBUGGABLE) {
+            return true;
+        }
+        // Currently, we only enforce prefetching for APEX jars.
+        if (!path.startsWith("/apex/")) {
+            return true;
+        }
+        // `test_com.android.server.apex` is for testing only and is okay to ignore.
+        if (path.startsWith("/apex/test_com.android.server.apex/")) {
+            return true;
+        }
+        return false;
     }
 }
