@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "75308bc8_50578346",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11593,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2021-12-22T23:10:14Z",
+      "side": 1,
+      "message": "I can see that one doesn\u0027t need to use both this API \u0026 renouncedPermissions, i.e. it\u0027s a corner case. However we need to define APIs in a consistent way. If we claim getServiceState() honors RenouncedPermissions, wouldn\u0027t it be more natural for all its overrides to honor it?",
+      "parentUuid": "9c471e5d_d513fa0f",
+      "range": {
+        "startLine": 11588,
+        "startChar": 11,
+        "endLine": 11593,
+        "endChar": 74
+      },
+      "revId": "68f3835266401dd56366ebcda18dc4cd666dca86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d0b1ba8_16deb0da",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
