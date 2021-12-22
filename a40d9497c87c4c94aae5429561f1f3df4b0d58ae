@@ -1,0 +1,82 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018631002",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1931579?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "61ad4d37_0feca232",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-22T09:20:50Z",
+      "side": 1,
+      "message": "Change must include a \"Tag:\" stanza. Valid tags are #compatibility #stability #security #feature #floss #gd-refactor #refactor. See: go/managing-bluetooth-cl-risk",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "a40d9497c87c4c94aae5429561f1f3df4b0d58ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018631002",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1931579?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "fafcb0a7_86d1be7e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-22T09:20:50Z",
+      "side": 1,
+      "message": "\"build\" is not on the list of allowed atest tests. Expected one of: bluetooth_test_gd OR BluetoothInstrumentationTests OR CtsBluetoothTestCases",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 54
+      },
+      "revId": "a40d9497c87c4c94aae5429561f1f3df4b0d58ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018631002",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1931579?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c75f8a57_57221c28",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-22T09:20:50Z",
+      "side": 1,
+      "message": "\"PeriodicAdvertisingParametersTest\" is not on the list of allowed atest tests. Expected one of: bluetooth_test_gd OR BluetoothInstrumentationTests OR CtsBluetoothTestCases",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 54
+      },
+      "revId": "a40d9497c87c4c94aae5429561f1f3df4b0d58ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
