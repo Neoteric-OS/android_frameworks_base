@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb5a5bc2_4f357f88",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T10:00:55Z",
+      "side": 1,
+      "message": "1. Maybe also Objects.requireNonNull()?\n\n2. Maybe keep the same order for variable declarations, arguments and assignments?",
+      "range": {
+        "startLine": 457,
+        "startChar": 16,
+        "endLine": 457,
+        "endChar": 20
+      },
+      "revId": "dd7327ad477f56b22adb090dcb33f88e634bd03f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "868a988a_1eea4c4a",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T10:00:55Z",
+      "side": 1,
+      "message": "Can we initialize it when delaration?",
+      "range": {
+        "startLine": 458,
+        "startChar": 8,
+        "endLine": 458,
+        "endChar": 45
+      },
+      "revId": "dd7327ad477f56b22adb090dcb33f88e634bd03f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99d73232_5d44646b",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T10:00:55Z",
+      "side": 1,
+      "message": "This is not true now, right?\nMaybe just remove it.",
+      "range": {
+        "startLine": 521,
+        "startChar": 12,
+        "endLine": 521,
+        "endChar": 57
+      },
+      "revId": "dd7327ad477f56b22adb090dcb33f88e634bd03f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e67c0bc3_9ac5f6cf",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1963,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T10:00:55Z",
+      "side": 1,
+      "message": "Also @NonNull?",
+      "revId": "dd7327ad477f56b22adb090dcb33f88e634bd03f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cf97380_c3f5c3aa",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1971,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T10:00:55Z",
+      "side": 1,
+      "message": "Can this be initialized here?\ne.g. stats \u003d new NetworkStats(SystemClock.elapsedRealtime(), 1);",
+      "range": {
+        "startLine": 1971,
+        "startChar": 27,
+        "endLine": 1971,
+        "endChar": 32
+      },
+      "revId": "dd7327ad477f56b22adb090dcb33f88e634bd03f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31e681d9_04419ca6",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1973,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T10:00:55Z",
+      "side": 1,
+      "message": "Parcels?",
+      "range": {
+        "startLine": 1973,
+        "startChar": 49,
+        "endLine": 1973,
+        "endChar": 52
+      },
+      "revId": "dd7327ad477f56b22adb090dcb33f88e634bd03f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21b0ccfa_79b127fb",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1986,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T10:00:55Z",
+      "side": 1,
+      "message": "1. Maybe use another constructor?\n2. Maybe you could just stats.combineValues(new Entry(...))?",
+      "range": {
+        "startLine": 1979,
+        "startChar": 0,
+        "endLine": 1986,
+        "endChar": 60
+      },
+      "revId": "dd7327ad477f56b22adb090dcb33f88e634bd03f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
