@@ -169,6 +169,23 @@ public abstract class CallRedirectionService extends Service {
     }
 
     /**
+     * Notify to Telecom that the timeout processing has finished. This will trigger the service
+     * unbind.
+     *
+     * <p>This can only be called after onRedirectionTimeout.
+     */
+    private void redirectionTimeout() {
+        try {
+            if (mCallRedirectionAdapter == null) {
+                throw new IllegalStateException("Can only be called after onPlaceCall.");
+            }
+            mCallRedirectionAdapter.redirectionTimeout();
+        } catch (RemoteException e) {
+            e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
      * A handler message to process the attempt to place call with redirection service from Telecom
      */
     private static final int MSG_PLACE_CALL = 1;
@@ -198,6 +215,7 @@ public abstract class CallRedirectionService extends Service {
                     break;
                 case MSG_TIMEOUT:
                     onRedirectionTimeout();
+                    redirectionTimeout();
                     break;
             }
         }
