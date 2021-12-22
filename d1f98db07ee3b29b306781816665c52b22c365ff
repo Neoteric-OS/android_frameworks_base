@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ec6a06d_f59bfcf6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-22T08:26:14Z",
+      "side": 1,
+      "message": "TH failed because the filegroup was defined, and it\u0027s reverted in aosp/1928472. So TH might be happy once aosp/1928472 gets merged.",
+      "revId": "d1f98db07ee3b29b306781816665c52b22c365ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
