@@ -16,6 +16,29 @@
       "message": "TH failed because the filegroup was defined, and it\u0027s reverted in aosp/1928472. So TH might be happy once aosp/1928472 gets merged.",
       "revId": "d1f98db07ee3b29b306781816665c52b22c365ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0467c4ad_b67f2199",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/annotations/PolicyDirection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-22T08:47:54Z",
+      "side": 1,
+      "message": "I think this comment is no longer relevant. Do you want to remove it, or reword it ?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "d1f98db07ee3b29b306781816665c52b22c365ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
