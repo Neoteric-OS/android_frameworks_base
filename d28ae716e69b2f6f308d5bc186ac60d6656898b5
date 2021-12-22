@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27700ef2_225970e5",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-22T03:51:03Z",
+      "side": 1,
+      "message": "Yes, you are right, I put it back.",
+      "parentUuid": "a953b02f_06b3a81a",
+      "range": {
+        "startLine": 461,
+        "startChar": 12,
+        "endLine": 461,
+        "endChar": 66
+      },
+      "revId": "d28ae716e69b2f6f308d5bc186ac60d6656898b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a66c945b_8375a2a8",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fad643cc_e27521b4",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-22T03:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a66c945b_8375a2a8",
+      "range": {
+        "startLine": 523,
+        "startChar": 18,
+        "endLine": 523,
+        "endChar": 30
+      },
+      "revId": "d28ae716e69b2f6f308d5bc186ac60d6656898b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2b787ba_208498d4",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-12-20T08:19:58Z",
       "side": 1,
       "message": "Should we delete this as well?\nIIUC this is unused.",
+      "range": {
+        "startLine": 1256,
+        "startChar": 4,
+        "endLine": 1257,
+        "endChar": 17
+      },
+      "revId": "d28ae716e69b2f6f308d5bc186ac60d6656898b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00e882a1_49551f0e",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-22T03:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2b787ba_208498d4",
       "range": {
         "startLine": 1256,
         "startChar": 4,
