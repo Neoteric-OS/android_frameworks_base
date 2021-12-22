@@ -2377,6 +2377,7 @@ public final class BluetoothAdapter {
     @RequiresLegacyBluetoothPermission
     @RequiresBluetoothConnectPermission
     @RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT)
+    @SystemApi
     public int getMaxConnectedAudioDevices() {
         try {
             mServiceLock.readLock().lock();
