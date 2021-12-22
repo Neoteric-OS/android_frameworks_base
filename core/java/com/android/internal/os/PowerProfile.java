@@ -315,11 +315,11 @@ public class PowerProfile {
         }
 
         // Now collect other config variables.
-        int[] configResIds = new int[]{
-                com.android.internal.R.integer.config_bluetooth_idle_cur_ma,
-                com.android.internal.R.integer.config_bluetooth_rx_cur_ma,
-                com.android.internal.R.integer.config_bluetooth_tx_cur_ma,
-                com.android.internal.R.integer.config_bluetooth_operating_voltage_mv,
+        String[] configSysPropIds = new String[]{
+                "bluetooth.hardware.power.idle_cur_ma",
+                "bluetooth.hardware.power.rx_cur_ma",
+                "bluetooth.hardware.power.tx_cur_ma",
+                "bluetooth.hardware.power.operating_voltage_mv",
         };
 
         String[] configResIdKeys = new String[]{
@@ -328,15 +328,14 @@ public class PowerProfile {
                 POWER_BLUETOOTH_CONTROLLER_TX,
                 POWER_BLUETOOTH_CONTROLLER_OPERATING_VOLTAGE,
         };
-
-        for (int i = 0; i < configResIds.length; i++) {
+        for (int i = 0; i < configSysPropIds.length; i++) {
             String key = configResIdKeys[i];
             // if we already have some of these parameters in power_profile.xml, ignore the
             // value in config.xml
             if ((sPowerItemMap.containsKey(key) && sPowerItemMap.get(key) > 0)) {
                 continue;
             }
-            int value = resources.getInteger(configResIds[i]);
+            int value = android.os.SystemProperties.getInt(configSysPropIds[i], 0);
             if (value > 0) {
                 sPowerItemMap.put(key, (double) value);
             }
