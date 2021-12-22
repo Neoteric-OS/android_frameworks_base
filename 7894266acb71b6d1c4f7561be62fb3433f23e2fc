@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e536f38b_ed2f362e",
+        "filename": "core/java/android/net/InternalNetworkManagementException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-22T13:28:13Z",
+      "side": 1,
+      "message": "I don\u0027t really see the point of creating a cause containing the message ; I think this should just read super(source.readString())",
+      "range": {
+        "startLine": 33,
+        "startChar": 18,
+        "endLine": 33,
+        "endChar": 34
+      },
+      "revId": "7894266acb71b6d1c4f7561be62fb3433f23e2fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5fc3e2e_27eaf05c",
+        "filename": "core/java/android/net/InternalNetworkManagementException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-22T13:28:13Z",
+      "side": 1,
+      "message": "No particular objection but is this useful ? I think the default toString from Exception is probably fine",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "7894266acb71b6d1c4f7561be62fb3433f23e2fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b34b06b4_b74accd8",
+        "filename": "core/java/android/net/InternalNetworkUpdateRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-22T13:28:13Z",
+      "side": 1,
+      "message": "Nit: Doc says it\u0027s better to use NetworkCapabilities.CREATOR.createFromParcel (and likewise with IpConfig above). This will require to change the writeParcelable calls to writeToParcel I think",
+      "range": {
+        "startLine": 61,
+        "startChar": 23,
+        "endLine": 61,
+        "endChar": 37
+      },
+      "revId": "7894266acb71b6d1c4f7561be62fb3433f23e2fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
