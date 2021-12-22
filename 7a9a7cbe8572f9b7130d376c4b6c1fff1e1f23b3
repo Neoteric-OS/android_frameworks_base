@@ -33,6 +33,24 @@
       "message": "Thanks for the code review Sungsoo Lim. Approval still needed.",
       "revId": "7a9a7cbe8572f9b7130d376c4b6c1fff1e1f23b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f0aa6fb_cd32691e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2021-12-22T06:32:33Z",
+      "side": 1,
+      "message": "I\u0027m not working on media anymore. Thus I don\u0027t think I\u0027m the right person to give +2. I cc\u0027ed some other people.",
+      "parentUuid": "eb822966_4b5256a6",
+      "revId": "7a9a7cbe8572f9b7130d376c4b6c1fff1e1f23b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
