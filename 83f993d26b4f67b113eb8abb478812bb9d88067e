@@ -159,6 +159,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "4164efc2_92d36e60",
+        "filename": "core/java/android/app/BroadcastOptions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-22T09:05:54Z",
+      "side": 1,
+      "message": "Ah I see. Then the comment probably should call out FLAG_RECEIVER_REGISTERED_ONLY.",
+      "parentUuid": "8bdfc346_85b17427",
+      "range": {
+        "startLine": 274,
+        "startChar": 8,
+        "endLine": 274,
+        "endChar": 18
+      },
+      "revId": "83f993d26b4f67b113eb8abb478812bb9d88067e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "03bee780_ebf88c8a",
