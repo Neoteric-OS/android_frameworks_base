@@ -39,6 +39,30 @@
       },
       "revId": "d1f98db07ee3b29b306781816665c52b22c365ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dd5f731_97e069d2",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/annotations/PolicyDirection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-22T13:36:06Z",
+      "side": 1,
+      "message": "Done, removed.",
+      "parentUuid": "0467c4ad_b67f2199",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "d1f98db07ee3b29b306781816665c52b22c365ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
