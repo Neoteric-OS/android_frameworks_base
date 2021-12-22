@@ -547,7 +547,7 @@ public final class ViewRootImpl implements ViewParent,
     @InputSourceClass
     int mUnbufferedInputSource = SOURCE_CLASS_NONE;
 
-    String mPendingInputEventQueueLengthCounterName = "pq";
+    String mPendingInputEventQueueLengthCounterName = "ieq:pending:";
 
     InputStage mFirstInputStage;
     InputStage mFirstPostImeInputStage;
@@ -1239,17 +1239,17 @@ public final class ViewRootImpl implements ViewParent,
                 mSyntheticInputStage = new SyntheticInputStage();
                 InputStage viewPostImeStage = new ViewPostImeInputStage(mSyntheticInputStage);
                 InputStage nativePostImeStage = new NativePostImeInputStage(viewPostImeStage,
-                        "aq:native-post-ime:" + counterSuffix);
+                        "ieq:native-post-ime:" + counterSuffix);
                 InputStage earlyPostImeStage = new EarlyPostImeInputStage(nativePostImeStage);
                 InputStage imeStage = new ImeInputStage(earlyPostImeStage,
-                        "aq:ime:" + counterSuffix);
+                        "ieq:ime:" + counterSuffix);
                 InputStage viewPreImeStage = new ViewPreImeInputStage(imeStage);
                 InputStage nativePreImeStage = new NativePreImeInputStage(viewPreImeStage,
-                        "aq:native-pre-ime:" + counterSuffix);
+                        "ieq:native-pre-ime:" + counterSuffix);
 
                 mFirstInputStage = nativePreImeStage;
                 mFirstPostImeInputStage = earlyPostImeStage;
-                mPendingInputEventQueueLengthCounterName = "aq:pending:" + counterSuffix;
+                mPendingInputEventQueueLengthCounterName = mPendingInputEventQueueLengthCounterName + counterSuffix;
             }
         }
     }
