@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9c471e5d_d513fa0f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11593,
+      "author": {
+        "id": 1890690
+      },
+      "writtenOn": "2021-12-22T23:00:07Z",
+      "side": 1,
+      "message": "Hmm, currently Scone use a custom context to add renounce permissions like this: https://source.corp.google.com/piper///depot/google3/java/com/google/android/apps/scone/utils/ContextPermissionsUtils.java;l\u003d29?q\u003drenounce\u0026sq\u003d\u0026ss\u003dpiper%2FGoogle%2FPiper:google3%2Fjava%2Fcom%2Fgoogle%2Fandroid%2Fapps%2Fscone%2F. It seems now that they are 2 ways to renounce permissions, one with passing booleans in parameters or/and adding renounce permissions in the context(This is more general and can applied to other cases that the current modified methods) but is only for privileged apps.",
+      "parentUuid": "57c49b09_a4c7881a",
+      "range": {
+        "startLine": 11588,
+        "startChar": 11,
+        "endLine": 11593,
+        "endChar": 74
+      },
+      "revId": "68f3835266401dd56366ebcda18dc4cd666dca86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d0b1ba8_16deb0da",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
