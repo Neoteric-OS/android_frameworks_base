@@ -22,6 +22,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -83,7 +84,9 @@ public class LockIconView extends FrameLayout implements Dumpable {
     }
 
     void updateColorAndBackgroundVisibility() {
-        if (mUseBackground && mLockIcon.getDrawable() != null) {
+        if (mUseBackground && mLockIcon.getDrawable() != null &&
+            Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SHOW_UDFPS_BG, 1) != 0) {
             mLockIconColor = ColorUtils.blendARGB(
                     Utils.getColorAttrDefaultColor(getContext(), android.R.attr.textColorPrimary),
                     Color.WHITE,
@@ -109,7 +112,8 @@ public class LockIconView extends FrameLayout implements Dumpable {
 
         if (drawable == null) {
             mBgView.setVisibility(View.INVISIBLE);
-        } else {
+        } else if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SHOW_UDFPS_BG, 1) != 0) {
             mBgView.setVisibility(View.VISIBLE);
         }
     }

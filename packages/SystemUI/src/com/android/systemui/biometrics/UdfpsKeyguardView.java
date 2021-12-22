@@ -26,6 +26,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.MathUtils;
 import android.view.View;
@@ -176,6 +177,12 @@ public class UdfpsKeyguardView extends UdfpsAnimationView {
         mTextColorPrimary = Utils.getColorAttrDefaultColor(mContext,
             android.R.attr.textColorPrimary);
         mBgProtection.setImageDrawable(getContext().getDrawable(R.drawable.fingerprint_bg));
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SHOW_UDFPS_BG, 1) != 0) {
+            mBgProtection.setVisibility(View.VISIBLE);
+        } else {
+            mBgProtection.setVisibility(View.GONE);
+        }
         mLockScreenFp.invalidate(); // updated with a valueCallback
     }
 
