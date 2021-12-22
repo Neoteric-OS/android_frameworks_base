@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57c49b09_a4c7881a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11593,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-12-22T22:48:47Z",
+      "side": 1,
+      "message": "this does not look right. If anyone is calling this api, why not pass what is needed. We dont need to look at the renounced permissions here, isnt it?",
+      "range": {
+        "startLine": 11588,
+        "startChar": 11,
+        "endLine": 11593,
+        "endChar": 74
+      },
+      "revId": "68f3835266401dd56366ebcda18dc4cd666dca86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d0b1ba8_16deb0da",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15527,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-12-22T22:48:47Z",
+      "side": 1,
+      "message": "do we need this?",
+      "range": {
+        "startLine": 15522,
+        "startChar": 12,
+        "endLine": 15527,
+        "endChar": 74
+      },
+      "revId": "68f3835266401dd56366ebcda18dc4cd666dca86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
