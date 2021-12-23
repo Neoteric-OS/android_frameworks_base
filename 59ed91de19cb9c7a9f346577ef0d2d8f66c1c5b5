@@ -69,6 +69,24 @@
       "parentUuid": "be90769a_f7a62223",
       "revId": "59ed91de19cb9c7a9f346577ef0d2d8f66c1c5b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5456e20_9c7bd343",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-12-23T14:11:09Z",
+      "side": 1,
+      "message": "I think I\u0027d agree with Artur (my suggestion was to have createClassLoader for the zygote creating, and then getOrCreateClassLoader would have the Build.DEBUGGABLE check to decide whether to create or not).",
+      "parentUuid": "8da34846_502dc56d",
+      "revId": "59ed91de19cb9c7a9f346577ef0d2d8f66c1c5b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
