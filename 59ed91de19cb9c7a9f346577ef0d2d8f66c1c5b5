@@ -51,6 +51,24 @@
       "parentUuid": "d66cc790_6bda6ddf",
       "revId": "59ed91de19cb9c7a9f346577ef0d2d8f66c1c5b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8da34846_502dc56d",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-12-23T13:36:55Z",
+      "side": 1,
+      "message": "Different perspective, both correct in some sense. :-)\n\nFrom my perspective, SystemServiceManager has clear responsibilities about starting services and managing their lifecycle. For most people looking at it, they wouldn\u0027t care about how the classloader is created. So, when they read getOrCreateClassLoader() they probably don\u0027t also care how the classloader is created either.\n\nBut I am not an owner of either of those, so just nitpicking from myside.. :-)",
+      "parentUuid": "be90769a_f7a62223",
+      "revId": "59ed91de19cb9c7a9f346577ef0d2d8f66c1c5b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
