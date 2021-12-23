@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbd871b7_c7f1a12a",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-23T09:59:05Z",
+      "side": 1,
+      "message": "It seems to me the pfd should be closed instead of sockFd?\nAlso not sure why you did not close sockFd when catching exception.\n\nDoes it work in this way?\n\n} catch (IOException | ErrnoException e) {\n            IoUtils.closeQuietly(pFd.getFileDescriptor());\n            IoUtils.closeQuietly(sockFd);\n        } finally {\n            IoUtils.closeQuietly(pFd.getFileDescriptor());\n        }",
+      "range": {
+        "startLine": 1274,
+        "startChar": 10,
+        "endLine": 1274,
+        "endChar": 17
+      },
+      "revId": "a08e201cbbdae54228d5aa32ab82314c02b1bfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
