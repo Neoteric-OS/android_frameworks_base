@@ -146,6 +146,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "191ad2c6_9e929397",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11593,
+      "author": {
+        "id": 1890690
+      },
+      "writtenOn": "2021-12-23T17:45:25Z",
+      "side": 1,
+      "message": "Personally I think because there will be 2 possible ways to renounce permissions for getting service state, it\u0027s better to \u0027merge\u0027 the 2. If they get a unexpected result, is kinda their \u0027fault\u0027 because they allow it and renounce, but if we remove one options to renounce for the api calls it will be the fault of the api(\u0027ours\u0027) because is not taking in consideration the possible ways to renounce. Ideally there\u0027s only one way to do it but it does not seems possible for the moment unless with remove renouncePermissions from the context.",
+      "parentUuid": "1f8484d9_ee4cbaa2",
+      "range": {
+        "startLine": 11588,
+        "startChar": 11,
+        "endLine": 11593,
+        "endChar": 74
+      },
+      "revId": "68f3835266401dd56366ebcda18dc4cd666dca86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d0b1ba8_16deb0da",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
