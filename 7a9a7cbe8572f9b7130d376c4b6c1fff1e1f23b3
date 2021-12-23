@@ -193,6 +193,30 @@
       },
       "revId": "7a9a7cbe8572f9b7130d376c4b6c1fff1e1f23b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ecadd33_da191e39",
+        "filename": "media/java/android/media/JetPlayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1903265
+      },
+      "writtenOn": "2021-12-23T19:13:16Z",
+      "side": 1,
+      "message": "The only way I know how to run google-java-format on a selection is to run it in Android Studio. I used the AOSP code style, but got the results you saw. From the CLI, I ran the command with the --aosp option on the entire JetPlayer.java file and got the current results. (I manually formatted the Javadoc comments to match.)",
+      "parentUuid": "5381dc51_dd92d811",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 6
+      },
+      "revId": "7a9a7cbe8572f9b7130d376c4b6c1fff1e1f23b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
