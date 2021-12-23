@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d764d26f_4b47d085",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2021-12-23T11:47:53Z",
+      "side": 1,
+      "message": "Makoto, here\u0027s the context: go/dexopting-standalone-system-server-jars?disco\u003dAAAAQxohlY4",
+      "revId": "59ed91de19cb9c7a9f346577ef0d2d8f66c1c5b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
