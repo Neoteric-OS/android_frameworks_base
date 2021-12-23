@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bf93d37e_b7aa6000",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11593,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2021-12-23T03:34:47Z",
+      "side": 1,
+      "message": "passing a false to this API just means do not _additionally_ renounce permission. It\u0027s just like if you don\u0027t already have the permission, passing a false doesn\u0027t grant you. I would say it\u0027s more contradicting if you can gain a permission from a context with renounced permission.",
+      "parentUuid": "955f33c4_0959bb13",
+      "range": {
+        "startLine": 11588,
+        "startChar": 11,
+        "endLine": 11593,
+        "endChar": 74
+      },
+      "revId": "68f3835266401dd56366ebcda18dc4cd666dca86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d0b1ba8_16deb0da",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
