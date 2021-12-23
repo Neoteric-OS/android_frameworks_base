@@ -2271,7 +2271,7 @@ public final class BluetoothAdapter {
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {
-            BluetoothStatusCodes.SUCCESS,
+            BluetoothStatusCodes.FEATURE_SUPPORTED,
             BluetoothStatusCodes.ERROR_UNKNOWN,
             BluetoothStatusCodes.ERROR_BLUETOOTH_NOT_ENABLED,
             BluetoothStatusCodes.ERROR_FEATURE_NOT_SUPPORTED,
@@ -2279,9 +2279,9 @@ public final class BluetoothAdapter {
     public @interface LeFeatureReturnValues {}
 
     /**
-     * Returns {@link BluetoothStatusCodes#SUCCESS} if the LE audio feature is
-     * supported, returns {@link BluetoothStatusCodes#ERROR_FEATURE_NOT_SUPPORTED} if
-     * the feature is not supported or an error code.
+     * Returns {@link BluetoothStatusCodes#FEATURE_SUPPORTED} if the LE audio feature is
+     * supported, {@link BluetoothStatusCodes#ERROR_FEATURE_NOT_SUPPORTED} if the feature is not
+     * supported, or an error code.
      *
      * @return whether the LE audio is supported
      */
@@ -2304,9 +2304,10 @@ public final class BluetoothAdapter {
     }
 
     /**
-     * Returns {@link BluetoothStatusCodes#SUCCESS} if LE Periodic Advertising Sync Transfer Sender
-     * feature is supported, returns {@link BluetoothStatusCodes#ERROR_FEATURE_NOT_SUPPORTED} if the
-     * feature is not supported or an error code
+     * Returns {@link BluetoothStatusCodes#FEATURE_SUPPORTED} if LE Periodic Advertising Sync
+     * Transfer Sender feature is supported,
+     * {@link BluetoothStatusCodes#ERROR_FEATURE_NOT_SUPPORTED} if the feature is not supported, or
+     * an error code
      *
      * @return whether the chipset supports the LE Periodic Advertising Sync Transfer Sender feature
      */
