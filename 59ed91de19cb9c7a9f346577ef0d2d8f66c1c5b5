@@ -33,6 +33,24 @@
       "message": "Can this logic go into SystemServerClassLoaderFactory instead? from SystemServiceManager perspective all we really want is a classloader, doesn\u0027t matter how it gets created really.",
       "revId": "59ed91de19cb9c7a9f346577ef0d2d8f66c1c5b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be90769a_f7a62223",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2021-12-23T13:18:53Z",
+      "side": 1,
+      "message": "I think it makes more sense to keep this logic here. It\u0027s really SystemServiceManager that wants to make sure that APEX jars are prefetched so that they can take advantage of AOT compilation. SystemServerClassLoaderFactory just creates and caches class loaders. It doesn\u0027t care about when a jar is supposed to be loaded from cache.",
+      "parentUuid": "d66cc790_6bda6ddf",
+      "revId": "59ed91de19cb9c7a9f346577ef0d2d8f66c1c5b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
