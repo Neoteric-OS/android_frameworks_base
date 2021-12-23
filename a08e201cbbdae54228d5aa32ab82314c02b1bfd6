@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d88c52fc_fcd254cf",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1247,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-23T09:59:20Z",
+      "side": 1,
+      "message": "As we discussed in our 1:1 I think you should close(sockFd) immediately after you call dup(), not in finally{}. This will let you declare it inside the try{} block and make it final.",
+      "range": {
+        "startLine": 1247,
+        "startChar": 50,
+        "endLine": 1247,
+        "endChar": 51
+      },
+      "revId": "a08e201cbbdae54228d5aa32ab82314c02b1bfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba15a091_3e9b57a4",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-23T09:59:20Z",
+      "side": 1,
+      "message": "One of two things must be true :\n- Either l.1242~1246 can throw, in which case this will crash with NPE\n- Or l.1242~1246 can\u0027t throw, and you should move them out of the try{} block and make pFd final\n\nNote that because IOException and ErrnoException are checked exceptions you can rely on the compiler to tell you whether they will be thrown",
+      "range": {
+        "startLine": 1273,
+        "startChar": 36,
+        "endLine": 1273,
+        "endChar": 37
+      },
+      "revId": "a08e201cbbdae54228d5aa32ab82314c02b1bfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cbd871b7_c7f1a12a",
         "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
         "patchSetId": 2
