@@ -56,6 +56,24 @@
       "message": "This class is largely a duplicate of android.media.AudioPresentation.\n\n1) Does TvAudioPresentation need to be defined? I presume yes because it\u0027s implementing Parceable?\n2) If it does need to exist, can TvAudioPresentation inherit from android.media.AudioPresentation?",
       "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2e0f98d_b178b4f0",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1633017
+      },
+      "writtenOn": "2021-12-23T12:16:53Z",
+      "side": 1,
+      "message": "Yes it\u0027s largely duplicate of AudioPresentation class. However, AudioPresetation class was primarily written targeting MediaExtractor and AudioTrack. If TVAudioPresentation inherits from AudioPresentation, isn\u0027t that the base class is not generic?",
+      "parentUuid": "dd83569f_de798693",
+      "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
