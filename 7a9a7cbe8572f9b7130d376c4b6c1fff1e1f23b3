@@ -78,6 +78,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1fdca39f_936d8bbe",
+        "filename": "media/java/android/media/JetPlayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1903265
+      },
+      "writtenOn": "2021-12-23T17:03:39Z",
+      "side": 1,
+      "message": "Lists sometimes end with periods, sometimes not. The \u003cli\u003es above are complete sentences (the second is a paragraph); and so, they need to end with sentence punctuation. This list contains sentence fragments. The list items could end with periods, but I think the extra punctuation reduces readability.",
+      "parentUuid": "9e562c83_c8ed2f3e",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 21
+      },
+      "revId": "7a9a7cbe8572f9b7130d376c4b6c1fff1e1f23b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "36687579_38870469",
         "filename": "media/java/android/media/JetPlayer.java",
         "patchSetId": 1
@@ -89,6 +113,30 @@
       "writtenOn": "2021-12-23T12:08:17Z",
       "side": 1,
       "message": "Would you mind running `google-java-format --aosp` on this block?",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 6
+      },
+      "revId": "7a9a7cbe8572f9b7130d376c4b6c1fff1e1f23b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de9f4ff6_1d34c711",
+        "filename": "media/java/android/media/JetPlayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1903265
+      },
+      "writtenOn": "2021-12-23T17:03:39Z",
+      "side": 1,
+      "message": "Ran google-java-format. Reformatted paragraphs in Google Style.",
+      "parentUuid": "36687579_38870469",
       "range": {
         "startLine": 33,
         "startChar": 2,
