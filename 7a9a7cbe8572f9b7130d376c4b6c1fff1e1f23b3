@@ -51,6 +51,52 @@
       "parentUuid": "eb822966_4b5256a6",
       "revId": "7a9a7cbe8572f9b7130d376c4b6c1fff1e1f23b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e562c83_c8ed2f3e",
+        "filename": "media/java/android/media/JetPlayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2021-12-23T12:08:17Z",
+      "side": 1,
+      "message": "Uber-nit - While we are here: Mind adding a period at the end of each item? The \u003cli\u003es above and sentences so it makes sense to be consistent.",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 21
+      },
+      "revId": "7a9a7cbe8572f9b7130d376c4b6c1fff1e1f23b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36687579_38870469",
+        "filename": "media/java/android/media/JetPlayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2021-12-23T12:08:17Z",
+      "side": 1,
+      "message": "Would you mind running `google-java-format --aosp` on this block?",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 6
+      },
+      "revId": "7a9a7cbe8572f9b7130d376c4b6c1fff1e1f23b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
