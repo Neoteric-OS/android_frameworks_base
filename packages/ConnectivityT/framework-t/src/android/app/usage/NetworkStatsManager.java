@@ -57,6 +57,7 @@ import com.android.net.module.util.NetworkIdentityUtils;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Provides access to network usage history and statistics. Usage data is collected in
@@ -493,6 +494,30 @@ public class NetworkStatsManager {
         result = new NetworkStats(mContext, template, mFlags, startTime, endTime, mService);
         result.startUserUidEnumeration();
         return result;
+    }
+
+    /**
+     * Query network usage statistics details. Return snapshot of current UID statistics,
+     * including any {@link TrafficStats#UID_TETHERING}, video calling data usage,
+     * and {@link #mUidOperations} values.
+     *
+     * @param requiredIfaces A list of interfaces the stats should be restricted to, or
+     *               {@link NetworkStats#INTERFACES_ALL}.
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(anyOf = {NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK})
+    @NonNull public android.net.NetworkStats getDetailedUidStats(
+                @NonNull Set<String> requiredIfaces) {
+        Objects.requireNonNull(requiredIfaces, "requiredIfaces cannot be null");
+        try {
+            return mService.getDetailedUidStats(requiredIfaces.toArray(
+                    new String[requiredIfaces.size()]));
+        } catch (RemoteException e) {
+            if (DBG) Log.d(TAG, "Remote exception when get detailed uid stats");
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /** @hide */

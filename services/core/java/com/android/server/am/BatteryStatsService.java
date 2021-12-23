@@ -343,7 +343,7 @@ public final class BatteryStatsService extends IBatteryStats.Stub
         mHandlerThread.start();
         mHandler = new Handler(mHandlerThread.getLooper());
 
-        mStats = new BatteryStatsImpl(systemDir, handler, this,
+        mStats = new BatteryStatsImpl(context, systemDir, handler, this,
                 this, mUserManagerUserInfoProvider);
         mWorker = new BatteryExternalStatsWorker(context, mStats);
         mStats.setExternalStatsSyncLocked(mWorker);
@@ -2461,7 +2461,7 @@ public final class BatteryStatsService extends IBatteryStats.Stub
                                 Parcel in = Parcel.obtain();
                                 in.unmarshall(raw, 0, raw.length);
                                 in.setDataPosition(0);
-                                BatteryStatsImpl checkinStats = new BatteryStatsImpl(
+                                BatteryStatsImpl checkinStats = new BatteryStatsImpl(mContext,
                                         null, mStats.mHandler, null, null,
                                         mUserManagerUserInfoProvider);
                                 checkinStats.readSummaryFromParcel(in);
@@ -2502,7 +2502,7 @@ public final class BatteryStatsService extends IBatteryStats.Stub
                                 in.unmarshall(raw, 0, raw.length);
                                 in.setDataPosition(0);
                                 BatteryStatsImpl checkinStats = new BatteryStatsImpl(
-                                        null, mStats.mHandler, null, null,
+                                        mContext, null, mStats.mHandler, null, null,
                                         mUserManagerUserInfoProvider);
                                 checkinStats.readSummaryFromParcel(in);
                                 in.recycle();
