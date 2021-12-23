@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "955f33c4_0959bb13",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11593,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-12-23T03:20:33Z",
+      "side": 1,
+      "message": "But it gives a contradicting usecase when user explicitly passes false to renounce permission and then we look into context and then renounce it.",
+      "parentUuid": "75308bc8_50578346",
+      "range": {
+        "startLine": 11588,
+        "startChar": 11,
+        "endLine": 11593,
+        "endChar": 74
+      },
+      "revId": "68f3835266401dd56366ebcda18dc4cd666dca86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d0b1ba8_16deb0da",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
