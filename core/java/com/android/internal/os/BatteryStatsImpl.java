@@ -25,6 +25,7 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.ActivityManager;
+import android.app.usage.NetworkStatsManager;
 import android.bluetooth.BluetoothActivityEnergyInfo;
 import android.bluetooth.UidTraffic;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -36,7 +37,6 @@ import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.hardware.usb.UsbManager;
 import android.location.GnssSignalQuality;
-import android.net.INetworkStatsService;
 import android.net.NetworkStats;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
@@ -137,6 +137,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
@@ -195,6 +196,8 @@ public class BatteryStatsImpl extends BatteryStats {
     public static final int RESET_REASON_ADB_COMMAND = 2;
     public static final int RESET_REASON_FULL_CHARGE = 3;
     public static final int RESET_REASON_MEASURED_ENERGY_BUCKETS_CHANGE = 4;
+
+    private final Context mContext;
 
     protected Clocks mClocks;
 
@@ -827,6 +830,7 @@ public class BatteryStatsImpl extends BatteryStats {
     private BatteryStatsHistoryIterator mBatteryStatsHistoryIterator;
     private HistoryItem mHistoryIterator;
     private boolean mReadOverflow;
+    private NetworkStatsManager mNetStatsManager;
 
     int mStartCount;
 
@@ -1201,6 +1205,7 @@ public class BatteryStatsImpl extends BatteryStats {
     }
 
     public BatteryStatsImpl(Clocks clocks) {
+        mContext = null;
         init(clocks);
         mStartClockTimeMs = clocks.currentTimeMillis();
         mStatsFile = null;
@@ -10646,14 +10651,16 @@ public class BatteryStatsImpl extends BatteryStats {
         return mCpuFreqs;
     }
 
-    public BatteryStatsImpl(File systemDir, Handler handler, PlatformIdleStateCallback cb,
-            MeasuredEnergyRetriever energyStatsCb, UserInfoProvider userInfoProvider) {
-        this(new SystemClocks(), systemDir, handler, cb, energyStatsCb, userInfoProvider);
-    }
-
-    private BatteryStatsImpl(Clocks clocks, File systemDir, Handler handler,
+    public BatteryStatsImpl(Context context, File systemDir, Handler handler,
             PlatformIdleStateCallback cb, MeasuredEnergyRetriever energyStatsCb,
             UserInfoProvider userInfoProvider) {
+        this(context, new SystemClocks(), systemDir, handler, cb, energyStatsCb, userInfoProvider);
+    }
+
+    private BatteryStatsImpl(Context context, Clocks clocks, File systemDir, Handler handler,
+            PlatformIdleStateCallback cb, MeasuredEnergyRetriever energyStatsCb,
+            UserInfoProvider userInfoProvider) {
+        mContext = context;
         init(clocks);
 
         if (systemDir == null) {
@@ -10684,6 +10691,8 @@ public class BatteryStatsImpl extends BatteryStats {
         // Notify statsd that the system is initially not in doze.
         mDeviceIdleMode = DEVICE_IDLE_MODE_OFF;
         FrameworkStatsLog.write(FrameworkStatsLog.DEVICE_IDLE_MODE_STATE_CHANGED, mDeviceIdleMode);
+        mNetStatsManager = (NetworkStatsManager)
+                mContext.getSystemService(mContext.NETWORK_STATS_SERVICE);
     }
 
     @VisibleForTesting
@@ -10772,6 +10781,7 @@ public class BatteryStatsImpl extends BatteryStats {
     }
 
     public BatteryStatsImpl(Clocks clocks, Parcel p) {
+        mContext = null;
         init(clocks);
         mStatsFile = null;
         mCheckinFile = null;
@@ -11540,18 +11550,8 @@ public class BatteryStatsImpl extends BatteryStats {
 
     @VisibleForTesting
     protected NetworkStats readNetworkStatsLocked(String[] ifaces) {
-        try {
-            if (!ArrayUtils.isEmpty(ifaces)) {
-                INetworkStatsService statsService = INetworkStatsService.Stub.asInterface(
-                        ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
-                if (statsService != null) {
-                    return statsService.getDetailedUidStats(ifaces);
-                } else {
-                    Slog.e(TAG, "Failed to get networkStatsService ");
-                }
-            }
-        } catch (RemoteException e) {
-            Slog.e(TAG, "failed to read network stats for ifaces: " + Arrays.toString(ifaces) + e);
+        if (!ArrayUtils.isEmpty(ifaces)) {
+            return mNetStatsManager.getDetailedUidStats(Set.of(ifaces));
         }
         return null;
     }
