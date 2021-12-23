@@ -16,6 +16,23 @@
       "message": "Makoto, here\u0027s the context: go/dexopting-standalone-system-server-jars?disco\u003dAAAAQxohlY4",
       "revId": "59ed91de19cb9c7a9f346577ef0d2d8f66c1c5b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d66cc790_6bda6ddf",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-12-23T12:51:26Z",
+      "side": 1,
+      "message": "Can this logic go into SystemServerClassLoaderFactory instead? from SystemServiceManager perspective all we really want is a classloader, doesn\u0027t matter how it gets created really.",
+      "revId": "59ed91de19cb9c7a9f346577ef0d2d8f66c1c5b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
