@@ -170,15 +170,43 @@ public class NetworkStatsManager {
         }
     }
 
-    /** @hide */
-    public Bucket querySummaryForDevice(NetworkTemplate template,
-            long startTime, long endTime) throws SecurityException, RemoteException {
+    /**
+     * Query network usage statistics summaries. Result is summarised data usage for the whole
+     * device. Result is a single Bucket aggregated over time, state, uid, tag, metered, and
+     * roaming. This means the bucket's start and end timestamp are going to be the same as the
+     * 'startTime' and 'endTime' parameters. State is going to be
+     * {@link NetworkStats.Bucket#STATE_ALL}, uid {@link NetworkStats.Bucket#UID_ALL},
+     * tag {@link NetworkStats.Bucket#TAG_NONE},
+     * default network {@link NetworkStats.Bucket#DEFAULT_NETWORK_ALL},
+     * metered {@link NetworkStats.Bucket#METERED_ALL},
+     * and roaming {@link NetworkStats.Bucket#ROAMING_ALL}.
+     * This may take a long time, and apps should avoid calling this on their main thread.
+     *
+     * @param template Predicate used to match networks. See {@link NetworkTemplate}.
+     * @param startTime Start of period. Defined in terms of "Unix time", see
+     *            {@link java.lang.System#currentTimeMillis}.
+     * @param endTime End of period. Defined in terms of "Unix time", see
+     *            {@link java.lang.System#currentTimeMillis}.
+     * @return Bucket object or null if permissions are insufficient or error happened during
+     *         statistics collection.
+     *
+     * @hide
+     */
+    @Nullable
+    @WorkerThread
+    // @SystemApi(client = MODULE_LIBRARIES)
+    public Bucket querySummaryForDevice(@NonNull NetworkTemplate template,
+            long startTime, long endTime) throws SecurityException {
         Bucket bucket = null;
-        NetworkStats stats = new NetworkStats(mContext, template, mFlags, startTime, endTime,
+        NetworkStats stats;
+        try {
+            stats = new NetworkStats(mContext, template, mFlags, startTime, endTime,
                 mService);
-        bucket = stats.getDeviceSummaryForNetwork();
-
-        stats.close();
+            bucket = stats.getDeviceSummaryForNetwork();
+            stats.close();
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
         return bucket;
     }
 
@@ -323,13 +351,36 @@ public class NetworkStatsManager {
         return querySummary(template, startTime, endTime);
     }
 
-    /** @hide */
-    public NetworkStats querySummary(NetworkTemplate template, long startTime,
-            long endTime) throws SecurityException, RemoteException {
-        NetworkStats result;
-        result = new NetworkStats(mContext, template, mFlags, startTime, endTime, mService);
-        result.startSummaryEnumeration();
-
+    /**
+     * Query network usage statistics summaries. Result filtered to include only uids belonging to
+     * calling user. Result is aggregated over time, hence all buckets will have the same start and
+     * end timestamps. Not aggregated over state, uid, default network, metered, or roaming. This
+     * means buckets' start and end timestamps are going to be the same as the 'startTime' and
+     * 'endTime' parameters. State, uid, metered, and roaming are going to vary, and tag is going to
+     * be the same.
+     * This may take a long time, and apps should avoid calling this on their main thread.
+     *
+     * @param template Predicate used to match networks. See {@link NetworkTemplate}.
+     * @param startTime Start of period. Defined in terms of "Unix time", see
+     *            {@link java.lang.System#currentTimeMillis}.
+     * @param endTime End of period. Defined in terms of "Unix time", see
+     *            {@link java.lang.System#currentTimeMillis}.
+     * @return Statistics object or null if permissions are insufficient or error happened during
+     *         statistics collection.
+     * @hide
+     */
+    @Nullable
+    // @SystemApi(client = MODULE_LIBRARIES)
+    @WorkerThread
+    public NetworkStats querySummary(@NonNull NetworkTemplate template, long startTime,
+            long endTime) throws SecurityException {
+        NetworkStats result = null;
+        try {
+            result = new NetworkStats(mContext, template, mFlags, startTime, endTime, mService);
+            result.startSummaryEnumeration();
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
         return result;
     }
 
