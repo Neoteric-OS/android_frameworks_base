@@ -170,6 +170,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "44dc4784_8173f7ac",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11593,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2021-12-23T17:54:11Z",
+      "side": 1,
+      "message": "Agree w/ Rafael. Indeed it\u0027s a contradicting use case if one use both renoucedpermission and this API and the two doesn\u0027t agree. A reasonable one should never do that. But if that happens, we should take the safest approach i.e. one preserves minimal permissions. The user has all means to fix their code if this is not intended.",
+      "parentUuid": "191ad2c6_9e929397",
+      "range": {
+        "startLine": 11588,
+        "startChar": 11,
+        "endLine": 11593,
+        "endChar": 74
+      },
+      "revId": "68f3835266401dd56366ebcda18dc4cd666dca86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d0b1ba8_16deb0da",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
