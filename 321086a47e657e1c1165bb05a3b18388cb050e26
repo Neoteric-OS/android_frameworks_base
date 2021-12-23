@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a72a87ac_8632c47f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-23T01:46:14Z",
+      "side": 1,
+      "message": "LGTM with nits",
+      "revId": "321086a47e657e1c1165bb05a3b18388cb050e26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7da2c3e8_ce841b16",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1983,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-23T01:46:14Z",
+      "side": 1,
+      "message": "IIUC this is not needed?",
+      "range": {
+        "startLine": 1983,
+        "startChar": 12,
+        "endLine": 1983,
+        "endChar": 44
+      },
+      "revId": "321086a47e657e1c1165bb05a3b18388cb050e26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
