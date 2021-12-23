@@ -100,6 +100,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5b40ed1_e7fbdfc8",
+        "filename": "media/java/android/media/JetPlayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2021-12-23T18:09:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1fdca39f_936d8bbe",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 21
+      },
+      "revId": "7a9a7cbe8572f9b7130d376c4b6c1fff1e1f23b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36687579_38870469",
@@ -137,6 +161,30 @@
       "side": 1,
       "message": "Ran google-java-format. Reformatted paragraphs in Google Style.",
       "parentUuid": "36687579_38870469",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 6
+      },
+      "revId": "7a9a7cbe8572f9b7130d376c4b6c1fff1e1f23b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5381dc51_dd92d811",
+        "filename": "media/java/android/media/JetPlayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2021-12-23T18:09:18Z",
+      "side": 1,
+      "message": "I\u0027m surprised it\u0027s using 2-spaces indentation. Did you include the --aosp param? If yes, I guess it\u0027s fine to leave as is.",
+      "parentUuid": "de9f4ff6_1d34c711",
       "range": {
         "startLine": 33,
         "startChar": 2,
