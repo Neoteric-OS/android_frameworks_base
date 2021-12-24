@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3408bc1b_4f3f78cf",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1246,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-24T09:22:40Z",
+      "side": 1,
+      "message": "Does this mean if any exception happens at l.1246, we\u0027ll leave a sockFd initialized? Does it matter?",
+      "range": {
+        "startLine": 1246,
+        "startChar": 12,
+        "endLine": 1246,
+        "endChar": 50
+      },
+      "revId": "409b3e873b72660b1cfcd7efab99a0bd5f2cddbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
