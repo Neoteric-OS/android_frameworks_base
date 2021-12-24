@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e681d0a_d68debd6",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2021-12-24T14:18:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee861a63_a8da65b2",
+      "revId": "7943e5d3182fd2d476a691ad040e656527a6d987",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae6bd10f_9c1d5ce0",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-12-24T12:08:09Z",
       "side": 1,
       "message": "this can be package private",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 10
+      },
+      "revId": "7943e5d3182fd2d476a691ad040e656527a6d987",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06858286_4b4868ff",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2021-12-24T14:18:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae6bd10f_9c1d5ce0",
       "range": {
         "startLine": 39,
         "startChar": 4,
@@ -58,6 +100,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f59c997_fbd62085",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2021-12-24T14:18:09Z",
+      "side": 1,
+      "message": "It\u0027s not possible that a classloader is already there in this case because this method is only called by ZygoteInit and is called only once for each jar.\n\nThere isn\u0027t an exact equivalent of DCHECK in Java, so I\u0027m not sure if it\u0027s common to add a check for things that can never actually happen. However, it\u0027s probably fine to add a check here since this method is not performance critical. Done.",
+      "parentUuid": "da0ad665_4b9593c7",
+      "revId": "7943e5d3182fd2d476a691ad040e656527a6d987",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "17c26efe_8d094375",
@@ -81,6 +141,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "950696ea_753a328e",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2021-12-24T14:18:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "17c26efe_8d094375",
+      "range": {
+        "startLine": 56,
+        "startChar": 73,
+        "endLine": 56,
+        "endChar": 93
+      },
+      "revId": "7943e5d3182fd2d476a691ad040e656527a6d987",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81335b22_12585729",
@@ -94,6 +178,30 @@
       "writtenOn": "2021-12-24T12:08:09Z",
       "side": 1,
       "message": "keep the old name, users of this API aren\u0027t expected to handle in code cases where the classloader isn\u0027t created.",
+      "range": {
+        "startLine": 118,
+        "startChar": 47,
+        "endLine": 118,
+        "endChar": 74
+      },
+      "revId": "7943e5d3182fd2d476a691ad040e656527a6d987",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bcf21d6_100bd4e8",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2021-12-24T14:18:09Z",
+      "side": 1,
+      "message": "When users load services from a platform jar (not an APEX one), it is possible that the classloader isn\u0027t created yet, unless the jar is listed in PRODUCT_STANDALONE_SYSTEM_SERVER_JARS. This can happen on downstream branches and in partners\u0027 codebases. Note that adding platform jars to the list is optional, and we don\u0027t have a plan to make it mandatory as the performance impact is minor and it may break things.\n\nI\u0027m fine with moving the check to SystemServerClassLoaderFactory, but I want to at least change the name here to remind users that this method has implications that a classloader may or may not be created, depending on some conditions.",
+      "parentUuid": "81335b22_12585729",
       "range": {
         "startLine": 118,
         "startChar": 47,
