@@ -3,6 +3,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ee861a63_a8da65b2",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-12-24T12:08:09Z",
+      "side": 1,
+      "message": "a note here on who is expected to call this method, or when it is okay to do so.",
+      "revId": "7943e5d3182fd2d476a691ad040e656527a6d987",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae6bd10f_9c1d5ce0",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-12-24T12:08:09Z",
+      "side": 1,
+      "message": "this can be package private",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 10
+      },
+      "revId": "7943e5d3182fd2d476a691ad040e656527a6d987",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "da0ad665_4b9593c7",
         "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
         "patchSetId": 3
@@ -14,6 +54,52 @@
       "writtenOn": "2021-12-23T17:39:30Z",
       "side": 1,
       "message": "Could you add a check it\u0027s not there already?",
+      "revId": "7943e5d3182fd2d476a691ad040e656527a6d987",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17c26efe_8d094375",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-12-24T12:08:09Z",
+      "side": 1,
+      "message": "nit: maybe not for this change, but you can simplify the API here by moving ZygoteInit\u0027s getOrCreateSystemServerClassLoader into this factory, and not asking SystemServerManager to provide a parent classloader.",
+      "range": {
+        "startLine": 56,
+        "startChar": 73,
+        "endLine": 56,
+        "endChar": 93
+      },
+      "revId": "7943e5d3182fd2d476a691ad040e656527a6d987",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81335b22_12585729",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-12-24T12:08:09Z",
+      "side": 1,
+      "message": "keep the old name, users of this API aren\u0027t expected to handle in code cases where the classloader isn\u0027t created.",
+      "range": {
+        "startLine": 118,
+        "startChar": 47,
+        "endLine": 118,
+        "endChar": 74
+      },
       "revId": "7943e5d3182fd2d476a691ad040e656527a6d987",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
