@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "32396b34_9bb9a9c0",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1247,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-24T08:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d88c52fc_fcd254cf",
+      "range": {
+        "startLine": 1247,
+        "startChar": 50,
+        "endLine": 1247,
+        "endChar": 51
+      },
+      "revId": "a08e201cbbdae54228d5aa32ab82314c02b1bfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb3c5443_19b431e4",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-12-24T07:28:41Z",
       "side": 1,
       "message": "pFd.getFileDescriptor()",
+      "range": {
+        "startLine": 1252,
+        "startChar": 20,
+        "endLine": 1252,
+        "endChar": 26
+      },
+      "revId": "a08e201cbbdae54228d5aa32ab82314c02b1bfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20029d26_cc20c5dd",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-24T08:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb3c5443_19b431e4",
       "range": {
         "startLine": 1252,
         "startChar": 20,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5051a72_96c7c886",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-24T08:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a19cef96_860bc197",
+      "range": {
+        "startLine": 1260,
+        "startChar": 24,
+        "endLine": 1260,
+        "endChar": 30
+      },
+      "revId": "a08e201cbbdae54228d5aa32ab82314c02b1bfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba15a091_3e9b57a4",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afb5a647_696edec4",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-24T08:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba15a091_3e9b57a4",
+      "range": {
+        "startLine": 1273,
+        "startChar": 36,
+        "endLine": 1273,
+        "endChar": 37
+      },
+      "revId": "a08e201cbbdae54228d5aa32ab82314c02b1bfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbd871b7_c7f1a12a",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-12-23T09:59:05Z",
       "side": 1,
       "message": "It seems to me the pfd should be closed instead of sockFd?\nAlso not sure why you did not close sockFd when catching exception.\n\nDoes it work in this way?\n\n} catch (IOException | ErrnoException e) {\n            IoUtils.closeQuietly(pFd.getFileDescriptor());\n            IoUtils.closeQuietly(sockFd);\n        } finally {\n            IoUtils.closeQuietly(pFd.getFileDescriptor());\n        }",
+      "range": {
+        "startLine": 1274,
+        "startChar": 10,
+        "endLine": 1274,
+        "endChar": 17
+      },
+      "revId": "a08e201cbbdae54228d5aa32ab82314c02b1bfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cff15d33_15323a2d",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-24T08:08:04Z",
+      "side": 1,
+      "message": "Remove finally block.",
+      "parentUuid": "cbd871b7_c7f1a12a",
       "range": {
         "startLine": 1274,
         "startChar": 10,
