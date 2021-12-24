@@ -26,6 +26,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eb3c5443_19b431e4",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-24T07:28:41Z",
+      "side": 1,
+      "message": "pFd.getFileDescriptor()",
+      "range": {
+        "startLine": 1252,
+        "startChar": 20,
+        "endLine": 1252,
+        "endChar": 26
+      },
+      "revId": "a08e201cbbdae54228d5aa32ab82314c02b1bfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a19cef96_860bc197",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-24T07:28:41Z",
+      "side": 1,
+      "message": "pFd.getFileDescriptor()",
+      "range": {
+        "startLine": 1260,
+        "startChar": 24,
+        "endLine": 1260,
+        "endChar": 30
+      },
+      "revId": "a08e201cbbdae54228d5aa32ab82314c02b1bfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ba15a091_3e9b57a4",
         "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
         "patchSetId": 2
