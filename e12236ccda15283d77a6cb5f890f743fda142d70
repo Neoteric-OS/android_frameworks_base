@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "df37d6bb_182b902f",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2021-12-24T15:58:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42e5afe1_51a251f5",
+      "range": {
+        "startLine": 44,
+        "startChar": 22,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "e12236ccda15283d77a6cb5f890f743fda142d70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8d23a92_f348a1b5",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-12-24T14:40:08Z",
       "side": 1,
       "message": "oh... this may become a problem if we start adding more and more test apexes. When will we be able to stop caring about this method?",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 84
+      },
+      "revId": "e12236ccda15283d77a6cb5f890f743fda142d70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b5808f5_4fd728c3",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2021-12-24T15:58:25Z",
+      "side": 1,
+      "message": "\u003e When will we be able to stop caring about this method?\nI\u0027m not sure I get this question. We always need this method to filter out paths that we don\u0027t care about.\n\n\u003e this may become a problem if we start adding more and more test apexes.\nOh, okay. It\u0027s tricky to deal with testing APEXes because they cannot be listed in `PRODUCT_APEX_STANDALONE_SYSTEM_SERVER_JARS`. I can\u0027t find an elegant way to deal with them. Maybe ignore all APEXes starting with `test_`?",
+      "parentUuid": "a8d23a92_f348a1b5",
       "range": {
         "startLine": 89,
         "startChar": 0,
