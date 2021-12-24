@@ -16,7 +16,6 @@
 
 package android.media;
 
-import android.annotation.CallbackExecutor;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.graphics.GraphicBuffer;
@@ -28,7 +27,6 @@ import android.hardware.HardwareBuffer.Usage;
 import android.hardware.camera2.MultiResolutionImageReader;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.view.Surface;
 
 import dalvik.system.VMRuntime;
@@ -42,6 +40,7 @@ import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.StampedLock;
 
 /**
  * <p>The ImageReader class allows direct application access to image data
@@ -602,7 +601,8 @@ public class ImageReader implements AutoCloseable {
      *            If no handler specified and the calling thread has no looper.
      */
     public void setOnImageAvailableListener(OnImageAvailableListener listener, Handler handler) {
-        synchronized (mListenerLock) {
+        long writeStamp = mListenerLock.writeLock();
+        try {
             if (listener != null) {
                 Looper looper = handler != null ? handler.getLooper() : Looper.myLooper();
                 if (looper == null) {
@@ -618,6 +618,8 @@ public class ImageReader implements AutoCloseable {
                 mListenerExecutor = null;
             }
             mListener = listener;
+        } finally {
+            mListenerLock.unlockWrite(writeStamp);
         }
     }
 
@@ -640,9 +642,12 @@ public class ImageReader implements AutoCloseable {
             throw new IllegalArgumentException("executor must not be null");
         }
 
-        synchronized (mListenerLock) {
+        long writeStamp = mListenerLock.writeLock();
+        try {
             mListenerExecutor = executor;
             mListener = listener;
+        } finally {
+            mListenerLock.unlockWrite(writeStamp);
         }
     }
 
@@ -816,28 +821,41 @@ public class ImageReader implements AutoCloseable {
             return;
         }
 
-        final Executor executor;
-        final OnImageAvailableListener listener;
-        synchronized (ir.mListenerLock) {
-            executor = ir.mListenerExecutor;
-            listener = ir.mListener;
-        }
-        final boolean isReaderValid;
         synchronized (ir.mCloseLock) {
-            isReaderValid = ir.mIsReaderValid;
+            if (!ir.mIsReaderValid) {
+                // It's dangerous to fire onImageAvailable() callback when the ImageReader
+                // is being closed, as application could acquire next image in the
+                // onImageAvailable() callback.
+                return;
+            }
         }
 
-        // It's dangerous to fire onImageAvailable() callback when the ImageReader
-        // is being closed, as application could acquire next image in the
-        // onImageAvailable() callback.
-        if (executor != null && listener != null && isReaderValid) {
-            executor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    listener.onImageAvailable(ir);
-                }
-            });
+        final Executor executor;
+        final long readStamp = ir.mListenerLock.readLock();
+        try {
+            executor = ir.mListenerExecutor;
+            if (executor == null) {
+                return;
+            }
+        } finally {
+            ir.mListenerLock.unlockRead(readStamp);
         }
+
+        executor.execute(() -> {
+            // Acquire readlock to ensure that the ImageReader does not change its
+            // state while a listener is actively processing.
+            final long rStamp = ir.mListenerLock.readLock();
+            try {
+                // Fire onImageAvailable of the latest non-null listener
+                // This ensures that if the listener changes while messages are in queue, the
+                // in-flight messages will call onImageAvailable of the new listener instead
+                if (ir.mListener != null) {
+                    ir.mListener.onImageAvailable(ir);
+                }
+            } finally {
+                ir.mListenerLock.unlockRead(rStamp);
+            }
+        });
     }
 
     private final int mWidth;
@@ -849,7 +867,7 @@ public class ImageReader implements AutoCloseable {
     private final Surface mSurface;
     private int mEstimatedNativeAllocBytes;
 
-    private final Object mListenerLock = new Object();
+    private final StampedLock mListenerLock = new StampedLock();
     private final Object mCloseLock = new Object();
     private boolean mIsReaderValid = false;
     private OnImageAvailableListener mListener;
