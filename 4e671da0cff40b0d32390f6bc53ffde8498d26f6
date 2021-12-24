@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e41e3851_51669531",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-24T10:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98614619_e3ab8071",
+      "range": {
+        "startLine": 174,
+        "startChar": 48,
+        "endLine": 174,
+        "endChar": 49
+      },
+      "revId": "4e671da0cff40b0d32390f6bc53ffde8498d26f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "548c7a64_a99bbc73",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-12-23T09:07:53Z",
       "side": 1,
       "message": "s/are going to be/will be/",
+      "range": {
+        "startLine": 176,
+        "startChar": 64,
+        "endLine": 176,
+        "endChar": 79
+      },
+      "revId": "4e671da0cff40b0d32390f6bc53ffde8498d26f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c3ffdb5_4e4610d7",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-24T10:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "548c7a64_a99bbc73",
       "range": {
         "startLine": 176,
         "startChar": 64,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b388ec1_0eb06833",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-24T10:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59b7c591_d41981d4",
+      "range": {
+        "startLine": 177,
+        "startChar": 33,
+        "endLine": 177,
+        "endChar": 43
+      },
+      "revId": "4e671da0cff40b0d32390f6bc53ffde8498d26f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "895e4a7d_8d460bad",
@@ -110,6 +182,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8163231_0364e0e6",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-24T10:08:04Z",
+      "side": 1,
+      "message": "Done.\nLet\u0027s also revise other javadocs in later patches.",
+      "parentUuid": "895e4a7d_8d460bad",
+      "range": {
+        "startLine": 185,
+        "startChar": 23,
+        "endLine": 185,
+        "endChar": 32
+      },
+      "revId": "4e671da0cff40b0d32390f6bc53ffde8498d26f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84547816_527c0d77",
@@ -123,6 +219,30 @@
       "writtenOn": "2021-12-23T09:07:53Z",
       "side": 1,
       "message": "Start of period, in milliseconds since the Unix epoch",
+      "range": {
+        "startLine": 186,
+        "startChar": 24,
+        "endLine": 186,
+        "endChar": 72
+      },
+      "revId": "4e671da0cff40b0d32390f6bc53ffde8498d26f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9196dc44_7d689f5d",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-24T10:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84547816_527c0d77",
       "range": {
         "startLine": 186,
         "startChar": 24,
@@ -179,6 +299,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "125c19c9_dbcc1c86",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-24T10:08:04Z",
+      "side": 1,
+      "message": "Yes.\nAfter some traces it seems we don\u0027t really have a null case.",
+      "parentUuid": "ae69d1b5_b90294c5",
+      "range": {
+        "startLine": 190,
+        "startChar": 32,
+        "endLine": 190,
+        "endChar": 68
+      },
+      "revId": "4e671da0cff40b0d32390f6bc53ffde8498d26f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18029fb8_d69046b3",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-24T10:08:04Z",
+      "side": 1,
+      "message": "Removed.\nProbably we want to revisit other javadocs as well after IC.",
+      "parentUuid": "29e387fd_8ce2e14a",
+      "range": {
+        "startLine": 190,
+        "startChar": 72,
+        "endLine": 190,
+        "endChar": 86
+      },
+      "revId": "4e671da0cff40b0d32390f6bc53ffde8498d26f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9e175e8_a24a117e",
@@ -192,6 +360,30 @@
       "writtenOn": "2021-12-23T09:07:53Z",
       "side": 1,
       "message": "The constructor for NetworkStats can\u0027t throw, right ? So you probably want something like\n\n  final NetworkStats stats \u003d new NetworkStats(...)\n  try {\n    return stats.getDeviceSummaryForNetwork();\n  } catch () {\n  } finally {\n    stats.close();\n  }",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 27
+      },
+      "revId": "4e671da0cff40b0d32390f6bc53ffde8498d26f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e05b0dff_e2561e93",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-24T10:08:04Z",
+      "side": 1,
+      "message": "No, the constructor will call openSession to retrieve the binder, it can throw.",
+      "parentUuid": "f9e175e8_a24a117e",
       "range": {
         "startLine": 200,
         "startChar": 0,
@@ -225,6 +417,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5387f572_e5a86a80",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-24T10:08:04Z",
+      "side": 1,
+      "message": "1. Done but I prefer not to say will contain a bucket for each distinct combination. Assuming we are adding additional dimension to the combination.\nFor old callers they might see more then 1 item for their old combination definition. Reopen if any idea.\n2. tagged data are already duplicated into non-tagged data when native layer reports stats.\nFrom the returned value, it seems we\u0027ll have TAG_NONE for all data.",
+      "parentUuid": "79accf29_92353cd9",
+      "range": {
+        "startLine": 355,
+        "startChar": 49,
+        "endLine": 360,
+        "endChar": 19
+      },
+      "revId": "4e671da0cff40b0d32390f6bc53ffde8498d26f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75a7eac8_a111eed0",
@@ -238,6 +454,30 @@
       "writtenOn": "2021-12-23T09:07:53Z",
       "side": 1,
       "message": "just return inline",
+      "range": {
+        "startLine": 377,
+        "startChar": 30,
+        "endLine": 377,
+        "endChar": 34
+      },
+      "revId": "4e671da0cff40b0d32390f6bc53ffde8498d26f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5fd3d04_8086c076",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-24T10:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75a7eac8_a111eed0",
       "range": {
         "startLine": 377,
         "startChar": 30,
