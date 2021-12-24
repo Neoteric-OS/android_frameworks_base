@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42e5afe1_51a251f5",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-12-24T14:40:08Z",
+      "side": 1,
+      "message": "IllegalStateException is a more specific",
+      "range": {
+        "startLine": 44,
+        "startChar": 22,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "e12236ccda15283d77a6cb5f890f743fda142d70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8d23a92_f348a1b5",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-12-24T14:40:08Z",
+      "side": 1,
+      "message": "oh... this may become a problem if we start adding more and more test apexes. When will we be able to stop caring about this method?",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 84
+      },
+      "revId": "e12236ccda15283d77a6cb5f890f743fda142d70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
