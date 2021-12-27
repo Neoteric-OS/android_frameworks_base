@@ -97,6 +97,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkIdentity;
 import android.net.NetworkIdentitySet;
+import android.net.NetworkPolicyManager;
 import android.net.NetworkSpecifier;
 import android.net.NetworkStack;
 import android.net.NetworkStateSnapshot;
@@ -210,6 +211,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private final INetworkManagementService mNetworkManager;
     private final NetworkStatsFactory mStatsFactory;
     private final AlarmManager mAlarmManager;
+    private static NetworkPolicyManager sNetPolicyManager;
     private final Clock mClock;
     private final NetworkStatsSettings mSettings;
     private final NetworkStatsObservers mStatsObservers;
@@ -573,6 +575,11 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 .getUriFor(Settings.Global.NETSTATS_COMBINE_SUBTYPE_ENABLED)));
 
         registerGlobalAlert();
+
+        // Because networkstatsservice starts later than NetworkPolicy Manager Service, so get
+        // NetworkPolicyManagerService in systemReady instead of NetworkStatsService.create.
+        NetworkPolicyManager sNetPolicyManager = (NetworkPolicyManager) mContext.getSystemService(
+                Context.NETWORK_POLICY_SERVICE);
     }
 
     private NetworkStatsRecorder buildRecorder(
@@ -826,8 +833,9 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             if (LOGD) Slog.d(TAG, "Resolving plan for " + template);
             final long token = Binder.clearCallingIdentity();
             try {
-                plan = LocalServices.getService(NetworkPolicyManagerInternal.class)
-                        .getSubscriptionPlan(template);
+                if (sNetPolicyManager != null) {
+                    plan = sNetPolicyManager.getSubscriptionPlan(template);
+                }
             } finally {
                 Binder.restoreCallingIdentity(token);
             }
@@ -2110,9 +2118,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         @Override
         public void notifyWarningOrLimitReached() {
             Log.d(TAG, mTag + ": notifyWarningOrLimitReached");
-            BinderUtils.withCleanCallingIdentity(() ->
-                    LocalServices.getService(NetworkPolicyManagerInternal.class)
-                            .onStatsProviderWarningOrLimitReached(mTag));
+            if (sNetPolicyManager != null) {
+                BinderUtils.withCleanCallingIdentity(() ->
+                        sNetPolicyManager.onStatsProviderWarningOrLimitReached(mTag));
+            }
         }
 
         @Override
