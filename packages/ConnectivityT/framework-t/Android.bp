@@ -34,6 +34,7 @@ filegroup {
         "src/android/net/TrafficStats.java",
         "src/android/net/UnderlyingNetworkInfo.*",
         "src/android/net/netstats/**/*.*",
+        "src/com/android/server/NetworkManagement*.java",
     ],
     path: "src",
     visibility: [
