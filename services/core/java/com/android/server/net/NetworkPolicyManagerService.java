@@ -3367,6 +3367,32 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         return result;
     }
 
+    /**
+     * Get subscription plan for the given networkTemplate.
+     *
+     * @param template the networkTemplate to get the subscription plan for.
+     * @hide
+     */
+    public SubscriptionPlan getSubscriptionPlan(NetworkTemplate template) {
+        synchronized (mNetworkPoliciesSecondLock) {
+            final int subId = findRelevantSubIdNL(template);
+            return getPrimarySubscriptionPlanLocked(subId);
+        }
+    }
+
+    /**
+     *  Notifies that the specified {@link NetworkStatsProvider} has reached its quota
+     *  which was set through {@link NetworkStatsProvider#onSetLimit(String, long)} or
+     *  {@link NetworkStatsProvider#onSetWarningAndLimit(String, long, long)}.
+     *
+     * @param tag the human readable identifier of the custom network stats provider.
+     * @hide
+     */
+    public void onStatsProviderWarningOrLimitReached(@NonNull String tag) {
+        Log.v(TAG, "onStatsProviderWarningOrLimitReached: " + tag);
+        mHandler.obtainMessage(MSG_STATS_PROVIDER_WARNING_OR_LIMIT_REACHED).sendToTarget();
+    }
+
     @Override
     public SubscriptionPlan[] getSubscriptionPlans(int subId, String callingPackage) {
         enforceSubscriptionPlanAccess(subId, Binder.getCallingUid(), callingPackage);
@@ -5591,14 +5617,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         }
 
         @Override
-        public SubscriptionPlan getSubscriptionPlan(NetworkTemplate template) {
-            synchronized (mNetworkPoliciesSecondLock) {
-                final int subId = findRelevantSubIdNL(template);
-                return getPrimarySubscriptionPlanLocked(subId);
-            }
-        }
-
-        @Override
         public long getSubscriptionOpportunisticQuota(Network network, int quotaType) {
             final long quotaBytes;
             synchronized (mNetworkPoliciesSecondLock) {
@@ -5639,12 +5657,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         public void setMeteredRestrictedPackagesAsync(Set<String> packageNames, int userId) {
             mHandler.obtainMessage(MSG_METERED_RESTRICTED_PACKAGES_CHANGED,
                     userId, 0, packageNames).sendToTarget();
-        }
-
-        @Override
-        public void onStatsProviderWarningOrLimitReached(@NonNull String tag) {
-            Log.v(TAG, "onStatsProviderWarningOrLimitReached: " + tag);
-            mHandler.obtainMessage(MSG_STATS_PROVIDER_WARNING_OR_LIMIT_REACHED).sendToTarget();
         }
     }
 

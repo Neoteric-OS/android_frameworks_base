@@ -535,6 +535,37 @@ public class NetworkPolicyManager {
     }
 
     /**
+     * Get subscription plan for the given networkTemplate.
+     *
+     * @param template the networkTemplate to get the subscription plan for.
+     * @hide
+     */
+    @NonNull
+    public SubscriptionPlan getSubscriptionPlan(NetworkTemplate template) {
+        try {
+            return mService.getSubscriptionPlan(template);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     *  Notifies that the specified {@link NetworkStatsProvider} has reached its quota
+     *  which was set through {@link NetworkStatsProvider#onSetLimit(String, long)} or
+     *  {@link NetworkStatsProvider#onSetWarningAndLimit(String, long, long)}.
+     *
+     * @param tag the human readable identifier of the custom network stats provider.
+     * @hide
+     */
+    public void onStatsProviderWarningOrLimitReached(@NonNull String tag) {
+        try {
+            mService.onStatsProviderWarningOrLimitReached(tag);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Resets network policy settings back to factory defaults.
      *
      * @hide
