@@ -693,6 +693,8 @@ public final class NotificationPanelViewController implements Dumpable {
                 }
             };
 
+    private boolean mBlockedGesturalNavigation = false;
+
     @Inject
     public NotificationPanelViewController(NotificationPanelView view,
             @Main Handler handler,
@@ -3488,7 +3490,13 @@ public final class NotificationPanelViewController implements Dumpable {
         );
     }
 
-    /** Updates notification panel-specific flags on {@link SysUiState}. */
+    public void setBlockedGesturalNavigation(boolean blocked) {
+        mBlockedGesturalNavigation = blocked;
+    }
+
+    /**
+     * Updates notification panel-specific flags on {@link SysUiState}.
+     */
     public void updateSystemUiStateFlags() {
         if (SysUiState.DEBUG) {
             Log.d(TAG, "Updating panel sysui state flags: fullyExpanded="
@@ -3499,7 +3507,7 @@ public final class NotificationPanelViewController implements Dumpable {
                 .setFlag(SYSUI_STATE_NOTIFICATION_PANEL_EXPANDED,
                         isFullyExpanded() && !mQsController.getExpanded())
                 .setFlag(SYSUI_STATE_QUICK_SETTINGS_EXPANDED,
-                        isFullyExpanded() && mQsController.getExpanded()).commitUpdate(mDisplayId);
+                        isFullyExpanded() || mBlockedGesturalNavigation && mQsController.getExpanded()).commitUpdate(mDisplayId);
     }
 
     private void debugLog(String fmt, Object... args) {
