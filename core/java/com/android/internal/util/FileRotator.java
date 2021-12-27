@@ -382,7 +382,10 @@ public class FileRotator {
             writer.write(bos);
             bos.flush();
         } finally {
-            FileUtils.sync(fos);
+            try {
+                fos.getFD().sync();
+            } catch (IOException e) {
+            }
             IoUtils.closeQuietly(bos);
         }
     }
