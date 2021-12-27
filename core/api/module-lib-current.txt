@@ -379,6 +379,11 @@ package android.util {
     ctor public AtomicFile(@NonNull java.io.File, @Nullable android.util.SystemConfigFileCommitEventLogger);
   }
 
+  public class CharsetUtils {
+    method @NonNull public static String fromModifiedUtf8Bytes(long, int, int);
+    method public static int toModifiedUtf8Bytes(@NonNull String, long, int, int);
+  }
+
   public final class Log {
     method public static int logToRadioBuffer(int, @Nullable String, @Nullable String);
   }

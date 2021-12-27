@@ -16,7 +16,10 @@
 
 package android.util;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 
 import dalvik.annotation.optimization.FastNative;
 
@@ -29,7 +32,11 @@ import dalvik.annotation.optimization.FastNative;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 public class CharsetUtils {
+    /** @hide */
+    private CharsetUtils() {}
+
     /**
      * Attempt to encode the given string as modified UTF-8 into the destination
      * byte array without making any new allocations.
@@ -59,6 +66,7 @@ public class CharsetUtils {
      * @return positive value when encoding succeeded, or negative value when
      *         failed; the magnitude of the value is the number of bytes
      *         required to encode the string.
+     * @hide
      */
     @FastNative
     private static native int toModifiedUtf8Bytes(@NonNull String src, int srcLen,
