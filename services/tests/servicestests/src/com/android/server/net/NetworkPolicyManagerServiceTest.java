@@ -18,6 +18,7 @@ package com.android.server.net;
 
 import static android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS;
 import static android.Manifest.permission.NETWORK_STACK;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.net.ConnectivityManager.BLOCKED_METERED_REASON_DATA_SAVER;
 import static android.net.ConnectivityManager.BLOCKED_METERED_REASON_USER_RESTRICTED;
 import static android.net.ConnectivityManager.BLOCKED_REASON_APP_STANDBY;
@@ -383,6 +384,12 @@ public class NetworkPolicyManagerServiceTest {
             @Override
             public void enforceCallingOrSelfPermission(String permission, String message) {
                 // Assume that we're AID_SYSTEM
+            }
+
+            @Override
+            public int checkCallingOrSelfPermission(String permission) {
+                // Assuming to grant the caller or self permissions
+                return PERMISSION_GRANTED;
             }
         };
 
@@ -1795,9 +1802,7 @@ public class NetworkPolicyManagerServiceTest {
     }
 
     private void triggerOnStatsProviderWarningOrLimitReached() throws InterruptedException {
-        final NetworkPolicyManagerInternal npmi = LocalServices
-                .getService(NetworkPolicyManagerInternal.class);
-        npmi.onStatsProviderWarningOrLimitReached("TEST");
+        mService.onStatsProviderWarningOrLimitReached("TEST");
         // Wait for processing of MSG_STATS_PROVIDER_WARNING_OR_LIMIT_REACHED.
         postMsgAndWaitForCompletion();
         verify(mStatsService).forceUpdate();
