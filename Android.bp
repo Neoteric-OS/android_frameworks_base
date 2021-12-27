@@ -449,9 +449,23 @@ filegroup {
     name: "framework-connectivityT-shared-srcs",
     srcs: [
         "core/java/android/util/IndentingPrintWriter.java",
+        "core/java/com/android/internal/util/FastDataInput.java",
+        "core/java/com/android/internal/util/FastDataOutput.java",
         "core/java/com/android/internal/util/FileRotator.java",
         "telephony/java/android/telephony/Annotation.java",
     ]
+}
+
+java_library_static {
+    name: "framework-connectivityT-shared-protos",
+    proto: {
+        type: "lite",
+        include_dirs: ["external/protobuf/src"],
+    },
+    srcs: [
+        "core/proto/android/service/netstats.proto",
+    ],
+    sdk_version: "system_30",
 }
 
 // Build ext.jar
