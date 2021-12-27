@@ -28,7 +28,6 @@ filegroup {
         "src/android/net/DataUsage*.*",
         "src/android/net/INetworkStats*.*",
         "src/android/net/NetworkIdentity*.java",
-        "src/android/net/NetworkStateSnapshot.*",
         "src/android/net/NetworkStats*.*",
         "src/android/net/NetworkTemplate.*",
         "src/android/net/TrafficStats.java",
