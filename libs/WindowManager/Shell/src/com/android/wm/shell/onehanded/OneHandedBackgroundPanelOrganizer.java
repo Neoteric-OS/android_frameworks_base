@@ -124,7 +124,6 @@ public class OneHandedBackgroundPanelOrganizer extends DisplayAreaOrganizer
 
     void createBackgroundSurface() {
         mBackgroundSurface = new SurfaceControl.Builder(mSurfaceSession)
-                .setBufferSize(mBkgBounds.width(), mBkgBounds.height())
                 .setColorLayer()
                 .setFormat(PixelFormat.RGB_888)
                 .setOpaque(true)
@@ -209,6 +208,7 @@ public class OneHandedBackgroundPanelOrganizer extends DisplayAreaOrganizer
                 .setAlpha(mBackgroundSurface, 1.0f)
                 .setLayer(mBackgroundSurface, -1 /* at bottom-most layer */)
                 .setColor(mBackgroundSurface, mThemeColor)
+                .setWindowCrop(mBackgroundSurface,mBkgBounds.width(), mBkgBounds.height())
                 .show(mBackgroundSurface)
                 .apply();
     }
