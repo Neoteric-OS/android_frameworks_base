@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f75de5b9_f97356b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T08:25:50Z",
+      "side": 1,
+      "message": "nit: per talk maybe merge this change into previous one to preserve the git log.",
+      "revId": "89e8e701f64660f27a2cc3271b87be32d744f5ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
