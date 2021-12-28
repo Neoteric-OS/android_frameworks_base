@@ -16,6 +16,52 @@
       "message": "LGTM",
       "revId": "d7c3d878d423635d948af5b19abc99c455285ba2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "795b1f66_84883a1f",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-28T06:58:21Z",
+      "side": 1,
+      "message": "One thing you could do to avoid the duplication and scope the variable better is to have a try{} block here.\n\n  ParcelFileDescriptor sockFd;\n  try {\n    sockFd \u003d Os.socket()\n    pFd \u003d ParcelFileDescriptor.dup\n  } finally {\n    IoUtils.closeQuietly(sockFd);\n  }\n\nThen you don\u0027t need l.1277 and it\u0027s easier to see the scope of the variable.",
+      "range": {
+        "startLine": 1248,
+        "startChar": 0,
+        "endLine": 1248,
+        "endChar": 41
+      },
+      "revId": "d7c3d878d423635d948af5b19abc99c455285ba2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0341d838_276783ac",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-28T06:58:21Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s how you close a ParcelFileDescriptor. How about just pFd.close() ? Otherwise you won\u0027t execute the closeguard contained in PFD",
+      "range": {
+        "startLine": 1275,
+        "startChar": 16,
+        "endLine": 1275,
+        "endChar": 62
+      },
+      "revId": "d7c3d878d423635d948af5b19abc99c455285ba2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
