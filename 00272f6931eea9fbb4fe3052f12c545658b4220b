@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11350276_d1801a19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T08:54:33Z",
+      "side": 1,
+      "message": "LGTM with nits that could be ignored.",
+      "revId": "00272f6931eea9fbb4fe3052f12c545658b4220b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "089cf5a7_e8e6d7d7",
+        "filename": "packages/ConnectivityT/framework-t/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T08:54:33Z",
+      "side": 1,
+      "message": "nit: since this will be shared to the platform, maybe name it -shared-src to match the style?",
+      "range": {
+        "startLine": 136,
+        "startChar": 32,
+        "endLine": 136,
+        "endChar": 33
+      },
+      "revId": "00272f6931eea9fbb4fe3052f12c545658b4220b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
