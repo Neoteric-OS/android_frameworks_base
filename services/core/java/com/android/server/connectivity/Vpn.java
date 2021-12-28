@@ -513,6 +513,28 @@ public class Vpn {
         loadAlwaysOnPackage();
     }
 
+    private boolean sendEventToVpnManagerApp(String packageName, @NonNull String category,
+            String sessionKey, @Nullable List<Network> underlyingNetworks,
+            NetworkCapabilities nc, LinkProperties lp, int errorType, int errorCode) {
+        final Intent intent = new Intent(VpnManager.ACTION_VPN_MANAGER_ERROR);
+        intent.setPackage(packageName);
+        intent.addCategory(category);
+        intent.putExtra(VpnManager.EXTRA_SESSION_KEY, sessionKey);
+        intent.putParcelableArrayListExtra(VpnManager.EXTRA_UNDERLYING_NETWORK,
+                (underlyingNetworks == null) ? null : (ArrayList<Network>) underlyingNetworks);
+        intent.putExtra(VpnManager.EXTRA_UNDERLYING_NETWORK_CAPABILITIES, nc);
+        intent.putExtra(VpnManager.EXTRA_UNDERLYING_LINK_PROPERTIES, lp);
+        intent.putExtra(VpnManager.EXTRA_TIMESTAMP, SystemClock.elapsedRealtime());
+        intent.putExtra(VpnManager.EXTRA_ERROR_TYPE, errorType);
+        intent.putExtra(VpnManager.EXTRA_ERROR_CODE, errorCode);
+        try {
+            return mUserIdContext.startService(intent) != null;
+        } catch (RuntimeException e) {
+            Log.e(TAG, "Service of VpnManager app " + intent + " failed to start", e);
+            return false;
+        }
+    }
+
     /**
      * Set whether this object is responsible for watching for {@link NetworkInfo}
      * teardown. When {@code false}, teardown is handled externally by someone
@@ -1026,6 +1048,12 @@ public class Vpn {
                 if (!VpnConfig.LEGACY_VPN.equals(mPackage)) {
                     mAppOpsManager.finishOp(
                             AppOpsManager.OPSTR_ESTABLISH_VPN_MANAGER, mOwnerUID, mPackage, null);
+                    // Only need to send the event when the VpnManager app is deactivated.
+                    sendEventToVpnManagerApp(mPackage, VpnManager.CATEGORY_ERROR_USER_DEACTIVATED,
+                            mSessionKey,
+                            mNetworkCapabilities.getUnderlyingNetworks(),
+                            mNetworkCapabilities, makeLinkProperties(),
+                            VpnManager.ERROR_NOT_RECOVERABLE, 0 /* errorCode */);
                 }
                 // cleanupVpnStateLocked() is called from mVpnRunner.exit()
                 mVpnRunner.exit();
@@ -1040,6 +1068,7 @@ public class Vpn {
             Log.i(TAG, "Switched from " + mPackage + " to " + newPackage);
             mPackage = newPackage;
             mOwnerUID = getAppUid(newPackage, mUserId);
+            mSessionKey = null;
             mIsPackageTargetingAtLeastQ = doesPackageTargetAtLeastQ(newPackage);
             try {
                 mNms.allowProtect(mOwnerUID);
