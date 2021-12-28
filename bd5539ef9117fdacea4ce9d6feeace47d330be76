@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e917063b_1d63c0e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T06:40:54Z",
+      "side": 1,
+      "message": "LGTM with nits can be ignored.",
+      "revId": "bd5539ef9117fdacea4ce9d6feeace47d330be76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9026fd02_d3f2b3f1",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T06:40:54Z",
+      "side": 1,
+      "message": "nit: Maybe apply @SystemApi first and fix linter errors in advance?",
+      "range": {
+        "startLine": 986,
+        "startChar": 6,
+        "endLine": 986,
+        "endChar": 7
+      },
+      "revId": "bd5539ef9117fdacea4ce9d6feeace47d330be76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
