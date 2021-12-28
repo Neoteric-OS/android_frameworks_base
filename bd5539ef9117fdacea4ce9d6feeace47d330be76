@@ -39,6 +39,30 @@
       },
       "revId": "bd5539ef9117fdacea4ce9d6feeace47d330be76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1339f323_fb1d3f07",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/IpSecManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-28T07:44:06Z",
+      "side": 1,
+      "message": "I think we don\u0027t need to make these two methods @SystemApi because they are used by IpSecTransform which is in the module. This patch just makes IpSecTransform call them through IpSecManager.",
+      "parentUuid": "9026fd02_d3f2b3f1",
+      "range": {
+        "startLine": 986,
+        "startChar": 6,
+        "endLine": 986,
+        "endChar": 7
+      },
+      "revId": "bd5539ef9117fdacea4ce9d6feeace47d330be76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
