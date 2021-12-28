@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bc26716_337a94c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T05:59:12Z",
+      "side": 1,
+      "message": "Please also run NetworkPolicyManagerTest and  NetworkPolicyManagerServiceTest as well.",
+      "range": {
+        "startLine": 14,
+        "startChar": 12,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "093e621c5b490190b9134febe2815967e02540e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a4d439f_e99a9a1a",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T05:59:12Z",
+      "side": 1,
+      "message": "Maybe try @SystemApi(...) to see if there is any linter errors?\nAnd put // @SystemApi(...) here.\nAlso for below.",
+      "range": {
+        "startLine": 544,
+        "startChar": 4,
+        "endLine": 544,
+        "endChar": 10
+      },
+      "revId": "093e621c5b490190b9134febe2815967e02540e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f22e65b1_bb78a36b",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T05:59:12Z",
+      "side": 1,
+      "message": "IIRC this was already fixed by your previous patch, is it not merged?",
+      "range": {
+        "startLine": 410,
+        "startChar": 16,
+        "endLine": 410,
+        "endChar": 57
+      },
+      "revId": "093e621c5b490190b9134febe2815967e02540e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e69c7bff_be0d92a2",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T05:59:12Z",
+      "side": 1,
+      "message": "Did we miss something here?\nI see the text is updated but didn\u0027t see any modification of parameters?",
+      "range": {
+        "startLine": 416,
+        "startChar": 7,
+        "endLine": 419,
+        "endChar": 57
+      },
+      "revId": "093e621c5b490190b9134febe2815967e02540e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20709518_5d7e8b28",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T05:59:12Z",
+      "side": 1,
+      "message": "Not sure if this is a good idea.\n\n+jchalard@ to input.",
+      "range": {
+        "startLine": 578,
+        "startChar": 29,
+        "endLine": 578,
+        "endChar": 46
+      },
+      "revId": "093e621c5b490190b9134febe2815967e02540e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
