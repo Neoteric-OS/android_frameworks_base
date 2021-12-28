@@ -114,6 +114,29 @@
       },
       "revId": "093e621c5b490190b9134febe2815967e02540e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f64261ad_a4fb88ca",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T06:50:29Z",
+      "side": 1,
+      "message": "Maybe add comment to describe why this is needed.",
+      "range": {
+        "startLine": 578,
+        "startChar": 29,
+        "endLine": 578,
+        "endChar": 46
+      },
+      "revId": "093e621c5b490190b9134febe2815967e02540e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
