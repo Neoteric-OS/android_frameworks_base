@@ -1581,10 +1581,6 @@ package android.media.tv.tuner {
 
 package android.net {
 
-  public class EthernetManager {
-    method public void setIncludeTestInterfaces(boolean);
-  }
-
   public final class IpSecManager {
     field public static final int INVALID_SECURITY_PARAMETER_INDEX = 0; // 0x0
   }
