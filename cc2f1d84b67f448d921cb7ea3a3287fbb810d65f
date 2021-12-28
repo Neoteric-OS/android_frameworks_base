@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cec99202_4fcdf23b",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T15:24:40Z",
+      "side": 1,
+      "message": "Wildcard match rules are no longer exist in the external world.\nThus I think the comment is not needed.",
+      "range": {
+        "startLine": 1150,
+        "startChar": 77,
+        "endLine": 1150,
+        "endChar": 96
+      },
+      "revId": "cc2f1d84b67f448d921cb7ea3a3287fbb810d65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f45eb9c5_8368a316",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1306,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T15:24:40Z",
+      "side": 1,
+      "message": "matchRules?\nAlso for below.",
+      "range": {
+        "startLine": 1306,
+        "startChar": 20,
+        "endLine": 1306,
+        "endChar": 30
+      },
+      "revId": "cc2f1d84b67f448d921cb7ea3a3287fbb810d65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df5ae90b_df1d3f10",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T15:24:40Z",
+      "side": 1,
+      "message": "ditto.\nIs it better if:\n // Subscriber Ids and Wifi Network Keys will not be set since\n // the purpose is to slice statistics of different OEM\n // managed networks among all network types.\n // Thus, specifying networks through their identifiers are not\n // needed.",
+      "range": {
+        "startLine": 1313,
+        "startChar": 19,
+        "endLine": 1315,
+        "endChar": 86
+      },
+      "revId": "cc2f1d84b67f448d921cb7ea3a3287fbb810d65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94f584a3_4f0f78d7",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T15:24:40Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1340,
+        "startChar": 8,
+        "endLine": 1341,
+        "endChar": 36
+      },
+      "revId": "cc2f1d84b67f448d921cb7ea3a3287fbb810d65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9bd5e91_0df01085",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T15:24:40Z",
+      "side": 1,
+      "message": "IIUC it will be better to use switch case here.\nAnd redirect default case to log.wtf or throw exception.",
+      "range": {
+        "startLine": 1344,
+        "startChar": 16,
+        "endLine": 1344,
+        "endChar": 66
+      },
+      "revId": "cc2f1d84b67f448d921cb7ea3a3287fbb810d65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
