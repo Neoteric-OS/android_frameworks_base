@@ -16,6 +16,23 @@
       "message": "Good catch!\nI wonder why this worked at all. I think we have been testing very intermittently with USAPs enabled?\nLGTM. I gave it only a +1 because Chris should look at it, too.",
       "revId": "3688f9590c7e48f87ca513bc8ab7b58a54d913c0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85e16902_b3bdcd7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1319385
+      },
+      "writtenOn": "2021-12-29T14:23:29Z",
+      "side": 1,
+      "message": "FYI, this can cause such issue on S:\n11-16 13:12:39.971  2350  2350 E USAP    : Attempt to invoke virtual method \u0027int com.android.internal.os.ZygoteCommandBuffer.getCount()\u0027 on a null object reference\n11-16 13:12:39.973  1952  2099 E ZygoteProcess: IO Exception while communicating with USAP pool - Connection reset by peer",
+      "revId": "3688f9590c7e48f87ca513bc8ab7b58a54d913c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
