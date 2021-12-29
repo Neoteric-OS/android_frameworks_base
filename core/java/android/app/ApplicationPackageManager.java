@@ -1074,6 +1074,9 @@ public class ApplicationPackageManager extends PackageManager {
             }
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
+        } catch (IllegalStateException e) {
+            Log.e("PackageManager", "Failure getModuleInfo for "
+                    + packageName + ": ", e);
         }
 
         throw new NameNotFoundException("No module info for package: " + packageName);
