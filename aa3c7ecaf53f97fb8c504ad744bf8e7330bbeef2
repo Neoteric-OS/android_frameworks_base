@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0628d960_dbadf19a",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-29T02:14:49Z",
+      "side": 1,
+      "message": "IIUC it should be:\nBecause NetworkPolicyManagerService starts later than NetworkStatsService, right?",
+      "range": {
+        "startLine": 579,
+        "startChar": 11,
+        "endLine": 579,
+        "endChar": 87
+      },
+      "revId": "aa3c7ecaf53f97fb8c504ad744bf8e7330bbeef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce6e35ba_c3f52458",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-29T02:14:49Z",
+      "side": 1,
+      "message": "Maybe get NPM on demand so you don\u0027t need this variable?",
+      "range": {
+        "startLine": 837,
+        "startChar": 27,
+        "endLine": 837,
+        "endChar": 44
+      },
+      "revId": "aa3c7ecaf53f97fb8c504ad744bf8e7330bbeef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62936926_ce046f10",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2064,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-29T02:14:49Z",
+      "side": 1,
+      "message": "IIUC you can pass NPM through the constructor so it won\u0027t need to be static.",
+      "range": {
+        "startLine": 2064,
+        "startChar": 8,
+        "endLine": 2064,
+        "endChar": 40
+      },
+      "revId": "aa3c7ecaf53f97fb8c504ad744bf8e7330bbeef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
