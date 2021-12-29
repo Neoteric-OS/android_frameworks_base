@@ -9521,9 +9521,14 @@ package android.bluetooth {
   }
 
   public final class BluetoothLeAudioCodecConfig {
+    method public int getAudioDirection();
+    method @NonNull public String getAudioDirectionName();
     method @NonNull public String getCodecName();
     method public int getCodecType();
     method public static int getMaxCodecType();
+    field public static final int AUDIO_DIRECTION_INPUT = 1; // 0x1
+    field public static final int AUDIO_DIRECTION_OUTPUT = 2; // 0x2
+    field public static final int AUDIO_DIRECTION_UNSPECIFIED = 0; // 0x0
     field public static final int SOURCE_CODEC_TYPE_INVALID = 1000000; // 0xf4240
     field public static final int SOURCE_CODEC_TYPE_LC3 = 0; // 0x0
   }
@@ -9531,6 +9536,7 @@ package android.bluetooth {
   public static final class BluetoothLeAudioCodecConfig.Builder {
     ctor public BluetoothLeAudioCodecConfig.Builder();
     method @NonNull public android.bluetooth.BluetoothLeAudioCodecConfig build();
+    method @NonNull public android.bluetooth.BluetoothLeAudioCodecConfig.Builder setAudioDirection(int);
     method @NonNull public android.bluetooth.BluetoothLeAudioCodecConfig.Builder setCodecType(int);
   }
 

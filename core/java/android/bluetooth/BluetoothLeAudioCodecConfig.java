@@ -41,8 +41,20 @@ public final class BluetoothLeAudioCodecConfig {
     @Retention(RetentionPolicy.SOURCE)
     public @interface SourceCodecType {};
 
+    /** @hide */
+    @IntDef(prefix = "AUDIO_DIRECTION", value = {
+        AUDIO_DIRECTION_UNSPECIFIED,
+        AUDIO_DIRECTION_INPUT,
+        AUDIO_DIRECTION_OUTPUT
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface AudioDirectionType {};
+
     public static final int SOURCE_CODEC_TYPE_LC3 = 0;
     public static final int SOURCE_CODEC_TYPE_INVALID = 1000 * 1000;
+    public static final int AUDIO_DIRECTION_UNSPECIFIED = 0;
+    public static final int AUDIO_DIRECTION_INPUT = 1;
+    public static final int AUDIO_DIRECTION_OUTPUT = 2;
 
     /**
      * Represents the count of valid source codec types. Can be accessed via
@@ -53,17 +65,25 @@ public final class BluetoothLeAudioCodecConfig {
     private final @SourceCodecType int mCodecType;
 
     /**
+     * Indicates the codec is for encode or decode direction
+     */
+    private final @AudioDirectionType int mAudioDirection;
+
+    /**
      * Creates a new BluetoothLeAudioCodecConfig.
      *
      * @param codecType the source codec type
+     * @param audioDirection the audio direction of this source codec type
      */
-    private BluetoothLeAudioCodecConfig(@SourceCodecType int codecType) {
+    private BluetoothLeAudioCodecConfig(@SourceCodecType int codecType,
+                                        @AudioDirectionType int audioDirection) {
         mCodecType = codecType;
+        mAudioDirection = audioDirection;
     }
 
     @Override
     public String toString() {
-        return "{codecName:" + getCodecName() + "}";
+        return "{codecName:" + getCodecName() + ", direction:" + getAudioDirectionName() + "}";
     }
 
     /**
@@ -73,6 +93,15 @@ public final class BluetoothLeAudioCodecConfig {
      */
     public @SourceCodecType int getCodecType() {
         return mCodecType;
+    }
+
+    /**
+     * Gets the audio direction.
+     *
+     * @return the audio direction
+     */
+    public @SourceCodecType int getAudioDirection() {
+        return mAudioDirection;
     }
 
     /**
@@ -100,12 +129,32 @@ public final class BluetoothLeAudioCodecConfig {
     }
 
     /**
+     * Gets the codec name.
+     *
+     * @return the codec name
+     */
+    public @NonNull String getAudioDirectionName() {
+        switch (mAudioDirection) {
+            case AUDIO_DIRECTION_UNSPECIFIED:
+                return "AUDIO DIRECTION UNSPECIFIED";
+            case AUDIO_DIRECTION_INPUT:
+                return "AUDIO DIRECTION INPUT(Decode)";
+            case AUDIO_DIRECTION_OUTPUT:
+                return "AUDIO DIRECTION OUTPUT(Encode)";
+            default:
+                break;
+        }
+        return "UNKNOWN AUDIO DIRECTION(" + mAudioDirection + ")";
+    }
+
+    /**
      * Builder for {@link BluetoothLeAudioCodecConfig}.
      * <p> By default, the codec type will be set to
      * {@link BluetoothLeAudioCodecConfig#SOURCE_CODEC_TYPE_INVALID}
      */
     public static final class Builder {
         private int mCodecType = BluetoothLeAudioCodecConfig.SOURCE_CODEC_TYPE_INVALID;
+        private int mAudioDirection = BluetoothLeAudioCodecConfig.AUDIO_DIRECTION_UNSPECIFIED;
 
         /**
          * Set codec type for Bluetooth codec config.
@@ -119,11 +168,21 @@ public final class BluetoothLeAudioCodecConfig {
         }
 
         /**
+         * Set audio direction for Bluetooth codec config.
+         *
+         * @param direction of this codec
+         * @return the same Builder instance
+         */
+        public @NonNull Builder setAudioDirection(@AudioDirectionType int direction) {
+            mAudioDirection = direction;
+            return this;
+        }
+        /**
          * Build {@link BluetoothLeAudioCodecConfig}.
          * @return new BluetoothLeAudioCodecConfig built
          */
         public @NonNull BluetoothLeAudioCodecConfig build() {
-            return new BluetoothLeAudioCodecConfig(mCodecType);
+            return new BluetoothLeAudioCodecConfig(mCodecType, mAudioDirection);
         }
     }
 }

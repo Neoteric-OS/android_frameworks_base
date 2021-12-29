@@ -6832,21 +6832,35 @@ public class AudioManager {
         ArrayList<Integer> formatsList = new ArrayList<>();
         ArrayList<BluetoothLeAudioCodecConfig> leAudioCodecConfigList = new ArrayList<>();
 
-        int status = AudioSystem.getHwOffloadFormatsSupportedForBluetoothMedia(
-                AudioSystem.DEVICE_OUT_BLE_HEADSET, formatsList);
-        if (status != AudioManager.SUCCESS) {
-            Log.e(TAG, "getHwOffloadEncodingFormatsSupportedForLeAudio failed:" + status);
-            return leAudioCodecConfigList;
-        }
+        Map<Integer, Integer> deviceTypeAudioDirectionMap = new HashMap<Integer, Integer>(){{
+                put(AudioSystem.DEVICE_OUT_BLE_HEADSET,
+                        BluetoothLeAudioCodecConfig.AUDIO_DIRECTION_OUTPUT);
+                put(AudioSystem.DEVICE_IN_BLE_HEADSET,
+                        BluetoothLeAudioCodecConfig.AUDIO_DIRECTION_INPUT);
+            }};
 
-        for (Integer format : formatsList) {
-            int btLeAudioCodec = AudioSystem.audioFormatToBluetoothLeAudioSourceCodec(format);
-            if (btLeAudioCodec != BluetoothLeAudioCodecConfig.SOURCE_CODEC_TYPE_INVALID) {
-                leAudioCodecConfigList.add(new BluetoothLeAudioCodecConfig.Builder()
-                                            .setCodecType(btLeAudioCodec)
-                                            .build());
+        for (Map.Entry<Integer, Integer> pair : deviceTypeAudioDirectionMap.entrySet()) {
+            formatsList.clear();
+            int status = AudioSystem.getHwOffloadFormatsSupportedForBluetoothMedia(pair.getKey(),
+                                                                                   formatsList);
+
+            if (status != AudioManager.SUCCESS) {
+                Log.e(TAG, "getHwOffloadFormatsSupportedForLeAudio failed:" + status
+                           + ", deviceType: " + pair.getKey());
+                continue;
+            }
+
+            for (Integer format : formatsList) {
+                int btLeAudioCodec = AudioSystem.audioFormatToBluetoothLeAudioSourceCodec(format);
+                if (btLeAudioCodec != BluetoothLeAudioCodecConfig.SOURCE_CODEC_TYPE_INVALID) {
+                    leAudioCodecConfigList.add(new BluetoothLeAudioCodecConfig.Builder()
+                                                .setCodecType(btLeAudioCodec)
+                                                .setAudioDirection(pair.getValue())
+                                                .build());
+                }
             }
         }
+
         return leAudioCodecConfigList;
     }
 

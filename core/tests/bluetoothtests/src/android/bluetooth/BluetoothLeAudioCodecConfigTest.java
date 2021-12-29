@@ -29,6 +29,12 @@ public class BluetoothLeAudioCodecConfigTest extends TestCase {
         BluetoothLeAudioCodecConfig.SOURCE_CODEC_TYPE_INVALID,
     };
 
+    private int[] mAudioDirection = new int[] {
+        BluetoothLeAudioCodecConfig.AUDIO_DIRECTION_UNSPECIFIED,
+        BluetoothLeAudioCodecConfig.AUDIO_DIRECTION_INPUT,
+        BluetoothLeAudioCodecConfig.AUDIO_DIRECTION_OUTPUT,
+    };
+
     @SmallTest
     public void testBluetoothLeAudioCodecConfig_valid_get_methods() {
 
@@ -36,7 +42,8 @@ public class BluetoothLeAudioCodecConfigTest extends TestCase {
             int codecType = mCodecTypeArray[codecIdx];
 
             BluetoothLeAudioCodecConfig leAudioCodecConfig =
-                    buildBluetoothLeAudioCodecConfig(codecType);
+                    buildBluetoothLeAudioCodecConfig(codecType,
+                        BluetoothLeAudioCodecConfig.AUDIO_DIRECTION_UNSPECIFIED);
 
             if (codecType == BluetoothLeAudioCodecConfig.SOURCE_CODEC_TYPE_LC3) {
                 assertEquals("LC3", leAudioCodecConfig.getCodecName());
@@ -47,11 +54,36 @@ public class BluetoothLeAudioCodecConfigTest extends TestCase {
 
             assertEquals(codecType, leAudioCodecConfig.getCodecType());
         }
+
+        for (int audioDirIdx = 0; audioDirIdx < mAudioDirection.length; audioDirIdx++) {
+            int audioDirection = mAudioDirection[audioDirIdx];
+
+            BluetoothLeAudioCodecConfig leAudioCodecConfig =
+                    buildBluetoothLeAudioCodecConfig(
+                            BluetoothLeAudioCodecConfig.SOURCE_CODEC_TYPE_LC3, audioDirection);
+
+            if (audioDirection == BluetoothLeAudioCodecConfig.AUDIO_DIRECTION_UNSPECIFIED) {
+                assertEquals("AUDIO DIRECTION UNSPECIFIED",
+                        leAudioCodecConfig.getAudioDirectionName());
+            }
+            if (audioDirection == BluetoothLeAudioCodecConfig.AUDIO_DIRECTION_INPUT) {
+                assertEquals("AUDIO DIRECTION INPUT(Decode)",
+                        leAudioCodecConfig.getAudioDirectionName());
+            }
+            if (audioDirection == BluetoothLeAudioCodecConfig.AUDIO_DIRECTION_OUTPUT) {
+                assertEquals("AUDIO DIRECTION OUTPUT(Encode)",
+                        leAudioCodecConfig.getAudioDirectionName());
+            }
+
+            assertEquals(audioDirection, leAudioCodecConfig.getAudioDirection());
+        }
     }
 
-    private BluetoothLeAudioCodecConfig buildBluetoothLeAudioCodecConfig(int sourceCodecType) {
+    private BluetoothLeAudioCodecConfig buildBluetoothLeAudioCodecConfig(int sourceCodecType,
+                                                                         int audioDirection) {
         return new BluetoothLeAudioCodecConfig.Builder()
                     .setCodecType(sourceCodecType)
+                    .setAudioDirection(audioDirection)
                     .build();
 
     }
