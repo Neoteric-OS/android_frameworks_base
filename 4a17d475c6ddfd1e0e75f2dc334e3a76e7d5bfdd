@@ -16,6 +16,23 @@
       "message": "fix system_server JE\njava.lang.IllegalStateException: Call to getModuleInfo before metadata loaded\n\tat com.android.server.pm.ModuleInfoProvider.getModuleInfo(ModuleInfoProvider.java:205)\n\tat com.android.server.pm.PackageManagerService.getModuleInfo(PackageManagerService.java:5885)\n\tat android.app.ApplicationPackageManager.getModuleInfo(ApplicationPackageManager.java:1035)\n\tat com.android.server.RescueParty$RescuePartyObserver.mayObservePackage(RescueParty.java:458)",
       "revId": "4a17d475c6ddfd1e0e75f2dc334e3a76e7d5bfdd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2892b912_15596f13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2021-12-29T18:29:18Z",
+      "side": 1,
+      "message": "Currently it is thrown to the caller. With your change it will not throw. Do you want to re-throw with a clearer message?",
+      "revId": "4a17d475c6ddfd1e0e75f2dc334e3a76e7d5bfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
