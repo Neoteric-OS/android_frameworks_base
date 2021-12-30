@@ -1,0 +1,51 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97d806c1_90bbb33d",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-30T06:30:17Z",
+      "side": 1,
+      "message": "\u003e Prefer to use mContext.getSystemService(NetworkPolicyManager.class) instead to avoid the cast.\n\nPlease fix.",
+      "parentUuid": "1f53d2fd_a2cc3101",
+      "range": {
+        "startLine": 830,
+        "startChar": 24,
+        "endLine": 830,
+        "endChar": 73
+      },
+      "revId": "be4626fa9af3ee17c7777e7525d0d217daf3f82b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0913d73_d94c81ff",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2006,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-30T06:30:17Z",
+      "side": 1,
+      "message": "While NetworkPolicyManager is enough for this maybe we don\u0027t need to pass whole mContext?\nGeneral guideline is only pass what is needed into a class/method.",
+      "range": {
+        "startLine": 2006,
+        "startChar": 42,
+        "endLine": 2006,
+        "endChar": 50
+      },
+      "revId": "be4626fa9af3ee17c7777e7525d0d217daf3f82b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
