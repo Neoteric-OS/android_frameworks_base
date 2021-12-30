@@ -121,6 +121,7 @@ filegroup {
     srcs: [
         "src/android/net/EthernetManager.java",
         "src/android/net/EthernetNetworkSpecifier.java",
+        "src/android/net/IEthernetCallback.aidl",
         "src/android/net/IEthernetManager.aidl",
         "src/android/net/IEthernetServiceListener.aidl",
         "src/android/net/ITetheredInterfaceCallback.aidl",

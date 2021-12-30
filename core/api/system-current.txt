@@ -7405,7 +7405,14 @@ package android.metrics {
 package android.net {
 
   public class EthernetManager {
+    method public void registerEthernetCallback(@NonNull java.util.concurrent.Executor, @NonNull android.net.EthernetManager.EthernetCallback);
     method @NonNull @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_STACK, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public android.net.EthernetManager.TetheredInterfaceRequest requestTetheredInterface(@NonNull java.util.concurrent.Executor, @NonNull android.net.EthernetManager.TetheredInterfaceCallback);
+    method public void unregisterEthernetCallback(@NonNull android.net.EthernetManager.EthernetCallback);
+  }
+
+  public static interface EthernetManager.EthernetCallback {
+    method public void onConnected(@NonNull String);
+    method public void onDisconnected(@NonNull String);
   }
 
   public static interface EthernetManager.TetheredInterfaceCallback {

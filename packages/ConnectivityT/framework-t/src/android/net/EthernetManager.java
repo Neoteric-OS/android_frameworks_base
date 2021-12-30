@@ -25,6 +25,7 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Build;
 import android.os.RemoteException;
+import android.util.ArrayMap;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.os.BackgroundThread;
@@ -85,6 +86,9 @@ public class EthernetManager {
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
         void onAvailabilityChanged(String iface, boolean isAvailable);
     }
+
+    private final ArrayMap<EthernetCallback, IEthernetCallback>
+            mEthernetCallbacks = new ArrayMap<>();
 
     /**
      * Create a new EthernetManager instance.
@@ -314,5 +318,114 @@ public class EthernetManager {
             throw e.rethrowFromSystemServer();
         }
         return new TetheredInterfaceRequest(mService, cbInternal);
+    }
+
+    /**
+     * register Ethernet callback to get ethernet connection info
+     */
+    public void registerEthernetCallback(@NonNull Executor executor,
+            @NonNull EthernetCallback callback) {
+
+        synchronized (mEthernetCallbacks) {
+            if (mEthernetCallbacks.containsKey(callback)) {
+                throw new IllegalArgumentException("callback was already registered");
+            }
+            final IEthernetCallback internalCallback = new IEthernetCallback.Stub() {
+                @Override
+                public void onConnected(String iface) throws RemoteException {
+                    executor.execute(() -> callback.onConnected(iface));
+                }
+
+                @Override
+                public void onDisconnected(String iface) throws RemoteException {
+                    executor.execute(() -> callback.onDisconnected(iface));
+                }
+            };
+
+            try {
+                mService.registerEthernetCallback(internalCallback);
+            } catch (RemoteException e) {
+            }
+
+            mEthernetCallbacks.put(callback, internalCallback);
+        }
+    }
+
+    /**
+     * unregister Ethernet callback to get ethernet connection info
+     */
+    public void unregisterEthernetCallback(@NonNull final EthernetCallback callback) {
+        synchronized (mEthernetCallbacks) {
+            IEthernetCallback internalCallback = mEthernetCallbacks.remove(callback);
+            if (internalCallback == null) {
+                throw new IllegalArgumentException("callback was not registered");
+            }
+            try {
+                mService.unregisterEthernetCallback(internalCallback);
+            } catch (RemoteException e) {
+            }
+        }
+    }
+
+    /**
+    * Callback for Ethernet
+    */
+    public interface EthernetCallback {
+        /**
+         * Called when Ethernet network is connected.
+         */
+        void onConnected(@NonNull String iface);
+
+        /**
+         * Called when Ethernet network is disconnected.
+         */
+        void onDisconnected(@NonNull String iface);
+    }
+
+    /**
+     * disable Ethernet
+     * @hide
+     */
+    public void setUserDisabled(boolean newState) {
+        try {
+            mService.setUserDisabled(newState);
+        } catch (RemoteException e) {
+        }
+    }
+
+    /**
+     * get if Ethernet is disabled
+     * @hide
+     */
+    public boolean getUserDisabled() {
+        try {
+            return mService.getUserDisabled();
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    /**
+     * get if Ethernet is connected.
+     * @hide
+     */
+    public boolean isEthConnected(String ifaceName) {
+        try {
+            return mService.isEthConnected(ifaceName);
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns an array of existing Ethernet interface names.
+     * @hide
+     */
+    public String[] getExistingInterfaces() {
+        try {
+            return mService.getExistingInterfaces();
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
     }
 }

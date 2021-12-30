@@ -17,6 +17,7 @@
 package android.net;
 
 import android.net.IpConfiguration;
+import android.net.IEthernetCallback;
 import android.net.IEthernetServiceListener;
 import android.net.ITetheredInterfaceCallback;
 
@@ -36,4 +37,10 @@ interface IEthernetManager
     void setIncludeTestInterfaces(boolean include);
     void requestTetheredInterface(in ITetheredInterfaceCallback callback);
     void releaseTetheredInterface(in ITetheredInterfaceCallback callback);
+    void registerEthernetCallback(in IEthernetCallback callback);
+    void unregisterEthernetCallback(in IEthernetCallback callback);
+    void setUserDisabled(boolean newState);
+    boolean getUserDisabled();
+    boolean isEthConnected(String ifaceName);
+    String[] getExistingInterfaces();
 }
