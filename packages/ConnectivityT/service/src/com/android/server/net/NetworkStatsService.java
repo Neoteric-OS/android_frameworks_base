@@ -46,7 +46,6 @@ import static android.net.NetworkTemplate.buildTemplateWifiWildcard;
 import static android.net.TrafficStats.KB_IN_BYTES;
 import static android.net.TrafficStats.MB_IN_BYTES;
 import static android.net.TrafficStats.UNSUPPORTED;
-import static android.os.Trace.TRACE_TAG_NETWORK;
 import static android.provider.Settings.Global.NETSTATS_AUGMENT_ENABLED;
 import static android.provider.Settings.Global.NETSTATS_COMBINE_SUBTYPE_ENABLED;
 import static android.provider.Settings.Global.NETSTATS_DEV_BUCKET_DURATION;
@@ -1437,40 +1436,40 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private void recordSnapshotLocked(long currentTime) throws RemoteException {
         // snapshot and record current counters; read UID stats first to
         // avoid over counting dev stats.
-        Trace.traceBegin(TRACE_TAG_NETWORK, "snapshotUid");
+        Trace.beginSection("snapshotUid");
         final NetworkStats uidSnapshot = getNetworkStatsUidDetail(INTERFACES_ALL);
-        Trace.traceEnd(TRACE_TAG_NETWORK);
-        Trace.traceBegin(TRACE_TAG_NETWORK, "snapshotXt");
+        Trace.endSection();
+        Trace.beginSection("snapshotXt");
         final NetworkStats xtSnapshot = readNetworkStatsSummaryXt();
-        Trace.traceEnd(TRACE_TAG_NETWORK);
-        Trace.traceBegin(TRACE_TAG_NETWORK, "snapshotDev");
+        Trace.endSection();
+        Trace.beginSection("snapshotDev");
         final NetworkStats devSnapshot = readNetworkStatsSummaryDev();
-        Trace.traceEnd(TRACE_TAG_NETWORK);
+        Trace.endSection();
 
         // Snapshot for dev/xt stats from all custom stats providers. Counts per-interface data
         // from stats providers that isn't already counted by dev and XT stats.
-        Trace.traceBegin(TRACE_TAG_NETWORK, "snapshotStatsProvider");
+        Trace.beginSection("snapshotStatsProvider");
         final NetworkStats providersnapshot = getNetworkStatsFromProviders(STATS_PER_IFACE);
-        Trace.traceEnd(TRACE_TAG_NETWORK);
+        Trace.endSection();
         xtSnapshot.combineAllValues(providersnapshot);
         devSnapshot.combineAllValues(providersnapshot);
 
         // For xt/dev, we pass a null VPN array because usage is aggregated by UID, so VPN traffic
         // can't be reattributed to responsible apps.
-        Trace.traceBegin(TRACE_TAG_NETWORK, "recordDev");
+        Trace.beginSection("recordDev");
         mDevRecorder.recordSnapshotLocked(devSnapshot, mActiveIfaces, currentTime);
-        Trace.traceEnd(TRACE_TAG_NETWORK);
-        Trace.traceBegin(TRACE_TAG_NETWORK, "recordXt");
+        Trace.endSection();
+        Trace.beginSection("recordXt");
         mXtRecorder.recordSnapshotLocked(xtSnapshot, mActiveIfaces, currentTime);
-        Trace.traceEnd(TRACE_TAG_NETWORK);
+        Trace.endSection();
 
         // For per-UID stats, pass the VPN info so VPN traffic is reattributed to responsible apps.
-        Trace.traceBegin(TRACE_TAG_NETWORK, "recordUid");
+        Trace.beginSection("recordUid");
         mUidRecorder.recordSnapshotLocked(uidSnapshot, mActiveUidIfaces, currentTime);
-        Trace.traceEnd(TRACE_TAG_NETWORK);
-        Trace.traceBegin(TRACE_TAG_NETWORK, "recordUidTag");
+        Trace.endSection();
+        Trace.beginSection("recordUidTag");
         mUidTagRecorder.recordSnapshotLocked(uidSnapshot, mActiveUidIfaces, currentTime);
-        Trace.traceEnd(TRACE_TAG_NETWORK);
+        Trace.endSection();
 
         // We need to make copies of member fields that are sent to the observer to avoid
         // a race condition between the service handler thread and the observer's
@@ -1515,7 +1514,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private void performPollLocked(int flags) {
         if (!mSystemReady) return;
         if (LOGV) Log.v(TAG, "performPollLocked(flags=0x" + Integer.toHexString(flags) + ")");
-        Trace.traceBegin(TRACE_TAG_NETWORK, "performPollLocked");
+        Trace.beginSection("performPollLocked");
 
         final boolean persistNetwork = (flags & FLAG_PERSIST_NETWORK) != 0;
         final boolean persistUid = (flags & FLAG_PERSIST_UID) != 0;
@@ -1537,7 +1536,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
 
         // persist any pending data depending on requested flags
-        Trace.traceBegin(TRACE_TAG_NETWORK, "[persisting]");
+        Trace.beginSection("[persisting]");
         if (persistForce) {
             mDevRecorder.forcePersistLocked(currentTime);
             mXtRecorder.forcePersistLocked(currentTime);
@@ -1553,7 +1552,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 mUidTagRecorder.maybePersistLocked(currentTime);
             }
         }
-        Trace.traceEnd(TRACE_TAG_NETWORK);
+        Trace.endSection();
 
         if (mSettings.getSampleEnabled()) {
             // sample stats after each full poll
@@ -1563,7 +1562,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         // finally, dispatch updated event to any listeners
         mHandler.sendMessage(mHandler.obtainMessage(MSG_BROADCAST_NETWORK_STATS_UPDATED));
 
-        Trace.traceEnd(TRACE_TAG_NETWORK);
+        Trace.endSection();
     }
 
     @GuardedBy("mStatsLock")
@@ -1575,7 +1574,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         // for removal, wait might take up to MAX_STATS_PROVIDER_POLL_WAIT_TIME_MS
         // once that happened.
         // TODO: request with a valid token.
-        Trace.traceBegin(TRACE_TAG_NETWORK, "provider.requestStatsUpdate");
+        Trace.beginSection("provider.requestStatsUpdate");
         final int registeredCallbackCount = mStatsProviderCbList.size();
         mStatsProviderSem.drainPermits();
         invokeForAllStatsProviderCallbacks(
@@ -1590,7 +1589,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                     + mStatsProviderSem.availablePermits()
                     + "/" + registeredCallbackCount + " : " + e);
         }
-        Trace.traceEnd(TRACE_TAG_NETWORK);
+        Trace.endSection();
     }
 
     /**
