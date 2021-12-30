@@ -16,6 +16,23 @@
       "message": "Thanks William - looks good to me.",
       "revId": "3fe5af489010664de23c9df515e6e2140835be90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d013f823_46905c48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1136338
+      },
+      "writtenOn": "2021-12-30T11:58:56Z",
+      "side": 1,
+      "message": "https://android-review.googlesource.com/c/platform/frameworks/base/+/1782984/19/media/java/android/media/BtProfileConnectionInfo.java doesn\u0027t contain the A2DP sink profile. ",
+      "revId": "3fe5af489010664de23c9df515e6e2140835be90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
