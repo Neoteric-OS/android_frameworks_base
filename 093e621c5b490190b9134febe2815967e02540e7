@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fbe713d_73e3faa4",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-30T04:54:57Z",
+      "side": 1,
+      "message": "Done.\nAfter merging aosp/1914533, the last error will disappear.",
+      "parentUuid": "e45962d9_7e0edc9d",
+      "range": {
+        "startLine": 544,
+        "startChar": 4,
+        "endLine": 544,
+        "endChar": 10
+      },
+      "revId": "093e621c5b490190b9134febe2815967e02540e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f22e65b1_bb78a36b",
@@ -249,6 +273,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "f64261ad_a4fb88ca",
+      "range": {
+        "startLine": 578,
+        "startChar": 29,
+        "endLine": 578,
+        "endChar": 46
+      },
+      "revId": "093e621c5b490190b9134febe2815967e02540e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0ea9863_75ad2e24",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-30T04:54:57Z",
+      "side": 1,
+      "message": "We will get NPM on demand on the new patch, so close it.",
+      "parentUuid": "20709518_5d7e8b28",
       "range": {
         "startLine": 578,
         "startChar": 29,

@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb8338a6_6f127798",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-30T04:54:57Z",
+      "side": 1,
+      "message": "yes, you are right. \nWe will get NPM on demand on the new patch, so remove the comment.",
+      "parentUuid": "0628d960_dbadf19a",
+      "range": {
+        "startLine": 579,
+        "startChar": 11,
+        "endLine": 579,
+        "endChar": 87
+      },
+      "revId": "aa3c7ecaf53f97fb8c504ad744bf8e7330bbeef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce6e35ba_c3f52458",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a99696ce_8414c39f",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-30T04:54:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce6e35ba_c3f52458",
+      "range": {
+        "startLine": 837,
+        "startChar": 27,
+        "endLine": 837,
+        "endChar": 44
+      },
+      "revId": "aa3c7ecaf53f97fb8c504ad744bf8e7330bbeef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62936926_ce046f10",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-12-29T02:14:49Z",
       "side": 1,
       "message": "IIUC you can pass NPM through the constructor so it won\u0027t need to be static.",
+      "range": {
+        "startLine": 2064,
+        "startChar": 8,
+        "endLine": 2064,
+        "endChar": 40
+      },
+      "revId": "aa3c7ecaf53f97fb8c504ad744bf8e7330bbeef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92f9f551_3dd46ac1",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2064,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-30T04:54:57Z",
+      "side": 1,
+      "message": "yes, you are right.",
+      "parentUuid": "62936926_ce046f10",
       "range": {
         "startLine": 2064,
         "startChar": 8,
