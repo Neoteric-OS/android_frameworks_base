@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ce3dd87_d78c32fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-30T08:33:35Z",
+      "side": 1,
+      "message": "LGTM assuming the comment will be addressed.",
+      "revId": "8c958cbd459b3c1116bd6cb2e08273faf91f23b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67b99c84_b03375ee",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-30T08:33:35Z",
+      "side": 1,
+      "message": "PERMISSION_MAINLINE_NETWORK_STACK?",
+      "range": {
+        "startLine": 544,
+        "startChar": 52,
+        "endLine": 544,
+        "endChar": 72
+      },
+      "revId": "8c958cbd459b3c1116bd6cb2e08273faf91f23b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
