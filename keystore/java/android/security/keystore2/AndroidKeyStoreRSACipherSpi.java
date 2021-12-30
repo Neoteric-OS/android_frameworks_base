@@ -298,6 +298,11 @@ abstract class AndroidKeyStoreRSACipherSpi extends AndroidKeyStoreCipherSpiBase 
             parameters.add(KeyStore2ParameterUtils.makeEnum(
                     KeymasterDefs.KM_TAG_DIGEST, mKeymasterDigest
             ));
+
+            android.util.Log.i("XXXSPI", String.format("Digest: %d", mKeymasterDigest));
+//            parameters.add(KeyStore2ParameterUtils.makeEnum(
+//                    KeymasterDefs.KM_TAG_RSA_OAEP_MGF_DIGEST, mKeymasterDigest
+//            ));
         }
 
         @Override

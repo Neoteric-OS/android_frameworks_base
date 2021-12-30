@@ -480,7 +480,19 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
                             KeymasterDefs.KM_TAG_DIGEST,
                             KeyProperties.Digest.toKeymaster(digest)
                     ));
+
+                    Log.i(TAG,
+                            String.format("Algorithm: %s digest: %s", key.getAlgorithm(), digest));
+//                    if (KeyProperties.KEY_ALGORITHM_RSA.equalsIgnoreCase(key.getAlgorithm())) {
+//                        importArgs.add(KeyStore2ParameterUtils.makeEnum(
+//                                KeymasterDefs.KM_TAG_RSA_OAEP_MGF_DIGEST,
+//                                KeyProperties.Digest.toKeymaster(digest)
+//                        ));
+//                    }
+
                 }
+
+
             }
             for (String blockMode : spec.getBlockModes()) {
                 importArgs.add(KeyStore2ParameterUtils.makeEnum(
@@ -859,6 +871,14 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
                         KeymasterDefs.KM_TAG_DIGEST,
                         digest
                 ));
+
+                Log.i(TAG, String.format("Algorithm %s digest %d", algorithm, digest));
+//                if (KeyProperties.KEY_ALGORITHM_RSA.equalsIgnoreCase(algorithm)) {
+//                    args.add(KeyStore2ParameterUtils.makeEnum(
+//                            KeymasterDefs.KM_TAG_RSA_OAEP_MGF_DIGEST,
+//                            digest
+//                    ));
+//                }
             }
         }
 

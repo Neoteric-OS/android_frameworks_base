@@ -774,6 +774,20 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
             ));
         });
 
+        if (KeymasterDefs.KM_ALGORITHM_RSA == mKeymasterAlgorithm) {
+            StringBuilder sb = new StringBuilder();
+            for (int keymasterDigest : mKeymasterDigests) {
+                sb.append(String.format("%d ", keymasterDigest));
+            }
+            Log.i(TAG,
+                    String.format("Algorithm: %d Digests: %s", mKeymasterAlgorithm, sb.toString()));
+            ArrayUtils.forEach(mKeymasterDigests, (digest) -> {
+                params.add(KeyStore2ParameterUtils.makeEnum(
+                        KeymasterDefs.KM_TAG_RSA_OAEP_MGF_DIGEST, digest
+                ));
+            });
+        }
+
         KeyStore2ParameterUtils.addUserAuthArgs(params, mSpec);
 
         if (mSpec.getKeyValidityStart() != null) {
