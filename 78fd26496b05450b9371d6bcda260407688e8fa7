@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49fd1d30_d57ecfef",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2050,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-30T08:15:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0873314_fcbccd07",
+      "range": {
+        "startLine": 2050,
+        "startChar": 44,
+        "endLine": 2050,
+        "endChar": 61
+      },
+      "revId": "78fd26496b05450b9371d6bcda260407688e8fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f4a6063_074b945a",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-12-30T07:35:54Z",
       "side": 1,
       "message": "nit: Maybe @NonNull as above?",
+      "range": {
+        "startLine": 2065,
+        "startChar": 16,
+        "endLine": 2065,
+        "endChar": 36
+      },
+      "revId": "78fd26496b05450b9371d6bcda260407688e8fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7642add8_c251279a",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-30T08:15:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f4a6063_074b945a",
       "range": {
         "startLine": 2065,
         "startChar": 16,
@@ -64,6 +112,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "add8342c_7cb15011",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3386,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-30T08:15:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c046ad28_2522ee4a",
+      "revId": "78fd26496b05450b9371d6bcda260407688e8fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a22287bf_fe47efcc",
@@ -77,6 +143,24 @@
       "writtenOn": "2021-12-30T07:35:54Z",
       "side": 1,
       "message": "Maybe enforce with android.Manifest.permission.NETWORK_STATS_PROVIDER,\n            and NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK?\nPlease also add annotation at NPM.",
+      "revId": "78fd26496b05450b9371d6bcda260407688e8fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fc23374_4fa8ab4c",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3401,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-30T08:15:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a22287bf_fe47efcc",
       "revId": "78fd26496b05450b9371d6bcda260407688e8fa7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
