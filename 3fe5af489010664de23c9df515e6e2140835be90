@@ -51,6 +51,24 @@
       "parentUuid": "d013f823_46905c48",
       "revId": "3fe5af489010664de23c9df515e6e2140835be90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35f16a83_f7fa382c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1136338
+      },
+      "writtenOn": "2021-12-31T03:40:48Z",
+      "side": 1,
+      "message": "Yes, only a2dpSinkInfo method is missing. Please add it.",
+      "parentUuid": "a55deafb_381fae61",
+      "revId": "3fe5af489010664de23c9df515e6e2140835be90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
