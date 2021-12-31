@@ -69,6 +69,24 @@
       "parentUuid": "a55deafb_381fae61",
       "revId": "3fe5af489010664de23c9df515e6e2140835be90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fe93b66_0e504ef5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-12-31T10:59:40Z",
+      "side": 1,
+      "message": "CL uploaded: aosp/1933145\nFeel free to put comment on it if does not match your need.",
+      "parentUuid": "35f16a83_f7fa382c",
+      "revId": "3fe5af489010664de23c9df515e6e2140835be90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
