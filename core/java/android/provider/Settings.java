@@ -5620,6 +5620,13 @@ public final class Settings {
         public static final String BACK_GESTURE_HAPTIC = "back_gesture_haptic";
 
         /**
+         * Zephyrus Idle Manager
+         * @hide
+         */
+        @Readable
+        public static final String ZEPHYRUS_IDLE_MANAGER = "zephyrus_idle_manager";
+
+        /**
          * @hide
          */
         public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";

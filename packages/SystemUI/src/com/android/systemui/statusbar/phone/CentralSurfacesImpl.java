@@ -145,6 +145,7 @@ import com.android.systemui.AutoReinflateContainer;
 import com.android.systemui.CoreStartable;
 import com.android.systemui.DejankUtils;
 import com.android.systemui.Dependency;
+import com.android.systemui.ZephyrusIdleManager;
 import com.android.systemui.EventLogTags;
 import com.android.systemui.InitController;
 import com.android.systemui.Prefs;
@@ -527,6 +528,9 @@ public class CentralSurfacesImpl extends CoreStartable implements
     // expanded notifications
     // the sliding/resizing panel within the notification window
     protected NotificationPanelViewController mNotificationPanelViewController;
+
+   // Zephyrus Idle
+    private boolean isIdleManagerIstantiated = false;
 
     // settings
     private QSPanelController mQSPanelController;
@@ -3828,6 +3832,17 @@ public class CentralSurfacesImpl extends CoreStartable implements
             }
 
             DejankUtils.stopDetectingBlockingIpcs(tag);
+            if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                                              Settings.System.ZEPHYRUS_IDLE_MANAGER, 1,
+                                              mLockscreenUserManager.getCurrentUserId()) == 1) {
+                if (!isIdleManagerIstantiated) {
+                    ZephyrusIdleManager.initManager(mContext);
+                    isIdleManagerIstantiated = true;
+                    ZephyrusIdleManager.executeManager();
+                } else {
+                    ZephyrusIdleManager.executeManager();
+                }
+            }
         }
 
         @Override
@@ -3858,6 +3873,12 @@ public class CentralSurfacesImpl extends CoreStartable implements
 
             });
             DejankUtils.stopDetectingBlockingIpcs(tag);
+            if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                                              Settings.System.ZEPHYRUS_IDLE_MANAGER, 1,
+                                              mLockscreenUserManager.getCurrentUserId()) == 1) {
+                ZephyrusIdleManager.haltManager();
+            }
+
         }
 
         @Override
