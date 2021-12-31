@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.android.server;
 
 import static android.Manifest.permission.ACCESS_MTP;
@@ -1344,7 +1343,6 @@ class StorageManagerService extends IStorageManager.Stub
                         && vol.getMountUserId() != mCurrentUserId) {
                     // If there's a visible secondary volume mounted,
                     // we need to update the currentUserId and remount
-                    vol.mountUserId = mCurrentUserId;
                     volumesToRemount.add(vol);
                 }
             }
@@ -1353,7 +1351,21 @@ class StorageManagerService extends IStorageManager.Stub
         for (VolumeInfo vol : volumesToRemount) {
             Slog.i(TAG, "Remounting volume for user: " + userId + ". Volume: " + vol);
             mHandler.obtainMessage(H_VOLUME_UNMOUNT, vol).sendToTarget();
+            mHandler.post(() -> vol.mountUserId = mCurrentUserId);
             mHandler.obtainMessage(H_VOLUME_MOUNT, vol).sendToTarget();
+        }
+    }
+
+    /**
+     * This method checks if the volume is public and the volume is visible and the volume it is
+     * trying to mount doesn't have the same mount user id as the current user being maintained by
+     * StorageManagerService and change the mount Id. The checks are same as
+     * {@link StorageManagerService#maybeRemountVolumes(int)}
+     * @param VolumeInfo object to consider for changing the mountId
+     */
+    private void updateVolumeMountIdIfRequired(VolumeInfo vol) {
+        if (!vol.isPrimary() && vol.isVisible() && vol.getMountUserId() != mCurrentUserId) {
+            vol.mountUserId = mCurrentUserId;
         }
     }
 
@@ -2322,7 +2334,7 @@ class StorageManagerService extends IStorageManager.Stub
         if (isMountDisallowed(vol)) {
             throw new SecurityException("Mounting " + volId + " restricted by policy");
         }
-
+        updateVolumeMountIdIfRequired(vol);
         mount(vol);
     }
 
