@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5045f39c_00658dc4",
+        "filename": "media/java/android/media/BtProfileConnectionInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-12-31T10:59:32Z",
+      "side": 1,
+      "message": "Method parameter does not contain suppressNoisyIntent like the other, because intent is never sent when audio is incoming.\ncf https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/audio/AudioDeviceInventory.java;l\u003d874?q\u003daudiodeviceinventory.java",
+      "range": {
+        "startLine": 113,
+        "startChar": 26,
+        "endLine": 113,
+        "endChar": 77
+      },
+      "revId": "b22dcdb6a11c2a62ac55385c586ab9e55ab61155",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
