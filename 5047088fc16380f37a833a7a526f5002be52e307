@@ -43,6 +43,121 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8a2cb80a_18d4aed3",
+        "filename": "identity/java/android/security/identity/CredentialDataRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2022-01-02T23:21:11Z",
+      "side": 1,
+      "message": "Is one of mDeviceSignedEntriesToRequest and mIssuerSignedEntriesToRequest mandatory? If so, you can introduce two separate builder constructors to mandate it.",
+      "range": {
+        "startLine": 135,
+        "startChar": 32,
+        "endLine": 135,
+        "endChar": 63
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa208c7d_7f8ac717",
+        "filename": "identity/java/android/security/identity/CredentialDataRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2022-01-02T23:21:11Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 186,
+        "startChar": 61,
+        "endLine": 186,
+        "endChar": 65
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37a7b0a0_26f7de23",
+        "filename": "identity/java/android/security/identity/CredentialDataRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2022-01-02T23:21:11Z",
+      "side": 1,
+      "message": "nit: setIncrementKeyUsageCount sounds better?",
+      "range": {
+        "startLine": 190,
+        "startChar": 32,
+        "endLine": 190,
+        "endChar": 52
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7a81477_08b870d1",
+        "filename": "identity/java/android/security/identity/CredentialDataResult.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2022-01-02T23:21:11Z",
+      "side": 1,
+      "message": "what does the API do if this happens?",
+      "range": {
+        "startLine": 170,
+        "startChar": 84,
+        "endLine": 170,
+        "endChar": 98
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c77e329c_5671c0ff",
+        "filename": "identity/java/android/security/identity/CredentialDataResult.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2022-01-02T23:21:11Z",
+      "side": 1,
+      "message": "what does the API do if this happens?",
+      "range": {
+        "startLine": 182,
+        "startChar": 31,
+        "endLine": 182,
+        "endChar": 45
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "512d04eb_10b06c88",
         "filename": "identity/java/android/security/identity/CredstorePresentationSession.java",
         "patchSetId": 13
@@ -105,6 +220,52 @@
         "startChar": 0,
         "endLine": 190,
         "endChar": 38
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "101de758_21f305e8",
+        "filename": "identity/java/android/security/identity/IdentityCredential.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2022-01-02T23:21:11Z",
+      "side": 1,
+      "message": "We don\u0027t normally add new API and then immediately deprecate it, is this intended?",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 0
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "705d8d78_b7d070ae",
+        "filename": "identity/java/android/security/identity/PresentationSession.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2022-01-02T23:21:11Z",
+      "side": 1,
+      "message": "Previous API was named createEphemeralKeyPair, is there an intentional semantic difference? For example is the current one idempotent but the old one isn\u0027t?",
+      "range": {
+        "startLine": 47,
+        "startChar": 37,
+        "endLine": 47,
+        "endChar": 56
       },
       "revId": "5047088fc16380f37a833a7a526f5002be52e307",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
