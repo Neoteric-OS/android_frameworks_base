@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018848073",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1935965?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7e9a01e8_86a2784d",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-03T14:29:40Z",
+      "side": 1,
+      "message": "Prefer to use mContext.getSystemService(TetheringManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 533,
+        "startChar": 16,
+        "endLine": 533,
+        "endChar": 61
+      },
+      "revId": "5d807240a8810a17ffe8f58a45f577a98982782a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018848073",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1935965?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "961baa91_afdfcb63",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-03T14:29:40Z",
+      "side": 1,
+      "message": "Prefer to use mContext.getSystemService(TetheringManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 592,
+        "startChar": 16,
+        "endLine": 592,
+        "endChar": 61
+      },
+      "revId": "5d807240a8810a17ffe8f58a45f577a98982782a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
