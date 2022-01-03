@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6939d3da_70287f27",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudioCodecConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2022-01-03T14:41:34Z",
+      "side": 1,
+      "message": "since this class describes CodecConfig, maybe instead AudioDirection we should have CodecFunction which could be:\nDECODE_ONLY\nENCODE_ONLY\nENCODE_AND_DECODE ?",
+      "revId": "0d384ab79ecbf6d56ab420bd4df5a7edd4460714",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
