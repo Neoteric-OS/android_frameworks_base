@@ -17,7 +17,6 @@
 package android.net;
 
 import static android.Manifest.permission.READ_NETWORK_USAGE_HISTORY;
-import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.net.NetworkStats.UID_ALL;
 import static android.net.TrafficStats.UID_REMOVED;
 import static android.net.TrafficStats.UID_TETHERING;
@@ -107,7 +106,7 @@ public final class NetworkStatsAccess {
 
     /** Returns the {@link NetworkStatsAccess.Level} for the given caller. */
     public static @NetworkStatsAccess.Level int checkAccessLevel(
-            Context context, int callingPid, int callingUid, String callingPackage) {
+            Context context, int callingUid, String callingPackage) {
         final DevicePolicyManager mDpm = context.getSystemService(DevicePolicyManager.class);
         final TelephonyManager tm = (TelephonyManager)
                 context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -124,12 +123,8 @@ public final class NetworkStatsAccess {
         final boolean isDeviceOwner = mDpm != null && mDpm.isDeviceOwnerApp(callingPackage);
         final int appId = UserHandle.getAppId(callingUid);
 
-        final boolean isNetworkStack = context.checkPermission(
-                android.Manifest.permission.NETWORK_STACK, callingPid, callingUid)
-                == PERMISSION_GRANTED;
-
         if (hasCarrierPrivileges || isDeviceOwner
-                || appId == Process.SYSTEM_UID || isNetworkStack) {
+                || appId == Process.SYSTEM_UID || appId == Process.NETWORK_STACK_UID) {
             // Carrier-privileged apps and device owners, and the system (including the
             // network stack) can access data usage for all apps on the device.
             return NetworkStatsAccess.Level.DEVICE;
@@ -160,8 +155,6 @@ public final class NetworkStatsAccess {
      */
     public static boolean isAccessibleToUser(int uid, int callerUid,
             @NetworkStatsAccess.Level int accessLevel) {
-        final int userId = UserHandle.getUserHandleForUid(uid).getIdentifier();
-        final int callerUserId = UserHandle.getUserHandleForUid(callerUid).getIdentifier();
         switch (accessLevel) {
             case NetworkStatsAccess.Level.DEVICE:
                 // Device-level access - can access usage for any uid.
@@ -172,13 +165,13 @@ public final class NetworkStatsAccess {
                 // anonymized uids
                 return uid == android.os.Process.SYSTEM_UID || uid == UID_REMOVED
                         || uid == UID_TETHERING || uid == UID_ALL
-                        || userId == callerUserId;
+                        || UserHandle.getUserId(uid) == UserHandle.getUserId(callerUid);
             case NetworkStatsAccess.Level.USER:
                 // User-level access - can access usage for any app running in the same user, along
                 // with some special uids (system, removed, or tethering).
                 return uid == android.os.Process.SYSTEM_UID || uid == UID_REMOVED
                         || uid == UID_TETHERING
-                        || userId == callerUserId;
+                        || UserHandle.getUserId(uid) == UserHandle.getUserId(callerUid);
             case NetworkStatsAccess.Level.DEFAULT:
             default:
                 // Default access level - can only access one's own usage.

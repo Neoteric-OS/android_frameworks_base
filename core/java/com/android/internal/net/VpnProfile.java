@@ -143,24 +143,17 @@ public final class VpnProfile implements Cloneable, Parcelable {
     public boolean areAuthParamsInline = false;                  // 23
     public final boolean isRestrictedToTestNetworks;             // 24
 
-    public final boolean excludeLocalRoutes;                     // 25
-
     // Helper fields.
     @UnsupportedAppUsage
     public transient boolean saveLogin = false;
 
     public VpnProfile(String key) {
-        this(key, false, false);
+        this(key, false);
     }
 
     public VpnProfile(String key, boolean isRestrictedToTestNetworks) {
-        this(key, isRestrictedToTestNetworks, false);
-    }
-
-    public VpnProfile(String key, boolean isRestrictedToTestNetworks, boolean excludeLocalRoutes) {
         this.key = key;
         this.isRestrictedToTestNetworks = isRestrictedToTestNetworks;
-        this.excludeLocalRoutes = excludeLocalRoutes;
     }
 
     @UnsupportedAppUsage
@@ -190,7 +183,6 @@ public final class VpnProfile implements Cloneable, Parcelable {
         maxMtu = in.readInt();
         areAuthParamsInline = in.readBoolean();
         isRestrictedToTestNetworks = in.readBoolean();
-        excludeLocalRoutes = in.readBoolean();
     }
 
     /**
@@ -238,7 +230,6 @@ public final class VpnProfile implements Cloneable, Parcelable {
         out.writeInt(maxMtu);
         out.writeBoolean(areAuthParamsInline);
         out.writeBoolean(isRestrictedToTestNetworks);
-        out.writeBoolean(excludeLocalRoutes);
     }
 
     /**
@@ -258,9 +249,8 @@ public final class VpnProfile implements Cloneable, Parcelable {
             // 14-19: Standard profile, with option for serverCert, proxy
             // 24: Standard profile with serverCert, proxy and platform-VPN parameters
             // 25: Standard profile with platform-VPN parameters and isRestrictedToTestNetworks
-            // 26: Standard profile with platform-VPN parameters and excludeLocalRoutes
             if ((values.length < 14 || values.length > 19)
-                    && values.length != 24 && values.length != 25 && values.length != 26) {
+                    && values.length != 24 && values.length != 25) {
                 return null;
             }
 
@@ -271,15 +261,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
                 isRestrictedToTestNetworks = false;
             }
 
-            final boolean excludeLocalRoutes;
-            if (values.length >= 26) {
-                excludeLocalRoutes = Boolean.parseBoolean(values[25]);
-            } else {
-                excludeLocalRoutes = false;
-            }
-
-            VpnProfile profile = new VpnProfile(key, isRestrictedToTestNetworks,
-                    excludeLocalRoutes);
+            VpnProfile profile = new VpnProfile(key, isRestrictedToTestNetworks);
             profile.name = values[0];
             profile.type = Integer.parseInt(values[1]);
             if (profile.type < 0 || profile.type > TYPE_MAX) {
@@ -389,8 +371,6 @@ public final class VpnProfile implements Cloneable, Parcelable {
         builder.append(VALUE_DELIMITER).append(areAuthParamsInline);
         builder.append(VALUE_DELIMITER).append(isRestrictedToTestNetworks);
 
-        builder.append(VALUE_DELIMITER).append(excludeLocalRoutes);
-
         return builder.toString().getBytes(StandardCharsets.UTF_8);
     }
 
@@ -471,7 +451,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
             key, type, server, username, password, dnsServers, searchDomains, routes, mppe,
             l2tpSecret, ipsecIdentifier, ipsecSecret, ipsecUserCert, ipsecCaCert, ipsecServerCert,
             proxy, mAllowedAlgorithms, isBypassable, isMetered, maxMtu, areAuthParamsInline,
-            isRestrictedToTestNetworks, excludeLocalRoutes);
+            isRestrictedToTestNetworks);
     }
 
     /** Checks VPN profiles for interior equality. */
@@ -504,8 +484,7 @@ public final class VpnProfile implements Cloneable, Parcelable {
                 && isMetered == other.isMetered
                 && maxMtu == other.maxMtu
                 && areAuthParamsInline == other.areAuthParamsInline
-                && isRestrictedToTestNetworks == other.isRestrictedToTestNetworks
-                && excludeLocalRoutes == other.excludeLocalRoutes;
+                && isRestrictedToTestNetworks == other.isRestrictedToTestNetworks;
     }
 
     @NonNull

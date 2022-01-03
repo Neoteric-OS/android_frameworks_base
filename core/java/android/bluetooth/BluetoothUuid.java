@@ -189,7 +189,7 @@ public final class BluetoothUuid {
     @NonNull
     @SystemApi
     public static final ParcelUuid CAP =
-            ParcelUuid.fromString("00001853-0000-1000-8000-00805F9B34FB");
+        ParcelUuid.fromString("EEEEEEEE-EEEE-EEEE-EEEE-EEEEEEEEEEEE");
     /** @hide */
     @NonNull
     @SystemApi
