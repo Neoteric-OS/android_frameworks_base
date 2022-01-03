@@ -413,7 +413,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
         final NetworkStatsService service = new NetworkStatsService(context, networkManager,
                 alarmManager, wakeLock, getDefaultClock(),
-                new DefaultNetworkStatsSettings(context), new NetworkStatsFactory(),
+                new DefaultNetworkStatsSettings(context), new NetworkStatsFactory(context),
                 new NetworkStatsObservers(), getDefaultSystemDir(), getDefaultBaseDir(),
                 new Dependencies());
         service.registerLocalService();
