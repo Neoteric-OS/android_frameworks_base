@@ -24,11 +24,13 @@ import static android.net.NetworkStats.UID_ALL;
 
 import static com.android.server.NetworkManagementSocketTagger.kernelToTag;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.content.Context;
 import android.net.INetd;
 import android.net.NetworkStats;
 import android.net.UnderlyingNetworkInfo;
-import android.net.util.NetdService;
+import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.SystemClock;
@@ -61,6 +63,8 @@ public class NetworkStatsFactory {
     private static final boolean USE_NATIVE_PARSING = true;
     private static final boolean VALIDATE_NATIVE_STATS = false;
 
+    private final Context mContext;
+
     /** Path to {@code /proc/net/xt_qtaguid/iface_stat_all}. */
     private final File mStatsXtIfaceAll;
     /** Path to {@code /proc/net/xt_qtaguid/iface_stat_fmt}. */
@@ -70,7 +74,7 @@ public class NetworkStatsFactory {
 
     private final boolean mUseBpfStats;
 
-    private INetd mNetdService;
+    private final INetd mNetd;
 
     /**
      * Guards persistent data access in this class
@@ -158,12 +162,13 @@ public class NetworkStatsFactory {
         NetworkStats.apply464xlatAdjustments(baseTraffic, stackedTraffic, mStackedIfaces);
     }
 
-    public NetworkStatsFactory() {
-        this(new File("/proc/"), true);
+    public NetworkStatsFactory(@NonNull Context context) {
+        this(context, new File("/proc/"), true);
     }
 
     @VisibleForTesting
-    public NetworkStatsFactory(File procRoot, boolean useBpfStats) {
+    public NetworkStatsFactory(@NonNull Context context, File procRoot, boolean useBpfStats) {
+        mContext = context;
         mStatsXtIfaceAll = new File(procRoot, "net/xt_qtaguid/iface_stat_all");
         mStatsXtIfaceFmt = new File(procRoot, "net/xt_qtaguid/iface_stat_fmt");
         mStatsXtUid = new File(procRoot, "net/xt_qtaguid/stats");
@@ -172,6 +177,8 @@ public class NetworkStatsFactory {
             mPersistSnapshot = new NetworkStats(SystemClock.elapsedRealtime(), -1);
             mTunAnd464xlatAdjustedStats = new NetworkStats(SystemClock.elapsedRealtime(), -1);
         }
+        mNetd = INetd.Stub.asInterface(
+                (IBinder) mContext.getSystemService(Context.NETD_SERVICE));
     }
 
     public NetworkStats readBpfNetworkStatsDev() throws IOException {
@@ -298,10 +305,7 @@ public class NetworkStatsFactory {
         // Ask netd to do a active map stats swap. When the binder call successfully returns,
         // the system server should be able to safely read and clean the inactive map
         // without race problem.
-        if (mNetdService == null) {
-            mNetdService = NetdService.getInstance();
-        }
-        mNetdService.trafficSwapActiveStatsMap();
+        mNetd.trafficSwapActiveStatsMap();
     }
 
     /**
