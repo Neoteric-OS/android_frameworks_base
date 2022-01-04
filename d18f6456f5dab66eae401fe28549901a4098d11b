@@ -94,6 +94,30 @@
       },
       "revId": "d18f6456f5dab66eae401fe28549901a4098d11b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e33082f3_0890f809",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-01-04T14:26:34Z",
+      "side": 1,
+      "message": "I see. And I guess the point is that it needs to be named test_* to get this special treatment *because* we don\u0027t prefetch it (because we don\u0027t have the config to make that happen)? Seems like an annoying edge case. Would be good if we could avoid doing something special for test apexes. Seems like a recipe for testing something other than what real devices will run (i.e. not a useful test).",
+      "parentUuid": "e8469aeb_6ecb1202",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 40
+      },
+      "revId": "d18f6456f5dab66eae401fe28549901a4098d11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
