@@ -93,6 +93,30 @@
       },
       "revId": "e12236ccda15283d77a6cb5f890f743fda142d70",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0308e876_9ed9ed5f",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2022-01-04T11:50:43Z",
+      "side": 1,
+      "message": "We would want a more specific check here, instead of setting this naming scheme in stone for T. Started a thread in g/mainline-modularization/diiDUwZXZvY/huRohAolEQAJ",
+      "parentUuid": "5b5808f5_4fd728c3",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 84
+      },
+      "revId": "e12236ccda15283d77a6cb5f890f743fda142d70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
