@@ -118,6 +118,30 @@
       },
       "revId": "d18f6456f5dab66eae401fe28549901a4098d11b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63eb12db_09a1282d",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2022-01-04T15:00:25Z",
+      "side": 1,
+      "message": "I just named it test_ to distinguish it from non-test apexes. Could be anything really, but it would still break this check here.\n\nThe point here is that test apexes _are_ different: they are not listed in product configs. I see a few options going forward:\n\n1. Propagate test apexes and prefetch them in ZygoteInit as well. I\u0027m not super happy about this option, but it does treat test apexes similar to real apexes the most.\n2. Keep filtering test apexes (but not based on the name ideally).\n3. Implement a check in a different way. I don\u0027t have a good suggestion here though.. We could add a @TestApi that lists all prefetched apexes in ZygoteInit, but you still need to propagate product specific list of apexes to compare again. You can\u0027t do the later as a CTS test, but perhaps it would be possible to do that as a local test.",
+      "parentUuid": "e33082f3_0890f809",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 40
+      },
+      "revId": "d18f6456f5dab66eae401fe28549901a4098d11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
