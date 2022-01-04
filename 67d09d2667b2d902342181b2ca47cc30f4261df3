@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bcf7d73_eb815683",
+        "filename": "media/aidl/android/media/audio/common/AudioContentTypeStable.aidl",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2022-01-04T18:49:57Z",
+      "side": 1,
+      "message": "I don\u0027t support the idea of temporary upstreaming these types under names different from the internal master. This creates a lot of confusion and will require extra effort to remove these temporary types when upstreaming the internal ones. Also, I think this undermines the declared \"stability\" for these types.\n\nIs there any technical issue that prevents upstreaming the actual types?",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "67d09d2667b2d902342181b2ca47cc30f4261df3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
