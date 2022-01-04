@@ -52,6 +52,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "424dfef6_7a8d6795",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-04T14:38:25Z",
+      "side": 1,
+      "message": "Hi Rubin, thanks for looking! Replies inline. New PS w/ fixes coming up soon.",
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce7426a5_922566aa",
@@ -98,6 +115,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "91d164f5_fc0fdef5",
+        "filename": "identity/java/android/security/identity/CredentialDataRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-04T14:38:25Z",
+      "side": 1,
+      "message": "It\u0027s permissible to not request any entries.",
+      "parentUuid": "8a2cb80a_18d4aed3",
+      "range": {
+        "startLine": 135,
+        "startChar": 32,
+        "endLine": 135,
+        "endChar": 63
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa208c7d_7f8ac717",
@@ -111,6 +152,30 @@
       "writtenOn": "2022-01-02T23:21:11Z",
       "side": 1,
       "message": "typo",
+      "range": {
+        "startLine": 186,
+        "startChar": 61,
+        "endLine": 186,
+        "endChar": 65
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c04735d4_78c4edb5",
+        "filename": "identity/java/android/security/identity/CredentialDataRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-04T14:38:25Z",
+      "side": 1,
+      "message": "Fixed (also fixed in isIncrementUseCount()).",
+      "parentUuid": "fa208c7d_7f8ac717",
       "range": {
         "startLine": 186,
         "startChar": 61,
@@ -144,6 +209,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dedaee6_3fdc95e6",
+        "filename": "identity/java/android/security/identity/CredentialDataRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-04T14:38:25Z",
+      "side": 1,
+      "message": "A little but it\u0027s also more typing and long identifiers/names really hurt the 100-column limit. So I\u0027ll keep it short for now I think.",
+      "parentUuid": "37a7b0a0_26f7de23",
+      "range": {
+        "startLine": 190,
+        "startChar": 32,
+        "endLine": 190,
+        "endChar": 52
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7a81477_08b870d1",
@@ -167,6 +256,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4c2fd1a_8be94028",
+        "filename": "identity/java/android/security/identity/CredentialDataResult.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-04T14:38:25Z",
+      "side": 1,
+      "message": "Thinking about it it\u0027s cleaner to just allow it. I\u0027ve updated the API to allow this and added \"or the empty collection if no entries was returned for the given name space.\" to @return docs.",
+      "parentUuid": "c7a81477_08b870d1",
+      "range": {
+        "startLine": 170,
+        "startChar": 84,
+        "endLine": 170,
+        "endChar": 98
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c77e329c_5671c0ff",
@@ -180,6 +293,30 @@
       "writtenOn": "2022-01-02T23:21:11Z",
       "side": 1,
       "message": "what does the API do if this happens?",
+      "range": {
+        "startLine": 182,
+        "startChar": 31,
+        "endLine": 182,
+        "endChar": 45
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f715f1ac_412fa087",
+        "filename": "identity/java/android/security/identity/CredentialDataResult.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-04T14:38:25Z",
+      "side": 1,
+      "message": "Same as above comment - I\u0027ve updated the API to allow this and added \"or the empty collection if no entries was returned for the given name space.\" to @return docs.",
+      "parentUuid": "c77e329c_5671c0ff",
       "range": {
         "startLine": 182,
         "startChar": 31,
@@ -284,6 +421,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ec087f4a_51473cc1",
+        "filename": "identity/java/android/security/identity/IdentityCredential.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-04T14:38:25Z",
+      "side": 1,
+      "message": "Yes, it\u0027s there for completeness and we\u0027re also using it in the implementation of CredentialData{Request, Result} APIs. I can remove it if you want to?",
+      "parentUuid": "101de758_21f305e8",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 0
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "705d8d78_b7d070ae",
         "filename": "identity/java/android/security/identity/PresentationSession.java",
         "patchSetId": 13
@@ -295,6 +456,30 @@
       "writtenOn": "2022-01-02T23:21:11Z",
       "side": 1,
       "message": "Previous API was named createEphemeralKeyPair, is there an intentional semantic difference? For example is the current one idempotent but the old one isn\u0027t?",
+      "range": {
+        "startLine": 47,
+        "startChar": 37,
+        "endLine": 47,
+        "endChar": 56
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08a8e35e_1b31afa0",
+        "filename": "identity/java/android/security/identity/PresentationSession.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-04T14:38:25Z",
+      "side": 1,
+      "message": "IdentityCredential.createEphemeralKeyPair() would return the same ephemeral key pair the second time it was called on the same instance. \n\nPresentationSession.getEphemeralKeyPair() does the same and I chose \"get\" instead of \"create\" to point out that the key pair is tied to the PresentationSession instance. I\u0027ll add a JavaDoc comment to explicitly call this out. I\u0027ve added \"The ephemeral key pair is tied to the {@link PresentationSession} instance so subsequent calls to this method will return the same key-pair.\"",
+      "parentUuid": "705d8d78_b7d070ae",
       "range": {
         "startLine": 47,
         "startChar": 37,
