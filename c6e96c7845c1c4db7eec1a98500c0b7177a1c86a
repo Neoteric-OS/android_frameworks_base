@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ef4df33_9080a0c0",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-04T09:16:59Z",
+      "side": 1,
+      "message": "Maybe delete this?",
+      "range": {
+        "startLine": 94,
+        "startChar": 19,
+        "endLine": 94,
+        "endChar": 50
+      },
+      "revId": "c6e96c7845c1c4db7eec1a98500c0b7177a1c86a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2461ac0_9ae80365",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-04T09:16:59Z",
+      "side": 1,
+      "message": "Please use the one in PermissionUtils instead.",
+      "range": {
+        "startLine": 520,
+        "startChar": 12,
+        "endLine": 520,
+        "endChar": 63
+      },
+      "revId": "c6e96c7845c1c4db7eec1a98500c0b7177a1c86a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e83b9db_9e97d704",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-04T09:16:59Z",
+      "side": 1,
+      "message": "This is @hide.\nWe cannot use this.",
+      "range": {
+        "startLine": 522,
+        "startChar": 16,
+        "endLine": 522,
+        "endChar": 34
+      },
+      "revId": "c6e96c7845c1c4db7eec1a98500c0b7177a1c86a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bea2d9c7_cacc6e2a",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-04T09:16:59Z",
+      "side": 1,
+      "message": "IIUC you need to update this?",
+      "range": {
+        "startLine": 666,
+        "startChar": 68,
+        "endLine": 666,
+        "endChar": 99
+      },
+      "revId": "c6e96c7845c1c4db7eec1a98500c0b7177a1c86a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
