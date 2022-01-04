@@ -923,7 +923,7 @@ public class LocationProviderManager extends
                     setLastDeliveredLocation(locationResult.getLastLocation());
 
                     // don't acquire a wakelock for mock locations to prevent abuse
-                    if (mUseWakeLock) {
+                    if (mUseWakeLock && !mWakeLock.isHeld()) {
                         mWakeLock.acquire(WAKELOCK_TIMEOUT_MS);
                     }
                 }
@@ -947,7 +947,7 @@ public class LocationProviderManager extends
 
                 @Override
                 public void onPostExecute(boolean success) {
-                    if (!success && mUseWakeLock) {
+                    if (!success && mUseWakeLock && mWakeLock.isHeld()) {
                         mWakeLock.release();
                     }
 
