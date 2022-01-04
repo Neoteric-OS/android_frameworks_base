@@ -51,6 +51,24 @@
       "parentUuid": "2892b912_15596f13",
       "revId": "4a17d475c6ddfd1e0e75f2dc334e3a76e7d5bfdd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3e04916_56da7797",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2022-01-04T17:32:35Z",
+      "side": 1,
+      "message": "Hi Wen, thanks for the explanation. Technically IllegalStateException is thrown when module data info was not loaded in package manager service, which is a different exception than NameNotFoundException. In this case the caller should handle the exception (aka RescueParty), as suggested by your other CL.",
+      "parentUuid": "d27b8aa0_dc3434c3",
+      "revId": "4a17d475c6ddfd1e0e75f2dc334e3a76e7d5bfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
