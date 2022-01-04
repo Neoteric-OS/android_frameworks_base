@@ -16,6 +16,7 @@
 
 package com.android.server.net;
 
+import static android.Manifest.permission.MANAGE_NETWORK_POLICY;
 import static android.Manifest.permission.NETWORK_STATS_PROVIDER;
 import static android.Manifest.permission.READ_NETWORK_USAGE_HISTORY;
 import static android.Manifest.permission.UPDATE_DEVICE_STATS;
@@ -425,7 +426,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 new DefaultNetworkStatsSettings(context), new NetworkStatsFactory(netd),
                 new NetworkStatsObservers(), getDefaultSystemDir(), getDefaultBaseDir(),
                 new Dependencies());
-        service.registerLocalService();
 
         return service;
     }
@@ -507,11 +507,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 }
             };
         }
-    }
-
-    private void registerLocalService() {
-        LocalServices.addService(NetworkStatsManagerInternal.class,
-                new NetworkStatsManagerInternalImpl());
     }
 
     public void systemReady() {
@@ -973,7 +968,9 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     @VisibleForTesting
-    void setUidForeground(int uid, boolean uidForeground) {
+    public void setUidForeground(int uid, boolean uidForeground) {
+        enforceAnyPermissionOf(MANAGE_NETWORK_POLICY,
+                NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK);
         synchronized (mStatsLock) {
             final int set = uidForeground ? SET_FOREGROUND : SET_DEFAULT;
             final int oldSet = mActiveUidCounterSet.get(uid, SET_DEFAULT);
@@ -1009,7 +1006,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
     @Override
     public void forceUpdate() {
-        mContext.enforceCallingOrSelfPermission(READ_NETWORK_USAGE_HISTORY, TAG);
+        enforceAnyPermissionOf(READ_NETWORK_USAGE_HISTORY,
+                NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK);
 
         final long token = Binder.clearCallingIdentity();
         try {
@@ -1019,7 +1017,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
     }
 
-    private void advisePersistThreshold(long thresholdBytes) {
+    /** Advise persistence threshold; may be overridden internally. */
+    public void advisePersistThreshold(long thresholdBytes) {
+        enforceAnyPermissionOf(MANAGE_NETWORK_POLICY,
+                NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK);
         // clamp threshold into safe range
         mPersistThreshold = NetworkStatsUtils.constrain(thresholdBytes,
                 128 * KB_IN_BYTES, 2 * MB_IN_BYTES);
@@ -1676,32 +1677,20 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         removeUidsLocked(CollectionUtils.toIntArray(uids));
     }
 
-    private class NetworkStatsManagerInternalImpl extends NetworkStatsManagerInternal {
-        @Override
-        public void setUidForeground(int uid, boolean uidForeground) {
-            NetworkStatsService.this.setUidForeground(uid, uidForeground);
+    /**
+     * Set the warning and limit to all registered custom network stats providers.
+     * Note that invocation of any interface will be sent to all providers.
+     */
+    public void setStatsProviderWarningAndLimitAsync(
+            @NonNull String iface, long warning, long limit) {
+        enforceAnyPermissionOf(MANAGE_NETWORK_POLICY,
+                NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK);
+        if (LOGV) {
+            Log.v(TAG, "setStatsProviderWarningAndLimitAsync("
+                    + iface + "," + warning + "," + limit + ")");
         }
-
-        @Override
-        public void advisePersistThreshold(long thresholdBytes) {
-            NetworkStatsService.this.advisePersistThreshold(thresholdBytes);
-        }
-
-        @Override
-        public void forceUpdate() {
-            NetworkStatsService.this.forceUpdate();
-        }
-
-        @Override
-        public void setStatsProviderWarningAndLimitAsync(
-                @NonNull String iface, long warning, long limit) {
-            if (LOGV) {
-                Log.v(TAG, "setStatsProviderWarningAndLimitAsync("
-                        + iface + "," + warning + "," + limit + ")");
-            }
-            invokeForAllStatsProviderCallbacks((cb) -> cb.mProvider.onSetWarningAndLimit(iface,
-                    warning, limit));
-        }
+        invokeForAllStatsProviderCallbacks((cb) -> cb.mProvider.onSetWarningAndLimit(iface,
+                warning, limit));
     }
 
     @Override

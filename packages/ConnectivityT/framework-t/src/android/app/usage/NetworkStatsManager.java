@@ -18,6 +18,7 @@ package android.app.usage;
 
 import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 
+import android.Manifest;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
@@ -802,6 +803,76 @@ public class NetworkStatsManager {
 
         private static Object getObject(Message msg, String key) {
             return msg.getData().getParcelable(key);
+        }
+    }
+
+    /**
+     * Mark given UID as being in foreground for stats purposes.
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(anyOf = {
+            Manifest.permission.MANAGE_NETWORK_POLICY,
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK})
+    public void setUidForeground(int uid, boolean uidForeground) {
+        try {
+            mService.setUidForeground(uid, uidForeground);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Advise persistence threshold; may be overridden internally.
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(anyOf = {
+            Manifest.permission.MANAGE_NETWORK_POLICY,
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK})
+    public void advisePersistThreshold(long thresholdBytes) {
+        try {
+            mService.advisePersistThreshold(thresholdBytes);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Force update of statistics.
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(anyOf = {
+            Manifest.permission.READ_NETWORK_USAGE_HISTORY,
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK})
+    public void forceUpdate() {
+        try {
+            mService.forceUpdate();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Set the warning and limit to all registered custom network stats providers.
+     * Note that invocation of any interface will be sent to all providers.
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(anyOf = {
+            Manifest.permission.MANAGE_NETWORK_POLICY,
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK})
+    public void setStatsProviderWarningAndLimitAsync(@NonNull String iface, long warning,
+            long limit) {
+        try {
+            mService.setStatsProviderWarningAndLimitAsync(iface, warning, limit);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
         }
     }
 }
