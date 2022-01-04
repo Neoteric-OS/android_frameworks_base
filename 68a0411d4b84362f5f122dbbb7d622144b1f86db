@@ -33,6 +33,24 @@
       "message": "So it\u0027s just the public API surface of ICU4J in android.icu package? It looks fine to me",
       "revId": "68a0411d4b84362f5f122dbbb7d622144b1f86db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56813333_c57fa5e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1872816
+      },
+      "writtenOn": "2022-01-04T17:40:39Z",
+      "side": 1,
+      "message": "Our team no longer needs this change.\nLet me know if we should still submit since it will be beneficial to other projects.\nIf not I will just abandon the change.",
+      "parentUuid": "22989e5d_49175303",
+      "revId": "68a0411d4b84362f5f122dbbb7d622144b1f86db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
