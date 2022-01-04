@@ -1,0 +1,212 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018876684",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1936378?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8391face_8a609d36",
+        "filename": "services/core/java/com/android/server/SmartStorageMaintIdler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-04T20:31:45Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(JobScheduler.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 85,
+        "startChar": 26,
+        "endLine": 85,
+        "endChar": 66
+      },
+      "revId": "19ab1a3c05fcc9607bae2e53ef1aa2c50f9d3c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018876684",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1936378?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6c56534e_85b6d1a7",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-04T20:31:45Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 936,
+        "startChar": 0,
+        "endLine": 936,
+        "endChar": 107
+      },
+      "revId": "19ab1a3c05fcc9607bae2e53ef1aa2c50f9d3c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018876684",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1936378?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "37157a6d_5bd4f32d",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-04T20:31:45Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 937,
+        "startChar": 0,
+        "endLine": 937,
+        "endChar": 102
+      },
+      "revId": "19ab1a3c05fcc9607bae2e53ef1aa2c50f9d3c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018876684",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1936378?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "31627439_90a659aa",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-04T20:31:45Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 952,
+        "startChar": 0,
+        "endLine": 952,
+        "endChar": 101
+      },
+      "revId": "19ab1a3c05fcc9607bae2e53ef1aa2c50f9d3c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018876684",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1936378?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5858d7ed_d7021d90",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2718,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-04T20:31:45Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 2718,
+        "startChar": 0,
+        "endLine": 2718,
+        "endChar": 104
+      },
+      "revId": "19ab1a3c05fcc9607bae2e53ef1aa2c50f9d3c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018876684",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1936378?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "fdfbaf6e_000da1ad",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2786,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-04T20:31:45Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 2786,
+        "startChar": 0,
+        "endLine": 2786,
+        "endChar": 106
+      },
+      "revId": "19ab1a3c05fcc9607bae2e53ef1aa2c50f9d3c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018876684",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1936378?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bcf27598_5e5486bb",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2801,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-04T20:31:45Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 2801,
+        "startChar": 0,
+        "endLine": 2801,
+        "endChar": 106
+      },
+      "revId": "19ab1a3c05fcc9607bae2e53ef1aa2c50f9d3c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018876684",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1936378?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "fec2394a_307a84c8",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2802,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-04T20:31:45Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 2802,
+        "startChar": 0,
+        "endLine": 2802,
+        "endChar": 103
+      },
+      "revId": "19ab1a3c05fcc9607bae2e53ef1aa2c50f9d3c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
