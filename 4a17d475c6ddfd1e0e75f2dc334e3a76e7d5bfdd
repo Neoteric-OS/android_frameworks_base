@@ -33,6 +33,24 @@
       "message": "Currently it is thrown to the caller. With your change it will not throw. Do you want to re-throw with a clearer message?",
       "revId": "4a17d475c6ddfd1e0e75f2dc334e3a76e7d5bfdd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d27b8aa0_dc3434c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385055
+      },
+      "writtenOn": "2022-01-04T08:57:01Z",
+      "side": 1,
+      "message": "Dear Songchun,\nThank you for your reply.\nI want throw NameNotFoundException to replace IllegalStateException.\nBecause caller will catch NameNotFoundException, and handle the exception in code.\nSo caller do not need to change any code for this exception.\nAn other way to slove this problem, caller catch IllegalStateException in code.\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1936185\nPlease review this patch.\n\nBest Regards.",
+      "parentUuid": "2892b912_15596f13",
+      "revId": "4a17d475c6ddfd1e0e75f2dc334e3a76e7d5bfdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
