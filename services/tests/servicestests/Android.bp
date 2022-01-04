@@ -25,6 +25,7 @@ android_test {
         "test-apps/JobTestApp/src/**/*.java",
 
         "test-apps/SuspendTestApp/src/**/*.java",
+	":service-bluetooth-tests",
     ],
     static_libs: [
         "frameworks-base-testutils",

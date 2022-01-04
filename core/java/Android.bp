@@ -15,7 +15,8 @@ filegroup {
         "**/*.java",
         "**/*.aidl",
     ],
-    visibility: ["//frameworks/base"],
+    visibility: ["//frameworks/base",
+                 "//packages/modules/Bluetooth:__subpackages__"],
 }
 
 filegroup {

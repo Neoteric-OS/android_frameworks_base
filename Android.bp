@@ -69,6 +69,7 @@ filegroup {
         // Java/AIDL sources under frameworks/base
         ":framework-annotations",
         ":framework-blobstore-sources",
+        ":framework-bluetooth-updatable-sources",
         ":framework-connectivity-tiramisu-sources",
         ":framework-core-sources",
         ":framework-drm-sources",
@@ -308,6 +309,7 @@ java_defaults {
             "frameworks/av/aidl",
             "frameworks/native/libs/permission/aidl",
             "packages/modules/Connectivity/framework/aidl-export",
+	    "packages/modules/Bluetooth/system/binder/android",
         ],
     },
     dxflags: [
@@ -546,6 +548,7 @@ stubs_defaults {
             "frameworks/av/aidl",
             "frameworks/native/libs/permission/aidl",
             "packages/modules/Connectivity/framework/aidl-export",
+	    "packages/modules/Bluetooth/system/binder/android",
         ],
     },
     // These are libs from framework-internal-utils that are required (i.e. being referenced)

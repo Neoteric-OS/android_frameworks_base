@@ -98,6 +98,7 @@ filegroup {
         ":services.uwb-sources",
         ":services.voiceinteraction-sources",
         ":services.wifi-sources",
+        ":service-bluetooth-srcs",
     ],
     visibility: ["//visibility:private"],
 }
