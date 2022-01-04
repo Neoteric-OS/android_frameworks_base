@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d13fda00_242cc795",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1651802
+      },
+      "writtenOn": "2022-01-04T23:32:18Z",
+      "side": 1,
+      "message": "Plz, check go/smart-idlemaint for this project history.",
+      "revId": "381c106e1211f4b5587ba703083ecd2917ba58b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
