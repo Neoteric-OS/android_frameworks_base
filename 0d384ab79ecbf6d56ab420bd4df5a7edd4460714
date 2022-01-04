@@ -16,6 +16,24 @@
       "message": "since this class describes CodecConfig, maybe instead AudioDirection we should have CodecFunction which could be:\nDECODE_ONLY\nENCODE_ONLY\nENCODE_AND_DECODE ?",
       "revId": "0d384ab79ecbf6d56ab420bd4df5a7edd4460714",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ccaf02b_1d720c9c",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudioCodecConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1875587
+      },
+      "writtenOn": "2022-01-04T02:43:07Z",
+      "side": 1,
+      "message": "CodecFunction seems not very clear.\nHow about rename audioDirection to codecSessionType and the enum contain DECODE_ONLY, ENCODE_ONLY, ENCODE_AND_DECODE?",
+      "parentUuid": "6939d3da_70287f27",
+      "revId": "0d384ab79ecbf6d56ab420bd4df5a7edd4460714",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
