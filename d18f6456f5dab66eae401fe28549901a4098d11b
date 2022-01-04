@@ -46,6 +46,30 @@
       },
       "revId": "d18f6456f5dab66eae401fe28549901a4098d11b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "573adfeb_3142f6d2",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-01-04T13:39:50Z",
+      "side": 1,
+      "message": "Do we have any test apexes (with apex name test_*, as opposed to filename test_*.apex) that are loaded in system server? My guess is no",
+      "parentUuid": "e34659ce_4c59893e",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 40
+      },
+      "revId": "d18f6456f5dab66eae401fe28549901a4098d11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
