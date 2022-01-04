@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0777d7a1_0aa0940a",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-04T05:32:44Z",
+      "side": 1,
+      "message": "This looks wrong, original code creates a template with METERED_ALL for mobile.",
+      "range": {
+        "startLine": 1316,
+        "startChar": 48,
+        "endLine": 1316,
+        "endChar": 59
+      },
+      "revId": "0a86c0eb6e429dad3517079a8777457a80e61619",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
