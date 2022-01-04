@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71c6ec7b_0915fdde",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-04T06:06:52Z",
+      "side": 1,
+      "message": "LGTM with nits, but someone else must have a look.",
+      "revId": "38f6ad9303bc47473420486a174494b8f118761a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d8f996f_af0a1c2d",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3386,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-04T06:06:52Z",
+      "side": 1,
+      "message": "1. Maybe add nullibility annotations?\n2. Objects.requireNotNull?",
+      "range": {
+        "startLine": 3386,
+        "startChar": 3,
+        "endLine": 3386,
+        "endChar": 73
+      },
+      "revId": "38f6ad9303bc47473420486a174494b8f118761a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
