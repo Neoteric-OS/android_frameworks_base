@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018856847",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1933088?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "8f41f46c_00c460e2",
+          "description": "Change to \"services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java\"",
+          "replacements": [
+            {
+              "path": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+              "range": {
+                "startLine": 262,
+                "startChar": 16,
+                "endLine": 262,
+                "endChar": 29
+              },
+              "replacement": "Dependencies"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "0605df6a_5aab0d9e",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-04T05:47:41Z",
+      "side": 1,
+      "message": "Common typo found: \"Depdendencies\" -- should it be \"Dependencies\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 262,
+        "startChar": 16,
+        "endLine": 262,
+        "endChar": 29
+      },
+      "revId": "820128ac587306858dd3c4e1b7537d8cda53c11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018856847",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1933088?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "7a4e0ae2_e9d6b1d3",
+          "description": "Change to \"services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java\"",
+          "replacements": [
+            {
+              "path": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+              "range": {
+                "startLine": 339,
+                "startChar": 22,
+                "endLine": 339,
+                "endChar": 35
+              },
+              "replacement": "Dependencies"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "6b597580_3633b1ca",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-04T05:47:41Z",
+      "side": 1,
+      "message": "Common typo found: \"Depdendencies\" -- should it be \"Dependencies\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 339,
+        "startChar": 22,
+        "endLine": 339,
+        "endChar": 35
+      },
+      "revId": "820128ac587306858dd3c4e1b7537d8cda53c11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018856847",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1933088?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "863d98b4_feecaab9",
+          "description": "Change to \"services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java\"",
+          "replacements": [
+            {
+              "path": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+              "range": {
+                "startLine": 342,
+                "startChar": 12,
+                "endLine": 342,
+                "endChar": 25
+              },
+              "replacement": "Dependencies"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "1b4af54b_5895dfa7",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-04T05:47:41Z",
+      "side": 1,
+      "message": "Common typo found: \"Depdendencies\" -- should it be \"Dependencies\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 342,
+        "startChar": 12,
+        "endLine": 342,
+        "endChar": 25
+      },
+      "revId": "820128ac587306858dd3c4e1b7537d8cda53c11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018856847",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1933088?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "72c31500_68019c9d",
+          "description": "Change to \"services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java\"",
+          "replacements": [
+            {
+              "path": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+              "range": {
+                "startLine": 443,
+                "startChar": 24,
+                "endLine": 443,
+                "endChar": 37
+              },
+              "replacement": "Dependencies"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "4dbb63e1_302358b7",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-04T05:47:41Z",
+      "side": 1,
+      "message": "Common typo found: \"Depdendencies\" -- should it be \"Dependencies\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 443,
+        "startChar": 24,
+        "endLine": 443,
+        "endChar": 37
+      },
+      "revId": "820128ac587306858dd3c4e1b7537d8cda53c11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
