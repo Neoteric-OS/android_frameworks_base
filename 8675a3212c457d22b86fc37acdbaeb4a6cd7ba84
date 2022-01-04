@@ -16,6 +16,29 @@
       "message": "LGTM but someone else must have a look",
       "revId": "8675a3212c457d22b86fc37acdbaeb4a6cd7ba84",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "851cad5c_8cb3f030",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2004,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-04T09:17:15Z",
+      "side": 1,
+      "message": "This is @hide.\nPlease use NetworkPolicyManager.class instead.",
+      "range": {
+        "startLine": 2004,
+        "startChar": 42,
+        "endLine": 2004,
+        "endChar": 64
+      },
+      "revId": "8675a3212c457d22b86fc37acdbaeb4a6cd7ba84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
