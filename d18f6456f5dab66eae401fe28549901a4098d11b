@@ -142,6 +142,30 @@
       },
       "revId": "d18f6456f5dab66eae401fe28549901a4098d11b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e47ff7d2_b42c62fb",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-01-04T16:40:17Z",
+      "side": 1,
+      "message": "Thank you all for the discussion!\n\nThis line is only for fixing the failure of `ApexSystemServicesTestCases`, which is a test that installs an APEX and starts a service from a jar that does not exist on a real device, and therefore the jar is not prefetched because it is not listed in product configs. Other testing APEXes such as test_mediaprovider.apex don\u0027t have the problem because they act in the same way as normal APEXes: providing jars that exist on a real device and are listed in product configs.\n\nHere are my thoughts about the options:\n\n\u003e 1. Propagate test apexes and prefetch them in ZygoteInit as well.\n\nI don\u0027t have a good idea to do this in an elegant way. `ApexSystemServicesTestCases` installs an APEX that does not exist on a real device, so it cannot be listed in product configs.\n\n\u003e 2. Keep filtering test apexes (but not based on the name ideally).\n\nI would go with this option. Jiyong mentioned the `testOnly` flag in the manifest (g/mainline-modularization/c/diiDUwZXZvY/m/yLRsIlIlEQAJ). We can probably do the check based on that instead of based on the name.\n\n\u003e 3. Implement a check in a different way.\n\nWhat I really want to verify is that the system server does not load any APEX jars that are not prefetched in ZygoteInit. Therefore, `SystemServerClassLoaderFactory` is the best place to perform this check. I don\u0027t see how a @TestApi can achieve the goal.",
+      "parentUuid": "63eb12db_09a1282d",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 40
+      },
+      "revId": "d18f6456f5dab66eae401fe28549901a4098d11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
