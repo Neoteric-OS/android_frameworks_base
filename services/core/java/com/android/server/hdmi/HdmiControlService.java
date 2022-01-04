@@ -1252,7 +1252,10 @@ public class HdmiControlService extends SystemService {
         }
 
         if (!connected) {
-            mHdmiCecNetwork.removeDevicesConnectedToPort(portId);
+            HdmiDeviceInfo avr = tv().getAvrDeviceInfo();
+            if (avr != null && avr.getPortId() != portId) {
+                mHdmiCecNetwork.removeDevicesConnectedToPort(portId);
+            }
         }
 
         announceHotplugEvent(portId, connected);
