@@ -17,8 +17,10 @@ aidl_interface {
     srcs: [
         "aidl/android/media/audio/common/AudioChannelMask.aidl",
         "aidl/android/media/audio/common/AudioConfig.aidl",
+        "aidl/android/media/audio/common/AudioContentType.aidl",
         "aidl/android/media/audio/common/AudioFormat.aidl",
         "aidl/android/media/audio/common/AudioOffloadInfo.aidl",
+        "aidl/android/media/audio/common/AudioSource.aidl",
         "aidl/android/media/audio/common/AudioStreamType.aidl",
         "aidl/android/media/audio/common/AudioUsage.aidl",
     ],
