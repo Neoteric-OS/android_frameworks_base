@@ -236,6 +236,24 @@
       "parentUuid": "74fbd1da_5f5b502c",
       "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe6c43ba_8a81f0b3",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1633017
+      },
+      "writtenOn": "2022-01-05T22:59:34Z",
+      "side": 1,
+      "message": "yes this PS has the final removed and attempted to resolve some default constructor issue.",
+      "parentUuid": "0de84208_40992700",
+      "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
