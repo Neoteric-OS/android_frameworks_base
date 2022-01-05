@@ -969,7 +969,7 @@ class SettingsProtoDumpUtil {
         dumpSetting(s, p,
                 Settings.Global.NATIVE_FLAGS_HEALTH_CHECK_ENABLED,
                 GlobalSettingsProto.NATIVE_FLAGS_HEALTH_CHECK_ENABLED);
-
+/*
         final long netstatsToken = p.start(GlobalSettingsProto.NETSTATS);
         dumpSetting(s, p,
                 Settings.Global.NETSTATS_ENABLED,
@@ -1026,7 +1026,7 @@ class SettingsProtoDumpUtil {
                 Settings.Global.NETSTATS_UID_TAG_DELETE_AGE,
                 GlobalSettingsProto.Netstats.UID_TAG_DELETE_AGE);
         p.end(netstatsToken);
-
+*/
         final long networkToken = p.start(GlobalSettingsProto.NETWORK);
         dumpSetting(s, p,
                 Settings.Global.NETWORK_PREFERENCE,

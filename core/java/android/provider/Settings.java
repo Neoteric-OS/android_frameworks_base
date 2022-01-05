@@ -5677,23 +5677,6 @@ public final class Settings {
             MOVED_TO_GLOBAL.add(Settings.Global.DOWNLOAD_MAX_BYTES_OVER_MOBILE);
             MOVED_TO_GLOBAL.add(Settings.Global.DOWNLOAD_RECOMMENDED_MAX_BYTES_OVER_MOBILE);
             MOVED_TO_GLOBAL.add(Settings.Global.MOBILE_DATA);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_DEV_BUCKET_DURATION);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_DEV_DELETE_AGE);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_DEV_PERSIST_BYTES);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_DEV_ROTATE_AGE);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_ENABLED);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_GLOBAL_ALERT_BYTES);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_POLL_INTERVAL);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_SAMPLE_ENABLED);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_TIME_CACHE_MAX_AGE);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_UID_BUCKET_DURATION);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_UID_DELETE_AGE);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_UID_PERSIST_BYTES);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_UID_ROTATE_AGE);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_UID_TAG_BUCKET_DURATION);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_UID_TAG_DELETE_AGE);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_UID_TAG_PERSIST_BYTES);
-            MOVED_TO_GLOBAL.add(Settings.Global.NETSTATS_UID_TAG_ROTATE_AGE);
             MOVED_TO_GLOBAL.add(Settings.Global.NETWORK_PREFERENCE);
             MOVED_TO_GLOBAL.add(Settings.Global.NITZ_UPDATE_DIFF);
             MOVED_TO_GLOBAL.add(Settings.Global.NITZ_UPDATE_SPACING);
@@ -11120,9 +11103,7 @@ public final class Settings {
         /** {@hide} */
         @Readable
         public static final String NETSTATS_ENABLED = "netstats_enabled";
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_POLL_INTERVAL = "netstats_poll_interval";
+
         /**
          * @deprecated
          * {@hide}
@@ -11133,57 +11114,7 @@ public final class Settings {
         /** {@hide} */
         @Readable
         public static final String NETSTATS_GLOBAL_ALERT_BYTES = "netstats_global_alert_bytes";
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_SAMPLE_ENABLED = "netstats_sample_enabled";
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_AUGMENT_ENABLED = "netstats_augment_enabled";
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_COMBINE_SUBTYPE_ENABLED =
-                "netstats_combine_subtype_enabled";
 
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_DEV_BUCKET_DURATION = "netstats_dev_bucket_duration";
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_DEV_PERSIST_BYTES = "netstats_dev_persist_bytes";
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_DEV_ROTATE_AGE = "netstats_dev_rotate_age";
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_DEV_DELETE_AGE = "netstats_dev_delete_age";
-
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_UID_BUCKET_DURATION = "netstats_uid_bucket_duration";
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_UID_PERSIST_BYTES = "netstats_uid_persist_bytes";
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_UID_ROTATE_AGE = "netstats_uid_rotate_age";
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_UID_DELETE_AGE = "netstats_uid_delete_age";
-
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_UID_TAG_BUCKET_DURATION =
-                "netstats_uid_tag_bucket_duration";
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_UID_TAG_PERSIST_BYTES =
-                "netstats_uid_tag_persist_bytes";
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_UID_TAG_ROTATE_AGE = "netstats_uid_tag_rotate_age";
-        /** {@hide} */
-        @Readable
-        public static final String NETSTATS_UID_TAG_DELETE_AGE = "netstats_uid_tag_delete_age";
 
         /** {@hide} */
         @Readable

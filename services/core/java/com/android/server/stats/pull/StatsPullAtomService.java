@@ -45,7 +45,6 @@ import static android.os.Process.LAST_SHARED_APPLICATION_GID;
 import static android.os.Process.getUidForPid;
 import static android.os.storage.VolumeInfo.TYPE_PRIVATE;
 import static android.os.storage.VolumeInfo.TYPE_PUBLIC;
-import static android.provider.Settings.Global.NETSTATS_UID_BUCKET_DURATION;
 import static android.telephony.TelephonyManager.UNKNOWN_CARRIER_ID;
 import static android.util.MathUtils.constrain;
 
@@ -93,6 +92,7 @@ import android.hardware.biometrics.BiometricsProtoEnums;
 import android.hardware.face.FaceManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.net.ConnectivityManager;
+import android.net.ConnectivitySettingsManager;
 import android.net.INetworkStatsService;
 import android.net.INetworkStatsSession;
 import android.net.Network;
@@ -1356,7 +1356,8 @@ public class StatsPullAtomService extends SystemService {
         final long elapsedMillisSinceBoot = SystemClock.elapsedRealtime();
         final long currentTimeInMillis = MICROSECONDS.toMillis(SystemClock.currentTimeMicro());
         final long bucketDuration = Settings.Global.getLong(mContext.getContentResolver(),
-                NETSTATS_UID_BUCKET_DURATION, NETSTATS_UID_DEFAULT_BUCKET_DURATION_MS);
+                ConnectivitySettingsManager.getNetstatsUidBucketDuration(),
+                NETSTATS_UID_DEFAULT_BUCKET_DURATION_MS);
         try {
             // TODO (b/156313635): This is short-term hack to allow perfd gets updated networkStats
             //  history when query in every second in order to show realtime statistics. However,
