@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cc1d5435_29a27236",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1895321
+      },
+      "writtenOn": "2022-01-05T13:03:48Z",
+      "side": 1,
+      "message": "In condition, the \u003cvalue\u003e\u003c/value\u003e of sensor, may have one value, sunch as min, max and so on. According to cuerrent logic, at least, the sensor must return one valid values to comapre with config values. \n\nBut if the value has two, min and max. This need that the sensot must return two valid values. As we all know, the angle value only has one valid angle value. This will make the sensor return two sample values.\n\nThe value in config file don\u0027t have limit. So there may be one, two, three, even four.\n\nThis logic make the sensor valid values related to config value strongly.",
+      "parentUuid": "3fb639cf_7d78604a",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 3
+      },
+      "revId": "7d22dce76509374c72a2b05df537dd671825aac0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "261477b4_43f01165",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
