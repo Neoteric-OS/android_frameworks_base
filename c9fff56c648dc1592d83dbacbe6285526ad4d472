@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "587b00e3_99bcd4d5",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2022-01-05T16:42:28Z",
+      "side": 1,
+      "message": "Are we going to match location values somehow with https://cs.android.com/android/platform/superproject/+/master:packages/modules/Bluetooth/system/bta/le_audio/le_audio_types.h;l\u003d123?q\u003dle_audio_type and https://btprodspecificationrefs.blob.core.windows.net/assigned-numbers/Assigned%20Number%20Types/Generic%20Audio.pdf",
+      "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
