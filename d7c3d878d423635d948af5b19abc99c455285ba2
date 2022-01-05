@@ -62,6 +62,30 @@
       },
       "revId": "d7c3d878d423635d948af5b19abc99c455285ba2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43244e11_d4eacd81",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-05T07:03:53Z",
+      "side": 1,
+      "message": "Sync\u0027d offline : pFd.close() can throw IOException\n\nI think it\u0027s still better to write it like this\n\n  } catch (IOException | ErrnoException e) {\n    try {\n      pFd.close();\n    } catch (IOException e) {\n      // Nothing can be done at this point\n    }\n    IoUtils.closeQuietly(sockFd);\n  }\n\nThe reason I think it\u0027s better here is that ParcelFileDescriptor expects to own the descriptor and does not expect client code to close it under its feet. This is evident in the use of the CloseGuard. Your code as of this patch does not call mGuard.close(), which means the CloseGuard will warn when the PDF is finalized.",
+      "parentUuid": "0341d838_276783ac",
+      "range": {
+        "startLine": 1275,
+        "startChar": 16,
+        "endLine": 1275,
+        "endChar": 62
+      },
+      "revId": "d7c3d878d423635d948af5b19abc99c455285ba2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
