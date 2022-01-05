@@ -547,13 +547,28 @@ public final class NetworkStats implements AutoCloseable {
     /**
      * Collects history results for uid and resets history enumeration index.
      */
-    void startHistoryEnumeration(int uid, int tag, int state) {
+    void startHistoryUidEnumeration(int uid, int tag, int state) {
         mHistory = null;
         try {
             mHistory = mSession.getHistoryIntervalForUid(mTemplate, uid,
                     Bucket.convertSet(state), tag, NetworkStatsHistory.FIELD_ALL,
                     mStartTimeStamp, mEndTimeStamp);
             setSingleUidTagState(uid, tag, state);
+        } catch (RemoteException e) {
+            Log.w(TAG, e);
+            // Leaving mHistory null
+        }
+        mEnumerationIndex = 0;
+    }
+
+    /**
+     * Collects history results for network and resets history enumeration index.
+     */
+    void startHistoryNetworkEnumeration() {
+        mHistory = null;
+        try {
+            mHistory = mSession.getHistoryIntervalForNetwork(
+                    mTemplate, NetworkStatsHistory.FIELD_ALL, mStartTimeStamp, mEndTimeStamp);
         } catch (RemoteException e) {
             Log.w(TAG, e);
             // Leaving mHistory null
