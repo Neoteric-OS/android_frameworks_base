@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "957a2c27_ea81366d",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2022-01-05T15:35:36Z",
+      "side": 1,
+      "message": "Why not enable this check for all builds, not just debuggable?",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "29e1dc213c7deeedcd6ef276feb53d6e7d8cc384",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52457b0d_8ce1ec19",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2022-01-05T15:35:36Z",
+      "side": 1,
+      "message": "nit: for readability sake can you not replace this, and instead return false for apexes?",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 87,
+        "endChar": 38
+      },
+      "revId": "29e1dc213c7deeedcd6ef276feb53d6e7d8cc384",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c7b259a_5edc9d05",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2022-01-05T15:35:36Z",
+      "side": 1,
+      "message": "nit: isTestApexJar or isJarInTestApex",
+      "range": {
+        "startLine": 132,
+        "startChar": 27,
+        "endLine": 132,
+        "endChar": 39
+      },
+      "revId": "29e1dc213c7deeedcd6ef276feb53d6e7d8cc384",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

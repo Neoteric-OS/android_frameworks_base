@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22af027f_36bfbcc1",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2022-01-05T15:35:36Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t realize ApexManager was in the services/.",
+      "parentUuid": "45babe27_d4250fa1",
+      "revId": "3d073982d3cf71aad84721fd00e1a04c8eb8a306",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf6a6dee_673af90d",
