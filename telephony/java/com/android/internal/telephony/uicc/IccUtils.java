@@ -23,7 +23,6 @@ import android.content.res.Resources.NotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
-import android.telephony.UiccPortInfo;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.telephony.GsmAlphabet;
@@ -45,7 +44,8 @@ public class IccUtils {
     static final int FPLMN_BYTE_SIZE = 3;
 
     // ICCID used for tests by some OEMs
-    public static final String TEST_ICCID = UiccPortInfo.ICCID_REDACTED;
+    // TODO(b/159354974): Replace the constant here with UiccPortInfo.ICCID_REDACTED once ready
+    private static final String TEST_ICCID = "FFFFFFFFFFFFFFFFFFFF";
 
     // A table mapping from a number to a hex character for fast encoding hex strings.
     private static final char[] HEX_CHARS = {
