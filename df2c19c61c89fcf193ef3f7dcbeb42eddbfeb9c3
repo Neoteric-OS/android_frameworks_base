@@ -164,6 +164,24 @@
       "parentUuid": "1adb79b1_6d65ebf7",
       "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "348bf898_7c4f1d89",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1633017
+      },
+      "writtenOn": "2022-01-05T22:42:29Z",
+      "side": 1,
+      "message": "yeah making it \"final\" was based on this assumption earlier. But that\u0027s to true anymore",
+      "parentUuid": "bf6c1d70_6ddd160c",
+      "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
