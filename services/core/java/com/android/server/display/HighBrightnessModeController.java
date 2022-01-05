@@ -378,7 +378,7 @@ class HighBrightnessModeController {
         // Calculate the time at which we want to recalculate mIsTimeAvailable in case a lux or
         // brightness change doesn't happen before then.
         long nextTimeout = -1;
-        if (mBrightness > mHbmData.transitionPoint) {
+        if (mBrightness > mHbmData.transitionPoint && remainingTime > 0) {
             // if we're in high-lux now, timeout when we run out of allowed time.
             nextTimeout = currentTime + remainingTime;
         } else if (!mIsTimeAvailable && mEvents.size() > 0) {
