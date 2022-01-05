@@ -92,6 +92,24 @@
       "parentUuid": "b2e0f98d_b178b4f0",
       "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1adb79b1_6d65ebf7",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2022-01-05T22:25:20Z",
+      "side": 1,
+      "message": "Can AudioPresentation class be used directly, rather than subclassing it, in this patchset?",
+      "parentUuid": "97a4d357_057d4807",
+      "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
