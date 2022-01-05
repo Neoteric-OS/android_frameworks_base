@@ -165,6 +165,7 @@ java_library_static {
         "overlayable_policy_aidl-java",
         "SurfaceFlingerProperties",
         "com.android.sysprop.watchdog",
+        "modules-utils-handlerexecutor",
     ],
     javac_shard_size: 50,
 }
