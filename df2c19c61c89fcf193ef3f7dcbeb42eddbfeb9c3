@@ -110,6 +110,24 @@
       "parentUuid": "97a4d357_057d4807",
       "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "761487d1_5da47ccb",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1633017
+      },
+      "writtenOn": "2022-01-05T22:29:40Z",
+      "side": 1,
+      "message": "Was there a concern in removing final from AudioPresentation.java? In my WIP patchset, I have modified the AudioPresentaiton.java file accordingly so that, TVAudioPresentation.java can extend it.\n\nWe need a wrapper over AudioPresentation.java as TvAudioPresentation also implements Parcel which is needed for client/service communication with aidl.",
+      "parentUuid": "1adb79b1_6d65ebf7",
+      "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
