@@ -22,6 +22,30 @@
       },
       "revId": "67d09d2667b2d902342181b2ca47cc30f4261df3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a58bb9b4_47e99585",
+        "filename": "media/aidl/android/media/audio/common/AudioContentTypeStable.aidl",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1794306
+      },
+      "writtenOn": "2022-01-05T07:17:44Z",
+      "side": 1,
+      "message": "We are not familiar with the audio system and there are a lot of CLs needed to upstream so we just pick some necessary part - in a weird way. If it\u0027s available to upstream most of things, then we can still do that.",
+      "parentUuid": "7bcf7d73_eb815683",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "67d09d2667b2d902342181b2ca47cc30f4261df3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
