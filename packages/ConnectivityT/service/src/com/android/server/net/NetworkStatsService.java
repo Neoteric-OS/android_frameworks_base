@@ -46,27 +46,7 @@ import static android.net.TrafficStats.KB_IN_BYTES;
 import static android.net.TrafficStats.MB_IN_BYTES;
 import static android.net.TrafficStats.UNSUPPORTED;
 import static android.os.Trace.TRACE_TAG_NETWORK;
-import static android.provider.Settings.Global.NETSTATS_AUGMENT_ENABLED;
-import static android.provider.Settings.Global.NETSTATS_COMBINE_SUBTYPE_ENABLED;
-import static android.provider.Settings.Global.NETSTATS_DEV_BUCKET_DURATION;
-import static android.provider.Settings.Global.NETSTATS_DEV_DELETE_AGE;
-import static android.provider.Settings.Global.NETSTATS_DEV_PERSIST_BYTES;
-import static android.provider.Settings.Global.NETSTATS_DEV_ROTATE_AGE;
-import static android.provider.Settings.Global.NETSTATS_GLOBAL_ALERT_BYTES;
-import static android.provider.Settings.Global.NETSTATS_POLL_INTERVAL;
-import static android.provider.Settings.Global.NETSTATS_SAMPLE_ENABLED;
-import static android.provider.Settings.Global.NETSTATS_UID_BUCKET_DURATION;
-import static android.provider.Settings.Global.NETSTATS_UID_DELETE_AGE;
-import static android.provider.Settings.Global.NETSTATS_UID_PERSIST_BYTES;
-import static android.provider.Settings.Global.NETSTATS_UID_ROTATE_AGE;
-import static android.provider.Settings.Global.NETSTATS_UID_TAG_BUCKET_DURATION;
-import static android.provider.Settings.Global.NETSTATS_UID_TAG_DELETE_AGE;
-import static android.provider.Settings.Global.NETSTATS_UID_TAG_PERSIST_BYTES;
-import static android.provider.Settings.Global.NETSTATS_UID_TAG_ROTATE_AGE;
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
-import static android.text.format.DateUtils.DAY_IN_MILLIS;
-import static android.text.format.DateUtils.HOUR_IN_MILLIS;
-import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 
 import static com.android.net.module.util.NetworkCapabilitiesUtils.getDisplayTransport;
@@ -87,6 +67,7 @@ import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
+import android.net.ConnectivitySettingsManager;
 import android.net.DataUsageRequest;
 import android.net.INetd;
 import android.net.INetworkManagementEventObserver;
@@ -206,6 +187,11 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private static final int DEFAULT_PERFORM_POLL_DELAY_MS = 1000;
 
     private static final String TAG_NETSTATS_ERROR = "netstats_error";
+
+    // TODO: Replace the hardcoded string with the one in ConnectivitySettingsManager after
+    // NetworkStatsService moves to the mainline module.
+    private static final String NETSTATS_COMBINE_SUBTYPE_ENABLED =
+            "netstats_combine_subtype_enabled";
 
     private final Context mContext;
     private final INetworkManagementService mNetworkManager;
@@ -567,13 +553,13 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 mSettings.getPollInterval(), pollIntent);
 
         mContentResolver.registerContentObserver(Settings.Global
-                .getUriFor(Settings.Global.NETSTATS_COMBINE_SUBTYPE_ENABLED),
+                .getUriFor(NETSTATS_COMBINE_SUBTYPE_ENABLED),
                         false /* notifyForDescendants */, mContentObserver);
 
         // Post a runnable on handler thread to call onChange(). It's for getting current value of
         // NETSTATS_COMBINE_SUBTYPE_ENABLED to decide start or stop monitoring RAT type changes.
         mHandler.post(() -> mContentObserver.onChange(false, Settings.Global
-                .getUriFor(Settings.Global.NETSTATS_COMBINE_SUBTYPE_ENABLED)));
+                .getUriFor(NETSTATS_COMBINE_SUBTYPE_ENABLED)));
 
         registerGlobalAlert();
     }
@@ -2174,24 +2160,14 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
      * {@link android.provider.Settings.Global}.
      */
     private static class DefaultNetworkStatsSettings implements NetworkStatsSettings {
-        private final ContentResolver mResolver;
-
+        private final Context mContext;
         public DefaultNetworkStatsSettings(Context context) {
-            mResolver = Objects.requireNonNull(context.getContentResolver());
-            // TODO: adjust these timings for production builds
-        }
-
-        private long getGlobalLong(String name, long def) {
-            return Settings.Global.getLong(mResolver, name, def);
-        }
-        private boolean getGlobalBoolean(String name, boolean def) {
-            final int defInt = def ? 1 : 0;
-            return Settings.Global.getInt(mResolver, name, defInt) != 0;
+            mContext = Objects.requireNonNull(context);
         }
 
         @Override
         public long getPollInterval() {
-            return getGlobalLong(NETSTATS_POLL_INTERVAL, 30 * MINUTE_IN_MILLIS);
+            return ConnectivitySettingsManager.getPollIntervalMillis(mContext);
         }
         @Override
         public long getPollDelay() {
@@ -2199,25 +2175,25 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
         @Override
         public long getGlobalAlertBytes(long def) {
-            return getGlobalLong(NETSTATS_GLOBAL_ALERT_BYTES, def);
+            return ConnectivitySettingsManager.getGlobalAlertBytes(mContext, def);
         }
         @Override
         public boolean getSampleEnabled() {
-            return getGlobalBoolean(NETSTATS_SAMPLE_ENABLED, true);
+            return ConnectivitySettingsManager.getSampleEnabled(mContext);
         }
         @Override
         public boolean getAugmentEnabled() {
-            return getGlobalBoolean(NETSTATS_AUGMENT_ENABLED, true);
+            return ConnectivitySettingsManager.getAugmentEnabled(mContext);
         }
         @Override
         public boolean getCombineSubtypeEnabled() {
-            return getGlobalBoolean(NETSTATS_COMBINE_SUBTYPE_ENABLED, false);
+            return ConnectivitySettingsManager.getCombineSubtypeEnabled(mContext);
         }
         @Override
         public Config getDevConfig() {
-            return new Config(getGlobalLong(NETSTATS_DEV_BUCKET_DURATION, HOUR_IN_MILLIS),
-                    getGlobalLong(NETSTATS_DEV_ROTATE_AGE, 15 * DAY_IN_MILLIS),
-                    getGlobalLong(NETSTATS_DEV_DELETE_AGE, 90 * DAY_IN_MILLIS));
+            return new Config(ConnectivitySettingsManager.getDevBucketDurationMillis(mContext),
+                    ConnectivitySettingsManager.getDevRotateAgeMillis(mContext),
+                    ConnectivitySettingsManager.getDevDeleteAgeMillis(mContext));
         }
         @Override
         public Config getXtConfig() {
@@ -2225,19 +2201,19 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
         @Override
         public Config getUidConfig() {
-            return new Config(getGlobalLong(NETSTATS_UID_BUCKET_DURATION, 2 * HOUR_IN_MILLIS),
-                    getGlobalLong(NETSTATS_UID_ROTATE_AGE, 15 * DAY_IN_MILLIS),
-                    getGlobalLong(NETSTATS_UID_DELETE_AGE, 90 * DAY_IN_MILLIS));
+            return new Config(ConnectivitySettingsManager.getUidBucketDurationMillis(mContext),
+                    ConnectivitySettingsManager.getUidRotateAgeMillis(mContext),
+                    ConnectivitySettingsManager.getUidDeleteAgeMillis(mContext));
         }
         @Override
         public Config getUidTagConfig() {
-            return new Config(getGlobalLong(NETSTATS_UID_TAG_BUCKET_DURATION, 2 * HOUR_IN_MILLIS),
-                    getGlobalLong(NETSTATS_UID_TAG_ROTATE_AGE, 5 * DAY_IN_MILLIS),
-                    getGlobalLong(NETSTATS_UID_TAG_DELETE_AGE, 15 * DAY_IN_MILLIS));
+            return new Config(ConnectivitySettingsManager.getUidTagBucketDurationMillis(mContext),
+                    ConnectivitySettingsManager.getUidTagRotateAgeMillis(mContext),
+                    ConnectivitySettingsManager.getUidTagDeleteAgeMillis(mContext));
         }
         @Override
         public long getDevPersistBytes(long def) {
-            return getGlobalLong(NETSTATS_DEV_PERSIST_BYTES, def);
+            return ConnectivitySettingsManager.getDevPersistBytes(mContext, def);
         }
         @Override
         public long getXtPersistBytes(long def) {
@@ -2245,11 +2221,11 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
         @Override
         public long getUidPersistBytes(long def) {
-            return getGlobalLong(NETSTATS_UID_PERSIST_BYTES, def);
+            return ConnectivitySettingsManager.getUidPersistBytes(mContext, def);
         }
         @Override
         public long getUidTagPersistBytes(long def) {
-            return getGlobalLong(NETSTATS_UID_TAG_PERSIST_BYTES, def);
+            return ConnectivitySettingsManager.getUidTagPersistBytes(mContext, def);
         }
     }
 
