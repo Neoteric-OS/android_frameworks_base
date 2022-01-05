@@ -182,6 +182,24 @@
       "parentUuid": "bf6c1d70_6ddd160c",
       "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ebf11a3_b3708b85",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1565664
+      },
+      "writtenOn": "2022-01-05T22:45:12Z",
+      "side": 1,
+      "message": "@Dean \"Is this class Immutable after it is created?  If so then make all final have have a static method for construct it.\" Is this from previous AudioPresentation contribution ?",
+      "parentUuid": "348bf898_7c4f1d89",
+      "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
