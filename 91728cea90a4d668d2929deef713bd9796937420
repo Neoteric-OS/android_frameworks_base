@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb4e3585_0a150456",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-05T02:24:43Z",
+      "side": 1,
+      "message": "Question: how does getSystemService know we want netd?\nOr that doesn\u0027t matter?",
+      "range": {
+        "startLine": 420,
+        "startChar": 47,
+        "endLine": 420,
+        "endChar": 63
+      },
+      "revId": "91728cea90a4d668d2929deef713bd9796937420",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
