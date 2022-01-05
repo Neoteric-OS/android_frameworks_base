@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018893746",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1928459?revision\u003d12",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "06b90d8b_b62e5b91",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-05T05:31:08Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(IBinder.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 421,
+        "startChar": 39,
+        "endLine": 421,
+        "endChar": 74
+      },
+      "revId": "1f33188ad00dac254dbdc495ebfc8d70853a6aed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
