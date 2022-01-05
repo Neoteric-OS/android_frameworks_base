@@ -146,6 +146,24 @@
       "parentUuid": "761487d1_5da47ccb",
       "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d4f7259_5488c512",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1565664
+      },
+      "writtenOn": "2022-01-05T22:41:36Z",
+      "side": 1,
+      "message": "Considering AudioPresentation is used by Applications that parse media streams and use it for extracting presentation information by creating their own instances of AudioPresentation. The same is reflected as part of Android doc reference\nhttps://developer.android.com/reference/android/media/AudioPresentation?hl\u003den\n\nI don\u0027t think it would be good to remove final as Applications could as well extend which is not a good thing right ?\n\nCan you share the WIP patch so that I understand what was being attempted.\n\nNow as far as using AudioPresentation as part of TvAudioPresentation goes I can check more as to see if there are ways to do it as per existing Android code references.",
+      "parentUuid": "1adb79b1_6d65ebf7",
+      "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
