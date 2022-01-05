@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45babe27_d4250fa1",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-01-05T13:36:59Z",
+      "side": 1,
+      "message": "I have to put it here because it uses ApexManager, which is in the `com.android.server.pm` package. The factory class is part of the framework (and it has to be, in order to be used by ZygoteInit), so it cannot reference `com.android.server.pm`. This is not ideal. Do you have any suggestions?",
+      "parentUuid": "131fde5d_56b6ae73",
+      "revId": "3d073982d3cf71aad84721fd00e1a04c8eb8a306",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf6a6dee_673af90d",
@@ -41,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c005a76_3ea3c7ae",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-01-05T13:36:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cf6a6dee_673af90d",
+      "range": {
+        "startLine": 133,
+        "startChar": 8,
+        "endLine": 133,
+        "endChar": 53
+      },
+      "revId": "3d073982d3cf71aad84721fd00e1a04c8eb8a306",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "67dfa765_d5b8163d",
@@ -54,6 +96,30 @@
       "writtenOn": "2022-01-05T12:28:33Z",
       "side": 1,
       "message": "maybe cleaner/more performant to use the path APIs? new File(path).toPath().getName(1) or something like that.",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 44
+      },
+      "revId": "3d073982d3cf71aad84721fd00e1a04c8eb8a306",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dec475b_82c65a90",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-01-05T13:36:59Z",
+      "side": 1,
+      "message": "Done. Thank you for the suggestion!",
+      "parentUuid": "67dfa765_d5b8163d",
       "range": {
         "startLine": 134,
         "startChar": 0,
