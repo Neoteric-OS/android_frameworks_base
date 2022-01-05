@@ -74,6 +74,24 @@
       "parentUuid": "dd83569f_de798693",
       "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97a4d357_057d4807",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1565664
+      },
+      "writtenOn": "2022-01-05T22:21:02Z",
+      "side": 1,
+      "message": "As part of \nframeworks/base/media/java/android/media/AudioPresentation.java\n\nAudioPresentation class is declared as final\npublic final class AudioPresentation\n\nIn Java the purpose of using a class being declared as final is to prevent the class from being subclassed. If a class is marked as final then no class can inherit any feature from the final class.\n\nSo basically we cannot subclass AudioPresentation class.",
+      "parentUuid": "b2e0f98d_b178b4f0",
+      "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
