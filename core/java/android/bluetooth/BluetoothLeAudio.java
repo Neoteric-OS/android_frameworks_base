@@ -723,6 +723,38 @@ public final class BluetoothLeAudio implements BluetoothProfile, AutoCloseable {
     }
 
     /**
+     * Get the audio location for the device. The return value is a bitfiled. The bit definition
+     * is included in Bluetooth SIG Assigned Numbers - Generic Audio - Audio Location Definitions.
+     * ex. Front Left: 0x00000001
+     *     Front Right: 0x00000002
+     *     Front Left | Front Right: 0x00000003
+     *
+     * @param device the bluetooth device
+     * @return The bitfiled of audio location for the device
+     *
+     * @hide
+     */
+    @RequiresBluetoothConnectPermission
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.BLUETOOTH_PRIVILEGED
+    })
+    public int getAudioLocation(@NonNull BluetoothDevice device) {
+        if (VDBG) log("getAudioLocation()");
+        final IBluetoothLeAudio service = getService();
+        final int defaultLocation = 0;
+        if (service == null) {
+            Log.w(TAG, "Proxy not attached to service");
+            if (DBG) log(Log.getStackTraceString(new Throwable()));
+        } else if (mAdapter.isEnabled()) {
+            //TODO: add the implementation.
+            if (VDBG) log("getAudioLocation() from LE audio service");
+        }
+        return defaultLocation;
+    }
+
+
+    /**
      * Set connection policy of the profile
      *
      * <p> The device should already be paired.
