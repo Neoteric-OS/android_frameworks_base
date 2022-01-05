@@ -46,6 +46,30 @@
       },
       "revId": "67d09d2667b2d902342181b2ca47cc30f4261df3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "527e6eda_7d69e1c5",
+        "filename": "media/aidl/android/media/audio/common/AudioContentTypeStable.aidl",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1794306
+      },
+      "writtenOn": "2022-01-05T10:43:44Z",
+      "side": 1,
+      "message": "The problem is that AudioUsage has been used as an unstable type, and our new interface(as well as new audio AIDL) uses stable. Under the same path, it cannot be stable and unstable type at the same time, that\u0027s why I have to rename it.",
+      "parentUuid": "a58bb9b4_47e99585",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "67d09d2667b2d902342181b2ca47cc30f4261df3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
