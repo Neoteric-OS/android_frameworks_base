@@ -1,6 +1,52 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fb639cf_7d78604a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-01-05T12:43:53Z",
+      "side": 1,
+      "message": "From the description, I don\u0027t know what you are trying to \"fix\"? What is broken with the current approach?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 3
+      },
+      "revId": "7d22dce76509374c72a2b05df537dd671825aac0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "261477b4_43f01165",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-01-05T12:43:53Z",
+      "side": 1,
+      "message": "Not familiar with Sensor, but I think here it doesn\u0027t restrict to angle sensor, but also other types?",
+      "range": {
+        "startLine": 13,
+        "startChar": 33,
+        "endLine": 13,
+        "endChar": 58
+      },
+      "revId": "7d22dce76509374c72a2b05df537dd671825aac0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "0fac24ff_c099cd48",
