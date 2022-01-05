@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "131fde5d_56b6ae73",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2022-01-05T12:21:01Z",
+      "side": 1,
+      "message": "This should be in the factory class",
+      "revId": "3d073982d3cf71aad84721fd00e1a04c8eb8a306",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf6a6dee_673af90d",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2022-01-05T12:21:01Z",
+      "side": 1,
+      "message": "this can be a final field, so you don\u0027t have to compile the same regex on each invocation",
+      "range": {
+        "startLine": 133,
+        "startChar": 8,
+        "endLine": 133,
+        "endChar": 53
+      },
+      "revId": "3d073982d3cf71aad84721fd00e1a04c8eb8a306",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
