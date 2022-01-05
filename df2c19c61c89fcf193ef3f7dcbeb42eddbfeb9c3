@@ -128,6 +128,24 @@
       "parentUuid": "1adb79b1_6d65ebf7",
       "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf6c1d70_6ddd160c",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2022-01-05T22:39:48Z",
+      "side": 1,
+      "message": "OK. Was there an original rationale for adding final in the AudioPresentation class definition? From my records I have review comment \"Is this class Immutable after it is created?  If so then make all final have have a static method for construct it.\"",
+      "parentUuid": "761487d1_5da47ccb",
+      "revId": "df2c19c61c89fcf193ef3f7dcbeb42eddbfeb9c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
