@@ -47,6 +47,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71db2ac0_25f23759",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-01-05T15:50:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I get what you mean by \"replace this\". I can\u0027t negate the condition and the return value because this check is an early return for non-APEX jars. APEX jars should go through the condition(s) below. IMO, this method has better readability if it returns true for any condition and returns false by default, rather than having `return true` and `return false` interleaved. WDYT?",
+      "parentUuid": "52457b0d_8ce1ec19",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 87,
+        "endChar": 38
+      },
+      "revId": "29e1dc213c7deeedcd6ef276feb53d6e7d8cc384",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c7b259a_5edc9d05",
@@ -60,6 +84,30 @@
       "writtenOn": "2022-01-05T15:35:36Z",
       "side": 1,
       "message": "nit: isTestApexJar or isJarInTestApex",
+      "range": {
+        "startLine": 132,
+        "startChar": 27,
+        "endLine": 132,
+        "endChar": 39
+      },
+      "revId": "29e1dc213c7deeedcd6ef276feb53d6e7d8cc384",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e0c3e8c_d9d7ef29",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-01-05T15:50:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c7b259a_5edc9d05",
       "range": {
         "startLine": 132,
         "startChar": 27,
