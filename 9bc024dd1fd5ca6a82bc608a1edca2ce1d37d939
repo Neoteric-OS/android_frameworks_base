@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ef6c0be5_dba3fdf4",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11117,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-01-06T03:17:17Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "a4567283_7a9526d5",
+      "revId": "9bc024dd1fd5ca6a82bc608a1edca2ce1d37d939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7d2948a0_de56ae42",
         "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 1
@@ -31,6 +49,30 @@
       "writtenOn": "2022-01-06T00:28:55Z",
       "side": 1,
       "message": "IIUC this is equivalent to expose the key string.\n\nNot sure how we deal with contentObserver last year.\nMaybe paulhu@ will have more context.",
+      "range": {
+        "startLine": 553,
+        "startChar": 17,
+        "endLine": 553,
+        "endChar": 55
+      },
+      "revId": "9bc024dd1fd5ca6a82bc608a1edca2ce1d37d939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b38f7b3_f236025c",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-01-06T03:17:17Z",
+      "side": 1,
+      "message": "I don\u0027t think you need a method to get key, you can access the key if this file is in the module.",
+      "parentUuid": "7d2948a0_de56ae42",
       "range": {
         "startLine": 553,
         "startChar": 17,
@@ -59,6 +101,53 @@
         "startChar": 0,
         "endLine": 972,
         "endChar": 2
+      },
+      "revId": "9bc024dd1fd5ca6a82bc608a1edca2ce1d37d939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "979067b0_38a499ca",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProtoDumpUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-01-06T03:17:17Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "80694b73_f1837f97",
+      "range": {
+        "startLine": 972,
+        "startChar": 0,
+        "endLine": 972,
+        "endChar": 2
+      },
+      "revId": "9bc024dd1fd5ca6a82bc608a1edca2ce1d37d939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c12948f_0399bdd7",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-01-06T03:17:17Z",
+      "side": 1,
+      "message": "You should let CSM#getNetstatsUidBucketDuration return bucket duration not key string.",
+      "range": {
+        "startLine": 1358,
+        "startChar": 36,
+        "endLine": 1360,
+        "endChar": 57
       },
       "revId": "9bc024dd1fd5ca6a82bc608a1edca2ce1d37d939",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
