@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c63937df_683e1022",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-01-06T03:47:50Z",
+      "side": 1,
+      "message": "Need this patch in order to exclude features/tests until TIRAMISU in mainline module developing in AOSP",
+      "revId": "1da5cea1b6849a5d5caeb165f9f27bf769b4cf53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
