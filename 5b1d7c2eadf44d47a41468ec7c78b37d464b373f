@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba6d2f27_620685fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2022-01-06T14:55:06Z",
+      "side": 1,
+      "message": "Hi Jean, \nthis CL is a clean re-land of aosp/1619406.\nInitial submission was reverted because of build target misconfiguration (see cl/419667118)\n\nplease approve",
+      "revId": "5b1d7c2eadf44d47a41468ec7c78b37d464b373f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
