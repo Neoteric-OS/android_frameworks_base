@@ -36,6 +36,42 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff3d4826_1dff36ee",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11117,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-06T06:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef6c0be5_dba3fdf4",
+      "revId": "9bc024dd1fd5ca6a82bc608a1edca2ce1d37d939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a19cc2ee_33a72e9a",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11117,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-06T06:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef6c0be5_dba3fdf4",
+      "revId": "9bc024dd1fd5ca6a82bc608a1edca2ce1d37d939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d2948a0_de56ae42",
@@ -130,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2a2d7b4_d1a36387",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProtoDumpUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-06T06:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "979067b0_38a499ca",
+      "range": {
+        "startLine": 972,
+        "startChar": 0,
+        "endLine": 972,
+        "endChar": 2
+      },
+      "revId": "9bc024dd1fd5ca6a82bc608a1edca2ce1d37d939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c12948f_0399bdd7",
@@ -143,6 +203,30 @@
       "writtenOn": "2022-01-06T03:17:17Z",
       "side": 1,
       "message": "You should let CSM#getNetstatsUidBucketDuration return bucket duration not key string.",
+      "range": {
+        "startLine": 1358,
+        "startChar": 36,
+        "endLine": 1360,
+        "endChar": 57
+      },
+      "revId": "9bc024dd1fd5ca6a82bc608a1edca2ce1d37d939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "121588c2_7f9b45f4",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-06T06:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c12948f_0399bdd7",
       "range": {
         "startLine": 1358,
         "startChar": 36,
