@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f484487_14b22020",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-06T06:15:21Z",
+      "side": 1,
+      "message": "Move to internal ag/16556059 and address comments there because it\u0027s conflict.",
+      "revId": "0a86c0eb6e429dad3517079a8777457a80e61619",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0777d7a1_0aa0940a",
@@ -14,6 +31,30 @@
       "writtenOn": "2022-01-04T05:32:44Z",
       "side": 1,
       "message": "This looks wrong, original code creates a template with METERED_ALL for mobile.",
+      "range": {
+        "startLine": 1316,
+        "startChar": 48,
+        "endLine": 1316,
+        "endChar": 59
+      },
+      "revId": "0a86c0eb6e429dad3517079a8777457a80e61619",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9757dbf_80f7fef4",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-06T06:15:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0777d7a1_0aa0940a",
       "range": {
         "startLine": 1316,
         "startChar": 48,
