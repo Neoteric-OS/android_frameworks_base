@@ -16,6 +16,24 @@
       "message": "Are we going to match location values somehow with https://cs.android.com/android/platform/superproject/+/master:packages/modules/Bluetooth/system/bta/le_audio/le_audio_types.h;l\u003d123?q\u003dle_audio_type and https://btprodspecificationrefs.blob.core.windows.net/assigned-numbers/Assigned%20Number%20Types/Generic%20Audio.pdf",
       "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c1d420c_9d6e7740",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2022-01-06T04:51:05Z",
+      "side": 1,
+      "message": "I\u0027m worrying to bring all the detailed value to upper layer and the app should be handle all the combination, and we don\u0027t have plan to handle all the values in UI for now.\n\nIs it good to mirror this? kLeAudioLocationAnyLeft, kLeAudioLocationAnyRight, kLeAudioLocationAnyRight (left and right) \nhttps://cs.android.com/android/platform/superproject/+/master:packages/modules/Bluetooth/system/bta/le_audio/le_audio_types.h;drc\u003d422f55d13fc2927b7c9e766521815efe5ca0b78f;l\u003d154\n\nIt is the requirement from TMAP as well.",
+      "parentUuid": "587b00e3_99bcd4d5",
+      "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
