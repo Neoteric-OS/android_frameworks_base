@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f86e790_8e93c06d",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/IpSecService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-06T10:34:08Z",
+      "side": 1,
+      "message": "I think this could stay outside of the try {} block ?",
+      "range": {
+        "startLine": 1250,
+        "startChar": 16,
+        "endLine": 1250,
+        "endChar": 70
+      },
+      "revId": "526504b6bf52672e7bc570fbd5df162d77aa9983",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
