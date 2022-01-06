@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "72cbdeb1_0f380600",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-01-06T12:25:46Z",
+      "side": 1,
+      "message": "IIUC, you are worrying about something only existing in user builds but not in debuggable builds, which this check won\u0027t catch? I thought user builds and debuggable builds should have the same things.",
+      "parentUuid": "c7d3ebd6_88f97227",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "29e1dc213c7deeedcd6ef276feb53d6e7d8cc384",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "52457b0d_8ce1ec19",
         "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
         "patchSetId": 12
