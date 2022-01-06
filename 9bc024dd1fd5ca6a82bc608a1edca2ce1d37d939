@@ -137,6 +137,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3b8cebb_d35fe9c0",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-06T14:01:36Z",
+      "side": 1,
+      "message": "1. use \"netstats_combine_subtype_enabled\" to  replace ettings.Global.NETSTATS_COMBINE_SUBTYPE_ENABLED\n2. add todo to Replace the string \"netstats_combine_subtype_enabled\" with ConnectivitySettingsManager.NETSTATS_COMBINE_SUBTYPE_ENABLED after NetworkStatsService becomes the mainline module.",
+      "parentUuid": "0b38f7b3_f236025c",
+      "range": {
+        "startLine": 553,
+        "startChar": 17,
+        "endLine": 553,
+        "endChar": 55
+      },
+      "revId": "9bc024dd1fd5ca6a82bc608a1edca2ce1d37d939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "80694b73_f1837f97",
