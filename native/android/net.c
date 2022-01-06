@@ -161,3 +161,11 @@ int android_res_nsend(net_handle_t network, const uint8_t *msg, size_t msglen,
 void android_res_cancel(int nsend_fd) {
     resNetworkCancel(nsend_fd);
 }
+
+int android_tagSocket_with_uid(int sockfd, int tag, uid_t uid) {
+    return tagSocket(sockfd, tag, uid);
+}
+
+int android_untagSocket(int sockfd) {
+    return untagSocket(sockfd);
+}
