@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4567283_7a9526d5",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11117,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-06T00:28:55Z",
+      "side": 1,
+      "message": "1. It\u0027s easier if you do this in a different patch after all callers are removed.\n\nTH fail at git-master:\npackages/services/Car/tests/NetworkPreferenceApp/src/com/google/android/car/networking/preferenceupdater/components/MetricDisplay.java:21: error: cannot find symbol\nimport static android.provider.Settings.Global.NETSTATS_UID_BUCKET_DURATION;\n\n2.\nTH also failed at\nframeworks/base/packages/SettingsProvider/test/src/android/provider/SettingsBackupTest.java",
+      "revId": "9bc024dd1fd5ca6a82bc608a1edca2ce1d37d939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d2948a0_de56ae42",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-06T00:28:55Z",
+      "side": 1,
+      "message": "IIUC this is equivalent to expose the key string.\n\nNot sure how we deal with contentObserver last year.\nMaybe paulhu@ will have more context.",
+      "range": {
+        "startLine": 553,
+        "startChar": 17,
+        "endLine": 553,
+        "endChar": 55
+      },
+      "revId": "9bc024dd1fd5ca6a82bc608a1edca2ce1d37d939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80694b73_f1837f97",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProtoDumpUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-06T00:28:55Z",
+      "side": 1,
+      "message": "1. Remove dead code?\n\n2. Suggest do this in a different CL to get better turnaround time.\nAlso for StatsPullAtomService.",
+      "range": {
+        "startLine": 972,
+        "startChar": 0,
+        "endLine": 972,
+        "endChar": 2
+      },
+      "revId": "9bc024dd1fd5ca6a82bc608a1edca2ce1d37d939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
