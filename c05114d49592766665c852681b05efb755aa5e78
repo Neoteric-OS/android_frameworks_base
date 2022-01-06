@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e51f1a0_f73cf6b8",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-06T14:17:29Z",
+      "side": 1,
+      "message": "1. Maybe reword as:\nReplace the hardcoded string with the one in ConnectivitySettingsManager after NetworkStatsService moves to the mainline module.\n\n2. Maybe define a private String and only add TODO there?",
+      "range": {
+        "startLine": 547,
+        "startChar": 17,
+        "endLine": 547,
+        "endChar": 75
+      },
+      "revId": "c05114d49592766665c852681b05efb755aa5e78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
