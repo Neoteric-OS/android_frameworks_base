@@ -72,6 +72,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c553627d_50a6d4af",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11117,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-06T06:11:16Z",
+      "side": 1,
+      "message": "please see the other commit aosp/1937449 to remove the deprecate code on\n   android.provider.Settings.Global and also change the caller to\n   use ConnectivitySettingsManager api instead of Settings.Global.",
+      "parentUuid": "ff3d4826_1dff36ee",
+      "revId": "9bc024dd1fd5ca6a82bc608a1edca2ce1d37d939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d2948a0_de56ae42",
