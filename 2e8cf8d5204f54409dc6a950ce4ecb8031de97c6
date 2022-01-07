@@ -22,6 +22,30 @@
       },
       "revId": "2e8cf8d5204f54409dc6a950ce4ecb8031de97c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "359ebc74_3bfe42e5",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-01-07T08:44:45Z",
+      "side": 1,
+      "message": "instead of adding this here, can you please build service-connectivity-T separately and statically link service-connectivity-T?",
+      "parentUuid": "676b6e26_a0bd27bf",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 40
+      },
+      "revId": "2e8cf8d5204f54409dc6a950ce4ecb8031de97c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
