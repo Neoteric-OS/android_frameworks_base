@@ -196,7 +196,7 @@ public class NetworkStatsManager {
      */
     @NonNull
     @WorkerThread
-    // @SystemApi(client = MODULE_LIBRARIES)
+    @SystemApi(client = MODULE_LIBRARIES)
     public Bucket querySummaryForDevice(@NonNull NetworkTemplate template,
             long startTime, long endTime) {
         try {
@@ -370,7 +370,7 @@ public class NetworkStatsManager {
      * @hide
      */
     @NonNull
-    // @SystemApi(client = MODULE_LIBRARIES)
+    @SystemApi(client = MODULE_LIBRARIES)
     @WorkerThread
     public NetworkStats querySummary(@NonNull NetworkTemplate template, long startTime,
             long endTime) throws SecurityException {
@@ -403,7 +403,7 @@ public class NetworkStatsManager {
      * @hide
      */
     @NonNull
-    // @SystemApi(client = MODULE_LIBRARIES)
+    @SystemApi(client = MODULE_LIBRARIES)
     @WorkerThread
     public NetworkStats queryTaggedSummary(@NonNull NetworkTemplate template, long startTime,
             long endTime) throws SecurityException {
@@ -436,7 +436,7 @@ public class NetworkStatsManager {
      * @hide
      */
     @NonNull
-    // @SystemApi(client = MODULE_LIBRARIES)
+    @SystemApi(client = MODULE_LIBRARIES)
     @WorkerThread
     public NetworkStats queryDetailsForNetwork(@NonNull NetworkTemplate template,
             long startTime, long endTime) {
@@ -560,7 +560,7 @@ public class NetworkStatsManager {
      * @hide
      */
     @NonNull
-    // @SystemApi(client = MODULE_LIBRARIES)
+    @SystemApi(client = MODULE_LIBRARIES)
     @WorkerThread
     public NetworkStats queryDetailsForUidTagState(@NonNull NetworkTemplate template,
             long startTime, long endTime, int uid, int tag, int state) throws SecurityException {
