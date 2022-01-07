@@ -22,6 +22,30 @@
       },
       "revId": "b91c11f25aeafe1e45db82c69d61cdd43c90d202",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75f51df7_4f926461",
+        "filename": "core/java/android/bluetooth/BluetoothStatusCodes.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-07T22:53:55Z",
+      "side": 1,
+      "message": "No API should ever use both constants as possible return values. The value 0 is meant to symbolize success / true / supported / allowed. Unfortunately, the name \"SUCCESS\" isn\u0027t a clear return value for every function call. For function like isLeAudioSupported, a return value of \"SUCCESS\" isn\u0027t really clear. In these cases, we replace SUCCESS with FEATURE_SUPPORTED. The underlying value is kept the same, but it\u0027s just a clearer signal to the developer.",
+      "parentUuid": "ea08e2fb_b2988801",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 50
+      },
+      "revId": "b91c11f25aeafe1e45db82c69d61cdd43c90d202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
