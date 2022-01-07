@@ -96,6 +96,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c9116e3_ab15c315",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-01-07T16:55:20Z",
+      "side": 1,
+      "message": "Discussed offline. Artur, I get your point and thanks for the discussion. However, I would keep the check as-is to avoid introducing any risk that can hurt reliability.",
+      "parentUuid": "72cbdeb1_0f380600",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "29e1dc213c7deeedcd6ef276feb53d6e7d8cc384",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52457b0d_8ce1ec19",
