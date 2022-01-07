@@ -46,6 +46,30 @@
       },
       "revId": "2e8cf8d5204f54409dc6a950ce4ecb8031de97c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8bde789_87b05b1b",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-07T09:27:34Z",
+      "side": 1,
+      "message": "Not feasible for now due to dependency problems.\nBut once we can build it separately we\u0027ll move that to the module.\nAt that time this line will be removed.",
+      "parentUuid": "359ebc74_3bfe42e5",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 40
+      },
+      "revId": "2e8cf8d5204f54409dc6a950ce4ecb8031de97c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
