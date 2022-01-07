@@ -7459,6 +7459,10 @@ package android.net {
     method @NonNull @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS) public android.net.IpSecTransform buildTunnelModeTransform(@NonNull java.net.InetAddress, @NonNull android.net.IpSecManager.SecurityParameterIndex) throws java.io.IOException, android.net.IpSecManager.ResourceUnavailableException, android.net.IpSecManager.SpiUnavailableException;
   }
 
+  public class LocalSocket implements java.io.Closeable {
+    method @NonNull public static android.net.LocalSocket createConnectedLocalSocket(@NonNull android.os.ParcelFileDescriptor);
+  }
+
   public final class MatchAllNetworkSpecifier extends android.net.NetworkSpecifier implements android.os.Parcelable {
     ctor public MatchAllNetworkSpecifier();
     method public int describeContents();

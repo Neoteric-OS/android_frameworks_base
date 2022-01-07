@@ -16,7 +16,12 @@
 
 package android.net;
 
+import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
+import android.os.ParcelFileDescriptor;
+
+import com.android.internal.annotations.VisibleForTesting;
 
 import java.io.Closeable;
 import java.io.FileDescriptor;
@@ -81,7 +86,11 @@ public class LocalSocket implements Closeable {
      *
      * @hide - used by BluetoothSocket.
      */
-    public static LocalSocket createConnectedLocalSocket(FileDescriptor fd) {
+    @VisibleForTesting
+    @SystemApi
+    @NonNull
+    public static LocalSocket createConnectedLocalSocket(@NonNull ParcelFileDescriptor pfd) {
+        FileDescriptor fd = pfd.getFileDescriptor();
         return createConnectedLocalSocket(new LocalSocketImpl(fd), SOCKET_UNKNOWN);
     }
 
