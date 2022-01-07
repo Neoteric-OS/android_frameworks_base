@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea08e2fb_b2988801",
+        "filename": "core/java/android/bluetooth/BluetoothStatusCodes.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2022-01-07T22:50:47Z",
+      "side": 1,
+      "message": "these two values are the same, caller won\u0027t be able to distinguish among them, is this intended? Should we just use different values instead given that int values are abundant?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 50
+      },
+      "revId": "b91c11f25aeafe1e45db82c69d61cdd43c90d202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
