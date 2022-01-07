@@ -70,6 +70,30 @@
       },
       "revId": "2e8cf8d5204f54409dc6a950ce4ecb8031de97c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "967f7b7f_d648a935",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-01-07T10:00:22Z",
+      "side": 1,
+      "message": "I\u0027m not confident that\u0027s going to happen. We shouldn\u0027t put another copy of essentially the same class into this jar. Plus, once you\u0027ve added this there\u0027s nothing preventing new deps. At least file a TM-triaged bug and add a comment here that it should be removed.",
+      "parentUuid": "d8bde789_87b05b1b",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 40
+      },
+      "revId": "2e8cf8d5204f54409dc6a950ce4ecb8031de97c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
