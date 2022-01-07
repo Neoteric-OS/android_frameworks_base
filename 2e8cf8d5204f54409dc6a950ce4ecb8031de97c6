@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "676b6e26_a0bd27bf",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-07T08:31:47Z",
+      "side": 1,
+      "message": "IIUC, this will be removed after migrating to mainline module. Suggest adding a comment if respin this patch.",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 40
+      },
+      "revId": "2e8cf8d5204f54409dc6a950ce4ecb8031de97c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
