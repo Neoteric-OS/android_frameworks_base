@@ -40,6 +40,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -53,6 +54,7 @@ import static java.util.Collections.singletonList;
 import android.net.ConnectivityManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
+import android.net.Network;
 import android.net.NetworkAgent;
 import android.net.NetworkCapabilities;
 import android.net.ipsec.ike.ChildSaProposal;
@@ -87,12 +89,16 @@ import java.util.function.Consumer;
 public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnectionTestBase {
     private VcnIkeSession mIkeSession;
     private VcnNetworkAgent mNetworkAgent;
+    private Network mNetwork;
 
     @Before
     public void setUp() throws Exception {
         super.setUp();
 
+        mNetwork = mock(Network.class, CALLS_REAL_METHODS);
         mNetworkAgent = mock(VcnNetworkAgent.class);
+
+        doReturn(mNetwork).when(mNetworkAgent).getNetwork();
         doReturn(mNetworkAgent)
                 .when(mDeps)
                 .newNetworkAgent(any(), any(), any(), any(), any(), any(), any(), any(), any());
@@ -252,6 +258,7 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
                         && TEST_TCP_BUFFER_SIZES_2.equals(lp.getTcpBufferSizes())));
         verify(mNetworkAgent)
                 .setUnderlyingNetworks(eq(singletonList(TEST_UNDERLYING_NETWORK_RECORD_2.network)));
+        verify(mConnMgr).reportNetworkConnectivity(eq(mNetwork), eq(false));
     }
 
     private void triggerChildOpened() {

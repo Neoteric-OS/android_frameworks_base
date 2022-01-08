@@ -1854,6 +1854,12 @@ public class VcnGatewayConnection extends StateMachine {
                     IpSecManager.DIRECTION_OUT);
 
             updateNetworkAgent(mTunnelIface, mNetworkAgent, mChildConfig);
+
+            // Trigger re-validation upon migration to ensure connectivity is stable
+            mVcnContext
+                    .getContext()
+                    .getSystemService(ConnectivityManager.class)
+                    .reportNetworkConnectivity(mNetworkAgent.getNetwork(), false);
         }
 
         private void handleUnderlyingNetworkChanged(@NonNull Message msg) {
