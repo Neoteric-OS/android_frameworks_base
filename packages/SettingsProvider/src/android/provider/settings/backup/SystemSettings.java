@@ -94,5 +94,10 @@ public class SystemSettings {
         Settings.System.HAPTIC_ON_SLIDER,
         Settings.System.STATUS_BAR_BATTERY_STYLE,
         Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT,
+        Settings.System.EDGE_LIGHT_ENABLED,
+        Settings.System.EDGE_LIGHT_ALWAYS_TRIGGER_ON_PULSE,
+        Settings.System.EDGE_LIGHT_REPEAT_ANIMATION,
+        Settings.System.EDGE_LIGHT_COLOR_MODE,
+        Settings.System.EDGE_LIGHT_CUSTOM_COLOR,
     };
 }

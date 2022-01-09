@@ -204,6 +204,7 @@ import com.android.systemui.statusbar.notification.stack.StackStateAnimator;
 import com.android.systemui.statusbar.phone.BounceInterpolator;
 import com.android.systemui.statusbar.phone.CentralSurfaces;
 import com.android.systemui.statusbar.phone.DozeParameters;
+import com.android.systemui.statusbar.phone.EdgeLightViewController;
 import com.android.systemui.statusbar.phone.HeadsUpAppearanceController;
 import com.android.systemui.statusbar.phone.HeadsUpManagerPhone;
 import com.android.systemui.statusbar.phone.HeadsUpTouchHelper;
@@ -406,6 +407,11 @@ public final class NotificationPanelViewController implements Dumpable {
     private OpenCloseListener mOpenCloseListener;
     private GestureRecorder mGestureRecorder;
     private boolean mPanelExpanded;
+    private final EdgeLightViewController mEdgeLightViewController;
+
+    private int mQsTrackingPointer;
+    private VelocityTracker mQsVelocityTracker;
+    private boolean mQsTracking;
 
     private GestureDetector mDoubleTapToSleepGesture;
     private boolean mIsLockscreenDoubleTapEnabled;
@@ -763,7 +769,8 @@ public final class NotificationPanelViewController implements Dumpable {
             KeyguardTransitionInteractor keyguardTransitionInteractor,
             DumpManager dumpManager,
             KeyguardLongPressViewModel keyguardLongPressViewModel,
-            KeyguardInteractor keyguardInteractor) {
+            KeyguardInteractor keyguardInteractor,
+	    EdgeLightViewController edgeLightViewController) {
         mInteractionJankMonitor = interactionJankMonitor;
         keyguardStateController.addCallback(new KeyguardStateController.Callback() {
             @Override
@@ -914,6 +921,7 @@ public final class NotificationPanelViewController implements Dumpable {
         mScreenOffAnimationController = screenOffAnimationController;
         mUnlockedScreenOffAnimationController = unlockedScreenOffAnimationController;
         mLastDownEvents = new NPVCDownEventState.Buffer(MAX_DOWN_EVENT_BUFFER_SIZE);
+        mEdgeLightViewController = edgeLightViewController;
 
         int currentMode = navigationModeController.addListener(
                 mode -> mIsGestureNavigation = QuickStepContract.isGesturalMode(mode));
@@ -1060,7 +1068,7 @@ public final class NotificationPanelViewController implements Dumpable {
                 mView.findViewById(R.id.keyguard_status_view),
                 userAvatarContainer,
                 keyguardUserSwitcherView);
-
+        mEdgeLightViewController.setEdgeLightView(mView.findViewById(R.id.edge_light_container));
         NotificationStackScrollLayout stackScrollLayout = mView.findViewById(
                 R.id.notification_stack_scroller);
         mNotificationStackScrollLayoutController.attach(stackScrollLayout);
