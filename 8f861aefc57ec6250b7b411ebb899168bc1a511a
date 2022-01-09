@@ -16,6 +16,24 @@
       "message": "We are going to control the smart idle maintenance behaviors by DeviceConfig, and this feature will be turned off by default and we are using the traditional idle maintenance way until we turn on using Mendel.",
       "revId": "8f861aefc57ec6250b7b411ebb899168bc1a511a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ac53194_3dad08f3",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1651802
+      },
+      "writtenOn": "2022-01-09T22:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3568f742_3fdb48c0",
+      "revId": "8f861aefc57ec6250b7b411ebb899168bc1a511a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
