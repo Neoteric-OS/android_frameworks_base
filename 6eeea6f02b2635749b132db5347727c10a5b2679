@@ -50,6 +50,24 @@
       "message": "I don\u0027t think we should be returning 1 in this case. It seems like we should return -1 to signal an error (in this case, a RemoteException for the binder call).",
       "revId": "6eeea6f02b2635749b132db5347727c10a5b2679",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd7d7f6a_fd9da2e6",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2392,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-10T17:34:37Z",
+      "side": 1,
+      "message": "Also missed that the error could be because the Adapter Service is not bound. In both cases, I don\u0027t think we should default to 1 because it might be misleading.",
+      "parentUuid": "875db713_e84e5f6b",
+      "revId": "6eeea6f02b2635749b132db5347727c10a5b2679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
