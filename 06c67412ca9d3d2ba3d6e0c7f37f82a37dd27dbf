@@ -16,6 +16,23 @@
       "message": "API council required during the API review for the CarrierService API change. Soon it reveals that this is a common problem for TelephonyRegistryManager API. Pls let me know if it makes sense to you.",
       "revId": "06c67412ca9d3d2ba3d6e0c7f37f82a37dd27dbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e03c5c5e_7fff2b12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-01-10T21:37:53Z",
+      "side": 1,
+      "message": "Should we do this in both direction from SystemServer-\u003eUSER as well as SystemServer-\u003ePhone process.",
+      "revId": "06c67412ca9d3d2ba3d6e0c7f37f82a37dd27dbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
