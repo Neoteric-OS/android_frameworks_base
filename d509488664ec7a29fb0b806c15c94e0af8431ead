@@ -16,6 +16,75 @@
       "message": "Friendly ping",
       "revId": "d509488664ec7a29fb0b806c15c94e0af8431ead",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fd1742d_84d9e210",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2022-01-10T22:34:09Z",
+      "side": 1,
+      "message": "nit: {@link}",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "d509488664ec7a29fb0b806c15c94e0af8431ead",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9496781b_e3875fde",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2022-01-10T22:34:09Z",
+      "side": 1,
+      "message": "I am afraid this won\u0027t work for Google-signed APEXes. The APEX module name that you are extracting from the /apex/... path doesn\u0027t always match package name, e.g. google signed ART module will have packageName com.google.android.art.apex, while the path here will refer to /apex/com.android.art.\n\nOne way to solve this would be to add new ApexManager.isTestApex(String apexModuleName) API. The downside is that we currently don\u0027t store the moduleName -\u003e packageName mapping (we only store the packageName -\u003e moduleName one), so you will probably need to create a reverse mapping.",
+      "range": {
+        "startLine": 135,
+        "startChar": 11,
+        "endLine": 137,
+        "endChar": 83
+      },
+      "revId": "d509488664ec7a29fb0b806c15c94e0af8431ead",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3c452c5_9f47fb94",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2022-01-10T22:34:09Z",
+      "side": 1,
+      "message": "nit: inline into return",
+      "range": {
+        "startLine": 139,
+        "startChar": 16,
+        "endLine": 139,
+        "endChar": 96
+      },
+      "revId": "d509488664ec7a29fb0b806c15c94e0af8431ead",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
