@@ -3,6 +3,92 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8598a189_54044b57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2022-01-10T21:58:16Z",
+      "side": 1,
+      "message": "since APIs live forever, it probably makes long term sense to make this a general pending intent based API, and have the car projection code register on boot.\n\nthat\u0027ll avoid the binding-lifetime problems, and make it easily expandable to future roles.\n\nfor now, we can restrict the usage of the API to apps with the car role.",
+      "revId": "b22e144abc30835ca75c6e135bf37918a56f7d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b76c73e0_ed3c97a1",
+        "filename": "core/java/android/bluetooth/BluetoothCarProjectionService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2022-01-10T21:58:16Z",
+      "side": 1,
+      "message": "return a fully resolved socket class instead of the file descriptor?",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 44
+      },
+      "revId": "b22e144abc30835ca75c6e135bf37918a56f7d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "404d4d85_0f78c62f",
+        "filename": "core/java/android/bluetooth/BluetoothCarProjectionService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2022-01-10T21:58:16Z",
+      "side": 1,
+      "message": "BluetoothDevice instead",
+      "range": {
+        "startLine": 44,
+        "startChar": 55,
+        "endLine": 44,
+        "endChar": 73
+      },
+      "revId": "b22e144abc30835ca75c6e135bf37918a56f7d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f718666_41284a70",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2845,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2022-01-10T21:58:16Z",
+      "side": 1,
+      "message": "this will have performance/resource implications, since it looks like we\u0027re binding to the car projection service the entire time from connection first seen until the BT stack is disabled, which will keep it alive and attribute usage implicitly to the BT stack.\n\ncan this be structured in such a way to keep the binding time restricted to just the time required to report a connected socket?",
+      "range": {
+        "startLine": 2844,
+        "startChar": 11,
+        "endLine": 2845,
+        "endChar": 59
+      },
+      "revId": "b22e144abc30835ca75c6e135bf37918a56f7d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "37bbca38_3f2522b9",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 11
