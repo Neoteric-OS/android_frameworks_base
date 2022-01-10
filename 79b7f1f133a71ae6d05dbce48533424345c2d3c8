@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39f68778_2f60dab3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-10T17:24:04Z",
+      "side": 1,
+      "message": "This is my understanding of what combined_apis is intended to do.",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e66508e_72a53f78",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-10T17:24:04Z",
+      "side": 1,
+      "message": "Why are these not included in system?",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eecfb8cb_280f9ebf",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-10T17:24:04Z",
+      "side": 1,
+      "message": "This should probably include \"service-media-s\" too.",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d8bf416_dfaa05d4",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-10T17:24:04Z",
+      "side": 1,
+      "message": "This module (once it is renamed to frameworks-base-api) will create the following:\n\napi-versions-xml-public-filtered\n\nframeworks-base-api-current.srcjar\n\nframeworks-base-api-current.txt\nframeworks-base-api-removed.txt\nframeworks-base-api-system-current.txt\nframeworks-base-api-system-removed.txt\nframeworks-base-api-module-lib-current.txt\nframeworks-base-api-module-lib-removed.txt\nframeworks-base-api-system-server-current.txt\nframeworks-base-api-system-server-removed.txt\n\nThe last two do not match the current names of the modules which are respectively:\n\nservices-system-server-current.txt\nservices-system-server-removed.txt",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9759b9c0_a68ac78d",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-10T17:24:04Z",
+      "side": 1,
+      "message": "Intended to be replaced by the combined_apis module.",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ef3c8cb_4b6ad777",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-10T17:24:04Z",
+      "side": 1,
+      "message": "Can modules like this be generated too?",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "222dc861_57c679f9",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-10T17:24:04Z",
+      "side": 1,
+      "message": "Intended to be replaced by the combined_apis module.",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3466f05f_e947ec5d",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-10T17:24:04Z",
+      "side": 1,
+      "message": "Intended to be replaced by the combined_apis module.",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0357ac8f_b3d5a1dc",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-10T17:24:04Z",
+      "side": 1,
+      "message": "Intended to be replaced by the combined_apis module.",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e4b8fe8_9113588f",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-10T17:24:04Z",
+      "side": 1,
+      "message": "Intended to be replaced by the combined_apis module.",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac1aba53_4f6f98cf",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-10T17:24:04Z",
+      "side": 1,
+      "message": "Intended to be replaced by the combined_apis module.",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7754392e_e7a7d58b",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-10T17:24:04Z",
+      "side": 1,
+      "message": "Intended to be replaced by the combined_apis module.",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a1743a9_019fad08",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-10T17:24:04Z",
+      "side": 1,
+      "message": "Intended to be replaced by the combined_apis module.",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
