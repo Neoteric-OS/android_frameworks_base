@@ -71,6 +71,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "378fb1ec_156caafa",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-01-10T18:12:58Z",
+      "side": 1,
+      "message": "Yeah, but this is just how the txt files work: system-current.txt does not include current.txt (it didn\u0027t before this \"merged\" build rule existed, so I didn\u0027t include it afterward either)",
+      "parentUuid": "690deafa_198d4665",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eecfb8cb_280f9ebf",
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "You are correct that the rate at which these will be changed is much lower than for the other ones (which will change every time a new module is added) but there is still quite a lot of boilerplate here and if it does need changing then there is still a cost to keep this consistent for all scopes and a risk of issues arising if they\u0027re not.\n\nThe downside is it is a little more abstract so harder to see what is going on.\n\nI\u0027m not sure that the benefits outweigh the costs so I\u0027ll leave it to you as you know this area better. And will most likely be the person who has to update it. Doing it later won\u0027t be a big problem.",
       "parentUuid": "0cab7e33_0594047b",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbbda398_dc907908",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-01-10T18:12:58Z",
+      "side": 1,
+      "message": "Yeah, I plan to grow combine_apis after  the initial CL,  I\u0027ll keep it in mind but leave it out of v1 to keep things simpler",
+      "parentUuid": "614fc92d_cd22058c",
       "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
