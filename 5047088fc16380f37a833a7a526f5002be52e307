@@ -541,6 +541,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c79dd184_b81bf0ad",
+        "filename": "identity/java/android/security/identity/IdentityCredential.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2022-01-10T23:34:52Z",
+      "side": 1,
+      "message": "I think it will be better if this is not exposed as a new and deprecated public API. Can your implementation still use it if it\u0027s @hide?",
+      "parentUuid": "ec087f4a_51473cc1",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 0
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "705d8d78_b7d070ae",
         "filename": "identity/java/android/security/identity/PresentationSession.java",
         "patchSetId": 13
