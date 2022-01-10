@@ -92,6 +92,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef5a268f_19f9d4a4",
+        "filename": "core/java/android/hardware/biometrics/BiometricPrompt.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-10T21:28:21Z",
+      "side": 1,
+      "message": "Fixed in latest PS. The reason is was done like this in the earlier PS had to do with avoiding a merge-conflict (was resolved when 12 was merged to AOSP).",
+      "parentUuid": "ce7426a5_922566aa",
+      "range": {
+        "startLine": 691,
+        "startChar": 37,
+        "endLine": 691,
+        "endChar": 82
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a2cb80a_18d4aed3",
@@ -350,6 +374,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23390912_8ff7beaf",
+        "filename": "identity/java/android/security/identity/CredstorePresentationSession.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-10T21:28:21Z",
+      "side": 1,
+      "message": "Yes and yes!",
+      "parentUuid": "512d04eb_10b06c88",
+      "range": {
+        "startLine": 69,
+        "startChar": 40,
+        "endLine": 69,
+        "endChar": 59
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5aae5f07_69825b65",
@@ -373,6 +421,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae030408_2956cb6c",
+        "filename": "identity/java/android/security/identity/CredstorePresentationSession.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-10T21:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aae5f07_69825b65",
+      "range": {
+        "startLine": 97,
+        "startChar": 18,
+        "endLine": 97,
+        "endChar": 29
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "395a9c40_4ccf8c44",
@@ -386,6 +458,30 @@
       "writtenOn": "2021-11-16T22:41:51Z",
       "side": 1,
       "message": "nit: please move this next to the other fields of the class.",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 38
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32ac4da8_b233e117",
+        "filename": "identity/java/android/security/identity/CredstorePresentationSession.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-10T21:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "395a9c40_4ccf8c44",
       "range": {
         "startLine": 189,
         "startChar": 0,
