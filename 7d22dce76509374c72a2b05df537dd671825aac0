@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "90d5f2bd_a1b5ac92",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-01-10T09:47:22Z",
+      "side": 1,
+      "message": "It may make sense for the hinge angle sensor, but what about other types of sensor?",
+      "parentUuid": "cc1d5435_29a27236",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 3
+      },
+      "revId": "7d22dce76509374c72a2b05df537dd671825aac0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "261477b4_43f01165",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
