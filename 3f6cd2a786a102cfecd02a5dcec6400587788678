@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61008c98_234db8b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-10T12:58:36Z",
+      "side": 1,
+      "message": "LGTM but maybe Jean wants to take a look.",
+      "revId": "3f6cd2a786a102cfecd02a5dcec6400587788678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
