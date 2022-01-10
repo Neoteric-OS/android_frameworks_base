@@ -80,6 +80,7 @@ public class TrafficStats {
      *
      * @hide
      */
+    @SystemApi
     public static final int UID_REMOVED = -4;
 
     /**
@@ -88,6 +89,7 @@ public class TrafficStats {
      *
      * @hide
      */
+    @SystemApi
     public static final int UID_TETHERING = NetworkStats.UID_TETHERING;
 
     /**
