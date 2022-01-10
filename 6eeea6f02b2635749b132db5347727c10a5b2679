@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b21d06bc_ccf948bc",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2372,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-10T17:30:36Z",
+      "side": 1,
+      "message": "I would update the docs here because they aren\u0027t very clear. Specifically, it should note that this is the max supported by this device and the @return tag should not be identical to the summary.",
+      "revId": "6eeea6f02b2635749b132db5347727c10a5b2679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "750d837e_85c205ee",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2379,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-10T17:30:36Z",
+      "side": 1,
+      "message": "Should be elevated to BLUETOOTH_PRIVILEGED because it\u0027s a System API",
+      "revId": "6eeea6f02b2635749b132db5347727c10a5b2679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "875db713_e84e5f6b",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2392,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-10T17:30:36Z",
+      "side": 1,
+      "message": "I don\u0027t think we should be returning 1 in this case. It seems like we should return -1 to signal an error (in this case, a RemoteException for the binder call).",
+      "revId": "6eeea6f02b2635749b132db5347727c10a5b2679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
