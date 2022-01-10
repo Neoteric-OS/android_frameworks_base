@@ -33,6 +33,23 @@
       "message": "Should we do this in both direction from SystemServer-\u003eUSER as well as SystemServer-\u003ePhone process.",
       "revId": "06c67412ca9d3d2ba3d6e0c7f37f82a37dd27dbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "134528e8_61e39cd6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-01-10T21:40:04Z",
+      "side": 1,
+      "message": "Discussed offline. I don\u0027t think there\u0027s any down-side to throwing these from SystemServer back to Phone. If SS goes down, phone process needs to go down anyway (I believe it will eventually anyway).",
+      "revId": "06c67412ca9d3d2ba3d6e0c7f37f82a37dd27dbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
