@@ -22,6 +22,30 @@
       },
       "revId": "3e5151d198612a5aef562346b5536d9cd3648a93",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4eedbe03_8489b0f9",
+        "filename": "graphics/java/android/graphics/Outline.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1927950
+      },
+      "writtenOn": "2022-01-11T11:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f5e785c_1cf65437",
+      "range": {
+        "startLine": 186,
+        "startChar": 76,
+        "endLine": 186,
+        "endChar": 77
+      },
+      "revId": "3e5151d198612a5aef562346b5536d9cd3648a93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
