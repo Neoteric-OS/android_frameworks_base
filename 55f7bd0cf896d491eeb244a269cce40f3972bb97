@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a157c958_9ca4e5f3",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-01-11T22:44:33Z",
+      "side": 1,
+      "message": "Hm, I can\u0027t see how we are guaranteeing that the return value cannot be null? I mean, in the implementation on the system_server side, getPrimarySubscriptionPlanLocked() could technically return null.",
+      "range": {
+        "startLine": 543,
+        "startChar": 5,
+        "endLine": 543,
+        "endChar": 12
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f973a9dc_35d7a8f8",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-01-11T22:44:33Z",
+      "side": 1,
+      "message": "It seems this is being used only for logging. Do you anticipate using this for something more in the future? If it is going to be only for logging, could you double-check with your API council sponsor if this is okay?",
+      "range": {
+        "startLine": 559,
+        "startChar": 14,
+        "endLine": 559,
+        "endChar": 17
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29d2b5c1_9a9a6352",
         "filename": "core/java/android/net/NetworkPolicyManager.java",
         "patchSetId": 17
@@ -19,6 +65,121 @@
         "startChar": 24,
         "endLine": 562,
         "endChar": 29
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9273a35b_30ed91b7",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2124,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-01-11T22:44:33Z",
+      "side": 1,
+      "message": "Just to make sure, could there be a scenario where this could be triggered before NPMS is available?",
+      "range": {
+        "startLine": 2120,
+        "startChar": 8,
+        "endLine": 2124,
+        "endChar": 9
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "519bd073_9662121a",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3390,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-01-11T22:44:33Z",
+      "side": 1,
+      "message": "nit: not necessary, remove?",
+      "range": {
+        "startLine": 3390,
+        "startChar": 7,
+        "endLine": 3390,
+        "endChar": 12
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfdbe0a8_eb65ab09",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3401,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-01-11T22:44:33Z",
+      "side": 1,
+      "message": "nit: Remove the extra space here and in the lines below.",
+      "range": {
+        "startLine": 3401,
+        "startChar": 7,
+        "endLine": 3401,
+        "endChar": 8
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2398649e_65129ef8",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3406,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-01-11T22:44:33Z",
+      "side": 1,
+      "message": "nit: not necessary, remove?",
+      "range": {
+        "startLine": 3406,
+        "startChar": 7,
+        "endLine": 3406,
+        "endChar": 12
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7286cd5d_b797a875",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3409,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-01-11T22:44:33Z",
+      "side": 1,
+      "message": "Earlier, only callers inside system_server process could call this. This change seems to be relaxing this restriction. Could you clarify what\u0027s the reason for this?",
+      "range": {
+        "startLine": 3409,
+        "startChar": 31,
+        "endLine": 3409,
+        "endChar": 81
       },
       "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
