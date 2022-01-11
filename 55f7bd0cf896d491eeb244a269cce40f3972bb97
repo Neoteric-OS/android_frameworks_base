@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29d2b5c1_9a9a6352",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-11T16:16:35Z",
+      "side": 1,
+      "message": "Question: why do we need all of them?",
+      "range": {
+        "startLine": 562,
+        "startChar": 24,
+        "endLine": 562,
+        "endChar": 29
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
