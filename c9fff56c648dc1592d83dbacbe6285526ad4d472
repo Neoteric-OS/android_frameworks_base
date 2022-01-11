@@ -34,6 +34,40 @@
       "parentUuid": "587b00e3_99bcd4d5",
       "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbd86c2a_f809dc71",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-11T02:46:04Z",
+      "side": 1,
+      "message": "Any reason why only the front values are being used right now? Is this expected to be expanded?",
+      "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b8a9a4a_d38a1f0f",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-11T02:46:04Z",
+      "side": 1,
+      "message": "nit: Please add a blank line between the summary and block tags!",
+      "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
