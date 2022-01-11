@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e894e6b3_d5ac71da",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-01-11T20:44:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fd1742d_84d9e210",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "d509488664ec7a29fb0b806c15c94e0af8431ead",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9496781b_e3875fde",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9c9291b_443fef0b",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-01-11T20:44:40Z",
+      "side": 1,
+      "message": "Thank you for pointing this out. I added a reverse mapping and a new `ApexManager.getActivePackageNameForApexModuleName(String apexModuleName)` API.\n\nI prefer not to add an API like `ApexManager.isTestApex(String apexModuleName)` that accepts an APEX module name as a parameter. It may confuse users because it is not consistent with other APIs in the same class, which all accept a package name as a parameter.\n\nHowever, if you think something like `ApexManager.isTestApex(String packageName)` is useful, please let me know, and I\u0027ll add one.",
+      "parentUuid": "9496781b_e3875fde",
+      "range": {
+        "startLine": 135,
+        "startChar": 11,
+        "endLine": 137,
+        "endChar": 83
+      },
+      "revId": "d509488664ec7a29fb0b806c15c94e0af8431ead",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3c452c5_9f47fb94",
@@ -77,6 +125,30 @@
       "writtenOn": "2022-01-10T22:34:09Z",
       "side": 1,
       "message": "nit: inline into return",
+      "range": {
+        "startLine": 139,
+        "startChar": 16,
+        "endLine": 139,
+        "endChar": 96
+      },
+      "revId": "d509488664ec7a29fb0b806c15c94e0af8431ead",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47f9cce8_4e3d34e2",
+        "filename": "services/core/java/com/android/server/SystemServiceManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-01-11T20:44:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c452c5_9f47fb94",
       "range": {
         "startLine": 139,
         "startChar": 16,
