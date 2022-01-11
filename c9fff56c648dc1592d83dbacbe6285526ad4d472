@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3580618d_b8ad2e24",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2022-01-11T08:30:57Z",
+      "side": 1,
+      "message": "Probably in the future for the advanced application, each of the value will be important.\n\nThese location are standard values, and I pointed it out to make sure we will not invent any new values.\n\nNot sure how to expose it in the API - can we do single variable AUDIO_LOCATION as a bitfield? If not, then for now the current definition looks good I would just change AUDIO_LOCATION_INVALID to MONO_UNSPECIFIED",
+      "parentUuid": "2c1d420c_9d6e7740",
+      "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cbd86c2a_f809dc71",
         "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
         "patchSetId": 3
