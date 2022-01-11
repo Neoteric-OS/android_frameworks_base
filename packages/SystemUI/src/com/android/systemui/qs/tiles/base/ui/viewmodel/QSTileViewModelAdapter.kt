@@ -18,6 +18,7 @@ package com.android.systemui.qs.tiles.base.ui.viewmodel
 
 import android.content.Context
 import android.os.UserHandle
+import android.provider.Settings
 import android.util.Log
 import com.android.internal.logging.InstanceId
 import com.android.systemui.Dumpable
@@ -25,6 +26,7 @@ import com.android.systemui.animation.Expandable
 import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.dagger.qualifiers.MainImmediate
 import com.android.systemui.dagger.qualifiers.UiBackground
+import com.android.systemui.plugins.ActivityStarter
 import com.android.systemui.plugins.qs.QSTile
 import com.android.systemui.plugins.qs.TileDetailsViewModel
 import com.android.systemui.qs.QSHost
@@ -60,6 +62,7 @@ constructor(
     private val qsHost: QSHost,
     @Assisted private val qsTileViewModel: QSTileViewModel,
     @UiBackground private val uiBgDispatcher: CoroutineDispatcher,
+    private val activityStarter: ActivityStarter,
 ) : QSTile, Dumpable {
 
     private val context
@@ -134,21 +137,46 @@ constructor(
         callbacks.clear()
     }
 
+    private fun isAllowedWhenLocked(): Boolean =
+        Settings.System.getInt(context.contentResolver, Settings.System.SECURE_LOCKSCREEN_QS_DISABLED, 1) == 0
+
+    private fun handleAction(action: () -> Unit) {
+        if (isAllowedWhenLocked()) {
+            action()
+            return
+        }
+
+        val ksc = qsHost.keyguardStateController
+        val hasSecureKeyguard = ksc.isMethodSecure && ksc.isShowing
+
+        if (hasSecureKeyguard) {
+            activityStarter.postQSRunnableDismissingKeyguard(action)
+        } else {
+            action()
+        }
+    }
+
     override fun click(expandable: Expandable?) {
         if (isActionSupported(QSTileState.UserAction.CLICK)) {
-            qsTileViewModel.onActionPerformed(QSTileUserAction.Click(expandable))
+            handleAction {
+                qsTileViewModel.onActionPerformed(QSTileUserAction.Click(expandable))
+            }
         }
     }
 
     override fun secondaryClick(expandable: Expandable?) {
         if (isActionSupported(QSTileState.UserAction.TOGGLE_CLICK)) {
-            qsTileViewModel.onActionPerformed(QSTileUserAction.ToggleClick(expandable))
+            handleAction {
+                qsTileViewModel.onActionPerformed(QSTileUserAction.ToggleClick(expandable))
+            }
         }
     }
 
     override fun longClick(expandable: Expandable?) {
         if (isActionSupported(QSTileState.UserAction.LONG_CLICK)) {
-            qsTileViewModel.onActionPerformed(QSTileUserAction.LongClick(expandable))
+            handleAction {
+                qsTileViewModel.onActionPerformed(QSTileUserAction.LongClick(expandable))
+            }
         }
     }
 

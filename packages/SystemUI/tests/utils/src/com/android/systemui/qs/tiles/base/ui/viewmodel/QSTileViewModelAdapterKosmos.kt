@@ -20,6 +20,7 @@ import android.content.testableContext
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.applicationCoroutineScope
 import com.android.systemui.kosmos.testDispatcher
+import com.android.systemui.plugins.activityStarter
 import com.android.systemui.qs.QSHost
 import com.android.systemui.util.mockito.mock
 import org.mockito.kotlin.whenever
@@ -33,6 +34,7 @@ val Kosmos.qsTileViewModelAdapterFactory by
                     mock<QSHost> { whenever(context).thenReturn(testableContext) },
                     qsTileViewModel,
                     testDispatcher,
+                    activityStarter,
                 )
             }
         }
