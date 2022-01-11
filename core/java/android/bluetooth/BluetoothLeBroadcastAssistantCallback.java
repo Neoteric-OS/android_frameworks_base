@@ -77,6 +77,25 @@ public abstract class BluetoothLeBroadcastAssistantCallback {
     public static final int BASS_STATUS_NO_EMPTY_SLOT = 0x09;
     public static final int BASS_STATUS_INVALID_GROUP_OP = 0x10;
 
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(value = {
+            BluetoothProfile.STATE_CONNECTED,
+            BluetoothProfile.STATE_CONNECTING,
+            BluetoothProfile.STATE_DISCONNECTED,
+            BluetoothProfile.STATE_DISCONNECTING
+    })
+    public @interface ConnectionStateChangeValues {}
+
+    /**
+     * Callback invoked when the connection state for an LE Audio Broadcast Sink changes
+     *
+     * @param sink device representing the Broadcast Sink
+     */
+    public void onConnectionStateChange(@NonNull BluetoothDevice sink,
+            @ConnectionStateChangeValues int prevState,
+            @ConnectionStateChangeValues int newState) {}
+
     /**
      * Callback invoked when a new LE Audio Broadcast Source is found.
      *
