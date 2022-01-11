@@ -1,0 +1,4382 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110039",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9d4a21a3_e95abd93",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Change must include a \"Sponsor:\" stanza indicating who at Google has personally signed up to take responsibility in case of any potential fallout.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110039",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a92a1fb1_f7206535",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "\"compile\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 12
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110039",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b2004d5b_6a6f5cd6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "#feature requires a tracking bug number",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "e601f46c_0a0a820b",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+              "range": {
+                "startLine": 76,
+                "startChar": 18,
+                "endLine": 76,
+                "endChar": 26
+              },
+              "replacement": "available"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "5e046c07_ea2d0329",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"avaiable\" -- should it be \"available\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 76,
+        "startChar": 18,
+        "endLine": 76,
+        "endChar": 26
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2c058700_9c032828",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 104
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "29918cf2_73526c8c",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 112
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8aa82b5f_b88e56b7",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 111
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "c9894343_66fcc485",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+              "range": {
+                "startLine": 96,
+                "startChar": 29,
+                "endLine": 96,
+                "endChar": 38
+              },
+              "replacement": "successful"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "285f5db7_3e4a5352",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"succesful\" -- should it be \"successful\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 96,
+        "startChar": 29,
+        "endLine": 96,
+        "endChar": 38
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c8b74b1b_3201e89c",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 105
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "aa4f9da9_08830e1c",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+              "range": {
+                "startLine": 109,
+                "startChar": 95,
+                "endLine": 109,
+                "endChar": 106
+              },
+              "replacement": "successfully"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "ab199a9b_a6a24e40",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"succesfully\" -- should it be \"successfully\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 109,
+        "startChar": 95,
+        "endLine": 109,
+        "endChar": 106
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5e7e3836_c51271ae",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 106
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ac295ed9_929e9275",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 120
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "eb6f4cc1_777cc392",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 111
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "50c9c7fc_7d0468a6",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+              "range": {
+                "startLine": 115,
+                "startChar": 29,
+                "endLine": 115,
+                "endChar": 38
+              },
+              "replacement": "successful"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "250b066e_71ff7751",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"succesful\" -- should it be \"successful\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 115,
+        "startChar": 29,
+        "endLine": 115,
+        "endChar": 38
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "eb347630_b1b8ef16",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 124
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a8846267_f35d2f25",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 101
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "764a3a6f_0a9694d5",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+              "range": {
+                "startLine": 128,
+                "startChar": 90,
+                "endLine": 128,
+                "endChar": 101
+              },
+              "replacement": "successfully"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "cd8fdf78_deac60af",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"succesfully\" -- should it be \"successfully\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 128,
+        "startChar": 90,
+        "endLine": 128,
+        "endChar": 101
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b312c67b_53217061",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 120
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "77320c5e_a7fabe60",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+              "range": {
+                "startLine": 132,
+                "startChar": 19,
+                "endLine": 132,
+                "endChar": 29
+              },
+              "replacement": "successful"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "9a9275f4_821ef43e",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"succesfull\" -- should it be \"successful\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 132,
+        "startChar": 19,
+        "endLine": 132,
+        "endChar": 29
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "0599e89e_670f2ab3",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+              "range": {
+                "startLine": 132,
+                "startChar": 103,
+                "endLine": 132,
+                "endChar": 110
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "feafaadb_5028df36",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciver\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 132,
+        "startChar": 103,
+        "endLine": 132,
+        "endChar": 110
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "85f3ce3a_52e602e7",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+              "range": {
+                "startLine": 136,
+                "startChar": 29,
+                "endLine": 136,
+                "endChar": 38
+              },
+              "replacement": "successful"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "edb95e7f_2c81097d",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"succesful\" -- should it be \"successful\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 136,
+        "startChar": 29,
+        "endLine": 136,
+        "endChar": 38
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "268ec3f8_418111c2",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+              "range": {
+                "startLine": 149,
+                "startChar": 100,
+                "endLine": 149,
+                "endChar": 111
+              },
+              "replacement": "successfully"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "ea742580_4ab13a67",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"succesfully\" -- should it be \"successfully\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 149,
+        "startChar": 100,
+        "endLine": 149,
+        "endChar": 111
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "acf59a87_c982be5b",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+              "range": {
+                "startLine": 157,
+                "startChar": 29,
+                "endLine": 157,
+                "endChar": 38
+              },
+              "replacement": "successful"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "50c91ca5_d036a796",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"succesful\" -- should it be \"successful\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 157,
+        "startChar": 29,
+        "endLine": 157,
+        "endChar": 38
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "4bc38dfe_ef9a96cf",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 102
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "965e7188_257a83a8",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 122,
+                "startChar": 89,
+                "endLine": 122,
+                "endChar": 96
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "48192bef_31c9b23a",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciver\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 122,
+        "startChar": 89,
+        "endLine": 122,
+        "endChar": 96
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "3242116e_de82b6ed",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 104
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "506beb57_d1de2ee2",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 109
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5f9bb77f_596be602",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 108
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f612127c_9cf364ab",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 107
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "36a0e464_4a0b3c3c",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 222,
+        "endChar": 105
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "97f7df85_fc593012",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 267,
+        "startChar": 0,
+        "endLine": 267,
+        "endChar": 107
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "3da2db77_07343a1b",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 105
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "cb5de837_400daf6a",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 268,
+                "startChar": 32,
+                "endLine": 268,
+                "endChar": 40
+              },
+              "replacement": "available"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "85c65137_894f02e3",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"avaiable\" -- should it be \"available\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 268,
+        "startChar": 32,
+        "endLine": 268,
+        "endChar": 40
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "541db268_d6dd3932",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 101
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "213b0ce3_9230829f",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 276,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 104
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "b000979d_a21b4033",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 346,
+                "startChar": 30,
+                "endLine": 346,
+                "endChar": 38
+              },
+              "replacement": "Indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "fceecc2a_5525f94f",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Indicies\" -- should it be \"Indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 346,
+        "startChar": 30,
+        "endLine": 346,
+        "endChar": 38
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "fa0ce619_dab01cfa",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 348,
+                "startChar": 58,
+                "endLine": 348,
+                "endChar": 66
+              },
+              "replacement": "indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "5b7294e5_502897e7",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"indicies\" -- should it be \"indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 348,
+        "startChar": 58,
+        "endLine": 348,
+        "endChar": 66
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "4bec960c_b53cd713",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 348,
+                "startChar": 35,
+                "endLine": 348,
+                "endChar": 43
+              },
+              "replacement": "Indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "9dbd3a8f_1f32c425",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Indicies\" -- should it be \"Indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 348,
+        "startChar": 35,
+        "endLine": 348,
+        "endChar": 43
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "dd684e55_f6ac9824",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 363,
+                "startChar": 80,
+                "endLine": 363,
+                "endChar": 87
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "50b348e7_eb3d9412",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciver\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 363,
+        "startChar": 80,
+        "endLine": 363,
+        "endChar": 87
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "1080add8_844fd229",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 383,
+                "startChar": 13,
+                "endLine": 383,
+                "endChar": 22
+              },
+              "replacement": "Available"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "9868594e_1fe8cf41",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Avaialble\" -- should it be \"Available\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 383,
+        "startChar": 13,
+        "endLine": 383,
+        "endChar": 22
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "921fa622_b4262523",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 383,
+                "startChar": 33,
+                "endLine": 383,
+                "endChar": 41
+              },
+              "replacement": "indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "99eb2deb_6456a88d",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"indicies\" -- should it be \"indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 383,
+        "startChar": 33,
+        "endLine": 383,
+        "endChar": 41
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "c0343fac_2fe1ba1a",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 384,
+                "startChar": 27,
+                "endLine": 384,
+                "endChar": 35
+              },
+              "replacement": "indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "e5eefee8_e9cf494d",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"indicies\" -- should it be \"indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 384,
+        "startChar": 27,
+        "endLine": 384,
+        "endChar": 35
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "eb84e98c_24e45449",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 384,
+                "startChar": 8,
+                "endLine": 384,
+                "endChar": 16
+              },
+              "replacement": "Available"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "6dd0f8fe_1009cb52",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Avaiable\" -- should it be \"Available\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 384,
+        "startChar": 8,
+        "endLine": 384,
+        "endChar": 16
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "c62651cf_23a6e602",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 388,
+                "startChar": 76,
+                "endLine": 388,
+                "endChar": 85
+              },
+              "replacement": "available"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "80c188f2_400cfeca",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"avaialble\" -- should it be \"available\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 388,
+        "startChar": 76,
+        "endLine": 388,
+        "endChar": 85
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "8a4e54e7_f13205c5",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 413,
+                "startChar": 22,
+                "endLine": 413,
+                "endChar": 30
+              },
+              "replacement": "Indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "3022e4a3_d191e924",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Indicies\" -- should it be \"Indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 413,
+        "startChar": 22,
+        "endLine": 413,
+        "endChar": 30
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "a8b80d7a_79e34434",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 419,
+                "startChar": 32,
+                "endLine": 419,
+                "endChar": 41
+              },
+              "replacement": "overridden"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "a30e57fa_5a74757f",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"overriden\" -- should it be \"overridden\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 419,
+        "startChar": 32,
+        "endLine": 419,
+        "endChar": 41
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "12f92b8c_d62b4856",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 450,
+                "startChar": 104,
+                "endLine": 450,
+                "endChar": 111
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "88878436_70312a5a",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciver\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 450,
+        "startChar": 104,
+        "endLine": 450,
+        "endChar": 111
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "d52754d6_7d1f9c64",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 469,
+                "startChar": 33,
+                "endLine": 469,
+                "endChar": 41
+              },
+              "replacement": "indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "c8da5594_0e23e669",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"indicies\" -- should it be \"indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 469,
+        "startChar": 33,
+        "endLine": 469,
+        "endChar": 41
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "cc79cebd_cefa7913",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 469,
+                "startChar": 13,
+                "endLine": 469,
+                "endChar": 22
+              },
+              "replacement": "Available"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "37a010f4_dd9b2218",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Avaialble\" -- should it be \"Available\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 469,
+        "startChar": 13,
+        "endLine": 469,
+        "endChar": 22
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "52be7560_b4a2b501",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 470,
+                "startChar": 27,
+                "endLine": 470,
+                "endChar": 35
+              },
+              "replacement": "indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "eca59b0a_aef7fe25",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"indicies\" -- should it be \"indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 470,
+        "startChar": 27,
+        "endLine": 470,
+        "endChar": 35
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "ad032c60_7511c9ef",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 470,
+                "startChar": 8,
+                "endLine": 470,
+                "endChar": 16
+              },
+              "replacement": "Available"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "77e3cf21_056cb4c8",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Avaiable\" -- should it be \"Available\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 470,
+        "startChar": 8,
+        "endLine": 470,
+        "endChar": 16
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "1b561dc7_d54a20a9",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 473,
+                "startChar": 76,
+                "endLine": 473,
+                "endChar": 85
+              },
+              "replacement": "available"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "23b2b426_1b6a8b46",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"avaialble\" -- should it be \"available\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 473,
+        "startChar": 76,
+        "endLine": 473,
+        "endChar": 85
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "f297658a_5a8a09d8",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 504,
+                "startChar": 24,
+                "endLine": 504,
+                "endChar": 32
+              },
+              "replacement": "Indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "c6d553ac_62f81410",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Indicies\" -- should it be \"Indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 504,
+        "startChar": 24,
+        "endLine": 504,
+        "endChar": 32
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "d903e9d5_216917e0",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 526,
+                "startChar": 38,
+                "endLine": 526,
+                "endChar": 45
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "a665c6ea_37b26c5c",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciver\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 526,
+        "startChar": 38,
+        "endLine": 526,
+        "endChar": 45
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "2a073b89_e5704e28",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+              "range": {
+                "startLine": 544,
+                "startChar": 95,
+                "endLine": 544,
+                "endChar": 102
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "29bb93f9_694bde2a",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciver\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 544,
+        "startChar": 95,
+        "endLine": 544,
+        "endChar": 102
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "e8643a71_ed1e6819",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceChannel.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceChannel.java",
+              "range": {
+                "startLine": 32,
+                "startChar": 25,
+                "endLine": 32,
+                "endChar": 33
+              },
+              "replacement": "indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "a30ae89b_4f389366",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceChannel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"indicies\" -- should it be \"indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 32,
+        "startChar": 25,
+        "endLine": 32,
+        "endChar": 33
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ac913ea4_9365b89f",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceChannel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 107
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7fd1ec3f_349cf15d",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceChannel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 146
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "23ce872a_dd13394c",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceChannel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 107
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "137db81b_c5c7ad57",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 116
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "eacd05c2_861372ac",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 120
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "a45e3c4f_c9c43e56",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 43,
+                "startChar": 20,
+                "endLine": 43,
+                "endChar": 27
+              },
+              "replacement": "retrieve"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "b89f46b8_dbd5bc68",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"retrive\" -- should it be \"retrieve\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 43,
+        "startChar": 20,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "85280626_8e513d5e",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 111
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ee410d70_00bf21db",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 111
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1eb32468_a089bba4",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 103
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2cd1e138_a27245a1",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 108
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "dc10bb7d_4b4f7192",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 111
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "929a267e_631a52c3",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 123
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2018a8d9_a3e52f84",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 114
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "501ad040_f62fc5cb",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 255,
+                "startChar": 49,
+                "endLine": 255,
+                "endChar": 58
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "679465f3_ba74f213",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 255,
+        "startChar": 49,
+        "endLine": 255,
+        "endChar": 58
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ff3c7f15_a99b5074",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 101
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "d16ec5fa_e63cf879",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 265,
+                "startChar": 33,
+                "endLine": 265,
+                "endChar": 41
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "15d7367f_1e34300b",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciever\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 265,
+        "startChar": 33,
+        "endLine": 265,
+        "endChar": 41
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "798949f6_1fffcc17",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 282,
+                "startChar": 8,
+                "endLine": 282,
+                "endChar": 17
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "2ae0b384_4c477d6a",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 282,
+        "endChar": 17
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "ddbdd68c_63ea1fd5",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 290,
+                "startChar": 17,
+                "endLine": 290,
+                "endChar": 25
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "63c24da8_2aea6349",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciever\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 290,
+        "startChar": 17,
+        "endLine": 290,
+        "endChar": 25
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "3dc9983b_8a45841c",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 294,
+                "startChar": 50,
+                "endLine": 294,
+                "endChar": 55
+              },
+              "replacement": "which"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "fede00bc_59ba9152",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"whcih\" -- should it be \"which\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 294,
+        "startChar": 50,
+        "endLine": 294,
+        "endChar": 55
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "2aafe475_f82179c7",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 295,
+                "startChar": 79,
+                "endLine": 295,
+                "endChar": 87
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "17ff6594_54352fff",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciever\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 295,
+        "startChar": 79,
+        "endLine": 295,
+        "endChar": 87
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "06a3e604_960d8efd",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 305,
+                "startChar": 64,
+                "endLine": 305,
+                "endChar": 72
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "8513ded7_15bcc051",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciever\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 305,
+        "startChar": 64,
+        "endLine": 305,
+        "endChar": 72
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "eac52ab8_d66124c2",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 344,
+                "startChar": 8,
+                "endLine": 344,
+                "endChar": 17
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "edf5370b_2cbd3cc5",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 344,
+        "startChar": 8,
+        "endLine": 344,
+        "endChar": 17
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "36cac207_a2194117",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 352,
+                "startChar": 17,
+                "endLine": 352,
+                "endChar": 25
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "1e412010_dfab9b98",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciever\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 352,
+        "startChar": 17,
+        "endLine": 352,
+        "endChar": 25
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "d69b5b27_64a51f95",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 358,
+                "startChar": 50,
+                "endLine": 358,
+                "endChar": 55
+              },
+              "replacement": "which"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "8ea35a58_66c3a9f2",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"whcih\" -- should it be \"which\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 358,
+        "startChar": 50,
+        "endLine": 358,
+        "endChar": 55
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "e900329b_7c2c2d73",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 360,
+                "startChar": 79,
+                "endLine": 360,
+                "endChar": 87
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "4c5df5a9_fd6f8c27",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciever\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 360,
+        "startChar": 79,
+        "endLine": 360,
+        "endChar": 87
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "7908bc28_32e287ba",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 372,
+                "startChar": 64,
+                "endLine": 372,
+                "endChar": 72
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "487c2e14_080bc871",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciever\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 372,
+        "startChar": 64,
+        "endLine": 372,
+        "endChar": 72
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "06836740_754330d5",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 401,
+                "startChar": 8,
+                "endLine": 401,
+                "endChar": 17
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "1f523f84_e87c14ad",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 401,
+        "startChar": 8,
+        "endLine": 401,
+        "endChar": 17
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "e1367fdc_ed203731",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 440,
+                "startChar": 17,
+                "endLine": 440,
+                "endChar": 25
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "e45e2548_0ddf608d",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciever\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 440,
+        "startChar": 17,
+        "endLine": 440,
+        "endChar": 25
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "00687edd_74bf64b8",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 446,
+                "startChar": 50,
+                "endLine": 446,
+                "endChar": 55
+              },
+              "replacement": "which"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "22b31475_398b83ef",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"whcih\" -- should it be \"which\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 446,
+        "startChar": 50,
+        "endLine": 446,
+        "endChar": 55
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "ab1f262b_3f41ae2f",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 447,
+                "startChar": 79,
+                "endLine": 447,
+                "endChar": 87
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "8ed54d23_686868c9",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciever\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 447,
+        "startChar": 79,
+        "endLine": 447,
+        "endChar": 87
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "4a6d45b3_c9859da6",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 459,
+                "startChar": 64,
+                "endLine": 459,
+                "endChar": 72
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "0624e1cd_192f888b",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciever\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 459,
+        "startChar": 64,
+        "endLine": 459,
+        "endChar": 72
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "68d86913_8c929847",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 478,
+                "startChar": 8,
+                "endLine": 478,
+                "endChar": 17
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "2d0077fc_33f57a89",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 478,
+        "startChar": 8,
+        "endLine": 478,
+        "endChar": 17
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "8d439970_362ca6b6",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 521,
+                "startChar": 57,
+                "endLine": 521,
+                "endChar": 65
+              },
+              "replacement": "Indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "5fabc2f9_93ebb6eb",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Indicies\" -- should it be \"Indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 521,
+        "startChar": 57,
+        "endLine": 521,
+        "endChar": 65
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "ec6bb872_14998d8b",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 527,
+                "startChar": 12,
+                "endLine": 527,
+                "endChar": 21
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "2916af15_b6ae7410",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 527,
+        "startChar": 12,
+        "endLine": 527,
+        "endChar": 21
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "c08b06eb_5b60dead",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 538,
+                "startChar": 66,
+                "endLine": 538,
+                "endChar": 74
+              },
+              "replacement": "Indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "185a7ddf_3dd542d5",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Indicies\" -- should it be \"Indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 538,
+        "startChar": 66,
+        "endLine": 538,
+        "endChar": 74
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "a2026cd2_40b19b3b",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 554,
+                "startChar": 50,
+                "endLine": 554,
+                "endChar": 59
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "5a651400_4043dc6a",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 554,
+        "startChar": 50,
+        "endLine": 554,
+        "endChar": 59
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "68c64436_f921bd10",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 554,
+                "startChar": 30,
+                "endLine": 554,
+                "endChar": 39
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "f289feaa_df2f5819",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 554,
+        "startChar": 30,
+        "endLine": 554,
+        "endChar": 39
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "8704516c_429f76a8",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 569,
+                "startChar": 13,
+                "endLine": 569,
+                "endChar": 22
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "3c95c285_63f658e4",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 569,
+        "startChar": 13,
+        "endLine": 569,
+        "endChar": 22
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "a3ea932f_694f5a13",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 604,
+                "startChar": 17,
+                "endLine": 604,
+                "endChar": 26
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "9cf3e297_dc7f2ce4",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 604,
+        "startChar": 17,
+        "endLine": 604,
+        "endChar": 26
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "2a3c77cd_dbef4fa3",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 619,
+                "startChar": 20,
+                "endLine": 619,
+                "endChar": 29
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "c2d6ecbd_720ee28c",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 619,
+        "startChar": 20,
+        "endLine": 619,
+        "endChar": 29
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "6736d4e0_c1eba09c",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 619,
+                "startChar": 40,
+                "endLine": 619,
+                "endChar": 49
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "c692aa90_339d7d8b",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 619,
+        "startChar": 40,
+        "endLine": 619,
+        "endChar": 49
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "7f63fe41_b583b210",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 788,
+                "startChar": 9,
+                "endLine": 788,
+                "endChar": 18
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "302196fe_f1f22f72",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 788,
+        "startChar": 9,
+        "endLine": 788,
+        "endChar": 18
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "ef127c9c_013bf9f9",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 801,
+                "startChar": 16,
+                "endLine": 801,
+                "endChar": 25
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "00a5e7e4_920c2e9d",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 801,
+        "startChar": 16,
+        "endLine": 801,
+        "endChar": 25
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "29650390_2f25d60b",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 840,
+                "startChar": 42,
+                "endLine": 840,
+                "endChar": 50
+              },
+              "replacement": "receiver"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "38e7ce78_5cb0497f",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"reciever\" -- should it be \"receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 840,
+        "startChar": 42,
+        "endLine": 840,
+        "endChar": 50
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "03a05ed2_35edd3d5",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 865,
+                "startChar": 46,
+                "endLine": 865,
+                "endChar": 54
+              },
+              "replacement": "indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "e0046070_9c586208",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"indicies\" -- should it be \"indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 865,
+        "startChar": 46,
+        "endLine": 865,
+        "endChar": 54
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "a63ee394_f7a45c0d",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 871,
+                "startChar": 45,
+                "endLine": 871,
+                "endChar": 53
+              },
+              "replacement": "Indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "6f85f752_cc03f8e0",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Indicies\" -- should it be \"Indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 871,
+        "startChar": 45,
+        "endLine": 871,
+        "endChar": 53
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "edd77d75_384cee1d",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 879,
+                "startChar": 25,
+                "endLine": 879,
+                "endChar": 33
+              },
+              "replacement": "Indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "f06b106b_5c67fd86",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Indicies\" -- should it be \"Indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 879,
+        "startChar": 25,
+        "endLine": 879,
+        "endChar": 33
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "fbc1abca_70b7b47b",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 886,
+                "startChar": 56,
+                "endLine": 886,
+                "endChar": 64
+              },
+              "replacement": "Indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "a32ba2a0_95d171f8",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Indicies\" -- should it be \"Indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 886,
+        "startChar": 56,
+        "endLine": 886,
+        "endChar": 64
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "4e653590_6ddc4e59",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 887,
+                "startChar": 20,
+                "endLine": 887,
+                "endChar": 28
+              },
+              "replacement": "Indices"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "517535ec_6c9fee90",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Indicies\" -- should it be \"Indices\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 887,
+        "startChar": 20,
+        "endLine": 887,
+        "endChar": 28
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "dc1cdc7d_a56c6948",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 980,
+                "startChar": 30,
+                "endLine": 980,
+                "endChar": 39
+              },
+              "replacement": "encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "e5467746_30b90087",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"encyption\" -- should it be \"encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 980,
+        "startChar": 30,
+        "endLine": 980,
+        "endChar": 39
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "cc6d0dcf_4c4808a0",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 996,
+                "startChar": 28,
+                "endLine": 996,
+                "endChar": 37
+              },
+              "replacement": "encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "cf3fead9_462fdcef",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"encyption\" -- should it be \"encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 996,
+        "startChar": 28,
+        "endLine": 996,
+        "endChar": 37
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "992818d5_b1252802",
+          "description": "Change to \"core/java/android/bluetooth/BleBroadcastSourceInfo.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+              "range": {
+                "startLine": 1016,
+                "startChar": 22,
+                "endLine": 1016,
+                "endChar": 31
+              },
+              "replacement": "Encryption"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "d4beddf3_f84b48e7",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Encyption\" -- should it be \"Encryption\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1016,
+        "startChar": 22,
+        "endLine": 1016,
+        "endChar": 31
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "63690199_e3f68afd",
+          "description": "Change to \"core/java/android/bluetooth/BluetoothSyncHelper.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BluetoothSyncHelper.java",
+              "range": {
+                "startLine": 67,
+                "startChar": 42,
+                "endLine": 67,
+                "endChar": 51
+              },
+              "replacement": "Broadcast"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "c419be13_caa3e155",
+        "filename": "core/java/android/bluetooth/BluetoothSyncHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"Braodcast\" -- should it be \"Broadcast\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 67,
+        "startChar": 42,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d4907ad6_8c61f4a3",
+        "filename": "core/java/android/bluetooth/BluetoothSyncHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 112
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0692386c_77fe9def",
+        "filename": "core/java/android/bluetooth/BluetoothSyncHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 102
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "91a4f812_220c7fbc",
+        "filename": "core/java/android/bluetooth/BluetoothSyncHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 128
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "21eb2554_5553a970",
+        "filename": "core/java/android/bluetooth/BluetoothSyncHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 104
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "14fb6177_337fff8d",
+        "filename": "core/java/android/bluetooth/BluetoothSyncHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 118
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bac0b078_1e9318f1",
+        "filename": "core/java/android/bluetooth/BluetoothSyncHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 104
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f6420b85_4b274865",
+        "filename": "core/java/android/bluetooth/BluetoothSyncHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 107
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ed374dfe_c9e268e2",
+        "filename": "core/java/android/bluetooth/BluetoothSyncHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 104
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110042",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "a133125a_bc5cb8ec",
+          "description": "Change to \"core/java/android/bluetooth/BluetoothSyncHelper.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BluetoothSyncHelper.java",
+              "range": {
+                "startLine": 192,
+                "startChar": 69,
+                "endLine": 192,
+                "endChar": 75
+              },
+              "replacement": "return"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "01b78335_f3b26cdd",
+        "filename": "core/java/android/bluetooth/BluetoothSyncHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Common typo found: \"retrun\" -- should it be \"return\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 192,
+        "startChar": 69,
+        "endLine": 192,
+        "endChar": 75
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "04e9e627_0c6851e0",
+        "filename": "core/java/android/bluetooth/BluetoothSyncHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 527,
+        "startChar": 0,
+        "endLine": 527,
+        "endChar": 106
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019110040",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b492d1c9_e0b35203",
+        "filename": "core/java/android/bluetooth/BluetoothSyncHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T15:01:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 543,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 110
+      },
+      "revId": "dc61a4ce00780edb5180ba430ad2b722d8e3966f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
