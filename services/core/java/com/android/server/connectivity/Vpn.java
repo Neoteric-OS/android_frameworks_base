@@ -17,6 +17,7 @@
 package com.android.server.connectivity;
 
 import static android.Manifest.permission.BIND_VPN_SERVICE;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.RouteInfo.RTN_THROW;
 import static android.net.RouteInfo.RTN_UNREACHABLE;
@@ -69,6 +70,7 @@ import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkProvider;
 import android.net.NetworkRequest;
 import android.net.NetworkScore;
+import android.net.NetworkStack;
 import android.net.RouteInfo;
 import android.net.UidRangeParcel;
 import android.net.UnderlyingNetworkInfo;
@@ -511,6 +513,27 @@ public class Vpn {
                 .build();
 
         loadAlwaysOnPackage();
+    }
+
+    private boolean sendEventToVpnManagerApp(String packageName, @NonNull String category,
+            String sessionKey, @Nullable Network underlyingNetwork, NetworkCapabilities nc,
+            LinkProperties lp, int errorType, int errorCode) {
+        final Intent intent = new Intent(VpnManager.ACTION_VPN_MANAGER_ERROR);
+        intent.setPackage(packageName);
+        intent.addCategory(category);
+        intent.putExtra(VpnManager.EXTRA_SESSION_KEY, sessionKey);
+        intent.putExtra(VpnManager.EXTRA_UNDERLYING_NETWORK, underlyingNetwork);
+        intent.putExtra(VpnManager.EXTRA_UNDERLYING_NETWORK_CAPABILITIES, nc);
+        intent.putExtra(VpnManager.EXTRA_UNDERLYING_LINK_PROPERTIES, lp);
+        intent.putExtra(VpnManager.EXTRA_TIMESTAMP, SystemClock.elapsedRealtime());
+        intent.putExtra(VpnManager.EXTRA_ERROR_TYPE, errorType);
+        intent.putExtra(VpnManager.EXTRA_ERROR_CODE, errorCode);
+        try {
+            return mUserIdContext.startService(intent) != null;
+        } catch (RuntimeException e) {
+            Log.e(TAG, "Service of VpnManager app " + intent + " failed to start", e);
+            return false;
+        }
     }
 
     /**
@@ -996,6 +1019,66 @@ public class Vpn {
         return getAppUid(packageName, mUserId) == mOwnerUID && mPackage.equals(packageName);
     }
 
+    private boolean checkSettingsPermission(String packageName) {
+        final PackageManager pm = mContext.getPackageManager();
+        return PERMISSION_GRANTED == pm.checkPermission(
+                android.Manifest.permission.NETWORK_SETTINGS, packageName)
+                || PERMISSION_GRANTED == pm.checkPermission(
+                NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, packageName);
+    }
+
+    private boolean checkAnyPermissionOf(String packageName, String... permissions) {
+        final PackageManager pm = mContext.getPackageManager();
+        for (String permission : permissions) {
+            if (pm.checkPermission(permission, packageName) == PERMISSION_GRANTED) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    NetworkCapabilities networkCapabilitiesRestrictedForCallerPermissions(NetworkCapabilities nc,
+            String packageName) {
+        final NetworkCapabilities newNc = new NetworkCapabilities(nc);
+        if (!checkSettingsPermission(packageName)) {
+            newNc.setUids(null);
+            newNc.setSSID(null);
+            newNc.setUnderlyingNetworks(null);
+        }
+        if (newNc.getNetworkSpecifier() != null) {
+            newNc.setNetworkSpecifier(newNc.getNetworkSpecifier().redact());
+        }
+        newNc.setAdministratorUids(new int[0]);
+        if (!checkAnyPermissionOf(packageName, android.Manifest.permission.NETWORK_FACTORY)) {
+            newNc.setSubscriptionIds(Collections.emptySet());
+        }
+
+        return newNc;
+    }
+
+    private LinkProperties linkPropertiesRestrictedForCallerPermissions(LinkProperties lp,
+            String packageName) {
+        if (lp == null) return new LinkProperties();
+
+        // Only do a permission check if sanitization is needed, to avoid unnecessary binder calls.
+        final boolean needsSanitization =
+                (lp.getCaptivePortalApiUrl() != null || lp.getCaptivePortalData() != null);
+        if (!needsSanitization) {
+            return new LinkProperties(lp);
+        }
+
+        if (checkSettingsPermission(packageName)) {
+            return new LinkProperties(lp, true /* parcelSensitiveFields */);
+        }
+
+        final LinkProperties newLp = new LinkProperties(lp);
+        // Sensitive fields would not be parceled anyway, but sanitize for consistency before the
+        // object gets parceled.
+        newLp.setCaptivePortalApiUrl(null);
+        newLp.setCaptivePortalData(null);
+        return newLp;
+    }
+
     /** Prepare the VPN for the given package. Does not perform permission checks. */
     @GuardedBy("this")
     private void prepareInternal(String newPackage) {
@@ -1026,6 +1109,21 @@ public class Vpn {
                 if (!VpnConfig.LEGACY_VPN.equals(mPackage)) {
                     mAppOpsManager.finishOp(
                             AppOpsManager.OPSTR_ESTABLISH_VPN_MANAGER, mOwnerUID, mPackage, null);
+
+                    // Only need to send the event when the VpnManager app is deactivated.
+                    final Network underlyingNetwork = mVpnRunner.getUnderlyingNetwork();
+                    final NetworkCapabilities ncOfUnderlyingNetwork =
+                            networkCapabilitiesRestrictedForCallerPermissions(
+                                    mConnectivityManager.getNetworkCapabilities(underlyingNetwork),
+                                    mPackage);
+                    final LinkProperties lpOfUnderlyingNetwork =
+                            linkPropertiesRestrictedForCallerPermissions(
+                                    mConnectivityManager.getLinkProperties(underlyingNetwork),
+                                    mPackage);
+                    sendEventToVpnManagerApp(mPackage, VpnManager.CATEGORY_ERROR_USER_DEACTIVATED,
+                            mSessionKey, underlyingNetwork, ncOfUnderlyingNetwork,
+                            lpOfUnderlyingNetwork, VpnManager.ERROR_NOT_RECOVERABLE,
+                            0 /* errorCode */);
                 }
                 // cleanupVpnStateLocked() is called from mVpnRunner.exit()
                 mVpnRunner.exit();
@@ -1040,6 +1138,7 @@ public class Vpn {
             Log.i(TAG, "Switched from " + mPackage + " to " + newPackage);
             mPackage = newPackage;
             mOwnerUID = getAppUid(newPackage, mUserId);
+            mSessionKey = null;
             mIsPackageTargetingAtLeastQ = doesPackageTargetAtLeastQ(newPackage);
             try {
                 mNms.allowProtect(mOwnerUID);
@@ -2435,6 +2534,10 @@ public class Vpn {
                 cleanupVpnStateLocked();
             }
         }
+
+        protected Network getUnderlyingNetwork() {
+            return null;
+        }
     }
 
     interface IkeV2VpnRunnerCallback {
@@ -2502,6 +2605,11 @@ public class Vpn {
             mProfile = profile;
             mIpSecManager = (IpSecManager) mContext.getSystemService(Context.IPSEC_SERVICE);
             mNetworkCallback = new VpnIkev2Utils.Ikev2VpnNetworkCallback(TAG, this);
+        }
+
+        @Override
+        protected Network getUnderlyingNetwork() {
+            return mActiveNetwork;
         }
 
         @Override
