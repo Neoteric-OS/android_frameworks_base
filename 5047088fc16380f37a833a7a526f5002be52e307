@@ -587,6 +587,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "07943d0e_feb84bd0",
+        "filename": "identity/java/android/security/identity/IdentityCredential.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-11T15:40:21Z",
+      "side": 1,
+      "message": "Actually with the way the CTS test is set up it doesn\u0027t need @TestApi.",
+      "parentUuid": "1199f55b_76db87d8",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 0
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "705d8d78_b7d070ae",
