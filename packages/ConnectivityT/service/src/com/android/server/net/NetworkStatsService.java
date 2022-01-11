@@ -2156,7 +2156,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         public void notifyWarningOrLimitReached() {
             Log.d(TAG, mTag + ": notifyWarningOrLimitReached");
             BinderUtils.withCleanCallingIdentity(() ->
-                    mNetworkPolicyManager.onStatsProviderWarningOrLimitReached());
+                    mNetworkPolicyManager.notifyStatsProviderWarningOrLimitReached());
         }
 
         @Override
