@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e90d828f_d372a403",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2022-01-11T08:33:13Z",
+      "side": 1,
+      "message": "I also have the same question as yours. Let me ask Rahul to get more insight.",
+      "parentUuid": "3580618d_b8ad2e24",
+      "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cbd86c2a_f809dc71",
         "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
         "patchSetId": 3
