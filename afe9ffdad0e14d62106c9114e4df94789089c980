@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a11a27d6_9d0a3d24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1874206
+      },
+      "writtenOn": "2022-01-11T19:40:22Z",
+      "side": 1,
+      "message": "Please confirm automerger Linter warning is non-issue",
+      "revId": "afe9ffdad0e14d62106c9114e4df94789089c980",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
