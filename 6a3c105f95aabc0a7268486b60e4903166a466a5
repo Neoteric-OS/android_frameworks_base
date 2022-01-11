@@ -1,0 +1,76 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019088334",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1892338?revision\u003d12",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bcd81cca_16cc67e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T07:52:21Z",
+      "side": 1,
+      "message": "{#compatibility %!s(int\u003d4) %!s(int\u003d4) %!s(int\u003d19)} requires you include cert test changes to ensure this issue does not happen in the future",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "6a3c105f95aabc0a7268486b60e4903166a466a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019088334",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1892338?revision\u003d12",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c7b631bc_95550edf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T07:52:21Z",
+      "side": 1,
+      "message": "\"IOP, BCST, GTS\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "6a3c105f95aabc0a7268486b60e4903166a466a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019088316",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1892338?revision\u003d12",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "587dc48c_0532d5fb",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-11T07:52:21Z",
+      "side": 1,
+      "message": "This CL adds new API(s), but it doesn\u0027t include any CTS test to test them. Please add CTS test(s) in a change and include the change in the same topic. After adding that change, you may need to upload a new patchset such as updating commit message to rerun this presubmit test. If you are unable to add CTS test(s) now, please file a tracking bug via go/new-cts-coverage-bug and add \"CTS-Coverage-Bug: \u003cbug id\u003e\" in this CL\u0027s commit message to pass this presubmit. For more information, please refer to go/api-test-coverage.",
+      "revId": "6a3c105f95aabc0a7268486b60e4903166a466a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
