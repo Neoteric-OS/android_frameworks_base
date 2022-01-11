@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0062f2c0_921fcb2c",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2372,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2022-01-11T15:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b21d06bc_ccf948bc",
+      "revId": "6eeea6f02b2635749b132db5347727c10a5b2679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "750d837e_85c205ee",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-01-10T17:30:36Z",
       "side": 1,
       "message": "Should be elevated to BLUETOOTH_PRIVILEGED because it\u0027s a System API",
+      "revId": "6eeea6f02b2635749b132db5347727c10a5b2679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a68a64e_1d662e45",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2379,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2022-01-11T15:02:41Z",
+      "side": 1,
+      "message": "As we finally make it public, I think we can let the permissions as is!",
+      "parentUuid": "750d837e_85c205ee",
       "revId": "6eeea6f02b2635749b132db5347727c10a5b2679",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -66,6 +102,24 @@
       "side": 1,
       "message": "Also missed that the error could be because the Adapter Service is not bound. In both cases, I don\u0027t think we should default to 1 because it might be misleading.",
       "parentUuid": "875db713_e84e5f6b",
+      "revId": "6eeea6f02b2635749b132db5347727c10a5b2679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "506bae82_96467969",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2392,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2022-01-11T15:02:41Z",
+      "side": 1,
+      "message": "Yes, I changed error return value to -1 and updated the doc accordingly.",
+      "parentUuid": "cd7d7f6a_fd9da2e6",
       "revId": "6eeea6f02b2635749b132db5347727c10a5b2679",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
