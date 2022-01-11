@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b3c4a2d_4468ec1a",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-11T23:37:25Z",
+      "side": 1,
+      "message": "nit: save in constant and reuse in the JobService",
+      "range": {
+        "startLine": 942,
+        "startChar": 67,
+        "endLine": 942,
+        "endChar": 68
+      },
+      "revId": "0966aff497b998aa9bea2885209e9e64c6945d62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc389f50_3623269b",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2733,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-11T23:37:25Z",
+      "side": 1,
+      "message": "If we don\u0027t have up to 72 records, this average will be incorrect, but is that fine?",
+      "range": {
+        "startLine": 2733,
+        "startChar": 59,
+        "endLine": 2733,
+        "endChar": 83
+      },
+      "revId": "0966aff497b998aa9bea2885209e9e64c6945d62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66c51222_8968b4e2",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2743,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-11T23:37:25Z",
+      "side": 1,
+      "message": "try with resources? Instead of initializing null fos\n\nDitto above for fis",
+      "range": {
+        "startLine": 2742,
+        "startChar": 8,
+        "endLine": 2743,
+        "endChar": 48
+      },
+      "revId": "0966aff497b998aa9bea2885209e9e64c6945d62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c008dd12_659cacf3",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2785,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-11T23:37:25Z",
+      "side": 1,
+      "message": "return false? similar to if lifetime \u003d\u003d -1?",
+      "range": {
+        "startLine": 2785,
+        "startChar": 28,
+        "endLine": 2785,
+        "endChar": 29
+      },
+      "revId": "0966aff497b998aa9bea2885209e9e64c6945d62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b27e758_e0124c46",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2795,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-11T23:37:25Z",
+      "side": 1,
+      "message": "IIUC should we also return false here? Maybe I\u0027m misunderstanding the return of this method?",
+      "range": {
+        "startLine": 2795,
+        "startChar": 7,
+        "endLine": 2795,
+        "endChar": 9
+      },
+      "revId": "0966aff497b998aa9bea2885209e9e64c6945d62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6aad57b_1dfcfcdc",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2806,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-11T23:37:25Z",
+      "side": 1,
+      "message": "Is it sufficient to only check needsCheckpoint?  \n\nCan needsCheckpoint \u003d\u003d true and supportsBlockCheckpoint \u003d\u003d false?",
+      "range": {
+        "startLine": 2806,
+        "startChar": 0,
+        "endLine": 2806,
+        "endChar": 67
+      },
+      "revId": "0966aff497b998aa9bea2885209e9e64c6945d62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "feb736ef_f8ebd650",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2807,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-11T23:37:25Z",
+      "side": 1,
+      "message": "I thought we shouldn\u0027t negate this? Similar to isPassedLifetimeThresh? And then do we need both? refreshLifetimeConstraint and isPassedLifetimeThresh?",
+      "range": {
+        "startLine": 2807,
+        "startChar": 21,
+        "endLine": 2807,
+        "endChar": 46
+      },
+      "revId": "0966aff497b998aa9bea2885209e9e64c6945d62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
