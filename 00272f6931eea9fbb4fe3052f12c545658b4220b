@@ -39,6 +39,30 @@
       },
       "revId": "00272f6931eea9fbb4fe3052f12c545658b4220b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09191754_6a1da5e5",
+        "filename": "packages/ConnectivityT/framework-t/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-11T15:16:42Z",
+      "side": 1,
+      "message": "Latest conclusion is to make a copy to connectivity module so it won\u0027t share anymore.",
+      "parentUuid": "089cf5a7_e8e6d7d7",
+      "range": {
+        "startLine": 136,
+        "startChar": 32,
+        "endLine": 136,
+        "endChar": 33
+      },
+      "revId": "00272f6931eea9fbb4fe3052f12c545658b4220b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
