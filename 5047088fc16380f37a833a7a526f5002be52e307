@@ -563,6 +563,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1199f55b_76db87d8",
+        "filename": "identity/java/android/security/identity/IdentityCredential.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-11T15:23:14Z",
+      "side": 1,
+      "message": "Yes it\u0027s fine to @hide but it then needs @TestApi for CTS to use it. I\u0027ll do that.",
+      "parentUuid": "c79dd184_b81bf0ad",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 0
+      },
+      "revId": "5047088fc16380f37a833a7a526f5002be52e307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "705d8d78_b7d070ae",
