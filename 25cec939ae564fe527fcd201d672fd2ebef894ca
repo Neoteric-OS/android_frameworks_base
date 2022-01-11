@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "384d8965_c0bd1658",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2022-01-11T21:02:49Z",
+      "side": 1,
+      "message": "For consistency with other CF keys:\nKEY_SUPPORTS_CALL_FORWARDING_PER_SERVICE_CLASS_BOOL and key value supports_call_forwarding_by_service_class_bool",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 4
+      },
+      "revId": "25cec939ae564fe527fcd201d672fd2ebef894ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "259ac657_98af3571",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsUtImplBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2022-01-11T21:02:49Z",
+      "side": 1,
+      "message": "These should have per-field comments and since they\u0027re public need to be in the api.txt file.  make update-api should fix that.",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 16
+      },
+      "revId": "25cec939ae564fe527fcd201d672fd2ebef894ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
