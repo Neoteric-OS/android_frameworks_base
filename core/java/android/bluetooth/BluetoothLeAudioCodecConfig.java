@@ -41,8 +41,20 @@ public final class BluetoothLeAudioCodecConfig {
     @Retention(RetentionPolicy.SOURCE)
     public @interface SourceCodecType {};
 
+    /** @hide */
+    @IntDef(prefix = "SESSION_TYPE", value = {
+        SESSION_TYPE_DECODE_ONLY,
+        SESSION_TYPE_ENCODE_ONLY,
+        SESSION_TYPE_ENCODE_AND_DECODE
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface CodecSessionType {};
+
     public static final int SOURCE_CODEC_TYPE_LC3 = 0;
     public static final int SOURCE_CODEC_TYPE_INVALID = 1000 * 1000;
+    public static final int SESSION_TYPE_ENCODE_AND_DECODE = 0;
+    public static final int SESSION_TYPE_ENCODE_ONLY = 1;
+    public static final int SESSION_TYPE_DECODE_ONLY = 2;
 
     /**
      * Represents the count of valid source codec types. Can be accessed via
@@ -53,17 +65,42 @@ public final class BluetoothLeAudioCodecConfig {
     private final @SourceCodecType int mCodecType;
 
     /**
+     * Indicates the codec config is for encode or decode session.
+     */
+    private final @CodecSessionType int mCodecSessionType;
+
+    /**
      * Creates a new BluetoothLeAudioCodecConfig.
      *
      * @param codecType the source codec type
+     * @param sessionType the session type of this source codec type
      */
-    private BluetoothLeAudioCodecConfig(@SourceCodecType int codecType) {
+    private BluetoothLeAudioCodecConfig(@SourceCodecType int codecType,
+                                        @CodecSessionType int sessionType) {
         mCodecType = codecType;
+        mCodecSessionType = sessionType;
     }
 
     @Override
     public String toString() {
-        return "{codecName:" + getCodecName() + "}";
+        String sessionTypeStr;
+        switch (mCodecSessionType) {
+            case SESSION_TYPE_DECODE_ONLY:
+                sessionTypeStr = "DECODE SESSION";
+                break;
+            case SESSION_TYPE_ENCODE_ONLY:
+                sessionTypeStr = "ENCODE SESSION";
+                break;
+            case SESSION_TYPE_ENCODE_AND_DECODE:
+                sessionTypeStr = "ENCODE AND DECODE SESSION";
+                break;
+            default:
+                sessionTypeStr = "UNKNOWN SESSION TYPE(" + mCodecSessionType + ")";
+                break;
+        }
+
+        return "{codecName:" + getCodecName()
+                + ", direction:" + sessionTypeStr + "}";
     }
 
     /**
@@ -72,7 +109,16 @@ public final class BluetoothLeAudioCodecConfig {
      * @return the codec type
      */
     public @SourceCodecType int getCodecType() {
-        return mCodecType;
+        return mCodecSessionType;
+    }
+
+    /**
+     * Gets the session type.
+     *
+     * @return the session type
+     */
+    public @SourceCodecType int getCodecSessionType() {
+        return mCodecSessionType;
     }
 
     /**
@@ -106,6 +152,7 @@ public final class BluetoothLeAudioCodecConfig {
      */
     public static final class Builder {
         private int mCodecType = BluetoothLeAudioCodecConfig.SOURCE_CODEC_TYPE_INVALID;
+        private int mCodecSessionType = BluetoothLeAudioCodecConfig.SESSION_TYPE_ENCODE_AND_DECODE;
 
         /**
          * Set codec type for Bluetooth codec config.
@@ -119,11 +166,21 @@ public final class BluetoothLeAudioCodecConfig {
         }
 
         /**
+         * Set session type for Bluetooth codec config.
+         *
+         * @param sessionType of this codec
+         * @return the same Builder instance
+         */
+        public @NonNull Builder setCodecSessionType(@CodecSessionType int sessionType) {
+            mCodecSessionType = sessionType;
+            return this;
+        }
+        /**
          * Build {@link BluetoothLeAudioCodecConfig}.
          * @return new BluetoothLeAudioCodecConfig built
          */
         public @NonNull BluetoothLeAudioCodecConfig build() {
-            return new BluetoothLeAudioCodecConfig(mCodecType);
+            return new BluetoothLeAudioCodecConfig(mCodecType, mCodecSessionType);
         }
     }
 }

@@ -29,6 +29,12 @@ public class BluetoothLeAudioCodecConfigTest extends TestCase {
         BluetoothLeAudioCodecConfig.SOURCE_CODEC_TYPE_INVALID,
     };
 
+    private int[] mSessionTypeArray = new int[] {
+        BluetoothLeAudioCodecConfig.SESSION_TYPE_DECODE_ONLY,
+        BluetoothLeAudioCodecConfig.SESSION_TYPE_ENCODE_ONLY,
+        BluetoothLeAudioCodecConfig.SESSION_TYPE_ENCODE_AND_DECODE,
+    };
+
     @SmallTest
     public void testBluetoothLeAudioCodecConfig_valid_get_methods() {
 
@@ -36,7 +42,8 @@ public class BluetoothLeAudioCodecConfigTest extends TestCase {
             int codecType = mCodecTypeArray[codecIdx];
 
             BluetoothLeAudioCodecConfig leAudioCodecConfig =
-                    buildBluetoothLeAudioCodecConfig(codecType);
+                    buildBluetoothLeAudioCodecConfig(codecType,
+                        BluetoothLeAudioCodecConfig.AUDIO_DIRECTION_UNSPECIFIED);
 
             if (codecType == BluetoothLeAudioCodecConfig.SOURCE_CODEC_TYPE_LC3) {
                 assertEquals("LC3", leAudioCodecConfig.getCodecName());
@@ -47,11 +54,23 @@ public class BluetoothLeAudioCodecConfigTest extends TestCase {
 
             assertEquals(codecType, leAudioCodecConfig.getCodecType());
         }
+
+        for (int sessionTypeIdx = 0; sessionTypeIdx < mSessionTypeArray.length; sessionTypeIdx++) {
+            int sessionType = mSessionTypeArray[sessionTypeIdx];
+
+            BluetoothLeAudioCodecConfig leAudioCodecConfig =
+                    buildBluetoothLeAudioCodecConfig(
+                            BluetoothLeAudioCodecConfig.SOURCE_CODEC_TYPE_LC3, sessionType);
+
+            assertEquals(sessionType, leAudioCodecConfig.getCodecSessionType());
+        }
     }
 
-    private BluetoothLeAudioCodecConfig buildBluetoothLeAudioCodecConfig(int sourceCodecType) {
+    private BluetoothLeAudioCodecConfig buildBluetoothLeAudioCodecConfig(int sourceCodecType,
+                                                                         int sessionType) {
         return new BluetoothLeAudioCodecConfig.Builder()
                     .setCodecType(sourceCodecType)
+                    .setSessionType(sessionType)
                     .build();
 
     }
