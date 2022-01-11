@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85905013_0475b4c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2022-01-11T17:32:50Z",
+      "side": 1,
+      "message": "Unfortunately need to keep this in the rway_updateConfiguration topic as existing tests will start failing without the changes in the topic\u0027s other CL.",
+      "revId": "085d59ba47638f0b5b3a61af9179f475f1f8d6c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
