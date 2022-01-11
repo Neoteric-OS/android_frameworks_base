@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ecf9e270_4fd8032e",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2022-01-11T04:59:09Z",
+      "side": 1,
+      "message": "The specification contains a lot of values, so I am just thinking keeping `front` in the naming may be easier as we plan to add support for the other location in the future.",
+      "parentUuid": "cbd86c2a_f809dc71",
+      "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9b8a9a4a_d38a1f0f",
         "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "writtenOn": "2022-01-11T02:46:04Z",
       "side": 1,
       "message": "nit: Please add a blank line between the summary and block tags!",
+      "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c94b35d2_b77b4da2",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2022-01-11T04:59:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b8a9a4a_d38a1f0f",
       "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
