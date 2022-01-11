@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0437432a_0d3aa964",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-11T19:32:17Z",
+      "side": 1,
+      "message": "still taking a look..",
+      "revId": "048bebf81178bc8a9810515755874c17c68edc93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c33dd0a_96828440",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-11T19:32:17Z",
+      "side": 1,
+      "message": "Out of curiousity? What units is \u0027lifetime\u0027 measured in? Can we reflect this in the name?\n\nWorth documenting some of the other fields as well",
+      "range": {
+        "startLine": 355,
+        "startChar": 29,
+        "endLine": 355,
+        "endChar": 55
+      },
+      "revId": "048bebf81178bc8a9810515755874c17c68edc93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "326f3707_b73ac911",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-11T19:32:17Z",
+      "side": 1,
+      "message": "nit: remove static?\n\nDo we need \u0027volatile\u0027 to ensure modifications are published across threads?\n\nDo we need any additional synchronization of these fields?",
+      "range": {
+        "startLine": 362,
+        "startChar": 12,
+        "endLine": 362,
+        "endChar": 18
+      },
+      "revId": "048bebf81178bc8a9810515755874c17c68edc93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8ee87ce_e63fd929",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-11T19:32:17Z",
+      "side": 1,
+      "message": "nit: move to a method?",
+      "range": {
+        "startLine": 934,
+        "startChar": 7,
+        "endLine": 969,
+        "endChar": 9
+      },
+      "revId": "048bebf81178bc8a9810515755874c17c68edc93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f8912c1_232fec5f",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-11T19:32:17Z",
+      "side": 1,
+      "message": "nit: prefix with storage?",
+      "range": {
+        "startLine": 1978,
+        "startChar": 64,
+        "endLine": 1978,
+        "endChar": 65
+      },
+      "revId": "048bebf81178bc8a9810515755874c17c68edc93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "988dba70_9b4239c6",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2780,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-11T19:32:17Z",
+      "side": 1,
+      "message": "Can we avoid modifying state in this \u0027check\u0027 method? Or rename appropriately",
+      "range": {
+        "startLine": 2780,
+        "startChar": 0,
+        "endLine": 2780,
+        "endChar": 41
+      },
+      "revId": "048bebf81178bc8a9810515755874c17c68edc93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
