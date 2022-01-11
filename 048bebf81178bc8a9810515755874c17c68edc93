@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "207f0037_80aa2757",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1651802
+      },
+      "writtenOn": "2022-01-11T21:06:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9c33dd0a_96828440",
+      "range": {
+        "startLine": 355,
+        "startChar": 29,
+        "endLine": 355,
+        "endChar": 55
+      },
+      "revId": "048bebf81178bc8a9810515755874c17c68edc93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "326f3707_b73ac911",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-01-11T19:32:17Z",
       "side": 1,
       "message": "nit: remove static?\n\nDo we need \u0027volatile\u0027 to ensure modifications are published across threads?\n\nDo we need any additional synchronization of these fields?",
+      "range": {
+        "startLine": 362,
+        "startChar": 12,
+        "endLine": 362,
+        "endChar": 18
+      },
+      "revId": "048bebf81178bc8a9810515755874c17c68edc93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2055859_2af5e719",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1651802
+      },
+      "writtenOn": "2022-01-11T21:06:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "326f3707_b73ac911",
       "range": {
         "startLine": 362,
         "startChar": 12,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "245e6370_1611b026",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1651802
+      },
+      "writtenOn": "2022-01-11T21:06:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a8ee87ce_e63fd929",
+      "range": {
+        "startLine": 934,
+        "startChar": 7,
+        "endLine": 969,
+        "endChar": 9
+      },
+      "revId": "048bebf81178bc8a9810515755874c17c68edc93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f8912c1_232fec5f",
@@ -110,6 +182,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0d02f93_468344c2",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1651802
+      },
+      "writtenOn": "2022-01-11T21:06:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6f8912c1_232fec5f",
+      "range": {
+        "startLine": 1978,
+        "startChar": 64,
+        "endLine": 1978,
+        "endChar": 65
+      },
+      "revId": "048bebf81178bc8a9810515755874c17c68edc93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "988dba70_9b4239c6",
@@ -123,6 +219,30 @@
       "writtenOn": "2022-01-11T19:32:17Z",
       "side": 1,
       "message": "Can we avoid modifying state in this \u0027check\u0027 method? Or rename appropriately",
+      "range": {
+        "startLine": 2780,
+        "startChar": 0,
+        "endLine": 2780,
+        "endChar": 41
+      },
+      "revId": "048bebf81178bc8a9810515755874c17c68edc93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e882152_f9028d92",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2780,
+      "author": {
+        "id": 1651802
+      },
+      "writtenOn": "2022-01-11T21:06:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "988dba70_9b4239c6",
       "range": {
         "startLine": 2780,
         "startChar": 0,
