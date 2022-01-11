@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7438fa4_8e8278f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1359095
+      },
+      "writtenOn": "2022-01-11T18:32:54Z",
+      "side": 1,
+      "message": "Please update the METADATA file to have \"license_type: RECIPROCAL\"\n\nIgnore the comment about NOTICE. The project contains CPL, which is reciprocal.\n",
+      "revId": "556ae099a4b13caea57f9f482f02d604d90d9234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
