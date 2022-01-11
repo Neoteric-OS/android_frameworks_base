@@ -541,14 +541,15 @@ public class NetworkStatsManager {
      * Return snapshot of current UID statistics, including any {@link TrafficStats#UID_TETHERING},
      * video calling data usage and count of network operations that set by
      * {@link TrafficStats#incrementOperationCount}. The returned data doesn't include any
-     * statistics that is reported by {@link NetworkStatsProvider}.
+     * statistics that cannot be seen by kernel, e.g. statistics reported by
+     * {@link NetworkStatsProvider}.
      *
      * @param requiredIfaces A list of interfaces the stats should be restricted to, or
-     *               {@link NetworkStats#INTERFACES_ALL}.
+     *                       null to represent no restriction.
      *
      * @hide
      */
-    //@SystemApi
+    @SystemApi
     @RequiresPermission(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK)
     @NonNull public android.net.NetworkStats getDetailedUidStats(
                 @NonNull Set<String> requiredIfaces) {
