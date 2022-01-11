@@ -21,6 +21,7 @@ import android.provider.Settings;
 
 import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.res.R;
+import com.android.systemui.statusbar.policy.KeyguardStateController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +50,7 @@ public interface QSHost {
     Context getUserContext();
     int getUserId();
     Collection<QSTile> getTiles();
+    KeyguardStateController getKeyguardStateController();
     void addCallback(Callback callback);
     void removeCallback(Callback callback);
     void removeTile(String tileSpec);
