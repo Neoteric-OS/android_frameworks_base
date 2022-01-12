@@ -179,6 +179,7 @@ import android.app.admin.NetworkEvent;
 import android.app.admin.ParcelableGranteeMap;
 import android.app.admin.PasswordMetrics;
 import android.app.admin.PasswordPolicy;
+import android.app.admin.PreferentialNetworkServicePreference;
 import android.app.admin.SecurityLog;
 import android.app.admin.SecurityLog.SecurityEvent;
 import android.app.admin.StartInstallingUpdateCallback;
@@ -3277,14 +3278,15 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         updatePermissionPolicyCache(userId);
         updateAdminCanGrantSensorsPermissionCache(userId);
 
-        final boolean preferentialNetworkServiceEnabled;
+        final PreferentialNetworkServicePreference preferentialNetworkServicePreference;
         synchronized (getLockObject()) {
             ActiveAdmin owner = getDeviceOrProfileOwnerAdminLocked(userId);
-            preferentialNetworkServiceEnabled = owner != null
-                    ? owner.mPreferentialNetworkServiceEnabled
-                             : DevicePolicyManager.PREFERENTIAL_NETWORK_SERVICE_ENABLED_DEFAULT;
+            preferentialNetworkServicePreference = owner != null
+                    ? owner.mPreferentialNetworkServicePreference
+                             : (new PreferentialNetworkServicePreference.Builder())
+                                     .setPreferentialNetworkServiceEnabled(false).build();
         }
-        updateNetworkPreferenceForUser(userId, preferentialNetworkServiceEnabled);
+        updateNetworkPreferenceForUser(userId, preferentialNetworkServicePreference);
 
         startOwnerService(userId, "start-user");
     }
@@ -11882,6 +11884,62 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
     }
 
     @Override
+    public void setPreferentialNetworkServicePreference(
+            PreferentialNetworkServicePreference preferentialNetworkServicePreference) {
+        if (!mHasFeature) {
+            return;
+        }
+        final CallerIdentity caller = getCallerIdentity();
+        Preconditions.checkCallAuthorization(isProfileOwner(caller),
+                "Caller is not profile owner;"
+                        + " only profile owner may control the preferntial network service");
+        synchronized (getLockObject()) {
+            final ActiveAdmin requiredAdmin = getProfileOwnerAdminLocked(
+                    caller.getUserId());
+            if (requiredAdmin != null) {
+                if (!requiredAdmin.mPreferentialNetworkServicePreference.equals(
+                        preferentialNetworkServicePreference)) {
+                    requiredAdmin.mPreferentialNetworkServiceEnabled =
+                            preferentialNetworkServicePreference
+                                    .isPreferentialNetworkServiceEnabled();
+                    requiredAdmin.mPreferentialNetworkServicePreference =
+                            preferentialNetworkServicePreference;
+                    saveSettingsLocked(caller.getUserId());
+                }
+            }
+        }
+        updateNetworkPreferenceForUser(caller.getUserId(), preferentialNetworkServicePreference);
+        DevicePolicyEventLogger
+                .createEvent(DevicePolicyEnums.SET_PREFERENTIAL_NETWORK_SERVICE_ENABLED)
+                .setBoolean(
+                        preferentialNetworkServicePreference.isPreferentialNetworkServiceEnabled())
+                .write();
+    }
+
+    @Override
+    public PreferentialNetworkServicePreference getPreferentialNetworkServicePreference(
+            int userHandle) {
+        PreferentialNetworkServicePreference preferentialNetworkServicePreferenceDefault =
+                (new PreferentialNetworkServicePreference.Builder())
+                        .setPreferentialNetworkServiceEnabled(false).build();
+        if (!mHasFeature) {
+            return preferentialNetworkServicePreferenceDefault;
+        }
+
+        final CallerIdentity caller = getCallerIdentity();
+        Preconditions.checkCallAuthorization(isProfileOwner(caller),
+                "Caller is not profile owner");
+        synchronized (getLockObject()) {
+            final ActiveAdmin requiredAdmin = getProfileOwnerAdminLocked(userHandle);
+            if (requiredAdmin != null) {
+                return requiredAdmin.mPreferentialNetworkServicePreference;
+            } else {
+                return preferentialNetworkServicePreferenceDefault;
+            }
+        }
+    }
+
+    @Override
     public void setLockTaskPackages(ComponentName who, String[] packages)
             throws SecurityException {
         Objects.requireNonNull(who, "ComponentName is null");
@@ -17538,6 +17596,25 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
             return;
         }
         int networkPreference = preferentialNetworkServiceEnabled
+                ? PROFILE_NETWORK_PREFERENCE_ENTERPRISE : PROFILE_NETWORK_PREFERENCE_DEFAULT;
+        ProfileNetworkPreference.Builder preferenceBuilder =
+                new ProfileNetworkPreference.Builder();
+        preferenceBuilder.setPreference(networkPreference);
+        List<ProfileNetworkPreference> preferences = new ArrayList<>();
+        preferences.add(preferenceBuilder.build());
+        mInjector.binderWithCleanCallingIdentity(() ->
+                mInjector.getConnectivityManager().setProfileNetworkPreferences(
+                        UserHandle.of(userId), preferences,
+                        null /* executor */, null /* listener */));
+    }
+
+    private void updateNetworkPreferenceForUser(int userId,
+            PreferentialNetworkServicePreference preferentialNetworkServicePreference) {
+        if (!isManagedProfile(userId)) {
+            return;
+        }
+        int networkPreference =
+                preferentialNetworkServicePreference.isPreferentialNetworkServiceEnabled()
                 ? PROFILE_NETWORK_PREFERENCE_ENTERPRISE : PROFILE_NETWORK_PREFERENCE_DEFAULT;
         ProfileNetworkPreference.Builder preferenceBuilder =
                 new ProfileNetworkPreference.Builder();
