@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78b8181b_b70af5c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2022-01-12T20:11:48Z",
+      "side": 1,
+      "message": "owners +1 for xml resource removals",
+      "revId": "21ac89b557e471dbcd5a9c0e052dd456c2ceaddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
