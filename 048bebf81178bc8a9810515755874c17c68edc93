@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c37fc3cc_37ddace2",
+        "filename": "services/core/java/com/android/server/SmartStorageMaintIdler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1651802
+      },
+      "writtenOn": "2022-01-12T06:36:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "106b200d_7ddb842a",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 49
+      },
+      "revId": "048bebf81178bc8a9810515755874c17c68edc93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38391e30_d8511fed",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-01-11T23:37:25Z",
       "side": 1,
       "message": "final (especially since we are synchronizing on it and the object changes in future)",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "048bebf81178bc8a9810515755874c17c68edc93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e1a3eaa_766fb3ca",
+        "filename": "services/core/java/com/android/server/SmartStorageMaintIdler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1651802
+      },
+      "writtenOn": "2022-01-12T06:36:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "38391e30_d8511fed",
       "range": {
         "startLine": 39,
         "startChar": 21,
