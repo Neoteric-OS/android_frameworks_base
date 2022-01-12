@@ -89,6 +89,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8b3877c_a29140a7",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-12T19:06:54Z",
+      "side": 1,
+      "message": "I wasn\u0027t thinking specifically about the txt files but more generally. I am not sure if you plan on generating android_system_stubs_current using this but that would need to include the public API for conscrypt and i18n if the system API is not available.\n\nIf you do plan on generating that it would be better to just get conscrypt and i18n to generate an empty system API than add any special logic into combined_apis to handle that.\n\nThe system API for conscrypt and i18n should just be empty txt files so merging them in shouldn\u0027t break anything, unless something in Soong complains about the file not being generated.",
+      "parentUuid": "378fb1ec_156caafa",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eecfb8cb_280f9ebf",
@@ -155,6 +173,24 @@
       "writtenOn": "2022-01-10T17:24:04Z",
       "side": 1,
       "message": "This module (once it is renamed to frameworks-base-api) will create the following:\n\napi-versions-xml-public-filtered\n\nframeworks-base-api-current.srcjar\n\nframeworks-base-api-current.txt\nframeworks-base-api-removed.txt\nframeworks-base-api-system-current.txt\nframeworks-base-api-system-removed.txt\nframeworks-base-api-module-lib-current.txt\nframeworks-base-api-module-lib-removed.txt\nframeworks-base-api-system-server-current.txt\nframeworks-base-api-system-server-removed.txt\n\nThe last two do not match the current names of the modules which are respectively:\n\nservices-system-server-current.txt\nservices-system-server-removed.txt",
+      "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f8bd0c3_69bc9d1c",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-12T19:06:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d8bf416_dfaa05d4",
       "revId": "79b7f1f133a71ae6d05dbce48533424345c2d3c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
