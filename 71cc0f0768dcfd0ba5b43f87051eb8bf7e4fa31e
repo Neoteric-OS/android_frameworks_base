@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e0fc278_838dc78c",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4218,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-01-12T16:24:20Z",
+      "side": 1,
+      "message": "1. Question, any 3p apps are allowed to receive it? It not, you may need to protect it with a permission.\n\n2. You\u0027ve changed the string value, but that\u0027s dangerous because existing clients of this broadcast have the string in their manifest, and they likely won\u0027t realize they have to update the manifest.\n\nI\u0027m checking with other API councilors on 2.",
+      "revId": "71cc0f0768dcfd0ba5b43f87051eb8bf7e4fa31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
