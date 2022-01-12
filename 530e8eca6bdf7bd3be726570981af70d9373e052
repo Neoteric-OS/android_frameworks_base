@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7f57abc_8e8ac04f",
+        "filename": "core/java/android/bluetooth/BluetoothLeCallControl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-01-12T14:54:56Z",
+      "side": 1,
+      "message": "`If mCcid \u003d\u003d 0 \u003d\u003e return false` but at the start of the method you are also returning false `if mCcid !\u003d 0`.\n\nIt\u0027s not related to this CL and I don\u0027t know what it is, but it looks suspicious .",
+      "range": {
+        "startLine": 601,
+        "startChar": 12,
+        "endLine": 601,
+        "endChar": 17
+      },
+      "revId": "530e8eca6bdf7bd3be726570981af70d9373e052",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
