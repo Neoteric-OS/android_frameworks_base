@@ -1,0 +1,82 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019150557",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1931086?revision\u003d8",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "636c09c6_fabbad77",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-12T15:23:52Z",
+      "side": 1,
+      "message": "\"build\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 11
+      },
+      "revId": "21ac89b557e471dbcd5a9c0e052dd456c2ceaddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019150557",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1931086?revision\u003d8",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c4c5d7b7_c6dd8be4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-12T15:23:52Z",
+      "side": 1,
+      "message": "\"make RunSettingsRoboTests\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 31
+      },
+      "revId": "21ac89b557e471dbcd5a9c0e052dd456c2ceaddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019150557",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1931086?revision\u003d8",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "cfaa09ff_9b4d5199",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-12T15:23:52Z",
+      "side": 1,
+      "message": "\"Added and logged system properties in vendors\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "21ac89b557e471dbcd5a9c0e052dd456c2ceaddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
