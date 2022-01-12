@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "59e9fbf7_548324b1",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2022-01-12T00:52:21Z",
+      "side": 1,
+      "message": "Sync with Rahul, change return value type to bitfield and add more description in the java doc.",
+      "parentUuid": "e90d828f_d372a403",
+      "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cbd86c2a_f809dc71",
         "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
         "patchSetId": 3
@@ -103,6 +121,24 @@
       "side": 1,
       "message": "The specification contains a lot of values, so I am just thinking keeping `front` in the naming may be easier as we plan to add support for the other location in the future.",
       "parentUuid": "cbd86c2a_f809dc71",
+      "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4175d2e6_8c0a839d",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2022-01-12T00:52:21Z",
+      "side": 1,
+      "message": "Per discussion, change return value type to bitfield",
+      "parentUuid": "ecf9e270_4fd8032e",
       "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
