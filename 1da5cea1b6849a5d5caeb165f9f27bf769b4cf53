@@ -51,6 +51,41 @@
       "parentUuid": "73d2c3cf_6c984754",
       "revId": "1da5cea1b6849a5d5caeb165f9f27bf769b4cf53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e71668ae_faccbee9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-12T02:21:18Z",
+      "side": 1,
+      "message": "LGTM (assuming comments addressed), since this is a straight cherry-pick. Not sure it will actually help our code though. There needs to be a shim for it.",
+      "revId": "1da5cea1b6849a5d5caeb165f9f27bf769b4cf53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e49014d_abafaffc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-12T02:21:18Z",
+      "side": 1,
+      "message": "Sure. But we don\u0027t backport these APIs to older releases. For example: we didn\u0027t modify sc-dev to add a constant for T, and we didn\u0027t modify mainline-prod to add a constant for sc-dev.",
+      "parentUuid": "71caa2ce_71bb60e7",
+      "revId": "1da5cea1b6849a5d5caeb165f9f27bf769b4cf53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
