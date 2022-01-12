@@ -16,6 +16,29 @@
       "message": "Please confirm automerger Linter warning is non-issue",
       "revId": "afe9ffdad0e14d62106c9114e4df94789089c980",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b2eb7c8_d7ee5a43",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4882,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2022-01-12T16:19:18Z",
+      "side": 1,
+      "message": "Enable is redundant in the name, lets shorten to:\nKEY_SUPPORTS_EAP_AKA_FAST_REAUTH_BOOL",
+      "range": {
+        "startLine": 4882,
+        "startChar": 35,
+        "endLine": 4882,
+        "endChar": 82
+      },
+      "revId": "afe9ffdad0e14d62106c9114e4df94789089c980",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
