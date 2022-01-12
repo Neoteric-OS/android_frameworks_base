@@ -70,6 +70,24 @@
       "parentUuid": "a1ca5048_75fd6222",
       "revId": "71cc0f0768dcfd0ba5b43f87051eb8bf7e4fa31e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "783bd4b6_17787198",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4218,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-01-12T17:02:57Z",
+      "side": 1,
+      "message": "Okay if only the system server and sysUI can receive it, then public doesn\u0027t make sense. And 3p apps can\u0027t receive it.\n\nSo 1) let\u0027s change it to `@SystemApi(client\u003dMODULE_LIBRARIES)`, 2) revert to the original string with SuppressLint, and 3) document the broadcast will be explicitly sent to specific receivers in line 4210. Some thing like \"... around restore time to specific receivers\".",
+      "parentUuid": "7b57c1b1_6c696580",
+      "revId": "71cc0f0768dcfd0ba5b43f87051eb8bf7e4fa31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
