@@ -33,6 +33,24 @@
       "message": "Is this really something that belongs in sc-mainline-prod? My mental model of that branch is that it\u0027s basically equivalent to S for most things. What is the code that needs this constant? Could that code use a shim instead?",
       "revId": "1da5cea1b6849a5d5caeb165f9f27bf769b4cf53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71caa2ce_71bb60e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-01-12T01:30:39Z",
+      "side": 1,
+      "message": "We use the SDK code to check if specific code or test should be executed. When we use @IgnoreUpTo(S) as running in T, it\u0027s not really accurate. When v2 ROM is push to device with our module, @IgnoreUpTo(S) may misjudge whether the code should be executed or not since the SDK is greater than S.",
+      "parentUuid": "73d2c3cf_6c984754",
+      "revId": "1da5cea1b6849a5d5caeb165f9f27bf769b4cf53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
