@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61f7260b_ca34c9b9",
+        "filename": "services/core/java/com/android/server/media/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2022-01-12T12:13:11Z",
+      "side": 1,
+      "message": "Please replace this with:\n\n```\n# go/android-fwk-media-solutions for info on areas of ownership.\ninclude platform/frameworks/av:/media/janitors/media_solutions_OWNERS\n```",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 18
+      },
+      "revId": "5cd2ef41964c33104f5ea1f9912b1024076733ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
