@@ -39,6 +39,29 @@
       },
       "revId": "afe9ffdad0e14d62106c9114e4df94789089c980",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5407ae00_0fc6ec28",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5028,
+      "author": {
+        "id": 1633352
+      },
+      "writtenOn": "2022-01-12T17:23:11Z",
+      "side": 1,
+      "message": "since the support is required per 3GPP and TR51, can we change the default to true and set it to false in paris config for carriers which explicitly require the UE to not support it?",
+      "range": {
+        "startLine": 5028,
+        "startChar": 12,
+        "endLine": 5028,
+        "endChar": 87
+      },
+      "revId": "afe9ffdad0e14d62106c9114e4df94789089c980",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
