@@ -34,6 +34,29 @@
       "parentUuid": "f75de5b9_f97356b9",
       "revId": "89e8e701f64660f27a2cc3271b87be32d744f5ab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d4df5b4_78ae5fb3",
+        "filename": "packages/ConnectivityT/framework-t/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-12T12:00:53Z",
+      "side": 1,
+      "message": "So as I was saying on the previous patch, I think this name doesn\u0027t make it clear who can use this filegroup, and filegroups are a bit difficult to manipulate. Case in point here, strictly speaking the net-utils-annotations-src target should only be visible to the IpSec part, which is in the framework today and will be moved in the module soon, and it\u0027s difficult to guarantee we\u0027re not going to miss that.\n\nIIUC, now nobody in the framework (that won\u0027t move to the connectivity module) should be using this annotation, because you removed the only usage from VCN a few days ago. As we discussed in our 1:1, if we still need this annotation in the framework it seems like we should be making a third copy of it.",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 38
+      },
+      "revId": "89e8e701f64660f27a2cc3271b87be32d744f5ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
