@@ -88,6 +88,24 @@
       "parentUuid": "7b57c1b1_6c696580",
       "revId": "71cc0f0768dcfd0ba5b43f87051eb8bf7e4fa31e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c52f585_fdf31f34",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4218,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-01-12T19:33:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "783bd4b6_17787198",
+      "revId": "71cc0f0768dcfd0ba5b43f87051eb8bf7e4fa31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
