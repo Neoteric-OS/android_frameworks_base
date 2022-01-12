@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c70b6ee_e21e7c67",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/util/annotations/PolicyDirection.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-12T11:57:07Z",
+      "side": 1,
+      "message": "• android.net is supposed to be for public classes. I know that in Java, \"android.net\" and \"android.net.util\" are unrelated packages but I wonder if that might not be a bit confusing.\n• Furthermore, I think \"util\" is not really appropriate for annotations.\n• I fear that without the context, it will be difficult for a dev to remember what the \"net-util-annotation\" target is (who can use it and so on). Besides we don\u0027t want to multiply the targets.\n\nI think the best thing to do is just to move this annotation back into the IpSecManager class. Note that the old file used to have a comment saying it was moved into its own file for the IKEv2 module, but now that this constraint has disappeared, I think it should go back under IpSecManager.",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "85a776d6acb5b35e44ad73c578d4971ad562516a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
