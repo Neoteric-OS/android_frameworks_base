@@ -34,6 +34,24 @@
       "parentUuid": "2e0fc278_838dc78c",
       "revId": "71cc0f0768dcfd0ba5b43f87051eb8bf7e4fa31e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1ca5048_75fd6222",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4218,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-01-12T16:45:05Z",
+      "side": 1,
+      "message": "Okay I don\u0027t know what this action is, so I don\u0027t know the answer to 1... That\u0027s something for you to investigate, really...\n\nBut are you really using it? http://cs/android/frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/SettingsHelper.java;l\u003d209;rcl\u003d763c003f49c5d58a17daaf82d602e894a9adc89d is the only sender code I can find, and it\u0027s not sent to the BT package.",
+      "parentUuid": "a9dd109d_ad0e878a",
+      "revId": "71cc0f0768dcfd0ba5b43f87051eb8bf7e4fa31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
