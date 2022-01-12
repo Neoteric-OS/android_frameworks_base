@@ -90,6 +90,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b09a419f_99cfe7ae",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1929540
+      },
+      "writtenOn": "2022-01-12T14:40:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "59e9fbf7_548324b1",
+      "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbd86c2a_f809dc71",
@@ -139,6 +157,24 @@
       "side": 1,
       "message": "Per discussion, change return value type to bitfield",
       "parentUuid": "ecf9e270_4fd8032e",
+      "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9976654_238e43ca",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1929540
+      },
+      "writtenOn": "2022-01-12T14:40:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4175d2e6_8c0a839d",
       "revId": "c9fff56c648dc1592d83dbacbe6285526ad4d472",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
