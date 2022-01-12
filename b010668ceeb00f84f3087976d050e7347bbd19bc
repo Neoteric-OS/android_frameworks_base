@@ -16,6 +16,24 @@
       "message": "I don\u0027t think SystemApi(MODULE_LIBRARIES) makes sense for string constants.\n\nIf you need to limit who can receive or send the broadcast, you need to use a permission that\u0027s likely a PRIV permission, and you\u0027d use @SystemApi(PRIV_ALL) with @RequiresPermission.\n\nIf there\u0027s no permission and any apps can send it anyway, then you can make then public.\n\nMODULE_LIBRARIES doesn\u0027t really protect anything here, so you probably want to do either of the above.",
       "revId": "b010668ceeb00f84f3087976d050e7347bbd19bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86fb88ce_729f43e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-01-12T12:19:02Z",
+      "side": 1,
+      "message": "Done.\nI hope I understand your comment correctly.\nI don\u0027t have any specific permission so I make them public as you suggest.",
+      "parentUuid": "c61f817e_17793bbd",
+      "revId": "b010668ceeb00f84f3087976d050e7347bbd19bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
