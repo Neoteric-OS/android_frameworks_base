@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "569f2abe_095b13c3",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2733,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-12T15:05:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0ca5d2c9_292bc3b3",
+      "range": {
+        "startLine": 2733,
+        "startChar": 59,
+        "endLine": 2733,
+        "endChar": 83
+      },
+      "revId": "0966aff497b998aa9bea2885209e9e64c6945d62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66c51222_8968b4e2",
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "I initialized it with null, because of the below catch part.\nIs it okay not to initialize null fos?\n\n} catch (IOException e) {\n    if (fos !\u003d null) {\n        mHourlyWriteFile.failWrite(fos);\n    }\n}",
       "parentUuid": "66c51222_8968b4e2",
+      "range": {
+        "startLine": 2742,
+        "startChar": 8,
+        "endLine": 2743,
+        "endChar": 48
+      },
+      "revId": "0966aff497b998aa9bea2885209e9e64c6945d62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "462a4810_66a6bdda",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2743,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-12T15:05:21Z",
+      "side": 1,
+      "message": "Ah, right. That\u0027s annoying.",
+      "parentUuid": "5468bc1c_c467b270",
       "range": {
         "startLine": 2742,
         "startChar": 8,
@@ -273,6 +321,30 @@
       "side": 1,
       "message": "This uses the same condition check in fstrim() and runIdleMaint().\n(needsCheckpoint \u003d\u003d true and supportsBlockCheckpoint \u003d\u003d false) means system uses checkpoint\u003ddisable mode and it is not block device backed checkpoint.",
       "parentUuid": "a6aad57b_1dfcfcdc",
+      "range": {
+        "startLine": 2806,
+        "startChar": 0,
+        "endLine": 2806,
+        "endChar": 67
+      },
+      "revId": "0966aff497b998aa9bea2885209e9e64c6945d62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06cb6e79_5ed9c643",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2806,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-12T15:05:21Z",
+      "side": 1,
+      "message": "Got it. Thanks for the explanation",
+      "parentUuid": "b68d03ff_786e62c9",
       "range": {
         "startLine": 2806,
         "startChar": 0,

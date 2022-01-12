@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de0085dc_4c446006",
+        "filename": "services/core/java/com/android/server/SmartStorageMaintIdler.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-12T15:05:21Z",
+      "side": 1,
+      "message": "Move into synchronized block?\n\nActually, I wonder if we need this synchronization? It seems there are only 2 threads that interact with this feature:\n\nT1. The thread that runs handleSystemReady and initializes the configs\nT2. The thread (main thread) that executes the job onStart/onStop which actually runs the idle maint\n\nIIUC, T1 and T2 should never race? And the initialized variables are published correctly with \u0027volatile\u0027\n\nIf the main work only happens on T2 then we shouldn\u0027t need any synchronization?\n\nWdyt?",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 28
+      },
+      "revId": "4bed59b10eef15c95134ac41b893eecbb4b36a68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8246fb7_3478bf8f",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2805,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2022-01-12T15:05:21Z",
+      "side": 1,
+      "message": "nit: maybe instead of setXYZ, runXYZ is better?",
+      "range": {
+        "startLine": 2805,
+        "startChar": 9,
+        "endLine": 2805,
+        "endChar": 26
+      },
+      "revId": "4bed59b10eef15c95134ac41b893eecbb4b36a68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
