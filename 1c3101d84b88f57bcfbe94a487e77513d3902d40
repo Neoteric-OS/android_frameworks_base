@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97b80b85_749d2af2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2022-01-12T17:27:08Z",
+      "side": 1,
+      "message": "LGTM but it seems like just \"return 0;\" would be cleaner overall",
+      "revId": "1c3101d84b88f57bcfbe94a487e77513d3902d40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
