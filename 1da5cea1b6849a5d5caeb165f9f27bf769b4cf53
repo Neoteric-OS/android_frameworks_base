@@ -86,6 +86,24 @@
       "parentUuid": "71caa2ce_71bb60e7",
       "revId": "1da5cea1b6849a5d5caeb165f9f27bf769b4cf53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c046d4f_a4943a24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-12T15:10:13Z",
+      "side": 1,
+      "message": "(please ignore this comment, I thought this CL was in sc-mainline-prod)",
+      "parentUuid": "7e49014d_abafaffc",
+      "revId": "1da5cea1b6849a5d5caeb165f9f27bf769b4cf53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
