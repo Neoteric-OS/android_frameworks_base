@@ -179,6 +179,7 @@ import android.app.admin.NetworkEvent;
 import android.app.admin.ParcelableGranteeMap;
 import android.app.admin.PasswordMetrics;
 import android.app.admin.PasswordPolicy;
+import android.app.admin.PreferentialNetworkServiceConfig;
 import android.app.admin.SecurityLog;
 import android.app.admin.SecurityLog.SecurityEvent;
 import android.app.admin.StartInstallingUpdateCallback;
@@ -3277,14 +3278,14 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         updatePermissionPolicyCache(userId);
         updateAdminCanGrantSensorsPermissionCache(userId);
 
-        final boolean preferentialNetworkServiceEnabled;
+        final PreferentialNetworkServiceConfig preferentialNetworkServiceConfig;
         synchronized (getLockObject()) {
             ActiveAdmin owner = getDeviceOrProfileOwnerAdminLocked(userId);
-            preferentialNetworkServiceEnabled = owner != null
-                    ? owner.mPreferentialNetworkServiceEnabled
-                             : DevicePolicyManager.PREFERENTIAL_NETWORK_SERVICE_ENABLED_DEFAULT;
+            preferentialNetworkServiceConfig = owner != null
+                    ? owner.mPreferentialNetworkServiceConfig
+                             : (new PreferentialNetworkServiceConfig.Builder()).build();
         }
-        updateNetworkPreferenceForUser(userId, preferentialNetworkServiceEnabled);
+        updateNetworkPreferenceForUser(userId, preferentialNetworkServiceConfig);
 
         startOwnerService(userId, "start-user");
     }
@@ -3301,7 +3302,8 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
 
     @Override
     void handleStopUser(int userId) {
-        updateNetworkPreferenceForUser(userId, false);
+        updateNetworkPreferenceForUser(userId, (new PreferentialNetworkServiceConfig.Builder())
+                .setEnabled(false).build());
         stopOwnerService(userId, "stop-user");
     }
 
@@ -11882,6 +11884,62 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
     }
 
     @Override
+    public void setPreferentialNetworkServiceConfig(
+            PreferentialNetworkServiceConfig preferentialNetworkServiceConfig) {
+        if (!mHasFeature) {
+            return;
+        }
+        final CallerIdentity caller = getCallerIdentity();
+        Preconditions.checkCallAuthorization(isProfileOwner(caller),
+                "Caller is not profile owner;"
+                        + " only profile owner may control the preferntial network service");
+        synchronized (getLockObject()) {
+            final ActiveAdmin requiredAdmin = getProfileOwnerAdminLocked(
+                    caller.getUserId());
+            if (requiredAdmin != null) {
+                if (!requiredAdmin.mPreferentialNetworkServiceConfig.equals(
+                        preferentialNetworkServiceConfig)) {
+                    requiredAdmin.mPreferentialNetworkServiceEnabled =
+                            preferentialNetworkServiceConfig
+                                    .isEnabled();
+                    requiredAdmin.mPreferentialNetworkServiceConfig =
+                            preferentialNetworkServiceConfig;
+                    saveSettingsLocked(caller.getUserId());
+                }
+            }
+        }
+        updateNetworkPreferenceForUser(caller.getUserId(), preferentialNetworkServiceConfig);
+        DevicePolicyEventLogger
+                .createEvent(DevicePolicyEnums.SET_PREFERENTIAL_NETWORK_SERVICE_ENABLED)
+                .setBoolean(
+                        preferentialNetworkServiceConfig.isEnabled())
+                .write();
+    }
+
+    @Override
+    public PreferentialNetworkServiceConfig getPreferentialNetworkServiceConfig(
+            int userHandle) {
+        PreferentialNetworkServiceConfig preferentialNetworkServiceConfigDefault =
+                (new PreferentialNetworkServiceConfig.Builder())
+                        .setEnabled(false).build();
+        if (!mHasFeature) {
+            return preferentialNetworkServiceConfigDefault;
+        }
+
+        final CallerIdentity caller = getCallerIdentity();
+        Preconditions.checkCallAuthorization(isProfileOwner(caller),
+                "Caller is not profile owner");
+        synchronized (getLockObject()) {
+            final ActiveAdmin requiredAdmin = getProfileOwnerAdminLocked(userHandle);
+            if (requiredAdmin != null) {
+                return requiredAdmin.mPreferentialNetworkServiceConfig;
+            } else {
+                return preferentialNetworkServiceConfigDefault;
+            }
+        }
+    }
+
+    @Override
     public void setLockTaskPackages(ComponentName who, String[] packages)
             throws SecurityException {
         Objects.requireNonNull(who, "ComponentName is null");
@@ -17538,6 +17596,25 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
             return;
         }
         int networkPreference = preferentialNetworkServiceEnabled
+                ? PROFILE_NETWORK_PREFERENCE_ENTERPRISE : PROFILE_NETWORK_PREFERENCE_DEFAULT;
+        ProfileNetworkPreference.Builder preferenceBuilder =
+                new ProfileNetworkPreference.Builder();
+        preferenceBuilder.setPreference(networkPreference);
+        List<ProfileNetworkPreference> preferences = new ArrayList<>();
+        preferences.add(preferenceBuilder.build());
+        mInjector.binderWithCleanCallingIdentity(() ->
+                mInjector.getConnectivityManager().setProfileNetworkPreferences(
+                        UserHandle.of(userId), preferences,
+                        null /* executor */, null /* listener */));
+    }
+
+    private void updateNetworkPreferenceForUser(int userId,
+            PreferentialNetworkServiceConfig preferentialNetworkServiceConfig) {
+        if (!isManagedProfile(userId)) {
+            return;
+        }
+        int networkPreference =
+                preferentialNetworkServiceConfig.isEnabled()
                 ? PROFILE_NETWORK_PREFERENCE_ENTERPRISE : PROFILE_NETWORK_PREFERENCE_DEFAULT;
         ProfileNetworkPreference.Builder preferenceBuilder =
                 new ProfileNetworkPreference.Builder();

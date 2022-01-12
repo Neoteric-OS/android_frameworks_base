@@ -10215,6 +10215,57 @@ public class DevicePolicyManager {
     }
 
     /**
+     * Sets preferential network preference on the work profile.
+     * {@see PreferentialNetworkServiceConfig}
+     *
+     * An example of a supported preferential network service is the Enterprise
+     * slice on 5G networks.
+     *
+     * By default, preferential network service is disabled on the work profile on supported
+     * carriers and devices. Admins can explicitly enable it with this API.
+     * On fully-managed devices this method is unsupported because all traffic is considered
+     * work traffic.
+     *
+     * <p>This method can only be called by the profile owner of a managed profile.
+     * @param preferentialNetworkServiceConfig preferential network preference.
+     * @throws SecurityException if the caller is not the profile owner.
+     **/
+    public void setPreferentialNetworkServiceConfig(
+            @NonNull PreferentialNetworkServiceConfig preferentialNetworkServiceConfig) {
+        throwIfParentInstance("setPreferentialNetworkServiceConfig");
+        if (mService == null) {
+            return;
+        }
+        try {
+            mService.setPreferentialNetworkServiceConfig(preferentialNetworkServiceConfig);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Get preferential network preference
+     * {@see PreferentialNetworkServiceConfig}
+     *
+     * <p>This method can be called by the profile owner of a managed profile.
+     *
+     * @return preferential network preference.
+     * @throws SecurityException if the caller is not the profile owner.
+     */
+    public @NonNull PreferentialNetworkServiceConfig getPreferentialNetworkServiceConfig() {
+        throwIfParentInstance("getPreferentialNetworkServiceConfig");
+        if (mService == null) {
+            return (new PreferentialNetworkServiceConfig.Builder())
+                    .setEnabled(false).build();
+        }
+        try {
+            return mService.getPreferentialNetworkServiceConfig(myUserId());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * This method is mostly deprecated.
      * Most of the settings that still have an effect have dedicated setter methods or user
      * restrictions. See individual settings for details.
