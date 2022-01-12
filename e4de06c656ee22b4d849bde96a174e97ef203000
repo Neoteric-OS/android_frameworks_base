@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e410c9cc_b303d4ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-01-12T15:43:29Z",
+      "side": 1,
+      "message": "Could you provide some more context? Is there a bug for this feature? What is the use-case of this added HdmiCecActiveness class?",
+      "revId": "e4de06c656ee22b4d849bde96a174e97ef203000",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
