@@ -52,6 +52,24 @@
       "parentUuid": "a9dd109d_ad0e878a",
       "revId": "71cc0f0768dcfd0ba5b43f87051eb8bf7e4fa31e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b57c1b1_6c696580",
+        "filename": "core/java/android/content/Intent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4218,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-01-12T16:52:18Z",
+      "side": 1,
+      "message": "Yes it\u0027s used:\n\nIt is sent to \"android\" and it got catch by the BluetoothManagerService in the android server process:\nhttps://source.corp.google.com/android/frameworks/base/services/core/java/com/android/server/BluetoothManagerService.java?q\u003df:BluetoothManagerService.java%20SETTING_RESTORED\u0026sq\u003dp:%5Eandroid$",
+      "parentUuid": "a1ca5048_75fd6222",
+      "revId": "71cc0f0768dcfd0ba5b43f87051eb8bf7e4fa31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
