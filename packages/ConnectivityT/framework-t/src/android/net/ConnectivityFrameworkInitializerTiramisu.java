@@ -48,5 +48,11 @@ public final class ConnectivityFrameworkInitializerTiramisu {
                     return new NsdManager(context, service);
                 }
         );
+
+        SystemServiceRegistry.registerContextAwareService(
+                MdnsServiceManager.MDNS_SERVICE,
+                MdnsServiceManager.class,
+                (context, serviceBinder) -> new MdnsServiceManager(serviceBinder)
+        );
     }
 }
