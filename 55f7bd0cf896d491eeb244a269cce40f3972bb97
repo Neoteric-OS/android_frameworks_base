@@ -71,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18f56e3a_09d251d6",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-13T17:52:49Z",
+      "side": 1,
+      "message": "After internal discussions, we decided to remove it.\nthanks.",
+      "parentUuid": "f973a9dc_35d7a8f8",
+      "range": {
+        "startLine": 559,
+        "startChar": 14,
+        "endLine": 559,
+        "endChar": 17
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "29d2b5c1_9a9a6352",
@@ -131,6 +155,30 @@
       "writtenOn": "2022-01-11T22:44:33Z",
       "side": 1,
       "message": "Just to make sure, could there be a scenario where this could be triggered before NPMS is available?",
+      "range": {
+        "startLine": 2120,
+        "startChar": 8,
+        "endLine": 2124,
+        "endChar": 9
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9357846_14b65782",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2124,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-13T17:52:49Z",
+      "side": 1,
+      "message": "Yes, you are right, it is possible be triggered before NPMS is available.\n\nSo this API will check if NPMS is available.\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1934459/17..23/services/core/java/com/android/server/net/NetworkPolicyManagerService.java#3410",
+      "parentUuid": "9273a35b_30ed91b7",
       "range": {
         "startLine": 2120,
         "startChar": 8,
