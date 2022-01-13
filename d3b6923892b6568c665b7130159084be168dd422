@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d34735d_6ec7338d",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 3410,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-13T17:43:26Z",
+      "side": 1,
+      "message": "IIUC this needs to be protected by lock?",
+      "range": {
+        "startLine": 3410,
+        "startChar": 13,
+        "endLine": 3410,
+        "endChar": 25
+      },
+      "revId": "d3b6923892b6568c665b7130159084be168dd422",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
