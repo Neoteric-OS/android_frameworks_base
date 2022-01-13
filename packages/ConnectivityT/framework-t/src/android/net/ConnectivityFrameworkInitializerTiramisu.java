@@ -20,6 +20,7 @@ import android.annotation.SystemApi;
 import android.app.SystemServiceRegistry;
 import android.content.Context;
 import android.net.nsd.INsdManager;
+import android.net.nsd.MdnsServiceManager;
 import android.net.nsd.NsdManager;
 
 /**
@@ -47,6 +48,12 @@ public final class ConnectivityFrameworkInitializerTiramisu {
                     INsdManager service = INsdManager.Stub.asInterface(serviceBinder);
                     return new NsdManager(context, service);
                 }
+        );
+
+        SystemServiceRegistry.registerContextAwareService(
+                MdnsServiceManager.MDNS_SERVICE,
+                MdnsServiceManager.class,
+                (context, serviceBinder) -> new MdnsServiceManager(serviceBinder)
         );
     }
 }
