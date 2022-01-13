@@ -513,6 +513,29 @@ public class Vpn {
         loadAlwaysOnPackage();
     }
 
+    private boolean sendEventToVpnManagerApp(@NonNull String category, int errorType,
+            int errorCode) {
+        if (mVpnRunner == null || VpnConfig.LEGACY_VPN.equals(mPackage)) return false;
+        final Intent intent = new Intent(VpnManager.ACTION_VPN_MANAGER_ERROR);
+        intent.setPackage(mPackage);
+        intent.addCategory(category);
+        intent.putExtra(VpnManager.EXTRA_SESSION_KEY, mSessionKey);
+        intent.putExtra(VpnManager.EXTRA_UNDERLYING_NETWORK, mVpnRunner.getUnderlyingNetwork());
+        intent.putExtra(VpnManager.EXTRA_UNDERLYING_NETWORK_CAPABILITIES,
+                mVpnRunner.getRedactedNetworkCapabilitiesOfUnderlyingNetwork());
+        intent.putExtra(VpnManager.EXTRA_UNDERLYING_LINK_PROPERTIES,
+                mVpnRunner.getRedactedLinkPropertiesOfUnderlyingNetwork());
+        intent.putExtra(VpnManager.EXTRA_TIMESTAMP, SystemClock.elapsedRealtime());
+        intent.putExtra(VpnManager.EXTRA_ERROR_TYPE, errorType);
+        intent.putExtra(VpnManager.EXTRA_ERROR_CODE, errorCode);
+        try {
+            return mUserIdContext.startService(intent) != null;
+        } catch (RuntimeException e) {
+            Log.e(TAG, "Service of VpnManager app " + intent + " failed to start", e);
+            return false;
+        }
+    }
+
     /**
      * Set whether this object is responsible for watching for {@link NetworkInfo}
      * teardown. When {@code false}, teardown is handled externally by someone
@@ -1026,6 +1049,10 @@ public class Vpn {
                 if (!VpnConfig.LEGACY_VPN.equals(mPackage)) {
                     mAppOpsManager.finishOp(
                             AppOpsManager.OPSTR_ESTABLISH_VPN_MANAGER, mOwnerUID, mPackage, null);
+
+                    // Only need to send the event when the VpnManager app is deactivated.
+                    sendEventToVpnManagerApp(VpnManager.CATEGORY_ERROR_USER_DEACTIVATED,
+                            VpnManager.ERROR_NOT_RECOVERABLE, 0 /* errorCode */);
                 }
                 // cleanupVpnStateLocked() is called from mVpnRunner.exit()
                 mVpnRunner.exit();
@@ -2439,10 +2466,28 @@ public class Vpn {
                 cleanupVpnStateLocked();
             }
         }
+
+        protected Network getUnderlyingNetwork() {
+            return null;
+        }
+
+        protected NetworkCapabilities getRedactedNetworkCapabilitiesOfUnderlyingNetwork() {
+            return null;
+        }
+
+        protected LinkProperties getRedactedLinkPropertiesOfUnderlyingNetwork() {
+            return null;
+        }
     }
 
     interface IkeV2VpnRunnerCallback {
         void onDefaultNetworkChanged(@NonNull Network network);
+
+        void onDefaultNetworkCapabilitiesChanged(@NonNull Network network,
+                @NonNull NetworkCapabilities nc);
+
+        void onDefaultNetworkLinkPropertiesChanged(@NonNull Network network,
+                @NonNull LinkProperties lp);
 
         void onChildOpened(
                 @NonNull Network network, @NonNull ChildSessionConfiguration childConfig);
@@ -2500,6 +2545,8 @@ public class Vpn {
         @Nullable private IpSecTunnelInterface mTunnelIface;
         @Nullable private IkeSession mSession;
         @Nullable private Network mActiveNetwork;
+        @Nullable private NetworkCapabilities mNetworkCapabilities;
+        @Nullable private LinkProperties mLinkProperties;
 
         IkeV2VpnRunner(@NonNull Ikev2VpnProfile profile) {
             super(TAG);
@@ -2507,6 +2554,27 @@ public class Vpn {
             mIpSecManager = (IpSecManager) mContext.getSystemService(Context.IPSEC_SERVICE);
             mNetworkCallback = new VpnIkev2Utils.Ikev2VpnNetworkCallback(TAG, this);
             mSessionKey = UUID.randomUUID().toString();
+        }
+
+        @Override
+        protected Network getUnderlyingNetwork() {
+            return mActiveNetwork;
+        }
+
+        @Override
+        protected NetworkCapabilities getRedactedNetworkCapabilitiesOfUnderlyingNetwork() {
+            if (mNetworkCapabilities != null) {
+                return mNetworkCapabilities.restrictedForCallerPermissions(mContext, mPackage);
+            }
+            return null;
+        }
+
+        @Override
+        protected LinkProperties getRedactedLinkPropertiesOfUnderlyingNetwork() {
+            if (mLinkProperties != null) {
+                return mLinkProperties.restrictedForCallerPermissions(mContext, mPackage);
+            }
+            return null;
         }
 
         @Override
@@ -2712,6 +2780,20 @@ public class Vpn {
             });
         }
 
+        /** Called when the NetworkCapabilities of underlying network is changed */
+        public void onDefaultNetworkCapabilitiesChanged(@NonNull Network network,
+                @NonNull NetworkCapabilities nc) {
+            mActiveNetwork = network;
+            mNetworkCapabilities = nc;
+        }
+
+        /** Called when the LinkProperties of underlying network is changed */
+        public void onDefaultNetworkLinkPropertiesChanged(@NonNull Network network,
+                @NonNull LinkProperties lp) {
+            mActiveNetwork = network;
+            mLinkProperties = lp;
+        }
+
         /** Marks the state as FAILED, and disconnects. */
         private void markFailedAndDisconnect(Exception exception) {
             synchronized (Vpn.this) {
@@ -2764,6 +2846,8 @@ public class Vpn {
             }
 
             mActiveNetwork = null;
+            mNetworkCapabilities = null;
+            mLinkProperties = null;
 
             // Close all obsolete state, but keep VPN alive incase a usable network comes up.
             // (Mirrors VpnService behavior)
