@@ -19,6 +19,8 @@ package com.android.server;
 import static android.Manifest.permission.BLUETOOTH_CONNECT;
 import static android.content.PermissionChecker.PERMISSION_HARD_DENIED;
 import static android.content.PermissionChecker.PID_UNKNOWN;
+import static android.content.pm.PackageManager.GET_META_DATA;
+import static android.content.pm.PackageManager.GET_SERVICES;
 import static android.content.pm.PackageManager.MATCH_SYSTEM_ONLY;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.os.PowerExemptionManager.TEMPORARY_ALLOW_LIST_TYPE_FOREGROUND_SERVICE_ALLOWED;
@@ -32,12 +34,15 @@ import android.app.ActivityManager;
 import android.app.AppGlobals;
 import android.app.AppOpsManager;
 import android.app.BroadcastOptions;
+import android.app.role.RoleManager;
 import android.bluetooth.BluetoothA2dp;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothHearingAid;
 import android.bluetooth.BluetoothLeAudio;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothProtoEnums;
+import android.bluetooth.BluetoothServerSocket;
+import android.bluetooth.BluetoothSocket;
 import android.bluetooth.IBluetooth;
 import android.bluetooth.IBluetoothCallback;
 import android.bluetooth.IBluetoothGatt;
@@ -45,6 +50,7 @@ import android.bluetooth.IBluetoothHeadset;
 import android.bluetooth.IBluetoothManager;
 import android.bluetooth.IBluetoothManagerCallback;
 import android.bluetooth.IBluetoothProfileServiceConnection;
+import android.bluetooth.IBluetoothRfcommHandoff;
 import android.bluetooth.IBluetoothStateChangeCallback;
 import android.content.ActivityNotFoundException;
 import android.content.AttributionSource;
@@ -58,8 +64,10 @@ import android.content.PermissionChecker;
 import android.content.ServiceConnection;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManagerInternal;
+import android.content.pm.ServiceInfo;
 import android.content.pm.UserInfo;
 import android.database.ContentObserver;
 import android.os.Binder;
@@ -68,6 +76,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.ParcelUuid;
 import android.os.PowerExemptionManager;
 import android.os.Process;
 import android.os.RemoteCallbackList;
@@ -93,14 +102,20 @@ import com.android.server.pm.UserManagerInternal.UserRestrictionsListener;
 import com.android.server.pm.UserRestrictionsUtils;
 
 import java.io.FileDescriptor;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 class BluetoothManagerService extends IBluetoothManager.Stub {
@@ -187,12 +202,21 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     private final ReentrantReadWriteLock mBluetoothLock = new ReentrantReadWriteLock();
     private boolean mBinding;
     private boolean mUnbinding;
+    private final PackageManager mPackageManager;
+    private final RoleManager mRoleManager;
 
     private BluetoothModeChangeHelper mBluetoothModeChangeHelper;
 
     private BluetoothAirplaneModeListener mBluetoothAirplaneModeListener;
 
     private BluetoothDeviceConfigListener mBluetoothDeviceConfigListener;
+
+    private BluetoothAdapter mBluetoothAdapter;
+
+    private final Map<UUID, RfcommListenerData> mBluetoothServerSockets =
+            Collections.synchronizedMap(new HashMap<>());
+
+    private final Executor mSocketServersExecutor;
 
     // used inside handler thread
     private boolean mQuietEnable = false;
@@ -498,6 +522,11 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         registerForBleScanModeChange();
         mCallbacks = new RemoteCallbackList<IBluetoothManagerCallback>();
         mStateChangeCallbacks = new RemoteCallbackList<IBluetoothStateChangeCallback>();
+        mRoleManager = mContext.getSystemService(RoleManager.class);
+        mPackageManager = mContext.getSystemService(PackageManager.class);
+        // Each socket must listen for incoming connections. Since accept() blocks, each must run in
+        // its own thread.
+        mSocketServersExecutor = r -> new Thread(r).start();
 
         mIsHearingAidProfileSupported = context.getResources()
                 .getBoolean(com.android.internal.R.bool.config_hearing_aid_profile_supported);
@@ -2456,6 +2485,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                 if (DBG) {
                     Slog.d(TAG, "Sending off request.");
                 }
+                stopRfcommServerSockets();
                 if (!mBluetooth.disable(mContext.getAttributionSource())) {
                     Slog.e(TAG, "IBluetooth.disable() returned false");
                 }
@@ -2771,6 +2801,173 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         return (mErrorRecoveryRetryCounter + 1) * SERVICE_RESTART_TIME_MS;
     }
 
+    private void handleIncomingRfcommConnections(UUID uuid) {
+        RfcommListenerData listenerData = mBluetoothServerSockets.get(uuid);
+        for (;;) {
+            BluetoothSocket socket;
+            try {
+                socket = listenerData.mServerSocket.accept();
+            } catch (IOException e) {
+                Slog.e(TAG, "Failed to accept socket on " + listenerData.mServerSocket, e);
+                // In this case, try and restart the server socket once.
+                try {
+                    listenerData.mServerSocket.close();
+                } catch (IOException closeEx) {
+                    Slog.e(TAG,
+                            "Failed to call close on rfcomm server socket after accept failed",
+                            closeEx);
+                }
+                try {
+                    startRfcommListenerInternal(
+                            listenerData.mName,
+                            uuid,
+                            listenerData.mServiceIntent,
+                            listenerData.mRequesterUid);
+                } catch (IOException restartEx) {
+                    Slog.e(TAG, "Failed to recreate rfcomm server socket", restartEx);
+
+                    mBluetoothServerSockets.remove(uuid);
+
+                    // Inform the remote service that the listener has closed unexpectedly.
+                    mContext.bindService(
+                            listenerData.mServiceIntent,
+                            new RfcommListenerErrorServiceConnection(mContext),
+                            Context.BIND_AUTO_CREATE);
+                }
+
+                return;
+            }
+
+            // Bind to the relevant service. The RfcommSocketHandoffServiceConnection will take care
+            // of sending the socket over the binder interface and subsequently unbinding from the
+            // service.
+            mContext.bindService(
+                    listenerData.mServiceIntent,
+                    new RfcommSocketHandoffServiceConnection(mContext, socket),
+                    Context.BIND_AUTO_CREATE);
+        }
+    }
+
+    private void stopRfcommServerSockets() {
+        synchronized (mBluetoothServerSockets) {
+            mBluetoothServerSockets.entrySet().forEach(entry -> {
+                mBluetoothServerSockets.remove(entry.getKey());
+                try {
+                    entry.getValue().mServerSocket.close();
+                } catch (IOException e) {
+                    Slog.e(TAG, "Failed to close RFCOMM server.", e);
+                }
+            });
+        }
+    }
+
+    private PackageInfo getCarProjectionPackage() {
+        List<String> carRoleHolders =
+                mRoleManager.getRoleHolders("android.app.role.SYSTEM_AUTOMOTIVE_PROJECTION");
+
+        String carProjectionPackage = carRoleHolders.stream().findAny().orElse("");
+
+        if (carProjectionPackage.isEmpty()) {
+            return null;
+        }
+
+        try {
+            return
+                    mPackageManager.getPackageInfo(
+                            carProjectionPackage, GET_SERVICES | GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            Slog.e(TAG, "Failed to find car projection package", e);
+            return null;
+        }
+    }
+
+    private ServiceInfo getCarProjectionService() {
+        PackageInfo carProjectionPackage = getCarProjectionPackage();
+
+        if (carProjectionPackage != null) {
+            return Arrays.stream(carProjectionPackage.services)
+                    .filter(serviceInfo -> serviceInfo.metaData.getBoolean(
+                            "android.bluetooth.AUTO_PROJECTION_HANDLER", false))
+                    .findFirst()
+                    .orElse(null);
+        }
+
+        return null;
+    }
+
+    private static class RfcommSocketHandoffServiceConnection implements ServiceConnection {
+        private final Context mContext;
+        private final BluetoothSocket mSocketToHandoff;
+
+        RfcommSocketHandoffServiceConnection(Context context, BluetoothSocket bluetoothSocket) {
+            mContext = context;
+            mSocketToHandoff = bluetoothSocket;
+        }
+
+        @Override
+        public synchronized void onServiceConnected(ComponentName name, IBinder service) {
+            IBluetoothRfcommHandoff handoffService  = (IBluetoothRfcommHandoff) service;
+
+            try {
+                handoffService.sendSocketFileDescriptor(mSocketToHandoff.getParcelFileDescriptor(),
+                        mSocketToHandoff.getRemoteDevice().getAddress());
+            } catch (RemoteException e) {
+                Log.e(TAG, "Failed to transact with rfcomm handoff service.", e);
+            }
+
+            mContext.unbindService(this);
+        }
+
+        @Override
+        public synchronized void onServiceDisconnected(ComponentName name) {}
+    }
+
+    private static class RfcommListenerErrorServiceConnection implements ServiceConnection {
+        private final Context mContext;
+
+        RfcommListenerErrorServiceConnection(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        public synchronized void onServiceConnected(ComponentName name, IBinder service) {
+            IBluetoothRfcommHandoff handoffService  = (IBluetoothRfcommHandoff) service;
+
+            try {
+                handoffService.indicateListenerError();
+            } catch (RemoteException e) {
+                Log.e(TAG, "Failed to transact with rfcomm handoff service.", e);
+            }
+
+            mContext.unbindService(this);
+        }
+
+        @Override
+        public synchronized void onServiceDisconnected(ComponentName name) {}
+    }
+
+    private static class RfcommListenerData {
+        final BluetoothServerSocket mServerSocket;
+        // Service record name
+        final String mName;
+        // The Intent which contains the Service info to which the incoming socket connections are
+        // handed off to.
+        final Intent mServiceIntent;
+        // This is the UID of the application which requested that the listener be started.
+        final int mRequesterUid;
+
+        RfcommListenerData(
+                BluetoothServerSocket serverSocket,
+                String name,
+                Intent serviceIntent,
+                int requesterUid) {
+            mServerSocket = serverSocket;
+            mName = name;
+            mServiceIntent = serviceIntent;
+            mRequesterUid = requesterUid;
+        }
+    }
+
     @Override
     public void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
         if (!DumpUtils.checkDumpPermission(mContext, TAG, writer)) {
@@ -2846,6 +3043,81 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         if (errorMsg != null) {
             writer.println(errorMsg);
         }
+    }
+
+    @Override
+    @BluetoothAdapter.RfcommListenerResult
+    public int startRfcommListener(String name, ParcelUuid uuid, Intent intent, int callingUid) {
+        if (mBluetoothServerSockets.containsKey(uuid.getUuid())) {
+            Slog.d(TAG,
+                    String.format(
+                            "Cannot start RFCOMM listener: UUID %s already in use.",
+                            uuid.getUuid()));
+            return BluetoothAdapter.RFCOMM_LISTENER_START_FAILED_UUID_IN_USE;
+        }
+
+        try {
+            if (mPackageManager.getPackageUid(intent.getPackage(), 0) != callingUid) {
+                Slog.d(TAG, "intent UID does not match caller for registering the rfcomm listener");
+                return BluetoothAdapter.RFCOMM_LISTENER_START_FAILED_INTENT_UID_MISMATCH;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Slog.d(TAG,
+                    String.format("Could not find socket handoff service package %s",
+                    intent.getPackage()),
+                    e);
+            return BluetoothAdapter.RFCOMM_LISTENER_START_FAILED_INTENT_UID_MISMATCH;
+        }
+
+        try {
+            startRfcommListenerInternal(name, uuid.getUuid(), intent, callingUid);
+        } catch (IOException e) {
+            return BluetoothAdapter.RFCOMM_LISTENER_FAILED_TO_CREATE_SERVER_SOCKET;
+        }
+
+        return BluetoothAdapter.RFCOMM_LISTENER_SUCCESS;
+    }
+
+    @Override
+    @BluetoothAdapter.RfcommListenerResult
+    public int stopRfcommListener(ParcelUuid uuid, int callingUid) {
+        if (!mBluetoothServerSockets.containsKey(uuid.getUuid())) {
+            Slog.d(TAG,
+                    String.format(
+                            "Cannot stop RFCOMM listener: UUID %s is not registered.",
+                            uuid.getUuid()));
+            return BluetoothAdapter.RFCOMM_LISTENER_STOP_FAILED_NO_MATCHING_SERVICE_RECORD;
+        }
+
+        // Remove the entry so that it does not try and restart the server socket.
+        RfcommListenerData listenerData = mBluetoothServerSockets.remove(uuid.getUuid());
+
+        if (listenerData.mRequesterUid != callingUid) {
+            Slog.d(TAG, "Cannot stop RFCOMM listener: stop called by different UID than start.");
+            return BluetoothAdapter.RFCOMM_LISTENER_STOP_FAILED_MISMATCHED_UID;
+        }
+
+        try {
+            listenerData.mServerSocket.close();
+        } catch (IOException e) {
+            Slog.e(TAG, "RfcommServerSocket close failed", e);
+            return BluetoothAdapter.RFCOMM_LISTENER_FAILED_TO_CLOSE_SERVER_SOCKET;
+        }
+
+        return BluetoothAdapter.RFCOMM_LISTENER_SUCCESS;
+    }
+
+    private void startRfcommListenerInternal(
+            String name, UUID uuid, Intent intent, int callingUid) throws IOException {
+        BluetoothServerSocket bluetoothServerSocket =
+                mBluetoothAdapter.listenUsingRfcommWithServiceRecord(name, uuid);
+
+        RfcommListenerData listenerData =
+                new RfcommListenerData(bluetoothServerSocket, name, intent, callingUid);
+
+        mBluetoothServerSockets.put(uuid, listenerData);
+
+        mSocketServersExecutor.execute(() -> handleIncomingRfcommConnections(uuid));
     }
 
     private void dumpProto(FileDescriptor fd) {

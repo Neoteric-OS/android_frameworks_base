@@ -19,6 +19,7 @@ package android.bluetooth;
 
 import static java.util.Objects.requireNonNull;
 
+import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
@@ -49,10 +50,12 @@ import android.bluetooth.le.ScanSettings;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.AttributionSource;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.ParcelUuid;
+import android.os.Process;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.ServiceManager;
@@ -232,6 +235,72 @@ public final class BluetoothAdapter {
      */
     public static final UUID LE_PSM_CHARACTERISTIC_UUID =
             UUID.fromString("2d410339-82b6-42aa-b34e-e2e01df8cc1a");
+
+    /** @hide */
+    @IntDef(prefix = { "RFCOMM_LISTENER_" }, value = {
+            RFCOMM_LISTENER_SUCCESS,
+            RFCOMM_LISTENER_START_FAILED_UUID_IN_USE,
+            RFCOMM_LISTENER_STOP_FAILED_NO_MATCHING_SERVICE_RECORD,
+            RFCOMM_LISTENER_STOP_FAILED_MISMATCHED_UID,
+            RFCOMM_LISTENER_FAILED_TO_CREATE_SERVER_SOCKET,
+            RFCOMM_LISTENER_FAILED_TO_CLOSE_SERVER_SOCKET
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface RfcommListenerResult {}
+
+    /**
+     * Indicates that the operation for a given RFCOMM listener completed successfully.
+     *
+     * @hide
+     */
+    public static final int RFCOMM_LISTENER_SUCCESS = 0;
+
+    /**
+     * Indicates that the RFCOMM listener could not be started due to the requested UUID already
+     * being in use.
+     *
+     * @hide
+     */
+    public static final int RFCOMM_LISTENER_START_FAILED_UUID_IN_USE = 1;
+
+    /**
+     * Indicates that the RFCOMM listener could not be started due to the Intent indicating the
+     * socket handoff service is not from the same package as the one attempting to register the
+     * listener.
+     *
+     * @hide
+     */
+    public static final int RFCOMM_LISTENER_START_FAILED_INTENT_UID_MISMATCH = 2;
+
+    /**
+     * Indicates that the RFCOMM listener could not be stopped due to the listener with the expected
+     * service record not existing.
+     *
+     * @hide
+     */
+    public static final int RFCOMM_LISTENER_STOP_FAILED_NO_MATCHING_SERVICE_RECORD = 3;
+
+    /**
+     * Indicates that the RFCOMM listener could not be stopped as the app requesting that the
+     * listener be stopped is different than the one that requested it to start.
+     *
+     * @hide
+     */
+    public static final int RFCOMM_LISTENER_STOP_FAILED_MISMATCHED_UID = 4;
+
+    /**
+     * Indicates that the creation of the underlying BluetoothServerSocket failed.
+     *
+     * @hide
+     */
+    public static final int RFCOMM_LISTENER_FAILED_TO_CREATE_SERVER_SOCKET = 5;
+
+    /**
+     * Indicates that closing the underlying BluetoothServerSocket failed.
+     *
+     * @hide
+     */
+    public static final int RFCOMM_LISTENER_FAILED_TO_CLOSE_SERVER_SOCKET = 6;
 
     /**
      * Human-readable string helper for AdapterState
@@ -2771,6 +2840,89 @@ public final class BluetoothAdapter {
     public BluetoothServerSocket listenUsingRfcommWithServiceRecord(String name, UUID uuid)
             throws IOException {
         return createNewRfcommSocketAndRecord(name, uuid, true, true);
+    }
+
+    /**
+     * Requests the framework to start an RFCOMM socket server which listens based on the provided
+     * {@code name} and {@code uuid}. Incoming connections will cause the framework to bind to the
+     * {@link android.app.Service} described by {@code intent} over which the incoming socket
+     * connections will be handed off.
+     * <p>
+     * {@code intent} must be a service which implements the {@link BluetoothRfcommListenerService}.
+     *
+     * @param name service name for SDP record
+     * @param uuid uuid for SDP record
+     * @throws IllegalStateException if the requested service record ID, {@code uuid}, is already
+     *         registered.
+     * @throws IOException if the system failed to start the underlying RFCOMM listener.
+     * @hide
+     */
+    @SystemApi
+    @RequiresBluetoothConnectPermission
+    @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
+    public void listenUsingRfcommWithServiceRecord(
+            @NonNull String name, @NonNull UUID uuid, @NonNull Intent intent) throws IOException {
+        try {
+            @RfcommListenerResult
+            int result =
+                    mManagerService.startRfcommListener(
+                            name, new ParcelUuid(uuid), intent, Process.myUid());
+            switch (result) {
+                case RFCOMM_LISTENER_SUCCESS:
+                    return;
+                case RFCOMM_LISTENER_START_FAILED_UUID_IN_USE:
+                    throw new IllegalStateException(String.format("UUID %s already in use", uuid));
+                case RFCOMM_LISTENER_FAILED_TO_CREATE_SERVER_SOCKET: // fallthrough
+                    throw new IOException("Failed to start RFCOMM server.");
+                default:
+                    throw new IllegalStateException(
+                            "Received unexpected result from the framework");
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Failed to transact with bt manager service", e);
+            throw new IOException("Failed to start RFCOMM server due to a RemoteException", e);
+        }
+    }
+
+    /**
+     * Closes the RFCOMM socket server listening on the given SDP record name and UUID. This can be
+     * called by applications after calling {@link #listenUsingRfcommWithServiceRecord(String, UUID,
+     * Intent)} to stop listening for incoming RFCOMM connections.
+     *
+     * @param uuid uuid for SDP record
+     * @throws IllegalStateException if the requested service record ID, {@code uuid}, is not
+     *         registered or if the listener that is being stopped was registered by a different
+     *         application than the one calling this method.
+     * @throws IOException if the system failed to stop the underlying RFCOMM listener.
+     * @hide
+     */
+    @SystemApi
+    @RequiresBluetoothConnectPermission
+    @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
+    public void closeRfcommServer(@NonNull UUID uuid) throws IOException {
+        try {
+            @RfcommListenerResult
+            int result =
+                    mManagerService.stopRfcommListener(new ParcelUuid(uuid), Process.myUid());
+            switch (result) {
+                case RFCOMM_LISTENER_SUCCESS:
+                    return;
+                case RFCOMM_LISTENER_STOP_FAILED_NO_MATCHING_SERVICE_RECORD:
+                    throw new IllegalStateException(
+                            "Listener does not exist for this service record");
+                case RFCOMM_LISTENER_STOP_FAILED_MISMATCHED_UID:
+                    throw new IllegalStateException(
+                            "A different application registered this service record");
+                case RFCOMM_LISTENER_FAILED_TO_CREATE_SERVER_SOCKET: // fallthrough
+                    throw new IOException("Failed to stop RFCOMM server.");
+                default:
+                    throw new IllegalStateException(
+                            "Received unexpected result from the framework");
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Failed to transact with bt manager service", e);
+            throw new IOException("Failed to stop RFCOMM server due to a RemoteException", e);
+        }
     }
 
     /**
