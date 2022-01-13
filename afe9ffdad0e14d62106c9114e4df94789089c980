@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44cb6e23_3dd557a1",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4882,
+      "author": {
+        "id": 1598911
+      },
+      "writtenOn": "2022-01-13T10:20:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b2eb7c8_d7ee5a43",
+      "range": {
+        "startLine": 4882,
+        "startChar": 35,
+        "endLine": 4882,
+        "endChar": 82
+      },
+      "revId": "afe9ffdad0e14d62106c9114e4df94789089c980",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5407ae00_0fc6ec28",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-01-12T17:23:11Z",
       "side": 1,
       "message": "since the support is required per 3GPP and TR51, can we change the default to true and set it to false in paris config for carriers which explicitly require the UE to not support it?",
+      "range": {
+        "startLine": 5028,
+        "startChar": 12,
+        "endLine": 5028,
+        "endChar": 87
+      },
+      "revId": "afe9ffdad0e14d62106c9114e4df94789089c980",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c858ce8f_d74ccfa7",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5028,
+      "author": {
+        "id": 1598911
+      },
+      "writtenOn": "2022-01-13T10:20:04Z",
+      "side": 1,
+      "message": "As the live network test under Telstra network, the network will send the reauth ID to UE but when UE uses the reauth ID to setup the IKE tunnel, the server will reject the setup request and cause the tunnel setup fail. Even though the next IKE tunnel setup retry will use the full auth and tunnel establish success. There is still a setup fail recoed in the log. And it means the Telstra device will always need to do 2 run setup for IKE tunnel setup. It might impact the user experience. Hence, i think we can keep the default setting as false until any operator confirm their live network can support it and we can add the CarrierCondig as true for them.",
+      "parentUuid": "5407ae00_0fc6ec28",
       "range": {
         "startLine": 5028,
         "startChar": 12,
