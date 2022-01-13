@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d2cdc78_7a839a16",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-13T01:36:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 92
+      },
+      "revId": "5bd0f91125997beb9f69e8d4f2faa483ca16c81f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ae789de_23dbd095",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-13T01:36:43Z",
+      "side": 1,
+      "message": "MIN_EXIT_UPSTREAM_BANDWIDTH_KBPS_KEY",
+      "range": {
+        "startLine": 102,
+        "startChar": 24,
+        "endLine": 102,
+        "endChar": 63
+      },
+      "revId": "5bd0f91125997beb9f69e8d4f2faa483ca16c81f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bacf7db0_37ccece6",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-13T01:36:43Z",
+      "side": 1,
+      "message": "MIN_ENTRY_DOWNSTREAM_BANDWIDTH_KBPS_KEY",
+      "range": {
+        "startLine": 107,
+        "startChar": 24,
+        "endLine": 107,
+        "endChar": 60
+      },
+      "revId": "5bd0f91125997beb9f69e8d4f2faa483ca16c81f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8181895a_6167f255",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-13T01:36:43Z",
+      "side": 1,
+      "message": "MIN_EXIT_UPSTREAM_BANDWIDTH_KBPS_KEY",
+      "range": {
+        "startLine": 184,
+        "startChar": 22,
+        "endLine": 184,
+        "endChar": 61
+      },
+      "revId": "5bd0f91125997beb9f69e8d4f2faa483ca16c81f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76a79df1_8d7f6130",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-13T01:36:43Z",
+      "side": 1,
+      "message": "MIN_ENTRY_DOWNSTREAM_BANDWIDTH_KBPS_KEY",
+      "range": {
+        "startLine": 185,
+        "startChar": 22,
+        "endLine": 185,
+        "endChar": 58
+      },
+      "revId": "5bd0f91125997beb9f69e8d4f2faa483ca16c81f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8df2b3d3_40a9e5e4",
+        "filename": "core/java/android/net/vcn/VcnWifiUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-13T01:36:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 92
+      },
+      "revId": "5bd0f91125997beb9f69e8d4f2faa483ca16c81f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75d4ac46_0eb10e75",
+        "filename": "tests/vcn/java/android/net/vcn/VcnCellUnderlyingNetworkTemplateTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-13T01:36:43Z",
+      "side": 1,
+      "message": "DEFAULT_MIN_BANDWIDTH_KBPS?",
+      "range": {
+        "startLine": 78,
+        "startChar": 21,
+        "endLine": 78,
+        "endChar": 22
+      },
+      "revId": "5bd0f91125997beb9f69e8d4f2faa483ca16c81f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac335f51_7d2c4abe",
+        "filename": "tests/vcn/java/android/net/vcn/VcnWifiUnderlyingNetworkTemplateTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-13T01:36:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 70,
+        "startChar": 21,
+        "endLine": 70,
+        "endChar": 22
+      },
+      "revId": "5bd0f91125997beb9f69e8d4f2faa483ca16c81f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75b00561_7a225937",
+        "filename": "tests/vcn/java/com/android/server/vcn/routeselection/NetworkPriorityClassifierTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-13T01:36:43Z",
+      "side": 1,
+      "message": "Maybe we can create two methods to shared? Something like:\n\nverifyCheckMatchesPriorityRuleForEntryBandwith(\n    VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority,\n    boolean expectMatch\n)\n\nverifyCheckMatchesPriorityRuleForExitBandwith(\n    VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority,\n    boolean expectMatch\n)",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 51
+      },
+      "revId": "5bd0f91125997beb9f69e8d4f2faa483ca16c81f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
