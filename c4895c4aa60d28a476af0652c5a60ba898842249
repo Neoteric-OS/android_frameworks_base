@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6c5b1ff_cb559403",
+        "filename": "services/core/java/com/android/server/SerialService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2022-01-13T05:31:52Z",
+      "side": 1,
+      "message": "Do we need this annotations again in the Java code? IIRC the design was for it to add permission checks for the code generated from the AIDL declaration, so it seems to me annotating in the AIDL file is enough. Not sure if I\u0027m up-to-date with the final design of this annotation though.",
+      "revId": "c4895c4aa60d28a476af0652c5a60ba898842249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
