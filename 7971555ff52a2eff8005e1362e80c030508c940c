@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63f46f84_e01b2750",
+        "filename": "services/core/java/com/android/server/pm/ApexManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2022-01-13T23:33:18Z",
+      "side": 1,
+      "message": "Please add test cases to ApexManagerTest",
+      "range": {
+        "startLine": 938,
+        "startChar": 22,
+        "endLine": 938,
+        "endChar": 59
+      },
+      "revId": "7971555ff52a2eff8005e1362e80c030508c940c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
