@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c13bf55b_285106f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2022-01-13T07:57:20Z",
+      "side": 1,
+      "message": "I believe I have addressed the issues around binding-lifetime, though I had to use a normal Intent instead of a PendingIntent because we do still need to bind to the remote service in order to transact the socket information.",
+      "parentUuid": "8598a189_54044b57",
+      "revId": "b22e144abc30835ca75c6e135bf37918a56f7d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b76c73e0_ed3c97a1",
@@ -64,6 +82,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8d5b1fe_f365f514",
+        "filename": "core/java/android/bluetooth/BluetoothCarProjectionService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2022-01-13T07:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b76c73e0_ed3c97a1",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 44
+      },
+      "revId": "b22e144abc30835ca75c6e135bf37918a56f7d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d6e815b_ebcaedb8",
+        "filename": "core/java/android/bluetooth/BluetoothCarProjectionService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2022-01-13T07:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "404d4d85_0f78c62f",
+      "range": {
+        "startLine": 44,
+        "startChar": 55,
+        "endLine": 44,
+        "endChar": 73
+      },
+      "revId": "b22e144abc30835ca75c6e135bf37918a56f7d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f718666_41284a70",
@@ -87,6 +153,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9de08071_09c97407",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2845,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2022-01-13T07:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f718666_41284a70",
+      "range": {
+        "startLine": 2844,
+        "startChar": 11,
+        "endLine": 2845,
+        "endChar": 59
+      },
+      "revId": "b22e144abc30835ca75c6e135bf37918a56f7d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "37bbca38_3f2522b9",
@@ -100,6 +190,30 @@
       "writtenOn": "2021-12-09T19:01:12Z",
       "side": 1,
       "message": "This thread may block waiting for elements appear in the queue, this also holds the lock (synchronized method).\n\nI guess, in this case, if other thread will attempt to put socket with addSocketToProcess - this will block that thread because that method is also synchronized.",
+      "range": {
+        "startLine": 3013,
+        "startChar": 20,
+        "endLine": 3013,
+        "endChar": 54
+      },
+      "revId": "b22e144abc30835ca75c6e135bf37918a56f7d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f45eb225_2d416734",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3013,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2022-01-13T07:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37bbca38_3f2522b9",
       "range": {
         "startLine": 3013,
         "startChar": 20,
