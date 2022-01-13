@@ -34,6 +34,24 @@
       "parentUuid": "f6c5b1ff_cb559403",
       "revId": "c4895c4aa60d28a476af0652c5a60ba898842249",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d475c08_d3163df8",
+        "filename": "services/core/java/com/android/server/SerialService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2022-01-13T19:47:47Z",
+      "side": 1,
+      "message": "I\u0027m actually about confused what this annotation does in Java code, given that normally Java code generation can\u0027t modify existing code 🤔",
+      "parentUuid": "9250a78f_5f4b9702",
+      "revId": "c4895c4aa60d28a476af0652c5a60ba898842249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
