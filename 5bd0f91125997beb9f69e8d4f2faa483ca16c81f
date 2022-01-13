@@ -330,6 +330,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3e729d0_b7626ecf",
+        "filename": "tests/vcn/java/android/net/vcn/VcnCellUnderlyingNetworkTemplateTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-13T03:08:43Z",
+      "side": 1,
+      "message": "Thanks. It makes sense to me",
+      "parentUuid": "d619f09c_487c277e",
+      "range": {
+        "startLine": 78,
+        "startChar": 21,
+        "endLine": 78,
+        "endChar": 22
+      },
+      "revId": "5bd0f91125997beb9f69e8d4f2faa483ca16c81f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac335f51_7d2c4abe",
