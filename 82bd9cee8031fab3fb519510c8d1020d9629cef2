@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34cf6b0e_cef84ea8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1299481
+      },
+      "writtenOn": "2022-01-13T10:24:47Z",
+      "side": 1,
+      "message": "I decided not to rename mTagOnly variable. This CL will just add comments and tiny variable change in a single method only: NetworkStatsService.buildRecorder().",
+      "revId": "82bd9cee8031fab3fb519510c8d1020d9629cef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
