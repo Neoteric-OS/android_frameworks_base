@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66a5db3e_be6038ec",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-13T02:56:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a157c958_9ca4e5f3",
+      "range": {
+        "startLine": 543,
+        "startChar": 5,
+        "endLine": 543,
+        "endChar": 12
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f973a9dc_35d7a8f8",
@@ -60,6 +84,30 @@
       "writtenOn": "2022-01-11T16:16:35Z",
       "side": 1,
       "message": "Question: why do we need all of them?",
+      "range": {
+        "startLine": 562,
+        "startChar": 24,
+        "endLine": 562,
+        "endChar": 29
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "762fc9ce_ea51ed7e",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-13T02:56:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29d2b5c1_9a9a6352",
       "range": {
         "startLine": 562,
         "startChar": 24,
@@ -116,6 +164,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1633a61e_6487cf03",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3390,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-13T02:56:46Z",
+      "side": 1,
+      "message": "will public the systemApi on the other commit aosp/1944531",
+      "parentUuid": "519bd073_9662121a",
+      "range": {
+        "startLine": 3390,
+        "startChar": 7,
+        "endLine": 3390,
+        "endChar": 12
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dfdbe0a8_eb65ab09",
@@ -129,6 +201,30 @@
       "writtenOn": "2022-01-11T22:44:33Z",
       "side": 1,
       "message": "nit: Remove the extra space here and in the lines below.",
+      "range": {
+        "startLine": 3401,
+        "startChar": 7,
+        "endLine": 3401,
+        "endChar": 8
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6643e0d6_060293b8",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3401,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-13T02:56:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfdbe0a8_eb65ab09",
       "range": {
         "startLine": 3401,
         "startChar": 7,
@@ -162,6 +258,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a2cf707_5851252a",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3406,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-13T02:56:46Z",
+      "side": 1,
+      "message": "will public the systemApi on the other commit aosp/1944531",
+      "parentUuid": "2398649e_65129ef8",
+      "range": {
+        "startLine": 3406,
+        "startChar": 7,
+        "endLine": 3406,
+        "endChar": 12
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7286cd5d_b797a875",
@@ -175,6 +295,30 @@
       "writtenOn": "2022-01-11T22:44:33Z",
       "side": 1,
       "message": "Earlier, only callers inside system_server process could call this. This change seems to be relaxing this restriction. Could you clarify what\u0027s the reason for this?",
+      "range": {
+        "startLine": 3409,
+        "startChar": 31,
+        "endLine": 3409,
+        "endChar": 81
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ca96a9e_4dcda389",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3409,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-13T02:56:46Z",
+      "side": 1,
+      "message": "yes, you are right, we don\u0027t need this.",
+      "parentUuid": "7286cd5d_b797a875",
       "range": {
         "startLine": 3409,
         "startChar": 31,
