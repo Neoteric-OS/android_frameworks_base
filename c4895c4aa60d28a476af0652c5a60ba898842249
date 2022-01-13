@@ -52,6 +52,24 @@
       "parentUuid": "9250a78f_5f4b9702",
       "revId": "c4895c4aa60d28a476af0652c5a60ba898842249",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cdc8c1f_098bc5e3",
+        "filename": "services/core/java/com/android/server/SerialService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2022-01-13T23:00:52Z",
+      "side": 1,
+      "message": "The AIDL annotation is used to generate the checks in the Java stub. The Java annotation is used as a visibility marker for engineers to see that a permission check has already been performed.\n\nThere is another change underway (ag/16602924) to confirm that the same annotation is used on any derived class from the Stub. \n\nIn the end, this allows us to: require annotations when defining a new interface, have the same annotation trickle down on any implementation and have a clear indicator of which permissions are already verified when editing the implementation.",
+      "parentUuid": "9d475c08_d3163df8",
+      "revId": "c4895c4aa60d28a476af0652c5a60ba898842249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
