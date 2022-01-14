@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d319f8a6_048c15d7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2781,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-01-14T03:04:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89c51bc3_6356dda8",
+      "range": {
+        "startLine": 2781,
+        "startChar": 32,
+        "endLine": 2781,
+        "endChar": 52
+      },
+      "revId": "c2cfea784a7558b875e15ffb771e72decb047555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3436b0ef_1f473750",
@@ -70,6 +94,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6d4d201_20c5e06c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2782,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-01-14T03:04:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3436b0ef_1f473750",
+      "range": {
+        "startLine": 2782,
+        "startChar": 52,
+        "endLine": 2782,
+        "endChar": 70
+      },
+      "revId": "c2cfea784a7558b875e15ffb771e72decb047555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5c6e39f_b1e603af",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2782,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-01-14T03:04:36Z",
+      "side": 1,
+      "message": "Well, yes, I think mConfig won\u0027t be null because it will be set before Ikev2VpnRunner is created.\nAnd I checked it is because makeLinkProperties() will use it.\nBut it doesn\u0027t matter now because I shouldn\u0027t use it.",
+      "parentUuid": "766bfe0a_fb0307b2",
+      "range": {
+        "startLine": 2782,
+        "startChar": 33,
+        "endLine": 2782,
+        "endChar": 48
+      },
+      "revId": "c2cfea784a7558b875e15ffb771e72decb047555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bcb09366_0ba074b8",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-01-06T03:38:15Z",
       "side": 1,
       "message": "To save some code duplication, you may want to make a helper method that just takes the errorType.",
+      "range": {
+        "startLine": 2789,
+        "startChar": 24,
+        "endLine": 2789,
+        "endChar": 58
+      },
+      "revId": "c2cfea784a7558b875e15ffb771e72decb047555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc598147_ec97f187",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2789,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-01-14T03:04:36Z",
+      "side": 1,
+      "message": "Now, I think maybe we can just let sendEventToVpnManagerApp() to accept only \"category\", \"errorType\" and \"errorCode\" these 3 arguments.\nFor other arguments, we can handle it in sendEventToVpnManagerApp() since there should be no difference between different categories, which means the caller doesn\u0027t need to pass them.\n\nUpdated this design in aosp/1899037, see if it works for you.",
+      "parentUuid": "bcb09366_0ba074b8",
       "range": {
         "startLine": 2789,
         "startChar": 24,
