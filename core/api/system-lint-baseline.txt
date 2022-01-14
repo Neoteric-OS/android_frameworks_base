@@ -90,6 +90,11 @@ MissingNullability: android.telephony.mbms.DownloadRequest.Builder#setServiceId(
 OnNameExpected: android.service.smartspace.SmartspaceService#notifySmartspaceEvent(android.app.smartspace.SmartspaceSessionId, android.app.smartspace.SmartspaceTargetEvent):
     Methods implemented by developers should follow the on<Something> style, was `notifySmartspaceEvent`
 
+ProtectedMember: android.bluetooth.BluetoothRfcommHandoffService#onListenerError():
+    Protected methods not allowed; must be public: method android.bluetooth.BluetoothRfcommHandoffService.onListenerError()}
+
+ProtectedMember: android.bluetooth.BluetoothRfcommHandoffService#onSocketReceived(android.bluetooth.BluetoothSocket, android.bluetooth.BluetoothDevice):
+    Protected methods not allowed; must be public: method android.bluetooth.BluetoothRfcommHandoffService.onSocketReceived(android.bluetooth.BluetoothSocket,android.bluetooth.BluetoothDevice)}
 
 ProtectedMember: android.printservice.recommendation.RecommendationService#attachBaseContext(android.content.Context):
 
