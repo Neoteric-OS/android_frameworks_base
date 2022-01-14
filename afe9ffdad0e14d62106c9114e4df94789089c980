@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62cb2767_86fc6b5b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4882,
+      "author": {
+        "id": 1598911
+      },
+      "writtenOn": "2022-01-14T05:51:26Z",
+      "side": 1,
+      "message": "Update in aosp/1948919",
+      "parentUuid": "44cb6e23_3dd557a1",
+      "range": {
+        "startLine": 4882,
+        "startChar": 35,
+        "endLine": 4882,
+        "endChar": 82
+      },
+      "revId": "afe9ffdad0e14d62106c9114e4df94789089c980",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5407ae00_0fc6ec28",
