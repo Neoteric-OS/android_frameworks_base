@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ca57826_59669ae1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1483435
+      },
+      "writtenOn": "2022-01-14T02:34:32Z",
+      "side": 1,
+      "message": "Sorry ~ I just gave a try to revert and verify it on https://android-build.googleplex.com/builds/abtd/run/L07700000952599756\n\nPlease help to test if you can pass the `eng-full` target build?\n\nThank you,\nJoseph.",
+      "revId": "e0606dfb496f8fb401226b87a750298a572d4951",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
