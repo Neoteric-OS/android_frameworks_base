@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84771b95_5f951e7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1581454
+      },
+      "writtenOn": "2022-01-14T02:07:34Z",
+      "side": 1,
+      "message": "Hey Zach, could you help me take a look at this prototype CL? I commented my questions, mainly on permission issue. Debugging code will be removed before merging. Style will be refined before merging.",
+      "revId": "3b990971fde7431435aca4138f20d4f24f3958e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c22acccd_972bcd2e",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2009,
+      "author": {
+        "id": 1581454
+      },
+      "writtenOn": "2022-01-14T02:07:34Z",
+      "side": 1,
+      "message": "Are they the right permissions?",
+      "revId": "3b990971fde7431435aca4138f20d4f24f3958e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09073480_ad299097",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 1581454
+      },
+      "writtenOn": "2022-01-14T02:07:34Z",
+      "side": 1,
+      "message": "Testing code to show how I test framework/base -\u003e bt cpp path, will be removed",
+      "revId": "3b990971fde7431435aca4138f20d4f24f3958e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90943398_c3b0ebe7",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2842,
+      "author": {
+        "id": 1581454
+      },
+      "writtenOn": "2022-01-14T02:07:34Z",
+      "side": 1,
+      "message": "Are they the right permissions?",
+      "revId": "3b990971fde7431435aca4138f20d4f24f3958e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
