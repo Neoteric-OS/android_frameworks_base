@@ -16,6 +16,23 @@
       "message": "Colin would be a better reviewer.",
       "revId": "74495f419171b909198f328826b15797c04a24b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e599bc8a_24c8a3ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1863710
+      },
+      "writtenOn": "2022-01-14T14:30:09Z",
+      "side": 1,
+      "message": "There are failures reported in module_info_unittest.ModuleInfoUnittests#test_get_testable_modules\nThe failure is:\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nERROR: test_get_testable_modules (module_info_unittest.ModuleInfoUnittests)\nTest get_testable_modules.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/tmp/Soong.python_omxn5c5z/atest/module_info.py\", line 256, in _index_testable_modules\n    constants.MODULE_INDEX_MD5)\n  File \"/tmp/Soong.python_omxn5c5z/atest/atest_utils.py\", line 765, in save_md5\n    with open(save_file, \u0027w+\u0027) as _file:\nFileNotFoundError: [Errno 2] No such file or directory: \u0027/tmp/indexes/modules.md5\u0027\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.7/unittest/mock.py\", line 1680, in _inner\n    return f(*args, **kw)\n  File \"/usr/local/lib/python3.7/unittest/mock.py\", line 1259, in patched\n    return func(*args, **keywargs)\n  File \"/tmp/Soong.python_omxn5c5z/atest/module_info_unittest.py\", line 226, in test_get_testable_modules\n    self.assertEqual(len(mod_info.get_testable_modules()), 28)\n  File \"/tmp/Soong.python_omxn5c5z/atest/module_info.py\", line 350, in get_testable_modules\n    modules \u003d self._get_testable_modules()\n  File \"/tmp/Soong.python_omxn5c5z/atest/module_info.py\", line 273, in _get_testable_modules\n    self._index_testable_modules(modules)\n  File \"/tmp/Soong.python_omxn5c5z/atest/module_info.py\", line 260, in _index_testable_modules\n    os.remove(cache)\nTypeError: remove: path should be string, bytes or os.PathLike, not _io.BufferedWriter\nModuleInfoUnittests checks module_info.py which is a tool used by atest.\nIt doesn\u0027t seem related to the current changes.\n",
+      "revId": "74495f419171b909198f328826b15797c04a24b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
