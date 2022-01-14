@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccf1d126_00eea28d",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1427525
+      },
+      "writtenOn": "2022-01-14T04:00:17Z",
+      "side": 1,
+      "message": "GTS tests are included in a separate patch on internal.",
+      "parentUuid": "2307282a_6dd283b5",
+      "revId": "1fab3f86eecdf37a81c79aef53ae8fd7c00e1493",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

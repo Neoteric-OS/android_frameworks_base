@@ -227,6 +227,30 @@
       },
       "revId": "bc8c2fdb27285dbfec5f4d706b2c05c022407846",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "861d619d_44546fa9",
+        "filename": "core/java/android/bluetooth/BluetoothHeadsetClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1427525
+      },
+      "writtenOn": "2022-01-14T04:00:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70798ece_a25e55ea",
+      "range": {
+        "startLine": 911,
+        "startChar": 19,
+        "endLine": 911,
+        "endChar": 38
+      },
+      "revId": "bc8c2fdb27285dbfec5f4d706b2c05c022407846",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
