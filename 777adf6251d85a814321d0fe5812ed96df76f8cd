@@ -1,0 +1,368 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019234332",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c81e29d0_b1617f0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T02:56:39Z",
+      "side": 1,
+      "message": "Change must include a \"Sponsor:\" stanza indicating who at Google has personally signed up to take responsibility in case of any potential fallout.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "777adf6251d85a814321d0fe5812ed96df76f8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019234332",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "4fb4f6c1_022ce6cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T02:56:39Z",
+      "side": 1,
+      "message": "\"compile\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 12
+      },
+      "revId": "777adf6251d85a814321d0fe5812ed96df76f8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019234332",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "acabe48c_24a77a5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T02:56:39Z",
+      "side": 1,
+      "message": "#feature requires a tracking bug number",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "777adf6251d85a814321d0fe5812ed96df76f8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019234333",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "59c58869_22ce4718",
+        "filename": "core/java/android/bluetooth/BleBroadcastAudioScanAssistManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T02:56:39Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 648,
+        "startChar": 0,
+        "endLine": 648,
+        "endChar": 105
+      },
+      "revId": "777adf6251d85a814321d0fe5812ed96df76f8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019234333",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "58c2614a_07d4f92e",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T02:56:39Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 770,
+        "startChar": 0,
+        "endLine": 770,
+        "endChar": 105
+      },
+      "revId": "777adf6251d85a814321d0fe5812ed96df76f8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019234333",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5e07cceb_6fa3223d",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T02:56:39Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 772,
+        "startChar": 0,
+        "endLine": 772,
+        "endChar": 107
+      },
+      "revId": "777adf6251d85a814321d0fe5812ed96df76f8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019234333",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "4209da77_f2260045",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T02:56:39Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 786,
+        "startChar": 0,
+        "endLine": 786,
+        "endChar": 106
+      },
+      "revId": "777adf6251d85a814321d0fe5812ed96df76f8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019234333",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1108dbb1_47d66c1b",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T02:56:39Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 802,
+        "startChar": 0,
+        "endLine": 802,
+        "endChar": 102
+      },
+      "revId": "777adf6251d85a814321d0fe5812ed96df76f8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019234333",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "08847e8f_d2cb5ba9",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T02:56:39Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 804,
+        "startChar": 0,
+        "endLine": 804,
+        "endChar": 101
+      },
+      "revId": "777adf6251d85a814321d0fe5812ed96df76f8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019234333",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "43586e31_f3fdc893",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T02:56:39Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 815,
+        "startChar": 0,
+        "endLine": 815,
+        "endChar": 103
+      },
+      "revId": "777adf6251d85a814321d0fe5812ed96df76f8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019234333",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "973f160b_df882adb",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T02:56:39Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 827,
+        "startChar": 0,
+        "endLine": 827,
+        "endChar": 102
+      },
+      "revId": "777adf6251d85a814321d0fe5812ed96df76f8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019234333",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7398d47e_cf80a619",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T02:56:39Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 841,
+        "startChar": 0,
+        "endLine": 841,
+        "endChar": 103
+      },
+      "revId": "777adf6251d85a814321d0fe5812ed96df76f8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019234333",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "81758f5d_5dc552cb",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T02:56:39Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 893,
+        "startChar": 0,
+        "endLine": 893,
+        "endChar": 105
+      },
+      "revId": "777adf6251d85a814321d0fe5812ed96df76f8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019234333",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944967?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5e65115e_2fb3a82c",
+        "filename": "core/java/android/bluetooth/BleBroadcastSourceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T02:56:39Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1045,
+        "startChar": 0,
+        "endLine": 1045,
+        "endChar": 103
+      },
+      "revId": "777adf6251d85a814321d0fe5812ed96df76f8cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
