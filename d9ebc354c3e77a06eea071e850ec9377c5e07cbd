@@ -16,6 +16,23 @@
       "message": "Re-running treehugger, b/205592604 causing car/* test failures should be fixed now.",
       "revId": "d9ebc354c3e77a06eea071e850ec9377c5e07cbd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bba207c2_d0085056",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-01-14T00:40:25Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure this was reverted erroneously.",
+      "revId": "d9ebc354c3e77a06eea071e850ec9377c5e07cbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
