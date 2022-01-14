@@ -238,6 +238,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d32f533c_833606b5",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3390,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-01-14T05:50:17Z",
+      "side": 1,
+      "message": "Even with that change, there is no need to add @hide here.",
+      "parentUuid": "1633a61e_6487cf03",
+      "range": {
+        "startLine": 3390,
+        "startChar": 7,
+        "endLine": 3390,
+        "endChar": 12
+      },
+      "revId": "55f7bd0cf896d491eeb244a269cce40f3972bb97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dfdbe0a8_eb65ab09",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 17

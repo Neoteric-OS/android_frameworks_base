@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa474e2f_adf5350d",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-01-14T05:50:17Z",
+      "side": 1,
+      "message": "Add @return tag to describe the return value, especially when the return value could be null.",
+      "range": {
+        "startLine": 540,
+        "startChar": 4,
+        "endLine": 542,
+        "endChar": 7
+      },
+      "revId": "e8b615b868f134934cff61ff885cb46cc69fdc4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8141bc82_0ceea0cc",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 3392,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-01-14T05:50:17Z",
+      "side": 1,
+      "message": "Add @Override annotation.",
+      "range": {
+        "startLine": 3392,
+        "startChar": 3,
+        "endLine": 3392,
+        "endChar": 10
+      },
+      "revId": "e8b615b868f134934cff61ff885cb46cc69fdc4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5eba41e_99359a17",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 3407,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-01-14T05:50:17Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 3407,
+        "startChar": 4,
+        "endLine": 3407,
+        "endChar": 10
+      },
+      "revId": "e8b615b868f134934cff61ff885cb46cc69fdc4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
