@@ -77,7 +77,9 @@ object ProtoLogTool {
                 }
             }.map { future ->
                 val (path, outSrc) = future.get()
-                outJar.putNextEntry(ZipEntry(path))
+                val entry = ZipEntry(path)
+                entry.setTime(0)
+                outJar.putNextEntry(entry)
                 outJar.write(outSrc.toByteArray())
                 outJar.closeEntry()
             }
@@ -90,7 +92,9 @@ object ProtoLogTool {
         val cachePackage = cacheSplit.dropLast(1).joinToString(".")
         val cachePath = "gen/${cacheSplit.joinToString("/")}.java"
 
-        outJar.putNextEntry(ZipEntry(cachePath))
+        val entry = ZipEntry(cachePath)
+        entry.setTime(0)
+        outJar.putNextEntry(entry)
         outJar.write(generateLogGroupCache(cachePackage, cacheName, groups,
                 command.protoLogImplClassNameArg, command.protoLogGroupsClassNameArg).toByteArray())
 
