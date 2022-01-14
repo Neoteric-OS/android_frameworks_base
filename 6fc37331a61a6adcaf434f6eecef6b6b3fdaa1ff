@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ea3f3f2_6e7bf53a",
+        "filename": "core/java/android/hardware/biometrics/BiometricPrompt.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-14T21:03:36Z",
+      "side": 1,
+      "message": "Will follow up in separate CL - thanks!",
+      "parentUuid": "85bfcaf0_25b0b1b6",
+      "range": {
+        "startLine": 699,
+        "startChar": 15,
+        "endLine": 699,
+        "endChar": 27
+      },
+      "revId": "6fc37331a61a6adcaf434f6eecef6b6b3fdaa1ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0dcc7f7d_ddd94e3e",
@@ -54,6 +78,24 @@
       "writtenOn": "2022-01-14T20:15:22Z",
       "side": 1,
       "message": "nit: javadoc",
+      "revId": "6fc37331a61a6adcaf434f6eecef6b6b3fdaa1ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8489c9df_05de89a2",
+        "filename": "core/java/android/hardware/biometrics/CryptoObject.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1076971
+      },
+      "writtenOn": "2022-01-14T21:03:36Z",
+      "side": 1,
+      "message": "Same",
+      "parentUuid": "0dcc7f7d_ddd94e3e",
       "revId": "6fc37331a61a6adcaf434f6eecef6b6b3fdaa1ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
