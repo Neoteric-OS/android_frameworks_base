@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88b6a7e6_0ec69514",
+        "filename": "core/java/android/bluetooth/BluetoothLeCallControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-01-14T13:16:53Z",
+      "side": 1,
+      "message": "nit: import no longer needed. it\u0027s weird pre-upload hook didn\u0027t catch it",
+      "range": {
+        "startLine": 49,
+        "startChar": 28,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "e4700e46a351dea61af2a83807f2b32488c168db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
