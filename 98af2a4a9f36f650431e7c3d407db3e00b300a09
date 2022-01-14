@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72e0f901_4a653b8e",
+        "filename": "media/java/android/media/tv/tunerresourcemanager/OWNER",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1608690
+      },
+      "writtenOn": "2022-01-14T00:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2111aeb4_aa74a56d",
+      "revId": "98af2a4a9f36f650431e7c3d407db3e00b300a09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4fd4075a_d68e988d",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-01-14T00:38:20Z",
       "side": 1,
       "message": "add both you and kensuke ?",
+      "revId": "98af2a4a9f36f650431e7c3d407db3e00b300a09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4feb76ee_51d95bb7",
+        "filename": "media/tests/TunerTest/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1608690
+      },
+      "writtenOn": "2022-01-14T00:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fd4075a_d68e988d",
       "revId": "98af2a4a9f36f650431e7c3d407db3e00b300a09",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
