@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f0197ac_80d2a904",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1466695
+      },
+      "writtenOn": "2022-01-14T02:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f57cc2d9_dc95a065",
+      "revId": "991f61e2c6d6c6373c3c9d2a218d6952937e6dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0babc6a1_79c2bf45",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcd68f35_0c2abd91",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1466695
+      },
+      "writtenOn": "2022-01-14T02:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0babc6a1_79c2bf45",
+      "revId": "991f61e2c6d6c6373c3c9d2a218d6952937e6dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "589fd6bc_a6f5e6c0",
@@ -48,6 +84,24 @@
       "writtenOn": "2022-01-14T00:24:18Z",
       "side": 1,
       "message": "We should have an IntDef for this",
+      "revId": "991f61e2c6d6c6373c3c9d2a218d6952937e6dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02802e5b_1cb02660",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1466695
+      },
+      "writtenOn": "2022-01-14T02:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "589fd6bc_a6f5e6c0",
       "revId": "991f61e2c6d6c6373c3c9d2a218d6952937e6dd1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -82,6 +136,24 @@
       "writtenOn": "2022-01-14T00:29:22Z",
       "side": 1,
       "message": "Same as setConnectionPolicy, we can expand this to involve error codes as well, but let me know what you think",
+      "revId": "991f61e2c6d6c6373c3c9d2a218d6952937e6dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25a1f076_1914a64d",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1466695
+      },
+      "writtenOn": "2022-01-14T02:52:02Z",
+      "side": 1,
+      "message": "Offline chat, agreed to keep as is for now.",
+      "parentUuid": "2ddbd9ce_b07aee7a",
       "revId": "991f61e2c6d6c6373c3c9d2a218d6952937e6dd1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
