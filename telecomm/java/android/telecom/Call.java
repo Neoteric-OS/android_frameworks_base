@@ -917,37 +917,69 @@ public final class Call {
         }
 
         /**
+         * For outgoing calls, returns the phone number (or other identifier) associated with the
+         * dialed outgoing call.  For calls dialed over the mobile network, this may change from
+         * the value dialed based on values reported by the network; the most common case for this
+         * is where a number is dialed without a country code and the carrier network reports back
+         * the full dialed number including country code.
+         * <p>
+         * For incoming calls, this value can be {@code null} if the incoming number is not known.
+         * This is expected in cases where {@link #getHandlePresentation()} is not
+         * {@link TelecomManager#PRESENTATION_ALLOWED}.
          * @return The handle (e.g., phone number) to which the {@code Call} is currently
-         * connected.
+         * connected, or {@code null} if not known.
          */
-        public Uri getHandle() {
+        public @Nullable Uri getHandle() {
             return mHandle;
         }
 
         /**
-         * @return The presentation requirements for the handle. See
-         * {@link TelecomManager} for valid values.
+         * The presentation requirements for the {@link #getHandle()}.  Where
+         * {@link TelecomManager#PRESENTATION_ALLOWED}, indicates the {@link #getHandle()} has no
+         * specific presentation requirements.  Other values indicate reasons why a specific number
+         * cannot be presented to the user.
+         * <p>
+         * For outgoing calls, will be {@link TelecomManager#PRESENTATION_ALLOWED}.
+         * <p>
+         * For incoming calls, where the presentation is not
+         * {@link TelecomManager#PRESENTATION_ALLOWED}, the {@link #getHandle()} is {@code null},
+         * and {@link #getHandlePresentation()} indicates the reason why the number is not
+         * available.
+         * @return The presentation requirements for the {@link #getHandle()}.
          */
-        public int getHandlePresentation() {
+        public @TelecomManager.Presentation int getHandlePresentation() {
             return mHandlePresentation;
         }
 
         /**
-         * The display name for the caller.
+         * The display name for the caller, or {@code null} if the caller display name is not
+         * known.
          * <p>
          * This is the name as reported by the {@link ConnectionService} associated with this call.
+         * For mobile calls this would be the name as reported by a carrier name display service.
+         * <p>
+         * Note: Where a carrier does not know a caller's name, this value will typically be an
+         * empty string and the {@link #getCallerDisplayNamePresentation()} will be
+         * {@link TelecomManager#PRESENTATION_ALLOWED} or
+         * {@link TelecomManager#PRESENTATION_UNKNOWN}.
          *
          * @return The display name for the caller.
          */
-        public String getCallerDisplayName() {
+        public @Nullable String getCallerDisplayName() {
             return mCallerDisplayName;
         }
 
         /**
-         * @return The presentation requirements for the caller display name. See
-         * {@link TelecomManager} for valid values.
+         * Indicates the presentation requirements for the caller display name.
+         * <p>
+         * For values other than {@link TelecomManager#PRESENTATION_ALLOWED}, the
+         * {@link #getCallerDisplayName()} is not provided and the presentation value indicates a
+         * specific reason why it is not available.  This is typically due to the name being blocked
+         * by the caller.
+         *
+         * @return The presentation requirements for the caller display name.
          */
-        public int getCallerDisplayNamePresentation() {
+        public @TelecomManager.Presentation int getCallerDisplayNamePresentation() {
             return mCallerDisplayNamePresentation;
         }
 
