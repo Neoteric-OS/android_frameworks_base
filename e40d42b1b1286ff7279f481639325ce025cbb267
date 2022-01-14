@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c91f2f3f_6c67e5f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1427525
+      },
+      "writtenOn": "2022-01-14T16:51:34Z",
+      "side": 1,
+      "message": "As mentioned prior, GTS tests are included in a separate patch on a different repo. They will be submitted after this patch lands, as presubmit tests there will need this patch.",
+      "revId": "e40d42b1b1286ff7279f481639325ce025cbb267",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6dfd9b3f_e1b5a1fa",
