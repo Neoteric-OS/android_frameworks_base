@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "306b6f40_afe85de0",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-14T00:52:19Z",
+      "side": 1,
+      "message": "Cross-commenting here. I saw that IUserRestrictionsListener is @hide. Was this change intentionally made?",
+      "revId": "eb3b0b61846bad3e2151876a1016ebc4a3cad942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
