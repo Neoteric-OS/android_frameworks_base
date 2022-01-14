@@ -123,6 +123,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc7735d5_8302cd8e",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1466695
+      },
+      "writtenOn": "2022-01-14T05:08:26Z",
+      "side": 1,
+      "message": "I agree that supporting error codes is better than simple boolean, but it\u0027s probably best to keep things consistent amongst profiles.",
+      "parentUuid": "c4ff6a2c_448674de",
+      "revId": "991f61e2c6d6c6373c3c9d2a218d6952937e6dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ddbd9ce_b07aee7a",
