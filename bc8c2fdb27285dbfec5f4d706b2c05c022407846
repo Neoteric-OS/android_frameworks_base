@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "882d0f08_1abd87e3",
+        "filename": "core/java/android/bluetooth/BluetoothHeadsetClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-14T00:40:51Z",
+      "side": 1,
+      "message": "Same feedback as the BluetoothMapClient CL here as well.",
+      "revId": "bc8c2fdb27285dbfec5f4d706b2c05c022407846",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
