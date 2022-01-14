@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdf71425_75153af0",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2009,
+      "author": {
+        "id": 1581454
+      },
+      "writtenOn": "2022-01-14T23:37:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1daa020d_b77c0002",
+      "revId": "3b990971fde7431435aca4138f20d4f24f3958e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09073480_ad299097",
@@ -66,6 +84,24 @@
       "writtenOn": "2022-01-14T02:07:34Z",
       "side": 1,
       "message": "Testing code to show how I test framework/base -\u003e bt cpp path, will be removed",
+      "revId": "3b990971fde7431435aca4138f20d4f24f3958e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d454b8fe_a6e5f1cf",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 1581454
+      },
+      "writtenOn": "2022-01-14T23:37:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09073480_ad299097",
       "revId": "3b990971fde7431435aca4138f20d4f24f3958e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -105,6 +141,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d6eef09_33a35d76",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2842,
+      "author": {
+        "id": 1581454
+      },
+      "writtenOn": "2022-01-14T23:37:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64c31ee4_85e0d2cb",
+      "revId": "3b990971fde7431435aca4138f20d4f24f3958e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "393ed89f_2b730fbc",
@@ -118,6 +172,30 @@
       "writtenOn": "2022-01-14T17:32:45Z",
       "side": 1,
       "message": "super nit, but maybe call it \"allowLowLatencyAudio\"?\n\n(because the audio framework makes the ultimate decision here, we\u0027re just setting the boolean on whether we\u0027ll support it or not)",
+      "range": {
+        "startLine": 2845,
+        "startChar": 19,
+        "endLine": 2845,
+        "endChar": 40
+      },
+      "revId": "3b990971fde7431435aca4138f20d4f24f3958e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e47f981d_c921619c",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2845,
+      "author": {
+        "id": 1581454
+      },
+      "writtenOn": "2022-01-14T23:37:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "393ed89f_2b730fbc",
       "range": {
         "startLine": 2845,
         "startChar": 19,
