@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019257247",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1943970?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "74d1fcf6_b257800b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T13:03:01Z",
+      "side": 1,
+      "message": "\"phone call over BT\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 24
+      },
+      "revId": "e4700e46a351dea61af2a83807f2b32488c168db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
