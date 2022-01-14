@@ -50,6 +50,40 @@
       "message": "We should have an IntDef for this",
       "revId": "991f61e2c6d6c6373c3c9d2a218d6952937e6dd1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4ff6a2c_448674de",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-14T00:29:22Z",
+      "side": 1,
+      "message": "We should update this to return an int (so we can support error codes) \u0026 create and IntDef for it. I know we didn\u0027t do it in the other profile classes, but that should be the pattern we follow going forward. If you feel there\u0027s a significant inconvenience of being locally inconsistent there though, please feel free to let me know!",
+      "revId": "991f61e2c6d6c6373c3c9d2a218d6952937e6dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ddbd9ce_b07aee7a",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-14T00:29:22Z",
+      "side": 1,
+      "message": "Same as setConnectionPolicy, we can expand this to involve error codes as well, but let me know what you think",
+      "revId": "991f61e2c6d6c6373c3c9d2a218d6952937e6dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
