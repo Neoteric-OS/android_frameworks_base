@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f57cc2d9_dc95a065",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-14T00:24:18Z",
+      "side": 1,
+      "message": "We should raise all new System APIs to require both BLUETOOTH_CONNECT and BLUETOOTH_PRIVILEGED.",
+      "revId": "991f61e2c6d6c6373c3c9d2a218d6952937e6dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0babc6a1_79c2bf45",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-14T00:24:18Z",
+      "side": 1,
+      "message": "nit: move nullability annotations to between \"public\" and the return type for consistency",
+      "revId": "991f61e2c6d6c6373c3c9d2a218d6952937e6dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "589fd6bc_a6f5e6c0",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-14T00:24:18Z",
+      "side": 1,
+      "message": "We should have an IntDef for this",
+      "revId": "991f61e2c6d6c6373c3c9d2a218d6952937e6dd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
