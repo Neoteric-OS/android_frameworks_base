@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dfd9b3f_e1b5a1fa",
+        "filename": "core/java/android/bluetooth/BluetoothHeadsetClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-14T16:38:31Z",
+      "side": 1,
+      "message": "nit: All first sentences should end in a period.",
+      "revId": "e40d42b1b1286ff7279f481639325ce025cbb267",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
