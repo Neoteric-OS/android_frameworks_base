@@ -2837,9 +2837,14 @@ public class Vpn {
                     case IkeProtocolException.ERROR_TYPE_FAILED_CP_REQUIRED: // Fallthrough
                     case IkeProtocolException.ERROR_TYPE_TS_UNACCEPTABLE:
                         // All the above failures are configuration errors, and are terminal
+                        sendEventToVpnManagerApp(VpnManager.CATEGORY_ERROR_IKE,
+                                VpnManager.ERROR_NOT_RECOVERABLE, ikeException.getErrorType());
                         markFailedAndDisconnect(exception);
                         return;
                     // All other cases possibly recoverable.
+                    default:
+                        sendEventToVpnManagerApp(VpnManager.CATEGORY_ERROR_IKE,
+                                VpnManager.ERROR_RECOVERABLE, ikeException.getErrorType());
                 }
             } else if (exception instanceof IllegalArgumentException) {
                 // Failed to build IKE/ChildSessionParams; fatal profile configuration error
