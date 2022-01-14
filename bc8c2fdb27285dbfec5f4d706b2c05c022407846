@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a156064_80c40566",
+        "filename": "core/java/android/bluetooth/BluetoothHeadsetClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1427525
+      },
+      "writtenOn": "2022-01-14T04:01:14Z",
+      "side": 1,
+      "message": "I pulled in most the comments from the MAP Client CL into here and addressed them all.\n\nYou can find them as resolved comments between P3 and P4.",
+      "parentUuid": "882d0f08_1abd87e3",
+      "revId": "bc8c2fdb27285dbfec5f4d706b2c05c022407846",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28d9e691_bdcf7ef9",
