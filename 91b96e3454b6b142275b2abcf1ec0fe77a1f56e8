@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9be3c166_c4c859f3",
+        "filename": "services/core/jni/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1687194
+      },
+      "writtenOn": "2022-01-14T22:52:13Z",
+      "side": 0,
+      "message": "this line was invalid -- owners file doesn\u0027t exist",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 68
+      },
+      "revId": "91b96e3454b6b142275b2abcf1ec0fe77a1f56e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
