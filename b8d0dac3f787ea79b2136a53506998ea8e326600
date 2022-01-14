@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3fd7686_a71d4aae",
+        "filename": "core/java/android/bluetooth/BluetoothMapClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-14T16:37:36Z",
+      "side": 1,
+      "message": "nit: Need a period at the end of the first sentence so the docs are parsed properly.",
+      "revId": "b8d0dac3f787ea79b2136a53506998ea8e326600",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
