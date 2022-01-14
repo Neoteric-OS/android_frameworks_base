@@ -16,6 +16,46 @@
       "message": "+patb for owner-review of PackageManager.java (it\u0027s just a comment change)\n\n+kchyn and jaggies for owner-review of CryptoObject.java\n\nThanks for looking!",
       "revId": "6fc37331a61a6adcaf434f6eecef6b6b3fdaa1ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85bfcaf0_25b0b1b6",
+        "filename": "core/java/android/hardware/biometrics/BiometricPrompt.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1157913
+      },
+      "writtenOn": "2022-01-14T20:15:22Z",
+      "side": 1,
+      "message": "nit: javadoc",
+      "range": {
+        "startLine": 699,
+        "startChar": 15,
+        "endLine": 699,
+        "endChar": 27
+      },
+      "revId": "6fc37331a61a6adcaf434f6eecef6b6b3fdaa1ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dcc7f7d_ddd94e3e",
+        "filename": "core/java/android/hardware/biometrics/CryptoObject.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1157913
+      },
+      "writtenOn": "2022-01-14T20:15:22Z",
+      "side": 1,
+      "message": "nit: javadoc",
+      "revId": "6fc37331a61a6adcaf434f6eecef6b6b3fdaa1ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
