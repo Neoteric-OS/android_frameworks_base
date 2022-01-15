@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ca5a6f4_285cb112",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-01-15T00:51:31Z",
+      "side": 1,
+      "message": "Small case \u0027r\u0027 for consistency with the rest of the codebase.",
+      "range": {
+        "startLine": 541,
+        "startChar": 8,
+        "endLine": 541,
+        "endChar": 9
+      },
+      "revId": "0b8a561ebad563294574d9f47f443f7724bede30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
