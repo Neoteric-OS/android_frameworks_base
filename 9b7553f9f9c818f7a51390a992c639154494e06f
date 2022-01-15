@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bb49559f_04bd2b1d",
+        "filename": "core/java/android/bluetooth/BluetoothHapClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-01-15T11:51:31Z",
+      "side": 1,
+      "message": "`allowBlocking` Method is hidden and must not be called.\nIt safe to remove once the interface is modified as `oneway interface` and it use SynchronousResultReceiver like Lukasz mentionned in other comments",
+      "range": {
+        "startLine": 403,
+        "startChar": 28,
+        "endLine": 403,
+        "endChar": 48
+      },
+      "revId": "9b7553f9f9c818f7a51390a992c639154494e06f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a3a69183_ab37ddb2",
         "filename": "core/java/android/bluetooth/BluetoothHapClient.java",
         "patchSetId": 4
