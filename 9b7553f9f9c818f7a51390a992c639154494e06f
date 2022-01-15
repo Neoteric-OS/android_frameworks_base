@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3a69183_ab37ddb2",
+        "filename": "core/java/android/bluetooth/BluetoothHapClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1929540
+      },
+      "writtenOn": "2022-01-15T11:19:48Z",
+      "side": 1,
+      "message": "Bluetooth API requires asynchronous receiver as it is here:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1943965/2/core/java/android/bluetooth/BluetoothDevice.java",
+      "revId": "9b7553f9f9c818f7a51390a992c639154494e06f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
