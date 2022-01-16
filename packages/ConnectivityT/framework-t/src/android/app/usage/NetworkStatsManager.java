@@ -148,6 +148,15 @@ public class NetworkStatsManager {
 
     private int mFlags;
 
+    /**
+     * Intent broadcast action that will be fired after {@code NetworkStatsService} has an update
+     * of current statistics.
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static final String ACTION_NETWORK_STATS_UPDATED =
+            "android.app.usage.action.NETWORK_STATS_UPDATED";
+
     /** @hide */
     @VisibleForTesting
     public NetworkStatsManager(Context context, INetworkStatsService service) {
