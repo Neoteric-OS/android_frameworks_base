@@ -130,7 +130,8 @@ public class SystemSettings {
         	Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM,
                 Settings.System.RINGTONE_VIBRATION_PATTERN,
                 Settings.System.NOTIFICATION_VIBRATION_PATTERN,
-                Settings.System.POWER_SHARE_THRESHOLD
+                Settings.System.POWER_SHARE_THRESHOLD,
+                Settings.System.NOTIFICATION_SOUND_VIB_SCREEN_ON
         ));
         if (Flags.backUpSmoothDisplayAndForcePeakRefreshRate()) {
             settings.add(Settings.System.PEAK_REFRESH_RATE);
