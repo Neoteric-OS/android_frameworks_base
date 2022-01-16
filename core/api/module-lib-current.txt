@@ -400,6 +400,14 @@ package android.net {
 
 }
 
+package android.net.netstats {
+
+  public class NetworkStatsDataMigrationUtils {
+    method @NonNull public static android.net.NetworkStatsCollection readPlatformCollectionLocked(@NonNull String, long) throws java.io.IOException;
+  }
+
+}
+
 package android.os {
 
   public final class BatteryStatsManager {
