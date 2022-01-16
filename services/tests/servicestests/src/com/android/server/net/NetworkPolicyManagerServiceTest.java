@@ -18,6 +18,7 @@ package com.android.server.net;
 
 import static android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS;
 import static android.Manifest.permission.NETWORK_STACK;
+import static android.app.usage.NetworkStatsManager.ACTION_NETWORK_STATS_UPDATED;
 import static android.net.ConnectivityManager.BLOCKED_METERED_REASON_DATA_SAVER;
 import static android.net.ConnectivityManager.BLOCKED_METERED_REASON_USER_RESTRICTED;
 import static android.net.ConnectivityManager.BLOCKED_REASON_APP_STANDBY;
@@ -71,7 +72,6 @@ import static com.android.server.net.NetworkPolicyManagerService.TYPE_LIMIT_SNOO
 import static com.android.server.net.NetworkPolicyManagerService.TYPE_RAPID;
 import static com.android.server.net.NetworkPolicyManagerService.TYPE_WARNING;
 import static com.android.server.net.NetworkPolicyManagerService.UidBlockedState.getEffectiveBlockedReasons;
-import static com.android.server.net.NetworkStatsService.ACTION_NETWORK_STATS_UPDATED;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

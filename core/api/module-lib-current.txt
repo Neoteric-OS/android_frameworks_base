@@ -65,6 +65,7 @@ package android.app.usage {
     method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_STACK}) public void setPollOnOpen(boolean);
     method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_STACK}) public void setStatsProviderWarningAndLimitAsync(@NonNull String, long, long);
     method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_STACK}) public void setUidForeground(int, boolean);
+    field public static final String ACTION_NETWORK_STATS_UPDATED = "android.app.usage.action.NETWORK_STATS_UPDATED";
   }
 
 }
