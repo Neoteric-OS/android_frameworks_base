@@ -139,7 +139,8 @@ public class SystemSettings {
                 Settings.System.THREE_FINGER_GESTURE,
                 Settings.System.VOLBTN_MUSIC_CONTROLS,
                 Settings.System.TORCH_POWER_BUTTON_GESTURE,
-                Settings.System.ADVANCED_REBOOT
+                Settings.System.ADVANCED_REBOOT,
+                Settings.System.NOTIFICATION_SOUND_VIB_SCREEN_ON
         ));
         return settings.toArray(new String[0]);
     }
