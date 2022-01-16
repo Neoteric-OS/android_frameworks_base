@@ -22,6 +22,30 @@
       },
       "revId": "f4c9b9af5d034a3fd4a9f705097bd41ae61a0a23",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d44eede_1b1ed711",
+        "filename": "core/java/com/android/internal/util/FileRotator.java",
+        "patchSetId": 57
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-16T03:20:43Z",
+      "side": 1,
+      "message": "Maybe no?\nIt seems we don\u0027t even care about this in FileUtils.sync for 10 years.\nIt is likely we won\u0027t care about it in next 10 years.",
+      "parentUuid": "4b1a3e6a_7ef3450f",
+      "range": {
+        "startLine": 387,
+        "startChar": 0,
+        "endLine": 388,
+        "endChar": 13
+      },
+      "revId": "f4c9b9af5d034a3fd4a9f705097bd41ae61a0a23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
