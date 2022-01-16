@@ -16,6 +16,7 @@
 
 package android.net;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 import static android.net.NetworkStats.DEFAULT_NETWORK_NO;
 import static android.net.NetworkStats.DEFAULT_NETWORK_YES;
 import static android.net.NetworkStats.IFACE_ALL;
@@ -34,6 +35,7 @@ import static com.android.net.module.util.NetworkStatsUtils.multiplySafeByRation
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.os.Binder;
 import android.service.NetworkStatsCollectionKeyProto;
 import android.service.NetworkStatsCollectionProto;
@@ -79,7 +81,7 @@ import java.util.Objects;
  *
  * @hide
  */
-// @SystemApi(client = MODULE_LIBRARIES)
+@SystemApi(client = MODULE_LIBRARIES)
 public class NetworkStatsCollection implements FileRotator.Reader, FileRotator.Writer {
     private static final String TAG = NetworkStatsCollection.class.getSimpleName();
     /** File header magic number: "ANET" */

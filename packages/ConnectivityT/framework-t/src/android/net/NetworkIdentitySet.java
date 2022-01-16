@@ -16,9 +16,11 @@
 
 package android.net;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.service.NetworkIdentitySetProto;
 import android.util.proto.ProtoOutputStream;
 
@@ -34,7 +36,7 @@ import java.util.Objects;
  *
  * @hide
  */
-// @SystemApi(client = MODULE_LIBRARIES)
+@SystemApi(client = MODULE_LIBRARIES)
 public class NetworkIdentitySet extends HashSet<NetworkIdentity> implements
         Comparable<NetworkIdentitySet> {
     private static final int VERSION_INIT = 1;
