@@ -39,6 +39,30 @@
       },
       "revId": "28b6357c66c21ddfde65d77af10b4bc642849bbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49dbe5f7_d176cade",
+        "filename": "apex/media/framework/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-01-17T11:57:16Z",
+      "side": 1,
+      "message": "Some of the other modules are using framework-XXX-sources. One or two are using framework-XXX-updatable-sources. I think I have a preference for the former, because they really are the sources of framework-XXX :)\n\nI may also in the future refactor this such that framework-XXX can generate the sources automatically, which you\u0027d access in Android.bp with something like framework-XXX{.sources}, so it kind of matches that at least.",
+      "parentUuid": "e5ece63f_f4b32dcd",
+      "range": {
+        "startLine": 72,
+        "startChar": 11,
+        "endLine": 72,
+        "endChar": 34
+      },
+      "revId": "28b6357c66c21ddfde65d77af10b4bc642849bbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
