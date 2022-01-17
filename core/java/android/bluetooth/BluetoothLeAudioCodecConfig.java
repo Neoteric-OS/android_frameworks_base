@@ -18,6 +18,8 @@ package android.bluetooth;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -30,7 +32,7 @@ import java.lang.annotation.RetentionPolicy;
  *
  * {@see BluetoothLeAudioCodecConfig}
  */
-public final class BluetoothLeAudioCodecConfig {
+public final class BluetoothLeAudioCodecConfig implements Parcelable {
     // Add an entry for each source codec here.
 
     /** @hide */
@@ -238,6 +240,46 @@ public final class BluetoothLeAudioCodecConfig {
         mChannelMode = channelMode;
         mFrameDuration = frameDuration;
         mOctetsPerFrame = octetsPerFrame;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * {@link Parcelable.Creator} interface implementation.
+     */
+    public static final @android.annotation.NonNull
+            Parcelable.Creator<BluetoothLeAudioCodecConfig> CREATOR =
+            new Parcelable.Creator<BluetoothLeAudioCodecConfig>() {
+                public BluetoothLeAudioCodecConfig createFromParcel(Parcel in) {
+                    int codecType = in.readInt();
+                    int codecPriority = in.readInt();
+                    int sampleRate = in.readInt();
+                    int bitsPerSample = in.readInt();
+                    int channelMode = in.readInt();
+                    int frameDuration = in.readInt();
+                    int octetsPerFrame = in.readInt();
+                    return new BluetoothLeAudioCodecConfig(codecType, codecPriority, sampleRate,
+                                                           bitsPerSample, channelMode,
+                                                           frameDuration, octetsPerFrame);
+                }
+
+                public BluetoothLeAudioCodecConfig[] newArray(int size) {
+                    return new BluetoothLeAudioCodecConfig[size];
+                }
+            };
+
+    @Override
+    public void writeToParcel(@NonNull Parcel out, int flags) {
+        out.writeInt(mCodecType);
+        out.writeInt(mCodecPriority);
+        out.writeInt(mSampleRate);
+        out.writeInt(mBitsPerSample);
+        out.writeInt(mChannelMode);
+        out.writeInt(mFrameDuration);
+        out.writeInt(mOctetsPerFrame);
     }
 
     @Override
