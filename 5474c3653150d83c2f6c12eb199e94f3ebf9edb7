@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b93754b_28bc909d",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-17T06:48:06Z",
+      "side": 1,
+      "message": "Can be another CL.\nPlease use NetworkTemplate.OEM_MANAGED_* instead.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 54
+      },
+      "revId": "5474c3653150d83c2f6c12eb199e94f3ebf9edb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
