@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5b91247_8bc6ba2d",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/TrafficStats.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-17T12:14:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "214fef12_e72d6016",
+      "range": {
+        "startLine": 191,
+        "startChar": 12,
+        "endLine": 191,
+        "endChar": 19
+      },
+      "revId": "35b0542cd3006966d0c2e21183892abba3501383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fbc7972a_e19c95c9",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-01-17T10:38:21Z",
       "side": 1,
       "message": "This will crash as soon as somebody tries to use the returned object (which all callers do), maybe you want to throw NullPointerException(\"Cannot get INetworkStatsService\", e); immediately to clarify the error message.",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 15
+      },
+      "revId": "35b0542cd3006966d0c2e21183892abba3501383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb8ce059_6c41ac36",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/TrafficStats.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-17T12:14:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbc7972a_e19c95c9",
       "range": {
         "startLine": 195,
         "startChar": 12,
