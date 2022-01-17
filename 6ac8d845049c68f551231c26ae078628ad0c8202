@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfa7379b_59f8841f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-01-17T05:19:25Z",
+      "side": 1,
+      "message": "Thanks for writing this\n\nDo you also have the netd change ? I don\u0027t see it in the topic",
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "543650bc_d6e9ed98",
+        "filename": "packages/ConnectivityT/framework-t/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-01-17T05:19:25Z",
+      "side": 1,
+      "message": "Why not put it in android.net.nsd ? This is only for NSD, and it would be easier to manage sources",
+      "range": {
+        "startLine": 80,
+        "startChar": 25,
+        "endLine": 80,
+        "endChar": 43
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46f4739d_97d813b4",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/MdnsServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-01-17T05:19:25Z",
+      "side": 1,
+      "message": "Could you have wrappers for the methods (that catch the RemoteExceptions) here instead ?\nYou\u0027ll need to add the mdns_aidl_interface rule as a dependency of framework-t (I think it would be better if it\u0027s separate from netd_aidl_interface), with jarjar rules for it",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 29
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9df6f56_625b59ed",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-01-17T05:19:25Z",
+      "side": 1,
+      "message": "Nit: since it\u0027s not final, can you add a comment to specify what the threading model is ? (IIUC this should only be accessed from the StateMachine handler thread)",
+      "range": {
+        "startLine": 69,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 41
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ff8b62a_e551dbb9",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-01-17T05:19:25Z",
+      "side": 1,
+      "message": "It looks like this registers the listener and starts daemon unconditionally, contrary to what the \"maybe\" suggests\n\nMaybe you could check for a boolean before registering and starting to make sure it\u0027s only done once ?",
+      "range": {
+        "startLine": 98,
+        "startChar": 12,
+        "endLine": 98,
+        "endChar": 44
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d69ca232_32523f1a",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-01-17T05:19:25Z",
+      "side": 1,
+      "message": "Should this also check whether the daemon has been started, and unregister the event listeners (to avoid binder leaks) ?",
+      "range": {
+        "startLine": 201,
+        "startChar": 24,
+        "endLine": 201,
+        "endChar": 27
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7342996a_e5cfea3f",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-01-17T05:19:25Z",
+      "side": 1,
+      "message": "Typo: Quotation (or you could just say \"removeQuotes()\")",
+      "range": {
+        "startLine": 583,
+        "startChar": 32,
+        "endLine": 583,
+        "endChar": 41
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fc60df1_b7099fd9",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-01-17T05:19:25Z",
+      "side": 1,
+      "message": "Is this new, or existing behavior ? This seems error-prone because the string could have quotes embedded, possibly escaped",
+      "range": {
+        "startLine": 583,
+        "startChar": 26,
+        "endLine": 583,
+        "endChar": 55
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
