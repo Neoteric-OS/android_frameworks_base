@@ -303,7 +303,7 @@ public class NsdService extends INsdManager.Stub {
 
                         maybeStartDaemon();
                         id = getUniqueId();
-                        if (discoverServices(id, args.serviceInfo.getServiceType())) {
+                        if (discoverServices(id, args.serviceInfo)) {
                             if (DBG) {
                                 Log.d(TAG, "Discover " + msg.arg2 + " " + id
                                         + args.serviceInfo.getServiceType());
@@ -849,8 +849,11 @@ public class NsdService extends INsdManager.Stub {
         return mDaemon.execute("update", regId, t.size(), t.getRawData());
     }
 
-    private boolean discoverServices(int discoveryId, String serviceType) {
-        return mDaemon.execute("discover", discoveryId, serviceType);
+    private boolean discoverServices(int discoveryId, NsdServiceInfo serviceInfo) {
+        final Network network = serviceInfo.getNetwork();
+        final String resolveInterface = network == null ? IFNAME_ANY : getResolveInterface(network);
+        return mDaemon.execute("discover", discoveryId, serviceInfo.getServiceType(),
+                resolveInterface);
     }
 
     private boolean stopServiceDiscovery(int discoveryId) {
@@ -871,11 +874,11 @@ public class NsdService extends INsdManager.Stub {
     }
 
     /**
-     * Guess the interface to use to resolve a service on a specific network.
+     * Guess the interface to use to resolve or discover a service on a specific network.
      *
      * This is an imperfect guess, as for example the network may be gone or not yet fully
-     * registered. This is fine as failing to resolve is correct if the network is gone, and
-     * a client attempting to resolve on a network not yet setup would have a bad time anyway; also
+     * registered. This is fine as failing is correct if the network is gone, and a client
+     * attempting to resolve/discover on a network not yet setup would have a bad time anyway; also
      * this is to support the legacy mdnsresponder implementation, which historically resolved
      * services on an unspecified network.
      */
