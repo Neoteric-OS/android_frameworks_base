@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d7543af_f54f9183",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-01-17T22:36:48Z",
+      "side": 1,
+      "message": "I restored change on the BluetoothSocket file because file no longer exist in f/Base.\nFile should be available to edit in packages/modules/Bluetooth/framework/xxx in a couple hours. I will link the CL at this point.\nMeanwhile, this CL can be approved by owner (but pre-submit cannot be run yet)",
+      "revId": "2534244b374a47e99c59197510fb685ce2a91e53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
