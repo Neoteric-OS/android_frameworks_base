@@ -1424,6 +1424,27 @@ public final class BluetoothDevice implements Parcelable, Attributable {
     }
 
     /**
+     * Sets the battery level of this Bluetooth device
+     *
+     * @hide
+     */
+    @RequiresLegacyBluetoothPermission
+    @RequiresBluetoothConnectPermission
+    @RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT)
+    public void setBatteryLevel(int batteryLevel) {
+        final IBluetooth service = sService;
+        if (service == null) {
+            Log.e(TAG, "Bluetooth disabled. Cannot get remote device battery level");
+            return;
+        }
+        try {
+            service.setBatteryLevel(this, mAttributionSource, batteryLevel);
+        } catch (RemoteException e) {
+            Log.e(TAG, "", e);
+        }
+    }
+
+    /**
      * Start the bonding (pairing) process with the remote device.
      * <p>This is an asynchronous call, it will return immediately. Register
      * for {@link #ACTION_BOND_STATE_CHANGED} intents to be notified when

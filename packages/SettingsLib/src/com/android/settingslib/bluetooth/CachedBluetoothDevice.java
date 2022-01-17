@@ -20,6 +20,10 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothCsipSetCoordinator;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCallback;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothHearingAid;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothUuid;
@@ -53,6 +57,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -72,11 +77,17 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
     private static final long MAX_LEAUDIO_DELAY_FOR_AUTO_CONNECT = 30000;
     private static final long MAX_MEDIA_PROFILE_CONNECT_DELAY = 60000;
 
+    private static final UUID GATT_BATTERY_SERVICE_UUID =
+            UUID.fromString("0000180f-0000-1000-8000-00805f9b34fb");
+    private static final UUID GATT_BATTERY_LEVEL_CHARACTERISTIC_UUID =
+            UUID.fromString("00002a19-0000-1000-8000-00805f9b34fb");
+
     private final Context mContext;
     private final BluetoothAdapter mLocalAdapter;
     private final LocalBluetoothProfileManager mProfileManager;
     private final Object mProfileLock = new Object();
     BluetoothDevice mDevice;
+    BluetoothGatt mBluetoothGatt;
     private long mHiSyncId;
     private int mGroupId;
     // Need this since there is no method for getting RSSI
@@ -1385,5 +1396,65 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
 
     void releaseLruCache() {
         mDrawableCache.evictAll();
+    }
+
+    final class GattCallback extends BluetoothGattCallback {
+        @Override
+        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+            Log.d(TAG, "Connection status:" + status + " state:" + newState);
+            if (status == BluetoothGatt.GATT_SUCCESS && newState == BluetoothGatt.STATE_CONNECTED) {
+                gatt.discoverServices();
+            }
+        }
+
+        @Override
+        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+            if (status != BluetoothGatt.GATT_SUCCESS) {
+                Log.e(TAG, "No gatt service");
+                return;
+            }
+
+            final BluetoothGattService battService = gatt.getService(GATT_BATTERY_SERVICE_UUID);
+            if (battService == null) {
+                Log.d(TAG, "No battery service");
+                return;
+            }
+
+            final BluetoothGattCharacteristic battLevel =
+                    battService.getCharacteristic(GATT_BATTERY_LEVEL_CHARACTERISTIC_UUID);
+            if (battLevel == null) {
+                Log.d(TAG, "No battery level");
+                return;
+            }
+
+            gatt.setCharacteristicNotification(battLevel, /*enable=*/true);
+            gatt.readCharacteristic(battLevel);
+        }
+
+        @Override
+        public void onCharacteristicChanged(BluetoothGatt gatt,
+                BluetoothGattCharacteristic characteristic, byte[] value) {
+            if (GATT_BATTERY_SERVICE_UUID.equals(characteristic.getUuid())) {
+                updateBatteryLevel(value);
+            }
+        }
+
+        @Override
+        public void onCharacteristicRead(BluetoothGatt gatt,
+                BluetoothGattCharacteristic characteristic, byte[] value, int status) {
+            if (status != BluetoothGatt.GATT_SUCCESS) {
+                Log.e(TAG, "Read characteristic failure on " + gatt + " " + characteristic);
+                return;
+            }
+
+            if (GATT_BATTERY_LEVEL_CHARACTERISTIC_UUID.equals(characteristic.getUuid())) {
+                updateBatteryLevel(value);
+            }
+        }
+
+        private void updateBatteryLevel(byte[] value) {
+            int batteryLevel = value[0] & 0xFF;
+            mDevice.setBatteryLevel(batteryLevel);
+        }
     }
 }
