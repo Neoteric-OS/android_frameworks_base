@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a24c6122_146daf56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 38
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-17T10:38:21Z",
+      "side": 1,
+      "message": "This is infortunate, but we searched the solution space pretty hard, and all alternative seem to be worse (more complexity, APIs with deep access into the system, a lot more code).\n\nMaybe we\u0027ll need to actually make this method @SystemApi someday. In the meantime, I think there is a zero practical chance it stops working, and this patch is simple, obviously correct and already tested.\n\nSo I\u0027ll hold my nose and say this is fine, and we\u0027ll change it if we find better solutions.\n",
+      "revId": "35b0542cd3006966d0c2e21183892abba3501383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "214fef12_e72d6016",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/TrafficStats.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-17T10:38:21Z",
+      "side": 1,
+      "message": "nit : final",
+      "range": {
+        "startLine": 191,
+        "startChar": 12,
+        "endLine": 191,
+        "endChar": 19
+      },
+      "revId": "35b0542cd3006966d0c2e21183892abba3501383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbc7972a_e19c95c9",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/TrafficStats.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-17T10:38:21Z",
+      "side": 1,
+      "message": "This will crash as soon as somebody tries to use the returned object (which all callers do), maybe you want to throw NullPointerException(\"Cannot get INetworkStatsService\", e); immediately to clarify the error message.",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 15
+      },
+      "revId": "35b0542cd3006966d0c2e21183892abba3501383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
