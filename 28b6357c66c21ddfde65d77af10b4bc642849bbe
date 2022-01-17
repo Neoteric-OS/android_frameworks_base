@@ -63,6 +63,30 @@
       },
       "revId": "28b6357c66c21ddfde65d77af10b4bc642849bbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ebfe785_44132a07",
+        "filename": "apex/media/framework/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2022-01-17T13:25:10Z",
+      "side": 1,
+      "message": "I see 3 concrete problems with the current naming:\n- The new name is a verbatim copy of a target which before this change represented the complementary set of media sources (roughly), so from a historic point of view this can be confusing.\n- The name \"framework-media-sources\", the way I see it, suggests the target contains media sources, like say MediaExtractor.java, which is not contained in this target (granted, it would not contain non java sources, anyway, but I\u0027m addressing only issues introduced by the new name, and not pre-existing issues).\n- The other name \"non-updatable-media-sources\" naturally suggests there are updatable media sources, which is not reflected in the current set of targets.\n\n\u003e I may also in the future refactor ...\n\nI\u0027m not super clear on the implications of this part on the naming.\n\nI will check with the team in the team sync later and explain the problem. Please kindly explain if any of my points above stems from a confusion on my part.",
+      "parentUuid": "49dbe5f7_d176cade",
+      "range": {
+        "startLine": 72,
+        "startChar": 11,
+        "endLine": 72,
+        "endChar": 34
+      },
+      "revId": "28b6357c66c21ddfde65d77af10b4bc642849bbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
