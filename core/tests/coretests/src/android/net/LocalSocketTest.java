@@ -16,6 +16,7 @@
 
 package android.net;
 
+import android.os.ParcelFileDescriptor;
 import android.system.Os;
 import android.system.OsConstants;
 import android.test.MoreAsserts;
@@ -355,7 +356,7 @@ public class LocalSocketTest extends TestCase {
         String address = ADDRESS_PREFIX + "_testSetSoTimeout_readTimeout";
 
         try (LocalSocketPair socketPair = LocalSocketPair.createConnectedSocketPair(address)) {
-            final LocalSocket clientSocket = socketPair.clientSocket;
+            final LocalSocket clientSocket = socketPair.mClientSocket;
 
             // Set the timeout in millis.
             int timeoutMillis = 1000;
@@ -385,7 +386,7 @@ public class LocalSocketTest extends TestCase {
         String address = ADDRESS_PREFIX + "_testSetSoTimeout_writeTimeout";
 
         try (LocalSocketPair socketPair = LocalSocketPair.createConnectedSocketPair(address)) {
-            final LocalSocket clientSocket = socketPair.clientSocket;
+            final LocalSocket clientSocket = socketPair.mClientSocket;
 
             // Set the timeout in millis.
             int timeoutMillis = 1000;
@@ -420,8 +421,8 @@ public class LocalSocketTest extends TestCase {
         String address = ADDRESS_PREFIX + "_testAvailable";
 
         try (LocalSocketPair socketPair = LocalSocketPair.createConnectedSocketPair(address)) {
-            LocalSocket clientSocket = socketPair.clientSocket;
-            LocalSocket serverSocket = socketPair.serverSocket.accept();
+            LocalSocket clientSocket = socketPair.mClientSocket;
+            LocalSocket serverSocket = socketPair.mServerSocket.accept();
 
             OutputStream clientOutputStream = clientSocket.getOutputStream();
             InputStream serverInputStream = serverSocket.getInputStream();
@@ -449,17 +450,19 @@ public class LocalSocketTest extends TestCase {
         // descriptor.
         try (LocalSocketPair socketPair = LocalSocketPair.createConnectedSocketPair(address)) {
             // Extract the client FileDescriptor we can use.
-            FileDescriptor fileDescriptor = socketPair.clientSocket.getFileDescriptor();
+            FileDescriptor fileDescriptor = socketPair.mClientSocket.getFileDescriptor();
             assertTrue(fileDescriptor.valid());
 
+            ParcelFileDescriptor parcelFileDescriptor = ParcelFileDescriptor.dup(fileDescriptor);
+
             LocalSocket clientSocketCreatedFromFileDescriptor =
-                    LocalSocket.createConnectedLocalSocket(fileDescriptor);
+                    LocalSocket.createConnectedLocalSocket(parcelFileDescriptor);
             // Create the LocalSocket we want to test.
             assertTrue(clientSocketCreatedFromFileDescriptor.isConnected());
             assertTrue(clientSocketCreatedFromFileDescriptor.isBound());
 
             // Test the LocalSocket can be used for communication.
-            LocalSocket serverSocket = socketPair.serverSocket.accept();
+            LocalSocket serverSocket = socketPair.mServerSocket.accept();
             OutputStream clientOutputStream =
                     clientSocketCreatedFromFileDescriptor.getOutputStream();
             InputStream serverInputStream = serverSocket.getInputStream();
@@ -472,7 +475,7 @@ public class LocalSocketTest extends TestCase {
             assertTrue(fileDescriptor.valid());
 
             // .. while closing the LocalSocket that owned the file descriptor does.
-            socketPair.clientSocket.close();
+            socketPair.mClientSocket.close();
             assertFalse(fileDescriptor.valid());
         }
     }
@@ -481,8 +484,8 @@ public class LocalSocketTest extends TestCase {
         String address = ADDRESS_PREFIX + "_testFlush";
 
         try (LocalSocketPair socketPair = LocalSocketPair.createConnectedSocketPair(address)) {
-            LocalSocket clientSocket = socketPair.clientSocket;
-            LocalSocket serverSocket = socketPair.serverSocket.accept();
+            LocalSocket clientSocket = socketPair.mClientSocket;
+            LocalSocket serverSocket = socketPair.mServerSocket.accept();
 
             OutputStream clientOutputStream = clientSocket.getOutputStream();
             InputStream serverInputStream = serverSocket.getInputStream();
@@ -518,16 +521,16 @@ public class LocalSocketTest extends TestCase {
     }
 
     private static class StreamReader extends Thread {
-        private final InputStream is;
-        private final int expectedByteCount;
-        private final CountDownLatch completeLatch = new CountDownLatch(1);
+        private final InputStream mIs;
+        private final int mExpectedByteCount;
+        private final CountDownLatch mCompleteLatch = new CountDownLatch(1);
 
-        private volatile Exception exception;
-        private int bytesRead;
+        private volatile Exception mException;
+        private int mBytesRead;
 
         private StreamReader(InputStream is, int expectedByteCount) {
-            this.is = is;
-            this.expectedByteCount = expectedByteCount;
+            this.mIs = is;
+            this.mExpectedByteCount = expectedByteCount;
         }
 
         @Override
@@ -535,40 +538,40 @@ public class LocalSocketTest extends TestCase {
             try {
                 byte[] buffer = new byte[10];
                 int readCount;
-                while ((readCount = is.read(buffer)) >= 0) {
-                    bytesRead += readCount;
-                    if (bytesRead >= expectedByteCount) {
+                while ((readCount = mIs.read(buffer)) >= 0) {
+                    mBytesRead += readCount;
+                    if (mBytesRead >= mExpectedByteCount) {
                         break;
                     }
                 }
             } catch (IOException e) {
-                exception = e;
+                mException = e;
             } finally {
-                completeLatch.countDown();
+                mCompleteLatch.countDown();
             }
         }
 
         public void waitForCompletion(long waitMillis) throws Exception {
-            if (!completeLatch.await(waitMillis, TimeUnit.MILLISECONDS)) {
+            if (!mCompleteLatch.await(waitMillis, TimeUnit.MILLISECONDS)) {
                 fail("Timeout waiting for completion");
             }
-            if (exception != null) {
-                throw new Exception("Read failed", exception);
+            if (mException != null) {
+                throw new Exception("Read failed", mException);
             }
         }
 
         public void assertBytesRead(int expected) {
-            assertEquals(expected, bytesRead);
+            assertEquals(expected, mBytesRead);
         }
     }
 
     private static class Result {
-        private final String type;
-        private final Exception e;
+        private final String mType;
+        private final Exception mException;
 
         private Result(String type, Exception e) {
-            this.type = type;
-            this.e = e;
+            this.mType = type;
+            this.mException = e;
         }
 
         static Result noException(String description) {
@@ -580,8 +583,8 @@ public class LocalSocketTest extends TestCase {
         }
 
         void assertThrewIOException(String expectedMessage) {
-            assertEquals("Unexpected result type", IOException.class.getName(), type);
-            assertEquals("Unexpected exception message", expectedMessage, e.getMessage());
+            assertEquals("Unexpected result type", IOException.class.getName(), mType);
+            assertEquals("Unexpected exception message", expectedMessage, mException.getMessage());
         }
     }
 
@@ -608,17 +611,17 @@ public class LocalSocketTest extends TestCase {
             return new LocalSocketPair(localServerSocket, clientSocket);
         }
 
-        final LocalServerSocket serverSocket;
-        final LocalSocket clientSocket;
+        final LocalServerSocket mServerSocket;
+        final LocalSocket mClientSocket;
 
         LocalSocketPair(LocalServerSocket serverSocket, LocalSocket clientSocket) {
-            this.serverSocket = serverSocket;
-            this.clientSocket = clientSocket;
+            this.mServerSocket = serverSocket;
+            this.mClientSocket = clientSocket;
         }
 
         public void close() throws Exception {
-            serverSocket.close();
-            clientSocket.close();
+            mServerSocket.close();
+            mClientSocket.close();
         }
     }
 }
