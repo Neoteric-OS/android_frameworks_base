@@ -65,6 +65,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "86821bea_80e1cfde",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2022-01-18T05:02:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8003e34f_5ccf247b",
+      "revId": "63b069d349c0b3d6c04433fa8f42b346965fc4f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8dc2fac0_da7cd035",
@@ -78,6 +96,30 @@
       "writtenOn": "2022-01-13T08:22:13Z",
       "side": 1,
       "message": "apps could call the aidl directly and lie about their UID, so we\u0027d need to validate this.\n\nin the old days we had to do this by hand, but we should use the new AttributionSource that\u0027s used on other BT APIs and it\u0027ll do the validation automatically for you as per b/188391719\n\n(AttributionSource bundles a number of other important new things, like renounced permissions, etc)\n\nalso need to enforce the permissions like we do in the other AdapterService aidl endpoints",
+      "range": {
+        "startLine": 3065,
+        "startChar": 73,
+        "endLine": 3065,
+        "endChar": 83
+      },
+      "revId": "63b069d349c0b3d6c04433fa8f42b346965fc4f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2920d641_dac5271f",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 3065,
+      "author": {
+        "id": 1540418
+      },
+      "writtenOn": "2022-01-18T05:02:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dc2fac0_da7cd035",
       "range": {
         "startLine": 3065,
         "startChar": 73,
