@@ -16,6 +16,52 @@
       "message": "I restored change on the BluetoothSocket file because file no longer exist in f/Base.\nFile should be available to edit in packages/modules/Bluetooth/framework/xxx in a couple hours. I will link the CL at this point.\nMeanwhile, this CL can be approved by owner (but pre-submit cannot be run yet)",
       "revId": "2534244b374a47e99c59197510fb685ce2a91e53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bd2f749_a73e192f",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-18T01:32:38Z",
+      "side": 1,
+      "message": "The use case doesn\u0027t seem to justify SystemApi here.\n\n- If this might be useful to general apps, then it should be public.\n- If this is only useful to the system (e.g., requires permission, difficult or impossible to use in app code, ...) then it should be @SystemApi(client \u003d MODULE_LIBRARIES)",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 14
+      },
+      "revId": "2534244b374a47e99c59197510fb685ce2a91e53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "654dc6c7_3ab6362f",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-18T01:32:38Z",
+      "side": 1,
+      "message": "Are you sure this is correct?\n\nWe\u0027ve often seen hard-to-debug leaks when extracting FDs from ParcelFileDescriptors. IIRC, the issue is that ParcelFileDescriptor has a finalize method that will close the wrapped fd. The finalizer runs at at some unpredictable time after the ParcelFileDescriptor goes out of scope. This can result in the socket being closed while it\u0027s still being used.\n\nIn some places we\u0027ve worked around it by doing things like:\n\n    FileDescriptor fd \u003d new FileDescriptor();\n    fd.setInt$(pfd.detachFd());\n\nbut I don\u0027t know if that is correct here. In particular, if you do that, it doesn\u0027t seem possible for the caller to close the fd any more, resulting in a filedescriptor leak. Another solution is to keep the fd in scope so the finalizer does not run, but that doesn\u0027t seem to be possible in a utility method such as this one.\n\nA better solution might be to always keep the pfd itself in scope. Not sure if that\u0027s something you can do here.",
+      "range": {
+        "startLine": 93,
+        "startChar": 28,
+        "endLine": 93,
+        "endChar": 51
+      },
+      "revId": "2534244b374a47e99c59197510fb685ce2a91e53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
