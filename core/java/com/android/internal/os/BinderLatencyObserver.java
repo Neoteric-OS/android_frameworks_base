@@ -18,8 +18,6 @@ package com.android.internal.os;
 
 import android.annotation.Nullable;
 import android.os.Binder;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.SystemClock;
 import android.util.ArrayMap;
 import android.util.Slog;
@@ -72,7 +70,6 @@ public class BinderLatencyObserver {
     private int mStatsdPushIntervalMinutes = STATSD_PUSH_INTERVAL_MINUTES_DEFAULT;
 
     private final Random mRandom;
-    private final Handler mLatencyObserverHandler;
     private final int mProcessSource;
 
     private BinderLatencyBuckets mLatencyBuckets;
@@ -169,8 +166,8 @@ public class BinderLatencyObserver {
     }
 
     private void noteLatencyDelayed() {
-        mLatencyObserverHandler.removeCallbacks(mLatencyObserverRunnable);
-        mLatencyObserverHandler.postDelayed(mLatencyObserverRunnable,
+        BackgroundThread.getHandler().removeCallbacks(mLatencyObserverRunnable);
+        BackgroundThread.getHandler().postDelayed(mLatencyObserverRunnable,
                 mStatsdPushIntervalMinutes * 60 * 1000);
     }
 
@@ -179,15 +176,10 @@ public class BinderLatencyObserver {
         public Random getRandomGenerator() {
             return new Random();
         }
-
-        public Handler getHandler() {
-            return new Handler(Looper.getMainLooper());
-        }
     }
 
     public BinderLatencyObserver(Injector injector, int processSource) {
         mRandom = injector.getRandomGenerator();
-        mLatencyObserverHandler = injector.getHandler();
         mLatencyBuckets = new BinderLatencyBuckets(
             mBucketCount, mFirstBucketSize, mBucketScaleFactor);
         mProcessSource = processSource;
