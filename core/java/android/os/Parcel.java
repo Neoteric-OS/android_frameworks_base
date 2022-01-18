@@ -4210,9 +4210,10 @@ public final class Parcel {
      * trying to instantiate an element.
      */
     @Nullable
-    public <T> T readParcelable(@Nullable ClassLoader loader, @NonNull Class<T> clazz) {
+    public <T extends Parcelable> T readParcelable(@Nullable ClassLoader loader,
+            @NonNull Class<? super T> clazz) {
         Objects.requireNonNull(clazz);
-        return readParcelableInternal(loader, clazz);
+        return (T) readParcelableInternal(loader, clazz);
     }
 
     /**
