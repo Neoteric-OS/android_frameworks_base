@@ -358,6 +358,9 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     @NonNull
     private final NetworkStatsSubscriptionsMonitor mNetworkStatsSubscriptionsMonitor;
 
+    @NonNull
+    private final BpfInterfaceMapUpdater mInterfaceMapUpdater;
+
     private static @NonNull File getDefaultSystemDir() {
         return new File(Environment.getDataDirectory(), "system");
     }
@@ -455,6 +458,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mContentResolver = mContext.getContentResolver();
         mContentObserver = mDeps.makeContentObserver(mHandler, mSettings,
                 mNetworkStatsSubscriptionsMonitor);
+        mInterfaceMapUpdater = mDeps.makeBpfInterfaceMapUpdater(mHandler, mNetd);
     }
 
     /**
@@ -501,6 +505,13 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                     }
                 }
             };
+        }
+
+        /** Create BpfInterfaceMapUpdater to update bpf interface map. */
+        @NonNull
+        public BpfInterfaceMapUpdater makeBpfInterfaceMapUpdater(
+                @NonNull Handler handler, @NonNull INetd netd) {
+            return new BpfInterfaceMapUpdater(handler, netd);
         }
     }
 
@@ -596,6 +607,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         // NETSTATS_COMBINE_SUBTYPE_ENABLED to decide start or stop monitoring RAT type changes.
         mHandler.post(() -> mContentObserver.onChange(false, Settings.Global
                 .getUriFor(Settings.Global.NETSTATS_COMBINE_SUBTYPE_ENABLED)));
+
+        mInterfaceMapUpdater.start();
 
         registerGlobalAlert();
     }

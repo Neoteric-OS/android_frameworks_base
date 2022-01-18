@@ -165,6 +165,8 @@ java_library_static {
         "overlayable_policy_aidl-java",
         "SurfaceFlingerProperties",
         "com.android.sysprop.watchdog",
+        // This is used for services.connectivity-tiramisu-sources.
+        "net-utils-device-common-bpf",
     ],
     javac_shard_size: 50,
 }
