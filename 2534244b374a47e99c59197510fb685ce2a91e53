@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a178134_a6b852e2",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-01-18T20:30:34Z",
+      "side": 1,
+      "message": "code for this has moved in aosp/1952390 as a following change. Since you ask for a first CL without changing the test code.\nBut to address the comment:\nI added `MODULE_LIBRARIES`\n\nI don\u0027t think there is any valid reason to put this as a public API. Bluetooth is the only caller and I don\u0027t see how this should be call by someone else. For the same reason, I don\u0027t have any permission in mind that we should use here.\nWould a `@RequireNoPermission` be useful ? Linter does not complain to not have anything.",
+      "parentUuid": "6bd2f749_a73e192f",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 14
+      },
+      "revId": "2534244b374a47e99c59197510fb685ce2a91e53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "654dc6c7_3ab6362f",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-01-18T01:32:38Z",
       "side": 1,
       "message": "Are you sure this is correct?\n\nWe\u0027ve often seen hard-to-debug leaks when extracting FDs from ParcelFileDescriptors. IIRC, the issue is that ParcelFileDescriptor has a finalize method that will close the wrapped fd. The finalizer runs at at some unpredictable time after the ParcelFileDescriptor goes out of scope. This can result in the socket being closed while it\u0027s still being used.\n\nIn some places we\u0027ve worked around it by doing things like:\n\n    FileDescriptor fd \u003d new FileDescriptor();\n    fd.setInt$(pfd.detachFd());\n\nbut I don\u0027t know if that is correct here. In particular, if you do that, it doesn\u0027t seem possible for the caller to close the fd any more, resulting in a filedescriptor leak. Another solution is to keep the fd in scope so the finalizer does not run, but that doesn\u0027t seem to be possible in a utility method such as this one.\n\nA better solution might be to always keep the pfd itself in scope. Not sure if that\u0027s something you can do here.",
+      "range": {
+        "startLine": 93,
+        "startChar": 28,
+        "endLine": 93,
+        "endChar": 51
+      },
+      "revId": "2534244b374a47e99c59197510fb685ce2a91e53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "872c6324_e646506b",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-01-18T20:30:34Z",
+      "side": 1,
+      "message": "Good to know ! I only put the Parcel because I wasn\u0027t allowed by compiler to build an API with FileDescriptor as a parameter.\n\nWe are currently calling this API by doing something like this:\n```\n LocalSocket.createConnectedLocalSocket(mPfd.getFileDescriptor());\n```\nand the mPfd is keep in scope of the BluetoothSocket and close on it\u0027s own.\n\nSo moving the `getFileDescriptor` from being before the API call to after shouldn\u0027t change the behavior if I understand correctly what you said.\n\n(cf https://source.corp.google.com/android/packages/modules/Bluetooth/framework/java/android/bluetooth/BluetoothSocket.java?q\u003dcreateConnectedLocalSocket%20mPfd\u0026sq\u003dp:%5Eandroid$)\n\nI put this comment as resolved, but if I miss something here do note hesitate to re-open and we will see how we can keep the ParcelFileDescriptor in the LocalSocketImpl scope by adding a constructor.",
+      "parentUuid": "654dc6c7_3ab6362f",
       "range": {
         "startLine": 93,
         "startChar": 28,
