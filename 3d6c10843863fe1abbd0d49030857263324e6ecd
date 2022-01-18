@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e55a2129_7ac6b4de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-18T10:01:39Z",
+      "side": 1,
+      "message": "LGTM when comments are addressed",
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5070f870_f669c19e",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-18T10:01:39Z",
+      "side": 1,
+      "message": "NetworkTemplate#NETWORK_TYPE_ALL",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 51
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb88e735_a34b0b7a",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-18T10:01:39Z",
+      "side": 1,
+      "message": "Let\u0027s have a builder for this.\n\nThe build has a method that takes a NetworkStateSnapshot, and is documented to read roaming, metered, wifikey... from the snapshot for convenience.\n\nThen let\u0027s :\n- hide both this constructor and the factory method.\n- remove refs to NetworkTemplate#NETWORK_TYPE_ALL\n    add a clearRatType() method that sets it back to NETWORK_TYPE_ALL",
+      "range": {
+        "startLine": 94,
+        "startChar": 11,
+        "endLine": 94,
+        "endChar": 26
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dffbddad_c8cd8f42",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-18T10:01:39Z",
+      "side": 1,
+      "message": "* Assemble a {@link NetworkIdentity} from the passed arguments.\n  *\n  * This methods builds an identity based on the capabilities of the network in the snapshot and other passed arguments. The identity is used as a key to record data usage.",
+      "range": {
+        "startLine": 242,
+        "startChar": 7,
+        "endLine": 243,
+        "endChar": 85
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8276b024_a56290a6",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsCollection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-18T10:01:39Z",
+      "side": 1,
+      "message": "Let\u0027s have a Builder for this class. The Builder will take the bucket duration in its constructor.",
+      "range": {
+        "startLine": 111,
+        "startChar": 11,
+        "endLine": 111,
+        "endChar": 33
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb21c27f_ca6c22b0",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsCollection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-18T10:01:39Z",
+      "side": 1,
+      "message": "Let\u0027s move this to the builder and name it addHistory();\n\nWe can have \"Map\u003cKey, NSS\u003e getHistories()\" on the built object. That means you don\u0027t need to have addCollection because its implementation is trivial :\n\n  for (Map.Entry\u003cKey, NSS\u003e history : collection.getHistories) { \n    c.add(history.getKey(), history.getValue());\n  }",
+      "range": {
+        "startLine": 415,
+        "startChar": 16,
+        "endLine": 415,
+        "endChar": 29
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aab87091_804915eb",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsHistory.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-18T10:01:39Z",
+      "side": 1,
+      "message": "I\u0027m afraid the framework team wants no usage of the stream API in the system server",
+      "range": {
+        "startLine": 556,
+        "startChar": 47,
+        "endLine": 556,
+        "endChar": 60
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
