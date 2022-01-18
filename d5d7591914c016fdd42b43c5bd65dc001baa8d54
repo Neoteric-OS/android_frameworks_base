@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f16a7d2_34b7d5b4",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-18T08:35:16Z",
+      "side": 1,
+      "message": "Let\u0027s have a callback for this instead. I don\u0027t think we want to perpetuate this shape.\n\nWe probably need to still send the broadcast for backward compatibility, but then we don\u0027t expose this.",
+      "range": {
+        "startLine": 59,
+        "startChar": 37,
+        "endLine": 59,
+        "endChar": 65
+      },
+      "revId": "d5d7591914c016fdd42b43c5bd65dc001baa8d54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
