@@ -110,6 +110,30 @@
       },
       "revId": "2534244b374a47e99c59197510fb685ce2a91e53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7c2f014_68f88ef9",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-18T23:55:08Z",
+      "side": 1,
+      "message": "I don\u0027t think we can release an API (even a module-lib API) that might (non-deterministically) close the object that is passed in. Such an API would be very difficult to use correctly. That would result in hard-to-find bugs.\n\nWhat was the error you got when you used FileDescriptor?",
+      "parentUuid": "872c6324_e646506b",
+      "range": {
+        "startLine": 93,
+        "startChar": 28,
+        "endLine": 93,
+        "endChar": 51
+      },
+      "revId": "2534244b374a47e99c59197510fb685ce2a91e53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
