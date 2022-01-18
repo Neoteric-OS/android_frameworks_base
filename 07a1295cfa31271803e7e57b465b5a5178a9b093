@@ -34,6 +34,24 @@
       "parentUuid": "80577b2b_f91bc526",
       "revId": "07a1295cfa31271803e7e57b465b5a5178a9b093",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24684ee5_c25d7319",
+        "filename": "api/api.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-18T16:12:03Z",
+      "side": 1,
+      "message": "Ack. I suspect that we will need something like this on an ongoing basis. AIUI the reasons why we need it now are not particularly special and it is possible that other teams will need something similar in future. Having that in the Android.bp file would make it easier for those teams to manage it but we can deal with that if/when it becomes an issue.",
+      "parentUuid": "0876547b_88b2b6aa",
+      "revId": "07a1295cfa31271803e7e57b465b5a5178a9b093",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
