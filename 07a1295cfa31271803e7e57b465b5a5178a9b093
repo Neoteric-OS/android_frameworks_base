@@ -16,6 +16,24 @@
       "message": "Can this not be configured in an Android.bp file similar to how the prefer setting of mainline modules is configured? That would avoid the need to have specific support in this code.",
       "revId": "07a1295cfa31271803e7e57b465b5a5178a9b093",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0876547b_88b2b6aa",
+        "filename": "api/api.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-01-18T15:27:44Z",
+      "side": 1,
+      "message": "the soong_config variable stuff is IMO extremely clunky. The point of that is to avoid having to write .go code, but given we have go code already this is much more straightforward to understand.\n\nNote also it\u0027s temporary, so we\u0027ll clean it up in a month or so.",
+      "parentUuid": "80577b2b_f91bc526",
+      "revId": "07a1295cfa31271803e7e57b465b5a5178a9b093",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
