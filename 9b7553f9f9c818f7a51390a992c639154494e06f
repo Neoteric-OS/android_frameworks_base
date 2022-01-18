@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "904aad2b_2672e07b",
+        "filename": "core/java/android/bluetooth/BluetoothHapClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2022-01-18T12:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb49559f_04bd2b1d",
+      "range": {
+        "startLine": 403,
+        "startChar": 28,
+        "endLine": 403,
+        "endChar": 48
+      },
+      "revId": "9b7553f9f9c818f7a51390a992c639154494e06f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3a69183_ab37ddb2",
@@ -37,6 +61,24 @@
       "writtenOn": "2022-01-15T11:19:48Z",
       "side": 1,
       "message": "Bluetooth API requires asynchronous receiver as it is here:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1943965/2/core/java/android/bluetooth/BluetoothDevice.java",
+      "revId": "9b7553f9f9c818f7a51390a992c639154494e06f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2a4215f_6551b12c",
+        "filename": "core/java/android/bluetooth/BluetoothHapClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2022-01-18T12:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3a69183_ab37ddb2",
       "revId": "9b7553f9f9c818f7a51390a992c639154494e06f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
