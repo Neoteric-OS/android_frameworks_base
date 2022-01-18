@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c47b816b_eaf1726a",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2833,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2022-01-18T19:58:29Z",
+      "side": 1,
+      "message": "super nit, but looks like a double space here",
+      "range": {
+        "startLine": 2833,
+        "startChar": 46,
+        "endLine": 2833,
+        "endChar": 48
+      },
+      "revId": "9abe97c6b2dd0c5b7211b9671778425562651d3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
