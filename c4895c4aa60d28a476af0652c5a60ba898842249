@@ -70,6 +70,24 @@
       "parentUuid": "9d475c08_d3163df8",
       "revId": "c4895c4aa60d28a476af0652c5a60ba898842249",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27ef6b7f_c1f5c21d",
+        "filename": "services/core/java/com/android/server/SerialService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2022-01-18T21:47:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4cdc8c1f_098bc5e3",
+      "revId": "c4895c4aa60d28a476af0652c5a60ba898842249",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
