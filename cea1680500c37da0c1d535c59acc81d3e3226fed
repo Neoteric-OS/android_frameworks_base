@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb08944e_12c11782",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561936
+      },
+      "writtenOn": "2022-01-18T06:25:49Z",
+      "side": 1,
+      "message": "Hello,\nIt was reported as a market issue, and we applied it to the All R OS models, and there was no side effect.\nPlease review it.",
+      "revId": "cea1680500c37da0c1d535c59acc81d3e3226fed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
