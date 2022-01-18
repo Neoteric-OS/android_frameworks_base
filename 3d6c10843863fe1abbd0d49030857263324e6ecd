@@ -43,6 +43,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b2ccb3ce_9da6340d",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-18T10:10:53Z",
+      "side": 1,
+      "message": "metered",
+      "range": {
+        "startLine": 89,
+        "startChar": 45,
+        "endLine": 89,
+        "endChar": 52
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cb88e735_a34b0b7a",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
         "patchSetId": 10
@@ -66,6 +89,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "026a4aa0_202ec8df",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-18T10:10:53Z",
+      "side": 1,
+      "message": "You don\u0027t want to change this naming?",
+      "range": {
+        "startLine": 217,
+        "startChar": 18,
+        "endLine": 217,
+        "endChar": 30
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dffbddad_c8cd8f42",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
         "patchSetId": 10
@@ -82,6 +128,29 @@
         "startChar": 7,
         "endLine": 243,
         "endChar": 85
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27dd9207_a6db59c9",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-18T10:10:53Z",
+      "side": 1,
+      "message": "Question:\nSo, this method is called by buildNetworkIdentity(l.266) so it will be moved to static library as well? If so, OEM_NONE, OEM_PAID and OEM_PRIVATE are @hide so I think they are not visible to the library. Do you plan to expose them?",
+      "range": {
+        "startLine": 300,
+        "startChar": 22,
+        "endLine": 300,
+        "endChar": 36
       },
       "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
