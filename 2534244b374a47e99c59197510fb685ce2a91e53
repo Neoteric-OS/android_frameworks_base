@@ -158,6 +158,30 @@
       },
       "revId": "2534244b374a47e99c59197510fb685ce2a91e53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bed6565_ec08bc73",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-19T00:39:01Z",
+      "side": 1,
+      "message": "Per discussion on the thread, let\u0027s first move the test with no code changes. Then we can discuss what to do here.",
+      "parentUuid": "c4661ef0_1ba7cab6",
+      "range": {
+        "startLine": 93,
+        "startChar": 28,
+        "endLine": 93,
+        "endChar": 51
+      },
+      "revId": "2534244b374a47e99c59197510fb685ce2a91e53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
