@@ -134,6 +134,30 @@
       },
       "revId": "2534244b374a47e99c59197510fb685ce2a91e53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4661ef0_1ba7cab6",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-01-19T00:20:33Z",
+      "side": 1,
+      "message": "I have a build error:\n```\nMust use ParcelFileDescriptor instead of FileDescriptor in parameter fd in android.net.LocalSocket.createConnectedLocalSocket(java.io.FileDescriptor fd) [UseParcelFileDescriptor]\n```\n\nAdding SuppressLint on the method do not remove the error.\n\nBut while trying to reproduce it I noticed it was possible to add the suppresslint at the parameter level and indeed it remove the error. Didn\u0027t knew about that !\nWould you approve a modification of aosp/1952390 with SystemAPi(MODULE) and suppressLint ?\nThis CL is currently only addressing the move of the test file. Do you still want it to be moved ? ( I think it should be)",
+      "parentUuid": "b7c2f014_68f88ef9",
+      "range": {
+        "startLine": 93,
+        "startChar": 28,
+        "endLine": 93,
+        "endChar": 51
+      },
+      "revId": "2534244b374a47e99c59197510fb685ce2a91e53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
