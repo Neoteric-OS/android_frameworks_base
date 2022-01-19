@@ -139,6 +139,7 @@ import android.net.NetworkScoreManager;
 import android.net.NetworkWatchlistManager;
 import android.net.PacProxyManager;
 import android.net.TetheringManager;
+import android.net.TrafficStats;
 import android.net.VpnManager;
 import android.net.lowpan.ILowpanManager;
 import android.net.lowpan.LowpanManager;
@@ -986,6 +987,7 @@ public final class SystemServiceRegistry {
                 //  {@code ConnectivityFrameworkInitializer}.
                 final INetworkStatsService service = INetworkStatsService.Stub.asInterface(
                         ServiceManager.getServiceOrThrow(Context.NETWORK_STATS_SERVICE));
+                TrafficStats.init(ctx.getOuterContext());
                 return new NetworkStatsManager(ctx.getOuterContext(), service);
             }});
 
