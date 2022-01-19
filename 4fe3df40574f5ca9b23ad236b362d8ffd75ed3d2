@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe2eebc1_c0c805c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2022-01-19T07:21:14Z",
+      "side": 1,
+      "message": "we need to rebase it to p/m/Bluetooth, but change looks good",
+      "revId": "4fe3df40574f5ca9b23ad236b362d8ffd75ed3d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
