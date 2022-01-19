@@ -75,7 +75,6 @@ import android.os.Environment;
 import android.os.FileUtils;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.IUserRestrictionsListener;
 import android.os.Looper;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
@@ -87,6 +86,7 @@ import android.os.SELinux;
 import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.os.UserRestrictionsCallback;
 import android.provider.DeviceConfig;
 import android.provider.Settings;
 import android.provider.Settings.Config.SyncDisabledMode;
@@ -1010,7 +1010,7 @@ public class SettingsProvider extends ContentProvider {
         // TODO: The current design of settings looking different based on user restrictions
         // should be reworked to keep them separate and system code should check the setting
         // first followed by checking the user restriction before performing an operation.
-        IUserRestrictionsListener listener = new IUserRestrictionsListener.Stub() {
+        UserRestrictionsCallback callback = new UserRestrictionsCallback() {
             @Override
             public void onUserRestrictionsChanged(int userId,
                     Bundle newRestrictions, Bundle prevRestrictions) {
@@ -1098,7 +1098,7 @@ public class SettingsProvider extends ContentProvider {
                 }
             }
         };
-        mUserManager.addUserRestrictionsListener(listener);
+        mUserManager.registerUserRestrictionsCallback(callback);
     }
 
     private static Set<String> getRestrictionDiff(Bundle prevRestrictions, Bundle newRestrictions) {

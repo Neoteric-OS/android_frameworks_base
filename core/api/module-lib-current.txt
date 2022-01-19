@@ -382,6 +382,15 @@ package android.os {
     method @NonNull public java.util.List<android.content.ComponentName> getEnabledComponentOverrides(@NonNull String);
   }
 
+  public class UserManager {
+    method public void registerUserRestrictionsCallback(@NonNull android.os.UserRestrictionsCallback);
+  }
+
+  public abstract class UserRestrictionsCallback {
+    ctor public UserRestrictionsCallback();
+    method public abstract void onUserRestrictionsChanged(int, @NonNull android.os.Bundle, @NonNull android.os.Bundle);
+  }
+
 }
 
 package android.os.storage {

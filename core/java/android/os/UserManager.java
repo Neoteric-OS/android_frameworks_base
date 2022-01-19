@@ -66,6 +66,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -2836,13 +2837,20 @@ public class UserManager {
     }
 
     /**
-     * @hide
      * Register a binder callback for user restrictions changes.
      * May only be called by the OS itself.
+     *
+     * {@hide}
      */
-    public void addUserRestrictionsListener(final IUserRestrictionsListener listener) {
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @SuppressLint({
+            "ExecutorRegistration",
+            "PairedRegistration"
+    })
+    public void registerUserRestrictionsCallback(@NonNull final UserRestrictionsCallback callback) {
+        Objects.requireNonNull(callback, "UserRestrictionsCallback must not be null");
         try {
-            mService.addUserRestrictionsListener(listener);
+            mService.addUserRestrictionsListener(callback.mListener);
         } catch (RemoteException re) {
             throw re.rethrowFromSystemServer();
         }
