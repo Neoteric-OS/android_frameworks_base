@@ -2515,6 +2515,9 @@ interface ITelephony {
     CellIdentity getLastKnownCellIdentity(int subId, String callingPackage,
             String callingFeatureId);
 
+    /** Check if telephony new data stack is enabled. */
+    boolean isUsingNewDataStack();
+
     /**
      *  @return true if the modem service is set successfully, false otherwise.
      */
@@ -2540,6 +2543,12 @@ interface ITelephony {
     boolean isRcsProvisioningRequiredForCapability(int subId, int capability, int tech);
 
     /**
+     * Sets a voice service state from telecom based on the current PhoneAccounts registered. See
+     * PhoneAccount#CAPABILITY_VOICE_CALLING_AVAILABLE.
+     */
+    void setVoiceServiceStateOverride(int subId, boolean hasService, String callingPackage);
+
+    /**
      * Returns the package name that provides the {@link CarrierService} implementation for the
      * specified {@code logicalSlotIndex}, or {@code null} if no package with carrier privileges
      * declares one.
@@ -2549,7 +2558,4 @@ interface ITelephony {
      * for the slot, or {@code null} if none is resolved
      */
     String getCarrierServicePackageNameForLogicalSlot(int logicalSlotIndex);
-
-    /** Check if telephony new data stack is enabled. */
-    boolean isUsingNewDataStack();
 }
