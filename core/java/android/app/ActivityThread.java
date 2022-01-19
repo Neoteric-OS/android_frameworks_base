@@ -97,6 +97,7 @@ import android.media.MediaFrameworkPlatformInitializer;
 import android.media.MediaServiceManager;
 import android.net.ConnectivityManager;
 import android.net.Proxy;
+import android.net.TrafficStats;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
@@ -6662,6 +6663,9 @@ public final class ActivityThread extends ClientTransactionHandler
         Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "NetworkSecurityConfigProvider.install");
         NetworkSecurityConfigProvider.install(appContext);
         Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+
+        // Initialize with the context, to allow TrafficStats to fetch the needed binder.
+        TrafficStats.init(appContext);
 
         // Continue loading instrumentation.
         if (ii != null) {

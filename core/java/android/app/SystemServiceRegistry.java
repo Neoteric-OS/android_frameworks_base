@@ -986,6 +986,7 @@ public final class SystemServiceRegistry {
                 //  {@code ConnectivityFrameworkInitializer}.
                 final INetworkStatsService service = INetworkStatsService.Stub.asInterface(
                         ServiceManager.getServiceOrThrow(Context.NETWORK_STATS_SERVICE));
+                TrafficStats.init(ctx.getOuterContext());
                 return new NetworkStatsManager(ctx.getOuterContext(), service);
             }});
 
