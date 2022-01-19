@@ -39,6 +39,30 @@
       },
       "revId": "d5f07c3612c2287903fac931740054af024ab8ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f9c2420_b9d4a398",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4216,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2022-01-19T17:51:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf02feac_c6b9852e",
+      "range": {
+        "startLine": 4216,
+        "startChar": 19,
+        "endLine": 4216,
+        "endChar": 41
+      },
+      "revId": "d5f07c3612c2287903fac931740054af024ab8ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
