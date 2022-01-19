@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ec33bda_d3e9001a",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3825,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2022-01-19T21:21:47Z",
+      "side": 1,
+      "message": "You can also recommend they use {@link android.telephony.PhoneNumberUtils#formatNumberToE164(String, String)}, which will format the number in a consistent manner.",
+      "range": {
+        "startLine": 3824,
+        "startChar": 60,
+        "endLine": 3825,
+        "endChar": 18
+      },
+      "revId": "12e7fc10c62b4b3f05063d04decd09ce800e10e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
