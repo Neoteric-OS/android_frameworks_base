@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75ce6cd9_3f4df5e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-01-19T09:56:40Z",
+      "side": 1,
+      "message": "Just pulling b/210800751#comment9 here to remind you to modify readSerializable() too :) ",
+      "revId": "d5f07c3612c2287903fac931740054af024ab8ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf02feac_c6b9852e",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4216,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-01-19T09:56:40Z",
+      "side": 1,
+      "message": "Apply the same signature modifications to readParcelableInternal() so we don\u0027t have to cast here.",
+      "range": {
+        "startLine": 4216,
+        "startChar": 19,
+        "endLine": 4216,
+        "endChar": 41
+      },
+      "revId": "d5f07c3612c2287903fac931740054af024ab8ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
