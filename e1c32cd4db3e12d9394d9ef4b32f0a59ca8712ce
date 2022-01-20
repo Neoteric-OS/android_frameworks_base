@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8263d32c_4450d0e9",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentitySet.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-20T04:11:19Z",
+      "side": 1,
+      "message": "Let\u0027s call super() explicitly",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 5
+      },
+      "revId": "e1c32cd4db3e12d9394d9ef4b32f0a59ca8712ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2419cbf_8a0eac56",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsCollection.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-20T04:11:19Z",
+      "side": 1,
+      "message": "@hide",
+      "range": {
+        "startLine": 435,
+        "startChar": 4,
+        "endLine": 435,
+        "endChar": 7
+      },
+      "revId": "e1c32cd4db3e12d9394d9ef4b32f0a59ca8712ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
