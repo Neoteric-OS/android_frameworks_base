@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a66ea3bc_edd0dd59",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1858130
+      },
+      "writtenOn": "2022-01-20T17:43:33Z",
+      "side": 1,
+      "message": "Bypassing presubmit since this is only an owners file and the previous failures were unrelated to the change.",
+      "revId": "b90933a1cc50e48560d1d2ab5fcc2abe3a191d82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
