@@ -300,6 +300,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8bffc9c_bf88a647",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-20T15:55:54Z",
+      "side": 1,
+      "message": "They are equivalent so it\u0027s probably fine.\n NetworkTemplate.OEM_MANAGED_NO \u003d NetworkIdentity.OEM_NONE\n NetworkTemplate.OEM_MANAGED_PAID \u003d NetworkIdentity.OEM_PAID\n NetworkTemplate.OEM_MANAGED_PRIVATE \u003d NetworkIdentity.OEM_PRIVATE",
+      "parentUuid": "582baaae_2aca5a7d",
+      "range": {
+        "startLine": 300,
+        "startChar": 22,
+        "endLine": 300,
+        "endChar": 36
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8276b024_a56290a6",
