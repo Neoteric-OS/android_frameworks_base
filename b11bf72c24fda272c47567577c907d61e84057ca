@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9b6f357_8b185171",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-20T10:12:36Z",
+      "side": 1,
+      "message": "I don\u0027t understand why, but this fail to build with:\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nframeworks/base/core/java/android/net/LocalSocket.java:92: error: Must use ParcelFileDescriptor instead of FileDescriptor in parameter fd in android.net.LocalSocket.createConnectedLocalSocket(java.io.FileDescriptor fd) [UseParcelFileDescriptor]Error: metalava detected the following problems:\nframeworks/base/core/java/android/net/LocalSocket.java:92: error: Must use ParcelFileDescriptor instead of FileDescriptor in parameter fd in android.net.LocalSocket.createConnectedLocalSocket(java.io.FileDescriptor fd) [UseParcelFileDescriptor]\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 44
+      },
+      "revId": "b11bf72c24fda272c47567577c907d61e84057ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
