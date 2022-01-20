@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ab0e5cf_71e068ad",
+        "filename": "core/api/current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 9368,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2022-01-20T19:58:16Z",
+      "side": 1,
+      "message": "Are these inherited methods only? Should they be removed?",
+      "range": {
+        "startLine": 9367,
+        "startChar": 0,
+        "endLine": 9368,
+        "endChar": 37
+      },
+      "revId": "6a33b1ae6f5f3b121bd5abbb0648924418b45479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
