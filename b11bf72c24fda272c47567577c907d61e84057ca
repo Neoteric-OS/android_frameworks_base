@@ -22,6 +22,30 @@
       },
       "revId": "b11bf72c24fda272c47567577c907d61e84057ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "952f0939_39e2b029",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2022-01-20T13:22:13Z",
+      "side": 1,
+      "message": "Not very obvious, sorry; the annotation needs to go on the parameter, not the method.\n\n(the method annotation suppresses the lint on the return type only, same as how the nullability annotations work)",
+      "parentUuid": "e9b6f357_8b185171",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 44
+      },
+      "revId": "b11bf72c24fda272c47567577c907d61e84057ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
