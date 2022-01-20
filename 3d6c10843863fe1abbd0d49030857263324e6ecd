@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e838041_eaeb50f7",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-20T03:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5070f870_f669c19e",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 51
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b2ccb3ce_9da6340d",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-01-18T10:10:53Z",
       "side": 1,
       "message": "metered",
+      "range": {
+        "startLine": 89,
+        "startChar": 45,
+        "endLine": 89,
+        "endChar": 52
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15fb4cdc_91325366",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-20T03:39:19Z",
+      "side": 1,
+      "message": "Removed since we\u0027ll have a builder class instead.",
+      "parentUuid": "b2ccb3ce_9da6340d",
       "range": {
         "startLine": 89,
         "startChar": 45,
@@ -89,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f91f9513_be20475e",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-20T03:39:19Z",
+      "side": 1,
+      "message": "The builder part will be addressed in next patch.",
+      "parentUuid": "cb88e735_a34b0b7a",
+      "range": {
+        "startLine": 94,
+        "startChar": 11,
+        "endLine": 94,
+        "endChar": 26
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "026a4aa0_202ec8df",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
         "patchSetId": 10
@@ -100,6 +172,30 @@
       "writtenOn": "2022-01-18T10:10:53Z",
       "side": 1,
       "message": "You don\u0027t want to change this naming?",
+      "range": {
+        "startLine": 217,
+        "startChar": 18,
+        "endLine": 217,
+        "endChar": 30
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a509f1f6_3817331e",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-20T03:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "026a4aa0_202ec8df",
       "range": {
         "startLine": 217,
         "startChar": 18,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d888988a_61205dce",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-20T03:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dffbddad_c8cd8f42",
+      "range": {
+        "startLine": 242,
+        "startChar": 7,
+        "endLine": 243,
+        "endChar": 85
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27dd9207_a6db59c9",
@@ -146,6 +266,30 @@
       "writtenOn": "2022-01-18T10:10:53Z",
       "side": 1,
       "message": "Question:\nSo, this method is called by buildNetworkIdentity(l.266) so it will be moved to static library as well? If so, OEM_NONE, OEM_PAID and OEM_PRIVATE are @hide so I think they are not visible to the library. Do you plan to expose them?",
+      "range": {
+        "startLine": 300,
+        "startChar": 22,
+        "endLine": 300,
+        "endChar": 36
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "582baaae_2aca5a7d",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-20T03:39:19Z",
+      "side": 1,
+      "message": "We\u0027ll have a Builder in the follow-up patch.\nSo maybe keep it as is for now.\nThay are already exposed as NetworkTemplate#OEM_MANAGED_*.\nNot sure if we want to expose another set of similar constants?\nGiven that we don\u0027t want caller to input OEM_MANAGED_YES in NetworkIdentity.\nAny idea?",
+      "parentUuid": "27dd9207_a6db59c9",
       "range": {
         "startLine": 300,
         "startChar": 22,
@@ -181,6 +325,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3a7dc48c_287808b6",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsCollection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-20T03:39:19Z",
+      "side": 1,
+      "message": "Keeped this hidden.\nThe builder will be introduced in the follow-up CLs.",
+      "parentUuid": "8276b024_a56290a6",
+      "range": {
+        "startLine": 111,
+        "startChar": 11,
+        "endLine": 111,
+        "endChar": 33
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cb21c27f_ca6c22b0",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsCollection.java",
         "patchSetId": 10
@@ -204,6 +372,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "98147b84_2999150c",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsCollection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-20T03:39:19Z",
+      "side": 1,
+      "message": "Keeped this hidden.\nThe builder will be introduced in the follow-up CLs.",
+      "parentUuid": "cb21c27f_ca6c22b0",
+      "range": {
+        "startLine": 415,
+        "startChar": 16,
+        "endLine": 415,
+        "endChar": 29
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aab87091_804915eb",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsHistory.java",
         "patchSetId": 10
@@ -215,6 +407,30 @@
       "writtenOn": "2022-01-18T10:01:39Z",
       "side": 1,
       "message": "I\u0027m afraid the framework team wants no usage of the stream API in the system server",
+      "range": {
+        "startLine": 556,
+        "startChar": 47,
+        "endLine": 556,
+        "endChar": 60
+      },
+      "revId": "3d6c10843863fe1abbd0d49030857263324e6ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3499d3c3_a353ac6a",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsHistory.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-20T03:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aab87091_804915eb",
       "range": {
         "startLine": 556,
         "startChar": 47,
