@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019493125",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/208251?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d456d6f1_36b0623c",
+        "filename": "core/java/android/hardware/hdmi/HdmiDeviceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-20T13:33:11Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 101
+      },
+      "revId": "7a46ac3c8453b2a757bc87635119e665cc94fec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
