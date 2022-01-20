@@ -16,11 +16,6 @@
 
 package android.net;
 
-import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
-
-import android.annotation.NonNull;
-import android.annotation.SuppressLint;
-import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 
 import java.io.Closeable;
@@ -86,10 +81,7 @@ public class LocalSocket implements Closeable {
      *
      * @hide - used by BluetoothSocket.
      */
-    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
-    @SuppressLint("UseParcelFileDescriptor")
-    @NonNull
-    public static LocalSocket createConnectedLocalSocket(@NonNull FileDescriptor fd) {
+    public static LocalSocket createConnectedLocalSocket(FileDescriptor fd) {
         return createConnectedLocalSocket(new LocalSocketImpl(fd), SOCKET_UNKNOWN);
     }
 
