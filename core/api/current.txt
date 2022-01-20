@@ -9792,6 +9792,7 @@ package android.bluetooth.le {
 
   public final class ScanFilter implements android.os.Parcelable {
     method public int describeContents();
+    method public int getAdType();
     method @Nullable public String getDeviceAddress();
     method @Nullable public String getDeviceName();
     method @Nullable public byte[] getManufacturerData();
@@ -9812,6 +9813,7 @@ package android.bluetooth.le {
   public static final class ScanFilter.Builder {
     ctor public ScanFilter.Builder();
     method public android.bluetooth.le.ScanFilter build();
+    method @NonNull public android.bluetooth.le.ScanFilter.Builder setAdType(int);
     method public android.bluetooth.le.ScanFilter.Builder setDeviceAddress(String);
     method public android.bluetooth.le.ScanFilter.Builder setDeviceName(String);
     method public android.bluetooth.le.ScanFilter.Builder setManufacturerData(int, byte[]);
