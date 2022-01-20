@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b600159_1abfacbf",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-20T09:55:49Z",
+      "side": 1,
+      "message": "IIUC this is not needed.\nWhen it changes, we\u0027ll query getCombineSubtypeEnabled.\nBut when we query it, it always returns false.",
+      "range": {
+        "startLine": 580,
+        "startChar": 27,
+        "endLine": 580,
+        "endChar": 59
+      },
+      "revId": "6d934e0b48727f9440c875aeddbf8c5e558c21bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
