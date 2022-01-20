@@ -174,11 +174,16 @@ public class TrafficStats {
 
     private static INetworkStatsService sStatsService;
 
+    /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @SuppressLint("VisiblySynchronized")
+    public static synchronized void init(@NonNull final Context context) {
+        final NetworkStatsManager nm = context.getSystemService(NetworkStatsManager.class);
+        sStatsService = nm.getBinder();
+    }
+
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 130143562)
     private synchronized static INetworkStatsService getStatsService() {
-        if (sStatsService == null) {
-            sStatsService = getStatsBinder();
-        }
         return sStatsService;
     }
 

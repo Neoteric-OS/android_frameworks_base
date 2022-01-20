@@ -18,6 +18,7 @@ package android.net;
 
 import android.annotation.SystemApi;
 import android.app.SystemServiceRegistry;
+import android.app.usage.NetworkStatsManager;
 import android.content.Context;
 import android.net.nsd.INsdManager;
 import android.net.nsd.NsdManager;
@@ -48,5 +49,11 @@ public final class ConnectivityFrameworkInitializerTiramisu {
                     return new NsdManager(context, service);
                 }
         );
+
+        SystemServiceRegistry.registerContextAwareService(
+                Context.NETWORK_STATS_SERVICE,
+                NetworkStatsManager.class,
+                (context, serviceBinder) -> new NetworkStatsManager(context,
+                        INetworkStatsManager.Stub.asInterface(serviceBinder)));
     }
 }
