@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e36a46c1_bd5b0565",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2184,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-20T10:16:04Z",
+      "side": 0,
+      "message": "I\u0027m pretty sure we\u0027ll still need a context eventually, because we\u0027ll need it to get the resources to read the overlay.\n\nBut anyway, maybe it\u0027s not worth respinning the change.",
+      "range": {
+        "startLine": 2184,
+        "startChar": 43,
+        "endLine": 2184,
+        "endChar": 58
+      },
+      "revId": "8e2a6f76c70d64e2ae8dcdc71945d087a5a7b732",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

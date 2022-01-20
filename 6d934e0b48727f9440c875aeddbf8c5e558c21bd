@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69266ff6_3f0ce19a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-20T10:16:04Z",
+      "side": 1,
+      "message": "+2 to unblock as this is good enough. Please make followups to address the remaining comments, possibly after IC :)",
+      "revId": "6d934e0b48727f9440c875aeddbf8c5e558c21bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3b600159_1abfacbf",
@@ -14,6 +31,30 @@
       "writtenOn": "2022-01-20T09:55:49Z",
       "side": 1,
       "message": "IIUC this is not needed.\nWhen it changes, we\u0027ll query getCombineSubtypeEnabled.\nBut when we query it, it always returns false.",
+      "range": {
+        "startLine": 580,
+        "startChar": 27,
+        "endLine": 580,
+        "endChar": 59
+      },
+      "revId": "6d934e0b48727f9440c875aeddbf8c5e558c21bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0504f3e_79a6f651",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-20T10:16:04Z",
+      "side": 1,
+      "message": "I agree with Junyu ; besides I strongly suspect nobody is changing this dynamically. Presumably we can afford to completely remove mContentObserver.",
+      "parentUuid": "3b600159_1abfacbf",
       "range": {
         "startLine": 580,
         "startChar": 27,
