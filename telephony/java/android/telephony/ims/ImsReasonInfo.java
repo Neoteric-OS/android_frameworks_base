@@ -259,7 +259,7 @@ public final class ImsReasonInfo implements Parcelable {
     /**
      * SIP response 480 : Temporarily Unavailable
      */
-    public static final int CODE_SIP_TEMPRARILY_UNAVAILABLE = 336;
+    public static final int CODE_SIP_TEMPORARILY_UNAVAILABLE = 336;
     /**
      * SIP response 484 : Address Incomplete
      */
@@ -970,7 +970,7 @@ public final class ImsReasonInfo implements Parcelable {
             CODE_SIP_NOT_FOUND,
             CODE_SIP_NOT_SUPPORTED,
             CODE_SIP_REQUEST_TIMEOUT,
-            CODE_SIP_TEMPRARILY_UNAVAILABLE,
+            CODE_SIP_TEMPORARILY_UNAVAILABLE,
             CODE_SIP_BAD_ADDRESS,
             CODE_SIP_BUSY,
             CODE_SIP_REQUEST_CANCELLED,
@@ -1155,7 +1155,7 @@ public final class ImsReasonInfo implements Parcelable {
         sImsCodeMap.put(CODE_SIP_NOT_FOUND, "CODE_SIP_NOT_FOUND");
         sImsCodeMap.put(CODE_SIP_NOT_SUPPORTED, "CODE_SIP_NOT_SUPPORTED");
         sImsCodeMap.put(CODE_SIP_REQUEST_TIMEOUT, "CODE_SIP_REQUEST_TIMEOUT");
-        sImsCodeMap.put(CODE_SIP_TEMPRARILY_UNAVAILABLE, "CODE_SIP_TEMPRARILY_UNAVAILABLE");
+        sImsCodeMap.put(CODE_SIP_TEMPRARILY_UNAVAILABLE, "CODE_SIP_TEMPORARILY_UNAVAILABLE");
         sImsCodeMap.put(CODE_SIP_BAD_ADDRESS, "CODE_SIP_BAD_ADDRESS");
         sImsCodeMap.put(CODE_SIP_BUSY, "CODE_SIP_BUSY");
         sImsCodeMap.put(CODE_SIP_REQUEST_CANCELLED, "CODE_SIP_REQUEST_CANCELLED");
