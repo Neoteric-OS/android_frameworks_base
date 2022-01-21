@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019562359",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1954391?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8d07b094_35ad62f4",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/BpfInterfaceMapUpdater.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-21T15:35:53Z",
+      "side": 1,
+      "message": "Prefer to use ctx.getSystemService(IBinder.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 82,
+        "startChar": 42,
+        "endLine": 82,
+        "endChar": 73
+      },
+      "revId": "eaca9e9ac47c97f2e916cfc6cfdac6beb0329b69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
