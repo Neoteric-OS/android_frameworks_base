@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8d60d0d_9ee810e4",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/TrafficStats.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-21T17:33:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "112c0c6d_1f8783a8",
+      "range": {
+        "startLine": 199,
+        "startChar": 5,
+        "endLine": 199,
+        "endChar": 6
+      },
+      "revId": "1b264242af2860de0bcbe4721942de3e90d88d3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "71651ba0_db32fae1",
@@ -71,6 +95,54 @@
       "writtenOn": "2022-01-20T23:37:38Z",
       "side": 1,
       "message": "Not necessarily for this CL, but we should prevent applications from calling this. The easiest way to do that, I think, is to throw IllegalStateException if sStatsService is already non-null. That is something we can also test for in CTS.",
+      "range": {
+        "startLine": 207,
+        "startChar": 8,
+        "endLine": 207,
+        "endChar": 21
+      },
+      "revId": "1b264242af2860de0bcbe4721942de3e90d88d3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63fb0841_02d638d7",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/TrafficStats.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-21T17:33:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71651ba0_db32fae1",
+      "range": {
+        "startLine": 207,
+        "startChar": 8,
+        "endLine": 207,
+        "endChar": 21
+      },
+      "revId": "1b264242af2860de0bcbe4721942de3e90d88d3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e96e8ea7_b24aef66",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/TrafficStats.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-21T17:33:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71651ba0_db32fae1",
       "range": {
         "startLine": 207,
         "startChar": 8,
