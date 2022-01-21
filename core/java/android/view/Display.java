@@ -1275,32 +1275,34 @@ public final class Display {
     }
 
     /**
-     * Gets display metrics that describe the size and density of this display.
-     * The size returned by this method does not necessarily represent the
-     * actual raw size (native resolution) of the display.
-     * <p>
-     * 1. The returned size may be adjusted to exclude certain system decor elements
-     * that are always visible.
-     * </p><p>
-     * 2. It may be scaled to provide compatibility with older applications that
-     * were originally designed for smaller displays.
-     * </p><p>
-     * 3. It can be different depending on the WindowManager to which the display belongs.
-     * </p><p>
-     * - If requested from non-Activity context (e.g. Application context via
-     * {@code (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE)})
-     * metrics will report the size of the entire display based on current rotation and with
-     * subtracted system decoration areas.
-     * </p><p>
-     * - If requested from activity (either using {@code getWindowManager()} or
-     * {@code (WindowManager) getSystemService(Context.WINDOW_SERVICE)}) resulting metrics will
-     * correspond to current app window metrics. In this case the size can be smaller than physical
-     * size in multi-window mode.
-     * </p>
+     * Gets display metrics that describe the size and density of this display. The size returned
+     * by this method does not necessarily represent the actual raw size (native resolution) of the
+     * display.
+     *
+     * <ol>
+     *     <li>The returned size can be adjusted to exclude certain system decor elements that are
+     *         always visible.
+     *     <li>It may be scaled to provide compatibility with older applications that were
+     *         originally designed for smaller displays.
+     *     <li>It can be different depending on the WindowManager to which the display belongs.
+     *         <ul>
+     *             <li>If requested from a non-activity context &mdash; for example, the application
+     *                 context, where the WindowManager is accessed by
+     *                 {@code getApplicationContext().getSystemService(Context.WINDOW_SERVICE)}
+     *                 &mdash; metrics report the size of the entire display based on current
+     *                 rotation, subtracting system decoration areas.
+     *             <li>If requested from an activity &mdash; either using a WindowManager accessed
+     *                 by {@code getWindowManager()} or
+     *                 {@code getSystemService(Context.WINDOW_SERVICE)} &mdash; the resulting
+     *                 metrics correspond to the current app window metrics. In multi-window mode,
+     *                 the size can be smaller than the physical display size.
+     *         </ul>
+     * </ol>
      *
      * @param outMetrics A {@link DisplayMetrics} object to receive the metrics.
+     *
      * @deprecated Use {@link WindowMetrics#getBounds()} to get the dimensions of the application
-     * window area, and {@link Configuration#densityDpi} to get the current density.
+     *     window area, and {@link Configuration#densityDpi} to get the current density.
      */
     @Deprecated
     public void getMetrics(DisplayMetrics outMetrics) {
