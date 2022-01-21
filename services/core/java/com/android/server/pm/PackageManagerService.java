@@ -12929,13 +12929,13 @@ public class PackageManagerService extends IPackageManager.Stub
      *       definite state.
      */
     @Override
-    public boolean performDexOptSecondary(String packageName, String compilerFilter,
+    public boolean performDexOptSecondary(String packageName, int reason, String compilerFilter,
             boolean force) {
         int flags = DexoptOptions.DEXOPT_ONLY_SECONDARY_DEX |
                 DexoptOptions.DEXOPT_CHECK_FOR_PROFILES_UPDATES |
                 DexoptOptions.DEXOPT_BOOT_COMPLETE |
                 (force ? DexoptOptions.DEXOPT_FORCE : 0);
-        return performDexOpt(new DexoptOptions(packageName, compilerFilter, flags));
+        return performDexOpt(new DexoptOptions(packageName, reason, compilerFilter, null, flags));
     }
 
     /*package*/ boolean performDexOpt(DexoptOptions options) {

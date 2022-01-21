@@ -1810,6 +1810,7 @@ class PackageManagerShellCommand extends ShellCommand {
             } else {
                 result = secondaryDex
                     ? mInterface.performDexOptSecondary(packageName,
+                            PackageManagerService.REASON_CMDLINE,
                             targetCompilerFilter, forceCompilation)
                     : mInterface.performDexOptMode(packageName,
                             checkProfiles, targetCompilerFilter, forceCompilation,
