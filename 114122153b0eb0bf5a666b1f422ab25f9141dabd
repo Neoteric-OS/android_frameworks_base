@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8331131_c462fe3a",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsHistory.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-21T18:43:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5dfefe9_7050bfe4",
+      "range": {
+        "startLine": 123,
+        "startChar": 24,
+        "endLine": 123,
+        "endChar": 29
+      },
+      "revId": "114122153b0eb0bf5a666b1f422ab25f9141dabd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0610b1cf_62495c18",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-01-18T10:09:24Z",
       "side": 1,
       "message": "If you don\u0027t make the class final then :\n\no.getClass() !\u003d getClass()\n\nOtherwise you could have a subclass pass this test\n\n  Entry e \u003d new Entry(...);\n  SubClassOfEntry e2 \u003d new SubClassOfEntry(...)\n  e2.doSomethingThatEntryCantDo();\n  e.equals(e2); // true\n  e2.equals(e); // false",
+      "range": {
+        "startLine": 185,
+        "startChar": 16,
+        "endLine": 185,
+        "endChar": 37
+      },
+      "revId": "114122153b0eb0bf5a666b1f422ab25f9141dabd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fe6cc01_5c324abd",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsHistory.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-21T18:43:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0610b1cf_62495c18",
       "range": {
         "startLine": 185,
         "startChar": 16,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e657eb46_5f2c4b7d",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsHistory.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-21T18:43:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16747433_9f577365",
+      "range": {
+        "startLine": 195,
+        "startChar": 27,
+        "endLine": 195,
+        "endChar": 31
+      },
+      "revId": "114122153b0eb0bf5a666b1f422ab25f9141dabd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2649907e_ffa0e796",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-01-18T10:09:24Z",
       "side": 1,
       "message": "If you don\u0027t have getters you\u0027ll have implementations calling this and parsing it 😮\n\nLet\u0027s add getters.",
+      "range": {
+        "startLine": 200,
+        "startChar": 22,
+        "endLine": 200,
+        "endChar": 30
+      },
+      "revId": "114122153b0eb0bf5a666b1f422ab25f9141dabd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbcf8ddf_1a4abc17",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsHistory.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-21T18:43:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2649907e_ffa0e796",
       "range": {
         "startLine": 200,
         "startChar": 22,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75bb5c20_3a3a71c7",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsHistory.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-21T18:43:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a9d3123_2af72cab",
+      "range": {
+        "startLine": 1063,
+        "startChar": 8,
+        "endLine": 1063,
+        "endChar": 53
+      },
+      "revId": "114122153b0eb0bf5a666b1f422ab25f9141dabd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db458aaa_734c3490",
@@ -129,6 +249,30 @@
       "writtenOn": "2022-01-18T10:09:24Z",
       "side": 1,
       "message": "sorry :/",
+      "range": {
+        "startLine": 1091,
+        "startChar": 29,
+        "endLine": 1091,
+        "endChar": 35
+      },
+      "revId": "114122153b0eb0bf5a666b1f422ab25f9141dabd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c7d1b65_7ff3b175",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsHistory.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-21T18:43:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db458aaa_734c3490",
       "range": {
         "startLine": 1091,
         "startChar": 29,
