@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79492ac6_26569e41",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1633930
+      },
+      "writtenOn": "2022-01-21T23:02:58Z",
+      "side": 1,
+      "message": "Please keep it one-line and informative, e.g. Fix typo in CODE_SIP_TEMPRARILY_UNAVAILABLE",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 8
+      },
+      "revId": "90d45b118576f686e6933eaf0758b99ef4da6dee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f1d1d82_19e79768",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1633930
+      },
+      "writtenOn": "2022-01-21T23:02:58Z",
+      "side": 1,
+      "message": "There are other instances of this that needs to be fixed:\n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhoneCallTracker.java;l\u003d663;drc\u003d5ce951b6d714c97d610468cb75819a03f545a3c0\n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/opt/telephony/src/java/com/android/internal/telephony/CallFailCause.java;l\u003d290;drc\u003dmaster",
+      "revId": "90d45b118576f686e6933eaf0758b99ef4da6dee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69a4aa62_9b08481f",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1633930
+      },
+      "writtenOn": "2022-01-21T23:02:58Z",
+      "side": 1,
+      "message": "Since these fields are public API, some 3rd-party APP might be using them. To be safe, we may need to make a copy of this rather than simply fix it.\n\nExample:\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/telephony/java/android/telephony/DataFailCause.java;l\u003d849;drc\u003d4a4b55fca397139617c1d9bb610e3406e46d2237",
+      "range": {
+        "startLine": 262,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 67
+      },
+      "revId": "90d45b118576f686e6933eaf0758b99ef4da6dee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
