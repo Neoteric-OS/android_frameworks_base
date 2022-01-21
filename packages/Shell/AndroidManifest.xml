@@ -619,6 +619,9 @@
     <!-- Permission required for CTS test - CtsKeystoreTestCases -->
     <uses-permission android:name="android.permission.REQUEST_UNIQUE_ID_ATTESTATION" />
 
+    <!-- Permission required for CTS test - CtsTelephonyTestCases -->
+    <uses-permission android:name="android.permission.BIND_TELECOM_CONNECTION_SERVICE" />
+
     <application android:label="@string/app_label"
                 android:theme="@android:style/Theme.DeviceDefault.DayNight"
                 android:defaultToDeviceProtectedStorage="true"
