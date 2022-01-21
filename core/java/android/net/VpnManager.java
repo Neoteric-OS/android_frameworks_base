@@ -222,7 +222,7 @@ public class VpnManager {
      *
      * @hide
      */
-    public static final int ERROR_CODE_NETWORK_CONNECTION_RESET = 3;
+    public static final int ERROR_CODE_NETWORK_RESET = 3;
 
     /**
      * An error code to indicate that there is an IOException.
