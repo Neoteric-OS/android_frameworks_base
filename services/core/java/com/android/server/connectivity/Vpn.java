@@ -2856,6 +2856,10 @@ public class Vpn {
                 }
             } else if (exception instanceof IllegalArgumentException) {
                 // Failed to build IKE/ChildSessionParams; fatal profile configuration error
+                // Sending CATEGORY_ERROR_USER_DEACTIVATED is not perfect but this is a more proper
+                // event to the user by comparing with other 2 events.
+                sendEventToVpnManagerApp(VpnManager.CATEGORY_ERROR_USER_DEACTIVATED,
+                        VpnManager.ERROR_NOT_RECOVERABLE, 0 /* errorCode */);
                 markFailedAndDisconnect(exception);
                 return;
             } else if (isException(exception, UnknownHostException.class)) {
