@@ -260,6 +260,11 @@ copyFileIfChanged(JNIEnv *env, void* arg, ZipFileRO* zipFile, ZipEntryRO zipEntr
         return INSTALL_FAILED_CONTAINER_ERROR;
     }
 
+    if (fsync(fd) < 0) {
+        ALOGE("Coulnd't fsync temporary file name: %s: %s\n", localTmpFileName, strerror(errno));
+        return INSTALL_FAILED_INTERNAL_ERROR;
+    }
+
     close(fd);
 
     // Set the modification time for this file to the ZIP's mod time.
