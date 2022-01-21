@@ -130,9 +130,12 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
@@ -2805,6 +2808,11 @@ public class Vpn {
             disconnectVpnRunner();
         }
 
+        private <T extends Exception, U extends T> boolean isException(T exception, Class<U> type) {
+            return type.isInstance(exception)
+                    || (exception != null && type.isInstance(exception.getCause()));
+        }
+
         /**
          * Handles loss of a session
          *
@@ -2850,6 +2858,26 @@ public class Vpn {
                 // Failed to build IKE/ChildSessionParams; fatal profile configuration error
                 markFailedAndDisconnect(exception);
                 return;
+            } else if (isException(exception, UnknownHostException.class)) {
+                sendEventToVpnManagerApp(VpnManager.CATEGORY_ERROR_NETWORK,
+                        VpnManager.ERROR_NOT_RECOVERABLE,
+                        VpnManager.ERROR_CODE_NETWORK_UNKNOWN_HOST);
+                markFailedAndDisconnect(exception);
+                return;
+            } else if (isException(exception, SocketTimeoutException.class)) {
+                sendEventToVpnManagerApp(VpnManager.CATEGORY_ERROR_NETWORK,
+                        VpnManager.ERROR_RECOVERABLE, VpnManager.ERROR_CODE_NETWORK_TIMEOUT);
+            } else if (isException(exception, ConnectException.class)) {
+                sendEventToVpnManagerApp(VpnManager.CATEGORY_ERROR_NETWORK,
+                        VpnManager.ERROR_RECOVERABLE, VpnManager.ERROR_CODE_NETWORK_CONNECT);
+            } else if (isException(exception, SocketException.class)) {
+                sendEventToVpnManagerApp(VpnManager.CATEGORY_ERROR_NETWORK,
+                        VpnManager.ERROR_RECOVERABLE, VpnManager.ERROR_CODE_NETWORK_RESET);
+            } else if (isException(exception, IOException.class)) {
+                sendEventToVpnManagerApp(VpnManager.CATEGORY_ERROR_NETWORK,
+                        VpnManager.ERROR_RECOVERABLE, VpnManager.ERROR_CODE_NETWORK_IO);
+            } else if (exception != null) {
+                Log.d(TAG, "onSessionLost: exception = " + exception);
             }
 
             mActiveNetwork = null;
