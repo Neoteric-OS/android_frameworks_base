@@ -582,7 +582,7 @@ interface IPackageManager {
      * Note: exposed only for the shell command to allow moving packages explicitly to a
      *       definite state.
      */
-    boolean performDexOptSecondary(String packageName,
+    boolean performDexOptSecondary(String packageName, int reason,
             String targetCompilerFilter, boolean force);
 
     /**
