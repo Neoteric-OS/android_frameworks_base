@@ -120,7 +120,7 @@ public final class NetworkStatsHistory implements Parcelable {
     /**
      * An instance to represent a single record in a {@link NetworkStatsHistory} object.
      */
-    public static class Entry {
+    public static final class Entry {
         /** @hide */
         public static final long UNKNOWN = -1;
 
@@ -179,10 +179,39 @@ public final class NetworkStatsHistory implements Parcelable {
             this.operations = operations;
         }
 
+        /** FIXME */
+        public long getBucketStart() {
+            return bucketStart;
+        }
+
+        public long getActiveTime() {
+            return activeTime;
+        }
+
+        public long getRxBytes() {
+            return rxBytes;
+        }
+
+        public long getRxPackets() {
+            return rxPackets;
+        }
+
+        public long getTxBytes() {
+            return txBytes;
+        }
+
+        public long getTxPackets() {
+            return txPackets;
+        }
+
+        public long getOperations() {
+            return operations;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof Entry)) return false;
+            if (o.getClass() != getClass()) return false;
             Entry entry = (Entry) o;
             return bucketStart == entry.bucketStart
                     && activeTime == entry.activeTime && rxBytes == entry.rxBytes
@@ -192,8 +221,13 @@ public final class NetworkStatsHistory implements Parcelable {
 
         @Override
         public int hashCode() {
-            return Objects.hash(bucketStart, activeTime, rxBytes, rxPackets,
-                    txBytes, txPackets, operations);
+            return (int) (bucketStart * 2
+                    + activeTime * 3
+                    + rxBytes * 5
+                    + rxPackets * 7
+                    + txBytes * 11
+                    + txPackets * 13
+                    + operations * 17);
         }
 
         @Override
