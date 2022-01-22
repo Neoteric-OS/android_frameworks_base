@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67ee96fc_eb82ee88",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsHistory.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-22T06:28:38Z",
+      "side": 1,
+      "message": "Suggest having a TODO to instead return a wrapper that uses this entry instead. Imagine :\n\n{\n  final entry \u003d this;\n  return new List\u003cEntry\u003e() {\n    public void add(Entry e) {\n      throw new UnsupportedOperationException();\n    }\n    public Entry get(int index) {\n      return entry.getValues(i, null);\n    }\n  }\n}\n\nDon\u0027t do this now. The Java List interface is relatively large ; a good way to implement this is to have a utility class defining a very small number of primitives and implementing the rest on top of it. Then users only provide the primitives, and only override if they want to provide better performance than the default for their class.\n\n(This is how modern languages usually do it, look at ArrayTrackRecord for actual usage that implements List\u003c\u003e)",
+      "range": {
+        "startLine": 470,
+        "startChar": 37,
+        "endLine": 470,
+        "endChar": 40
+      },
+      "revId": "d49b1e15ae582a56ad2a2df979866bc6ebaa024f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48b1aa1b_c5ec1192",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsHistory.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-22T06:28:38Z",
+      "side": 1,
+      "message": "You already created these two temp objects : can you use a local to avoid computing them twice ? Or write custom code to produce the sum.",
+      "range": {
+        "startLine": 1146,
+        "startChar": 42,
+        "endLine": 1146,
+        "endChar": 79
+      },
+      "revId": "d49b1e15ae582a56ad2a2df979866bc6ebaa024f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
