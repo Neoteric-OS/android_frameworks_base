@@ -1028,8 +1028,8 @@ public class NetworkStatsManager {
                     if (mCallback != null) {
                         final int networkType = networkTypeForTemplate(mTemplate);
                         if (networkType != ConnectivityManager.TYPE_NONE) {
-                            final String subscriberId =
-                                    mTemplate.getSubscriberIds().iterator().next();
+                            final String subscriberId = mTemplate.getSubscriberIds().isEmpty()
+                                    ? null : mTemplate.getSubscriberIds().iterator().next();
                             mExecutor.execute(
                                     () -> mCallback.onThresholdReached(networkType, subscriberId));
                         }
