@@ -34,6 +34,7 @@ import static com.android.net.module.util.NetworkStatsUtils.multiplySafeByRation
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.net.NetworkStatsHistory.Entry;
 import android.os.Binder;
 import android.service.NetworkStatsCollectionKeyProto;
 import android.service.NetworkStatsCollectionProto;
@@ -71,6 +72,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -806,6 +808,74 @@ public class NetworkStatsCollection implements FileRotator.Reader, FileRotator.W
             }
         }
         return false;
+    }
+
+    /**
+     * Get the all historical stats of the collection {@link NetworkStatsCollection}.
+     *
+     * @return mStats All {@link NetworkStatsHistory} in this collection.
+     * @hide
+     */
+    @NonNull
+    public ArrayMap<Key, NetworkStatsHistory> getEntries() {
+        return new ArrayMap(mStats);
+    }
+
+    /**
+     * Builder class for {@link NetworkStatsCollection}.
+     */
+    public static final class Builder {
+        private final long mBucketDuration;
+        private final ArrayMap<Key, NetworkStatsHistory> mEntries = new ArrayMap<>();
+        private final ArrayMap<Key, NetworkStatsHistory> mEntries2 = new ArrayMap<>();
+
+        /**
+         * Creates a new Builder with given bucket duration.
+         *
+         * @param bucketDuration Duration of the buckets of the object, in milliseconds.
+         */
+        public Builder(long bucketDuration) {
+            mBucketDuration = bucketDuration;
+        }
+
+        /**
+         * Add associated {@link NetworkStatsHistory} with the specified {@link Key} in
+         * {@link NetworkStatsCollection} instance.
+         *
+         * @param key The object that used to identify a network, see {@link Key}.
+         * @param history collection of historical network statistics {@link NetworkStatsHistory}.
+         * @return The builder object.
+         */
+        @NonNull
+        public NetworkStatsCollection.Builder addEntry(@NonNull Key key,
+                @NonNull NetworkStatsHistory history) {
+            Objects.requireNonNull(key);
+            Objects.requireNonNull(history);
+            final List<Entry> historyEntries = history.getEntries();
+
+            final NetworkStatsHistory.Builder historyBuilder =
+                    new NetworkStatsHistory.Builder(mBucketDuration, historyEntries.size());
+            for (Entry entry : historyEntries) {
+                historyBuilder.addEntry(entry);
+            }
+
+            mEntries.put(key, historyBuilder.build());
+            return this;
+        }
+
+        /**
+         * Builds the instance of the {@link NetworkStatsCollection}.
+         *
+         * @return the built instance of {@link NetworkStatsCollection}.
+         */
+        @NonNull
+        public NetworkStatsCollection build() {
+            final NetworkStatsCollection collection = new NetworkStatsCollection(mBucketDuration);
+            for (int i = 0; i < mEntries.size(); i++) {
+                collection.recordHistory(mEntries.keyAt(i), mEntries.valueAt(i));
+            }
+            return collection;
+        }
     }
 
     /**
