@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6871b06c_fa1f5849",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsHistory.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-22T15:31:02Z",
+      "side": 1,
+      "message": "Done\nThanks for explanation.",
+      "parentUuid": "67ee96fc_eb82ee88",
+      "range": {
+        "startLine": 470,
+        "startChar": 37,
+        "endLine": 470,
+        "endChar": 40
+      },
+      "revId": "d49b1e15ae582a56ad2a2df979866bc6ebaa024f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48b1aa1b_c5ec1192",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-01-22T06:28:38Z",
       "side": 1,
       "message": "You already created these two temp objects : can you use a local to avoid computing them twice ? Or write custom code to produce the sum.",
+      "range": {
+        "startLine": 1146,
+        "startChar": 42,
+        "endLine": 1146,
+        "endChar": 79
+      },
+      "revId": "d49b1e15ae582a56ad2a2df979866bc6ebaa024f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "829a9241_54028e81",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStatsHistory.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-22T15:31:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48b1aa1b_c5ec1192",
       "range": {
         "startLine": 1146,
         "startChar": 42,
