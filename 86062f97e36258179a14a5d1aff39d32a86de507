@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7b39972_9dd15e67",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-23T07:21:55Z",
+      "side": 1,
+      "message": "Callback object must be the last argument",
+      "range": {
+        "startLine": 64,
+        "startChar": 136,
+        "endLine": 64,
+        "endChar": 149
+      },
+      "revId": "86062f97e36258179a14a5d1aff39d32a86de507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe97d73d_a37d3f65",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-23T07:21:55Z",
+      "side": 1,
+      "message": "You need an unregister method",
+      "range": {
+        "startLine": 64,
+        "startChar": 23,
+        "endLine": 64,
+        "endChar": 44
+      },
+      "revId": "86062f97e36258179a14a5d1aff39d32a86de507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "febe9821_067bd6e3",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-23T07:21:55Z",
+      "side": 1,
+      "message": "UsageCallback takes an int networkType and a String subscriberId. This doesn\u0027t match the signature of this method ; we should not take a full-featured NetworkTemplate object and then pass a deprecated int \"networkType\". It\u0027s not enough information for the caller – remember that the only reason to pass the int networkType is so that the caller can register the callback multiple times with different types, and that will let them know which type it was. But if you do this with 2 NetworkTemplates with the same type, you don\u0027t know. That\u0027s completely inconsistent and not very useful.\n\nOne thing you may do is to add a method to UsageCallback that takes a NetworkTemplate, with a default implementation calling the legacy method, then you adjust the code to only call the new one, so that if they don\u0027t implement the new one they\u0027ll have the old one called. Document this carefully.\n\nAnother option is to have a separate callback. Then you may choose not to pass arguments at all, and tell callers that they should not register the same callback twice.",
+      "range": {
+        "startLine": 64,
+        "startChar": 136,
+        "endLine": 64,
+        "endChar": 149
+      },
+      "revId": "86062f97e36258179a14a5d1aff39d32a86de507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4753c266_81d63b48",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-23T07:21:55Z",
+      "side": 1,
+      "message": "alive\n\n...but these semantics won\u0027t be accepted, you need an unregister method",
+      "range": {
+        "startLine": 740,
+        "startChar": 77,
+        "endLine": 740,
+        "endChar": 81
+      },
+      "revId": "86062f97e36258179a14a5d1aff39d32a86de507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "211f713b_6e9c8474",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-23T07:21:55Z",
+      "side": 1,
+      "message": "This is called by the application on any thread they want, right ? This will happily return null, but you marked the argument to CallbackHandler @NonNull.\n\nSorry, I really don\u0027t think you can afford to call myLooper() on random app threads. You just can\u0027t assume clients have loopers wherever you need.",
+      "range": {
+        "startLine": 759,
+        "startChar": 10,
+        "endLine": 759,
+        "endChar": 48
+      },
+      "revId": "86062f97e36258179a14a5d1aff39d32a86de507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
