@@ -114,6 +114,29 @@
       },
       "revId": "86062f97e36258179a14a5d1aff39d32a86de507",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c5fa6b9_2cc36d5e",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-23T07:35:00Z",
+      "side": 1,
+      "message": "You mentioned on another patch that some usage callbacks have TYPE_NONE (e.g. for test networks). IIUC this changes the behavior in such a way that the old method will no longer send the callbacks if you register with TYPE_NONE.",
+      "range": {
+        "startLine": 1030,
+        "startChar": 28,
+        "endLine": 1030,
+        "endChar": 72
+      },
+      "revId": "86062f97e36258179a14a5d1aff39d32a86de507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
