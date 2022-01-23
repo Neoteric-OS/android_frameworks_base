@@ -70,6 +70,78 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa97480d_56726a26",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-23T13:03:41Z",
+      "side": 1,
+      "message": "Done.\nYes that was the plan but I was trying to defer that to later patches.\nSince NPMS and MultipathPolicyTracker doesn\u0027t really need it to work.\nSee if it works for you.",
+      "parentUuid": "febe9821_067bd6e3",
+      "range": {
+        "startLine": 64,
+        "startChar": 136,
+        "endLine": 64,
+        "endChar": 149
+      },
+      "revId": "86062f97e36258179a14a5d1aff39d32a86de507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ed418ff_16ccdc6d",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-23T13:03:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7b39972_9dd15e67",
+      "range": {
+        "startLine": 64,
+        "startChar": 136,
+        "endLine": 64,
+        "endChar": 149
+      },
+      "revId": "86062f97e36258179a14a5d1aff39d32a86de507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb055356_0c5199e3",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-23T13:03:41Z",
+      "side": 1,
+      "message": "That one is already public I think.\nhttps://developer.android.com/reference/android/app/usage/NetworkStatsManager#unregisterUsageCallback(android.app.usage.NetworkStatsManager.UsageCallback)\nIIUC we should able to use that for all register methods?",
+      "parentUuid": "fe97d73d_a37d3f65",
+      "range": {
+        "startLine": 64,
+        "startChar": 23,
+        "endLine": 64,
+        "endChar": 44
+      },
+      "revId": "86062f97e36258179a14a5d1aff39d32a86de507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4753c266_81d63b48",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-01-23T07:21:55Z",
       "side": 1,
       "message": "alive\n\n...but these semantics won\u0027t be accepted, you need an unregister method",
+      "range": {
+        "startLine": 740,
+        "startChar": 77,
+        "endLine": 740,
+        "endChar": 81
+      },
+      "revId": "86062f97e36258179a14a5d1aff39d32a86de507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d6a57bf_dc8162a0",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-23T13:03:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4753c266_81d63b48",
       "range": {
         "startLine": 740,
         "startChar": 77,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a88ab90_54edeb59",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-23T13:03:41Z",
+      "side": 1,
+      "message": "Looper is evil, removed.",
+      "parentUuid": "211f713b_6e9c8474",
+      "range": {
+        "startLine": 759,
+        "startChar": 10,
+        "endLine": 759,
+        "endChar": 48
+      },
+      "revId": "86062f97e36258179a14a5d1aff39d32a86de507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c5fa6b9_2cc36d5e",
@@ -129,6 +249,30 @@
       "writtenOn": "2022-01-23T07:35:00Z",
       "side": 1,
       "message": "You mentioned on another patch that some usage callbacks have TYPE_NONE (e.g. for test networks). IIUC this changes the behavior in such a way that the old method will no longer send the callbacks if you register with TYPE_NONE.",
+      "range": {
+        "startLine": 1030,
+        "startChar": 28,
+        "endLine": 1030,
+        "endChar": 72
+      },
+      "revId": "86062f97e36258179a14a5d1aff39d32a86de507",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a450e727_77312d17",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-23T13:03:41Z",
+      "side": 1,
+      "message": "IIUC we documented that only TYPE_MOBILE and TYPE_WIFI is supported.\nhttps://developer.android.com/reference/android/app/usage/NetworkStatsManager#registerUsageCallback(int,%20java.lang.String,%20long,%20android.app.usage.NetworkStatsManager.UsageCallback,%20android.os.Handler)\n\nThus I think for old APIs this is no-op change?",
+      "parentUuid": "6c5fa6b9_2cc36d5e",
       "range": {
         "startLine": 1030,
         "startChar": 28,
