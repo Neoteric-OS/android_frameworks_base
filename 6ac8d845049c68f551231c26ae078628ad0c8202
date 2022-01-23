@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d2a2935_70ee7cce",
+        "filename": "packages/ConnectivityT/framework-t/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-01-23T16:10:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "543650bc_d6e9ed98",
+      "range": {
+        "startLine": 80,
+        "startChar": 25,
+        "endLine": 80,
+        "endChar": 43
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "46f4739d_97d813b4",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-01-17T05:19:25Z",
       "side": 1,
       "message": "Could you have wrappers for the methods (that catch the RemoteExceptions) here instead ?\nYou\u0027ll need to add the mdns_aidl_interface rule as a dependency of framework-t (I think it would be better if it\u0027s separate from netd_aidl_interface), with jarjar rules for it",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 29
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3893aed9_a598d2b1",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/MdnsServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-01-23T16:10:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46f4739d_97d813b4",
       "range": {
         "startLine": 42,
         "startChar": 19,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5290a85b_38e7dec9",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-01-23T16:10:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9df6f56_625b59ed",
+      "range": {
+        "startLine": 69,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 41
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ff8b62a_e551dbb9",
@@ -110,6 +182,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bc19aa7_3d6f2717",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-01-23T16:10:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ff8b62a_e551dbb9",
+      "range": {
+        "startLine": 98,
+        "startChar": 12,
+        "endLine": 98,
+        "endChar": 44
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d69ca232_32523f1a",
@@ -123,6 +219,30 @@
       "writtenOn": "2022-01-17T05:19:25Z",
       "side": 1,
       "message": "Should this also check whether the daemon has been started, and unregister the event listeners (to avoid binder leaks) ?",
+      "range": {
+        "startLine": 201,
+        "startChar": 24,
+        "endLine": 201,
+        "endChar": 27
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c438431_25143bda",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-01-23T16:10:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d69ca232_32523f1a",
       "range": {
         "startLine": 201,
         "startChar": 24,
@@ -169,6 +289,54 @@
       "writtenOn": "2022-01-17T05:19:25Z",
       "side": 1,
       "message": "Is this new, or existing behavior ? This seems error-prone because the string could have quotes embedded, possibly escaped",
+      "range": {
+        "startLine": 583,
+        "startChar": 26,
+        "endLine": 583,
+        "endChar": 55
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b6d8d1d_697ceca5",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-01-23T16:10:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7342996a_e5cfea3f",
+      "range": {
+        "startLine": 583,
+        "startChar": 32,
+        "endLine": 583,
+        "endChar": 41
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "561ee4e4_d9a8ddf6",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-01-23T16:10:08Z",
+      "side": 1,
+      "message": "I think it\u0027s existing behavioir. In previous design, INativeDaemonConnectorCallbacks#onEvent would report the result with \"cooked\" argument. The strings in this argument are already removed the quotation.",
+      "parentUuid": "3fc60df1_b7099fd9",
       "range": {
         "startLine": 583,
         "startChar": 26,
