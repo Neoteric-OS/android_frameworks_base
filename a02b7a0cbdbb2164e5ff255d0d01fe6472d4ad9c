@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7411841_7126b3c5",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-24T11:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21d4e6a2_0824dad5",
+      "range": {
+        "startLine": 812,
+        "startChar": 0,
+        "endLine": 818,
+        "endChar": 10
+      },
+      "revId": "a02b7a0cbdbb2164e5ff255d0d01fe6472d4ad9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "32fb9898_2e6906d2",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-01-24T10:07:07Z",
       "side": 1,
       "message": "I think you need to synchronize accesses to this variable somehow.\n\nvolatile should work",
+      "range": {
+        "startLine": 1013,
+        "startChar": 11,
+        "endLine": 1013,
+        "endChar": 15
+      },
+      "revId": "a02b7a0cbdbb2164e5ff255d0d01fe6472d4ad9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1aa23393_015b532d",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-24T11:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32fb9898_2e6906d2",
       "range": {
         "startLine": 1013,
         "startChar": 11,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "392ec17b_55c8249f",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-24T11:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5334704_0aedf5cd",
+      "range": {
+        "startLine": 1025,
+        "startChar": 16,
+        "endLine": 1025,
+        "endChar": 25
+      },
+      "revId": "a02b7a0cbdbb2164e5ff255d0d01fe6472d4ad9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dea9a75a_29dddf45",
@@ -100,6 +172,30 @@
       "writtenOn": "2022-01-24T10:07:07Z",
       "side": 1,
       "message": "Can\u0027t be null, or you\u0027d have crashed in l.247",
+      "range": {
+        "startLine": 269,
+        "startChar": 12,
+        "endLine": 269,
+        "endChar": 36
+      },
+      "revId": "a02b7a0cbdbb2164e5ff255d0d01fe6472d4ad9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "038fa61b_6a2ddbef",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsObservers.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-24T11:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dea9a75a_29dddf45",
       "range": {
         "startLine": 269,
         "startChar": 12,
