@@ -46,6 +46,30 @@
       },
       "revId": "b11bf72c24fda272c47567577c907d61e84057ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3d0271c_80242b72",
+        "filename": "core/java/android/net/LocalSocket.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-24T12:05:34Z",
+      "side": 1,
+      "message": "Ack, thanks!",
+      "parentUuid": "952f0939_39e2b029",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 44
+      },
+      "revId": "b11bf72c24fda272c47567577c907d61e84057ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
