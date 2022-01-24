@@ -195,7 +195,6 @@ cc_library_shared {
                 "android_util_FileObserver.cpp",
                 "android/opengl/poly_clip.cpp", // TODO: .arm
                 "android/opengl/util.cpp",
-                "android_server_NetworkManagementSocketTagger.cpp",
                 "android_ddm_DdmHandleNativeHeap.cpp",
                 "android_backup_BackupDataInput.cpp",
                 "android_backup_BackupDataOutput.cpp",
@@ -224,6 +223,8 @@ cc_library_shared {
                 "fd_utils.cpp",
                 "android_hardware_input_InputWindowHandle.cpp",
                 "android_hardware_input_InputApplicationHandle.cpp",
+                // TODO: delete when TrafficStats is moved to the mainline module.
+                ":framework-connectivity-tiramisu-jni-sources",
             ],
 
             static_libs: [

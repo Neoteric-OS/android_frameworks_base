@@ -176,3 +176,14 @@ filegroup {
         "//packages/modules/Connectivity:__subpackages__",
     ],
 }
+
+filegroup {
+    name: "framework-connectivity-tiramisu-jni-sources",
+    srcs: [
+        "jni/android_server_NetworkManagementSocketTagger.cpp",
+    ],
+    visibility: [
+        "//frameworks/base/core/jni",
+        "//packages/modules/Connectivity:__subpackages__",
+    ],
+}
