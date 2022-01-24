@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8159becc_c86a8714",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-24T10:18:18Z",
+      "side": 1,
+      "message": "These are published public APIs ; don\u0027t you need to have this change in a topic together with a change that adds them in the module API ?",
+      "revId": "d63b460dfaa279c75104625da812665d6c2be34b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
