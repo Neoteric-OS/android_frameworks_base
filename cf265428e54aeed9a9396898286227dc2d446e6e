@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df211d78_dc9ead9d",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 36
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-24T04:06:10Z",
+      "side": 1,
+      "message": "We think this probably doesn\u0027t need to be Comparable. If not, then you can replace NetworkIdentitySet with Set\u003cNetworkIdentity\u003e in future methods.",
+      "range": {
+        "startLine": 265,
+        "startChar": 15,
+        "endLine": 265,
+        "endChar": 33
+      },
+      "revId": "cf265428e54aeed9a9396898286227dc2d446e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebda0a48_75b5da82",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-24T04:06:10Z",
+      "side": 1,
+      "message": "Why is this comparable ? It\u0027s at least not intuitive ; I think it\u0027s best if it\u0027s not comparable, but if you don\u0027t have a choice in the matter, then at least the javadoc should explain what the order is and why.",
+      "range": {
+        "startLine": 52,
+        "startChar": 40,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "cf265428e54aeed9a9396898286227dc2d446e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "923a4b92_5366fdee",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-24T04:06:10Z",
+      "side": 1,
+      "message": "I think this needs to say exactly what it will read from the snapshot.\ne.g.\n\n This is a useful shorthand that will read from the snapshot and set the \n following fields, if they are set in the snapshot :\n - type\n - subscriberId\n - roaming\n - metered\n - oemManaged\n - wifiKey",
+      "range": {
+        "startLine": 367,
+        "startChar": 11,
+        "endLine": 367,
+        "endChar": 90
+      },
+      "revId": "cf265428e54aeed9a9396898286227dc2d446e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b52485c_4caa7b9f",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-24T04:06:10Z",
+      "side": 1,
+      "message": "The setters doc should say what the default value is for the setter. E.g. here :\n\n  * Set whether this network is the default network.\n  *\n  * This field is false by default. Call with false to reset.\n\nAnd for the ratType\n\n  * Set the Radio Access Technology(RAT) type of the network.\n  *\n  * No RAT type is specified by default. Call clearRatType to reset.",
+      "range": {
+        "startLine": 497,
+        "startChar": 58,
+        "endLine": 497,
+        "endChar": 59
+      },
+      "revId": "cf265428e54aeed9a9396898286227dc2d446e6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
