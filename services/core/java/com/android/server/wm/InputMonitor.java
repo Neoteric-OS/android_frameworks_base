@@ -407,6 +407,7 @@ final class InputMonitor {
             final RecentsAnimationController recentsAnimationController =
                     mService.getRecentsAnimationController();
             final boolean shouldApplyRecentsInputConsumer = recentsAnimationController != null
+                    && recentsAnimationController.updateInputConsumer()
                     && recentsAnimationController.shouldApplyInputConsumer(focus.mActivityRecord);
             if (shouldApplyRecentsInputConsumer) {
                 requestFocus(recentsAnimationInputConsumer.mWindowHandle.token,
