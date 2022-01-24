@@ -16,10 +16,13 @@
 
 package android.net;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
 import android.annotation.CallbackExecutor;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.annotation.TestApi;
@@ -78,6 +81,7 @@ public class EthernetManager {
      * A listener interface to receive notification on changes in Ethernet.
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     public interface Listener {
         /**
          * Called when Ethernet port's availability is changed.
@@ -85,8 +89,9 @@ public class EthernetManager {
          * @param isAvailable {@code true} if Ethernet port exists.
          * @hide
          */
-        @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
-        void onAvailabilityChanged(String iface, boolean isAvailable);
+        @SystemApi(client = MODULE_LIBRARIES)
+        void onAvailabilityChanged(@SuppressLint("MissingNullability") String iface,
+                boolean isAvailable);
     }
 
     /**
@@ -131,7 +136,7 @@ public class EthernetManager {
      * Indicates whether the system currently has one or more Ethernet interfaces.
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
+    @SystemApi(client = MODULE_LIBRARIES)
     public boolean isAvailable() {
         return getAvailableInterfaces().length > 0;
     }
@@ -172,7 +177,8 @@ public class EthernetManager {
      * @throws IllegalArgumentException If the listener or executor is null.
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
+    @SystemApi(client = MODULE_LIBRARIES)
+    @SuppressLint("SamShouldBeLast")
     public void addListener(@NonNull Listener listener, @NonNull Executor executor) {
         if (listener == null || executor == null) {
             throw new NullPointerException("listener and executor must not be null");
@@ -208,7 +214,7 @@ public class EthernetManager {
      * @throws IllegalArgumentException If the listener is null.
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
+    @SystemApi(client = MODULE_LIBRARIES)
     public void removeListener(@NonNull Listener listener) {
         if (listener == null) {
             throw new IllegalArgumentException("listener must not be null");
