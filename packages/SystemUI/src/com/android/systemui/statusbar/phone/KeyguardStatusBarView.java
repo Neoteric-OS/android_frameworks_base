@@ -50,6 +50,7 @@ import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.animation.Interpolators;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
+import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.FeatureFlags;
 import com.android.systemui.statusbar.events.SystemStatusAnimationCallback;
 import com.android.systemui.statusbar.events.SystemStatusAnimationScheduler;
@@ -377,7 +378,8 @@ public class KeyguardStatusBarView extends RelativeLayout implements
         userInfoController.addCallback(this);
         userInfoController.reloadUserInfo();
         Dependency.get(ConfigurationController.class).addCallback(this);
-        mIconManager = new TintedIconManager(findViewById(R.id.statusIcons), mFeatureFlags);
+        mIconManager = new TintedIconManager(findViewById(R.id.statusIcons), mFeatureFlags,
+                Dependency.get(CommandQueue.class));
         mIconManager.setBlockList(mBlockedIcons);
         Dependency.get(StatusBarIconController.class).addIconGroup(mIconManager);
         mAnimationScheduler.addCallback(this);

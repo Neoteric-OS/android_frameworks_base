@@ -156,7 +156,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             mStatusBar.restoreHierarchyState(
                     savedInstanceState.getSparseParcelableArray(EXTRA_PANEL_STATE));
         }
-        mDarkIconManager = new DarkIconManager(view.findViewById(R.id.statusIcons), mFeatureFlags);
+        mDarkIconManager = new DarkIconManager(view.findViewById(R.id.statusIcons), mFeatureFlags,
+                mCommandQueue);
         mDarkIconManager.setShouldLog(true);
         mBlockedIcons.add(getString(com.android.internal.R.string.status_bar_volume));
         mBlockedIcons.add(getString(com.android.internal.R.string.status_bar_alarm_clock));

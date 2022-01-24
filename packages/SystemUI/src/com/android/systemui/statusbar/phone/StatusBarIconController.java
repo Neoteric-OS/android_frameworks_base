@@ -14,6 +14,9 @@
 
 package com.android.systemui.statusbar.phone;
 
+import static android.app.StatusBarManager.DISABLE2_SYSTEM_ICONS;
+import static android.app.StatusBarManager.DISABLE_NONE;
+
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_ICON;
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_MOBILE;
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_WIFI;
@@ -38,6 +41,7 @@ import com.android.systemui.R;
 import com.android.systemui.demomode.DemoModeCommandReceiver;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
+import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.FeatureFlags;
 import com.android.systemui.statusbar.StatusBarIconView;
 import com.android.systemui.statusbar.StatusBarMobileView;
@@ -46,6 +50,7 @@ import com.android.systemui.statusbar.StatusIconDisplayable;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.CallIndicatorIconState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.MobileIconState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.WifiIconState;
+import com.android.systemui.util.Utils.DisableStateTracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,8 +127,9 @@ public interface StatusBarIconController {
         private final DarkIconDispatcher mDarkIconDispatcher;
         private int mIconHPadding;
 
-        public DarkIconManager(LinearLayout linearLayout, FeatureFlags featureFlags) {
-            super(linearLayout, featureFlags);
+        public DarkIconManager(LinearLayout linearLayout, FeatureFlags featureFlags,
+                    CommandQueue commandQueue) {
+            super(linearLayout, featureFlags, commandQueue);
             mIconHPadding = mContext.getResources().getDimensionPixelSize(
                     R.dimen.status_bar_icon_padding);
             mDarkIconDispatcher = Dependency.get(DarkIconDispatcher.class);
@@ -183,8 +189,9 @@ public interface StatusBarIconController {
     class TintedIconManager extends IconManager {
         private int mColor;
 
-        public TintedIconManager(ViewGroup group, FeatureFlags featureFlags) {
-            super(group, featureFlags);
+        public TintedIconManager(ViewGroup group, FeatureFlags featureFlags,
+                    CommandQueue commandQueue) {
+            super(group, featureFlags, commandQueue);
         }
 
         @Override
@@ -233,12 +240,21 @@ public interface StatusBarIconController {
 
         protected ArrayList<String> mBlockList = new ArrayList<>();
 
-        public IconManager(ViewGroup group, FeatureFlags featureFlags) {
+        public IconManager(ViewGroup group, FeatureFlags featureFlags,
+                    CommandQueue commandQueue) {
             mFeatureFlags = featureFlags;
             mGroup = group;
             mContext = group.getContext();
             mIconSize = mContext.getResources().getDimensionPixelSize(
                     com.android.internal.R.dimen.status_bar_icon_size);
+
+            DisableStateTracker tracker =
+                    new DisableStateTracker(DISABLE_NONE, DISABLE2_SYSTEM_ICONS, commandQueue);
+            mGroup.addOnAttachStateChangeListener(tracker);
+            if (mGroup.isAttachedToWindow()) {
+                // In case we miss the first onAttachedToWindow event
+                tracker.onViewAttachedToWindow(mGroup);
+            }
         }
 
         public boolean isDemoable() {
