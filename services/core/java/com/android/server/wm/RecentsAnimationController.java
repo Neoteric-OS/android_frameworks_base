@@ -141,6 +141,7 @@ public class RecentsAnimationController implements DeathRecipient {
     // Whether or not the input consumer is enabled. The input consumer must be both registered and
     // enabled for it to start intercepting touch events.
     private boolean mInputConsumerEnabled;
+    private boolean mInputConsumerPendingEnabled;
 
     private final Rect mTmpRect = new Rect();
 
@@ -325,7 +326,7 @@ public class RecentsAnimationController implements DeathRecipient {
                     if (mCanceled) {
                         return;
                     }
-                    mInputConsumerEnabled = enabled;
+                    mInputConsumerPendingEnabled = enabled;
                     final InputMonitor inputMonitor = mDisplayContent.getInputMonitor();
                     inputMonitor.updateInputWindowsLw(true /*force*/);
                     mService.scheduleAnimationLocked();
@@ -1060,6 +1061,11 @@ public class RecentsAnimationController implements DeathRecipient {
                 ((w.mActivityRecord != null && mTargetActivityRecord == w.mActivityRecord)
                         || isAnimatingTask(w.getTask()))
                 && isTargetOverWallpaper() && w.isOnScreen();
+    }
+
+    boolean updateInputConsumer() {
+        mInputConsumerEnabled = mInputConsumerPendingEnabled;
+        return true;
     }
 
     /**
