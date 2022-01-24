@@ -47,7 +47,6 @@ cc_library_static {
         "com_android_server_lights_LightsService.cpp",
         "com_android_server_location_GnssLocationProvider.cpp",
         "com_android_server_locksettings_SyntheticPasswordManager.cpp",
-        "com_android_server_net_NetworkStatsService.cpp",
         "com_android_server_power_PowerManagerService.cpp",
         "com_android_server_powerstats_PowerStatsService.cpp",
         "com_android_server_hint_HintManagerService.cpp",
@@ -73,7 +72,8 @@ cc_library_static {
         "com_android_server_sensor_SensorService.cpp",
         "onload.cpp",
         ":lib_cachedAppOptimizer_native",
-        ":lib_networkStatsFactory_native",
+        // TODO: delete when NetworkStatsService is moved to the mainline module.
+        ":services.connectivity-tiramisu-jni-sources",
     ],
 
     include_dirs: [
@@ -202,13 +202,6 @@ cc_defaults {
             ],
         },
     },
-}
-
-filegroup {
-    name: "lib_networkStatsFactory_native",
-    srcs: [
-        "com_android_server_net_NetworkStatsFactory.cpp",
-    ],
 }
 
 filegroup {
