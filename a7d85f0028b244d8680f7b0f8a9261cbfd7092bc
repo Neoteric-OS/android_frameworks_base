@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43bacd8f_b29d3dae",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 62
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-01-24T08:00:50Z",
+      "side": 1,
+      "message": "Just \"mHandler::post\" might work too ? Not really important",
+      "range": {
+        "startLine": 452,
+        "startChar": 38,
+        "endLine": 452,
+        "endChar": 42
+      },
+      "revId": "a7d85f0028b244d8680f7b0f8a9261cbfd7092bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
