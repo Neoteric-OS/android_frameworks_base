@@ -2018,13 +2018,15 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
                 pw.print(prefix);
                 pw.print(full ? "* " : "  ");
                 pw.println(lastTask);
-                if (full) {
-                    lastTask.dump(pw, prefix + "  ");
-                } else if (complete) {
-                    // Complete + brief == give a summary.  Isn't that obvious?!?
-                    if (lastTask.intent != null) {
-                        pw.print(prefix); pw.print("  ");
-                                pw.println(lastTask.intent.toInsecureString());
+                if (lastTask ！= null) {
+                    if (full) {
+                        lastTask.dump(pw, prefix + "  ");
+                    } else if (complete) {
+                        // Complete + brief == give a summary.  Isn't that obvious?!?
+                        if (lastTask.intent != null) {
+                            pw.print(prefix); pw.print("  ");
+                                    pw.println(lastTask.intent.toInsecureString());
+                        }
                     }
                 }
             }
