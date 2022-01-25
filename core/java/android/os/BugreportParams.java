@@ -17,6 +17,7 @@
 package android.os;
 
 import android.annotation.IntDef;
+import android.annotation.NonNull;
 import android.annotation.SystemApi;
 
 import java.lang.annotation.Retention;
@@ -28,15 +29,26 @@ import java.lang.annotation.RetentionPolicy;
  * @hide
  */
 @SystemApi
-public final class BugreportParams {
+public final class BugreportParams implements Parcelable {
     private final int mMode;
+    private final boolean mSuppressFinalNotification;
 
     public BugreportParams(@BugreportMode int mode) {
         mMode = mode;
+        mSuppressFinalNotification = false;
+    }
+
+    public BugreportParams(@BugreportMode int mode, boolean suppressFinalNotification) {
+        mMode = mode;
+        mSuppressFinalNotification = suppressFinalNotification;
     }
 
     public int getMode() {
         return mMode;
+    }
+
+    public boolean getSuppressFinalNotification() {
+        return mSuppressFinalNotification;
     }
 
     /**
@@ -88,4 +100,31 @@ public final class BugreportParams {
      * Wifi.
      */
     public static final int BUGREPORT_MODE_WIFI = IDumpstate.BUGREPORT_MODE_WIFI;
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(mMode);
+        dest.writeBoolean(mSuppressFinalNotification);
+    }
+
+    private BugreportParams(@NonNull Parcel source) {
+        mMode = source.readInt();
+        mSuppressFinalNotification = source.readBoolean();
+    }
+
+    @NonNull
+    public static final Creator<BugreportParams> CREATOR = new Creator<BugreportParams>() {
+        public BugreportParams createFromParcel(@NonNull Parcel source) {
+            return new BugreportParams(source);
+        }
+
+        public BugreportParams[] newArray(int size) {
+            return new BugreportParams[size];
+        }
+    };
 }

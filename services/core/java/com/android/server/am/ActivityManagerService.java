@@ -543,6 +543,8 @@ public class ActivityManagerService extends IActivityManager.Stub
     static final String EXTRA_TITLE = "android.intent.extra.TITLE";
     static final String EXTRA_DESCRIPTION = "android.intent.extra.DESCRIPTION";
     static final String EXTRA_BUGREPORT_TYPE = "android.intent.extra.BUGREPORT_TYPE";
+    static final String EXTRA_SUPPRESS_FINAL_NOTIFICATION =
+            "android.intent.extra.SUPPRESS_FINAL_NOTIFICATION";
 
     /**
      * The maximum number of bytes that {@link #setProcessStateSummary} accepts.
@@ -6571,8 +6573,8 @@ public class ActivityManagerService extends IActivityManager.Stub
      * title and description
      */
     @Override
-    public void requestBugReport(@BugreportParams.BugreportMode int bugreportType) {
-        requestBugReportWithDescription(null, null, bugreportType);
+    public void requestBugReport(BugreportParams params) {
+        requestBugReportWithDescription(null, null, params);
     }
 
     /**
@@ -6581,9 +6583,9 @@ public class ActivityManagerService extends IActivityManager.Stub
      */
     @Override
     public void requestBugReportWithDescription(@Nullable String shareTitle,
-            @Nullable String shareDescription, int bugreportType) {
-        String type = null;
-        switch (bugreportType) {
+            @Nullable String shareDescription, BugreportParams params) {
+        String type;
+        switch (params.getMode()) {
             case BugreportParams.BUGREPORT_MODE_FULL:
                 type = "bugreportfull";
                 break;
@@ -6605,7 +6607,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             default:
                 throw new IllegalArgumentException(
                     "Provided bugreport type is not correct, value: "
-                        + bugreportType);
+                        + params.getMode());
         }
         // Always log caller, even if it does not have permission to dump.
         Slog.i(TAG, type + " requested by UID " + Binder.getCallingUid());
@@ -6631,7 +6633,9 @@ public class ActivityManagerService extends IActivityManager.Stub
         Intent triggerShellBugreport = new Intent();
         triggerShellBugreport.setAction(INTENT_BUGREPORT_REQUESTED);
         triggerShellBugreport.setPackage(SHELL_APP_PACKAGE);
-        triggerShellBugreport.putExtra(EXTRA_BUGREPORT_TYPE, bugreportType);
+        triggerShellBugreport.putExtra(EXTRA_BUGREPORT_TYPE, params.getMode());
+        triggerShellBugreport.putExtra(EXTRA_SUPPRESS_FINAL_NOTIFICATION,
+                params.getSuppressFinalNotification());
         triggerShellBugreport.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         triggerShellBugreport.addFlags(Intent.FLAG_RECEIVER_INCLUDE_BACKGROUND);
         if (shareTitle != null) {
@@ -6655,7 +6659,7 @@ public class ActivityManagerService extends IActivityManager.Stub
     @Override
     public void requestTelephonyBugReport(String shareTitle, String shareDescription) {
         requestBugReportWithDescription(shareTitle, shareDescription,
-                BugreportParams.BUGREPORT_MODE_TELEPHONY);
+                new BugreportParams(BugreportParams.BUGREPORT_MODE_TELEPHONY));
     }
 
     /**
@@ -6664,7 +6668,7 @@ public class ActivityManagerService extends IActivityManager.Stub
     @Override
     public void requestWifiBugReport(String shareTitle, String shareDescription) {
         requestBugReportWithDescription(shareTitle, shareDescription,
-                BugreportParams.BUGREPORT_MODE_WIFI);
+                new BugreportParams(BugreportParams.BUGREPORT_MODE_WIFI));
     }
 
     /**
@@ -6672,7 +6676,8 @@ public class ActivityManagerService extends IActivityManager.Stub
      */
     @Override
     public void requestInteractiveBugReport() {
-        requestBugReportWithDescription(null, null, BugreportParams.BUGREPORT_MODE_INTERACTIVE);
+        requestBugReportWithDescription(null, null,
+                new BugreportParams(BugreportParams.BUGREPORT_MODE_INTERACTIVE));
     }
 
     /**
@@ -6683,7 +6688,7 @@ public class ActivityManagerService extends IActivityManager.Stub
     public void requestInteractiveBugReportWithDescription(String shareTitle,
             String shareDescription) {
         requestBugReportWithDescription(shareTitle, shareDescription,
-                BugreportParams.BUGREPORT_MODE_INTERACTIVE);
+                new BugreportParams(BugreportParams.BUGREPORT_MODE_INTERACTIVE));
     }
 
     /**
@@ -6691,7 +6696,8 @@ public class ActivityManagerService extends IActivityManager.Stub
      */
     @Override
     public void requestFullBugReport() {
-        requestBugReportWithDescription(null, null,  BugreportParams.BUGREPORT_MODE_FULL);
+        requestBugReportWithDescription(null, null,
+                new BugreportParams(BugreportParams.BUGREPORT_MODE_FULL));
     }
 
     /**
@@ -6699,7 +6705,8 @@ public class ActivityManagerService extends IActivityManager.Stub
      */
     @Override
     public void requestRemoteBugReport() {
-        requestBugReportWithDescription(null, null, BugreportParams.BUGREPORT_MODE_REMOTE);
+        requestBugReportWithDescription(null, null,
+                new BugreportParams(BugreportParams.BUGREPORT_MODE_REMOTE));
     }
 
     /**

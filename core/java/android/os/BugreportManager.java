@@ -301,7 +301,7 @@ public final class BugreportManager {
             String title = shareTitle == null ? null : shareTitle.toString();
             String description = shareDescription == null ? null : shareDescription.toString();
             ActivityManager.getService()
-                    .requestBugReportWithDescription(title, description, params.getMode());
+                    .requestBugReportWithDescription(title, description, params);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

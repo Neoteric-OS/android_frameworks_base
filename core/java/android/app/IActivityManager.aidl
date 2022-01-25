@@ -62,6 +62,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.BugreportParams;
 import android.os.Debug;
 import android.os.IBinder;
 import android.os.IProgressListener;
@@ -409,9 +410,9 @@ interface IActivityManager {
     // Request a heap dump for the system server.
     void requestSystemServerHeapDump();
 
-    void requestBugReport(int bugreportType);
+    void requestBugReport(in BugreportParams params);
     void requestBugReportWithDescription(in @nullable String shareTitle,
-                in @nullable String shareDescription, int bugreportType);
+                in @nullable String shareDescription, in BugreportParams params);
 
     /**
      *  Takes a telephony bug report and notifies the user with the title and description
@@ -683,8 +684,8 @@ interface IActivityManager {
 
     /**
      * Control the app freezer state. Returns true in case of success, false if the operation
-     * didn't succeed (for example, when the app freezer isn't supported). 
-     * Handling the freezer state via this method is reentrant, that is it can be 
+     * didn't succeed (for example, when the app freezer isn't supported).
+     * Handling the freezer state via this method is reentrant, that is it can be
      * disabled and re-enabled multiple times in parallel. As long as there's a 1:1 disable to
      * enable match, the freezer is re-enabled at last enable only.
      * @param enable set it to true to enable the app freezer, false to disable it.

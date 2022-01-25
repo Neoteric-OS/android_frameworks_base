@@ -164,6 +164,8 @@ public class BugreportProgressService extends Service {
     static final String EXTRA_DESCRIPTION = "android.intent.extra.DESCRIPTION";
     static final String EXTRA_ORIGINAL_INTENT = "android.intent.extra.ORIGINAL_INTENT";
     static final String EXTRA_INFO = "android.intent.extra.INFO";
+    static final String EXTRA_SUPPRESS_FINAL_NOTIFICATION =
+            "android.intent.extra.SUPPRESS_FINAL_NOTIFICATION";
 
     private static final int MSG_SERVICE_COMMAND = 1;
     private static final int MSG_DELAYED_SCREENSHOT = 2;
@@ -259,6 +261,7 @@ public class BugreportProgressService extends Service {
 
     private boolean mIsWatch;
     private boolean mIsTv;
+    private boolean mSuppressFinalNotification;
 
     @Override
     public void onCreate() {
@@ -613,6 +616,8 @@ public class BugreportProgressService extends Service {
         String shareDescription = intent.getStringExtra(EXTRA_DESCRIPTION);
         int bugreportType = intent.getIntExtra(EXTRA_BUGREPORT_TYPE,
                 BugreportParams.BUGREPORT_MODE_INTERACTIVE);
+        mSuppressFinalNotification = intent.getBooleanExtra(
+                EXTRA_SUPPRESS_FINAL_NOTIFICATION, false);
         String baseName = getBugreportBaseName(bugreportType);
         String name = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
 
@@ -1054,7 +1059,11 @@ public class BugreportProgressService extends Service {
             stopForegroundWhenDoneLocked(info.id);
         }
 
-        triggerLocalNotification(mContext, info);
+        if (!mSuppressFinalNotification) {
+            triggerLocalNotification(mContext, info);
+        } else {
+            Log.i(TAG, "Bugreport sharing notification was suppressed.");
+        }
     }
 
     /**
