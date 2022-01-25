@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c93f2c9_1d3bd972",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1877855
+      },
+      "writtenOn": "2022-01-25T18:08:33Z",
+      "side": 1,
+      "message": "Thanks for the quick fix Jon!",
+      "revId": "563bfec8d6f92985c609b401c8a187b5e1029371",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e328bfb8_2281f3d8",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 3488,
+      "author": {
+        "id": 1877855
+      },
+      "writtenOn": "2022-01-25T18:08:33Z",
+      "side": 1,
+      "message": "I believe we also want to unbind if the SecurityException is thrown, not sure if we want to call that out as well.",
+      "range": {
+        "startLine": 3488,
+        "startChar": 15,
+        "endLine": 3488,
+        "endChar": 32
+      },
+      "revId": "563bfec8d6f92985c609b401c8a187b5e1029371",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
