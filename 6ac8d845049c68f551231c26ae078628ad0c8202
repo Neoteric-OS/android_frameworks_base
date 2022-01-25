@@ -345,6 +345,30 @@
       },
       "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32928dcc_c0ae48bc",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-01-25T04:56:00Z",
+      "side": 1,
+      "message": "In NativeDaemonEvent.unescapeArgs right ?\nThe logic here was more complicated; in particular if a word had quotes in the middle, I think they would not be just removed as here.\n\nThis was likely necessary because all arguments were sent as a single command-line, but with the new interface that doesn\u0027t seem to be necessary: they are all separate arguments, so don\u0027t need to be quoted or separated by spaces.\n\nCould you avoid quoting the arguments in MDnsSdListener.cpp instead ?",
+      "parentUuid": "561ee4e4_d9a8ddf6",
+      "range": {
+        "startLine": 583,
+        "startChar": 26,
+        "endLine": 583,
+        "endChar": 55
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
