@@ -30,7 +30,7 @@ import java.lang.annotation.RetentionPolicy;
  * {@hide}
  */
 @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
-public final class BtProfileConnectionInfo implements Parcelable {
+public final class BluetoothProfileConnectionInfo implements Parcelable {
     /** @hide */
     @IntDef({
             BluetoothProfile.A2DP,
@@ -47,8 +47,8 @@ public final class BtProfileConnectionInfo implements Parcelable {
     private final int mVolume;
     private final boolean mIsLeOutput;
 
-    private BtProfileConnectionInfo(@BtProfile int profile, boolean suppressNoisyIntent, int volume,
-            boolean isLeOutput) {
+    private BluetoothProfileConnectionInfo(@BtProfile int profile, boolean suppressNoisyIntent,
+            int volume, boolean isLeOutput) {
         mProfile = profile;
         mSupprNoisy = suppressNoisyIntent;
         mVolume = volume;
@@ -59,21 +59,21 @@ public final class BtProfileConnectionInfo implements Parcelable {
      * Constructor used by BtHelper when a profile is connected
      * {@hide}
      */
-    public BtProfileConnectionInfo(@BtProfile int profile) {
+    public BluetoothProfileConnectionInfo(@BtProfile int profile) {
         this(profile, false, -1, false);
     }
 
-    public static final @NonNull Parcelable.Creator<BtProfileConnectionInfo> CREATOR =
-            new Parcelable.Creator<BtProfileConnectionInfo>() {
+    public static final @NonNull Parcelable.Creator<BluetoothProfileConnectionInfo> CREATOR =
+            new Parcelable.Creator<BluetoothProfileConnectionInfo>() {
                 @Override
-                public BtProfileConnectionInfo createFromParcel(Parcel source) {
-                    return new BtProfileConnectionInfo(source.readInt(), source.readBoolean(),
-                            source.readInt(), source.readBoolean());
+                public BluetoothProfileConnectionInfo createFromParcel(Parcel source) {
+                    return new BluetoothProfileConnectionInfo(source.readInt(),
+                            source.readBoolean(), source.readInt(), source.readBoolean());
                 }
 
                 @Override
-                public BtProfileConnectionInfo[] newArray(int size) {
-                    return new BtProfileConnectionInfo[size];
+                public BluetoothProfileConnectionInfo[] newArray(int size) {
+                    return new BluetoothProfileConnectionInfo[size];
                 }
             };
 
@@ -98,10 +98,10 @@ public final class BtProfileConnectionInfo implements Parcelable {
      *
      * @param volume of device -1 to ignore value
      */
-    public static @NonNull BtProfileConnectionInfo a2dpInfo(boolean suppressNoisyIntent,
-            int volume) {
-        return new BtProfileConnectionInfo(BluetoothProfile.A2DP, suppressNoisyIntent, volume,
-            false);
+    public static @NonNull BluetoothProfileConnectionInfo createA2dpInfo(
+            boolean suppressNoisyIntent, int volume) {
+        return new BluetoothProfileConnectionInfo(BluetoothProfile.A2DP, suppressNoisyIntent,
+            volume, false);
     }
 
     /**
@@ -110,8 +110,8 @@ public final class BtProfileConnectionInfo implements Parcelable {
      *
      * @param volume of device -1 to ignore value
      */
-    public static @NonNull BtProfileConnectionInfo a2dpSinkInfo(int volume) {
-        return new BtProfileConnectionInfo(BluetoothProfile.A2DP_SINK, true, volume, false);
+    public static @NonNull BluetoothProfileConnectionInfo createA2dpSinkInfo(int volume) {
+        return new BluetoothProfileConnectionInfo(BluetoothProfile.A2DP_SINK, true, volume, false);
     }
 
     /**
@@ -120,9 +120,10 @@ public final class BtProfileConnectionInfo implements Parcelable {
      * @param suppressNoisyIntent if true the {@link AudioManager.ACTION_AUDIO_BECOMING_NOISY}
      * intent will not be sent.
      */
-    public static @NonNull BtProfileConnectionInfo hearingAidInfo(boolean suppressNoisyIntent) {
-        return new BtProfileConnectionInfo(BluetoothProfile.HEARING_AID, suppressNoisyIntent, -1,
-            false);
+    public static @NonNull BluetoothProfileConnectionInfo createHearingAidInfo(
+            boolean suppressNoisyIntent) {
+        return new BluetoothProfileConnectionInfo(BluetoothProfile.HEARING_AID, suppressNoisyIntent,
+            -1, false);
     }
 
     /**
@@ -133,10 +134,10 @@ public final class BtProfileConnectionInfo implements Parcelable {
      *
      * @param isLeOutput if true mean the device is an output device, if false it's an input device
      */
-    public static @NonNull BtProfileConnectionInfo leAudio(boolean suppressNoisyIntent,
-            boolean isLeOutput) {
-        return new BtProfileConnectionInfo(BluetoothProfile.LE_AUDIO, suppressNoisyIntent, -1,
-            isLeOutput);
+    public static @NonNull BluetoothProfileConnectionInfo createLeAudioInfo(
+            boolean suppressNoisyIntent, boolean isLeOutput) {
+        return new BluetoothProfileConnectionInfo(BluetoothProfile.LE_AUDIO, suppressNoisyIntent,
+            -1, isLeOutput);
     }
 
     /**
@@ -150,7 +151,7 @@ public final class BtProfileConnectionInfo implements Parcelable {
      * @return {@code true} if {@link AudioManager.ACTION_AUDIO_BECOMING_NOISY} intent will not be
      * sent
      */
-    public boolean getSuppressNoisyIntent() {
+    public boolean isSuppressNoisyIntent() {
         return mSupprNoisy;
     }
 
@@ -167,7 +168,7 @@ public final class BtProfileConnectionInfo implements Parcelable {
      * @return {@code true} is the LE device is an output device, {@code false} if it's an input
      * device
      */
-    public boolean getIsLeOutput() {
+    public boolean isLeOutput() {
         return mIsLeOutput;
     }
 }
