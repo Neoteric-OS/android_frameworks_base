@@ -343,6 +343,8 @@ import com.android.server.wm.Task.ActivityState;
 import com.android.server.wm.WindowManagerService.H;
 import com.android.server.wm.utils.InsetUtils;
 
+import dalvik.annotation.optimization.NeverCompile;
+
 import com.google.android.collect.Sets;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -876,6 +878,7 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
         }
     }
 
+    @NeverCompile // Avoid size overhead of debugging code.
     @Override
     void dump(PrintWriter pw, String prefix, boolean dumpAll) {
         final long now = SystemClock.uptimeMillis();
