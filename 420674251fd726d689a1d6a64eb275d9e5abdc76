@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29d969e9_008066a0",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2757,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:12:20Z",
+      "side": 1,
+      "message": "This is the first subscriberId in the list ; how do you know it\u0027s the right one ? The code looks like they are completely independent.",
+      "range": {
+        "startLine": 2757,
+        "startChar": 26,
+        "endLine": 2757,
+        "endChar": 72
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a77e54bc_3dfff167",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3145,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:12:20Z",
+      "side": 1,
+      "message": "Can you please also bring the javadoc method of that function from NetworkTemplate ? This is impossible to understand without that javadoc.",
+      "range": {
+        "startLine": 3145,
+        "startChar": 35,
+        "endLine": 3145,
+        "endChar": 52
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48c33c5d_9e4d026c",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3148,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:12:20Z",
+      "side": 1,
+      "message": "instance",
+      "range": {
+        "startLine": 3148,
+        "startChar": 28,
+        "endLine": 3148,
+        "endChar": 37
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad95f59b_ee08ff36",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3149,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:12:20Z",
+      "side": 1,
+      "message": "I don\u0027t think it means that : you could have wifi-only subscriptions, though I don\u0027t know if we have any of these yet. At least in principle it may be a different subscription than a merged carrier network.",
+      "range": {
+        "startLine": 3149,
+        "startChar": 43,
+        "endLine": 3149,
+        "endChar": 48
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc3ce5cf_53475f17",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3150,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:12:20Z",
+      "side": 1,
+      "message": "s/associate to/is associated to a/",
+      "range": {
+        "startLine": 3150,
+        "startChar": 51,
+        "endLine": 3150,
+        "endChar": 63
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31439021_3244e4ed",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3150,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:12:20Z",
+      "side": 1,
+      "message": "TYPE_CELLULAR ? or MATCH_CARRIER ?",
+      "range": {
+        "startLine": 3150,
+        "startChar": 15,
+        "endLine": 3150,
+        "endChar": 27
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c81853f8_d75d7c6c",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3158,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:12:20Z",
+      "side": 1,
+      "message": "merged",
+      "range": {
+        "startLine": 3158,
+        "startChar": 68,
+        "endLine": 3158,
+        "endChar": 73
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42d0d25b_d9a99fc2",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3163,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:12:20Z",
+      "side": 1,
+      "message": "The old code would drop the meteredness I think ? It might have been a bug, but then do you want to also set OemManaged, RatType and Roaming ?\n\n(also consider (not for this patch) having a constructor for the Builder that takes an already built object)",
+      "range": {
+        "startLine": 3163,
+        "startChar": 29,
+        "endLine": 3163,
+        "endChar": 43
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dae57b5_76a4fb9b",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2032,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:12:20Z",
+      "side": 1,
+      "message": "What\u0027s stopping you ? Just the fact that some methods expect FAKE_SUBSCRIBER_ID ?",
+      "range": {
+        "startLine": 2032,
+        "startChar": 11,
+        "endLine": 2032,
+        "endChar": 62
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
