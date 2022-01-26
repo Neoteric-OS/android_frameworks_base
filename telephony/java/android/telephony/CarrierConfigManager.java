@@ -5887,6 +5887,7 @@ public class CarrierConfigManager {
                 CellSignalStrengthLte.USE_RSRP);
         // Default wifi configurations.
         sDefaults.putAll(Wifi.getDefaults());
+        sDefaults.putAll(Tethering.getDefaults());
         sDefaults.putBoolean(ENABLE_EAP_METHOD_PREFIX_BOOL, false);
         sDefaults.putInt(KEY_GBA_MODE_INT, GBA_ME);
         sDefaults.putInt(KEY_GBA_UA_SECURITY_ORGANIZATION_INT,
@@ -5981,6 +5982,28 @@ public class CarrierConfigManager {
         }
 
         private Wifi() {}
+    }
+
+    /**
+     * Tethering configs used in Tethering Module.
+     */
+    public static final class Tethering {
+        /** Prefix of all Tethering.KEY_* constants. */
+        public static final String KEY_PREFIX = "tethering.";
+
+        /**
+         * Uses to forbidden tethering capability and hide any tethering UI entry.
+         */
+        public static final String KEY_DISALLOW_TETHERING =
+                KEY_PREFIX + "disallow_tethering";
+
+        private Tethering() {}
+
+        private static PersistableBundle getDefaults() {
+            PersistableBundle defaults = new PersistableBundle();
+            defaults.putString(KEY_DISALLOW_TETHERING, false);
+            return defaults;
+        }
     }
 
     /**
