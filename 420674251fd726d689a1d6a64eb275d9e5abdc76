@@ -141,6 +141,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6024c247_62bb862c",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3150,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-26T13:25:49Z",
+      "side": 1,
+      "message": "This is not a network type in ConnectivityManager. Is this a constant? Or does this mean the match rule?",
+      "range": {
+        "startLine": 3150,
+        "startChar": 15,
+        "endLine": 3150,
+        "endChar": 27
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c81853f8_d75d7c6c",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 1
