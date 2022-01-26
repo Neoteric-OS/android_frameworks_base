@@ -16,6 +16,23 @@
       "message": "AOSP CP",
       "revId": "3ca3ce4fdbf685af5e6fa7354705c3458e2beff5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fb7223b_4706ae33",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-01-26T17:11:36Z",
+      "side": 1,
+      "message": "Anton, would you mind setting this to Autosubmit as I need it in AOSP ASAP.",
+      "revId": "3ca3ce4fdbf685af5e6fa7354705c3458e2beff5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
