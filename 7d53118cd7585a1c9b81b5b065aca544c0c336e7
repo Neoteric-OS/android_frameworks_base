@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "522ede3b_a870f92f",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-01-26T05:47:30Z",
+      "side": 1,
+      "message": "Not really, it\u0027s only UnsupportedAppUsage before: you could probably add an API that has the arguments in the usual order, keeping this method as-is (but deprecated) ?",
+      "range": {
+        "startLine": 181,
+        "startChar": 6,
+        "endLine": 181,
+        "endChar": 40
+      },
+      "revId": "7d53118cd7585a1c9b81b5b065aca544c0c336e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
