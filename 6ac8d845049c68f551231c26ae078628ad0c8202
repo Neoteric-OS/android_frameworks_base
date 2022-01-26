@@ -369,6 +369,30 @@
       },
       "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b928d83_61816938",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-01-26T09:08:40Z",
+      "side": 1,
+      "message": "I found that quotes are added by MDnsSdListener... I have removed this unnecessary format, then we don\u0027t need do this removal.",
+      "parentUuid": "32928dcc_c0ae48bc",
+      "range": {
+        "startLine": 583,
+        "startChar": 26,
+        "endLine": 583,
+        "endChar": 55
+      },
+      "revId": "6ac8d845049c68f551231c26ae078628ad0c8202",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
