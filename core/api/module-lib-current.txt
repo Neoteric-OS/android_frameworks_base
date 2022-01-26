@@ -2,6 +2,7 @@
 package android {
 
   public static final class Manifest.permission {
+    field public static final String CONTROL_AUTOMOTIVE_GNSS = "android.permission.CONTROL_AUTOMOTIVE_GNSS";
     field public static final String GET_INTENT_SENDER_INTENT = "android.permission.GET_INTENT_SENDER_INTENT";
   }
 
@@ -9,10 +10,18 @@ package android {
 
 package android.app {
 
+  @UiContext public class Activity extends android.view.ContextThemeWrapper implements android.content.ComponentCallbacks2 android.view.KeyEvent.Callback android.view.LayoutInflater.Factory2 android.view.OnBackInvokedDispatcherOwner android.view.View.OnCreateContextMenuListener android.view.Window.Callback {
+    method public final boolean addDumpable(@NonNull android.util.Dumpable);
+  }
+
   public class ActivityManager {
     method @RequiresPermission(android.Manifest.permission.SET_ACTIVITY_WATCHER) public void addHomeVisibilityListener(@NonNull java.util.concurrent.Executor, @NonNull android.app.HomeVisibilityListener);
     method @RequiresPermission(android.Manifest.permission.SET_ACTIVITY_WATCHER) public void removeHomeVisibilityListener(@NonNull android.app.HomeVisibilityListener);
     method @RequiresPermission(android.Manifest.permission.CHANGE_CONFIGURATION) public boolean updateMccMncConfiguration(@NonNull String, @NonNull String);
+  }
+
+  public class ActivityOptions {
+    method @NonNull public static android.app.ActivityOptions fromBundle(@NonNull android.os.Bundle);
   }
 
   public class AppOpsManager {
@@ -20,8 +29,8 @@ package android.app {
   }
 
   public class BroadcastOptions {
-    method public int getMaxManifestReceiverApiLevel();
-    method public void setMaxManifestReceiverApiLevel(int);
+    method @Deprecated public int getMaxManifestReceiverApiLevel();
+    method @Deprecated public void setMaxManifestReceiverApiLevel(int);
   }
 
   public abstract class HomeVisibilityListener {
@@ -45,33 +54,34 @@ package android.app {
     method public void onCanceled(@NonNull android.app.PendingIntent);
   }
 
+  public class PropertyInvalidatedCache<Query, Result> {
+    ctor public PropertyInvalidatedCache(int, int, @NonNull String, @NonNull String, @NonNull android.app.PropertyInvalidatedCache.QueryHandler<Query,Result>);
+    method public final void disableForCurrentProcess();
+    method public final void invalidateCache();
+    method public static void invalidateCache(int, @NonNull String);
+    method @Nullable public final Result query(@NonNull Query);
+    field public static final int MODULE_BLUETOOTH = 2; // 0x2
+  }
+
+  public abstract static class PropertyInvalidatedCache.QueryHandler<Q, R> {
+    ctor public PropertyInvalidatedCache.QueryHandler();
+    method @Nullable public abstract R apply(@NonNull Q);
+    method public boolean shouldBypassCache(@NonNull Q);
+  }
+
   public class StatusBarManager {
     method @RequiresPermission(android.Manifest.permission.STATUS_BAR) public void setExpansionDisabledForSimNetworkLock(boolean);
   }
 
 }
 
-package android.app.usage {
+package android.app.admin {
 
-  public class NetworkStatsManager {
-    method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_STACK}) public void forceUpdate();
-    method public static int getCollapsedRatType(int);
-    method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_STACK}) public void notifyNetworkStatus(@NonNull java.util.List<android.net.Network>, @NonNull java.util.List<android.net.NetworkStateSnapshot>, @Nullable String, @NonNull java.util.List<android.net.UnderlyingNetworkInfo>);
-    method @NonNull @WorkerThread public android.app.usage.NetworkStats queryDetailsForDevice(@NonNull android.net.NetworkTemplate, long, long);
-    method @NonNull @WorkerThread public android.app.usage.NetworkStats queryDetailsForUidTagState(@NonNull android.net.NetworkTemplate, long, long, int, int, int) throws java.lang.SecurityException;
-    method @NonNull @WorkerThread public android.app.usage.NetworkStats querySummary(@NonNull android.net.NetworkTemplate, long, long) throws java.lang.SecurityException;
-    method @NonNull @WorkerThread public android.app.usage.NetworkStats.Bucket querySummaryForDevice(@NonNull android.net.NetworkTemplate, long, long);
-    method @NonNull @WorkerThread public android.app.usage.NetworkStats queryTaggedSummary(@NonNull android.net.NetworkTemplate, long, long) throws java.lang.SecurityException;
-    method public void registerUsageCallback(@NonNull android.net.NetworkTemplate, long, @NonNull java.util.concurrent.Executor, @NonNull android.app.usage.NetworkStatsManager.UsageCallback);
-    method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_STACK}) public void setDefaultGlobalAlert(long);
-    method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_STACK}) public void setPollOnOpen(boolean);
-    method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_STACK}) public void setStatsProviderWarningAndLimitAsync(@NonNull String, long, long);
-    method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_STACK}) public void setUidForeground(int, boolean);
-    field public static final int NETWORK_TYPE_5G_NSA = -2; // 0xfffffffe
-  }
-
-  public abstract static class NetworkStatsManager.UsageCallback {
-    method public void onThresholdReached(@NonNull android.net.NetworkTemplate);
+  public class DevicePolicyManager {
+    method @RequiresPermission(anyOf={android.Manifest.permission.MANAGE_USERS, android.Manifest.permission.INTERACT_ACROSS_USERS}) public void acknowledgeNewUserDisclaimer();
+    method @Nullable @RequiresPermission(anyOf={android.Manifest.permission.MANAGE_USERS, android.Manifest.permission.INTERACT_ACROSS_USERS}) public android.os.UserHandle getLogoutUser();
+    method @RequiresPermission(anyOf={android.Manifest.permission.MANAGE_USERS, android.Manifest.permission.INTERACT_ACROSS_USERS}) public int logoutUser();
+    field public static final String ACTION_SHOW_NEW_USER_DISCLAIMER = "android.app.action.SHOW_NEW_USER_DISCLAIMER";
   }
 
 }
@@ -80,6 +90,10 @@ package android.content {
 
   public abstract class ContentProvider implements android.content.ComponentCallbacks2 {
     method @NonNull public static android.net.Uri createContentUriForUser(@NonNull android.net.Uri, @NonNull android.os.UserHandle);
+  }
+
+  public abstract class ContentResolver {
+    method @RequiresPermission(value=android.Manifest.permission.INTERACT_ACROSS_USERS_FULL, conditional=true) public final void registerContentObserverAsUser(@NonNull android.net.Uri, boolean, @NonNull android.database.ContentObserver, @NonNull android.os.UserHandle);
   }
 
   public abstract class Context {
@@ -100,8 +114,14 @@ package android.content {
 
 package android.content.pm {
 
+  public class ApplicationInfo extends android.content.pm.PackageItemInfo implements android.os.Parcelable {
+    method @NonNull public java.util.List<android.content.pm.SharedLibraryInfo> getSharedLibraryInfos();
+  }
+
   public abstract class PackageManager {
     method @NonNull public String getPermissionControllerPackageName();
+    method @NonNull public String getSupplementalProcessPackageName();
+    field public static final int MATCH_STATIC_SHARED_AND_SDK_LIBRARIES = 67108864; // 0x4000000
   }
 
 }
@@ -125,10 +145,22 @@ package android.hardware.usb {
     field public static final int USB_DATA_TRANSFER_RATE_LOW_SPEED = 2; // 0x2
     field public static final int USB_DATA_TRANSFER_RATE_UNKNOWN = -1; // 0xffffffff
     field public static final int USB_HAL_NOT_SUPPORTED = -1; // 0xffffffff
+    field public static final int USB_HAL_RETRY = -2; // 0xfffffffe
     field public static final int USB_HAL_V1_0 = 10; // 0xa
     field public static final int USB_HAL_V1_1 = 11; // 0xb
     field public static final int USB_HAL_V1_2 = 12; // 0xc
     field public static final int USB_HAL_V1_3 = 13; // 0xd
+    field public static final int USB_HAL_V2_0 = 20; // 0x14
+  }
+
+}
+
+package android.location {
+
+  public class LocationManager {
+    method @RequiresPermission(allOf={android.Manifest.permission.LOCATION_HARDWARE, android.Manifest.permission.ACCESS_FINE_LOCATION}) public boolean injectLocation(@NonNull android.location.Location);
+    method @RequiresPermission(android.Manifest.permission.CONTROL_AUTOMOTIVE_GNSS) public boolean isAutomotiveGnssSuspended();
+    method @RequiresPermission(android.Manifest.permission.CONTROL_AUTOMOTIVE_GNSS) public void setAutomotiveGnssSuspended(boolean);
   }
 
 }
@@ -218,50 +250,16 @@ package android.media.session {
 
 package android.net {
 
-  public class EthernetManager {
-    method @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) public void addInterfaceStateListener(@NonNull java.util.concurrent.Executor, @NonNull android.net.EthernetManager.InterfaceStateListener);
-    method public void removeInterfaceStateListener(@NonNull android.net.EthernetManager.InterfaceStateListener);
-    method public void setIncludeTestInterfaces(boolean);
-    field public static final int ROLE_CLIENT = 1; // 0x1
-    field public static final int ROLE_NONE = 0; // 0x0
-    field public static final int ROLE_SERVER = 2; // 0x2
-    field public static final int STATE_ABSENT = 0; // 0x0
-    field public static final int STATE_LINK_DOWN = 1; // 0x1
-    field public static final int STATE_LINK_UP = 2; // 0x2
-  }
-
-  public static interface EthernetManager.InterfaceStateListener {
-    method public void onInterfaceStateChanged(@NonNull String, int, int, @Nullable android.net.IpConfiguration);
+  public final class EthernetNetworkSpecifier extends android.net.NetworkSpecifier implements android.os.Parcelable {
+    ctor public EthernetNetworkSpecifier(@NonNull String);
+    method public int describeContents();
+    method @Nullable public String getInterfaceName();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.EthernetNetworkSpecifier> CREATOR;
   }
 
   public class LocalSocket implements java.io.Closeable {
     ctor public LocalSocket(@NonNull java.io.FileDescriptor);
-  }
-
-  public class NetworkIdentity {
-    method public int getOemManaged();
-    method public int getRatType();
-    method @Nullable public String getSubscriberId();
-    method public int getType();
-    method @Nullable public String getWifiNetworkKey();
-    method public boolean isDefaultNetwork();
-    method public boolean isMetered();
-    method public boolean isRoaming();
-  }
-
-  public static final class NetworkIdentity.Builder {
-    ctor public NetworkIdentity.Builder();
-    method @NonNull public android.net.NetworkIdentity build();
-    method @NonNull public android.net.NetworkIdentity.Builder clearRatType();
-    method @NonNull public android.net.NetworkIdentity.Builder setDefaultNetwork(boolean);
-    method @NonNull public android.net.NetworkIdentity.Builder setMetered(boolean);
-    method @NonNull public android.net.NetworkIdentity.Builder setNetworkStateSnapshot(@NonNull android.net.NetworkStateSnapshot);
-    method @NonNull public android.net.NetworkIdentity.Builder setOemManaged(int);
-    method @NonNull public android.net.NetworkIdentity.Builder setRatType(int);
-    method @NonNull public android.net.NetworkIdentity.Builder setRoaming(boolean);
-    method @NonNull public android.net.NetworkIdentity.Builder setSubscriberId(@Nullable String);
-    method @NonNull public android.net.NetworkIdentity.Builder setType(int);
-    method @NonNull public android.net.NetworkIdentity.Builder setWifiNetworkKey(@Nullable String);
   }
 
   public class NetworkPolicyManager {
@@ -277,94 +275,6 @@ package android.net {
 
   public static interface NetworkPolicyManager.NetworkPolicyCallback {
     method public default void onUidBlockedReasonChanged(int, int);
-  }
-
-  public final class NetworkStateSnapshot implements android.os.Parcelable {
-    ctor public NetworkStateSnapshot(@NonNull android.net.Network, @NonNull android.net.NetworkCapabilities, @NonNull android.net.LinkProperties, @Nullable String, int);
-    method public int describeContents();
-    method public int getLegacyType();
-    method @NonNull public android.net.LinkProperties getLinkProperties();
-    method @NonNull public android.net.Network getNetwork();
-    method @NonNull public android.net.NetworkCapabilities getNetworkCapabilities();
-    method @Nullable public String getSubscriberId();
-    method public void writeToParcel(@NonNull android.os.Parcel, int);
-    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkStateSnapshot> CREATOR;
-  }
-
-  public class NetworkStatsCollection {
-    method @NonNull public java.util.Map<android.net.NetworkStatsCollection.Key,android.net.NetworkStatsHistory> getEntries();
-  }
-
-  public static final class NetworkStatsCollection.Builder {
-    ctor public NetworkStatsCollection.Builder(long);
-    method @NonNull public android.net.NetworkStatsCollection.Builder addEntry(@NonNull android.net.NetworkStatsCollection.Key, @NonNull android.net.NetworkStatsHistory);
-    method @NonNull public android.net.NetworkStatsCollection build();
-  }
-
-  public static class NetworkStatsCollection.Key {
-    ctor public NetworkStatsCollection.Key(@NonNull java.util.Set<android.net.NetworkIdentity>, int, int, int);
-  }
-
-  public final class NetworkStatsHistory implements android.os.Parcelable {
-    method public int describeContents();
-    method @NonNull public java.util.List<android.net.NetworkStatsHistory.Entry> getEntries();
-    method public void writeToParcel(@NonNull android.os.Parcel, int);
-    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkStatsHistory> CREATOR;
-  }
-
-  public static final class NetworkStatsHistory.Builder {
-    ctor public NetworkStatsHistory.Builder(long, int);
-    method @NonNull public android.net.NetworkStatsHistory.Builder addEntry(@NonNull android.net.NetworkStatsHistory.Entry);
-    method @NonNull public android.net.NetworkStatsHistory build();
-  }
-
-  public static final class NetworkStatsHistory.Entry {
-    ctor public NetworkStatsHistory.Entry(long, long, long, long, long, long, long);
-    method public long getActiveTime();
-    method public long getBucketStart();
-    method public long getOperations();
-    method public long getRxBytes();
-    method public long getRxPackets();
-    method public long getTxBytes();
-    method public long getTxPackets();
-  }
-
-  public final class NetworkTemplate implements android.os.Parcelable {
-    method public int describeContents();
-    method public int getDefaultNetworkStatus();
-    method public int getMatchRule();
-    method public int getMeteredness();
-    method public int getOemManaged();
-    method public int getRatType();
-    method public int getRoaming();
-    method @NonNull public java.util.Set<java.lang.String> getSubscriberIds();
-    method @NonNull public java.util.Set<java.lang.String> getWifiNetworkKeys();
-    method public boolean matches(@NonNull android.net.NetworkIdentity);
-    method public void writeToParcel(@NonNull android.os.Parcel, int);
-    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkTemplate> CREATOR;
-    field public static final int MATCH_BLUETOOTH = 8; // 0x8
-    field public static final int MATCH_CARRIER = 10; // 0xa
-    field public static final int MATCH_ETHERNET = 5; // 0x5
-    field public static final int MATCH_MOBILE = 1; // 0x1
-    field public static final int MATCH_WIFI = 4; // 0x4
-    field public static final int NETWORK_TYPE_ALL = -1; // 0xffffffff
-    field public static final int OEM_MANAGED_ALL = -1; // 0xffffffff
-    field public static final int OEM_MANAGED_NO = 0; // 0x0
-    field public static final int OEM_MANAGED_PAID = 1; // 0x1
-    field public static final int OEM_MANAGED_PRIVATE = 2; // 0x2
-    field public static final int OEM_MANAGED_YES = -2; // 0xfffffffe
-  }
-
-  public static final class NetworkTemplate.Builder {
-    ctor public NetworkTemplate.Builder(int);
-    method @NonNull public android.net.NetworkTemplate build();
-    method @NonNull public android.net.NetworkTemplate.Builder setDefaultNetworkStatus(int);
-    method @NonNull public android.net.NetworkTemplate.Builder setMeteredness(int);
-    method @NonNull public android.net.NetworkTemplate.Builder setOemManaged(int);
-    method @NonNull public android.net.NetworkTemplate.Builder setRatType(int);
-    method @NonNull public android.net.NetworkTemplate.Builder setRoaming(int);
-    method @NonNull public android.net.NetworkTemplate.Builder setSubscriberIds(@NonNull java.util.Set<java.lang.String>);
-    method @NonNull public android.net.NetworkTemplate.Builder setWifiNetworkKeys(@NonNull java.util.Set<java.lang.String>);
   }
 
   public class NetworkWatchlistManager {
@@ -383,21 +293,6 @@ package android.net {
 
   public final class Proxy {
     method public static void setHttpProxyConfiguration(@Nullable android.net.ProxyInfo);
-  }
-
-  public class TrafficStats {
-    method public static void attachSocketTagger();
-    method public static void init(@NonNull android.content.Context);
-  }
-
-  public final class UnderlyingNetworkInfo implements android.os.Parcelable {
-    ctor public UnderlyingNetworkInfo(int, @NonNull String, @NonNull java.util.List<java.lang.String>);
-    method public int describeContents();
-    method @NonNull public String getInterface();
-    method public int getOwnerUid();
-    method @NonNull public java.util.List<java.lang.String> getUnderlyingInterfaces();
-    method public void writeToParcel(@NonNull android.os.Parcel, int);
-    field @NonNull public static final android.os.Parcelable.Creator<android.net.UnderlyingNetworkInfo> CREATOR;
   }
 
   public class VpnManager {
@@ -431,6 +326,21 @@ package android.os {
     method public final void markVintfStability();
   }
 
+  public class BluetoothServiceManager {
+    method @NonNull public android.os.BluetoothServiceManager.ServiceRegisterer getBluetoothManagerServiceRegisterer();
+  }
+
+  public static class BluetoothServiceManager.ServiceNotFoundException extends java.lang.Exception {
+    ctor public BluetoothServiceManager.ServiceNotFoundException(@NonNull String);
+  }
+
+  public static final class BluetoothServiceManager.ServiceRegisterer {
+    method @Nullable public android.os.IBinder get();
+    method @NonNull public android.os.IBinder getOrThrow() throws android.os.BluetoothServiceManager.ServiceNotFoundException;
+    method public void register(@NonNull android.os.IBinder);
+    method @Nullable public android.os.IBinder tryGet();
+  }
+
   public class Build {
     method public static boolean isDebuggable();
   }
@@ -444,6 +354,9 @@ package android.os {
   }
 
   public class Process {
+    method public static final boolean isSupplemental(int);
+    method public static final int toAppUid(int);
+    method public static final int toSupplementalUid(int);
     field public static final int NFC_UID = 1027; // 0x403
     field public static final int VPN_UID = 1016; // 0x3f8
   }
@@ -491,14 +404,11 @@ package android.os {
 package android.os.storage {
 
   public class StorageManager {
+    method public long computeStorageCacheBytes(@NonNull java.io.File);
     method public void notifyAppIoBlocked(@NonNull java.util.UUID, int, int, int);
     method public void notifyAppIoResumed(@NonNull java.util.UUID, int, int, int);
     field public static final int APP_IO_BLOCKED_REASON_TRANSCODING = 1; // 0x1
     field public static final int APP_IO_BLOCKED_REASON_UNKNOWN = 0; // 0x0
-  }
-
-  public final class StorageVolume implements android.os.Parcelable {
-    method @NonNull public android.os.UserHandle getOwner();
   }
 
 }
@@ -513,6 +423,26 @@ package android.provider {
     field public static final String NAMESPACE_ALARM_MANAGER = "alarm_manager";
     field public static final String NAMESPACE_APP_STANDBY = "app_standby";
     field public static final String NAMESPACE_DEVICE_IDLE = "device_idle";
+  }
+
+  public static final class Settings.Global extends android.provider.Settings.NameValueTable {
+    field public static final String BLE_SCAN_ALWAYS_AVAILABLE = "ble_scan_always_enabled";
+    field public static final String BLE_SCAN_BACKGROUND_MODE = "ble_scan_background_mode";
+    field public static final String BLE_SCAN_BALANCED_INTERVAL_MS = "ble_scan_balanced_interval_ms";
+    field public static final String BLE_SCAN_BALANCED_WINDOW_MS = "ble_scan_balanced_window_ms";
+    field public static final String BLE_SCAN_LOW_LATENCY_INTERVAL_MS = "ble_scan_low_latency_interval_ms";
+    field public static final String BLE_SCAN_LOW_LATENCY_WINDOW_MS = "ble_scan_low_latency_window_ms";
+    field public static final String BLE_SCAN_LOW_POWER_INTERVAL_MS = "ble_scan_low_power_interval_ms";
+    field public static final String BLE_SCAN_LOW_POWER_WINDOW_MS = "ble_scan_low_power_window_ms";
+    field public static final String BLUETOOTH_BTSNOOP_DEFAULT_MODE = "bluetooth_btsnoop_default_mode";
+    field public static final String BLUETOOTH_CLASS_OF_DEVICE = "bluetooth_class_of_device";
+    field public static final String BLUETOOTH_DISABLED_PROFILES = "bluetooth_disabled_profiles";
+  }
+
+  public static final class Settings.Secure extends android.provider.Settings.NameValueTable {
+    field public static final String BLUETOOTH_ADDRESS = "bluetooth_address";
+    field public static final String BLUETOOTH_ADDR_VALID = "bluetooth_addr_valid";
+    field public static final String BLUETOOTH_NAME = "bluetooth_name";
   }
 
 }
