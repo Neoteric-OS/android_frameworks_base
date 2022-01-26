@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46a5ae24_3daedd11",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:55:29Z",
+      "side": 1,
+      "message": "adapt ?\n\n(adopt means something else, in this context it would be almost exactly the opposite)",
+      "range": {
+        "startLine": 100,
+        "startChar": 65,
+        "endLine": 100,
+        "endChar": 70
+      },
+      "revId": "9b8a4dac7c5b857a1a984ba038432418a452fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43e308a0_d6fb99a7",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:55:29Z",
+      "side": 1,
+      "message": "Maybe just\n\n  Constructing this object is not allowed\n\nor\n\n  This is a helper class with only static methods",
+      "range": {
+        "startLine": 107,
+        "startChar": 7,
+        "endLine": 107,
+        "endChar": 67
+      },
+      "revId": "9b8a4dac7c5b857a1a984ba038432418a452fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8d22844_5739caab",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:55:29Z",
+      "side": 1,
+      "message": "For ease of use I think the function that find the file name should be factored out.\n\n  private File findUidFileForPrefix(String prefix) {\n    return new File(systemDir(), map.get(prefix));\n  }\n\n  private void readUidFile(File uidFile) {\n    AtomicFile\n    DataInputStream\n    maybeReadLegacyUid\n  }\n  \n  private List\u003cFile\u003e getXXXFiles() {\n    for (name : platformFiles) {\n      if exists and prefix and whatever\n        list.add\n    return list\n  }\n  \n  readPlatformCollectionLocked(...) {\n    builder\n    final File uidFile \u003d findUidFileForPrefix(prefix)\n    if (null !\u003d uidFile \u0026\u0026 uidFile.exists()) {\n      readUidFile(uidFile)\n    }\n  }",
+      "range": {
+        "startLine": 145,
+        "startChar": 41,
+        "endLine": 145,
+        "endChar": 45
+      },
+      "revId": "9b8a4dac7c5b857a1a984ba038432418a452fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17993d22_534fe7d5",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:55:29Z",
+      "side": 1,
+      "message": "name.startsWith(prefix) ?",
+      "range": {
+        "startLine": 171,
+        "startChar": 20,
+        "endLine": 171,
+        "endChar": 66
+      },
+      "revId": "9b8a4dac7c5b857a1a984ba038432418a452fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d672b31_52e8d452",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:55:29Z",
+      "side": 1,
+      "message": "lol\n\nyeah why not",
+      "range": {
+        "startLine": 197,
+        "startChar": 22,
+        "endLine": 197,
+        "endChar": 39
+      },
+      "revId": "9b8a4dac7c5b857a1a984ba038432418a452fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ef883c1_6e666d62",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:55:29Z",
+      "side": 1,
+      "message": "var long",
+      "range": {
+        "startLine": 266,
+        "startChar": 47,
+        "endLine": 266,
+        "endChar": 51
+      },
+      "revId": "9b8a4dac7c5b857a1a984ba038432418a452fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33924ea1_91606df1",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:55:29Z",
+      "side": 1,
+      "message": "adapt",
+      "range": {
+        "startLine": 280,
+        "startChar": 40,
+        "endLine": 280,
+        "endChar": 45
+      },
+      "revId": "9b8a4dac7c5b857a1a984ba038432418a452fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5a1f7a3_8b29a43c",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:55:29Z",
+      "side": 1,
+      "message": "Do you know what used to be stored here ? If you do a comment would be useful",
+      "range": {
+        "startLine": 348,
+        "startChar": 26,
+        "endLine": 348,
+        "endChar": 33
+      },
+      "revId": "9b8a4dac7c5b857a1a984ba038432418a452fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b181916_e9b8e3ab",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:55:29Z",
+      "side": 1,
+      "message": "What you have is not wrong, but I think it\u0027s faster and probably more readable to say\n\n  switch (networkType) {\n    case TYPE_MOBILE:\n    case TYPE_MOBILE_SUPL:\n    ...\n      return TYPE_MOBILE;\n   }\n   return networkType;",
+      "range": {
+        "startLine": 410,
+        "startChar": 0,
+        "endLine": 415,
+        "endChar": 73
+      },
+      "revId": "9b8a4dac7c5b857a1a984ba038432418a452fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d144976_9b6565fb",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:55:29Z",
+      "side": 1,
+      "message": "Maybe also, copied from NetworkStatsCollection#readLegacyUid",
+      "range": {
+        "startLine": 426,
+        "startChar": 5,
+        "endLine": 426,
+        "endChar": 6
+      },
+      "revId": "9b8a4dac7c5b857a1a984ba038432418a452fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fd1eb9c_367efff4",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:55:29Z",
+      "side": 1,
+      "message": "Need javadoc for this parameter, since it\u0027s fairly unclear what it does\n\nAlso suggest renaming to \"onlyTaggedData\" or similar",
+      "range": {
+        "startLine": 431,
+        "startChar": 43,
+        "endLine": 431,
+        "endChar": 51
+      },
+      "revId": "9b8a4dac7c5b857a1a984ba038432418a452fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69e54a4a_a61541c0",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:55:29Z",
+      "side": 1,
+      "message": "unknown",
+      "range": {
+        "startLine": 480,
+        "startChar": 49,
+        "endLine": 480,
+        "endChar": 59
+      },
+      "revId": "9b8a4dac7c5b857a1a984ba038432418a452fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
