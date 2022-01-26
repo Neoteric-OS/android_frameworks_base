@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e385e9a_532d55fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2022-01-26T01:40:34Z",
+      "side": 1,
+      "message": "Thanks for the catch!",
+      "parentUuid": "d7ee2e2c_7a744ad2",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 52
+      },
+      "revId": "4ee0e38225a5e4614e1b0e7a974cfaa5a6954483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c8f0452_8d3a224a",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-01-25T16:08:44Z",
       "side": 1,
       "message": "Where did you get this change ID from?",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 52
+      },
+      "revId": "4ee0e38225a5e4614e1b0e7a974cfaa5a6954483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81b27ba9_1c0a827e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2022-01-26T01:40:34Z",
+      "side": 1,
+      "message": "It\u0027s from the original CL. Didn\u0027t notice there\u0027s a second one below.",
+      "parentUuid": "0c8f0452_8d3a224a",
       "range": {
         "startLine": 16,
         "startChar": 11,
