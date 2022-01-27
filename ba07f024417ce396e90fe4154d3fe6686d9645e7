@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d361a5fc_45fc5115",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-01-27T07:17:11Z",
+      "side": 1,
+      "message": "As mentioned in the native change, could you send the bytes down directly instead of encoding/decoding ?",
+      "revId": "ba07f024417ce396e90fe4154d3fe6686d9645e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b3d7663_c6918d09",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-01-27T07:17:11Z",
+      "side": 1,
+      "message": "Could this be null instead ? Lorenzo noted that \"any\" could be a valid interface name in my change",
+      "range": {
+        "startLine": 815,
+        "startChar": 75,
+        "endLine": 815,
+        "endChar": 81
+      },
+      "revId": "ba07f024417ce396e90fe4154d3fe6686d9645e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
