@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The Android Open Source Project
+ * Copyright (C) 2022 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,9 @@ package android.media;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.icu.util.ULocale;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -49,7 +52,7 @@ import java.util.Objects;
  * Applications that parse media streams and extract presentation information on their own
  * can create instances of AudioPresentation by using {@link AudioPresentation.Builder} class.
  */
-public final class AudioPresentation {
+public final class AudioPresentation implements Parcelable {
     private final int mPresentationId;
     private final int mProgramId;
     private final ULocale mLanguage;
@@ -126,7 +129,7 @@ public final class AudioPresentation {
     private final boolean mAudioDescriptionAvailable;
     private final boolean mSpokenSubtitlesAvailable;
     private final boolean mDialogueEnhancementAvailable;
-    private final Map<ULocale, CharSequence> mLabels;
+    private final HashMap<ULocale, CharSequence> mLabels;
 
     /**
      * No preferred reproduction channel layout.
@@ -160,9 +163,14 @@ public final class AudioPresentation {
     public static final int MASTERED_FOR_HEADPHONE          = 4;
 
     /**
-     * This ID is reserved. No items can be explicitly assigned this ID.
+     * Unknown audio presentation ID, this indicates audio presentation ID is not selected.
      */
-    private static final int UNKNOWN_ID = -1;
+    public static final int PRESENTATION_ID_UNKNOWN = -1;
+
+    /**
+     * Unknown audio program ID, this indicates audio program ID is not selected.
+     */
+    public static final int PROGRAM_ID_UNKNOWN = -1;
 
     /**
      * This allows an application developer to construct an AudioPresentation object with all the
@@ -200,6 +208,17 @@ public final class AudioPresentation {
         mSpokenSubtitlesAvailable = spokenSubtitlesAvailable;
         mDialogueEnhancementAvailable = dialogueEnhancementAvailable;
         mLabels = new HashMap<ULocale, CharSequence>(labels);
+    }
+
+    private AudioPresentation(@NonNull Parcel in) {
+        mPresentationId = in.readInt();
+        mProgramId = in.readInt();
+        mLanguage = in.readSerializable(android.icu.util.ULocale.class.getClassLoader(), android.icu.util.ULocale.class);
+        mMasteringIndication = in.readInt();
+        mAudioDescriptionAvailable = in.readBoolean();
+        mSpokenSubtitlesAvailable = in.readBoolean();
+        mDialogueEnhancementAvailable = in.readBoolean();
+        mLabels = in.readSerializable(java.util.HashMap.class.getClassLoader(), java.util.HashMap.class);
     }
 
     /**
@@ -335,13 +354,13 @@ public final class AudioPresentation {
      */
     public static final class Builder {
         private final int mPresentationId;
-        private int mProgramId = UNKNOWN_ID;
+        private int mProgramId = PROGRAM_ID_UNKNOWN;
         private ULocale mLanguage = new ULocale("");
         private int mMasteringIndication = MASTERING_NOT_INDICATED;
         private boolean mAudioDescriptionAvailable = false;
         private boolean mSpokenSubtitlesAvailable = false;
         private boolean mDialogueEnhancementAvailable = false;
-        private Map<ULocale, CharSequence> mLabels = new HashMap<ULocale, CharSequence>();
+        private HashMap<ULocale, CharSequence> mLabels = new HashMap<ULocale, CharSequence>();
 
         /**
          * Create a {@link Builder}. Any field that should be included in the
@@ -448,4 +467,42 @@ public final class AudioPresentation {
                                            mDialogueEnhancementAvailable, mLabels);
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+    /**
+     * Used to package this object into a {@link Parcel}.
+     *
+     * @param dest The {@link Parcel} to be written.
+     * @param flags The flags used for parceling.
+     */
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(getPresentationId());
+        dest.writeInt(getProgramId());
+        dest.writeSerializable(getULocale());
+        dest.writeInt(getMasteringIndication());
+        dest.writeBoolean(hasAudioDescription());
+        dest.writeBoolean(hasSpokenSubtitles());
+        dest.writeBoolean(hasDialogueEnhancement());
+        dest.writeSerializable(mLabels);
+    }
+
+    @NonNull
+    public static final Parcelable.Creator<AudioPresentation> CREATOR =
+            new Parcelable.Creator<AudioPresentation>() {
+            @Override
+            public AudioPresentation createFromParcel(@NonNull Parcel in) {
+                return new AudioPresentation(in);
+            }
+
+            @Override
+            public AudioPresentation[] newArray(int size) {
+                return new AudioPresentation[size];
+            }
+    };
 }
