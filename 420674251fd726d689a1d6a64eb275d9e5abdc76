@@ -71,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb662f32_ff29d89a",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3145,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-27T13:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a77e54bc_3dfff167",
+      "range": {
+        "startLine": 3145,
+        "startChar": 35,
+        "endLine": 3145,
+        "endChar": 52
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48c33c5d_9e4d026c",
@@ -94,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62c3148f_b05ac634",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3148,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-27T13:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48c33c5d_9e4d026c",
+      "range": {
+        "startLine": 3148,
+        "startChar": 28,
+        "endLine": 3148,
+        "endChar": 37
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad95f59b_ee08ff36",
@@ -107,6 +155,30 @@
       "writtenOn": "2022-01-26T11:12:20Z",
       "side": 1,
       "message": "I don\u0027t think it means that : you could have wifi-only subscriptions, though I don\u0027t know if we have any of these yet. At least in principle it may be a different subscription than a merged carrier network.",
+      "range": {
+        "startLine": 3149,
+        "startChar": 43,
+        "endLine": 3149,
+        "endChar": 48
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0339b20_37c31f5a",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3149,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-27T13:00:07Z",
+      "side": 1,
+      "message": "Rewording, please see if it works for you.",
+      "parentUuid": "ad95f59b_ee08ff36",
       "range": {
         "startLine": 3149,
         "startChar": 43,
@@ -186,6 +258,78 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "964debbb_bd0911de",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3150,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-27T13:00:07Z",
+      "side": 1,
+      "message": "Rewording.",
+      "parentUuid": "6024c247_62bb862c",
+      "range": {
+        "startLine": 3150,
+        "startChar": 15,
+        "endLine": 3150,
+        "endChar": 27
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11d84782_26609fc8",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3150,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-27T13:00:07Z",
+      "side": 1,
+      "message": "Rewording.",
+      "parentUuid": "dc3ce5cf_53475f17",
+      "range": {
+        "startLine": 3150,
+        "startChar": 51,
+        "endLine": 3150,
+        "endChar": 63
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cec54dd0_d50554e4",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3150,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-27T13:00:07Z",
+      "side": 1,
+      "message": "Rewording.",
+      "parentUuid": "31439021_3244e4ed",
+      "range": {
+        "startLine": 3150,
+        "startChar": 15,
+        "endLine": 3150,
+        "endChar": 27
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c81853f8_d75d7c6c",
@@ -199,6 +343,30 @@
       "writtenOn": "2022-01-26T11:12:20Z",
       "side": 1,
       "message": "merged",
+      "range": {
+        "startLine": 3158,
+        "startChar": 68,
+        "endLine": 3158,
+        "endChar": 73
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a931fe25_3ff46357",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3158,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-27T13:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c81853f8_d75d7c6c",
       "range": {
         "startLine": 3158,
         "startChar": 68,
