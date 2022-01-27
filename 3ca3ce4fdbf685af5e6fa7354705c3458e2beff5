@@ -50,6 +50,24 @@
       "message": "Ping. Anton, could you mind submitting this ASAP as it is blocking the work to remove the special handling of conscrypt and i18n when merging system and module-lib stubs.",
       "revId": "3ca3ce4fdbf685af5e6fa7354705c3458e2beff5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45afdc02_52242a49",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-01-27T12:33:08Z",
+      "side": 1,
+      "message": "Sorry. I was monitoring it pretty closely but presubmit took 7 hours .. and now there\u0027s a merge conflict. Sigh. I\u0027ll submit it now.",
+      "parentUuid": "7c3399e7_273dfb9f",
+      "revId": "3ca3ce4fdbf685af5e6fa7354705c3458e2beff5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
