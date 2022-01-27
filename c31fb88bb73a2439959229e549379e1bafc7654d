@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50496541_9c37381e",
+        "filename": "core/api/current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 9374,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2022-01-27T11:06:40Z",
+      "side": 1,
+      "message": "none of these APIs expose BluetoothHapPresetInfo, then how can a API caller use BluetoothHapPresetInfo any where?",
+      "range": {
+        "startLine": 9367,
+        "startChar": 0,
+        "endLine": 9374,
+        "endChar": 3
+      },
+      "revId": "c31fb88bb73a2439959229e549379e1bafc7654d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
