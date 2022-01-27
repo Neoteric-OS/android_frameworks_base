@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1d0f638_930924f0",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2757,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-27T12:32:42Z",
+      "side": 1,
+      "message": "It was wrong already.\nIn current design, we always choose the first item (merged[0]) from what telephonyManager tell us.\nAnd TelephoyManager didn\u0027t document anything about order too.\n\nreturn new NetworkTemplate(template.mMatchRule, merged[0], merged,\n                        template.mNetworkId);\nSee\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java;l\u003d959;drc\u003ded26feb95c8b22508a35e935c122625caed38d35\n\nIf so IIUC the behavior matches what we have now, which is a random one from the group.\nBut maybe this is problematic if the group changes unexpectedly.",
+      "parentUuid": "29d969e9_008066a0",
+      "range": {
+        "startLine": 2757,
+        "startChar": 26,
+        "endLine": 2757,
+        "endChar": 72
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a77e54bc_3dfff167",
@@ -198,6 +222,30 @@
       "writtenOn": "2022-01-26T11:12:20Z",
       "side": 1,
       "message": "The old code would drop the meteredness I think ? It might have been a bug, but then do you want to also set OemManaged, RatType and Roaming ?\n\n(also consider (not for this patch) having a constructor for the Builder that takes an already built object)",
+      "range": {
+        "startLine": 3163,
+        "startChar": 29,
+        "endLine": 3163,
+        "endChar": 43
+      },
+      "revId": "420674251fd726d689a1d6a64eb275d9e5abdc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a9c6d3f_494ef6fd",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3163,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-27T12:32:42Z",
+      "side": 1,
+      "message": "1. No the old code calls into the constructor with 4 arguments.\nWhere we need to deduce the meteredness from MATCH rule.\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java;l\u003d400;bpv\u003d1;bpt\u003d1?q\u003dNetworkTemplate\u0026ss\u003dandroid%2Fplatform%2Fsuperproject\n\n2. For OemManaged, RatType and Roaming, no.\nBecause in NPMS we only use NetworkTemplate to find out relavent networks.\nThe template that used to match these identities simply ignore these conditions.\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java;drc\u003dmaster;bpv\u003d1;bpt\u003d1;l\u003d337\n\nTry to make comments more clear see if it works for you.",
+      "parentUuid": "42d0d25b_d9a99fc2",
       "range": {
         "startLine": 3163,
         "startChar": 29,
