@@ -10837,6 +10837,7 @@ package android.content {
     field public static final String USAGE_STATS_SERVICE = "usagestats";
     field public static final String USB_SERVICE = "usb";
     field public static final String USER_SERVICE = "user";
+    field public static final String VENDOR_CONNECTIVITY_SERVICE = "vendor_connectivity";
     field public static final String VIBRATOR_MANAGER_SERVICE = "vibrator_manager";
     field @Deprecated public static final String VIBRATOR_SERVICE = "vibrator";
     field public static final String VPN_MANAGEMENT_SERVICE = "vpn_management";

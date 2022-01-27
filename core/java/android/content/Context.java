@@ -3702,6 +3702,7 @@ public abstract class Context {
             VIBRATOR_SERVICE,
             //@hide: STATUS_BAR_SERVICE,
             CONNECTIVITY_SERVICE,
+            VENDOR_CONNECTIVITY_SERVICE,
             PAC_PROXY_SERVICE,
             VCN_MANAGEMENT_SERVICE,
             //@hide: IP_MEMORY_STORE_SERVICE,
@@ -3853,6 +3854,7 @@ public abstract class Context {
      *  <dt> {@link #VIBRATOR_SERVICE} ("vibrator")
      *  <dd> A {@link android.os.Vibrator} for interacting with the vibrator hardware.
      *  <dt> {@link #CONNECTIVITY_SERVICE} ("connectivity")
+     * *  <dt> {@link #VENDOR_CONNECTIVITY_SERVICE} ("vendor_connectivity")
      *  <dd> A {@link android.net.ConnectivityManager ConnectivityManager} for
      *  handling management of network connections.
      *  <dt> {@link #IPSEC_SERVICE} ("ipsec")
@@ -3939,6 +3941,7 @@ public abstract class Context {
      * @see #VIBRATOR_SERVICE
      * @see android.os.Vibrator
      * @see #CONNECTIVITY_SERVICE
+     * @see #VENDOR_CONNECTIVITY_SERVICE
      * @see android.net.ConnectivityManager
      * @see #WIFI_SERVICE
      * @see android.net.wifi.WifiManager
@@ -4309,6 +4312,16 @@ public abstract class Context {
      * @see android.net.ConnectivityManager
      */
     public static final String CONNECTIVITY_SERVICE = "connectivity";
+
+    /**
+     * Use with {@link #getSystemService(String)} to retrieve a {@link
+     * android.net.ConnectivityManager} for handling management of
+     * network connections.
+     *
+     * @see #getSystemService(String)
+     * @see android.net.ConnectivityManager
+     */
+    public static final String VENDOR_CONNECTIVITY_SERVICE = "vendor_connectivity";
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve a {@link
