@@ -16,10 +16,6 @@
 
 package android.net;
 
-import static android.net.PlatformVpnProfile.TYPE_IKEV2_IPSEC_PSK;
-import static android.net.PlatformVpnProfile.TYPE_IKEV2_IPSEC_RSA;
-import static android.net.PlatformVpnProfile.TYPE_IKEV2_IPSEC_USER_PASS;
-
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 
@@ -67,11 +63,15 @@ public abstract class PlatformVpnProfile {
 
     /** @hide */
     protected final boolean mExcludeLocalRoutes;
+    /** @hide */
+    protected final boolean mRequiresPlatformValidation;
 
     /** @hide */
-    PlatformVpnProfile(@PlatformVpnType int type, boolean excludeLocalRoutes) {
+    PlatformVpnProfile(@PlatformVpnType int type, boolean excludeLocalRoutes,
+            boolean requiresValidation) {
         mType = type;
         mExcludeLocalRoutes = excludeLocalRoutes;
+        mRequiresPlatformValidation = requiresValidation;
     }
 
     /** Returns the profile integer type. */
@@ -80,12 +80,28 @@ public abstract class PlatformVpnProfile {
         return mType;
     }
 
-
     /**
-     * Returns if the local traffic is exempted from the VPN.
+     * Returns whether the local traffic is exempted from the VPN.
      */
     public final boolean getExcludeLocalRoutes() {
         return mExcludeLocalRoutes;
+    }
+
+    /**
+     * Returns whether this VPN should undergo platform validation.
+     *
+     * If this is true, the platform will perform basic validation checks for Internet
+     * connectivity over this VPN when it connects. If and when they succeed, the VPN network
+     * capabilities will reflect this by gaining the
+     * {@link NetworkCapabilities#NET_CAPABILITY_VALIDATED} capability.
+     *
+     * If this is false, the platform assumes the VPN either is always capable of reaching its
+     * intended destinations or intends not to. In this case, the VPN network capabilities will
+     * always gain the {@link NetworkCapabilities#NET_CAPABILITY_VALIDATED} capability
+     * immediately after it connects, whether it can reach public Internet destinations or not.
+     */
+    public final boolean getRequiresPlatformValidation() {
+        return mRequiresPlatformValidation;
     }
 
     /** Returns a type string describing the VPN profile type */

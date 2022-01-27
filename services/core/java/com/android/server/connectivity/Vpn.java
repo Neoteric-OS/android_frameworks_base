@@ -1302,6 +1302,7 @@ public class Vpn {
                 .setLegacyType(ConnectivityManager.TYPE_VPN)
                 .setLegacyTypeName("VPN")
                 .setBypassableVpn(mConfig.allowBypass && !mLockdown)
+                .setVpnRequiresValidation(mConfig.requiresPlatformValidation)
                 .build();
 
         capsBuilder.setOwnerUid(mOwnerUID);
@@ -3363,6 +3364,7 @@ public class Vpn {
             }
             mConfig.startTime = SystemClock.elapsedRealtime();
             mConfig.proxyInfo = profile.proxy;
+            mConfig.requiresPlatformValidation = profile.requiresPlatformValidation;
 
             switch (profile.type) {
                 case VpnProfile.TYPE_IKEV2_IPSEC_USER_PASS:
