@@ -142,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a316a9c4_9e874c07",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T04:28:07Z",
+      "side": 1,
+      "message": "I think I\u0027d have wanted this function more streamlined (move the switch() out etc) but this will do.",
+      "parentUuid": "2860bc73_703d89e6",
+      "range": {
+        "startLine": 145,
+        "startChar": 41,
+        "endLine": 145,
+        "endChar": 45
+      },
+      "revId": "9b8a4dac7c5b857a1a984ba038432418a452fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "17993d22_534fe7d5",
@@ -484,6 +508,30 @@
       "side": 1,
       "message": "Yes and no, since onlyTaggedData \u003d\u003d false sounds like we should include both non-tagged and tagged data.\nSee if the doc and renaming works for you.",
       "parentUuid": "8fd1eb9c_367efff4",
+      "range": {
+        "startLine": 431,
+        "startChar": 43,
+        "endLine": 431,
+        "endChar": 51
+      },
+      "revId": "9b8a4dac7c5b857a1a984ba038432418a452fc1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4eb2434b_061afe8c",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 43
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T04:28:07Z",
+      "side": 1,
+      "message": "Added a small suggestion to clarify the comment.",
+      "parentUuid": "d48293f9_370d7018",
       "range": {
         "startLine": 431,
         "startChar": 43,

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "675ba6a6_3fc10003",
+        "filename": "core/java/android/net/netstats/NetworkStatsDataMigrationUtils.java",
+        "patchSetId": 44
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T04:28:07Z",
+      "side": 1,
+      "message": "read only tagged data (true) or only non-tagged data (false).",
+      "range": {
+        "startLine": 456,
+        "startChar": 36,
+        "endLine": 456,
+        "endChar": 52
+      },
+      "revId": "44f61309c9daaa5f0ba7a974ecf79f31d3e95a09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
