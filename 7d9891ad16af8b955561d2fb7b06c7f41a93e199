@@ -16,6 +16,29 @@
       "message": "+1 for StatsPullAtomService",
       "revId": "7d9891ad16af8b955561d2fb7b06c7f41a93e199",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8bfee75_c7f30175",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T00:59:19Z",
+      "side": 1,
+      "message": "Please add that this is a concept added by NetworkStats on top of the telephony constants for backward compatibility of metrics",
+      "range": {
+        "startLine": 152,
+        "startChar": 56,
+        "endLine": 153,
+        "endChar": 6
+      },
+      "revId": "7d9891ad16af8b955561d2fb7b06c7f41a93e199",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
