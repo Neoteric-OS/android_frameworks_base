@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c84e23b7_e6f01110",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-01-27T12:55:29Z",
+      "side": 1,
+      "message": "No real diffs from previous presubmit-verified PS",
+      "revId": "c6e9d2ffe20fd0253a6b70fe77b04fa31158b06e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
