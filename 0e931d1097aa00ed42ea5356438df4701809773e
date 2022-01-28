@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7b624e3_864bb3a3",
+        "filename": "core/java/android/os/image/IDynamicSystemService.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2022-01-28T20:21:19Z",
+      "side": 1,
+      "message": "(Sorry for missing this earlier but)\nWhy does the code only need to specify the last part of the permission name here?\nI checked https://android.googlesource.com/platform/system/tools/aidl/+/master/permission.cpp again and it seems to be hard-coding that the permission must be in android.Manifest.permission. Does that mean we\u0027ll never support permissions that aren\u0027t defined in platform manifest?\nBut still, this is just a design question from me and can be changed later if actually need.",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 45
+      },
+      "revId": "0e931d1097aa00ed42ea5356438df4701809773e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
