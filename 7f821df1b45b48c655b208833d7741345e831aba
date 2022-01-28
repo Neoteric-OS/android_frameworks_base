@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019860517",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1951483?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8d073472_7db64f6b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-28T05:20:16Z",
+      "side": 1,
+      "message": "\"manually with BLE keyboard/BLE Audio\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "7f821df1b45b48c655b208833d7741345e831aba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
