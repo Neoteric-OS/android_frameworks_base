@@ -72,8 +72,6 @@ cc_library_static {
         "com_android_server_sensor_SensorService.cpp",
         "onload.cpp",
         ":lib_cachedAppOptimizer_native",
-        // TODO: delete when NetworkStatsService is moved to the mainline module.
-        ":services.connectivity-tiramisu-jni-sources",
     ],
 
     include_dirs: [

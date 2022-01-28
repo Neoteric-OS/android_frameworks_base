@@ -32,6 +32,10 @@ public final class NetworkManagementSocketTagger extends SocketTagger {
     private static final String TAG = "NetworkManagementSocketTagger";
     private static final boolean LOGD = false;
 
+    static {
+        System.loadLibrary("framework-connectivity-t-jni");
+    }
+
     private static ThreadLocal<SocketTags> threadSocketTags = new ThreadLocal<SocketTags>() {
         @Override
         protected SocketTags initialValue() {
