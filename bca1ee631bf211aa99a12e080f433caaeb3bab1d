@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4b261fd_454b556f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1090013
+      },
+      "writtenOn": "2022-01-28T09:14:46Z",
+      "side": 1,
+      "message": "Hi, anyone could help with this issue? This could be 100% reproduced on recent Android 12 releases.",
+      "revId": "bca1ee631bf211aa99a12e080f433caaeb3bab1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
