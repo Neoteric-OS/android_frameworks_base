@@ -128,6 +128,7 @@ cc_library_shared {
 cc_library_shared {
     name: "libandroid_net",
     defaults: ["libandroid_defaults"],
+    min_sdk_version: "30",
     llndk: {
         symbol_file: "libandroid_net.map.txt",
         unversioned: true,
@@ -138,6 +139,11 @@ cc_library_shared {
     shared_libs: ["libnetd_client"],
 
     include_dirs: ["bionic/libc/dns/include"],
+
+    apex_available: [
+        "com.android.tethering",
+        "//apex_available:platform",
+    ],
 }
 
 // Aidl library for platform compat.
