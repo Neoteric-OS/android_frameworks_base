@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b348980_4f6ccd05",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2022-01-28T23:58:11Z",
+      "side": 1,
+      "message": "please add a comment explaining why it\u0027s needed.\n\nAlso, is it safe to grant this permission? Shell can be seem like an \"extension\" of the (human) user can do - is it ok for the user to modify the tough mode state?",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 81
+      },
+      "revId": "eb245c976eb7017b8ed8f774e2c718861d1f3ec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
