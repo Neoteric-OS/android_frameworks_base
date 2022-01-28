@@ -22,6 +22,30 @@
       },
       "revId": "7d53118cd7585a1c9b81b5b065aca544c0c336e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c487e497_137928e2",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2022-01-28T06:36:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "522ede3b_a870f92f",
+      "range": {
+        "startLine": 181,
+        "startChar": 6,
+        "endLine": 181,
+        "endChar": 40
+      },
+      "revId": "7d53118cd7585a1c9b81b5b065aca544c0c336e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
