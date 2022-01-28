@@ -126,16 +126,31 @@ public class NetworkStatsManager {
     private final INetworkStatsService mService;
 
     /**
-     * Type constants for reading different types of Data Usage.
+     * @deprecated Use {@link #PREFIX_XT} instead.
      * @hide
      */
-    // @SystemApi(client = MODULE_LIBRARIES)
+    @Deprecated
     public static final String PREFIX_DEV = "dev";
-    /** @hide */
+    /**
+     * Prefix of the files which are used to store per network interface statistics.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
     public static final String PREFIX_XT = "xt";
-    /** @hide */
+    /**
+     * Prefix of the files which are used to store per uid statistics.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
     public static final String PREFIX_UID = "uid";
-    /** @hide */
+    /**
+     * Prefix of the files which are used to store per uid tagged traffic statistics.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
     public static final String PREFIX_UID_TAG = "uid_tag";
 
     /** @hide */
