@@ -22,6 +22,30 @@
       },
       "revId": "eb245c976eb7017b8ed8f774e2c718861d1f3ec3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75f7ed9b_b95029f8",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2022-01-29T00:42:06Z",
+      "side": 1,
+      "message": "Yeah, totally safe. If you can inject an input event, you can change touch mode. For example, you can do: adb shell input keyevent \u003csome key\u003e to exit touch mode, and adb shell input tap \u003cx\u003e \u003cy\u003e to enter touch mode. Which makes me think, we could also have used \"inject_events\" permission, but a separate permission seems cleaner if you just need to change touch mode for some reason.",
+      "parentUuid": "2b348980_4f6ccd05",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 81
+      },
+      "revId": "eb245c976eb7017b8ed8f774e2c718861d1f3ec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
