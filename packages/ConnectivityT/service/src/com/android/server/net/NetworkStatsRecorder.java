@@ -346,15 +346,24 @@ public class NetworkStatsRecorder {
     }
 
     /**
-     * Rewriter that will combine current {@link NetworkStatsCollection} values
-     * with anything read from disk, and write combined set to disk. Clears the
-     * original {@link NetworkStatsCollection} when finished writing.
+     * Rewriter combining disk data with an existing collection, with optional cutoff date.
+     *
+     * This rewriter combines the content of a passed {@link NetworkStatsCollection} with anything
+     * read from disk, and write the resulting combined set to disk. Clears the original
+     * {@link NetworkStatsCollection} when finished writing.
+     * If a cutoff is supplied, any data from disk before the cutoff is dropped.
      */
     private static class CombiningRewriter implements FileRotator.Rewriter {
         private final NetworkStatsCollection mCollection;
+        private final long mCutoff;
 
         public CombiningRewriter(NetworkStatsCollection collection) {
+            this(collection, Long.MIN_VALUE);
+        }
+
+        public CombiningRewriter(NetworkStatsCollection collection, long cutoff) {
             mCollection = Objects.requireNonNull(collection, "missing NetworkStatsCollection");
+            mCutoff = cutoff;
         }
 
         @Override
@@ -364,7 +373,15 @@ public class NetworkStatsRecorder {
 
         @Override
         public void read(InputStream in) throws IOException {
-            mCollection.read(in);
+            if (mCutoff <= Long.MIN_VALUE) {
+                mCollection.read(in);
+            } else {
+                final NetworkStatsCollection existing =
+                        new NetworkStatsCollection(mCollection.getBucketDuration());
+                existing.read(in);
+                existing.removeHistoryBefore(mCutoff);
+                mCollection.recordCollection(existing);
+            }
         }
 
         @Override
@@ -453,6 +470,13 @@ public class NetworkStatsRecorder {
             mRotator.rewriteActive(new CombiningRewriter(collection), startMillis);
             mRotator.maybeRotate(endMillis);
         }
+    }
+
+    public void removeDataBefore(final long cutoff) throws IOException {
+        Objects.requireNonNull(mRotator, "missing FileRotator");
+
+        final NetworkStatsCollection collection = new NetworkStatsCollection(mBucketDuration);
+        mRotator.rewriteAll(new CombiningRewriter(collection, cutoff));
     }
 
     public void dumpLocked(IndentingPrintWriter pw, boolean fullHistory) {
