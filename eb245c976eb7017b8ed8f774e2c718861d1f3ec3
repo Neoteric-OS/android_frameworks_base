@@ -46,6 +46,30 @@
       },
       "revId": "eb245c976eb7017b8ed8f774e2c718861d1f3ec3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d630e031_cb6f858f",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1630008
+      },
+      "writtenOn": "2022-01-29T01:38:34Z",
+      "side": 1,
+      "message": "Added the comment.\n\nI agree that there is an overlap between INJECT_EVENT and MODIFY_TOUCH_MODE_STATE, but, as Siarhei said, switching touch mode seems a little bit more specific than just injecting any event.",
+      "parentUuid": "75f7ed9b_b95029f8",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 81
+      },
+      "revId": "eb245c976eb7017b8ed8f774e2c718861d1f3ec3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
