@@ -218,6 +218,23 @@ package android.media.session {
 
 package android.net {
 
+  public class EthernetManager {
+    method @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) public void addListener(@NonNull java.util.concurrent.Executor, @NonNull android.net.EthernetManager.Listener);
+    method public void removeListener(@NonNull android.net.EthernetManager.Listener);
+    method public void setConfiguration(@NonNull String, @NonNull android.net.IpConfiguration);
+    method public void setIncludeTestInterfaces(boolean);
+    field public static final int ROLE_CLIENT = 1; // 0x1
+    field public static final int ROLE_NONE = 0; // 0x0
+    field public static final int ROLE_SERVER = 2; // 0x2
+    field public static final int STATE_ABSENT = 0; // 0x0
+    field public static final int STATE_LINK_DOWN = 1; // 0x1
+    field public static final int STATE_LINK_UP = 2; // 0x2
+  }
+
+  public static interface EthernetManager.Listener {
+    method public default void onInterfaceStateChanged(@NonNull String, int, int, @NonNull android.net.IpConfiguration);
+  }
+
   public final class EthernetNetworkSpecifier extends android.net.NetworkSpecifier implements android.os.Parcelable {
     ctor public EthernetNetworkSpecifier(@NonNull String);
     method public int describeContents();
