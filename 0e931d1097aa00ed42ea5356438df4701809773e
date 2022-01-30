@@ -22,6 +22,30 @@
       },
       "revId": "0e931d1097aa00ed42ea5356438df4701809773e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6825ec5_2b8ea0fc",
+        "filename": "core/java/android/os/image/IDynamicSystemService.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2022-01-30T22:10:53Z",
+      "side": 1,
+      "message": "That\u0027s right. As a shortcut, it accepts the last part of a platform permission as reference.\nThe intent is to support all types of permission, using the full permission name if it is not under \"android.Manifest.permission\". We just haven\u0027t had the need to implement it yet.",
+      "parentUuid": "d7b624e3_864bb3a3",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 45
+      },
+      "revId": "0e931d1097aa00ed42ea5356438df4701809773e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
