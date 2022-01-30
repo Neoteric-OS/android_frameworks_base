@@ -17,6 +17,7 @@
 package android.net;
 
 import android.annotation.CallbackExecutor;
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
@@ -31,6 +32,8 @@ import android.os.RemoteException;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.os.BackgroundThread;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -52,11 +55,13 @@ public class EthernetManager {
     private final IEthernetServiceListener.Stub mServiceListener =
             new IEthernetServiceListener.Stub() {
                 @Override
-                public void onAvailabilityChanged(String iface, boolean isAvailable) {
+                public void onInterfaceStateChanged(String iface, int linkStatus, int role,
+                        IpConfiguration configuration) {
                     synchronized (mListeners) {
                         for (ListenerInfo li : mListeners) {
                             li.executor.execute(() ->
-                                    li.listener.onAvailabilityChanged(iface, isAvailable));
+                                    li.listener.onInterfaceStateChanged(iface, linkStatus, role,
+                                            configuration));
                         }
                     }
                 }
@@ -75,18 +80,58 @@ public class EthernetManager {
     }
 
     /**
+     * Ethernet interface is absent.
+     */
+    public static final int LINK_ABSENT = 0;
+    /**
+     * Ethernet interface exists but link is down.
+     */
+    public static final int LINK_DOWN = 1;
+    /**
+     * Ethernet interface exists and link is up.
+     */
+    public static final int LINK_UP = 2;
+
+    /** @hide */
+    @IntDef({LINK_ABSENT, LINK_DOWN, LINK_UP})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface LinkStatus {}
+
+    /**
+     * Ethernet interface isn't assigned with any specific role.
+     */
+    public static final int ROLE_NONE = 0;
+    /**
+     * Ethernet interface is in client mode.
+     */
+    public static final int ROLE_CLIENT = 1;
+    /**
+     * Ethernet interface is in server mode.
+     */
+    public static final int ROLE_SERVER = 2;
+
+    /** @hide */
+    @IntDef({ROLE_NONE, ROLE_CLIENT, ROLE_SERVER})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Role {}
+
+    /**
      * A listener interface to receive notification on changes in Ethernet.
      * @hide
      */
     public interface Listener {
         /**
-         * Called when Ethernet port's availability is changed.
-         * @param iface Ethernet interface name
-         * @param isAvailable {@code true} if Ethernet port exists.
+         * Called when Ethernet interface state is changed.
+         * @param iface Ethernet interface name.
+         * @param linkStatus the integer enum defined above to represent the current status of
+         *                   Ethernet interface.
+         * @param role interface is in the client mode or server mode.
+         * @param configuration the current configuration of Ethernet interface.
          * @hide
          */
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
-        void onAvailabilityChanged(String iface, boolean isAvailable);
+        void onInterfaceStateChanged(@NonNull String iface, @LinkStatus int linkStatus,
+                @Role int role, @NonNull IpConfiguration configuration);
     }
 
     /**
@@ -187,6 +232,22 @@ public class EthernetManager {
                 }
             }
         }
+    }
+
+    /**
+     * Adds a listener to receive notification on the state changes of all existing Ethernet
+     * interfaces. {@link Listener#onInterfaceStateChanged} must be triggered immediately after
+     * adding a listener, which ensures that information for all existing interfaces can be
+     * retrieved immediately, otherwise, the information about other existing interfaces will be
+     * updated via callback until its state has changed.
+     *
+     * @param executor Executor to run callbacks on.
+     * @param listener A {@link Listener} to add.
+     * @throws IllegalArgumentException If the listener or executor is null.
+     * @hide
+     */
+    public void addListener(@NonNull Executor executor, @NonNull Listener listener) {
+        addListener(listener, executor);
     }
 
     /**
