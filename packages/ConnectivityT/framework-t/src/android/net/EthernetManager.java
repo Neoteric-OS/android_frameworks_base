@@ -16,13 +16,15 @@
 
 package android.net;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
 import android.annotation.CallbackExecutor;
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
-import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Build;
@@ -31,6 +33,8 @@ import android.os.RemoteException;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.os.BackgroundThread;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -52,11 +56,13 @@ public class EthernetManager {
     private final IEthernetServiceListener.Stub mServiceListener =
             new IEthernetServiceListener.Stub() {
                 @Override
-                public void onAvailabilityChanged(String iface, boolean isAvailable) {
+                public void onInterfaceStateChanged(String iface, int state, int role,
+                        IpConfiguration configuration) {
                     synchronized (mListeners) {
                         for (ListenerInfo li : mListeners) {
                             li.executor.execute(() ->
-                                    li.listener.onAvailabilityChanged(iface, isAvailable));
+                                    li.listener.onInterfaceStateChanged(iface, state, role,
+                                            configuration));
                         }
                     }
                 }
@@ -75,9 +81,58 @@ public class EthernetManager {
     }
 
     /**
+     * Ethernet interface is absent.
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static final int INTERFACE_ABSENT = 0;
+    /**
+     * Ethernet interface exists but link is down.
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static final int LINK_DOWN = 1;
+    /**
+     * Ethernet interface exists and link is up.
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static final int LINK_UP = 2;
+
+    /** @hide */
+    @IntDef({INTERFACE_ABSENT, LINK_DOWN, LINK_UP})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface InterfaceState {}
+
+    /**
+     * Ethernet interface isn't assigned with any specific role.
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static final int ROLE_NONE = 0;
+    /**
+     * Ethernet interface is in client mode.
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static final int ROLE_CLIENT = 1;
+    /**
+     * Ethernet interface is in server mode.
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static final int ROLE_SERVER = 2;
+
+    /** @hide */
+    @IntDef({ROLE_NONE, ROLE_CLIENT, ROLE_SERVER})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Role {}
+
+    /**
      * A listener interface to receive notification on changes in Ethernet.
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     public interface Listener {
         /**
          * Called when Ethernet port's availability is changed.
@@ -86,7 +141,20 @@ public class EthernetManager {
          * @hide
          */
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
-        void onAvailabilityChanged(String iface, boolean isAvailable);
+        default void onAvailabilityChanged(String iface, boolean isAvailable) {}
+
+        /**
+         * Called when Ethernet interface state is changed.
+         * @param iface Ethernet interface name.
+         * @param state the integer enum defined above to represent the current state of
+         *              the Ethernet interface.
+         * @param role interface is in the client mode or server mode.
+         * @param configuration the current configuration of Ethernet interface.
+         * @hide
+         */
+        @SystemApi(client = MODULE_LIBRARIES)
+        void onInterfaceStateChanged(@NonNull String iface, @InterfaceState int state,
+                @Role int role, @NonNull IpConfiguration configuration);
     }
 
     /**
@@ -118,8 +186,8 @@ public class EthernetManager {
      * Set Ethernet configuration.
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
-    public void setConfiguration(String iface, IpConfiguration config) {
+    @SystemApi(client = MODULE_LIBRARIES)
+    public void setConfiguration(@NonNull String iface, @NonNull IpConfiguration config) {
         try {
             mService.setConfiguration(iface, config);
         } catch (RemoteException e) {
@@ -190,6 +258,27 @@ public class EthernetManager {
     }
 
     /**
+     * Listen to changes in the state of Ethernet interfaces.
+     *
+     * Adds a listener to receive notification for any state change of all existing Ethernet
+     * interfaces.
+     * <p>{@link Listener#onInterfaceStateChanged} will be triggered immediately for all
+     * existing interfaces upon adding a listener. The same method will be called on the
+     * listener every time any of the interface changes state. In particular, if an
+     * interface is removed, it will be called with INTERFACE_ABSENT state.
+     * <p>Use removeListener with the same object to stop listening.
+     *
+     * @param executor Executor to run callbacks on.
+     * @param listener A {@link Listener} to add.
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    @SystemApi(client = MODULE_LIBRARIES)
+    public void addListener(@NonNull Executor executor, @NonNull Listener listener) {
+        addListener(listener, executor);
+    }
+
+    /**
      * Returns an array of available Ethernet interface names.
      * @hide
      */
@@ -208,7 +297,7 @@ public class EthernetManager {
      * @throws IllegalArgumentException If the listener is null.
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
+    @SystemApi(client = MODULE_LIBRARIES)
     public void removeListener(@NonNull Listener listener) {
         if (listener == null) {
             throw new IllegalArgumentException("listener must not be null");
@@ -231,7 +320,7 @@ public class EthernetManager {
      * already present on the system.
      * @hide
      */
-    @TestApi
+    @SystemApi(client = MODULE_LIBRARIES)
     public void setIncludeTestInterfaces(boolean include) {
         try {
             mService.setIncludeTestInterfaces(include);
