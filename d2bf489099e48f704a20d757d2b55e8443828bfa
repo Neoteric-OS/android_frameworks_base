@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c99dad51_7bc4a759",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-01-31T11:26:24Z",
+      "side": 1,
+      "message": "Need review for diff I uploaded since patchset 6 in particular",
+      "revId": "d2bf489099e48f704a20d757d2b55e8443828bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
