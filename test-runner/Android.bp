@@ -79,13 +79,26 @@ java_library {
     ],
 }
 
-// Build the repackaged.android.test.runner library
-// ================================================
+// Build the android.test_for_signature_tests library
+// ==================================================
+// This is only intended to be used by CTS signature tests.
+//
+// Must not be used elsewhere.
+//
 java_library_static {
-    name: "repackaged.android.test.runner",
+    name: "android.test_for_signature_tests",
+    visibility: [
+        "//cts/tests/signature/api-check",
+    ],
 
     srcs: [":android-test-runner-sources"],
     exclude_srcs: [
+        // Excluded because they depend on android.test.mock classes and
+        // depending on that library would cause any CTS signature test that
+        // statically included this library to add a <uses-library> entry in
+        // their manifest which would load the android.test.mock shared
+        // library. That could break those tests. As these classes are not
+        // needed by those tests the simplest fix is just to exclude them.
         "src/android/test/ActivityUnitTestCase.java",
         "src/android/test/ApplicationTestCase.java",
         "src/android/test/IsolatedContext.java",
@@ -96,13 +109,9 @@ java_library_static {
     ],
 
     sdk_version: "current",
-    libs: [
+    static_libs: [
         "android.test.base_static",
     ],
-
-    jarjar_rules: "jarjar-rules.txt",
-    // Pin java_version until jarjar is certified to support later versions. http://b/72703434
-    java_version: "1.8",
 }
 
 // Make the current.txt available for use by the cts/tests/signature tests.
