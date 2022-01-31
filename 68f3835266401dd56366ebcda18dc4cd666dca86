@@ -240,6 +240,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57523ab5_ad41c02d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11593,
+      "author": {
+        "id": 1890690
+      },
+      "writtenOn": "2022-01-31T23:30:24Z",
+      "side": 1,
+      "message": "Makes sense. Is now extracted to the api calls without the flags. That way if somebody renounce with the custom context, normally they will not called the function with the flags. If it call the functions with the flags, it will not take in consideration the custom context. Making the custom api call with flags prioritize over the custom context.",
+      "parentUuid": "2558b814_451be36c",
+      "range": {
+        "startLine": 11588,
+        "startChar": 11,
+        "endLine": 11593,
+        "endChar": 74
+      },
+      "revId": "68f3835266401dd56366ebcda18dc4cd666dca86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d0b1ba8_16deb0da",
@@ -253,6 +277,30 @@
       "writtenOn": "2021-12-22T22:48:47Z",
       "side": 1,
       "message": "do we need this?",
+      "range": {
+        "startLine": 15522,
+        "startChar": 12,
+        "endLine": 15527,
+        "endChar": 74
+      },
+      "revId": "68f3835266401dd56366ebcda18dc4cd666dca86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "477cb559_7907740b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15527,
+      "author": {
+        "id": 1890690
+      },
+      "writtenOn": "2022-01-31T23:30:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d0b1ba8_16deb0da",
       "range": {
         "startLine": 15522,
         "startChar": 12,
