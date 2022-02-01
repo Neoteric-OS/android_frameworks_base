@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17243fcf_cc89a1b1",
+        "filename": "core/java/android/annotation/DeprecatedForSdk.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2022-02-01T05:08:42Z",
+      "side": 1,
+      "message": "Then should it be a Class\u003c?\u003e[]",
+      "range": {
+        "startLine": 55,
+        "startChar": 13,
+        "endLine": 55,
+        "endChar": 20
+      },
+      "revId": "680c061bbafdae956e8d33016e135c77f3f4f1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
