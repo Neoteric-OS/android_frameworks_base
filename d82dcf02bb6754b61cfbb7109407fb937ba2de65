@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9492f19_5dfbe0e7",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 11673,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2022-02-01T00:19:59Z",
+      "side": 1,
+      "message": "We should update the Javadoc to document that this API doesn\u0027t honor the renounced location permission in context.\n\nSame for registerTelephonyCallback(boolean renounceFineLocationAccess, boolean renounceCoarseLocationAccess, ...).",
+      "revId": "d82dcf02bb6754b61cfbb7109407fb937ba2de65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
