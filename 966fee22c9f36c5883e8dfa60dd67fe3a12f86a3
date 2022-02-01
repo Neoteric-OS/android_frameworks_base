@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af35c5e1_9442cf94",
+        "filename": "core/java/android/annotation/DeprecatedForSdk.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2022-02-01T18:12:13Z",
+      "side": 1,
+      "message": "(which is fine as long as the platform team isn\u0027t loading anything in their workspace that shouldn\u0027t have platform-level access to APIs, which would break the public API visibility model anyway so not going to happen)",
+      "parentUuid": "1e609c0f_27bc9b29",
+      "range": {
+        "startLine": 41,
+        "startChar": 18,
+        "endLine": 41,
+        "endChar": 34
+      },
+      "revId": "966fee22c9f36c5883e8dfa60dd67fe3a12f86a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "860a788f_fd083ff6",
