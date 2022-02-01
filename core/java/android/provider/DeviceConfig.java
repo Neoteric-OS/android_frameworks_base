@@ -630,6 +630,14 @@ public final class DeviceConfig {
             "virtualization_framework_native";
 
     /**
+     * Namespace for Android Rubidium related features.
+     *
+     * @hide
+     */
+    @SystemApi
+    @TestApis
+    public static final String NAMESPACE_ADSERVICES = "adservices";
+    /**
      * Namespace for Constrain Display APIs related features.
      *
      * @hide
