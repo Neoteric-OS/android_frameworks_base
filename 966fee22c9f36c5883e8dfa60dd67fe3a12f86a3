@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de0657d4_9188b59f",
+        "filename": "core/java/android/annotation/DeprecatedForSdk.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2022-02-01T17:09:21Z",
+      "side": 1,
+      "message": "Metalava will rewrite it to a normal @Deprecated annotation when generating stubs",
+      "parentUuid": "4ef5c965_a3b0d37f",
+      "range": {
+        "startLine": 41,
+        "startChar": 18,
+        "endLine": 41,
+        "endChar": 34
+      },
+      "revId": "966fee22c9f36c5883e8dfa60dd67fe3a12f86a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "860a788f_fd083ff6",
