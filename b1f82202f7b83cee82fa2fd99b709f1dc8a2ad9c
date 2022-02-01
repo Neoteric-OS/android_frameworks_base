@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39838d2c_5b414f56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1726181
+      },
+      "writtenOn": "2022-02-01T01:49:27Z",
+      "side": 1,
+      "message": "+ Alex and Romain who have been working on Java rules for Roboleaf",
+      "revId": "b1f82202f7b83cee82fa2fd99b709f1dc8a2ad9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
