@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "3a794346_bf550c89",
         "filename": "core/java/android/annotation/DeprecatedForSdk.java",
@@ -20,10 +21,10 @@
         "endChar": 34
       },
       "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "55044286_bf5e4e57",
         "filename": "core/java/android/annotation/DeprecatedForSdk.java",
@@ -44,10 +45,10 @@
         "endChar": 34
       },
       "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "5387799f_d1b2112b",
         "filename": "core/java/android/annotation/DeprecatedForSdk.java",
@@ -68,10 +69,10 @@
         "endChar": 34
       },
       "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "b781854f_1d244a16",
         "filename": "core/java/android/annotation/DeprecatedForSdk.java",
@@ -92,10 +93,10 @@
         "endChar": 34
       },
       "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "d2b98bd0_3ab482ff",
         "filename": "core/java/android/annotation/DeprecatedForSdk.java",
@@ -116,8 +117,31 @@
         "endChar": 34
       },
       "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92272e95_364080b7",
+        "filename": "core/java/android/annotation/DeprecatedForSdk.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1004689
+      },
+      "writtenOn": "2022-02-01T00:53:14Z",
+      "side": 1,
+      "message": "This bug showed up on the radar via the bug scrubber, so I took a stab at it.\n\nI ended up changing this a bit; having to use @deprecatedForSdk as a comment ended up pretty complicated (various code, including code outside of metalava, seems to just look for comment.contains(\"@deprecated\") to mark it deprecated which is incorrect). Now instead this comment bit is just attached to the comment.\n\nFor the test surface allowedIn suggestion, I ended up simply using strings: the same annotation names that are passed into metalava to generate the various api surfaces (e.g. android.annotation.SystemApi, android.annotation.TestApi, etc). It would have been nicer to let you place the annotations directly in there (@DeprecatedForSdk(allowedIn\u003d{@SystemApi, @TestApi})) but annotations don\u0027t allow this. Maybe we can define some constants on each one, like SystemApi.NAME.)",
+      "parentUuid": "d2b98bd0_3ab482ff",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 42,
+        "endChar": 34
+      },
+      "revId": "bd5728a9b0f917a005d5554f3483a9fb788112c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
