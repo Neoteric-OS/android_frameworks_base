@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1869a586_b1586bea",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1890690
+      },
+      "writtenOn": "2022-02-01T19:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "727e0d0a_3ec1b9b4",
+      "range": {
+        "startLine": 470,
+        "startChar": 15,
+        "endLine": 470,
+        "endChar": 36
+      },
+      "revId": "74cfbd1a0ea65b1e6d2aa7ad2bf826501fcfeb57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b87b4a71_8d60cb7d",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-02-01T18:13:49Z",
       "side": 1,
       "message": "nit: cache the result of getRenouncedPermissions() in a local variable to avoid calling twice?\n\n  Set\u003cString\u003e renouncedPermissions \u003d getRenouncedPermissions();\n  ... renouncedPermissions.contains(x) .. renouncedPermissions.contains(y) ..",
+      "range": {
+        "startLine": 6174,
+        "startChar": 49,
+        "endLine": 6174,
+        "endChar": 74
+      },
+      "revId": "74cfbd1a0ea65b1e6d2aa7ad2bf826501fcfeb57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aabdc73c_c419dcd1",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6174,
+      "author": {
+        "id": 1890690
+      },
+      "writtenOn": "2022-02-01T19:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b87b4a71_8d60cb7d",
       "range": {
         "startLine": 6174,
         "startChar": 49,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "498d58c9_8dc77cfd",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11674,
+      "author": {
+        "id": 1890690
+      },
+      "writtenOn": "2022-02-01T19:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "457c5aa8_4f1dc407",
+      "range": {
+        "startLine": 11674,
+        "startChar": 7,
+        "endLine": 11674,
+        "endChar": 95
+      },
+      "revId": "74cfbd1a0ea65b1e6d2aa7ad2bf826501fcfeb57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c4c9055_e9ed48d2",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "08dd21e6_9cccb16d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11675,
+      "author": {
+        "id": 1890690
+      },
+      "writtenOn": "2022-02-01T19:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c4c9055_e9ed48d2",
+      "range": {
+        "startLine": 11675,
+        "startChar": 56,
+        "endLine": 11675,
+        "endChar": 72
+      },
+      "revId": "74cfbd1a0ea65b1e6d2aa7ad2bf826501fcfeb57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6bb2f052_9b6e1441",
@@ -106,6 +202,30 @@
       "writtenOn": "2022-02-01T18:17:05Z",
       "side": 1,
       "message": "I think \"only for system apps\" is enough.",
+      "range": {
+        "startLine": 11675,
+        "startChar": 77,
+        "endLine": 11676,
+        "endChar": 28
+      },
+      "revId": "74cfbd1a0ea65b1e6d2aa7ad2bf826501fcfeb57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cc7db8b_b2131fe3",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11676,
+      "author": {
+        "id": 1890690
+      },
+      "writtenOn": "2022-02-01T19:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bb2f052_9b6e1441",
       "range": {
         "startLine": 11675,
         "startChar": 77,
