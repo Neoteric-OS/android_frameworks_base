@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c89137e0_8a8a6542",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 11675,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2022-02-01T23:59:38Z",
+      "side": 1,
+      "message": "I meant to link to the system API to renounce permissions from Context, i.e. the one used in the system app.",
+      "range": {
+        "startLine": 11675,
+        "startChar": 14,
+        "endLine": 11675,
+        "endChar": 55
+      },
+      "revId": "9d8c1de37326f4f28c820cb9af4cda73b9191949",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
