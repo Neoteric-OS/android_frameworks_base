@@ -16,6 +16,23 @@
       "message": "Can someone take a look?",
       "revId": "aaa92a1bb0ec9788b2910c8c7c43782e01695481",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dd111f2_f4ebf0cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1876901
+      },
+      "writtenOn": "2022-02-01T12:40:05Z",
+      "side": 1,
+      "message": "Thanks for submitting the fix, Bruno.\n\nThis has already been fixed internally so I will close this change to avoid merge conflicts.",
+      "revId": "aaa92a1bb0ec9788b2910c8c7c43782e01695481",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
