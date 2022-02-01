@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e609c0f_27bc9b29",
+        "filename": "core/java/android/annotation/DeprecatedForSdk.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1004689
+      },
+      "writtenOn": "2022-02-01T17:57:59Z",
+      "side": 1,
+      "message": "(and to be clear that means that when you\u0027re looking at platform sources, this element will NOT be considered deprecated. It\u0027s only deprecated when you consume it via some sdk, like the public SDK, the system API or the test API (unless it\u0027s explicitly un-deprecated for some of those).",
+      "parentUuid": "de0657d4_9188b59f",
+      "range": {
+        "startLine": 41,
+        "startChar": 18,
+        "endLine": 41,
+        "endChar": 34
+      },
+      "revId": "966fee22c9f36c5883e8dfa60dd67fe3a12f86a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "860a788f_fd083ff6",
@@ -61,6 +85,30 @@
       "writtenOn": "2022-02-01T16:34:15Z",
       "side": 1,
       "message": "to",
+      "range": {
+        "startLine": 43,
+        "startChar": 19,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "966fee22c9f36c5883e8dfa60dd67fe3a12f86a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0a0603a_0e7121a3",
+        "filename": "core/java/android/annotation/DeprecatedForSdk.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1004689
+      },
+      "writtenOn": "2022-02-01T17:57:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "860a788f_fd083ff6",
       "range": {
         "startLine": 43,
         "startChar": 19,
