@@ -22,6 +22,30 @@
       },
       "revId": "680c061bbafdae956e8d33016e135c77f3f4f1ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2366aa4_df4e3c5e",
+        "filename": "core/java/android/annotation/DeprecatedForSdk.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1004689
+      },
+      "writtenOn": "2022-02-01T15:58:36Z",
+      "side": 1,
+      "message": "Yes that\u0027s *much* better and still flexible enough. Updated.",
+      "parentUuid": "17243fcf_cc89a1b1",
+      "range": {
+        "startLine": 55,
+        "startChar": 13,
+        "endLine": 55,
+        "endChar": 20
+      },
+      "revId": "680c061bbafdae956e8d33016e135c77f3f4f1ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
