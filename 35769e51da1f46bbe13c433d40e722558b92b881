@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019989550",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1949237?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "84235fd9_c72c9fe6",
+        "filename": "omapi/aidl/vts/functional/config/api/current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-01T19:54:39Z",
+      "side": 1,
+      "message": "This CL adds new API(s), but it doesn\u0027t include any CTS test to test them. Please add CTS test(s) in a change and include the change in the same topic. After adding that change, you may need to upload a new patchset such as updating commit message to rerun this presubmit test. If you are unable to add CTS test(s) now, please file a tracking bug via go/new-cts-coverage-bug and add \"CTS-Coverage-Bug: \u003cbug id\u003e\" in this CL\u0027s commit message to pass this presubmit. For more information, please refer to go/api-test-coverage.",
+      "revId": "35769e51da1f46bbe13c433d40e722558b92b881",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019989558",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1949237?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ddb4662b_897ac1f0",
+        "filename": "omapi/aidl/vts/functional/omapi/VtsHalOmapiSeServiceV1_TargetTest.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-01T19:54:39Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 104
+      },
+      "revId": "35769e51da1f46bbe13c433d40e722558b92b881",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
