@@ -45,6 +45,75 @@
       },
       "revId": "74cfbd1a0ea65b1e6d2aa7ad2bf826501fcfeb57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "457c5aa8_4f1dc407",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11674,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2022-02-01T18:17:05Z",
+      "side": 1,
+      "message": "This sentence can be removed as it just repeats existing Javadoc.",
+      "range": {
+        "startLine": 11674,
+        "startChar": 7,
+        "endLine": 11674,
+        "endChar": 95
+      },
+      "revId": "74cfbd1a0ea65b1e6d2aa7ad2bf826501fcfeb57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c4c9055_e9ed48d2",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11675,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2022-02-01T18:17:05Z",
+      "side": 1,
+      "message": "say the exact API here: {@link Foo#bar()}",
+      "range": {
+        "startLine": 11675,
+        "startChar": 56,
+        "endLine": 11675,
+        "endChar": 72
+      },
+      "revId": "74cfbd1a0ea65b1e6d2aa7ad2bf826501fcfeb57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bb2f052_9b6e1441",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11676,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2022-02-01T18:17:05Z",
+      "side": 1,
+      "message": "I think \"only for system apps\" is enough.",
+      "range": {
+        "startLine": 11675,
+        "startChar": 77,
+        "endLine": 11676,
+        "endChar": 28
+      },
+      "revId": "74cfbd1a0ea65b1e6d2aa7ad2bf826501fcfeb57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
