@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "738caec5_9b38ed9b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2022-02-01T15:45:59Z",
+      "side": 1,
+      "message": "With the security concern resolved (b/181053462), re-open this CL to safely public the CC keys for T release.",
+      "revId": "73161658feadccd6e1b2cdf468547b42efc1bac2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
