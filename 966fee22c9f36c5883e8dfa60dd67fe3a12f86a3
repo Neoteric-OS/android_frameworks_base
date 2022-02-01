@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ef5c965_a3b0d37f",
+        "filename": "core/java/android/annotation/DeprecatedForSdk.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2022-02-01T16:34:15Z",
+      "side": 1,
+      "message": "Will this get picked up correctly as deprecation by the IDE, or are we re-implementing @Deprecated support in Lint to get IDE support?",
+      "range": {
+        "startLine": 41,
+        "startChar": 18,
+        "endLine": 41,
+        "endChar": 34
+      },
+      "revId": "966fee22c9f36c5883e8dfa60dd67fe3a12f86a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "860a788f_fd083ff6",
+        "filename": "core/java/android/annotation/DeprecatedForSdk.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2022-02-01T16:34:15Z",
+      "side": 1,
+      "message": "to",
+      "range": {
+        "startLine": 43,
+        "startChar": 19,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "966fee22c9f36c5883e8dfa60dd67fe3a12f86a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
