@@ -42,7 +42,7 @@ system_optimized_java_defaults {
         SYSTEM_OPTIMIZE_JAVA: {
             optimize: {
                 enabled: true,
-                optimize: true,
+                optimize: false,
                 shrink: true,
                 proguard_flags_files: ["proguard.flags"],
             },
