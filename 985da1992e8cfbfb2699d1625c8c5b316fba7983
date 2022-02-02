@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc598099_b03cc643",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-02-02T14:12:20Z",
+      "side": 1,
+      "message": "Is there an extra parameter here? Below you use cooked[7], so I guess there is. What is it? The interface name? The network? ...?",
+      "range": {
+        "startLine": 464,
+        "startChar": 78,
+        "endLine": 464,
+        "endChar": 79
+      },
+      "revId": "985da1992e8cfbfb2699d1625c8c5b316fba7983",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
