@@ -228,5 +228,6 @@ public class SecureSettings {
         Settings.Secure.DOZE_PICK_UP_GESTURE_AMBIENT,
         Settings.Secure.DOZE_TAP_GESTURE_AMBIENT,
         Settings.Secure.BERRY_BLACK_THEME,
+        Settings.Secure.DISABLE_SECURE_TILES_ON_LOCKSCREEN,
     };
 }
