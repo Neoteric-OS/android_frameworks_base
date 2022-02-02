@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7397245f_407b737c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-02T23:31:17Z",
+      "side": 1,
+      "message": "We have the green light to enable shrinking (not opt), so I\u0027ll do that in a follow-up CL when we have the PSA ready.\n\nNote that I already have some more refined rules, but I want to keep this somewhat conservative for the initial pass.",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
