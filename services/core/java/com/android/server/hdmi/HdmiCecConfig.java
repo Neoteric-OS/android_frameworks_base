@@ -35,6 +35,7 @@ import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings.Global;
 import android.util.ArrayMap;
+import android.util.Slog;
 
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
@@ -266,9 +267,11 @@ public class HdmiCecConfig {
                 mAllowedValues.add(value);
                 if (mContext.getResources().getBoolean(defaultResId)) {
                     if (mDefaultValue != null) {
-                        throw new VerificationException("Invalid CEC setup for '"
-                            + this.getName() + "' setting. "
-                            + "Setting already has a default value.");
+                        Slog.e(TAG,
+                                "Failed to set '" + value + "' as a default for '" + this.getName()
+                                        + "': Setting already has a default ('" + mDefaultValue
+                                        + "').");
+                        return;
                     }
                     mDefaultValue = value;
                 }
@@ -296,6 +299,11 @@ public class HdmiCecConfig {
                   @NonNull StorageAdapter storageAdapter) {
         mContext = context;
         mStorageAdapter = storageAdapter;
+
+        // IMPORTANT: when adding a config value for a particular setting, register that value AFTER
+        // the existing values for that setting. That way, defaults set in the RRO are forward
+        // compatible even if the RRO doesn't include that new value yet
+        // (e.g. because it's ported from a previous release).
 
         Setting hdmiCecEnabled = registerSetting(
                 HdmiControlManager.CEC_SETTING_NAME_HDMI_CEC_ENABLED,
@@ -329,6 +337,9 @@ public class HdmiCecConfig {
         powerControlMode.registerValue(HdmiControlManager.POWER_CONTROL_MODE_NONE,
                 R.bool.config_cecPowerControlModeNone_allowed,
                 R.bool.config_cecPowerControlModeNone_default);
+        powerControlMode.registerValue(HdmiControlManager.POWER_CONTROL_MODE_TV_AND_AUDIO_SYSTEM,
+                R.bool.config_cecPowerControlModeTvAndAudioSystem_allowed,
+                R.bool.config_cecPowerControlModeTvAndAudioSystem_default);
 
         Setting powerStateChangeOnActiveSourceLost = registerSetting(
                 HdmiControlManager.CEC_SETTING_NAME_POWER_STATE_CHANGE_ON_ACTIVE_SOURCE_LOST,
