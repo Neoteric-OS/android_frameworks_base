@@ -220,5 +220,6 @@ public class SecureSettings {
         Settings.Secure.BERRY_BLACK_THEME,
         Settings.Secure.SKIP_FACE_AUTH_CONFIRMATION,
         Settings.Secure.DOZE_FOR_NOTIFICATIONS,
+        Settings.Secure.DISABLE_SECURE_TILES_ON_LOCKSCREEN,
     };
 }
