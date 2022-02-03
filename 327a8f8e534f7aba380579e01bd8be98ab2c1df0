@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e24b6b4_d7e710ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004689
+      },
+      "writtenOn": "2022-02-03T22:43:14Z",
+      "side": 1,
+      "message": "(needs owner review -- added the ones suggested by gerrit as owners for this package)",
+      "revId": "327a8f8e534f7aba380579e01bd8be98ab2c1df0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
