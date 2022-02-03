@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7570769_7498be4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2022-02-03T18:02:27Z",
+      "side": 1,
+      "message": "This seems to be a robolectric bug, which cannot block platform improvements as a matter of policy (see also why robolectric isn\u0027t allowed in presubmit)",
+      "revId": "9adae0f34c3caa74fcc7ab1f3074520aacb851fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
