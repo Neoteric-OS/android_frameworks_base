@@ -3705,7 +3705,7 @@ public class CarrierConfigManager {
     /**
      * SMDP+ server address for downloading opportunistic eSIM profile.
      * FQDN (Fully Qualified Domain Name) of the SM-DP+ (e.g., smdp.gsma.com) restricted to the
-     * Alphanumeric mode character set defined in table 5 of ISO/IEC 18004 [15] excluding '$'.
+     * Alphanumeric mode character set defined in table 5 of ISO/IEC 18004 excluding '$'.
      */
     public static final String KEY_SMDP_SERVER_ADDRESS_STRING =
             "smdp_server_address_string";
@@ -3747,6 +3747,14 @@ public class CarrierConfigManager {
      */
     public static final String KEY_OPPORTUNISTIC_CARRIER_IDS_INT_ARRAY =
             "opportunistic_carrier_ids_int_array";
+
+    /**
+     * Boolean configuration to control if eSIM should be downloaded via only WiFi or use both
+     * WiFi/Data. True will download esim only via WiFi and false will use both WiFi and Data
+     * connection.
+     */
+    public static final String KEY_OPPORTUNISTIC_ESIM_DOWNLOAD_VIA_WIFI_ONLY =
+            "opportunistic_esim_download_via_wifi_only";
 
     /**
      * Controls RSRP threshold at which OpportunisticNetworkService will decide whether
@@ -5815,6 +5823,7 @@ public class CarrierConfigManager {
         sDefaults.putInt(KEY_ESIM_MAX_DOWNLOAD_RETRY_ATTEMPTS_INT, 5);
         sDefaults.putInt(KEY_ESIM_DOWNLOAD_RETRY_BACKOFF_TIMER_SEC_INT, 60);
         sDefaults.putIntArray(KEY_OPPORTUNISTIC_CARRIER_IDS_INT_ARRAY, new int[] {0});
+        sDefaults.putBoolean(KEY_OPPORTUNISTIC_ESIM_DOWNLOAD_VIA_WIFI_ONLY, false);
         /* Default value is minimum RSRP level needed for SIGNAL_STRENGTH_GOOD */
         sDefaults.putInt(KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_RSRP_INT, -108);
         /* Default value is minimum RSRP level needed for SIGNAL_STRENGTH_MODERATE */
