@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05bdca56_941cc34a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2022-02-03T23:06:26Z",
+      "side": 1,
+      "message": "add a comment why this was needed even though application was renouncing the permissions",
+      "range": {
+        "startLine": 416,
+        "startChar": 12,
+        "endLine": 428,
+        "endChar": 9
+      },
+      "revId": "54b6a10191ac9f603c9859ba86fb595c5b533ee4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
