@@ -168,7 +168,10 @@ public class CarrierConfigManager {
     /**
      * This flag specifies whether VoLTE availability is based on provisioning. By default this is
      * false.
+     * Used for UCE to determine if EAB provisioning checks should be based on provisioning.
+     * @deprecated Use {@link Ims#KEY_MMTEL_REQUIRES_PROVISIONING_BUNDLE} instead.
      */
+    @Deprecated
     public static final String
             KEY_CARRIER_VOLTE_PROVISIONED_BOOL = "carrier_volte_provisioned_bool";
 
@@ -347,6 +350,12 @@ public class CarrierConfigManager {
      */
     public static final String
             KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL = "require_entitlement_checks_bool";
+
+    /**
+     * Flag indicating if the carrier supports tethering of mobile data.
+     */
+    public static final String KEY_CARRIER_SUPPORTS_TETHERING_BOOL =
+            "carrier_supports_tethering_bool";
 
     /**
      * Flag indicating whether radio is to be restarted on error PDP_FAIL_REGULAR_DEACTIVATION
@@ -798,7 +807,8 @@ public class CarrierConfigManager {
 
     /**
      * Flag specifying whether WFC over IMS supports the "wifi only" option.  If false, the wifi
-     * calling settings will not include an option for "wifi only".  If true, the wifi calling
+     * calling settin
+     gs will not include an option for "wifi only".  If true, the wifi calling
      * settings will include an option for "wifi only"
      * <p>
      * By default, it is assumed that WFC supports "wifi only".
@@ -858,7 +868,12 @@ public class CarrierConfigManager {
     /**
      * Flag specifying whether provisioning is required for VoLTE, Video Telephony, and WiFi
      * Calling.
+
+     * Combines VoLTE, VT, VoWiFI calling provisioning into one parameter.
+     * @deprecated Use {@link Ims#KEY_MMTEL_REQUIRES_PROVISIONING_BUNDLE} instead for
+     * finer-grained control.
      */
+    @Deprecated
     public static final String KEY_CARRIER_VOLTE_PROVISIONING_REQUIRED_BOOL
             = "carrier_volte_provisioning_required_bool";
 
@@ -872,7 +887,11 @@ public class CarrierConfigManager {
      * and enable the UT over IMS capability for the subscription when the subscription is loaded.
      *
      * The default value for this key is {@code false}.
+     *
+     * @deprecated Use {@link Ims#KEY_MMTEL_REQUIRES_PROVISIONING_BUNDLE} instead for
+     * determining if UT requires provisioning.
      */
+    @Deprecated
     public static final String KEY_CARRIER_UT_PROVISIONING_REQUIRED_BOOL =
             "carrier_ut_provisioning_required_bool";
 
@@ -3705,7 +3724,7 @@ public class CarrierConfigManager {
     /**
      * SMDP+ server address for downloading opportunistic eSIM profile.
      * FQDN (Fully Qualified Domain Name) of the SM-DP+ (e.g., smdp.gsma.com) restricted to the
-     * Alphanumeric mode character set defined in table 5 of ISO/IEC 18004 [15] excluding '$'.
+     * Alphanumeric mode character set defined in table 5 of ISO/IEC 18004 excluding '$'.
      */
     public static final String KEY_SMDP_SERVER_ADDRESS_STRING =
             "smdp_server_address_string";
@@ -3747,6 +3766,17 @@ public class CarrierConfigManager {
      */
     public static final String KEY_OPPORTUNISTIC_CARRIER_IDS_INT_ARRAY =
             "opportunistic_carrier_ids_int_array";
+
+    /**
+     * Boolean configuration to control auto provisioning eSIM download in
+     * OpportunisticNetworkService using only WiFi or both WiFi/Data.
+     * True will download esim only via WiFi.
+     * False will use both WiFi and Data connection.
+     *
+     * @hide
+     */
+    public static final String KEY_OPPORTUNISTIC_ESIM_DOWNLOAD_VIA_WIFI_ONLY_BOOL =
+            "opportunistic_esim_download_via_wifi_only_bool";
 
     /**
      * Controls RSRP threshold at which OpportunisticNetworkService will decide whether
@@ -4402,12 +4432,10 @@ public class CarrierConfigManager {
             "carrier_auto_cancel_cs_notification";
 
     /**
-     * Passing this value as {@link KEY_SUBSCRIPTION_GROUP_UUID_STRING} will remove the
+     * Passing this value as {@link #KEY_SUBSCRIPTION_GROUP_UUID_STRING} will remove the
      * subscription from a group instead of adding it to a group.
      *
-     * TODO: Expose in a future release.
-     *
-     * @hide
+     * <p>This value will work all the way back to {@link android.os.Build.VERSION_CODES#Q}.
      */
     public static final String REMOVE_GROUP_UUID_STRING = "00000000-0000-0000-0000-000000000000";
 
@@ -4420,9 +4448,7 @@ public class CarrierConfigManager {
      * <p>If set to {@link #REMOVE_GROUP_UUID_STRING}, then the subscription will be removed from
      * its current group.
      *
-     * TODO: unhide this key.
-     *
-     * @hide
+     * <p>This key will work all the way back to {@link android.os.Build.VERSION_CODES#Q}.
      */
     public static final String KEY_SUBSCRIPTION_GROUP_UUID_STRING =
             "subscription_group_uuid_string";
@@ -4447,17 +4473,15 @@ public class CarrierConfigManager {
             "data_switch_validation_min_gap_long";
 
     /**
-    * A boolean property indicating whether this subscription should be managed as an opportunistic
-    * subscription.
-    *
-    * If true, then this subscription will be selected based on available coverage and will not be
-    * available for a user in settings menus for selecting macro network providers. If unset,
-    * defaults to “false”.
-    *
-    * TODO: unhide this key.
-    *
-    * @hide
-    */
+     * A boolean property indicating whether this subscription should be managed as an opportunistic
+     * subscription.
+     *
+     * If true, then this subscription will be selected based on available coverage and will not be
+     * available for a user in settings menus for selecting macro network providers. If unset,
+     * defaults to “false”.
+     *
+     * <p>This key will work all the way back to {@link android.os.Build.VERSION_CODES#Q}.
+     */
     public static final String KEY_IS_OPPORTUNISTIC_SUBSCRIPTION_BOOL =
             "is_opportunistic_subscription_bool";
 
@@ -4637,6 +4661,134 @@ public class CarrierConfigManager {
         public static final String KEY_RCS_REQUEST_RETRY_INTERVAL_MILLIS_LONG =
                 KEY_PREFIX + "rcs_request_retry_interval_millis_long";
 
+        /**
+         * A bundle which specifies the MMTEL capability and registration technology
+         * that requires provisioning. If a tuple is not present, the
+         * framework will not require that the tuple requires provisioning before
+         * enabling the capability.
+         * <p> Possible keys in this bundle are
+         * <ul>
+         *     <li>{@link #KEY_CAPABILITY_TYPE_VOICE_INT_ARRAY}</li>
+         *     <li>{@link #KEY_CAPABILITY_TYPE_VIDEO_INT_ARRAY}</li>
+         *     <li>{@link #KEY_CAPABILITY_TYPE_UT_INT_ARRAY}</li>
+         *     <li>{@link #KEY_CAPABILITY_TYPE_SMS_INT_ARRAY}</li>
+         *     <li>{@link #KEY_CAPABILITY_TYPE_CALL_COMPOSER_INT_ARRAY}</li>
+         * </ul>
+         * <p> The values are defined in
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationTech}
+         */
+        public static final String KEY_MMTEL_REQUIRES_PROVISIONING_BUNDLE =
+                KEY_PREFIX + "mmtel_requires_provisioning_bundle";
+
+        /**
+         * List of different RAT technologies on which Provisioning for Voice calling (IR.92)
+         * is supported.
+         * @see MmTelFeature.MmTelCapabilities#CAPABILITY_TYPE_VOICE
+         * <p>Possible values are,
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_LTE}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_IWLAN}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_CROSS_SIM}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_NR}
+         */
+        public static final String KEY_CAPABILITY_TYPE_VOICE_INT_ARRAY =
+                KEY_PREFIX + "capability_type_voice_int_array";
+
+        /**
+         * List of different RAT technologies on which Provisioning for Video Telephony (IR.94)
+         * is supported.
+         * @see MmTelFeature.MmTelCapabilities#CAPABILITY_TYPE_VIDEO
+         * <p>Possible values are,
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_LTE}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_IWLAN}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_CROSS_SIM}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_NR}
+         */
+        public static final String KEY_CAPABILITY_TYPE_VIDEO_INT_ARRAY =
+                KEY_PREFIX + "capability_type_video_int_array";
+
+        /**
+         * List of different RAT technologies on which Provisioning for XCAP over Ut for
+         * supplementary services. (IR.92) is supported.
+         * @see MmTelFeature.MmTelCapabilities#CAPABILITY_TYPE_UT
+         * <p>Possible values are,
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_LTE}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_IWLAN}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_CROSS_SIM}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_NR}
+         */
+        public static final String KEY_CAPABILITY_TYPE_UT_INT_ARRAY =
+                KEY_PREFIX + "capability_type_ut_int_array";
+
+        /**
+         * List of different RAT technologies on which Provisioning for SMS (IR.92) is supported.
+         * @see MmTelFeature.MmTelCapabilities#CAPABILITY_TYPE_SMS
+         * <p>Possible values are,
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_LTE}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_IWLAN}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_CROSS_SIM}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_NR}
+         */
+        public static final String KEY_CAPABILITY_TYPE_SMS_INT_ARRAY =
+                KEY_PREFIX + "capability_type_sms_int_array";
+
+        /**
+         * List of different RAT technologies on which Provisioning for Call Composer
+         * (section 2.4 of RCC.20) is supported.
+         * @see MmTelFeature.MmTelCapabilities#CAPABILITY_TYPE_CALL_COMPOSER
+         * <p>Possible values are,
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_LTE}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_IWLAN}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_CROSS_SIM}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_NR}
+         */
+        public static final String KEY_CAPABILITY_TYPE_CALL_COMPOSER_INT_ARRAY =
+                KEY_PREFIX + "capability_type_call_composer_int_array";
+
+        /**
+         * A bundle which specifies the RCS capability and registration technology
+         * that requires provisioning. If a tuple is not present, the
+         * framework will not require that the tuple requires provisioning before
+         * enabling the capability.
+         * <p> Possible keys in this bundle are
+         * <ul>
+         *     <li>{@link #KEY_CAPABILITY_TYPE_OPTIONS_UCE_INT_ARRAY}</li>
+         *     <li>{@link #KEY_CAPABILITY_TYPE_PRESENCE_UCE_INT_ARRAY}</li>
+         * </ul>
+         * <p> The values are defined in
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationTech}
+         */
+        public static final String KEY_RCS_REQUIRES_PROVISIONING_BUNDLE =
+                KEY_PREFIX + "rcs_requires_provisioning_bundle";
+
+        /**
+         * This carrier supports User Capability Exchange using SIP OPTIONS as defined by the
+         * framework. If set, the RcsFeature should support capability exchange using SIP OPTIONS.
+         * If not set, this RcsFeature should not service capability requests.
+         * @see RcsFeature.RcsImsCapabilities#CAPABILITY_TYPE_OPTIONS_UCE
+         * <p>Possible values are,
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_LTE}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_IWLAN}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_CROSS_SIM}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_NR}
+         */
+        public static final String KEY_CAPABILITY_TYPE_OPTIONS_UCE_INT_ARRAY =
+                KEY_PREFIX + "capability_type_options_uce_int_array";
+
+        /**
+         * This carrier supports User Capability Exchange using a presence server as defined by the
+         * framework. If set, the RcsFeature should support capability exchange using a presence
+         * server. If not set, this RcsFeature should not publish capabilities or service capability
+         * requests using presence.
+         * @see RcsFeature.RcsImsCapabilities#CAPABILITY_TYPE_PRESENCE_UCE
+         * <p>Possible values are,
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_LTE}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_IWLAN}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_CROSS_SIM}
+         * {@link android.telephony.ims.stub.ImsRegistrationImplBase.ImsRegistrationImplBase.ImsRegistrationTech#REGISTRATION_TECH_NR}
+         */
+        public static final String KEY_CAPABILITY_TYPE_PRESENCE_UCE_INT_ARRAY =
+                KEY_PREFIX + "capability_type_presence_uce_int_array";
+
         private Ims() {}
 
         private static PersistableBundle getDefaults() {
@@ -4672,6 +4824,17 @@ public class CarrierConfigManager {
                     "+g.3gpp.iari-ref=\"urn%3Aurn-7%3A3gpp-application.ims.iari.rcs.chatbot.sa\"",
                     "+g.gsma.rcs.botversion=\"#=1,#=2\"",
                     "+g.gsma.rcs.cpimext"});
+
+            /**
+             * @see #KEY_MMTEL_REQUIRES_PROVISIONING_BUNDLE
+             */
+            defaults.putPersistableBundle(
+                    KEY_MMTEL_REQUIRES_PROVISIONING_BUNDLE, new PersistableBundle());
+            /**
+             * @see #KEY_RCS_REQUIRES_PROVISIONING_BUNDLE
+             */
+            defaults.putPersistableBundle(
+                    KEY_RCS_REQUIRES_PROVISIONING_BUNDLE, new PersistableBundle());
 
             return defaults;
         }
@@ -5421,6 +5584,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_VOICE_PRIVACY_DISABLE_UI_BOOL, false);
         sDefaults.putBoolean(KEY_WORLD_PHONE_BOOL, false);
         sDefaults.putBoolean(KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL, true);
+        sDefaults.putBoolean(KEY_CARRIER_SUPPORTS_TETHERING_BOOL, true);
         sDefaults.putBoolean(KEY_RESTART_RADIO_ON_PDP_FAIL_REGULAR_DEACTIVATION_BOOL, false);
         sDefaults.putIntArray(KEY_RADIO_RESTART_FAILURE_CAUSES_INT_ARRAY, new int[]{});
         sDefaults.putInt(KEY_VOLTE_REPLACEMENT_RAT_INT, 0);
@@ -5815,6 +5979,7 @@ public class CarrierConfigManager {
         sDefaults.putInt(KEY_ESIM_MAX_DOWNLOAD_RETRY_ATTEMPTS_INT, 5);
         sDefaults.putInt(KEY_ESIM_DOWNLOAD_RETRY_BACKOFF_TIMER_SEC_INT, 60);
         sDefaults.putIntArray(KEY_OPPORTUNISTIC_CARRIER_IDS_INT_ARRAY, new int[] {0});
+        sDefaults.putBoolean(KEY_OPPORTUNISTIC_ESIM_DOWNLOAD_VIA_WIFI_ONLY_BOOL, false);
         /* Default value is minimum RSRP level needed for SIGNAL_STRENGTH_GOOD */
         sDefaults.putInt(KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_RSRP_INT, -108);
         /* Default value is minimum RSRP level needed for SIGNAL_STRENGTH_MODERATE */
