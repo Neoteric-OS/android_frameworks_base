@@ -35,6 +35,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "33dc8f9d_fc8fd9aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1327199
+      },
+      "writtenOn": "2022-02-03T08:15:56Z",
+      "side": 1,
+      "message": "LGTM.\n\nNote that the rules prevent shrinking of annotations and generic signatures (assuming a default Proguard config is keeping them using a -keepattributes rule) from any kept item (which seems to be quite many). We may want to expose a way in R8 to avoid that, similarly to \u0027,allowaccessmodification\u0027. This is related to b/190469643.\n\nAlso, it may be worthwhile checking that the default Proguard config (if any) is not keeping runtime invisible annotations (e.g., using -keepattributes *Annotations*).",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2571fcc6_3f32f9c9",
@@ -54,6 +71,75 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7ff068da_042a59f4",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1327199
+      },
+      "writtenOn": "2022-02-03T08:15:56Z",
+      "side": 1,
+      "message": "Consider removing allowoptimization,allowaccessmodification here.",
+      "range": {
+        "startLine": 5,
+        "startChar": 6,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d25764e8_aab34556",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1327199
+      },
+      "writtenOn": "2022-02-03T08:15:56Z",
+      "side": 1,
+      "message": "void main(java.lang.String[])",
+      "range": {
+        "startLine": 6,
+        "startChar": 16,
+        "endLine": 6,
+        "endChar": 17
+      },
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d919efb_819fc32c",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1327199
+      },
+      "writtenOn": "2022-02-03T08:15:56Z",
+      "side": 1,
+      "message": "I suggest strengthening this rule to:\n\n  -keepclasseswithmembers class * {\n    @android.annotation.SystemApi *;\n  }\n\nIf a non-static field or method is annotated with @SystemApi, and the enclosing class is not instantiated, then the rule won\u0027t keep the member in R8 full mode.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 1
+      },
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "237c6df4_26087b47",
         "filename": "services/proguard.flags",
         "patchSetId": 5
@@ -65,6 +151,29 @@
       "writtenOn": "2022-02-03T06:53:33Z",
       "side": 1,
       "message": "is system server doing anything explicitly to not get the aapt generated entries into the pipeline? or are these framework resources that are shared among more apps/services?",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44b79b41_00e54c1f",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1327199
+      },
+      "writtenOn": "2022-02-03T08:15:56Z",
+      "side": 1,
+      "message": "Consider moving this to the top of the file.\n\nHave you considered repackaging the non-kept part of the app into the default package to reduce size?:\n\n  -repackageclasses\n\nIf system server is not running in its own process, you would need to repackage into a system server namespace to avoid collisions, e.g.,\n\n  -repackageclasses com.android.server.SystemServer",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 24
+      },
       "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
