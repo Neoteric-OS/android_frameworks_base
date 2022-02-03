@@ -91,8 +91,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @GuardedBy("mLock")
     private boolean mSystemAudioMute = false;
 
-    private final HdmiCecStandbyModeHandler mStandbyHandler;
-
     // If true, do not do routing control/send active source for internal source.
     // Set to true when the device was woken up by <Text/Image View On>.
     private boolean mSkipRoutingControl;
@@ -157,7 +155,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         mPrevPortId = Constants.INVALID_PORT_ID;
         mSystemAudioControlFeatureEnabled =
                 mService.readBooleanSetting(Global.HDMI_SYSTEM_AUDIO_CONTROL_ENABLED, true);
-        mStandbyHandler = new HdmiCecStandbyModeHandler(service, this);
     }
 
     @Override

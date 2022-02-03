@@ -233,6 +233,10 @@ public class HdmiControlServiceTest {
         mHdmiControlServiceSpy.setMessageValidator(new HdmiCecMessageValidator(
                 mHdmiControlServiceSpy));
 
+        mAudioSystemDeviceSpy.mStandbyHandler =
+                new HdmiCecStandbyModeHandler(mHdmiControlServiceSpy, mAudioSystemDeviceSpy);
+        mPlaybackDeviceSpy.mStandbyHandler =
+                new HdmiCecStandbyModeHandler(mHdmiControlServiceSpy, mPlaybackDeviceSpy);
         mLocalDevices.add(mAudioSystemDeviceSpy);
         mLocalDevices.add(mPlaybackDeviceSpy);
         mHdmiPortInfo = new HdmiPortInfo[4];
@@ -892,6 +896,7 @@ public class HdmiControlServiceTest {
         int sourceAddress = Constants.ADDR_TV;
         byte[] params = {0x00, 0x01, 0x02, 0x03};
         int vendorId = 0x123456;
+        doReturn(false).when(mHdmiControlServiceSpy).isPowerStandby();
 
         VendorCommandListener vendorCmdListener =
                 new VendorCommandListener(sourceAddress, destAddress, params, vendorId);
@@ -913,6 +918,7 @@ public class HdmiControlServiceTest {
         int sourceAddress = Constants.ADDR_TV;
         byte[] params = {0x00, 0x01, 0x02, 0x03};
         int vendorId = 0x123456;
+        doReturn(false).when(mHdmiControlServiceSpy).isPowerStandby();
 
         VendorCommandListener vendorCmdListener =
                 new VendorCommandListener(sourceAddress, destAddress, params, vendorId);
@@ -936,6 +942,7 @@ public class HdmiControlServiceTest {
         byte[] params = {0x00, 0x01, 0x02, 0x03};
         int vendorId = 0x123456;
         int diffVendorId = 0x345678;
+        doReturn(false).when(mHdmiControlServiceSpy).isPowerStandby();
 
         VendorCommandListener vendorCmdListener =
                 new VendorCommandListener(sourceAddress, destAddress, params, vendorId);

@@ -75,6 +75,8 @@ abstract class HdmiCecLocalDevice {
     protected int mLastKeycode = HdmiCecKeycode.UNSUPPORTED_KEYCODE;
     protected int mLastKeyRepeatCount = 0;
 
+    HdmiCecStandbyModeHandler mStandbyHandler;
+
     // Stores recent changes to the active source in the CEC network.
     private final ArrayBlockingQueue<HdmiCecController.Dumpable> mActiveSourceHistory =
             new ArrayBlockingQueue<>(MAX_HDMI_ACTIVE_SOURCE_HISTORY);
@@ -193,16 +195,22 @@ abstract class HdmiCecLocalDevice {
 
     // Factory method that returns HdmiCecLocalDevice of corresponding type.
     static HdmiCecLocalDevice create(HdmiControlService service, int deviceType) {
+        HdmiCecLocalDevice device;
         switch (deviceType) {
             case HdmiDeviceInfo.DEVICE_TV:
-                return new HdmiCecLocalDeviceTv(service);
+                device = new HdmiCecLocalDeviceTv(service);
+                break;
             case HdmiDeviceInfo.DEVICE_PLAYBACK:
-                return new HdmiCecLocalDevicePlayback(service);
+                device = new HdmiCecLocalDevicePlayback(service);
+                break;
             case HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM:
-                return new HdmiCecLocalDeviceAudioSystem(service);
+                device = new HdmiCecLocalDeviceAudioSystem(service);
+                break;
             default:
                 return null;
         }
+        device.mStandbyHandler = new HdmiCecStandbyModeHandler(service, device);
+        return device;
     }
 
     @ServiceThreadOnly
@@ -262,6 +270,11 @@ abstract class HdmiCecLocalDevice {
         int dest = message.getDestination();
         if (dest != mAddress && dest != Constants.ADDR_BROADCAST) {
             return Constants.NOT_HANDLED;
+        }
+        if (mService.isPowerStandby()
+                && !mService.isWakeUpMessageReceived()
+                && mStandbyHandler.handleCommand(message)) {
+            return Constants.HANDLED;
         }
         // Cache incoming message if it is included in the list of cacheable opcodes.
         mCecMessageCache.cacheMessage(message);
