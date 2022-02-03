@@ -16,6 +16,74 @@
       "message": "We have the green light to enable shrinking (not opt), so I\u0027ll do that in a follow-up CL when we have the PSA ready.\n\nNote that I already have some more refined rules, but I want to keep this somewhat conservative for the initial pass.",
       "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2571fcc6_3f32f9c9",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1127078
+      },
+      "writtenOn": "2022-02-03T06:53:33Z",
+      "side": 1,
+      "message": "nit, add this to commit message bug list",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "237c6df4_26087b47",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1127078
+      },
+      "writtenOn": "2022-02-03T06:53:33Z",
+      "side": 1,
+      "message": "is system server doing anything explicitly to not get the aapt generated entries into the pipeline? or are these framework resources that are shared among more apps/services?",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a770f45a_2116a8bc",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1127078
+      },
+      "writtenOn": "2022-02-03T06:53:33Z",
+      "side": 1,
+      "message": "I guess this is because it just happens to be that a lot of methods on classes with native methods are also having methods called from native",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51898af5_e0b35466",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1127078
+      },
+      "writtenOn": "2022-02-03T06:53:33Z",
+      "side": 1,
+      "message": "for this and the ones below, is it enough to keep public methods and fields? or do native call private methods?",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
