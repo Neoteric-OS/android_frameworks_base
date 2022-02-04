@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c778353d_38ae0605",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2022-02-04T17:41:24Z",
+      "side": 1,
+      "message": "adding owners who know kotlin more than i do",
+      "revId": "8fbbbe13449a848d9992e8afb21010b08652daa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc433c0c_57b19afd",
+        "filename": "tests/SilkFX/res/drawable/background_blur_drawable.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2022-02-04T17:41:24Z",
+      "side": 1,
+      "message": "blur_activity_background_drawable_white has a copyright header but this does not\n\nditto for the other xmls",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "8fbbbe13449a848d9992e8afb21010b08652daa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3993da83_9a45ddcc",
+        "filename": "tests/SilkFX/src/com/android/test/silkfx/materials/BackgroundBlurActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2022-02-04T17:41:24Z",
+      "side": 1,
+      "message": "val?",
+      "range": {
+        "startLine": 191,
+        "startChar": 8,
+        "endLine": 191,
+        "endChar": 11
+      },
+      "revId": "8fbbbe13449a848d9992e8afb21010b08652daa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7ef78ec_4a71b279",
+        "filename": "tests/SilkFX/src/com/android/test/silkfx/materials/BackgroundBlurActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2022-02-04T17:41:24Z",
+      "side": 1,
+      "message": "val?",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 197,
+        "endChar": 11
+      },
+      "revId": "8fbbbe13449a848d9992e8afb21010b08652daa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
