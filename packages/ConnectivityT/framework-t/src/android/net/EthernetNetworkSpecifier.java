@@ -29,9 +29,7 @@ import java.util.Objects;
  * A {@link NetworkSpecifier} used to identify ethernet interfaces.
  *
  * @see EthernetManager
- * @hide
  */
-@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
 public final class EthernetNetworkSpecifier extends NetworkSpecifier implements Parcelable {
 
     /**
@@ -61,6 +59,8 @@ public final class EthernetNetworkSpecifier extends NetworkSpecifier implements 
         return mInterfaceName;
     }
 
+    /** @hide */
+    @SystemApi
     @Override
     public boolean canBeSatisfiedBy(@Nullable NetworkSpecifier other) {
         return equals(other);
