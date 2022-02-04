@@ -559,7 +559,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 return new BpfMap<U32, U8>(UID_COUNTERSET_MAP_PATH, BpfMap.BPF_F_RDWR,
                         U32.class, U8.class);
             } catch (ErrnoException e) {
-                Log.wtf(TAG, "Cannot create uid counter set map: " + e);
+                Log.wtf(TAG, "Cannot open uid counter set map: " + e);
                 return null;
             }
         }
@@ -570,7 +570,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 return new BpfMap<CookieTagMapKey, CookieTagMapValue>(COOKIE_TAG_MAP_PATH,
                         BpfMap.BPF_F_RDWR, CookieTagMapKey.class, CookieTagMapValue.class);
             } catch (ErrnoException e) {
-                Log.wtf(TAG, "Cannot create cookie tag map: " + e);
+                Log.wtf(TAG, "Cannot open cookie tag map: " + e);
                 return null;
             }
         }
@@ -581,7 +581,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 return new BpfMap<StatsMapKey, StatsMapValue>(STATS_MAP_A_PATH,
                         BpfMap.BPF_F_RDWR, StatsMapKey.class, StatsMapValue.class);
             } catch (ErrnoException e) {
-                Log.wtf(TAG, "Cannot create stats map A: " + e);
+                Log.wtf(TAG, "Cannot open stats map A: " + e);
                 return null;
             }
         }
@@ -592,7 +592,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 return new BpfMap<StatsMapKey, StatsMapValue>(STATS_MAP_B_PATH,
                         BpfMap.BPF_F_RDWR, StatsMapKey.class, StatsMapValue.class);
             } catch (ErrnoException e) {
-                Log.wtf(TAG, "Cannot create stats map B: " + e);
+                Log.wtf(TAG, "Cannot open stats map B: " + e);
                 return null;
             }
         }
@@ -603,7 +603,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 return new BpfMap<UidStatsMapKey, StatsMapValue>(APP_UID_STATS_MAP_PATH,
                         BpfMap.BPF_F_RDWR, UidStatsMapKey.class, StatsMapValue.class);
             } catch (ErrnoException e) {
-                Log.wtf(TAG, "Cannot create app uid stats map: " + e);
+                Log.wtf(TAG, "Cannot open app uid stats map: " + e);
                 return null;
             }
         }
