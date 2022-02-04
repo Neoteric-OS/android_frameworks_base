@@ -69,6 +69,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b05509fd_ac1411b1",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-04T20:08:42Z",
+      "side": 1,
+      "message": "Good catch, updated to the more specific bug.",
+      "parentUuid": "2571fcc6_3f32f9c9",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ff068da_042a59f4",
@@ -82,6 +100,30 @@
       "writtenOn": "2022-02-03T08:15:56Z",
       "side": 1,
       "message": "Consider removing allowoptimization,allowaccessmodification here.",
+      "range": {
+        "startLine": 5,
+        "startChar": 6,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6eabed11_9098b536",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-04T20:08:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ff068da_042a59f4",
       "range": {
         "startLine": 5,
         "startChar": 6,
@@ -115,6 +157,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c33cb7d9_cd837b09",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-04T20:08:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d25764e8_aab34556",
+      "range": {
+        "startLine": 6,
+        "startChar": 16,
+        "endLine": 6,
+        "endChar": 17
+      },
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d919efb_819fc32c",
@@ -128,6 +194,30 @@
       "writtenOn": "2022-02-03T08:15:56Z",
       "side": 1,
       "message": "I suggest strengthening this rule to:\n\n  -keepclasseswithmembers class * {\n    @android.annotation.SystemApi *;\n  }\n\nIf a non-static field or method is annotated with @SystemApi, and the enclosing class is not instantiated, then the rule won\u0027t keep the member in R8 full mode.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 1
+      },
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b1a7ffc_599188ad",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-04T20:08:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d919efb_819fc32c",
       "range": {
         "startLine": 11,
         "startChar": 0,
@@ -155,6 +245,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b977fd2_766d6c6e",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-04T20:08:42Z",
+      "side": 1,
+      "message": "The library target doesn\u0027t include the manifest at all. The manifest is a bit odd, in that it\u0027s a mix of general system features and system_server-specific things like BroadcastReceivers.\n\nI was playing with a follow-up that feeds the manifest to the library rule, but will leave for a separate change. Tweaked the TODO accordingly.",
+      "parentUuid": "237c6df4_26087b47",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44b79b41_00e54c1f",
@@ -168,6 +276,30 @@
       "writtenOn": "2022-02-03T08:15:56Z",
       "side": 1,
       "message": "Consider moving this to the top of the file.\n\nHave you considered repackaging the non-kept part of the app into the default package to reduce size?:\n\n  -repackageclasses\n\nIf system server is not running in its own process, you would need to repackage into a system server namespace to avoid collisions, e.g.,\n\n  -repackageclasses com.android.server.SystemServer",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 24
+      },
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20e22fe8_0beb12f5",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-04T20:08:42Z",
+      "side": 1,
+      "message": "For now, we won\u0027t be doing any renaming or obfuscating (or even optimization), only shrinking. At some point we might consider that, but the current plan is 1) enable shrinking, 2) build out retracing infra further, 3) enable optimization. After that we\u0027ll consider repackaging.",
+      "parentUuid": "44b79b41_00e54c1f",
       "range": {
         "startLine": 47,
         "startChar": 0,
@@ -197,6 +329,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "311c9f0a_2b80cdb9",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-04T20:08:42Z",
+      "side": 1,
+      "message": "I\u0027m actually not 100% sure on this one. The default rule is automatically included @ https://source.corp.google.com/android/build/make/core/proguard_basic_keeps.flags;rcl\u003dd7f4a1f54800975c215502ce556ffdc8bfdc3e08;l\u003d12, but doesn\u0027t have `includedescriptorclasses`. However, in google3 I see https://source.corp.google.com/piper///depot/google3/java/com/google/android/apps/common/proguard/base.pgcfg;rcl\u003d372369943;l\u003d25, which I also see in other places like https://github.com/facebookarchive/proguard/blob/master/examples/annotations/examples.pro#L36, so that\u0027s what I put here. Should we just update proguard_basic_keeps.flags to match what exists elsewhere (with `includedescriptorclasses`)?",
+      "parentUuid": "a770f45a_2116a8bc",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "51898af5_e0b35466",
         "filename": "services/proguard.flags",
         "patchSetId": 5
@@ -208,6 +358,24 @@
       "writtenOn": "2022-02-03T06:53:33Z",
       "side": 1,
       "message": "for this and the ones below, is it enough to keep public methods and fields? or do native call private methods?",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74ef74d2_fedf38cf",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-04T20:08:42Z",
+      "side": 1,
+      "message": "A good number do call private methods and even reference private fields. I went through the list and pruned out a few that aren\u0027t strictly necessary (I first went through these a few months ago, probably should have documented each addition \u003d/). However, others will require some more targeted refinement.\n\nOne issue is that we use manual JNI registration in native code to wire up each native method declared in Java. However, the `native \u003cmethods\u003e` keepclasseswithmembernames rule above doesn\u0027t actually seem to keep native methods that are *unreferenced in Java*, so some of them will get stripped. This was a little surprising at first, though the \"process native methods\" section @ https://www.guardsquare.com/manual/configuration/examples#androidapplication seems to support this. For some of these classes, that could suggest a bug, but for others it just means they have a few native-\u003ejava-\u003enative hops for certain methods.",
+      "parentUuid": "51898af5_e0b35466",
       "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
