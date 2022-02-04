@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e228c812_9d16413b",
+        "filename": "tests/SilkFX/res/drawable/background_blur_drawable.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2022-02-04T19:41:56Z",
+      "side": 1,
+      "message": "Added the 2022 AOSP copyright on Galia\u0027s behalf",
+      "parentUuid": "bc433c0c_57b19afd",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "8fbbbe13449a848d9992e8afb21010b08652daa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3993da83_9a45ddcc",
@@ -81,6 +105,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e378e80_e2c9b7f0",
+        "filename": "tests/SilkFX/src/com/android/test/silkfx/materials/BackgroundBlurActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2022-02-04T19:41:56Z",
+      "side": 1,
+      "message": "increaseBackgroundColorAlpha/decreaseBackgroundColorAlpha are dead code from PS2 onwards so I\u0027ve gone and deleted them. Can\u0027t have bugs in  the code if there is no code :)",
+      "parentUuid": "3993da83_9a45ddcc",
+      "range": {
+        "startLine": 191,
+        "startChar": 8,
+        "endLine": 191,
+        "endChar": 11
+      },
+      "revId": "8fbbbe13449a848d9992e8afb21010b08652daa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d7ef78ec_4a71b279",
@@ -94,6 +142,30 @@
       "writtenOn": "2022-02-04T17:41:24Z",
       "side": 1,
       "message": "val?",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 197,
+        "endChar": 11
+      },
+      "revId": "8fbbbe13449a848d9992e8afb21010b08652daa2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "041d6e5c_38898979",
+        "filename": "tests/SilkFX/src/com/android/test/silkfx/materials/BackgroundBlurActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2022-02-04T19:41:56Z",
+      "side": 1,
+      "message": "Ditto last comment about deleting the functions",
+      "parentUuid": "d7ef78ec_4a71b279",
       "range": {
         "startLine": 197,
         "startChar": 8,
