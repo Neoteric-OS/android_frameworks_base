@@ -75,8 +75,8 @@ import android.content.pm.ProviderInfo;
 import android.content.pm.UserInfo;
 import android.content.res.ObbInfo;
 import android.database.ContentObserver;
-import android.media.MediaCodecList;
 import android.media.MediaCodecInfo;
+import android.media.MediaCodecList;
 import android.media.MediaFormat;
 import android.net.Uri;
 import android.os.BatteryManager;
@@ -1375,6 +1375,18 @@ class StorageManagerService extends IStorageManager.Stub
     private boolean supportsBlockCheckpoint() throws RemoteException {
         enforcePermission(android.Manifest.permission.MOUNT_FORMAT_FILESYSTEMS);
         return mVold.supportsBlockCheckpoint();
+    }
+
+    /**
+     * This method would test if the volume passed as parameter is a private volume, mounted and a
+     * non internal volume.
+     * @param vol, a VolumeInfo object to test
+     * @return true, if the volume is non-null, private volume, mounted and non-internal volume
+     * else false
+     */
+    private boolean isExternalMountedWritablePrivateVolume(VolumeInfo vol) {
+        return vol != null && vol.getType() == VolumeInfo.TYPE_PRIVATE && vol.isMountedWritable()
+                && !TextUtils.isEmpty(vol.getFsUuid());
     }
 
     @Override
@@ -3308,6 +3320,21 @@ class StorageManagerService extends IStorageManager.Stub
                 Slog.wtf(TAG, e);
                 return;
             }
+
+            // The user encrypted storage on private volumes other than internal storage are not
+            // unlocked even if internal storage is unlocked for non-running users. This causes
+            // issues when performing operations like move content and move apps where even if user
+            // has authenticated successfully. This flow will unlock the storage before moving
+            // forward with the operations bringing the behaviour inline with internal storage.
+            for (VolumeInfo vol : mVolumes.values()) {
+                if (isExternalMountedWritablePrivateVolume(vol)) {
+                    try {
+                        mVold.unlockUserKeyForVolume(vol.getFsUuid(), userId);
+                    } catch (Exception e) {
+                        Slog.wtf(TAG, e);
+                    }
+                }
+            }
         }
 
         synchronized (mLock) {
@@ -3337,6 +3364,19 @@ class StorageManagerService extends IStorageManager.Stub
             return;
         }
 
+        // This user encrypted storage on private volumes other than internal volume are not
+        // locked when storage is locked, this causes the user encrypted storage accessible even if
+        // internal storage is locked (one example is after user is stopped). This flow will lock
+        // the user encrypted storage on private volumes following the internal storage behaviour.
+        for (VolumeInfo vol : mVolumes.values()) {
+            if (isExternalMountedWritablePrivateVolume(vol)) {
+                try {
+                    mVold.lockUserKeyForVolume(vol.getFsUuid(), userId);
+                } catch (Exception e) {
+                    Slog.wtf(TAG, e);
+                }
+            }
+        }
         synchronized (mLock) {
             mLocalUnlockedUsers.remove(userId);
         }
