@@ -107,5 +107,8 @@
     <string name="global_action_reboot_fastboot">Fastboot</string>
     <string name="global_action_reboot_systemui">SystemUI</string>
     <string name="global_action_settings">Settings</string>
+
+    <!-- Google Lens Screenshot string -->
+    <string name="lensss">Lens</string>
 </resources>
 
