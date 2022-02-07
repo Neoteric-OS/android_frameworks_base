@@ -3434,7 +3434,7 @@ public abstract class Context {
     public abstract boolean stopServiceAsUser(Intent service, UserHandle user);
 
     /**
-     * Connect to an application service, creating it if needed.  This defines
+     * Connects to an application service, creating it if needed.  This defines
      * a dependency between your application and the service.  The given
      * <var>conn</var> will receive the service object when it is created and be
      * told if it dies and restarts.  The service will be considered required
@@ -3475,11 +3475,10 @@ public abstract class Context {
      *          {@link #BIND_IMPORTANT}, {@link #BIND_ADJUST_WITH_ACTIVITY},
      *          {@link #BIND_NOT_PERCEPTIBLE}, or {@link #BIND_INCLUDE_CAPABILITIES}.
      * @return {@code true} if the system is in the process of bringing up a
-     *         service that your client has permission to bind to; {@code false}
-     *         if the system couldn't find the service or if your client doesn't
-     *         have permission to bind to it. If this value is {@code true}, you
-     *         should later call {@link #unbindService} to release the
-     *         connection.
+     *     service that your client has permission to bind to; {@code false} if
+     *     he system couldn't find the service or if your client doesn't have
+     *     permission to bind to it. Regardless of the return value, you should
+     *     later call {@link #unbindService} to release the connection.
      *
      * @throws SecurityException If the caller does not have permission to access the service
      * or the service can not be found.
