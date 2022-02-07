@@ -52,7 +52,7 @@ import java.util.List;
  * app (unlike VpnService).
  *
  * <p>VPN apps using supported protocols should preferentially use this API over the {@link
- * VpnService} API for ease-of-development and reduced maintainance burden. This also give the user
+ * VpnService} API for ease-of-development and reduced maintenance burden. This also give the user
  * the guarantee that VPN network traffic is not subjected to on-device packet interception.
  *
  * @see Ikev2VpnProfile
@@ -97,130 +97,166 @@ public class VpnManager {
     public static final String NOTIFICATION_CHANNEL_VPN = "VPN";
 
     /**
-     * Action sent in the intent when an error occurred.
+     * Action sent in intents to VpnManager clients when an error occurred.
      *
-     * @hide
+     * This action will contain a category of either {@link #CATEGORY_ERROR_IKE},
+     * {@link #CATEGORY_ERROR_USER_DEACTIVATED}, or {@link #CATEGORY_ERROR_NETWORK},
+     * that the app can use to filter events it's interested in reacting to.
+     *
+     * It will also contain the following extras :
+     * <ul>
+     *   <li>{@link #EXTRA_SESSION_KEY}, a String for the session key, as returned by
+     *       {@link #startProvisionedVpnProfileSession}.
+     *   <li>{@link #EXTRA_TIMESTAMP}, a long for the timestamp at which the error occurred,
+     *       in milliseconds since the Unix Epoch, as returned by
+     *       {@link android.os.SystemClock#elapsedRealtime}.
+     *   <li>{@link #EXTRA_UNDERLYING_NETWORK}, a {@link Network} containing the underlying
+     *       network at the time the error occurred, or null if none. Note that this network
+     *       may have disconnected already.
+     *   <li>{@link #EXTRA_UNDERLYING_NETWORK_CAPABILITIES}, a {@link NetworkCapabilities} for
+     *       the underlying network at the time the error occurred.
+     *   <li>{@link #EXTRA_UNDERLYING_LINK_PROPERTIES}, a {@link LinkProperties} for the underlying
+     *       network at the time the error occurred.
+     *   <li>{@link #EXTRA_ERROR_TYPE}, an {@code int} for the type or error, either
+     *       {@link #ERROR_TYPE_RECOVERABLE} or {@link #ERROR_TYPE_NOT_RECOVERABLE}.
+     *   <li>{@link #EXTRA_ERROR_CODE}, an {@code int} error code specific to the error. See
+     *       {@link #EXTRA_ERROR_CODE} for details.
+     * </ul>
      */
     public static final String ACTION_VPN_MANAGER_ERROR = "android.net.action.VPN_MANAGER_ERROR";
 
     /**
-     * An IKE protocol error. Codes are the codes from IkeProtocolException, RFC 7296.
+     * An IKE protocol error.
      *
-     * @hide
+     * Codes (in {@link #EXTRA_ERROR_CODE}) are the codes from
+     * {@link android.net.ipsec.ike.exceptions.IkeProtocolException}, as defined by IANA in
+     * "IKEv2 Notify Message Types - Error Types".
      */
     public static final String CATEGORY_ERROR_IKE = "android.net.category.ERROR_IKE";
 
     /**
-     * User deactivated the VPN, either by turning it off or selecting a different VPN provider.
-     * The error code is always 0.
+     * The user deactivated the VPN.
      *
-     * @hide
+     * This can happen either when the user turns the VPN off explicitly, or when they select
+     * a different VPN provider.
+     *
+     * The error code is always 0.
      */
     public static final String CATEGORY_ERROR_USER_DEACTIVATED =
             "android.net.category.ERROR_USER_DEACTIVATED";
 
     /**
-     * Network error. Error codes are ERROR_CODE_NETWORK_*.
+     * A network error occurred.
      *
-     * @hide
+     * Error codes (in {@link #EXTRA_ERROR_CODE}) are ERROR_CODE_NETWORK_*.
      */
     public static final String CATEGORY_ERROR_NETWORK = "android.net.category.ERROR_NETWORK";
 
     /**
-     * The key of the session that experienced this error, as returned by
-     * startProvisionedVpnProfileSession.
+     * The key of the session that experienced this event, as a {@code String}.
      *
-     * @hide
+     * This is the same key that was returned by {@link #startProvisionedVpnProfileSession}.
      */
     public static final String EXTRA_SESSION_KEY = "android.net.extra.SESSION_KEY";
 
     /**
-     * Extra for the Network object that was the underlying network at the time of the failure, or
-     * null if none.
+     * The network that was underlying the VPN when the event occurred, as a {@link Network}.
      *
-     * @hide
+     * This extra will be null if there was no underlying network at the time of the event.
      */
     public static final String EXTRA_UNDERLYING_NETWORK = "android.net.extra.UNDERLYING_NETWORK";
 
     /**
-     * The NetworkCapabilities of the underlying network.
+     * The {@link NetworkCapabilities} of the underlying network when the event occurred.
      *
-     * @hide
+     * This extra will be null if there was no underlying network at the time of the event.
      */
     public static final String EXTRA_UNDERLYING_NETWORK_CAPABILITIES =
             "android.net.extra.UNDERLYING_NETWORK_CAPABILITIES";
 
     /**
-     * The LinkProperties of the underlying network.
+     * The {@link LinkProperties} of the underlying network when the event occurred.
      *
-     * @hide
+     * This extra will be null if there was no underlying network at the time of the event.
      */
     public static final String EXTRA_UNDERLYING_LINK_PROPERTIES =
             "android.net.extra.UNDERLYING_LINK_PROPERTIES";
 
     /**
-     * A long timestamp with SystemClock.elapsedRealtime base for when the event happened.
+     * A {@code long} timestamp containing the time at which the event occurred.
      *
-     * @hide
+     * This is a number of milliseconds since the Unix Epoch, suitable to be compared with
+     * {@link android.os.SystemClock#elapsedRealtime}.
      */
     public static final String EXTRA_TIMESTAMP = "android.net.extra.TIMESTAMP";
 
     /**
-     * Extra for the error type. This is ERROR_NOT_RECOVERABLE or ERROR_RECOVERABLE.
+     * Extra for the error type, as an {@code int}.
      *
-     * @hide
+     * This is always either {@link #ERROR_TYPE_NOT_RECOVERABLE} or {@link #ERROR_TYPE_RECOVERABLE}.
      */
     public static final String EXTRA_ERROR_TYPE = "android.net.extra.ERROR_TYPE";
 
     /**
-     * Extra for the error code. The value will be 0 for CATEGORY_ERROR_USER_DEACTIVATED, one of
-     * ERROR_CODE_NETWORK_* for ERROR_CATEGORY_NETWORK or one of values defined in
-     * IkeProtocolException#ErrorType for CATEGORY_ERROR_IKE.
+     * Extra for an error code, as an {@code int}.
      *
-     * @hide
+     * <ul>
+     *   <li>For {@link #CATEGORY_ERROR_USER_DEACTIVATED}, this is always 0.
+     *   <li>For {@link #CATEGORY_ERROR_NETWORK}, this is one of the {@code ERROR_CODE_NETWORK_*}
+     *       constants.
+     *   <li>For {@link #CATEGORY_ERROR_IKE}, this is one of values defined in
+     *       {@link android.net.ipsec.ike.exceptions.IkeProtocolException}.ERROR_TYPE_*.
+     * </ul>
      */
     public static final String EXTRA_ERROR_CODE = "android.net.extra.ERROR_CODE";
 
     /**
+     * {@link #EXTRA_ERROR_TYPE} coding for a non-recoverable error.
+     *
      * This error is fatal, e.g. the VPN was disabled or configuration error. The stack will not
      * retry connection.
-     *
-     * @hide
      */
-    public static final int ERROR_NOT_RECOVERABLE = 1;
+    public static final int ERROR_TYPE_NOT_RECOVERABLE = 1;
 
     /**
+     * {@link #EXTRA_ERROR_TYPE} coding for a recoverable error.
+     *
      * The stack experienced an error but will retry with exponential backoff, e.g. network timeout.
-     *
-     * @hide
      */
-    public static final int ERROR_RECOVERABLE = 2;
+    public static final int ERROR_TYPE_RECOVERABLE = 2;
 
     /**
-     * An error code to indicate that there was an UnknownHostException.
+     * An {@link #EXTRA_ERROR_CODE} for {@link #CATEGORY_ERROR_NETWORK} to indicate that the
+     * network host isn't known.
      *
-     * @hide
+     * This happens when domain name resolution could not resolve an IP address for the
+     * specified host. {@see java.net.UnknownHostException}
      */
     public static final int ERROR_CODE_NETWORK_UNKNOWN_HOST = 0;
 
     /**
-     * An error code to indicate that there is a SocketTimeoutException.
+     * An {@link #EXTRA_ERROR_CODE} for {@link #CATEGORY_ERROR_NETWORK} indicating a timeout.
      *
-     * @hide
+     * This happens typically after a retransmission failure.
+     * {@see android.net.ipsec.ike.exceptions.IkeTimeoutException}
      */
-    public static final int ERROR_CODE_NETWORK_TIMEOUT = 1;
+    public static final int ERROR_CODE_NETWORK_PROTOCOL_TIMEOUT = 1;
 
     /**
-     * An error code to indicate the connection was reset. (e.g. SocketException)
+     * An {@link #EXTRA_ERROR_CODE} for {@link #CATEGORY_ERROR_NETWORK} indicating that the
+     * connection was reset.
      *
-     * @hide
+     * The most common reason for this error is that the underlying network was disconnected,
+     * {@see android.net.ipsec.ike.exceptions.IkeNetworkLostException}.
      */
-    public static final int ERROR_CODE_NETWORK_RESET = 2;
+    public static final int ERROR_CODE_NETWORK_LOST = 2;
 
     /**
-     * An error code to indicate that there is an IOException.
+     * An {@link #EXTRA_ERROR_CODE} for {@link #CATEGORY_ERROR_NETWORK} indicating an
+     * input/output error.
      *
-     * @hide
+     * This code happens when reading or writing to sockets on the underlying networks was
+     * terminated by an I/O error. {@see IOException}.
      */
     public static final int ERROR_CODE_NETWORK_IO = 3;
 
