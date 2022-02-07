@@ -16,6 +16,24 @@
       "message": "It looks like https://source.corp.google.com/android/packages/modules/common/proguard/Android.bp;rcl\u003df65d457419a9727855217a43c337f1a0c8bfc7ca;l\u003d25 already has rules for the @SystemApi flag, I could just reuse those for consistency?",
       "revId": "3295f24ee59c1b9bf3cd9bce0d2af19168ae8342",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68208a9d_0c475c7e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-07T20:19:41Z",
+      "side": 1,
+      "message": "I can leave that in the TODO, looks like I\u0027d need to tweak the visibility of those rules. Any thoughts @zhanghai?",
+      "parentUuid": "7c9f7509_e12e485c",
+      "revId": "3295f24ee59c1b9bf3cd9bce0d2af19168ae8342",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
