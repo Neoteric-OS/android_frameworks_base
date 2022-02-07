@@ -146,6 +146,30 @@
       },
       "revId": "3295f24ee59c1b9bf3cd9bce0d2af19168ae8342",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9dd1df65_55936841",
+        "filename": "services/proguard.flags",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2022-02-07T23:07:04Z",
+      "side": 1,
+      "message": "For the context, I\u0027m not the expert on proguard/r8 so my change aosp/1840383 was adapted from AndroidX: https://android.googlesource.com/platform/frameworks/support/+/androidx-main/annotation/annotation/src/main/resources/META-INF/proguard/androidx-annotations.pro",
+      "parentUuid": "68c54ab0_8cb6d0ef",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "3295f24ee59c1b9bf3cd9bce0d2af19168ae8342",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
