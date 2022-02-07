@@ -345,6 +345,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4706779e_ee999ea4",
+        "filename": "services/proguard.flags",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-07T19:05:37Z",
+      "side": 1,
+      "message": "Uploaded aosp/1975127, so I\u0027ll remove this entry.",
+      "parentUuid": "311c9f0a_2b80cdb9",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51898af5_e0b35466",
