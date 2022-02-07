@@ -34,6 +34,70 @@
       "parentUuid": "7c9f7509_e12e485c",
       "revId": "3295f24ee59c1b9bf3cd9bce0d2af19168ae8342",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54a29aa1_267eca15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2022-02-07T20:27:35Z",
+      "side": 1,
+      "message": "Yes I think re-using is a good idea.",
+      "parentUuid": "68208a9d_0c475c7e",
+      "revId": "3295f24ee59c1b9bf3cd9bce0d2af19168ae8342",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8fc6249_e36507d3",
+        "filename": "services/proguard.flags",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2022-02-07T20:27:35Z",
+      "side": 1,
+      "message": "need to keep protected as well",
+      "range": {
+        "startLine": 15,
+        "startChar": 46,
+        "endLine": 15,
+        "endChar": 53
+      },
+      "revId": "3295f24ee59c1b9bf3cd9bce0d2af19168ae8342",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01c4be6c_f5a0233a",
+        "filename": "services/proguard.flags",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2022-02-07T20:27:35Z",
+      "side": 1,
+      "message": "Does * cover constructors? The proguard manual says:\n\n```\nWILDCARD\tMEANING\n\u003cinit\u003e\tmatches any constructor.\n\u003cfields\u003e\tmatches any field.\n\u003cmethods\u003e\tmatches any method.\n*\tmatches any field or method.\n```\n\nhttps://www.guardsquare.com/manual/configuration/usage#classspecification",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "3295f24ee59c1b9bf3cd9bce0d2af19168ae8342",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
