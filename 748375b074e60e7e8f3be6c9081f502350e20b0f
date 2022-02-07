@@ -52,6 +52,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "157a2fbd_ad80313a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-07T19:11:49Z",
+      "side": 1,
+      "message": "Thanks Christoffer and Rico for review, and good to know on the signatures/annotations. I actually don\u0027t think we have any `-keepattributes` rules in our base config (should we? see https://source.corp.google.com/android/build/make/core/proguard.flags and https://source.corp.google.com/android/build/make/core/proguard_basic_keeps.flags).\n\nSome of these rules are a bit more conservative than I\u0027d like, in follow-up work I\u0027ll trim them down as much as possible (testing across platforms is a bit annoying as there are a number of classes that get lit up depending on the platform... another area of improvement I\u0027m looking into, b/203143243).",
+      "parentUuid": "33dc8f9d_fc8fd9aa",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2571fcc6_3f32f9c9",
