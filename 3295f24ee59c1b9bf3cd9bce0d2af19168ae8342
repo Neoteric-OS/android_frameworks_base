@@ -77,6 +77,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "433b096f_6579600c",
+        "filename": "services/proguard.flags",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-07T23:01:06Z",
+      "side": 1,
+      "message": "Good catch.",
+      "parentUuid": "a8fc6249_e36507d3",
+      "range": {
+        "startLine": 15,
+        "startChar": 46,
+        "endLine": 15,
+        "endChar": 53
+      },
+      "revId": "3295f24ee59c1b9bf3cd9bce0d2af19168ae8342",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "01c4be6c_f5a0233a",
@@ -90,6 +114,30 @@
       "writtenOn": "2022-02-07T20:27:35Z",
       "side": 1,
       "message": "Does * cover constructors? The proguard manual says:\n\n```\nWILDCARD\tMEANING\n\u003cinit\u003e\tmatches any constructor.\n\u003cfields\u003e\tmatches any field.\n\u003cmethods\u003e\tmatches any method.\n*\tmatches any field or method.\n```\n\nhttps://www.guardsquare.com/manual/configuration/usage#classspecification",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "3295f24ee59c1b9bf3cd9bce0d2af19168ae8342",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68c54ab0_8cb6d0ef",
+        "filename": "services/proguard.flags",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-07T23:01:06Z",
+      "side": 1,
+      "message": "Good question. In theory it should, as I believe \u003cmethods\u003e is a strict superset of \u003cinit\u003e. That said, it\u0027s not clear to me why it\u0027s common to see separate rules that keep \u003cfields\u003e and \u003cmethods\u003e, rather than just using *.\n\n@Rico or @Christoffer do you know? Here are some examples:\n\nhttps://source.corp.google.com/piper///depot/google3/gmscore/sdk/config/proguard/base.pgcfg;rcl\u003d416077209;l\u003d113\n\nhttps://source.corp.google.com/piper///depot/google3/gmscore/sdk/config/proguard/base.pgcfg;rcl\u003d416077209;l\u003d299\n\nI\u0027m also wondering if we should include `includedescriptorclasses` on this rule as well. Thoughts?",
+      "parentUuid": "01c4be6c_f5a0233a",
       "range": {
         "startLine": 17,
         "startChar": 32,
