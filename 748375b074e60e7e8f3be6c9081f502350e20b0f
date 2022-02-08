@@ -70,6 +70,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74c86ec6_f17e1bfc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1327199
+      },
+      "writtenOn": "2022-02-08T08:32:31Z",
+      "side": 1,
+      "message": "If you\u0027re not looking up annotations or signatures at runtime, I don\u0027t think you need to add any `-keepattributes` rules yet. I expect you will need to add `-keepattributes LineNumberTable` to be able to retrace correctly if/when you plan to minify the program;.",
+      "parentUuid": "157a2fbd_ad80313a",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2571fcc6_3f32f9c9",

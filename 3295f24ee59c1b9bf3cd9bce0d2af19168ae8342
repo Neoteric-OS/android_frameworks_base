@@ -170,6 +170,30 @@
       },
       "revId": "3295f24ee59c1b9bf3cd9bce0d2af19168ae8342",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1289a408_cd4a1715",
+        "filename": "services/proguard.flags",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1327199
+      },
+      "writtenOn": "2022-02-08T08:32:31Z",
+      "side": 1,
+      "message": "Yes, * includes all fields and methods including constructors.\n\nI am not sure why some declare the same rule using \u003cfields\u003e and \u003cmethods\u003e. In R8, we use * when a rule should apply to both fields and methods, e.g.,\nhttps://r8.googlesource.com/r8/+/refs/heads/main/src/test/java/com/android/tools/r8/R8TestBuilder.java#569\n\nI think adding `includedescriptorclasses` could be a good idea. If you have a publicly exposed API which refers to a class Foo, then Foo is strictly speaking part of the exposed API as well, and should probably itself be annotated by @SystemApi as well. This would make `includedescriptorclasses` redundant. The `includedescriptorclasses` could perhaps save you a few times where you missed a @SystemApi annotation, but on the other hand it could also pave over some missing rules.",
+      "parentUuid": "9dd1df65_55936841",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "3295f24ee59c1b9bf3cd9bce0d2af19168ae8342",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
