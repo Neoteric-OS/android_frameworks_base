@@ -106,6 +106,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f06dac0_78a8bbe8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1327199
+      },
+      "writtenOn": "2022-02-08T18:46:26Z",
+      "side": 1,
+      "message": "No, you might as well add that sooner than later. When you start optimizing, your stack traces will no longer correspond to original stack traces due to, for example, inlining. Having the above rule should allow you to correctly retrace such stack traces using the mapping file.",
+      "parentUuid": "ccfc785c_b1db9e18",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2571fcc6_3f32f9c9",
