@@ -88,6 +88,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccfc785c_b1db9e18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-02-08T18:09:28Z",
+      "side": 1,
+      "message": "Gotcha, so long as we\u0027re not enabling obfuscation (but are shrinking, and soon optimizing), we shouldn\u0027t need an explicit rule like:\n\n`-keepattributes SourceFile,LineNumberTable`\n\nDoes it hurt to keep that even if we\u0027re not obfuscating?",
+      "parentUuid": "74c86ec6_f17e1bfc",
+      "revId": "748375b074e60e7e8f3be6c9081f502350e20b0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2571fcc6_3f32f9c9",
