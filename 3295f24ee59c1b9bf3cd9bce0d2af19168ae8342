@@ -194,6 +194,30 @@
       },
       "revId": "3295f24ee59c1b9bf3cd9bce0d2af19168ae8342",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e68aaaef_e45b56d7",
+        "filename": "services/proguard.flags",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2022-02-08T19:06:29Z",
+      "side": 1,
+      "message": "(IIRC metalava does check that all referenced classes in an API are also APIs, so `includedescriptorclasses` might not be needed.)",
+      "parentUuid": "1289a408_cd4a1715",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "3295f24ee59c1b9bf3cd9bce0d2af19168ae8342",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
