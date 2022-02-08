@@ -337,6 +337,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     private boolean mAppliedTemporaryBrightness;
     private boolean mAppliedTemporaryAutoBrightnessAdjustment;
     private boolean mAppliedBrightnessBoost;
+    private boolean mAppliedHDR;
 
     // Reason for which the brightness was last changed. See {@link BrightnessReason} for more
     // information.
@@ -1365,11 +1366,20 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             // use instead. We still preserve the calculated brightness for Standard Dynamic Range
             // (SDR) layers, but the main brightness value will be the one for HDR.
             float sdrAnimateValue = animateValue;
-            if (mHbmController.getHighBrightnessMode() == BrightnessInfo.HIGH_BRIGHTNESS_MODE_HDR
-                    && ((mBrightnessReason.modifier & BrightnessReason.MODIFIER_DIMMED) == 0
-                    || (mBrightnessReason.modifier & BrightnessReason.MODIFIER_LOW_POWER) == 0)) {
-                // We want to scale HDR brightness level with the SDR level
-                animateValue = mHbmController.getHdrBrightnessValue();
+            if (mHbmController.getHighBrightnessMode() == BrightnessInfo.HIGH_BRIGHTNESS_MODE_HDR) {
+                if ((mBrightnessReason.modifier & BrightnessReason.MODIFIER_DIMMED) == 0
+                        || (mBrightnessReason.modifier & BrightnessReason.MODIFIER_LOW_POWER)
+                        == 0) {
+                    // We want to scale HDR brightness level with the SDR level
+                    animateValue = mHbmController.getHdrBrightnessValue();
+                }
+                if (!mAppliedHDR) {
+                    slowChange = false;
+                }
+                mAppliedHDR = true;
+            } else if (mAppliedHDR) {
+                slowChange = false;
+                mAppliedHDR = false;
             }
 
             final float currentBrightness = mPowerState.getScreenBrightness();
@@ -2278,6 +2288,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         pw.println("  mAppliedLowPower=" + mAppliedLowPower);
         pw.println("  mAppliedScreenBrightnessOverride=" + mAppliedScreenBrightnessOverride);
         pw.println("  mAppliedTemporaryBrightness=" + mAppliedTemporaryBrightness);
+        pw.println("  mAppliedHDR=" + mAppliedHDR);
         pw.println("  mDozing=" + mDozing);
         pw.println("  mSkipRampState=" + skipRampStateToString(mSkipRampState));
         pw.println("  mScreenOnBlockStartRealTime=" + mScreenOnBlockStartRealTime);
