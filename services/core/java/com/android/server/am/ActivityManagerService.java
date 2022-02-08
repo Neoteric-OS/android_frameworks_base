@@ -14785,6 +14785,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         if (mLocalDeviceIdleController != null) {
             for (int i = 0; i < N; i++) {
                 PendingTempAllowlist ptw = list[i];
+                if (ptw == null) continue;
                 mLocalDeviceIdleController.addPowerSaveTempWhitelistAppDirect(ptw.targetUid,
                         ptw.duration, ptw.type, true, ptw.reasonCode, ptw.tag,
                         ptw.callingUid);
@@ -14796,6 +14797,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             synchronized (mProcLock) {
                 for (int i = 0; i < N; i++) {
                     PendingTempAllowlist ptw = list[i];
+                    if (ptw == null) continue;
                     int index = mPendingTempAllowlist.indexOfKey(ptw.targetUid);
                     if (index >= 0 && mPendingTempAllowlist.valueAt(index) == ptw) {
                         mPendingTempAllowlist.removeAt(index);
