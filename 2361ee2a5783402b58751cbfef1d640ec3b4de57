@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d51535d_8b542f10",
+        "filename": "media/java/android/media/HwAudioSource.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2022-02-08T12:54:53Z",
+      "side": 1,
+      "message": "if agreed, i need to enforce that MODIFY_AUDIO_ROUTING is required",
+      "range": {
+        "startLine": 33,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 48
+      },
+      "revId": "2361ee2a5783402b58751cbfef1d640ec3b4de57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cafa1fa7_10628b9c",
+        "filename": "media/java/android/media/HwAudioSource.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2022-02-08T12:54:53Z",
+      "side": 1,
+      "message": "This CL has a \"side\" effect, it forces client of HwAudioSource to have MODIFY_AUDIO_ROUTING.\nHowever, it seems to be ... normal expectation to have this permission in order to connect audio sources, isn\u0027t it?",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 7
+      },
+      "revId": "2361ee2a5783402b58751cbfef1d640ec3b4de57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
