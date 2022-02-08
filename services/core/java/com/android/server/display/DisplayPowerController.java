@@ -430,6 +430,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     private boolean mAppliedTemporaryAutoBrightnessAdjustment;
     private boolean mAppliedBrightnessBoost;
     private boolean mAppliedThrottling;
+    private boolean mAppliedHDR;
 
     // Reason for which the brightness was last changed. See {@link BrightnessReason} for more
     // information.
@@ -1960,14 +1961,22 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             // TODO(b/216365040): The decision to prevent HBM for HDR in low power mode should be
             // done in HighBrightnessModeController.
             if (mBrightnessRangeController.getHighBrightnessMode()
-                    == BrightnessInfo.HIGH_BRIGHTNESS_MODE_HDR
-                    && (mBrightnessReasonTemp.getModifier() & BrightnessReason.MODIFIER_DIMMED) == 0
-                    && (mBrightnessReasonTemp.getModifier() & BrightnessReason.MODIFIER_LOW_POWER)
-                    == 0) {
-                // We want to scale HDR brightness level with the SDR level, we also need to restore
-                // SDR brightness immediately when entering dim or low power mode.
-                animateValue = mBrightnessRangeController.getHdrBrightnessValue();
-                mBrightnessReasonTemp.addModifier(BrightnessReason.MODIFIER_HDR);
+                    == BrightnessInfo.HIGH_BRIGHTNESS_MODE_HDR) {
+                if ((mBrightnessReasonTemp.getModifier() & BrightnessReason.MODIFIER_DIMMED) == 0
+                        || (mBrightnessReasonTemp.getModifier()
+                        & BrightnessReason.MODIFIER_LOW_POWER) == 0) {
+                    // We want to scale HDR brightness level with the SDR level, we also need to
+                    // restore SDR brightness immediately when entering dim or low power mode.
+                    animateValue = mBrightnessRangeController.getHdrBrightnessValue();
+                    mBrightnessReasonTemp.addModifier(BrightnessReason.MODIFIER_HDR);
+                }
+                if (!mAppliedHDR) {
+                    slowChange = false;
+                }
+                mAppliedHDR = true;
+            } else if (mAppliedHDR) {
+                slowChange = false;
+                mAppliedHDR = false;
             }
 
             final float currentBrightness = mPowerState.getScreenBrightness();
@@ -3122,6 +3131,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         pw.println("  mAppliedTemporaryAutoBrightnessAdjustment="
                 + mAppliedTemporaryAutoBrightnessAdjustment);
         pw.println("  mAppliedBrightnessBoost=" + mAppliedBrightnessBoost);
+        pw.println("  mAppliedHDR=" + mAppliedHDR);
         pw.println("  mDozing=" + mDozing);
         pw.println("  mSkipRampState=" + skipRampStateToString(mSkipRampState));
         pw.println("  mScreenOnBlockStartRealTime=" + mScreenOnBlockStartRealTime);
