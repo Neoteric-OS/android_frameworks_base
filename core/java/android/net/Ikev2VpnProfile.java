@@ -543,7 +543,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         if (profile.excludeLocalRoutes && !profile.isBypassable) {
             Log.w(TAG, "ExcludeLocalRoutes should only be set in the bypassable VPN");
         }
-        builder.setExcludeLocalRoutes(profile.excludeLocalRoutes && profile.isBypassable);
+        builder.setLocalRoutesExcluded(profile.excludeLocalRoutes && profile.isBypassable);
 
         return builder.build();
     }
@@ -1074,7 +1074,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
          */
         @NonNull
         @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
-        public Builder setExcludeLocalRoutes(boolean excludeLocalRoutes) {
+        public Builder setLocalRoutesExcluded(boolean excludeLocalRoutes) {
             mExcludeLocalRoutes = excludeLocalRoutes;
             return this;
         }

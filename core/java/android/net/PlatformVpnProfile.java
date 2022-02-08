@@ -84,7 +84,7 @@ public abstract class PlatformVpnProfile {
     /**
      * Returns if the local traffic is exempted from the VPN.
      */
-    public final boolean getExcludeLocalRoutes() {
+    public final boolean areLocalRoutesExcluded() {
         return mExcludeLocalRoutes;
     }
 
