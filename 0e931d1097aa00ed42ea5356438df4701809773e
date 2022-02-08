@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57a21222_df14f4fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2022-02-08T06:53:41Z",
+      "side": 1,
+      "message": "LGTM. This CL does not change the DSU behavior but its implementation about permission control.",
+      "revId": "0e931d1097aa00ed42ea5356438df4701809773e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d7b624e3_864bb3a3",
