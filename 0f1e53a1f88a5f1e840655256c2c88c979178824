@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000020244517",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1978026?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c673a2e3_642337ef",
+        "filename": "services/core/java/com/android/server/media/MediaSessionRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1351,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-09T02:56:56Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1351,
+        "startChar": 0,
+        "endLine": 1351,
+        "endChar": 8
+      },
+      "revId": "0f1e53a1f88a5f1e840655256c2c88c979178824",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000020244517",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1978026?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "873999cc_08e0d596",
+        "filename": "services/core/java/com/android/server/media/MediaSessionRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-09T02:56:56Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1354,
+        "startChar": 99,
+        "endLine": 1354,
+        "endChar": 100
+      },
+      "revId": "0f1e53a1f88a5f1e840655256c2c88c979178824",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
