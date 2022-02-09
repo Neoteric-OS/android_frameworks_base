@@ -19,7 +19,9 @@ package android.net;
 import android.annotation.SystemApi;
 import android.app.SystemServiceRegistry;
 import android.content.Context;
+import android.net.mdns.aidl.IMdns;
 import android.net.nsd.INsdManager;
+import android.net.nsd.MdnsServiceManager;
 import android.net.nsd.NsdManager;
 
 /**
@@ -55,6 +57,15 @@ public final class ConnectivityFrameworkInitializerTiramisu {
                 (context, serviceBinder) -> {
                     IIpSecService service = IIpSecService.Stub.asInterface(serviceBinder);
                     return new IpSecManager(context, service);
+                }
+        );
+
+        SystemServiceRegistry.registerStaticService(
+                MdnsServiceManager.MDNS_SERVICE,
+                MdnsServiceManager.class,
+                (serviceBinder) -> {
+                    IMdns service = IMdns.Stub.asInterface(serviceBinder);
+                    return new MdnsServiceManager(service);
                 }
         );
     }
