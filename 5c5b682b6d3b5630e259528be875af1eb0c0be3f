@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a6df366_5f94810a",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2022-02-09T04:01:14Z",
+      "side": 1,
+      "message": "it already has NET_ADMIN capability, so it makes sense it should also be in the group.",
+      "range": {
+        "startLine": 688,
+        "startChar": 28,
+        "endLine": 688,
+        "endChar": 41
+      },
+      "revId": "5c5b682b6d3b5630e259528be875af1eb0c0be3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
