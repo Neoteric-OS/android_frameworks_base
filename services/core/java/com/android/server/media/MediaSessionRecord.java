@@ -1377,6 +1377,15 @@ public class MediaSessionRecord implements IBinder.DeathRecipient, MediaSessionR
                 if (getControllerHolderIndexForCb(cb) < 0) {
                     mControllerCallbackHolders.add(new ISessionControllerCallbackHolder(cb,
                             packageName, Binder.getCallingUid()));
+                    // Avoid callback leaks
+                    try {
+                        // cb is not referenced outside of the MediaSessionRecord, so the death  
+                        // handler won't prevent MediaSessionRecord to be garbage collected.
+                        cb.asBinder().linkToDeath(() -> unregisterCallback(cb), 0);
+                    } catch (RemoteException e) {
+                        unregisterCallback(cb);
+                        Log.w(TAG, "registerCallback failed to linkToDeath", e);
+                    }
                     if (DEBUG) {
                         Log.d(TAG, "registering controller callback " + cb + " from controller"
                                 + packageName);
