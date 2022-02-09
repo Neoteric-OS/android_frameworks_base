@@ -1758,6 +1758,11 @@ public class ServiceState implements Parcelable {
     /**
      * Get the CDMA NID (Network Identification Number), a number uniquely identifying a network
      * within a wireless system. (Defined in 3GPP2 C.S0023 3.4.8)
+     *
+     * Require at least {@link android.Manifest.permission#ACCESS_FINE_LOCATION} or
+     * {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}. Otherwise return
+     * {@link #UNKNOWN_ID}.
+     *
      * @return The CDMA NID or {@link #UNKNOWN_ID} if not available.
      */
     public int getCdmaNetworkId() {
@@ -1767,6 +1772,11 @@ public class ServiceState implements Parcelable {
     /**
      * Get the CDMA SID (System Identification Number), a number uniquely identifying a wireless
      * system. (Defined in 3GPP2 C.S0023 3.4.8)
+     *
+     * Require at least {@link android.Manifest.permission#ACCESS_FINE_LOCATION} or
+     * {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}. Otherwise return
+     * {@link #UNKNOWN_ID}.
+     *
      * @return The CDMA SID or {@link #UNKNOWN_ID} if not available.
      */
     public int getCdmaSystemId() {
@@ -2069,6 +2079,8 @@ public class ServiceState implements Parcelable {
         state.mOperatorAlphaLong = null;
         state.mOperatorAlphaShort = null;
         state.mOperatorNumeric = null;
+        state.mSystemId = -1;
+        state.mNetworkId = -1;
 
         return state;
     }
