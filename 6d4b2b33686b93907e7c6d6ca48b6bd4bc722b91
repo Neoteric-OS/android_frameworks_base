@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d800308_35f0203d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1309980
+      },
+      "writtenOn": "2022-02-09T13:22:55Z",
+      "side": 1,
+      "message": "Hello Kevin\n\nThis patch is to create a performance test about Resources.getIdentifier.\n\nCould you please help to code review ResourcesPerfTest.java and OWNERS?",
+      "revId": "6d4b2b33686b93907e7c6d6ca48b6bd4bc722b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee9a9e75_431ac8ac",
