@@ -39,6 +39,30 @@
       },
       "revId": "6d4b2b33686b93907e7c6d6ca48b6bd4bc722b91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6c54bf1_8774826e",
+        "filename": "apct-tests/perftests/core/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1309980
+      },
+      "writtenOn": "2022-02-09T13:47:22Z",
+      "side": 1,
+      "message": "Done in patchset 2",
+      "parentUuid": "ee9a9e75_431ac8ac",
+      "range": {
+        "startLine": 4,
+        "startChar": 44,
+        "endLine": 4,
+        "endChar": 54
+      },
+      "revId": "6d4b2b33686b93907e7c6d6ca48b6bd4bc722b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
