@@ -33,6 +33,23 @@
       "message": "Ping.",
       "revId": "f404f1dbfc71e957aab99a014df0b461309b2bb7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2fa8906_d1a22c97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-02-09T15:20:43Z",
+      "side": 1,
+      "message": "Ping. I need ORV+1 for the removal of the jarjar rules files.",
+      "revId": "f404f1dbfc71e957aab99a014df0b461309b2bb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
