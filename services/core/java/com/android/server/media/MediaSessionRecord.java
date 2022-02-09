@@ -1375,8 +1375,16 @@ public class MediaSessionRecord implements IBinder.DeathRecipient, MediaSessionR
                     return;
                 }
                 if (getControllerHolderIndexForCb(cb) < 0) {
-                    mControllerCallbackHolders.add(new ISessionControllerCallbackHolder(cb,
-                            packageName, Binder.getCallingUid()));
+                    ISessionControllerCallbackHolder holder = new ISessionControllerCallbackHolder(
+                        cb, packageName, Binder.getCallingUid(), () -> unregisterCallback(cb));
+                    mControllerCallbackHolders.add(holder);
+                    // Avoid callback leaks
+                    try {
+                        cb.asBinder().linkToDeath(holder.mDeathMonitor, 0);
+                    } catch (RemoteException e) {
+                        unregisterCallback(cb);
+                        Log.w(TAG, "registerCallback failed to linkToDeath", e);
+                    }
                     if (DEBUG) {
                         Log.d(TAG, "registering controller callback " + cb + " from controller"
                                 + packageName);
@@ -1390,6 +1398,8 @@ public class MediaSessionRecord implements IBinder.DeathRecipient, MediaSessionR
             synchronized (mLock) {
                 int index = getControllerHolderIndexForCb(cb);
                 if (index != -1) {
+                    cb.asBinder().unlinkToDeath(mControllerCallbackHolders.get(index).mDeathMonitor,
+                        0);
                     mControllerCallbackHolders.remove(index);
                 }
                 if (DEBUG) {
@@ -1600,12 +1610,14 @@ public class MediaSessionRecord implements IBinder.DeathRecipient, MediaSessionR
         private final ISessionControllerCallback mCallback;
         private final String mPackageName;
         private final int mUid;
+        private final IBinder.DeathRecipient mDeathMonitor;
 
         ISessionControllerCallbackHolder(ISessionControllerCallback callback, String packageName,
-                int uid) {
+                int uid, IBinder.DeathRecipient deathMonitor) {
             mCallback = callback;
             mPackageName = packageName;
             mUid = uid;
+            mDeathMonitor = deathMonitor;
         }
     }
 
