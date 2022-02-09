@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "516776cc_87d19fe5",
+        "filename": "apct-tests/perftests/core/src/android/app/ResourcesPerfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1757736
+      },
+      "writtenOn": "2022-02-09T18:18:27Z",
+      "side": 1,
+      "message": "Nit: random.nextInt(10000) will give you a number in [0, 10000). For [0, 10000], I think this should be random.nextInt(10001).",
+      "range": {
+        "startLine": 235,
+        "startChar": 55,
+        "endLine": 235,
+        "endChar": 60
+      },
+      "revId": "778ee9fc035c4a852fa2cb99d8595a3670507c9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
