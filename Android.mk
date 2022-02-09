@@ -15,6 +15,12 @@
 #
 LOCAL_PATH := $(call my-dir)
 
+$(eval $(call declare-1p-copy-files,frameworks/base,.ogg))
+$(eval $(call declare-1p-copy-files,frameworks/base,.kl))
+$(eval $(call declare-1p-copy-files,frameworks/base,.kcm))
+$(eval $(call declare-1p-copy-files,frameworks/base,.idc))
+$(eval $(call declare-1p-copy-files,frameworks/base,dirty-image-objects))
+
 # Load framework-specific path mappings used later in the build.
 include $(LOCAL_PATH)/pathmap.mk
 
