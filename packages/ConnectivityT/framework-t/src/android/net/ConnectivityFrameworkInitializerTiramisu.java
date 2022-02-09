@@ -20,7 +20,9 @@ import android.annotation.SystemApi;
 import android.app.SystemServiceRegistry;
 import android.app.usage.NetworkStatsManager;
 import android.content.Context;
+import android.net.mdns.aidl.IMdns;
 import android.net.nsd.INsdManager;
+import android.net.nsd.MdnsServiceManager;
 import android.net.nsd.NsdManager;
 
 /**
@@ -66,6 +68,15 @@ public final class ConnectivityFrameworkInitializerTiramisu {
                     INetworkStatsService service =
                             INetworkStatsService.Stub.asInterface(serviceBinder);
                     return new NetworkStatsManager(context, service);
+                }
+        );
+
+        SystemServiceRegistry.registerStaticService(
+                MdnsServiceManager.MDNS_SERVICE,
+                MdnsServiceManager.class,
+                (serviceBinder) -> {
+                    IMdns service = IMdns.Stub.asInterface(serviceBinder);
+                    return new MdnsServiceManager(service);
                 }
         );
     }
