@@ -19,6 +19,7 @@ package android.telephony;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -757,16 +758,20 @@ public class ServiceState implements Parcelable {
     /**
      * Get current registered operator name in long alphanumeric format.
      *
-     * In GSM/UMTS, long format can be up to 16 characters long.
-     * In CDMA, returns the ERI text, if set. Otherwise, returns the ONS.
+     * <p>In GSM/UMTS, long format can be up to 16 characters long. In CDMA, returns the ERI text,
+     * if set. Otherwise, returns the ONS.
      *
-     * Require at least {@link android.Manifest.permission#ACCESS_FINE_LOCATION} or
-     * {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}. Otherwise return null if the
-     * caller does not hold neither {@link android.Manifest.permission#ACCESS_FINE_LOCATION} nor
-     * {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}.
+     * <p>Require at least {@link android.Manifest.permission#ACCESS_FINE_LOCATION} or {@link
+     * android.Manifest.permission#ACCESS_COARSE_LOCATION}. Otherwise return null if the caller does
+     * not hold neither {@link android.Manifest.permission#ACCESS_FINE_LOCATION} nor {@link
+     * android.Manifest.permission#ACCESS_COARSE_LOCATION}.
      *
      * @return long name of operator, null if unregistered or unknown
      */
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+    })
     public String getOperatorAlphaLong() {
         return mOperatorAlphaLong;
     }
@@ -774,14 +779,18 @@ public class ServiceState implements Parcelable {
     /**
      * Get current registered voice network operator name in long alphanumeric format.
      *
-     * Require at least {@link android.Manifest.permission#ACCESS_FINE_LOCATION} or
-     * {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}. Otherwise return null if the
-     * caller does not hold neither {@link android.Manifest.permission#ACCESS_FINE_LOCATION} nor
-     * {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}.
+     * <p>Require at least {@link android.Manifest.permission#ACCESS_FINE_LOCATION} or {@link
+     * android.Manifest.permission#ACCESS_COARSE_LOCATION}. Otherwise return null if the caller does
+     * not hold neither {@link android.Manifest.permission#ACCESS_FINE_LOCATION} nor {@link
+     * android.Manifest.permission#ACCESS_COARSE_LOCATION}.
      *
      * @return long name of operator
      * @hide
      */
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+    })
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.Q,
             publicAlternatives = "Use {@link #getOperatorAlphaLong} instead.")
     public String getVoiceOperatorAlphaLong() {
@@ -800,6 +809,10 @@ public class ServiceState implements Parcelable {
      *
      * @return short name of operator, null if unregistered or unknown
      */
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+    })
     public String getOperatorAlphaShort() {
         return mOperatorAlphaShort;
     }
@@ -815,6 +828,10 @@ public class ServiceState implements Parcelable {
      * @return short name of operator, null if unregistered or unknown
      * @hide
      */
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+    })
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.Q,
             publicAlternatives = "Use {@link #getOperatorAlphaShort} instead.")
     public String getVoiceOperatorAlphaShort() {
@@ -832,6 +849,10 @@ public class ServiceState implements Parcelable {
      * @return short name of operator, null if unregistered or unknown
      * @hide
      */
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+    })
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.Q,
             publicAlternatives = "Use {@link #getOperatorAlphaShort} instead.")
     public String getDataOperatorAlphaShort() {
@@ -853,6 +874,10 @@ public class ServiceState implements Parcelable {
      * @return name of operator, null if unregistered or unknown
      * @hide
      */
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+    })
     public String getOperatorAlpha() {
         if (TextUtils.isEmpty(mOperatorAlphaLong)) {
             return mOperatorAlphaShort;
@@ -864,13 +889,12 @@ public class ServiceState implements Parcelable {
     /**
      * Get current registered operator numeric id.
      *
-     * In GSM/UMTS, numeric format is 3 digit country code plus 2 or 3 digit
-     * network code.
+     * <p>In GSM/UMTS, numeric format is 3 digit country code plus 2 or 3 digit network code.
      *
-     * Require at least {@link android.Manifest.permission#ACCESS_FINE_LOCATION} or
-     * {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}. Otherwise return null if the
-     * caller does not hold neither {@link android.Manifest.permission#ACCESS_FINE_LOCATION} nor
-     * {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}.
+     * <p>Require at least {@link android.Manifest.permission#ACCESS_FINE_LOCATION} or {@link
+     * android.Manifest.permission#ACCESS_COARSE_LOCATION}. Otherwise return null if the caller does
+     * not hold neither {@link android.Manifest.permission#ACCESS_FINE_LOCATION} nor {@link
+     * android.Manifest.permission#ACCESS_COARSE_LOCATION}.
      *
      * @return numeric format of operator, null if unregistered or unknown
      */
@@ -878,6 +902,10 @@ public class ServiceState implements Parcelable {
      * The country code can be decoded using
      * {@link com.android.internal.telephony.MccTable#countryCodeForMcc(int)}.
      */
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+    })
     public String getOperatorNumeric() {
         return mOperatorNumeric;
     }
@@ -893,6 +921,10 @@ public class ServiceState implements Parcelable {
      * @return numeric format of operator, null if unregistered or unknown
      * @hide
      */
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+    })
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public String getVoiceOperatorNumeric() {
         return mOperatorNumeric;
@@ -909,6 +941,10 @@ public class ServiceState implements Parcelable {
      * @return numeric format of operator, null if unregistered or unknown
      * @hide
      */
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+    })
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.Q,
             publicAlternatives = "Use {@link #getOperatorNumeric} instead.")
     public String getDataOperatorNumeric() {
@@ -1758,8 +1794,17 @@ public class ServiceState implements Parcelable {
     /**
      * Get the CDMA NID (Network Identification Number), a number uniquely identifying a network
      * within a wireless system. (Defined in 3GPP2 C.S0023 3.4.8)
+     *
+     * Require at least {@link android.Manifest.permission#ACCESS_FINE_LOCATION} or
+     * {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}. Otherwise return
+     * {@link #UNKNOWN_ID}.
+     *
      * @return The CDMA NID or {@link #UNKNOWN_ID} if not available.
      */
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+    })
     public int getCdmaNetworkId() {
         return this.mNetworkId;
     }
@@ -1767,8 +1812,17 @@ public class ServiceState implements Parcelable {
     /**
      * Get the CDMA SID (System Identification Number), a number uniquely identifying a wireless
      * system. (Defined in 3GPP2 C.S0023 3.4.8)
+     *
+     * Require at least {@link android.Manifest.permission#ACCESS_FINE_LOCATION} or
+     * {@link android.Manifest.permission#ACCESS_COARSE_LOCATION}. Otherwise return
+     * {@link #UNKNOWN_ID}.
+     *
      * @return The CDMA SID or {@link #UNKNOWN_ID} if not available.
      */
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+    })
     public int getCdmaSystemId() {
         return this.mSystemId;
     }
@@ -2069,6 +2123,8 @@ public class ServiceState implements Parcelable {
         state.mOperatorAlphaLong = null;
         state.mOperatorAlphaShort = null;
         state.mOperatorNumeric = null;
+        state.mSystemId = UNKNOWN_ID;
+        state.mNetworkId = UNKNOWN_ID;
 
         return state;
     }
