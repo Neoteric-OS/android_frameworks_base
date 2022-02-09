@@ -1347,6 +1347,20 @@ public class MediaSessionRecord implements IBinder.DeathRecipient, MediaSessionR
         }
     }
 
+    private final class SessionControllerCallbackDeathMonitor implements IBinder.DeathRecipient {
+        final ISessionControllerCallback mSessionControllerCallback;
+
+        SessionControllerCallbackDeathMonitor(ISessionControllerCallback sessionControllerCallback)
+        {
+            mSessionControllerCallback = sessionControllerCallback;
+        }
+
+        public void binderDied() {
+            mController.unregisterCallback(mSessionControllerCallback);
+            mSessionControllerCallback.asBinder().unlinkToDeath(this, 0);
+        }
+    }
+
     class ControllerStub extends ISessionController.Stub {
         @Override
         public void sendCommand(String packageName, String command, Bundle args,
@@ -1377,6 +1391,12 @@ public class MediaSessionRecord implements IBinder.DeathRecipient, MediaSessionR
                 if (getControllerHolderIndexForCb(cb) < 0) {
                     mControllerCallbackHolders.add(new ISessionControllerCallbackHolder(cb,
                             packageName, Binder.getCallingUid()));
+                    // Avoid callback leaks
+                    try {
+                        cb.asBinder().linkToDeath(new SessionControllerCallbackDeathMonitor(cb), 0);
+                    } catch (RemoteException e) {
+                        Log.w(TAG, "The far side is dead");
+                    }
                     if (DEBUG) {
                         Log.d(TAG, "registering controller callback " + cb + " from controller"
                                 + packageName);
