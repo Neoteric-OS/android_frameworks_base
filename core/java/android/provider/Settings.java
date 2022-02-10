@@ -11108,6 +11108,18 @@ public final class Settings {
         public static final String ADAPTIVE_CONNECTIVITY_ENABLED = "adaptive_connectivity_enabled";
 
         /**
+         * Face Unlock Method
+         * @hide
+         */
+        public static final String FACE_UNLOCK_METHOD = "face_unlock_method";
+
+        /**
+         * Whether to skip face auth confirmation
+         * @hide
+         */
+        public static final String SKIP_FACE_AUTH_CONFIRMATION = "skip_face_auth_confirmation";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *

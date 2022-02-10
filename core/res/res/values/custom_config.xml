@@ -1,0 +1,59 @@
+<resources>
+    <!-- Whether device supports in-display fingerprint -->
+    <bool name="config_supportsUdfps">true</bool>
+
+    <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
+    <bool name="config_cleanupUnusedFingerprints">true</bool>
+
+    <!-- The list of components which should be automatically disabled for a specific device.
+      Note: this MUST not be used to randomly disable components, ask for approval first! -->
+     <string-array name="config_deviceDisabledComponents" translatable="false">
+     </string-array>
+
+     <!-- The list of components which should be automatically disabled for all devices. -->
+     <string-array name="config_globallyDisabledComponents" translatable="false">
+     </string-array>
+
+     <!-- The list of components which should be forced to be enabled. -->
+     <string-array name="config_forceEnabledComponents" translatable="false">
+     </string-array>
+
+    <!-- These are system packages exempted from privacy indicator -->
+    <string-array name="config_indicatorExemptedPackageNames" translatable="false">
+        <item>com.android.bluetooth</item>
+        <item>com.android.cellbroadcastservice</item>
+        <item>com.android.mms.service</item>
+        <item>com.android.networkstack.tethering</item>
+        <item>com.android.ons</item>
+        <item>com.android.phone</item>
+        <item>com.android.printspooler</item>
+        <item>com.android.providers.telephony</item>
+        <item>com.android.stk</item>
+        <item>com.android.systemui</item>
+        <item>com.google.android.settings.intelligence</item>
+        <item>com.mediatek.ims</item>
+        <item>com.qualcomm.qti.cne</item>
+        <item>com.shannon.imsservice</item>
+        <item>org.pixelexperience.faceunlock</item>
+    </string-array>
+
+    <!-- Defines the sysfs attribute path used by pocket bridge
+         to communicate pocket state to the pocket judge kernel driver. -->
+    <string name="config_pocketBridgeSysfsInpocket"></string>
+
+    <!-- Pocket Lock -->
+    <bool name="config_pocketModeSupported">true</bool>
+    <bool name="config_pocketUseLightSensor">true</bool>
+
+    <!-- Defines custom OEM sensor for pocket detection. -->
+    <string name="config_pocketJudgeVendorSensorName"></string>
+    <string name="config_pocketJudgeVendorProximitySensorName"></string>
+
+    <!-- Array containing custom error messages from vendor. -->
+    <string-array name="face_error_vendor" translatable="false">
+        <item>@string/face_unlock_disabled_idle</item>
+    </string-array>
+
+    <!-- Enable face auth only when swiping security view -->
+    <bool name="config_faceAuthOnlyOnSecurityView">false</bool>
+</resources>
