@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb6016ab_dd4dca22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1106808
+      },
+      "writtenOn": "2022-02-10T22:01:24Z",
+      "side": 1,
+      "message": "+2 without comment since it was already merged to internal main branch.",
+      "revId": "cfa26a0ae73045646e6ec674602c5304417aaff3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
