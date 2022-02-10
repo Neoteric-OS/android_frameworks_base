@@ -16,6 +16,24 @@
       "message": "This seems to be a robolectric bug, which cannot block platform improvements as a matter of policy (see also why robolectric isn\u0027t allowed in presubmit)",
       "revId": "9adae0f34c3caa74fcc7ab1f3074520aacb851fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7614024f_f80d57ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1503910
+      },
+      "writtenOn": "2022-02-10T01:39:08Z",
+      "side": 1,
+      "message": "Filed https://github.com/robolectric/robolectric/issues/7048 for Robolectric (as they ask to use the public github tracker for their bugs).\n\nAnyway seems like a blocker for Robolectric T support if the rollback is not approved.\n\n(and some teams need to get the message about not running robolectric in presubmit..)",
+      "parentUuid": "e7570769_7498be4a",
+      "revId": "9adae0f34c3caa74fcc7ab1f3074520aacb851fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
