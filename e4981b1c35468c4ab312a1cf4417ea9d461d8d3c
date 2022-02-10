@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83bf862f_2d3040bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2022-02-10T22:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a5f4201_f08dc4fe",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 11
+      },
+      "revId": "e4981b1c35468c4ab312a1cf4417ea9d461d8d3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4cf5b68_4b336a87",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-02-10T22:46:01Z",
       "side": 1,
       "message": "Doesn\u0027t telephony operate on 1001 UID?",
+      "range": {
+        "startLine": 14,
+        "startChar": 45,
+        "endLine": 14,
+        "endChar": 63
+      },
+      "revId": "e4981b1c35468c4ab312a1cf4417ea9d461d8d3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eab3504e_1cd27d00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2022-02-10T22:59:14Z",
+      "side": 1,
+      "message": "Yes, updated commit message",
+      "parentUuid": "b4cf5b68_4b336a87",
       "range": {
         "startLine": 14,
         "startChar": 45,
