@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44b972ec_69c8e075",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5691,
+      "author": {
+        "id": 1572720
+      },
+      "writtenOn": "2022-02-10T19:10:03Z",
+      "side": 1,
+      "message": "We need to de-register \"next\" if next is non-null, here",
+      "range": {
+        "startLine": 5691,
+        "startChar": 36,
+        "endLine": 5691,
+        "endChar": 58
+      },
+      "revId": "b5ebbe14f08c524cb7a665a671e5e0e272535b07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
