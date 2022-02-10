@@ -11428,6 +11428,18 @@ public final class Settings {
         public static final String QS_SHOW_DATA_USAGE = "qs_show_data_usage";
 
         /**
+         * Face Unlock Method
+         * @hide
+         */
+        public static final String FACE_UNLOCK_METHOD = "face_unlock_method";
+
+        /**
+         * Whether to skip face auth confirmation
+         * @hide
+         */
+        public static final String SKIP_FACE_AUTH_CONFIRMATION = "skip_face_auth_confirmation";
+
+        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */
