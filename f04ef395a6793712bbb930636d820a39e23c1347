@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96b4a62a_c010f2e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870445
+      },
+      "writtenOn": "2022-02-10T03:30:10Z",
+      "side": 1,
+      "message": "HDMI CEC Activeness feature is from netflix request:https://docs.netflixpartners.com/docs/nrdp/dev/android-tv/integrating-netflix/ninja-features/\nHDMI-CEC Activeness integration is required in NRDP 5.2 (see NRDP 5.2 Features and Changes). For Android TV partners to integrate HDMI-CEC Activeness for Netflix:\n\nNinja uses \"nrdp_video_platform_capabilities\" settings to signal video output related events and capabilities. The \"nrdp_video_platform_capabilities\" setting can be updated by invoking Settings.Global.putString(getContentResolver(), \"nrdp_video_platform_capabilities\", jsonCaps).\n\njsonCaps is a JSON string, for example: {\"activeCecState\":\"active\", \"xxx\":\"yyy\"}\n\nNinja APK uses “activeCecState” key in “nrdp_video_platform_capabilities” json value for HDMI-CEC Activeness integration. Android/Fire TV partners must report the correct “activeCecState” value in “nrdp_video_platform_capabilities” json if its HDMI source devices and the device’s Ninja validation version \u003e\u003d ninja_7.",
+      "revId": "f04ef395a6793712bbb930636d820a39e23c1347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
