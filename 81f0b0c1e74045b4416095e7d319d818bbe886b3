@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd0102d0_40e7ffe3",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-02-11T20:52:08Z",
+      "side": 1,
+      "message": "If these are non-null, they should also be validated.",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 84
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96c6fb72_412ddbeb",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-02-11T20:52:08Z",
+      "side": 1,
+      "message": "This should probably still be validated. Suggest moving to before the IkeTunConnParams check?",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 9
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2a247c9_a60fb04d",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-02-11T20:52:08Z",
+      "side": 1,
+      "message": "Instead of storing only these two variables, perhaps we read them directly from the IkeTunnelConnectionParams if it exists?\n\nNo strong opinion.",
+      "range": {
+        "startLine": 286,
+        "startChar": 15,
+        "endLine": 286,
+        "endChar": 26
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecf8acae_18f44fd0",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-02-11T20:52:08Z",
+      "side": 1,
+      "message": ".equals()? \n\nElse, we\u0027re doing a pointer comparison, and serialize/deserialize will be not equal\n\nCan we add a test to make sure they are equal after serialize/deserialize?",
+      "range": {
+        "startLine": 435,
+        "startChar": 36,
+        "endLine": 435,
+        "endChar": 40
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2853327a_5823a873",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-02-11T20:52:08Z",
+      "side": 1,
+      "message": "Ahh, this is because non-null?",
+      "range": {
+        "startLine": 452,
+        "startChar": 0,
+        "endLine": 453,
+        "endChar": 48
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15e37f6b_a670d729",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-02-11T20:52:08Z",
+      "side": 1,
+      "message": "Instead of having these broken out still, can we read from the IkeSessionParams if the query methods are called?\n\nWe\u0027d have to convert the fields to @Nullable, but the API can stay @NonNull, given that the IkeSessionParams also requires this.",
+      "range": {
+        "startLine": 770,
+        "startChar": 12,
+        "endLine": 770,
+        "endChar": 76
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "497a76bd_7b2c6ce8",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-02-11T20:52:08Z",
+      "side": 1,
+      "message": "Do we use one \"n\" intentionally here? is this supposed to be TunConnParams?",
+      "range": {
+        "startLine": 311,
+        "startChar": 50,
+        "endLine": 311,
+        "endChar": 53
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8c50a0f_4ffe4250",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-02-11T20:52:08Z",
+      "side": 1,
+      "message": ".equals()?",
+      "range": {
+        "startLine": 558,
+        "startChar": 35,
+        "endLine": 558,
+        "endChar": 39
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
