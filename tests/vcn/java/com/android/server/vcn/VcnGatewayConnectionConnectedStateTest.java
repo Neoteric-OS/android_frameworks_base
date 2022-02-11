@@ -61,7 +61,9 @@ import android.net.ipsec.ike.exceptions.IkeInternalException;
 import android.net.ipsec.ike.exceptions.IkeProtocolException;
 import android.net.vcn.VcnGatewayConnectionConfig;
 import android.net.vcn.VcnGatewayConnectionConfigTest;
+import android.net.vcn.VcnManager;
 import android.net.vcn.VcnManager.VcnErrorCode;
+import android.os.PersistableBundle;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -145,6 +147,23 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
 
     @Test
     public void testNewNetworkTriggersMigration() throws Exception {
+        mGatewayConnection
+                .getUnderlyingNetworkControllerCallback()
+                .onSelectedUnderlyingNetworkChanged(TEST_UNDERLYING_NETWORK_RECORD_2);
+        mTestLooper.dispatchAll();
+
+        assertEquals(mGatewayConnection.mConnectedState, mGatewayConnection.getCurrentState());
+        verify(mIkeSession, never()).close();
+        verify(mIkeSession).setNetwork(TEST_UNDERLYING_NETWORK_RECORD_2.network);
+    }
+
+    @Test
+    public void testNewNetworkTriggersMigrationWithBreakBeforeMake() throws Exception {
+        final PersistableBundle carrierConfigBundle = new PersistableBundle();
+        carrierConfigBundle.putBoolean(
+                VcnManager.VCN_INTER_CELL_MIGRATION_BREAK_BEFORE_MAKE_KEY, true);
+        doReturn(carrierConfigBundle).when(mCarrierConfigMgr).getConfigForSubId(anyInt());
+
         mGatewayConnection
                 .getUnderlyingNetworkControllerCallback()
                 .onSelectedUnderlyingNetworkChanged(TEST_UNDERLYING_NETWORK_RECORD_2);

@@ -67,17 +67,20 @@ import android.net.ipsec.ike.exceptions.IkeException;
 import android.net.ipsec.ike.exceptions.IkeInternalException;
 import android.net.ipsec.ike.exceptions.IkeProtocolException;
 import android.net.vcn.VcnGatewayConnectionConfig;
+import android.net.vcn.VcnManager;
 import android.net.vcn.VcnTransportInfo;
 import android.net.wifi.WifiInfo;
 import android.os.Handler;
 import android.os.HandlerExecutor;
 import android.os.Message;
 import android.os.ParcelUuid;
+import android.os.PersistableBundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.Process;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.telephony.CarrierConfigManager;
 import android.util.ArraySet;
 import android.util.Slog;
 
@@ -162,6 +165,16 @@ import java.util.function.Consumer;
  */
 public class VcnGatewayConnection extends StateMachine {
     private static final String TAG = VcnGatewayConnection.class.getSimpleName();
+
+    /**
+     * Defaults for the break-before-make cell switching setting
+     *
+     * <p>If this is enabled, close IPsec transforms on the old network prior to starting migration.
+     * This ensures that on devices where DSDS prioritizes non-default data subscriptions, the VCN
+     * will at least complete migration, at the cost of greater packet loss.
+     */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    static final boolean INTER_CELL_MIGRATION_BREAK_BEFORE_MAKE_DEFAULT = false;
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     static final InetAddress DUMMY_ADDR = InetAddresses.parseNumericAddress("192.0.2.0");
@@ -537,6 +550,8 @@ public class VcnGatewayConnection extends StateMachine {
     @NonNull private final IpSecManager mIpSecManager;
 
     @Nullable private IpSecTunnelInterface mTunnelIface = null;
+    @Nullable private IpSecTransform mOutTransform = null;
+    @Nullable private IpSecTransform mInTransform = null;
 
     /**
      * WakeLock to be held when processing messages on the Handler queue.
@@ -1804,6 +1819,13 @@ public class VcnGatewayConnection extends StateMachine {
                     final EventTransformCreatedInfo transformCreatedInfo =
                             (EventTransformCreatedInfo) msg.obj;
 
+                    // Cache transforms.
+                    if (transformCreatedInfo.direction == IpSecManager.DIRECTION_OUT) {
+                        mOutTransform = transformCreatedInfo.transform;
+                    } else if (transformCreatedInfo.direction == IpSecManager.DIRECTION_IN) {
+                        mInTransform = transformCreatedInfo.transform;
+                    }
+
                     applyTransform(
                             mCurrentToken,
                             mTunnelIface,
@@ -1827,6 +1849,10 @@ public class VcnGatewayConnection extends StateMachine {
                 case EVENT_MIGRATION_COMPLETED:
                     final EventMigrationCompletedInfo migrationCompletedInfo =
                             (EventMigrationCompletedInfo) msg.obj;
+
+                    // Cache transforms.
+                    mOutTransform = migrationCompletedInfo.outTransform;
+                    mInTransform = migrationCompletedInfo.inTransform;
 
                     handleMigrationCompleted(migrationCompletedInfo);
                     break;
@@ -1872,6 +1898,38 @@ public class VcnGatewayConnection extends StateMachine {
             // If network changed, migrate. Otherwise, update any existing networkAgent.
             if (oldUnderlying == null || !oldUnderlying.network.equals(mUnderlying.network)) {
                 logDbg("Migrating to new network: " + mUnderlying.network);
+
+                // If break-before-make migration between two cellular networks is enabled, close
+                // transforms prior to starting migration.
+                if (mUnderlying.networkCapabilities.getSubscriptionIds().size() != 1) {
+                    logWtf(
+                            "No, or more than one subscription ID for underlying network: "
+                                    + mUnderlying.networkCapabilities.getSubscriptionIds().size());
+                } else {
+                    final int subId =
+                            mUnderlying.networkCapabilities.getSubscriptionIds()
+                                    .toArray(new Integer[0])[0];
+
+                    final PersistableBundle config =
+                            mVcnContext
+                                    .getContext()
+                                    .getSystemService(CarrierConfigManager.class)
+                                    .getConfigForSubId(subId);
+                    if (config != null
+                            && config.getBoolean(
+                                    VcnManager.VCN_INTER_CELL_MIGRATION_BREAK_BEFORE_MAKE_KEY,
+                                    INTER_CELL_MIGRATION_BREAK_BEFORE_MAKE_DEFAULT)) {
+                        if (mOutTransform != null) {
+                            mOutTransform.close();
+                            mOutTransform = null;
+                        }
+                        if (mInTransform != null) {
+                            mInTransform.close();
+                            mInTransform = null;
+                        }
+                    }
+                }
+
                 mIkeSession.setNetwork(mUnderlying.network);
             } else {
                 // oldUnderlying is non-null & underlying network itself has not changed
@@ -1907,6 +1965,9 @@ public class VcnGatewayConnection extends StateMachine {
         protected void exitState() {
             // Will only set a new alarm if no safe mode alarm is currently scheduled.
             setSafeModeAlarm();
+
+            mOutTransform = null;
+            mInTransform = null;
         }
     }
 

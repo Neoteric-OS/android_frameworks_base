@@ -52,6 +52,7 @@ import android.net.vcn.VcnGatewayConnectionConfigTest;
 import android.os.ParcelUuid;
 import android.os.PowerManager;
 import android.os.test.TestLooper;
+import android.telephony.CarrierConfigManager;
 import android.telephony.SubscriptionInfo;
 
 import com.android.internal.util.State;
@@ -103,7 +104,9 @@ public class VcnGatewayConnectionTestBase {
     protected static final UnderlyingNetworkRecord TEST_UNDERLYING_NETWORK_RECORD_1 =
             new UnderlyingNetworkRecord(
                     mock(Network.class, CALLS_REAL_METHODS),
-                    new NetworkCapabilities(),
+                    new NetworkCapabilities.Builder()
+                            .setSubscriptionIds(Collections.singleton(TEST_SUB_ID))
+                            .build(),
                     new LinkProperties(),
                     false /* blocked */);
 
@@ -116,7 +119,9 @@ public class VcnGatewayConnectionTestBase {
     protected static final UnderlyingNetworkRecord TEST_UNDERLYING_NETWORK_RECORD_2 =
             new UnderlyingNetworkRecord(
                     mock(Network.class, CALLS_REAL_METHODS),
-                    new NetworkCapabilities(),
+                    new NetworkCapabilities.Builder()
+                            .setSubscriptionIds(Collections.singleton(TEST_SUB_ID))
+                            .build(),
                     new LinkProperties(),
                     false /* blocked */);
 
@@ -147,6 +152,7 @@ public class VcnGatewayConnectionTestBase {
 
     @NonNull protected final IpSecService mIpSecSvc;
     @NonNull protected final ConnectivityManager mConnMgr;
+    @NonNull protected final CarrierConfigManager mCarrierConfigMgr;
 
     protected VcnIkeSession mMockIkeSession;
     protected VcnGatewayConnection mGatewayConnection;
@@ -172,6 +178,13 @@ public class VcnGatewayConnectionTestBase {
         mConnMgr = mock(ConnectivityManager.class);
         VcnTestUtils.setupSystemService(
                 mContext, mConnMgr, Context.CONNECTIVITY_SERVICE, ConnectivityManager.class);
+
+        mCarrierConfigMgr = mock(CarrierConfigManager.class);
+        VcnTestUtils.setupSystemService(
+                mContext,
+                mCarrierConfigMgr,
+                Context.CARRIER_CONFIG_SERVICE,
+                CarrierConfigManager.class);
 
         doReturn(mContext).when(mVcnContext).getContext();
         doReturn(mTestLooper.getLooper()).when(mVcnContext).getLooper();

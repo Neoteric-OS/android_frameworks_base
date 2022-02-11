@@ -102,6 +102,22 @@ public class VcnManager {
     public static final String VCN_NETWORK_SELECTION_WIFI_EXIT_RSSI_THRESHOLD_KEY =
             "vcn_network_selection_wifi_exit_rssi_threshold";
 
+    /**
+     * Key to enable VCN break-before-make migration when switching between two cellular networks
+     *
+     * <p>If enabled, the VCN will close all existing IpSecTransforms before starting IKEv2 MOBIKE
+     * migration. This helps to handle the case where a modem's DSDS stack prioritizes the
+     * non-default data subscription, and dataplane traffic continues flowing over the previous
+     * default, thus starving IKE of airtime to complete the migration.
+     *
+     * <p>WARNING: The VCN does not listen for changes to this key made after VCN startup.
+     *
+     * @hide
+     */
+    @NonNull
+    public static final String VCN_INTER_CELL_MIGRATION_BREAK_BEFORE_MAKE_KEY =
+            "vcn_inter_cell_migration_break_before_make_key";
+
     // TODO: Add separate signal strength thresholds for 2.4 GHz and 5GHz
 
     private static final Map<
