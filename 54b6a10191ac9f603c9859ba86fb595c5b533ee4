@@ -22,6 +22,30 @@
       },
       "revId": "54b6a10191ac9f603c9859ba86fb595c5b533ee4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66d1b686_b80a0d07",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1890690
+      },
+      "writtenOn": "2022-02-11T22:59:32Z",
+      "side": 1,
+      "message": "Hmm, this is done because of the logic for saving the mContext here: https://android.googlesource.com/platform/frameworks/base/+/87ece80a2741d3b57d106800a929969f547f1ad0/telephony/java/android/telephony/TelephonyManager.java#380. This is just for extending that logic and in the process keeping the renouncedPermissions set.",
+      "parentUuid": "05bdca56_941cc34a",
+      "range": {
+        "startLine": 416,
+        "startChar": 12,
+        "endLine": 428,
+        "endChar": 9
+      },
+      "revId": "54b6a10191ac9f603c9859ba86fb595c5b533ee4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
