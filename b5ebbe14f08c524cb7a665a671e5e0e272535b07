@@ -22,6 +22,30 @@
       },
       "revId": "b5ebbe14f08c524cb7a665a671e5e0e272535b07",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c78f0b9_7465ab41",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5691,
+      "author": {
+        "id": 1786490
+      },
+      "writtenOn": "2022-02-11T09:47:14Z",
+      "side": 1,
+      "message": "Here in the while loop, if this judgment is removed, next.getNext() will be used at the beginning of the next loop, and a null pointer error will be reported",
+      "parentUuid": "44b972ec_69c8e075",
+      "range": {
+        "startLine": 5691,
+        "startChar": 36,
+        "endLine": 5691,
+        "endChar": 58
+      },
+      "revId": "b5ebbe14f08c524cb7a665a671e5e0e272535b07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
