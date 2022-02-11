@@ -46,6 +46,30 @@
       },
       "revId": "b5ebbe14f08c524cb7a665a671e5e0e272535b07",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31dee941_0dcd6ab1",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5691,
+      "author": {
+        "id": 1572720
+      },
+      "writtenOn": "2022-02-11T15:59:55Z",
+      "side": 1,
+      "message": "I don\u0027t want you to remove it. Inside the \"if\", I would like you to add \n\nif next !\u003d null THEN unregister next.getToken",
+      "parentUuid": "0c78f0b9_7465ab41",
+      "range": {
+        "startLine": 5691,
+        "startChar": 36,
+        "endLine": 5691,
+        "endChar": 58
+      },
+      "revId": "b5ebbe14f08c524cb7a665a671e5e0e272535b07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
