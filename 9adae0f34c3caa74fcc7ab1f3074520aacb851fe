@@ -34,6 +34,24 @@
       "parentUuid": "e7570769_7498be4a",
       "revId": "9adae0f34c3caa74fcc7ab1f3074520aacb851fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e604d2f1_615d1b1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2022-02-12T20:46:22Z",
+      "side": 1,
+      "message": "\u003e  This seems to be a robolectric bug\n\nThis isn\u0027t really a Robolectric bug. It\u0027s more of an issue of Java core classes in libcore deviating from those on the JVM. Reference.refersTo was added in Java 16, and libcore is already using it. This could very well come up again in other frameworks that run Android framework classes on the JVM, such as layoutlib, depending on whether this logic is exercised from the View layer. This type of thing is straightforward to work around in Robolectric, but it\u0027s important to keep in mind that framework classes have wide usage on the JVM.\n\n\u003e  Robolectric isn\u0027t allowed in presubmit\n\nMaybe we can chat about this offline, but I would encourage some kind of presubmit coverage that catch issues running Android framework classes on the JVM for things like Robolectric and layoutlib.",
+      "parentUuid": "7614024f_f80d57ed",
+      "revId": "9adae0f34c3caa74fcc7ab1f3074520aacb851fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
