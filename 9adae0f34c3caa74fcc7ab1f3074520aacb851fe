@@ -88,6 +88,24 @@
       "parentUuid": "0dbe49e6_ad768549",
       "revId": "9adae0f34c3caa74fcc7ab1f3074520aacb851fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bee53c6_ae7f55f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2022-02-14T19:02:08Z",
+      "side": 1,
+      "message": "Just to be clear I am fine with not reverting this CL. I understand the original CL was an important performance improvement. I just wanted to point out that this type of thing should not be considered a Robolectric bug, as it was a libcore + framework change, and could have impacts elsewhere (e.g. layoutlib).\n\nRobolectric (and layoutlib) are fairly robust to these libcore modifications of Java core classes. Both perform bytecode instrumentation on framework jars that allow them to rewrite operations like \u0027Reference.refersTo\u0027 to make them compatible with older JDK versions.",
+      "parentUuid": "7dce2713_208cf288",
+      "revId": "9adae0f34c3caa74fcc7ab1f3074520aacb851fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
