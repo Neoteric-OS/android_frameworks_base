@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2d1551cf_528f1d1c",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2022-02-14T15:12:14Z",
+      "side": 1,
+      "message": "The \u0027false\u0027 part doesn\u0027t seem to apply? I suggest keeping the first part of the sentence and update \u0027true\u0027 with \u0027whether\" ?",
+      "parentUuid": "33638fad_98480440",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "85f21da86f38ece88c59d96a2ed2261dde48d946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06f38d3d_e2e6ec83",
         "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
         "patchSetId": 15
@@ -102,6 +126,30 @@
       "side": 1,
       "message": "The purpose of this early return is exactly to exclude the check from release builds. Returning true means that classloaders are allowed to be created for any jars on release builds. The check on jars will only take effect on debuggable builds, so problems will be caught early in the development process.",
       "parentUuid": "06f38d3d_e2e6ec83",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 9
+      },
+      "revId": "85f21da86f38ece88c59d96a2ed2261dde48d946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cc050ac_9e08e6f2",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2022-02-14T15:12:14Z",
+      "side": 1,
+      "message": "Oh sorry, I misinterpreted the check.",
+      "parentUuid": "a28e3d5b_3b032055",
       "range": {
         "startLine": 83,
         "startChar": 0,
@@ -149,6 +197,30 @@
       "side": 1,
       "message": "This check on jars is not enabled on release builds, but the new API `getActivePackageNameForApexModuleName` is available on any builds, so we need the reverse mapping for performance.",
       "parentUuid": "a2f00851_6cd6428d",
+      "range": {
+        "startLine": 480,
+        "startChar": 41,
+        "endLine": 480,
+        "endChar": 75
+      },
+      "revId": "85f21da86f38ece88c59d96a2ed2261dde48d946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cce49394_dd943bdc",
+        "filename": "services/core/java/com/android/server/pm/ApexManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2022-02-14T15:12:14Z",
+      "side": 1,
+      "message": "Why does it need to be a new API? Can it not only be used for the assertion? And in this case the performance of the mapping isn\u0027t critical?",
+      "parentUuid": "cb8c16e8_beded207",
       "range": {
         "startLine": 480,
         "startChar": 41,
