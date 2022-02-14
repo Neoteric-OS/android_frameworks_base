@@ -22,6 +22,30 @@
       },
       "revId": "2424262814fc4e99c3c8d4e88e96f36fed0ea68e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a32c6758_46fd7229",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1590325
+      },
+      "writtenOn": "2022-02-14T07:44:03Z",
+      "side": 1,
+      "message": "Yes, if the USB mouse support PD and supply power to the phone.",
+      "parentUuid": "516c6ad1_3e2e5461",
+      "range": {
+        "startLine": 1222,
+        "startChar": 72,
+        "endLine": 1222,
+        "endChar": 94
+      },
+      "revId": "2424262814fc4e99c3c8d4e88e96f36fed0ea68e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
