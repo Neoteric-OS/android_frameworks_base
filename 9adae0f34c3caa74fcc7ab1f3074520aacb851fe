@@ -52,6 +52,24 @@
       "parentUuid": "7614024f_f80d57ed",
       "revId": "9adae0f34c3caa74fcc7ab1f3074520aacb851fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dbe49e6_ad768549",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2022-02-14T16:26:41Z",
+      "side": 1,
+      "message": "layoutlib is maybe a bit different but framework team not supporting Robolectric (and thus not allowing it in presubmit on framework) is a decade-long policy at this point, and PSAs have been sent out in the past ( https://groups.google.com/a/google.com/g/android-eng/c/kuc4-_JITjY/m/q_fdDQCsAQAJ )",
+      "parentUuid": "e604d2f1_615d1b1b",
+      "revId": "9adae0f34c3caa74fcc7ab1f3074520aacb851fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
