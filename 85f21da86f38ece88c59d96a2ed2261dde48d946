@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "33638fad_98480440",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-02-14T15:07:19Z",
+      "side": 1,
+      "message": "What about `Returns true if a class loader for the jar is allowed to be created at runtime, or false if the jar must be prefetched on startup.`?",
+      "parentUuid": "80dab6d5_ed531ca0",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "85f21da86f38ece88c59d96a2ed2261dde48d946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06f38d3d_e2e6ec83",
         "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
         "patchSetId": 15
@@ -54,6 +78,30 @@
       "writtenOn": "2022-02-14T14:52:05Z",
       "side": 1,
       "message": "Note we don\u0027t do a lot of testing on user builds, so it\u0027s likely this will only be caught at the very end of the development process.\n\nAlso, is that really the intention? One would expect release builds to not have such assertions.",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 9
+      },
+      "revId": "85f21da86f38ece88c59d96a2ed2261dde48d946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a28e3d5b_3b032055",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-02-14T15:07:19Z",
+      "side": 1,
+      "message": "The purpose of this early return is exactly to exclude the check from release builds. Returning true means that classloaders are allowed to be created for any jars on release builds. The check on jars will only take effect on debuggable builds, so problems will be caught early in the development process.",
+      "parentUuid": "06f38d3d_e2e6ec83",
       "range": {
         "startLine": 83,
         "startChar": 0,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb8c16e8_beded207",
+        "filename": "services/core/java/com/android/server/pm/ApexManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-02-14T15:07:19Z",
+      "side": 1,
+      "message": "This check on jars is not enabled on release builds, but the new API `getActivePackageNameForApexModuleName` is available on any builds, so we need the reverse mapping for performance.",
+      "parentUuid": "a2f00851_6cd6428d",
+      "range": {
+        "startLine": 480,
+        "startChar": 41,
+        "endLine": 480,
+        "endChar": 75
+      },
+      "revId": "85f21da86f38ece88c59d96a2ed2261dde48d946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea95060c_2f85ea73",
@@ -100,6 +172,30 @@
       "writtenOn": "2022-02-14T14:52:05Z",
       "side": 1,
       "message": "Is that a new check? Is it desirable to have it on its own, unrelated to the dexopt assertion this CL is for?",
+      "range": {
+        "startLine": 597,
+        "startChar": 0,
+        "endLine": 601,
+        "endChar": 25
+      },
+      "revId": "85f21da86f38ece88c59d96a2ed2261dde48d946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e13358eb_837e16a0",
+        "filename": "services/core/java/com/android/server/pm/ApexManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-02-14T15:07:19Z",
+      "side": 1,
+      "message": "This is a new check added to package manager, but it shouldn\u0027t affect anything. APEXes are mounted to `/apex/\u003cmodule_name\u003e`, so if there were two active packages having the same module name, apexd would fail already.",
+      "parentUuid": "ea95060c_2f85ea73",
       "range": {
         "startLine": 597,
         "startChar": 0,
