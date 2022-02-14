@@ -1,0 +1,5 @@
+include /core/java/android/widget/OWNERS
+
+per-file *SuggestionsPopup* = siyamed@google.com, nona@google.com, clarabayarri@google.com
+
+per-file *FloatingToolbar*, *SelectionToolbar* = file:/core/java/android/view/textclassifier/OWNERS
