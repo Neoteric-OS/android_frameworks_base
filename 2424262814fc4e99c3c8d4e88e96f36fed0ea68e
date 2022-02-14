@@ -46,6 +46,29 @@
       },
       "revId": "2424262814fc4e99c3c8d4e88e96f36fed0ea68e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eae0ee39_2b222083",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1330244
+      },
+      "writtenOn": "2022-02-14T15:12:04Z",
+      "side": 1,
+      "message": "In b/212189038#comment10, it is connected to another Android phone with USB, but got the charger type as AC.\nThis looks like a charger type false-detection issue.\nIs there any other real use case that will hit this situation?",
+      "range": {
+        "startLine": 1222,
+        "startChar": 56,
+        "endLine": 1222,
+        "endChar": 94
+      },
+      "revId": "2424262814fc4e99c3c8d4e88e96f36fed0ea68e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
