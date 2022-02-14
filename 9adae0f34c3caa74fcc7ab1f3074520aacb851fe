@@ -106,6 +106,24 @@
       "parentUuid": "7dce2713_208cf288",
       "revId": "9adae0f34c3caa74fcc7ab1f3074520aacb851fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d5c485a_c20764ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2022-02-14T19:18:57Z",
+      "side": 1,
+      "message": "\u003e I just wanted to point out that this type of thing should not be considered a Robolectric bug, as it was a libcore + framework change, and could have impacts elsewhere (e.g. layoutlib).\n\nPerhaps there\u0027s a bit of a blame overload to calling it a \u0027Robolectric bug\u0027. I didn\u0027t mean Robolectric caused the issue, but rather just that it\u0027s Robolectric\u0027s problem to fix it anyway (such as via rewrite operations, as was submitted). It falls into a similar category to \"framework changed something and now Robolectric needs to track that update\" that happens with some degree of frequency.",
+      "parentUuid": "8bee53c6_ae7f55f8",
+      "revId": "9adae0f34c3caa74fcc7ab1f3074520aacb851fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
