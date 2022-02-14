@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5298ead4_446ab088",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-02-14T15:31:33Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t know that you are also against the difference. We discussed this with Artur at https://android-review.googlesource.com/c/platform/frameworks/base/+/1925695/12..15/core/java/com/android/internal/os/SystemServerClassLoaderFactory.java#b83. In short, we don\u0027t want a crash in production for something that is just performance related.",
+      "parentUuid": "78154f01_d2f66165",
+      "revId": "85f21da86f38ece88c59d96a2ed2261dde48d946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "80dab6d5_ed531ca0",
@@ -96,6 +114,30 @@
       "side": 1,
       "message": "The \u0027false\u0027 part doesn\u0027t seem to apply? I suggest keeping the first part of the sentence and update \u0027true\u0027 with \u0027whether\" ?",
       "parentUuid": "33638fad_98480440",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "85f21da86f38ece88c59d96a2ed2261dde48d946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39b37797_12892d85",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-02-14T15:31:33Z",
+      "side": 1,
+      "message": "Sounds okay to me. Done.",
+      "parentUuid": "2d1551cf_528f1d1c",
       "range": {
         "startLine": 79,
         "startChar": 0,
@@ -238,6 +280,30 @@
       "side": 1,
       "message": "Why does it need to be a new API? Can it not only be used for the assertion? And in this case the performance of the mapping isn\u0027t critical?",
       "parentUuid": "cb8c16e8_beded207",
+      "range": {
+        "startLine": 480,
+        "startChar": 41,
+        "endLine": 480,
+        "endChar": 75
+      },
+      "revId": "85f21da86f38ece88c59d96a2ed2261dde48d946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c478be26_bf5dccbf",
+        "filename": "services/core/java/com/android/server/pm/ApexManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-02-14T15:31:33Z",
+      "side": 1,
+      "message": "Without a new API, there isn\u0027t a way I can see to map the module name to the package name. Nikita brought this up and he\u0027s okay with the new API.\n\nDiscussed here: https://android-review.googlesource.com/c/platform/frameworks/base/+/1925695/13..15/services/core/java/com/android/server/SystemServiceManager.java#b137",
+      "parentUuid": "cce49394_dd943bdc",
       "range": {
         "startLine": 480,
         "startChar": 41,
