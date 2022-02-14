@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f74e8c29_d586ff17",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-02-14T05:39:19Z",
+      "side": 1,
+      "message": "Update these two to Nullable based on the other comments below, so keep it being skipped if mIkeTunConnParams exists.",
+      "parentUuid": "fd0102d0_40e7ffe3",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 84
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "96c6fb72_412ddbeb",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-02-11T20:52:08Z",
       "side": 1,
       "message": "This should probably still be validated. Suggest moving to before the IkeTunConnParams check?",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 9
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "894ebdcb_75e6e941",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-02-14T05:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96c6fb72_412ddbeb",
       "range": {
         "startLine": 206,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c515a9e_9ee7e385",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-02-14T05:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2a247c9_a60fb04d",
+      "range": {
+        "startLine": 286,
+        "startChar": 15,
+        "endLine": 286,
+        "endChar": 26
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ecf8acae_18f44fd0",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-02-11T20:52:08Z",
       "side": 1,
       "message": ".equals()? \n\nElse, we\u0027re doing a pointer comparison, and serialize/deserialize will be not equal\n\nCan we add a test to make sure they are equal after serialize/deserialize?",
+      "range": {
+        "startLine": 435,
+        "startChar": 36,
+        "endLine": 435,
+        "endChar": 40
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b553c262_647c6ba9",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-02-14T05:39:19Z",
+      "side": 1,
+      "message": "Updated to equals() but it\u0027s not serializable object. Add test to test the equals() of this only.",
+      "parentUuid": "ecf8acae_18f44fd0",
       "range": {
         "startLine": 435,
         "startChar": 36,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76f0a9fd_24195a94",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-02-14T05:39:19Z",
+      "side": 1,
+      "message": "Update it to refer to getter() since they were @Non-Null in Ikev2Profile previously. It\u0027s not defined as @Non-Null in VpnProfile, but I think it would help to reduce the modification in other places.",
+      "parentUuid": "2853327a_5823a873",
+      "range": {
+        "startLine": 452,
+        "startChar": 0,
+        "endLine": 453,
+        "endChar": 48
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15e37f6b_a670d729",
@@ -129,6 +249,30 @@
       "writtenOn": "2022-02-11T20:52:08Z",
       "side": 1,
       "message": "Instead of having these broken out still, can we read from the IkeSessionParams if the query methods are called?\n\nWe\u0027d have to convert the fields to @Nullable, but the API can stay @NonNull, given that the IkeSessionParams also requires this.",
+      "range": {
+        "startLine": 770,
+        "startChar": 12,
+        "endLine": 770,
+        "endChar": 76
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c6960f8_06fbc6b8",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-02-14T05:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15e37f6b_a670d729",
       "range": {
         "startLine": 770,
         "startChar": 12,
@@ -162,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48650c2d_dd575ac7",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-02-14T05:39:19Z",
+      "side": 1,
+      "message": "Yes, I would like to prevent getting confused with the global variable.",
+      "parentUuid": "497a76bd_7b2c6ce8",
+      "range": {
+        "startLine": 311,
+        "startChar": 50,
+        "endLine": 311,
+        "endChar": 53
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8c50a0f_4ffe4250",
@@ -175,6 +343,30 @@
       "writtenOn": "2022-02-11T20:52:08Z",
       "side": 1,
       "message": ".equals()?",
+      "range": {
+        "startLine": 558,
+        "startChar": 35,
+        "endLine": 558,
+        "endChar": 39
+      },
+      "revId": "81f0b0c1e74045b4416095e7d319d818bbe886b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6535926_d7e867d5",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-02-14T05:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8c50a0f_4ffe4250",
       "range": {
         "startLine": 558,
         "startChar": 35,
