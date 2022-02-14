@@ -70,6 +70,24 @@
       "parentUuid": "e604d2f1_615d1b1b",
       "revId": "9adae0f34c3caa74fcc7ab1f3074520aacb851fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dce2713_208cf288",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2022-02-14T16:57:53Z",
+      "side": 1,
+      "message": "It seems to me that that this potentially has fairly major consequences as to whether and how we can use libcore extensions in framework code. It seems to me that, one way or another, our testing solutions need to continue to allow that.\n\nHas anybody thought about a mechanism that for supplying alternate OpenJDK-friendly code as part of the original CL, so that we can side-step this issue without a separate Robolectric work-around CL?\n\nI think there is a strong argument against just reverting this CL: It reintroduces a significant risk of very-hard-to-trace memory leaks.",
+      "parentUuid": "0dbe49e6_ad768549",
+      "revId": "9adae0f34c3caa74fcc7ab1f3074520aacb851fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
