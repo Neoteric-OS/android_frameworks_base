@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "432f753e_3ce816df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-02-15T18:28:45Z",
+      "side": 1,
+      "message": "Discussed with Narayan, Nicolas, and Artur offline. In theory, there shouldn\u0027t be a case where user builds have more jars to load from apexes than userdebug builds because apexes are supposed to be the same. Therefore, enabling the check on user builds is okay. I enabled the check on all builds.",
+      "parentUuid": "5298ead4_446ab088",
+      "revId": "85f21da86f38ece88c59d96a2ed2261dde48d946",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "80dab6d5_ed531ca0",
