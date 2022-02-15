@@ -78,6 +78,7 @@ import android.os.PowerManager.WakeLock;
 import android.os.Process;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 import android.util.Slog;
 
@@ -1631,6 +1632,10 @@ public class VcnGatewayConnection extends StateMachine {
             final NetworkAgentConfig nac =
                     new NetworkAgentConfig.Builder()
                             .setLegacyType(ConnectivityManager.TYPE_MOBILE)
+                            .setLegacyTypeName("MOBILE")
+                            .setLegacySubType(TelephonyManager.NETWORK_TYPE_UNKNOWN)
+                            .setLegacySubTypeName(TelephonyManager.getNetworkTypeName(TelephonyManager.NETWORK_TYPE_UNKNOWN))
+                            .setLegacyExtraInfo("VCN")
                             .build();
 
             final VcnNetworkAgent agent =
