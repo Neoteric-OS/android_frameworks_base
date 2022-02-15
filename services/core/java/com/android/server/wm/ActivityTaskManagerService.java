@@ -6487,6 +6487,18 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
             }
         }
 
+        public void onConfigurationChangedForDisplay() {
+            if (mRootWindowContainer == null) {
+                Slog.w(TAG, "mRootWindowContainer is null");
+                return;
+            }
+            if (mRootWindowContainer.getDefaultDisplay() == null) {
+                Slog.w(TAG, "defaultDisplay is null");
+                return;
+            }
+            mRootWindowContainer.getDefaultDisplay().getDisplayPolicy().onConfigurationChanged();
+        }
+
         int getNightMode() {
             return mNightMode;
         }
