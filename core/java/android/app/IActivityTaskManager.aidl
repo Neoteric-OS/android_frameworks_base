@@ -330,4 +330,9 @@ interface IActivityTaskManager {
      * When the Picture-in-picture state has changed.
      */
     void onPictureInPictureStateChanged(in PictureInPictureUiState pipState);
+
+    /**
+     * Reload the framework resources cache of the default display.
+     */
+    void onConfigurationChangedForDisplay();
 }

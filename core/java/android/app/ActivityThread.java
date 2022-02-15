@@ -2201,6 +2201,13 @@ public final class ActivityThread extends ClientTransactionHandler
                 }
                 case APPLICATION_INFO_CHANGED:
                     handleApplicationInfoChanged((ApplicationInfo) msg.obj);
+                    if ("android".equals(((ApplicationInfo) msg.obj).packageName)) {
+                        try {
+                            ActivityTaskManager.getService().onConfigurationChangedForDisplay();
+                        } catch (RemoteException e) {
+                            throw e.rethrowFromSystemServer();
+                        }
+                    }
                     break;
                 case RUN_ISOLATED_ENTRY_POINT:
                     handleRunIsolatedEntryPoint((String) ((SomeArgs) msg.obj).arg1,
