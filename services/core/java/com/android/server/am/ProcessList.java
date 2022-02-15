@@ -4732,7 +4732,7 @@ public final class ProcessList {
                             if (ai.packageName.equals(app.info.packageName)) {
                                 app.info = ai;
                             }
-                            app.getThread().scheduleApplicationInfoChanged(ai);
+                            app.getThread().scheduleApplicationInfoChanged(ai, updateFrameworkRes);
                             targetProcesses.add(app.getWindowProcessController());
                         }
                     } catch (RemoteException e) {

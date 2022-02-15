@@ -1166,10 +1166,13 @@ public final class ActivityThread extends ClientTransactionHandler
             sendMessage(H.SUICIDE, null);
         }
 
-        public void scheduleApplicationInfoChanged(ApplicationInfo ai) {
+        public void scheduleApplicationInfoChanged(ApplicationInfo ai, boolean updateFrameworkRes) {
             mResourcesManager.appendPendingAppInfoUpdate(new String[]{ai.sourceDir}, ai);
             mH.removeMessages(H.APPLICATION_INFO_CHANGED, ai);
             sendMessage(H.APPLICATION_INFO_CHANGED, ai);
+            if (updateFrameworkRes) {
+                sendMessage(H.UPDATE_DISPLAY_RES_CACHE, null);
+            }
         }
 
         public void updateTimeZone() {
@@ -1992,6 +1995,8 @@ public final class ActivityThread extends ClientTransactionHandler
         public static final int INSTRUMENT_WITHOUT_RESTART = 170;
         public static final int FINISH_INSTRUMENTATION_WITHOUT_RESTART = 171;
 
+        public static final int UPDATE_DISPLAY_RES_CACHE = 173;
+
         String codeToString(int code) {
             if (DEBUG_MESSAGES) {
                 switch (code) {
@@ -2240,6 +2245,13 @@ public final class ActivityThread extends ClientTransactionHandler
                     break;
                 case FINISH_INSTRUMENTATION_WITHOUT_RESTART:
                     handleFinishInstrumentationWithoutRestart();
+                    break;
+                case UPDATE_DISPLAY_RES_CACHE:
+                    try {
+                        ActivityTaskManager.getService().onConfigurationChangedForDisplay();
+                    } catch (RemoteException e) {
+                        throw e.rethrowFromSystemServer();
+                    }
                     break;
             }
             Object obj = msg.obj;
