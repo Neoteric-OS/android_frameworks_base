@@ -145,7 +145,7 @@ oneway interface IApplicationThread {
     void handleTrustStorageUpdate();
     void attachAgent(String path);
     void attachStartupAgents(String dataDir);
-    void scheduleApplicationInfoChanged(in ApplicationInfo ai);
+    void scheduleApplicationInfoChanged(in ApplicationInfo ai, boolean updateFrameworkRes);
     void setNetworkBlockSeq(long procStateSeq);
     void scheduleTransaction(in ClientTransaction transaction);
     void requestDirectActions(IBinder activityToken, IVoiceInteractor intractor,
