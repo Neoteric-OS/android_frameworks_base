@@ -69,6 +69,30 @@
       },
       "revId": "2424262814fc4e99c3c8d4e88e96f36fed0ea68e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da4ec499_3e547ce3",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1590325
+      },
+      "writtenOn": "2022-02-15T04:15:34Z",
+      "side": 1,
+      "message": "There are two conditions to cause notification problem.\n1. mHostConnected \u0026\u0026 mSinkPower \u0026\u0026 mUsbCharging\n\u003e\u003e a PD charger sends data role swap during the charging.\n\n2. mHostConnected \u0026\u0026 mSinkPower \u0026\u0026 mUsbAccessoryConnected\n\u003e\u003e It is a charger detection issue in kernel side, and I will open another bug to discuss it. BTW, I think the notification could be handled when USB peripheral is connected, so I add this case.",
+      "parentUuid": "eae0ee39_2b222083",
+      "range": {
+        "startLine": 1222,
+        "startChar": 56,
+        "endLine": 1222,
+        "endChar": 94
+      },
+      "revId": "2424262814fc4e99c3c8d4e88e96f36fed0ea68e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
