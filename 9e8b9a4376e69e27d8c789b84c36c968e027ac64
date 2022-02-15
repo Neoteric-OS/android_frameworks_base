@@ -16,6 +16,24 @@
       "message": "If this is a test of bp2build/bazel functionalities, it might make more sense for it to live under build/bazel or build/soong. How about creating a .bp file for the app under build/bazel/examples/android_app/, and testing this signing pattern there instead?",
       "revId": "9e8b9a4376e69e27d8c789b84c36c968e027ac64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53e60615_003ec98a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1932329
+      },
+      "writtenOn": "2022-02-15T18:13:42Z",
+      "side": 1,
+      "message": "Yep, sounds like a better place. Moved this code to aosp/1980586.",
+      "parentUuid": "6045f29b_79a35de1",
+      "revId": "9e8b9a4376e69e27d8c789b84c36c968e027ac64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
