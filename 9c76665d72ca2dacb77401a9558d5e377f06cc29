@@ -22,6 +22,30 @@
       },
       "revId": "9c76665d72ca2dacb77401a9558d5e377f06cc29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3129f76_a606e92a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-02-16T19:44:37Z",
+      "side": 1,
+      "message": "I removed the \"debuggable\" check in PS17 but forgot the update the description. Thank you for pointing this out. Updated.",
+      "parentUuid": "2068e8de_89ede790",
+      "range": {
+        "startLine": 11,
+        "startChar": 58,
+        "endLine": 12,
+        "endChar": 6
+      },
+      "revId": "9c76665d72ca2dacb77401a9558d5e377f06cc29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
