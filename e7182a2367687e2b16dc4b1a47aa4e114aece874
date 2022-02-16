@@ -22,6 +22,30 @@
       },
       "revId": "e7182a2367687e2b16dc4b1a47aa4e114aece874",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a8a77f9_fe56f905",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-02-16T06:17:58Z",
+      "side": 1,
+      "message": "This is actually defined in multiple places:\n- A private constant in DataConnection\n- ConnectivityManager.getNetworkTypeName(), but that is API guarded to not work after Android R (but also is a magic string there)\n\nAdded a comment here, but it\u0027s appears there\u0027s zero API guarantees in any way...",
+      "parentUuid": "3a6ea2a6_5903edff",
+      "range": {
+        "startLine": 168,
+        "startChar": 24,
+        "endLine": 168,
+        "endChar": 56
+      },
+      "revId": "e7182a2367687e2b16dc4b1a47aa4e114aece874",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
