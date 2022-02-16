@@ -93,6 +93,30 @@
       },
       "revId": "2424262814fc4e99c3c8d4e88e96f36fed0ea68e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ff802c0_6f7a9bac",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1330244
+      },
+      "writtenOn": "2022-02-16T03:51:14Z",
+      "side": 1,
+      "message": "Discussed with Ray, this could be considered as a supplement of http://aosp/338265, then it will make more sense for the modification.\nAlso request QMC to verify no regression on the specific Chromebook Charger of previous bug for that patch.",
+      "parentUuid": "da4ec499_3e547ce3",
+      "range": {
+        "startLine": 1222,
+        "startChar": 56,
+        "endLine": 1222,
+        "endChar": 94
+      },
+      "revId": "2424262814fc4e99c3c8d4e88e96f36fed0ea68e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
