@@ -2080,6 +2080,7 @@ public class HdmiControlService extends SystemService {
         public void addVendorCommandListener(
                 final IHdmiVendorCommandListener listener, final int vendorId) {
             initBinderCall();
+            Slog.e(TAG, "Adding listener with ID " + vendorId);
             HdmiControlService.this.addVendorCommandListener(listener, vendorId);
         }
 
@@ -3231,12 +3232,14 @@ public class HdmiControlService extends SystemService {
         synchronized (mLock) {
             mVendorCommandListenerRecords.add(record);
         }
+        Slog.e(TAG, "Added vendor listener record with vendor ID " + vendorId);
     }
 
     boolean invokeVendorCommandListenersOnReceived(int deviceType, int srcAddress, int destAddress,
             byte[] params, boolean hasVendorId) {
         synchronized (mLock) {
             if (mVendorCommandListenerRecords.isEmpty()) {
+                Slog.e(TAG, "No listeners found!");
                 return false;
             }
             for (VendorCommandListenerRecord record : mVendorCommandListenerRecords) {
@@ -3246,11 +3249,20 @@ public class HdmiControlService extends SystemService {
                                     + ((params[1] & 0xFF) << 8)
                                     + (params[2] & 0xFF);
                     if (record.mVendorId != vendorId) {
+                        Slog.e(
+                                TAG,
+                                "Record vendor ID "
+                                        + record.mVendorId
+                                        + " does not match vendor ID "
+                                        + vendorId);
                         continue;
                     }
+                } else {
+                    Slog.e(TAG, "No vendor ID!");
                 }
                 try {
                     record.mListener.onReceived(srcAddress, destAddress, params, hasVendorId);
+                    Slog.e(TAG, "Called on received.");
                 } catch (RemoteException e) {
                     Slog.e(TAG, "Failed to notify vendor command reception", e);
                 }
