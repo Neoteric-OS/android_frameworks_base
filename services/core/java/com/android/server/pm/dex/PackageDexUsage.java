@@ -728,19 +728,7 @@ public class PackageDexUsage extends AbstractStatsBase<Void> {
         }
 
         public boolean isUsedByOtherApps(String codePath) {
-            if (mPrimaryCodePaths.containsKey(codePath)) {
-                Set<String> loadingPackages = mPrimaryCodePaths.get(codePath);
-                if (loadingPackages.contains(mPackageName)) {
-                    // If the owning package is in the list then this code path
-                    // is used by others if there are other packages in the list.
-                    return loadingPackages.size() > 1;
-                } else {
-                    // The owning package is not in the loading packages. So if
-                    // the list is non-empty then the code path is used by others.
-                    return !loadingPackages.isEmpty();
-                }
-            }
-            return false;
+            return true;
         }
 
         public Map<String, DexUseInfo> getDexUseInfoMap() {
