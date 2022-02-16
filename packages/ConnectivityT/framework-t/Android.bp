@@ -146,7 +146,7 @@ filegroup {
 filegroup {
     name: "framework-connectivity-tiramisu-internal-sources",
     srcs: [
-        "src/android/net/ConnectivityFrameworkInitializerTiramisu.java",
+        "src/android/net/ConnectivityFrameworkInitializerT.java",
     ],
     path: "src",
     visibility: [

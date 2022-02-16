@@ -29,8 +29,8 @@ import android.net.nsd.NsdManager;
  * @hide
  */
 @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
-public final class ConnectivityFrameworkInitializerTiramisu {
-    private ConnectivityFrameworkInitializerTiramisu() {}
+public final class ConnectivityFrameworkInitializerT {
+    private ConnectivityFrameworkInitializerT() {}
 
     /**
      * Called by {@link SystemServiceRegistry}'s static initializer and registers nsd services to

@@ -125,7 +125,7 @@ import android.media.tv.TvInputManager;
 import android.media.tv.tunerresourcemanager.ITunerResourceManager;
 import android.media.tv.tunerresourcemanager.TunerResourceManager;
 import android.net.ConnectivityFrameworkInitializer;
-import android.net.ConnectivityFrameworkInitializerTiramisu;
+import android.net.ConnectivityFrameworkInitializerT;
 import android.net.EthernetManager;
 import android.net.IEthernetManager;
 import android.net.INetworkPolicyManager;
@@ -1470,7 +1470,7 @@ public final class SystemServiceRegistry {
             MediaFrameworkInitializer.registerServiceWrappers();
             RoleFrameworkInitializer.registerServiceWrappers();
             SchedulingFrameworkInitializer.registerServiceWrappers();
-            ConnectivityFrameworkInitializerTiramisu.registerServiceWrappers();
+            ConnectivityFrameworkInitializerT.registerServiceWrappers();
         } finally {
             // If any of the above code throws, we're in a pretty bad shape and the process
             // will likely crash, but we'll reset it just in case there's an exception handler...
