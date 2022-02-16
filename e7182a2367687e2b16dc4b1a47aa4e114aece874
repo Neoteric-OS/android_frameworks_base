@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a6ea2a6_5903edff",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-02-16T02:27:03Z",
+      "side": 1,
+      "message": "Does this need to match a constant defined somewhere else? Is it possible to use that constant?",
+      "range": {
+        "startLine": 168,
+        "startChar": 24,
+        "endLine": 168,
+        "endChar": 56
+      },
+      "revId": "e7182a2367687e2b16dc4b1a47aa4e114aece874",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
