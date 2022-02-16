@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61bf1891_143c4d66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-16T20:23:45Z",
+      "side": 1,
+      "message": "LG, just a nit on naming.",
+      "revId": "0098a61568d60b3bd2aed3f7cba29d2bab7caef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2136fe22_6023fc75",
+        "filename": "core/java/com/android/internal/os/SystemServerClassLoaderFactory.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-16T20:23:45Z",
+      "side": 1,
+      "message": "nit, why did you add \"maybe\" here? \"getOrCreate\" is a pretty common naming pattern -- compare https://source.corp.google.com/search?q\u003d%5CbgetOrMaybeCreate%20package:%5Eandroid%20case:no to https://source.corp.google.com/search?q\u003d%5CbgetOrCreate%20package:%5Eandroid%20case:no\u0026sq\u003d.\n\n\"getOrMaybeCreate\" sounds to me like there are 3 possible outcomes -- \"if it\u0027s available return it. Otherwise, create a new instance _when certain conditions are met_. Otherwise return null\".\n\nIf you\u0027re talking about \"get or create or throw\", then the \"throw\" is really a situation that shouldn\u0027t happen, so I wouldn\u0027t reflect to its name. Otherwise, if you only look at the callsite -- e.g. `Loader ld \u003d getOrMaybeCreate()` -- to me, I\u0027d look like `ld` may be null. (but it won\u0027t.)",
+      "range": {
+        "startLine": 62,
+        "startChar": 39,
+        "endLine": 62,
+        "endChar": 44
+      },
+      "revId": "0098a61568d60b3bd2aed3f7cba29d2bab7caef2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
