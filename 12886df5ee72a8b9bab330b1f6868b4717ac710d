@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f51553d_5d5da9dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-02-16T17:53:31Z",
+      "side": 1,
+      "message": "Code looks good, but still lacking a few tests, added comments on the other CL.",
+      "revId": "12886df5ee72a8b9bab330b1f6868b4717ac710d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
