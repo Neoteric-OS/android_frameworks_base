@@ -241,28 +241,48 @@ public class PackageDexOptimizer {
 
             String profileName = ArtManager.getProfileName(
                     i == 0 ? null : pkg.getSplitNames()[i - 1]);
+            final boolean isUsedByOtherApps = options.isDexoptAsSharedLibrary()
+                    || packageUseInfo.isUsedByOtherApps(path);
+            String compilerFilter = getRealCompilerFilter(pkg, options.getCompilerFilter());
+            // If the app is used by other apps, we must not use the existing profile because it
+            // may contain user data, unless the profile is newly created on install.
+            final boolean resetProfile = isProfileGuidedCompilerFilter(compilerFilter)
+                    && isUsedByOtherApps
+                    && options.getCompilationReason() != PackageManagerService.REASON_INSTALL;
 
             String dexMetadataPath = null;
-            if (options.isDexoptInstallWithDexMetadata()) {
+            if (options.isDexoptInstallWithDexMetadata() || resetProfile) {
                 File dexMetadataFile = DexMetadataHelper.findDexMetadataForFile(new File(path));
                 dexMetadataPath = dexMetadataFile == null
                         ? null : dexMetadataFile.getAbsolutePath();
             }
 
-            final boolean isUsedByOtherApps = options.isDexoptAsSharedLibrary()
-                    || packageUseInfo.isUsedByOtherApps(path);
-            final String compilerFilter = getRealCompilerFilter(pkg,
-                options.getCompilerFilter(), isUsedByOtherApps);
             // If we don't have to check for profiles updates assume
             // PROFILE_ANALYSIS_DONT_OPTIMIZE_SMALL_DELTA which will be a no-op with respect to
             // profiles.
-            final int profileAnalysisResult = options.isCheckForProfileUpdates()
-                    ? analyseProfiles(pkg, sharedGid, profileName, compilerFilter)
-                    : PROFILE_ANALYSIS_DONT_OPTIMIZE_SMALL_DELTA;
+            int profileAnalysisResult = PROFILE_ANALYSIS_DONT_OPTIMIZE_SMALL_DELTA;
+            if (resetProfile) {
+                try {
+                    mInstaller.clearAppProfiles(pkg.getPackageName(), profileName);
+                    final int appId = UserHandle.getAppId(pkg.getUid());
+                    mInstaller.prepareAppProfile(pkg.getPackageName(), UserHandle.USER_NULL, appId,
+                            profileName, path, dexMetadataPath);
+                } catch (InstallerException e) {
+                    Slog.w(TAG, "Failed to reset profile", e);
+                    // Fall back to use the shared filter.
+                    compilerFilter =
+                            PackageManagerServiceCompilerMapping.getCompilerFilterForReason(
+                                    PackageManagerService.REASON_SHARED);
+                }
+            } else if (options.isCheckForProfileUpdates()) {
+                profileAnalysisResult =
+                        analyseProfiles(pkg, sharedGid, profileName, compilerFilter);
+            }
 
             // Get the dexopt flags after getRealCompilerFilter to make sure we get the correct
             // flags.
-            final int dexoptFlags = getDexFlags(pkg, pkgSetting, compilerFilter, options);
+            final int dexoptFlags = getDexFlags(pkg, pkgSetting, compilerFilter, resetProfile,
+                    options);
 
             for (String dexCodeIsa : dexCodeInstructionSets) {
                 int newResult = dexOptPath(pkg, pkgSetting, path, dexCodeIsa, compilerFilter,
@@ -318,14 +338,14 @@ public class PackageDexOptimizer {
             String isa, String compilerFilter, int profileAnalysisResult, String classLoaderContext,
             int dexoptFlags, int uid, CompilerStats.PackageStats packageStats, boolean downgrade,
             String profileName, String dexMetadataPath, int compilationReason) {
+        String oatDir = getPackageOatDirIfSupported(pkg,
+                pkgSetting.getPkgState().isUpdatedSystemApp());
+
         int dexoptNeeded = getDexoptNeeded(path, isa, compilerFilter, classLoaderContext,
-                profileAnalysisResult, downgrade);
+                profileAnalysisResult, downgrade, dexoptFlags, oatDir);
         if (Math.abs(dexoptNeeded) == DexFile.NO_DEXOPT_NEEDED) {
             return DEX_OPT_SKIPPED;
         }
-
-        String oatDir = getPackageOatDirIfSupported(pkg,
-                pkgSetting.getPkgState().isUpdatedSystemApp());
 
         Log.i(TAG, "Running dexopt (dexoptNeeded=" + dexoptNeeded + ") on: " + path
                 + " pkg=" + pkg.getPackageName() + " isa=" + isa
@@ -360,6 +380,7 @@ public class PackageDexOptimizer {
     /**
      * Perform dexopt (if needed) on a system server code path).
      */
+    @GuardedBy("mInstallLock")
     public int dexoptSystemServerPath(
             String dexPath, PackageDexUsage.DexUseInfo dexUseInfo, DexoptOptions options) {
         int dexoptFlags = DEXOPT_PUBLIC
@@ -374,7 +395,9 @@ public class PackageDexOptimizer {
                     options.getCompilerFilter(),
                     dexUseInfo.getClassLoaderContext(),
                     PROFILE_ANALYSIS_DONT_OPTIMIZE_EMPTY_PROFILES,
-                    /* downgrade= */ false);
+                    /* downgrade= */ false,
+                    dexoptFlags,
+                    /* oatDir= */ null);
 
             if (dexoptNeeded == DexFile.NO_DEXOPT_NEEDED) {
                 continue;
@@ -650,8 +673,7 @@ public class PackageDexOptimizer {
      * The target filter will be updated if the package code is used by other apps
      * or if it has the safe mode flag set.
      */
-    private String getRealCompilerFilter(AndroidPackage pkg, String targetCompilerFilter,
-            boolean isUsedByOtherApps) {
+    private String getRealCompilerFilter(AndroidPackage pkg, String targetCompilerFilter) {
         // When an app or priv app is configured to run out of box, only verify it.
         if (pkg.isUseEmbeddedDex()
                 || (pkg.isPrivileged()
@@ -675,12 +697,6 @@ public class PackageDexOptimizer {
             return getSafeModeCompilerFilter(targetCompilerFilter);
         }
 
-        if (isProfileGuidedCompilerFilter(targetCompilerFilter) && isUsedByOtherApps) {
-            // If the dex files is used by other apps, apply the shared filter.
-            return PackageManagerServiceCompilerMapping.getCompilerFilterForReason(
-                    PackageManagerService.REASON_SHARED);
-        }
-
         return targetCompilerFilter;
     }
 
@@ -691,14 +707,14 @@ public class PackageDexOptimizer {
     private int getDexFlags(ApplicationInfo info, String compilerFilter, DexoptOptions options) {
         return getDexFlags((info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0,
                 info.getHiddenApiEnforcementPolicy(), info.splitDependencies,
-                info.requestsIsolatedSplitLoading(), compilerFilter, options);
+                info.requestsIsolatedSplitLoading(), compilerFilter, false, options);
     }
     private int getDexFlags(AndroidPackage pkg, @NonNull PackageSetting pkgSetting,
-            String compilerFilter, DexoptOptions options) {
+            String compilerFilter, boolean resetProfile, DexoptOptions options) {
         return getDexFlags(pkg.isDebuggable(),
                 AndroidPackageUtils.getHiddenApiEnforcementPolicy(pkg, pkgSetting),
                 pkg.getSplitDependencies(), pkg.isIsolatedSplitLoading(), compilerFilter,
-                options);
+                resetProfile, options);
     }
 
     /**
@@ -707,13 +723,15 @@ public class PackageDexOptimizer {
      */
     private int getDexFlags(boolean debuggable, int hiddenApiEnforcementPolicy,
             SparseArray<int[]> splitDependencies, boolean requestsIsolatedSplitLoading,
-            String compilerFilter, DexoptOptions options) {
+            String compilerFilter, boolean resetProfile, DexoptOptions options) {
         // Profile guide compiled oat files should not be public unles they are based
         // on profiles from dex metadata archives.
         // The flag isDexoptInstallWithDexMetadata applies only on installs when we know that
         // the user does not have an existing profile.
+        // The flag resetProfile applies only when the existing profile is already reset.
         boolean isProfileGuidedFilter = isProfileGuidedCompilerFilter(compilerFilter);
-        boolean isPublic = !isProfileGuidedFilter || options.isDexoptInstallWithDexMetadata();
+        boolean isPublic = !isProfileGuidedFilter || options.isDexoptInstallWithDexMetadata()
+                || resetProfile;
         int profileFlag = isProfileGuidedFilter ? DEXOPT_PROFILE_GUIDED : 0;
         // Some apps are executed with restrictions on hidden API usage. If this app is one
         // of them, pass a flag to dexopt to enable the same restrictions during compilation.
@@ -758,8 +776,10 @@ public class PackageDexOptimizer {
      * Assesses if there's a need to perform dexopt on {@code path} for the given
      * configuration (isa, compiler filter, profile).
      */
+    @GuardedBy("mInstallLock")
     private int getDexoptNeeded(String path, String isa, String compilerFilter,
-            String classLoaderContext, int profileAnalysisResult, boolean downgrade) {
+            String classLoaderContext, int profileAnalysisResult, boolean downgrade,
+            int dexoptFlags, String oatDir) {
         int dexoptNeeded;
         try {
             // A profile guided optimizations with an empty profile is essentially 'verify' and
@@ -785,12 +805,29 @@ public class PackageDexOptimizer {
             Slog.wtf(TAG, "Unexpected exception when calling dexoptNeeded on " + path, e);
             return DEX_OPT_FAILED;
         }
+        boolean shouldBePublic = (dexoptFlags & DEXOPT_PUBLIC) != 0;
+        // If the artifacts should be public while the current artifacts are not, we should
+        // re-compile anyway.
+        if (dexoptNeeded == DexFile.NO_DEXOPT_NEEDED && shouldBePublic
+                && !isOdexPublic(path, isa, oatDir)) {
+            return -DexFile.DEX2OAT_FOR_FILTER;
+        }
         return adjustDexoptNeeded(dexoptNeeded);
     }
 
     /** Returns true if the compiler filter depends on profiles (e.g speed-profile). */
     private boolean compilerFilterDependsOnProfiles(String compilerFilter) {
         return compilerFilter.endsWith("-profile");
+    }
+
+    /** Returns true if the current artifacts are public. */
+    private boolean isOdexPublic(String path, String isa, String oatDir) {
+        try {
+            return mInstaller.getOdexVisibility(path, isa, oatDir) == Installer.ODEX_IS_PUBLIC;
+        } catch (Exception e) {
+            Slog.w(TAG, "Failed to get odex visibility for " + path, e);
+            return false;
+        }
     }
 
     /**
