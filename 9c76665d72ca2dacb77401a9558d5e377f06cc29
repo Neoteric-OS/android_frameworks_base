@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2068e8de_89ede790",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-16T19:42:11Z",
+      "side": 1,
+      "message": "I don\u0027t see any \"debuggable\" check. Could you clarify what it means? (Is it Build.IS_DEBUGGABLE or what?)",
+      "range": {
+        "startLine": 11,
+        "startChar": 58,
+        "endLine": 12,
+        "endChar": 6
+      },
+      "revId": "9c76665d72ca2dacb77401a9558d5e377f06cc29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
