@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60c1643e_0729a1ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-02-16T21:00:00Z",
+      "side": 1,
+      "message": "Passed on previous version with only whitespace comment change.",
+      "revId": "37a6ef1cd6afb56aac9530daf2128c0f850185f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
