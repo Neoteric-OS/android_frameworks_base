@@ -33,6 +33,23 @@
       "message": "roosa@google.com PTAL for owners review.",
       "revId": "327a8f8e534f7aba380579e01bd8be98ab2c1df0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b71f4f8e_6fc87a7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2022-02-17T16:01:59Z",
+      "side": 1,
+      "message": "Could you move this to frameworks/libs/modules-utils/java/android/annotation/, so modules can use this too?",
+      "revId": "327a8f8e534f7aba380579e01bd8be98ab2c1df0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
