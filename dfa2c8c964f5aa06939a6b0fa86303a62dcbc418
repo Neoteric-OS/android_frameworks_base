@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad320bd6_405331ef",
+        "filename": "core/jni/RobolectricNativeRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2022-02-17T19:19:00Z",
+      "side": 1,
+      "message": "have you tried moving outsided of the `namespace android`? Below register_android_graphics_Graphics?",
+      "revId": "dfa2c8c964f5aa06939a6b0fa86303a62dcbc418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1860d46a_2babf098",
+        "filename": "core/jni/RobolectricNativeRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2022-02-17T19:19:00Z",
+      "side": 1,
+      "message": "it looks like \u0027Font\u0027 is a dependency of Typeface, so maybe that should also be registered.",
+      "revId": "dfa2c8c964f5aa06939a6b0fa86303a62dcbc418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
