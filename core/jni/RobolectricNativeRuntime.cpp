@@ -30,9 +30,11 @@ static const RegJNIRec sqliteJNI[] = {
 };
 
 static const RegJNIRec graphicsJNI[] = {
-        REG_JNI(register_android_graphics_Matrix),     REG_JNI(register_android_graphics_Graphics),
-        REG_JNI(register_android_graphics_Paint),      REG_JNI(register_android_graphics_Typeface),
         REG_JNI(register_android_graphics_FontFamily),
+        REG_JNI(register_android_graphics_Graphics),
+        REG_JNI(register_android_graphics_Matrix),
+        REG_JNI(register_android_graphics_Paint),
+        REG_JNI(register_android_graphics_Typeface),
 };
 
 JNIEnv* AndroidRuntime::getJNIEnv() {
