@@ -3478,7 +3478,7 @@ public class ChooserActivity extends ResolverActivity implements
             final int spec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
             final int exactSpec = MeasureSpec.makeMeasureSpec(mChooserTargetWidth,
                     MeasureSpec.EXACTLY);
-            int columnCount = holder.getColumnCount();
+            int columnCount = Math.min(holder.getColumnCount(), holder.getMaxViewCount());
 
             final boolean isDirectShare = holder instanceof DirectShareViewHolder;
 
@@ -3560,16 +3560,21 @@ public class ChooserActivity extends ResolverActivity implements
                 parentGroup.addView(row1);
                 parentGroup.addView(row2);
 
+                int serviceTargetCount = mChooserListAdapter.getServiceTargetCount();
                 mDirectShareViewHolder = new DirectShareViewHolder(parentGroup,
-                        Lists.newArrayList(row1, row2), mMaxTargetsPerRow, viewType);
+                        Lists.newArrayList(row1, row2), serviceTargetCount, mMaxTargetsPerRow,
+                        viewType);
                 loadViewsIntoGroup(mDirectShareViewHolder);
 
                 return mDirectShareViewHolder;
             } else {
                 ViewGroup row = (ViewGroup) mLayoutInflater.inflate(R.layout.chooser_row, parent,
                         false);
+                int callerAndRankedCount = mChooserListAdapter.getCallerTargetCount()
+                        + mChooserListAdapter.getRankedTargetCount();
                 ItemGroupViewHolder holder =
-                        new SingleRowViewHolder(row, mMaxTargetsPerRow, viewType);
+                        new SingleRowViewHolder(row, callerAndRankedCount, mMaxTargetsPerRow,
+                        viewType);
                 loadViewsIntoGroup(holder);
 
                 return holder;
@@ -3645,12 +3650,14 @@ public class ChooserActivity extends ResolverActivity implements
             for (int i = 0; i < columnCount; i++) {
                 final View v = holder.getView(i);
 
-                if (start + i <= end) {
-                    holder.setViewVisibility(i, View.VISIBLE);
-                    holder.setItemIndex(i, start + i);
-                    mChooserListAdapter.bindView(holder.getItemIndex(i), v);
-                } else {
-                    holder.setViewVisibility(i, View.INVISIBLE);
+                if (v != null) {
+                    if (start + i <= end) {
+                        holder.setViewVisibility(i, View.VISIBLE);
+                        holder.setItemIndex(i, start + i);
+                        mChooserListAdapter.bindView(holder.getItemIndex(i), v);
+                    } else {
+                        holder.setViewVisibility(i, View.INVISIBLE);
+                    }
                 }
             }
         }
@@ -3728,12 +3735,14 @@ public class ChooserActivity extends ResolverActivity implements
         private int[] mItemIndices;
         protected final View[] mCells;
         private final int mColumnCount;
+        private final int mMaxViewCount;
 
-        ItemGroupViewHolder(int cellCount, View itemView, int viewType) {
+        ItemGroupViewHolder(int cellCount, int maxViewCount, View itemView, int viewType) {
             super(itemView, viewType);
             this.mCells = new View[cellCount];
             this.mItemIndices = new int[cellCount];
             this.mColumnCount = cellCount;
+            this.mMaxViewCount = maxViewCount;
         }
 
         abstract ViewGroup addView(int index, View v);
@@ -3748,6 +3757,10 @@ public class ChooserActivity extends ResolverActivity implements
 
         public int getColumnCount() {
             return mColumnCount;
+        }
+
+        public int getMaxViewCount() {
+            return mMaxViewCount;
         }
 
         public void measure() {
@@ -3776,8 +3789,8 @@ public class ChooserActivity extends ResolverActivity implements
     class SingleRowViewHolder extends ItemGroupViewHolder {
         private final ViewGroup mRow;
 
-        SingleRowViewHolder(ViewGroup row, int cellCount, int viewType) {
-            super(cellCount, row, viewType);
+        SingleRowViewHolder(ViewGroup row, int maxViewCount, int cellCount, int viewType) {
+            super(cellCount, maxViewCount, row, viewType);
 
             this.mRow = row;
         }
@@ -3819,9 +3832,9 @@ public class ChooserActivity extends ResolverActivity implements
 
         private final boolean[] mCellVisibility;
 
-        DirectShareViewHolder(ViewGroup parent, List<ViewGroup> rows, int cellCountPerRow,
-                int viewType) {
-            super(rows.size() * cellCountPerRow, parent, viewType);
+        DirectShareViewHolder(ViewGroup parent, List<ViewGroup> rows, int maxViewCount,
+                int cellCountPerRow, int viewType) {
+            super(rows.size() * cellCountPerRow, maxViewCount, parent, viewType);
 
             this.mParent = parent;
             this.mRows = rows;
