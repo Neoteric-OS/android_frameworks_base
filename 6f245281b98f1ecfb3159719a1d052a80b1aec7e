@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37bef848_d7865282",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2022-02-17T18:52:19Z",
+      "side": 1,
+      "message": "Hold on on merging this since BLUETOOTH_COUNTER_METRICS_ACTION is only received by BT stack process",
+      "revId": "6f245281b98f1ecfb3159719a1d052a80b1aec7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
