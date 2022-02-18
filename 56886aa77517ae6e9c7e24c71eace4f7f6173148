@@ -16,6 +16,29 @@
       "message": "+2, but long term this change should be reverted.\n\nforEach() should be fixed to never pass in a null value in the first place.",
       "revId": "56886aa77517ae6e9c7e24c71eace4f7f6173148",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9b2f4b7_5c3a5be4",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1884,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2022-02-18T10:10:41Z",
+      "side": 1,
+      "message": "and of course we\u0027re not in a for loop...\n\ninstead: \nif (value !\u003d null \u0026\u0026 value.uid \u003d\u003d uid) {",
+      "range": {
+        "startLine": 1884,
+        "startChar": 35,
+        "endLine": 1884,
+        "endChar": 43
+      },
+      "revId": "56886aa77517ae6e9c7e24c71eace4f7f6173148",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
