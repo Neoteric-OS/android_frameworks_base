@@ -22,6 +22,30 @@
       },
       "revId": "7ddad8c8738755164cbc6800f4635ba8232d952f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64878f79_e9816766",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1880,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2022-02-18T09:22:28Z",
+      "side": 1,
+      "message": "Thanks for suggestion. Just modify your comment, I think the iteration would just start from first key instead of keep iterate the rest of entries.\n\n    public void forEach(ThrowingBiConsumer\u003cK, V\u003e action) throws ErrnoException {\n        @Nullable K nextKey \u003d getFirstKey();\n\n        while (nextKey !\u003d null) {\n            @NonNull final K curKey \u003d nextKey;\n            @NonNull final V value \u003d getValue(curKey); // if null here, mean curKey also not exit from bpfMap\n\n            nextKey \u003d getNextKey(curKey); // getNextKey would return first key if passing key is not exist.\n            action.accept(curKey, value);\n        }\n    }",
+      "parentUuid": "8e711b69_b5eec384",
+      "range": {
+        "startLine": 1880,
+        "startChar": 20,
+        "endLine": 1880,
+        "endChar": 25
+      },
+      "revId": "7ddad8c8738755164cbc6800f4635ba8232d952f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
