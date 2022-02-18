@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27f018cc_e2fee343",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2022-02-18T10:09:08Z",
+      "side": 1,
+      "message": "+2, but long term this change should be reverted.\n\nforEach() should be fixed to never pass in a null value in the first place.",
+      "revId": "56886aa77517ae6e9c7e24c71eace4f7f6173148",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
