@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7394221b_3af00cfd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2022-02-19T21:41:21Z",
+      "side": 1,
+      "message": "TH claiming we broke the vibrator test... which is already broken at head.",
+      "revId": "77bb1cef4ad0a2d11abf039d9a44c3147c58879b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
