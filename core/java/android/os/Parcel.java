@@ -1244,6 +1244,9 @@ public final class Parcel {
         }
     }
 
+    /** @hide */
+    public void foo2(String bar) {}
+
     /**
      * @hide For testing only.
      */

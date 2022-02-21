@@ -609,6 +609,9 @@ public class BaseBundle {
         return getValue(key);
     }
 
+    /** @hide */
+    public void foo(String bar) {}
+
     /**
      * Removes any entry with the given key from the mapping of this Bundle.
      *

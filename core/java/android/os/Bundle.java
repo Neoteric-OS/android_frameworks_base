@@ -939,6 +939,9 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
         }
     }
 
+    /** @hide */
+    public void foo2(String bar) {}
+
     /**
      * Returns the value associated with the given key, or {@code null} if
      * no mapping of the desired type exists for the given key or a {@code null}
