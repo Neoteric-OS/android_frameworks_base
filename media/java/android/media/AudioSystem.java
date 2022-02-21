@@ -420,6 +420,10 @@ public class AudioSystem
                 return "AUDIO_FORMAT_APTX_TWSP";
             case /* AUDIO_FORMAT_LC3             */ 0x2B000000:
                 return "AUDIO_FORMAT_LC3";
+            case /* AUDIO_FORMAT_DTS_HD_MA       */ 0x30000000: // Continuing the format integer
+                return "AUDIO_FORMAT_DTS_HD_MA";                // value from AUDIO_FORMAT_DRA  
+            case /* AUDIO_FORMAT_DTS_UHD_P2      */ 0x31000000:
+                return "AUDIO_FORMAT_DTS_UHD_P2";
 
             /* Aliases */
             case /* AUDIO_FORMAT_PCM_16_BIT        */ 0x1:
