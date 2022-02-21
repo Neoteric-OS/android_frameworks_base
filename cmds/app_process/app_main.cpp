@@ -7,6 +7,7 @@
 
 #define LOG_TAG "appproc"
 
+#include <memory>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/prctl.h>
@@ -23,6 +24,7 @@
 #include <cutils/trace.h>
 #include <android_runtime/AndroidRuntime.h>
 #include <private/android_filesystem_config.h>  // for AID_SYSTEM
+#include <cutils/properties.h>
 
 namespace android {
 
@@ -184,8 +186,10 @@ int main(int argc, char* const argv[])
     }
 
     // Because of applications that are using PAC instructions incorrectly, PAC
-    // is disabled in application processes for now.
-    ScopedDisablePAC x;
+    // is disabled in application processes for now except developer option is enabled.
+    std::unique_ptr<ScopedDisablePAC> x;
+    if (!property_get_bool("persist.dalvik.vm.isa.arm64.features.pac.enabled", false))
+        x = std::make_unique<ScopedDisablePAC>();
 
     AppRuntime runtime(argv[0], computeArgBlockSize(argc, argv));
     // Process command line arguments
