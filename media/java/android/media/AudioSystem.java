@@ -431,6 +431,14 @@ public class AudioSystem
                 return "AUDIO_FORMAT_APTX_TWSP";
             case /* AUDIO_FORMAT_LC3             */ 0x2B000000:
                 return "AUDIO_FORMAT_LC3";
+            case /* AUDIO_FORMAT_DTS_UHD         */ 0x2E000000:
+                return "AUDIO_FORMAT_DTS_UHD";
+            case /* AUDIO_FORMAT_DRA             */ 0x2F000000:
+                return "AUDIO_FORMAT_DRA";
+            case /* AUDIO_FORMAT_DTS_HD_MA       */ 0x30000000:
+                return "AUDIO_FORMAT_DTS_HD_MA";
+            case /* AUDIO_FORMAT_DTS_UHD_P2      */ 0x31000000:
+                return "AUDIO_FORMAT_DTS_UHD_P2";
 
             /* Aliases */
             case /* AUDIO_FORMAT_PCM_16_BIT        */ 0x1:
@@ -503,10 +511,6 @@ public class AudioSystem
                 return "AUDIO_FORMAT_MAT_2_0"; // (MAT | MAT_SUB_2_0)
             case /* AUDIO_FORMAT_MAT_2_1           */ 0x24000003:
                 return "AUDIO_FORMAT_MAT_2_1"; // (MAT | MAT_SUB_2_1)
-            case /* AUDIO_FORMAT_DTS_UHD */           0x2E000000:
-                return "AUDIO_FORMAT_DTS_UHD";
-            case /* AUDIO_FORMAT_DRA */           0x2F000000:
-                return "AUDIO_FORMAT_DRA";
             default:
                 return "AUDIO_FORMAT_(" + audioFormat + ")";
         }
