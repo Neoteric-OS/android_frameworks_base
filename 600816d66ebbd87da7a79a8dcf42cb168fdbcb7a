@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "188902e9_cb3f90f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-02-21T18:15:32Z",
+      "side": 1,
+      "message": "FYI, I encountered merge conflicts, so I have to land this change on internal first. PTAL at ag/16568754.",
+      "revId": "600816d66ebbd87da7a79a8dcf42cb168fdbcb7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
