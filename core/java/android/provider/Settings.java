@@ -238,6 +238,20 @@ public final class Settings {
             "android.settings.TETHER_PROVISIONING_UI";
 
     /**
+     * Activity Action: Show a dialog to notify tethering provisioning result.
+     *
+     * <p>
+     * In some cases, a matching Activity may not exist, so ensure you
+     * safeguard against this.
+     *
+     * @hide
+     */
+    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+    @SystemApi
+    public static final String ACTION_TETHER_PROVISIONING_CARRIER_UI =
+            "android.settings.TETHER_PROVISIONING_CARRIER_UI";
+
+    /**
      * Activity Action: Show settings to allow entering/exiting airplane mode.
      * <p>
      * In some cases, a matching Activity may not exist, so ensure you
