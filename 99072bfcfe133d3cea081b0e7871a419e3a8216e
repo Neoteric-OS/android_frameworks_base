@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44ac96f5_5f898653",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2856,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-02-22T02:47:17Z",
+      "side": 1,
+      "message": "Let\u0027s also say this is supposed to be impossible anyway because building the configuration should not have succeeded",
+      "range": {
+        "startLine": 2856,
+        "startChar": 69,
+        "endLine": 2856,
+        "endChar": 70
+      },
+      "revId": "99072bfcfe133d3cea081b0e7871a419e3a8216e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
