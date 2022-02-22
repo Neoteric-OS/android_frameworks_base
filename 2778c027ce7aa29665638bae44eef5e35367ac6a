@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b8e7688_e332b1fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-02-22T16:52:17Z",
+      "side": 1,
+      "message": "Adding Chad for initial thoughts on the AndroidManifest.xml changes. These don\u0027t allow anything that isn\u0027t already possible via \"adb shell cmd alarm\"",
+      "revId": "2778c027ce7aa29665638bae44eef5e35367ac6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
