@@ -52,6 +52,24 @@
       "parentUuid": "d5cccca2_9dfb5e21",
       "revId": "d60da0dbbe85d42934704fdf06cb83767ff06ad2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe5c0565_b3716062",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1301101
+      },
+      "writtenOn": "2022-02-22T19:10:13Z",
+      "side": 1,
+      "message": "patch file is attached in issue:218370115.",
+      "parentUuid": "e73b9bfc_02ba8f52",
+      "revId": "d60da0dbbe85d42934704fdf06cb83767ff06ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
