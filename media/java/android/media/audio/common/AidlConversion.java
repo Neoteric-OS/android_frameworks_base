@@ -476,7 +476,8 @@ public class AidlConversion {
                         return AudioFormat.ENCODING_E_AC3;
                     } else if (MediaFormat.MIMETYPE_AUDIO_DTS.equals(aidl.encoding)) {
                         return AudioFormat.ENCODING_DTS;
-                    } else if (MediaFormat.MIMETYPE_AUDIO_DTS_HD.equals(aidl.encoding)) {
+                    } else if (MediaFormat.MIMETYPE_AUDIO_DTS_HD.equals(aidl.encoding)
+                             || MediaFormat.MIMETYPE_AUDIO_DTS_HD_LBR.equals(aidl.encoding)) {
                         return AudioFormat.ENCODING_DTS_HD;
                     } else if (MediaFormat.MIMETYPE_AUDIO_MPEG.equals(aidl.encoding)) {
                         return AudioFormat.ENCODING_MP3;
@@ -514,10 +515,20 @@ public class AidlConversion {
                         return AudioFormat.ENCODING_MPEGH_LC_L3;
                     } else if (MediaFormat.MIMETYPE_AUDIO_MPEGH_LC_L4.equals(aidl.encoding)) {
                         return AudioFormat.ENCODING_MPEGH_LC_L4;
+<<<<<<< PATCH SET (973a01 MediaFormat: Add new MIME types for DTS streams)
+                    } else if (MediaFormat.MIMETYPE_AUDIO_DTS_UHD.equals(aidl.encoding)
+                            || MediaFormat.MIMETYPE_AUDIO_DTS_UHD_P1.equals(aidl.encoding)) {
+                        return AudioFormat.ENCODING_DTS_UHD;
+=======
                     } else if (MediaFormat.MIMETYPE_AUDIO_DTS_UHD.equals(aidl.encoding)) {
                         return AudioFormat.ENCODING_DTS_UHD_P1;
+>>>>>>> BASE      (7edaca Merge "Audio: Add ENCODING_DTS_HD_MA, ENCODING_DTS_UHD_P2")
                     } else if (MediaFormat.MIMETYPE_AUDIO_DRA.equals(aidl.encoding)) {
                         return AudioFormat.ENCODING_DRA;
+                    } else if (MediaFormat.MIMETYPE_AUDIO_DTS_HD_MA.equals(aidl.encoding)) {
+                        return AudioFormat.ENCODING_DTS_HD_MA;
+                    } else if (MediaFormat.MIMETYPE_AUDIO_DTS_UHD_P2.equals(aidl.encoding)) {
+                        return AudioFormat.ENCODING_DTS_UHD_P2;
                     } else {
                         return AudioFormat.ENCODING_INVALID;
                     }

@@ -22317,7 +22317,11 @@ package android.media {
     field public static final String MIMETYPE_AUDIO_DRA = "audio/vnd.dra";
     field public static final String MIMETYPE_AUDIO_DTS = "audio/vnd.dts";
     field public static final String MIMETYPE_AUDIO_DTS_HD = "audio/vnd.dts.hd";
+    field public static final String MIMETYPE_AUDIO_DTS_HD_LBR = "audio/vnd.dts.hd;profile=lbr";
+    field public static final String MIMETYPE_AUDIO_DTS_HD_MA = "audio/vnd.dts.hd;profile=dtsma";
     field public static final String MIMETYPE_AUDIO_DTS_UHD = "audio/vnd.dts.uhd";
+    field public static final String MIMETYPE_AUDIO_DTS_UHD_P1 = "audio/vnd.dts.uhd;profile=p1";
+    field public static final String MIMETYPE_AUDIO_DTS_UHD_P2 = "audio/vnd.dts.uhd;profile=p2";
     field public static final String MIMETYPE_AUDIO_EAC3 = "audio/eac3";
     field public static final String MIMETYPE_AUDIO_EAC3_JOC = "audio/eac3-joc";
     field public static final String MIMETYPE_AUDIO_FLAC = "audio/flac";
