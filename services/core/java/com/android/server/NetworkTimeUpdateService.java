@@ -16,6 +16,7 @@
 
 package com.android.server;
 
+import android.annotation.NonNull;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.timedetector.NetworkTimeSuggestion;
@@ -38,6 +39,7 @@ import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.TimestampedValue;
 import android.provider.Settings;
+import android.util.LocalLog;
 import android.util.Log;
 import android.util.NtpTrustedTime;
 import android.util.TimeUtils;
@@ -94,6 +96,13 @@ public class NetworkTimeUpdateService extends Binder {
     // During bootup, the network may not have been up yet, or it's taking time for the
     // connection to happen.
     private int mTryAgainCounter;
+
+    /**
+     * A log that records the decisions to fetch a network time update.
+     * This is logged in bug reports to assist with debugging issues with network time suggestions.
+     */
+    @NonNull
+    private final LocalLog mLocalLog = new LocalLog(30, false /* useLocalTimestamps */);
 
     public NetworkTimeUpdateService(Context context) {
         mContext = context;
@@ -159,7 +168,17 @@ public class NetworkTimeUpdateService extends Binder {
         NtpTrustedTime.TimeResult cachedNtpResult = mTime.getCachedTimeResult();
         if (cachedNtpResult == null || cachedNtpResult.getAgeMillis() >= mPollingIntervalMs) {
             if (DBG) Log.d(TAG, "Stale NTP fix; forcing refresh");
-            mTime.forceRefresh();
+            // Use Local logs to log important events
+            // Ideas: Get refresh result and log when it fails and reset counter if successfully.
+            boolean isSuccessful = mTime.forceRefresh();
+            if (!isSuccessful) {
+                String logMsg = "Failed to get a new ntp time suggestion";
+                if (DBG) {
+                    Log.d(TAG, logMsg);
+                }
+                mLocalLog.log(logMsg);
+            }
+
             cachedNtpResult = mTime.getCachedTimeResult();
         }
 
@@ -180,6 +199,18 @@ public class NetworkTimeUpdateService extends Binder {
                 resetAlarm(mPollingIntervalShorterMs);
             } else {
                 // Try much later
+                long cachedNtpResultAgeMillis = cachedNtpResult != null
+                        ? cachedNtpResult.getAgeMillis() : 0;
+                String logMsg = "Couldn't get a recent time suggestion after retrying "
+                        + "mTryAgainCounter=" + mTryAgainCounter + " times. "
+                        + "Last time suggestion came in at cachedNtpResultAgeMillis="
+                        + cachedNtpResultAgeMillis
+                        + " Scheduling alarm to retry after mPollingIntervalMs="
+                        + mPollingIntervalMs;
+                if (DBG) {
+                    Log.d(TAG, logMsg);
+                }
+                mLocalLog.log(logMsg);
                 mTryAgainCounter = 0;
                 resetAlarm(mPollingIntervalMs);
             }
