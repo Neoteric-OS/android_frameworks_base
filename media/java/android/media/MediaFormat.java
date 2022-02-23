@@ -174,12 +174,23 @@ public final class MediaFormat {
     public static final String MIMETYPE_AUDIO_MPEGH_MHA1 = "audio/mha1";
     /** MIME type for MPEG-H Audio single stream, encapsulated in MHAS */
     public static final String MIMETYPE_AUDIO_MPEGH_MHM1 = "audio/mhm1";
-    /** MIME type for DTS (up to 5.1 channels) audio stream. */
+    /** MIME type for DTS (up to 5.1 channels) audio stream. (Digital Surround stream) */
     public static final String MIMETYPE_AUDIO_DTS = "audio/vnd.dts";
-    /** MIME type for DTS HD (up to 7.1 channels) audio stream. */
+    /** MIME type for DTS HD (up to 7.1 channels) audio stream. (includes also DTS 8Ch Discrete,
+        DTS High Resolution, DTS HD Master Audio with Core) */
     public static final String MIMETYPE_AUDIO_DTS_HD = "audio/vnd.dts.hd";
-    /** MIME type for DTS UHD (object-based) audio stream. */
+    /** MIME type for DTS HD Master Audio (Coreless Lossless) stream */
+    public static final String MIMETYPE_AUDIO_DTS_HD_MA = "audio/vnd.dts.hd;profile=dtsma";
+    /** MIME type for DTS Express(aka LBR) stream */
+    public static final String MIMETYPE_AUDIO_DTS_HD_LBR = "audio/vnd.dts.hd;profile=lbr";
+    /** MIME type for DTS UHD (object-based) audio stream. (DTS:X Profile 1 aka DTS UHD Profile 1)*/
     public static final String MIMETYPE_AUDIO_DTS_UHD = "audio/vnd.dts.uhd";
+    /** MIME type for DTS UHD (object-based) audio stream. (DTS:X Profile 1 aka DTS UHD Profile 1)
+     * The same as MIMETYPE_AUDIO_DTS_UHD with "profile=p1" included for legacy support.
+     */
+    public static final String MIMETYPE_AUDIO_DTS_UHD_P1 = "audio/vnd.dts.uhd;profile=p1";
+    /** MIME type for DTS:X Profile 2(aka DTS UHD Profile 2) stream */
+    public static final String MIMETYPE_AUDIO_DTS_UHD_P2 = "audio/vnd.dts.uhd;profile=p2";
     /** MIME type for Dynamic Resolution Adaptation (DRA) audio stream. */
     public static final String MIMETYPE_AUDIO_DRA = "audio/vnd.dra";
     /** MIME type for Dolby Metadata-enhanced Audio Transmission (MAT) audio stream. */
