@@ -505,15 +505,6 @@ public class HdmiCecNetwork {
     @ServiceThreadOnly
     public void handleCecMessage(HdmiCecMessage message) {
         assertRunOnServiceThread();
-        // Add device by logical address if it's not already known
-        int sourceAddress = message.getSource();
-        if (getCecDeviceInfo(sourceAddress) == null) {
-            HdmiDeviceInfo newDevice = new HdmiDeviceInfo(sourceAddress,
-                    HdmiDeviceInfo.PATH_INVALID, HdmiDeviceInfo.PORT_INVALID,
-                    HdmiDeviceInfo.DEVICE_RESERVED, Constants.UNKNOWN_VENDOR_ID,
-                    HdmiUtils.getDefaultDeviceName(sourceAddress));
-            addCecDevice(newDevice);
-        }
 
         switch (message.getOpcode()) {
             case Constants.MESSAGE_REPORT_PHYSICAL_ADDRESS:
@@ -564,7 +555,11 @@ public class HdmiCecNetwork {
 
         HdmiDeviceInfo deviceInfo = getCecDeviceInfo(logicalAddress);
         if (deviceInfo == null) {
-            Slog.i(TAG, "Unknown source device info for <Report Physical Address> " + message);
+            Slog.i(TAG, "new source device info " + message);
+            HdmiDeviceInfo newDeviceInfo = new HdmiDeviceInfo(logicalAddress, physicalAddress,
+                    physicalAddressToPortId(physicalAddress), type,
+                    Constants.UNKNOWN_VENDOR_ID, HdmiUtils.getDefaultDeviceName(logicalAddress));
+            addCecDevice(newDeviceInfo);
         } else {
             HdmiDeviceInfo updatedDeviceInfo = new HdmiDeviceInfo(deviceInfo.getLogicalAddress(),
                     physicalAddress,
