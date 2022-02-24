@@ -50,6 +50,24 @@
       "message": "Thanks Ke for the CL, but it seems like the code around it has changed. I think @jing or someone just need to do it internally, and abandon this CL from AOSP.",
       "revId": "693080ddc7b98d0708a65ce64a454ac9c1dc9ef6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c20690a9_e55aa085",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1887356
+      },
+      "writtenOn": "2022-02-24T01:09:28Z",
+      "side": 1,
+      "message": "ok, I will abandon this change, this cachedAdjSeq is stay too long in AOSP code which is not used(Android P is no used, now is Android S/T). The code about it is all move to assignCachedAdjIfNecessary now.",
+      "parentUuid": "c59d48a7_674f8826",
+      "revId": "693080ddc7b98d0708a65ce64a454ac9c1dc9ef6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
