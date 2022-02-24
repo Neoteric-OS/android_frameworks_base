@@ -1,0 +1,4 @@
+# Bug component: 655446
+
+include /core/java/android/service/cloudsearch/OWNERS
+srazdan@google.com
