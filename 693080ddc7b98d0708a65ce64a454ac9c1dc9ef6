@@ -68,7 +68,23 @@
       "parentUuid": "c59d48a7_674f8826",
       "revId": "693080ddc7b98d0708a65ce64a454ac9c1dc9ef6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27784f14_ff066b1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-24T16:18:39Z",
+      "side": 1,
+      "message": "Cherry-pick initiated internally: Ia2332da419647e1d48f7aa20766057215315b3fb",
+      "revId": "693080ddc7b98d0708a65ce64a454ac9c1dc9ef6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
-  ],
-  "submitRequirementResults": []
+  ]
 }
