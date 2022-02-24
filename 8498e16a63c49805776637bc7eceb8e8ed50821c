@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a7b0b77_44d79ffc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2022-02-24T18:04:08Z",
+      "side": 1,
+      "message": "Thanks for the fix. Could you please file a bug? We need to fix this internally to avoid merging conflicts. Thanks!",
+      "revId": "8498e16a63c49805776637bc7eceb8e8ed50821c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
