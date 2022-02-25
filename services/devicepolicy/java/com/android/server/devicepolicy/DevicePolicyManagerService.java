@@ -17584,10 +17584,10 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         ProfileNetworkPreference.Builder preferenceBuilder =
                 new ProfileNetworkPreference.Builder();
         if (preferentialNetworkServiceEnabled) {
-            preferenceBuilder.setPreference(PROFILE_NETWORK_PREFERENCE_ENTERPRISE);
-            preferenceBuilder.setPreferenceEnterpriseId(NET_ENTERPRISE_ID_1);
+            preferenceBuilder.setBehavior(PROFILE_NETWORK_PREFERENCE_ENTERPRISE);
+            preferenceBuilder.setEnterpriseId(NET_ENTERPRISE_ID_1);
         } else {
-            preferenceBuilder.setPreference(PROFILE_NETWORK_PREFERENCE_DEFAULT);
+            preferenceBuilder.setBehavior(PROFILE_NETWORK_PREFERENCE_DEFAULT);
         }
         List<ProfileNetworkPreference> preferences = new ArrayList<>();
         preferences.add(preferenceBuilder.build());
@@ -17606,12 +17606,12 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
                 new ProfileNetworkPreference.Builder();
         if (preferentialNetworkServiceConfig.isEnabled()) {
             if (preferentialNetworkServiceConfig.isFallbackToDefaultConnectionAllowed()) {
-                preferenceBuilder.setPreference(PROFILE_NETWORK_PREFERENCE_ENTERPRISE);
+                preferenceBuilder.setBehavior(PROFILE_NETWORK_PREFERENCE_ENTERPRISE);
             } else {
-                preferenceBuilder.setPreference(PROFILE_NETWORK_PREFERENCE_ENTERPRISE_NO_FALLBACK);
+                preferenceBuilder.setBehavior(PROFILE_NETWORK_PREFERENCE_ENTERPRISE_NO_FALLBACK);
             }
         } else {
-            preferenceBuilder.setPreference(PROFILE_NETWORK_PREFERENCE_DEFAULT);
+            preferenceBuilder.setBehavior(PROFILE_NETWORK_PREFERENCE_DEFAULT);
         }
         List<Integer> allowedUids = Arrays.stream(
                 preferentialNetworkServiceConfig.getIncludedUids()).boxed().collect(
@@ -17621,7 +17621,7 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
                 Collectors.toList());
         preferenceBuilder.setIncludedUids(allowedUids);
         preferenceBuilder.setExcludedUids(excludedUids);
-        preferenceBuilder.setPreferenceEnterpriseId(
+        preferenceBuilder.setEnterpriseId(
                 preferentialNetworkServiceConfig.getNetworkId());
         List<ProfileNetworkPreference> preferences = new ArrayList<>();
         preferences.add(preferenceBuilder.build());

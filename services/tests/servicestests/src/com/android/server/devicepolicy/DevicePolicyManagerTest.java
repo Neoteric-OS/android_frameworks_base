@@ -4051,7 +4051,7 @@ public class DevicePolicyManagerTest extends DpmTestBase {
         dpms.handleStartUser(managedProfileUserId);
         ProfileNetworkPreference preferenceDetails =
                 new ProfileNetworkPreference.Builder()
-                .setPreference(PROFILE_NETWORK_PREFERENCE_DEFAULT)
+                .setBehavior(PROFILE_NETWORK_PREFERENCE_DEFAULT)
                 .build();
         List<ProfileNetworkPreference> preferences = new ArrayList<>();
         preferences.add(preferenceDetails);
@@ -4071,7 +4071,7 @@ public class DevicePolicyManagerTest extends DpmTestBase {
         dpms.handleStopUser(managedProfileUserId);
         ProfileNetworkPreference preferenceDetails =
                 new ProfileNetworkPreference.Builder()
-                        .setPreference(PROFILE_NETWORK_PREFERENCE_DEFAULT)
+                        .setBehavior(PROFILE_NETWORK_PREFERENCE_DEFAULT)
                         .build();
         List<ProfileNetworkPreference> preferences = new ArrayList<>();
         preferences.add(preferenceDetails);
@@ -4098,7 +4098,7 @@ public class DevicePolicyManagerTest extends DpmTestBase {
 
         ProfileNetworkPreference preferenceDetails =
                 new ProfileNetworkPreference.Builder()
-                        .setPreference(PROFILE_NETWORK_PREFERENCE_DEFAULT)
+                        .setBehavior(PROFILE_NETWORK_PREFERENCE_DEFAULT)
                         .build();
         List<ProfileNetworkPreference> preferences = new ArrayList<>();
         preferences.add(preferenceDetails);
@@ -4111,8 +4111,8 @@ public class DevicePolicyManagerTest extends DpmTestBase {
 
         ProfileNetworkPreference preferenceDetails2 =
                 new ProfileNetworkPreference.Builder()
-                        .setPreference(PROFILE_NETWORK_PREFERENCE_ENTERPRISE)
-                        .setPreferenceEnterpriseId(NET_ENTERPRISE_ID_1)
+                        .setBehavior(PROFILE_NETWORK_PREFERENCE_ENTERPRISE)
+                        .setEnterpriseId(NET_ENTERPRISE_ID_1)
                         .build();
         List<ProfileNetworkPreference> preferences2 = new ArrayList<>();
         preferences2.add(preferenceDetails);
@@ -4172,7 +4172,7 @@ public class DevicePolicyManagerTest extends DpmTestBase {
 
         ProfileNetworkPreference preferenceDetails =
                 new ProfileNetworkPreference.Builder()
-                        .setPreference(PROFILE_NETWORK_PREFERENCE_DEFAULT)
+                        .setBehavior(PROFILE_NETWORK_PREFERENCE_DEFAULT)
                         .build();
         List<ProfileNetworkPreference> preferences = new ArrayList<>();
         preferences.add(preferenceDetails);
@@ -4199,8 +4199,8 @@ public class DevicePolicyManagerTest extends DpmTestBase {
                 .isEnabled()).isTrue();
         ProfileNetworkPreference preferenceDetails =
                 new ProfileNetworkPreference.Builder()
-                        .setPreference(PROFILE_NETWORK_PREFERENCE_ENTERPRISE)
-                        .setPreferenceEnterpriseId(NET_ENTERPRISE_ID_1)
+                        .setBehavior(PROFILE_NETWORK_PREFERENCE_ENTERPRISE)
+                        .setEnterpriseId(NET_ENTERPRISE_ID_1)
                         .build();
         List<ProfileNetworkPreference> preferences = new ArrayList<>();
         preferences.add(preferenceDetails);
@@ -4232,8 +4232,8 @@ public class DevicePolicyManagerTest extends DpmTestBase {
         includedList.add(2);
         ProfileNetworkPreference preferenceDetails =
                 new ProfileNetworkPreference.Builder()
-                        .setPreference(PROFILE_NETWORK_PREFERENCE_ENTERPRISE_NO_FALLBACK)
-                        .setPreferenceEnterpriseId(NET_ENTERPRISE_ID_1)
+                        .setBehavior(PROFILE_NETWORK_PREFERENCE_ENTERPRISE_NO_FALLBACK)
+                        .setEnterpriseId(NET_ENTERPRISE_ID_1)
                         .setIncludedUids(includedList)
                         .build();
         List<ProfileNetworkPreference> preferences = new ArrayList<>();
@@ -4267,8 +4267,8 @@ public class DevicePolicyManagerTest extends DpmTestBase {
         excludedUids.add(2);
         ProfileNetworkPreference preferenceDetails =
                 new ProfileNetworkPreference.Builder()
-                        .setPreference(PROFILE_NETWORK_PREFERENCE_ENTERPRISE_NO_FALLBACK)
-                        .setPreferenceEnterpriseId(NET_ENTERPRISE_ID_1)
+                        .setBehavior(PROFILE_NETWORK_PREFERENCE_ENTERPRISE_NO_FALLBACK)
+                        .setEnterpriseId(NET_ENTERPRISE_ID_1)
                         .setExcludedUids(excludedUids)
                         .build();
         List<ProfileNetworkPreference> preferences = new ArrayList<>();
