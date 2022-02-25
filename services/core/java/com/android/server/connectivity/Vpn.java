@@ -2890,6 +2890,14 @@ public class Vpn {
                 }
             } else if (exception instanceof IllegalArgumentException) {
                 // Failed to build IKE/ChildSessionParams; fatal profile configuration error
+                // Sending CATEGORY_ERROR_USER_DEACTIVATED is not perfect but this is a more proper
+                // event to the user by comparing with other 2 events. And in fact, this might not
+                // be happened because the configuration error should be happened before
+                // establishing the connection.
+                mExecutorService.execute(() -> sendEventToVpnManagerApp(
+                        VpnManager.CATEGORY_EVENT_DEACTIVATED_BY_USER,
+                        -1 /* errorClass */, -1 /* errorType */, packageName, sessionKey,
+                        underlyingNetwork, nc, lp));
                 markFailedAndDisconnect(exception);
                 return;
             } else if (exception instanceof IkeNonProtocolException) {
