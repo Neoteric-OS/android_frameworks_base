@@ -2853,6 +2853,12 @@ public class Vpn {
                 return;
             }
 
+            final String packageName = mPackage;
+            final String sessionKey = mSessionKey;
+            final Network underlyingNetwork = getUnderlyingNetwork();
+            final NetworkCapabilities nc = getRedactedNetworkCapabilitiesOfUnderlyingNetwork();
+            final LinkProperties lp = getRedactedLinkPropertiesOfUnderlyingNetwork();
+
             if (exception instanceof IkeProtocolException) {
                 final IkeProtocolException ikeException = (IkeProtocolException) exception;
 
@@ -2864,9 +2870,20 @@ public class Vpn {
                     case IkeProtocolException.ERROR_TYPE_FAILED_CP_REQUIRED: // Fallthrough
                     case IkeProtocolException.ERROR_TYPE_TS_UNACCEPTABLE:
                         // All the above failures are configuration errors, and are terminal
+                        mExecutorService.execute(() -> sendEventToVpnManagerApp(
+                                VpnManager.CATEGORY_EVENT_IKE_ERROR,
+                                VpnManager.ERROR_CLASS_NOT_RECOVERABLE,
+                                ikeException.getErrorType(), packageName, sessionKey,
+                                underlyingNetwork, nc, lp));
                         markFailedAndDisconnect(exception);
                         return;
                     // All other cases possibly recoverable.
+                    default:
+                        mExecutorService.execute(() -> sendEventToVpnManagerApp(
+                                VpnManager.CATEGORY_EVENT_IKE_ERROR,
+                                VpnManager.ERROR_CLASS_RECOVERABLE,
+                                ikeException.getErrorType(), packageName, sessionKey,
+                                underlyingNetwork, nc, lp));
                 }
             } else if (exception instanceof IllegalArgumentException) {
                 // Failed to build IKE/ChildSessionParams; fatal profile configuration error
