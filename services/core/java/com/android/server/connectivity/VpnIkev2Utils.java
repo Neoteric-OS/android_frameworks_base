@@ -50,7 +50,9 @@ import android.net.InetAddresses;
 import android.net.IpPrefix;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecTransform;
+import android.net.LinkProperties;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.RouteInfo;
 import android.net.eap.EapSessionConfig;
 import android.net.ipsec.ike.ChildSaProposal;
@@ -386,6 +388,20 @@ public class VpnIkev2Utils {
         public void onAvailable(@NonNull Network network) {
             Log.d(mTag, "Starting IKEv2/IPsec session on new network: " + network);
             mCallback.onDefaultNetworkChanged(network);
+        }
+
+        @Override
+        public void onCapabilitiesChanged(@NonNull Network network,
+                @NonNull NetworkCapabilities networkCapabilities) {
+            Log.d(mTag, "Receiving network capabilities changed on network: " + network);
+            mCallback.onDefaultNetworkCapabilitiesChanged(networkCapabilities);
+        }
+
+        @Override
+        public void onLinkPropertiesChanged(@NonNull Network network,
+                @NonNull LinkProperties linkProperties) {
+            Log.d(mTag, "Receiving link properties changed on network: " + network);
+            mCallback.onDefaultNetworkLinkPropertiesChanged(linkProperties);
         }
 
         @Override

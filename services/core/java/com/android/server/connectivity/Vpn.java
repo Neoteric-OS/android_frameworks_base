@@ -158,6 +158,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -275,6 +276,19 @@ public class Vpn {
 
     // The user id of initiating VPN.
     private final int mUserId;
+
+    private static final String VPN_MANAGER_EVENT_THREAD = "VPN_MANAGER_EVENT_THREAD";
+
+    // In order to prevent threading issue, this is used to make sure that all the objects which
+    // will be sent to the VpnManager app through ACTION_VPN_MANAGER_EVENT will be handled in order.
+    private final ExecutorService mExecutorService = Executors.newSingleThreadExecutor(
+            new ThreadFactory() {
+                @Override
+                public Thread newThread(Runnable r) {
+                    return new Thread(r, VPN_MANAGER_EVENT_THREAD);
+                }
+            }
+    );
 
     interface RetryScheduler {
         void checkInterruptAndDelay(boolean sleepLonger) throws InterruptedException;
@@ -511,6 +525,38 @@ public class Vpn {
                 .build();
 
         loadAlwaysOnPackage();
+    }
+
+    private void ensureRunningOnVpnManagerEventThread() {
+        if (!VPN_MANAGER_EVENT_THREAD.equals(Thread.currentThread().getName())) {
+            throw new SecurityException("Not running on VPN manager event thread: "
+                    + Thread.currentThread().getName());
+        }
+    }
+
+    private boolean sendEventToVpnManagerApp(@NonNull String category, int errorClass,
+            int errorCode, String packageName, String sessionKey, Network underlyingNetwork,
+            NetworkCapabilities nc, LinkProperties lp) {
+        ensureRunningOnVpnManagerEventThread();
+        // if (mVpnRunner == null || VpnConfig.LEGACY_VPN.equals(packageName)) return false;
+        final Intent intent = new Intent(VpnManager.ACTION_VPN_MANAGER_EVENT);
+        intent.setPackage(packageName);
+        intent.addCategory(category);
+        intent.putExtra(VpnManager.EXTRA_SESSION_KEY, sessionKey);
+        intent.putExtra(VpnManager.EXTRA_UNDERLYING_NETWORK, underlyingNetwork);
+        intent.putExtra(VpnManager.EXTRA_UNDERLYING_NETWORK_CAPABILITIES, nc);
+        intent.putExtra(VpnManager.EXTRA_UNDERLYING_LINK_PROPERTIES, lp);
+        intent.putExtra(VpnManager.EXTRA_TIMESTAMP, SystemClock.elapsedRealtime());
+        if (!VpnManager.CATEGORY_EVENT_DEACTIVATED_BY_USER.equals(category)) {
+            intent.putExtra(VpnManager.EXTRA_ERROR_CLASS, errorClass);
+            intent.putExtra(VpnManager.EXTRA_ERROR_CODE, errorCode);
+        }
+        try {
+            return mUserIdContext.startService(intent) != null;
+        } catch (RuntimeException e) {
+            Log.e(TAG, "Service of VpnManager app " + intent + " failed to start", e);
+            return false;
+        }
     }
 
     /**
@@ -1026,6 +1072,19 @@ public class Vpn {
                 if (!VpnConfig.LEGACY_VPN.equals(mPackage)) {
                     mAppOpsManager.finishOp(
                             AppOpsManager.OPSTR_ESTABLISH_VPN_MANAGER, mOwnerUID, mPackage, null);
+
+                    final String packageName = mPackage;
+                    final String sessionKey = mSessionKey;
+                    final Network underlyingNetwork = mVpnRunner.getUnderlyingNetwork();
+                    final NetworkCapabilities nc =
+                            mVpnRunner.getRedactedNetworkCapabilitiesOfUnderlyingNetwork();
+                    final LinkProperties lp =
+                            mVpnRunner.getRedactedLinkPropertiesOfUnderlyingNetwork();
+                    // Only need to send the event when the VpnManager app is deactivated.
+                    mExecutorService.execute(() -> sendEventToVpnManagerApp(
+                            VpnManager.CATEGORY_EVENT_DEACTIVATED_BY_USER,
+                            -1 /* errorClass */, -1 /* errorCode */,
+                            packageName, sessionKey, underlyingNetwork, nc, lp));
                 }
                 // cleanupVpnStateLocked() is called from mVpnRunner.exit()
                 mVpnRunner.exit();
@@ -1038,7 +1097,7 @@ public class Vpn {
             }
 
             Log.i(TAG, "Switched from " + mPackage + " to " + newPackage);
-            mPackage = newPackage;
+            mExecutorService.execute(() -> mPackage = newPackage);
             mOwnerUID = getAppUid(newPackage, mUserId);
             mIsPackageTargetingAtLeastQ = doesPackageTargetAtLeastQ(newPackage);
             try {
@@ -2440,10 +2499,24 @@ public class Vpn {
                 cleanupVpnStateLocked();
             }
         }
+
+        /** This method returns null when there is no underlying network. */
+        @Nullable
+        protected abstract Network getUnderlyingNetwork();
+
+        @Nullable
+        protected abstract NetworkCapabilities getRedactedNetworkCapabilitiesOfUnderlyingNetwork();
+
+        @Nullable
+        protected abstract LinkProperties getRedactedLinkPropertiesOfUnderlyingNetwork();
     }
 
     interface IkeV2VpnRunnerCallback {
         void onDefaultNetworkChanged(@NonNull Network network);
+
+        void onDefaultNetworkCapabilitiesChanged(@NonNull NetworkCapabilities nc);
+
+        void onDefaultNetworkLinkPropertiesChanged(@NonNull LinkProperties lp);
 
         void onChildOpened(
                 @NonNull Network network, @NonNull ChildSessionConfiguration childConfig);
@@ -2500,7 +2573,12 @@ public class Vpn {
 
         @Nullable private IpSecTunnelInterface mTunnelIface;
         @Nullable private IkeSession mSession;
+        // In order to prevent threading issue, mActiveNetwork, mNetworkCapabilities and
+        // mLinkProperties are guarded by the same thread as sendEventToVpnManagerApp().
+        // See mExecutorService.
         @Nullable private Network mActiveNetwork;
+        @Nullable private NetworkCapabilities mNetworkCapabilities;
+        @Nullable private LinkProperties mLinkProperties;
 
         IkeV2VpnRunner(@NonNull Ikev2VpnProfile profile) {
             super(TAG);
@@ -2508,6 +2586,28 @@ public class Vpn {
             mIpSecManager = (IpSecManager) mContext.getSystemService(Context.IPSEC_SERVICE);
             mNetworkCallback = new VpnIkev2Utils.Ikev2VpnNetworkCallback(TAG, this);
             mSessionKey = UUID.randomUUID().toString();
+        }
+
+        @Nullable
+        @Override
+        protected Network getUnderlyingNetwork() {
+            return mActiveNetwork;
+        }
+
+        @Nullable
+        @Override
+        protected NetworkCapabilities getRedactedNetworkCapabilitiesOfUnderlyingNetwork() {
+            if (mNetworkCapabilities == null) return null;
+            return mConnectivityManager.getRedactedNetworkCapabilitiesForPackage(
+                    mNetworkCapabilities, mOwnerUID, mPackage);
+        }
+
+        @Nullable
+        @Override
+        protected LinkProperties getRedactedLinkPropertiesOfUnderlyingNetwork() {
+            if (mLinkProperties == null) return null;
+            return mConnectivityManager.getRedactedLinkPropertiesForPackage(mLinkProperties,
+                    mOwnerUID, mPackage);
         }
 
         @Override
@@ -2679,7 +2779,7 @@ public class Vpn {
                     // Without MOBIKE, we have no way to seamlessly migrate. Close on old
                     // (non-default) network, and start the new one.
                     resetIkeState();
-                    mActiveNetwork = network;
+                    mExecutorService.execute(() -> mActiveNetwork = network);
 
                     final IkeSessionParams ikeSessionParams =
                             VpnIkev2Utils.buildIkeSessionParams(mContext, mProfile, network);
@@ -2711,6 +2811,16 @@ public class Vpn {
                     onSessionLost(network, e);
                 }
             });
+        }
+
+        /** Called when the NetworkCapabilities of underlying network is changed */
+        public void onDefaultNetworkCapabilitiesChanged(@NonNull NetworkCapabilities nc) {
+            mExecutorService.execute(() -> mNetworkCapabilities = nc);
+        }
+
+        /** Called when the LinkProperties of underlying network is changed */
+        public void onDefaultNetworkLinkPropertiesChanged(@NonNull LinkProperties lp) {
+            mExecutorService.execute(() -> mLinkProperties = lp);
         }
 
         /** Marks the state as FAILED, and disconnects. */
@@ -2764,7 +2874,11 @@ public class Vpn {
                 return;
             }
 
-            mActiveNetwork = null;
+            mExecutorService.execute(() -> {
+                mActiveNetwork = null;
+                mNetworkCapabilities = null;
+                mLinkProperties = null;
+            });
 
             // Close all obsolete state, but keep VPN alive incase a usable network comes up.
             // (Mirrors VpnService behavior)
@@ -2828,8 +2942,10 @@ public class Vpn {
          * consistency of the Ikev2VpnRunner fields.
          */
         private void disconnectVpnRunner() {
-            mActiveNetwork = null;
-            mSessionKey = null;
+            mExecutorService.execute(() -> {
+                mActiveNetwork = null;
+                mSessionKey = null;
+            });
             mIsRunning = false;
 
             resetIkeState();
@@ -3184,6 +3300,24 @@ public class Vpn {
                     }
                 }
             }
+        }
+
+        @Nullable
+        @Override
+        protected Network getUnderlyingNetwork() {
+            return null;
+        }
+
+        @Nullable
+        @Override
+        protected NetworkCapabilities getRedactedNetworkCapabilitiesOfUnderlyingNetwork() {
+            return null;
+        }
+
+        @Nullable
+        @Override
+        protected LinkProperties getRedactedLinkPropertiesOfUnderlyingNetwork() {
+            return null;
         }
     }
 
