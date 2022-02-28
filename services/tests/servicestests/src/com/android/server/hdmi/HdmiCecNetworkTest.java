@@ -156,6 +156,20 @@ public class HdmiCecNetworkTest {
     }
 
     @Test
+    public void physicalAddressToPort_localDevice_weAreSourceDevice() {
+        mNativeWrapper.setPhysicalAddress(0x2000);
+        mHdmiCecNetwork.initPortInfo();
+        assertThat(mHdmiCecNetwork.physicalAddressToPortId(0x2000)).isEqualTo(0);
+    }
+
+    @Test
+    public void physicalAddressToPort_localDevice_weAreTv() {
+        mNativeWrapper.setPhysicalAddress(0x0000);
+        mHdmiCecNetwork.initPortInfo();
+        assertThat(mHdmiCecNetwork.physicalAddressToPortId(0x0000)).isEqualTo(0);
+    }
+
+    @Test
     public void localDevices_verifyOne_tv() {
         mHdmiCecNetwork.clearLocalDevices();
         mHdmiCecNetwork.addLocalDevice(HdmiDeviceInfo.DEVICE_TV,
