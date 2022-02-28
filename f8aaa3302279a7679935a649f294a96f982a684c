@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ead4ad7_22564ee9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-02-28T22:45:49Z",
+      "side": 1,
+      "message": "Hi, \n\n128 bits is violating the spec https://datatracker.ietf.org/doc/html/rfc2404#section-3, where it says that \"Key lengths other than 160-bits MUST NOT be supported\".\n\nCan you provide more context of the VoLTE/IMS use cases? For example, which carriers are depending on that?\n\n",
+      "revId": "f8aaa3302279a7679935a649f294a96f982a684c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
