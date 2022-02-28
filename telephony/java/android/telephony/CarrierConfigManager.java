@@ -3778,30 +3778,42 @@ public class CarrierConfigManager {
     public static final String KEY_OPPORTUNISTIC_ESIM_DOWNLOAD_VIA_WIFI_ONLY_BOOL =
             "opportunistic_esim_download_via_wifi_only_bool";
 
-    /**
-     * Controls RSRP threshold at which OpportunisticNetworkService will decide whether
+/**
+     * Controls RSRP threshold, in dBm, at which OpportunisticNetworkService will decide whether
      * the opportunistic network is good enough for internet data.
+     *
+     * <p>The value of {@link CellSignalStrengthLte#getRsrp()} will be compared with this
+     * threshold.
      */
     public static final String KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_RSRP_INT =
             "opportunistic_network_entry_threshold_rsrp_int";
 
     /**
-     * Controls RSSNR threshold at which OpportunisticNetworkService will decide whether
-     * the opportunistic network is good enough for internet data.
+     * Controls RSSNR threshold, in centiBels (0.1 dB), at which OpportunisticNetworkService will
+     * decide whether the opportunistic network is good enough for internet data.
+     *
+     * <p>The value of {@link CellSignalStrengthLte#getRssnr()} will be compared with this
+     * threshold.
      */
     public static final String KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_RSSNR_INT =
             "opportunistic_network_entry_threshold_rssnr_int";
 
     /**
-     * Controls RSRP threshold below which OpportunisticNetworkService will decide whether
+     * Controls RSRP threshold, in dBm, below which OpportunisticNetworkService will decide whether
      * the opportunistic network available is not good enough for internet data.
+     *
+     * <p>The value of {@link CellSignalStrengthLte#getRsrp()} will be compared with this
+     * threshold.
      */
     public static final String KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_RSRP_INT =
             "opportunistic_network_exit_threshold_rsrp_int";
 
     /**
-     * Controls RSSNR threshold below which OpportunisticNetworkService will decide whether
-     * the opportunistic network available is not good enough for internet data.
+     * Controls RSSNR threshold, in centiBels (0.1 dB), below which OpportunisticNetworkService will
+     * decide whether the opportunistic network available is not good enough for internet data.
+     *
+     * <p>The value of {@link CellSignalStrengthLte#getRssnr()} will be compared with this
+     * threshold.
      */
     public static final String KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_RSSNR_INT =
             "opportunistic_network_exit_threshold_rssnr_int";
@@ -3899,7 +3911,7 @@ public class CarrierConfigManager {
          * good enough for internet data. Note other factors may be considered for the final
          * decision.
          *
-         * <p>The value of {@link CellSignalStrengthNr#getSsRsrp} will be compared with this
+         * <p>The value of {@link CellSignalStrengthNr#getSsRsrp()} will be compared with this
          * threshold.
          *
          * @hide
@@ -3926,7 +3938,7 @@ public class CarrierConfigManager {
          * good enough for internet data. Note other factors may be considered for the final
          * decision.
          *
-         * <p>The value of {@link CellSignalStrengthNr#getSsRsrq} will be compared with this
+         * <p>The value of {@link CellSignalStrengthNr#getSsRsrq()} will be compared with this
          * threshold.
          *
          * @hide
@@ -3953,6 +3965,9 @@ public class CarrierConfigManager {
          * be considered good enough for internet data. Note other factors may be considered
          * for the final decision.
          *
+         * <p>The value of {@link CellSignalStrengthNr#getSsRsrp()} will be compared with this
+         * threshold.
+         *
          * @hide
          */
         public static final String KEY_EXIT_THRESHOLD_SS_RSRP_INT =
@@ -3975,6 +3990,9 @@ public class CarrierConfigManager {
          * Controls SS-RSRQ threshold in dB below which 5G opportunistic network available will not
          * be considered good enough for internet data. Note other factors may be considered
          * for the final decision.
+         *
+         * <p>The value of {@link CellSignalStrengthNr#getSsRsrq()} will be compared with this
+         * threshold.
          *
          * @hide
          */
