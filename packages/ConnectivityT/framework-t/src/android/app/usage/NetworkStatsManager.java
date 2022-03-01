@@ -289,8 +289,9 @@ public class NetworkStatsManager {
      * @return Bucket object or null if permissions are insufficient or error happened during
      *         statistics collection.
      */
+    @Nullable
     @WorkerThread
-    public Bucket querySummaryForDevice(int networkType, String subscriberId,
+    public Bucket querySummaryForDevice(int networkType, @Nullable String subscriberId,
             long startTime, long endTime) throws SecurityException, RemoteException {
         NetworkTemplate template;
         try {
@@ -334,9 +335,10 @@ public class NetworkStatsManager {
      * @return Bucket object or null if permissions are insufficient or error happened during
      *         statistics collection.
      */
+    @Nullable
     @WorkerThread
-    public Bucket querySummaryForUser(int networkType, String subscriberId, long startTime,
-            long endTime) throws SecurityException, RemoteException {
+    public Bucket querySummaryForUser(int networkType, @Nullable String subscriberId,
+            long startTime, long endTime) throws SecurityException, RemoteException {
         NetworkTemplate template;
         try {
             template = createTemplate(networkType, subscriberId);
@@ -383,8 +385,9 @@ public class NetworkStatsManager {
      * @return Statistics object or null if permissions are insufficient or error happened during
      *         statistics collection.
      */
+    @Nullable
     @WorkerThread
-    public NetworkStats querySummary(int networkType, String subscriberId, long startTime,
+    public NetworkStats querySummary(int networkType, @Nullable String subscriberId, long startTime,
             long endTime) throws SecurityException, RemoteException {
         NetworkTemplate template;
         try {
@@ -508,15 +511,17 @@ public class NetworkStatsManager {
      *
      * @see #queryDetailsForUidTagState(int, String, long, long, int, int, int)
      */
+    @NonNull
     @WorkerThread
-    public NetworkStats queryDetailsForUid(int networkType, String subscriberId,
+    public NetworkStats queryDetailsForUid(int networkType, @Nullable String subscriberId,
             long startTime, long endTime, int uid) throws SecurityException {
         return queryDetailsForUidTagState(networkType, subscriberId, startTime, endTime, uid,
             NetworkStats.Bucket.TAG_NONE, NetworkStats.Bucket.STATE_ALL);
     }
 
     /** @hide */
-    public NetworkStats queryDetailsForUid(NetworkTemplate template,
+    @NonNull
+    public NetworkStats queryDetailsForUid(@NonNull NetworkTemplate template,
             long startTime, long endTime, int uid) throws SecurityException {
         return queryDetailsForUidTagState(template, startTime, endTime, uid,
                 NetworkStats.Bucket.TAG_NONE, NetworkStats.Bucket.STATE_ALL);
@@ -528,8 +533,9 @@ public class NetworkStatsManager {
      *
      * @see #queryDetailsForUidTagState(int, String, long, long, int, int, int)
      */
+    @NonNull
     @WorkerThread
-    public NetworkStats queryDetailsForUidTag(int networkType, String subscriberId,
+    public NetworkStats queryDetailsForUidTag(int networkType, @Nullable String subscriberId,
             long startTime, long endTime, int uid, int tag) throws SecurityException {
         return queryDetailsForUidTagState(networkType, subscriberId, startTime, endTime, uid,
             tag, NetworkStats.Bucket.STATE_ALL);
@@ -575,8 +581,9 @@ public class NetworkStatsManager {
      * @return Statistics object or null if an error happened during statistics collection.
      * @throws SecurityException if permissions are insufficient to read network statistics.
      */
+    @NonNull
     @WorkerThread
-    public NetworkStats queryDetailsForUidTagState(int networkType, String subscriberId,
+    public NetworkStats queryDetailsForUidTagState(int networkType, @Nullable String subscriberId,
             long startTime, long endTime, int uid, int tag, int state) throws SecurityException {
         NetworkTemplate template;
         template = createTemplate(networkType, subscriberId);
@@ -668,8 +675,9 @@ public class NetworkStatsManager {
      * @return Statistics object or null if permissions are insufficient or error happened during
      *         statistics collection.
      */
+    @Nullable
     @WorkerThread
-    public NetworkStats queryDetails(int networkType, String subscriberId, long startTime,
+    public NetworkStats queryDetails(int networkType, @Nullable String subscriberId, long startTime,
             long endTime) throws SecurityException, RemoteException {
         NetworkTemplate template;
         try {
@@ -698,7 +706,7 @@ public class NetworkStatsManager {
      *
      * @hide
      */
-    @SystemApi
+    @SystemApi(client = MODULE_LIBRARIES)
     @RequiresPermission(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK)
     @NonNull public android.net.NetworkStats getMobileUidStats() {
         try {
@@ -722,7 +730,7 @@ public class NetworkStatsManager {
      *
      * @hide
      */
-    @SystemApi
+    @SystemApi(client = MODULE_LIBRARIES)
     @RequiresPermission(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK)
     @NonNull public android.net.NetworkStats getWifiUidStats() {
         try {
@@ -779,8 +787,8 @@ public class NetworkStatsManager {
      *
      * @see #registerUsageCallback(int, String, long, UsageCallback, Handler)
      */
-    public void registerUsageCallback(int networkType, String subscriberId, long thresholdBytes,
-            UsageCallback callback) {
+    public void registerUsageCallback(int networkType, @Nullable String subscriberId,
+            long thresholdBytes, @NonNull UsageCallback callback) {
         registerUsageCallback(networkType, subscriberId, thresholdBytes, callback,
                 null /* handler */);
     }
@@ -810,8 +818,8 @@ public class NetworkStatsManager {
      * @param handler to dispatch callback events through, otherwise if {@code null} it uses
      *            the calling thread.
      */
-    public void registerUsageCallback(int networkType, String subscriberId, long thresholdBytes,
-            UsageCallback callback, @Nullable Handler handler) {
+    public void registerUsageCallback(int networkType, @Nullable String subscriberId,
+            long thresholdBytes, @NonNull UsageCallback callback, @Nullable Handler handler) {
         NetworkTemplate template = createTemplate(networkType, subscriberId);
         if (DBG) {
             Log.d(TAG, "registerUsageCallback called with: {"
@@ -831,7 +839,7 @@ public class NetworkStatsManager {
      *
      * @param callback The {@link UsageCallback} used when registering.
      */
-    public void unregisterUsageCallback(UsageCallback callback) {
+    public void unregisterUsageCallback(@NonNull UsageCallback callback) {
         if (callback == null || callback.request == null
                 || callback.request.requestId == DataUsageRequest.REQUEST_ID_UNSET) {
             throw new IllegalArgumentException("Invalid UsageCallback");
@@ -872,7 +880,7 @@ public class NetworkStatsManager {
         /**
          * Called when data usage has reached the given threshold.
          */
-        public abstract void onThresholdReached(int networkType, String subscriberId);
+        public abstract void onThresholdReached(int networkType, @Nullable String subscriberId);
 
         /**
          * @hide used for internal bookkeeping
@@ -912,7 +920,7 @@ public class NetworkStatsManager {
      *                 registered to the system.
      * @hide
      */
-    @SystemApi
+    @SystemApi(client = MODULE_LIBRARIES)
     @RequiresPermission(anyOf = {
             android.Manifest.permission.NETWORK_STATS_PROVIDER,
             NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK})
@@ -938,7 +946,7 @@ public class NetworkStatsManager {
      *                 unregistered to the system.
      * @hide
      */
-    @SystemApi
+    @SystemApi(client = MODULE_LIBRARIES)
     @RequiresPermission(anyOf = {
             android.Manifest.permission.NETWORK_STATS_PROVIDER,
             NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK})
@@ -950,7 +958,7 @@ public class NetworkStatsManager {
         }
     }
 
-    private static NetworkTemplate createTemplate(int networkType, String subscriberId) {
+    private static NetworkTemplate createTemplate(int networkType, @Nullable String subscriberId) {
         final NetworkTemplate template;
         switch (networkType) {
             case ConnectivityManager.TYPE_MOBILE:

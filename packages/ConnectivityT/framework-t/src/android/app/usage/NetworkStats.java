@@ -17,6 +17,7 @@
 package android.app.usage;
 
 import android.annotation.IntDef;
+import android.annotation.Nullable;
 import android.content.Context;
 import android.net.INetworkStatsService;
 import android.net.INetworkStatsSession;
@@ -477,7 +478,7 @@ public final class NetworkStats implements AutoCloseable {
      * @param bucketOut Bucket to be filled with data.
      * @return true if successfully filled the bucket, false otherwise.
      */
-    public boolean getNextBucket(Bucket bucketOut) {
+    public boolean getNextBucket(@Nullable Bucket bucketOut) {
         if (mSummary != null) {
             return getNextSummaryBucket(bucketOut);
         } else {

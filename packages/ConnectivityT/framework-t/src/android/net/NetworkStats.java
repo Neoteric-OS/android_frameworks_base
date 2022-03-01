@@ -16,6 +16,8 @@
 
 package android.net;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
 import static com.android.net.module.util.NetworkStatsUtils.multiplySafeByRational;
 
 import android.annotation.IntDef;
@@ -58,7 +60,7 @@ import java.util.function.Predicate;
  * @hide
  */
 // @NotThreadSafe
-@SystemApi
+@SystemApi(client = MODULE_LIBRARIES)
 public final class NetworkStats implements Parcelable, Iterable<NetworkStats.Entry> {
     private static final String TAG = "NetworkStats";
 
@@ -249,7 +251,7 @@ public final class NetworkStats implements Parcelable, Iterable<NetworkStats.Ent
      *
      * @hide
      */
-    @SystemApi
+    @SystemApi(client = MODULE_LIBRARIES)
     public static class Entry {
         /** @hide */
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
@@ -689,9 +691,7 @@ public final class NetworkStats implements Parcelable, Iterable<NetworkStats.Ent
      * iteration is in progress, either inside the loop or in another thread, then behavior is
      * undefined.
      * The remove() method is not implemented and will throw UnsupportedOperationException.
-     * @hide
      */
-    @SystemApi
     @NonNull public Iterator<Entry> iterator() {
         return new Iterator<Entry>() {
             int mIndex = 0;
