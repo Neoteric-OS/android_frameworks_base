@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcfb69ed_58207731",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2022-03-01T22:40:41Z",
+      "side": 1,
+      "message": "(ignore the \"should this be more general?\" questions --- they\u0027re really for me to get answers to internally. just the sorted imports and the over-long line are really for you :-) )",
+      "revId": "85b74eddaa886d00244473f9a4c6b7402c0d55c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97a84981_fc6184e5",
+        "filename": "services/core/java/com/android/server/wm/AppWarnings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2022-03-01T22:40:41Z",
+      "side": 1,
+      "message": "|sort",
+      "revId": "85b74eddaa886d00244473f9a4c6b7402c0d55c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dc137ba_c745c7fc",
+        "filename": "services/core/java/com/android/server/wm/AppWarnings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2022-03-01T22:40:41Z",
+      "side": 1,
+      "message": "should this be arm-specific or should we just look for \"64\" here?",
+      "range": {
+        "startLine": 173,
+        "startChar": 22,
+        "endLine": 173,
+        "endChar": 38
+      },
+      "revId": "85b74eddaa886d00244473f9a4c6b7402c0d55c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25468d62_3f85ee53",
+        "filename": "services/core/java/com/android/server/wm/AppWarnings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2022-03-01T22:40:41Z",
+      "side": 1,
+      "message": "and look for the _absence_ of \"64\" here?",
+      "revId": "85b74eddaa886d00244473f9a4c6b7402c0d55c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
