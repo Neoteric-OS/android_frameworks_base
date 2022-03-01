@@ -16,6 +16,29 @@
       "message": "Adding jmorace@ and kanyinsola@ as reviewers, since kanyinsola@ doesn\u0027t currently have OWNERS. Please work out who actually wants to do the review between you.",
       "revId": "b368bac149d0eeaca7c775daaca540825e48daeb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3186245e_42e7e96c",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateServiceShellCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1566205
+      },
+      "writtenOn": "2022-03-01T13:48:31Z",
+      "side": 1,
+      "message": "I don\u0027t know the norm with these shell commands, but if the refresh fails, would it be possibly beneficial to return something other than 0?",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "b368bac149d0eeaca7c775daaca540825e48daeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
