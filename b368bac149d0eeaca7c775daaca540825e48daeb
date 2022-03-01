@@ -63,6 +63,30 @@
       },
       "revId": "b368bac149d0eeaca7c775daaca540825e48daeb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90477b7d_d3df4a53",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateServiceShellCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1566205
+      },
+      "writtenOn": "2022-03-01T14:29:04Z",
+      "side": 1,
+      "message": "Thanks for the explanation!",
+      "parentUuid": "3e425c72_1d706469",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "b368bac149d0eeaca7c775daaca540825e48daeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
