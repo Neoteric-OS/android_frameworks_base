@@ -39,6 +39,30 @@
       },
       "revId": "b368bac149d0eeaca7c775daaca540825e48daeb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e425c72_1d706469",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateServiceShellCommand.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-03-01T14:12:37Z",
+      "side": 1,
+      "message": "Usual norms.\n\nIt prints \"true\" or \"false\" depending on the refresh, which is how I intended for the caller distinguish between those two cases.\n\nThe command could be said to have \"succeeded\" (0) either way if the refresh attempt is made at all. I tend to reserve non-zero for failure to what has been asked (or if the cmd / cmd args are malformed). I know there are some test helper methods that will throw an exception if the command returns anything other than zero, assuming non-zero means \"failure\", which is what I was mainly thinking of. Not sure if they will apply here, though. IMO, printing true/false is more obvious to the user than needing to check the exit code. I\u0027m not wedded to the way I\u0027ve done it - these commands are flexible / mutable if they\u0027re provided for tests.\n\nOne thing that I\u0027m not convinced of is that this cmd will remain synchronous forever, but it is right now, so exit code would certainly work, and if it became async we wouldn\u0027t be able to print true/false _either_. The \"has it done what we expected?\" would have to become delay- or polling-based if that happened, which is why I\u0027ve made it synchronous initially.\n\n(Many time detector things are deliberately asynchronous as in normal operation the client doesn\u0027t expect to wait / get a response, but the behavior here is purely for tests and there\u0027s no knock-ons from doing it in its own thread rather than the handler. The NetworkTimeUpdateService has no locking because it assumes everything takes place on the handler thread, but my addition is safe: NtpTrustedTime makes no such assumption and _is_ thread safe. That said, the suggestion that results from successful refresh _is_ processed asynchronously, so there would be a race if the client tried to confirm that the TimeDetector had received the suggestion resulting from the NTP request).",
+      "parentUuid": "3186245e_42e7e96c",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "b368bac149d0eeaca7c775daaca540825e48daeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
