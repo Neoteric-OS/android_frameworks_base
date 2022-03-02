@@ -59,7 +59,25 @@ public class HdmiCecNetworkTest {
     private Looper mMyLooper;
     private TestLooper mTestLooper = new TestLooper();
     private HdmiPortInfo[] mHdmiPortInfo;
-    private List<Integer> mDeviceEventListenerStatuses = new ArrayList<>();
+    private List<DeviceEventListener> mDeviceEventListeners = new ArrayList<>();
+
+    private class DeviceEventListener {
+        private HdmiDeviceInfo mDevice;
+        private int mStatus;
+
+        DeviceEventListener(HdmiDeviceInfo device, int status) {
+            this.mDevice = device;
+            this.mStatus = status;
+        }
+
+        int getStatus() {
+            return mStatus;
+        }
+
+        HdmiDeviceInfo getDeviceInfo() {
+            return mDevice;
+        }
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -67,7 +85,7 @@ public class HdmiCecNetworkTest {
         mHdmiControlService = new HdmiControlService(mContext) {
             @Override
             void invokeDeviceEventListeners(HdmiDeviceInfo device, int status) {
-                mDeviceEventListenerStatuses.add(status);
+                mDeviceEventListeners.add(new DeviceEventListener(device, status));
             }
         };
 
@@ -202,8 +220,9 @@ public class HdmiCecNetworkTest {
         assertThat(cecDeviceInfo.getDevicePowerStatus()).isEqualTo(
                 HdmiControlManager.POWER_STATUS_UNKNOWN);
 
-        assertThat(mDeviceEventListenerStatuses).containsExactly(
-                HdmiControlManager.DEVICE_EVENT_ADD_DEVICE);
+        assertThat(mDeviceEventListeners.size()).isEqualTo(1);
+        assertThat(mDeviceEventListeners.get(0).getStatus())
+                .isEqualTo(HdmiControlManager.DEVICE_EVENT_ADD_DEVICE);
     }
 
     @Test
@@ -214,8 +233,9 @@ public class HdmiCecNetworkTest {
         mHdmiCecNetwork.handleCecMessage(
                 HdmiCecMessageBuilder.buildActiveSource(logicalAddress, 0x1000));
 
-        assertThat(mDeviceEventListenerStatuses).containsExactly(
-                HdmiControlManager.DEVICE_EVENT_ADD_DEVICE);
+        assertThat(mDeviceEventListeners.size()).isEqualTo(1);
+        assertThat(mDeviceEventListeners.get(0).getStatus())
+                .isEqualTo(HdmiControlManager.DEVICE_EVENT_ADD_DEVICE);
     }
 
     @Test
@@ -258,9 +278,11 @@ public class HdmiCecNetworkTest {
 
         // ADD for logical address first detected
         // UPDATE for updating device with physical address
-        assertThat(mDeviceEventListenerStatuses).containsExactly(
-                HdmiControlManager.DEVICE_EVENT_ADD_DEVICE,
-                HdmiControlManager.DEVICE_EVENT_UPDATE_DEVICE);
+        assertThat(mDeviceEventListeners.size()).isEqualTo(2);
+        assertThat(mDeviceEventListeners.get(0).getStatus())
+                .isEqualTo(HdmiControlManager.DEVICE_EVENT_ADD_DEVICE);
+        assertThat(mDeviceEventListeners.get(1).getStatus())
+                .isEqualTo(HdmiControlManager.DEVICE_EVENT_UPDATE_DEVICE);
     }
 
     @Test
@@ -385,10 +407,13 @@ public class HdmiCecNetworkTest {
         // ADD for logical address first detected
         // UPDATE for updating device with physical address
         // UPDATE for updating device with new physical address
-        assertThat(mDeviceEventListenerStatuses).containsExactly(
-                HdmiControlManager.DEVICE_EVENT_ADD_DEVICE,
-                HdmiControlManager.DEVICE_EVENT_UPDATE_DEVICE,
-                HdmiControlManager.DEVICE_EVENT_UPDATE_DEVICE);
+        assertThat(mDeviceEventListeners.size()).isEqualTo(3);
+        assertThat(mDeviceEventListeners.get(0).getStatus())
+                .isEqualTo(HdmiControlManager.DEVICE_EVENT_ADD_DEVICE);
+        assertThat(mDeviceEventListeners.get(1).getStatus())
+                .isEqualTo(HdmiControlManager.DEVICE_EVENT_UPDATE_DEVICE);
+        assertThat(mDeviceEventListeners.get(2).getStatus())
+                .isEqualTo(HdmiControlManager.DEVICE_EVENT_UPDATE_DEVICE);
     }
 
     @Test
@@ -471,9 +496,11 @@ public class HdmiCecNetworkTest {
 
         assertThat(mHdmiCecNetwork.getSafeCecDevicesLocked()).isEmpty();
 
-        assertThat(mDeviceEventListenerStatuses).containsExactly(
-                HdmiControlManager.DEVICE_EVENT_ADD_DEVICE,
-                HdmiControlManager.DEVICE_EVENT_REMOVE_DEVICE);
+        assertThat(mDeviceEventListeners.size()).isEqualTo(2);
+        assertThat(mDeviceEventListeners.get(0).getStatus())
+                .isEqualTo(HdmiControlManager.DEVICE_EVENT_ADD_DEVICE);
+        assertThat(mDeviceEventListeners.get(1).getStatus())
+                .isEqualTo(HdmiControlManager.DEVICE_EVENT_REMOVE_DEVICE);
     }
 
     @Test
@@ -561,5 +588,105 @@ public class HdmiCecNetworkTest {
         HdmiDeviceInfo cecDeviceInfo = mHdmiCecNetwork.getCecDeviceInfo(logicalAddress);
         assertThat(cecDeviceInfo.getLogicalAddress()).isEqualTo(logicalAddress);
         assertThat(cecDeviceInfo.getCecVersion()).isEqualTo(cecVersion);
+    }
+
+    @Test
+    public void deviceRemoval_invokesListeners_playback() {
+        HdmiCecLocalDeviceTv localDevice = new HdmiCecLocalDeviceTv(mHdmiControlService);
+        localDevice.init();
+        int logicalAddress = Constants.ADDR_PLAYBACK_1;
+        int physicalAddress = 0x3100;
+        int type = HdmiDeviceInfo.DEVICE_PLAYBACK;
+        mHdmiCecNetwork.handleCecMessage(
+                HdmiCecMessageBuilder.buildReportPhysicalAddressCommand(logicalAddress,
+                        physicalAddress, type));
+
+        synchronized (mHdmiCecNetwork.mLock) {
+            assertThat(mHdmiCecNetwork.getSafeCecDevicesLocked()).hasSize(1);
+        }
+        assertThat(mHdmiCecNetwork.getDeviceInfoList(false, false)).hasSize(1);
+        assertThat(mHdmiCecNetwork.getDeviceInfoList(false, true)).hasSize(1);
+        assertThat(mHdmiCecNetwork.getSafeCecDeviceInfo(Constants.ADDR_PLAYBACK_1)).isNotNull();
+
+        HdmiDeviceInfo cecDeviceInfo = mHdmiCecNetwork.getCecDeviceInfo(logicalAddress);
+        mDeviceEventListeners.clear();
+
+        assertThat(mDeviceEventListeners.size()).isEqualTo(0);
+
+        // This removal method shouldn't invoke the listener
+        mHdmiCecNetwork.removeDevicesConnectedToPort(4);
+        synchronized (mHdmiCecNetwork.mLock) {
+            assertThat(mHdmiCecNetwork.getSafeCecDevicesLocked()).hasSize(0);
+        }
+        assertThat(mHdmiCecNetwork.getDeviceInfoList(false, false)).hasSize(0);
+        assertThat(mHdmiCecNetwork.getDeviceInfoList(false, true)).hasSize(1);
+        assertThat(mHdmiCecNetwork.getSafeCecDeviceInfo(Constants.ADDR_PLAYBACK_1)).isNull();
+        assertThat(mDeviceEventListeners).isEmpty();
+
+        // This removal method should invoke the listener
+        mHdmiCecNetwork.removeCecDevice(localDevice, logicalAddress);
+        synchronized (mHdmiCecNetwork.mLock) {
+            assertThat(mHdmiCecNetwork.getSafeCecDevicesLocked()).hasSize(0);
+        }
+        assertThat(mHdmiCecNetwork.getDeviceInfoList(false, false)).hasSize(0);
+        assertThat(mHdmiCecNetwork.getDeviceInfoList(false, true)).hasSize(0);
+        assertThat(mHdmiCecNetwork.getSafeCecDeviceInfo(Constants.ADDR_PLAYBACK_1)).isNull();
+        assertThat(mDeviceEventListeners.size()).isEqualTo(1);
+        assertThat(mDeviceEventListeners.get(0).getStatus())
+                .isEqualTo(HdmiControlManager.DEVICE_EVENT_REMOVE_DEVICE);
+        HdmiDeviceInfo removedDeviceInfo = mDeviceEventListeners.get(0).getDeviceInfo();
+        assertThat(removedDeviceInfo.getPortId()).isEqualTo(4);
+        assertThat(removedDeviceInfo.getLogicalAddress()).isEqualTo(Constants.ADDR_PLAYBACK_1);
+        assertThat(removedDeviceInfo.getPhysicalAddress()).isEqualTo(physicalAddress);
+        assertThat(removedDeviceInfo.getDeviceType()).isEqualTo(HdmiDeviceInfo.DEVICE_PLAYBACK);
+    }
+
+    @Test
+    public void deviceRemoval_invokesListeners_audioSystem() {
+        HdmiCecLocalDeviceTv localDevice = new HdmiCecLocalDeviceTv(mHdmiControlService);
+        localDevice.init();
+        int logicalAddress = Constants.ADDR_AUDIO_SYSTEM;
+        int physicalAddress = 0x3100;
+        int type = HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM;
+        mHdmiCecNetwork.handleCecMessage(
+                HdmiCecMessageBuilder.buildReportPhysicalAddressCommand(logicalAddress,
+                        physicalAddress, type));
+
+        synchronized (mHdmiCecNetwork.mLock) {
+            assertThat(mHdmiCecNetwork.getSafeCecDevicesLocked()).hasSize(1);
+        }
+        assertThat(mHdmiCecNetwork.getDeviceInfoList(false, false)).hasSize(1);
+        assertThat(mHdmiCecNetwork.getDeviceInfoList(false, true)).hasSize(1);
+
+        HdmiDeviceInfo cecDeviceInfo = mHdmiCecNetwork.getCecDeviceInfo(logicalAddress);
+        assertThat(cecDeviceInfo.getPortId()).isEqualTo(4);
+        mDeviceEventListeners.clear();
+
+        assertThat(mDeviceEventListeners.size()).isEqualTo(0);
+
+        // This removal method shouldn't invoke the listener
+        mHdmiCecNetwork.removeDevicesConnectedToPort(4);
+        synchronized (mHdmiCecNetwork.mLock) {
+            assertThat(mHdmiCecNetwork.getSafeCecDevicesLocked()).hasSize(0);
+        }
+        assertThat(mHdmiCecNetwork.getDeviceInfoList(false, false)).hasSize(0);
+        assertThat(mHdmiCecNetwork.getDeviceInfoList(false, true)).hasSize(1);
+        assertThat(mDeviceEventListeners).isEmpty();
+
+        // This removal method should invoke the listener
+        mHdmiCecNetwork.removeCecDevice(localDevice, logicalAddress);
+        synchronized (mHdmiCecNetwork.mLock) {
+            assertThat(mHdmiCecNetwork.getSafeCecDevicesLocked()).hasSize(0);
+        }
+        assertThat(mHdmiCecNetwork.getDeviceInfoList(false, false)).hasSize(0);
+        assertThat(mHdmiCecNetwork.getDeviceInfoList(false, true)).hasSize(0);
+        assertThat(mDeviceEventListeners.size()).isEqualTo(1);
+        assertThat(mDeviceEventListeners.get(0).getStatus())
+                .isEqualTo(HdmiControlManager.DEVICE_EVENT_REMOVE_DEVICE);
+        HdmiDeviceInfo removedDeviceInfo = mDeviceEventListeners.get(0).getDeviceInfo();
+        assertThat(removedDeviceInfo.getPortId()).isEqualTo(4);
+        assertThat(removedDeviceInfo.getLogicalAddress()).isEqualTo(Constants.ADDR_AUDIO_SYSTEM);
+        assertThat(removedDeviceInfo.getPhysicalAddress()).isEqualTo(physicalAddress);
+        assertThat(removedDeviceInfo.getDeviceType()).isEqualTo(HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
     }
 }
