@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f501dca_d820dbbe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-03-02T16:58:37Z",
+      "side": 1,
+      "message": "Please add a CTS that actually passes a subclass type, thanks!",
+      "revId": "a9cb2102da997f016245da9a2a56f9ef134e8f91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
