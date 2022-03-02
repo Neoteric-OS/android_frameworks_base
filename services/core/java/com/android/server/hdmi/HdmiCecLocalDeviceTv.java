@@ -1164,7 +1164,10 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     HdmiDeviceInfo getAvrDeviceInfo() {
         assertRunOnServiceThread();
-        return mService.getHdmiCecNetwork().getCecDeviceInfo(Constants.ADDR_AUDIO_SYSTEM);
+        // Consider an AVR available until it has permanently been removed by
+        // HotplugDetectionAction. Therefore check the list of devices pending clearance as well.
+        return mService.getHdmiCecNetwork()
+                .getCecDeviceInfoIncludingFromDevicesPendingClearance(Constants.ADDR_AUDIO_SYSTEM);
     }
 
     boolean hasSystemAudioDevice() {
@@ -1173,7 +1176,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
 
     @Nullable
     HdmiDeviceInfo getSafeAvrDeviceInfo() {
-        return mService.getHdmiCecNetwork().getSafeCecDeviceInfo(Constants.ADDR_AUDIO_SYSTEM);
+        return mService.getHdmiCecNetwork().getSafeAvrDeviceInfo();
     }
 
 
