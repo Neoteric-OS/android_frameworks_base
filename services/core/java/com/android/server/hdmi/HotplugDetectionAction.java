@@ -36,8 +36,8 @@ import java.util.List;
 final class HotplugDetectionAction extends HdmiCecFeatureAction {
     private static final String TAG = "HotPlugDetectionAction";
 
-    private static final int POLLING_INTERVAL_MS = 5000;
-    private static final int TIMEOUT_COUNT = 3;
+    public static final int POLLING_INTERVAL_MS = 5000;
+    public static final int TIMEOUT_COUNT = 3;
     private static final int AVR_COUNT_MAX = 3;
 
     // State in which waits for next polling
@@ -149,7 +149,8 @@ final class HotplugDetectionAction extends HdmiCecFeatureAction {
 
     private void checkHotplug(List<Integer> ackedAddress, boolean audioOnly) {
         BitSet currentInfos = infoListToBitSet(
-                localDevice().mService.getHdmiCecNetwork().getDeviceInfoList(false), audioOnly);
+                localDevice().mService.getHdmiCecNetwork()
+                        .getDeviceInfoList(false, true), audioOnly);
         BitSet polledResult = addressListToBitSet(ackedAddress);
 
         // At first, check removed devices.
