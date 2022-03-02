@@ -68,7 +68,7 @@ cc_defaults {
             enabled: false,
         },
         unbundled_build: {
-            enabled: false,
+            enabled: true,
         },
     },
 }
