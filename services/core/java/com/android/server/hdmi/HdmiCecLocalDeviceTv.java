@@ -292,7 +292,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         }
         setActiveSource(newActive, caller);
         int logicalAddress = newActive.logicalAddress;
-        if (mService.getHdmiCecNetwork().getCecDeviceInfo(logicalAddress) != null
+        if (mService.getHdmiCecNetwork().getCecDeviceInfo(logicalAddress, false) != null
                 && logicalAddress != mAddress) {
             if (mService.pathToPortId(newActive.physicalAddress) == getActivePortId()) {
                 setPrevPortId(getActivePortId());
@@ -333,7 +333,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         if (notifyInputChange) {
             ActiveSource activeSource = getActiveSource();
             HdmiDeviceInfo info = mService.getHdmiCecNetwork().getCecDeviceInfo(
-                    activeSource.logicalAddress);
+                    activeSource.logicalAddress, false);
             if (info == null) {
                 info = mService.getDeviceInfoByPort(getActivePortId());
                 if (info == null) {
@@ -415,7 +415,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         assertRunOnServiceThread();
         int logicalAddress = message.getSource();
         int physicalAddress = HdmiUtils.twoBytesToInt(message.getParams());
-        HdmiDeviceInfo info = mService.getHdmiCecNetwork().getCecDeviceInfo(logicalAddress);
+        HdmiDeviceInfo info = mService.getHdmiCecNetwork().getCecDeviceInfo(logicalAddress, false);
         if (info == null) {
             if (!handleNewDeviceAtTheTailOfActivePath(physicalAddress)) {
                 HdmiLogger.debug("Device info %X not found; buffering the command", logicalAddress);
@@ -453,7 +453,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
             // TODO: Do this only if TV is not showing multiview like PIP/PAP.
 
             HdmiDeviceInfo inactiveSource = mService.getHdmiCecNetwork().getCecDeviceInfo(
-                    message.getSource());
+                    message.getSource(), false);
             if (inactiveSource == null) {
                 return Constants.HANDLED;
             }
@@ -1164,7 +1164,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     HdmiDeviceInfo getAvrDeviceInfo() {
         assertRunOnServiceThread();
-        return mService.getHdmiCecNetwork().getCecDeviceInfo(Constants.ADDR_AUDIO_SYSTEM);
+        return mService.getHdmiCecNetwork().getCecDeviceInfo(Constants.ADDR_AUDIO_SYSTEM, false);
     }
 
     boolean hasSystemAudioDevice() {
@@ -1410,7 +1410,8 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     }
 
     private boolean checkRecorder(int recorderAddress) {
-        HdmiDeviceInfo device = mService.getHdmiCecNetwork().getCecDeviceInfo(recorderAddress);
+        HdmiDeviceInfo device = mService.getHdmiCecNetwork()
+                .getCecDeviceInfo(recorderAddress, false);
         return (device != null) && (HdmiUtils.isEligibleAddressForDevice(
                 HdmiDeviceInfo.DEVICE_RECORDER, recorderAddress));
     }

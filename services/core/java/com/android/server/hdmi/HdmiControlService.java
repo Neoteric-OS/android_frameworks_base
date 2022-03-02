@@ -1078,7 +1078,7 @@ public class HdmiControlService extends SystemService {
     @ServiceThreadOnly
     HdmiDeviceInfo getDeviceInfo(int logicalAddress) {
         assertRunOnServiceThread();
-        return mHdmiCecNetwork.getCecDeviceInfo(logicalAddress);
+        return mHdmiCecNetwork.getCecDeviceInfo(logicalAddress, false);
     }
 
     @ServiceThreadOnly

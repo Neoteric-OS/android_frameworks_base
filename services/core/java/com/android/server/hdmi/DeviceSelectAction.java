@@ -106,7 +106,7 @@ final class DeviceSelectAction extends HdmiCecFeatureAction {
         } else {
             int targetPowerStatus = HdmiControlManager.POWER_STATUS_UNKNOWN;
             HdmiDeviceInfo targetDevice = localDevice().mService.getHdmiCecNetwork()
-                    .getCecDeviceInfo(getTargetAddress());
+                    .getCecDeviceInfo(getTargetAddress(), false);
             if (targetDevice != null) {
                 targetPowerStatus = targetDevice.getDevicePowerStatus();
             }

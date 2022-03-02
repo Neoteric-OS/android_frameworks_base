@@ -526,7 +526,8 @@ abstract class HdmiCecLocalDevice {
             return Constants.HANDLED;
         }
 
-        HdmiDeviceInfo cecDeviceInfo = mService.getHdmiCecNetwork().getCecDeviceInfo(address);
+        HdmiDeviceInfo cecDeviceInfo = mService.getHdmiCecNetwork()
+                .getCecDeviceInfo(address, false);
         // If no non-default display name is available for the device, request the devices OSD name.
         if (cecDeviceInfo != null && cecDeviceInfo.getDisplayName().equals(
                 HdmiUtils.getDefaultDeviceName(address))) {

@@ -75,6 +75,10 @@ public class HdmiCecNetwork {
     // device id is used as key of container.
     // This is not thread-safe. For external purpose use mSafeDeviceInfos.
     private final SparseArray<HdmiDeviceInfo> mDeviceInfos = new SparseArray<>();
+    // Map-like container of cec devices for which the HAL detected that they were removed, but
+    // HotplugDetectionAction didn't detect it yet. They are kept around until
+    // HotplugDetectionAction has detected the removal as well and the listeners have been informed.
+    private final SparseArray<HdmiDeviceInfo> mDeviceInfosPendingClearance = new SparseArray<>();
     // Set of physical addresses of CEC switches on the CEC bus. Managed independently from
     // other CEC devices since they might not have logical address.
     private final ArraySet<Integer> mCecSwitches = new ArraySet<>();
@@ -208,11 +212,11 @@ public class HdmiCecNetwork {
     @ServiceThreadOnly
     private HdmiDeviceInfo addDeviceInfo(HdmiDeviceInfo deviceInfo) {
         assertRunOnServiceThread();
-        HdmiDeviceInfo oldDeviceInfo = getCecDeviceInfo(deviceInfo.getLogicalAddress());
+        HdmiDeviceInfo oldDeviceInfo = getCecDeviceInfo(deviceInfo.getLogicalAddress(), false);
         mHdmiControlService.checkLogicalAddressConflictAndReallocate(
                 deviceInfo.getLogicalAddress(), deviceInfo.getPhysicalAddress());
         if (oldDeviceInfo != null) {
-            removeDeviceInfo(deviceInfo.getId());
+            removeDeviceInfo(deviceInfo.getId(), false);
         }
         mDeviceInfos.append(deviceInfo.getId(), deviceInfo);
         updateSafeDeviceInfoList();
@@ -220,20 +224,34 @@ public class HdmiCecNetwork {
     }
 
     /**
-     * Remove a device info corresponding to the given {@code logicalAddress}.
-     * It returns removed {@link HdmiDeviceInfo} if exists.
+     * Remove a device info corresponding to the given {@code logicalAddress} from the network.
+     *
+     * It returns removed {@link HdmiDeviceInfo} if exists. The device info is gathered either from
+     * - mDevicesInfos, or,
+     * - mDeviceInfosPendingClearance if the device had been removed previously but still kept
+     * around until the listeners are invoked.
      *
      * <p>Declared as package-private. accessed by {@link HdmiControlService} only.
      *
      * @param id id of device to be removed
+     * @param keepUntilCleared keep the device info in mDeviceInfosPendingClearance until the
+     *                         listeners are invoked
      * @return removed {@link HdmiDeviceInfo} it exists. Otherwise, returns {@code null}
      */
     @ServiceThreadOnly
-    private HdmiDeviceInfo removeDeviceInfo(int id) {
+    private HdmiDeviceInfo removeDeviceInfo(int id, boolean keepUntilCleared) {
         assertRunOnServiceThread();
         HdmiDeviceInfo deviceInfo = mDeviceInfos.get(id);
         if (deviceInfo != null) {
             mDeviceInfos.remove(id);
+            mDeviceInfosPendingClearance.remove(id);
+        } else {
+            deviceInfo = mDeviceInfosPendingClearance.get(id);
+            mDeviceInfosPendingClearance.remove(id);
+        }
+
+        if (keepUntilCleared) {
+            mDeviceInfosPendingClearance.append(deviceInfo.getId(), deviceInfo);
         }
         updateSafeDeviceInfoList();
         return deviceInfo;
@@ -245,14 +263,17 @@ public class HdmiCecNetwork {
      * This is not thread-safe. For thread safety, call {@link #getSafeCecDeviceInfo(int)}.
      *
      * @param logicalAddress logical address of the device to be retrieved
+     * @param includeDevicesPendingClearance whether to also search the devices in the list of
+     *                                       devices that are pending to be cleared
      * @return {@link HdmiDeviceInfo} matched with the given {@code logicalAddress}.
      * Returns null if no logical address matched
      */
     @ServiceThreadOnly
     @Nullable
-    HdmiDeviceInfo getCecDeviceInfo(int logicalAddress) {
+    HdmiDeviceInfo getCecDeviceInfo(int logicalAddress, boolean includeDevicesPendingClearance) {
         assertRunOnServiceThread();
-        return mDeviceInfos.get(HdmiDeviceInfo.idForCecDevice(logicalAddress));
+        HdmiDeviceInfo deviceInfo = mDeviceInfos.get(HdmiDeviceInfo.idForCecDevice(logicalAddress));
+        return (deviceInfo == null) ? mDeviceInfosPendingClearance.get(logicalAddress) : deviceInfo;
     }
 
     /**
@@ -322,7 +343,8 @@ public class HdmiCecNetwork {
      * does not include local device.
      */
     @ServiceThreadOnly
-    List<HdmiDeviceInfo> getDeviceInfoList(boolean includeLocalDevice) {
+    List<HdmiDeviceInfo> getDeviceInfoList(
+            boolean includeLocalDevice, boolean includeDevicesPendingClearance) {
         assertRunOnServiceThread();
         if (includeLocalDevice) {
             return HdmiUtils.sparseArrayToList(mDeviceInfos);
@@ -331,6 +353,12 @@ public class HdmiCecNetwork {
             for (int i = 0; i < mDeviceInfos.size(); ++i) {
                 HdmiDeviceInfo info = mDeviceInfos.valueAt(i);
                 if (!isLocalDeviceAddress(info.getLogicalAddress())) {
+                    infoList.add(info);
+                }
+            }
+            if (includeDevicesPendingClearance) {
+                for (int i = 0; i < mDeviceInfosPendingClearance.size(); i++) {
+                    HdmiDeviceInfo info = mDeviceInfosPendingClearance.valueAt(i);
                     infoList.add(info);
                 }
             }
@@ -379,14 +407,14 @@ public class HdmiCecNetwork {
     }
 
     /**
-     * Called when a device is removed or removal of device is detected.
+     * Called when a device is removed or removal of device is detected. Invokes a listener.
      *
      * @param address a logical address of a device to be removed
      */
     @ServiceThreadOnly
     final void removeCecDevice(HdmiCecLocalDevice localDevice, int address) {
         assertRunOnServiceThread();
-        HdmiDeviceInfo info = removeDeviceInfo(HdmiDeviceInfo.idForCecDevice(address));
+        HdmiDeviceInfo info = removeDeviceInfo(HdmiDeviceInfo.idForCecDevice(address), false);
 
         localDevice.mCecMessageCache.flushMessagesFrom(address);
         invokeDeviceEventListener(info,
@@ -394,7 +422,7 @@ public class HdmiCecNetwork {
     }
 
     public void updateDevicePowerStatus(int logicalAddress, int newPowerStatus) {
-        HdmiDeviceInfo info = getCecDeviceInfo(logicalAddress);
+        HdmiDeviceInfo info = getCecDeviceInfo(logicalAddress, false);
         if (info == null) {
             Slog.w(TAG, "Can not update power status of non-existing device:" + logicalAddress);
             return;
@@ -492,7 +520,7 @@ public class HdmiCecNetwork {
     @ServiceThreadOnly
     boolean isInDeviceList(int logicalAddress, int physicalAddress) {
         assertRunOnServiceThread();
-        HdmiDeviceInfo device = getCecDeviceInfo(logicalAddress);
+        HdmiDeviceInfo device = getCecDeviceInfo(logicalAddress, false);
         if (device == null) {
             return false;
         }
@@ -537,7 +565,7 @@ public class HdmiCecNetwork {
         assertRunOnServiceThread();
         // Add device by logical address if it's not already known
         int sourceAddress = message.getSource();
-        if (getCecDeviceInfo(sourceAddress) == null) {
+        if (getCecDeviceInfo(sourceAddress, false) == null) {
             HdmiDeviceInfo newDevice = new HdmiDeviceInfo(sourceAddress,
                     HdmiDeviceInfo.PATH_INVALID, HdmiDeviceInfo.PORT_INVALID,
                     logicalAddressToDeviceType(sourceAddress), Constants.UNKNOWN_VENDOR_ID,
@@ -592,7 +620,7 @@ public class HdmiCecNetwork {
 
         if (updateCecSwitchInfo(logicalAddress, type, physicalAddress)) return;
 
-        HdmiDeviceInfo deviceInfo = getCecDeviceInfo(logicalAddress);
+        HdmiDeviceInfo deviceInfo = getCecDeviceInfo(logicalAddress, false);
         if (deviceInfo == null) {
             Slog.i(TAG, "Unknown source device info for <Report Physical Address> " + message);
         } else {
@@ -620,7 +648,7 @@ public class HdmiCecNetwork {
     @ServiceThreadOnly
     private void updateDeviceCecVersion(int logicalAddress, int hdmiCecVersion) {
         assertRunOnServiceThread();
-        HdmiDeviceInfo deviceInfo = getCecDeviceInfo(logicalAddress);
+        HdmiDeviceInfo deviceInfo = getCecDeviceInfo(logicalAddress, false);
         if (deviceInfo == null) {
             Slog.w(TAG, "Can not update CEC version of non-existing device:" + logicalAddress);
             return;
@@ -643,7 +671,7 @@ public class HdmiCecNetwork {
         assertRunOnServiceThread();
         int logicalAddress = message.getSource();
         String osdName;
-        HdmiDeviceInfo deviceInfo = getCecDeviceInfo(logicalAddress);
+        HdmiDeviceInfo deviceInfo = getCecDeviceInfo(logicalAddress, false);
         // If the device is not in device list, ignore it.
         if (deviceInfo == null) {
             Slog.i(TAG, "No source device info for <Set Osd Name>." + message);
@@ -677,7 +705,7 @@ public class HdmiCecNetwork {
         int logicalAddress = message.getSource();
         int vendorId = HdmiUtils.threeBytesToInt(message.getParams());
 
-        HdmiDeviceInfo deviceInfo = getCecDeviceInfo(logicalAddress);
+        HdmiDeviceInfo deviceInfo = getCecDeviceInfo(logicalAddress, false);
         if (deviceInfo == null) {
             Slog.i(TAG, "Unknown source device info for <Device Vendor ID> " + message);
         } else {
@@ -717,7 +745,7 @@ public class HdmiCecNetwork {
             }
         }
         for (Integer key : toRemove) {
-            removeDeviceInfo(key);
+            removeDeviceInfo(key, true);
         }
     }
 
@@ -777,7 +805,7 @@ public class HdmiCecNetwork {
     @ServiceThreadOnly
     final HdmiDeviceInfo getDeviceInfoByPath(int path) {
         assertRunOnServiceThread();
-        for (HdmiDeviceInfo info : getDeviceInfoList(false)) {
+        for (HdmiDeviceInfo info : getDeviceInfoList(false, false)) {
             if (info.getPhysicalAddress() == path) {
                 return info;
             }

@@ -118,7 +118,7 @@ public class PowerStatusMonitorAction extends HdmiCecFeatureAction {
 
     private void queryPowerStatus() {
         List<HdmiDeviceInfo> deviceInfos =
-                localDevice().mService.getHdmiCecNetwork().getDeviceInfoList(false);
+                localDevice().mService.getHdmiCecNetwork().getDeviceInfoList(false, false);
         resetPowerStatus(deviceInfos);
         for (HdmiDeviceInfo info : deviceInfos) {
             if (localDevice().mService.getCecVersion() < HdmiControlManager.HDMI_CEC_VERSION_2_0

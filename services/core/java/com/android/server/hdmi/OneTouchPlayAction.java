@@ -187,7 +187,7 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
     private static int getTargetCecVersion(HdmiCecLocalDevice localDevice,
             int targetLogicalAddress) {
         HdmiDeviceInfo targetDevice = localDevice.mService.getHdmiCecNetwork().getCecDeviceInfo(
-                targetLogicalAddress);
+                targetLogicalAddress, false);
         if (targetDevice != null) {
             return targetDevice.getCecVersion();
         }
@@ -197,7 +197,7 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
     private static int getTargetDevicePowerStatus(HdmiCecLocalDevice localDevice,
             int targetLogicalAddress, int defaultPowerStatus) {
         HdmiDeviceInfo targetDevice = localDevice.mService.getHdmiCecNetwork().getCecDeviceInfo(
-                targetLogicalAddress);
+                targetLogicalAddress, false);
         if (targetDevice != null) {
             return targetDevice.getDevicePowerStatus();
         }

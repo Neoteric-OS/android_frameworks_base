@@ -62,6 +62,7 @@ import java.util.ArrayList;
 /** Tests for {@link HdmiCecLocalDeviceTv} class. */
 public class HdmiCecLocalDeviceTvTest {
     private static final int TIMEOUT_MS = HdmiConfig.TIMEOUT_MS + 1;
+    private static final int PORT_1 = 1;
 
     private HdmiControlService mHdmiControlService;
     private HdmiCecController mHdmiCecController;
@@ -595,5 +596,95 @@ public class HdmiCecLocalDeviceTvTest {
         mTestLooper.dispatchAll();
 
         verify(mAudioManager, never()).setStreamVolume(anyInt(), anyInt(), anyInt());
+    }
+
+    @Test
+    public void hotplugDetectionActionClearsPendingDevices() {
+        mHdmiControlService.getHdmiCecNetwork().clearDeviceList();
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, false))
+                .isEmpty();
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, true))
+                .isEmpty();
+        // Add a device to the network and assert that this devices is included in the list of
+        // devices but not in the list of devices pending clearance.
+        HdmiDeviceInfo infoPlayback = new HdmiDeviceInfo(
+                Constants.ADDR_PLAYBACK_2,
+                0x1234,
+                PORT_1,
+                HdmiDeviceInfo.DEVICE_PLAYBACK,
+                0x1234,
+                "Playback 2",
+                HdmiControlManager.POWER_STATUS_ON);
+        mHdmiControlService.getHdmiCecNetwork().addCecDevice(infoPlayback);
+        mTestLooper.dispatchAll();
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, true))
+                .hasSize(1);
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, false))
+                .hasSize(1);
+        // Remove the device from the network, just like is done when the HAL detects a hotplug
+        // out. Assert that this device is removed from the list of devices but still kept in the
+        // list of devices pending clearance.
+        mHdmiControlService.getHdmiCecNetwork().removeDevicesConnectedToPort(PORT_1);
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, true))
+                .hasSize(1);
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, false))
+                .isEmpty();
+        // Make the device not acknowledge the poll message sent by the HotplugDetectionAction.
+        // Assert that this device is removed from the list of devices pending clearance.
+        mNativeWrapper.setPollAddressResponse(Constants.ADDR_PLAYBACK_2, SendMessageResult.NACK);
+        for (int pollCount = 0; pollCount < HotplugDetectionAction.TIMEOUT_COUNT; pollCount++) {
+            mTestLooper.moveTimeForward(HotplugDetectionAction.POLLING_INTERVAL_MS);
+            mTestLooper.dispatchAll();
+        }
+
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, false))
+                .isEmpty();
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, true))
+                .isEmpty();
+    }
+
+    @Test
+    public void hotplugDetectionActionClearsPendingDevices_AudioSystem() {
+        mHdmiControlService.getHdmiCecNetwork().clearDeviceList();
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, false))
+                .isEmpty();
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, true))
+                .isEmpty();
+        // Add a device to the network and assert that this devices is included in the list of
+        // devices but not in the list of devices pending clearance.
+        HdmiDeviceInfo infoAudioSystem = new HdmiDeviceInfo(
+                ADDR_AUDIO_SYSTEM,
+                0x1234,
+                PORT_1,
+                HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM,
+                0x1234,
+                "Audio SYstem",
+                HdmiControlManager.POWER_STATUS_ON);
+        mHdmiControlService.getHdmiCecNetwork().addCecDevice(infoAudioSystem);
+        mTestLooper.dispatchAll();
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, true))
+                .hasSize(1);
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, false))
+                .hasSize(1);
+        // Remove the device from the network, just like is done when the HAL detects a hotplug
+        // out. Assert that this device is removed from the list of devices but still kept in the
+        // list of devices pending clearance.
+        mHdmiControlService.getHdmiCecNetwork().removeDevicesConnectedToPort(PORT_1);
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, true))
+                .hasSize(1);
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, false))
+                .isEmpty();
+        // Make the device not acknowledge the poll message sent by the HotplugDetectionAction.
+        // Assert that this device is removed from the list of devices pending clearance.
+        mNativeWrapper.setPollAddressResponse(ADDR_AUDIO_SYSTEM, SendMessageResult.NACK);
+        for (int pollCount = 0; pollCount < HotplugDetectionAction.TIMEOUT_COUNT; pollCount++) {
+            mTestLooper.moveTimeForward(HotplugDetectionAction.POLLING_INTERVAL_MS);
+            mTestLooper.dispatchAll();
+        }
+
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, false))
+                .isEmpty();
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false, true))
+                .isEmpty();
     }
 }

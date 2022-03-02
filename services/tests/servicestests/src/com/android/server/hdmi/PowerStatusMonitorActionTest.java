@@ -174,7 +174,7 @@ public class PowerStatusMonitorActionTest {
 
     private void assertPowerStatus(int logicalAddress, int powerStatus) {
         HdmiDeviceInfo deviceInfo = mHdmiControlService.getHdmiCecNetwork().getCecDeviceInfo(
-                logicalAddress);
+                logicalAddress, false);
         assertThat(deviceInfo).isNotNull();
         assertThat(deviceInfo.getDevicePowerStatus()).isEqualTo(powerStatus);
     }

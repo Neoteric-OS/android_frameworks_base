@@ -195,7 +195,7 @@ public class DeviceSelectActionTest {
                                                         TestCallback callback,
                                                         boolean isCec20) {
         HdmiDeviceInfo hdmiDeviceInfo =
-                mHdmiControlService.getHdmiCecNetwork().getCecDeviceInfo(ADDR_PLAYBACK_1);
+                mHdmiControlService.getHdmiCecNetwork().getCecDeviceInfo(ADDR_PLAYBACK_1, false);
         DeviceSelectAction action = new DeviceSelectAction(mHdmiCecLocalDeviceTv,
                                                            hdmiDeviceInfo, callback, isCec20);
         action.setActionTimer(actionTimer);

@@ -36,8 +36,8 @@ import java.util.List;
 final class HotplugDetectionAction extends HdmiCecFeatureAction {
     private static final String TAG = "HotPlugDetectionAction";
 
-    private static final int POLLING_INTERVAL_MS = 5000;
-    private static final int TIMEOUT_COUNT = 3;
+    public static final int POLLING_INTERVAL_MS = 5000;
+    public static final int TIMEOUT_COUNT = 3;
     private static final int AVR_COUNT_MAX = 3;
 
     // State in which waits for next polling
@@ -149,7 +149,8 @@ final class HotplugDetectionAction extends HdmiCecFeatureAction {
 
     private void checkHotplug(List<Integer> ackedAddress, boolean audioOnly) {
         BitSet currentInfos = infoListToBitSet(
-                localDevice().mService.getHdmiCecNetwork().getDeviceInfoList(false), audioOnly);
+                localDevice().mService.getHdmiCecNetwork()
+                        .getDeviceInfoList(false, true), audioOnly);
         BitSet polledResult = addressListToBitSet(ackedAddress);
 
         // At first, check removed devices.
@@ -157,7 +158,8 @@ final class HotplugDetectionAction extends HdmiCecFeatureAction {
         int index = -1;
         while ((index = removed.nextSetBit(index + 1)) != -1) {
             if (index == Constants.ADDR_AUDIO_SYSTEM) {
-                HdmiDeviceInfo avr = tv().getAvrDeviceInfo();
+                HdmiDeviceInfo avr = localDevice().mService.getHdmiCecNetwork()
+                        .getCecDeviceInfo(Constants.ADDR_AUDIO_SYSTEM, true);
                 if (avr != null && tv().isConnected(avr.getPortId())) {
                     ++mAvrStatusCount;
                     Slog.w(TAG, "Ack not returned from AVR. count: " + mAvrStatusCount);
@@ -230,7 +232,8 @@ final class HotplugDetectionAction extends HdmiCecFeatureAction {
     }
 
     private void mayChangeRoutingPath(int address) {
-        HdmiDeviceInfo info = localDevice().mService.getHdmiCecNetwork().getCecDeviceInfo(address);
+        HdmiDeviceInfo info = localDevice().mService.getHdmiCecNetwork()
+                .getCecDeviceInfo(address, false);
         if (info != null) {
             tv().handleRemoveActiveRoutingPath(info.getPhysicalAddress());
         }

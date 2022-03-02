@@ -64,7 +64,7 @@ final class DevicePowerStatusAction extends HdmiCecFeatureAction {
         HdmiControlService service = localDevice().mService;
         if (service.getCecVersion() >= HdmiControlManager.HDMI_CEC_VERSION_2_0) {
             HdmiDeviceInfo deviceInfo = service.getHdmiCecNetwork().getCecDeviceInfo(
-                    mTargetAddress);
+                    mTargetAddress, false);
             if (deviceInfo != null
                     && deviceInfo.getCecVersion() >= HdmiControlManager.HDMI_CEC_VERSION_2_0) {
                 int powerStatus = deviceInfo.getDevicePowerStatus();

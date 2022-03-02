@@ -329,7 +329,7 @@ public class HdmiCecLocalDeviceAudioSystem extends HdmiCecLocalDeviceSource {
         // If the new Active Source is under the current device, check if the device info and the TV
         // input is ready to switch to the new Active Source. If not ready, buffer the cec command
         // to handle later when the device is ready.
-        HdmiDeviceInfo info = mService.getHdmiCecNetwork().getCecDeviceInfo(logicalAddress);
+        HdmiDeviceInfo info = mService.getHdmiCecNetwork().getCecDeviceInfo(logicalAddress, false);
         if (info == null) {
             HdmiLogger.debug("Device info %X not found; buffering the command", logicalAddress);
             mDelayedMessageBuffer.add(message);
