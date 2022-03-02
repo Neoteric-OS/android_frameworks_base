@@ -87,6 +87,24 @@
       "parentUuid": "14b79939_9b90afc4",
       "revId": "8498e16a63c49805776637bc7eceb8e8ed50821c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c0b96cc_7fabf462",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2022-03-02T18:55:14Z",
+      "side": 1,
+      "message": "Fix was merged in https://android-review.googlesource.com/c/platform/frameworks/base/+/1990974. I will abandon this change because it is now duplicated. Thanks HaoRan for creating the change!",
+      "parentUuid": "b4fa851b_af27526e",
+      "revId": "8498e16a63c49805776637bc7eceb8e8ed50821c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
