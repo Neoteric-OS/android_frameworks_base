@@ -70,6 +70,13 @@
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"/>
 
+    <ViewStub
+        android:id="@+id/broadcast_qrcode"
+        android:layout="@layout/media_output_broadcast_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ViewStub>
+
     <LinearLayout
         android:id="@+id/device_list"
         android:layout_width="match_parent"

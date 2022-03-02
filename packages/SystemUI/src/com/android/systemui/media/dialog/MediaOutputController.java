@@ -18,6 +18,7 @@ package com.android.systemui.media.dialog;
 
 import static android.provider.Settings.ACTION_BLUETOOTH_PAIRING_SETTINGS;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +37,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -52,10 +54,12 @@ import com.android.settingslib.media.MediaDevice;
 import com.android.settingslib.utils.ThreadUtils;
 import com.android.systemui.R;
 import com.android.systemui.animation.DialogLaunchAnimator;
+import com.android.systemui.broadcast.BroadcastSender;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.statusbar.notification.NotificationEntryManager;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 import com.android.systemui.statusbar.phone.ShadeController;
+import com.android.systemui.statusbar.phone.SystemUIDialog;
 import com.android.systemui.statusbar.phone.SystemUIDialogManager;
 
 import java.util.ArrayList;
@@ -97,6 +101,11 @@ public class MediaOutputController implements LocalMediaManager.DeviceCallback {
 
     private MediaOutputMetricLogger mMetricLogger;
     private UiEventLogger mUiEventLogger;
+
+    public enum BroadcastNotifyDialog {
+        ACTION_FIRST_LAUNCH,
+        ACTION_BROADCAST_INFO_ICON
+    }
 
     @Inject
     public MediaOutputController(@NonNull Context context, String packageName,
@@ -484,6 +493,43 @@ public class MediaOutputController implements LocalMediaManager.DeviceCallback {
                 mActivityStarter, mNotificationEntryManager, mUiEventLogger, mDialogLaunchAnimator,
                 mDialogManager);
         MediaOutputGroupDialog dialog = new MediaOutputGroupDialog(mContext, mAboveStatusbar,
+                controller, mDialogManager);
+        mDialogLaunchAnimator.showFromView(dialog, mediaOutputDialog);
+    }
+
+    void launchLeBroadcastNotifyDialog(View mediaOutputDialog, BroadcastSender broadcastSender,
+            BroadcastNotifyDialog action) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        switch (action) {
+            case ACTION_FIRST_LAUNCH:
+                builder.setTitle(R.string.media_output_first_broadcast_title);
+                builder.setMessage(R.string.media_output_first_notify_broadcast_message);
+                builder.setNegativeButton(android.R.string.cancel, null);
+                builder.setPositiveButton(R.string.media_output_broadcast,
+                        (d, w) -> {
+                            launchMediaOutputBroadcastDialog(mediaOutputDialog, broadcastSender);
+                        });
+                break;
+            case ACTION_BROADCAST_INFO_ICON:
+                builder.setTitle(R.string.media_output_broadcast);
+                builder.setMessage(R.string.media_output_broadcasting_message);
+                builder.setPositiveButton(android.R.string.ok, null);
+                break;
+        }
+
+        final AlertDialog dialog = builder.create();
+        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
+        SystemUIDialog.setShowForAllUsers(dialog, true);
+        SystemUIDialog.registerDismissListener(dialog);
+        dialog.show();
+    }
+
+    void launchMediaOutputBroadcastDialog(View mediaOutputDialog, BroadcastSender broadcastSender) {
+        MediaOutputController controller = new MediaOutputController(mContext, mPackageName,
+                mAboveStatusbar, mMediaSessionManager, mLocalBluetoothManager, mShadeController,
+                mActivityStarter, mNotificationEntryManager, mUiEventLogger, mDialogLaunchAnimator,
+                mDialogManager);
+        MediaOutputBroadcastDialog dialog = new MediaOutputBroadcastDialog(mContext, true,
                 controller, mDialogManager);
         mDialogLaunchAnimator.showFromView(dialog, mediaOutputDialog);
     }
