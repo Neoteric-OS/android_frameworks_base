@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8591e41b_8c094a7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-03-02T13:46:07Z",
+      "side": 1,
+      "message": "Presubmit failure is unrelated",
+      "revId": "b368bac149d0eeaca7c775daaca540825e48daeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3186245e_42e7e96c",
