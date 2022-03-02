@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a14ef740_f0a00d52",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1929200
+      },
+      "writtenOn": "2022-03-02T22:40:27Z",
+      "side": 1,
+      "message": "Hi, (I picked the suggested owner randomly, please feel free to forward to someone with more context) could you help review the CL for bug https://b.corp.google.com/issues/210502588? Thank you.",
+      "revId": "ed602f6f6cc66c619a2c90ddb5f022e9ca44102f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
