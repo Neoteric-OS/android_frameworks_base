@@ -75,6 +75,10 @@ public class HdmiCecNetwork {
     // device id is used as key of container.
     // This is not thread-safe. For external purpose use mSafeDeviceInfos.
     private final SparseArray<HdmiDeviceInfo> mDeviceInfos = new SparseArray<>();
+    // Map-like container of cec devices for which the HAL detected that they were removed, but
+    // HotplugDetectionAction didn't detect it yet. They are kept around until
+    // HotplugDetectionAction has detected the removal as well and the listeners have been informed.
+    private final SparseArray<HdmiDeviceInfo> mDeviceInfosPendingClearance = new SparseArray<>();
     // Set of physical addresses of CEC switches on the CEC bus. Managed independently from
     // other CEC devices since they might not have logical address.
     private final ArraySet<Integer> mCecSwitches = new ArraySet<>();
@@ -212,7 +216,7 @@ public class HdmiCecNetwork {
         mHdmiControlService.checkLogicalAddressConflictAndReallocate(
                 deviceInfo.getLogicalAddress(), deviceInfo.getPhysicalAddress());
         if (oldDeviceInfo != null) {
-            removeDeviceInfo(deviceInfo.getId());
+            removeDeviceInfo(deviceInfo.getId(), false);
         }
         mDeviceInfos.append(deviceInfo.getId(), deviceInfo);
         updateSafeDeviceInfoList();
@@ -220,20 +224,34 @@ public class HdmiCecNetwork {
     }
 
     /**
-     * Remove a device info corresponding to the given {@code logicalAddress}.
-     * It returns removed {@link HdmiDeviceInfo} if exists.
+     * Remove a device info corresponding to the given {@code logicalAddress} from the network.
+     *
+     * It returns removed {@link HdmiDeviceInfo} if exists. The device info is gathered either from
+     * - mDevicesInfos, or,
+     * - mDeviceInfosPendingClearance if the device had been removed previously but still kept
+     * around until the listeners are invoked.
      *
      * <p>Declared as package-private. accessed by {@link HdmiControlService} only.
      *
      * @param id id of device to be removed
+     * @param keepUntilCleared keep the device info in mDeviceInfosPendingClearance until the
+     *                         listeners are invoked
      * @return removed {@link HdmiDeviceInfo} it exists. Otherwise, returns {@code null}
      */
     @ServiceThreadOnly
-    private HdmiDeviceInfo removeDeviceInfo(int id) {
+    private HdmiDeviceInfo removeDeviceInfo(int id, boolean keepUntilCleared) {
         assertRunOnServiceThread();
         HdmiDeviceInfo deviceInfo = mDeviceInfos.get(id);
         if (deviceInfo != null) {
             mDeviceInfos.remove(id);
+            mDeviceInfosPendingClearance.remove(id);
+        } else {
+            deviceInfo = mDeviceInfosPendingClearance.get(id);
+            mDeviceInfosPendingClearance.remove(id);
+        }
+
+        if (keepUntilCleared) {
+            mDeviceInfosPendingClearance.append(deviceInfo.getId(), deviceInfo);
         }
         updateSafeDeviceInfoList();
         return deviceInfo;
@@ -379,14 +397,14 @@ public class HdmiCecNetwork {
     }
 
     /**
-     * Called when a device is removed or removal of device is detected.
+     * Called when a device is removed or removal of device is detected. Invokes a listener.
      *
      * @param address a logical address of a device to be removed
      */
     @ServiceThreadOnly
     final void removeCecDevice(HdmiCecLocalDevice localDevice, int address) {
         assertRunOnServiceThread();
-        HdmiDeviceInfo info = removeDeviceInfo(HdmiDeviceInfo.idForCecDevice(address));
+        HdmiDeviceInfo info = removeDeviceInfo(HdmiDeviceInfo.idForCecDevice(address), false);
 
         localDevice.mCecMessageCache.flushMessagesFrom(address);
         invokeDeviceEventListener(info,
@@ -717,7 +735,7 @@ public class HdmiCecNetwork {
             }
         }
         for (Integer key : toRemove) {
-            removeDeviceInfo(key);
+            removeDeviceInfo(key, true);
         }
     }
 
