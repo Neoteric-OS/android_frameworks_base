@@ -123,7 +123,8 @@ public class SystemSettings {
 		Settings.System.TORCH_POWER_BUTTON_GESTURE,
 		Settings.System.ADVANCED_REBOOT,
 		Settings.System.CLICK_PARTIAL_SCREENSHOT,
-		Settings.System.SWIPE_TYPE
+		Settings.System.SWIPE_TYPE,
+        	Settings.System.HAPTIC_ON_SLIDER
         ));
         if (Flags.backUpSmoothDisplayAndForcePeakRefreshRate()) {
             settings.add(Settings.System.PEAK_REFRESH_RATE);
