@@ -33,6 +33,23 @@
       "message": "Required your review kindly",
       "revId": "47a5e90d2da06f0f2b3e63271781a73c3948cf92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca3310b3_79d101d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-03-03T01:15:39Z",
+      "side": 1,
+      "message": "@andreionea is the owner, right? I don\u0027t know much about this class.",
+      "revId": "47a5e90d2da06f0f2b3e63271781a73c3948cf92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
