@@ -71,6 +71,7 @@ import android.media.AudioSystem;
 import android.media.session.MediaController;
 import android.media.session.MediaSessionManager;
 import android.media.session.PlaybackState;
+import android.os.AsyncTask;
 import android.os.Debug;
 import android.os.Handler;
 import android.os.Looper;
@@ -78,6 +79,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.Trace;
 import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.text.InputFilter;
@@ -296,6 +298,8 @@ public class VolumeDialogImpl implements VolumeDialog,
     // Number of animating rows
     private int mAnimatingRows = 0;
 
+    private Vibrator mVibrator;
+
     public VolumeDialogImpl(
             Context context,
             VolumeDialogController volumeDialogController,
@@ -347,6 +351,8 @@ public class VolumeDialogImpl implements VolumeDialog,
                 mDialogRowsView.invalidate();
             };
         }
+
+        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
 
         initDimens();
     }
@@ -2635,6 +2641,14 @@ public class VolumeDialogImpl implements VolumeDialog,
                     Events.writeEvent(Events.EVENT_TOUCH_LEVEL_CHANGED, mRow.stream,
                             userLevel);
                 }
+            }
+
+            if (Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0 &&
+                Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.HAPTIC_ON_SLIDER, 1) != 0) {
+                AsyncTask.execute(() ->
+                        mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_TICK)));
             }
         }
 

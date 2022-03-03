@@ -5605,6 +5605,12 @@ public final class Settings {
         public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
 
         /**
+         * Whether do haptic feedback on changed slider value
+         * @hide
+         */
+        public static final String HAPTIC_ON_SLIDER = "haptic_on_slider";
+
+        /**
          * media artwork wallpaper blur level on lockscreen
          * @hide
          */

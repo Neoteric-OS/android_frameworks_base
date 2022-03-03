@@ -91,5 +91,6 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.OMNI_ADVANCED_REBOOT,
         Settings.System.SMALL_LANDSCAPE_NOTIFICATION,
+        Settings.System.HAPTIC_ON_SLIDER,
     };
 }
