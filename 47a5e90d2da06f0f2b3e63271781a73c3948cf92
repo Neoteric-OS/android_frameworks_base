@@ -16,6 +16,23 @@
       "message": "1. the org code:\n            // If the change is gated by a platform version newer than the one currently installed\n            // on the device, disregard the app\u0027s target sdk version.\n            int compareSdk \u003d Math.min(app.targetSdkVersion, buildClassifier.platformTargetSdk());\n            if (compareSdk !\u003d app.targetSdkVersion) {\n                compareSdk \u003d app.targetSdkVersion;\n            }\n            return compareSdk \u003e\u003d getEnableSinceTargetSdk();\n2. same as\n            return app.targetSdkVersion \u003e\u003d getEnableSinceTargetSdk();\nwhy do not delete to use platformTargetSdk or delele \"compareSdk \u003d app.targetSdkVersion\" ?\n\n3. platformTargetSdk should be use in this function:\n            int compareSdk \u003d Math.min(app.targetSdkVersion, buildClassifier.platformTargetSdk());\n            //if (compareSdk !\u003d app.targetSdkVersion) {//this should be delete\n                //compareSdk \u003d app.targetSdkVersion;\n            //}\n            return compareSdk \u003e\u003d getEnableSinceTargetSdk();\n",
       "revId": "47a5e90d2da06f0f2b3e63271781a73c3948cf92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86d68d5f_fcabc7f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1887356
+      },
+      "writtenOn": "2022-03-03T00:44:17Z",
+      "side": 1,
+      "message": "Required your review kindly",
+      "revId": "47a5e90d2da06f0f2b3e63271781a73c3948cf92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
