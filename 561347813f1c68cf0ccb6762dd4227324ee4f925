@@ -16,6 +16,23 @@
       "message": "Can you also provide a (at least manual) test case? A test in HdmiCecLocalDevicePlaybacTest would be appreciated to verify the new case.",
       "revId": "561347813f1c68cf0ccb6762dd4227324ee4f925",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cda86cc7_e382dbeb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-03-03T13:19:21Z",
+      "side": 1,
+      "message": "Could you please elaborate on the issue we\u0027re trying to solve with 1.? All I can see in the change is that\n`currentLocale.getISO3Language()`\nis being replaced with\n`mService.localeToMenuLanguage(currentLocale)`\nand I don\u0027t understand what we\u0027re trying to achieve.\n\n2. Actively send \u003cGet Menu Language\u003e is something that we don\u0027t want, given the interoperability issues with TVs reporting unexpected menu languages.",
+      "revId": "561347813f1c68cf0ccb6762dd4227324ee4f925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
