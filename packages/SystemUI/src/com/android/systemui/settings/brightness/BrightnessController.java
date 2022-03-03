@@ -37,6 +37,8 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.service.vr.IVrManager;
 import android.service.vr.IVrStateCallbacks;
@@ -88,6 +90,10 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
     private final BrightnessObserver mBrightnessObserver;
 
     private final DisplayTracker.Callback mBrightnessListener = new DisplayTracker.Callback() {
+    private Vibrator mVibrator;
+
+    private float last_val = -1;
+
         @Override
         public void onDisplayChanged(int displayId) {
             if (mUserChangedBrightness) return;
@@ -318,6 +324,26 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
         mDisplayManager = context.getSystemService(DisplayManager.class);
         mVrManager = IVrManager.Stub.asInterface(ServiceManager.getService(
                 Context.VR_SERVICE));
+        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+
+        if (mIcon != null) {
+            if (mAutomaticAvailable) {
+                mIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int newMode = mAutomatic ? Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL : Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
+                        setMode(newMode);
+                    }
+                });
+            }
+        }
+    }
+
+    private void setMode(int mode) {
+        Settings.System.putIntForUser(mContext.getContentResolver(),
+                Settings.System.SCREEN_BRIGHTNESS_MODE, mode,
+                mUserTracker.getCurrentUserId());
+>>>>>>> 1edd6702ec0b (base: Add haptic feedback to sliders [1/2])
     }
 
     public void registerCallbacks() {
@@ -404,6 +430,16 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
 
     private void setBrightness(float brightness) {
         mDisplayManager.setTemporaryBrightness(mDisplayId, brightness);
+        if (brightness != last_val) {
+            if (Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0 &&
+                Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.HAPTIC_ON_SLIDER, 1) != 0) {
+                last_val = brightness;
+                AsyncTask.execute(() ->
+                        mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_TICK)));
+            }
+        }
     }
 
     private void updateVrMode(boolean isEnabled) {

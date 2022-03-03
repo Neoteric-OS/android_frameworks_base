@@ -5613,6 +5613,12 @@ public final class Settings {
         public static final String OMNI_ADVANCED_REBOOT = "advanced_reboot";
 
         /**
+         * Whether do haptic feedback on changed slider value
+         * @hide
+         */
+        public static final String HAPTIC_ON_SLIDER = "haptic_on_slider";
+
+        /**
          * media artwork wallpaper blur level on lockscreen
          * @hide
          */

@@ -213,5 +213,6 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.NOTIFICATION_VIBRATION_PATTERN, new InclusiveIntegerRangeValidator(0, 4));
         VALIDATORS.put(System.INCALL_FEEDBACK_VIBRATE, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.OMNI_ADVANCED_REBOOT, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.HAPTIC_ON_SLIDER, BOOLEAN_VALIDATOR);
     }
 }
