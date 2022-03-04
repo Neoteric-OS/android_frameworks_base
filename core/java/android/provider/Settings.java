@@ -5969,6 +5969,13 @@ public final class Settings {
         public static final String MEDIA_ARTWORK_FADE_PERCENT = "media_artwork_fade_percent";
 
         /**
+         * Heads up notifications threshold
+         * Default 0
+         * @hide
+         */
+        public static final String HEADS_UP_NOTIFICATIONS_THRESHOLD = "heads_up_notifications_threshold";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
