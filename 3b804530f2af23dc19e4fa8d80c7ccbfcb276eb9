@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d3ab653_0e294ec9",
+        "filename": "telecomm/java/android/telecom/CallRedirectionService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2022-03-04T17:45:14Z",
+      "side": 1,
+      "message": "I can see the reason why you\u0027re doing this; if we just unbound from Telecom immediately on timeout the service might not ever get the onRedirectionTimeout signal.\n\nMy concern here is that a misbehaving CallRedirectionService implementation can potentially block in onRedirectionTimeout and cause the call redirection process to stall out longer.",
+      "range": {
+        "startLine": 217,
+        "startChar": 20,
+        "endLine": 218,
+        "endChar": 41
+      },
+      "revId": "3b804530f2af23dc19e4fa8d80c7ccbfcb276eb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
