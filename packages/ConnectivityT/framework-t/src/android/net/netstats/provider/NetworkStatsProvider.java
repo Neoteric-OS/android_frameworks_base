@@ -152,7 +152,7 @@ public abstract class NetworkStatsProvider {
         try {
             // Reuse the code path to notify warning reached with limit reached
             // since framework handles them in the same way.
-            getProviderCallbackBinderOrThrow().notifyWarningOrLimitReached();
+            getProviderCallbackBinderOrThrow().notifyWarningReached();
         } catch (RemoteException e) {
             e.rethrowAsRuntimeException();
         }
@@ -164,7 +164,7 @@ public abstract class NetworkStatsProvider {
      */
     public void notifyLimitReached() {
         try {
-            getProviderCallbackBinderOrThrow().notifyWarningOrLimitReached();
+            getProviderCallbackBinderOrThrow().notifyLimitReached();
         } catch (RemoteException e) {
             e.rethrowAsRuntimeException();
         }
