@@ -51,6 +51,24 @@
       "parentUuid": "cda86cc7_e382dbeb",
       "revId": "561347813f1c68cf0ccb6762dd4227324ee4f925",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c04092a6_6e4d1701",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-03-04T09:24:22Z",
+      "side": 1,
+      "message": "1. Does this mean that the only effect of this change is: for locales Taiwan, Hong Kong and Macau, \"chi\" is used instead of \"zho\"? If yes, please add that to the commit message to make this clear.\n\n2. I will sync on this internally and get back to you.",
+      "parentUuid": "327c0c47_075ad41d",
+      "revId": "561347813f1c68cf0ccb6762dd4227324ee4f925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
