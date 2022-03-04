@@ -2395,8 +2395,13 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         @Override
         public void notifyWarningOrLimitReached() {
             Log.d(TAG, mTag + ": notifyWarningOrLimitReached");
+            // TODO: Once the NetworkPolicyManager#notifyStatsProviderWarningReached and
+            //       NetworkPolicyManager#notifyStatsProviderLimitReached started to implement
+            //       different implementations this method has to be split into different
+            //       methods. Currently since the APIs both do the same thing, it is okay to call
+            //       either of the two here.
             BinderUtils.withCleanCallingIdentity(() ->
-                    mNetworkPolicyManager.notifyStatsProviderWarningOrLimitReached());
+                    mNetworkPolicyManager.notifyStatsProviderLimitReached());
         }
 
         @Override

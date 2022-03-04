@@ -558,6 +558,28 @@ public class NetworkPolicyManager {
     }
 
     /**
+     * Notifies that the specified {@link NetworkStatsProvider} has reached its quota which was
+     * set through {@link NetworkStatsProvider#onSetWarningAndLimit(String, long, long)}.
+     *
+     * @hide
+     */
+    @RequiresPermission(anyOf = {
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
+            android.Manifest.permission.NETWORK_STACK})
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public void notifyStatsProviderWarningReached() {
+        try {
+            // Because notifyStatsProviderWarningReached and notifyStatsProviderLimitReached
+            // currently do the same thing, they call the same function. The two APIs are
+            // currently separate. If the two APIs need to be implemented differently in the
+            // future, there is no need to change the API.
+            mService.notifyStatsProviderWarningOrLimitReached();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Notifies that the specified {@link NetworkStatsProvider} has reached its quota
      * which was set through {@link NetworkStatsProvider#onSetLimit(String, long)} or
      * {@link NetworkStatsProvider#onSetWarningAndLimit(String, long, long)}.
@@ -568,7 +590,7 @@ public class NetworkPolicyManager {
             NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
             android.Manifest.permission.NETWORK_STACK})
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
-    public void notifyStatsProviderWarningOrLimitReached() {
+    public void notifyStatsProviderLimitReached() {
         try {
             mService.notifyStatsProviderWarningOrLimitReached();
         } catch (RemoteException e) {
