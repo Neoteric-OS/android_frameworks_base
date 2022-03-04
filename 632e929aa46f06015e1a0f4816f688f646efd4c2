@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54a088e1_61256edd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-03-04T08:20:13Z",
+      "side": 1,
+      "message": "As we discussed, please make sure this works with\n• Some VpnService app\n• Some VpnManager app\n• Settings VPN with IKEv2\n• Legacy Settings VPN (PPTP or L2TP)\n",
+      "revId": "632e929aa46f06015e1a0f4816f688f646efd4c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9477e046_f39056d0",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3340,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-03-04T08:20:13Z",
+      "side": 1,
+      "message": "This is not necessary because by definition\n\n  null instanceOf xxx \u003d\u003d false",
+      "range": {
+        "startLine": 3340,
+        "startChar": 16,
+        "endLine": 3340,
+        "endChar": 38
+      },
+      "revId": "632e929aa46f06015e1a0f4816f688f646efd4c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
