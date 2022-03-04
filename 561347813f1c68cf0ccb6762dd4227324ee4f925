@@ -33,6 +33,24 @@
       "message": "Could you please elaborate on the issue we\u0027re trying to solve with 1.? All I can see in the change is that\n`currentLocale.getISO3Language()`\nis being replaced with\n`mService.localeToMenuLanguage(currentLocale)`\nand I don\u0027t understand what we\u0027re trying to achieve.\n\n2. Actively send \u003cGet Menu Language\u003e is something that we don\u0027t want, given the interoperability issues with TVs reporting unexpected menu languages.",
       "revId": "561347813f1c68cf0ccb6762dd4227324ee4f925",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "327c0c47_075ad41d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1501078
+      },
+      "writtenOn": "2022-03-04T01:47:58Z",
+      "side": 1,
+      "message": "1.As the annotation of method localeToMenuLanguage shows, Android always returns \"zho\" for all Chinese variants. Use \"bibliographic\" code defined in CEC639-2 for traditional Chinese used in Taiwan/Hong Kong/Macau. If not, the locale finally selected for \"zho\" is Taiwan with Traditional Chinese() while it should be Mainland China Simplified Chinese. \n\n2.Actively send \u003cGet Menu Language\u003e is controlled with the SET_MENU_LANGUAGE switch. If oem configs it true, then they will think the playback box should be switched to TV\u0027s language once the box is connected with tv. Then playback should try to send a message actively in case there are TVs which don\u0027t send \u003cSet Menu Language\u003e messages actively.",
+      "parentUuid": "cda86cc7_e382dbeb",
+      "revId": "561347813f1c68cf0ccb6762dd4227324ee4f925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
