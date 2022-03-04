@@ -28,11 +28,15 @@ import android.util.Slog;
 import android.util.SparseArray;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.IndentingPrintWriter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 import java.util.function.BiFunction;
 
 /**
@@ -120,6 +124,8 @@ public class BaseBundle {
     /** {@hide} */
     @VisibleForTesting
     public int mFlags;
+
+    private final Map<Object, Class<?>> mItemTypeCheckCache = new WeakHashMap<>();
 
     /**
      * Constructs a new, empty Bundle that uses a specific ClassLoader for
@@ -384,8 +390,42 @@ public class BaseBundle {
                 }
             }
             mMap.setValueAt(i, object);
+            // Unparceling will have already checked the type.
+            return (T) object;
         }
-        return (clazz != null) ? clazz.cast(object) : (T) object;
+        return checkType(object, clazz, itemTypes);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Nullable
+    private <T> T checkType(Object object, @Nullable Class<T> clazz,
+            @Nullable Class<?>[] itemTypes) {
+        T value = (clazz != null) ? clazz.cast(object) : (T) object;
+        Class<?> itemType = ArrayUtils.getOrNull(itemTypes, 0);
+        if (itemType != null) {
+            Class<?> cachedType = mItemTypeCheckCache.get(object);
+            // No need to check again if the type required is a parent of the cached type
+            if (cachedType == null || !itemType.isAssignableFrom(cachedType)) {
+                if (object instanceof Object[]) {
+                    Object[] container = (Object[]) object;
+                    for (int i = 0, n = container.length; i < n; i++) {
+                        itemType.cast(container[i]);
+                    }
+                } else if (object instanceof List<?>) {
+                    List<?> container = (List<?>) object;
+                    for (int i = 0, n = container.size(); i < n; i++) {
+                        itemType.cast(container.get(i));
+                    }
+                } else if (object instanceof SparseArray<?>) {
+                    SparseArray<?> container = (SparseArray<?>) object;
+                    for (int i = 0, n = container.size(); i < n; i++) {
+                        itemType.cast(container.valueAt(i));
+                    }
+                }
+                mItemTypeCheckCache.put(object, cachedType);
+            }
+        }
+        return value;
     }
 
     private void initializeFromParcelLocked(@NonNull Parcel parcelledData, boolean recycleParcel,
