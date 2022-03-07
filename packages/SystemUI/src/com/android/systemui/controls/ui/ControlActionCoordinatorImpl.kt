@@ -16,11 +16,11 @@
 
 package com.android.systemui.controls.ui
 
+import android.annotation.AnyThread
 import android.annotation.MainThread
 import android.app.Dialog
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.os.VibrationEffect
@@ -33,6 +33,7 @@ import android.util.Log
 import android.view.HapticFeedbackConstants
 import com.android.internal.annotations.VisibleForTesting
 import com.android.systemui.broadcast.BroadcastDispatcher
+import com.android.systemui.broadcast.BroadcastSender
 import com.android.systemui.controls.ControlsMetricsLogger
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Main
@@ -51,6 +52,7 @@ class ControlActionCoordinatorImpl @Inject constructor(
     private val bgExecutor: DelayableExecutor,
     @Main private val uiExecutor: DelayableExecutor,
     private val activityStarter: ActivityStarter,
+    private val broadcastSender: BroadcastSender,
     private val keyguardStateController: KeyguardStateController,
     private val globalActionsComponent: GlobalActionsComponent,
     private val taskViewFactory: Optional<TaskViewFactory>,
@@ -145,11 +147,12 @@ class ControlActionCoordinatorImpl @Inject constructor(
             false
         }
 
+    @AnyThread
     @VisibleForTesting
     fun bouncerOrRun(action: Action) {
         if (keyguardStateController.isShowing()) {
             if (isLocked) {
-                context.sendBroadcast(Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS))
+                broadcastSender.closeSystemDialogs()
 
                 // pending actions will only run after the control state has been refreshed
                 pendingAction = action
@@ -179,7 +182,10 @@ class ControlActionCoordinatorImpl @Inject constructor(
                 // make sure the intent is valid before attempting to open the dialog
                 if (activities.isNotEmpty() && taskViewFactory.isPresent) {
                     taskViewFactory.get().create(context, uiExecutor, {
-                        dialog = DetailDialog(activityContext, it, pendingIntent, cvh).also {
+                        dialog = DetailDialog(
+                            activityContext, broadcastSender,
+                            it, pendingIntent, cvh
+                        ).also {
                             it.setOnDismissListener { _ -> dialog = null }
                             it.show()
                         }

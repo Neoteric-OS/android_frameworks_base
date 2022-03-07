@@ -52,6 +52,7 @@ import com.android.settingslib.widget.AdaptiveIcon;
 import com.android.systemui.R;
 import com.android.systemui.animation.ActivityLaunchAnimator;
 import com.android.systemui.animation.GhostedViewLaunchAnimatorController;
+import com.android.systemui.broadcast.BroadcastSender;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.media.dialog.MediaOutputDialogFactory;
 import com.android.systemui.plugins.ActivityStarter;
@@ -101,6 +102,7 @@ public class MediaControlPanel {
     private SeekBarObserver mSeekBarObserver;
     protected final Executor mBackgroundExecutor;
     private final ActivityStarter mActivityStarter;
+    private final BroadcastSender mBroadcastSender;
 
     private Context mContext;
     private PlayerViewHolder mPlayerViewHolder;
@@ -134,14 +136,16 @@ public class MediaControlPanel {
      */
     @Inject
     public MediaControlPanel(Context context, @Background Executor backgroundExecutor,
-            ActivityStarter activityStarter, MediaViewController mediaViewController,
-            SeekBarViewModel seekBarViewModel, Lazy<MediaDataManager> lazyMediaDataManager,
-            KeyguardDismissUtil keyguardDismissUtil, MediaOutputDialogFactory
-            mediaOutputDialogFactory, MediaCarouselController mediaCarouselController,
+            ActivityStarter activityStarter, BroadcastSender broadcastSender,
+            MediaViewController mediaViewController, SeekBarViewModel seekBarViewModel,
+            Lazy<MediaDataManager> lazyMediaDataManager, KeyguardDismissUtil keyguardDismissUtil,
+            MediaOutputDialogFactory mediaOutputDialogFactory,
+            MediaCarouselController mediaCarouselController,
             FalsingManager falsingManager, SystemClock systemClock) {
         mContext = context;
         mBackgroundExecutor = backgroundExecutor;
         mActivityStarter = activityStarter;
+        mBroadcastSender = broadcastSender;
         mSeekBarViewModel = seekBarViewModel;
         mMediaViewController = mediaViewController;
         mMediaDataManagerLazy = lazyMediaDataManager;
@@ -684,7 +688,7 @@ public class MediaControlPanel {
                 // Dismiss the card Smartspace data through Smartspace trampoline activity.
                 mContext.startActivity(dismissIntent);
             } else {
-                mContext.sendBroadcast(dismissIntent);
+                mBroadcastSender.sendBroadcast(dismissIntent);
             }
         });
 
