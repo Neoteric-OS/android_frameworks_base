@@ -63,6 +63,24 @@
       "message": "LGTM, but I\u0027ve suggested expanding the commit comment.",
       "revId": "f20bc8eaed6a5692f6eb53f03feba58eb151c2ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9377b4cb_080d5557",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1940460
+      },
+      "writtenOn": "2022-03-07T11:27:26Z",
+      "side": 1,
+      "message": "Seems this CL needs OWNERS approval. Should I add one of the suggested owners?",
+      "parentUuid": "950a1540_3b407955",
+      "revId": "f20bc8eaed6a5692f6eb53f03feba58eb151c2ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
