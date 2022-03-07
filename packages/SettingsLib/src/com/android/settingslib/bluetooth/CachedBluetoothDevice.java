@@ -284,6 +284,12 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
         synchronized (mProfileLock) {
             mDevice.disconnect();
         }
+        if (getGroupId() != BluetoothCsipSetCoordinator.GROUP_ID_INVALID) {
+            for (CachedBluetoothDevice member : getMemberDevice()) {
+                Log.d(TAG, "Disconnect the member(" + member.getAddress() + ")");
+                member.disconnect();
+            }
+        }
         // Disconnect  PBAP server in case its connected
         // This is to ensure all the profiles are disconnected as some CK/Hs do not
         // disconnect  PBAP connection when HF connection is brought down
@@ -396,6 +402,12 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
             }
 
             mDevice.connect();
+            if (getGroupId() != BluetoothCsipSetCoordinator.GROUP_ID_INVALID) {
+                for (CachedBluetoothDevice member : getMemberDevice()) {
+                    Log.d(TAG, "connect the member(" + member.getAddress() + ")");
+                    member.connect();
+                }
+            }
         }
     }
 
