@@ -19,6 +19,7 @@ package com.android.systemui.controls.ui
 import android.testing.AndroidTestingRunner
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
+import com.android.systemui.broadcast.BroadcastSender
 import com.android.systemui.controls.ControlsMetricsLogger
 import com.android.systemui.globalactions.GlobalActionsComponent
 import com.android.systemui.plugins.ActivityStarter
@@ -61,6 +62,8 @@ class ControlActionCoordinatorImplTest : SysuiTestCase() {
     @Mock
     private lateinit var globalActionsComponent: GlobalActionsComponent
     @Mock
+    private lateinit var broadcastSender: BroadcastSender
+    @Mock
     private lateinit var taskViewFactory: Optional<TaskViewFactory>
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     private lateinit var cvh: ControlViewHolder
@@ -85,6 +88,7 @@ class ControlActionCoordinatorImplTest : SysuiTestCase() {
             bgExecutor,
             uiExecutor,
             activityStarter,
+            broadcastSender,
             keyguardStateController,
             globalActionsComponent,
             taskViewFactory,
