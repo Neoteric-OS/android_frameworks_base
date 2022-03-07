@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d2d7a76_7d869c99",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-03-07T17:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ba651b3_6e0d2c76",
+      "revId": "93fc6b739ee72532c23d20395e1ca8566093aa7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "828238a3_d0881dfe",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-03-06T07:02:45Z",
       "side": 1,
       "message": "We revisit the API used here, the original issue mentioned in b/213417037 still exisit if we use removeDeviceInfo().\n\nWe need to trigger invokeDeviceEventListener to notifyting TIF about the device remvoal, (e.g. use \"removeCecDevice()\" instead as proposed in aosp/1997130).\n\nOne way is to modify getDeviceInfoList(), which is used by HotplugDetectionAction.java, so that HotplugDetectionAction.java will call removeCecDevice()\n\nAnother idea is to simply change to use removeCecDevice() here, and also move the logic of mDeviceInfosPendingClearance to removeCecDevice() as well.",
+      "revId": "93fc6b739ee72532c23d20395e1ca8566093aa7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4368c6ca_fb3a67df",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-03-07T17:15:33Z",
+      "side": 1,
+      "message": "\u003e One way is to modify getDeviceInfoList(),\n\nDone.",
+      "parentUuid": "828238a3_d0881dfe",
       "revId": "93fc6b739ee72532c23d20395e1ca8566093aa7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
