@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "379726bc_3d9cf27b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1940460
+      },
+      "writtenOn": "2022-03-07T11:11:27Z",
+      "side": 1,
+      "message": "Thanks for this. I\u0027ve updated the commit message.",
+      "parentUuid": "2bc8a552_bbd61e0d",
+      "range": {
+        "startLine": 9,
+        "startChar": 35,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "f20bc8eaed6a5692f6eb53f03feba58eb151c2ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "950a1540_3b407955",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
