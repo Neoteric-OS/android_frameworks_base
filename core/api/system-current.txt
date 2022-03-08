@@ -7048,7 +7048,6 @@ package android.net {
 
   public static final class EthernetNetworkUpdateRequest.Builder {
     ctor public EthernetNetworkUpdateRequest.Builder();
-    ctor public EthernetNetworkUpdateRequest.Builder(@NonNull android.net.EthernetNetworkUpdateRequest);
     method @NonNull public android.net.EthernetNetworkUpdateRequest build();
     method @NonNull public android.net.EthernetNetworkUpdateRequest.Builder setIpConfiguration(@Nullable android.net.IpConfiguration);
     method @NonNull public android.net.EthernetNetworkUpdateRequest.Builder setNetworkCapabilities(@Nullable android.net.NetworkCapabilities);
