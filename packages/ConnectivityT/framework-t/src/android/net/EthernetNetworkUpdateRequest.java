@@ -65,21 +65,6 @@ public final class EthernetNetworkUpdateRequest implements Parcelable {
         @Nullable
         private NetworkCapabilities mBuilderNetworkCapabilities;
 
-        public Builder(){}
-
-        /**
-         * Constructor to populate the builder's values with an already built
-         * {@link EthernetNetworkUpdateRequest}.
-         * @param request the {@link EthernetNetworkUpdateRequest} to populate with.
-         */
-        public Builder(@NonNull final EthernetNetworkUpdateRequest request) {
-            Objects.requireNonNull(request);
-            mBuilderIpConfig = null == request.mNetworkCapabilities
-                    ? null : new IpConfiguration(request.mIpConfig);
-            mBuilderNetworkCapabilities = null == request.mNetworkCapabilities
-                    ? null : new NetworkCapabilities(request.mNetworkCapabilities);
-        }
-
         /**
          * Set the {@link IpConfiguration} to be used with the {@code Builder}.
          * @param ipConfig the {@link IpConfiguration} to set.
