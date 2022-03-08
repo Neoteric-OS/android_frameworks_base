@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "718ad53f_7d37e0ba",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2396,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-03-08T07:31:10Z",
+      "side": 0,
+      "message": "It seems to me it is not useful for now to split the implementation into 2.\nIIUC We don\u0027t really have a use case need 2 different implementation for now.\nCould we just change API surface and just call one of them?\nAnd add TODO for the unused one.",
+      "range": {
+        "startLine": 2396,
+        "startChar": 20,
+        "endLine": 2396,
+        "endChar": 47
+      },
+      "revId": "a29bc7bbd88046a25ef1abf60a9091afd515b26a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
