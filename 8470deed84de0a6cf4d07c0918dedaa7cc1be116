@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab0639d9_16ae9dc3",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-03-08T10:19:05Z",
+      "side": 1,
+      "message": "The issue of  b/213423169 still exists, maybe we need to modify getAvrDeviceInfo() of HdmiCecLocalDeviceTv.java as well",
+      "revId": "8470deed84de0a6cf4d07c0918dedaa7cc1be116",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
