@@ -81,6 +81,24 @@
       "parentUuid": "950a1540_3b407955",
       "revId": "f20bc8eaed6a5692f6eb53f03feba58eb151c2ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "842fdc78_38ed6963",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-03-08T11:34:05Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the only way to land changes to this file.\n\nThe number of owners isn\u0027t high, unfortunately. This file is used for a lot of different things, so not always easy to identify who will understand implications of changes.\n\nI\u0027ve added an owner who has been responsive in the recent past.\n\nYou\u0027ve provided good context in the commit comment, and the bug link provides even more context, so we should be good. If you don\u0027t get a response in a day or two you will have to ping/poke/chase/etc.",
+      "parentUuid": "9377b4cb_080d5557",
+      "revId": "f20bc8eaed6a5692f6eb53f03feba58eb151c2ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
