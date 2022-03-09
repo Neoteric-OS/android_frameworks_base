@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19aa9945_7838b9cf",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2022-03-09T10:32:51Z",
+      "side": 1,
+      "message": "As discussed offline, we could consider having one single-argument method for each value of includeDevicesPendingClearance, with the one for \u0027false\u0027 taking the current name since it is the more common case. Similarly for removeDeviceInfo and getDeviceInfoList.",
+      "range": {
+        "startLine": 273,
+        "startChar": 19,
+        "endLine": 273,
+        "endChar": 35
+      },
+      "revId": "fee25c4f1b4822425cebd773badcb27cd041e135",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
