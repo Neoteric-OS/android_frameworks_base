@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e9adaa4_dff075ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2022-03-09T17:19:30Z",
+      "side": 1,
+      "message": "Please add a test to catch this boundary in CellSignalStrengthNrTest.java",
+      "revId": "b823e8320d0362bfbf47e451c8c20e46ffb038ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
