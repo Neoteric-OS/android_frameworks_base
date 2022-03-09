@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6bb3199_f625ae9b",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6992,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-03-09T06:37:48Z",
+      "side": 1,
+      "message": "In which case the holder.provider will be null but the key.mHolder isn\u0027t null?",
+      "revId": "c8b5588a154d47bbed846c3c6d1b4d33facdbc36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
