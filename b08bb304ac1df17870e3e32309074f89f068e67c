@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee71aad8_2981edfd",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-03-09T14:03:48Z",
+      "side": 1,
+      "message": "Yes, correct it.",
+      "parentUuid": "f4e76cd4_77c066fe",
+      "range": {
+        "startLine": 562,
+        "startChar": 29,
+        "endLine": 562,
+        "endChar": 85
+      },
+      "revId": "b08bb304ac1df17870e3e32309074f89f068e67c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fea27ac9_8bcab524",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be186017_871ec253",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-03-09T14:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fea27ac9_8bcab524",
+      "range": {
+        "startLine": 573,
+        "startChar": 12,
+        "endLine": 573,
+        "endChar": 64
+      },
+      "revId": "b08bb304ac1df17870e3e32309074f89f068e67c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5cf9ff05_958ebfe0",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-03-09T03:13:13Z",
       "side": 1,
       "message": "NetworkPolicyManager#notifyStatsProviderWarningReached",
+      "range": {
+        "startLine": 2398,
+        "startChar": 30,
+        "endLine": 2398,
+        "endChar": 88
+      },
+      "revId": "b08bb304ac1df17870e3e32309074f89f068e67c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4272c53d_0add0570",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2398,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-03-09T14:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cf9ff05_958ebfe0",
       "range": {
         "startLine": 2398,
         "startChar": 30,
@@ -111,6 +183,54 @@
         "startChar": 21,
         "endLine": 2400,
         "endChar": 22
+      },
+      "revId": "b08bb304ac1df17870e3e32309074f89f068e67c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d44949dc_768bba1b",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2400,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-03-09T14:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23c93677_a71a842f",
+      "range": {
+        "startLine": 2400,
+        "startChar": 21,
+        "endLine": 2400,
+        "endChar": 22
+      },
+      "revId": "b08bb304ac1df17870e3e32309074f89f068e67c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b00b7d1_647cb279",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2400,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-03-09T14:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de96dfc0_600c4278",
+      "range": {
+        "startLine": 2400,
+        "startChar": 23,
+        "endLine": 2400,
+        "endChar": 65
       },
       "revId": "b08bb304ac1df17870e3e32309074f89f068e67c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
