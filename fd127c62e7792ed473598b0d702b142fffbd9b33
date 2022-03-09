@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80afe5a7_4e798456",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1940460
+      },
+      "writtenOn": "2022-03-09T13:33:41Z",
+      "side": 1,
+      "message": "Presubmit passed earlier. The last patch changed the commit message only.",
+      "revId": "fd127c62e7792ed473598b0d702b142fffbd9b33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
