@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4e76cd4_77c066fe",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-03-09T03:13:13Z",
+      "side": 1,
+      "message": "This is not true, right?",
+      "range": {
+        "startLine": 562,
+        "startChar": 29,
+        "endLine": 562,
+        "endChar": 85
+      },
+      "revId": "b08bb304ac1df17870e3e32309074f89f068e67c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fea27ac9_8bcab524",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-03-09T03:13:13Z",
+      "side": 1,
+      "message": "Maybe add comments to describe why the implementation calls the same function.",
+      "range": {
+        "startLine": 573,
+        "startChar": 12,
+        "endLine": 573,
+        "endChar": 64
+      },
+      "revId": "b08bb304ac1df17870e3e32309074f89f068e67c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cf9ff05_958ebfe0",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2398,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-03-09T03:13:13Z",
+      "side": 1,
+      "message": "NetworkPolicyManager#notifyStatsProviderWarningReached",
+      "range": {
+        "startLine": 2398,
+        "startChar": 30,
+        "endLine": 2398,
+        "endChar": 88
+      },
+      "revId": "b08bb304ac1df17870e3e32309074f89f068e67c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de96dfc0_600c4278",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2400,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-03-09T03:13:13Z",
+      "side": 1,
+      "message": "s/the method notifyWarningOrLimitReached had/this method has/",
+      "range": {
+        "startLine": 2400,
+        "startChar": 23,
+        "endLine": 2400,
+        "endChar": 65
+      },
+      "revId": "b08bb304ac1df17870e3e32309074f89f068e67c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23c93677_a71a842f",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2400,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-03-09T03:13:13Z",
+      "side": 1,
+      "message": ", cannot be at the beginning of line.",
+      "range": {
+        "startLine": 2400,
+        "startChar": 21,
+        "endLine": 2400,
+        "endChar": 22
+      },
+      "revId": "b08bb304ac1df17870e3e32309074f89f068e67c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
