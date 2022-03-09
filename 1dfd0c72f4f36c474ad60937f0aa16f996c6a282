@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0e14a56_8fd73923",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-03-09T22:14:42Z",
+      "side": 1,
+      "message": "Not writing this (or having a magic value for \"look at tunConnParams\") will result in the legacy VPN codepath not understanding these:\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/connectivity/Vpn.java;l\u003d2244;drc\u003dmaster?q\u003dvpnrunner\u0026ss\u003dandroid%2Fplatform%2Fsuperproject\n\nThat\u0027s technically doesn\u0027t affect functionality because the VpnManager uses different internals, but JFYI.",
+      "range": {
+        "startLine": 467,
+        "startChar": 0,
+        "endLine": 467,
+        "endChar": 29
+      },
+      "revId": "1dfd0c72f4f36c474ad60937f0aa16f996c6a282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
