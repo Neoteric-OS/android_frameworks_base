@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e634d1a7_4d280d9f",
+        "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2022-03-09T20:21:18Z",
+      "side": 1,
+      "message": "128? :-)\n\n\"100\" is such an unfriendly number i wondered if there was a hidden meaning (or it was a sum of smaller things). powers of two i automatically assume are just \"ballpark guesses\".\n\n(in this specific case \"name\" made me think of the kernel\u0027s [tiny] name limit and wonder whether there was any use to the extra characters, but it seems like this basically ends up as a _java_ string where there isn\u0027t any limit, and we just want to avoid allocations in native code? actually, yeah, if that\u0027s the reasoning, that\u0027s probably the comment that would have made me understand at a glance :-) )",
+      "parentUuid": "707232f3_2316dd78",
+      "revId": "8837d3bbd56a8bf1d52254763abf744e29e79f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2974b349_72f5c38f",
         "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
         "patchSetId": 3
