@@ -34,6 +34,47 @@
       "parentUuid": "f6bb3199_f625ae9b",
       "revId": "c8b5588a154d47bbed846c3c6d1b4d33facdbc36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8955503f_a83fa69b",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6992,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-03-09T07:18:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "acdee6ec_54b872b9",
+      "revId": "c8b5588a154d47bbed846c3c6d1b4d33facdbc36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86d321e3_4d7fa07c",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6993,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-03-09T07:18:58Z",
+      "side": 1,
+      "message": "nit: add if (DEBUG_PROVIDER) before this",
+      "range": {
+        "startLine": 6993,
+        "startChar": 28,
+        "endLine": 6993,
+        "endChar": 78
+      },
+      "revId": "c8b5588a154d47bbed846c3c6d1b4d33facdbc36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
