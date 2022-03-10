@@ -50,6 +50,23 @@
       "message": "@andreionea is the owner, right? I don\u0027t know much about this class.",
       "revId": "47a5e90d2da06f0f2b3e63271781a73c3948cf92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88693b10_60796da9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1887356
+      },
+      "writtenOn": "2022-03-10T00:52:13Z",
+      "side": 1,
+      "message": "Dear andreionea,\nRequired your review kindly",
+      "revId": "47a5e90d2da06f0f2b3e63271781a73c3948cf92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
