@@ -18275,18 +18275,34 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     }
 
     /**
-     * If some part of this view is not clipped by any of its parents, then
-     * return that area in r in global (root) coordinates. To convert r to local
-     * coordinates (without taking possible View rotations into account), offset
-     * it by -globalOffset (e.g. r.offset(-globalOffset.x, -globalOffset.y)).
-     * If the view is completely clipped or translated out, return false.
+     * Sets <code>r</code> to the global coordinates of the non-clipped area of
+     * this view. Sets <code>globalOffset</code> to the offset of the view's x-
+     * and y&#8209;coordinates from the global origin.
      *
-     * @param r If true is returned, r holds the global coordinates of the
-     *        visible portion of this view.
-     * @param globalOffset If true is returned, globalOffset holds the dx,dy
-     *        between this view and its root. globalOffet may be null.
-     * @return true if r is non-empty (i.e. part of the view is visible at the
-     *         root level.
+     * <p>To convert <code>r</code> to local coordinates (without taking view
+     * rotations into account), offset <code>r</code> by the inverse values of
+     * <code>globalOffset</code> (<code>r.offset(-globalOffset.x,
+     * -globalOffset.y)</code>), which is equivalent to calling
+     * {@link #getLocalVisibleRect(Rect) getLocalVisibleRect(Rect)}.
+     *
+     * <p>In multi-window mode, the global area is the window in which this view
+     * is displayed, not the entire device screen. Also, the top and bottom
+     * coordinates of <code>r</code> and the y&#8209;coordinate of
+     * <code>globalOffset</code> can vary depending on the size and number of
+     * system UI elements in the containing window.
+     *
+     * <p><b>Note:</b> Do not use this method to determine the size of a window
+     * in multi-window mode; use {@link WindowMetrics}.
+     *
+     * @param r If the method returns true, contains the global coordinates of
+     *      the visible portion of this view.
+     * @param globalOffset If the method returns true, contains the offset of
+     *      the x- and y&#8209;coordinates of this view from the global origin.
+     *      Can be null (see {@link #getGlobalVisibleRect(Rect r)
+     *      getGlobalVisibleRect(Rect r)}.
+     * @return true if <code>r</code> is non-empty (that is, part of the view is
+     *      visible at the global level); false if the view is completely
+     *      clipped or translated out of the visible global area.
      */
     public boolean getGlobalVisibleRect(Rect r, Point globalOffset) {
         int width = mRight - mLeft;
@@ -18301,10 +18317,44 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         return false;
     }
 
+    /**
+     * Sets <code>r</code> to the global coordinates of the non-clipped area of
+     * this view.
+     *
+     * <p>See {@link #getGlobalVisibleRect(Rect, Point)
+     * getGlobalVisibleRect(Rect, Point)} for more information.
+     *
+     * @param r If the method returns true, contains the global coordinates of
+     *      the visible portion of this view.
+     * @return true if <code>r</code> is non-empty; otherwise false.
+     */
     public final boolean getGlobalVisibleRect(Rect r) {
         return getGlobalVisibleRect(r, null);
     }
 
+    /**
+     * Sets <code>r</code> to the local coordinates of the non-clipped area of
+     * this view.
+     *
+     * <p>If the view is partially clipped on the left or top, the left and top
+     * coordinates are offset from 0 by the clipped amount. For example, if the
+     * view is off screen 50px to the left and 30px to the top, the left and
+     * right coordinates are 50 and 30 respectively.
+     *
+     * <p>If the view is partially clipped on the right or bottom, the right and
+     * bottom coordinates are reduced by the clipped amount. For example, if the
+     * view is off screen 40px to the right and 20px to the bottom, the right
+     * coordinate is the image width - 40, and the bottom coordinate is the
+     * image height - 20.
+     *
+     * @param r If the method returns true, contains the local coordinates of
+     *      the visible portion of this view.
+     * @return true if <code>r</code> is non-empty (that is, at least part of
+     *      the view is visible); false if the view is completely clipped or
+     *      translated out of the visible area.
+     *
+     * @see #getGlobalVisibleRect(Rect, Point)
+     */
     public final boolean getLocalVisibleRect(Rect r) {
         final Point offset = mAttachInfo != null ? mAttachInfo.mPoint : new Point();
         if (getGlobalVisibleRect(r, offset)) {
