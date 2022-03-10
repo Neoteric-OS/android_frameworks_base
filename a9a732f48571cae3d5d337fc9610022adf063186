@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e46aaf3_1fd6c5ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-03-10T23:25:55Z",
+      "side": 1,
+      "message": "This topic is a set of clean cherry-picks from internal master.  Having these in AOSP will avoid merge conflicts with removing FDE support.  Originally there were merge conflicts between AOSP master and internal master on this set, which is why they went to internal master first, but now there are no conflicts.",
+      "revId": "a9a732f48571cae3d5d337fc9610022adf063186",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
