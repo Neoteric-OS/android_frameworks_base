@@ -16,6 +16,23 @@
       "message": "Hello Santos, \n\nCould you please review this change? thanks.",
       "revId": "8b0f6c5c4475830fdb824f50e5ee08bac9959d91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9d52107_113a12c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015328
+      },
+      "writtenOn": "2022-03-10T00:27:52Z",
+      "side": 1,
+      "message": "This is a simple enough change, but can you share how this case is possible?\n\nIf the remainingTime \u003c 0, then mBrightness would fall before the transitionPoint and the conditional would fail.  Are you seeing cases where mBrightness remains above the transition point even after HBM timeout has run out?",
+      "revId": "8b0f6c5c4475830fdb824f50e5ee08bac9959d91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
