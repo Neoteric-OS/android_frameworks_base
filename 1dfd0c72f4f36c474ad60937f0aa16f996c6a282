@@ -96,6 +96,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e239d021_71536b2f",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-03-10T06:57:20Z",
+      "side": 1,
+      "message": "Correction, this is a functional bug; in testing with an actual app, this causes the startVpnProfilePrivileged method to fail:\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/connectivity/Vpn.java;l\u003d3401?q\u003dvpn.java\u0026ss\u003dandroid%2Fplatform%2Fsuperproject, since the type does not get parcelled. This is used as a prerequisite to calling fromVpnProfile on the cached profile.",
+      "parentUuid": "6d811d59_22f66b01",
+      "range": {
+        "startLine": 467,
+        "startChar": 0,
+        "endLine": 467,
+        "endChar": 29
+      },
+      "revId": "1dfd0c72f4f36c474ad60937f0aa16f996c6a282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e7d96f66_64d457fb",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 5
