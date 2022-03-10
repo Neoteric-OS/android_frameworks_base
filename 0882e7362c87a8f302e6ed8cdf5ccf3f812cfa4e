@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cb5e6a26_880d1e3f",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-03-10T09:45:27Z",
+      "side": 1,
+      "message": "This should probably be \"accessing this value in any thread is not safe, it must only be changed in the state machine thread\", or \"This value is accessed safely from the state machine thread only\"",
+      "parentUuid": "299c3fcb_4f87b1a2",
+      "range": {
+        "startLine": 78,
+        "startChar": 28,
+        "endLine": 78,
+        "endChar": 31
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6d94261c_f28a0c56",
         "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
         "patchSetId": 11
@@ -42,6 +66,29 @@
         "startChar": 20,
         "endLine": 237,
         "endChar": 44
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f26b246e_7b8d2052",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-03-10T09:45:27Z",
+      "side": 1,
+      "message": "This is new right ? It would be a bit noisy I think, but may be OK if you set DBG to Log.isLoggable(TAG, Log.DEBUG)",
+      "range": {
+        "startLine": 436,
+        "startChar": 24,
+        "endLine": 436,
+        "endChar": 25
       },
       "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
@@ -118,6 +165,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6c7c20ed_40398ce0",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-03-10T09:45:27Z",
+      "side": 1,
+      "message": "Is this still necessary ? The other end doesn\u0027t use quoteArgs anymore",
+      "range": {
+        "startLine": 516,
+        "startChar": 38,
+        "endLine": 516,
+        "endChar": 46
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1c8af3c3_cb891147",
         "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
         "patchSetId": 11
@@ -134,6 +204,29 @@
         "startChar": 57,
         "endLine": 560,
         "endChar": 59
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87b483bc_58185b01",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-03-10T09:45:27Z",
+      "side": 1,
+      "message": "Inner classes that extend Binder interfaces have been a source of binder leaks in the past.\n\nCan you make the class static, and take mNsdStateMachine as constructor argument instead ? It may help a bit.",
+      "range": {
+        "startLine": 634,
+        "startChar": 28,
+        "endLine": 634,
+        "endChar": 35
       },
       "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
