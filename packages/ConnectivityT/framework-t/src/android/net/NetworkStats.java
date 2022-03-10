@@ -327,16 +327,11 @@ public final class NetworkStats implements Parcelable, Iterable<NetworkStats.Ent
          * @param uid uid of this {@link Entry}. {@link #UID_TETHERING} if this {@link Entry} is
          *            for tethering. Or {@link #UID_ALL} if this {@link NetworkStats} is only
          *            counting iface stats.
-         * @param set usage state of this {@link Entry}. Should be one of the following
-         *            values: {@link #SET_DEFAULT}, {@link #SET_FOREGROUND}.
+         * @param set usage state of this {@link Entry}.
          * @param tag tag of this {@link Entry}.
-         * @param metered metered state of this {@link Entry}. Should be one of the following
-         *                values: {link #METERED_YES}, {link #METERED_NO}.
-         * @param roaming roaming state of this {@link Entry}. Should be one of the following
-         *                values: {link #ROAMING_YES}, {link #ROAMING_NO}.
-         * @param defaultNetwork default network status of this {@link Entry}. Should be one
-         *                       of the following values: {link #DEFAULT_NETWORK_YES},
-         *                       {link #DEFAULT_NETWORK_NO}.
+         * @param metered metered state of this {@link Entry}.
+         * @param roaming roaming state of this {@link Entry}.
+         * @param defaultNetwork default network status of this {@link Entry}.
          * @param rxBytes Number of bytes received for this {@link Entry}. Statistics should
          *                represent the contents of IP packets, including IP headers.
          * @param rxPackets Number of packets received for this {@link Entry}. Statistics should
