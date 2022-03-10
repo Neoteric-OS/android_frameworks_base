@@ -556,8 +556,23 @@ class BatteryExternalStatsWorker implements BatteryStatsImpl.ExternalStatsSync {
             // We were asked to fetch Bluetooth data.
             final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
             if (adapter != null) {
-                bluetoothReceiver = new SynchronousResultReceiver("bluetooth");
-                adapter.requestControllerActivityEnergyInfo(bluetoothReceiver);
+                SynchronousResultReceiver tempBluetoothReceiver =
+                        new SynchronousResultReceiver("bluetooth");
+                adapter.requestControllerActivityEnergyInfo(
+                        new Executor() {
+                            @Override
+                            public void execute(Runnable runnable) {
+                                runnable.run();
+                            }
+                        },
+                        info -> {
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable(BatteryStats.RESULT_RECEIVER_CONTROLLER_KEY,
+                                    info);
+                            tempBluetoothReceiver.send(0, bundle);
+                        }
+                );
+                bluetoothReceiver = tempBluetoothReceiver;
             }
         }
 
