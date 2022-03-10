@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "299c3fcb_4f87b1a2",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-03-10T01:49:40Z",
+      "side": 1,
+      "message": "is not?",
+      "range": {
+        "startLine": 78,
+        "startChar": 28,
+        "endLine": 78,
+        "endChar": 31
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d94261c_f28a0c56",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-03-10T01:49:40Z",
+      "side": 1,
+      "message": "Is this intended to do nothing? If yes, maybe add a comment or just remove this since it just fall through to default case. It\u0027s the same without this case.",
+      "range": {
+        "startLine": 237,
+        "startChar": 20,
+        "endLine": 237,
+        "endChar": 44
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d21c3148_eaddc2ab",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-03-10T01:49:40Z",
+      "side": 1,
+      "message": "Can\u0027t this fit into one line?",
+      "range": {
+        "startLine": 436,
+        "startChar": 20,
+        "endLine": 437,
+        "endChar": 44
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c5046f5_2410927c",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-03-10T01:49:40Z",
+      "side": 1,
+      "message": "d?",
+      "range": {
+        "startLine": 442,
+        "startChar": 57,
+        "endLine": 442,
+        "endChar": 58
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ced3fd92_a5dad5b4",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-03-10T01:49:40Z",
+      "side": 1,
+      "message": "d?",
+      "range": {
+        "startLine": 452,
+        "startChar": 47,
+        "endLine": 452,
+        "endChar": 48
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c8af3c3_cb891147",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-03-10T01:49:40Z",
+      "side": 1,
+      "message": "Nit: 0? netId is just an int, not long",
+      "range": {
+        "startLine": 560,
+        "startChar": 57,
+        "endLine": 560,
+        "endChar": 59
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
