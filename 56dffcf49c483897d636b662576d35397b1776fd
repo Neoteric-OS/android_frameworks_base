@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bddc071_b36ce9bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1886292
+      },
+      "writtenOn": "2022-03-10T22:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "749085c5_991930a0",
+      "range": {
+        "startLine": 7,
+        "startChar": 12,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "56dffcf49c483897d636b662576d35397b1776fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f7b71713_9ba5a259",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ecb1c8f_3603d848",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1886292
+      },
+      "writtenOn": "2022-03-10T22:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7b71713_9ba5a259",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 15
+      },
+      "revId": "56dffcf49c483897d636b662576d35397b1776fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05354cdb_d1f06ffe",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-03-10T17:51:55Z",
       "side": 1,
       "message": "The dedicated EPS bearer along with QOS is allocated by LTE network and notified to the UE. The Telephony framework creates the {@link EpsBearerQosSessionAttributes} object which represents the QOS of the dedicated bearer and notifies the same to applications via {@link QosCallback}.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "56dffcf49c483897d636b662576d35397b1776fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb255828_7f087bc9",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1886292
+      },
+      "writtenOn": "2022-03-10T22:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05354cdb_d1f06ffe",
       "range": {
         "startLine": 37,
         "startChar": 0,
