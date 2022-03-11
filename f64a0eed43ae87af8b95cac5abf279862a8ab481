@@ -16,6 +16,23 @@
       "message": "such as this log:\n09-27 11:42:59.370  1237  3693 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:43:08.942  1237  1459 V BroadcastQueue: Schedule broadcasts [foreground]: current\u003dfalse\n09-27 11:43:09.648  1237  1251 V BroadcastQueue: Schedule broadcasts [foreground]: current\u003dfalse\n09-27 11:43:09.726  1237  1257 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:43:09.879  1237  3389 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:43:09.888  1237  3221 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:43:15.049  1237  1251 V BroadcastQueue: Schedule broadcasts [foreground]: current\u003dfalse\n09-27 11:43:19.758  1237  1257 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:43:21.324  1237  3116 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:46:09.423  1237  1459 V BroadcastQueue: Schedule broadcasts [foreground]: current\u003dfalse\n09-27 11:47:00.009  1237  1459 V BroadcastQueue: Schedule broadcasts [foreground]: current\u003dfalse\n09-27 11:47:00.032  1237  1459 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:48:39.507  1237  3226 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:48:39.515  1237  3687 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:48:39.579  1237  1257 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:48:49.455  1237  2205 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:48:49.736  1237  1257 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:48:54.943  1237  1257 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:48:55.125  1237  3687 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:48:55.140  1237  3226 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:49:05.047  1237  3693 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\n09-27 11:49:05.219  1237  1257 V BroadcastQueue: Schedule broadcasts [background]: current\u003dtrue\t\n\n  mBroadcastsScheduled [foreground]\u003dfalse\n  mBroadcastsScheduled [background]\u003dtrue\n\n\n",
       "revId": "f64a0eed43ae87af8b95cac5abf279862a8ab481",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3cd626d_1988b48b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1887356
+      },
+      "writtenOn": "2022-03-11T01:39:18Z",
+      "side": 1,
+      "message": "Required your review kindly,",
+      "revId": "f64a0eed43ae87af8b95cac5abf279862a8ab481",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
