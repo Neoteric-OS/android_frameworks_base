@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12cad9a6_a39638c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-14T02:34:09Z",
+      "side": 1,
+      "message": "API LGTM, but can you do the cleanup suggested inline?",
+      "revId": "d55f0c645858af23153952664894be623f4a6e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3873a21c_4fb044f9",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-14T02:34:09Z",
+      "side": 1,
+      "message": "warning threshold",
+      "range": {
+        "startLine": 561,
+        "startChar": 80,
+        "endLine": 561,
+        "endChar": 85
+      },
+      "revId": "d55f0c645858af23153952664894be623f4a6e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62f7e956_9ff33d00",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2404,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-14T02:34:09Z",
+      "side": 1,
+      "message": "For a warning, this looks incorrect. Can you fix it by replacing  notifyWarningOrLimitReached with two methods, notifyWarningReachedAnd notifyLimitReached?\n\nRight now we have:\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nFor a warning:\nNetworkStatsProvider#notifyWarningReached\n-\u003e NetworkStatsProviderCallbackImpl#notifyWarningOrLimitReached\n-\u003e NetworkPolicyManager#notifyStatsProviderLimitReached\n\nFor a  limit:\nNetworkStatsProvider#notifyLimitReached\n-\u003e NetworkStatsProviderCallbackImpl#notifyWarningOrLimitReached\n-\u003e NetworkPolicyManager#notifyStatsProviderLimitReached\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n\n\nInstead we should have:\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nFor a warning:\nNetworkStatsProvider#notifyWarningReached\n-\u003e NetworkStatsProviderCallbackImpl#notifyWarningReached\n-\u003e NetworkPolicyManager#notifyStatsProviderWarningReached\n\nFor a  limit:\nNetworkStatsProvider#notifyLimitReached\n-\u003e NetworkStatsProviderCallbackImpl#notifyLimitReached\n-\u003e NetworkPolicyManager#notifyStatsProviderLimitReached\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d",
+      "range": {
+        "startLine": 2404,
+        "startChar": 42,
+        "endLine": 2404,
+        "endChar": 73
+      },
+      "revId": "d55f0c645858af23153952664894be623f4a6e84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
