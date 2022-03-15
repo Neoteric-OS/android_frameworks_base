@@ -45,6 +45,54 @@
       },
       "revId": "f91e3e3756dc5688a87f594b01fbbf55953de74b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ccaf9c7_279d5ca4",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1886292
+      },
+      "writtenOn": "2022-03-15T22:36:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fa2cb27b_d50c6f46",
+      "range": {
+        "startLine": 37,
+        "startChar": 95,
+        "endLine": 37,
+        "endChar": 97
+      },
+      "revId": "f91e3e3756dc5688a87f594b01fbbf55953de74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41497a9d_d2d56836",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1886292
+      },
+      "writtenOn": "2022-03-15T22:36:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8a2ea4e7_aa416bbd",
+      "range": {
+        "startLine": 37,
+        "startChar": 63,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "f91e3e3756dc5688a87f594b01fbbf55953de74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
