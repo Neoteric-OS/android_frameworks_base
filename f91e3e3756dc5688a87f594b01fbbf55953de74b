@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa2cb27b_d50c6f46",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2022-03-15T22:00:21Z",
+      "side": 1,
+      "message": "device.\n\nI think UE is not an Android term.",
+      "range": {
+        "startLine": 37,
+        "startChar": 95,
+        "endLine": 37,
+        "endChar": 97
+      },
+      "revId": "f91e3e3756dc5688a87f594b01fbbf55953de74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a2ea4e7_aa416bbd",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2022-03-15T22:00:21Z",
+      "side": 1,
+      "message": "the LTE",
+      "range": {
+        "startLine": 37,
+        "startChar": 63,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "f91e3e3756dc5688a87f594b01fbbf55953de74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
