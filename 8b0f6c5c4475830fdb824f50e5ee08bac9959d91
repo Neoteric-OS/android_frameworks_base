@@ -33,6 +33,24 @@
       "message": "This is a simple enough change, but can you share how this case is possible?\n\nIf the remainingTime \u003c 0, then mBrightness would fall before the transitionPoint and the conditional would fail.  Are you seeing cases where mBrightness remains above the transition point even after HBM timeout has run out?",
       "revId": "8b0f6c5c4475830fdb824f50e5ee08bac9959d91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "099ebe55_2dc1fb5f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1746367
+      },
+      "writtenOn": "2022-03-15T15:44:20Z",
+      "side": 1,
+      "message": "Thanks, it\u0027s a great flow, there must be something wrong that caused my own, and I will abandon this change soon.\n\nHowever, there is really a problem with the following change, it may cause system_server crash because of Null Pointer Exception:\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/2003570",
+      "parentUuid": "f9d52107_113a12c8",
+      "revId": "8b0f6c5c4475830fdb824f50e5ee08bac9959d91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
