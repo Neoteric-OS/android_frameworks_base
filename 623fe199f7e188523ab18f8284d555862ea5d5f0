@@ -16,6 +16,24 @@
       "message": "Similarly to what we discussed in the other CL and bug -- why does the non-updatable need to depend on this? I feel like it shouldn\u0027t have to.",
       "revId": "623fe199f7e188523ab18f8284d555862ea5d5f0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7f55eca_592aca4b",
+        "filename": "ProtoLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-03-15T06:30:28Z",
+      "side": 1,
+      "message": "Hi Anton, since this is a cherry-picked CL, what about let this CL gets merged and discuss the topic in the bug?",
+      "parentUuid": "3678c8e4_1319dce7",
+      "revId": "623fe199f7e188523ab18f8284d555862ea5d5f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
