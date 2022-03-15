@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c25474ee_527762b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2022-03-15T22:46:39Z",
+      "side": 1,
+      "message": "Please remove the trailing white spaces as suggested.",
+      "revId": "813fbd50cfbfbb9323376cc2cf382440ea912429",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
