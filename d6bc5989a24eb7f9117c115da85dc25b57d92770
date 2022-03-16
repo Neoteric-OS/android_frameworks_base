@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6b62c02_15530c4b",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-03-16T10:06:09Z",
+      "side": 1,
+      "message": "Should replace with getCecDeviceInfoIncludingFromDevicesPendingClearance(sourceAddress) ?\n\nFor a device that its HDMI 5V is low on standby, its deviceInfo is removed at first, and then a dummy one with PATH_INVALID is added again. This might cause some unexpected issues.",
+      "revId": "d6bc5989a24eb7f9117c115da85dc25b57d92770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
