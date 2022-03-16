@@ -34,6 +34,24 @@
       "parentUuid": "f6b62c02_15530c4b",
       "revId": "d6bc5989a24eb7f9117c115da85dc25b57d92770",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53f27961_30199d89",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-03-16T11:41:57Z",
+      "side": 1,
+      "message": "Yes, to our knowledge, most of the devices still respond to polls in standby mode.\nThe only difference is that some devices are with HDMI 5V low, and some are with HDMI 5V high.",
+      "parentUuid": "3dea095d_99925d45",
+      "revId": "d6bc5989a24eb7f9117c115da85dc25b57d92770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
