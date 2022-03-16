@@ -52,6 +52,24 @@
       "parentUuid": "3dea095d_99925d45",
       "revId": "d6bc5989a24eb7f9117c115da85dc25b57d92770",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d927c5fb_b76ead79",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-03-16T12:52:12Z",
+      "side": 1,
+      "message": "How common is this case? How many device actually pull down the 5V signal when going to standby?\n\nIf we handle all messages including for the ones in the list of devices pending clearance, we\u0027re slowly converging to a situation where we might as well just ignore the hotplug signal from the HAL.",
+      "parentUuid": "53f27961_30199d89",
+      "revId": "d6bc5989a24eb7f9117c115da85dc25b57d92770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
