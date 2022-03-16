@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d035f0f9_f5226ab4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-03-16T05:54:27Z",
+      "side": 1,
+      "message": "LGTM with only nits.",
+      "revId": "8399703973d58255b203f647f84df2e45510537b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fa1edb8_08b2e3ab",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-03-16T05:54:27Z",
+      "side": 1,
+      "message": "Please update this.",
+      "range": {
+        "startLine": 162,
+        "startChar": 25,
+        "endLine": 162,
+        "endChar": 39
+      },
+      "revId": "8399703973d58255b203f647f84df2e45510537b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3e486f2_efcac332",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2397,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-03-16T05:54:27Z",
+      "side": 1,
+      "message": "This might need to be updated.",
+      "range": {
+        "startLine": 2397,
+        "startChar": 33,
+        "endLine": 2397,
+        "endChar": 60
+      },
+      "revId": "8399703973d58255b203f647f84df2e45510537b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "330f2796_7a7c7741",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2404,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-03-16T05:54:27Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 2404,
+        "startChar": 33,
+        "endLine": 2404,
+        "endChar": 60
+      },
+      "revId": "8399703973d58255b203f647f84df2e45510537b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
