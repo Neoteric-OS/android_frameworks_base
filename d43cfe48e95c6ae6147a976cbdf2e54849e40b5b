@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3367978_20e69b63",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2022-03-17T09:25:49Z",
+      "side": 1,
+      "message": "I have no idea what this is for. Can we clean up all these notify* methods? I believe it is pretty much just dead weight now.",
+      "range": {
+        "startLine": 640,
+        "startChar": 8,
+        "endLine": 644,
+        "endChar": 0
+      },
+      "revId": "d43cfe48e95c6ae6147a976cbdf2e54849e40b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
