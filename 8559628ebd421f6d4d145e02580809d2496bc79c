@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b0d8c0d_61200e33",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2022-03-17T02:20:35Z",
+      "side": 1,
+      "message": "why not \"final\"?",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 112,
+        "endChar": 40
+      },
+      "revId": "8559628ebd421f6d4d145e02580809d2496bc79c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
