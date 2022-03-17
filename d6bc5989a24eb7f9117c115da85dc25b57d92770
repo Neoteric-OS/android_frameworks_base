@@ -88,6 +88,24 @@
       "parentUuid": "d927c5fb_b76ead79",
       "revId": "d6bc5989a24eb7f9117c115da85dc25b57d92770",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9146fa66_e06ad484",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-03-17T05:52:23Z",
+      "side": 1,
+      "message": "We replace with getCecDeviceInfoIncludingFromDevicesPendingClearance(sourceAddress), but once the deviceInfo is removed temporary and stored in mDeviceInfosPendingClearance, it cannot be added back.\nThe error log is \"Unknown source device info for \u003cReport Physical Address\u003e..\"\nDo you have any suggestion for this kind of device?",
+      "parentUuid": "62fc0486_e4c30aa4",
+      "revId": "d6bc5989a24eb7f9117c115da85dc25b57d92770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
