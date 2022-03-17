@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5fad4dc_d9600fac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-17T14:39:03Z",
+      "side": 1,
+      "message": "There\u0027s a merge conflict in master because ag/17157452 someone changed ExternalSyntheticLambda4 to ExternalSyntheticLambda5. :-\\\n\nUploaded ag/17238384 to fix master; once that\u0027s merged we can merge this one.",
+      "revId": "d34d387c4fd2aa819b6c6868600794e56a03cab0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
