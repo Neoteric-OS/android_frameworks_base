@@ -1820,6 +1820,14 @@ public class AccountManagerService
         if (account == null) {
             return false;
         }
+        if (account.name != null && account.name.length > 200) {
+            Log.w(TAG, "Account cannot be added as name length greater than 200")
+            return false
+        }
+        if (account.type != null && account.type.length > 200) {
+            Log.w(TAG, "Account cannot be added as account type length greater than 200")
+            return false
+        }
         if (!isLocalUnlockedUser(accounts.userId)) {
             Log.w(TAG, "Account " + account.toSafeString() + " cannot be added - user "
                     + accounts.userId + " is locked. callingUid=" + callingUid);
@@ -1836,7 +1844,7 @@ public class AccountManagerService
                     }
                     if (accounts.accountsDb.findAllDeAccounts().size() > 100) {
                         Log.w(TAG, "insertAccountIntoDatabase: " + account.toSafeString()
-                                + ", skipping since more than 50 accounts on device exist");
+                                + ", skipping since more than 100 accounts on device exist");
                         return false;
                     }
                     long accountId = accounts.accountsDb.insertCeAccount(account, password);
@@ -2094,6 +2102,10 @@ public class AccountManagerService
 
     private Account renameAccountInternal(
             UserAccounts accounts, Account accountToRename, String newName) {
+        if (newName != null && newName.length() > 200) {
+        	Log.e(TAG, "renameAccount failed. New name length is too long");
+        	return null;
+        }
         Account resultAccount = null;
         /*
          * Cancel existing notifications. Let authenticators
