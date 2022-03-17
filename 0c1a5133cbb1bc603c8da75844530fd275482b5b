@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34fc3de7_cbd56296",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-17T09:58:17Z",
+      "side": 1,
+      "message": "LGTM, feel free to address doc nits in a follow-up CL.",
+      "revId": "0c1a5133cbb1bc603c8da75844530fd275482b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6343c19b_2f6c441d",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-17T09:58:17Z",
+      "side": 1,
+      "message": "This implies that enabling an interface that is already enabled is an error? If that\u0027s not the case, suggest just \"Enables a network interface\". Or you could also clarify \"An attempt to enable an already-enabled interface is ignored.\"",
+      "range": {
+        "startLine": 540,
+        "startChar": 15,
+        "endLine": 540,
+        "endChar": 36
+      },
+      "revId": "0c1a5133cbb1bc603c8da75844530fd275482b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fceeeb6_2edb1473",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-17T09:58:17Z",
+      "side": 1,
+      "message": "Disables the specified interface. If this interface is in use in a connected {@link android.net.Network}, then that {@code Network} will be torn down.",
+      "range": {
+        "startLine": 577,
+        "startChar": 7,
+        "endLine": 578,
+        "endChar": 65
+      },
+      "revId": "0c1a5133cbb1bc603c8da75844530fd275482b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f68790f_741c0929",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-17T09:58:17Z",
+      "side": 1,
+      "message": "The fact that the function accepts a parameter is implicit in the @param. Suggest shortening to \"The provided OutcomeReceiver is called once...\"\n\nAlso in the javadoc above.",
+      "range": {
+        "startLine": 579,
+        "startChar": 7,
+        "endLine": 579,
+        "endChar": 69
+      },
+      "revId": "0c1a5133cbb1bc603c8da75844530fd275482b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
