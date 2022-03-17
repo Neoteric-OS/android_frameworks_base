@@ -22,6 +22,8 @@ import android.net.IEthernetNetworkManagementListener;
 import android.net.EthernetNetworkUpdateRequest;
 import android.net.ITetheredInterfaceCallback;
 
+import java.util.List;
+
 /**
  * Interface that answers queries about, and allows changing
  * ethernet configuration.
@@ -42,4 +44,5 @@ interface IEthernetManager
         in IEthernetNetworkManagementListener listener);
     void connectNetwork(String iface, in IEthernetNetworkManagementListener listener);
     void disconnectNetwork(String iface, in IEthernetNetworkManagementListener listener);
+    List<String> getInterfaceList();
 }
