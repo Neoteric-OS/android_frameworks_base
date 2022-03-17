@@ -70,6 +70,24 @@
       "parentUuid": "53f27961_30199d89",
       "revId": "d6bc5989a24eb7f9117c115da85dc25b57d92770",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62fc0486_e4c30aa4",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-03-17T03:36:16Z",
+      "side": 1,
+      "message": "How common is this case? How many device actually pull down the 5V signal when going to standby?\n--\u003e We don\u0027t have a precise ratio for this question, in my experience it is common ,maybe 30~50% of the devices behave like this.",
+      "parentUuid": "d927c5fb_b76ead79",
+      "revId": "d6bc5989a24eb7f9117c115da85dc25b57d92770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
