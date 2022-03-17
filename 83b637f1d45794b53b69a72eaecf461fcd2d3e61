@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fc0d5a51_64a38e6b",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-17T12:53:50Z",
+      "side": 1,
+      "message": "I wonder what are the implications of removing the listener on this handler thread but actually running the user callback on another thread? I suppose it means that another callback can be run or scheduled before the user callback completes. Perhaps that\u0027s fine though? It doesn\u0027t seem any different from the case in which the user runs the callback on this handler thread but actually posts a lambda to another thread.",
+      "range": {
+        "startLine": 686,
+        "startChar": 0,
+        "endLine": 688,
+        "endChar": 70
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6020027f_2581218a",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
         "patchSetId": 1
@@ -19,6 +42,29 @@
         "startChar": 7,
         "endLine": 812,
         "endChar": 8
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29712007_81f8ddb9",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-17T12:53:50Z",
+      "side": 1,
+      "message": "This looks out of place.",
+      "range": {
+        "startLine": 815,
+        "startChar": 0,
+        "endLine": 815,
+        "endChar": 25
       },
       "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
