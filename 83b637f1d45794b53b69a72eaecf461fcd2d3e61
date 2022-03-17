@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6020027f_2581218a",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-17T01:20:25Z",
+      "side": 1,
+      "message": "Extra blank",
+      "range": {
+        "startLine": 812,
+        "startChar": 7,
+        "endLine": 812,
+        "endChar": 8
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "943dadc9_47c52c56",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-17T01:20:25Z",
+      "side": 1,
+      "message": "Extra blank",
+      "range": {
+        "startLine": 907,
+        "startChar": 7,
+        "endLine": 907,
+        "endChar": 8
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98da3ce0_c41b13e4",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-17T01:20:25Z",
+      "side": 1,
+      "message": "Should this be l.914?",
+      "range": {
+        "startLine": 912,
+        "startChar": 0,
+        "endLine": 912,
+        "endChar": 88
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d227ea5_23e42c52",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-17T01:20:25Z",
+      "side": 1,
+      "message": "Extra blank",
+      "range": {
+        "startLine": 964,
+        "startChar": 7,
+        "endLine": 964,
+        "endChar": 8
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48824aa8_6c36c4a7",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-17T01:20:25Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 969,
+        "startChar": 0,
+        "endLine": 969,
+        "endChar": 88
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74f9f091_2f93064a",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-17T01:20:25Z",
+      "side": 1,
+      "message": "Extra blank.",
+      "range": {
+        "startLine": 1046,
+        "startChar": 7,
+        "endLine": 1046,
+        "endChar": 8
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f1b167e_b904f639",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-17T01:20:25Z",
+      "side": 1,
+      "message": "Nit: It\u0027s unnecessary since it has been annotated @NonNull.",
+      "range": {
+        "startLine": 1048,
+        "startChar": 68,
+        "endLine": 1048,
+        "endChar": 83
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
