@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d383686d_2d95f883",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-03-17T19:27:12Z",
+      "side": 1,
+      "message": "Operative change is verifyCallingUidAndPackage (which could be a sec vuln otherwise)",
+      "revId": "323695e2fb7a061d788d460aee81f889910f3ae4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ec231cd_af95a413",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3453,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-03-17T19:27:12Z",
+      "side": 1,
+      "message": "Nit: suggest wtf.",
+      "range": {
+        "startLine": 3453,
+        "startChar": 20,
+        "endLine": 3453,
+        "endChar": 21
+      },
+      "revId": "323695e2fb7a061d788d460aee81f889910f3ae4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f057d45a_e82594d9",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3477,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-03-17T19:27:12Z",
+      "side": 1,
+      "message": "Probably needs a check to ensure UID and package name match:\n\nSee l.3289:\n        verifyCallingUidAndPackage(packageName);",
+      "range": {
+        "startLine": 3477,
+        "startChar": 0,
+        "endLine": 3477,
+        "endChar": 35
+      },
+      "revId": "323695e2fb7a061d788d460aee81f889910f3ae4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfc5b491_eeeb549d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3482,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-03-17T19:27:12Z",
+      "side": 1,
+      "message": "Nit can be compressed:\n\nreturn isCurrentIkev2VpnLocked(packageName) ? makeVpnProfileState : null;",
+      "range": {
+        "startLine": 3478,
+        "startChar": 0,
+        "endLine": 3482,
+        "endChar": 9
+      },
+      "revId": "323695e2fb7a061d788d460aee81f889910f3ae4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
