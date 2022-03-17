@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab9fa077_d8849c74",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-03-17T12:01:36Z",
+      "side": 1,
+      "message": "I like the clarification. To me, \"enables a previously disabled network interface\" does a better job of describing the use case than just \"enables a network interface\".\n\nFixed in follow up.",
+      "parentUuid": "6343c19b_2f6c441d",
+      "range": {
+        "startLine": 540,
+        "startChar": 15,
+        "endLine": 540,
+        "endChar": 36
+      },
+      "revId": "0c1a5133cbb1bc603c8da75844530fd275482b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4fceeeb6_2edb1473",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d60a434_c8a428ea",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-03-17T12:01:36Z",
+      "side": 1,
+      "message": "Much better, thanks. Fixed in follow up.",
+      "parentUuid": "4fceeeb6_2edb1473",
+      "range": {
+        "startLine": 577,
+        "startChar": 7,
+        "endLine": 578,
+        "endChar": 65
+      },
+      "revId": "0c1a5133cbb1bc603c8da75844530fd275482b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f68790f_741c0929",
@@ -77,6 +125,30 @@
       "writtenOn": "2022-03-17T09:58:17Z",
       "side": 1,
       "message": "The fact that the function accepts a parameter is implicit in the @param. Suggest shortening to \"The provided OutcomeReceiver is called once...\"\n\nAlso in the javadoc above.",
+      "range": {
+        "startLine": 579,
+        "startChar": 7,
+        "endLine": 579,
+        "endChar": 69
+      },
+      "revId": "0c1a5133cbb1bc603c8da75844530fd275482b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a853821c_682088de",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-03-17T12:01:36Z",
+      "side": 1,
+      "message": "Fixed in follow up.",
+      "parentUuid": "6f68790f_741c0929",
       "range": {
         "startLine": 579,
         "startChar": 7,
