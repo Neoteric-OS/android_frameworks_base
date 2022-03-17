@@ -110,6 +110,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "15951d6b_70b586a6",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-03-17T15:54:37Z",
+      "side": 1,
+      "message": "I\u0027d first like to investigate more whether we even need to handle this case at all.\n\nCan you give some names of devices that behave like this? I\u0027d like to reproduce this.\n\nIf you can already reproduce this on one of your devices, it would also be interesting to know\n- What is the reason why these devices pull 5V down? Did they go into a deep suspend mode?\n- Do these devices keep their logical address and still respond to polls at that logical address?\n- Do these devices come out of standby when a \u003cSet Stream Path\u003e message is sent to them?",
+      "parentUuid": "9146fa66_e06ad484",
+      "revId": "d6bc5989a24eb7f9117c115da85dc25b57d92770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d1abe46_a5d2747d",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
         "patchSetId": 13
