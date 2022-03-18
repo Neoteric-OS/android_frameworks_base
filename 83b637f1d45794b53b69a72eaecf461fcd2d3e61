@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4d8dd003_a708bf80",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-03-18T10:38:23Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s possible for another callback to be scheduled after this point, since it would be scheduled from the handler thread, and the listener was removed already from the same handler.\n\nDepending on the Executor used I guess it\u0027s possible for a previous callback to be run at the same time or after onStopDiscoveryFailed (if the Executor doesn\u0027t have any particular order for example) ? But just as callbacks were executed in order before, they are posted in order to the provided Executor now, which I think is the only guarantee that NsdManager can/should give.",
+      "parentUuid": "fc0d5a51_64a38e6b",
+      "range": {
+        "startLine": 686,
+        "startChar": 0,
+        "endLine": 688,
+        "endChar": 70
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6020027f_2581218a",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2022-03-17T01:20:25Z",
       "side": 1,
       "message": "Extra blank",
+      "range": {
+        "startLine": 812,
+        "startChar": 7,
+        "endLine": 812,
+        "endChar": 8
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac3e1753_edde0093",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-03-18T10:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6020027f_2581218a",
       "range": {
         "startLine": 812,
         "startChar": 7,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f259421_291c101b",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-03-18T10:38:23Z",
+      "side": 1,
+      "message": "Oops - switched parameter order through intellij and that didn\u0027t go well with multiple-line javadoc (also should have double-checked...)\n\nDone",
+      "parentUuid": "29712007_81f8ddb9",
+      "range": {
+        "startLine": 815,
+        "startChar": 0,
+        "endLine": 815,
+        "endChar": 25
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "943dadc9_47c52c56",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-03-17T01:20:25Z",
       "side": 1,
       "message": "Extra blank",
+      "range": {
+        "startLine": 907,
+        "startChar": 7,
+        "endLine": 907,
+        "endChar": 8
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95fc8f39_2dc34a5a",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-03-18T10:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "943dadc9_47c52c56",
       "range": {
         "startLine": 907,
         "startChar": 7,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53702e6a_c1fc9a73",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-03-18T10:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98da3ce0_c41b13e4",
+      "range": {
+        "startLine": 912,
+        "startChar": 0,
+        "endLine": 912,
+        "endChar": 88
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d227ea5_23e42c52",
@@ -129,6 +249,30 @@
       "writtenOn": "2022-03-17T01:20:25Z",
       "side": 1,
       "message": "Extra blank",
+      "range": {
+        "startLine": 964,
+        "startChar": 7,
+        "endLine": 964,
+        "endChar": 8
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fae796d9_eca48315",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-03-18T10:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d227ea5_23e42c52",
       "range": {
         "startLine": 964,
         "startChar": 7,
@@ -162,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ee0c28c_685c581d",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-03-18T10:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48824aa8_6c36c4a7",
+      "range": {
+        "startLine": 969,
+        "startChar": 0,
+        "endLine": 969,
+        "endChar": 88
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "74f9f091_2f93064a",
@@ -185,6 +353,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c62e83c1_7f3657d8",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-03-18T10:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74f9f091_2f93064a",
+      "range": {
+        "startLine": 1046,
+        "startChar": 7,
+        "endLine": 1046,
+        "endChar": 8
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f1b167e_b904f639",
@@ -198,6 +390,30 @@
       "writtenOn": "2022-03-17T01:20:25Z",
       "side": 1,
       "message": "Nit: It\u0027s unnecessary since it has been annotated @NonNull.",
+      "range": {
+        "startLine": 1048,
+        "startChar": 68,
+        "endLine": 1048,
+        "endChar": 83
+      },
+      "revId": "83b637f1d45794b53b69a72eaecf461fcd2d3e61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df16d9e1_06be3a99",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-03-18T10:38:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f1b167e_b904f639",
       "range": {
         "startLine": 1048,
         "startChar": 68,
