@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aee9bfbb_2fedd563",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1838859
+      },
+      "writtenOn": "2022-03-18T02:55:17Z",
+      "side": 1,
+      "message": "Hi Jing Ji,\n\"Presubmit-Verified -1\", Can you resolve it?",
+      "revId": "036d3ce1a9ceb42586568a553832738bb9b0a62d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
