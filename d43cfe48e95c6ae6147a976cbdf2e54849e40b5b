@@ -22,6 +22,53 @@
       },
       "revId": "d43cfe48e95c6ae6147a976cbdf2e54849e40b5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5411ccf_b52f0634",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2022-03-18T09:15:31Z",
+      "side": 1,
+      "message": "Let\u0027s do a review before the clean-up.",
+      "parentUuid": "d3367978_20e69b63",
+      "range": {
+        "startLine": 640,
+        "startChar": 8,
+        "endLine": 644,
+        "endChar": 0
+      },
+      "revId": "d43cfe48e95c6ae6147a976cbdf2e54849e40b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24099ebe_8fcbbdfc",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2022-03-18T09:15:31Z",
+      "side": 1,
+      "message": "Why do we check this so late after startInstallation() and installUserdata()?\nDo we have the use case that only creates userdata?",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 31
+      },
+      "revId": "d43cfe48e95c6ae6147a976cbdf2e54849e40b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
