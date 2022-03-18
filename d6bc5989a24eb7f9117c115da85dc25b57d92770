@@ -128,6 +128,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2bbf2a3e_be9278a6",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-03-18T09:05:53Z",
+      "side": 1,
+      "message": "Can you give some names of devices that behave like this? I\u0027d like to reproduce this.\n---\u003e Sony STR-DH790 is a good case, it suppors both Tuner and Audio System feature.\n\nWhat is the reason why these devices pull 5V down? Did they go into a deep suspend mode?\n--\u003eOur guess is that pull 5v down could save devices\u0027 power comsuption, we don\u0027t think it is related to the suspend mode.\n\nDo these devices keep their logical address and still respond to polls at that logical address?\n--\u003e Yes, the devices enter standby mode with 5V low, but they still respond to the polling commands and keep their logical address.\n\nDo these devices come out of standby when a \u003cSet Stream Path\u003e message is sent to them?\n--\u003e For source devices, yes; For audio devices, they come out of standby on receiving \u003cSystem Audio Mode Request\u003e[ON]. In other words, with HDMI 5V low, these devices\u0027 CEC function still work as expected.",
+      "parentUuid": "15951d6b_70b586a6",
+      "revId": "d6bc5989a24eb7f9117c115da85dc25b57d92770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d1abe46_a5d2747d",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
         "patchSetId": 13
