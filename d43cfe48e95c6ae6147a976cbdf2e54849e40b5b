@@ -69,6 +69,30 @@
       },
       "revId": "d43cfe48e95c6ae6147a976cbdf2e54849e40b5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4b64785_ea08e51c",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2022-03-18T09:27:18Z",
+      "side": 1,
+      "message": "I don\u0027t know, I\u0027ve asked this question before but never got an answer\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1163679/6..11/packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java#b147",
+      "parentUuid": "24099ebe_8fcbbdfc",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 31
+      },
+      "revId": "d43cfe48e95c6ae6147a976cbdf2e54849e40b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
