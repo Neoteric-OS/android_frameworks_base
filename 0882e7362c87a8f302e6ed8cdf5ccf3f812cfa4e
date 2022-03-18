@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a74e0d0_a6ce9cc0",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-18T08:33:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb5e6a26_880d1e3f",
+      "range": {
+        "startLine": 78,
+        "startChar": 28,
+        "endLine": 78,
+        "endChar": 31
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d94261c_f28a0c56",
@@ -61,6 +85,30 @@
       "writtenOn": "2022-03-10T01:49:40Z",
       "side": 1,
       "message": "Is this intended to do nothing? If yes, maybe add a comment or just remove this since it just fall through to default case. It\u0027s the same without this case.",
+      "range": {
+        "startLine": 237,
+        "startChar": 20,
+        "endLine": 237,
+        "endChar": 44
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5d452aa_95eb9d42",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-18T08:33:00Z",
+      "side": 1,
+      "message": "ACK. Removed.",
+      "parentUuid": "6d94261c_f28a0c56",
       "range": {
         "startLine": 237,
         "startChar": 20,
@@ -94,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d34d5c29_7d48385e",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-18T08:33:00Z",
+      "side": 1,
+      "message": "It\u0027s moved from l.434 not new one actually. But you are right, it would be a bit noisy if I move to here. Change back to previous place and set Log.isLoggalbe() to DBG as well.",
+      "parentUuid": "f26b246e_7b8d2052",
+      "range": {
+        "startLine": 436,
+        "startChar": 24,
+        "endLine": 436,
+        "endChar": 25
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d21c3148_eaddc2ab",
@@ -107,6 +179,30 @@
       "writtenOn": "2022-03-10T01:49:40Z",
       "side": 1,
       "message": "Can\u0027t this fit into one line?",
+      "range": {
+        "startLine": 436,
+        "startChar": 20,
+        "endLine": 437,
+        "endChar": 44
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ece2804_e2ec7655",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-18T08:33:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d21c3148_eaddc2ab",
       "range": {
         "startLine": 436,
         "startChar": 20,
@@ -140,6 +236,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5290f6f8_f6157a9f",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-18T08:33:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c5046f5_2410927c",
+      "range": {
+        "startLine": 442,
+        "startChar": 57,
+        "endLine": 442,
+        "endChar": 58
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ced3fd92_a5dad5b4",
@@ -153,6 +273,30 @@
       "writtenOn": "2022-03-10T01:49:40Z",
       "side": 1,
       "message": "d?",
+      "range": {
+        "startLine": 452,
+        "startChar": 47,
+        "endLine": 452,
+        "endChar": 48
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d038e785_7cf74efa",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-18T08:33:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ced3fd92_a5dad5b4",
       "range": {
         "startLine": 452,
         "startChar": 47,
@@ -186,6 +330,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a272bcc_a9742169",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-18T08:33:00Z",
+      "side": 1,
+      "message": "It\u0027s unnecessary now. Removed.",
+      "parentUuid": "6c7c20ed_40398ce0",
+      "range": {
+        "startLine": 516,
+        "startChar": 38,
+        "endLine": 516,
+        "endChar": 46
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1c8af3c3_cb891147",
@@ -209,6 +377,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76ca8eef_f75a7b38",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-18T08:33:00Z",
+      "side": 1,
+      "message": "Use NETID_UNSET instead.",
+      "parentUuid": "1c8af3c3_cb891147",
+      "range": {
+        "startLine": 560,
+        "startChar": 57,
+        "endLine": 560,
+        "endChar": 59
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87b483bc_58185b01",
@@ -222,6 +414,30 @@
       "writtenOn": "2022-03-10T09:45:27Z",
       "side": 1,
       "message": "Inner classes that extend Binder interfaces have been a source of binder leaks in the past.\n\nCan you make the class static, and take mNsdStateMachine as constructor argument instead ? It may help a bit.",
+      "range": {
+        "startLine": 634,
+        "startChar": 28,
+        "endLine": 634,
+        "endChar": 35
+      },
+      "revId": "0882e7362c87a8f302e6ed8cdf5ccf3f812cfa4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3acddef2_f7bafec1",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/NsdService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-03-18T08:33:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87b483bc_58185b01",
       "range": {
         "startLine": 634,
         "startChar": 28,
