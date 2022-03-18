@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6dcb77b_850071f5",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-18T05:04:15Z",
+      "side": 1,
+      "message": "Nit: package. No need to fix in this CL.",
+      "range": {
+        "startLine": 423,
+        "startChar": 79,
+        "endLine": 423,
+        "endChar": 82
+      },
+      "revId": "a516ce884a2d1a7cb473ddc27e8c0f7edd8a8118",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
