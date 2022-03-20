@@ -16,6 +16,23 @@
       "message": "I have confirmed this builds and is functional with no apparent side effects.",
       "revId": "081e5dfccb7ed55c073cdb9bde555590efb60d36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d51ba475_52a6bc13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1944541
+      },
+      "writtenOn": "2022-03-20T10:24:35Z",
+      "side": 1,
+      "message": "Perhaps a test should be added to cover this change? complete newb to this codebase, but i can try to look at that (on my own, but any pointers are welcome ^^)",
+      "revId": "081e5dfccb7ed55c073cdb9bde555590efb60d36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
