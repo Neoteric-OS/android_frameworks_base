@@ -34,6 +34,23 @@
       "parentUuid": "793836d4_b6de7e17",
       "revId": "6287488399d7d14f2091bd84bf4a4c6175dd4894",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2c0a196_ea76cc43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2022-03-21T06:42:56Z",
+      "side": 1,
+      "message": "Discuss with yo offline. This offers the flexibility for different devices to have different buffer sizes for optimization.",
+      "revId": "6287488399d7d14f2091bd84bf4a4c6175dd4894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
