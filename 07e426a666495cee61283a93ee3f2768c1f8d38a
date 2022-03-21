@@ -16,6 +16,23 @@
       "message": "Thanks again.",
       "revId": "07e426a666495cee61283a93ee3f2768c1f8d38a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddf44500_fecca253",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-21T09:25:45Z",
+      "side": 1,
+      "message": "OWNERS files are not tested by treehugger.",
+      "revId": "07e426a666495cee61283a93ee3f2768c1f8d38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
