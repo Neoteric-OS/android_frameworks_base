@@ -146,6 +146,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2eea6c5c_fd61b67a",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-03-21T20:03:11Z",
+      "side": 1,
+      "message": "Based on this, it seems dangerous to rely on the onHotplug signal at all. I will prepare a change, different from the current chain, that relies more on HotplugDetectionAction and less on onHotplug.",
+      "parentUuid": "2bbf2a3e_be9278a6",
+      "revId": "d6bc5989a24eb7f9117c115da85dc25b57d92770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d1abe46_a5d2747d",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
         "patchSetId": 13
