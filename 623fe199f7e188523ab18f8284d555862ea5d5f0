@@ -70,6 +70,24 @@
       "parentUuid": "3addcdc3_de788a86",
       "revId": "623fe199f7e188523ab18f8284d555862ea5d5f0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86770d46_09ca9fae",
+        "filename": "ProtoLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-03-22T09:53:34Z",
+      "side": 1,
+      "message": "So yes Aaron is trying to fix b/222625935, looking at usages it seems to be doable by having the proto only be used by non-platform utils and tests that parse it (it seems the platform is only generating it using modules so shouldn\u0027t need to parse it)",
+      "parentUuid": "cabe1890_1a8eb31b",
+      "revId": "623fe199f7e188523ab18f8284d555862ea5d5f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
