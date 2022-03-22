@@ -1717,16 +1717,20 @@ static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids, 
     // runtime.
     runtime_flags &= ~RuntimeFlags::NATIVE_HEAP_ZERO_INIT;
 
-    bool forceEnableGwpAsan = false;
+    const char* nice_name_ptr = nice_name.has_value() ? nice_name.value().c_str() : nullptr;
+    android_mallopt_gwp_asan_options_t gwp_asan_options;
+    // The system server doesn't have its nice name set by the time SpecializeCommon is called.
+    gwp_asan_options.program_name = nice_name_ptr ?: process_name;
+    gwp_asan_options.use_lottery = true;
     switch (runtime_flags & RuntimeFlags::GWP_ASAN_LEVEL_MASK) {
         default:
         case RuntimeFlags::GWP_ASAN_LEVEL_NEVER:
             break;
         case RuntimeFlags::GWP_ASAN_LEVEL_ALWAYS:
-            forceEnableGwpAsan = true;
+            gwp_asan_options.use_lottery = false;
             [[fallthrough]];
         case RuntimeFlags::GWP_ASAN_LEVEL_LOTTERY:
-            android_mallopt(M_INITIALIZE_GWP_ASAN, &forceEnableGwpAsan, sizeof(forceEnableGwpAsan));
+            android_mallopt(M_INITIALIZE_GWP_ASAN, &gwp_asan_options, sizeof(gwp_asan_options));
     }
     // Now that we've used the flag, clear it so that we don't pass unknown flags to the ART
     // runtime.
@@ -1739,7 +1743,6 @@ static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids, 
     AStatsSocket_close();
 
     const char* se_info_ptr = se_info.has_value() ? se_info.value().c_str() : nullptr;
-    const char* nice_name_ptr = nice_name.has_value() ? nice_name.value().c_str() : nullptr;
 
     if (selinux_android_setcontext(uid, is_system_server, se_info_ptr, nice_name_ptr) == -1) {
         fail_fn(CREATE_ERROR("selinux_android_setcontext(%d, %d, \"%s\", \"%s\") failed", uid,
