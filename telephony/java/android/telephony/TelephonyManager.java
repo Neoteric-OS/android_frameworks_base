@@ -16370,7 +16370,6 @@ public class TelephonyManager {
             @NonNull @CallbackExecutor Executor executor,
             @NonNull CarrierPrivilegesCallback callback) {
         // TODO(b/216549778): cherry-pick implementation once merge conflict is resolved
-        throw new UnsupportedOperationException("Not implemented, yet");
     }
 
     /**
@@ -16382,6 +16381,5 @@ public class TelephonyManager {
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public void unregisterCarrierPrivilegesCallback(@NonNull CarrierPrivilegesCallback callback) {
         // TODO(b/216549778): cherry-pick implementation once merge conflict is resolved
-        throw new UnsupportedOperationException("Not implemented, yet");
     }
 }
