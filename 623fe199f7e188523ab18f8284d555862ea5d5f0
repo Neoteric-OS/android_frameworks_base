@@ -52,6 +52,24 @@
       "parentUuid": "b7f55eca_592aca4b",
       "revId": "623fe199f7e188523ab18f8284d555862ea5d5f0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cabe1890_1a8eb31b",
+        "filename": "ProtoLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-03-22T06:55:43Z",
+      "side": 1,
+      "message": "I discussed this with Remi last week and had the following notes.\n- incident.proto is used to implement the “adb shell incident” command.\n- Need to see if this can be implemented without knowing the type of field 3001.\n- The dependency on netstats.proto should only be used to parse the proto, not to generate it. Maybe add it to utilities and tests that parse the proto.",
+      "parentUuid": "3addcdc3_de788a86",
+      "revId": "623fe199f7e188523ab18f8284d555862ea5d5f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
