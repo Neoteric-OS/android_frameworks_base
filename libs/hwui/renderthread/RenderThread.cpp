@@ -249,7 +249,7 @@ void RenderThread::requireGlContext() {
     }
     mEglManager->initialize();
 
-    sk_sp<const GrGLInterface> glInterface(GrGLCreateNativeInterface());
+    sk_sp<const GrGLInterface> glInterface = GrGLMakeNativeInterface();
     LOG_ALWAYS_FATAL_IF(!glInterface.get());
 
     GrContextOptions options;
