@@ -363,6 +363,7 @@ public class AudioDeviceInventory {
                     }
                     break;
                 case BluetoothProfile.LE_AUDIO:
+                case BluetoothProfile.LE_AUDIO_BROADCAST:
                     if (switchToUnavailable) {
                         makeLeAudioDeviceUnavailable(address, btInfo.mAudioSystemDevice);
                     } else if (switchToAvailable) {
@@ -814,7 +815,10 @@ public class AudioDeviceInventory {
                 disconnectHearingAid();
                 break;
             case BluetoothProfile.LE_AUDIO:
-                disconnectLeAudio();
+                disconnectLeAudioUnicast();
+                break;
+            case BluetoothProfile.LE_AUDIO_BROADCAST:
+                disconnectLeAudioBroadcast();
                 break;
             default:
                 // Not a valid profile to disconnect
@@ -824,26 +828,39 @@ public class AudioDeviceInventory {
         }
     }
 
-     /*package*/ void disconnectLeAudio() {
+     /*package*/ void disconnectLeAudio(int device) {
+        if (device != AudioSystem.DEVICE_OUT_BLE_HEADSET ||
+                    device != AudioSystem.DEVICE_OUT_BLE_BROADCAST) {
+            Log.e(TAG, "disconnectLeAudio: Can't disconnect not LE Audio device " + device);
+            return;
+        }
+
         synchronized (mDevicesLock) {
             final ArraySet<String> toRemove = new ArraySet<>();
             // Disconnect ALL DEVICE_OUT_BLE_HEADSET devices
             mConnectedDevices.values().forEach(deviceInfo -> {
-                if (deviceInfo.mDeviceType == AudioSystem.DEVICE_OUT_BLE_HEADSET) {
+                if (deviceInfo.mDeviceType == device) {
                     toRemove.add(deviceInfo.mDeviceAddress);
                 }
             });
             new MediaMetrics.Item(mMetricsId + "disconnectLeAudio")
                     .record();
             if (toRemove.size() > 0) {
-                final int delay = checkSendBecomingNoisyIntentInt(
-                        AudioSystem.DEVICE_OUT_BLE_HEADSET, 0, AudioSystem.DEVICE_NONE);
+                final int delay = checkSendBecomingNoisyIntentInt(device, 0,
+                        AudioSystem.DEVICE_NONE);
                 toRemove.stream().forEach(deviceAddress ->
-                        makeLeAudioDeviceUnavailable(deviceAddress,
-                            AudioSystem.DEVICE_OUT_BLE_HEADSET)
+                        makeLeAudioDeviceUnavailable(deviceAddress, device)
                 );
             }
         }
+    }
+
+    /*package*/ void disconnectLeAudioUnicast() {
+        disconnectLeAudio(AudioSystem.DEVICE_OUT_BLE_HEADSET);
+    }
+
+    /*package*/ void disconnectLeAudioBroadcast() {
+        disconnectLeAudio(AudioSystem.DEVICE_OUT_BLE_BROADCAST);
     }
 
     // must be called before removing the device from mConnectedDevices

@@ -6336,6 +6336,7 @@ public class AudioService extends IAudioService.Stub
             BluetoothProfile.A2DP,
             BluetoothProfile.A2DP_SINK,
             BluetoothProfile.LE_AUDIO,
+            BluetoothProfile.LE_AUDIO_BROADCAST,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface BtProfile {}
@@ -6357,6 +6358,7 @@ public class AudioService extends IAudioService.Stub
         final int profile = info.getProfile();
         if (profile != BluetoothProfile.A2DP && profile != BluetoothProfile.A2DP_SINK
                 && profile != BluetoothProfile.LE_AUDIO
+                && profile != BluetoothProfile.LE_AUDIO_BROADCAST
                 && profile != BluetoothProfile.HEARING_AID) {
             throw new IllegalArgumentException("Illegal BluetoothProfile profile for device "
                     + previousDevice + " -> " + newDevice + ". Got: " + profile);
