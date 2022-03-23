@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64340591_8e40d257",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2022-03-23T14:12:33Z",
+      "side": 1,
+      "message": "handle BluetoothProfile.LE_AUDIO_BROADCAST",
+      "range": {
+        "startLine": 820,
+        "startChar": 0,
+        "endLine": 820,
+        "endChar": 20
+      },
+      "revId": "18e1292f77cb8c3ec469323eeeb51a3893322f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9592951_73c0ce3e",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6338,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2022-03-23T14:12:33Z",
+      "side": 1,
+      "message": "add BluetoothProfile.LE_AUDIO_BROADCAST",
+      "range": {
+        "startLine": 6338,
+        "startChar": 0,
+        "endLine": 6338,
+        "endChar": 38
+      },
+      "revId": "18e1292f77cb8c3ec469323eeeb51a3893322f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
