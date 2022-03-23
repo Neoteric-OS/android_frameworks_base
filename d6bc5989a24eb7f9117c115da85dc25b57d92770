@@ -162,6 +162,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a753f247_2b48a3fd",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-03-23T14:31:41Z",
+      "side": 1,
+      "message": "Abandoning this CL for this reason. Taking a different approach now, see aosp/2039064.",
+      "parentUuid": "2eea6c5c_fd61b67a",
+      "revId": "d6bc5989a24eb7f9117c115da85dc25b57d92770",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d1abe46_a5d2747d",
