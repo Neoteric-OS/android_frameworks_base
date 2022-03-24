@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e69ee019_4b6c83a8",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-03-24T01:09:21Z",
+      "side": 1,
+      "message": "In Line 548, we first have a DEVICE_EVENT_ADD_DEVICE with physical_address:INVALID PATH, and then we will have a DEVICE_EVENT_UPDATE_DEVICE with correct physical address.\n\nIf we don\u0027t notify listner here, with aosp/1903493 patchset 11, would the following DEVICE_EVENT_UPDATE_DEVICE being ignored by TIF?",
+      "revId": "01726f72372e327faf005c48a4e8c74af9660e7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fd93245_77ed98cb",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-03-24T01:09:21Z",
+      "side": 1,
+      "message": "If the connected device send any command before TV queries its physical address, a deviceInfo with physical_address:PATH_INVALID would be added. Our suggestion is adding the dummy deviceInfo only when device responsed with \u003cReport Physical Address\u003e.",
+      "revId": "01726f72372e327faf005c48a4e8c74af9660e7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
