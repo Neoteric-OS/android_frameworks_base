@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddaaff25_0adff70d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2022-03-24T13:02:01Z",
+      "side": 1,
+      "message": "Hi, team\nWe are Xiaomi technical team from China, We found a bug that indicator can\u0027t disappear in some cases, please help review the fixed code.",
+      "revId": "b46f58b512a15039ac38465de39e1d1e29120f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
