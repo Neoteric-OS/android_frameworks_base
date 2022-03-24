@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "90941da9_6ce56c86",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-03-24T05:40:35Z",
+      "side": 1,
+      "message": "Sorry, I missed this modification, with this line, the issue I mentioned above shouldn\u0027t exist, I\u0027ve veried passed with these 4 CLs",
+      "revId": "01726f72372e327faf005c48a4e8c74af9660e7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4fd93245_77ed98cb",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
         "patchSetId": 2
