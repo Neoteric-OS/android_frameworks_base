@@ -39,6 +39,30 @@
       },
       "revId": "8c959cde947879cbbe3b18b6f148ceceed95eb7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "834320b7_8072b5b3",
+        "filename": "core/java/android/os/SystemProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1929200
+      },
+      "writtenOn": "2022-03-25T21:06:50Z",
+      "side": 1,
+      "message": "Yes agree ideally 1 conversion is enough, (I\u0027m just not familiar with native_set/android_os_SystemProperties.cpp#SystemProperties_set() enough to touch it..)",
+      "parentUuid": "e8186ce2_1a86e90e",
+      "range": {
+        "startLine": 229,
+        "startChar": 53,
+        "endLine": 229,
+        "endChar": 96
+      },
+      "revId": "8c959cde947879cbbe3b18b6f148ceceed95eb7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
