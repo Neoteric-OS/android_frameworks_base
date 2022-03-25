@@ -33,6 +33,24 @@
       "message": "In what scenario do you anticipate not providing a nits range for a given device\u0027s display? I don\u0027t imagine this to be a supported situation",
       "revId": "2d5ed88008524cd40fd52638eaab9c42ac4af359",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d68c1bad_54921eea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870086
+      },
+      "writtenOn": "2022-03-25T10:35:41Z",
+      "side": 1,
+      "message": "We will don\u0027t provide nits range when devices don\u0027t support Extra dim feature, thanks, I know your means.",
+      "parentUuid": "7e3c66dc_00d47d6e",
+      "revId": "2d5ed88008524cd40fd52638eaab9c42ac4af359",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
