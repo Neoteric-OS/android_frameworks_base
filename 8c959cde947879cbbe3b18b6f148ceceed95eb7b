@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4ec88d3_d50223d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2022-03-25T19:27:30Z",
+      "side": 1,
+      "message": "good catch!",
+      "revId": "8c959cde947879cbbe3b18b6f148ceceed95eb7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8186ce2_1a86e90e",
+        "filename": "core/java/android/os/SystemProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2022-03-25T19:27:30Z",
+      "side": 1,
+      "message": "if we\u0027re going to pay for that, /me wonders whether we should change native_set to take a byte[] directly, rather than pay for two UTF-8 conversions?\n\nbut i don\u0027t think anyone\u0027s setting properties in a performance-critical context, and assume timmurray would be kicking down their door to get them to stop doing that anyway.",
+      "range": {
+        "startLine": 229,
+        "startChar": 53,
+        "endLine": 229,
+        "endChar": 96
+      },
+      "revId": "8c959cde947879cbbe3b18b6f148ceceed95eb7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
