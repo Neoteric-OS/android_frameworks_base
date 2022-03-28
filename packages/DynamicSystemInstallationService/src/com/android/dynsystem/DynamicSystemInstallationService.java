@@ -65,6 +65,8 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 
 /**
@@ -170,6 +172,7 @@ public class DynamicSystemInstallationService extends Service
 
     private InstallationAsyncTask.Progress mInstallTaskProgress;
     private InstallationAsyncTask mInstallTask;
+    private Instant mBeginTaskInstant;
 
 
     @Override
@@ -247,6 +250,7 @@ public class DynamicSystemInstallationService extends Service
     public void onResult(int result, Throwable detail) {
         if (result == RESULT_OK) {
             logEventComplete();
+            Log.i(TAG, Duration.between(mBeginTaskInstant, Instant.now()).toString());
             postStatus(STATUS_READY, CAUSE_INSTALL_COMPLETED, null);
 
             // For testing: enable DSU and restart the device when install completed
@@ -326,6 +330,7 @@ public class DynamicSystemInstallationService extends Service
                 new InstallationAsyncTask(
                         url, dsuSlot, publicKey, systemSize, userdataSize, this, mDynSystem, this);
 
+        mBeginTaskInstant = Instant.now();
         mInstallTask.execute();
 
         // start fore ground
