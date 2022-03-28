@@ -41,6 +41,10 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -51,8 +55,8 @@ class InstallationAsyncTask extends AsyncTask<String, Long, Throwable> {
     private static final String TAG = "InstallationAsyncTask";
 
     private static final int MIN_SHARED_MEMORY_SIZE = 8 << 10; // 8KiB
-    private static final int MAX_SHARED_MEMORY_SIZE = 1024 << 10; // 1MiB
-    private static final int DEFAULT_SHARED_MEMORY_SIZE = 64 << 10; // 64KiB
+    private static final int MAX_SHARED_MEMORY_SIZE = 8 << 20; // 8MiB
+    private static final int DEFAULT_SHARED_MEMORY_SIZE = 512 << 10; // 512KiB
     private static final String SHARED_MEMORY_SIZE_PROP =
             "dynamic_system.data_transfer.shared_memory.size";
 
@@ -637,27 +641,57 @@ class InstallationAsyncTask extends AsyncTask<String, Long, Throwable> {
         long prevInstalledSize = 0;
         long installedSize = 0;
         byte[] bytes = new byte[memoryFile.length()];
-        int numBytesRead;
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future<Boolean> submitPromise = null;
 
-        while ((numBytesRead = sis.read(bytes, 0, bytes.length)) != -1) {
+        while (true) {
+            final int numBytesRead = sis.read(bytes, 0, bytes.length);
+            if (numBytesRead < 0) {
+                break;
+            }
+
             if (isCancelled()) {
                 return;
             }
 
-            memoryFile.writeBytes(bytes, 0, 0, numBytesRead);
-
-            if (!mInstallationSession.submitFromAshmem(numBytesRead)) {
-                throw new IOException("Failed write() to DynamicSystem");
+            // Wait until the previous submit task is complete.
+            while (submitPromise != null && !submitPromise.isDone()) {
+                try {
+                    if (!submitPromise.get()) {
+                        throw new IOException("Failed submitFromAshmem() to DynamicSystem");
+                    }
+                } catch (ExecutionException | InterruptedException e) {
+                    // Ignore any error.
+                }
             }
 
-            installedSize += numBytesRead;
-
+            // Publish the progress of the previous submit task.
             if (installedSize > prevInstalledSize + MIN_PROGRESS_TO_PUBLISH) {
                 publishProgress(installedSize);
                 prevInstalledSize = installedSize;
             }
+
+            memoryFile.writeBytes(bytes, 0, 0, numBytesRead);
+            submitPromise =
+                    executor.submit(() -> mInstallationSession.submitFromAshmem(numBytesRead));
+
+            // Even though we update the bytes counter here, the actual progress is updated only
+            // after the submit task (submitPromise) is complete.
+            installedSize += numBytesRead;
         }
 
+        // Ensure the last submit task is complete.
+        while (submitPromise != null && !submitPromise.isDone()) {
+            try {
+                if (!submitPromise.get()) {
+                    throw new IOException("Failed submitFromAshmem() to DynamicSystem");
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                // Ignore any error.
+            }
+        }
+
+        // Ensure a 100% mark is published.
         if (prevInstalledSize != partitionSize) {
             publishProgress(partitionSize);
         }
