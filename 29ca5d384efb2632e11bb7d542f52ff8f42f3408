@@ -69,6 +69,30 @@
       },
       "revId": "29ca5d384efb2632e11bb7d542f52ff8f42f3408",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e19333bc_d220b0a0",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2022-03-29T05:08:18Z",
+      "side": 1,
+      "message": "You\u0027re right. Not this line, just the progress update block. Please refer to my next comment on patchset#6.",
+      "parentUuid": "a4163b2e_b0d6c651",
+      "range": {
+        "startLine": 681,
+        "startChar": 12,
+        "endLine": 683,
+        "endChar": 42
+      },
+      "revId": "29ca5d384efb2632e11bb7d542f52ff8f42f3408",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
