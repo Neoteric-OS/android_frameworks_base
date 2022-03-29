@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5331c0b6_7e913a7e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2022-03-29T02:02:11Z",
+      "side": 1,
+      "message": "Good observation!",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "29ca5d384efb2632e11bb7d542f52ff8f42f3408",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a34160d7_c6359997",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2022-03-29T02:02:11Z",
+      "side": 1,
+      "message": "We could move this and the progress update into the while (submitPromise...) loop and then move \"if (numBytesRead \u003c 0) break\" here.\n\nThis would eliminate the need to check the last submit task after this while(true) loop, I think.",
+      "range": {
+        "startLine": 681,
+        "startChar": 12,
+        "endLine": 683,
+        "endChar": 42
+      },
+      "revId": "29ca5d384efb2632e11bb7d542f52ff8f42f3408",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
