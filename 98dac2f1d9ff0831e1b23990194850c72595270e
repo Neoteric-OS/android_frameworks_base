@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7586be42_a937c1dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2022-03-29T03:32:59Z",
+      "side": 1,
+      "message": "LGTM\n\ncode changes are the same.\n\"Merged-In: I0b7427521479271b34aed307f17a6e2225fb3076\" is as expected.\n\n98dac2f.diff: https://android-review.googlesource.com/c/platform/frameworks/base/+/2045073 (patchset 1)\nc60b36d.diff: https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/17319303 (patchset 2)\n\n$ diff 98dac2f.diff c60b36d.diff \n1c1\n\u003c From 98dac2f1d9ff0831e1b23990194850c72595270e Mon Sep 17 00:00:00 2001\n---\n\u003e From c60b36d705bd6d0943f9fd0efbf7818ba1599ae9 Mon Sep 17 00:00:00 2001\n9d8\n\u003c Merged-In: I0b7427521479271b34aed307f17a6e2225fb3076",
+      "revId": "98dac2f1d9ff0831e1b23990194850c72595270e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
