@@ -70,6 +70,30 @@
       },
       "revId": "6ea240a3ddd3384cee9c615a75a5a2fdba132936",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "007e3b65_9b8b4dbe",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2022-03-29T05:42:11Z",
+      "side": 1,
+      "message": "I treat \"update progress\" similar to \"checking numBytesRead\", that is they are both something we do every loop and not directly part of the loop body, like the \"++i\" part of a for-loop, but I get where you are going.\n\nI also noticed another bug, that is we shouldn\u0027t be checking isDone() in the while condition, because the promise might be isDone() \u003d\u003d true before get() is called. Let me fix all these in next patch.",
+      "parentUuid": "b994c334_5daf30e7",
+      "range": {
+        "startLine": 664,
+        "startChar": 12,
+        "endLine": 668,
+        "endChar": 13
+      },
+      "revId": "6ea240a3ddd3384cee9c615a75a5a2fdba132936",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
