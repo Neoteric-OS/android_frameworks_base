@@ -45,6 +45,30 @@
       },
       "revId": "29ca5d384efb2632e11bb7d542f52ff8f42f3408",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4163b2e_b0d6c651",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2022-03-29T04:30:00Z",
+      "side": 1,
+      "message": "not sure what you mean by \"move this and the progress update into the while loop\", but note that |numBytesRead| is final loop-local (so that the submitPromise lambda can capture it, as java closure requires its closure to all be \"final\" variables), so I cannot move it there because by that time numBytesRead are out of scope",
+      "parentUuid": "a34160d7_c6359997",
+      "range": {
+        "startLine": 681,
+        "startChar": 12,
+        "endLine": 683,
+        "endChar": 42
+      },
+      "revId": "29ca5d384efb2632e11bb7d542f52ff8f42f3408",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
