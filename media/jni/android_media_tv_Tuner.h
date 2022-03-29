@@ -100,7 +100,7 @@ private:
 struct Dvr : public RefBase {
     Dvr(sp<IDvr> sp, jweak obj);
     ~Dvr();
-    jint close();
+    Result close();
     MQ& getDvrMQ();
     sp<IDvr> getIDvr();
     sp<IDvr> mDvrSp;
@@ -136,7 +136,7 @@ struct MediaEvent : public RefBase {
 struct Filter : public RefBase {
     Filter(sp<IFilter> sp, jobject obj);
     ~Filter();
-    int close();
+    Result close();
     sp<IFilter> getIFilter();
     sp<IFilter> mFilterSp;
     std::unique_ptr<MQ> mFilterMQ;

@@ -3122,7 +3122,10 @@ static jint android_media_tv_Tuner_close_filter(JNIEnv *env, jobject filter) {
         ALOGD("Failed to close filter: filter not found");
         return (jint) Result::NOT_INITIALIZED;
     }
-    return filterSp->close();
+    jint r = filterSp->close();
+    filterSp->decStrong(filter);
+    env->SetLongField(filter, gFields.filterContext, 0);
+    return r;
 }
 
 static sp<TimeFilter> getTimeFilter(JNIEnv *env, jobject filter) {
@@ -3212,10 +3215,8 @@ static int android_media_tv_Tuner_time_filter_close(JNIEnv *env, jobject filter)
     }
 
     Result r = filterSp->getITimeFilter()->close();
-    if (r == Result::SUCCESS) {
-        filterSp->decStrong(filter);
-        env->SetLongField(filter, gFields.timeFilterContext, 0);
-    }
+    filterSp->decStrong(filter);
+    env->SetLongField(filter, gFields.timeFilterContext, 0);
     return (int) r;
 }
 
@@ -3265,9 +3266,8 @@ static jint android_media_tv_Tuner_close_descrambler(JNIEnv* env, jobject descra
         return (jint) Result::NOT_INITIALIZED;
     }
     Result r = descramblerSp->close();
-    if (r == Result::SUCCESS) {
-        descramblerSp->decStrong(descrambler);
-    }
+    descramblerSp->decStrong(descrambler);
+    env->SetLongField(descrambler, gFields.descramblerContext, 0);
     return (jint) r;
 }
 
@@ -3406,7 +3406,10 @@ static jint android_media_tv_Tuner_close_dvr(JNIEnv* env, jobject dvr) {
         ALOGD("Failed to close dvr: dvr not found");
         return (jint) Result::NOT_INITIALIZED;
     }
-    return dvrSp->close();
+    jint r = dvrSp->close();
+    dvrSp->decStrong(dvr);
+    env->SetLongField(dvr, gFields.dvrPlaybackContext, 0);
+    return r;
 }
 
 static sp<Lnb> getLnb(JNIEnv *env, jobject lnb) {
@@ -3443,10 +3446,8 @@ static int android_media_tv_Tuner_lnb_send_diseqc_msg(JNIEnv* env, jobject lnb, 
 static int android_media_tv_Tuner_close_lnb(JNIEnv* env, jobject lnb) {
     sp<Lnb> lnbSp = getLnb(env, lnb);
     Result r = lnbSp->getILnb()->close();
-    if (r == Result::SUCCESS) {
-        lnbSp->decStrong(lnb);
-        env->SetLongField(lnb, gFields.lnbContext, 0);
-    }
+    lnbSp->decStrong(lnb);
+    env->SetLongField(lnb, gFields.lnbContext, 0);
     return (jint) r;
 }
 
