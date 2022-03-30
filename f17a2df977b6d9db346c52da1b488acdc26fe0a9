@@ -16,6 +16,23 @@
       "message": "For more context, I was trying to get owner approvals in ag/17239543 (for that file) but hansson@ suggested instead updating the OWNERS file to make it easier to make updates like this.",
       "revId": "f17a2df977b6d9db346c52da1b488acdc26fe0a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e99b27b_271a9de5",
+        "filename": "OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-03-30T15:57:58Z",
+      "side": 1,
+      "message": "nit: order it next to the other soong lines? (which would also be alphabetical)",
+      "revId": "f17a2df977b6d9db346c52da1b488acdc26fe0a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
