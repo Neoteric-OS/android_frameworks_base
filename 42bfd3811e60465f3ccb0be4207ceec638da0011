@@ -16,6 +16,24 @@
       "message": "Weird, how come it says I\u0027m the author?",
       "revId": "42bfd3811e60465f3ccb0be4207ceec638da0011",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9cc9148_0a9d7de7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1938931
+      },
+      "writtenOn": "2022-03-30T21:32:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff81dbc2_1bbdada0",
+      "revId": "42bfd3811e60465f3ccb0be4207ceec638da0011",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
