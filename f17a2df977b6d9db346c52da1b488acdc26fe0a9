@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a63403b3_c84928c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1787007
+      },
+      "writtenOn": "2022-03-30T15:55:26Z",
+      "side": 1,
+      "message": "For more context, I was trying to get owner approvals in ag/17239543 (for that file) but hansson@ suggested instead updating the OWNERS file to make it easier to make updates like this.",
+      "revId": "f17a2df977b6d9db346c52da1b488acdc26fe0a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
