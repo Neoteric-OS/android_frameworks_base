@@ -26,11 +26,17 @@ package android.security;
  * @hide
  */
 interface IGenerateRkpKeyService {
+    const int STATUS_OK = 0;
+    const int STATUS_SYSTEM_FAILURE = 1;
+    const int STATUS_NO_NETWORK_AVAILABLE = 2;
+    const int STATUS_SERVER_FAILURE = 3;
+    const int STATUS_PUBLIC_KEY_NOT_FOUND = 4;
+
     /**
      * Ping the provisioner service to let it know an app generated a key. This may or may not have
      * consumed a remotely provisioned attestation key, so the RemoteProvisioner app should check.
      */
     oneway void notifyKeyGenerated(in int securityLevel);
     /** Ping the provisioner service to indicate there are no remaining attestation keys left. */
-    void generateKey(in int securityLevel);
+    int generateKey(in int securityLevel);
 }

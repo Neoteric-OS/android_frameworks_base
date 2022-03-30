@@ -81,12 +81,13 @@ public class GenerateRkpKey {
         mContext = context;
     }
 
-    private void bindAndSendCommand(int command, int securityLevel) throws RemoteException {
+    private int bindAndSendCommand(int command, int securityLevel) throws RemoteException {
         Intent intent = new Intent(IGenerateRkpKeyService.class.getName());
         ComponentName comp = intent.resolveSystemService(mContext.getPackageManager(), 0);
+        int returnCode = 0;
         if (comp == null) {
             // On a system that does not use RKP, the RemoteProvisioner app won't be installed.
-            return;
+            return returnCode;
         }
         intent.setComponent(comp);
         mCountDownLatch = new CountDownLatch(1);
@@ -102,7 +103,7 @@ public class GenerateRkpKey {
         if (mBinder != null) {
             switch (command) {
                 case NOTIFY_EMPTY:
-                    mBinder.generateKey(securityLevel);
+                    returnCode = mBinder.generateKey(securityLevel);
                     break;
                 case NOTIFY_KEY_GENERATED:
                     mBinder.notifyKeyGenerated(securityLevel);
@@ -114,14 +115,15 @@ public class GenerateRkpKey {
             Log.e(TAG, "Binder object is null; failed to bind to GenerateRkpKeyService.");
         }
         mContext.unbindService(mConnection);
+        return returnCode;
     }
 
     /**
      * Fulfills the use case of (2) described in the class documentation. Blocks until the
      * RemoteProvisioner application can get new attestation keys signed by the server.
      */
-    public void notifyEmpty(int securityLevel) throws RemoteException {
-        bindAndSendCommand(NOTIFY_EMPTY, securityLevel);
+    public int notifyEmpty(int securityLevel) throws RemoteException {
+        return bindAndSendCommand(NOTIFY_EMPTY, securityLevel);
     }
 
     /**
