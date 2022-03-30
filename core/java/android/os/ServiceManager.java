@@ -37,7 +37,7 @@ import java.util.Map;
  *
  * @hide
  **/
-@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+@SystemApi(client = SystemApi.Client.PRIVILEGED_APPS)
 public final class ServiceManager {
     private static final String TAG = "ServiceManager";
     private static final Object sLock = new Object();
@@ -288,13 +288,12 @@ public final class ServiceManager {
      * Returns the specified service from the service manager, if declared.
      *
      * If the service is not running, servicemanager will attempt to start it, and this function
-     * will wait for it to be ready.
+     * will wait for it to be ready. Access to services is gated by SELinux and a declaration
+     * in the VINTF manifest.
      *
      * @return {@code null} if the service is not declared in the manifest, or if there are
      * permission problems, or if there are fatal errors.
-     * @hide
      */
-    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     @Nullable public static IBinder waitForDeclaredService(@NonNull String name) {
         return isDeclared(name) ? waitForService(name) : null;
     }
