@@ -33,6 +33,23 @@
       "message": "Required your review kindly,",
       "revId": "f64a0eed43ae87af8b95cac5abf279862a8ab481",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2057509a_18299bb8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1301101
+      },
+      "writtenOn": "2022-03-30T17:00:52Z",
+      "side": 1,
+      "message": "But BroadcastQueue.scheduleBroadcastsLocked() is called while holding the ActivityManagerService lock, processNextBroadcastLocked() is also called while holding the same lock. ",
+      "revId": "f64a0eed43ae87af8b95cac5abf279862a8ab481",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
