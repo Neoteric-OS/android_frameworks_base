@@ -16,6 +16,24 @@
       "message": "Seems reasonable to me. Not that I particularly want to review jarjar changes... 😊",
       "revId": "b4f03e15ebe0a3a304d106ead0fd2929508d45d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de7f7ceb_84137723",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-03-30T17:33:47Z",
+      "side": 1,
+      "message": "rationale being that jarjar rules being necessary is more tied to the build configuration than anything else..",
+      "parentUuid": "16aa4f96_327cbcbb",
+      "revId": "b4f03e15ebe0a3a304d106ead0fd2929508d45d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
