@@ -37,7 +37,7 @@ import java.util.Map;
  *
  * @hide
  **/
-@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+@SystemApi(client = SystemApi.Client.PRIVILEGED_APPS)
 public final class ServiceManager {
     private static final String TAG = "ServiceManager";
     private static final Object sLock = new Object();
@@ -292,7 +292,7 @@ public final class ServiceManager {
      * permission problems, or if there are fatal errors.
      * @hide
      */
-    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @SystemApi(client = SystemApi.Client.PRIVILEGED_APPS)
     @Nullable public static IBinder waitForDeclaredService(@NonNull String name) {
         return isDeclared(name) ? waitForService(name) : null;
     }

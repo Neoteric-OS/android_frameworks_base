@@ -8149,6 +8149,11 @@ package android.os {
     method public void onResult(@Nullable android.os.Bundle);
   }
 
+  public final class ServiceManager {
+    method public static boolean isDeclared(@NonNull String);
+    method @Nullable public static android.os.IBinder waitForDeclaredService(@NonNull String);
+  }
+
   public class ServiceSpecificException extends java.lang.RuntimeException {
     ctor public ServiceSpecificException(int, @Nullable String);
     ctor public ServiceSpecificException(int);
