@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f861b35c_5c534dff",
+        "filename": "core/java/android/text/TextUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2022-03-31T19:23:03Z",
+      "side": 1,
+      "message": "Ah, sorry I misunderstand the point. Okay, it should be fine to generate broken output for the broken input, unless it will not cause a disaster (e.g. app crash).\n\nPlease add tests that verifies that valid surrogate pairs should not cut in the middle. (do not generate broken output from valid input)",
+      "parentUuid": "6c7c6bc5_10728576",
+      "range": {
+        "startLine": 360,
+        "startChar": 73,
+        "endLine": 361,
+        "endChar": 35
+      },
+      "revId": "d9191f91198d662772f44e121b56df143c5fe2c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "79a5aca3_b3bb5883",
         "filename": "core/java/android/text/TextUtils.java",
         "patchSetId": 3
