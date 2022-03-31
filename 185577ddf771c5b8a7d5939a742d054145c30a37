@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2638f169_cc2d61ce",
+        "filename": "keystore/java/android/security/GenerateRkpKey.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-03-31T13:20:33Z",
+      "side": 1,
+      "message": "Can we initialize to STATUS_OK here?",
+      "range": {
+        "startLine": 87,
+        "startChar": 25,
+        "endLine": 87,
+        "endChar": 26
+      },
+      "revId": "185577ddf771c5b8a7d5939a742d054145c30a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97cddb2d_e31b5a0b",
+        "filename": "keystore/java/android/security/GenerateRkpKey.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-03-31T13:20:33Z",
+      "side": 1,
+      "message": "Assign STATUS_SYSTEM_FAILURE to returnCode here?",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 90
+      },
+      "revId": "185577ddf771c5b8a7d5939a742d054145c30a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b732b0e_e707a639",
+        "filename": "keystore/java/android/security/GenerateRkpKey.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-03-31T13:20:33Z",
+      "side": 1,
+      "message": "Can you annotate the return value or at least document it?",
+      "range": {
+        "startLine": 125,
+        "startChar": 11,
+        "endLine": 125,
+        "endChar": 14
+      },
+      "revId": "185577ddf771c5b8a7d5939a742d054145c30a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b964e2d_277b9d09",
+        "filename": "keystore/java/android/security/IGenerateRkpKeyService.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-03-31T13:20:33Z",
+      "side": 1,
+      "message": "Nit: Documentation (many of the values are self-explainatory but not all)",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 46
+      },
+      "revId": "185577ddf771c5b8a7d5939a742d054145c30a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
