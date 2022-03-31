@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "daf978db_fb52667a",
+        "filename": "core/java/com/android/internal/app/ChooserActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2022-03-31T17:30:27Z",
+      "side": 1,
+      "message": "\u003e What happens if we just use setData() ?\n\nCalling setData() will automatically clear any type that was previously set.\n\n\u003e Or, would it at least be possible to use one of the Intent helper methods like Intent.resolveType()\n\nHow about just reusing the type included in originalIntent if explicitly set by the caller?",
+      "parentUuid": "fc9bfb27_67322b0d",
+      "range": {
+        "startLine": 1184,
+        "startChar": 20,
+        "endLine": 1185,
+        "endChar": 64
+      },
+      "revId": "2d6c2a8e880ccea9677e16675730c8ea2b54c4f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9ec525e3_eb40c85c",
         "filename": "core/java/com/android/internal/app/ChooserActivity.java",
         "patchSetId": 1
