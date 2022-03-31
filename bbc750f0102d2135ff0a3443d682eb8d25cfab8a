@@ -16,6 +16,24 @@
       "message": "Makoto, are you able to provide API-Review +1 for this cherry-pick?",
       "revId": "bbc750f0102d2135ff0a3443d682eb8d25cfab8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7da8add0_b4894e98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431413
+      },
+      "writtenOn": "2022-03-31T17:11:33Z",
+      "side": 1,
+      "message": "Resolved, thanks.",
+      "parentUuid": "6c4f1c72_d73659f0",
+      "revId": "bbc750f0102d2135ff0a3443d682eb8d25cfab8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
