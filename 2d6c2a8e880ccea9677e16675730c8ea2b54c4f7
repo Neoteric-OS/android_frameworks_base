@@ -69,6 +69,30 @@
       },
       "revId": "2d6c2a8e880ccea9677e16675730c8ea2b54c4f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14a4dc43_6427a5b5",
+        "filename": "core/java/com/android/internal/app/ChooserActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1809300
+      },
+      "writtenOn": "2022-03-31T14:44:24Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s true in general (and if it were, I\u0027d think we should enforce it in `Intent::createChooser()` -- where actually the Javadocs already refer to conditions for other actions). You can see for example `ChooserActivity::isSendAction()` is used internally to gate on other action types.\n\nI did notice the comments in `ChooserActivity::onCopyButtonClicked()` suggesting that we didn\u0027t need to handle other cases *there* because the copy button is (somehow?) not shown in the UI for other actions. Maybe we can make that same assertion about the edit button?\n\nStill, I would prefer to see this look something like:\n```\n} else {\n    Log.e(TAG, originalAction + \" editing is not supported\");\n    return null;\n}\n```\n(instead of or in addition to the log message that specifically describes \"multiple image edit\")\n\nSpeaking of which, do we have logic elsewhere to justify the interpretation that ACTION_SEND only shows an edit button for \"image edit\"? (E.g., do we check the content type before adding the edit button?)",
+      "parentUuid": "a765412d_9521610b",
+      "range": {
+        "startLine": 1188,
+        "startChar": 10,
+        "endLine": 1191,
+        "endChar": 9
+      },
+      "revId": "2d6c2a8e880ccea9677e16675730c8ea2b54c4f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
