@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2886bafe_21238839",
+        "filename": "core/java/android/view/InsetsController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2022-03-31T22:05:57Z",
+      "side": 1,
+      "message": "Do we also want to require `DEBUG_IME` here?\n\n  DEBUG_IME \u0026\u0026 (types \u0026 ime()) !\u003d 0",
+      "range": {
+        "startLine": 982,
+        "startChar": 12,
+        "endLine": 982,
+        "endChar": 32
+      },
+      "revId": "3b6c90daea22c36aaff5364b9efe222289896b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
