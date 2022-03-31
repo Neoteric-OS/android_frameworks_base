@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe7481de_3fbfb173",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1402164
+      },
+      "writtenOn": "2022-03-31T21:05:36Z",
+      "side": 1,
+      "message": "Cool! Nice to see the seedrng hash make its way into Android. Looks good.",
+      "revId": "88a2a7e5c9c1b8df9c15ba4162f154a0ae936733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "42231361_505e2df6",
