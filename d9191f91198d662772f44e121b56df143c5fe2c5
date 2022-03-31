@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6c7c6bc5_10728576",
+        "filename": "core/java/android/text/TextUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1929200
+      },
+      "writtenOn": "2022-03-31T18:30:46Z",
+      "side": 1,
+      "message": "if the input contains invalid unpaird surrogates, I\u0027m not sure if the method should silently truncate the unpaird surrogates/throw IAE because this method\u0027s scope seems only to be converting the input to fit into the byte limits. I wonder if it makes sense to leave as it is?",
+      "parentUuid": "fa9ed0ce_205682f2",
+      "range": {
+        "startLine": 360,
+        "startChar": 73,
+        "endLine": 361,
+        "endChar": 35
+      },
+      "revId": "d9191f91198d662772f44e121b56df143c5fe2c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "79a5aca3_b3bb5883",
         "filename": "core/java/android/text/TextUtils.java",
         "patchSetId": 3
@@ -37,6 +61,30 @@
       "writtenOn": "2022-03-29T01:18:16Z",
       "side": 1,
       "message": "Should return empty string in case of maxBytes \u003d\u003d 0?\n\nI think this method returns the original string if the maxBytes \u003d\u003d 0.\nPlease add test cases for this.",
+      "range": {
+        "startLine": 375,
+        "startChar": 0,
+        "endLine": 375,
+        "endChar": 9
+      },
+      "revId": "d9191f91198d662772f44e121b56df143c5fe2c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2758cb55_ebcc4157",
+        "filename": "core/java/android/text/TextUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1929200
+      },
+      "writtenOn": "2022-03-31T18:30:46Z",
+      "side": 1,
+      "message": "Will add tests.",
+      "parentUuid": "79a5aca3_b3bb5883",
       "range": {
         "startLine": 375,
         "startChar": 0,
