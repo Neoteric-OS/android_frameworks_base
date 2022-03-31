@@ -48,14 +48,17 @@ int32_t applyFormatOverrides(int32_t imageFormat, int32_t containerFormat) {
     return containerFormat;
 }
 
-bool isFormatOpaque(int format) {
-    // This is the only opaque format exposed in the ImageFormat public API.
-    // Note that we do support CPU access for HAL_PIXEL_FORMAT_RAW_OPAQUE
-    // (ImageFormat#RAW_PRIVATE) so it doesn't count as opaque here.
-    return format == HAL_PIXEL_FORMAT_IMPLEMENTATION_DEFINED;
-}
+/// useful pixel format types
+enum format_type_t {
+    UNKNOWN,        ///< used for unknown (e.g. vendor) formats
+    OPAQUE,
+    YUV_420_888,    ///< flexible YUV 4:2:0 8-bit compatible
+    P010,           ///< flexibly YUV 4:2:0 10-bit P010 compatible
+    OTHER,          ///< used for all other known formats that have no specific type
+};
 
-bool isPossiblyYUV(PixelFormat format) {
+/// returns the format type for a pixel format
+static format_type_t getFormatType(PixelFormat format) {
     switch (static_cast<int>(format)) {
         case HAL_PIXEL_FORMAT_RGBA_8888:
         case HAL_PIXEL_FORMAT_RGBX_8888:
@@ -69,16 +72,39 @@ bool isPossiblyYUV(PixelFormat format) {
         case HAL_PIXEL_FORMAT_RAW10:
         case HAL_PIXEL_FORMAT_RAW_OPAQUE:
         case HAL_PIXEL_FORMAT_BLOB:
+            return OTHER;
+
+        // This is the only opaque format exposed in the ImageFormat public API.
+        // Note that we do support CPU access for HAL_PIXEL_FORMAT_RAW_OPAQUE
+        // (ImageFormat#RAW_PRIVATE) so it doesn't count as opaque here.
         case HAL_PIXEL_FORMAT_IMPLEMENTATION_DEFINED:
+            return OPAQUE;
+
         case HAL_PIXEL_FORMAT_YCBCR_P010:
-            return false;
+            return P010;
 
         case HAL_PIXEL_FORMAT_YV12:
         case HAL_PIXEL_FORMAT_YCbCr_420_888:
         case HAL_PIXEL_FORMAT_YCrCb_420_SP:
+            return YUV_420_888;
+
         default:
-            return true;
+            return UNKNOWN;
     }
+}
+
+bool isFormatOpaque(int format) {
+    return getFormatType((PixelFormat)format) == OPAQUE;
+}
+
+bool isPossiblyYUV(PixelFormat format) {
+    format_type_t ftype = getFormatType(format);
+    return ftype == YUV_420_888 || ftype == UNKNOWN;
+}
+
+bool isPossiblyP010(PixelFormat format) {
+    format_type_t ftype = getFormatType(format);
+    return ftype == P010 || ftype == UNKNOWN;
 }
 
 uint32_t Image_getBlobSize(LockedImage* buffer, bool usingRGBAOverride) {

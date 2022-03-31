@@ -33,7 +33,15 @@ uint32_t Image_getBlobSize(LockedImage* buffer, bool usingRGBAOverride);
 
 bool isFormatOpaque(int format);
 
+/**
+ * Returns false if the pixelformat |format| is known to not be compatible with YUV 4:2:0 888
+ **/
 bool isPossiblyYUV(PixelFormat format);
+
+/**
+ * Returns false if the pixelformat |format| is known to not be compatible with YUV P010
+ **/
+bool isPossiblyP010(PixelFormat format);
 
 status_t getLockedImageInfo(LockedImage* buffer, int idx, int32_t containerFormat,
         uint8_t **base, uint32_t *size, int *pixelStride, int *rowStride);
