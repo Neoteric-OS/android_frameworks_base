@@ -45,6 +45,30 @@
       },
       "revId": "2d6c2a8e880ccea9677e16675730c8ea2b54c4f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a765412d_9521610b",
+        "filename": "core/java/com/android/internal/app/ChooserActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1060522
+      },
+      "writtenOn": "2022-03-31T14:24:18Z",
+      "side": 1,
+      "message": "Sharesheet is only expected to be called with ACTION_SEND and ACTION_SEND_MULTIPLE. We could log an error and bail for other actions or assume these are the only two (there are examples of each elsewhere in ChooserActivity)",
+      "parentUuid": "9ec525e3_eb40c85c",
+      "range": {
+        "startLine": 1188,
+        "startChar": 10,
+        "endLine": 1191,
+        "endChar": 9
+      },
+      "revId": "2d6c2a8e880ccea9677e16675730c8ea2b54c4f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
