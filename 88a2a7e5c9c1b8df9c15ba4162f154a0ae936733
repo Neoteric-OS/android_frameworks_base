@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42231361_505e2df6",
+        "filename": "services/core/java/com/android/server/EntropyMixer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2022-03-31T20:13:54Z",
+      "side": 1,
+      "message": "thank you for not logging :-)",
+      "revId": "88a2a7e5c9c1b8df9c15ba4162f154a0ae936733",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
