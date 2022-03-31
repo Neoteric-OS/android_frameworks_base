@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc9bfb27_67322b0d",
+        "filename": "core/java/com/android/internal/app/ChooserActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1809300
+      },
+      "writtenOn": "2022-03-31T14:10:41Z",
+      "side": 1,
+      "message": "I\u0027m not entirely familiar with the role mime types serve in relation to Intents, but I wonder if it\u0027s really necessary for Chooser to be determining this logic -- it seems unusual that we\u0027d have to be responsible for setting the explicit type. What happens if we just use `setData()`? Or, would it at least be possible to use one of the Intent helper methods like `Intent.resolveType()` (or better yet, if possible `Intent.resolveTypeIfNeeded()`)?",
+      "range": {
+        "startLine": 1184,
+        "startChar": 20,
+        "endLine": 1185,
+        "endChar": 64
+      },
+      "revId": "2d6c2a8e880ccea9677e16675730c8ea2b54c4f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ec525e3_eb40c85c",
+        "filename": "core/java/com/android/internal/app/ChooserActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1809300
+      },
+      "writtenOn": "2022-03-31T14:10:41Z",
+      "side": 1,
+      "message": "Why is this the only action we reject? Surely we don\u0027t \"support\" everything *except* send-multiple?\n\nAlso: should we reject ACTION_SEND_MULTIPLE even if resolveIntent.getData() is non-null?",
+      "range": {
+        "startLine": 1188,
+        "startChar": 10,
+        "endLine": 1191,
+        "endChar": 9
+      },
+      "revId": "2d6c2a8e880ccea9677e16675730c8ea2b54c4f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
