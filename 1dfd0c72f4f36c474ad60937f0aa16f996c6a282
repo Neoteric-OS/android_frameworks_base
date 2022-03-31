@@ -114,6 +114,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "589906cc_743ad137",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-03-31T22:05:45Z",
+      "side": 1,
+      "message": "Yes it is a similar concern as the comment above.\n\nI think those getters should have consistent behaviors. When IkeTunnelConnectionParams is set, they should either all return null, or all return correct values. We shouldn\u0027t have some of them return null (e.g. getUserCert), some returns wrong values (e.g. getAllowedAlgorithms) and some returns correct values (e.g. getServerAddr).",
+      "parentUuid": "0c37e387_bb7e24ba",
+      "range": {
+        "startLine": 363,
+        "startChar": 0,
+        "endLine": 366,
+        "endChar": 5
+      },
+      "revId": "1dfd0c72f4f36c474ad60937f0aa16f996c6a282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a0e14a56_8fd73923",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 5
@@ -220,6 +244,30 @@
       "side": 1,
       "message": "Add the case to throw exception. But I have to say that I have little context about how the IkeSessionParams are set. What I refer to is https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/connectivity/VpnIkev2Utils.java;l\u003d428;bpv\u003d1;bpt\u003d1?q\u003dIkeIpv6AddrIdentification\n\nI just apply similar mechanism, so IkeDerAsn1DnIdentification is not in the list here.",
       "parentUuid": "e7d96f66_64d457fb",
+      "range": {
+        "startLine": 708,
+        "startChar": 10,
+        "endLine": 710,
+        "endChar": 9
+      },
+      "revId": "1dfd0c72f4f36c474ad60937f0aa16f996c6a282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51c634a2_93e20998",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-03-31T22:05:45Z",
+      "side": 1,
+      "message": "thanks",
+      "parentUuid": "fddb9538_58b73b29",
       "range": {
         "startLine": 708,
         "startChar": 10,
