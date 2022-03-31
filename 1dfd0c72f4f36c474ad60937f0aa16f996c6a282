@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "55a774ad_9088fe61",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-03-31T06:50:33Z",
+      "side": 1,
+      "message": "A getter to retrieve IkeTunnelConnectionParams was done in aosp/2029924",
+      "parentUuid": "2a0c5766_b4536be9",
+      "range": {
+        "startLine": 299,
+        "startChar": 4,
+        "endLine": 354,
+        "endChar": 5
+      },
+      "revId": "1dfd0c72f4f36c474ad60937f0aa16f996c6a282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f1f4429_b7047e61",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-03-09T23:53:24Z",
       "side": 1,
       "message": "If caller build the profile with IkeTunnelConnectionParams and then since caller cannot call setAllowedAlgorithms, this getter will always return DEFAULT_ALGORITHMS but IkeTunnelConnectionParams might allow different algorithms, which will be confusing",
+      "range": {
+        "startLine": 363,
+        "startChar": 0,
+        "endLine": 366,
+        "endChar": 5
+      },
+      "revId": "1dfd0c72f4f36c474ad60937f0aa16f996c6a282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c37e387_bb7e24ba",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-03-31T06:50:33Z",
+      "side": 1,
+      "message": "Is it similar concern as the comment above? Caller may probably need to get the allowed algorithm from IkeTunnelConnectionParams. All the IKE related getter may not be able to provide correct information if an IkeTunnelConnectionParams is set.",
+      "parentUuid": "7f1f4429_b7047e61",
       "range": {
         "startLine": 363,
         "startChar": 0,
@@ -158,6 +206,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fddb9538_58b73b29",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-03-31T06:50:33Z",
+      "side": 1,
+      "message": "Add the case to throw exception. But I have to say that I have little context about how the IkeSessionParams are set. What I refer to is https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/connectivity/VpnIkev2Utils.java;l\u003d428;bpv\u003d1;bpt\u003d1?q\u003dIkeIpv6AddrIdentification\n\nI just apply similar mechanism, so IkeDerAsn1DnIdentification is not in the list here.",
+      "parentUuid": "e7d96f66_64d457fb",
+      "range": {
+        "startLine": 708,
+        "startChar": 10,
+        "endLine": 710,
+        "endChar": 9
+      },
+      "revId": "1dfd0c72f4f36c474ad60937f0aa16f996c6a282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "34cfd9a2_1de10711",
@@ -171,6 +243,30 @@
       "writtenOn": "2022-03-09T23:53:24Z",
       "side": 1,
       "message": "Suggest update the API doc in all setters with this check explaining that they are not allowed to be called when mIkeTunConnParams is set.",
+      "range": {
+        "startLine": 807,
+        "startChar": 12,
+        "endLine": 807,
+        "endChar": 82
+      },
+      "revId": "1dfd0c72f4f36c474ad60937f0aa16f996c6a282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cc65b40_9cd0c79f",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-03-31T06:50:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34cfd9a2_1de10711",
       "range": {
         "startLine": 807,
         "startChar": 12,
