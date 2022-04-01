@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f573e60_2394c619",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-04-01T07:08:34Z",
+      "side": 1,
+      "message": "Daren, I had to adapt the \"remove\" listener as well. Could you confirm that it still works? Then the change is ready to be merged.",
+      "revId": "a598b9362220c8ef719975cf9f69e278888a2157",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
