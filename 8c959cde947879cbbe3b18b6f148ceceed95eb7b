@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb577097_75fa8f3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-04-01T21:42:59Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with this code, but since Elliott seems happy with it, and he is very familiar with system properties, +1 for OWNERS approval.",
+      "revId": "8c959cde947879cbbe3b18b6f148ceceed95eb7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e8186ce2_1a86e90e",
