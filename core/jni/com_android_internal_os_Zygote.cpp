@@ -1598,10 +1598,11 @@ static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids, 
     if (!is_system_server && getuid() == 0) {
         const int rc = createProcessGroup(uid, getpid());
         if (rc == -EROFS) {
-            ALOGW("createProcessGroup failed, kernel missing CONFIG_CGROUP_CPUACCT?");
+            ALOGE("createProcessGroup failed, kernel missing CONFIG_CGROUP_CPUACCT?");
         } else if (rc != 0) {
             ALOGE("createProcessGroup(%d, %d) failed: %s", uid, /* pid= */ 0, strerror(-rc));
         }
+        RuntimeAbort(env, __LINE__, "createProcessGroup failed");
     }
 
     SetGids(env, gids, is_child_zygote, fail_fn);
