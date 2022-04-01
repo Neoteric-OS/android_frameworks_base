@@ -962,6 +962,15 @@ static jboolean android_os_Debug_isVmapStack(JNIEnv *env, jobject clazz)
     return cfg_state == CONFIG_SET;
 }
 
+static jboolean android_os_Debug_abortProcess(JNIEnv* env, jobject clazz, jstring message) {
+    const ScopedUtfChars msg(env, message);
+    if (msg.c_str() == nullptr) {
+        return false;
+    }
+    LOG(FATAL) << msg.c_str();
+    return true;
+}
+
 /*
  * JNI registration.
  */
@@ -1023,6 +1032,8 @@ static const JNINativeMethod gMethods[] = {
             (void*)android_os_Debug_getGpuTotalUsageKb },
     { "isVmapStack", "()Z",
             (void*)android_os_Debug_isVmapStack },
+    { "abortProcess", "(Ljava/lang/String;)Z",
+            (void*)android_os_Debug_abortProcess },
 };
 
 int register_android_os_Debug(JNIEnv *env)

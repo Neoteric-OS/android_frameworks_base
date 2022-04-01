@@ -2628,4 +2628,11 @@ public final class Debug
      * @hide
      */
     public static native boolean isVmapStack();
+
+    /**
+     * Process self-destruct with a farewell message in the logs.
+     *
+     * @hide
+     */
+    public static native boolean abortProcess(String message);
 }
