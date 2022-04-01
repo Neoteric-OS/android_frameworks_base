@@ -504,6 +504,7 @@ public final class StrictMode {
                 detectDiskReads();
                 detectDiskWrites();
                 detectNetwork();
+                detectExplicitGc();
 
                 final int targetSdk = VMRuntime.getRuntime().getTargetSdkVersion();
                 if (targetSdk >= Build.VERSION_CODES.HONEYCOMB) {
