@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce2b819e_26c0c3f8",
+        "filename": "core/java/android/text/TextUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1929200
+      },
+      "writtenOn": "2022-04-01T01:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f861b35c_5c534dff",
+      "range": {
+        "startLine": 360,
+        "startChar": 73,
+        "endLine": 361,
+        "endChar": 35
+      },
+      "revId": "d9191f91198d662772f44e121b56df143c5fe2c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79a5aca3_b3bb5883",
