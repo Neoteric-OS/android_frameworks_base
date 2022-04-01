@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cce3e294_63a6039f",
+        "filename": "core/java/com/android/internal/app/ChooserActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1167564
+      },
+      "writtenOn": "2022-04-01T03:10:51Z",
+      "side": 1,
+      "message": "I think ContentResolver#getType() is better.\nEdit button is shown only when preview type is CONTENT_PREVIEW_IMAGE.\nIt is decided at ChooserActivity#findPreferredContentPreview().\nWhen action is ACTION_SEND, preview type can be CONTENT_PREVIEW_IMAGE only when ContentResolver#getType() start with \"image/\".\nSo we can always get same mimeType here.",
+      "parentUuid": "daf978db_fb52667a",
+      "range": {
+        "startLine": 1184,
+        "startChar": 20,
+        "endLine": 1185,
+        "endChar": 64
+      },
+      "revId": "2d6c2a8e880ccea9677e16675730c8ea2b54c4f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9ec525e3_eb40c85c",
         "filename": "core/java/com/android/internal/app/ChooserActivity.java",
         "patchSetId": 1
@@ -109,6 +133,30 @@
       "side": 1,
       "message": "I don\u0027t think that\u0027s true in general (and if it were, I\u0027d think we should enforce it in `Intent::createChooser()` -- where actually the Javadocs already refer to conditions for other actions). You can see for example `ChooserActivity::isSendAction()` is used internally to gate on other action types.\n\nI did notice the comments in `ChooserActivity::onCopyButtonClicked()` suggesting that we didn\u0027t need to handle other cases *there* because the copy button is (somehow?) not shown in the UI for other actions. Maybe we can make that same assertion about the edit button?\n\nStill, I would prefer to see this look something like:\n```\n} else {\n    Log.e(TAG, originalAction + \" editing is not supported\");\n    return null;\n}\n```\n(instead of or in addition to the log message that specifically describes \"multiple image edit\")\n\nSpeaking of which, do we have logic elsewhere to justify the interpretation that ACTION_SEND only shows an edit button for \"image edit\"? (E.g., do we check the content type before adding the edit button?)",
       "parentUuid": "a765412d_9521610b",
+      "range": {
+        "startLine": 1188,
+        "startChar": 10,
+        "endLine": 1191,
+        "endChar": 9
+      },
+      "revId": "2d6c2a8e880ccea9677e16675730c8ea2b54c4f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bab6b6a_d78245aa",
+        "filename": "core/java/com/android/internal/app/ChooserActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1167564
+      },
+      "writtenOn": "2022-04-01T03:10:51Z",
+      "side": 1,
+      "message": "Currently, edit button is shown only when ACTION_SEND and ACTION_SEND_MULTIPLE.\nEdit button is created at ChooserActivity#displayImageContentPreview().\nIt is called only when preview type is CONTENT_PREVIEW_IMAGE.\nPreview type is decided at ChooserActivity#findPreferredContentPreview().\nOnly ACTION_SEND and ACTION_SEND_MULTIPLE can become CONTENT_PREVIEW_IMAGE.\n\nCan we use current code?\nIs it better to change to \"} else {\" for future modification just in case?",
+      "parentUuid": "14a4dc43_6427a5b5",
       "range": {
         "startLine": 1188,
         "startChar": 10,
