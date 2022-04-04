@@ -22,6 +22,30 @@
       },
       "revId": "3b804530f2af23dc19e4fa8d80c7ccbfcb276eb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8201915c_bf934c0a",
+        "filename": "telecomm/java/android/telecom/CallRedirectionService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2022-04-04T14:14:15Z",
+      "side": 1,
+      "message": "Thank you for the comment. I have changed the CallRedirectionProcessor to proceed the Outgoing Call sequence without waiting for #redirectionTimeout. Could you review https://android-review.googlesource.com/c/platform/packages/services/Telecomm/+/1992712 ?",
+      "parentUuid": "3d3ab653_0e294ec9",
+      "range": {
+        "startLine": 217,
+        "startChar": 20,
+        "endLine": 218,
+        "endChar": 41
+      },
+      "revId": "3b804530f2af23dc19e4fa8d80c7ccbfcb276eb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
