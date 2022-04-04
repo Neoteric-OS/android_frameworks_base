@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "181e94b6_c09d71d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140781
+      },
+      "writtenOn": "2022-04-04T11:11:50Z",
+      "side": 1,
+      "message": "We met similar issue and did below fix. Can the patch pass review and be merged?\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1934464",
+      "revId": "c210577a7b08b80496eac5f6f81659ffebd0e5f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
