@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b25e1f44_e0e0ca1f",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 18402,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2022-04-04T17:52:52Z",
+      "side": 1,
+      "message": "top?",
+      "range": {
+        "startLine": 18402,
+        "startChar": 7,
+        "endLine": 18402,
+        "endChar": 12
+      },
+      "revId": "aa40d09580dd2852ccbad1087c217874d13c8714",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
