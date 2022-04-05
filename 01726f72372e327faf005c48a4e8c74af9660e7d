@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c85343f1_45fb57e8",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-04-05T06:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e69ee019_4b6c83a8",
+      "revId": "01726f72372e327faf005c48a4e8c74af9660e7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90941da9_6ce56c86",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4999594a_1c9dc960",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-04-05T06:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90941da9_6ce56c86",
+      "revId": "01726f72372e327faf005c48a4e8c74af9660e7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4fd93245_77ed98cb",
@@ -48,6 +84,24 @@
       "writtenOn": "2022-03-24T01:09:21Z",
       "side": 1,
       "message": "If the connected device send any command before TV queries its physical address, a deviceInfo with physical_address:PATH_INVALID would be added. Our suggestion is adding the dummy deviceInfo only when device responsed with \u003cReport Physical Address\u003e.",
+      "revId": "01726f72372e327faf005c48a4e8c74af9660e7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4dc6198_57a2f158",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-04-05T06:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fd93245_77ed98cb",
       "revId": "01726f72372e327faf005c48a4e8c74af9660e7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
