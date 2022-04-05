@@ -7807,15 +7807,10 @@ public final class ActivityThread extends ClientTransactionHandler
             try {
                 super.rename(oldPath, newPath);
             } catch (ErrnoException e) {
-                // On emulated volumes, we have bind mounts for /Android/data and
-                // /Android/obb, which prevents move from working across those directories
-                // and other directories on the filesystem. To work around that, try to
-                // recover by doing a copy instead.
-                // Note that we only do this for "/storage/emulated", because public volumes
-                // don't have these bind mounts, neither do private volumes that are not
-                // the primary storage.
-                if (e.errno == OsConstants.EXDEV && oldPath.startsWith("/storage/emulated")
-                        && newPath.startsWith("/storage/emulated")) {
+                //Rename can sometimes fail if the filesystems are different
+                // or if the project_ids on the source and target directories are different
+                // This can be mitigated by using Files.move as it falls back to copying instead.
+                if (e.errno == OsConstants.EXDEV) {
                     Log.v(TAG, "Recovering failed rename " + oldPath + " to " + newPath);
                     try {
                         Files.move(new File(oldPath).toPath(), new File(newPath).toPath(),
