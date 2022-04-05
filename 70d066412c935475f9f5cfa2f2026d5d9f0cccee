@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d669ff2a_35a0ab59",
+        "filename": "core/jni/RobolectricNativeRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2022-04-05T20:26:14Z",
+      "side": 0,
+      "message": "Looks like this needs a `repo sync frameworks/base` and a `repo rebase .`",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 59
+      },
+      "revId": "70d066412c935475f9f5cfa2f2026d5d9f0cccee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
