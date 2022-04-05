@@ -16,6 +16,24 @@
       "message": "We met similar issue and did below fix. Can the patch pass review and be merged?\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1934464",
       "revId": "c210577a7b08b80496eac5f6f81659ffebd0e5f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd2a71ce_21d96f6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1900056
+      },
+      "writtenOn": "2022-04-05T18:39:20Z",
+      "side": 1,
+      "message": "Unfortunately the patch doesn\u0027t fix the issue in the bug, it only fixes a very narrow case of it. Commented on the patch with the issues that it doesn\u0027t fix.",
+      "parentUuid": "181e94b6_c09d71d0",
+      "revId": "c210577a7b08b80496eac5f6f81659ffebd0e5f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
