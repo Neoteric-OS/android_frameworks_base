@@ -16,6 +16,23 @@
       "message": "+ mingaleev@ as he\u0027s reviewing the other part of the topic\n+ edgarwang@ as he has OWNERS",
       "revId": "7b867499f37c820447c7c83910a54c1136760a43",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe9f4050_e150174f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-04-05T15:04:35Z",
+      "side": 1,
+      "message": "Please review, but I\u0027m not intending to submit for a while given the bug\u0027s priority.",
+      "revId": "7b867499f37c820447c7c83910a54c1136760a43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
