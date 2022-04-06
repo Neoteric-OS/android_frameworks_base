@@ -136,6 +136,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f970a790_4a541e36",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-06T09:30:52Z",
+      "side": 1,
+      "message": "Updated, but not all the getter could return null since each getter has its own nullability. E.g. getAllowedAlgorithms is annotated as @NonNull. I think we could only return empty list for the return value.",
+      "parentUuid": "589906cc_743ad137",
+      "range": {
+        "startLine": 363,
+        "startChar": 0,
+        "endLine": 366,
+        "endChar": 5
+      },
+      "revId": "1dfd0c72f4f36c474ad60937f0aa16f996c6a282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a0e14a56_8fd73923",
@@ -197,6 +221,30 @@
       "side": 1,
       "message": "Correction, this is a functional bug; in testing with an actual app, this causes the startVpnProfilePrivileged method to fail:\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/connectivity/Vpn.java;l\u003d3401?q\u003dvpn.java\u0026ss\u003dandroid%2Fplatform%2Fsuperproject, since the type does not get parcelled. This is used as a prerequisite to calling fromVpnProfile on the cached profile.",
       "parentUuid": "6d811d59_22f66b01",
+      "range": {
+        "startLine": 467,
+        "startChar": 0,
+        "endLine": 467,
+        "endChar": 29
+      },
+      "revId": "1dfd0c72f4f36c474ad60937f0aa16f996c6a282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da24655a_12f2c15f",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-06T09:30:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e239d021_71536b2f",
       "range": {
         "startLine": 467,
         "startChar": 0,
