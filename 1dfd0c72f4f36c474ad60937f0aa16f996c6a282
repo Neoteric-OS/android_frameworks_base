@@ -160,6 +160,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7953d1b_2230e5d4",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-07T00:28:45Z",
+      "side": 1,
+      "message": "This should be mostly fine; the stipulation is that the getters must return the same thing that they set in the builder; and in this case, these are not set.",
+      "parentUuid": "f970a790_4a541e36",
+      "range": {
+        "startLine": 363,
+        "startChar": 0,
+        "endLine": 366,
+        "endChar": 5
+      },
+      "revId": "1dfd0c72f4f36c474ad60937f0aa16f996c6a282",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a0e14a56_8fd73923",
