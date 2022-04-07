@@ -681,13 +681,13 @@ public final class ColorDisplayService extends SystemService {
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     TintValueAnimator t = (TintValueAnimator) animator;
-                    Slog.d(TAG, tintController.getClass().getSimpleName()
+                    /*Slog.d(TAG, tintController.getClass().getSimpleName()
                             + " Animation cancelled: " + mIsCancelled
                             + " to matrix: " + TintController.matrixToString(to, 16)
                             + " min matrix coefficients: "
                             + TintController.matrixToString(t.getMin(), 16)
                             + " max matrix coefficients: "
-                            + TintController.matrixToString(t.getMax(), 16));
+                            + TintController.matrixToString(t.getMax(), 16));*/
                     if (!mIsCancelled) {
                         // Ensure final color matrix is set at the end of the animation. If the
                         // animation is cancelled then don't set the final color matrix so the new
