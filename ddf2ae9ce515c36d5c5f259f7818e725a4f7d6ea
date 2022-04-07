@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c6f8068_f83160b8",
+        "filename": "services/core/java/com/android/server/pm/dex/OdsignStatsLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2022-04-07T11:31:38Z",
+      "side": 1,
+      "message": "Got it! Thanks.",
+      "range": {
+        "startLine": 32,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "ddf2ae9ce515c36d5c5f259f7818e725a4f7d6ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
