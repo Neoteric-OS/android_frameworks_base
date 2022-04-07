@@ -171,7 +171,11 @@ public class LockdownVpnTracker {
 
         if (egressDisconnected || egressChanged) {
             mAcceptedEgressIface = null;
-            mVpn.stopVpnRunnerPrivileged();
+
+            // Legacy VPN needs to be restarted in order to pick up interface change.
+            if (mVpn.isLegacyVpn()) {
+                mVpn.stopVpnRunnerPrivileged();
+            }
         }
         if (egressDisconnected) {
             hideNotification();

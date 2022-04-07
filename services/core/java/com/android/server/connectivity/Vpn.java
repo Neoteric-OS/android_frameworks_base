@@ -2369,6 +2369,13 @@ public class Vpn {
     }
 
     /**
+     * Checks if the currently running VPN is a Legacy VPN.
+     */
+    public synchronized boolean isLegacyVpn() {
+        return mVpnRunner instanceof LegacyVpnRunner;
+    }
+
+    /**
      * Checks if this the currently running VPN (if any) was started by the Settings app
      *
      * <p>This includes both Legacy VPNs and Platform VPNs.
