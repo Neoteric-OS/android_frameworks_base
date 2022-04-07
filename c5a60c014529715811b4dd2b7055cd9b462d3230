@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cab7edeb_5524f0ea",
+        "filename": "media/jni/android_media_Utils.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2022-04-07T23:50:13Z",
+      "side": 1,
+      "message": "note that in theory we have a bunch of validation already that\u0027s in VTS: https://source.corp.google.com/android/hardware/interfaces/graphics/mapper/4.0/vts/functional/VtsHalGraphicsMapperV4_0TargetTest.cpp;l\u003d318;bpv\u003d1;bpt\u003d1?q\u003df:vts%20p010\u0026ss\u003dpiper%2FGoogle%2Fandroid\n\nup to you though if you feel that the media stack needs to be defensive - i think it\u0027s possible for a gralloc 4.0 implementation that shipped in R or S to have a questionable P010 layout that they didn\u0027t rev to T.",
+      "range": {
+        "startLine": 492,
+        "startChar": 13,
+        "endLine": 492,
+        "endChar": 45
+      },
+      "revId": "c5a60c014529715811b4dd2b7055cd9b462d3230",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
