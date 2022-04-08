@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cedbd674_b80ce6e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-04-08T10:02:17Z",
+      "side": 1,
+      "message": "+zyy fyi, `m api_txt dist` is now a thing, I\u0027m updating the \"deprecated at birth\" docs to include this.",
+      "revId": "b6c33006c2c8d5e7040cd0b134b6d5d02da79ab1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
