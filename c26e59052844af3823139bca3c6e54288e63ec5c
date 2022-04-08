@@ -63,6 +63,30 @@
       },
       "revId": "c26e59052844af3823139bca3c6e54288e63ec5c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f307dd5_ceda9c5a",
+        "filename": "api/api.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2022-04-08T11:59:17Z",
+      "side": 1,
+      "message": "Nice, that\u0027s a much better solution than what I proposed.",
+      "parentUuid": "16aa256e_0d912369",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 2
+      },
+      "revId": "c26e59052844af3823139bca3c6e54288e63ec5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
