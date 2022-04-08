@@ -51,6 +51,7 @@ import android.net.IpPrefix;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecTransform;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.RouteInfo;
 import android.net.eap.EapSessionConfig;
 import android.net.ipsec.ike.ChildSaProposal;
@@ -376,6 +377,7 @@ public class VpnIkev2Utils {
     static class Ikev2VpnNetworkCallback extends NetworkCallback {
         private final String mTag;
         private final Vpn.IkeV2VpnRunnerCallback mCallback;
+        private Network mCurrentNetwork;
 
         Ikev2VpnNetworkCallback(String tag, Vpn.IkeV2VpnRunnerCallback callback) {
             mTag = tag;
@@ -383,15 +385,23 @@ public class VpnIkev2Utils {
         }
 
         @Override
-        public void onAvailable(@NonNull Network network) {
-            Log.d(mTag, "Starting IKEv2/IPsec session on new network: " + network);
-            mCallback.onDefaultNetworkChanged(network);
+        public void onCapabilitiesChanged(@NonNull Network network,
+                @NonNull NetworkCapabilities cap) {
+            // Make sure that the network is not VPN and the network has not been used as the
+            // underlying network for establishing VPN connection.
+            if (!cap.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+                    && network != mCurrentNetwork) {
+                Log.d(mTag, "Starting IKEv2/IPsec session on new network: " + network);
+                mCurrentNetwork = network;
+                mCallback.onDefaultNetworkChanged(network);
+            }
         }
 
         @Override
         public void onLost(@NonNull Network network) {
             Log.d(mTag, "Tearing down; lost network: " + network);
             mCallback.onSessionLost(network, null);
+            mCurrentNetwork = null;
         }
     }
 
