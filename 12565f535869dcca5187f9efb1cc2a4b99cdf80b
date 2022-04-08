@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c11eb25e_92df578d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-04-08T08:51:16Z",
+      "side": 1,
+      "message": "In the first place, I thought that maybe we can fix this problem by adding NET_CAPABILITY_NOT_VPN for test network and add NET_CAPABILITY_NOT_VPN when requesting test network(https://source.corp.google.com/aosp-master/frameworks/base/services/core/java/com/android/server/connectivity/Vpn.java;l\u003d2544?q\u003dvpn.java\u0026sq\u003dpackage:%5Eaosp-master$), but looking at https://source.corp.google.com/aosp-master/frameworks/libs/net/common/testutils/devicetests/com/android/testutils/TestNetworkTracker.kt;l\u003d89?q\u003d%22.setupTestNetwork(%22\u0026sq\u003dpackage:%5Eaosp-master$ and https://source.corp.google.com/aosp-master/packages/modules/IPsec/tests/cts/src/android/ipsec/ike/cts/TestNetworkUtils.java;l\u003d74?q\u003d%22.setupTestNetwork(%22\u0026sq\u003dpackage:%5Eaosp-master$, it seems like the test network doesn\u0027t have NET_CAPABILITY_NOT_VPN is by design but I don\u0027t know why.\n\nBen, can you provide more context about why test network doesn\u0027t have NET_CAPABILITY_NOT_VPN by default since TestNetworkService was built by you(aosp/826957 \u0026 aosp/826958)?\nThis fix is designed by the limitation that test network cannot have NET_CAPABILITY_NOT_VPN, if test network can have NET_CAPABILITY_NOT_VPN, then I think the better solution is to add NET_CAPABILITY_NOT_VPN for test network and let VPN to request test network with NET_CAPABILITY_NOT_VPN.",
+      "revId": "12565f535869dcca5187f9efb1cc2a4b99cdf80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
