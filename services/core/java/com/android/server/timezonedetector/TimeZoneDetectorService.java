@@ -307,15 +307,15 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
     boolean isTelephonyTimeZoneDetectionSupported() {
         enforceManageTimeZoneDetectorPermission();
 
-        return ServiceConfigAccessor.getInstance(mContext)
-                .isTelephonyTimeZoneDetectionFeatureSupported();
+        return mTimeZoneDetectorStrategy.getCurrentUserConfigurationInternal()
+                .isTelephonyDetectionSupported();
     }
 
     boolean isGeoTimeZoneDetectionSupported() {
         enforceManageTimeZoneDetectorPermission();
 
-        return ServiceConfigAccessor.getInstance(mContext)
-                .isGeoTimeZoneDetectionFeatureSupported();
+        return mTimeZoneDetectorStrategy.getCurrentUserConfigurationInternal()
+                .isGeoDetectionSupported();
     }
 
     @Override
