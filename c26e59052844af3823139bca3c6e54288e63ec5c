@@ -39,6 +39,30 @@
       },
       "revId": "c26e59052844af3823139bca3c6e54288e63ec5c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16aa256e_0d912369",
+        "filename": "api/api.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-04-08T11:27:01Z",
+      "side": 1,
+      "message": "updated to a less hacky version than the current (added to the struct instead).",
+      "parentUuid": "f98cdd2a_206f04ef",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 2
+      },
+      "revId": "c26e59052844af3823139bca3c6e54288e63ec5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
