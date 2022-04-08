@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "70e714cb_5c464104",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-08T09:03:39Z",
+      "side": 1,
+      "message": "then reconnect the VPN?",
+      "range": {
+        "startLine": 12,
+        "startChar": 34,
+        "endLine": 12,
+        "endChar": 35
+      },
+      "revId": "12565f535869dcca5187f9efb1cc2a4b99cdf80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c11eb25e_92df578d",
@@ -14,6 +37,75 @@
       "writtenOn": "2022-04-08T08:51:16Z",
       "side": 1,
       "message": "In the first place, I thought that maybe we can fix this problem by adding NET_CAPABILITY_NOT_VPN for test network and add NET_CAPABILITY_NOT_VPN when requesting test network(https://source.corp.google.com/aosp-master/frameworks/base/services/core/java/com/android/server/connectivity/Vpn.java;l\u003d2544?q\u003dvpn.java\u0026sq\u003dpackage:%5Eaosp-master$), but looking at https://source.corp.google.com/aosp-master/frameworks/libs/net/common/testutils/devicetests/com/android/testutils/TestNetworkTracker.kt;l\u003d89?q\u003d%22.setupTestNetwork(%22\u0026sq\u003dpackage:%5Eaosp-master$ and https://source.corp.google.com/aosp-master/packages/modules/IPsec/tests/cts/src/android/ipsec/ike/cts/TestNetworkUtils.java;l\u003d74?q\u003d%22.setupTestNetwork(%22\u0026sq\u003dpackage:%5Eaosp-master$, it seems like the test network doesn\u0027t have NET_CAPABILITY_NOT_VPN is by design but I don\u0027t know why.\n\nBen, can you provide more context about why test network doesn\u0027t have NET_CAPABILITY_NOT_VPN by default since TestNetworkService was built by you(aosp/826957 \u0026 aosp/826958)?\nThis fix is designed by the limitation that test network cannot have NET_CAPABILITY_NOT_VPN, if test network can have NET_CAPABILITY_NOT_VPN, then I think the better solution is to add NET_CAPABILITY_NOT_VPN for test network and let VPN to request test network with NET_CAPABILITY_NOT_VPN.",
+      "revId": "12565f535869dcca5187f9efb1cc2a4b99cdf80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb84debb_35f1b7db",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-08T09:03:39Z",
+      "side": 1,
+      "message": "I think it\u0027s ok to put in the commit message but not in the general code comment. We may need some common descriptions here.",
+      "range": {
+        "startLine": 390,
+        "startChar": 14,
+        "endLine": 390,
+        "endChar": 27
+      },
+      "revId": "12565f535869dcca5187f9efb1cc2a4b99cdf80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c79d6f01_b5ac7c06",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-08T09:03:39Z",
+      "side": 1,
+      "message": "change to something like \"new Default network available:\" ?\n\n\"Starting IKEv2/IPsec session...\"  looks not very correct here..",
+      "range": {
+        "startLine": 397,
+        "startChar": 29,
+        "endLine": 397,
+        "endChar": 72
+      },
+      "revId": "12565f535869dcca5187f9efb1cc2a4b99cdf80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "757f3800_c23aefc3",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-08T09:03:39Z",
+      "side": 1,
+      "message": "It\u0027s safer to clear to mCurrentNetwork here if the mCurrentNetwork is lost.",
+      "range": {
+        "startLine": 406,
+        "startChar": 50,
+        "endLine": 406,
+        "endChar": 51
+      },
       "revId": "12565f535869dcca5187f9efb1cc2a4b99cdf80b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
