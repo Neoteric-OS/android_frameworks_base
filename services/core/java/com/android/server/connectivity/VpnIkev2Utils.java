@@ -51,6 +51,7 @@ import android.net.IpPrefix;
 import android.net.IpSecAlgorithm;
 import android.net.IpSecTransform;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.RouteInfo;
 import android.net.eap.EapSessionConfig;
 import android.net.ipsec.ike.ChildSaProposal;
@@ -376,6 +377,7 @@ public class VpnIkev2Utils {
     static class Ikev2VpnNetworkCallback extends NetworkCallback {
         private final String mTag;
         private final Vpn.IkeV2VpnRunnerCallback mCallback;
+        private Network mCurrentNetwork;
 
         Ikev2VpnNetworkCallback(String tag, Vpn.IkeV2VpnRunnerCallback callback) {
             mTag = tag;
@@ -383,9 +385,19 @@ public class VpnIkev2Utils {
         }
 
         @Override
-        public void onAvailable(@NonNull Network network) {
-            Log.d(mTag, "Starting IKEv2/IPsec session on new network: " + network);
-            mCallback.onDefaultNetworkChanged(network);
+        public void onCapabilitiesChanged(@NonNull Network network,
+                @NonNull NetworkCapabilities cap) {
+            // Ikev2VpnTest will bring up a test network as the underlying network of VPN. But test
+            // network doesn't have NET_CAPABILITY_NOT_VPN which will make onAvailable() being
+            // called again when VPN is connected. So add a transport type check here to prevent
+            // misusing VPN network as underlying network, also check if the network has been used
+            // as the underlying network for establishing VPN connection.
+            if (!cap.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+                    && network != mCurrentNetwork) {
+                Log.d(mTag, "Starting IKEv2/IPsec session on new network: " + network);
+                mCurrentNetwork = network;
+                mCallback.onDefaultNetworkChanged(network);
+            }
         }
 
         @Override
