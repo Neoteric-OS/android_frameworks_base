@@ -112,7 +112,11 @@ func createMergedTxt(ctx android.LoadHookContext, txt MergedTxtDefinition) {
 	if txt.Scope != "public" {
 		filename = txt.Scope + "-" + filename
 	}
-
+	// android.txt or android-removed.txt when disting into apistubs/...
+	distFilename := "android.txt"
+	if filename == "removed.txt" {
+		distFilename = "android-removed.txt"
+	}
 	props := genruleProps{}
 	props.Name = proptools.StringPtr(ctx.ModuleName() + "-" + filename)
 	props.Tools = []string{"metalava"}
@@ -126,9 +130,9 @@ func createMergedTxt(ctx android.LoadHookContext, txt MergedTxtDefinition) {
 			Dest:    proptools.StringPtr(filename),
 		},
 		{
-			Targets: []string{"sdk"},
+			Targets: []string{"api_txt", "sdk"},
 			Dir:     proptools.StringPtr("apistubs/android/" + txt.Scope + "/api"),
-			Dest:    proptools.StringPtr(txt.TxtFilename),
+			Dest:    proptools.StringPtr(distFilename),
 		},
 	}
 	props.Visibility = []string{"//visibility:public"}
