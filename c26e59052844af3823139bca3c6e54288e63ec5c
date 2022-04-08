@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f51f7d6_0df8e7b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2022-04-08T11:06:53Z",
+      "side": 1,
+      "message": "LGTM, but please see the inline comment.",
+      "revId": "c26e59052844af3823139bca3c6e54288e63ec5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f98cdd2a_206f04ef",
+        "filename": "api/api.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2022-04-08T11:06:53Z",
+      "side": 1,
+      "message": "How about explicitly listing the accepted file name patterns instead of relying on a default case? This will catch bugs early should the implicit assumption on what file names are passed in change. WDYT?\n\n map :\u003d make(map[string]string)\n map[\"current.txt\"] \u003d \"android.txt\"\n map[\"removed.txt\"] \u003d \"android-removed.txt\"\n ...\n distFilename \u003d map[txt.TxtFilename]\n if distFilename \u003d\u003d \"\" {\n     panic(...)\n }\n \n(Too bad go\u0027s `switch` isn\u0027t an expression. Maybe there\u0027s a less verbose to express the above?)",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 2
+      },
+      "revId": "c26e59052844af3823139bca3c6e54288e63ec5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
