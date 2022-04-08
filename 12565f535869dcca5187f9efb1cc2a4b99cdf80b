@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "9a8846ec_24ff03ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-04-08T09:52:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70e714cb_5c464104",
+      "range": {
+        "startLine": 12,
+        "startChar": 34,
+        "endLine": 12,
+        "endChar": 35
+      },
+      "revId": "12565f535869dcca5187f9efb1cc2a4b99cdf80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c11eb25e_92df578d",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8a6b922_fbf5bb79",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-04-08T09:52:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb84debb_35f1b7db",
+      "range": {
+        "startLine": 390,
+        "startChar": 14,
+        "endLine": 390,
+        "endChar": 27
+      },
+      "revId": "12565f535869dcca5187f9efb1cc2a4b99cdf80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c79d6f01_b5ac7c06",
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6e71278_de52fcf5",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-04-08T09:52:25Z",
+      "side": 1,
+      "message": "I don\u0027t have a strong opinion to modify this since onDefaultNetworkChanged is really trying to start IKEv2 session on new network.",
+      "parentUuid": "c79d6f01_b5ac7c06",
+      "range": {
+        "startLine": 397,
+        "startChar": 29,
+        "endLine": 397,
+        "endChar": 72
+      },
+      "revId": "12565f535869dcca5187f9efb1cc2a4b99cdf80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "757f3800_c23aefc3",
@@ -100,6 +172,30 @@
       "writtenOn": "2022-04-08T09:03:39Z",
       "side": 1,
       "message": "It\u0027s safer to clear to mCurrentNetwork here if the mCurrentNetwork is lost.",
+      "range": {
+        "startLine": 406,
+        "startChar": 50,
+        "endLine": 406,
+        "endChar": 51
+      },
+      "revId": "12565f535869dcca5187f9efb1cc2a4b99cdf80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af879e8b_f963fa46",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-04-08T09:52:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "757f3800_c23aefc3",
       "range": {
         "startLine": 406,
         "startChar": 50,
