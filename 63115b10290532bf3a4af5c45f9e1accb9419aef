@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c78e5e2_26e5fb24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2022-04-08T19:47:41Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure how this possible. Privileged is set as part of scan flags, not manifest/parse flags, so it can only be flipped by PMS scanning a priv-app partition.\n\nMaybe this can happen to orphaned /data packages where an OTA has removed their system package?\n\nDo we not clear this when the system package gets deleted?",
+      "revId": "63115b10290532bf3a4af5c45f9e1accb9419aef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
