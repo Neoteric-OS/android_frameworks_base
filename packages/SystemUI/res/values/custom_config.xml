@@ -4,6 +4,6 @@
 
     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
     <string name="quick_settings_tiles_extra" translatable="false">
-        powershare,refresh_rate,caffeine,ambient_display,heads_up,sync,usb_tether,aod,vpn,dataswitch,sound
+        powershare,refresh_rate,caffeine,ambient_display,heads_up,sync,usb_tether,aod,vpn,dataswitch,sound,preferred_network
     </string>
 </resources>
