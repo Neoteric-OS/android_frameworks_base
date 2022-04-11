@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1e936b7_d23dee52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-04-11T09:46:45Z",
+      "side": 1,
+      "message": "Question: When will it be both present?\nIIUC the imported data will be always stored in a standalone file when the rewriteSingle() is called.\nWhen deleting data before cutoff timestamp, mRotator.rewriteAll will be called, contents in the files will be either replaced with a single empty collection, or remain untouched, right?\nIf so why do we need this functionality?",
+      "range": {
+        "startLine": 10,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 43
+      },
+      "revId": "8b2972b4db939b9e599a5c4ee100aa6bf173bdce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58cff35c_52ae9918",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-04-11T09:46:45Z",
+      "side": 1,
+      "message": "It seems to me \u003d\u003d should be enough?",
+      "range": {
+        "startLine": 376,
+        "startChar": 24,
+        "endLine": 376,
+        "endChar": 26
+      },
+      "revId": "8b2972b4db939b9e599a5c4ee100aa6bf173bdce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dae2aa86_19fa5cce",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-04-11T09:46:45Z",
+      "side": 1,
+      "message": "why this is needed?",
+      "range": {
+        "startLine": 383,
+        "startChar": 16,
+        "endLine": 383,
+        "endChar": 55
+      },
+      "revId": "8b2972b4db939b9e599a5c4ee100aa6bf173bdce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce1f64ee_3418d5d8",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-04-11T09:46:45Z",
+      "side": 1,
+      "message": "nit: emptyCollection if you think it is better.",
+      "range": {
+        "startLine": 478,
+        "startChar": 37,
+        "endLine": 478,
+        "endChar": 47
+      },
+      "revId": "8b2972b4db939b9e599a5c4ee100aa6bf173bdce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
