@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c67414f_77d1998b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2022-04-11T01:43:09Z",
+      "side": 1,
+      "message": "Follow up from aosp/1978249. LGTM",
+      "revId": "240d126ed0031f2e1caf6b81c889c7bcf181de68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
