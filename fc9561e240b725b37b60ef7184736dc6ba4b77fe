@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf4f6130_f926c37d",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 10370,
+      "author": {
+        "id": 1947675
+      },
+      "writtenOn": "2022-04-12T18:44:44Z",
+      "side": 1,
+      "message": "Note the order of the labels should match the order in this list here.",
+      "revId": "fc9561e240b725b37b60ef7184736dc6ba4b77fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
