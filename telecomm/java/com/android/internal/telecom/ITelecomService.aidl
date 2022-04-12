@@ -364,4 +364,9 @@ interface ITelecomService {
      * @see TelecomServiceImpl#setTestCallDiagnosticService
      */
     void setTestCallDiagnosticService(in String packageName);
+
+    /**
+     * @see TelecomServiceImpl#requestLogMark
+     */
+    void requestLogMark(in String message);
 }
