@@ -20,6 +20,7 @@ import static com.android.server.vcn.VcnGatewayConnection.VcnIkeSession;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.never;
@@ -29,6 +30,9 @@ import android.net.ipsec.ike.IkeSessionParams;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
+
+import com.android.server.vcn.VcnGatewayConnection.IkeSessionCallbackImpl;
+import com.android.server.vcn.VcnGatewayConnection.VcnChildSessionCallback;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -56,9 +60,21 @@ public class VcnGatewayConnectionConnectingStateTest extends VcnGatewayConnectio
     public void testEnterStateCreatesNewIkeSession() throws Exception {
         final ArgumentCaptor<IkeSessionParams> paramsCaptor =
                 ArgumentCaptor.forClass(IkeSessionParams.class);
-        verify(mDeps).newIkeSession(any(), paramsCaptor.capture(), any(), any(), any());
+        final ArgumentCaptor<IkeSessionCallbackImpl> ikeCallbackCaptor =
+                ArgumentCaptor.forClass(IkeSessionCallbackImpl.class);
+        final ArgumentCaptor<VcnChildSessionCallback> childCallbackCaptor =
+                ArgumentCaptor.forClass(VcnChildSessionCallback.class);
+
+        verify(mDeps)
+                .newIkeSession(
+                        any(),
+                        paramsCaptor.capture(),
+                        any(),
+                        ikeCallbackCaptor.capture(),
+                        childCallbackCaptor.capture());
         assertEquals(
                 TEST_UNDERLYING_NETWORK_RECORD_1.network, paramsCaptor.getValue().getNetwork());
+        assertSame(ikeCallbackCaptor.getValue().getChildCallback(), childCallbackCaptor.getValue());
     }
 
     @Test

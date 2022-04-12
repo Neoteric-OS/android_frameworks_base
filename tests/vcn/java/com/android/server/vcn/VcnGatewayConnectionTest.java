@@ -48,6 +48,7 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.TelephonyNetworkSpecifier;
+import android.net.ipsec.ike.IkeSessionConnectionInfo;
 import android.net.vcn.VcnGatewayConnectionConfigTest;
 import android.net.vcn.VcnTransportInfo;
 import android.net.wifi.WifiInfo;
@@ -59,6 +60,8 @@ import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
+import com.android.server.vcn.VcnGatewayConnection.IkeSessionCallbackImpl;
+import com.android.server.vcn.VcnGatewayConnection.VcnChildSessionCallback;
 import com.android.server.vcn.routeselection.UnderlyingNetworkRecord;
 
 import org.junit.Before;
@@ -213,7 +216,8 @@ public class VcnGatewayConnectionTest extends VcnGatewayConnectionTestBase {
                         VcnGatewayConnectionConfigTest.buildTestConfig(),
                         tunnelIface,
                         childSessionConfig,
-                        record);
+                        record,
+                        mIkeConnectionInfo);
 
         verify(mDeps).getUnderlyingIfaceMtu(LOOPBACK_IFACE);
 
@@ -226,7 +230,8 @@ public class VcnGatewayConnectionTest extends VcnGatewayConnectionTestBase {
                         VcnGatewayConnectionConfigTest.buildTestConfig(),
                         tunnelIface,
                         childSessionConfig,
-                        record);
+                        record,
+                        mIkeConnectionInfo);
 
         verify(mDeps, times(2)).getUnderlyingIfaceMtu(LOOPBACK_IFACE);
 
@@ -285,5 +290,31 @@ public class VcnGatewayConnectionTest extends VcnGatewayConnectionTestBase {
         verify(vcnNetworkAgent).unregister();
 
         verifyWakeLockReleased();
+    }
+
+    @Test
+    public void testSetIkeConnectionInfoInIkeOpened() {
+        final int token = 1;
+        final VcnChildSessionCallback mockChildCallback = mock(VcnChildSessionCallback.class);
+        final IkeSessionCallbackImpl ikeCallback =
+                mGatewayConnection.new IkeSessionCallbackImpl(token, mockChildCallback);
+
+        ikeCallback.onOpened(mIkeSessionConfiguration);
+
+        verify(mockChildCallback).setIkeConnectionInfo(mIkeConnectionInfo);
+    }
+
+    @Test
+    public void testSetIkeConnectionInfoInIkeMigrated() {
+        final int token = 1;
+        final VcnChildSessionCallback mockChildCallback = mock(VcnChildSessionCallback.class);
+        final IkeSessionCallbackImpl ikeCallback =
+                mGatewayConnection.new IkeSessionCallbackImpl(token, mockChildCallback);
+        final IkeSessionConnectionInfo newIkeConnectionInfo =
+                new IkeSessionConnectionInfo(TEST_ADDR_V4, TEST_ADDR_V4_2, mock(Network.class));
+
+        ikeCallback.onIkeSessionConnectionInfoChanged(newIkeConnectionInfo);
+
+        verify(mockChildCallback).setIkeConnectionInfo(newIkeConnectionInfo);
     }
 }

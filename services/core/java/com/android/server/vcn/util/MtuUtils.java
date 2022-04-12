@@ -53,7 +53,14 @@ public class MtuUtils {
      *
      * <p>60 (Outer IPv4 + options) + 8 (UDP encap) + 4 (SPI) + 4 (Seq) + 2 (Pad + NextHeader)
      */
-    private static final int GENERIC_ESP_OVERHEAD_MAX = 78;
+    private static final int GENERIC_ESP_OVERHEAD_MAX_V4 = 78;
+
+    /**
+     * Max ESP overhead possible
+     *
+     * <p>40 (Outer IPv6 + options) + 4 (SPI) + 4 (Seq) + 2 (Pad + NextHeader)
+     */
+    private static final int GENERIC_ESP_OVERHEAD_MAX_V6 = 50;
 
     /** Maximum overheads of authentication algorithms, keyed on IANA-defined constants */
     private static final Map<Integer, Integer> AUTH_ALGORITHM_OVERHEAD;
@@ -108,7 +115,10 @@ public class MtuUtils {
      * </ul>
      */
     public static int getMtu(
-            @NonNull List<ChildSaProposal> childProposals, int maxMtu, int underlyingMtu) {
+            @NonNull List<ChildSaProposal> childProposals,
+            int maxMtu,
+            int underlyingMtu,
+            boolean isIpv4) {
         if (underlyingMtu <= 0) {
             return IPV6_MIN_MTU;
         }
@@ -145,10 +155,13 @@ public class MtuUtils {
             }
         }
 
+        final int genericEspOverheadMax =
+                isIpv4 ? GENERIC_ESP_OVERHEAD_MAX_V4 : GENERIC_ESP_OVERHEAD_MAX_V6;
+
         // Return minimum of maxMtu, and the adjusted MTUs based on algorithms.
-        final int combinedModeMtu = underlyingMtu - maxAuthCryptOverhead - GENERIC_ESP_OVERHEAD_MAX;
+        final int combinedModeMtu = underlyingMtu - maxAuthCryptOverhead - genericEspOverheadMax;
         final int normalModeMtu =
-                underlyingMtu - maxCryptOverhead - maxAuthOverhead - GENERIC_ESP_OVERHEAD_MAX;
+                underlyingMtu - maxCryptOverhead - maxAuthOverhead - genericEspOverheadMax;
         return Math.min(Math.min(maxMtu, combinedModeMtu), normalModeMtu);
     }
 }
