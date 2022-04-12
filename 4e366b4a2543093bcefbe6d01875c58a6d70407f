@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d902578_7988e176",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2022-04-12T22:35:33Z",
+      "side": 1,
+      "message": "Really sorry for the long discussion about this. It\u0027s just good to have something to refer to as this is the intended behaviour.",
+      "revId": "4e366b4a2543093bcefbe6d01875c58a6d70407f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
