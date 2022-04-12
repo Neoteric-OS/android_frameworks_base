@@ -29,6 +29,7 @@ import com.android.internal.protolog.common.ProtoLog;
 import com.android.wm.shell.ShellTaskOrganizer;
 import com.android.wm.shell.desktopmode.DesktopModeTaskRepository;
 import com.android.wm.shell.protolog.ShellProtoLogGroup;
+import com.android.wm.shell.recents.RecentTasksController;
 import com.android.wm.shell.shared.DesktopModeStatus;
 import com.android.wm.shell.sysui.ShellInit;
 import com.android.wm.shell.transition.Transitions;
@@ -49,6 +50,7 @@ public class FreeformTaskListener implements ShellTaskOrganizer.TaskListener,
     private final ShellTaskOrganizer mShellTaskOrganizer;
     private final Optional<DesktopModeTaskRepository> mDesktopModeTaskRepository;
     private final WindowDecorViewModel mWindowDecorationViewModel;
+    private final Optional<RecentTasksController> mRecentTasksOptional;
 
     private final SparseArray<State> mTasks = new SparseArray<>();
 
@@ -62,11 +64,13 @@ public class FreeformTaskListener implements ShellTaskOrganizer.TaskListener,
             ShellInit shellInit,
             ShellTaskOrganizer shellTaskOrganizer,
             Optional<DesktopModeTaskRepository> desktopModeTaskRepository,
-            WindowDecorViewModel windowDecorationViewModel) {
+            WindowDecorViewModel windowDecorationViewModel,
+            Optional<RecentTasksController> recentTasks) {
         mContext = context;
         mShellTaskOrganizer = shellTaskOrganizer;
         mWindowDecorationViewModel = windowDecorationViewModel;
         mDesktopModeTaskRepository = desktopModeTaskRepository;
+        mRecentTasksOptional = recentTasks;
         if (shellInit != null) {
             shellInit.addInitCallback(this::onInit, this);
         }
@@ -110,6 +114,8 @@ public class FreeformTaskListener implements ShellTaskOrganizer.TaskListener,
                 }
             });
         }
+
+        updateRecentsForVisibleFreeformTask(taskInfo);
     }
 
     @Override
@@ -201,5 +207,12 @@ public class FreeformTaskListener implements ShellTaskOrganizer.TaskListener,
     @Override
     public String toString() {
         return TAG;
+    }
+
+    private void updateRecentsForVisibleFreeformTask(RunningTaskInfo taskInfo) {
+        mRecentTasksOptional.ifPresent(recentTasks -> {
+            // Remove any persisted splits if either tasks are now made freeform.
+            recentTasks.removeSplitPair(taskInfo.taskId);
+        });
     }
 }
