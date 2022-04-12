@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51dd52f5_fb50f4a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2022-04-12T11:00:18Z",
+      "side": 1,
+      "message": "Recommend changing the author line to assign proper credit given that this is 99% Seth\u0027s work :)",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 41
+      },
+      "revId": "e3b659f176654db9a0e085e804398e1ce288cb79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09d83150_2c47798d",
+        "filename": "keystore/java/android/security/IGenerateRkpKeyService.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2022-04-12T11:00:18Z",
+      "side": 1,
+      "message": "Were tabs intentional here?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 1
+      },
+      "revId": "e3b659f176654db9a0e085e804398e1ce288cb79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
