@@ -149,6 +149,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "311eabfb_a830e9c5",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2714,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-04-13T15:20:04Z",
+      "side": 1,
+      "message": "Can we fix this by making the code use registerSystemDefaultNetworkCallback instead of registerDefaultNetworkCallback? We already had a bug for that IIRC.",
+      "parentUuid": "bd72ec97_1fad0b91",
+      "range": {
+        "startLine": 2714,
+        "startChar": 47,
+        "endLine": 2714,
+        "endChar": 66
+      },
+      "revId": "9a1a3239de4170cedc832ecedc8adda88ca74e77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "02a5e4a0_6384ad84",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 2
