@@ -2514,6 +2514,39 @@ public class ActivityManagerService extends IActivityManager.Stub
                 data2.recycle();
             }
         }
+        if (code == IBinder.FIRST_CALL_TRANSACTION + 13145) {
+            if (Binder.getCallingPid() != MY_PID) {
+                Slog.w(TAG, "calling pid isn't system.");
+                return false;
+            }
+            data.enforceInterface("android.app.IActivityManager");
+            int pid = data.readInt(); // get server pid
+            boolean javapid = data.readBoolean(); // whether java process
+            //Slog.i(TAG, "onTransact:pid=" + pid + ",javapid=" + javapid);
+            ArrayList<Integer> javaPids = new ArrayList<Integer>();
+            if (javapid) { // java pid
+                javaPids.add(pid);
+                dumpStackTraces(javaPids, null, null, null, null);
+            } else { // native pid
+                ArrayList<Integer> nativePids = new ArrayList<Integer>();
+                nativePids.add(pid);
+                dumpStackTraces(javaPids, null, null, nativePids, null);
+            }
+
+            int killProc = 1;
+            ProcessRecord proc;
+            synchronized (mPidsSelfLocked) {
+                proc = mPidsSelfLocked.get(pid);
+                if (proc != null && !proc.isKilledByAm() && proc.mState.getSetAdj() == ProcessList.FOREGROUND_APP_ADJ
+                    && (proc.mState.hasForegroundActivities() || proc.mState.hasOverlayUi() || proc.mState.hasTopUi())) {
+                    killProc = 0;
+                    Slog.w(TAG, "foregroundActivities:" + proc.mState.hasForegroundActivities() + ",hasOverlayUi:" + proc.mState.hasOverlayUi());
+                }
+            }
+            reply.writeInt(killProc);
+            reply.writeNoException();
+            return true;
+        }
         try {
             return super.onTransact(code, data, reply, flags);
         } catch (RuntimeException e) {

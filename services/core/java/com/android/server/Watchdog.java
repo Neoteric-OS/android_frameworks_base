@@ -62,6 +62,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import android.os.HandlerThread;
 
 /** This class calls its monitor every minute. Killing this process if they don't return **/
 public class Watchdog {
@@ -147,6 +148,8 @@ public class Watchdog {
             "android.hardware.light.ILights/",
             "android.hardware.power.stats.IPowerStats/",
     };
+
+    private HandlerThread mBinderMonitorThread;
 
     private static Watchdog sWatchdog;
 
@@ -366,7 +369,11 @@ public class Watchdog {
                 "surface animation thread", DEFAULT_TIMEOUT));
 
         // Initialize monitor for Binder threads.
-        addMonitor(new BinderThreadMonitor());
+        mBinderMonitorThread = new HandlerThread("binder monitor");
+	    mBinderMonitorThread.start();
+	    HandlerChecker binderChecker = new HandlerChecker(mBinderMonitorThread.getThreadHandler(),"binder monitor thread");
+	    binderChecker.addMonitorLocked(new BinderThreadMonitor());
+	    mHandlerCheckers.add(withDefaultTimeout(binderChecker));
 
         mInterestingJavaPids.add(Process.myPid());
 
