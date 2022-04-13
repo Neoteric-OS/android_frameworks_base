@@ -76,6 +76,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dd7fab7_ee2e5a40",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2272,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-13T14:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cbd3f21_7cb49206",
+      "range": {
+        "startLine": 2272,
+        "startChar": 18,
+        "endLine": 2272,
+        "endChar": 19
+      },
+      "revId": "9a1a3239de4170cedc832ecedc8adda88ca74e77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a42cf234_9b624df8",
@@ -99,6 +123,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd72ec97_1fad0b91",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2714,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-13T14:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a42cf234_9b624df8",
+      "range": {
+        "startLine": 2714,
+        "startChar": 47,
+        "endLine": 2714,
+        "endChar": 66
+      },
+      "revId": "9a1a3239de4170cedc832ecedc8adda88ca74e77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02a5e4a0_6384ad84",
@@ -112,6 +160,30 @@
       "writtenOn": "2022-04-13T06:28:26Z",
       "side": 1,
       "message": "If you have multiple ternaries with the same condition, please use if/else directly; it\u0027ll be cleaner:\n\n  final IkeSessionParams ikeSessionParams;\n  if (condition) {\n      ikeSessionParams \u003d foo;\n  } else {\n      ikeSessionParams \u003d bar;\n  }",
+      "range": {
+        "startLine": 2713,
+        "startChar": 0,
+        "endLine": 2719,
+        "endChar": 69
+      },
+      "revId": "9a1a3239de4170cedc832ecedc8adda88ca74e77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0778684b_5709199e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2719,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-13T14:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02a5e4a0_6384ad84",
       "range": {
         "startLine": 2713,
         "startChar": 0,
