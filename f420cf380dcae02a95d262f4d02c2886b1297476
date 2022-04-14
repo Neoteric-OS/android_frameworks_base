@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f77f6511_983153d3",
+        "filename": "core/java/android/os/Debug.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2637,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2022-04-14T22:42:53Z",
+      "side": 1,
+      "message": "Please use void. A function called \"abortProcess\" must not return.",
+      "range": {
+        "startLine": 2637,
+        "startChar": 25,
+        "endLine": 2637,
+        "endChar": 32
+      },
+      "revId": "f420cf380dcae02a95d262f4d02c2886b1297476",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab223a13_e742d8b2",
+        "filename": "core/jni/android_os_Debug.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2022-04-14T22:42:53Z",
+      "side": 1,
+      "message": "Please use a default message. e.g. \"\u003cno msg\u003e\" instead.\n\nThis should never return.",
+      "range": {
+        "startLine": 968,
+        "startChar": 8,
+        "endLine": 968,
+        "endChar": 21
+      },
+      "revId": "f420cf380dcae02a95d262f4d02c2886b1297476",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7fc224c6_badba088",
         "filename": "services/core/java/com/android/server/am/ProcessList.java",
         "patchSetId": 4
