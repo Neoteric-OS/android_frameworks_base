@@ -94,6 +94,30 @@
       },
       "revId": "f420cf380dcae02a95d262f4d02c2886b1297476",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "deaec6d2_090db80c",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2431,
+      "author": {
+        "id": 1017430
+      },
+      "writtenOn": "2022-04-14T20:04:12Z",
+      "side": 1,
+      "message": "There are numerous places in fw/base that catch Error or Throwable. I think we probably should have a \"guaranteed crash\" method to avoid any chance that AssertionError is caught.",
+      "parentUuid": "b31bd282_5b4b1eca",
+      "range": {
+        "startLine": 2430,
+        "startChar": 19,
+        "endLine": 2431,
+        "endChar": 60
+      },
+      "revId": "f420cf380dcae02a95d262f4d02c2886b1297476",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
