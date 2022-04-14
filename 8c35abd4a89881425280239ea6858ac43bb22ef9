@@ -22,6 +22,30 @@
       },
       "revId": "8c35abd4a89881425280239ea6858ac43bb22ef9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3b4c73a_8129b3fa",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-14T21:39:29Z",
+      "side": 1,
+      "message": "Yeah, this is done directly in the System Server\u0027s BootReceiver as well; This is also CTS tested, which does mean that it\u0027s relatively guaranteed:\n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/BootReceiver.java;l\u003d97?q\u003dbootreceiver\u0026ss\u003dandroid%2Fplatform%2Fsuperproject\n\nAdditionally, changes during the upgrade process would need to actually migrate the entire directory, given that this is the default for system component storage.",
+      "parentUuid": "9ec8a255_4766575d",
+      "range": {
+        "startLine": 167,
+        "startChar": 33,
+        "endLine": 167,
+        "endChar": 55
+      },
+      "revId": "8c35abd4a89881425280239ea6858ac43bb22ef9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
