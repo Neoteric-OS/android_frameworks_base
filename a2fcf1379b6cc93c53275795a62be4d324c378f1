@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6f885eb_43ce1d2e",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 4172,
+      "author": {
+        "id": 1765766
+      },
+      "writtenOn": "2022-04-14T16:08:51Z",
+      "side": 1,
+      "message": "Can you also add a getter, isEnabled()",
+      "range": {
+        "startLine": 4172,
+        "startChar": 95,
+        "endLine": 4172,
+        "endChar": 108
+      },
+      "revId": "a2fcf1379b6cc93c53275795a62be4d324c378f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62e85eb9_3a59af12",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1765766
+      },
+      "writtenOn": "2022-04-14T16:08:51Z",
+      "side": 1,
+      "message": "Should USB_HAL_RETRY also be in here? Or why not?",
+      "range": {
+        "startLine": 681,
+        "startChar": 12,
+        "endLine": 681,
+        "endChar": 33
+      },
+      "revId": "a2fcf1379b6cc93c53275795a62be4d324c378f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79755c72_559f17c6",
+        "filename": "core/java/android/hardware/usb/UsbPort.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1765766
+      },
+      "writtenOn": "2022-04-14T16:08:51Z",
+      "side": 1,
+      "message": "Would suggest using ENABLE_USB_DATA_STATUS_ prefix to match the name.\n\nMight want to adjust slightly to match method rename though.",
+      "range": {
+        "startLine": 111,
+        "startChar": 24,
+        "endLine": 111,
+        "endChar": 40
+      },
+      "revId": "a2fcf1379b6cc93c53275795a62be4d324c378f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8b368dc_8550a2ef",
+        "filename": "core/java/android/hardware/usb/UsbPort.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1765766
+      },
+      "writtenOn": "2022-04-14T16:08:51Z",
+      "side": 1,
+      "message": "Can we rename to setUsbDataEnabled(boolean enabled)?\n\nenableX() sounds like it always enables, instead of enable/disable.",
+      "range": {
+        "startLine": 248,
+        "startChar": 36,
+        "endLine": 248,
+        "endChar": 49
+      },
+      "revId": "a2fcf1379b6cc93c53275795a62be4d324c378f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
