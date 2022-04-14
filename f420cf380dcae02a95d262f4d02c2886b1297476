@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fc224c6_badba088",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2431,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2022-04-14T18:11:13Z",
+      "side": 1,
+      "message": "I would prefer that you threw an AssertionError or something like that. Is there a reason why you need to abort ?",
+      "range": {
+        "startLine": 2430,
+        "startChar": 19,
+        "endLine": 2431,
+        "endChar": 60
+      },
+      "revId": "f420cf380dcae02a95d262f4d02c2886b1297476",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
