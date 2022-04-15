@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "368f77e0_1bf41e53",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-04-15T23:03:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a1c4a86_7bb5bb25",
+      "range": {
+        "startLine": 480,
+        "startChar": 0,
+        "endLine": 481,
+        "endChar": 48
+      },
+      "revId": "d735b172324f3320bff01b98b3248f17cd3d0383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "d499d5c1_fd88ef90",
         "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
         "patchSetId": 5
@@ -77,6 +101,30 @@
       "writtenOn": "2022-04-15T19:05:53Z",
       "side": 1,
       "message": "Suggest revert the change? Probably cleaner as the previous.",
+      "range": {
+        "startLine": 1901,
+        "startChar": 0,
+        "endLine": 1903,
+        "endChar": 64
+      },
+      "revId": "d735b172324f3320bff01b98b3248f17cd3d0383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67049dbc_31d645f3",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1903,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-04-15T23:03:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0ee2919_537f5111",
       "range": {
         "startLine": 1901,
         "startChar": 0,
