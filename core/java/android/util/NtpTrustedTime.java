@@ -107,7 +107,7 @@ public class NtpTrustedTime implements TrustedTime {
     }
 
     private static final String TAG = "NtpTrustedTime";
-    private static final boolean LOGD = false;
+    private static final boolean LOGD = true;
 
     private static NtpTrustedTime sSingleton;
 
@@ -210,17 +210,20 @@ public class NtpTrustedTime implements TrustedTime {
 
             if (LOGD) Log.d(TAG, "forceRefresh() from cache miss");
             final SntpClient client = new SntpClient();
-            final String serverName = connectionInfo.getServer();
+            final String[] servers = connectionInfo.getServers();
             final int port = connectionInfo.getPort();
             final int timeoutMillis = connectionInfo.getTimeoutMillis();
-            if (client.requestTime(serverName, port, timeoutMillis, network)) {
-                long ntpCertainty = client.getRoundTripTime() / 2;
-                mTimeResult = new TimeResult(
+            for (String serverName: servers) {
+                if (client.requestTime(serverName, port, timeoutMillis, network)) {
+                    if (LOGD) Log.d(TAG, "Ntp success server:" + serverName);
+                    long ntpCertainty = client.getRoundTripTime() / 2;
+                    mTimeResult = new TimeResult(
                         client.getNtpTime(), client.getNtpTimeReference(), ntpCertainty);
-                return true;
-            } else {
-                return false;
+                    return true;
+                }
+                if (LOGD) Log.d(TAG, "Ntp Fail server:" + serverName);
             }
+            return false;
         }
     }
 
@@ -313,19 +316,19 @@ public class NtpTrustedTime implements TrustedTime {
 
     private static class NtpConnectionInfo {
 
-        @NonNull private final String mServer;
+        @NonNull private final String[] mServers;
         private final int mPort;
         private final int mTimeoutMillis;
 
-        NtpConnectionInfo(@NonNull String server, int port, int timeoutMillis) {
-            mServer = Objects.requireNonNull(server);
+        NtpConnectionInfo(@NonNull String[] servers, int port, int timeoutMillis) {
+            mServers = servers;
             mPort = port;
             mTimeoutMillis = timeoutMillis;
         }
 
         @NonNull
-        public String getServer() {
-            return mServer;
+        public String[] getServers() {
+            return mServers;
         }
 
         @NonNull
@@ -353,18 +356,12 @@ public class NtpTrustedTime implements TrustedTime {
 
         final Resources res = mContext.getResources();
 
-        final String hostname;
-        if (mHostnameForTests != null) {
-            hostname = mHostnameForTests;
-        } else {
-            String serverGlobalSetting =
-                    Settings.Global.getString(resolver, Settings.Global.NTP_SERVER);
-            if (serverGlobalSetting != null) {
-                hostname = serverGlobalSetting;
-            } else {
-                hostname = res.getString(com.android.internal.R.string.config_ntpServer);
-            }
-        }
+        final String[] hostnames;
+
+        final String defaultServer = res.getString(
+                com.android.internal.R.string.config_ntpServer);
+        String[] defaltservers = res.getStringArray(
+                com.android.internal.R.array.config_ntpServers);
 
         final Integer port;
         if (mPortForTests != null) {
@@ -382,8 +379,33 @@ public class NtpTrustedTime implements TrustedTime {
             timeoutMillis = Settings.Global.getInt(
                     resolver, Settings.Global.NTP_TIMEOUT, defaultTimeoutMillis);
         }
-        return TextUtils.isEmpty(hostname) ? null :
-            new NtpConnectionInfo(hostname, port, timeoutMillis);
+
+        if (mHostnameForTests != null) {
+            if (LOGD) Log.d(TAG, "smHostnameForTests != null");
+            hostnames = new String[1];
+            hostnames[0] = mHostnameForTests;
+            return new NtpConnectionInfo(hostnames, port, timeoutMillis);
+        } else {
+            String serverGlobalSetting =
+                    Settings.Global.getString(resolver, Settings.Global.NTP_SERVER);
+            if (serverGlobalSetting != null) {
+                if (LOGD) Log.d(TAG, "smHostnameForTests == null && serverGlobalSetting != null");
+                hostnames = new String[1];
+                hostnames[0] = serverGlobalSetting;
+                return new NtpConnectionInfo(hostnames, port, timeoutMillis);
+            } else if(defaltservers.length != 0){
+                if (LOGD) Log.d(TAG, "smHostnameForTests == null && serverGlobalSetting == null && defaltservers.length != 0");
+                return new NtpConnectionInfo(defaltservers, port, timeoutMillis);
+            } else if (defaultServer != null) {
+                if (LOGD) Log.d(TAG, "smHostnameForTests == null && serverGlobalSetting == null && defaltservers.length == 0 && defaultServer != null");
+                hostnames = new String[1];
+                hostnames[0] = defaultServer;
+                return new NtpConnectionInfo(hostnames, port, timeoutMillis);
+            } else {
+                if (LOGD) Log.d(TAG, "smHostnameForTests == null && serverGlobalSetting == null && defaltservers.length == 0 && defaultServer == null");
+                return null;
+            }
+        }
     }
 
     /** Prints debug information. */
