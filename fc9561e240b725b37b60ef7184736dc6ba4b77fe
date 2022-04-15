@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0945ba7f_a2f0bd1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1947675
+      },
+      "writtenOn": "2022-04-15T17:06:55Z",
+      "side": 1,
+      "message": "Auto submit is failing for me due to warnings. As an external contributor, it looks like I neither have permission to manually submit this, nor am I able to look at what the warnings are to try to resolve.\n\nCan someone help advise me on how to proceed from here?",
+      "revId": "fc9561e240b725b37b60ef7184736dc6ba4b77fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bf4f6130_f926c37d",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 3
