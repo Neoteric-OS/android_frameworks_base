@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a1c4a86_7bb5bb25",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-15T19:05:53Z",
+      "side": 1,
+      "message": "We should probably also document what arg1/sessionToken should be used. I presume the new connectionInfoChanged is also IKE Session dependent, so should be the IkeSession\u0027s token.",
+      "range": {
+        "startLine": 480,
+        "startChar": 0,
+        "endLine": 481,
+        "endChar": 48
+      },
+      "revId": "d735b172324f3320bff01b98b3248f17cd3d0383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d499d5c1_fd88ef90",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-15T19:05:53Z",
+      "side": 1,
+      "message": "I like the fact that this has a public constructor so we can just use it directly instead of wrapping it. Something we can keep in mind for future reference.",
+      "revId": "d735b172324f3320bff01b98b3248f17cd3d0383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b166c20_0f67845d",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-15T19:05:53Z",
+      "side": 1,
+      "message": "JFYI: In general, try to group even variables together if possible; the new IkeConnectionInfo data is extremely closely related to the ChildSessionConfiguration.",
+      "range": {
+        "startLine": 683,
+        "startChar": 0,
+        "endLine": 683,
+        "endChar": 54
+      },
+      "revId": "d735b172324f3320bff01b98b3248f17cd3d0383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0ee2919_537f5111",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1903,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-15T19:05:53Z",
+      "side": 1,
+      "message": "Suggest revert the change? Probably cleaner as the previous.",
+      "range": {
+        "startLine": 1901,
+        "startChar": 0,
+        "endLine": 1903,
+        "endChar": 64
+      },
+      "revId": "d735b172324f3320bff01b98b3248f17cd3d0383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
