@@ -182,6 +182,30 @@
       },
       "revId": "2d6c2a8e880ccea9677e16675730c8ea2b54c4f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0104cdf9_c749e130",
+        "filename": "core/java/com/android/internal/app/ChooserActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1060512
+      },
+      "writtenOn": "2022-04-18T14:11:29Z",
+      "side": 1,
+      "message": "Please change the else clause to:\n\n} else { \n    Log.e(TAG, originalAction + \" is not supported.\");\n    return null;\n}",
+      "parentUuid": "5bab6b6a_d78245aa",
+      "range": {
+        "startLine": 1188,
+        "startChar": 10,
+        "endLine": 1191,
+        "endChar": 9
+      },
+      "revId": "2d6c2a8e880ccea9677e16675730c8ea2b54c4f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
