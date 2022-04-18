@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "205455b1_20c086b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-18T08:42:38Z",
+      "side": 1,
+      "message": "Could you provide some sample logs for reference?",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 40
+      },
+      "revId": "a891508a03e8af8c1efb65b5e58661bc17c5e60a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8306813c_277f2969",
+        "filename": "core/java/android/net/VpnProfileState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-18T08:42:38Z",
+      "side": 1,
+      "message": "Do you need to access inside package? If not, maybe make it private.",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 5
+      },
+      "revId": "a891508a03e8af8c1efb65b5e58661bc17c5e60a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
