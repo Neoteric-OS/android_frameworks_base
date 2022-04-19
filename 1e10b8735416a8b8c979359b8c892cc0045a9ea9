@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a526eb1_77474ca7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2022-04-19T08:50:44Z",
+      "side": 1,
+      "message": "-1 as I really would prefer this doesn\u0027t get submitted as is.",
+      "revId": "1e10b8735416a8b8c979359b8c892cc0045a9ea9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
