@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d5370e9_4b52dedf",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 4172,
+      "author": {
+        "id": 1590325
+      },
+      "writtenOn": "2022-04-19T08:52:22Z",
+      "side": 1,
+      "message": "Since this commit is cherry picked from other branch, I can\u0027t add the api in this commit. I can open a bug (b/229694644) to add it.",
+      "parentUuid": "c6f885eb_43ce1d2e",
+      "range": {
+        "startLine": 4172,
+        "startChar": 95,
+        "endLine": 4172,
+        "endChar": 108
+      },
+      "revId": "a2fcf1379b6cc93c53275795a62be4d324c378f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62e85eb9_3a59af12",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-04-14T16:08:51Z",
       "side": 1,
       "message": "Should USB_HAL_RETRY also be in here? Or why not?",
+      "range": {
+        "startLine": 681,
+        "startChar": 12,
+        "endLine": 681,
+        "endChar": 33
+      },
+      "revId": "a2fcf1379b6cc93c53275795a62be4d324c378f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fa2f92c_3ec4f8f8",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1590325
+      },
+      "writtenOn": "2022-04-19T08:52:22Z",
+      "side": 1,
+      "message": "Currently, getUsbHalVersion() only return hal version (in IntDef) or throw exception, I think USB_HAL_RETRY is not suitable for the IntDef.",
+      "parentUuid": "62e85eb9_3a59af12",
       "range": {
         "startLine": 681,
         "startChar": 12,
@@ -83,6 +131,30 @@
       "writtenOn": "2022-04-14T16:08:51Z",
       "side": 1,
       "message": "Can we rename to setUsbDataEnabled(boolean enabled)?\n\nenableX() sounds like it always enables, instead of enable/disable.",
+      "range": {
+        "startLine": 248,
+        "startChar": 36,
+        "endLine": 248,
+        "endChar": 49
+      },
+      "revId": "a2fcf1379b6cc93c53275795a62be4d324c378f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9143d51_688d0335",
+        "filename": "core/java/android/hardware/usb/UsbPort.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1590325
+      },
+      "writtenOn": "2022-04-19T08:52:22Z",
+      "side": 1,
+      "message": "Since the API is already merged in other branch, I think we can\u0027t change it to avoid commit conflict.",
+      "parentUuid": "f8b368dc_8550a2ef",
       "range": {
         "startLine": 248,
         "startChar": 36,
