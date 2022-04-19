@@ -118,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "430cc164_08e05fac",
+        "filename": "core/java/android/hardware/usb/UsbPort.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1590325
+      },
+      "writtenOn": "2022-04-19T08:55:14Z",
+      "side": 1,
+      "message": "Since we didn\u0027t rename the API, do you think it is still needed to rename?",
+      "parentUuid": "79755c72_559f17c6",
+      "range": {
+        "startLine": 111,
+        "startChar": 24,
+        "endLine": 111,
+        "endChar": 40
+      },
+      "revId": "a2fcf1379b6cc93c53275795a62be4d324c378f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f8b368dc_8550a2ef",
