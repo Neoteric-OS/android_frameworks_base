@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59557f14_93052914",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 5315,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2022-04-19T11:08:23Z",
+      "side": 1,
+      "message": "rename to config_dimNonImeAttachedSide.",
+      "range": {
+        "startLine": 5315,
+        "startChar": 16,
+        "endLine": 5315,
+        "endChar": 32
+      },
+      "revId": "edce24a049da0a26074d89dedfb405775eb01aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "566b532d_208f27b0",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 5315,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2022-04-19T11:08:23Z",
+      "side": 1,
+      "message": "Please move this to frameworks/base/libs/WindowManager/Shell/res/values/config.xml.",
+      "range": {
+        "startLine": 5315,
+        "startChar": 4,
+        "endLine": 5315,
+        "endChar": 45
+      },
+      "revId": "edce24a049da0a26074d89dedfb405775eb01aa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
