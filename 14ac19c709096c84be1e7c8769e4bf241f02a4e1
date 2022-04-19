@@ -22,6 +22,30 @@
       },
       "revId": "14ac19c709096c84be1e7c8769e4bf241f02a4e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "360ad652_8acc69c0",
+        "filename": "core/java/android/net/NetworkPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-04-19T06:12:20Z",
+      "side": 1,
+      "message": "No since the template is the filter we want to match networks.\nFor templates in NPMS we should always pointed to metered mobile network filters.",
+      "parentUuid": "309157de_c1ea6b52",
+      "range": {
+        "startLine": 400,
+        "startChar": 27,
+        "endLine": 400,
+        "endChar": 67
+      },
+      "revId": "14ac19c709096c84be1e7c8769e4bf241f02a4e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
