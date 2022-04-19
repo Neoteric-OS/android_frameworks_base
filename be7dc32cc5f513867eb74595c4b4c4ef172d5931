@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac3c3e39_de803536",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3339,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-19T18:04:30Z",
+      "side": 1,
+      "message": "Does this need to be locked? or denoted as a method that should only be called when locked?\n\nLooks like it\u0027s always called while locked, so suggest \"getSessionKeyLocked()\" as the name.",
+      "range": {
+        "startLine": 3339,
+        "startChar": 0,
+        "endLine": 3339,
+        "endChar": 85
+      },
+      "revId": "be7dc32cc5f513867eb74595c4b4c4ef172d5931",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
