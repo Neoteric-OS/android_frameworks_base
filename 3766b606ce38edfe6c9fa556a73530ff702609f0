@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e56dc53e_2eca6485",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2022-04-19T03:05:30Z",
+      "side": 1,
+      "message": "12L issue: b/228425546\nCP\u0027ed from 491c07a9e0372bb90d2126600ff0a4a2caca25a2",
+      "revId": "3766b606ce38edfe6c9fa556a73530ff702609f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
