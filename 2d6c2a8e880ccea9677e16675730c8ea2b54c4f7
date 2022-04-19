@@ -89,6 +89,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "beda970e_97619787",
+        "filename": "core/java/com/android/internal/app/ChooserActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1167564
+      },
+      "writtenOn": "2022-04-19T04:53:35Z",
+      "side": 1,
+      "message": "Please see above comment.",
+      "parentUuid": "cce3e294_63a6039f",
+      "range": {
+        "startLine": 1184,
+        "startChar": 20,
+        "endLine": 1185,
+        "endChar": 64
+      },
+      "revId": "2d6c2a8e880ccea9677e16675730c8ea2b54c4f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9ec525e3_eb40c85c",
@@ -198,6 +222,30 @@
       "side": 1,
       "message": "Please change the else clause to:\n\n} else { \n    Log.e(TAG, originalAction + \" is not supported.\");\n    return null;\n}",
       "parentUuid": "5bab6b6a_d78245aa",
+      "range": {
+        "startLine": 1188,
+        "startChar": 10,
+        "endLine": 1191,
+        "endChar": 9
+      },
+      "revId": "2d6c2a8e880ccea9677e16675730c8ea2b54c4f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b657d9ee_25da5d76",
+        "filename": "core/java/com/android/internal/app/ChooserActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1167564
+      },
+      "writtenOn": "2022-04-19T04:53:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0104cdf9_c749e130",
       "range": {
         "startLine": 1188,
         "startChar": 10,
