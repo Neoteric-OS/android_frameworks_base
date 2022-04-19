@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "309157de_c1ea6b52",
+        "filename": "core/java/android/net/NetworkPolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-04-19T03:35:24Z",
+      "side": 1,
+      "message": "Does this affect non-metered 5G?",
+      "range": {
+        "startLine": 400,
+        "startChar": 27,
+        "endLine": 400,
+        "endChar": 67
+      },
+      "revId": "14ac19c709096c84be1e7c8769e4bf241f02a4e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
