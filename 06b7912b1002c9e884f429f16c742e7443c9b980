@@ -46,6 +46,30 @@
       },
       "revId": "06b7912b1002c9e884f429f16c742e7443c9b980",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b96206d5_7a418013",
+        "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2022-04-20T06:42:31Z",
+      "side": 1,
+      "message": "Sorry, I missed this. aosp/2067673 LGTM",
+      "parentUuid": "741052b4_7edd121d",
+      "range": {
+        "startLine": 285,
+        "startChar": 53,
+        "endLine": 285,
+        "endChar": 67
+      },
+      "revId": "06b7912b1002c9e884f429f16c742e7443c9b980",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
