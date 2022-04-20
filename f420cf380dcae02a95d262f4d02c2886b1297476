@@ -260,6 +260,30 @@
       },
       "revId": "f420cf380dcae02a95d262f4d02c2886b1297476",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f18b30cb_9af9730f",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2431,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2022-04-20T22:04:37Z",
+      "side": 1,
+      "message": "I tried Narayan\u0027s suggested approach of throwing AssertionError and it indeed crashes the system_server with the logs as below:\n\n```\n04-20 20:17:12.790 14892 14926 E AndroidRuntime: *** FATAL EXCEPTION IN SYSTEM PROCESS: ActivityManager:procStart\n04-20 20:17:12.790 14892 14926 E AndroidRuntime: java.lang.AssertionError: Unable to create process group for com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0 (19220)\n04-20 20:17:12.790 14892 14926 E AndroidRuntime:        at com.android.server.am.ProcessList.startProcess(ProcessList.java:2313)\n04-20 20:17:12.790 14892 14926 E AndroidRuntime:        at com.android.server.am.ProcessList.lambda$handleProcessStart$1(ProcessList.java:1966)\n04-20 20:17:12.790 14892 14926 E AndroidRuntime:        at com.android.server.am.ProcessList.$r8$lambda$yAUAM7lp-U4rR1kIWsGK9Z-eFWc(Unknown Source:0)\n04-20 20:17:12.790 14892 14926 E AndroidRuntime:        at com.android.server.am.ProcessList$$ExternalSyntheticLambda4.run(Unknown Source:22)\n04-20 20:17:12.790 14892 14926 E AndroidRuntime:        at com.android.server.am.ProcessList.handleProcessStart(ProcessList.java:1992)\n04-20 20:17:12.790 14892 14926 E AndroidRuntime:        at com.android.server.am.ProcessList.lambda$startProcessLocked$0(ProcessList.java:1932)\n04-20 20:17:12.790 14892 14926 E AndroidRuntime:        at com.android.server.am.ProcessList.$r8$lambda$oBmDYaH718rbQmtZhkdQqDR_vGQ(Unknown Source:0)\n04-20 20:17:12.790 14892 14926 E AndroidRuntime:        at com.android.server.am.ProcessList$$ExternalSyntheticLambda2.run(Unknown Source:22)\n04-20 20:17:12.790 14892 14926 E AndroidRuntime:        at android.os.Handler.handleCallback(Handler.java:942)\n04-20 20:17:12.790 14892 14926 E AndroidRuntime:        at android.os.Handler.dispatchMessage(Handler.java:99)\n04-20 20:17:12.790 14892 14926 E AndroidRuntime:        at android.os.Looper.loopOnce(Looper.java:201)\n04-20 20:17:12.790 14892 14926 E AndroidRuntime:        at android.os.Looper.loop(Looper.java:288)\n04-20 20:17:12.790 14892 14926 E AndroidRuntime:        at android.os.HandlerThread.run(HandlerThread.java:67)\n04-20 20:17:12.790 14892 14926 E AndroidRuntime:        at com.android.server.ServiceThread.run(ServiceThread.java:44)\n04-20 20:17:12.790 14892 14926 I am_crash: [14892,0,system_server,-1,java.lang.AssertionError,Unable to create process group for com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0 (19220),ProcessList.java,2313]\n```",
+      "parentUuid": "1eebb529_5733b48a",
+      "range": {
+        "startLine": 2430,
+        "startChar": 19,
+        "endLine": 2431,
+        "endChar": 60
+      },
+      "revId": "f420cf380dcae02a95d262f4d02c2886b1297476",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
