@@ -16,6 +16,24 @@
       "message": "please have a look",
       "revId": "9122ae05d36c4070f3718f715ab1786ce739e517",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac1c7d3e_d79b99a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2022-04-20T14:08:05Z",
+      "side": 1,
+      "message": "Sorry, my mistake, disregard my review request, this Bug was already fixed.",
+      "parentUuid": "4e6fe5de_b2753334",
+      "revId": "9122ae05d36c4070f3718f715ab1786ce739e517",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
