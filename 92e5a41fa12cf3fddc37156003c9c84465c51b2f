@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b1b3272_b99d4d20",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 18341,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2022-04-20T08:27:17Z",
+      "side": 1,
+      "message": "nit: `root view`?",
+      "range": {
+        "startLine": 18340,
+        "startChar": 14,
+        "endLine": 18341,
+        "endChar": 25
+      },
+      "revId": "92e5a41fa12cf3fddc37156003c9c84465c51b2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79deef81_78369979",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 18351,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2022-04-20T08:27:17Z",
+      "side": 1,
+      "message": "Is this related to multi-window mode? Or it is just related to the coordinate space of the root view?\n\nMaybe you can test this on a non-match-parent view which is in a ViewGroup (ex: FrameLayout) which is in a non-match-parent window.",
+      "range": {
+        "startLine": 18349,
+        "startChar": 0,
+        "endLine": 18351,
+        "endChar": 34
+      },
+      "revId": "92e5a41fa12cf3fddc37156003c9c84465c51b2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
