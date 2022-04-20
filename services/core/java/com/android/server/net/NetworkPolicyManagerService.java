@@ -1008,8 +1008,11 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 final int changes = ActivityManager.UID_OBSERVER_PROCSTATE
                         | ActivityManager.UID_OBSERVER_GONE
                         | ActivityManager.UID_OBSERVER_CAPABILITY;
-                mActivityManagerInternal.registerNetworkPolicyUidObserver(mUidObserver, changes,
-                        NetworkPolicyManager.FOREGROUND_THRESHOLD_STATE, "android");
+                mActivityManagerInternal.registerNetworkPolicyUidObserver(new UidObserver(),
+                        changes, NetworkPolicyManager.FOREGROUND_THRESHOLD_STATE, "android");
+                mActivityManagerInternal.registerNetworkPolicyUidObserver(new UidObserver(),
+                        ActivityManager.UID_OBSERVER_PROCSTATE,
+                        NetworkPolicyManager.TOP_THRESHOLD_STATE, "android");
                 mNetworkManager.registerObserver(mAlertObserver);
             } catch (RemoteException e) {
                 // ignored; both services live in system_server
@@ -1115,7 +1118,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         }
     }
 
-    final private IUidObserver mUidObserver = new IUidObserver.Stub() {
+    private final class UidObserver extends IUidObserver.Stub {
         @Override public void onUidStateChanged(int uid, int procState, long procStateSeq,
                 @ProcessCapability int capability) {
             synchronized (mUidStateCallbackInfos) {
@@ -1146,7 +1149,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
         @Override public void onUidCachedChanged(int uid, boolean cached) {
         }
-    };
+    }
 
     private static final class UidStateCallbackInfo {
         public int uid;
