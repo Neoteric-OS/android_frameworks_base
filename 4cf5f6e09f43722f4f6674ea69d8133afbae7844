@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa8a1677_53ec9d20",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-20T05:41:12Z",
+      "side": 1,
+      "message": "Let\u0027s break this out into a separate change; it\u0027s a safety check, but shouldn\u0027t block our other work.\n\nThis might require a bit of refactoring to make this work more nicely, let\u0027s at least unblock the PPN folks before attempting this. If you could file a bug, that\u0027d also be great.",
+      "range": {
+        "startLine": 690,
+        "startChar": 0,
+        "endLine": 690,
+        "endChar": 57
+      },
+      "revId": "4cf5f6e09f43722f4f6674ea69d8133afbae7844",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e1e2770_635bb451",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-20T05:41:12Z",
+      "side": 1,
+      "message": "String comparisons are generally frowned upon :)\n\nIf there is a way to do a direct equality comparison, that would be cleaner. The issue with String comparisons is that multiple threads with the same name could end up matching, and that\u0027d still leave us with a race condition.\n\nGenerally, the way this ends up getting done is that we often use HandlerThread(s) and HandlerExecutors, and do Thread.currentThread() \u003d\u003d handerThread.getThread() or something.",
+      "range": {
+        "startLine": 696,
+        "startChar": 13,
+        "endLine": 696,
+        "endChar": 78
+      },
+      "revId": "4cf5f6e09f43722f4f6674ea69d8133afbae7844",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7e4c4cd_402405b7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 2612,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-20T05:41:12Z",
+      "side": 1,
+      "message": "As an FYI for when you do this: making this injectable via dependencies would be a good idea.",
+      "range": {
+        "startLine": 2607,
+        "startChar": 0,
+        "endLine": 2612,
+        "endChar": 17
+      },
+      "revId": "4cf5f6e09f43722f4f6674ea69d8133afbae7844",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
