@@ -16,6 +16,23 @@
       "message": "Exception occurred while executing \u0027force-dex-opt\u0027:\njava.lang.IllegalArgumentException: reason -1 invalid\n\tat com.android.server.pm.PackageManagerServiceCompilerMapping.getReasonName(PackageManagerServiceCompilerMapping.java:146)\n... ...\n\tat com.android.server.pm.PackageManagerService.forceDexOpt(PackageManagerService.java:13416)\n",
       "revId": "712807259f96369df7436edd236eff281fac298b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95655334_12640da4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2022-04-21T13:34:44Z",
+      "side": 1,
+      "message": "I will cherry-pick it to the internal branch",
+      "revId": "712807259f96369df7436edd236eff281fac298b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
