@@ -21,9 +21,11 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
@@ -175,5 +177,24 @@ public final class VpnProfileState implements Parcelable {
         resultJoiner.add("Always-on: " + isAlwaysOn());
         resultJoiner.add("Lockdown: " + isLockdownEnabled());
         return resultJoiner.toString();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof VpnProfileState)) return false;
+        final VpnProfileState that = (VpnProfileState) obj;
+        if (getState() != that.getState()) return false;
+        if (!TextUtils.equals(getSessionId(), that.getSessionId())) return false;
+        if (isAlwaysOn() != that.isAlwaysOn()) return false;
+        if (isLockdownEnabled() != that.isLockdownEnabled()) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return getState() * 3
+                + Objects.hashCode(getSessionId()) * 5
+                + (isAlwaysOn() ? 7 : 0)
+                + (isLockdownEnabled() ? 11 : 0);
     }
 }
