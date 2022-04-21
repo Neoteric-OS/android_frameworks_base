@@ -16,6 +16,52 @@
       "message": "Please see changes in the API docs for all three methods.",
       "revId": "71f3c6c31690bb5a3a37b6302089a6ba6f1635dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cf56632_5fecfb76",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 18341,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2022-04-21T08:23:04Z",
+      "side": 1,
+      "message": "nit: do we really need this?",
+      "range": {
+        "startLine": 18340,
+        "startChar": 77,
+        "endLine": 18341,
+        "endChar": 64
+      },
+      "revId": "71f3c6c31690bb5a3a37b6302089a6ba6f1635dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e7f9fc5_8fb2e73e",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 18358,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2022-04-21T08:23:04Z",
+      "side": 1,
+      "message": "Do we really need this? Do we have different logic between the multiple-screen scenario and the single-screen one? Same question to the multi-window mode.",
+      "range": {
+        "startLine": 18348,
+        "startChar": 0,
+        "endLine": 18358,
+        "endChar": 55
+      },
+      "revId": "71f3c6c31690bb5a3a37b6302089a6ba6f1635dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

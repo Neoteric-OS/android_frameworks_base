@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1011c579_fddb9061",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 18341,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2022-04-21T08:23:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a4a076aa_075dc7ea",
+      "range": {
+        "startLine": 18340,
+        "startChar": 14,
+        "endLine": 18341,
+        "endChar": 25
+      },
+      "revId": "92e5a41fa12cf3fddc37156003c9c84465c51b2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79deef81_78369979",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Excellent observation. Thanks for the test code, which shows the coordinate space has nothing to do with the window or screen and everything to do with the root view. As you point out, the coordinate space is the root view.",
       "parentUuid": "79deef81_78369979",
+      "range": {
+        "startLine": 18349,
+        "startChar": 0,
+        "endLine": 18351,
+        "endChar": 34
+      },
+      "revId": "92e5a41fa12cf3fddc37156003c9c84465c51b2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcb41a02_96fbc004",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 18351,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2022-04-21T08:23:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a45eb957_f51b17aa",
       "range": {
         "startLine": 18349,
         "startChar": 0,
