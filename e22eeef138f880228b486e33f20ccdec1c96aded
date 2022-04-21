@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f180af34_862547bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2022-04-21T23:40:40Z",
+      "side": 1,
+      "message": "Reworked following Narayan\u0027s suggestion and confirmed that it works. Discussed the approach with Tim and he is fine with that.",
+      "revId": "e22eeef138f880228b486e33f20ccdec1c96aded",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
