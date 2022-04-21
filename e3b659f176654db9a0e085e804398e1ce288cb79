@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "99b0abf5_c9ae23db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2022-04-21T08:24:20Z",
+      "side": 1,
+      "message": "Nope, just didn\u0027t want to take credit for something I didn\u0027t do 😄\n\n`git commit --amend --author\u003d\"Name \u003cemail_address\u003e\"` if you care.",
+      "parentUuid": "decdc5c9_5e52c5bd",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 41
+      },
+      "revId": "e3b659f176654db9a0e085e804398e1ce288cb79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09d83150_2c47798d",
