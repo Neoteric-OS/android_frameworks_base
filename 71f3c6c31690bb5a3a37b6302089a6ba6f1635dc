@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3b4823a_a40c1e65",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 18341,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2022-04-22T06:37:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "66bdd538_65659d83",
+      "range": {
+        "startLine": 18340,
+        "startChar": 77,
+        "endLine": 18341,
+        "endChar": 64
+      },
+      "revId": "71f3c6c31690bb5a3a37b6302089a6ba6f1635dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e7f9fc5_8fb2e73e",
@@ -102,6 +126,30 @@
       "side": 1,
       "message": "I added the multiple-screen statement because it\u0027s an unusual use case. However, the multiple-screen behavior should be assumed since the rect is determined within the root view--if the root view spans multiple screens, it should be obvious that the coordinate space does too. So, if you think the multiple-screen statement is unnecessary, we can remove it. The note about multi-window mode is intended to address a request in b/172571756 (see comment #1) and should probably stay.",
       "parentUuid": "7e7f9fc5_8fb2e73e",
+      "range": {
+        "startLine": 18348,
+        "startChar": 0,
+        "endLine": 18358,
+        "endChar": 55
+      },
+      "revId": "71f3c6c31690bb5a3a37b6302089a6ba6f1635dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d43c146_96d1805d",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 18358,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2022-04-22T06:37:41Z",
+      "side": 1,
+      "message": "If we don\u0027t have different logic between the multiple-screen scenario and the single-screen one, the statement is unnecessary, and we should remove it. Otherwise, it might confuse the reader. If we do have different logic, we can keep it.\n\nIt is difficult for me to understand the note about the multi-window mode. This is a method and WindowMetrics is a class, how can the developer use WindowMetrics instead? If the developer already knows the globalVisibleRect is in the coordinate space of the root view, are they still recommended not to use this method to determine the size of a window in multi-window mode?",
+      "parentUuid": "ae0ab15a_2c42642e",
       "range": {
         "startLine": 18348,
         "startChar": 0,
