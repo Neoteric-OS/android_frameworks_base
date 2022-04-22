@@ -36,6 +36,7 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.UserHandle;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
@@ -102,6 +103,7 @@ public class TriStateUiControllerImpl implements ConfigurationListener, TriState
 
     private Context mContext;
     private final VolumeDialogController mVolumeDialogController;
+    private static final String PULSE_ACTION = "com.android.systemui.doze.pulse";
     private final Callbacks mVolumeDialogCallback = new Callbacks() {
         @Override
         public void onShowRequested(int reason, boolean keyguardLocked, int lockTaskModeState) { }
@@ -193,6 +195,7 @@ public class TriStateUiControllerImpl implements ConfigurationListener, TriState
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_DIALOG_SHOW:
+                    alertPulse();
                     mUiController.handleShow();
                     return;
                 case MSG_DIALOG_DISMISS:
@@ -569,5 +572,19 @@ public class TriStateUiControllerImpl implements ConfigurationListener, TriState
         int colorAccent = ta.getColor(0, 0);
         ta.recycle();
         return colorAccent;
+    }
+
+    public void alertPulse() {
+        boolean mAlertSliderPulse = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.ALERT_SLIDER_PULSE, 0,
+                UserHandle.USER_CURRENT) == 1;
+        boolean isAODDisabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.DOZE_ALWAYS_ON, 0,
+                UserHandle.USER_CURRENT) != 1;
+        // if AoD is disabled and we get a new slider event, trigger an ambient pulse event
+        if (mAlertSliderPulse && isAODDisabled) {
+            mContext.sendBroadcastAsUser(new Intent(PULSE_ACTION),
+                new UserHandle(UserHandle.USER_CURRENT));
+        }
     }
 }
