@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db01bb17_c2290a3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-22T05:41:56Z",
+      "side": 1,
+      "message": "Good practice is to always run the unit tests unless we\u0027re 1000% sure it breaks nothing. And even then, it may break unit tests :)\n\nLet\u0027s run them, and add the \"atest *\" here?",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 10
+      },
+      "revId": "aa8fec247ddc1bcb886a521a90b491f14a72aee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e41561d_9407f747",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-22T05:41:56Z",
+      "side": 1,
+      "message": "Code LGTM. Do we need to update any tests?",
+      "revId": "aa8fec247ddc1bcb886a521a90b491f14a72aee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
