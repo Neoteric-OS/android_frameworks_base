@@ -182,6 +182,30 @@
       },
       "revId": "71f3c6c31690bb5a3a37b6302089a6ba6f1635dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64055ffa_c7459904",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 18358,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2022-04-22T20:03:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ed7428d6_523499b6",
+      "range": {
+        "startLine": 18348,
+        "startChar": 0,
+        "endLine": 18358,
+        "endChar": 55
+      },
+      "revId": "71f3c6c31690bb5a3a37b6302089a6ba6f1635dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
