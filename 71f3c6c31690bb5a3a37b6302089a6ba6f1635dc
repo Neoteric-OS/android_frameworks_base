@@ -158,6 +158,30 @@
       },
       "revId": "71f3c6c31690bb5a3a37b6302089a6ba6f1635dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed7428d6_523499b6",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 18358,
+      "author": {
+        "id": 1903265
+      },
+      "writtenOn": "2022-04-22T16:08:27Z",
+      "side": 1,
+      "message": "The logic is the same for multiple screens, so I removed that section.\n\nChanged the WindowMetrics reference to WindowMetrics#getBounds(). Using WindowMetrics is the recommended way of getting the window size. We encourage developers to use that every chance we get. Using getGlobalVisibleRect won\u0027t get the window size if the root view and target view don\u0027t fill the window. I think the name of the method might lead developers to think the method does get the window size.",
+      "parentUuid": "4d43c146_96d1805d",
+      "range": {
+        "startLine": 18348,
+        "startChar": 0,
+        "endLine": 18358,
+        "endChar": 55
+      },
+      "revId": "71f3c6c31690bb5a3a37b6302089a6ba6f1635dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
