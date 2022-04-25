@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00d5117e_6a54594d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1903265
+      },
+      "writtenOn": "2022-04-25T00:52:20Z",
+      "side": 1,
+      "message": "Abandoning this CL and moving the changes to internal Gerrit so they can be merged into tm-dev.",
+      "revId": "cbff018809df11c999cd43b39a4d364af0465b1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
