@@ -16,6 +16,41 @@
       "message": "The interface is annotated with NonNull:\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/wm/AnimationAdapter.java;l\u003d56;drc\u003d8127ce57097afd191f1ebff76ff9304e387b89bc\nAnd NonAppWindowAnimationAdapter, WallpaperAnimationAdapter, RemoteAnimationAdapterWrapper only assigns the field once.\n\nDo you know what the condition the caller passes/sets null or missed to call startAnimation? It seems to be better fixing the caller.",
       "revId": "318a1907e4cd0afe49ca7a59e728375ea0ccb03e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10eea1a0_91e76430",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1928826
+      },
+      "writtenOn": "2022-04-25T18:24:38Z",
+      "side": 1,
+      "message": "I searched all the possibilities and found that it doesn\u0027t solve the problem. The probability of occurrence in the MTBF test is about 1/60. The only valid one is Add null check for RemoteAnimationController#onAnimationFinished",
+      "parentUuid": "ca3786e3_995d95bf",
+      "revId": "318a1907e4cd0afe49ca7a59e728375ea0ccb03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aebac11e_fd9b1106",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1928826
+      },
+      "writtenOn": "2022-04-25T18:24:38Z",
+      "side": 1,
+      "message": "a",
+      "revId": "318a1907e4cd0afe49ca7a59e728375ea0ccb03e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
