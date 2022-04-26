@@ -13411,6 +13411,7 @@ public class TelephonyManager {
      */
     public static final long NETWORK_TYPE_BITMASK_LTE = (1 << (NETWORK_TYPE_LTE -1));
     /**
+     * NOT USED; this bitmask is exposed accidentally.
      * network type bitmask indicating the support of radio tech LTE CA (carrier aggregation).
      */
     public static final long NETWORK_TYPE_BITMASK_LTE_CA = (1 << (NETWORK_TYPE_LTE_CA -1));
