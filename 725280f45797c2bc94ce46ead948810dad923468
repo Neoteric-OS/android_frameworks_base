@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9253b734_05b4d82b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-26T14:55:24Z",
+      "side": 1,
+      "message": "Platform",
+      "range": {
+        "startLine": 10,
+        "startChar": 38,
+        "endLine": 10,
+        "endChar": 46
+      },
+      "revId": "725280f45797c2bc94ce46ead948810dad923468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0694e824_4bb71517",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-26T14:55:24Z",
+      "side": 1,
+      "message": "This looks like an issue for the server side. Apart from the change in platform, do we want report issue to the specific VPN provider?",
+      "range": {
+        "startLine": 11,
+        "startChar": 61,
+        "endLine": 14,
+        "endChar": 5
+      },
+      "revId": "725280f45797c2bc94ce46ead948810dad923468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21bb54ad_354ca080",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-26T14:55:24Z",
+      "side": 1,
+      "message": "Do you verify the reported issue being addressed with this change?",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "725280f45797c2bc94ce46ead948810dad923468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dddaa0b6_aa4dc69d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-26T14:55:24Z",
+      "side": 1,
+      "message": "Nit: change to isLegacyVpn() since we have a method for this.",
+      "range": {
+        "startLine": 1846,
+        "startChar": 49,
+        "endLine": 1846,
+        "endChar": 86
+      },
+      "revId": "725280f45797c2bc94ce46ead948810dad923468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4949f4be_8f69a57d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2374,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-26T14:55:24Z",
+      "side": 1,
+      "message": "Should the synchronized in the follow up commit be put here?",
+      "range": {
+        "startLine": 2374,
+        "startChar": 10,
+        "endLine": 2374,
+        "endChar": 12
+      },
+      "revId": "725280f45797c2bc94ce46ead948810dad923468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be5e9122_c46251ee",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2393,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-26T14:55:24Z",
+      "side": 1,
+      "message": "Ditto nit",
+      "range": {
+        "startLine": 2393,
+        "startChar": 35,
+        "endLine": 2393,
+        "endChar": 73
+      },
+      "revId": "725280f45797c2bc94ce46ead948810dad923468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "162553e0_7f70ba74",
+        "filename": "services/core/java/com/android/server/net/LockdownVpnTracker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-26T14:55:24Z",
+      "side": 1,
+      "message": "From the issue case, the network was disconnected. The notification would still be removed here since the network is null. Wouldn\u0027t the behavior not sync between UI and framework?",
+      "range": {
+        "startLine": 180,
+        "startChar": 12,
+        "endLine": 180,
+        "endChar": 30
+      },
+      "revId": "725280f45797c2bc94ce46ead948810dad923468",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
