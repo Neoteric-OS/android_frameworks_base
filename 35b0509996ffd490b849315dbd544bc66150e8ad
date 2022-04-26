@@ -75,6 +75,24 @@
       "parentUuid": "fee549e6_cfc2dbec",
       "revId": "35b0509996ffd490b849315dbd544bc66150e8ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95210553_71e0f8e6",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3699,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2022-04-26T20:57:18Z",
+      "side": 1,
+      "message": "It looks like, internally, Felipe is adopting my suggestion in ag/I7c6b90e2c4af5ff0482c5445c1986d389e6a6610\n\nHe changed the if to read:\n```\nif (user.info.preCreated \u0026\u0026 !user.info.partial \u0026\u0026 user.info.userType.equals(userType)) {\n```\n\nGiven that, we don\u0027t need your `Slog.w` and `continue` block anymore.",
+      "parentUuid": "4007d31a_10b5e7f7",
+      "revId": "35b0509996ffd490b849315dbd544bc66150e8ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

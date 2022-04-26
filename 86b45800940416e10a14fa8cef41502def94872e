@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4736e36_2f10d8a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2022-04-26T20:57:18Z",
+      "side": 1,
+      "message": "Sorry, there were so many months after my last comment before it was updated, that I didn\u0027t notice this. Felipe, have you given it thought?",
+      "revId": "86b45800940416e10a14fa8cef41502def94872e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c460318d_3a1b8d16",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 3839,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2022-04-26T20:57:18Z",
+      "side": 1,
+      "message": "Unfortunately, this is unsafe: we cannot acquire `mUsersLock` before `mPackagesLock` (which we acquire on line 3870), as it explains on `mUsersLock`:\n```\n/**\n * Short-term lock for internal state, when interaction/sync with PM is not required. If using\n * with {@link #mPackagesLock}, {@link #mPackagesLock} should be acquired first.\n */\n```",
+      "range": {
+        "startLine": 3839,
+        "startChar": 16,
+        "endLine": 3839,
+        "endChar": 26
+      },
+      "revId": "86b45800940416e10a14fa8cef41502def94872e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7034c84_bb19387a",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 3870,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2022-04-26T20:57:18Z",
+      "side": 1,
+      "message": "`mPackagesLock` is acquired here, after `mUsersLock`, which is not allowed.",
+      "range": {
+        "startLine": 3870,
+        "startChar": 22,
+        "endLine": 3870,
+        "endChar": 35
+      },
+      "revId": "86b45800940416e10a14fa8cef41502def94872e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
