@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecee8a3d_e18fbd35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2022-04-27T20:45:06Z",
+      "side": 1,
+      "message": "Already flaky tests: \u003e 90% flake",
+      "revId": "560d8cc5aba4c436cfa3b70eda360caf9dacff0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
