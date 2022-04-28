@@ -342,6 +342,9 @@ public final class PowerManagerService extends SystemService
     private long mLastWakeTime;
     private long mLastSleepTime;
 
+    private long mLastWakeRtcTime;
+    private long mLastSleepRtcTime;
+
     // Last reason the device went to sleep.
     private @WakeReason int mLastWakeReason;
     private int mLastSleepReason;
@@ -2006,6 +2009,7 @@ public final class PowerManagerService extends SystemService
                         + ", details=" + details
                         + ")...");
                 mLastWakeTime = eventTime;
+                mLastWakeRtcTime = System.currentTimeMillis();
                 mLastWakeReason = reason;
                 break;
 
@@ -2020,6 +2024,7 @@ public final class PowerManagerService extends SystemService
                         + " (uid " + uid + ")...");
 
                 mLastSleepTime = eventTime;
+                mLastSleepRtcTime = System.currentTimeMillis();
                 mLastSleepReason = reason;
                 mDozeStartInProgress = true;
                 break;
@@ -4189,6 +4194,8 @@ public final class PowerManagerService extends SystemService
             pw.println("  mDeviceIdleTempWhitelist=" + Arrays.toString(mDeviceIdleTempWhitelist));
             pw.println("  mLastWakeTime=" + TimeUtils.formatUptime(mLastWakeTime));
             pw.println("  mLastSleepTime=" + TimeUtils.formatUptime(mLastSleepTime));
+            pw.println("  mLastWakeRtcTime=" + TimeUtils.formatUptime(mLastWakeRtcTime));
+            pw.println("  mLastSleepRtcTime=" + TimeUtils.formatUptime(mLastSleepRtcTime));
             pw.println("  mLastSleepReason=" + PowerManager.sleepReasonToString(mLastSleepReason));
             pw.println("  mLastInteractivePowerHintTime="
                     + TimeUtils.formatUptime(mLastInteractivePowerHintTime));
@@ -5990,7 +5997,8 @@ public final class PowerManagerService extends SystemService
 
     private PowerManager.WakeData getLastWakeupInternal() {
         synchronized (mLock) {
-            return new WakeData(mLastWakeTime, mLastWakeReason, mLastWakeTime - mLastSleepTime);
+            return new WakeData(mLastWakeRtcTime, mLastWakeReason,
+                    mLastWakeRtcTime - mLastSleepRtcTime);
         }
     }
 
