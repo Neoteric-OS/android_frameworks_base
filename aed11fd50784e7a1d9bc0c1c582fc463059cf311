@@ -34,6 +34,24 @@
       "parentUuid": "47af0959_dc4b0e4d",
       "revId": "aed11fd50784e7a1d9bc0c1c582fc463059cf311",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2455c4cb_de9ff4e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2022-04-28T14:41:10Z",
+      "side": 1,
+      "message": "OK, thanks, so Settings will get/set these app lists and Connectivity code will translate this into UID ranges for VPN routing. Makes sense.\n\nI remember in general Keystore team wasn\u0027t happy about using it as a general purpose data store. But given that the profiles are already stored there, it probably makes sense to store this stuff there too and hopefully migrate both to a more appropriate place at some point.\n\nI don\u0027t have any concerns, adding Eran to check from Keystore PoV.",
+      "parentUuid": "62c016bd_8f605ebf",
+      "revId": "aed11fd50784e7a1d9bc0c1c582fc463059cf311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
