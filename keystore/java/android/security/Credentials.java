@@ -106,6 +106,9 @@ public class Credentials {
     /** Key containing suffix of lockdown VPN profile. */
     public static final String LOCKDOWN_VPN = "LOCKDOWN_VPN";
 
+    /** Key containing prefix of vpn app excluded list */
+    public static final String VPN_APP_EXCLUDED = "VPN_APP_EXCLUDED_";
+
     /** Name of CA certificate usage. */
     public static final String CERTIFICATE_USAGE_CA = "ca";
 
