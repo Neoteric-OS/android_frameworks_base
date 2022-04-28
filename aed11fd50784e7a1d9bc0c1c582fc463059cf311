@@ -16,6 +16,24 @@
       "message": "Probably stupid questions: why does this list have to be stored in Keystore? Who is the consumer of this data? Thanks!",
       "revId": "aed11fd50784e7a1d9bc0c1c582fc463059cf311",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62c016bd_8f605ebf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-04-28T13:48:15Z",
+      "side": 1,
+      "message": "Sorry that I did not put enough information in this commit message. The consumer is the vpn servce for the VPN related operations. The VpnProfiles configured by user were stored in the keystore for each user. The app exclusion list should be stored at the same granularity. The prefix should be different from the the profile ones to prevent misuse, so I need to define a new prefix for this.\n\nUpdate more information in the commit message as well.",
+      "parentUuid": "47af0959_dc4b0e4d",
+      "revId": "aed11fd50784e7a1d9bc0c1c582fc463059cf311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
