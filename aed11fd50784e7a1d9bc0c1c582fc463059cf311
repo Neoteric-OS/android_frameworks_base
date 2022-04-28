@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47af0959_dc4b0e4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2022-04-28T13:26:28Z",
+      "side": 1,
+      "message": "Probably stupid questions: why does this list have to be stored in Keystore? Who is the consumer of this data? Thanks!",
+      "revId": "aed11fd50784e7a1d9bc0c1c582fc463059cf311",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
