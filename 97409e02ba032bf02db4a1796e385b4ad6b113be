@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd1186bf_0bd31df9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2022-04-28T10:11:54Z",
+      "side": 1,
+      "message": "I\u0027m removing myself from the reviewer list as I don\u0027t have OWNERS for powermanager.",
+      "revId": "97409e02ba032bf02db4a1796e385b4ad6b113be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
