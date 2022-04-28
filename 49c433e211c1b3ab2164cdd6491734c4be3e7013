@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eca4062_0f7552e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1167564
+      },
+      "writtenOn": "2022-04-28T10:05:34Z",
+      "side": 1,
+      "message": "I don\u0027t have access right for Status and Debugging info of \"Presubmit-Verified -1\". Do I need to do any action?",
+      "revId": "49c433e211c1b3ab2164cdd6491734c4be3e7013",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
