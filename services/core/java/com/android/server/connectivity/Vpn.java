@@ -130,6 +130,10 @@ import com.android.server.net.BaseNetworkObserver;
 
 import libcore.io.IoUtils;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -151,6 +155,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -1328,7 +1333,8 @@ public class Vpn {
         capsBuilder.setOwnerUid(mOwnerUID);
         capsBuilder.setAdministratorUids(new int[] {mOwnerUID});
         capsBuilder.setUids(createUserAndRestrictedProfilesRanges(mUserId,
-                mConfig.allowedApplications, mConfig.disallowedApplications));
+                mConfig.allowedApplications,
+                getCombinedDisallowedList(mConfig, getAppExclusionList(mPackage))));
 
         capsBuilder.setTransportInfo(new VpnTransportInfo(getActiveVpnType(), mConfig.session));
 
@@ -1661,7 +1667,7 @@ public class Vpn {
                 if (existingRanges != null) {
                     try {
                         addUserToRanges(existingRanges, userId, mConfig.allowedApplications,
-                                mConfig.disallowedApplications);
+                                getCombinedDisallowedList(mConfig, getAppExclusionList(mPackage)));
                         mNetworkCapabilities = new NetworkCapabilities.Builder(mNetworkCapabilities)
                                 .setUids(existingRanges).build();
                     } catch (Exception e) {
@@ -3474,6 +3480,102 @@ public class Vpn {
         if (isCurrentIkev2VpnLocked(packageName)) {
             prepareInternal(VpnConfig.LEGACY_VPN);
         }
+    }
+
+    private void storeAppExclusionList(@NonNull String packageName,
+            @NonNull List<String> excludedApps) {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final DataOutputStream out = new DataOutputStream(baos);
+        try {
+            for (String app : excludedApps) {
+                out.writeUTF(app);
+            }
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            Log.e(TAG, "problem writing into stream", e);
+            return;
+        }
+
+        final long oldId = Binder.clearCallingIdentity();
+        try {
+            final VpnProfile profile = getVpnProfilePrivileged(packageName);
+            getVpnProfileStore().put(Credentials.VPN_APP_EXCLUDED + profile.key,
+                    baos.toByteArray());
+        } finally {
+            Binder.restoreCallingIdentity(oldId);
+        }
+    }
+
+    private static List<String> getCombinedDisallowedList(@NonNull VpnConfig config,
+            @NonNull List<String> excludedApps) {
+        // Merged the disallowed list with configuration from VpnService.
+        final Set<String> set = new LinkedHashSet<>(excludedApps);
+        if (config.disallowedApplications != null) set.addAll(config.disallowedApplications);
+        return new ArrayList<>(set);
+    }
+
+    /**
+     * Set the application exclusion list for the specified VPN profile.
+     *
+     * @param packageName the package name of the app provisioning this profile
+     * @param excludedApps the list of excluded packages
+     */
+    public synchronized void setAppExclusionList(@NonNull String packageName,
+            @NonNull List<String> excludedApps) {
+        enforceNotRestrictedUser();
+        storeAppExclusionList(packageName, excludedApps);
+        // Re-build and update NetworkCapabilities via NetworkAgent.
+        if (mNetworkAgent != null) {
+            mNetworkCapabilities = new NetworkCapabilities.Builder(mNetworkCapabilities)
+                    .setUids(createUserAndRestrictedProfilesRanges(mUserId,
+                            mConfig.allowedApplications,
+                            getCombinedDisallowedList(mConfig, excludedApps)))
+                    .build();
+            mNetworkAgent.sendNetworkCapabilities(mNetworkCapabilities);
+        }
+    }
+
+    /**
+     * Gets the application exclusion list for the specified VPN profile.
+     *
+     * @param packageName the package name of the app provisioning this profile
+     * @return the list of excluded packages for the specified VPN profile or empty list if there is
+     *         no running VPN network
+     */
+    @NonNull
+    public synchronized List<String> getAppExclusionList(@NonNull String packageName) {
+        enforceNotRestrictedUser();
+        final long oldId = Binder.clearCallingIdentity();
+        byte[] bytes;
+        try {
+            final VpnProfile profile = getVpnProfilePrivileged(packageName);
+            if (profile == null) {
+                Log.d(TAG, "No profile for the package");
+                return new ArrayList<>();
+            }
+
+            bytes = getVpnProfileStore().get(Credentials.VPN_APP_EXCLUDED + profile.key);
+        } finally {
+            Binder.restoreCallingIdentity(oldId);
+        }
+
+        if (bytes == null || bytes.length == 0) return new ArrayList<>();
+
+        // Read from byte array
+        final ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        final DataInputStream in = new DataInputStream(bais);
+        final List<String> list = new ArrayList<>();
+        try {
+            while (in.available() > 0) {
+                list.add(in.readUTF());
+            }
+            in.close();
+        } catch (IOException e) {
+            Log.e(TAG, "problem reading from stream", e);
+        }
+
+        return list;
     }
 
     private @VpnProfileState.State int getStateFromLegacyState(int legacyState) {
