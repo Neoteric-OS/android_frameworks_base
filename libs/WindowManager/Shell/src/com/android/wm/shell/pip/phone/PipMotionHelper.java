@@ -37,8 +37,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.Choreographer;
 
-import androidx.dynamicanimation.animation.AnimationHandler;
-import androidx.dynamicanimation.animation.AnimationHandler.FrameCallbackScheduler;
+import androidx.dynamicanimation.animation.FrameCallbackScheduler;
 
 import com.android.wm.shell.R;
 import com.android.wm.shell.animation.FloatProperties;
@@ -88,7 +87,7 @@ public class PipMotionHelper implements PipAppOpsListener.Callback,
     /** Coordinator instance for resolving conflicts with other floating content. */
     private FloatingContentCoordinator mFloatingContentCoordinator;
 
-    private ThreadLocal<AnimationHandler> mSfAnimationHandlerThreadLocal =
+    private ThreadLocal<FrameCallbackScheduler> mSfSchedulerThreadLocal =
             ThreadLocal.withInitial(() -> {
                 final Looper initialLooper = Looper.myLooper();
                 final FrameCallbackScheduler scheduler = new FrameCallbackScheduler() {
@@ -102,8 +101,7 @@ public class PipMotionHelper implements PipAppOpsListener.Callback,
                         return Looper.myLooper() == initialLooper;
                     }
                 };
-                AnimationHandler handler = new AnimationHandler(scheduler);
-                return handler;
+                return scheduler;
             });
 
     /**
@@ -211,8 +209,7 @@ public class PipMotionHelper implements PipAppOpsListener.Callback,
         // Note: Needs to get the shell main thread sf vsync animation handler
         mTemporaryBoundsPhysicsAnimator = PhysicsAnimator.getInstance(
                 mPipBoundsState.getMotionBoundsState().getBoundsInMotion());
-        mTemporaryBoundsPhysicsAnimator.setCustomAnimationHandler(
-                mSfAnimationHandlerThreadLocal.get());
+        mTemporaryBoundsPhysicsAnimator.setCustomScheduler(mSfSchedulerThreadLocal.get());
     }
 
     @NonNull
