@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "950a9e2c_a16842f7",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9979,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2022-04-29T10:13:57Z",
+      "side": 1,
+      "message": "It looks like enforceSystemOrRootOrShell isn\u0027t in the call path for secondary dex files. Given this comment is the same as for performDexOptMode above, shouldn\u0027t it be?",
+      "range": {
+        "startLine": 9978,
+        "startChar": 0,
+        "endLine": 9979,
+        "endChar": 28
+      },
+      "revId": "f4a6ba88b3f5d44da53209b7c18ad714125bff5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
