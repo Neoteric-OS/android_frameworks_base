@@ -1744,6 +1744,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             } break;
             case CONTENT_PROVIDER_PUBLISH_TIMEOUT_MSG: {
                 ProcessRecord app = (ProcessRecord) msg.obj;
+                dumpStackTraceForApp(app);
                 synchronized (ActivityManagerService.this) {
                     mCpHelper.processContentProviderPublishTimedOutLocked(app);
                 }
@@ -1854,6 +1855,13 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
     }
 
+    private void dumpStackTraceForApp(final PrecessRecord app) {
+        Slog.w(TAG, "dumpStackTraceForApp app: " + app);
+        if (app.mPid <= 0) return;
+        ArrayList<Integer> pids = new ArrayList<>();
+        pids.add(app.mPid);
+        ActivityManagerService.dumpStackTraces(pids, null, null, null, null);
+    }
 
     public void setSystemProcess() {
         try {
