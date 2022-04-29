@@ -22,6 +22,23 @@
       },
       "revId": "c24b094ead69bfe8ca01c38f602fba9d2ed97077",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c2f5733_42c9c70e",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2903,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-04-29T18:27:35Z",
+      "side": 1,
+      "message": "One thing I\u0027d like to bring here is that, if we\u0027re freezing these processes, and we kill it, and then we restart it, if by the time of restart, the old process hasn\u0027t been really reaped by the system, will there be a problem with the restart? +dualli too",
+      "revId": "c24b094ead69bfe8ca01c38f602fba9d2ed97077",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
