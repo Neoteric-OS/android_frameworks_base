@@ -135,6 +135,24 @@
       "parentUuid": "8ffc2164_fd5cc302",
       "revId": "c24b094ead69bfe8ca01c38f602fba9d2ed97077",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "feb44009_de73d09e",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2903,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2022-04-29T22:08:20Z",
+      "side": 1,
+      "message": "I have not encountered this case, but if a process is TASK_UNINTERRUPTIBLE then it should never return from the kernel if it is frozen and then a kill is attempted. Whenever the process would have normally returned to userspace, the freezer will prevent that and the process should also have a lovely pending kill signal waiting to be handled.\n\nThe act of initially freezing such a process should do essentially nothing at all. See the Optimizations section here: https://blogs.oracle.com/linux/post/freezing-tasks-ksplice",
+      "parentUuid": "12c12afd_b77fcc2a",
+      "revId": "c24b094ead69bfe8ca01c38f602fba9d2ed97077",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
