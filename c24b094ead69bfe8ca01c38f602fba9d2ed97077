@@ -171,6 +171,24 @@
       "parentUuid": "feb44009_de73d09e",
       "revId": "c24b094ead69bfe8ca01c38f602fba9d2ed97077",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81acd25d_85c239bf",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2903,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2022-04-29T23:35:22Z",
+      "side": 1,
+      "message": "So as with the reaping, there will be no difference between freezing or not. This doesn\u0027t change whatever AM Service behavior already exists for that case. Freezing the app doesn\u0027t prevent it from being killed, and for uninterruptible frozen processes whenever the process is ready to transition out of the uninterruptible state it should die because of the pending kill signal. That\u0027s the same thing it would do if we didn\u0027t freeze it right?",
+      "parentUuid": "0215d51b_8489b83b",
+      "revId": "c24b094ead69bfe8ca01c38f602fba9d2ed97077",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
