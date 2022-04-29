@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c828043_efc90ffb",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2900,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2022-04-29T17:05:28Z",
+      "side": 1,
+      "message": "please tun clang-format to fix trivial issues.",
+      "range": {
+        "startLine": 2900,
+        "startChar": 16,
+        "endLine": 2900,
+        "endChar": 29
+      },
+      "revId": "c24b094ead69bfe8ca01c38f602fba9d2ed97077",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
