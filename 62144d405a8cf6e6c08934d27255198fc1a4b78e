@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b764b4e_9ba38642",
+        "filename": "core/res/res/xml/sms_short_codes.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2022-04-29T23:04:29Z",
+      "side": 1,
+      "message": "One of our docs (https://www.itu.int/dms_pub/itu-t/oth/02/02/T020200006B0001PDFE.pdf) shows that the 40 prefix is free with a number length from 2-14.  Was there a reason to change this to 40\\\\d{3}?",
+      "range": {
+        "startLine": 159,
+        "startChar": 175,
+        "endLine": 159,
+        "endChar": 183
+      },
+      "revId": "62144d405a8cf6e6c08934d27255198fc1a4b78e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
