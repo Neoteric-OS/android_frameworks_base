@@ -18,6 +18,47 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e26cd30d_9c2f2216",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2022-04-29T16:54:07Z",
+      "side": 1,
+      "message": "I\u0027m ok with the overall idea (i.e., remove pre-created users when the primary volume is moved) - pre-created users are a performance improvement trick but they can be removed if needed (and they would eventually be pre-created again after the move / reboot).\n\nBut this CL might need to be synced with code on master, and I\u0027d try to avoid unrelated changes (like adding the @GuardedBy(\"mUsersLock\") in another method)",
+      "parentUuid": "a4736e36_2f10d8a4",
+      "revId": "86b45800940416e10a14fa8cef41502def94872e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e645669_1e1125c6",
+        "filename": "services/core/java/com/android/server/pm/UserManagerInternal.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2022-04-29T16:54:07Z",
+      "side": 1,
+      "message": "nit / optional: I\u0027d remove (no pun intended :-) the All part",
+      "range": {
+        "startLine": 174,
+        "startChar": 25,
+        "endLine": 174,
+        "endChar": 49
+      },
+      "revId": "86b45800940416e10a14fa8cef41502def94872e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c460318d_3a1b8d16",
