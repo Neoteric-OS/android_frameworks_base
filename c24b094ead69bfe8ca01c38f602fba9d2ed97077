@@ -153,6 +153,24 @@
       "parentUuid": "12c12afd_b77fcc2a",
       "revId": "c24b094ead69bfe8ca01c38f602fba9d2ed97077",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0215d51b_8489b83b",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2903,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-04-29T22:21:01Z",
+      "side": 1,
+      "message": "What I\u0027m not clear about it is that, before returning to userspace, if the activity manager service wants to start another process of this app, what will happen?",
+      "parentUuid": "feb44009_de73d09e",
+      "revId": "c24b094ead69bfe8ca01c38f602fba9d2ed97077",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
