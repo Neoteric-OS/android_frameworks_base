@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45d26863_51e846c8",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2900,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2022-04-29T19:33:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c828043_efc90ffb",
+      "range": {
+        "startLine": 2900,
+        "startChar": 16,
+        "endLine": 2900,
+        "endChar": 29
+      },
+      "revId": "c24b094ead69bfe8ca01c38f602fba9d2ed97077",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c2f5733_42c9c70e",
@@ -37,6 +61,24 @@
       "writtenOn": "2022-04-29T18:27:35Z",
       "side": 1,
       "message": "One thing I\u0027d like to bring here is that, if we\u0027re freezing these processes, and we kill it, and then we restart it, if by the time of restart, the old process hasn\u0027t been really reaped by the system, will there be a problem with the restart? +dualli too",
+      "revId": "c24b094ead69bfe8ca01c38f602fba9d2ed97077",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "554ab037_2bdf689d",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2903,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2022-04-29T19:33:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure why freezing the processes would affect this. Freezing the process should not change how it is reaped.",
+      "parentUuid": "7c2f5733_42c9c70e",
       "revId": "c24b094ead69bfe8ca01c38f602fba9d2ed97077",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
