@@ -81,6 +81,24 @@
       "parentUuid": "7c2f5733_42c9c70e",
       "revId": "c24b094ead69bfe8ca01c38f602fba9d2ed97077",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8745019_e5ef3542",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2903,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2022-04-29T20:01:09Z",
+      "side": 1,
+      "message": "\"then we restart it\" - we\u0027re freezing and then killing here all inside the same lock lifetime, right?  Any component lifecycle operations that might try to launch a process for this uid will be locked out for the duration of the freeze-then-kill, at which point all of the ProcessRecord bookkeeping for that uid should be gone, and no inherited process(es) carried over to a new lifecycle.\n\nNo?",
+      "parentUuid": "554ab037_2bdf689d",
+      "revId": "c24b094ead69bfe8ca01c38f602fba9d2ed97077",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
