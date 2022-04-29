@@ -130,6 +130,10 @@ import com.android.server.net.BaseNetworkObserver;
 
 import libcore.io.IoUtils;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -174,6 +178,8 @@ public class Vpn {
     private static final String VPN_PROVIDER_NAME_BASE = "VpnNetworkProvider:";
     private static final boolean LOGD = true;
     private static final String ANDROID_KEYSTORE_PROVIDER = "AndroidKeyStore";
+    /** Key containing prefix of vpn app excluded list */
+    @VisibleForTesting static final String VPN_APP_EXCLUDED = "VPN_APP_EXCLUDED_";
 
     // Length of time (in milliseconds) that an app hosting an always-on VPN is placed on
     // the device idle allowlist during service launch and VPN bootstrap.
@@ -2621,6 +2627,8 @@ public class Vpn {
 
                     mConfig.underlyingNetworks = new Network[] {network};
 
+                    mConfig.disallowedApplications = getAppExclusionList(mPackage);
+
                     networkAgent = mNetworkAgent;
 
                     // The below must be done atomically with the mConfig update, otherwise
@@ -3474,6 +3482,94 @@ public class Vpn {
         if (isCurrentIkev2VpnLocked(packageName)) {
             prepareInternal(VpnConfig.LEGACY_VPN);
         }
+    }
+
+    private void storeAppExclusionList(@NonNull String packageName,
+            @NonNull List<String> excludedApps) {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final DataOutputStream out = new DataOutputStream(baos);
+        try {
+            for (String app : excludedApps) {
+                out.writeUTF(app);
+            }
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            Log.e(TAG, "problem writing into stream", e);
+            return;
+        }
+
+        final long oldId = Binder.clearCallingIdentity();
+        try {
+            final VpnProfile profile = getVpnProfilePrivileged(packageName);
+            if (profile != null) {
+                getVpnProfileStore().put(VPN_APP_EXCLUDED + profile.key, baos.toByteArray());
+            }
+        } finally {
+            Binder.restoreCallingIdentity(oldId);
+        }
+    }
+
+    /**
+     * Set the application exclusion list for the specified VPN profile.
+     *
+     * @param packageName the package name of the app provisioning this profile
+     * @param excludedApps the list of excluded packages
+     */
+    public synchronized void setAppExclusionList(@NonNull String packageName,
+            @NonNull List<String> excludedApps) {
+        enforceNotRestrictedUser();
+        storeAppExclusionList(packageName, excludedApps);
+        // Re-build and update NetworkCapabilities via NetworkAgent.
+        if (mNetworkAgent != null) {
+            mNetworkCapabilities = new NetworkCapabilities.Builder(mNetworkCapabilities)
+                    .setUids(createUserAndRestrictedProfilesRanges(
+                            mUserId, null /* allowedApplications */, excludedApps))
+                    .build();
+            mNetworkAgent.sendNetworkCapabilities(mNetworkCapabilities);
+        }
+    }
+
+    /**
+     * Gets the application exclusion list for the specified VPN profile.
+     *
+     * @param packageName the package name of the app provisioning this profile
+     * @return the list of excluded packages for the specified VPN profile or empty list if there is
+     *         no provisioned VPN profile.
+     */
+    @NonNull
+    public synchronized List<String> getAppExclusionList(@NonNull String packageName) {
+        enforceNotRestrictedUser();
+        final long oldId = Binder.clearCallingIdentity();
+        byte[] bytes;
+        try {
+            final VpnProfile profile = getVpnProfilePrivileged(packageName);
+            if (profile == null) {
+                Log.d(TAG, "No profile for the package");
+                return new ArrayList<>();
+            }
+
+            bytes = getVpnProfileStore().get(VPN_APP_EXCLUDED + profile.key);
+        } finally {
+            Binder.restoreCallingIdentity(oldId);
+        }
+
+        if (bytes == null || bytes.length == 0) return new ArrayList<>();
+
+        // Read from byte array
+        final ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        final DataInputStream in = new DataInputStream(bais);
+        final List<String> list = new ArrayList<>();
+        try {
+            while (in.available() > 0) {
+                list.add(in.readUTF());
+            }
+            in.close();
+        } catch (IOException e) {
+            Log.e(TAG, "problem reading from stream", e);
+        }
+
+        return list;
     }
 
     private @VpnProfileState.State int getStateFromLegacyState(int legacyState) {
