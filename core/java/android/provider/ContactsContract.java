@@ -8434,13 +8434,14 @@ public final class ContactsContract {
             Bundle response = contentResolver.call(ContactsContract.AUTHORITY_URI,
                     ContactsContract.SimContacts.QUERY_SIM_ACCOUNTS_METHOD,
                     null, null);
-            List<SimAccount> result = response.getParcelableArrayList(KEY_SIM_ACCOUNTS);
-
-            if (result == null) {
-                result = new ArrayList<>();
+            if (response != null) {
+                List<SimAccount> result = response.getParcelableArrayList(KEY_SIM_ACCOUNTS);
+                if (result != null) {
+                    return result;
+                }
             }
 
-            return result;
+            return new ArrayList<>();
         }
     }
 
