@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "625d8299_9bb55906",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2022-04-30T00:08:24Z",
+      "side": 1,
+      "message": "I was pretty confused reading this - I was worried we were migrating something one way, then migrating back again, which would be a sticky situation - but I think I now understand.\n\nThere\u0027s two kinds of data: global data and per-user data.\n\nThe old code has no provision for reading and writing the global data from anywhere except `/data/system_de/usagestats/globalcomponentusage`. The old code *does* have a provision to migrate per-user data from `/data/system/usagestats/10` (for user 10) to `/data/system_ce/10/usagestats`. So I guess things go in the following order:\n\n- write per-user data to `/data/system/usagestats/10`\n- write per-user data to `/data/system_ce/10/usagestats` (and migrate if needed), write global data to `/data/system_de/usagestats/globalcomponentusage`\n- write per-user data to `/data/system_ce/10/usagestats` (and migrate if needed), write global data to `/data/system/usagestats/globalcomponentusage` (and migrate if needed)\n\nThus in particular both global data and per-user data only get migrated once. `/data/system/usagestats` is the \"legacy\" dir for per-user data, but the \"new and better\" dir for global data.\n\nCan we put something like the above in the commit message?",
+      "revId": "eec28cac4cf79668e83b1558a3a589bb8c2a4ffa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
