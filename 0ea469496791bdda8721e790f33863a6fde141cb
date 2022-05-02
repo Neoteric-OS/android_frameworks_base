@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dd6c4f6_bbe6a7f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561157
+      },
+      "writtenOn": "2022-05-02T19:47:59Z",
+      "side": 1,
+      "message": "LGTM other than the comment about ambiguity. Deferred to kevhan@ who is the owner of App Hibernation feature for another look.",
+      "revId": "0ea469496791bdda8721e790f33863a6fde141cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abdf77f8_2848dd2f",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1561157
+      },
+      "writtenOn": "2022-05-02T19:47:59Z",
+      "side": 1,
+      "message": "This looks to me like that the legacy user directory is created from the common directory which tends to create ambiguity. Although they are essentially same and the comments also explains, I\u0027m wondering if we should keep both the USAGE_STATS_LEGACY_DIR and COMMON_USAGE_STATS_DIR constants to increase readability.",
+      "range": {
+        "startLine": 665,
+        "startChar": 8,
+        "endLine": 665,
+        "endChar": 94
+      },
+      "revId": "0ea469496791bdda8721e790f33863a6fde141cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
