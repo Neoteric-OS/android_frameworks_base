@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6aef585_8310533b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2022-05-02T20:49:24Z",
+      "side": 1,
+      "message": "LGTM as well for the most part.\n\nThanks for fixing this issue! This is a bit of a messy situation that we accidentally contributed to, so I appreciate the in-depth analysis and fix. ",
+      "revId": "0ea469496791bdda8721e790f33863a6fde141cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "abdf77f8_2848dd2f",
@@ -55,6 +72,30 @@
       "side": 1,
       "message": "I think that would actually decrease readability!  It would cause the same directory to be referred to as both \"legacy\" and \"non-legacy\" at the same time, which would be confusing.  I think it\u0027s a bit clearer the way I\u0027ve written it -- we have /data/system, which is the common stats directory, and within it we have both the legacy user stats directories and globalcomponentusage.  /data/system itself is no longer called a \"legacy\" directory, because it\u0027s not, and for that reason we don\u0027t delete it anymore.  Reading the diff is indeed a bit confusing, but I think that looking at just the new code, it makes more sense as-is.",
       "parentUuid": "abdf77f8_2848dd2f",
+      "range": {
+        "startLine": 665,
+        "startChar": 8,
+        "endLine": 665,
+        "endChar": 94
+      },
+      "revId": "0ea469496791bdda8721e790f33863a6fde141cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee7a2cb8_a0573c4c",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2022-05-02T20:49:24Z",
+      "side": 1,
+      "message": "I think the main confusion comes from the fact that as the CL stands currently, it unclear what \"legacy\" means as there are two migrations. AFAICT, the instance variables use \"legacy\" when referring to the old location of globalcomponentusage, but in this particular statement, \"legacy\" is being used to refer to the old user directory. If someone is trying to figure out what the \"legacy\" directory is, there are two possible answers and the reader has to figure it out via context.\n\nI think Zhen\u0027s suggestion is to do something like\n```\nprivate static final File COMMON_USAGE_STATS_DIR \u003d\n            new File(Environment.getDataSystemDirectory(), \"usagestats\");\nprivate static final File LEGACY_USER_STATES_DIR \u003d COMMON_USAGE_STATS_DIR;\n```\n\nand then do\n```\nfinal File legacyUserDir \u003d new File(LEGACY_USER_STATES_DIR, Integer.toString(userId));\n```\n\nThis makes it more clear that the legacy user directory IS the normally used common usage stats directory.\n\nYes, that makes the same directory both \"legacy\" and \"non-legacy\" at the same time but that IS actually the case here (the directory is legacy for user specific state and non-legacy for global component state), so I don\u0027t think it makes it more confusing than it already is.\n\nThose are just my two cents, and ultimately this is a bit of a nit and non-blocking.",
+      "parentUuid": "52f97c2b_5bb85b22",
       "range": {
         "startLine": 665,
         "startChar": 8,
