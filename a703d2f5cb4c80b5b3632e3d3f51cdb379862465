@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45801725_8e03d9bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2022-05-02T15:35:52Z",
+      "side": 1,
+      "message": "Looks like these build failures are due to b/230930120",
+      "revId": "a703d2f5cb4c80b5b3632e3d3f51cdb379862465",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
