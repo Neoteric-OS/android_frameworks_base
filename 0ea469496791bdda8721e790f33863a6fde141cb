@@ -104,6 +104,30 @@
       },
       "revId": "0ea469496791bdda8721e790f33863a6fde141cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94946f3b_9e9144a6",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-05-02T21:09:09Z",
+      "side": 1,
+      "message": "I just went ahead and changed it.  (I used LEGACY_USER_USAGE_STATS_DIR instead of  USAGE_STATS_LEGACY_DIR or LEGACY_USER_STATES_DIR.)  Thanks for the reviews!",
+      "parentUuid": "ee7a2cb8_a0573c4c",
+      "range": {
+        "startLine": 665,
+        "startChar": 8,
+        "endLine": 665,
+        "endChar": 94
+      },
+      "revId": "0ea469496791bdda8721e790f33863a6fde141cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
