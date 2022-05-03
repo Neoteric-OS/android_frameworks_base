@@ -16,6 +16,23 @@
       "message": "thanks for explaining this offline, Eric - LGTM.",
       "revId": "e25b77c1db231209dc96fa658cde026fd4e50914",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "927a31d7_a7a24091",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-05-03T01:48:43Z",
+      "side": 1,
+      "message": "Retrying presubmit due to broken tip-of-tree that has supposedly been fixed (b/230930120)...",
+      "revId": "e25b77c1db231209dc96fa658cde026fd4e50914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
