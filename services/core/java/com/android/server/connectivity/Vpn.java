@@ -84,6 +84,8 @@ import android.net.ipsec.ike.ChildSessionConfiguration;
 import android.net.ipsec.ike.ChildSessionParams;
 import android.net.ipsec.ike.IkeSession;
 import android.net.ipsec.ike.IkeSessionCallback;
+import android.net.ipsec.ike.IkeSessionConfiguration;
+import android.net.ipsec.ike.IkeSessionConnectionInfo;
 import android.net.ipsec.ike.IkeSessionParams;
 import android.net.ipsec.ike.IkeTunnelConnectionParams;
 import android.net.ipsec.ike.exceptions.IkeNetworkLostException;
@@ -164,9 +166,10 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -2569,9 +2572,19 @@ public class Vpn {
 
         void onDefaultNetworkLost(@NonNull Network network);
 
+        void onIkeOpened(int token, @NonNull IkeSessionConfiguration ikeConfiguration);
+
+        void onIkeConnectionInfoChanged(
+                int token, @NonNull IkeSessionConnectionInfo ikeConnectionInfo);
+
         void onChildOpened(int token, @NonNull ChildSessionConfiguration childConfig);
 
         void onChildTransformCreated(int token, @NonNull IpSecTransform transform, int direction);
+
+        void onChildMigrated(
+                int token,
+                @NonNull IpSecTransform inTransform,
+                @NonNull IpSecTransform outTransform);
 
         void onSessionLost(int token, @Nullable Exception exception);
     }
@@ -2615,7 +2628,8 @@ public class Vpn {
          * of the mutable Ikev2VpnRunner fields. The Ikev2VpnRunner is built mostly lock-free by
          * virtue of everything being serialized on this executor.
          */
-        @NonNull private final ExecutorService mExecutor = Executors.newSingleThreadExecutor();
+        @NonNull
+        private final ScheduledExecutorService mExecutor = Executors.newScheduledThreadPool(1);
 
         /** Signal to ensure shutdown is honored even if a new Network is connected. */
         private boolean mIsRunning = true;
@@ -2628,11 +2642,14 @@ public class Vpn {
         private int mCurrentToken = -1;
 
         @Nullable private IpSecTunnelInterface mTunnelIface;
-        @Nullable private IkeSession mSession;
         @Nullable private Network mActiveNetwork;
         @Nullable private NetworkCapabilities mNetworkCapabilities;
         @Nullable private LinkProperties mLinkProperties;
         private final String mSessionKey;
+
+        @Nullable private IkeSession mSession;
+        @Nullable private IkeSessionConnectionInfo mIkeConnectionInfo;
+        private boolean mMobikeEnabled = false;
 
         IkeV2VpnRunner(@NonNull Ikev2VpnProfile profile) {
             super(TAG);
@@ -2682,6 +2699,28 @@ public class Vpn {
 
         private boolean isActiveToken(int token) {
             return mCurrentToken == token && mIsRunning;
+        }
+
+        public void onIkeOpened(int token, @NonNull IkeSessionConfiguration ikeConfiguration) {
+            if (!isActiveToken(token)) {
+                Log.d(TAG, "onIkeOpened called for obsolete token " + token);
+                return;
+            }
+
+            mMobikeEnabled =
+                    ikeConfiguration.isIkeExtensionEnabled(
+                            IkeSessionConfiguration.EXTENSION_TYPE_MOBIKE);
+            onIkeConnectionInfoChanged(token, ikeConfiguration.getIkeSessionConnectionInfo());
+        }
+
+        public void onIkeConnectionInfoChanged(
+                int token, @NonNull IkeSessionConnectionInfo ikeConnectionInfo) {
+            if (!isActiveToken(token)) {
+                Log.d(TAG, "onIkeConnectionInfoChanged called for obsolete token " + token);
+                return;
+            }
+
+            mIkeConnectionInfo = ikeConnectionInfo;
         }
 
         /**
@@ -2793,6 +2832,34 @@ public class Vpn {
             }
         }
 
+        public void onChildMigrated(
+                int token,
+                @NonNull IpSecTransform inTransform,
+                @NonNull IpSecTransform outTransform) {
+            if (!isActiveToken(token)) {
+                Log.d(TAG, "onChildMigrated for obsolete token " + token);
+                return;
+            }
+
+            try {
+                // From the IKE perspective, it is guaranteed that mIkeConnectionInfo will be
+                // updated by onIkeConnectionInfoChanged right before this method is called.
+                // mTunnelIface MUST NOT use mActiveNetwork because mActiveNetwork might be updated
+                // after this migration is triggered.
+                mTunnelIface.setUnderlyingNetwork(mIkeConnectionInfo.getNetwork());
+
+                // Transforms do not need to be persisted; the IkeSession will keep
+                // them alive for us
+                mIpSecManager.applyTunnelModeTransform(
+                        mTunnelIface, IpSecManager.DIRECTION_IN, inTransform);
+                mIpSecManager.applyTunnelModeTransform(
+                        mTunnelIface, IpSecManager.DIRECTION_OUT, outTransform);
+            } catch (IOException e) {
+                Log.d(TAG, "Transform application failed for token " + token, e);
+                onSessionLost(token, e);
+            }
+        }
+
         /**
          * Called when a new default network is connected.
          *
@@ -2803,12 +2870,24 @@ public class Vpn {
          * consistency of the Ikev2VpnRunner fields.
          */
         public void onDefaultNetworkChanged(@NonNull Network network) {
-            Log.d(TAG, "Starting IKEv2/IPsec session on new network: " + network);
+            Log.d(TAG, "onDefaultNetworkChanged: " + network);
 
             try {
                 if (!mIsRunning) {
                     Log.d(TAG, "onDefaultNetworkChanged after exit");
                     return; // VPN has been shut down.
+                }
+
+                if (mSession != null && mMobikeEnabled) {
+                    Log.d(
+                            TAG,
+                            "Migrate IKE Session with token "
+                                    + mCurrentToken
+                                    + " to network "
+                                    + network);
+                    mActiveNetwork = network;
+                    mSession.setNetwork(network);
+                    return;
                 }
 
                 // Clear mInterface to prevent Ikev2VpnRunner being cleared when
@@ -2840,11 +2919,14 @@ public class Vpn {
                 // TODO: Remove the need for adding two unused addresses with
                 // IPsec tunnels.
                 final InetAddress address = InetAddress.getLocalHost();
+
+                // When onChildOpened is called and transforms are applied, it is
+                // guarantee that the unerlying network is still "network", because the
+                // IKE Session is not able to swicth network before onChildOpened. Thus
+                // it is safe to build a mTunnelIface before IKE setup.
                 mTunnelIface =
                         mIpSecManager.createIpSecTunnelInterface(
-                                address /* unused */,
-                                address /* unused */,
-                                network);
+                                address /* unused */, address /* unused */, network);
                 NetdUtils.setInterfaceUp(mNetd, mTunnelIface.getInterfaceName());
 
                 final int token = ++mCurrentToken;
@@ -2860,7 +2942,7 @@ public class Vpn {
                 Log.d(TAG, "Ike Session started for token " + token);
             } catch (Exception e) {
                 Log.i(TAG, "Setup failed for token " + mCurrentToken + ". Aborting", e);
-                onSessionLost(network, e);
+                onSessionLost(mCurrentToken, e);
             }
         }
 
@@ -2875,8 +2957,25 @@ public class Vpn {
         }
 
         public void onDefaultNetworkLost(@NonNull Network network) {
-            if(!isActiveNetwork(network)) {
+            if (!isActiveNetwork(network)) {
                 Log.d(TAG, "onDefaultNetworkLost called for obsolete network " + network);
+                return;
+            }
+
+            final int token = mCurrentToken;
+
+            Log.d(TAG, "Schedule onNetworkLostTimeout for network " + network);
+            mExecutor.schedule(
+                    () -> {
+                        onNetworkLostTimeout(network);
+                    },
+                    5L,
+                    TimeUnit.SECONDS);
+        }
+
+        private void onNetworkLostTimeout(Network network) {
+            if (!isActiveNetwork(network)) {
+                Log.d(TAG, "onNetworkLostTimeout called for obsolete network " + network);
                 return;
             }
 
@@ -2913,6 +3012,7 @@ public class Vpn {
                 return;
             }
 
+            Log.d(TAG, "onSessionLost() called for token " + token);
             handleSessionLost(exception);
         }
 
@@ -3079,6 +3179,8 @@ public class Vpn {
                 mSession.kill(); // Kill here to make sure all resources are released immediately
                 mSession = null;
             }
+            mIkeConnectionInfo = null;
+            mMobikeEnabled = false;
         }
 
         /**
