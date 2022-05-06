@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6eab404_19e8ae41",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2022-05-06T08:30:19Z",
+      "side": 1,
+      "message": "I\u0027ve removed the tests as infeasible for now. The tests are in a separate related CL, which can be merged once the issue of mocking AudioDeviceInfo is resolved.",
+      "revId": "0b50a384c44faa423d6c95774d413a163a298fc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
