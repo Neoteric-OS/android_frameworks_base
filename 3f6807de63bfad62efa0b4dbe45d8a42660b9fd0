@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3591d383_92ff4fa5",
+        "filename": "services/core/java/com/android/server/wm/AppWarnings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2022-05-09T15:48:24Z",
+      "side": 1,
+      "message": "yeah, i think contains(\"64\") probably makes more sense here.",
+      "parentUuid": "efe53e29_1178e77a",
+      "range": {
+        "startLine": 172,
+        "startChar": 22,
+        "endLine": 172,
+        "endChar": 38
+      },
+      "revId": "3f6807de63bfad62efa0b4dbe45d8a42660b9fd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "98d6a1cc_7321c4a8",
         "filename": "services/core/java/com/android/server/wm/AppWarnings.java",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2022-05-09T07:32:02Z",
       "side": 1,
       "message": "I think we should use String.equals() instead of \"\u003d\u003d\" in Java, unless both sides of the \"\u003d\u003d\" operator are intern()\u0027ed.",
+      "range": {
+        "startLine": 173,
+        "startChar": 50,
+        "endLine": 173,
+        "endChar": 71
+      },
+      "revId": "3f6807de63bfad62efa0b4dbe45d8a42660b9fd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f262a0cf_73257ec4",
+        "filename": "services/core/java/com/android/server/wm/AppWarnings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2022-05-09T15:48:24Z",
+      "side": 1,
+      "message": "(well, `!appAbi.contains(\"64\")` given the previous change, i think?)",
+      "parentUuid": "98d6a1cc_7321c4a8",
       "range": {
         "startLine": 173,
         "startChar": 50,
