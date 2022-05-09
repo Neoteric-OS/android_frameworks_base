@@ -18516,6 +18516,18 @@ public final class Settings {
              */
             public static final String WET_MODE_ON = "wet_mode_on";
         }
+
+        /**
+         * Set whether speaker media can be muted by ringer mode.
+         * @hide
+         */
+        public static final String RINGER_MUTE_SPEAKER_MEDIA = "ringer_mute_speaker_media";
+
+        /**
+         * The saved last speaker media volume before setting to silent or vibrate.
+         * @hide
+         */
+        public static final String SAVED_SPEAKER_MEDIA_VOLUME = "saved_speaker_media_volume";
     }
 
     /**
