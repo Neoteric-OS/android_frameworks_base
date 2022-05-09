@@ -16,6 +16,24 @@
       "message": "ugh, just diffed the stubs as well. Seeing some diffs because the 2nd metalava invocation no longer passes codename. I will fix.",
       "revId": "1450a4b9ba9088592d58b515f4c5cfb8cc6b56dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d40e2a1f_0d48884d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-05-09T12:19:32Z",
+      "side": 1,
+      "message": "fixed now (in soong)",
+      "parentUuid": "d8d5d0d9_0f21c4e7",
+      "revId": "1450a4b9ba9088592d58b515f4c5cfb8cc6b56dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
