@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98f49c08_d944262f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2022-05-09T13:17:51Z",
+      "side": 1,
+      "message": "Don\u0027t merge this before aosp/2092227 (which introduces api_levels_module) has been merged!",
+      "revId": "247c5f26ec28958917e289b19b0b9870cf6d1d39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
