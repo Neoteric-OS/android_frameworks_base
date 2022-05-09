@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efe53e29_1178e77a",
+        "filename": "services/core/java/com/android/server/wm/AppWarnings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1397448
+      },
+      "writtenOn": "2022-05-09T07:32:02Z",
+      "side": 1,
+      "message": "I think it\u0027s better to prompt the same for x86 apps running on x86_64 OSes, since Google Play\u0027s requirements on 64-bit apps apply to both arm and x86.",
+      "range": {
+        "startLine": 172,
+        "startChar": 22,
+        "endLine": 172,
+        "endChar": 38
+      },
+      "revId": "3f6807de63bfad62efa0b4dbe45d8a42660b9fd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98d6a1cc_7321c4a8",
+        "filename": "services/core/java/com/android/server/wm/AppWarnings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1397448
+      },
+      "writtenOn": "2022-05-09T07:32:02Z",
+      "side": 1,
+      "message": "I think we should use String.equals() instead of \"\u003d\u003d\" in Java, unless both sides of the \"\u003d\u003d\" operator are intern()\u0027ed.",
+      "range": {
+        "startLine": 173,
+        "startChar": 50,
+        "endLine": 173,
+        "endChar": 71
+      },
+      "revId": "3f6807de63bfad62efa0b4dbe45d8a42660b9fd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
