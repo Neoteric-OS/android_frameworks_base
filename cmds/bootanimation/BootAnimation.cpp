@@ -559,6 +559,11 @@ status_t BootAnimation::readyToRun() {
 
     sp<Surface> s = control->getSurface();
 
+    // On some MTK platforms, the transparent background image shows
+    // transparent background unexpectedly, so we need to make it opaque
+    t.setFlags(control->getParentingLayer(), layer_state_t::eLayerOpaque,
+        layer_state_t::eLayerOpaque).apply();
+
     // initialize opengl and egl
     EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     eglInitialize(display, nullptr, nullptr);
