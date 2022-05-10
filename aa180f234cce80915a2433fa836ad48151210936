@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e62a44d_e1992efe",
+        "filename": "packages/SystemUI/proguard.flags",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-05-10T15:09:31Z",
+      "side": 1,
+      "message": "Is it sufficient to restrict this to \u003cfields\u003e only?",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 5
+      },
+      "revId": "aa180f234cce80915a2433fa836ad48151210936",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
