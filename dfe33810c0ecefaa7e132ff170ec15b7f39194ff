@@ -80,6 +80,30 @@
       },
       "revId": "dfe33810c0ecefaa7e132ff170ec15b7f39194ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de8ded24_4d01839f",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-05-10T13:30:36Z",
+      "side": 1,
+      "message": "Yeah, I agree. A local service could crash and be restarting, for example.\n\nSo it _could_ be a permanent bug, but it also could be temporary. I don\u0027t know what\u0027s more likely, so it makes sense to assume it\u0027s temporary.",
+      "parentUuid": "e4993932_51437124",
+      "range": {
+        "startLine": 721,
+        "startChar": 0,
+        "endLine": 724,
+        "endChar": 79
+      },
+      "revId": "dfe33810c0ecefaa7e132ff170ec15b7f39194ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
