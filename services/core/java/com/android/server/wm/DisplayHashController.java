@@ -131,6 +131,8 @@ public class DisplayHashController {
      */
     private boolean mDisplayHashThrottlingEnabled = true;
 
+    private boolean mBound = false;
+
     private interface Command {
         void run(IDisplayHashingService service) throws RemoteException;
     }
@@ -372,6 +374,7 @@ public class DisplayHashController {
                 // Create the connection
                 mServiceConnection = new DisplayHashingServiceConnection();
 
+                mBound = false;
                 final ComponentName component = getServiceComponentName();
                 if (DEBUG) Slog.v(TAG, "binding to: " + component);
                 if (component != null) {
@@ -380,6 +383,7 @@ public class DisplayHashController {
                     final long token = Binder.clearCallingIdentity();
                     try {
                         mContext.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+                        mBound = true;
                         if (DEBUG) Slog.v(TAG, "bound");
                     } finally {
                         Binder.restoreCallingIdentity(token);
@@ -551,7 +555,10 @@ public class DisplayHashController {
                 }
                 synchronized (mServiceConnectionLock) {
                     if (mServiceConnection != null) {
-                        mContext.unbindService(mServiceConnection);
+                        if (mBound) {
+                            mBound = false;
+                            mContext.unbindService(mServiceConnection);
+                        }
                         mServiceConnection = null;
                     }
                 }
