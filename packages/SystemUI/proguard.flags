@@ -54,3 +54,9 @@
 -keep class com.android.systemui.dagger.GlobalRootComponent$SysUIComponentImpl { *; }
 -keep class com.android.systemui.dagger.Dagger** { *; }
 -keep class com.android.systemui.tv.Dagger** { *; }
+
+# TODO(b/227455445): Change to specific keep rule for fields that hold a reference to
+# objects used in WeakReference.
+-keepclassmembers,allowshrinking class * {
+  * *;
+}
