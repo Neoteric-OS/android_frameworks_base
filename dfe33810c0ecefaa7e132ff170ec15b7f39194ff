@@ -56,6 +56,30 @@
       },
       "revId": "dfe33810c0ecefaa7e132ff170ec15b7f39194ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4993932_51437124",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-05-10T09:40:09Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the default stance.",
+      "parentUuid": "74c8ec22_e536afbb",
+      "range": {
+        "startLine": 721,
+        "startChar": 0,
+        "endLine": 724,
+        "endChar": 79
+      },
+      "revId": "dfe33810c0ecefaa7e132ff170ec15b7f39194ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
