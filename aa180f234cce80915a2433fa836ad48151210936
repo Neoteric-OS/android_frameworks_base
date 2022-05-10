@@ -22,6 +22,30 @@
       },
       "revId": "aa180f234cce80915a2433fa836ad48151210936",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "457de843_849b5ea8",
+        "filename": "packages/SystemUI/proguard.flags",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1127078
+      },
+      "writtenOn": "2022-05-10T16:34:58Z",
+      "side": 1,
+      "message": "This is actually restricted to fields only, and specifically only reference fields.\nExample:\n\npublic class Test {\n\n  public final Bar bar \u003d new Bar();\n  public final int i \u003d 42;\n\n  public Test() {\n    print();\n  }\n\n  public void print() {\n    System.out.println(\"42\");\n  }\n\n  public static void main(String[] args) {\n    new Test();\n  }\n\n  public static class Bar {\n    public int i \u003d 42;\n    public Bar() {\n    }\n  }\n}\n\nKeep rules:\n\n-keepclassmembers,allowshrinking class Test {\n  * *;\n}\n\n-keep class Test {\n  public static void main(java.lang.String[]);\n}\n\n\n-keep class Test$Bar {\n \u003cmethods\u003e;\n}\n\nThis results in:\n# Bytecode for\n# Class: \u0027Test$Bar\u0027\n# Flags: \u0027public\u0027\n\n#\n# Fields:\n#\n\n#\n# Method: \u0027\u003cinit\u003e\u0027:\n# public\n#\n\nvoid Test$Bar.\u003cinit\u003e()\nregisters: 1, inputs: 1, outputs: 1\n------------------------------------------------------------\ninst#  offset  instruction         arguments\n------------------------------------------------------------\n    0:   0x00: InvokeDirect        { v0 } Ljava/lang/Object;-\u003e\u003cinit\u003e()V\n    1:   0x03: ReturnVoid          \n\n# Bytecode for\n# Class: \u0027Test\u0027\n# Flags: \u0027public\u0027\n\n#\n# Fields:\n#\npublic final Test$Bar bar\n\n#\n# Method: \u0027\u003cinit\u003e\u0027:\n# public\n#\n\nvoid Test.\u003cinit\u003e()\nregisters: 3, inputs: 1, outputs: 2\n------------------------------------------------------------\ninst#  offset  instruction         arguments\n------------------------------------------------------------\n    0:   0x00: InvokeDirect        { v2 } Ljava/lang/Object;-\u003e\u003cinit\u003e()V\n    1:   0x03: NewInstance         v0, Test$Bar\n    2:   0x05: InvokeDirect        { v0 } LTest$Bar;-\u003e\u003cinit\u003e()V\n    3:   0x08: IputObject          v0, v2, Field Test$Bar Test.bar\n         0x0a, line 0, locals: [2 -\u003e this]\n    4:   0x0a: SgetObject          v0, Field java.io.PrintStream java.lang.System.out\n    5:   0x0c: ConstString         v1, \"42\"\n    6:   0x0e: InvokeVirtual       { v0 v1 } Ljava/io/PrintStream;-\u003eprintln(Ljava/lang/String;)V\n    7:   0x11: ReturnVoid          \n\n#\n# Method: \u0027main\u0027:\n# public static\n#\n\nvoid Test.main(java.lang.String[])\nregisters: 1, inputs: 1, outputs: 1\n------------------------------------------------------------\ninst#  offset  instruction         arguments\n------------------------------------------------------------\n    0:   0x00: NewInstance         v0, Test\n    1:   0x02: InvokeDirect        { v0 } LTest;-\u003e\u003cinit\u003e()V\n    2:   0x05: ReturnVoid\n    \nNotice that the print method is inlined and gone, the int field is gone, the bar field is still there",
+      "parentUuid": "2e62a44d_e1992efe",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 5
+      },
+      "revId": "aa180f234cce80915a2433fa836ad48151210936",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
