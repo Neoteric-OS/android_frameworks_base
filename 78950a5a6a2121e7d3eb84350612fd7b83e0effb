@@ -16,6 +16,24 @@
       "message": "How do you know what module should add this code?",
       "revId": "78950a5a6a2121e7d3eb84350612fd7b83e0effb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e6ad4d0_672e80d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2022-05-10T04:16:04Z",
+      "side": 1,
+      "message": "Hi,\n\nI removed allowlist at https://android-review.googlesource.com/c/platform/build/soong/+/2089563/1/apex/apex.go#b3144\nand followed the build error.\n\nThese modules have been in use since R. (https://cs.android.com/android/platform/superproject/+/master:packages/modules/common/build/allowed_deps.txt;l\u003d890-907;drc\u003d7d96e47a39eb4cc578b50fd71c38b2651ff47ad5)",
+      "parentUuid": "38c0ca76_30a4840c",
+      "revId": "78950a5a6a2121e7d3eb84350612fd7b83e0effb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
