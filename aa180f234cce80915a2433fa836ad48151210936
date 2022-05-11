@@ -46,6 +46,30 @@
       },
       "revId": "aa180f234cce80915a2433fa836ad48151210936",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5222c2b_03367290",
+        "filename": "packages/SystemUI/proguard.flags",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-05-11T21:33:27Z",
+      "side": 1,
+      "message": "Interesting, good to know! Would adding `allowaccessmodification` here provide any benefit?",
+      "parentUuid": "457de843_849b5ea8",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 5
+      },
+      "revId": "aa180f234cce80915a2433fa836ad48151210936",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
