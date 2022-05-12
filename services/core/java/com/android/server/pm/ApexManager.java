@@ -115,16 +115,18 @@ public abstract class ApexManager {
         @Nullable public final String apexModuleName;
         public final File apexDirectory;
         public final File preInstalledApexPath;
+        public final boolean activeApexChanged;
 
         private ActiveApexInfo(File apexDirectory, File preInstalledApexPath) {
-            this(null, apexDirectory, preInstalledApexPath);
+            this(null, apexDirectory, preInstalledApexPath, false);
         }
 
         private ActiveApexInfo(@Nullable String apexModuleName, File apexDirectory,
-                File preInstalledApexPath) {
+                File preInstalledApexPath, boolean activeApexChanged) {
             this.apexModuleName = apexModuleName;
             this.apexDirectory = apexDirectory;
             this.preInstalledApexPath = preInstalledApexPath;
+            this.activeApexChanged = activeApexChanged;
         }
 
         private ActiveApexInfo(ApexInfo apexInfo) {
@@ -132,7 +134,8 @@ public abstract class ApexManager {
                     apexInfo.moduleName,
                     new File(Environment.getApexDirectory() + File.separator
                             + apexInfo.moduleName),
-                    new File(apexInfo.preinstalledModulePath));
+                    new File(apexInfo.preinstalledModulePath),
+                    apexInfo.activeApexChanged);
         }
     }
 
