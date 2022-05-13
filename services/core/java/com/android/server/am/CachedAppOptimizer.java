@@ -1074,6 +1074,7 @@ public final class CachedAppOptimizer {
 
         @Override
         public void handleMessage(Message msg) {
+            Slog.e(TAG_AM, "Hello world");
             switch (msg.what) {
                 case COMPACT_PROCESS_MSG: {
                     long start = SystemClock.uptimeMillis();
