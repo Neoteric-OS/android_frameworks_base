@@ -88,7 +88,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executor;
+import java.util.concurrent.RejectedExecutionException;
 
 /**
  * Utility class to build and convert IKEv2/IPsec parameters.
@@ -379,10 +380,10 @@ public class VpnIkev2Utils {
     static class Ikev2VpnNetworkCallback extends NetworkCallback {
         private final String mTag;
         private final Vpn.IkeV2VpnRunnerCallback mCallback;
-        private final ExecutorService mExecutor;
+        private final Executor mExecutor;
 
         Ikev2VpnNetworkCallback(String tag, Vpn.IkeV2VpnRunnerCallback callback,
-                ExecutorService executor) {
+                Executor executor) {
             mTag = tag;
             mCallback = callback;
             mExecutor = executor;
@@ -391,29 +392,41 @@ public class VpnIkev2Utils {
         @Override
         public void onAvailable(@NonNull Network network) {
             Log.d(mTag, "Starting IKEv2/IPsec session on new network: " + network);
-            mExecutor.execute(() -> mCallback.onDefaultNetworkChanged(network));
+            try {
+                mExecutor.execute(() -> mCallback.onDefaultNetworkChanged(network));
+            } catch (RejectedExecutionException e) {
+            }
         }
 
         @Override
         public void onCapabilitiesChanged(@NonNull Network network,
                 @NonNull NetworkCapabilities networkCapabilities) {
             Log.d(mTag, "NC changed for net " + network + " : " + networkCapabilities);
-            mExecutor.execute(
-                    () -> mCallback.onDefaultNetworkCapabilitiesChanged(networkCapabilities));
+            try {
+                mExecutor.execute(
+                        () -> mCallback.onDefaultNetworkCapabilitiesChanged(networkCapabilities));
+            } catch (RejectedExecutionException e) {
+            }
         }
 
         @Override
         public void onLinkPropertiesChanged(@NonNull Network network,
                 @NonNull LinkProperties linkProperties) {
             Log.d(mTag, "LP changed for net " + network + " : " + linkProperties);
-            mExecutor.execute(
-                    () -> mCallback.onDefaultNetworkLinkPropertiesChanged(linkProperties));
+            try {
+                mExecutor.execute(
+                        () -> mCallback.onDefaultNetworkLinkPropertiesChanged(linkProperties));
+            } catch (RejectedExecutionException e) {
+            }
         }
 
         @Override
         public void onLost(@NonNull Network network) {
             Log.d(mTag, "Tearing down; lost network: " + network);
-            mExecutor.execute(() -> mCallback.onSessionLost(network, null));
+            try {
+                mExecutor.execute(() -> mCallback.onSessionLost(network, null));
+            } catch (RejectedExecutionException e) {
+            }
         }
     }
 
