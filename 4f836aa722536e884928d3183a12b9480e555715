@@ -16,6 +16,23 @@
       "message": "Looks good, thanks, but there are test failures to resolve.\n\nAlternatively, if you\u0027d prefer that we do this internally I can, but that wouldn\u0027t be released until the next major release.",
       "revId": "4f836aa722536e884928d3183a12b9480e555715",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21f618f8_71ae3784",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2022-05-13T13:55:44Z",
+      "side": 1,
+      "message": "Hi Ming, thanks for the patch!\n\nWe\u0027re merged a similar fix internally for the next Android release. Do you still need this change in AOSP before the release?",
+      "revId": "4f836aa722536e884928d3183a12b9480e555715",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
