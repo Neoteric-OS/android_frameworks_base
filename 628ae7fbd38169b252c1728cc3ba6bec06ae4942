@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90118166_4eb6c0b4",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-05-13T18:36:15Z",
+      "side": 1,
+      "message": "Let\u0027s actually revert these changes; Yan will be addressing these in her MOBIKE CL; she\u0027s switching to an executorService that we define the RejectedExecutionHandler",
+      "range": {
+        "startLine": 397,
+        "startChar": 0,
+        "endLine": 398,
+        "endChar": 13
+      },
+      "revId": "628ae7fbd38169b252c1728cc3ba6bec06ae4942",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
