@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b011d04_2351cfc0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1282800
+      },
+      "writtenOn": "2022-05-16T07:57:52Z",
+      "side": 1,
+      "message": "hi, Jayachandran\nWhat\u0027s the correctsponding CTS test change for adding this Italian SMS short code?",
+      "revId": "61e314ec303a331b46753232325d3af3fedbf08f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
