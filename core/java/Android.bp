@@ -9,11 +9,21 @@ package {
     default_applicable_licenses: ["frameworks_base_license"],
 }
 
+aidl_interface_headers {
+    name: "framework-core-aidl-headers",
+    srcs: [":framework-core-aidl-sources"],
+}
+
+filegroup {
+    name: "framework-core-aidl-sources",
+    srcs: ["**/*.aidl"],
+}
+
 filegroup {
     name: "framework-core-sources",
     srcs: [
         "**/*.java",
-        "**/*.aidl",
+        ":framework-core-aidl-sources",
     ],
     visibility: ["//frameworks/base"],
 }
