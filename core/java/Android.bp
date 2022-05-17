@@ -9,17 +9,31 @@ package {
     default_applicable_licenses: ["frameworks_base_license"],
 }
 
+aidl_library {
+    name: "framework-core-aidl-headers",
+    hdrs: [":framework-core-aidl-sources"],
+}
+
+filegroup {
+    name: "framework-core-aidl-sources",
+    srcs: ["**/*.aidl"],
+    exclude_srcs: [
+        // Remove selection toolbar code from build time
+        "android/service/selectiontoolbar/*.aidl",
+        "android/view/selectiontoolbar/*.aidl",
+    ],
+    visibility: ["//frameworks/base"],
+}
+
 filegroup {
     name: "framework-core-sources",
     srcs: [
         "**/*.java",
-        "**/*.aidl",
+        ":framework-core-aidl-sources",
     ],
     exclude_srcs: [
-        // Remove election toolbar code from build time
-        "android/service/selectiontoolbar/*.aidl",
+        // Remove selection toolbar code from build time
         "android/service/selectiontoolbar/*.java",
-        "android/view/selectiontoolbar/*.aidl",
         "android/view/selectiontoolbar/*.java",
         "com/android/internal/widget/floatingtoolbar/RemoteFloatingToolbarPopup.java",
     ],
