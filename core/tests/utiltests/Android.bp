@@ -48,3 +48,18 @@ android_test {
     test_suites: ["device-tests"],
 
 }
+
+java_library {
+    name: "framework-core-utils-tests-shared",
+    srcs: [
+        "src/com/android/internal/util/StateMachineTest.java",
+    ],
+
+    static_libs: [
+        "frameworks-base-testutils",
+    ],
+
+    libs: [
+        "android.test.base",
+    ],
+}
