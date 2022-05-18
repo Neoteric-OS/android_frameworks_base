@@ -247,6 +247,7 @@ public final class Parcel {
     private ArrayMap<Class, Object> mClassCookies;
 
     private RuntimeException mStack;
+    private boolean mRecycled = false;
 
     /** @hide */
     @TestApi
@@ -520,6 +521,7 @@ public final class Parcel {
         if (res == null) {
             res = new Parcel(0);
         } else {
+            res.mRecycled = false;
             if (DEBUG_RECYCLE) {
                 res.mStack = new RuntimeException();
             }
@@ -548,7 +550,13 @@ public final class Parcel {
      * the object after this call.
      */
     public final void recycle() {
-        if (DEBUG_RECYCLE) mStack = null;
+        if (mRecycled) {
+            Log.w(TAG, "Recycle called on unowned Parcel. (recycle twice?)", mStack);
+        }
+        mRecycled = true;
+
+        // mStack is cleared in obtain, so that we can print the stack
+        // of where a Parcel was created if it is recycled twice
         freeBuffer();
 
         if (mOwnsNativeParcelObject) {
@@ -5083,6 +5091,7 @@ public final class Parcel {
         if (res == null) {
             res = new Parcel(obj);
         } else {
+            res.mRecycled = false;
             if (DEBUG_RECYCLE) {
                 res.mStack = new RuntimeException();
             }
@@ -5131,7 +5140,8 @@ public final class Parcel {
     @Override
     protected void finalize() throws Throwable {
         if (DEBUG_RECYCLE) {
-            if (mStack != null) {
+            // we could always have this log on, but it's spammy
+            if (!mRecycled) {
                 Log.w(TAG, "Client did not call Parcel.recycle()", mStack);
             }
         }
