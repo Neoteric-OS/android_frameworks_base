@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15bec8ec_2e8b7d1f",
+        "filename": "libs/hwui/jni/Paint.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2022-05-19T06:00:41Z",
+      "side": 1,
+      "message": "nit: add code comment here too about SDK levels?",
+      "revId": "0a0c82c46a849ce5c1a231c0d4a2b61ca3fd7a8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
