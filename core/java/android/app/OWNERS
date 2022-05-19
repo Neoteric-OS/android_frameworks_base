@@ -44,6 +44,7 @@ per-file *AppOp* = file:/core/java/android/permission/OWNERS
 
 # LocaleManager
 per-file *Locale* = file:/services/core/java/com/android/server/locales/OWNERS
+per-file LocaleConfig.java = file:platform/packages/apps/Settings:/src/com/android/settings/localepicker/OWNERS
 
 # Multiuser
 per-file *User* = file:/MULTIUSER_OWNERS
