@@ -118,6 +118,9 @@ public class Build {
     /** The name of the hardware (from the kernel command line or /proc). */
     public static final String HARDWARE = getString("ro.hardware");
 
+    /** The system kernel version number( from the SetKernelVersion of init). */
+    public static final String KERNEL = getString("ro.kernel.version");
+
     /**
      * The SKU of the hardware (from the kernel command line).
      *
