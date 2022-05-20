@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6ead62a_4bde1645",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1291338
+      },
+      "writtenOn": "2022-05-20T07:55:55Z",
+      "side": 1,
+      "message": "Can you also update system/sepolicy/private/property_contexts?",
+      "revId": "7b5407b2b64d28086897c338896ee5bb0b4c7512",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
