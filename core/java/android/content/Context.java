@@ -5848,10 +5848,11 @@ public abstract class Context {
     public abstract int checkCallingPermission(@NonNull String permission);
 
     /**
-     * Determine whether the calling process of an IPC <em>or you</em> have been
-     * granted a particular permission.  This is the same as
-     * {@link #checkCallingPermission}, except it grants your own permissions
-     * if you are not currently processing an IPC.  Use with care!
+     * Returns whether either the caller of an IPC has a permission or, when not handling an IPC,
+     * that you have the permission.
+     *
+     * This is the same as {@link #checkCallingPermission}, except that when you are not currently
+     * processing an IPC, it grants your own permissions. Use with care!
      *
      * @param permission The name of the permission being checked.
      *
@@ -5918,12 +5919,12 @@ public abstract class Context {
             @NonNull String permission, @Nullable String message);
 
     /**
-     * If neither you nor the calling process of an IPC you are
-     * handling has been granted a particular permission, throw a
-     * {@link SecurityException}.  This is the same as {@link
-     * #enforceCallingPermission}, except it grants your own
-     * permissions if you are not currently processing an IPC.  Use
-     * with care!
+     * Enforces that the caller of an IPC has a permission or, when not handling an IPC, that you
+     * have the permission.
+     *
+     * If the conditions are not met, this method throws a {@link SecurityException}. This is the
+     * same as {@link #enforceCallingPermission}, except that when you are not currently processing
+     * an IPC, it grants your own permissions. Use with care!
      *
      * @param permission The name of the permission being checked.
      * @param message A message to include in the exception if it is thrown.
