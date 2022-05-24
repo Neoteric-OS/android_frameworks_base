@@ -16,6 +16,23 @@
       "message": "Can you also update system/sepolicy/private/property_contexts?",
       "revId": "7b5407b2b64d28086897c338896ee5bb0b4c7512",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a48a4c9_a5bd14f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1950557
+      },
+      "writtenOn": "2022-05-24T11:34:13Z",
+      "side": 1,
+      "message": "Tied two changes togther,the topic is \"add ro.kernel.version property\". The other is https://android-review.googlesource.com/c/platform/system/sepolicy/+/2099118\nReview please.\nThanks.",
+      "revId": "7b5407b2b64d28086897c338896ee5bb0b4c7512",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
