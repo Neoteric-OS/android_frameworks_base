@@ -2988,7 +2988,8 @@ public class AudioService extends IAudioService.Stub
             int newIndex = mStreamStates[streamType].getIndex(device);
 
             // Check if volume update should be send to AVRCP
-            if (streamTypeAlias == AudioSystem.STREAM_MUSIC
+            if ((streamTypeAlias == AudioSystem.STREAM_MUSIC
+                    || streamTypeAlias == AudioSystem.STREAM_ASSISTANT)
                     && AudioSystem.DEVICE_OUT_ALL_A2DP_SET.contains(device)
                     && (flags & AudioManager.FLAG_BLUETOOTH_ABS_VOLUME) == 0) {
                 if (DEBUG_VOL) {
@@ -3634,7 +3635,8 @@ public class AudioService extends IAudioService.Stub
 
             index = rescaleIndex(index * 10, streamType, streamTypeAlias);
 
-            if (streamTypeAlias == AudioSystem.STREAM_MUSIC
+            if ((streamTypeAlias == AudioSystem.STREAM_MUSIC
+                    || streamTypeAlias == AudioSystem.STREAM_ASSISTANT)
                     && AudioSystem.DEVICE_OUT_ALL_A2DP_SET.contains(device)
                     && (flags & AudioManager.FLAG_BLUETOOTH_ABS_VOLUME) == 0) {
                 if (DEBUG_VOL) {
