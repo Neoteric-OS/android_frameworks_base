@@ -129,6 +129,19 @@ static jlong Typeface_createFromArray(JNIEnv *env, jobject, jlongArray familyArr
     return toJLong(Typeface::createFromFamilies(std::move(familyVec), weight, italic));
 }
 
+// Required for API O through R
+static jlong Typeface_createFromArrayO_R(JNIEnv* env, jobject, jlongArray familyArray, int weight,
+                                         int italic) {
+    ScopedLongArrayRO families(env, familyArray);
+    std::vector<std::shared_ptr<minikin::FontFamily>> familyVec;
+    familyVec.reserve(families.size());
+    for (size_t i = 0; i < families.size(); i++) {
+        FontFamilyWrapper* family = reinterpret_cast<FontFamilyWrapper*>(families[i]);
+        familyVec.emplace_back(family->family);
+    }
+    return toJLong(Typeface::createFromFamilies(std::move(familyVec), weight, italic));
+}
+
 // CriticalNative
 static void Typeface_setDefault(CRITICAL_JNI_PARAMS_COMMA jlong faceHandle) {
     Typeface::setDefault(toTypeface(faceHandle));
@@ -394,6 +407,7 @@ static const JNINativeMethod gTypefaceMethods[] = {
         {"nativeGetStyle", "(J)I", (void*)Typeface_getStyle},
         {"nativeGetWeight", "(J)I", (void*)Typeface_getWeight},
         {"nativeCreateFromArray", "([JJII)J", (void*)Typeface_createFromArray},
+        {"nativeCreateFromArray", "([JII)J", (void*)Typeface_createFromArrayO_R},
         {"nativeSetDefault", "(J)V", (void*)Typeface_setDefault},
         {"nativeGetSupportedAxes", "(J)[I", (void*)Typeface_getSupportedAxes},
         {"nativeRegisterGenericFamily", "(Ljava/lang/String;J)V",
