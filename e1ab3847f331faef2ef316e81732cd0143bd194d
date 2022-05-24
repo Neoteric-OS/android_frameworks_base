@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35b84434_2b046f18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-05-24T20:02:45Z",
+      "side": 1,
+      "message": "I am kinda shock this CL pass pre-submit now, as I had soo many issue to go trough a few month ago while we were still S-based.\n\nI guess nothing prevent us from merging it now !",
+      "revId": "e1ab3847f331faef2ef316e81732cd0143bd194d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
