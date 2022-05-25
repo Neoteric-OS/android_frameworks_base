@@ -24,6 +24,7 @@ import android.content.pm.PackagePartitions;
 import android.content.pm.PackagePartitions.SystemPartition;
 import android.os.Build;
 import android.os.FileUtils;
+import android.os.SystemProperties;
 import android.util.ArraySet;
 import android.util.Log;
 import android.util.Xml;
@@ -236,8 +237,12 @@ public final class OverlayConfigParser {
         // The current recursive depth of merging configuration files
         private int mMergeDepth;
 
-        private ParsingContext(OverlayPartition partition) {
+        // The allowed Sku value to use when reading sku specific RROs on product partition
+        private final String mProductPartitionSku;
+
+        private ParsingContext(OverlayPartition partition, String productPartitionSku) {
             mPartition = partition;
+            mProductPartitionSku = productPartitionSku;
         }
     }
 
@@ -248,13 +253,17 @@ public final class OverlayConfigParser {
      * added configured overlays will be null and the parsing logic will not assert that the
      * configured overlays exist within the partition.
      *
+     * {@link #getProductPartitionSku() getProductPartitionSku} provides the correct value to
+     * provide to productPartitionSku parameter.
+     *
      * @return list of configured overlays if configuration file exists; otherwise, null
      */
     @Nullable
     static ArrayList<ParsedConfiguration> getConfigurations(
             @NonNull OverlayPartition partition, @Nullable OverlayScanner scanner,
             @Nullable Map<String, ParsedOverlayInfo> packageManagerOverlayInfos,
-            @NonNull List<String> activeApexes) {
+            @NonNull List<String> activeApexes,
+            @NonNull String productPartitionSku) {
         if (scanner != null) {
             if (partition.getOverlayFolder() != null) {
                 scanner.scanDir(partition.getOverlayFolder());
@@ -273,7 +282,7 @@ public final class OverlayConfigParser {
             return null;
         }
 
-        final ParsingContext parsingContext = new ParsingContext(partition);
+        final ParsingContext parsingContext = new ParsingContext(partition, productPartitionSku);
         readConfigFile(configFile, scanner, packageManagerOverlayInfos, parsingContext);
         return parsingContext.mOrderedConfigurations;
     }
@@ -302,6 +311,10 @@ public final class OverlayConfigParser {
                         parseMerge(configFile, parser, scanner, packageManagerOverlayInfos,
                                 parsingContext);
                         break;
+                    case "merge-sku":
+                        parseMergeSku(configFile, parser, scanner, packageManagerOverlayInfos,
+                                parsingContext);
+                        break;
                     case "overlay":
                         parseOverlay(configFile, parser, scanner, packageManagerOverlayInfos,
                                 parsingContext);
@@ -319,30 +332,17 @@ public final class OverlayConfigParser {
         }
     }
 
+
     /**
-     * Parses a <merge> tag within an overlay configuration file.
-     *
-     * Merge tags allow for other configuration files to be "merged" at the current parsing
-     * position into the current configuration file being parsed. The {@code path} attribute of the
-     * tag represents the path of the file to merge relative to the directory containing overlay
-     * configuration files.
+     * "Merge" file at the current parsing position into the current configuration file being
+     * parsed. The {@code path} attribute of the tag represents the path of the file to merge
+     * relative to the directory containing overlay configuration files.
      */
-    private static void parseMerge(@NonNull File configFile, @NonNull XmlPullParser parser,
+    private static void mergeFileCommon(@NonNull File configFile,
+            @NonNull String path, @NonNull XmlPullParser parser,
             @Nullable OverlayScanner scanner,
             @Nullable Map<String, ParsedOverlayInfo> packageManagerOverlayInfos,
             @NonNull ParsingContext parsingContext) {
-        final String path = parser.getAttributeValue(null, "path");
-        if (path == null) {
-            throw new IllegalStateException(String.format("<merge> without path in %s at %s"
-                    + configFile, parser.getPositionDescription()));
-        }
-
-        if (path.startsWith("/")) {
-            throw new IllegalStateException(String.format(
-                    "Path %s must be relative to the directory containing overlay configurations "
-                            + " files in %s at %s ", path, configFile,
-                    parser.getPositionDescription()));
-        }
 
         if (parsingContext.mMergeDepth++ == MAXIMUM_MERGE_DEPTH) {
             throw new IllegalStateException(String.format(
@@ -378,6 +378,77 @@ public final class OverlayConfigParser {
 
         readConfigFile(includedConfigFile, scanner, packageManagerOverlayInfos, parsingContext);
         parsingContext.mMergeDepth--;
+    }
+
+    /**
+     * Parses a &lt;merge-sku&gt; tag within an overlay configuration file.
+     *
+     * Note: this is only applicable for product partition, for all other partitions
+     * exception will be raised.
+     *
+     * Merge-sku tags allow for sku configuration files to be "merged" at the current parsing
+     * position into the current configuration file being parsed.
+     *
+     * The path of file merged is hardcoded to
+     * overlay/sku_$(ro.boot.hardware.sku)/$(ro.boot.hardware.sku).xml
+     */
+    private static void parseMergeSku(@NonNull File configFile, @NonNull XmlPullParser parser,
+            @Nullable OverlayScanner scanner,
+            @Nullable Map<String, ParsedOverlayInfo> packageManagerOverlayInfos,
+            @NonNull ParsingContext parsingContext) {
+        if (PackagePartitions.PARTITION_PRODUCT != parsingContext.mPartition.type) {
+            throw new IllegalStateException(String.format("Sku not valid for current "
+                + "partition %d at %s", parsingContext.mPartition.type,
+                parser.getPositionDescription()));
+        }
+
+        final String skuValue = parsingContext.mProductPartitionSku;
+        if (skuValue.isEmpty()) {
+            throw new IllegalStateException(String.format("Sku property not set "
+                    + "at %s", parser.getPositionDescription()));
+        }
+
+        final String path = String.format("sku_%s/%s.xml", skuValue, skuValue);
+        mergeFileCommon(configFile, path, parser, scanner, packageManagerOverlayInfos,
+                parsingContext);
+    }
+
+    /**
+     * Return the Sku that should be used to select the Sku specific overlay config
+     * to read.
+     */
+    static String getProductPartitionSku() {
+        final String skuProp = "ro.boot.hardware.sku";
+        final String skuValue = SystemProperties.get(skuProp, "");
+        return skuValue;
+    }
+
+    /**
+     * Parses a &lt;merge&gt; tag within an overlay configuration file.
+     *
+     * Merge tags allow for other configuration files to be "merged" at the current parsing
+     * position into the current configuration file being parsed. The {@code path} attribute of the
+     * tag represents the path of the file to merge relative to the directory containing overlay
+     * configuration files.
+     */
+    private static void parseMerge(@NonNull File configFile, @NonNull XmlPullParser parser,
+            @Nullable OverlayScanner scanner,
+            @Nullable Map<String, ParsedOverlayInfo> packageManagerOverlayInfos,
+            @NonNull ParsingContext parsingContext) {
+        final String path = parser.getAttributeValue(null, "path");
+        if (path == null) {
+            throw new IllegalStateException(String.format("<merge> without path in %s at %s",
+                    configFile, parser.getPositionDescription()));
+        }
+        if (path.startsWith("/")) {
+            throw new IllegalStateException(String.format(
+                    "Path %s must be relative to the directory containing overlay configurations "
+                            + " files in %s at %s ", path, configFile,
+                    parser.getPositionDescription()));
+        }
+
+        mergeFileCommon(configFile, path, parser, scanner, packageManagerOverlayInfos,
+                parsingContext);
     }
 
     /**

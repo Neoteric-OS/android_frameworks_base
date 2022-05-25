@@ -140,6 +140,17 @@ public class OverlayConfig {
     public OverlayConfig(@Nullable File rootDirectory,
             @Nullable Supplier<OverlayScanner> scannerFactory,
             @Nullable PackageProvider packageProvider) {
+        this(rootDirectory,
+                scannerFactory,
+                packageProvider,
+                OverlayConfigParser.getProductPartitionSku());
+    }
+
+    @VisibleForTesting
+    public OverlayConfig(@Nullable File rootDirectory,
+            @Nullable Supplier<OverlayScanner> scannerFactory,
+            @Nullable PackageProvider packageProvider,
+            @NonNull String productPartitionSku) {
         Preconditions.checkArgument((scannerFactory == null) != (packageProvider == null),
                 "scannerFactory and packageProvider cannot be both null or both non-null");
 
@@ -170,7 +181,8 @@ public class OverlayConfig {
                     OverlayConfigParser.getConfigurations(partition, scanner,
                             packageManagerOverlayInfos,
                             activeApexesPerPartition.getOrDefault(partition.type,
-                                    Collections.emptyList()));
+                                    Collections.emptyList()),
+                            productPartitionSku);
             if (partitionOverlays != null) {
                 overlays.addAll(partitionOverlays);
                 continue;

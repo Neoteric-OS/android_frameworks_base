@@ -36,6 +36,7 @@ import com.android.internal.content.om.OverlayConfig.IdmapInvocation;
 import com.android.internal.content.om.OverlayConfigParser.OverlayPartition;
 import com.android.internal.content.om.OverlayScanner;
 
+import org.hamcrest.core.StringContains;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -69,6 +70,12 @@ public class OverlayConfigTest {
     private OverlayConfig createConfigImpl() throws IOException {
         return new OverlayConfig(mTestFolder.getRoot().getCanonicalFile(),
                 mScannerRule.getScannerFactory(), mScannerRule.getPackageProvider());
+    }
+
+    private OverlayConfig createConfigImpl(String skuValue) throws IOException {
+        return new OverlayConfig(mTestFolder.getRoot().getCanonicalFile(),
+                mScannerRule.getScannerFactory(), mScannerRule.getPackageProvider(),
+                skuValue);
     }
 
     private File createFile(String fileName) throws IOException {
@@ -843,5 +850,93 @@ public class OverlayConfigTest {
         assertEquals(true, overlayConfig.sortPartitions(partitionOrderFilePath, partitions));
         assertEquals("system_ext, vendor, oem, odm, product, system",
                 generatePartitionOrderString(partitions));
+    }
+
+    @Test
+    public void testMergeSku() throws IOException {
+        final String systemPropertyValue = "testSku";
+
+        final String skuConfigPath = String.format("/product/overlay/config/sku_%s/%s.xml",
+                systemPropertyValue, systemPropertyValue);
+
+        createFile(skuConfigPath,
+                "<config>"
+                        + "  <overlay package=\"two\" mutable=\"false\" enabled=\"true\" />"
+                        + "  <overlay package=\"three\" mutable=\"false\" enabled=\"true\" />"
+                        + "</config>");
+
+        createFile("/product/overlay/config/config.xml",
+                "<config>"
+                        + "  <overlay package=\"one\" mutable=\"false\" enabled=\"true\" />"
+                        + "  <merge-sku />"
+                        + "  <overlay package=\"four\" enabled=\"true\" />"
+                        + "</config>");
+
+        mScannerRule.addOverlay(createFile("/product/overlay/one.apk"), "one");
+        mScannerRule.addOverlay(createFile("/product/overlay/two.apk"), "two");
+        mScannerRule.addOverlay(createFile("/product/overlay/three.apk"), "three");
+        mScannerRule.addOverlay(createFile("/product/overlay/four.apk"), "four");
+
+        final OverlayConfig overlayConfig = createConfigImpl(systemPropertyValue);
+        OverlayConfig.Configuration o1 = overlayConfig.getConfiguration("one");
+        assertNotNull(o1);
+        assertFalse(o1.parsedConfig.mutable);
+        assertTrue(o1.parsedConfig.enabled);
+        assertEquals(0, o1.configIndex);
+
+        OverlayConfig.Configuration o2 = overlayConfig.getConfiguration("two");
+        assertNotNull(o2);
+        assertFalse(o2.parsedConfig.mutable);
+        assertTrue(o2.parsedConfig.enabled);
+        assertEquals(1, o2.configIndex);
+
+        OverlayConfig.Configuration o3 = overlayConfig.getConfiguration("three");
+        assertNotNull(o3);
+        assertFalse(o3.parsedConfig.mutable);
+        assertTrue(o3.parsedConfig.enabled);
+        assertEquals(2, o3.configIndex);
+
+        OverlayConfig.Configuration o4 = overlayConfig.getConfiguration("four");
+        assertNotNull(o4);
+        assertTrue(o4.parsedConfig.mutable);
+        assertTrue(o4.parsedConfig.enabled);
+        assertEquals(3, o4.configIndex);
+    }
+
+    @Test
+    public void testMergeSkuNotAllowedPartition() throws IOException {
+        mExpectedException.expect(IllegalStateException.class);
+        mExpectedException.expectMessage(StringContains.containsString("Sku not valid for "
+                + "current partition"));
+
+        final String systemPropertyValue = "testSku";
+
+        final String skuConfigPath = String.format("/system_ext/overlay/config/sku_%s/%s.xml",
+                systemPropertyValue, systemPropertyValue);
+
+        createFile("skuConfigPath");
+        createFile("/system_ext/overlay/config/config.xml",
+                "<config>"
+                        + "  <merge-sku />"
+                        + "</config>");
+        createConfigImpl(systemPropertyValue);
+    }
+
+    @Test
+    public void testMergeSkuPropNotSet() throws IOException {
+        mExpectedException.expect(IllegalStateException.class);
+        mExpectedException.expectMessage(StringContains.containsString("Sku property not set"));
+
+        final String skuValue = "testSku";
+        final String skuConfigPath = String.format("/product/overlay/config/sku_%s/%s.xml",
+                skuValue, skuValue);
+
+        createFile("skuConfigPath");
+        createFile("/product/overlay/config/config.xml",
+                "<config>"
+                        + "  <merge-sku />"
+                        + "</config>");
+
+        createConfigImpl("");
     }
 }
