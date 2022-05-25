@@ -34,6 +34,40 @@
       "parentUuid": "35b84434_2b046f18",
       "revId": "e1ab3847f331faef2ef316e81732cd0143bd194d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c51dd58_0ec93ace",
+        "filename": "tests/utils/testutils/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-05-25T18:59:00Z",
+      "side": 1,
+      "message": "is this used a lot within frameworks-base? (how many build rules? seems like it could be moved to modules-utils also.",
+      "revId": "e1ab3847f331faef2ef316e81732cd0143bd194d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f48607d6_dd2b1ce5",
+        "filename": "tests/utils/testutils/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-05-25T18:59:00Z",
+      "side": 1,
+      "message": "set visbiility",
+      "revId": "e1ab3847f331faef2ef316e81732cd0143bd194d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
