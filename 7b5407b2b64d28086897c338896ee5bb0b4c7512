@@ -33,6 +33,29 @@
       "message": "Tied two changes togther,the topic is \"add ro.kernel.version property\". The other is https://android-review.googlesource.com/c/platform/system/sepolicy/+/2099118\nReview please.\nThanks.",
       "revId": "7b5407b2b64d28086897c338896ee5bb0b4c7512",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29926492_27672f36",
+        "filename": "core/java/android/os/Build.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1291338
+      },
+      "writtenOn": "2022-05-25T00:57:37Z",
+      "side": 1,
+      "message": "I think this will need an API-review. Can you also update the api txt file?",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 71
+      },
+      "revId": "7b5407b2b64d28086897c338896ee5bb0b4c7512",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
