@@ -56,6 +56,30 @@
       },
       "revId": "7b5407b2b64d28086897c338896ee5bb0b4c7512",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8683834a_b074d64f",
+        "filename": "core/java/android/os/Build.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1950557
+      },
+      "writtenOn": "2022-05-25T04:33:05Z",
+      "side": 1,
+      "message": "Done.\n\nMr kim,\nreview please.\n\nthanks.",
+      "parentUuid": "29926492_27672f36",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 71
+      },
+      "revId": "7b5407b2b64d28086897c338896ee5bb0b4c7512",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
