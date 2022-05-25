@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0d52321e_a7e54d50",
+        "filename": "tests/utils/testutils/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-05-25T21:46:17Z",
+      "side": 1,
+      "message": "It\u0027s seems to be used in a few location.\nhttps://source.corp.google.com/search?q\u003df:frameworks%2Fbase%20%5CbTestLooper%5Cb\u0026sq\u003dp:%5Eandroid$\n\nI don\u0027t want to move it with this CL as it doesn\u0027t seems directly related to state machine.\nMaybe it can be done in a follow-up CL.",
+      "parentUuid": "5c51dd58_0ec93ace",
+      "revId": "e1ab3847f331faef2ef316e81732cd0143bd194d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f48607d6_dd2b1ce5",
         "filename": "tests/utils/testutils/Android.bp",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "writtenOn": "2022-05-25T18:59:00Z",
       "side": 1,
       "message": "set visbiility",
+      "revId": "e1ab3847f331faef2ef316e81732cd0143bd194d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "629a3fb8_e1a07bcd",
+        "filename": "tests/utils/testutils/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-05-25T21:46:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f48607d6_dd2b1ce5",
       "revId": "e1ab3847f331faef2ef316e81732cd0143bd194d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
