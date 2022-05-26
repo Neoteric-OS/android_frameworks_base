@@ -71,6 +71,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44372337_41c1472f",
+        "filename": "tests/utils/testutils/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-05-26T12:03:49Z",
+      "side": 1,
+      "message": "yeah. Maybe it should be a static library in modules utils that testutils depends on.",
+      "parentUuid": "0d52321e_a7e54d50",
+      "revId": "e1ab3847f331faef2ef316e81732cd0143bd194d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f48607d6_dd2b1ce5",
