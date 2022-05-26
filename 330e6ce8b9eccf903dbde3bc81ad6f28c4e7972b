@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "114a7d59_755ecd8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2022-05-26T08:38:21Z",
+      "side": 1,
+      "message": "Hi Tiger, is this merged in aosp-master?\nWe\u0027d like to avoid GSI specific patches.",
+      "revId": "330e6ce8b9eccf903dbde3bc81ad6f28c4e7972b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
