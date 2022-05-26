@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec8a33c8_10751bcd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-05-26T15:19:19Z",
+      "side": 1,
+      "message": "Looks good, but what are you going to use it for?",
+      "revId": "a7cb994b6f463b316d481ed890d3109d3595d9d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
