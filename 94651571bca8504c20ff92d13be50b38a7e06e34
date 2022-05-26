@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09177c73_151ad32b",
+        "filename": "services/core/java/com/android/server/speech/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1514900
+      },
+      "writtenOn": "2022-05-26T02:49:23Z",
+      "side": 0,
+      "message": "There are Java files in this directory though, maybe the owners of this library actually meant to glob them and include them in the services.jar and services-non-updatable-sources filegroup, but didn\u0027t realize that it\u0027s not being included?\n\nLet\u0027s inform them in this CL?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 1
+      },
+      "revId": "94651571bca8504c20ff92d13be50b38a7e06e34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
