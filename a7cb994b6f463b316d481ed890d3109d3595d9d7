@@ -16,6 +16,24 @@
       "message": "Looks good, but what are you going to use it for?",
       "revId": "a7cb994b6f463b316d481ed890d3109d3595d9d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "526e467e_30175bcd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1950557
+      },
+      "writtenOn": "2022-05-26T15:57:15Z",
+      "side": 1,
+      "message": "hi,Mr Onuki,\n\nWith start_count \u0026 crash_java count, we can simple confirm the stability status of device. Sometimes we do not have logs for a long time device use, or we have to search the crash keywords from logs to confirm what happened to device. \n\nIt can not indicate the restart details, but with the property, maybe it is clear that the runtime status of the past.\n\nThanks.",
+      "parentUuid": "ec8a33c8_10751bcd",
+      "revId": "a7cb994b6f463b316d481ed890d3109d3595d9d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
