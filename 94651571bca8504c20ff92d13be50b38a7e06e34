@@ -22,6 +22,30 @@
       },
       "revId": "94651571bca8504c20ff92d13be50b38a7e06e34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ff5911d_5a044288",
+        "filename": "services/core/java/com/android/server/speech/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2022-05-26T18:03:02Z",
+      "side": 0,
+      "message": "Added the original author, but I don\u0027t think there should actually be a services.speech. All the other named services are in frameworks/base/services/\u003cname\u003e, so I think this belongs in services.core.\n\nThe java files in this directory are being included by services.core.",
+      "parentUuid": "09177c73_151ad32b",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 1
+      },
+      "revId": "94651571bca8504c20ff92d13be50b38a7e06e34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
