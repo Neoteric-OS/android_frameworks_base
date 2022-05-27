@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1edf3556_6644a112",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1572720
+      },
+      "writtenOn": "2022-05-27T18:20:11Z",
+      "side": 1,
+      "message": "I\u0027m having some discussion with my team about this issue. Removing +2 vote for now.",
+      "revId": "52f5a5ead10d32ab47470394c895c8a71250e9ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
