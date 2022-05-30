@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f8804b4_56426c5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-05-30T15:07:39Z",
+      "side": 1,
+      "message": "LGTM as is, but this depends on aosp/2108043 which was reverted so not sure if this is feasible.",
+      "revId": "93298d6e832e35acdcca009f4674f7818ea060fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
