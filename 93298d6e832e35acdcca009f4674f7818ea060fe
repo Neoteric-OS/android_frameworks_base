@@ -16,6 +16,29 @@
       "message": "LGTM as is, but this depends on aosp/2108043 which was reverted so not sure if this is feasible.",
       "revId": "93298d6e832e35acdcca009f4674f7818ea060fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f1edb5f_3ceff005",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-05-30T17:13:40Z",
+      "side": 1,
+      "message": "+reminv FYI maybe you want to do this?",
+      "range": {
+        "startLine": 32,
+        "startChar": 49,
+        "endLine": 34,
+        "endChar": 56
+      },
+      "revId": "93298d6e832e35acdcca009f4674f7818ea060fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
