@@ -67,6 +67,9 @@ class DomainVerificationReceiverV1 : BaseDomainVerificationReceiver() {
             }
         }
 
+        //clear sp before enqueue unique work since policy is REPLACE
+        val editor = context.getSharedPreferences(packageName, Context.MODE_PRIVATE)?.edit()
+        editor?.clear()?.apply()
         WorkManager.getInstance(context)
             .beginUniqueWork(
                 "$PACKAGE_WORK_PREFIX_V1$packageName",
