@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d7238db_e876209c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1358176
+      },
+      "writtenOn": "2022-05-30T08:59:37Z",
+      "side": 1,
+      "message": "This is a cherry-pick to unblock Bluetooth work on AOSP.",
+      "revId": "7f490a783b51c89f6d0beb2630ebc91064e45576",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
