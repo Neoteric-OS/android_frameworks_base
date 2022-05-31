@@ -34,6 +34,24 @@
       "parentUuid": "114a7d59_755ecd8d",
       "revId": "330e6ce8b9eccf903dbde3bc81ad6f28c4e7972b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81edadf0_86c3a9d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2022-05-31T00:23:28Z",
+      "side": 1,
+      "message": "No problem. Adding a \"cherry picked from ...\" line in the commit message will do.",
+      "parentUuid": "e04263df_cf1dd69d",
+      "revId": "330e6ce8b9eccf903dbde3bc81ad6f28c4e7972b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
