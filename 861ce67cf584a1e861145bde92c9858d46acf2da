@@ -63,6 +63,30 @@
       },
       "revId": "861ce67cf584a1e861145bde92c9858d46acf2da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b310c320_f144e791",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1376883
+      },
+      "writtenOn": "2022-05-31T22:51:44Z",
+      "side": 1,
+      "message": "I\u0027m not really worried about the case where this occurs due to a filesystem error but more over when the user was created and started but before the user was unlocked, it was stopped - in that case, they will receive a bunch of events but they would not have been persisted to CE.\n\nso my question really is - other than the filesystem error, will mkdir fail only in the case where the user does not exist? if yes, then I\u0027m okay with removing the events here.",
+      "parentUuid": "4255c955_a6c22c8c",
+      "range": {
+        "startLine": 795,
+        "startChar": 12,
+        "endLine": 795,
+        "endChar": 34
+      },
+      "revId": "861ce67cf584a1e861145bde92c9858d46acf2da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
