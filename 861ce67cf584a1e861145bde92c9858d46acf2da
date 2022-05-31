@@ -111,6 +111,30 @@
       },
       "revId": "861ce67cf584a1e861145bde92c9858d46acf2da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d78c43b_18d32693",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-05-31T23:16:48Z",
+      "side": 1,
+      "message": "If you want, we could clear the events list only if `Environment.getDataSystemDeDirectory(userId)` doesn\u0027t exist.\n\nKeep in mind though, it seems that everything that happens here is still racy due to how the service processes user lifecycle changes asynchronously.  This CL is meant as a workaround only; I\u0027m hoping that you or the other service owners will look into fixing the race conditions here.",
+      "parentUuid": "d077535a_6eaed3d5",
+      "range": {
+        "startLine": 795,
+        "startChar": 12,
+        "endLine": 795,
+        "endChar": 34
+      },
+      "revId": "861ce67cf584a1e861145bde92c9858d46acf2da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
