@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62d127c3_562aff37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2022-05-31T10:08:56Z",
+      "side": 1,
+      "message": "LGTM as cherry-pick from ag/17104567",
+      "revId": "64c4012807d6578e3e084ff55aa1e86c7e36d7e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
