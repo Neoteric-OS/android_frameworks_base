@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "346df47b_2ccd882d",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1376883
+      },
+      "writtenOn": "2022-05-31T18:55:42Z",
+      "side": 1,
+      "message": "why are you clearing the pending events here? is it because the new restrictions always makes the first part of the conditional true and the only way the directory cannot exist is if the user has been removed? just want to make sure the second part of the conditional isn\u0027t possible if the user was just created.",
+      "range": {
+        "startLine": 795,
+        "startChar": 12,
+        "endLine": 795,
+        "endChar": 34
+      },
+      "revId": "861ce67cf584a1e861145bde92c9858d46acf2da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
