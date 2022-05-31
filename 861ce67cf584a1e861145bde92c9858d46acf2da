@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e27ad04_461f6bda",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2022-05-31T19:02:53Z",
+      "side": 1,
+      "message": "Don\u0027t think Zhen and I have much context here, so we\u0027ll defer to the UsageStats team\u0027s judgment unless there\u0027s something I missed.",
+      "revId": "861ce67cf584a1e861145bde92c9858d46acf2da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "346df47b_2ccd882d",
