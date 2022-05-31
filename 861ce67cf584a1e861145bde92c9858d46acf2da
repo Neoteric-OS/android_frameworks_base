@@ -39,6 +39,30 @@
       },
       "revId": "861ce67cf584a1e861145bde92c9858d46acf2da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4255c955_a6c22c8c",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-05-31T19:03:04Z",
+      "side": 1,
+      "message": "If /data/system_de/$userId doesn\u0027t exist, then there is no user with ID $userId, so any events that this service may have for this user ID are stale, and they should be discarded in case the user ID is reused later.\n\nTechnically the mkdir could fail due to an unrelated filesystem error, e.g. due to the filesystem being corrupted or completely full.  Are you saying you don\u0027t want to discard the events in that case?  I don\u0027t think that case really matters.",
+      "parentUuid": "346df47b_2ccd882d",
+      "range": {
+        "startLine": 795,
+        "startChar": 12,
+        "endLine": 795,
+        "endChar": 34
+      },
+      "revId": "861ce67cf584a1e861145bde92c9858d46acf2da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
