@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c238e032_f9dcb0df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-05-31T16:39:23Z",
+      "side": 1,
+      "message": "(cc zim)\n\nLooks great!",
+      "revId": "b07ac0ff0ee7f739646357f062ff16553c48caf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aedb210d_681e683e",
+        "filename": "core/api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 12968,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-05-31T16:39:23Z",
+      "side": 1,
+      "message": "Why do you take it?",
+      "revId": "b07ac0ff0ee7f739646357f062ff16553c48caf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c1da346_8b3b8db8",
+        "filename": "core/java/android/database/sqlite/SQLiteConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-05-31T16:39:23Z",
+      "side": 1,
+      "message": "This could throw, shouldn\u0027t you release the authorizer in that case?",
+      "revId": "b07ac0ff0ee7f739646357f062ff16553c48caf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b09c6e16_d1e6a335",
+        "filename": "core/jni/android_database_SQLiteConnection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-05-31T16:39:23Z",
+      "side": 1,
+      "message": "Will it work even if the arguments are NULL?",
+      "range": {
+        "startLine": 125,
+        "startChar": 53,
+        "endLine": 125,
+        "endChar": 65
+      },
+      "revId": "b07ac0ff0ee7f739646357f062ff16553c48caf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f639923d_ae8d29ee",
+        "filename": "core/jni/android_database_SQLiteConnection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-05-31T16:39:23Z",
+      "side": 1,
+      "message": "Why do you set it at the open time, rather than before executing each statement and release it afterwords? \n\nThat way:\n- We can remove the setAuthorizerSupportEnabled() API.\n- Statements without having an authorizer wouldn\u0027t incur performance penalty.\n\n\nIf the performance penalty is negligible anyway, maybe remove setAuthorizerSupportEnabled()? In that case, I\u0027m okay if we just keep it though.",
+      "revId": "b07ac0ff0ee7f739646357f062ff16553c48caf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23ed49b3_f891f247",
+        "filename": "core/jni/android_database_SQLiteConnection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-05-31T16:39:23Z",
+      "side": 1,
+      "message": "Move the second string to the next line?",
+      "range": {
+        "startLine": 996,
+        "startChar": 27,
+        "endLine": 996,
+        "endChar": 105
+      },
+      "revId": "b07ac0ff0ee7f739646357f062ff16553c48caf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
