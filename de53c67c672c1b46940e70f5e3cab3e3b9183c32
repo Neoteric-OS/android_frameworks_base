@@ -16,6 +16,24 @@
       "message": "your probably want to find someone else to review this and/or ping jeff directly William.",
       "revId": "de53c67c672c1b46940e70f5e3cab3e3b9183c32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55847f4a_9f7570d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-06-01T22:51:48Z",
+      "side": 1,
+      "message": "Jeff is ooo this week. I will ping him when he is back.\n\nThe other owner for State.java is ooo until 30th June, or there is also SatK but I am not sure I can add it as reviewer.",
+      "parentUuid": "e627ca3e_14c622f1",
+      "revId": "de53c67c672c1b46940e70f5e3cab3e3b9183c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
