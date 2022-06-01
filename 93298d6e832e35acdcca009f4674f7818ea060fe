@@ -97,6 +97,30 @@
       },
       "revId": "93298d6e832e35acdcca009f4674f7818ea060fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc7926e4_4961e539",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-06-01T02:54:19Z",
+      "side": 1,
+      "message": "Nate is actually having at try at that now (ag/18687514)",
+      "parentUuid": "902ffc3e_9e3b26a4",
+      "range": {
+        "startLine": 32,
+        "startChar": 49,
+        "endLine": 34,
+        "endChar": 56
+      },
+      "revId": "93298d6e832e35acdcca009f4674f7818ea060fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
