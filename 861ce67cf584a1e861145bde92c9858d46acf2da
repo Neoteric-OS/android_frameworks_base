@@ -135,6 +135,30 @@
       },
       "revId": "861ce67cf584a1e861145bde92c9858d46acf2da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fa26a9e_0b603a27",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1376883
+      },
+      "writtenOn": "2022-06-01T00:13:15Z",
+      "side": 1,
+      "message": "- if the events can\u0027t be written to disk, we\u0027d like to keep them in memory as long as possible in the case that they could eventually be written\n\n- so yes, let\u0027s update this to only clear the events list of the user does not exist\n\n- also, would you mind creating a follow-up bug about the race conditions you mentioned and assigning it to me so I can look into it for the next cycle?",
+      "parentUuid": "8d78c43b_18d32693",
+      "range": {
+        "startLine": 795,
+        "startChar": 12,
+        "endLine": 795,
+        "endChar": 34
+      },
+      "revId": "861ce67cf584a1e861145bde92c9858d46acf2da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
