@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b992c626_7649980d",
+        "filename": "packages/SettingsLib/res/layout/qrcode_scanner_fragment.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1429802
+      },
+      "writtenOn": "2022-06-01T11:35:22Z",
+      "side": 1,
+      "message": "Out of curiosity, why does this id be imported from SUW design library?",
+      "range": {
+        "startLine": 26,
+        "startChar": 25,
+        "endLine": 26,
+        "endChar": 50
+      },
+      "revId": "0ba1fb9571748c84c971715dbdd463bf81e4fac0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
