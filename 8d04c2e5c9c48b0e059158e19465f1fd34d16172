@@ -16,6 +16,23 @@
       "message": "Required your review kindly",
       "revId": "8d04c2e5c9c48b0e059158e19465f1fd34d16172",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb4608b7_880580e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1953885
+      },
+      "writtenOn": "2022-06-02T09:13:07Z",
+      "side": 1,
+      "message": "question:\nupdateOomAdjInnerLSP function\n1. if D-\u003eA-\u003eB-\u003eC-\u003eA\nA process is client for D process\nB process is client for A process\nC process is client for B process\nA process is client for C process\n\n1. first computeOomAdjLSP all ABCD will be setContainsCycle(true)\n\n2. second Cycle strategy:\n\u003d\u003e if mLruProcesses is order by C, B, A, D\n\u003d\u003e if C getCurRawAdj() is 0\nthen: \n\u003d\u003e C-\u003eA-\u003eB-\u003eC will let ABC all adj \u003d 0\nC cachedAdj \u003d getCurRawAdj() \u003d 0, which will deliver to all computeClients computeOomAdjLSP (B, C adj is raise by cachedAdj(C\u0027s getCurRawAdj()))\n\u003d\u003e D-\u003eA (D will be raise adj by A, but A adj may be not right here)\n\nps:\n\u003d\u003e C-\u003eA-\u003eB-\u003eC will let ABC all adj \u003d 0\npatch will stop C\u0027s getCurRawAdj() deliver to A, A use A\u0027s getCurRawAdj(which is A process not C process)",
+      "revId": "8d04c2e5c9c48b0e059158e19465f1fd34d16172",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
