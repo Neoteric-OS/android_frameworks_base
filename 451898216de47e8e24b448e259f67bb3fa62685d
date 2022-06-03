@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c1a5ff7_b8540b39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2022-06-03T13:46:29Z",
+      "side": 1,
+      "message": "Does this fix a bug (if so how does on trigger it) or is it a cleanup?\n\nTo quote someone else:\n  I might be wrong, but I don\u0027t think that\u0027s an issue. If a new package gets assigned a UID already in the allowlist, won\u0027t PACKAGE_ADDED be invoked again?\n\n",
+      "revId": "451898216de47e8e24b448e259f67bb3fa62685d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
