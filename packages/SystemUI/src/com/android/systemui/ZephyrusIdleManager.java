@@ -131,11 +131,18 @@ public class ZephyrusIdleManager {
                 !RunningServices.get(i).pkgList[0].toString().contains("launcher") &&
                 !RunningServices.get(i).pkgList[0].toString().contains("google") &&
                 !RunningServices.get(i).pkgList[0].toString().contains("youtube") &&
-                !RunningServices.get(i).pkgList[0].toString().contains("instagram") &&
-                !RunningServices.get(i).pkgList[0].toString().contains("facebook") &&
-                !RunningServices.get(i).pkgList[0].toString().contains("zhihu") &&
-                !RunningServices.get(i).pkgList[0].toString().contains("GoogleCamera") &&
                 !RunningServices.get(i).pkgList[0].toString().contains("settings") &&
+                !RunningServices.get(i).pkgList[0].toString().equals("com.facebook.orca") &&
+                !RunningServices.get(i).pkgList[0].toString().equals("com.groupme.android") &&
+                !RunningServices.get(i).pkgList[0].toString().equals("com.snapchat.android") &&
+                !RunningServices.get(i).pkgList[0].toString().equals("com.discord") &&
+                !RunningServices.get(i).pkgList[0].toString().contains("gram") &&
+                !RunningServices.get(i).pkgList[0].toString().contains("com.blackboard") &&
+                !RunningServices.get(i).pkgList[0].toString().equals("com.linkedin.android") &&
+                !RunningServices.get(i).pkgList[0].toString().equals("com.aimp.player") &&
+                !RunningServices.get(i).pkgList[0].toString().contains("com.spotify") &&
+                !RunningServices.get(i).pkgList[0].toString().equals("com.soundcloud.android") &&
+                !RunningServices.get(i).pkgList[0].toString().equals("com.maxmpz.audioplayer") &&
                 !RunningServices.get(i).pkgList[0].toString().contains("ims")) {
                     localActivityManager.killBackgroundProcesses(RunningServices.get(i).pkgList[0].toString());
             }
