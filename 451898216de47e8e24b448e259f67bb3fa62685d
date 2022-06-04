@@ -16,6 +16,24 @@
       "message": "Does this fix a bug (if so how does on trigger it) or is it a cleanup?\n\nTo quote someone else:\n  I might be wrong, but I don\u0027t think that\u0027s an issue. If a new package gets assigned a UID already in the allowlist, won\u0027t PACKAGE_ADDED be invoked again?\n\n",
       "revId": "451898216de47e8e24b448e259f67bb3fa62685d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "feed87c4_cfdf4815",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1289143
+      },
+      "writtenOn": "2022-06-04T06:31:08Z",
+      "side": 1,
+      "message": "PACKAGE_ADDED calls the following:\n```\nsynchronized (mUidRulesFirstLock) {\n    mInternetPermissionMap.delete(uid);\n    updateRestrictionRulesForUidUL(uid);\n}\n```\nIt will indeed update the restricted mode rule for the UID. In NetworkPolicyManagerService it seems like it is not a direct issue at the moment (it likely would be once the TODO over hasRestrictedModeAccess() is done). But it may be for PermissionMonitor since it checks the values in the setting which is currently not updated on UID removal and could lead to some desynchronization.\nhttps://cs.android.com/android/platform/superproject/+/master:packages/modules/Connectivity/service/src/com/android/server/connectivity/PermissionMonitor.java;l\u003d494;drc\u003db7aa4599dbb47308401696d7731b9ca0c87d5d70",
+      "parentUuid": "8c1a5ff7_b8540b39",
+      "revId": "451898216de47e8e24b448e259f67bb3fa62685d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
