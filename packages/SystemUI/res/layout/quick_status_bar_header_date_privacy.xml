@@ -26,7 +26,7 @@
     android:layout_gravity="top"
     android:orientation="horizontal"
     android:clickable="true"
-    android:minHeight="48dp">
+    android:minHeight="@dimen/qs_header_row_min_height">
 
     <FrameLayout
         android:id="@+id/date_container"
@@ -41,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
+            android:paddingStart="@dimen/status_bar_left_clock_starting_padding"
             android:gravity="center_vertical"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.QS.Status"
