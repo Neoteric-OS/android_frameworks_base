@@ -56,6 +56,30 @@
       },
       "revId": "52f5a5ead10d32ab47470394c895c8a71250e9ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "318c304d_c90ca1ef",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5697,
+      "author": {
+        "id": 1572720
+      },
+      "writtenOn": "2022-06-06T23:42:40Z",
+      "side": 1,
+      "message": "you can also remove the assignment to \"registered\", and just call \"sRunningAttributionSources.remove(next.getToken());\"",
+      "parentUuid": "5c7edffe_414d2aa1",
+      "range": {
+        "startLine": 5695,
+        "startChar": 24,
+        "endLine": 5697,
+        "endChar": 25
+      },
+      "revId": "52f5a5ead10d32ab47470394c895c8a71250e9ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
