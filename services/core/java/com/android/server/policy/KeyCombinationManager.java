@@ -101,13 +101,32 @@ public class KeyCombinationManager {
             return KeyEvent.keyCodeToString(mKeyCode1) + " + "
                     + KeyEvent.keyCodeToString(mKeyCode2);
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o instanceof TwoKeysCombinationRule) {
+                TwoKeysCombinationRule that = (TwoKeysCombinationRule) o;
+                return (mKeyCode1 == that.mKeyCode1 && mKeyCode2 == that.mKeyCode2) || (
+                        mKeyCode1 == that.mKeyCode2 && mKeyCode2 == that.mKeyCode1);
+            }
+            return false;
+        }
     }
 
     public KeyCombinationManager() {
     }
 
     void addRule(TwoKeysCombinationRule rule) {
-        mRules.add(rule);
+        if (rule != null && !mRules.contains(rule)) {
+            mRules.add(rule);
+        }
+    }
+
+    void removeRule(TwoKeysCombinationRule rule) {
+        mRules.remove(rule);
     }
 
     /**

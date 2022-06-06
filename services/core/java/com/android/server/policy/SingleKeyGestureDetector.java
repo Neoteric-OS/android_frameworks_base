@@ -171,6 +171,18 @@ public final class SingleKeyGestureDetector {
                     + ", VeryLongPress=" + supportVeryLongPress()
                     + ", MaxMultiPressCount=" + getMaxMultiPressCount();
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o instanceof SingleKeyRule) {
+                SingleKeyRule that = (SingleKeyRule) o;
+                return mKeyCode == that.mKeyCode && mSupportedGestures == that.mSupportedGestures;
+            }
+            return false;
+        }
     }
 
     public SingleKeyGestureDetector() {
@@ -178,7 +190,9 @@ public final class SingleKeyGestureDetector {
     }
 
     void addRule(SingleKeyRule rule) {
-        mRules.add(rule);
+        if (rule != null && !mRules.contains(rule)) {
+            mRules.add(rule);
+        }
     }
 
     void interceptKey(KeyEvent event, boolean interactive) {
