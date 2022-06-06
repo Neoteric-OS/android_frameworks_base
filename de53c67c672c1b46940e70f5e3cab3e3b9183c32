@@ -34,6 +34,52 @@
       "parentUuid": "e627ca3e_14c622f1",
       "revId": "de53c67c672c1b46940e70f5e3cab3e3b9183c32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b70ca3fb_e64970d3",
+        "filename": "tests/utils/testutils/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-06-06T20:18:36Z",
+      "side": 1,
+      "message": "This class unfortunately looks pretty rough on the internals, so I\u0027d prefer that we keep it internal so it can eventually be deleted.\n\nInstead, it looks like it\u0027s only being used to \"pause\" events and dispatch them all at a deterministic time:\n\n* https://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/tests/utiltests/src/com/android/internal/util/StateMachineTest.java;l\u003d414?q\u003dTestLooper%20state\n\nA better public API replacement for this class is TestLooperManager here:\n\n* https://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/os/TestLooperManager.java;l\u003d26?q\u003dTestLooper\n\nIt should be a drop-in replacement, where you `acquireLooperManager()` and then `release()` instead of `dispatchAll()`.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 47
+      },
+      "revId": "de53c67c672c1b46940e70f5e3cab3e3b9183c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30a64f6f_11df354b",
+        "filename": "tests/utils/testutils/java/android/os/test/TestLooper.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-06-06T20:18:36Z",
+      "side": 1,
+      "message": "Yeah, this isn\u0027t a safe change to make, since it\u0027s mixing modules code back into framework code; please leave this class unchanged and see suggested alternative.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 49
+      },
+      "revId": "de53c67c672c1b46940e70f5e3cab3e3b9183c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
