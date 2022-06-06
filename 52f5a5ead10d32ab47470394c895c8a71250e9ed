@@ -16,6 +16,46 @@
       "message": "I\u0027m having some discussion with my team about this issue. Removing +2 vote for now.",
       "revId": "52f5a5ead10d32ab47470394c895c8a71250e9ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28a40d3a_e512adef",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5688,
+      "author": {
+        "id": 1572720
+      },
+      "writtenOn": "2022-06-06T21:56:55Z",
+      "side": 1,
+      "message": "please replace with if (registered !\u003d null \u0026\u0026 next !\u003d null \u0026\u0026 next.getNext() !\u003d null)\n\nWe\u0027re investigating the impacts of calling \"unregister\" more often, so we want to keep the behavior the same, for the present minute.",
+      "revId": "52f5a5ead10d32ab47470394c895c8a71250e9ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c7edffe_414d2aa1",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5697,
+      "author": {
+        "id": 1572720
+      },
+      "writtenOn": "2022-06-06T21:56:55Z",
+      "side": 1,
+      "message": "please remove this block",
+      "range": {
+        "startLine": 5695,
+        "startChar": 24,
+        "endLine": 5697,
+        "endChar": 25
+      },
+      "revId": "52f5a5ead10d32ab47470394c895c8a71250e9ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
