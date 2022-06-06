@@ -3153,6 +3153,15 @@ final public class MediaCodec {
         }
 
         // Called from native
+        public static @Nullable LinearBlock obtain2() {
+            LinearBlock buffer = sPool.poll();
+            if (buffer == null) {
+                buffer = new LinearBlock();
+            }
+            return buffer;
+        }
+
+        // Called from native
         private void setInternalStateLocked(long context, boolean isMappable) {
             mNativeContext = context;
             mMappable = isMappable;

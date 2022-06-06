@@ -21342,6 +21342,7 @@ package android.media {
     method public boolean isMappable();
     method @NonNull public java.nio.ByteBuffer map();
     method @Nullable public static android.media.MediaCodec.LinearBlock obtain(int, @NonNull String[]);
+    method @Nullable public static android.media.MediaCodec.LinearBlock obtain2();
     method public void recycle();
   }
 

@@ -215,7 +215,6 @@ public class MediaEvent extends FilterEvent {
         return mExtraMetaData;
     }
 
-
     /**
      * Finalize the MediaEvent object.
      * @hide
