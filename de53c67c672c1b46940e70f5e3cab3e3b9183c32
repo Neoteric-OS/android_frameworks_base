@@ -59,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1135061_e44f8fe6",
+        "filename": "tests/utils/testutils/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-06-07T06:02:53Z",
+      "side": 1,
+      "message": "Thanks for the detailed and precise answer. 😊 🔥\nI did a new CL to not mix the raw file migration from this code change as it would have been hard to spot such change in the diff.\nIt is working well, maybe too well as the `release()` seems to be faster than the `dispatchAll()` and a race condition was raised.\nI solved it by adding a `sm.wait` that is unlock when the StateMachine reach the end of it\u0027s `onQuitting` method. I test it by adding some sleep at a few spot to see if I did something wrong with the lock but it seems to works great.\nFeel free to look at aosp/2118225 if you want to see the change I did.",
+      "parentUuid": "b70ca3fb_e64970d3",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 47
+      },
+      "revId": "de53c67c672c1b46940e70f5e3cab3e3b9183c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "30a64f6f_11df354b",
@@ -72,6 +96,30 @@
       "writtenOn": "2022-06-06T20:18:36Z",
       "side": 1,
       "message": "Yeah, this isn\u0027t a safe change to make, since it\u0027s mixing modules code back into framework code; please leave this class unchanged and see suggested alternative.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 49
+      },
+      "revId": "de53c67c672c1b46940e70f5e3cab3e3b9183c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d38c200b_33cc1f64",
+        "filename": "tests/utils/testutils/java/android/os/test/TestLooper.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-06-07T06:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30a64f6f_11df354b",
       "range": {
         "startLine": 28,
         "startChar": 0,
