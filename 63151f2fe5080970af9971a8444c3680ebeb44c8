@@ -16,6 +16,46 @@
       "message": "please review it, thank you.",
       "revId": "63151f2fe5080970af9971a8444c3680ebeb44c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb2c5eed_264059f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2022-06-08T18:04:00Z",
+      "side": 1,
+      "message": "Great contribution!",
+      "revId": "63151f2fe5080970af9971a8444c3680ebeb44c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b348dde8_bd12e896",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2022-06-08T18:04:00Z",
+      "side": 1,
+      "message": "If the format of the parcel is changing, VERSION must change as well.  Otherwise, we will get a crash after a system upgrade.",
+      "range": {
+        "startLine": 163,
+        "startChar": 21,
+        "endLine": 163,
+        "endChar": 28
+      },
+      "revId": "63151f2fe5080970af9971a8444c3680ebeb44c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
