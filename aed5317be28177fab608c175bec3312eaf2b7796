@@ -16,6 +16,24 @@
       "message": "Please also migrate the OWNERS rules for State* defined here:\n\n    per-file State* \u003d jchalard@google.com, lorenzo@google.com, satk@google.com",
       "revId": "aed5317be28177fab608c175bec3312eaf2b7796",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4039c17c_b26a97e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-06-08T21:15:34Z",
+      "side": 1,
+      "message": "Let\u0027s do it after this CL got merge, in a follow-up CL",
+      "parentUuid": "c69ace30_60fb79f0",
+      "revId": "aed5317be28177fab608c175bec3312eaf2b7796",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
