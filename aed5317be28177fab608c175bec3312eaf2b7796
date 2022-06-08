@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c69ace30_60fb79f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-06-08T11:37:02Z",
+      "side": 1,
+      "message": "Please also migrate the OWNERS rules for State* defined here:\n\n    per-file State* \u003d jchalard@google.com, lorenzo@google.com, satk@google.com",
+      "revId": "aed5317be28177fab608c175bec3312eaf2b7796",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
