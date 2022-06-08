@@ -90,6 +90,7 @@ genrule {
 
 java_library_static {
     name: "services.core.unboosted",
+    host_supported: true,
     defaults: ["platform_service_defaults"],
     srcs: [
         ":statslog-art-java-gen",
@@ -213,5 +214,21 @@ filegroup {
     name: "services.core-sources-deviceconfig-interface",
     srcs: [
         "java/com/android/server/utils/DeviceConfigInterface.java",
+    ],
+}
+
+java_fuzz_host {
+    name: "ActivityTaskManagerServiceFuzzer",
+    // Source file(s)
+    srcs: [
+        "java/com/android/server/wm/ActivityTaskManagerServiceFuzzer.java",
+    ],
+    static_libs: [
+        "jazzer",
+        "services.core.unboosted",
+    ],
+    sanitizers: [
+        "address",
+        "fuzzer",
     ],
 }
