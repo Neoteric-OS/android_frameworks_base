@@ -189,7 +189,7 @@ class InputController {
             InputDeviceDescriptor inputDeviceDescriptor) {
         token.unlinkToDeath(inputDeviceDescriptor.getDeathRecipient(), /* flags= */ 0);
         mNativeWrapper.closeUinput(inputDeviceDescriptor.getFileDescriptor());
-        InputManager.getInstance().removeUniqueIdAssociation(inputDeviceDescriptor.getPhys());
+        InputManager.getInstance().removeUniqueIdAssociationByPort(inputDeviceDescriptor.getPhys());
 
         // Reset values to the default if all virtual mice are unregistered, or set display
         // id if there's another mouse (choose the most recent). The inputDeviceDescriptor must be
@@ -248,9 +248,9 @@ class InputController {
         return String.format("virtual%s:%d", type, sNextPhysId.getAndIncrement());
     }
 
-    private void setUniqueIdAssociation(int displayId, String phys) {
+    private void setUniqueIdAssociationByPort(int displayId, String phys) {
         final String displayUniqueId = mDisplayManagerInternal.getDisplayInfo(displayId).uniqueId;
-        InputManager.getInstance().addUniqueIdAssociation(phys, displayUniqueId);
+        InputManager.getInstance().addUniqueIdAssociationByPort(phys, displayUniqueId);
     }
 
     boolean sendKeyEvent(@NonNull IBinder token, @NonNull VirtualKeyEvent event) {
@@ -599,7 +599,7 @@ class InputController {
         final int fd;
         final BinderDeathRecipient binderDeathRecipient;
 
-        setUniqueIdAssociation(displayId, phys);
+        setUniqueIdAssociationByPort(displayId, phys);
         try (WaitForDevice waiter = new WaitForDevice(deviceName, vendorId, productId)) {
             fd = deviceOpener.get();
             if (fd < 0) {
@@ -622,7 +622,7 @@ class InputController {
                 throw e;
             }
         } catch (DeviceCreationException e) {
-            InputManager.getInstance().removeUniqueIdAssociation(phys);
+            InputManager.getInstance().removeUniqueIdAssociationByPort(phys);
             throw e;
         }
 
