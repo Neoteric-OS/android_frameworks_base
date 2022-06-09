@@ -5332,6 +5332,48 @@ public class CarrierConfigManager {
         public static final String KEY_SUPPORTS_EAP_AKA_FAST_REAUTH_BOOL =
                 KEY_PREFIX + "supports_eap_aka_fast_reauth_bool";
 
+        /**
+         * IWLAN error policy configs that determine the behavior when a certain error happens
+         * during EPDG tunnel setup.
+         *
+         * Here are some sample configs.
+         * <string-array name="iwlan_error_policy_config" num="4">
+         *     <!-- When apn is ims or eims and error type is GENERIC_ERROR_TYPE -->
+         *     <item value="capabilities=ims|eims, error_type=GENERIC_ERROR_TYPE,
+         *         error_details=*, retry_array=0, unthrottling_events=APM_ENABLE_EVENT"/>
+         *     <!-- When apn is ims or eims and error type is IKE_PROTOCOL_ERROR_TYPE with specific
+         *     cause code, handover attempt count is enabled -->
+         *     <item value="capabilities=ims|eims, error_type=IKE_PROTOCOL_ERROR_TYPE,
+         *         error_details=24|34|9000-9050, retry_array=4|8|16,
+         *         unthrottling_events=APM_ENABLE_EVENT|WIFI_AP_CHANGED_EVENT,
+         *         handover_attempt_count=5"/>
+         *     <!-- When apn is ims or emis and error type is IKE_PROTOCOL_ERROR_TYPE including all
+         *     other cause codes, handover attempt count is enabled -->
+         *     <item value="capabilities=*, error_type=*, error_details=IKE_PROTOCOL_ERROR_TYPE,
+         *         retry_array=5|10|-1, unthrottling_events=APM_ENABLE_EVENT|
+         *         APM_DISABLE_EVENT|WIFI_DISABLE_EVENT|WIFI_AP_CHANGED_EVENT,
+         *         handover_attempt_count=6"/>
+         *     <!-- When apn and error type is anything else -->
+         *     <item value="capabilities=*, error_type=*, error_details=*,
+         *         retry_array=5|10|-1, unthrottling_events=APM_ENABLE_EVENT|
+         *         APM_DISABLE_EVENT|WIFI_DISABLE_EVENT|WIFI_AP_CHANGED_EVENT"/>
+         *     </string-array>
+         *
+         * When the value is "*" for any of "capabilities" or "error_type" or "error_details", it
+         * means that the config definition applies to rest of the errors for which the config
+         * is not defined.
+         * For example, if "capabilities" contains "ims" and one of the "error_type" in it
+         * is defined as "*" - this policy will be applied to the error that doesn't fall into
+         * other error types defined under "ims".
+         *
+         * "handover_attempt_count" should only be defined in the config when handover attempt count
+         * is enabled and "error_type" is explicitly defined as "IKE_PROTOCOL_ERROR_TYPE". If
+         * handover attempt count is disabled or "error_type" is defined as other error types
+         * including "*", "handover_attempt_count" should not be included in the config.
+         */
+        public static final String KEY_ERROR_POLICY_CONFIG_STRING_ARRAY =
+                KEY_PREFIX + "key_error_policy_config_string_array";
+
         /** @hide */
         @IntDef({AUTHENTICATION_METHOD_EAP_ONLY, AUTHENTICATION_METHOD_CERT})
         public @interface AuthenticationMethodType {}
@@ -5479,6 +5521,19 @@ public class CarrierConfigManager {
             defaults.putInt(KEY_EPDG_PCO_ID_IPV6_INT, 0);
             defaults.putInt(KEY_EPDG_PCO_ID_IPV4_INT, 0);
             defaults.putBoolean(KEY_SUPPORTS_EAP_AKA_FAST_REAUTH_BOOL, false);
+            defaults.putStringArray(KEY_ERROR_POLICY_CONFIG_STRING_ARRAY, new String[]{
+                    "capabilities=*, error_type=*, error_details=*, retry_array=5|10|-1, "
+                            + "unthrottling_events=APM_ENABLE_EVENT|APM_DISABLE_EVENT"
+                            + "|WIFI_DISABLE_EVENT|WIFI_AP_CHANGED_EVENT",
+                    "capabilities=*, error_type=GENERIC_ERROR_TYPE, error_details=IO_EXCEPTION, "
+                            + "retry_array=0|0|0|60+r15|120|-1, "
+                            + "unthrottling_events=APM_ENABLE_EVENT|APM_DISABLE_EVENT"
+                            + "|WIFI_DISABLE_EVENT|WIFI_AP_CHANGED_EVENT",
+                    "capabilities=*, error_type=IKE_PROTOCOL_ERROR_TYPE, error_details=24, "
+                            + "retry_array=10|20|40|80|160, "
+                            + "unthrottling_events=APM_ENABLE_EVENT|WIFI_DISABLE_EVENT"
+                            + "|WIFI_CALLING_DISABLE_EVENT"
+            });
 
             return defaults;
         }
