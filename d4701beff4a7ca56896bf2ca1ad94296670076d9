@@ -16,6 +16,23 @@
       "message": "Hello, please help to review this change, if it is confirmed that there is no problem, please help to merge it, thank you.",
       "revId": "d4701beff4a7ca56896bf2ca1ad94296670076d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f16dc67d_d8d75e58",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1432799
+      },
+      "writtenOn": "2022-06-09T16:07:58Z",
+      "side": 1,
+      "message": "The code works like this.\n\n1. startCleanupUnknownHalTemplate is called()\n2. The first unknown user is deleted\n3. The HAL finishes removing the user\n4. InternalCleanupClient#onClientFinished() is called\n5. We get the next client that has not been removed\n6. We tell the hal to remove it\n7. We get another callback from the HAL for onFinished()\n8. The process will repeat.\n\nmUknownHalTemplates \u003d {0,1,2,3}\nStartCleanup() -\u003e { hal.remove(mUnknownHalTemplates.pop()) }\n\nonFinishedRemoving() -\u003e { if(mUnknownHalTemplates.size()) { StartCleanup })",
+      "revId": "d4701beff4a7ca56896bf2ca1ad94296670076d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
