@@ -301,4 +301,22 @@ class InputManagerServiceTests {
         verify(wmCallbacks).notifyPointerDisplayIdChanged(overrideDisplayId, 0f, 0f)
         thread.join(100 /*millis*/)
     }
+
+    @Test
+    fun addUniqueIdAssociationByDescriptor_verifyAssociationAdded() {
+        val inputDeviceDescriptor = "db1c35ad39b25722948cd018539e0f0ed7ee7f7f"
+        val displayId = "10"
+        native.addUniqueIdAssociationByDescriptor(inputDeviceDescriptor, displayId)
+        verify(native, times(1)).addUniqueIdAssociationByDescriptor(
+        				inputDeviceDescriptor, displayId)
+    }
+
+    @Test
+    fun removeUniqueIdAssociationByDescriptor_verifyAssociationRemoved() {
+        val inputDeviceDescriptor = "db1c35ad39b25722948cd018539e0f0ed7ee7f7f"
+        val displayId = "10"
+        native.addUniqueIdAssociationByDescriptor(inputDeviceDescriptor, displayId)
+        native.removeUniqueIdAssociationByDescriptor(inputDeviceDescriptor)
+        verify(native, times(1)).removeUniqueIdAssociationByDescriptor(inputDeviceDescriptor)
+    }
 }

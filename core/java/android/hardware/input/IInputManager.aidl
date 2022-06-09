@@ -131,6 +131,13 @@ interface IInputManager {
     // Remove the runtime association between the input device and display.
     void removeUniqueIdAssociation(in String inputPort);
 
+    // Add a runtime association between the input device and display, using device's descriptor.
+    void addUniqueIdAssociationByDescriptor(in String inputDeviceDescriptor,
+            in String displayUniqueId);
+    // Remove the runtime association between the input device and display, using device's
+    // descriptor.
+    void removeUniqueIdAssociationByDescriptor(in String inputDeviceDescriptor);
+
     InputSensorInfo[] getSensorList(int deviceId);
 
     boolean registerSensorListener(IInputSensorEventListener listener);
