@@ -2436,6 +2436,49 @@ public class InputManagerService extends IInputManager.Stub
         mNative.changeUniqueIdAssociation();
     }
 
+    /**
+     * Add a runtime association between the input device descriptor and the display unique id.
+     * @param inputDeviceDescriptor The descriptor of the input device.
+     * @param displayUniqueId The name of the input device.
+     */
+    @Override // Binder call
+    public void addUniqueIdAssociationByDescriptor(@NonNull String inputDeviceDescriptor,
+                                                   @NonNull String displayUniqueId) {
+        if (!checkCallingPermission(
+                android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY,
+                "addUniqueIdAssociationByDescriptor()")) {
+            throw new SecurityException(
+                    "Requires ASSOCIATE_INPUT_DEVICE_TO_DISPLAY permission");
+        }
+
+        Objects.requireNonNull(inputDeviceDescriptor);
+        Objects.requireNonNull(displayUniqueId);
+        synchronized (mAssociationsLock) {
+            mUniqueIdAssociations.put(inputDeviceDescriptor, displayUniqueId);
+        }
+        mNative.changeUniqueIdAssociation();
+    }
+
+    /**
+     * Remove the runtime association between the input device and the display.
+     * @param inputDeviceDescriptor The descriptor of the input device.
+     */
+    @Override // Binder call
+    public void removeUniqueIdAssociationByDescriptor(@NonNull String inputDeviceDescriptor) {
+        if (!checkCallingPermission(
+                android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY,
+                "removeUniqueIdAssociationByDescriptor()")) {
+            throw new SecurityException(
+                    "Requires ASSOCIATE_INPUT_DEVICE_TO_DISPLAY permission");
+        }
+
+        Objects.requireNonNull(inputDeviceDescriptor);
+        synchronized (mAssociationsLock) {
+            mUniqueIdAssociations.remove(inputDeviceDescriptor);
+        }
+        mNative.changeUniqueIdAssociation();
+    }
+
     @Override // Binder call
     public InputSensorInfo[] getSensorList(int deviceId) {
         return mNative.getSensorList(deviceId);
