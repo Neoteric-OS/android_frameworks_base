@@ -243,6 +243,10 @@ class InputController {
     private void closeInputDeviceDescriptorLocked(IBinder token,
             InputDeviceDescriptor inputDeviceDescriptor) {
         token.unlinkToDeath(inputDeviceDescriptor.getDeathRecipient(), /* flags= */ 0);
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+        mNativeWrapper.closeUinput(inputDeviceDescriptor.getFileDescriptor());
+        InputManager.getInstance().removeUniqueIdAssociationByPort(inputDeviceDescriptor.getPhys());
+=======
         mNativeWrapper.closeUinput(inputDeviceDescriptor.getNativePointer());
         String phys = inputDeviceDescriptor.getPhys();
         InputManagerGlobal.getInstance().removeUniqueIdAssociation(phys);
@@ -255,6 +259,7 @@ class InputController {
         if (inputDeviceDescriptor.getType() == InputDeviceDescriptor.TYPE_KEYBOARD) {
             mInputManagerInternal.removeKeyboardLayoutAssociation(phys);
         }
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
 
         // Reset values to the default if all virtual mice are unregistered, or set display
         // id if there's another mouse (choose the most recent). The inputDeviceDescriptor must be
@@ -353,8 +358,11 @@ class InputController {
         return String.format("virtual%s:%d", type, sNextPhysId.getAndIncrement());
     }
 
-    private void setUniqueIdAssociation(int displayId, String phys) {
+    private void setUniqueIdAssociationByPort(int displayId, String phys) {
         final String displayUniqueId = mDisplayManagerInternal.getDisplayInfo(displayId).uniqueId;
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+        InputManager.getInstance().addUniqueIdAssociationByPort(phys, displayUniqueId);
+=======
         InputManagerGlobal.getInstance().addUniqueIdAssociation(phys, displayUniqueId);
     }
 
@@ -369,6 +377,7 @@ class InputController {
             return mNativeWrapper.writeDpadKeyEvent(inputDeviceDescriptor.getNativePointer(),
                     event.getKeyCode(), event.getAction(), event.getEventTimeNanos());
         }
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
     }
 
     boolean sendKeyEvent(@NonNull IBinder token, @NonNull VirtualKeyEvent event) {
@@ -792,9 +801,13 @@ class InputController {
         final long ptr;
         final BinderDeathRecipient binderDeathRecipient;
 
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+        setUniqueIdAssociationByPort(displayId, phys);
+=======
         final int inputDeviceId;
 
         setUniqueIdAssociation(displayId, phys);
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
         try (WaitForDevice waiter = new WaitForDevice(deviceName, vendorId, productId)) {
             ptr = deviceOpener.get();
             // See INVALID_PTR in libs/input/VirtualInputDevice.cpp.
@@ -820,7 +833,11 @@ class InputController {
                 throw e;
             }
         } catch (DeviceCreationException e) {
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+            InputManager.getInstance().removeUniqueIdAssociationByPort(phys);
+=======
             InputManagerGlobal.getInstance().removeUniqueIdAssociation(phys);
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
             throw e;
         }
 

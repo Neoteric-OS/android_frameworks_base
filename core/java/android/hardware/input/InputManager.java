@@ -400,7 +400,24 @@ public final class InputManager {
      */
     public void registerOnTabletModeChangedListener(
             OnTabletModeChangedListener listener, Handler handler) {
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+        if (listener == null) {
+            throw new IllegalArgumentException("listener must not be null");
+        }
+        synchronized (mTabletModeLock) {
+            if (mOnTabletModeChangedListeners == null) {
+                initializeTabletModeListenerLocked();
+            }
+            int idx = findOnTabletModeChangedListenerLocked(listener);
+            if (idx < 0) {
+                OnTabletModeChangedListenerDelegate d =
+                        new OnTabletModeChangedListenerDelegate(listener, handler);
+                mOnTabletModeChangedListeners.add(d);
+            }
+        }
+=======
         mGlobal.registerOnTabletModeChangedListener(listener, handler);
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
     }
 
     /**
@@ -572,9 +589,26 @@ public final class InputManager {
     @TestApi
     @RequiresPermission(Manifest.permission.SET_KEYBOARD_LAYOUT)
     public void setCurrentKeyboardLayoutForInputDevice(@NonNull InputDeviceIdentifier identifier,
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+                                                       @NonNull String keyboardLayoutDescriptor) {
+        if (identifier == null) {
+            throw new IllegalArgumentException("identifier must not be null");
+        }
+        if (keyboardLayoutDescriptor == null) {
+            throw new IllegalArgumentException("keyboardLayoutDescriptor must not be null");
+        }
+
+        try {
+            mIm.setCurrentKeyboardLayoutForInputDevice(identifier,
+                    keyboardLayoutDescriptor);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
+        }
+=======
             @NonNull String keyboardLayoutDescriptor) {
         mGlobal.setCurrentKeyboardLayoutForInputDevice(identifier,
                 keyboardLayoutDescriptor);
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
     }
 
     /**
@@ -611,7 +645,7 @@ public final class InputManager {
      */
     @RequiresPermission(Manifest.permission.SET_KEYBOARD_LAYOUT)
     public void addKeyboardLayoutForInputDevice(InputDeviceIdentifier identifier,
-            String keyboardLayoutDescriptor) {
+                                                String keyboardLayoutDescriptor) {
         if (identifier == null) {
             throw new IllegalArgumentException("inputDeviceDescriptor must not be null");
         }
@@ -641,7 +675,7 @@ public final class InputManager {
     @TestApi
     @RequiresPermission(Manifest.permission.SET_KEYBOARD_LAYOUT)
     public void removeKeyboardLayoutForInputDevice(@NonNull InputDeviceIdentifier identifier,
-            @NonNull String keyboardLayoutDescriptor) {
+                                                   @NonNull String keyboardLayoutDescriptor) {
         if (identifier == null) {
             throw new IllegalArgumentException("inputDeviceDescriptor must not be null");
         }
@@ -741,7 +775,7 @@ public final class InputManager {
      * @hide
      */
     public void setTouchCalibration(String inputDeviceDescriptor, int surfaceRotation,
-            TouchCalibration calibration) {
+                                    TouchCalibration calibration) {
         try {
             mIm.setTouchCalibrationForInputDevice(inputDeviceDescriptor, surfaceRotation, calibration);
         } catch (RemoteException ex) {
@@ -871,7 +905,94 @@ public final class InputManager {
      */
     @FloatRange(from = 0, to = 1)
     public float getMaximumObscuringOpacityForTouch() {
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+        Context context = ActivityThread.currentApplication();
+        return Settings.Global.getFloat(context.getContentResolver(),
+                Settings.Global.MAXIMUM_OBSCURING_OPACITY_FOR_TOUCH,
+                DEFAULT_MAXIMUM_OBSCURING_OPACITY_FOR_TOUCH);
+    }
+
+    /**
+     * Sets the maximum allowed obscuring opacity by UID to propagate touches.
+     *
+     * <p>For certain window types (eg. SAWs), the decision of honoring {@link LayoutParams
+     * #FLAG_NOT_TOUCHABLE} or not depends on the combined obscuring opacity of the windows
+     * above the touch-consuming window.
+     *
+     * <p>For a certain UID:
+     * <ul>
+     *     <li>If it's the same as the UID of the touch-consuming window, allow it to propagate
+     *     the touch.
+     *     <li>Otherwise take all its windows of eligible window types above the touch-consuming
+     *     window, compute their combined obscuring opacity considering that {@code
+     *     opacity(A, B) = 1 - (1 - opacity(A))*(1 - opacity(B))}. If the computed value is
+     *     lesser than or equal to this setting and there are no other windows preventing the
+     *     touch, allow the UID to propagate the touch.
+     * </ul>
+     *
+     * <p>This value should be between 0 (inclusive) and 1 (inclusive).
+     *
+     * @see #getMaximumObscuringOpacityForTouch()
+     *
+     * @hide
+     */
+    @TestApi
+    @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
+    public void setMaximumObscuringOpacityForTouch(@FloatRange(from = 0, to = 1) float opacity) {
+        if (opacity < 0 || opacity > 1) {
+            throw new IllegalArgumentException(
+                    "Maximum obscuring opacity for touch should be >= 0 and <= 1");
+        }
+        Context context = ActivityThread.currentApplication();
+        Settings.Global.putFloat(context.getContentResolver(),
+                Settings.Global.MAXIMUM_OBSCURING_OPACITY_FOR_TOUCH, opacity);
+    }
+
+    /**
+     * Returns the current mode of the block untrusted touches feature, one of:
+     * <ul>
+     *     <li>{@link BlockUntrustedTouchesMode#DISABLED}
+     *     <li>{@link BlockUntrustedTouchesMode#PERMISSIVE}
+     *     <li>{@link BlockUntrustedTouchesMode#BLOCK}
+     * </ul>
+     *
+     * @hide
+     */
+    @TestApi
+    @BlockUntrustedTouchesMode
+    public int getBlockUntrustedTouchesMode(@NonNull Context context) {
+        int mode = Settings.Global.getInt(context.getContentResolver(),
+                Settings.Global.BLOCK_UNTRUSTED_TOUCHES_MODE, DEFAULT_BLOCK_UNTRUSTED_TOUCHES_MODE);
+        if (!ArrayUtils.contains(BLOCK_UNTRUSTED_TOUCHES_MODES, mode)) {
+            Log.w(TAG, "Unknown block untrusted touches feature mode " + mode + ", using "
+                    + "default " + DEFAULT_BLOCK_UNTRUSTED_TOUCHES_MODE);
+            return DEFAULT_BLOCK_UNTRUSTED_TOUCHES_MODE;
+        }
+        return mode;
+    }
+
+    /**
+     * Sets the mode of the block untrusted touches feature to one of:
+     * <ul>
+     *     <li>{@link BlockUntrustedTouchesMode#DISABLED}
+     *     <li>{@link BlockUntrustedTouchesMode#PERMISSIVE}
+     *     <li>{@link BlockUntrustedTouchesMode#BLOCK}
+     * </ul>
+     *
+     * @hide
+     */
+    @TestApi
+    @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
+    public void setBlockUntrustedTouchesMode(@NonNull Context context,
+                                             @BlockUntrustedTouchesMode int mode) {
+        if (!ArrayUtils.contains(BLOCK_UNTRUSTED_TOUCHES_MODES, mode)) {
+            throw new IllegalArgumentException("Invalid feature mode " + mode);
+        }
+        Settings.Global.putInt(context.getContentResolver(),
+                Settings.Global.BLOCK_UNTRUSTED_TOUCHES_MODE, mode);
+=======
         return InputSettings.getMaximumObscuringOpacityForTouch(mContext);
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
     }
 
     /**
@@ -1081,9 +1202,19 @@ public final class InputManager {
      * @hide
      */
     public boolean enableSensor(int deviceId, int sensorType, int samplingPeriodUs,
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+                                int maxBatchReportLatencyUs) {
+        try {
+            return mIm.enableSensor(deviceId, sensorType, samplingPeriodUs,
+                    maxBatchReportLatencyUs);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
+        }
+=======
             int maxBatchReportLatencyUs) {
         return mGlobal.enableSensor(deviceId, sensorType, samplingPeriodUs,
                 maxBatchReportLatencyUs);
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
     }
 
     /**
@@ -1132,6 +1263,7 @@ public final class InputManager {
      * </p>
      * @hide
      */
+    @RequiresPermission(android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY)
     public void addPortAssociation(@NonNull String inputPort, int displayPort) {
         try {
             mIm.addPortAssociation(inputPort, displayPort);
@@ -1149,6 +1281,7 @@ public final class InputManager {
      * </p>
      * @hide
      */
+    @RequiresPermission(android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY)
     public void removePortAssociation(@NonNull String inputPort) {
         try {
             mIm.removePortAssociation(inputPort);
@@ -1167,10 +1300,21 @@ public final class InputManager {
      * </p>
      * @hide
      */
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+    @RequiresPermission(android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY)
+    public void addUniqueIdAssociationByPort(@NonNull String inputPort,
+                                             @NonNull String displayUniqueId) {
+        try {
+            mIm.addUniqueIdAssociationByPort(inputPort, displayUniqueId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+=======
     @TestApi
     public void addUniqueIdAssociation(@NonNull String inputPort,
             @NonNull String displayUniqueId) {
         mGlobal.addUniqueIdAssociation(inputPort, displayUniqueId);
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
     }
 
     /**
@@ -1181,9 +1325,59 @@ public final class InputManager {
      * </p>
      * @hide
      */
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+    @RequiresPermission(android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY)
+    public void removeUniqueIdAssociationByPort(@NonNull String inputPort) {
+        try {
+            mIm.removeUniqueIdAssociationByPort(inputPort);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Add a runtime association between the input device name and display, by descriptor. Input
+     * device descriptors are expected to be unique per physical device, though one physical
+     * device can have multiple virtual input devices that possess the same descriptor.
+     * E.g. a keyboard with built in trackpad will be 2 different input devices with the same
+     * descriptor.
+     * @param inputDeviceDescriptor The descriptor of the input device.
+     * @param displayUniqueId The unique id of the associated display.
+     * <p>
+     * Requires {@link android.Manifest.permissions.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY}.
+     * </p>
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY)
+    public void addUniqueIdAssociationByDescriptor(@NonNull String inputDeviceDescriptor,
+                                                   @NonNull String displayUniqueId) {
+        try {
+            mIm.addUniqueIdAssociationByDescriptor(inputDeviceDescriptor, displayUniqueId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Removes a runtime association between the input device and display.
+     * @param inputDeviceDescriptor The descriptor of the input device.
+     * <p>
+     * Requires {@link android.Manifest.permissions.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY}.
+     * </p>
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY)
+    public void removeUniqueIdAssociationByDescriptor(@NonNull String inputDeviceDescriptor) {
+        try {
+            mIm.removeUniqueIdAssociationByDescriptor(inputDeviceDescriptor);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+=======
     @TestApi
     public void removeUniqueIdAssociation(@NonNull String inputPort) {
         mGlobal.removeUniqueIdAssociation(inputPort);
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
     }
 
     /**
@@ -1226,7 +1420,70 @@ public final class InputManager {
      * @hide
      */
     public void cancelCurrentTouch() {
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+        try {
+            mIm.cancelCurrentTouch();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Adds a battery listener to be notified about {@link BatteryState} changes for an input
+     * device. The same listener can be registered for multiple input devices.
+     * The listener will be notified of the initial battery state of the device after it is
+     * successfully registered.
+     * @param deviceId the input device that should be monitored
+     * @param executor an executor on which the callback will be called
+     * @param listener the {@link InputDeviceBatteryListener}
+     * @see #removeInputDeviceBatteryListener(int, InputDeviceBatteryListener)
+     * @hide
+     */
+    public void addInputDeviceBatteryListener(int deviceId, @NonNull Executor executor,
+                                              @NonNull InputDeviceBatteryListener listener) {
+        Objects.requireNonNull(executor, "executor should not be null");
+        Objects.requireNonNull(listener, "listener should not be null");
+
+        synchronized (mBatteryListenersLock) {
+            if (mBatteryListeners == null) {
+                mBatteryListeners = new SparseArray<>();
+                mInputDeviceBatteryListener = new LocalInputDeviceBatteryListener();
+            }
+            RegisteredBatteryListeners listenersForDevice = mBatteryListeners.get(deviceId);
+            if (listenersForDevice == null) {
+                // The deviceId is currently not being monitored for battery changes.
+                // Start monitoring the device.
+                listenersForDevice = new RegisteredBatteryListeners();
+                mBatteryListeners.put(deviceId, listenersForDevice);
+                try {
+                    mIm.registerBatteryListener(deviceId, mInputDeviceBatteryListener);
+                } catch (RemoteException e) {
+                    throw e.rethrowFromSystemServer();
+                }
+            } else {
+                // The deviceId is already being monitored for battery changes.
+                // Ensure that the listener is not already registered.
+                for (InputDeviceBatteryListenerDelegate delegate : listenersForDevice.mDelegates) {
+                    if (Objects.equals(listener, delegate.mListener)) {
+                        throw new IllegalArgumentException(
+                                "Attempting to register an InputDeviceBatteryListener that has "
+                                        + "already been registered for deviceId: "
+                                        + deviceId);
+                    }
+                }
+            }
+            final InputDeviceBatteryListenerDelegate delegate =
+                    new InputDeviceBatteryListenerDelegate(listener, executor);
+            listenersForDevice.mDelegates.add(delegate);
+
+            // Notify the listener immediately if we already have the latest battery state.
+            if (listenersForDevice.mLatestBatteryState != null) {
+                delegate.notifyBatteryStateChanged(listenersForDevice.mLatestBatteryState);
+            }
+        }
+=======
         mGlobal.cancelCurrentTouch();
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
     }
 
     /**
@@ -1275,17 +1532,65 @@ public final class InputManager {
      * @hide
      */
     public void removeInputDeviceBatteryListener(int deviceId,
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+                                                 @NonNull InputDeviceBatteryListener listener) {
+        Objects.requireNonNull(listener, "listener should not be null");
+
+        synchronized (mBatteryListenersLock) {
+            if (mBatteryListeners == null) {
+                return;
+            }
+            RegisteredBatteryListeners listenersForDevice = mBatteryListeners.get(deviceId);
+            if (listenersForDevice == null) {
+                // The deviceId is not currently being monitored.
+                return;
+            }
+            final List<InputDeviceBatteryListenerDelegate> delegates =
+                    listenersForDevice.mDelegates;
+            for (int i = 0; i < delegates.size();) {
+                if (Objects.equals(listener, delegates.get(i).mListener)) {
+                    delegates.remove(i);
+                    continue;
+                }
+                i++;
+            }
+            if (!delegates.isEmpty()) {
+                return;
+            }
+
+            // There are no more battery listeners for this deviceId. Stop monitoring this device.
+            mBatteryListeners.remove(deviceId);
+            try {
+                mIm.unregisterBatteryListener(deviceId, mInputDeviceBatteryListener);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+            if (mBatteryListeners.size() == 0) {
+                // There are no more devices being monitored, so the registered
+                // IInputDeviceBatteryListener will be automatically dropped by the server.
+                mBatteryListeners = null;
+                mInputDeviceBatteryListener = null;
+            }
+        }
+=======
             @NonNull InputDeviceBatteryListener listener) {
         mGlobal.removeInputDeviceBatteryListener(deviceId, listener);
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
     }
 
     /**
      * Whether there is a gesture-compatible touchpad connected to the device.
      * @hide
      */
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+    public boolean isStylusEverUsed(@NonNull Context context) {
+        return Settings.Global.getInt(context.getContentResolver(),
+                Settings.Global.STYLUS_EVER_USED, 0) == 1;
+=======
     public boolean areTouchpadGesturesAvailable(@NonNull Context context) {
         // TODO: implement the right logic
         return true;
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
     }
 
     /**
@@ -1380,6 +1685,117 @@ public final class InputManager {
         void onTabletModeChanged(long whenNanos, boolean inTabletMode);
     }
 
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+    private final class TabletModeChangedListener extends ITabletModeChangedListener.Stub {
+        @Override
+        public void onTabletModeChanged(long whenNanos, boolean inTabletMode) {
+            InputManager.this.onTabletModeChanged(whenNanos, inTabletMode);
+        }
+    }
+
+    private static final class OnTabletModeChangedListenerDelegate extends Handler {
+        private static final int MSG_TABLET_MODE_CHANGED = 0;
+
+        public final OnTabletModeChangedListener mListener;
+
+        public OnTabletModeChangedListenerDelegate(
+                OnTabletModeChangedListener listener, Handler handler) {
+            super(handler != null ? handler.getLooper() : Looper.myLooper());
+            mListener = listener;
+        }
+
+        public void sendTabletModeChanged(long whenNanos, boolean inTabletMode) {
+            SomeArgs args = SomeArgs.obtain();
+            args.argi1 = (int) (whenNanos & 0xFFFFFFFF);
+            args.argi2 = (int) (whenNanos >> 32);
+            args.arg1 = (Boolean) inTabletMode;
+            obtainMessage(MSG_TABLET_MODE_CHANGED, args).sendToTarget();
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_TABLET_MODE_CHANGED:
+                    SomeArgs args = (SomeArgs) msg.obj;
+                    long whenNanos = (args.argi1 & 0xFFFFFFFFl) | ((long) args.argi2 << 32);
+                    boolean inTabletMode = (boolean) args.arg1;
+                    mListener.onTabletModeChanged(whenNanos, inTabletMode);
+                    break;
+            }
+        }
+    }
+
+    private static final class LocalBatteryState extends BatteryState {
+        final int mDeviceId;
+        final boolean mIsPresent;
+        final int mStatus;
+        final float mCapacity;
+        final long mEventTime;
+
+        LocalBatteryState(int deviceId, boolean isPresent, int status, float capacity,
+                          long eventTime) {
+            mDeviceId = deviceId;
+            mIsPresent = isPresent;
+            mStatus = status;
+            mCapacity = capacity;
+            mEventTime = eventTime;
+        }
+
+        @Override
+        public boolean isPresent() {
+            return mIsPresent;
+        }
+
+        @Override
+        public int getStatus() {
+            return mStatus;
+        }
+
+        @Override
+        public float getCapacity() {
+            return mCapacity;
+        }
+    }
+
+    private static final class RegisteredBatteryListeners {
+        final List<InputDeviceBatteryListenerDelegate> mDelegates = new ArrayList<>();
+        LocalBatteryState mLatestBatteryState;
+    }
+
+    private static final class InputDeviceBatteryListenerDelegate {
+        final InputDeviceBatteryListener mListener;
+        final Executor mExecutor;
+
+        InputDeviceBatteryListenerDelegate(InputDeviceBatteryListener listener, Executor executor) {
+            mListener = listener;
+            mExecutor = executor;
+        }
+
+        void notifyBatteryStateChanged(LocalBatteryState batteryState) {
+            mExecutor.execute(() ->
+                    mListener.onBatteryStateChanged(batteryState.mDeviceId, batteryState.mEventTime,
+                            batteryState));
+        }
+    }
+
+    private class LocalInputDeviceBatteryListener extends IInputDeviceBatteryListener.Stub {
+        @Override
+        public void onBatteryStateChanged(int deviceId, boolean isBatteryPresent, int status,
+                                          float capacity, long eventTime) {
+            synchronized (mBatteryListenersLock) {
+                if (mBatteryListeners == null) return;
+                final RegisteredBatteryListeners entry = mBatteryListeners.get(deviceId);
+                if (entry == null) return;
+
+                entry.mLatestBatteryState =
+                        new LocalBatteryState(
+                                deviceId, isBatteryPresent, status, capacity, eventTime);
+                for (InputDeviceBatteryListenerDelegate delegate : entry.mDelegates) {
+                    delegate.notifyBatteryStateChanged(entry.mLatestBatteryState);
+                }
+            }
+        }
+=======
     /**
      * A callback used to be notified about keyboard backlight state changes for keyboard device.
      * The {@link #onKeyboardBacklightChanged(int, KeyboardBacklightState, boolean)} method
@@ -1399,5 +1815,6 @@ public final class InputManager {
          */
         void onKeyboardBacklightChanged(
                 int deviceId, @NonNull KeyboardBacklightState state, boolean isTriggeredByKeyPress);
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
     }
 }

@@ -119,9 +119,14 @@ static struct {
     jmethodID getVirtualKeyQuietTimeMillis;
     jmethodID getExcludedDeviceNames;
     jmethodID getInputPortAssociations;
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+    jmethodID getInputUniqueIdAssociationsByDescriptor;
+    jmethodID getInputUniqueIdAssociationsByPort;
+=======
     jmethodID getInputUniqueIdAssociations;
     jmethodID getDeviceTypeAssociations;
     jmethodID getKeyboardLayoutAssociations;
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
     jmethodID getKeyRepeatTimeout;
     jmethodID getKeyRepeatDelay;
     jmethodID getHoverTapTimeout;
@@ -602,6 +607,42 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
         }
         env->DeleteLocalRef(portAssociations);
     }
+<<<<<<< PATCH SET (3e78d5 Bind an input device via descriptor)
+    outConfig->uniqueIdAssociationsByPort.clear();
+    jobjectArray uniqueIdAssociationsByPort = jobjectArray(
+            env->CallObjectMethod(mServiceObj,
+                                  gServiceClassInfo.getInputUniqueIdAssociationsByPort));
+    if (!checkAndClearExceptionFromCallback(env, "getInputUniqueIdAssociationsByPort") &&
+        uniqueIdAssociationsByPort) {
+        jsize length = env->GetArrayLength(uniqueIdAssociationsByPort);
+        for (jsize i = 0; i < length / 2; i++) {
+            std::string inputDeviceUniqueId =
+                    getStringElementFromJavaArray(env, uniqueIdAssociationsByPort, 2 * i);
+            std::string displayUniqueId =
+                    getStringElementFromJavaArray(env, uniqueIdAssociationsByPort, 2 * i + 1);
+            outConfig->uniqueIdAssociationsByPort.insert({inputDeviceUniqueId, displayUniqueId});
+        }
+        env->DeleteLocalRef(uniqueIdAssociationsByPort);
+    }
+
+    outConfig->uniqueIdAssociationsByDescriptor.clear();
+    jobjectArray uniqueIdAssociationsByDescriptor = jobjectArray(
+            env->CallObjectMethod(mServiceObj,
+                                  gServiceClassInfo.getInputUniqueIdAssociationsByDescriptor));
+    if (!checkAndClearExceptionFromCallback(env, "getInputUniqueIdAssociationsByDescriptor") &&
+        uniqueIdAssociationsByDescriptor) {
+        jsize length = env->GetArrayLength(uniqueIdAssociationsByDescriptor);
+        for (jsize i = 0; i < length / 2; i++) {
+            std::string inputDeviceUniqueId =
+                    getStringElementFromJavaArray(env, uniqueIdAssociationsByDescriptor, 2 * i);
+            std::string displayUniqueId =
+                    getStringElementFromJavaArray(env, uniqueIdAssociationsByDescriptor, 2 * i + 1);
+            outConfig->uniqueIdAssociationsByDescriptor.insert(
+                    {inputDeviceUniqueId, displayUniqueId});
+        }
+        env->DeleteLocalRef(uniqueIdAssociationsByDescriptor);
+    }
+=======
 
     outConfig->uniqueIdAssociations =
             readMapFromInterleavedJavaArray<std::string>(gServiceClassInfo
@@ -621,6 +662,7 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
                                     return KeyboardLayoutInfo(std::move(languageTag),
                                                               std::move(layoutType));
                                 });
+>>>>>>> BASE      (da32cb Merge "Adjust with changes in libxml2 upgrade" into main)
 
     jint hoverTapTimeout = env->CallIntMethod(mServiceObj,
             gServiceClassInfo.getHoverTapTimeout);
@@ -2762,8 +2804,11 @@ int register_android_server_InputManager(JNIEnv* env) {
     GET_METHOD_ID(gServiceClassInfo.getInputPortAssociations, clazz,
             "getInputPortAssociations", "()[Ljava/lang/String;");
 
-    GET_METHOD_ID(gServiceClassInfo.getInputUniqueIdAssociations, clazz,
-                  "getInputUniqueIdAssociations", "()[Ljava/lang/String;");
+    GET_METHOD_ID(gServiceClassInfo.getInputUniqueIdAssociationsByDescriptor, clazz,
+                  "getInputUniqueIdAssociationsByDescriptor", "()[Ljava/lang/String;");
+
+    GET_METHOD_ID(gServiceClassInfo.getInputUniqueIdAssociationsByPort, clazz,
+                  "getInputUniqueIdAssociationsByPort", "()[Ljava/lang/String;");
 
     GET_METHOD_ID(gServiceClassInfo.getDeviceTypeAssociations, clazz, "getDeviceTypeAssociations",
                   "()[Ljava/lang/String;");
