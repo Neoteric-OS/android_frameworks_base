@@ -569,7 +569,7 @@ public final class InputManager {
             int idx = findOnTabletModeChangedListenerLocked(listener);
             if (idx < 0) {
                 OnTabletModeChangedListenerDelegate d =
-                    new OnTabletModeChangedListenerDelegate(listener, handler);
+                        new OnTabletModeChangedListenerDelegate(listener, handler);
                 mOnTabletModeChangedListeners.add(d);
             }
         }
@@ -754,7 +754,7 @@ public final class InputManager {
     @TestApi
     @RequiresPermission(Manifest.permission.SET_KEYBOARD_LAYOUT)
     public void setCurrentKeyboardLayoutForInputDevice(@NonNull InputDeviceIdentifier identifier,
-            @NonNull String keyboardLayoutDescriptor) {
+                                                       @NonNull String keyboardLayoutDescriptor) {
         if (identifier == null) {
             throw new IllegalArgumentException("identifier must not be null");
         }
@@ -804,7 +804,7 @@ public final class InputManager {
      */
     @RequiresPermission(Manifest.permission.SET_KEYBOARD_LAYOUT)
     public void addKeyboardLayoutForInputDevice(InputDeviceIdentifier identifier,
-            String keyboardLayoutDescriptor) {
+                                                String keyboardLayoutDescriptor) {
         if (identifier == null) {
             throw new IllegalArgumentException("inputDeviceDescriptor must not be null");
         }
@@ -834,7 +834,7 @@ public final class InputManager {
     @TestApi
     @RequiresPermission(Manifest.permission.SET_KEYBOARD_LAYOUT)
     public void removeKeyboardLayoutForInputDevice(@NonNull InputDeviceIdentifier identifier,
-            @NonNull String keyboardLayoutDescriptor) {
+                                                   @NonNull String keyboardLayoutDescriptor) {
         if (identifier == null) {
             throw new IllegalArgumentException("inputDeviceDescriptor must not be null");
         }
@@ -879,7 +879,7 @@ public final class InputManager {
      * @hide
      */
     public void setTouchCalibration(String inputDeviceDescriptor, int surfaceRotation,
-            TouchCalibration calibration) {
+                                    TouchCalibration calibration) {
         try {
             mIm.setTouchCalibrationForInputDevice(inputDeviceDescriptor, surfaceRotation, calibration);
         } catch (RemoteException ex) {
@@ -1046,7 +1046,7 @@ public final class InputManager {
     @TestApi
     @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
     public void setBlockUntrustedTouchesMode(@NonNull Context context,
-            @BlockUntrustedTouchesMode int mode) {
+                                             @BlockUntrustedTouchesMode int mode) {
         if (!ArrayUtils.contains(BLOCK_UNTRUSTED_TOUCHES_MODES, mode)) {
             throw new IllegalArgumentException("Invalid feature mode " + mode);
         }
@@ -1290,7 +1290,7 @@ public final class InputManager {
      * @hide
      */
     public boolean enableSensor(int deviceId, int sensorType, int samplingPeriodUs,
-            int maxBatchReportLatencyUs) {
+                                int maxBatchReportLatencyUs) {
         try {
             return mIm.enableSensor(deviceId, sensorType, samplingPeriodUs,
                     maxBatchReportLatencyUs);
@@ -1387,6 +1387,7 @@ public final class InputManager {
      * </p>
      * @hide
      */
+    @RequiresPermission(android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY)
     public void addPortAssociation(@NonNull String inputPort, int displayPort) {
         try {
             mIm.addPortAssociation(inputPort, displayPort);
@@ -1404,6 +1405,7 @@ public final class InputManager {
      * </p>
      * @hide
      */
+    @RequiresPermission(android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY)
     public void removePortAssociation(@NonNull String inputPort) {
         try {
             mIm.removePortAssociation(inputPort);
@@ -1422,9 +1424,11 @@ public final class InputManager {
      * </p>
      * @hide
      */
-    public void addUniqueIdAssociation(@NonNull String inputPort, @NonNull String displayUniqueId) {
+    @RequiresPermission(android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY)
+    public void addUniqueIdAssociationByPort(@NonNull String inputPort,
+                                             @NonNull String displayUniqueId) {
         try {
-            mIm.addUniqueIdAssociation(inputPort, displayUniqueId);
+            mIm.addUniqueIdAssociationByPort(inputPort, displayUniqueId);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -1438,9 +1442,50 @@ public final class InputManager {
      * </p>
      * @hide
      */
-    public void removeUniqueIdAssociation(@NonNull String inputPort) {
+    @RequiresPermission(android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY)
+    public void removeUniqueIdAssociationByPort(@NonNull String inputPort) {
         try {
-            mIm.removeUniqueIdAssociation(inputPort);
+            mIm.removeUniqueIdAssociationByPort(inputPort);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Add a runtime association between the input device name and display, by descriptor. Input
+     * device descriptors are expected to be unique per physical device, though one physical
+     * device can have multiple virtual input devices that possess the same descriptor.
+     * E.g. a keyboard with built in trackpad will be 2 different input devices with the same
+     * descriptor.
+     * @param inputDeviceDescriptor The descriptor of the input device.
+     * @param displayUniqueId The unique id of the associated display.
+     * <p>
+     * Requires {@link android.Manifest.permissions.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY}.
+     * </p>
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY)
+    public void addUniqueIdAssociationByDescriptor(@NonNull String inputDeviceDescriptor,
+                                                   @NonNull String displayUniqueId) {
+        try {
+            mIm.addUniqueIdAssociationByDescriptor(inputDeviceDescriptor, displayUniqueId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Removes a runtime association between the input device and display.
+     * @param inputDeviceDescriptor The descriptor of the input device.
+     * <p>
+     * Requires {@link android.Manifest.permissions.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY}.
+     * </p>
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY)
+    public void removeUniqueIdAssociationByDescriptor(@NonNull String inputDeviceDescriptor) {
+        try {
+            mIm.removeUniqueIdAssociationByDescriptor(inputDeviceDescriptor);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -1775,7 +1820,7 @@ public final class InputManager {
      * @hide
      */
     public void addInputDeviceBatteryListener(int deviceId, @NonNull Executor executor,
-            @NonNull InputDeviceBatteryListener listener) {
+                                              @NonNull InputDeviceBatteryListener listener) {
         Objects.requireNonNull(executor, "executor should not be null");
         Objects.requireNonNull(listener, "listener should not be null");
 
@@ -1852,7 +1897,7 @@ public final class InputManager {
      * @hide
      */
     public void removeInputDeviceBatteryListener(int deviceId,
-            @NonNull InputDeviceBatteryListener listener) {
+                                                 @NonNull InputDeviceBatteryListener listener) {
         Objects.requireNonNull(listener, "listener should not be null");
 
         synchronized (mBatteryListenersLock) {
@@ -1899,7 +1944,7 @@ public final class InputManager {
      */
     public boolean isStylusEverUsed(@NonNull Context context) {
         return Settings.Global.getInt(context.getContentResolver(),
-                        Settings.Global.STYLUS_EVER_USED, 0) == 1;
+                Settings.Global.STYLUS_EVER_USED, 0) == 1;
     }
 
     /**
@@ -2053,7 +2098,7 @@ public final class InputManager {
         final long mEventTime;
 
         LocalBatteryState(int deviceId, boolean isPresent, int status, float capacity,
-                long eventTime) {
+                          long eventTime) {
             mDeviceId = deviceId;
             mIsPresent = isPresent;
             mStatus = status;
@@ -2101,7 +2146,7 @@ public final class InputManager {
     private class LocalInputDeviceBatteryListener extends IInputDeviceBatteryListener.Stub {
         @Override
         public void onBatteryStateChanged(int deviceId, boolean isBatteryPresent, int status,
-                float capacity, long eventTime) {
+                                          float capacity, long eventTime) {
             synchronized (mBatteryListenersLock) {
                 if (mBatteryListeners == null) return;
                 final RegisteredBatteryListeners entry = mBatteryListeners.get(deviceId);
