@@ -111,7 +111,8 @@ static struct {
     jmethodID getVirtualKeyQuietTimeMillis;
     jmethodID getExcludedDeviceNames;
     jmethodID getInputPortAssociations;
-    jmethodID getInputUniqueIdAssociations;
+    jmethodID getInputUniqueIdAssociationsByDescriptor;
+    jmethodID getInputUniqueIdAssociationsByPort;
     jmethodID getKeyRepeatTimeout;
     jmethodID getKeyRepeatDelay;
     jmethodID getHoverTapTimeout;
@@ -579,20 +580,39 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
         }
         env->DeleteLocalRef(portAssociations);
     }
-    outConfig->uniqueIdAssociations.clear();
-    jobjectArray uniqueIdAssociations = jobjectArray(
-            env->CallObjectMethod(mServiceObj, gServiceClassInfo.getInputUniqueIdAssociations));
-    if (!checkAndClearExceptionFromCallback(env, "getInputUniqueIdAssociations") &&
-        uniqueIdAssociations) {
-        jsize length = env->GetArrayLength(uniqueIdAssociations);
+    outConfig->uniqueIdAssociationsByPort.clear();
+    jobjectArray uniqueIdAssociationsByPort = jobjectArray(
+            env->CallObjectMethod(mServiceObj,
+                                  gServiceClassInfo.getInputUniqueIdAssociationsByPort));
+    if (!checkAndClearExceptionFromCallback(env, "getInputUniqueIdAssociationsByPort") &&
+        uniqueIdAssociationsByPort) {
+        jsize length = env->GetArrayLength(uniqueIdAssociationsByPort);
         for (jsize i = 0; i < length / 2; i++) {
             std::string inputDeviceUniqueId =
-                    getStringElementFromJavaArray(env, uniqueIdAssociations, 2 * i);
+                    getStringElementFromJavaArray(env, uniqueIdAssociationsByPort, 2 * i);
             std::string displayUniqueId =
-                    getStringElementFromJavaArray(env, uniqueIdAssociations, 2 * i + 1);
-            outConfig->uniqueIdAssociations.insert({inputDeviceUniqueId, displayUniqueId});
+                    getStringElementFromJavaArray(env, uniqueIdAssociationsByPort, 2 * i + 1);
+            outConfig->uniqueIdAssociationsByPort.insert({inputDeviceUniqueId, displayUniqueId});
         }
-        env->DeleteLocalRef(uniqueIdAssociations);
+        env->DeleteLocalRef(uniqueIdAssociationsByPort);
+    }
+
+    outConfig->uniqueIdAssociationsByDescriptor.clear();
+    jobjectArray uniqueIdAssociationsByDescriptor = jobjectArray(
+            env->CallObjectMethod(mServiceObj,
+                                  gServiceClassInfo.getInputUniqueIdAssociationsByDescriptor));
+    if (!checkAndClearExceptionFromCallback(env, "getInputUniqueIdAssociationsByDescriptor") &&
+        uniqueIdAssociationsByDescriptor) {
+        jsize length = env->GetArrayLength(uniqueIdAssociationsByDescriptor);
+        for (jsize i = 0; i < length / 2; i++) {
+            std::string inputDeviceUniqueId =
+                    getStringElementFromJavaArray(env, uniqueIdAssociationsByDescriptor, 2 * i);
+            std::string displayUniqueId =
+                    getStringElementFromJavaArray(env, uniqueIdAssociationsByDescriptor, 2 * i + 1);
+            outConfig->uniqueIdAssociationsByDescriptor.insert(
+                    {inputDeviceUniqueId, displayUniqueId});
+        }
+        env->DeleteLocalRef(uniqueIdAssociationsByDescriptor);
     }
 
     jint hoverTapTimeout = env->CallIntMethod(mServiceObj,
@@ -2492,8 +2512,11 @@ int register_android_server_InputManager(JNIEnv* env) {
     GET_METHOD_ID(gServiceClassInfo.getInputPortAssociations, clazz,
             "getInputPortAssociations", "()[Ljava/lang/String;");
 
-    GET_METHOD_ID(gServiceClassInfo.getInputUniqueIdAssociations, clazz,
-                  "getInputUniqueIdAssociations", "()[Ljava/lang/String;");
+    GET_METHOD_ID(gServiceClassInfo.getInputUniqueIdAssociationsByDescriptor, clazz,
+                  "getInputUniqueIdAssociationsByDescriptor", "()[Ljava/lang/String;");
+
+    GET_METHOD_ID(gServiceClassInfo.getInputUniqueIdAssociationsByPort, clazz,
+                  "getInputUniqueIdAssociationsByPort", "()[Ljava/lang/String;");
 
     GET_METHOD_ID(gServiceClassInfo.getKeyRepeatTimeout, clazz,
             "getKeyRepeatTimeout", "()I");
