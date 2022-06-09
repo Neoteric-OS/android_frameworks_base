@@ -111,7 +111,8 @@ static struct {
     jmethodID getVirtualKeyQuietTimeMillis;
     jmethodID getExcludedDeviceNames;
     jmethodID getInputPortAssociations;
-    jmethodID getInputUniqueIdAssociations;
+    jmethodID getInputUniqueIdAssociationsByDescriptor;
+    jmethodID getInputUniqueIdAssociationsByPort;
     jmethodID getKeyRepeatTimeout;
     jmethodID getKeyRepeatDelay;
     jmethodID getHoverTapTimeout;
@@ -581,8 +582,8 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
     }
     outConfig->uniqueIdAssociations.clear();
     jobjectArray uniqueIdAssociations = jobjectArray(
-            env->CallObjectMethod(mServiceObj, gServiceClassInfo.getInputUniqueIdAssociations));
-    if (!checkAndClearExceptionFromCallback(env, "getInputUniqueIdAssociations") &&
+            env->CallObjectMethod(mServiceObj, gServiceClassInfo.getInputUniqueIdAssociationsByDescriptor));
+    if (!checkAndClearExceptionFromCallback(env, "getInputUniqueIdAssociationsByDescriptor") &&
         uniqueIdAssociations) {
         jsize length = env->GetArrayLength(uniqueIdAssociations);
         for (jsize i = 0; i < length / 2; i++) {
@@ -2492,8 +2493,11 @@ int register_android_server_InputManager(JNIEnv* env) {
     GET_METHOD_ID(gServiceClassInfo.getInputPortAssociations, clazz,
             "getInputPortAssociations", "()[Ljava/lang/String;");
 
-    GET_METHOD_ID(gServiceClassInfo.getInputUniqueIdAssociations, clazz,
-                  "getInputUniqueIdAssociations", "()[Ljava/lang/String;");
+    GET_METHOD_ID(gServiceClassInfo.getInputUniqueIdAssociationsByPort, clazz,
+                  "getInputUniqueIdAssociationsByPort", "()[Ljava/lang/String;");
+
+    GET_METHOD_ID(gServiceClassInfo.getInputUniqueIdAssociationsByDescriptor, clazz,
+                  "getInputUniqueIdAssociationsByDescriptor", "()[Ljava/lang/String;");
 
     GET_METHOD_ID(gServiceClassInfo.getKeyRepeatTimeout, clazz,
             "getKeyRepeatTimeout", "()I");
