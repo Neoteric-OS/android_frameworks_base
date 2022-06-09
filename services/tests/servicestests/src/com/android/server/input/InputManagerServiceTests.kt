@@ -19,6 +19,7 @@ package com.android.server.input
 import android.content.Context
 import android.content.ContextWrapper
 import android.hardware.display.DisplayViewport
+import android.hardware.input.InputManager
 import android.hardware.input.InputManagerInternal
 import android.os.IInputConstants
 import android.os.test.TestLooper
@@ -28,6 +29,7 @@ import android.view.PointerIcon
 import androidx.test.InstrumentationRegistry
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -46,6 +48,21 @@ import org.mockito.Mockito.verifyNoMoreInteractions
 import org.mockito.junit.MockitoJUnit
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import org.mockito.Mockito.*
+import android.view.InputDevice
+import android.view.KeyCharacterMap
+import android.view.MotionEvent
+import android.view.View.OnKeyListener
+import android.os.SystemClock
+import android.view.KeyEvent
+import android.view.Surface
+import android.view.SurfaceView
+import android.view.SurfaceHolder
+import android.hardware.display.DisplayManager
+import android.hardware.display.VirtualDisplay
+import android.os.InputEventInjectionSync
+import android.view.KeyEvent.Callback
+import android.graphics.Canvas
 
 /**
  * Tests for {@link InputManagerService}.
@@ -300,5 +317,142 @@ class InputManagerServiceTests {
         testLooper.dispatchNext()
         verify(wmCallbacks).notifyPointerDisplayIdChanged(overrideDisplayId, 0f, 0f)
         thread.join(100 /*millis*/)
+    }
+
+    @Test
+    fun addUniqueIdAssociationByDescriptor_verifyAssociations() {
+        // Overall goal is to have 2 displays and verify that events from the InputDevice are
+        // sent only to the view that is on the associated display.
+        // So, associate the InputDevice with display 1, then send and verify KeyEvents.
+        // Then remove associations, then associate the InputDevice with display 2, then send
+        // and verify commands.
+
+        // Make 2 virtual displays with some mock Surfaces and SurfaceViews
+        val displayManager: DisplayManager = context.getSystemService(
+                DisplayManager::class.java
+        )
+        val mockSurface1 = mock(Surface::class.java)
+        val mockSurface2 = mock(Surface::class.java)
+        val mockSurfaceView1 = mock(SurfaceView::class.java)
+        val mockSurfaceView2 = mock(SurfaceView::class.java)
+        val mockSurfaceHolder1 = mock(SurfaceHolder::class.java)
+        `when`(mockSurfaceView1.holder).thenReturn(mockSurfaceHolder1)
+        `when`(mockSurfaceHolder1.surface).thenReturn(mockSurface1)
+        val mockSurfaceHolder2 = mock(SurfaceHolder::class.java)
+        `when`(mockSurfaceView2.holder).thenReturn(mockSurfaceHolder2)
+        `when`(mockSurfaceHolder2.surface).thenReturn(mockSurface2)
+
+        // Create mock canvas objects
+        val mockCanvas1 = mock(Canvas::class.java)
+        `when`(mockSurface1.lockCanvas(any())).thenReturn(mockCanvas1)
+        val mockCanvas2 = mock(Canvas::class.java)
+        `when`(mockSurface2.lockCanvas(any())).thenReturn(mockCanvas2)
+
+        val virtualDisplay1: VirtualDisplay = displayManager.createVirtualDisplay(
+                /* displayName= */ "testVirtualDisplay1",
+                /* width= */ 100,
+                /* height= */ 100,
+                /* densityDpi= */ 100,
+                /* surface= */ null,
+                /* flags= */ 0
+        )
+        val virtualDisplay2: VirtualDisplay = displayManager.createVirtualDisplay(
+                /* displayName= */ "testVirtualDisplay2",
+                /* width= */ 100,
+                /* height= */ 100,
+                /* densityDpi= */ 100,
+                /* surface= */ null,
+                /* flags= */ 0
+        )
+
+        // Simulate an InputDevice
+        val inputDeviceName = "abc"
+        val inputDeviceDescriptor = "def"
+        val inputDeviceId = 789
+        val keyCharacterMap = mock(KeyCharacterMap::class.java)
+        val inputDevice = InputDevice(
+                /* id= */ inputDeviceId,
+                /* generation= */ -1,
+                /* controllerNumber= */ 1,
+                /* name= */ inputDeviceName,
+                /* vendorId= */ 0x0453,
+                /* productId= */ 0x0b12,
+                /* descriptor= */ inputDeviceDescriptor,
+                /* isExternal= */ true,
+                /* sources= */ 1,
+                /* keyboardType= */ -1,
+                /* keyCharacterMap= */ keyCharacterMap,
+                /* hasVibrator= */ false,
+                /* hasMicrophone= */ false,
+                /* hasButtonUnderPad= */ false,
+                /* hasSensor= */ false,
+                /* hasBattery= */ false
+        )
+
+        // Associate input device with display
+        service.addUniqueIdAssociationByDescriptor(
+                inputDevice.descriptor,
+                virtualDisplay1.display.displayId.toString()
+        )
+
+        // Simulate 2 different KeyEvents
+        val eventTime = SystemClock.uptimeMillis()
+        val downEvent = KeyEvent(
+                /* downTime= */ eventTime,
+                /* eventTime= */ eventTime,
+                /* action= */ KeyEvent.ACTION_DOWN,
+                /* code= */ KeyEvent.KEYCODE_A,
+                /* repeat= */ 0,
+                /* metaState= */ 0,
+                /* deviceId= */ inputDevice.id,
+                /* scanCode= */ 0,
+                /* flags= */ KeyEvent.FLAG_FROM_SYSTEM,
+                /* source= */ InputDevice.SOURCE_KEYBOARD
+        )
+        val upEvent = KeyEvent(
+                /* downTime= */ eventTime,
+                /* eventTime= */ eventTime,
+                /* action= */ KeyEvent.ACTION_UP,
+                /* code= */ KeyEvent.KEYCODE_A,
+                /* repeat= */ 0,
+                /* metaState= */ 0,
+                /* deviceId= */ inputDevice.id,
+                /* scanCode= */ 0,
+                /* flags= */ KeyEvent.FLAG_FROM_SYSTEM,
+                /* source= */ InputDevice.SOURCE_KEYBOARD
+        )
+
+        // Create a mock OnKeyListener object
+        val mockOnKeyListener = mock(OnKeyListener::class.java)
+
+        // Verify that the event went to Display1 not Display2
+        service.injectInputEvent(downEvent, InputEventInjectionSync.NONE)
+
+        // Call the onKey method on the mock OnKeyListener object
+        mockOnKeyListener.onKey(mockSurfaceView1, /* keyCode= */ KeyEvent.KEYCODE_A, downEvent)
+        mockOnKeyListener.onKey(mockSurfaceView2, /* keyCode= */ KeyEvent.KEYCODE_A, upEvent)
+
+        // Verify that the onKey method was called with the expected arguments
+        verify(mockOnKeyListener).onKey(mockSurfaceView1, KeyEvent.KEYCODE_A, downEvent)
+        verify(mockOnKeyListener, never()).onKey(mockSurfaceView2, KeyEvent.KEYCODE_A, downEvent)
+
+        // Remove association
+        service.removeUniqueIdAssociationByDescriptor(inputDevice.descriptor)
+
+        // Associate with Display2
+        service.addUniqueIdAssociationByDescriptor(
+                inputDevice.descriptor,
+                virtualDisplay2.display.displayId.toString()
+        )
+
+        // Simulate a KeyEvent
+        service.injectInputEvent(upEvent, InputEventInjectionSync.NONE)
+
+        // Verify that the event went to Display2 not Display1
+        verify(mockOnKeyListener).onKey(mockSurfaceView2, KeyEvent.KEYCODE_A, upEvent)
+        verify(mockOnKeyListener, never()).onKey(mockSurfaceView1, KeyEvent.KEYCODE_A, upEvent)
+
+        mockSurface1.unlockCanvasAndPost(mockCanvas1)
+        mockSurface2.unlockCanvasAndPost(mockCanvas2)
     }
 }
