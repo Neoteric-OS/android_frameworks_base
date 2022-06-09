@@ -40006,6 +40006,8 @@ package android.telephony {
   }
 
   public static final class CarrierConfigManager.Iwlan {
+    field public static final int APM_DISABLE_UNTHROTTLING_EVENT = 2; // 0x2
+    field public static final int APM_ENABLE_UNTHROTTLING_EVENT = 3; // 0x3
     field public static final int AUTHENTICATION_METHOD_CERT = 1; // 0x1
     field public static final int AUTHENTICATION_METHOD_EAP_ONLY = 0; // 0x0
     field public static final int EPDG_ADDRESS_CELLULAR_LOC = 3; // 0x3
@@ -40029,6 +40031,7 @@ package android.telephony {
     field public static final String KEY_EPDG_PCO_ID_IPV6_INT = "iwlan.epdg_pco_id_ipv6_int";
     field public static final String KEY_EPDG_STATIC_ADDRESS_ROAMING_STRING = "iwlan.epdg_static_address_roaming_string";
     field public static final String KEY_EPDG_STATIC_ADDRESS_STRING = "iwlan.epdg_static_address_string";
+    field public static final String KEY_ERROR_POLICY_CONFIG_STRING_ARRAY = "iwlan.key_error_policy_config_string_array";
     field public static final String KEY_IKE_LOCAL_ID_TYPE_INT = "iwlan.ike_local_id_type_int";
     field public static final String KEY_IKE_REKEY_HARD_TIMER_SEC_INT = "iwlan.ike_rekey_hard_timer_in_sec";
     field public static final String KEY_IKE_REKEY_SOFT_TIMER_SEC_INT = "iwlan.ike_rekey_soft_timer_sec_int";
@@ -40045,6 +40048,9 @@ package android.telephony {
     field public static final String KEY_SUPPORTED_INTEGRITY_ALGORITHMS_INT_ARRAY = "iwlan.supported_integrity_algorithms_int_array";
     field public static final String KEY_SUPPORTED_PRF_ALGORITHMS_INT_ARRAY = "iwlan.supported_prf_algorithms_int_array";
     field public static final String KEY_SUPPORTS_EAP_AKA_FAST_REAUTH_BOOL = "iwlan.supports_eap_aka_fast_reauth_bool";
+    field public static final int WIFI_AP_CHANGED_UNTHROTTLING_EVENT = 4; // 0x4
+    field public static final int WIFI_CALLING_DISABLE_UNTHROTTLING_EVENT = 5; // 0x5
+    field public static final int WIFI_DISABLE_UNTHROTTLING_EVENT = 1; // 0x1
   }
 
   public abstract class CellIdentity implements android.os.Parcelable {
