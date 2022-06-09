@@ -19,6 +19,7 @@ package com.android.server.input
 import android.content.Context
 import android.content.ContextWrapper
 import android.hardware.display.DisplayViewport
+import android.hardware.input.InputManager
 import android.hardware.input.InputManagerInternal
 import android.os.IInputConstants
 import android.os.test.TestLooper
@@ -28,6 +29,7 @@ import android.view.PointerIcon
 import androidx.test.InstrumentationRegistry
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -46,6 +48,13 @@ import org.mockito.Mockito.verifyNoMoreInteractions
 import org.mockito.junit.MockitoJUnit
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import org.mockito.Mockito.*
+import android.view.InputDevice
+import android.view.KeyCharacterMap
+import android.view.MotionEvent
+import android.os.SystemClock
+import android.view.KeyEvent
+
 
 /**
  * Tests for {@link InputManagerService}.
@@ -300,5 +309,67 @@ class InputManagerServiceTests {
         testLooper.dispatchNext()
         verify(wmCallbacks).notifyPointerDisplayIdChanged(overrideDisplayId, 0f, 0f)
         thread.join(100 /*millis*/)
+    }
+
+    fun addUniqueIdAssociationByDescriptor_verifyAssociations() {
+        // Overall goal is to have 2 displays and verify that events from the InputDevice are sent
+        // specifically to the associated display, not the other. So, associate the InputDevice with
+        // display 1, then send and verify commands. Then remove associations, then associate the
+        // InputDevice with display 2, then send and verify commands.
+
+        // Simulate 2 displays
+        // TODO: Doesn't work because Display is a final class so can't mock without MockK
+        val display1 = mock(Display::class.java)
+        val display2 = mock(Display::class.java)
+        val displayId1 = 123
+        val displayId2 = 456
+        `when`(display1.getDisplayId()).thenReturn(displayId1)
+        `when`(display2.getDisplayId()).thenReturn(displayId2)
+
+        // Simulate an InputDevice
+        val inputDeviceName = "abc"
+        val inputDeviceDescriptor = "def"
+        val inputDeviceId = 789
+        val keyCharacterMap = mock(KeyCharacterMap::class.java)
+        val inputDevice = InputDevice(
+            inputDeviceId, -1, 1, inputDeviceName, 0x0453, 0x0b12,
+            inputDeviceDescriptor, true, 1, -1, keyCharacterMap, false, false, false, false, false
+        )
+
+        // Associate input device with display
+        service.addUniqueIdAssociationByDescriptor(
+            inputDevice.descriptor,
+            display1.displayId.toString()
+        )
+
+        // Simulate a KeyEvent
+        val eventTime = SystemClock.uptimeMillis()
+        val downEvent = KeyEvent(
+            eventTime, eventTime, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_A,
+            0, 0, inputDevice.id, 0, KeyEvent.FLAG_FROM_SYSTEM, InputDevice.SOURCE_KEYBOARD
+        )
+        service.injectInputEvent(downEvent, 0)
+
+        // Verify that the event went to Display1 not Display2
+
+
+        // Remove association
+        service.removeUniqueIdAssociationByDescriptor(inputDevice.descriptor)
+
+        // Associate with Display2
+        service.addUniqueIdAssociationByDescriptor(
+            inputDevice.descriptor,
+            display2.displayId.toString()
+        )
+
+        // Simulate a KeyEvent
+        service.injectInputEvent(downEvent, 0)
+
+        // Verify that the event went to Display2 not Display1
+
+
+        // Another option: look up inputReader? OR inputRouterService? OR InputInjector?
+        // OR View.OnKeyListener OR native.setFocusedDisplay(displayId)?
+
     }
 }
