@@ -5332,6 +5332,93 @@ public class CarrierConfigManager {
         public static final String KEY_SUPPORTS_EAP_AKA_FAST_REAUTH_BOOL =
                 KEY_PREFIX + "supports_eap_aka_fast_reauth_bool";
 
+        /**
+         * IWLAN error policy configs that determine the behavior when a certain error happens
+         * during EPDG tunnel setup.
+         *
+         * Each string in the string array represents a single error handling behavior.
+         * It has the following fields:
+         * 1. "capabilities": Array of apn names specifics for which the policy needs to be
+         *    applied to.
+         * 2. "error_type": The type of error in String. Possible error types are:
+         *     2.1. "IKE_PROTOCOL_ERROR_TYPE" refers to the Notify Error coming in Notify payload.
+         *          Refer to https://tools.ietf.org/html/rfc4306#section-3.10.1 for global errors
+         *          and carrier specific requirements for other carrier specific error codes.
+         *     2.2. "GENERIC_ERROR_TYPE" refers to the following Iwlan errors - "IO_EXCEPTION",
+         *          "TIMEOUT_EXCEPTION", "SERVER_SELECTION_FAILED" and "TUNNEL_TRANSFORM_FAILED".
+         *     2.3. "*" represents that this policy a generic fallback when no other policy matches.
+         * 3. "error_details": Array of error specifics for which the policy needs to be applied to.
+         *         Following are the currently supported formats of elements in the array:
+         *         Note: Array can be a mix of number, range and string formats.
+         *     3.1. Number or Code: "24" - Number specific to the error(see 3.2.6, 3.2.7).
+         *     3.2. Range: "9000-9050" Range of specific errors.
+         *     3.3. Any: "*" value represents that this can be applied to all ErrorDetails when
+         *          there is no specific match. This will be a single element array.
+         *     3.4. String: String describing the specific error. Current allowed string values -
+         *          "IO_EXCEPTION", "TIMEOUT_EXCEPTION", "SERVER_SELECTION_FAILED" and
+         *          "TUNNEL_TRANSFORM_FAILED"
+         *     3.5. "IKE_PROTOCOL_EXCEPTION" ErrorType expects the "error_detail" to be defined only
+         *          in numbers or range of numbers.
+         *          Examples: "24" or "9000-9050" or "7|14000-14050"
+         *     3.6. "GENERIC_ERROR_TYPE" or "*" ErrorType expects only the following to be in
+         *          "error_detail" - "IO_EXCEPTION", "TIMEOUT_EXCEPTION", "SERVER_SELECTION_FAILED",
+         *          "TUNNEL_TRANSFORM_FAILED" and "*".
+         *          Example: "IO_EXCEPTION|TIMEOUT_EXCEPTION or "*"
+         * 4. "retry_array": Array of retry times (in secs) represented in string format.
+         *    Following formats are currently supported:
+         *     4.1. "0|0|0" Retry immediately for maximum 3 times and then Fail.
+         *     4.2. "" Empty array means to fail whenever the error happens.
+         *     4.3. "2|4|8" Retry times are 2 secs, 4secs and 8 secs - Fail after that.
+         *     4.4. "5|10|15|-1" Here the "-1" represents infinite retires with the retry time "15"
+         *          (the last retry number).
+         *     4.5. "2+r15" 2 seconds + Random time below 15 seconds.
+         * 5. "unthrottling_events": Events for which the retry time can be unthrottled in string.
+         *    Possible unthrottling events are:
+         *     5.1. "WIFI_DISABLE_EVENT": Wifi on to off toggle.
+         *     5.2. "APM_DISABLE_EVENT": APM on to off toggle.
+         *     5.3. "APM_ENABLE_EVENT": APM off to on toggle.
+         *     5.4. "WIFI_AP_CHANGED_EVENT": Wifi is connected to a AP with different SSID.
+         *     5.5. "WIFI_CALLING_DISABLE_EVENT": Wifi calling button on to off toggle.
+         * 6. "handover_attempt_count": Integer to specify the number of handover request attempts
+         *    before using initial attach instead.
+         *     6.1. "handover_attempt_count" should only be defined in the string when handover
+         *          attempt count is enabled and "error_type" is explicitly defined as
+         *          "IKE_PROTOCOL_ERROR_TYPE". If handover attempt count is disabled or "error_type"
+         *          is defined as other error types including "*", "handover_attempt_count" should
+         *          not be included in the string.
+         *
+         * Note: When the value is "*" for any of "capabilities" or "error_type" or "error_details",
+         *       it means that the config definition applies to rest of the errors for which
+         *       the config is not defined.
+         *       For example, if "capabilities" is "ims" and the "error_type" is defined as "*" -
+         *       this policy will be applied to the error that doesn't fall into other error types
+         *       defined under "ims".
+         *
+         * Here are some sample configs.
+         * <string-array name="iwlan_error_policy_config" num="4">
+         *     <!-- When apn is ims or eims and error type is GENERIC_ERROR_TYPE -->
+         *     <item value="capabilities=ims|eims, error_type=GENERIC_ERROR_TYPE,
+         *         error_details=*, retry_array=0, unthrottling_events=APM_ENABLE_EVENT"/>
+         *     <!-- When apn is ims or eims and error type is IKE_PROTOCOL_ERROR_TYPE with specific
+         *     cause code, handover attempt count is enabled -->
+         *     <item value="capabilities=ims|eims, error_type=IKE_PROTOCOL_ERROR_TYPE,
+         *         error_details=24|34|9000-9050, retry_array=4|8|16,
+         *         unthrottling_events=APM_ENABLE_EVENT|WIFI_AP_CHANGED_EVENT,
+         *         handover_attempt_count=5"/>
+         *     <!-- When apn is ims or eims and error type is IKE_PROTOCOL_ERROR_TYPE including all
+         *     other cause codes, handover attempt count is enabled -->
+         *     <item value="capabilities=*, error_type=*, error_details=IKE_PROTOCOL_ERROR_TYPE,
+         *         retry_array=5|10|-1, unthrottling_events=APM_ENABLE_EVENT|APM_DISABLE_EVENT|
+         *         WIFI_DISABLE_EVENT|WIFI_AP_CHANGED_EVENT, handover_attempt_count=6"/>
+         *     <!-- When apn and error type is anything else -->
+         *     <item value="capabilities=*, error_type=*, error_details=*,
+         *         retry_array=5|10|-1, unthrottling_events=APM_ENABLE_EVENT|APM_DISABLE_EVENT|
+         *         WIFI_DISABLE_EVENT|WIFI_AP_CHANGED_EVENT"/>
+         *     </string-array>
+         */
+        public static final String KEY_ERROR_POLICY_CONFIG_STRING_ARRAY =
+                KEY_PREFIX + "key_error_policy_config_string_array";
+
         /** @hide */
         @IntDef({AUTHENTICATION_METHOD_EAP_ONLY, AUTHENTICATION_METHOD_CERT})
         public @interface AuthenticationMethodType {}
@@ -5479,6 +5566,19 @@ public class CarrierConfigManager {
             defaults.putInt(KEY_EPDG_PCO_ID_IPV6_INT, 0);
             defaults.putInt(KEY_EPDG_PCO_ID_IPV4_INT, 0);
             defaults.putBoolean(KEY_SUPPORTS_EAP_AKA_FAST_REAUTH_BOOL, false);
+            defaults.putStringArray(KEY_ERROR_POLICY_CONFIG_STRING_ARRAY, new String[]{
+                    "capabilities=*, error_type=*, error_details=*, retry_array=5|10|-1, "
+                            + "unthrottling_events=APM_ENABLE_EVENT|APM_DISABLE_EVENT"
+                            + "|WIFI_DISABLE_EVENT|WIFI_AP_CHANGED_EVENT",
+                    "capabilities=*, error_type=GENERIC_ERROR_TYPE, error_details=IO_EXCEPTION, "
+                            + "retry_array=0|0|0|60+r15|120|-1, "
+                            + "unthrottling_events=APM_ENABLE_EVENT|APM_DISABLE_EVENT"
+                            + "|WIFI_DISABLE_EVENT|WIFI_AP_CHANGED_EVENT",
+                    "capabilities=*, error_type=IKE_PROTOCOL_ERROR_TYPE, error_details=24, "
+                            + "retry_array=10|20|40|80|160, "
+                            + "unthrottling_events=APM_ENABLE_EVENT|WIFI_DISABLE_EVENT"
+                            + "|WIFI_CALLING_DISABLE_EVENT"
+            });
 
             return defaults;
         }
