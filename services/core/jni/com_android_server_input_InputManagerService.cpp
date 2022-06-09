@@ -119,7 +119,8 @@ static struct {
     jmethodID getVirtualKeyQuietTimeMillis;
     jmethodID getExcludedDeviceNames;
     jmethodID getInputPortAssociations;
-    jmethodID getInputUniqueIdAssociations;
+    jmethodID getInputUniqueIdAssociationsByPort;
+    jmethodID getInputUniqueIdAssociationsByDescriptor;
     jmethodID getDeviceTypeAssociations;
     jmethodID getKeyboardLayoutAssociations;
     jmethodID getKeyRepeatTimeout;
@@ -603,10 +604,17 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
         env->DeleteLocalRef(portAssociations);
     }
 
-    outConfig->uniqueIdAssociations =
-            readMapFromInterleavedJavaArray<std::string>(gServiceClassInfo
-                                                                 .getInputUniqueIdAssociations,
-                                                         "getInputUniqueIdAssociations");
+    outConfig->uniqueIdAssociationsByPort =
+            readMapFromInterleavedJavaArray<std::string>(
+                    gServiceClassInfo.getInputUniqueIdAssociationsByPort,
+                    "getInputUniqueIdAssociationsByPort"
+                    );
+
+    outConfig->uniqueIdAssociationsByDescriptor =
+            readMapFromInterleavedJavaArray<std::string>(
+                    gServiceClassInfo.getInputUniqueIdAssociationsByDescriptor,
+                    "getInputUniqueIdAssociationsByDescriptor"
+                    );
 
     outConfig->deviceTypeAssociations =
             readMapFromInterleavedJavaArray<std::string>(gServiceClassInfo
@@ -2762,8 +2770,11 @@ int register_android_server_InputManager(JNIEnv* env) {
     GET_METHOD_ID(gServiceClassInfo.getInputPortAssociations, clazz,
             "getInputPortAssociations", "()[Ljava/lang/String;");
 
-    GET_METHOD_ID(gServiceClassInfo.getInputUniqueIdAssociations, clazz,
-                  "getInputUniqueIdAssociations", "()[Ljava/lang/String;");
+    GET_METHOD_ID(gServiceClassInfo.getInputUniqueIdAssociationsByPort, clazz,
+                  "getInputUniqueIdAssociationsByPort", "()[Ljava/lang/String;");
+
+    GET_METHOD_ID(gServiceClassInfo.getInputUniqueIdAssociationsByDescriptor, clazz,
+                  "getInputUniqueIdAssociationsByDescriptor", "()[Ljava/lang/String;");
 
     GET_METHOD_ID(gServiceClassInfo.getDeviceTypeAssociations, clazz, "getDeviceTypeAssociations",
                   "()[Ljava/lang/String;");
