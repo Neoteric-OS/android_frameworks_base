@@ -254,8 +254,18 @@ public class InputManagerService extends IInputManager.Stub
     private final Object mAssociationsLock = new Object();
     @GuardedBy("mAssociationsLock")
     private final Map<String, Integer> mRuntimeAssociations = new ArrayMap<>();
-    @GuardedBy("mAssociationsLock")
-    private final Map<String, String> mUniqueIdAssociations = new ArrayMap<>();
+
+    // The associations of input devices to displays by port. Maps from input device port (String)
+    // to display id (int) so that events from the Input Device go to a specific display.
+    @GuardedBy("mAssociationLock")
+    private final Map<String, String> mUniqueIdAssociationsByPort = new ArrayMap<>();
+
+    // The associations of input devices to displays by descriptor. Maps from input device
+    // descriptor (String) to display id (int) so that events from the Input Device go to a
+    // specific display.
+    @GuardedBy("mAssociationLock")
+    private final Map<String, String> mUniqueIdAssociationsByDescriptor = new ArrayMap<>();
+
     // The map from input port (String) to the keyboard layout identifiers (comma separated string
     // containing language tag and layout type) associated with the corresponding keyboard device.
     // Currently only accessed by InputReader.
@@ -1773,10 +1783,11 @@ public class InputManagerService extends IInputManager.Stub
     }
 
     @Override // Binder call
-    public void addUniqueIdAssociation(@NonNull String inputPort, @NonNull String displayUniqueId) {
+    public void addUniqueIdAssociationByPort(@NonNull String inputPort,
+                                             @NonNull String displayUniqueId) {
         if (!checkCallingPermission(
                 android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY,
-                "addUniqueIdAssociation()")) {
+                "addUniqueIdAssociationByPort()")) {
             throw new SecurityException(
                     "Requires ASSOCIATE_INPUT_DEVICE_TO_DISPLAY permission");
         }
@@ -1784,22 +1795,65 @@ public class InputManagerService extends IInputManager.Stub
         Objects.requireNonNull(inputPort);
         Objects.requireNonNull(displayUniqueId);
         synchronized (mAssociationsLock) {
-            mUniqueIdAssociations.put(inputPort, displayUniqueId);
+            mUniqueIdAssociationsByPort.put(inputPort, displayUniqueId);
         }
         mNative.changeUniqueIdAssociation();
     }
 
     @Override // Binder call
-    public void removeUniqueIdAssociation(@NonNull String inputPort) {
+    public void removeUniqueIdAssociationByPort(@NonNull String inputPort) {
         if (!checkCallingPermission(
                 android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY,
-                "removeUniqueIdAssociation()")) {
+                "removeUniqueIdAssociationByPort()")) {
             throw new SecurityException("Requires ASSOCIATE_INPUT_DEVICE_TO_DISPLAY permission");
         }
 
         Objects.requireNonNull(inputPort);
         synchronized (mAssociationsLock) {
-            mUniqueIdAssociations.remove(inputPort);
+            mUniqueIdAssociationsByPort.remove(inputPort);
+        }
+        mNative.changeUniqueIdAssociation();
+    }
+
+    /**
+     * Adds a runtime association between the input device descriptor and the display unique id.
+     * @param inputDeviceDescriptor The descriptor of the input device.
+     * @param displayUniqueId The unique ID of the display.
+     */
+    @Override // Binder call
+    public void addUniqueIdAssociationByDescriptor(@NonNull String inputDeviceDescriptor,
+                                                   @NonNull String displayUniqueId) {
+        if (!checkCallingPermission(
+                android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY,
+                "addUniqueIdAssociationByDescriptor()")) {
+            throw new SecurityException(
+                    "Requires ASSOCIATE_INPUT_DEVICE_TO_DISPLAY permission");
+        }
+
+        Objects.requireNonNull(inputDeviceDescriptor);
+        Objects.requireNonNull(displayUniqueId);
+        synchronized (mAssociationsLock) {
+            mUniqueIdAssociationsByDescriptor.put(inputDeviceDescriptor, displayUniqueId);
+        }
+        mNative.changeUniqueIdAssociation();
+    }
+
+    /**
+     * Removes the runtime association between the input device and the display.
+     * @param inputDeviceDescriptor The descriptor of the input device.
+     */
+    @Override // Binder call
+    public void removeUniqueIdAssociationByDescriptor(@NonNull String inputDeviceDescriptor) {
+        if (!checkCallingPermission(
+                android.Manifest.permission.ASSOCIATE_INPUT_DEVICE_TO_DISPLAY,
+                "removeUniqueIdAssociationByDescriptor()")) {
+            throw new SecurityException(
+                    "Requires ASSOCIATE_INPUT_DEVICE_TO_DISPLAY permission");
+        }
+
+        Objects.requireNonNull(inputDeviceDescriptor);
+        synchronized (mAssociationsLock) {
+            mUniqueIdAssociationsByDescriptor.remove(inputDeviceDescriptor);
         }
         mNative.changeUniqueIdAssociation();
     }
@@ -2174,10 +2228,17 @@ public class InputManagerService extends IInputManager.Stub
                     pw.println("  display: " + v);
                 });
             }
-            if (!mUniqueIdAssociations.isEmpty()) {
+            if (!mUniqueIdAssociationsByPort.isEmpty()) {
                 pw.println("Unique Id Associations:");
-                mUniqueIdAssociations.forEach((k, v) -> {
+                mUniqueIdAssociationsByPort.forEach((k, v) -> {
                     pw.print("  port: " + k);
+                    pw.println("  uniqueId: " + v);
+                });
+            }
+            if (!mUniqueIdAssociationsByDescriptor.isEmpty()) {
+                pw.println("Unique Id Associations:");
+                mUniqueIdAssociationsByDescriptor.forEach((k, v) -> {
+                    pw.print("  descriptor: " + k);
                     pw.println("  uniqueId: " + v);
                 });
             }
@@ -2598,10 +2659,21 @@ public class InputManagerService extends IInputManager.Stub
 
     // Native callback
     @SuppressWarnings("unused")
-    private String[] getInputUniqueIdAssociations() {
+    private String[] getInputUniqueIdAssociationsByPort() {
         final Map<String, String> associations;
         synchronized (mAssociationsLock) {
-            associations = new HashMap<>(mUniqueIdAssociations);
+            associations = new HashMap<>(mUniqueIdAssociationsByPort);
+        }
+
+        return flatten(associations);
+    }
+
+    // Native callback
+    @SuppressWarnings("unused")
+    private String[] getInputUniqueIdAssociationsByDescriptor() {
+        final Map<String, String> associations;
+        synchronized (mAssociationsLock) {
+            associations = new HashMap<>(mUniqueIdAssociationsByDescriptor);
         }
 
         return flatten(associations);
