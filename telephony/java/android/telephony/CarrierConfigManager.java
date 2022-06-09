@@ -5332,6 +5332,104 @@ public class CarrierConfigManager {
         public static final String KEY_SUPPORTS_EAP_AKA_FAST_REAUTH_BOOL =
                 KEY_PREFIX + "supports_eap_aka_fast_reauth_bool";
 
+        /**
+         * IWLAN error policy configs that determine the behavior when a certain error happens
+         * during EPDG tunnel setup.
+         *
+         * Here are some sample configs.
+         * <string-array name="iwlan_error_policy_config" num="4">
+         *     <!-- When apn is ims or eims and error type is GENERIC_ERROR_TYPE -->
+         *     <item value="capabilities=ims|eims, error_type=GENERIC_ERROR_TYPE,
+         *         error_details=*, retry_array=0, unthrottling_events=APM_ENABLE_EVENT"/>
+         *     <!-- When apn is ims or eims and error type is IKE_PROTOCOL_ERROR_TYPE with specific
+         *     cause code, handover attempt count is enabled -->
+         *     <item value="capabilities=ims|eims, error_type=IKE_PROTOCOL_ERROR_TYPE,
+         *         error_details=24|34|9000-9050, retry_array=4|8|16,
+         *         unthrottling_events=APM_ENABLE_EVENT|WIFI_AP_CHANGED_EVENT,
+         *         handover_attempt_count=5"/>
+         *     <!-- When apn is ims or emis and error type is IKE_PROTOCOL_ERROR_TYPE including all
+         *     other cause codes, handover attempt count is enabled -->
+         *     <item value="capabilities=*, error_type=*, error_details=IKE_PROTOCOL_ERROR_TYPE,
+         *         retry_array=5|10|-1, unthrottling_events=APM_ENABLE_EVENT|
+         *         APM_DISABLE_EVENT|WIFI_DISABLE_EVENT|WIFI_AP_CHANGED_EVENT,
+         *         handover_attempt_count=6"/>
+         *     <!-- When apn and error type is anything else -->
+         *     <item value="capabilities=*, error_type=*, error_details=*,
+         *         retry_array=5|10|-1, unthrottling_events=APM_ENABLE_EVENT|
+         *         APM_DISABLE_EVENT|WIFI_DISABLE_EVENT|WIFI_AP_CHANGED_EVENT"/>
+         *     </string-array>
+         *
+         * When the value is "*" for any of "capabilities" or "error_type" or "error_details", it
+         * means that the config definition applies to rest of the errors for which the config
+         * is not defined.
+         * For example, if "capabilities" contains "ims" and one of the "error_type" in it
+         * is defined as "*" - this policy will be applied to the error that doesn't fall into
+         * other error types defined under "ims".
+         *
+         * "handover_attempt_count" should only be defined in the config when handover attempt count
+         * is enabled and "error_type" is explicitly defined as "IKE_PROTOCOL_ERROR_TYPE". If
+         * handover attempt count is disabled or "error_type" is defined as other error types
+         * including "*", "handover_attempt_count" should not be included in the config.
+         */
+        public static final String KEY_ERROR_POLICY_CONFIG_STRING_ARRAY =
+                KEY_PREFIX + "key_error_policy_config_string_array";
+
+        /** @hide */
+        @IntDef({
+                FALLBACK_ERROR_TYPE,
+                GENERIC_ERROR_TYPE,
+                IKE_PROTOCOL_ERROR_TYPE
+        })
+        public @interface ErrorPolicyErrorType {};
+
+        /**
+         * This value represents that the error tye is to be used as a fallback to represent all the
+         * errors.
+         */
+        public static final int FALLBACK_ERROR_TYPE = 0;
+
+        /**
+         * This value represents rest of the errors that are not defined above. ErrorDetails should
+         * mention the specific error. If it doesn't not - the policy will be used as a fallback
+         * global policy. Currently Supported ErrorDetails "IO_EXCEPTION" "TIMEOUT_EXCEPTION"
+         * "SERVER_SELECTION_FAILED" "TUNNEL_TRANSFORM_FAILED"
+         */
+        public static final int GENERIC_ERROR_TYPE = 1;
+
+        /**
+         * This value represents IKE Protocol Error/Notify Error. ErrorDetails defined for this
+         * type is always in numeric form representing the error codes. Examples: "24", "9000-9050"
+         *
+         * @see <a href="https://tools.ietf.org/html/rfc4306#section-3.10.1">RFC 4306, Internet Key
+         *     Exchange (IKEv2) Protocol</a>
+         */
+        public static final int IKE_PROTOCOL_ERROR_TYPE = 2;
+
+        /** @hide */
+        @IntDef({
+                WIFI_DISABLE_UNTHROTTLING_EVENT,
+                APM_DISABLE_UNTHROTTLING_EVENT,
+                APM_ENABLE_UNTHROTTLING_EVENT,
+                WIFI_AP_CHANGED_UNTHROTTLING_EVENT,
+                WIFI_CALLING_DISABLE_UNTHROTTLING_EVENT
+        })
+        public @interface ErrorPolicyUnthrottlingEvent {};
+
+        /** Wifi turned off or disabled. */
+        public static final int WIFI_DISABLE_UNTHROTTLING_EVENT = 0;
+
+        /** Airplane mode turned off or disabled. */
+        public static final int APM_DISABLE_UNTHROTTLING_EVENT = 1;
+
+        /** Airplame mode turned on or enabled */
+        public static final int APM_ENABLE_UNTHROTTLING_EVENT = 2;
+
+        /** Wifi AccessPoint changed. */
+        public static final int WIFI_AP_CHANGED_UNTHROTTLING_EVENT = 3;
+
+        /** Wifi calling turned off or disabled */
+        public static final int WIFI_CALLING_DISABLE_UNTHROTTLING_EVENT = 4;
+
         /** @hide */
         @IntDef({AUTHENTICATION_METHOD_EAP_ONLY, AUTHENTICATION_METHOD_CERT})
         public @interface AuthenticationMethodType {}
@@ -5479,6 +5577,19 @@ public class CarrierConfigManager {
             defaults.putInt(KEY_EPDG_PCO_ID_IPV6_INT, 0);
             defaults.putInt(KEY_EPDG_PCO_ID_IPV4_INT, 0);
             defaults.putBoolean(KEY_SUPPORTS_EAP_AKA_FAST_REAUTH_BOOL, false);
+            defaults.putStringArray(KEY_ERROR_POLICY_CONFIG_STRING_ARRAY, new String[]{
+                    "capabilities=*, error_type=*, error_details=*, retry_array=5|10|-1, "
+                            + "unthrottling_events=APM_ENABLE_EVENT|APM_DISABLE_EVENT"
+                            + "|WIFI_DISABLE_EVENT|WIFI_AP_CHANGED_EVENT",
+                    "capabilities=*, error_type=GENERIC_ERROR_TYPE, error_details=IO_EXCEPTION, "
+                            + "retry_array=0|0|0|60+r15|120|-1, "
+                            + "unthrottling_events=APM_ENABLE_EVENT|APM_DISABLE_EVENT"
+                            + "|WIFI_DISABLE_EVENT|WIFI_AP_CHANGED_EVENT",
+                    "capabilities=*, error_type=IKE_PROTOCOL_ERROR_TYPE, error_details=24, "
+                            + "retry_array=10|20|40|80|160, "
+                            + "unthrottling_events=APM_ENABLE_EVENT|WIFI_DISABLE_EVENT"
+                            + "|WIFI_CALLING_DISABLE_EVENT"
+            });
 
             return defaults;
         }
