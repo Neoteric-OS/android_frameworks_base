@@ -193,11 +193,13 @@ public class Vpn {
     private static final long VPN_LAUNCH_IDLE_ALLOWLIST_DURATION_MS = 60 * 1000;
 
     // Length of time (in milliseconds) that an app registered for VpnManager events is placed on
-    // the device idle allowlist each time the a VpnManager event is fired.
+    // the device idle allowlist each time the VpnManager event is fired.
     private static final long VPN_MANAGER_EVENT_ALLOWLIST_DURATION_MS = 30 * 1000;
 
     private static final String LOCKDOWN_ALLOWLIST_SETTING_NAME =
             Settings.Secure.ALWAYS_ON_VPN_LOCKDOWN_WHITELIST;
+
+    private static final long[] IKEV2_VPN_RETRY_DELAYS_SEC = {1L, 2L, 5L, 30L, 60L, 300L, 900L};
     /**
      * Largest profile size allowable for Platform VPNs.
      *
@@ -474,6 +476,20 @@ public class Vpn {
             } catch (IOException e) {
                 throw new IllegalStateException(
                         "Cannot set tunnel's fd as blocking=" + blocking, e);
+            }
+        }
+
+        /**
+         * Retrieves the next retry delay
+         *
+         * <p>If retries have exceeded the IKEV2_VPN_RETRY_DELAYS_SEC, the last entry in
+         * the array will be used as a repeating interval.
+         */
+        public long getNextRetryDelaySeconds(int retryCount) {
+            if (retryCount >= IKEV2_VPN_RETRY_DELAYS_SEC.length) {
+                return IKEV2_VPN_RETRY_DELAYS_SEC[IKEV2_VPN_RETRY_DELAYS_SEC.length - 1];
+            } else {
+                return IKEV2_VPN_RETRY_DELAYS_SEC[retryCount];
             }
         }
     }
@@ -2667,6 +2683,7 @@ public class Vpn {
         private final ScheduledThreadPoolExecutor mExecutor = new ScheduledThreadPoolExecutor(1);
 
         @Nullable private ScheduledFuture<?> mScheduledHandleNetworkLostTimeout;
+        @Nullable private ScheduledFuture<?> mScheduledHandleNewIkeSessionTimeout;
 
         /** Signal to ensure shutdown is honored even if a new Network is connected. */
         private boolean mIsRunning = true;
@@ -2689,6 +2706,14 @@ public class Vpn {
 
         // mMobikeEnabled can only be updated after IKE AUTH is finished.
         private boolean mMobikeEnabled = false;
+
+        /**
+         * The number of attempts since the last successful connection.
+         *
+         * <p>This variable controls the retry delay, and is reset when a new IKE session is
+         * opened or when there is a new default network.
+         */
+        private int mRetryCount = 0;
 
         IkeV2VpnRunner(@NonNull Ikev2VpnProfile profile) {
             super(TAG);
@@ -2766,6 +2791,7 @@ public class Vpn {
                     ikeConfiguration.isIkeExtensionEnabled(
                             IkeSessionConfiguration.EXTENSION_TYPE_MOBIKE);
             onIkeConnectionInfoChanged(token, ikeConfiguration.getIkeSessionConnectionInfo());
+            mRetryCount = 0;
         }
 
         /**
@@ -2962,16 +2988,41 @@ public class Vpn {
         public void onDefaultNetworkChanged(@NonNull Network network) {
             Log.d(TAG, "onDefaultNetworkChanged: " + network);
 
+            // If there is a new default network bringing up, cancel the retry task to prevent
+            // establishing an unnecessary IKE session.
+            cancelHandleNewIkeSessionTimeout();
+
+            // If there is a new default network bringing up, cancel the obsolete reset and retry
+            // task.
             cancelHandleNetworkLostTimeout();
 
+            if (!mIsRunning) {
+                Log.d(TAG, "onDefaultNetworkChanged after exit");
+                return; // VPN has been shut down.
+            }
+
+            mActiveNetwork = network;
+            mRetryCount = 0;
+
+            startOrMigrateIkeSession(network);
+        }
+
+        /**
+         * Start a new IKE session.
+         *
+         * <p>This method MUST always be called on the mExecutor thread in order to ensure
+         * consistency of the Ikev2VpnRunner fields.
+         *
+         * @param underlyingNetwork {@code null} to use mActiveNetwork to start a new IKE session.
+         *                Otherwise, use the given network to start a new IKE session.
+         */
+        private void startOrMigrateIkeSession(@Nullable Network underlyingNetwork) {
+            if (underlyingNetwork == null) {
+                Log.d(TAG, "There is no active network for starting an IKE session");
+                return;
+            }
+
             try {
-                if (!mIsRunning) {
-                    Log.d(TAG, "onDefaultNetworkChanged after exit");
-                    return; // VPN has been shut down.
-                }
-
-                mActiveNetwork = network;
-
                 if (mSession != null && mMobikeEnabled) {
                     // IKE session can schedule a migration event only when IKE AUTH is finished
                     // and mMobikeEnabled is true.
@@ -2980,10 +3031,12 @@ public class Vpn {
                             "Migrate IKE Session with token "
                                     + mCurrentToken
                                     + " to network "
-                                    + network);
-                    mSession.setNetwork(network);
+                                    + underlyingNetwork);
+                    mSession.setNetwork(underlyingNetwork);
                     return;
                 }
+
+                Log.d(TAG, "Start new IKE session on network " + underlyingNetwork);
 
                 // Clear mInterface to prevent Ikev2VpnRunner being cleared when
                 // interfaceRemoved() is called.
@@ -3000,12 +3053,12 @@ public class Vpn {
                 final ChildSessionParams childSessionParams;
                 if (ikeTunConnParams != null) {
                     final IkeSessionParams.Builder builder = new IkeSessionParams.Builder(
-                            ikeTunConnParams.getIkeSessionParams()).setNetwork(network);
+                            ikeTunConnParams.getIkeSessionParams()).setNetwork(underlyingNetwork);
                     ikeSessionParams = builder.build();
                     childSessionParams = ikeTunConnParams.getTunnelModeChildSessionParams();
                 } else {
                     ikeSessionParams = VpnIkev2Utils.buildIkeSessionParams(
-                            mContext, mProfile, network);
+                            mContext, mProfile, underlyingNetwork);
                     childSessionParams = VpnIkev2Utils.buildChildSessionParams(
                             mProfile.getAllowedAlgorithms());
                 }
@@ -3020,7 +3073,7 @@ public class Vpn {
                 // called. Thus it is safe to build a mTunnelIface before IKE setup.
                 mTunnelIface =
                         mIpSecManager.createIpSecTunnelInterface(
-                                address /* unused */, address /* unused */, network);
+                                address /* unused */, address /* unused */, underlyingNetwork);
                 NetdUtils.setInterfaceUp(mNetd, mTunnelIface.getInterfaceName());
 
                 final int token = ++mCurrentToken;
@@ -3039,6 +3092,18 @@ public class Vpn {
                 Log.i(TAG, "Setup failed for token " + mCurrentToken + ". Aborting", e);
                 onSessionLost(mCurrentToken, e);
             }
+            mScheduledHandleNewIkeSessionTimeout = null;
+        }
+
+        private void scheduleRetryNewIkeSession() {
+            final long retryDelay = mDeps.getNextRetryDelaySeconds(mRetryCount++);
+            Log.d(TAG, "Retry new IKE session after " + retryDelay + " seconds.");
+            // If the default network is lost during the retry delay, the mActiveNetwork will be
+            // null, and the new IKE session won't be established until there is a new default
+            // network bringing up.
+            mScheduledHandleNewIkeSessionTimeout =
+                    mExecutor.schedule(() -> startOrMigrateIkeSession(mActiveNetwork), retryDelay,
+                    TimeUnit.SECONDS);
         }
 
         /** Called when the NetworkCapabilities of underlying network is changed */
@@ -3062,6 +3127,11 @@ public class Vpn {
          * consistency of the Ikev2VpnRunner fields.
          */
         public void onDefaultNetworkLost(@NonNull Network network) {
+            // If the default network is torn down, there is no need to call
+            // startOrMigrateIkeSession() since it will always check if there is an active network
+            // can be used or not.
+            cancelHandleNewIkeSessionTimeout();
+
             if (!isActiveNetwork(network)) {
                 Log.d(TAG, "onDefaultNetworkLost called for obsolete network " + network);
 
@@ -3071,6 +3141,8 @@ public class Vpn {
                 // or an error was encountered somewhere else). In both cases, all resources and
                 // sessions are torn down via resetIkeState().
                 return;
+            } else {
+                mActiveNetwork = null;
             }
 
             if (mScheduledHandleNetworkLostTimeout != null
@@ -3083,7 +3155,7 @@ public class Vpn {
                         TAG,
                         "Unexpected error in onDefaultNetworkLost. Tear down session",
                         exception);
-                handleSessionLost(exception);
+                handleSessionLost(exception, network);
                 return;
             }
 
@@ -3092,7 +3164,7 @@ public class Vpn {
                         TAG,
                         "IKE Session has mobility. Delay handleSessionLost for losing network "
                                 + network
-                                + "on session with token "
+                                + " on session with token "
                                 + mCurrentToken);
 
                 // Delay the teardown in case a new network will be available soon. For example,
@@ -3101,13 +3173,13 @@ public class Vpn {
                 mScheduledHandleNetworkLostTimeout =
                         mExecutor.schedule(
                                 () -> {
-                                    handleSessionLost(null);
+                                    handleSessionLost(null, network);
                                 },
                                 NETWORK_LOST_TIMEOUT_MS,
                                 TimeUnit.MILLISECONDS);
             } else {
                 Log.d(TAG, "Call handleSessionLost for losing network " + network);
-                handleSessionLost(null);
+                handleSessionLost(null, network);
             }
         }
 
@@ -3120,6 +3192,20 @@ public class Vpn {
                 // mExecutor who has only one thread.
                 Log.d(TAG, "Cancel the task for handling network lost timeout");
                 mScheduledHandleNetworkLostTimeout.cancel(false /* mayInterruptIfRunning */);
+                mScheduledHandleNetworkLostTimeout = null;
+            }
+        }
+
+        private void cancelHandleNewIkeSessionTimeout() {
+            if (mScheduledHandleNewIkeSessionTimeout != null
+                    && !mScheduledHandleNewIkeSessionTimeout.isDone()) {
+                // It does not matter what to put in #cancel(boolean), because it is impossible
+                // that the task tracked by mScheduledHandleNewIkeSessionTimeout is
+                // in-progress since both that task and onDefaultNetworkChanged are submitted to
+                // mExecutor who has only one thread.
+                Log.d(TAG, "Cancel the task for handling new ike session timeout");
+                mScheduledHandleNewIkeSessionTimeout.cancel(false /* mayInterruptIfRunning */);
+                mScheduledHandleNewIkeSessionTimeout = null;
             }
         }
 
@@ -3155,10 +3241,10 @@ public class Vpn {
                 return;
             }
 
-            handleSessionLost(exception);
+            handleSessionLost(exception, mActiveNetwork);
         }
 
-        private void handleSessionLost(@Nullable Exception exception) {
+        private void handleSessionLost(@Nullable Exception exception, @Nullable Network network) {
             // Cancel mScheduledHandleNetworkLostTimeout if the session it is going to terminate is
             // already terminated due to other failures.
             cancelHandleNetworkLostTimeout();
@@ -3182,7 +3268,7 @@ public class Vpn {
                                         VpnManager.ERROR_CLASS_NOT_RECOVERABLE,
                                         ikeException.getErrorType(),
                                         getPackage(), mSessionKey, makeVpnProfileStateLocked(),
-                                        mActiveNetwork,
+                                        network,
                                         getRedactedNetworkCapabilitiesOfUnderlyingNetwork(
                                                 mUnderlyingNetworkCapabilities),
                                         getRedactedLinkPropertiesOfUnderlyingNetwork(
@@ -3200,7 +3286,7 @@ public class Vpn {
                                         VpnManager.ERROR_CLASS_RECOVERABLE,
                                         ikeException.getErrorType(),
                                         getPackage(), mSessionKey, makeVpnProfileStateLocked(),
-                                        mActiveNetwork,
+                                        network,
                                         getRedactedNetworkCapabilitiesOfUnderlyingNetwork(
                                                 mUnderlyingNetworkCapabilities),
                                         getRedactedLinkPropertiesOfUnderlyingNetwork(
@@ -3219,7 +3305,7 @@ public class Vpn {
                                 VpnManager.ERROR_CLASS_RECOVERABLE,
                                 VpnManager.ERROR_CODE_NETWORK_LOST,
                                 getPackage(), mSessionKey, makeVpnProfileStateLocked(),
-                                mActiveNetwork,
+                                network,
                                 getRedactedNetworkCapabilitiesOfUnderlyingNetwork(
                                         mUnderlyingNetworkCapabilities),
                                 getRedactedLinkPropertiesOfUnderlyingNetwork(
@@ -3234,7 +3320,7 @@ public class Vpn {
                                     VpnManager.ERROR_CLASS_RECOVERABLE,
                                     VpnManager.ERROR_CODE_NETWORK_UNKNOWN_HOST,
                                     getPackage(), mSessionKey, makeVpnProfileStateLocked(),
-                                    mActiveNetwork,
+                                    network,
                                     getRedactedNetworkCapabilitiesOfUnderlyingNetwork(
                                             mUnderlyingNetworkCapabilities),
                                     getRedactedLinkPropertiesOfUnderlyingNetwork(
@@ -3248,7 +3334,7 @@ public class Vpn {
                                     VpnManager.ERROR_CLASS_RECOVERABLE,
                                     VpnManager.ERROR_CODE_NETWORK_PROTOCOL_TIMEOUT,
                                     getPackage(), mSessionKey, makeVpnProfileStateLocked(),
-                                    mActiveNetwork,
+                                    network,
                                     getRedactedNetworkCapabilitiesOfUnderlyingNetwork(
                                             mUnderlyingNetworkCapabilities),
                                     getRedactedLinkPropertiesOfUnderlyingNetwork(
@@ -3262,7 +3348,7 @@ public class Vpn {
                                     VpnManager.ERROR_CLASS_RECOVERABLE,
                                     VpnManager.ERROR_CODE_NETWORK_IO,
                                     getPackage(), mSessionKey, makeVpnProfileStateLocked(),
-                                    mActiveNetwork,
+                                    network,
                                     getRedactedNetworkCapabilitiesOfUnderlyingNetwork(
                                             mUnderlyingNetworkCapabilities),
                                     getRedactedLinkPropertiesOfUnderlyingNetwork(
@@ -3272,9 +3358,10 @@ public class Vpn {
                 } else if (exception != null) {
                     Log.wtf(TAG, "onSessionLost: exception = " + exception);
                 }
+
+                scheduleRetryNewIkeSession();
             }
 
-            mActiveNetwork = null;
             mUnderlyingNetworkCapabilities = null;
             mUnderlyingLinkProperties = null;
 
