@@ -69,8 +69,8 @@ class InputManagerMockHelper {
         when(mIInputManagerMock.getInputDeviceIds()).thenReturn(new int[0]);
         doAnswer(inv -> mDevices.get(inv.getArgument(0)))
                 .when(mIInputManagerMock).getInputDevice(anyInt());
-        doNothing().when(mIInputManagerMock).addUniqueIdAssociation(anyString(), anyString());
-        doNothing().when(mIInputManagerMock).removeUniqueIdAssociation(anyString());
+        doNothing().when(mIInputManagerMock).addUniqueIdAssociationByPort(anyString(), anyString());
+        doNothing().when(mIInputManagerMock).removeUniqueIdAssociationByPort(anyString());
 
         // Set a new instance of InputManager for testing that uses the IInputManager mock as the
         // interface to the server.
