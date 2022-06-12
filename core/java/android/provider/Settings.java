@@ -5625,6 +5625,12 @@ public final class Settings {
          */
         @Readable
         public static final String ZEPHYRUS_IDLE_MANAGER = "zephyrus_idle_manager";
+        
+        /**
+         * Whether to enable small size landcape notifications or not
+         * @hide
+         */
+        public static final String SMALL_LANDSCAPE_NOTIFICATION = "small_landscape_notification";
 
         /**
          * @hide
