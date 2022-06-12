@@ -99,5 +99,8 @@ public class SystemSettings {
         Settings.System.EDGE_LIGHT_REPEAT_ANIMATION,
         Settings.System.EDGE_LIGHT_COLOR_MODE,
         Settings.System.EDGE_LIGHT_CUSTOM_COLOR,
+        Settings.System.QS_SHOW_BRIGHTNESS,
+        Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM,
+	Settings.System.QS_SHOW_AUTO_BRIGHTNESS_BUTTON,
     };
 }
