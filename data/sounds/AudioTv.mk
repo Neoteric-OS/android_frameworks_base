@@ -15,10 +15,10 @@
 LOCAL_PATH := frameworks/base/data/sounds
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/Alarm_Beep_01.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/alarms/Alarm_Beep_02.ogg \
-    $(LOCAL_PATH)/effects/ogg/Effect_Tick_48k.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ui/Effect_Tick.ogg \
-    $(LOCAL_PATH)/effects/ogg/KeypressDelete_120_48k.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ui/KeypressDelete.ogg \
-    $(LOCAL_PATH)/effects/ogg/KeypressInvalid_120_48k.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ui/KeypressInvalid.ogg \
-    $(LOCAL_PATH)/effects/ogg/KeypressReturn_120_48k.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ui/KeypressReturn.ogg \
-    $(LOCAL_PATH)/effects/ogg/KeypressSpacebar_120_48k.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ui/KeypressSpacebar.ogg \
-    $(LOCAL_PATH)/effects/ogg/KeypressStandard_120_48k.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ui/KeypressStandard.ogg
+    $(LOCAL_PATH)/alarms/Alarm_Beep_01.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/alarms/Alarm_Beep_02.ogg
+    
+EFFECT_FILES := Effect_Tick_48k KeypressDelete_120_48k KeypressInvalid_120_48k KeypressReturn_120_48k KeypressSpacebar_120_48k \
+    KeypressStandard_120_48k
+
+PRODUCT_COPY_FILES += $(foreach fn,$(EFFECT_FILES),\
+    $(LOCAL_PATH)/effects/ogg/$(fn).ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ui/$(fn).ogg)
