@@ -90,5 +90,6 @@ public class SystemSettings {
         Settings.System.RINGTONE_VIBRATION_PATTERN,
         Settings.System.NOTIFICATION_VIBRATION_PATTERN,
         Settings.System.OMNI_ADVANCED_REBOOT,
+        Settings.System.SMALL_LANDSCAPE_NOTIFICATION,
     };
 }
