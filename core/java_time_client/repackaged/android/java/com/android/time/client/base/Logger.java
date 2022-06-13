@@ -1,0 +1,36 @@
+/* GENERATED SOURCE. DO NOT MODIFY. */
+/*
+ * Copyright 2022 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.android.time.client.base;
+
+/**
+ * A stand-in for java.util.logging.Logger, which is not available on all platform versions
+ * supported by java-time-client.
+ * @hide This class is not part of the Android public SDK API
+ */
+public interface Logger {
+
+  boolean isLoggingFine();
+
+  void fine(String msg);
+
+  void fine(String msg, Throwable e);
+
+  void warning(String msg);
+
+  void warning(String msg, Throwable e);
+}

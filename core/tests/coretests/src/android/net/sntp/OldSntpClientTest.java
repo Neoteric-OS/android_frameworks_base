@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.net;
+package android.net.sntp;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -24,10 +24,7 @@ import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import android.net.sntp.Duration64;
-import android.net.sntp.Timestamp64;
-import android.util.Log;
-
+import android.net.Network;
 import androidx.test.runner.AndroidJUnit4;
 
 import libcore.util.HexEncoding;
@@ -36,11 +33,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -50,12 +42,7 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 @RunWith(AndroidJUnit4.class)
-public class SntpClientTest {
-    private static final String TAG = "SntpClientTest";
-
-    private static final int ORIGINATE_TIME_OFFSET = 24;
-    private static final int TRANSMIT_TIME_OFFSET = 40;
-
+public class OldSntpClientTest {
     private static final int NTP_MODE_SERVER = 4;
     private static final int NTP_MODE_BROADCAST = 5;
 
@@ -132,7 +119,7 @@ public class SntpClientTest {
             Timestamp64.fromString("1db2d251.938a3771").toInstant(1);
 
     private SntpTestServer mServer;
-    private SntpClient mClient;
+    private OldSntpClient mClient;
     private Network mNetwork;
     private Supplier<Instant> mSystemTimeSupplier;
     private Random mRandom;
@@ -151,7 +138,7 @@ public class SntpClientTest {
         // Returning zero means the "randomized" bottom bits of the clients transmit timestamp /
         // server's originate timestamp will be zeros.
         when(mRandom.nextInt()).thenReturn(0);
-        mClient = new SntpClient(mSystemTimeSupplier, mRandom);
+        mClient = new OldSntpClient(mSystemTimeSupplier, mRandom);
     }
 
     /** Tests when the client and server are in ERA0. b/199481251. */
@@ -208,7 +195,7 @@ public class SntpClientTest {
     }
 
     private static void checkRequestTimeCalcs(
-            Instant clientTime, Instant serverTime, SntpClient client) {
+            Instant clientTime, Instant serverTime, OldSntpClient client) {
         // The tests don't attempt to control the elapsed time tracking, which influences the
         // round trip time (i.e. time spent in due to the network), but they control everything
         // else, so assertions are allowed some slop and round trip time just has to be >= 0.
@@ -273,7 +260,7 @@ public class SntpClientTest {
             Timestamp64 serverTransmitTimestamp = Timestamp64.fromInstant(
                     serverTime.plusMillis(simulatedServerElapsedTimeMillis / 2));
 
-            Duration actualOffset = SntpClient.calculateClockOffset(
+            Duration actualOffset = OldSntpClient.calculateClockOffset(
                     clientRequestTimestamp, serverReceiveTimestamp,
                     serverTransmitTimestamp, clientResponseTimestamp);
 
@@ -294,7 +281,7 @@ public class SntpClientTest {
     @Test
     public void testDnsResolutionFailure() throws Exception {
         assertFalse(mClient.requestTime("ntp.server.doesnotexist.example",
-                SntpClient.STANDARD_NTP_PORT, 5000, mNetwork));
+                OldSntpClient.STANDARD_NTP_PORT, 5000, mNetwork));
     }
 
     @Test
@@ -374,7 +361,8 @@ public class SntpClientTest {
         when(mSystemTimeSupplier.get()).thenReturn(LATE_ERA0_REQUEST_TIME);
 
         final byte[] reply = HexEncoding.decode(LATE_ERA_RESPONSE.toCharArray(), false);
-        Arrays.fill(reply, TRANSMIT_TIME_OFFSET, TRANSMIT_TIME_OFFSET + 8, (byte) 0x00);
+        Arrays.fill(reply, SntpTestServer.TRANSMIT_TIME_OFFSET,
+                SntpTestServer.TRANSMIT_TIME_OFFSET + 8, (byte) 0x00);
         mServer.setServerReply(reply);
         assertFalse(mClient.requestTime(mServer.getAddress(), mServer.getPort(), 500, mNetwork));
         assertEquals(1, mServer.numRequestsReceived());
@@ -394,103 +382,6 @@ public class SntpClientTest {
         assertEquals(1, mServer.numRepliesSent());
     }
 
-
-    private static class SntpTestServer {
-        private final Object mLock = new Object();
-        private final DatagramSocket mSocket;
-        private final InetAddress mAddress;
-        private final int mPort;
-        private byte[] mReply;
-        private boolean mGenerateValidOriginateTimestamp = true;
-        private int mRcvd;
-        private int mSent;
-        private Thread mListeningThread;
-
-        public SntpTestServer() {
-            mSocket = makeSocket();
-            mAddress = mSocket.getLocalAddress();
-            mPort = mSocket.getLocalPort();
-            Log.d(TAG, "testing server listening on (" + mAddress + ", " + mPort + ")");
-
-            mListeningThread = new Thread() {
-                public void run() {
-                    while (true) {
-                        byte[] buffer = new byte[512];
-                        DatagramPacket ntpMsg = new DatagramPacket(buffer, buffer.length);
-                        try {
-                            mSocket.receive(ntpMsg);
-                        } catch (IOException e) {
-                            Log.e(TAG, "datagram receive error: " + e);
-                            break;
-                        }
-                        synchronized (mLock) {
-                            mRcvd++;
-                            if (mReply == null) { continue; }
-                            if (mGenerateValidOriginateTimestamp) {
-                                // Copy the transmit timestamp into originate timestamp: This is
-                                // validated by well-behaved clients.
-                                System.arraycopy(ntpMsg.getData(), TRANSMIT_TIME_OFFSET,
-                                        mReply, ORIGINATE_TIME_OFFSET, 8);
-                            } else {
-                                // Fill it with junk instead.
-                                Arrays.fill(mReply, ORIGINATE_TIME_OFFSET,
-                                        ORIGINATE_TIME_OFFSET + 8, (byte) 0xFF);
-                            }
-                            ntpMsg.setData(mReply);
-                            ntpMsg.setLength(mReply.length);
-                            try {
-                                mSocket.send(ntpMsg);
-                            } catch (IOException e) {
-                                Log.e(TAG, "datagram send error: " + e);
-                                break;
-                            }
-                            mSent++;
-                        }
-                    }
-                    mSocket.close();
-                }
-            };
-            mListeningThread.start();
-        }
-
-        private DatagramSocket makeSocket() {
-            DatagramSocket socket;
-            try {
-                socket = new DatagramSocket(0, InetAddress.getLoopbackAddress());
-            } catch (SocketException e) {
-                Log.e(TAG, "Failed to create test server socket: " + e);
-                return null;
-            }
-            return socket;
-        }
-
-        public void clearServerReply() {
-            setServerReply(null);
-        }
-
-        public void setServerReply(byte[] reply) {
-            synchronized (mLock) {
-                mReply = reply;
-                mRcvd = 0;
-                mSent = 0;
-            }
-        }
-
-        /**
-         * Controls the test server's behavior of copying the client's transmit timestamp into the
-         * response's originate timestamp (which is required of a real server).
-         */
-        public void setGenerateValidOriginateTimestamp(boolean enabled) {
-            synchronized (mLock) {
-                mGenerateValidOriginateTimestamp = enabled;
-            }
-        }
-
-        public InetAddress getAddress() { return mAddress; }
-        public int getPort() { return mPort; }
-        public int numRequestsReceived() { synchronized (mLock) { return mRcvd; } }
-        public int numRepliesSent() { synchronized (mLock) { return mSent; } }
-    }
 
     /**
      * Generates the "real" server time assuming it is exactly between the receive and transmit

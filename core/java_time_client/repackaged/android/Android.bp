@@ -1,0 +1,33 @@
+filegroup {
+    name: "java_time_client-android-sources",
+    srcs: [
+        "java/com/android/time/client/base/*.java",
+        "java/com/android/time/client/base/annotations/*.java",
+        "java/com/android/time/client/base/impl/*.java",
+        "java/com/android/time/client/sntp/*.java",
+        "java/com/android/time/client/sntp/impl/*.java",
+    ],
+    exclude_srcs: [
+        // Not used in the Android platform.
+        "java/com/android/time/client/base/LinearAdjustmentTick.java",
+    ],
+    visibility: ["//frameworks/base"],
+}
+
+filegroup {
+    name: "java_time_client-android-test-sources",
+    srcs: [
+        "java/com/android/time/client/base/testing/*.java",
+        "java/com/android/time/client/sntp/testing/*.java",
+        "javatests/com/android/time/client/base/*.java",
+        "javatests/com/android/time/client/base/annotations/*.java",
+        "javatests/com/android/time/client/base/impl/*.java",
+        "javatests/com/android/time/client/sntp/*.java",
+        "javatests/com/android/time/client/sntp/impl/*.java",
+    ],
+    exclude_srcs: [
+        // Not used in the Android platform.
+        "javatests/com/android/time/client/base/LinearAdjustmentTickTest.java",
+    ],
+    visibility: ["//frameworks/base/core/tests/coretests"],
+}

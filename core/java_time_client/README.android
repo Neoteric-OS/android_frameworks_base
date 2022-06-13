@@ -1,0 +1,13 @@
+java_time_client in Android is made up of the contents of the java-time-client
+GitHub repo (https://github.com/google/java-time-client) plus some
+Android-specific additions.  Specifically, the following are
+Android-only:
+
+Android.bp
+OWNERS
+README.android
+repackaged/...
+srcgen/...
+
+Android uses a transformed version of the upstream code. See srcgen/ for the
+transformation scripts and repackaged/ for the source.
