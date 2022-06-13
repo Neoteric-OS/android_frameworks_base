@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dfd3ce8_9612c3bc",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-06-13T10:27:24Z",
+      "side": 0,
+      "message": "Should we also keep this for the initial state before register listener?",
+      "range": {
+        "startLine": 1038,
+        "startChar": 16,
+        "endLine": 1038,
+        "endChar": 64
+      },
+      "revId": "7db3ab2c8614e6a64865b9fd0ce3f8c91f588154",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

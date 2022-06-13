@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80ed4e58_0e019cc2",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-06-13T10:27:24Z",
+      "side": 1,
+      "message": "Do you mean \"during\"?",
+      "range": {
+        "startLine": 1232,
+        "startChar": 57,
+        "endLine": 1232,
+        "endChar": 63
+      },
+      "revId": "2e9a3bf7d867176ef0ccf6dacbcee84448aa660a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
