@@ -19,6 +19,8 @@ package android.window;
 import static android.content.pm.ActivityInfo.CONFIG_SCREEN_LAYOUT;
 import static android.content.pm.ActivityInfo.CONFIG_SCREEN_SIZE;
 import static android.content.pm.ActivityInfo.CONFIG_SMALLEST_SCREEN_SIZE;
+import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
+import static android.app.WindowConfiguration.WINDOWING_MODE_MULTI_WINDOW;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -138,7 +140,17 @@ public final class SizeConfigurationBuckets implements Parcelable {
                 diff &= ~CONFIG_SMALLEST_SCREEN_SIZE;
             }
         }
-        if ((diff & CONFIG_SCREEN_LAYOUT) != 0 && nonSizeLayoutFieldsUnchanged) {
+        // shouldn't prevent compatNeededField change especially for multi-window large screen,
+        // it should be size related screenlayout attributes 
+        final boolean specialCompatNeededFieldChanged = nonSizeLayoutFieldsUnchanged
+          && (oldConfig.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) !=
+                 (newConfig.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
+          && oldConfig.screenHeightDp < newConfig.screenHeightDp
+          && oldConfig.windowConfiguration.getWindowingMode() == WINDOWING_MODE_MULTI_WINDOW
+          && newConfig.windowConfiguration.getWindowingMode() == WINDOWING_MODE_FULLSCREEN;
+
+        if ((diff & CONFIG_SCREEN_LAYOUT) != 0 &&
+            nonSizeLayoutFieldsUnchanged && !specialCompatNeededFieldChanged) {
             if (!buckets.crossesScreenLayoutSizeThreshold(oldConfig, newConfig)
                     && !buckets.crossesScreenLayoutLongThreshold(oldConfig.screenLayout,
                     newConfig.screenLayout)) {
