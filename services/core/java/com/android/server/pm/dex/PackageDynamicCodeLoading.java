@@ -354,6 +354,7 @@ class PackageDynamicCodeLoading extends AbstractStatsBase<Void> {
         } catch (IOException e) {
             Slog.w(TAG, "Failed to parse dynamic usage for secondary code files.", e);
         } finally {
+            System.out.println("readInternal - Class Name: " + stream.getClass().getName());
             IoUtils.closeQuietly(stream);
         }
     }
