@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4df31df_b62091bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-06-13T14:55:48Z",
+      "side": 1,
+      "message": "There is a merge conflict in internal master. Let me CP in internal first",
+      "revId": "cab8bdb74b01f16675305cb102318b982617876d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
