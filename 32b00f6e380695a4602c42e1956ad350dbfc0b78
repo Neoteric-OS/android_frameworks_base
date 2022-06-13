@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "615904c5_baa0a598",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 14353,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-06-13T21:46:02Z",
+      "side": 1,
+      "message": "You don\u0027t need to acquire this lock. This is protected in a \"OR\" condition, ActivityManagerService.this should be good enough.",
+      "range": {
+        "startLine": 14353,
+        "startChar": 28,
+        "endLine": 14353,
+        "endChar": 53
+      },
+      "revId": "32b00f6e380695a4602c42e1956ad350dbfc0b78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
