@@ -14349,11 +14349,20 @@ public class ActivityManagerService extends IActivityManager.Stub
                             app.processName, app.toShortString(), cpuLimit, app)) {
                     mHandler.post(() -> {
                         synchronized (ActivityManagerService.this) {
-                            app.killLocked("excessive cpu " + cpuTimeUsed + " during "
+                            int procState = ActivityManager.ActivityManager.PROCESS_STATE_HOME;
+                            synchronized(mProcLock){
+                                if (app.getThread() == null) {
+                                    return;
+                                }
+                                procState = app.mState.getSetProcState();
+                            }
+                            if (procState >= ActivityManager.PROCESS_STATE_HOME) {
+                                app.killLocked("excessive cpu " + cpuTimeUsed + " during "
                                     + uptimeSince + " dur=" + checkDur + " limit=" + cpuLimit,
                                     ApplicationExitInfo.REASON_EXCESSIVE_RESOURCE_USAGE,
                                     ApplicationExitInfo.SUBREASON_EXCESSIVE_CPU,
                                     true);
+                            }
                         }
                     });
                     profile.reportExcessiveCpu();
@@ -14374,11 +14383,20 @@ public class ActivityManagerService extends IActivityManager.Stub
                             app.processName, r.toString(), cpuLimit, app)) {
                     mHandler.post(() -> {
                         synchronized (ActivityManagerService.this) {
-                            mPhantomProcessList.killPhantomProcessGroupLocked(app, r,
+                            int procState = ActivityManager.ActivityManager.PROCESS_STATE_HOME;
+                            synchronized(mProcLock){
+                                if (app.getThread() == null) {
+                                    return;
+                                }
+                                procState = app.mState.getSetProcState();
+                            }
+                            if (procState >= ActivityManager.PROCESS_STATE_HOME) {
+                                mPhantomProcessList.killPhantomProcessGroupLocked(app, r,
                                     ApplicationExitInfo.REASON_EXCESSIVE_RESOURCE_USAGE,
                                     ApplicationExitInfo.SUBREASON_EXCESSIVE_CPU,
                                     "excessive cpu " + cpuTimeUsed + " during "
                                     + uptimeSince + " dur=" + checkDur + " limit=" + cpuLimit);
+                            }
                         }
                     });
                     return false;
