@@ -8483,6 +8483,21 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
             return true;
         }
 
+        if (Configuration.configurationDiffToString(changes).equals(
+                         "{CONFIG_SCREEN_LAYOUT}") && !forceNewConfig) {
+             Configuration mCurrentConfig = getConfiguration();
+             if ((mTmpConfig.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) !=
+                   (mCurrentConfig.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
+                   && mTmpConfig.screenWidthDp == mCurrentConfig.screenWidthDp
+                   && mTmpConfig.screenHeightDp == mCurrentConfig.screenHeightDp
+                   && mTmpConfig.densityDpi == mCurrentConfig.densityDpi) {
+                      Slog.d(TAG,"screenlayout no change : " + changes +
+                             " for specified screen, mTmpConfig : " + mTmpConfig +
+                             " config : "+ getConfiguration());
+                      return true;
+             }
+        }
+
         ProtoLog.v(WM_DEBUG_CONFIGURATION, "Configuration changes for %s, "
                 + "allChanges=%s", this, Configuration.configurationDiffToString(changes));
 
