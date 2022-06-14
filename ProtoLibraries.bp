@@ -22,6 +22,10 @@ gensrcs {
         "soong_zip",
     ],
 
+    tool_files: [
+        ":libprotobuf-internal-protos",
+    ],
+
     cmd: "mkdir -p $(genDir)/$(in) " +
         "&& $(location aprotoc) " +
         "  --plugin=$(location protoc-gen-javastream) " +
@@ -47,17 +51,19 @@ gensrcs {
 
 gensrcs {
     name: "framework-cppstream-protos",
-    depfile: true,
 
     tools: [
         "aprotoc",
         "protoc-gen-cppstream",
     ],
 
+    tool_files: [
+        ":libprotobuf-internal-protos",
+    ],
+
     cmd: "mkdir -p $(genDir) " +
         "&& $(location aprotoc) " +
         "  --plugin=$(location protoc-gen-cppstream) " +
-        "  --dependency_out=$(depfile) " +
         "  --cppstream_out=$(genDir) " +
         "  -Iexternal/protobuf/src " +
         "  -I . " +
