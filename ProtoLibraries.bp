@@ -67,6 +67,7 @@ gensrcs {
         ":libstats_atom_enum_protos",
         ":libstats_atom_message_protos",
         "core/proto/**/*.proto",
+        ":libprotobuf-internal-protos",
         "libs/incident/**/*.proto",
         ":service-permission-protos",
     ],
