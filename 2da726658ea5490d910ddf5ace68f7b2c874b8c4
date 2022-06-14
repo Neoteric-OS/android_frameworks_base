@@ -50,6 +50,23 @@
       "message": "Can this commit be merged?",
       "revId": "2da726658ea5490d910ddf5ace68f7b2c874b8c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "baa78e0c_f51e2d8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2022-06-14T18:45:32Z",
+      "side": 1,
+      "message": "This commit causes merge conflicts.  Let me take over and figure out how to merge it.\n\nThank you very much for your contribution!",
+      "revId": "2da726658ea5490d910ddf5ace68f7b2c874b8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
