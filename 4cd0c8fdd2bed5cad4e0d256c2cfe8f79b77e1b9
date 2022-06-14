@@ -16,6 +16,29 @@
       "message": "@Jing WDYT?",
       "revId": "4cd0c8fdd2bed5cad4e0d256c2cfe8f79b77e1b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04d0868e_7d65f24a",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14352,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-06-14T17:51:15Z",
+      "side": 1,
+      "message": "how about \n\n```\nif (app.getThread() \u003d\u003d null\n    || app.mState.getSetProcState() \u003c ActivityManager.PROCESS_STATE_HOME) {\n   return;\n}\n```",
+      "range": {
+        "startLine": 14352,
+        "startChar": 32,
+        "endLine": 14352,
+        "endChar": 55
+      },
+      "revId": "4cd0c8fdd2bed5cad4e0d256c2cfe8f79b77e1b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
