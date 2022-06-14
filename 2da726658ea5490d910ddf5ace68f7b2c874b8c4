@@ -33,6 +33,23 @@
       "message": "Over to @mwachens",
       "revId": "2da726658ea5490d910ddf5ace68f7b2c874b8c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6229a1a_5be5722c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1947716
+      },
+      "writtenOn": "2022-06-14T01:46:59Z",
+      "side": 1,
+      "message": "Can this commit be merged?",
+      "revId": "2da726658ea5490d910ddf5ace68f7b2c874b8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
