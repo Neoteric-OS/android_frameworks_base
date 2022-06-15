@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0238d18c_018d8b1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1950845
+      },
+      "writtenOn": "2022-06-15T06:26:00Z",
+      "side": 1,
+      "message": "Hi, Jing,Ji:\nit seems that this line is a little long. do I have to change it by defining a variable?\n\napp.mState.getSetProcState() \u003c ActivityManager.PROCESS_STATE_HOME) {",
+      "revId": "237dec894575bdd5e2f7b56b76daec0d96e76550",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
