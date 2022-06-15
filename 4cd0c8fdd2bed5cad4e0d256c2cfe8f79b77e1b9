@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1b65f37_b4ba2c13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1950845
+      },
+      "writtenOn": "2022-06-15T04:18:08Z",
+      "side": 1,
+      "message": "changed as you suggested, thx",
+      "revId": "4cd0c8fdd2bed5cad4e0d256c2cfe8f79b77e1b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "04d0868e_7d65f24a",
@@ -31,6 +48,30 @@
       "writtenOn": "2022-06-14T17:51:15Z",
       "side": 1,
       "message": "how about \n\n```\nif (app.getThread() \u003d\u003d null\n    || app.mState.getSetProcState() \u003c ActivityManager.PROCESS_STATE_HOME) {\n   return;\n}\n```",
+      "range": {
+        "startLine": 14352,
+        "startChar": 32,
+        "endLine": 14352,
+        "endChar": 55
+      },
+      "revId": "4cd0c8fdd2bed5cad4e0d256c2cfe8f79b77e1b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e54b5db5_fba8eb31",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14352,
+      "author": {
+        "id": 1950845
+      },
+      "writtenOn": "2022-06-15T04:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04d0868e_7d65f24a",
       "range": {
         "startLine": 14352,
         "startChar": 32,
