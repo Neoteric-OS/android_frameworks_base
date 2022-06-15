@@ -50,6 +50,24 @@
       "message": "The 7th point, not every time the callback will be obtained, only the last one will be triggered, so this cycle does not go on\n\n    public void onEnumerationResult(BiometricAuthenticator.Identifier identifier,\n            int remaining) {\n        handleEnumeratedTemplate(identifier);\n        if (remaining \u003d\u003d 0) {\n            doTemplateCleanup();\n            mCallback.onClientFinished(this, true /* success */);\n        }\n    }",
       "revId": "d4701beff4a7ca56896bf2ca1ad94296670076d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf8a1ad1_57cbf554",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1432799
+      },
+      "writtenOn": "2022-06-15T15:17:51Z",
+      "side": 1,
+      "message": "Good point, the callback will not happen if the HAL dies during this process.\n\nI\u0027ll have to think more about this one",
+      "parentUuid": "ea21252e_a514ba13",
+      "revId": "d4701beff4a7ca56896bf2ca1ad94296670076d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
