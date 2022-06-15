@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04d9192a_44466d6f",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 14360,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-06-15T04:25:07Z",
+      "side": 1,
+      "message": "unnecessary indent change",
+      "range": {
+        "startLine": 14357,
+        "startChar": 32,
+        "endLine": 14360,
+        "endChar": 38
+      },
+      "revId": "c6f5711129d7d07793a000d669880df0797d9fa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
