@@ -80,6 +80,30 @@
       },
       "revId": "4cd0c8fdd2bed5cad4e0d256c2cfe8f79b77e1b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "876b288f_8798aebe",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14352,
+      "author": {
+        "id": 1947723
+      },
+      "writtenOn": "2022-06-16T02:45:53Z",
+      "side": 1,
+      "message": "I changed the code according to function checkExcessivePowerUsage.\nBut the code you suggested is more simple.\nI\u0027ll change it.",
+      "parentUuid": "04d0868e_7d65f24a",
+      "range": {
+        "startLine": 14352,
+        "startChar": 32,
+        "endLine": 14352,
+        "endChar": 55
+      },
+      "revId": "4cd0c8fdd2bed5cad4e0d256c2cfe8f79b77e1b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
