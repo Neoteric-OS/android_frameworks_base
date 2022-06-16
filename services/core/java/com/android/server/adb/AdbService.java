@@ -151,6 +151,13 @@ public class AdbService extends IAdbManager.Stub {
             return mDebuggingManager == null ? null : mDebuggingManager.getAdbTempKeysFile();
         }
 
+        public void notifyKeyFilesUpdated() {
+            if (mDebuggingManager == null) {
+                return;
+            }
+            mDebuggingManager.notifyKeyFilesUpdated();
+        }
+
         @Override
         public void startAdbdForTransport(byte transportType) {
             FgThread.getHandler().sendMessage(obtainMessage(
