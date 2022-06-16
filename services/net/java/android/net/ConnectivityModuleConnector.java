@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.util.SharedLog;
 import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
@@ -39,6 +38,7 @@ import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.net.module.util.SharedLog;
 
 import java.io.File;
 import java.io.PrintWriter;

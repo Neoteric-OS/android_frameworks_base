@@ -25,7 +25,6 @@ import android.content.Context;
 import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.IDhcpServerCallbacks;
 import android.net.ip.IIpClientCallbacks;
-import android.net.util.SharedLog;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Process;
@@ -36,6 +35,7 @@ import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.net.module.util.SharedLog;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
