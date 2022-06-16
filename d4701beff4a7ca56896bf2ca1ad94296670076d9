@@ -68,6 +68,23 @@
       "parentUuid": "ea21252e_a514ba13",
       "revId": "d4701beff4a7ca56896bf2ca1ad94296670076d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c8723c3_624c9727",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1952311
+      },
+      "writtenOn": "2022-06-16T02:45:55Z",
+      "side": 1,
+      "message": "The problem you mentioned is one of them. The main problem this patch wants to solve is another. Due to the condition of remaining \u003d\u003d 0, although the callback can be received multiple times, only the last time will trigger the doTemplateCleanup function",
+      "revId": "d4701beff4a7ca56896bf2ca1ad94296670076d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
