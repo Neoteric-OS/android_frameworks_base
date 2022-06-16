@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0098e359_5002e56d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1950845
+      },
+      "writtenOn": "2022-06-16T06:59:03Z",
+      "side": 1,
+      "message": "fixed the white space.",
+      "revId": "a2461a3faa1566fff7825a9404f628bfcd3f4a99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
