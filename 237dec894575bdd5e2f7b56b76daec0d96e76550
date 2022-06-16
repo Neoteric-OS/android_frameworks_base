@@ -16,6 +16,29 @@
       "message": "Hi, Jing,Ji:\nit seems that this line is a little long. do I have to change it by defining a variable?\n\napp.mState.getSetProcState() \u003c ActivityManager.PROCESS_STATE_HOME) {",
       "revId": "237dec894575bdd5e2f7b56b76daec0d96e76550",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e829dfe_5731a36a",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 14380,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-06-16T04:34:27Z",
+      "side": 1,
+      "message": "please fix the whitespace error btw",
+      "range": {
+        "startLine": 14380,
+        "startChar": 68,
+        "endLine": 14380,
+        "endChar": 91
+      },
+      "revId": "237dec894575bdd5e2f7b56b76daec0d96e76550",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
