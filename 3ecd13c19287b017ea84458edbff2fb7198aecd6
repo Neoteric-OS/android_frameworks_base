@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c6ce0d4_9b03fe80",
+        "filename": "services/core/java/com/android/server/wm/AppWarnings.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1397448
+      },
+      "writtenOn": "2022-06-17T04:02:50Z",
+      "side": 1,
+      "message": "Hi Daniel, Build.SUPPORTED_APIS is a String[] field, so it doesn\u0027t have a contains() method and I\u0027m afraid your code won\u0027t compile. We can use Arrays.stream(Build.SUPPORTED_APIS).anyMatch(abi -\u003e abi.contains(\"64\")).",
+      "range": {
+        "startLine": 172,
+        "startChar": 59,
+        "endLine": 172,
+        "endChar": 67
+      },
+      "revId": "3ecd13c19287b017ea84458edbff2fb7198aecd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
