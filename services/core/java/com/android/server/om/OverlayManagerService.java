@@ -56,6 +56,7 @@ import android.content.pm.overlay.OverlayPaths;
 import android.content.res.ApkAssets;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Environment;
 import android.os.FabricatedOverlayInternal;
 import android.os.HandlerThread;
@@ -289,7 +290,7 @@ public final class OverlayManagerService extends SystemService {
             String shellPkgName = TextUtils.emptyIfNull(
                     getContext().getString(android.R.string.config_systemShell));
             mSettings.removeIf(overlayInfo -> overlayInfo.isFabricated
-                    && shellPkgName.equals(overlayInfo.packageName));
+                    && shellPkgName.equals(overlayInfo.packageName) && Build.IS_USER);
 
             initIfNeeded();
             onSwitchUser(UserHandle.USER_SYSTEM);
@@ -902,7 +903,7 @@ public final class OverlayManagerService extends SystemService {
                 // non privileged callers, a simple check against the shell UID is sufficient, since
                 // that's the only exception from the other categories. This is enough while OMS
                 // is not a public API, but this will have to be changed if it's ever exposed.
-                if (callingUid == Process.SHELL_UID) {
+                if (callingUid == Process.SHELL_UID && Build.IS_USER) {
                     EventLog.writeEvent(0x534e4554, "202768292", -1, "");
                     throw new IllegalArgumentException("Non-root shell cannot fabricate overlays");
                 }
