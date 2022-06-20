@@ -67,6 +67,24 @@
       "message": "This commit causes merge conflicts.  Let me take over and figure out how to merge it.\n\nThank you very much for your contribution!",
       "revId": "2da726658ea5490d910ddf5ace68f7b2c874b8c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a3732dd_3d74d801",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1947716
+      },
+      "writtenOn": "2022-06-20T02:42:35Z",
+      "side": 1,
+      "message": "Fine, Thank you.",
+      "parentUuid": "baa78e0c_f51e2d8b",
+      "revId": "2da726658ea5490d910ddf5ace68f7b2c874b8c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
