@@ -70,6 +70,7 @@ class RemoteAnimationController implements DeathRecipient {
     private final Runnable mTimeoutRunnable = () -> cancelAnimation("timeoutRunnable");
 
     private FinishedCallback mFinishedCallback;
+    private boolean mIsFinishing;
     private boolean mCanceled;
     private boolean mLinkedToDeathOfRunner;
 
@@ -246,6 +247,7 @@ class RemoteAnimationController implements DeathRecipient {
                 mPendingAnimations.size());
         mHandler.removeCallbacks(mTimeoutRunnable);
         synchronized (mService.mGlobalLock) {
+            mIsFinishing = true;
             unlinkToDeathOfRunner();
             releaseFinishedCallback();
             mService.openSurfaceTransaction();
@@ -291,6 +293,7 @@ class RemoteAnimationController implements DeathRecipient {
             } finally {
                 mService.closeSurfaceTransaction("RemoteAnimationController#finished");
             }
+            mIsFinishing = false;
         }
         setRunningRemoteAnimation(false);
         ProtoLog.i(WM_DEBUG_REMOTE_ANIMATIONS, "Finishing remote animation");
@@ -501,6 +504,9 @@ class RemoteAnimationController implements DeathRecipient {
 
         @Override
         public void onAnimationCancelled(SurfaceControl animationLeash) {
+            if (mIsFinishing) {
+                return;
+            }
             if (mRecord.mAdapter == this) {
                 mRecord.mAdapter = null;
             } else {
