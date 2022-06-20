@@ -472,6 +472,9 @@ public class ActivityManagerService extends IActivityManager.Stub
     // The flags that are set for all calls we make to the package manager.
     public static final int STOCK_PM_FLAGS = PackageManager.GET_SHARED_LIBRARY_FILES;
 
+    static final String SYSTEM_BOOT_NORMAL = "persist.sys.boot_normal";
+    static final String SYSTEM_BOOT_SAFEMODE = "persist.sys.boot_safemode";
+
     static final String SYSTEM_USER_HOME_NEEDED = "ro.system_user_home_needed";
 
     public static final String ANR_TRACE_DIR = "/data/anr";
@@ -4788,6 +4791,11 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
             // Tell anyone interested that we are done booting!
             SystemProperties.set("sys.boot_completed", "1");
+
+            int boot_count = SystemProperties.getInt(mSafeMode
+                    ? SYSTEM_BOOT_SAFEMODE : SYSTEM_BOOT_NORMAL, 0);
+            SystemProperties.set(mSafeMode
+                    ? SYSTEM_BOOT_SAFEMODE : SYSTEM_BOOT_NORMAL, Integer.toString(boot_count + 1));
 
             // And trigger dev.bootcomplete if we are not showing encryption progress
             if (!"trigger_restart_min_framework".equals(VoldProperties.decrypt().orElse(""))
