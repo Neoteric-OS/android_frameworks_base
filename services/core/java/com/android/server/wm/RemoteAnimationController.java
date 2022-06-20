@@ -252,8 +252,9 @@ class RemoteAnimationController implements DeathRecipient {
             try {
                 ProtoLog.d(WM_DEBUG_REMOTE_ANIMATIONS,
                         "onAnimationFinished(): Notify animation finished:");
-                for (int i = mPendingAnimations.size() - 1; i >= 0; i--) {
-                    final RemoteAnimationRecord adapters = mPendingAnimations.get(i);
+                while (mPendingAnimations.size() > 0) {
+                    final RemoteAnimationRecord adapters = mPendingAnimations.get(
+                            mPendingAnimations.size() - 1);
                     if (adapters.mAdapter != null) {
                         adapters.mAdapter.mCapturedFinishCallback
                                 .onAnimationFinished(adapters.mAdapter.mAnimationType,
@@ -264,7 +265,7 @@ class RemoteAnimationController implements DeathRecipient {
                                 .onAnimationFinished(adapters.mThumbnailAdapter.mAnimationType,
                                         adapters.mThumbnailAdapter);
                     }
-                    mPendingAnimations.remove(i);
+                    mPendingAnimations.remove(adapters);
                     ProtoLog.d(WM_DEBUG_REMOTE_ANIMATIONS, "\tcontainer=%s",
                             adapters.mWindowContainer);
                 }
