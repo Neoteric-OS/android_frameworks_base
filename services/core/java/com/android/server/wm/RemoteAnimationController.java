@@ -72,6 +72,7 @@ class RemoteAnimationController implements DeathRecipient {
     private FinishedCallback mFinishedCallback;
     private boolean mCanceled;
     private boolean mLinkedToDeathOfRunner;
+    private boolean mIsFinishing;
 
     RemoteAnimationController(WindowManagerService service, DisplayContent displayContent,
             RemoteAnimationAdapter remoteAnimationAdapter, Handler handler) {
@@ -244,6 +245,7 @@ class RemoteAnimationController implements DeathRecipient {
     private void onAnimationFinished() {
         ProtoLog.d(WM_DEBUG_REMOTE_ANIMATIONS, "onAnimationFinished(): mPendingAnimations=%d",
                 mPendingAnimations.size());
+        mIsFinishing = true;
         mHandler.removeCallbacks(mTimeoutRunnable);
         synchronized (mService.mGlobalLock) {
             unlinkToDeathOfRunner();
@@ -251,7 +253,7 @@ class RemoteAnimationController implements DeathRecipient {
             mService.openSurfaceTransaction();
             try {
                 ProtoLog.d(WM_DEBUG_REMOTE_ANIMATIONS,
-                        "onAnimationFinished(): Notify animation finished:");
+                        "onAnimationFinished(): Notify animation finished:");     
                 for (int i = mPendingAnimations.size() - 1; i >= 0; i--) {
                     final RemoteAnimationRecord adapters = mPendingAnimations.get(i);
                     if (adapters.mAdapter != null) {
@@ -268,7 +270,7 @@ class RemoteAnimationController implements DeathRecipient {
                     ProtoLog.d(WM_DEBUG_REMOTE_ANIMATIONS, "\tcontainer=%s",
                             adapters.mWindowContainer);
                 }
-
+                
                 for (int i = mPendingWallpaperAnimations.size() - 1; i >= 0; i--) {
                     final WallpaperAnimationAdapter adapter = mPendingWallpaperAnimations.get(i);
                     adapter.getLeashFinishedCallback().onAnimationFinished(
@@ -293,6 +295,7 @@ class RemoteAnimationController implements DeathRecipient {
             }
         }
         setRunningRemoteAnimation(false);
+        mIsFinishing = false;
         ProtoLog.i(WM_DEBUG_REMOTE_ANIMATIONS, "Finishing remote animation");
     }
 
@@ -506,7 +509,7 @@ class RemoteAnimationController implements DeathRecipient {
             } else {
                 mRecord.mThumbnailAdapter = null;
             }
-            if (mRecord.mAdapter == null && mRecord.mThumbnailAdapter == null) {
+            if (mRecord.mAdapter == null && mRecord.mThumbnailAdapter == null && !mIsFinishing) {
                 mPendingAnimations.remove(mRecord);
             }
             if (mPendingAnimations.isEmpty()) {
