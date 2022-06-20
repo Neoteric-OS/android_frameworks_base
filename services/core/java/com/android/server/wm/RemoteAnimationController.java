@@ -72,6 +72,7 @@ class RemoteAnimationController implements DeathRecipient {
     private FinishedCallback mFinishedCallback;
     private boolean mCanceled;
     private boolean mLinkedToDeathOfRunner;
+    private boolean mIsFinishing;
 
     RemoteAnimationController(WindowManagerService service, DisplayContent displayContent,
             RemoteAnimationAdapter remoteAnimationAdapter, Handler handler) {
@@ -244,6 +245,7 @@ class RemoteAnimationController implements DeathRecipient {
     private void onAnimationFinished() {
         ProtoLog.d(WM_DEBUG_REMOTE_ANIMATIONS, "onAnimationFinished(): mPendingAnimations=%d",
                 mPendingAnimations.size());
+        mIsFinishing = true;
         mHandler.removeCallbacks(mTimeoutRunnable);
         synchronized (mService.mGlobalLock) {
             unlinkToDeathOfRunner();
@@ -293,6 +295,7 @@ class RemoteAnimationController implements DeathRecipient {
             }
         }
         setRunningRemoteAnimation(false);
+        mIsFinishing = false;
         ProtoLog.i(WM_DEBUG_REMOTE_ANIMATIONS, "Finishing remote animation");
     }
 
@@ -506,7 +509,7 @@ class RemoteAnimationController implements DeathRecipient {
             } else {
                 mRecord.mThumbnailAdapter = null;
             }
-            if (mRecord.mAdapter == null && mRecord.mThumbnailAdapter == null) {
+            if (mRecord.mAdapter == null && mRecord.mThumbnailAdapter == null && !mIsFinishing) {
                 mPendingAnimations.remove(mRecord);
             }
             if (mPendingAnimations.isEmpty()) {
