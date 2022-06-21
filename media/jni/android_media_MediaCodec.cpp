@@ -342,7 +342,12 @@ status_t JMediaCodec::configure(
 
     constexpr int32_t CONFIGURE_FLAG_ENCODE = 1;
     AString mime;
-    CHECK(format->findString("mime", &mime));
+    // Return error if mime is not present
+    if(!format->findString("mime", &mime)) {
+        ALOGE("format does not contain mandatory mime key");
+        return BAD_VALUE;
+    }
+
     mGraphicOutput = (mime.startsWithIgnoreCase("video/") || mime.startsWithIgnoreCase("image/"))
             && !(flags & CONFIGURE_FLAG_ENCODE);
     mHasCryptoOrDescrambler = (crypto != nullptr) || (descrambler != nullptr);

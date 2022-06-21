@@ -2060,9 +2060,9 @@ final public class MediaCodec {
      * Configures a component.
      *
      * @param format The format of the input data (decoder) or the desired
-     *               format of the output data (encoder). Passing {@code null}
-     *               as {@code format} is equivalent to passing an
-     *               {@link MediaFormat#MediaFormat an empty mediaformat}.
+     *               format of the output data (encoder).
+     *               The {@code format} must contain {@link MediafFormat#KEY_MIME mime}.
+     *               This value cannot be {@code null}
      * @param surface Specify a surface on which to render the output of this
      *                decoder. Pass {@code null} as {@code surface} if the
      *                codec does not generate raw video output (e.g. not a video
@@ -2085,19 +2085,17 @@ final public class MediaCodec {
      * @throws CryptoException upon DRM error.
      * @throws CodecException upon codec error.
      */
-    public void configure(
-            @Nullable MediaFormat format,
-            @Nullable Surface surface, @Nullable MediaCrypto crypto,
-            @ConfigureFlag int flags) {
+    public void configure(MediaFormat format, @Nullable Surface surface,
+                          @Nullable MediaCrypto crypto, @ConfigureFlag int flags) {
         configure(format, surface, crypto, null, flags);
     }
 
     /**
      * Configure a component to be used with a descrambler.
      * @param format The format of the input data (decoder) or the desired
-     *               format of the output data (encoder). Passing {@code null}
-     *               as {@code format} is equivalent to passing an
-     *               {@link MediaFormat#MediaFormat an empty mediaformat}.
+     *               format of the output data (encoder).
+     *               The {@code format} must contain {@link MediafFormat#KEY_MIME mime}.
+     *               This value cannot be {@code null}
      * @param surface Specify a surface on which to render the output of this
      *                decoder. Pass {@code null} as {@code surface} if the
      *                codec does not generate raw video output (e.g. not a video
@@ -2115,9 +2113,8 @@ final public class MediaCodec {
      * @throws CryptoException upon DRM error.
      * @throws CodecException upon codec error.
      */
-    public void configure(
-            @Nullable MediaFormat format, @Nullable Surface surface,
-            @ConfigureFlag int flags, @Nullable MediaDescrambler descrambler) {
+    public void configure(MediaFormat format, @Nullable Surface surface, @ConfigureFlag int flags,
+                          @Nullable MediaDescrambler descrambler) {
         configure(format, surface, null,
                 descrambler != null ? descrambler.getBinder() : null, flags);
     }
