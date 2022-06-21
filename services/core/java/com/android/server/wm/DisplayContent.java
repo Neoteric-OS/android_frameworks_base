@@ -1567,7 +1567,11 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
             if (currentConfig.diff(mTmpConfiguration) != 0) {
                 mWaitingForConfig = true;
                 setLayoutNeeded();
-                mDisplayRotation.prepareNormalRotationAnimation();
+                if (currentConfig.orientation != mTmpConfiguration.orientation && 
+                       currentConfig.windowConfiguration.getDisplayRotation() != 
+                          mTmpConfiguration.windowConfiguration.getDisplayRotation()) {
+                   mDisplayRotation.prepareNormalRotationAnimation();
+                }
                 config = new Configuration(mTmpConfiguration);
             }
         }
