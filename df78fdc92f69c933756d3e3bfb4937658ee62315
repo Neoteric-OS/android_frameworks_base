@@ -33,6 +33,24 @@
       "message": "e.g. Just pass a flag to AMS, and don\u0027t let AMS create new services.",
       "revId": "df78fdc92f69c933756d3e3bfb4937658ee62315",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0f2e62f_9fc6c27f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2022-06-21T15:40:27Z",
+      "side": 1,
+      "message": "There are other ways, but I don\u0027t see any that do not require extra infrastructure or completely solve the problem without any races or side effects. We will try to bring this back after adding kernel support for launching Zygotes directly into the correct target cgroup.",
+      "parentUuid": "55164398_059d98c4",
+      "revId": "df78fdc92f69c933756d3e3bfb4937658ee62315",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
