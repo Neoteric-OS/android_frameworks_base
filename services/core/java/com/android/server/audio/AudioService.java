@@ -189,6 +189,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BooleanSupplier;
 import java.util.stream.Collectors;
+import java.util.function.ToIntFunction;
+import android.media.audiopolicy.AudioMixingRule.AudioMixMatchCriterion;
+import android.media.audiopolicy.AudioMixingRule;
 
 /**
  * The implementation of the audio service for volume, audio focus, device management...
@@ -9776,8 +9779,11 @@ public class AudioService extends IAudioService.Stub
             if (app == null){
                 return AudioManager.ERROR;
             }
-            return app.addMixes(policyConfig.getMixes()) == AudioSystem.SUCCESS
-                ? AudioManager.SUCCESS : AudioManager.ERROR;
+            boolean addMix = app.addMixes(policyConfig.getMixes()) == AudioSystem.SUCCESS;
+            if(addMix) {
+                app.updateAudioPolicyUid(policyConfig, pcb, app.mProjection,true);
+            }
+            return addMix ? AudioManager.SUCCESS : AudioManager.ERROR;
         }
     }
 
@@ -9790,8 +9796,11 @@ public class AudioService extends IAudioService.Stub
             if (app == null) {
                 return AudioManager.ERROR;
             }
-            return app.removeMixes(policyConfig.getMixes()) == AudioSystem.SUCCESS
-                ? AudioManager.SUCCESS : AudioManager.ERROR;
+            boolean removeMix = app.removeMixes(policyConfig.getMixes()) == AudioSystem.SUCCESS;
+            if(removeMix) {
+                app.updateAudioPolicyUid(policyConfig, pcb, app.mProjection, false);
+            }
+            return removeMix ? AudioManager.SUCCESS : AudioManager.ERROR;
         }
     }
 
@@ -10176,6 +10185,7 @@ public class AudioService extends IAudioService.Stub
         int mFocusDuckBehavior = AudioPolicy.FOCUS_POLICY_DUCKING_DEFAULT;
         boolean mIsFocusPolicy = false;
         boolean mIsTestFocusPolicy = false;
+        int[] mMatchUids = {-1};
 
         AudioPolicyProxy(AudioPolicyConfig config, IAudioPolicyCallback token,
                 boolean hasFocusListener, boolean isFocusPolicy, boolean isTestFocusPolicy,
@@ -10194,6 +10204,9 @@ public class AudioService extends IAudioService.Stub
                     mIsTestFocusPolicy = isTestFocusPolicy;
                     mMediaFocusControl.setFocusPolicy(mPolicyCallback, mIsTestFocusPolicy);
                 }
+            }
+            if(!isFocusPolicy) {
+                updateAudioPolicyUid(config, mPolicyCallback, mProjection, true);
             }
             if (mIsVolumeController) {
                 setExtVolumeController(mPolicyCallback);
@@ -10215,6 +10228,48 @@ public class AudioService extends IAudioService.Stub
             }
         }
 
+        private void updateAudioPolicyUid(AudioPolicyConfig config, IAudioPolicyCallback token,
+                                          IMediaProjection projection, boolean addUid) {
+            synchronized (mAudioPolicies) {
+                if (projection == null) {
+                    return;
+                }
+                mMatchUids = getAudioPolicyMatchUid(config);
+                if (!addUid) {
+                    mMediaFocusControl.removeUidForPolicy(token, mMatchUids);
+                    return;
+                }
+                mMediaFocusControl.addUidForPolicy(token, mMatchUids);
+            }
+        }
+        private int[] getAudioPolicyMatchUid(AudioPolicyConfig policyConfig) {
+            List<Integer> uidList = new ArrayList<>();
+            boolean matchUsages = false;
+            boolean hasEffectingUsage = hasMixAffectingUsage(AudioAttributes.USAGE_MEDIA,
+                    AudioMix.ROUTE_FLAG_LOOP_BACK_RENDER);
+            for(AudioMix mix : policyConfig.getMixes()) {
+                if (!matchUsages && mix.isAffectingUsage(AudioAttributes.USAGE_MEDIA)
+                        && ((mix.getRouteFlags() & AudioMix.ROUTE_FLAG_LOOP_BACK_RENDER)
+                        != AudioMix.ROUTE_FLAG_LOOP_BACK_RENDER)) {
+                    matchUsages = true;
+                }
+                int[] matchUidArray = getIntPredicates(AudioMixingRule.RULE_MATCH_UID, mix,
+                        criterion -> criterion.getIntProp());
+                List<Integer> listCollect = Arrays.stream(matchUidArray).boxed().
+                        collect(Collectors.<Integer>toList());
+                uidList.addAll(listCollect);
+            }
+            int[] arrays = uidList.stream().mapToInt(Integer::intValue).toArray();
+            return matchUsages ? arrays : null;
+        }
+        private int[] getIntPredicates(int rule, AudioMix mix,
+                                       ToIntFunction<AudioMixMatchCriterion> getPredicate) {
+            return mix.getRule().getCriteria().stream()
+                    .filter(criterion -> criterion.getRule() == rule)
+                    .mapToInt(getPredicate)
+                    .toArray();
+        }
+
         public void binderDied() {
             mDynPolicyLogger.log((new AudioEventLogger.StringEvent("AudioPolicy "
                     + mPolicyCallback.asBinder() + " died").printLog(TAG)));
@@ -10228,6 +10283,8 @@ public class AudioService extends IAudioService.Stub
         void release() {
             if (mIsFocusPolicy) {
                 mMediaFocusControl.unsetFocusPolicy(mPolicyCallback, mIsTestFocusPolicy);
+            } else {
+                mMediaFocusControl.removeUidForPolicy(mPolicyCallback, mMatchUids);
             }
             if (mFocusDuckBehavior == AudioPolicy.FOCUS_POLICY_DUCKING_IN_POLICY) {
                 mMediaFocusControl.setDuckingInExtPolicyAvailable(false);

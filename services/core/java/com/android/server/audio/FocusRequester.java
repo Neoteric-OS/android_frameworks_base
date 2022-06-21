@@ -332,6 +332,9 @@ public class FocusRequester {
     {
         final int focusLoss = focusLossForGainRequest(focusGain);
         handleFocusLoss(focusLoss, frWinner, forceDuck);
+        if(!mFocusController.interruptMusicPlayback(mCallingUid)) {
+            return false;
+        }
         return (focusLoss == AudioManager.AUDIOFOCUS_LOSS);
     }
 
@@ -386,6 +389,16 @@ public class FocusRequester {
                         Log.v(TAG, "NOT dispatching " + focusChangeToString(mFocusLossReceived)
                                 + " to " + mClientId + ", to be handled externally");
                     }
+                    mFocusController.notifyExtPolicyFocusLoss_syncAf(
+                            toAudioFocusInfo(), false /* wasDispatched */);
+                    return;
+                }
+
+                // match audioPolicy uid
+                if(!mFocusController.interruptMusicPlayback(mCallingUid)) {
+                    Log.d(TAG, "NOT dispatching " + focusChangeToString(mFocusLossReceived)
+                            + " to " + mClientId + ", reason: audio policy uid match");
+                    mFocusLossReceived = mLastFocusLossReceived;
                     mFocusController.notifyExtPolicyFocusLoss_syncAf(
                             toAudioFocusInfo(), false /* wasDispatched */);
                     return;

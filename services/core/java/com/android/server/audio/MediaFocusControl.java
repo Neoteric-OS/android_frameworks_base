@@ -51,6 +51,9 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 
 /**
  * @hide
@@ -610,6 +613,57 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                     mFocusPolicy = null;
                 }
             }
+        }
+    }
+
+    @GuardedBy("mAudioFocusLock")
+    private  final HashMap <IBinder, int[]> mAudioPolicyUid = new LinkedHashMap<>();
+
+    void addUidForPolicy(IAudioPolicyCallback policy, int[] uids) {
+        if (policy == null) {
+            return;
+        }
+        synchronized (mAudioFocusLock) {
+            if (mAudioPolicyUid.get(policy.asBinder()) != null) {
+                Log.d(TAG, "addUidForPolicy: policy.asBinder() is already exit");
+                mAudioPolicyUid.remove(policy.asBinder());
+            }
+            mAudioPolicyUid.put(policy.asBinder(), uids);
+            Log.d(TAG, " addUidForPolicy: " + Arrays.toString(uids));
+        }
+    }
+
+    void removeUidForPolicy(IAudioPolicyCallback policy, int[] uids) {
+        if (policy == null) {
+            return;
+        }
+        synchronized (mAudioFocusLock) {
+            if (mAudioPolicyUid.get(policy.asBinder()) == null) {
+                Log.d(TAG, " removeUidForPolicy: policy is not exist");
+                return;
+            }
+            mAudioPolicyUid.remove(policy.asBinder());
+            Log.d(TAG, " removeUidForPolicy: " + Arrays.toString(uids));
+        }
+    }
+
+    boolean interruptMusicPlayback(int uid) {
+        synchronized (mAudioFocusLock) {
+            boolean isInterrupt = true;
+            final Collection<int[]> appColl = mAudioPolicyUid.values();
+            for (int[] uids : appColl) {
+                for (int matchUid : uids) {
+                    if (uid == matchUid) {
+                        isInterrupt = false;
+                        break;
+                    }
+                }
+                if(!isInterrupt) {
+                    break;
+                }
+            }
+            Log.d(TAG, "interruptMusicPlayback: uid = " + uid + ", hasUid = " + !isInterrupt);
+            return isInterrupt;
         }
     }
 
