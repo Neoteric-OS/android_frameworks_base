@@ -991,6 +991,19 @@ public final class ObjectAnimator extends ValueAnimator {
         }
     }
 
+    @CallSuper
+    @Override
+    boolean animateBasedOnTime(long currentTime) {
+        boolean done = super.animateBasedOnTime(long currentTime);
+	final Object target = getTarget();
+
+	if(mTarget != null && target == null) {
+	    //cancel has been called through animateValue
+	    done = true;
+	}
+	return done;
+    }
+
     @Override
     boolean isInitialized() {
         return mInitialized;
