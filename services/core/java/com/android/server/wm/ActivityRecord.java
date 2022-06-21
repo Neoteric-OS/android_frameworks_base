@@ -264,7 +264,7 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.Trace;
 import android.os.UserHandle;
-import android.os.storage.StorageManager;
+import android.os.UserManager;
 import android.service.dreams.DreamActivity;
 import android.service.dreams.DreamManagerInternal;
 import android.service.voice.IVoiceInteractionSession;
@@ -5623,7 +5623,8 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
     public boolean okToShowLocked() {
         // We cannot show activities when the device is locked and the application is not
         // encryption aware.
-        if (!StorageManager.isUserKeyUnlocked(mUserId)
+        UserManager um = UserManager.get(mStackSupervisor.mService.mContext);
+        if (!um.isUserKeyUnlocked(mUserId)
                 && !info.applicationInfo.isEncryptionAware()) {
             return false;
         }
