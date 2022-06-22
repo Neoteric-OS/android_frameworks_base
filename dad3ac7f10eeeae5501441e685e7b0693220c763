@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ad385cc_8b314da6",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1705,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2022-06-22T09:40:33Z",
+      "side": 1,
+      "message": "I think we should make it consistent with the registration failure message:\n\"CommunicationRouteClient could not unlink to \" + mCb + \" binder death\"",
+      "range": {
+        "startLine": 1705,
+        "startChar": 28,
+        "endLine": 1705,
+        "endChar": 88
+      },
+      "revId": "dad3ac7f10eeeae5501441e685e7b0693220c763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
