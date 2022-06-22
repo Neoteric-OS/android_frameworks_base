@@ -22,6 +22,30 @@
       },
       "revId": "dad3ac7f10eeeae5501441e685e7b0693220c763",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e3c1154_8d0d8200",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1705,
+      "author": {
+        "id": 1869057
+      },
+      "writtenOn": "2022-06-22T10:13:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ad385cc_8b314da6",
+      "range": {
+        "startLine": 1705,
+        "startChar": 28,
+        "endLine": 1705,
+        "endChar": 88
+      },
+      "revId": "dad3ac7f10eeeae5501441e685e7b0693220c763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
