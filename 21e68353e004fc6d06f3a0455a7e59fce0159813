@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0226ada2_016fc78e",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2064,
+      "author": {
+        "id": 1261213
+      },
+      "writtenOn": "2022-06-23T09:35:24Z",
+      "side": 1,
+      "message": "media (MIME)\nPlease use media type in commit message and logs as well.\n\nRefer to https://developers.google.com/style/word-list",
+      "range": {
+        "startLine": 2064,
+        "startChar": 82,
+        "endLine": 2064,
+        "endChar": 86
+      },
+      "revId": "21e68353e004fc6d06f3a0455a7e59fce0159813",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
