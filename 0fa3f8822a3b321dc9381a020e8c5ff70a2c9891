@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e15aeb36_76df4c4e",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-06-23T06:19:48Z",
+      "side": 1,
+      "message": "I think this is only called by NetworkStackClient, so if you remove it from there, you could remove this and SharedLog usage",
+      "range": {
+        "startLine": 417,
+        "startChar": 16,
+        "endLine": 417,
+        "endChar": 20
+      },
+      "revId": "0fa3f8822a3b321dc9381a020e8c5ff70a2c9891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c356af9_d5f5658b",
+        "filename": "services/net/java/android/net/NetworkStackClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-06-23T06:19:48Z",
+      "side": 1,
+      "message": "Looks like this isn\u0027t called anywhere right now ? In which case you could just remove mLog usage, and just use android.util.Log ?",
+      "range": {
+        "startLine": 327,
+        "startChar": 16,
+        "endLine": 327,
+        "endChar": 20
+      },
+      "revId": "0fa3f8822a3b321dc9381a020e8c5ff70a2c9891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
