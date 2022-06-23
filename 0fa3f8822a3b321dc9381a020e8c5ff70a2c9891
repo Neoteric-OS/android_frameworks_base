@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8204bae_67b1316c",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-06-23T21:58:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e15aeb36_76df4c4e",
+      "range": {
+        "startLine": 417,
+        "startChar": 16,
+        "endLine": 417,
+        "endChar": 20
+      },
+      "revId": "0fa3f8822a3b321dc9381a020e8c5ff70a2c9891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c356af9_d5f5658b",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-06-23T06:19:48Z",
       "side": 1,
       "message": "Looks like this isn\u0027t called anywhere right now ? In which case you could just remove mLog usage, and just use android.util.Log ?",
+      "range": {
+        "startLine": 327,
+        "startChar": 16,
+        "endLine": 327,
+        "endChar": 20
+      },
+      "revId": "0fa3f8822a3b321dc9381a020e8c5ff70a2c9891",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd4e4607_518fd1db",
+        "filename": "services/net/java/android/net/NetworkStackClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-06-23T21:58:40Z",
+      "side": 1,
+      "message": "Good call! I removed dump() altogether. log() now calls Log.d() -- those logs were not visible before, but they still seemed somewhat useful.",
+      "parentUuid": "8c356af9_d5f5658b",
       "range": {
         "startLine": 327,
         "startChar": 16,
