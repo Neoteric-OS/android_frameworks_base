@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4931a12c_9ca6a467",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2022-06-23T22:30:43Z",
+      "side": 1,
+      "message": "LGTM conditional on Oscar\u0027s comment.",
+      "revId": "6c6d238125fa257819a1bb9b3c5fd222cb29274b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03ba8a52_9eeaf6c4",
@@ -14,6 +31,30 @@
       "writtenOn": "2022-06-23T22:28:24Z",
       "side": 1,
       "message": "Remove he is no longer here, add keun-young.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 20
+      },
+      "revId": "6c6d238125fa257819a1bb9b3c5fd222cb29274b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b64b0324_4ef133b5",
+        "filename": "core/java/android/hardware/radio/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2022-06-23T22:30:43Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "03ba8a52_9eeaf6c4",
       "range": {
         "startLine": 3,
         "startChar": 0,
