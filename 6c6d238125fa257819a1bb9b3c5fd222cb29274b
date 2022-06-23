@@ -63,6 +63,30 @@
       },
       "revId": "6c6d238125fa257819a1bb9b3c5fd222cb29274b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b03d50a0_a32e2c27",
+        "filename": "core/java/android/hardware/radio/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1945317
+      },
+      "writtenOn": "2022-06-23T22:40:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b64b0324_4ef133b5",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 20
+      },
+      "revId": "6c6d238125fa257819a1bb9b3c5fd222cb29274b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
