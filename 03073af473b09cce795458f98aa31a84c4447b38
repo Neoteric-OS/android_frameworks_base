@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "813b7138_ee2e5c65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2022-06-24T08:37:51Z",
+      "side": 1,
+      "message": "Usually this kind of temporary muting on routing change is handled by the audio policy manager. Is there a reason why this cannot be done there?\n",
+      "revId": "03073af473b09cce795458f98aa31a84c4447b38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
