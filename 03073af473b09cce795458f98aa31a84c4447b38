@@ -16,6 +16,24 @@
       "message": "Usually this kind of temporary muting on routing change is handled by the audio policy manager. Is there a reason why this cannot be done there?\n",
       "revId": "03073af473b09cce795458f98aa31a84c4447b38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e912e96a_4e9e0058",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1673919
+      },
+      "writtenOn": "2022-06-24T09:24:03Z",
+      "side": 1,
+      "message": "It is easier to get a2dp and sco state here and update players with specific usage from playback monitor.",
+      "parentUuid": "813b7138_ee2e5c65",
+      "revId": "03073af473b09cce795458f98aa31a84c4447b38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
