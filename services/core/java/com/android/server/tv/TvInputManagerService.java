@@ -565,12 +565,15 @@ public final class TvInputManagerService extends SystemService {
             if (serviceState != null && serviceState.sessionTokens.isEmpty()) {
                 if (serviceState.callback != null) {
                     try {
+                        if (serviceState.isHardware) {
+                            bindService(serviceState, userId);
+                        }
                         serviceState.service.unregisterCallback(serviceState.callback);
                     } catch (RemoteException e) {
                         Slog.e(TAG, "error in unregisterCallback", e);
                     }
                 }
-                mContext.unbindService(serviceState.connection);
+                unbindService(serviceState);
                 it.remove();
             }
         }
@@ -633,12 +636,15 @@ public final class TvInputManagerService extends SystemService {
                 if (serviceState.service != null) {
                     if (serviceState.callback != null) {
                         try {
+                            if (serviceState.isHardware) {
+                                bindService(serviceState, userId);
+                            }
                             serviceState.service.unregisterCallback(serviceState.callback);
                         } catch (RemoteException e) {
                             Slog.e(TAG, "error in unregisterCallback", e);
                         }
                     }
-                    mContext.unbindService(serviceState.connection);
+                    unbindService(serviceState);
                 }
             }
             userState.serviceStateMap.clear();
@@ -761,30 +767,17 @@ public final class TvInputManagerService extends SystemService {
         }
 
         if (serviceState.service == null && shouldBind) {
-            // This means that the service is not yet connected but its state indicates that we
-            // have pending requests. Then, connect the service.
-            if (serviceState.bound) {
-                // We have already bound to the service so we don't try to bind again until after we
-                // unbind later on.
-                return;
-            }
-            if (DEBUG) {
-                Slog.d(TAG, "bindServiceAsUser(service=" + component + ", userId=" + userId + ")");
-            }
-
-            Intent i = new Intent(TvInputService.SERVICE_INTERFACE).setComponent(component);
-            serviceState.bound = mContext.bindServiceAsUser(
-                    i, serviceState.connection,
-                    Context.BIND_AUTO_CREATE | Context.BIND_FOREGROUND_SERVICE_WHILE_AWAKE,
-                    new UserHandle(userId));
+            bindService(serviceState, userId);
         } else if (serviceState.service != null && !shouldBind) {
             // This means that the service is already connected but its state indicates that we have
             // nothing to do with it. Then, disconnect the service.
-            if (DEBUG) {
-                Slog.d(TAG, "unbindService(service=" + component + ")");
-            }
-            mContext.unbindService(serviceState.connection);
+            unbindService(serviceState);
             userState.serviceStateMap.remove(component);
+        }
+
+        // Unbind hardware service now.
+        if (serviceState.isHardware) {
+            unbindService(serviceState);
         }
     }
 
@@ -1553,6 +1546,10 @@ public final class TvInputManagerService extends SystemService {
                     // Also, add them to the session state map of the current service.
                     serviceState.sessionTokens.add(sessionToken);
 
+                    if (serviceState.isHardware) {
+                        bindService(serviceState, resolvedUserId);
+                    }
+
                     if (serviceState.service != null) {
                         if (!createSessionInternalLocked(serviceState.service, sessionToken,
                                     resolvedUserId, tvAppAttributionSource)) {
@@ -1563,6 +1560,10 @@ public final class TvInputManagerService extends SystemService {
                     }
                     logTuneStateChanged(FrameworkStatsLog.TIF_TUNE_STATE_CHANGED__STATE__CREATED,
                             sessionState, inputState);
+
+                    if (serviceState.isHardware) {
+                        unbindService(serviceState);
+                    }
                 }
             } finally {
                 Binder.restoreCallingIdentity(identity);
@@ -3074,6 +3075,37 @@ public final class TvInputManagerService extends SystemService {
         }
     }
 
+    @GuardedBy("mLock")
+    private void bindService(ServiceState serviceState, int userId) {
+        if (serviceState.bound) {
+            // We have already bound to the service so we don't try to bind again until after we
+            // unbind later on.
+            return;
+        }
+        if (DEBUG) {
+            Slog.d(TAG,
+                    "bindServiceAsUser(service=" + serviceState.component + ", userId=" + userId
+                            + ")");
+        }
+        Intent i =
+                new Intent(TvInputService.SERVICE_INTERFACE).setComponent(serviceState.component);
+        serviceState.bound = mContext.bindServiceAsUser(i, serviceState.connection,
+                Context.BIND_AUTO_CREATE | Context.BIND_FOREGROUND_SERVICE_WHILE_AWAKE,
+                new UserHandle(userId));
+    }
+
+    @GuardedBy("mLock")
+    private void unbindService(ServiceState serviceState) {
+        if (!serviceState.bound) {
+            return;
+        }
+        if (DEBUG) {
+            Slog.d(TAG, "unbindService(service=" + serviceState.component + ")");
+        }
+        mContext.unbindService(serviceState.connection);
+        serviceState.bound = false;
+    }
+
     private final class InputServiceConnection implements ServiceConnection {
         private final ComponentName mComponent;
         private final int mUserId;
@@ -3164,11 +3196,10 @@ public final class TvInputManagerService extends SystemService {
                 ServiceState serviceState = userState.serviceStateMap.get(mComponent);
                 if (serviceState != null) {
                     serviceState.reconnecting = true;
+                    abortPendingCreateSessionRequestsLocked(serviceState, null, mUserId);
                     serviceState.bound = false;
                     serviceState.service = null;
                     serviceState.callback = null;
-
-                    abortPendingCreateSessionRequestsLocked(serviceState, null, mUserId);
                 }
             }
         }
@@ -3808,9 +3839,12 @@ public final class TvInputManagerService extends SystemService {
                 for (ServiceState serviceState : userState.serviceStateMap.values()) {
                     if (!serviceState.isHardware || serviceState.service == null) continue;
                     try {
+                        bindService(serviceState, mCurrentUserId);
                         serviceState.service.notifyHardwareAdded(info);
                     } catch (RemoteException e) {
                         Slog.e(TAG, "error in notifyHardwareAdded", e);
+                    } finally {
+                        unbindService(serviceState);
                     }
                 }
             }
@@ -3824,9 +3858,12 @@ public final class TvInputManagerService extends SystemService {
                 for (ServiceState serviceState : userState.serviceStateMap.values()) {
                     if (!serviceState.isHardware || serviceState.service == null) continue;
                     try {
+                        bindService(serviceState, mCurrentUserId);
                         serviceState.service.notifyHardwareRemoved(info);
                     } catch (RemoteException e) {
                         Slog.e(TAG, "error in notifyHardwareRemoved", e);
+                    } finally {
+                        unbindService(serviceState);
                     }
                 }
             }
@@ -3840,9 +3877,12 @@ public final class TvInputManagerService extends SystemService {
                 for (ServiceState serviceState : userState.serviceStateMap.values()) {
                     if (!serviceState.isHardware || serviceState.service == null) continue;
                     try {
+                        bindService(serviceState, mCurrentUserId);
                         serviceState.service.notifyHdmiDeviceAdded(deviceInfo);
                     } catch (RemoteException e) {
                         Slog.e(TAG, "error in notifyHdmiDeviceAdded", e);
+                    } finally {
+                        unbindService(serviceState);
                     }
                 }
             }
@@ -3856,9 +3896,12 @@ public final class TvInputManagerService extends SystemService {
                 for (ServiceState serviceState : userState.serviceStateMap.values()) {
                     if (!serviceState.isHardware || serviceState.service == null) continue;
                     try {
+                        bindService(serviceState, mCurrentUserId);
                         serviceState.service.notifyHdmiDeviceRemoved(deviceInfo);
                     } catch (RemoteException e) {
                         Slog.e(TAG, "error in notifyHdmiDeviceRemoved", e);
+                    } finally {
+                        unbindService(serviceState);
                     }
                 }
             }
@@ -3890,9 +3933,12 @@ public final class TvInputManagerService extends SystemService {
                 for (ServiceState serviceState : userState.serviceStateMap.values()) {
                     if (!serviceState.isHardware || serviceState.service == null) continue;
                     try {
+                        bindService(serviceState, mCurrentUserId);
                         serviceState.service.notifyHdmiDeviceUpdated(deviceInfo);
                     } catch (RemoteException e) {
                         Slog.e(TAG, "error in notifyHdmiDeviceUpdated", e);
+                    } finally {
+                        unbindService(serviceState);
                     }
                 }
             }
