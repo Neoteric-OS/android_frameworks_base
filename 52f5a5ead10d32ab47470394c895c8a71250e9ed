@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ac7ea48_892ccfa1",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5688,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2022-06-24T20:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28a40d3a_e512adef",
+      "revId": "52f5a5ead10d32ab47470394c895c8a71250e9ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c7edffe_414d2aa1",

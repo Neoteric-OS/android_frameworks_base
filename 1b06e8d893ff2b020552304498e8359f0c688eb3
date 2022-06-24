@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "837a3dc9_a936ff90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2022-06-24T20:41:52Z",
+      "side": 1,
+      "message": "Hi Chuanghua, could you create another copy of this change on AOSP?\n\nThis is necessary because Nate voted -2 here and he\u0027s OOO for two weeks now, so although Nate and I discussed this and had the agreement to submit this patchset two days ago, I can\u0027t remove his vote and we have to use a new CL.",
+      "revId": "1b06e8d893ff2b020552304498e8359f0c688eb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54d3de07_c9d7c812",
+        "filename": "services/core/java/com/android/server/pm/permission/PermissionManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 5694,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2022-06-24T20:41:52Z",
+      "side": 1,
+      "message": "Could you add a comment above this line saying that:\n\n```\n            // We need to investigate whether to unregister attribution sources, but for now we are\n            // keeping the existing behavior since Android S.\n```\n\nThe behavior here doesn\u0027t make much sense if someone reads it without context, so leaving a comment will help future readers.",
+      "revId": "1b06e8d893ff2b020552304498e8359f0c688eb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
