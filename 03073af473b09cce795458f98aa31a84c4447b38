@@ -34,6 +34,24 @@
       "parentUuid": "813b7138_ee2e5c65",
       "revId": "03073af473b09cce795458f98aa31a84c4447b38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9394be60_e1685808",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2022-06-24T09:34:54Z",
+      "side": 1,
+      "message": "What I mean is that this problem may not be specific to this particular context with SCO and A2DP. The audio policy manager normally guaranties that no glitches are audible when audio route is changed. We need to root cause this and if possible fix at a lower level to cover more caes.",
+      "parentUuid": "e912e96a_4e9e0058",
+      "revId": "03073af473b09cce795458f98aa31a84c4447b38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
