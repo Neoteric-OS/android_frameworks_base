@@ -322,6 +322,7 @@ public class AudioService extends IAudioService.Stub
     private static final int MSG_ROUTING_UPDATED = 41;
     private static final int MSG_INIT_HEADTRACKING_SENSORS = 42;
     private static final int MSG_PERSIST_SPATIAL_AUDIO_ENABLED = 43;
+    private static final int MSG_END_MEDIA_PLAYER_MUTING = 44;
 
     // start of messages handled under wakelock
     //   these messages can only be queued, i.e. sent with queueMsgUnderWakeLock(),
@@ -4889,6 +4890,9 @@ public class AudioService extends IAudioService.Stub
         }
         if (mode != mMode.get() || force) {
             final long identity = Binder.clearCallingIdentity();
+            if (mode == AudioSystem.MODE_IN_COMMUNICATION && mDeviceBroker.isBluetoothA2dpOn()) {
+                mutePlayersMomentarilyForBtSco();
+            }
             int status = mAudioSystem.setPhoneState(mode, uid);
             Binder.restoreCallingIdentity(identity);
             if (status == AudioSystem.AUDIO_STATUS_OK) {
@@ -5473,6 +5477,9 @@ public class AudioService extends IAudioService.Stub
                 .append(") from u/pid:").append(uid).append("/")
                 .append(pid).toString();
         final long ident = Binder.clearCallingIdentity();
+        if (mMode.get() == AudioSystem.MODE_IN_COMMUNICATION && mDeviceBroker.isBluetoothScoOn()) {
+            mutePlayersMomentarilyForBtSco();
+        }
         mDeviceBroker.stopBluetoothScoForClient(cb, pid, eventSource);
         Binder.restoreCallingIdentity(ident);
         new MediaMetrics.Item(MediaMetrics.Name.AUDIO_BLUETOOTH)
@@ -7753,6 +7760,10 @@ public class AudioService extends IAudioService.Stub
 
                 case MSG_PERSIST_SPATIAL_AUDIO_ENABLED:
                     onPersistSpatialAudioEnabled(msg.arg1 == 1);
+                    break;
+
+                case MSG_END_MEDIA_PLAYER_MUTING:
+                    mPlaybackMonitor.unmutePlayersForCall();
                     break;
             }
         }
@@ -10087,6 +10098,12 @@ public class AudioService extends IAudioService.Stub
 
     public void releasePlayer(int piid) {
         mPlaybackMonitor.releasePlayer(piid, Binder.getCallingUid());
+    }
+
+    private void mutePlayersMomentarilyForBtSco() {
+        mPlaybackMonitor.mutePlayersForCall(new int[]{AudioAttributes.USAGE_MEDIA, AudioAttributes.USAGE_GAME});
+        sendMsg(mAudioHandler, MSG_END_MEDIA_PLAYER_MUTING, SENDMSG_REPLACE, 0, 0,
+                /*obj*/ null, /*delay*/ 1000);
     }
 
     /**
