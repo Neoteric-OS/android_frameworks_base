@@ -351,7 +351,7 @@ class MediaResumeListenerTest : SysuiTestCase() {
         // Then we save an update with the current time
         verify(sharedPrefsEditor).putString(any(), (capture(componentCaptor)))
         componentCaptor.value.split(ResumeMediaBrowser.DELIMITER.toRegex())
-                ?.dropLastWhile { it.isEmpty() }.forEach {
+                .dropLastWhile { it.isEmpty() }.forEach {
             val result = it.split("/")
             assertThat(result.size).isEqualTo(3)
             assertThat(result[2].toLong()).isEqualTo(currentTime)
@@ -438,7 +438,7 @@ class MediaResumeListenerTest : SysuiTestCase() {
         // Then we store the new lastPlayed time
         verify(sharedPrefsEditor).putString(any(), (capture(componentCaptor)))
         componentCaptor.value.split(ResumeMediaBrowser.DELIMITER.toRegex())
-                ?.dropLastWhile { it.isEmpty() }.forEach {
+                .dropLastWhile { it.isEmpty() }.forEach {
                     val result = it.split("/")
                     assertThat(result.size).isEqualTo(3)
                     assertThat(result[2].toLong()).isEqualTo(currentTime)
