@@ -784,6 +784,7 @@ public class ScreenshotController {
         ScrollCaptureController.BitmapScreenshot bitmapScreenshot =
             new ScrollCaptureController.BitmapScreenshot(mContext, newScreenshot);
 
+        mLongScreenshotHolder.setNeedsMagnification(false);
         startLongScreenshotActivity(bitmapScreenshot);
     }
 
@@ -852,6 +853,8 @@ public class ScreenshotController {
                 return;
             }
 
+            mLongScreenshotHolder.setForegroundAppName(getForegroundAppLabel());
+            mLongScreenshotHolder.setNeedsMagnification(true);
             startLongScreenshotActivity(longScreenshot);
         }, mMainExecutor);
     }
