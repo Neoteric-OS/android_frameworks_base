@@ -53,7 +53,6 @@ import android.hardware.hdmi.IHdmiMhlVendorCommandListener;
 import android.hardware.hdmi.IHdmiRecordListener;
 import android.hardware.hdmi.IHdmiSystemAudioModeChangeListener;
 import android.hardware.hdmi.IHdmiVendorCommandListener;
-import android.hardware.tv.cec.V1_0.OptionKey;
 import android.hardware.tv.cec.V1_0.SendMessageResult;
 import android.media.AudioManager;
 import android.media.session.MediaController;
@@ -593,7 +592,7 @@ public class HdmiControlService extends SystemService {
         if (mHdmiControlEnabled == HdmiControlManager.HDMI_CEC_CONTROL_ENABLED) {
             initializeCec(INITIATED_BY_BOOT_UP);
         } else {
-            mCecController.setOption(OptionKey.ENABLE_CEC, false);
+            mCecController.enableCec(false);
         }
         mMhlDevices = Collections.emptyList();
 
@@ -624,10 +623,11 @@ public class HdmiControlService extends SystemService {
                     @Override
                     public void onChange(String setting) {
                         if (isTvDeviceEnabled()) {
-                            setCecOption(OptionKey.WAKEUP, tv().getAutoWakeup());
+                            mCecController.enableWakeupByOtp(tv().getAutoWakeup());
                         }
                     }
-                }, mServiceThreadExecutor);
+                },
+                mServiceThreadExecutor);
     }
 
     private void bootCompleted() {
@@ -720,7 +720,7 @@ public class HdmiControlService extends SystemService {
         mWakeUpMessageReceived = false;
 
         if (isTvDeviceEnabled()) {
-            mCecController.setOption(OptionKey.WAKEUP, tv().getAutoWakeup());
+            mCecController.enableWakeupByOtp(tv().getAutoWakeup());
         }
         int reason = -1;
         switch (initiatedBy) {
@@ -884,7 +884,7 @@ public class HdmiControlService extends SystemService {
         mCecVersion = Math.max(HdmiControlManager.HDMI_CEC_VERSION_1_4_B,
                 Math.min(settingsCecVersion, supportedCecVersion));
 
-        mCecController.setOption(OptionKey.SYSTEM_CEC_CONTROL, true);
+        mCecController.enableSystemCecControl(true);
         mCecController.setLanguage(mMenuLanguage);
         initializeLocalDevices(initiatedBy);
     }
@@ -3210,7 +3210,7 @@ public class HdmiControlService extends SystemService {
         }
         mStandbyMessageReceived = false;
         if (!isAudioSystemDevice()) {
-            mCecController.setOption(OptionKey.SYSTEM_CEC_CONTROL, false);
+            mCecController.enableSystemCecControl(false);
             mMhlController.setOption(OPTION_MHL_SERVICE_CONTROL, DISABLED);
         }
     }
@@ -3354,12 +3354,6 @@ public class HdmiControlService extends SystemService {
     }
 
     @ServiceThreadOnly
-    void setCecOption(int key, boolean value) {
-        assertRunOnServiceThread();
-        mCecController.setOption(key, value);
-    }
-
-    @ServiceThreadOnly
     void setControlEnabled(@HdmiControlManager.HdmiCecControl int enabled) {
         assertRunOnServiceThread();
 
@@ -3393,8 +3387,8 @@ public class HdmiControlService extends SystemService {
 
     @ServiceThreadOnly
     private void enableHdmiControlService() {
-        mCecController.setOption(OptionKey.ENABLE_CEC, true);
-        mCecController.setOption(OptionKey.SYSTEM_CEC_CONTROL, true);
+        mCecController.enableCec(true);
+        mCecController.enableSystemCecControl(true);
         mMhlController.setOption(OPTION_MHL_ENABLE, ENABLED);
 
         initializeCec(INITIATED_BY_ENABLE_CEC);
@@ -3402,21 +3396,23 @@ public class HdmiControlService extends SystemService {
 
     @ServiceThreadOnly
     private void disableHdmiControlService() {
-        disableDevices(new PendingActionClearedCallback() {
-            @Override
-            public void onCleared(HdmiCecLocalDevice device) {
-                assertRunOnServiceThread();
-                mCecController.flush(new Runnable() {
+        disableDevices(
+                new PendingActionClearedCallback() {
                     @Override
-                    public void run() {
-                        mCecController.setOption(OptionKey.ENABLE_CEC, false);
-                        mCecController.setOption(OptionKey.SYSTEM_CEC_CONTROL, false);
-                        mMhlController.setOption(OPTION_MHL_ENABLE, DISABLED);
-                        clearLocalDevices();
+                    public void onCleared(HdmiCecLocalDevice device) {
+                        assertRunOnServiceThread();
+                        mCecController.flush(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mCecController.enableCec(false);
+                                        mCecController.enableSystemCecControl(false);
+                                        mMhlController.setOption(OPTION_MHL_ENABLE, DISABLED);
+                                        clearLocalDevices();
+                                    }
+                                });
                     }
                 });
-            }
-        });
     }
 
     @ServiceThreadOnly
