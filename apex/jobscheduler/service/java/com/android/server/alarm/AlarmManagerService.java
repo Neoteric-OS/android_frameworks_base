@@ -82,7 +82,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
-import android.os.ParcelableException;
 import android.os.PowerExemptionManager;
 import android.os.PowerManager;
 import android.os.Process;
@@ -107,7 +106,6 @@ import android.util.ArraySet;
 import android.util.IndentingPrintWriter;
 import android.util.Log;
 import android.util.LongArrayQueue;
-import android.util.NtpTrustedTime;
 import android.util.Pair;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -147,7 +145,6 @@ import libcore.util.EmptyArray;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.time.DateTimeException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -2653,17 +2650,6 @@ public class AlarmManagerService extends SystemService {
                     Binder.getCallingUid(), userId, /*allowAll=*/false, ALLOW_NON_FULL,
                     "getNextAlarmClock", null);
             return getNextAlarmClockImpl(userId);
-        }
-
-        @Override
-        public long currentNetworkTimeMillis() {
-            final NtpTrustedTime time = NtpTrustedTime.getInstance(getContext());
-            NtpTrustedTime.TimeResult ntpResult = time.getCachedTimeResult();
-            if (ntpResult != null) {
-                return ntpResult.currentTimeMillis();
-            } else {
-                throw new ParcelableException(new DateTimeException("Missing NTP fix"));
-            }
         }
 
         @Override
