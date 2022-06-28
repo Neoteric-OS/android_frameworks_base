@@ -276,6 +276,11 @@ public final class TimeDetectorStrategyImpl implements TimeDetectorStrategy {
     }
 
     @Override
+    public synchronized NetworkTimeSuggestion getLatestNetworkTimeSuggestion() {
+        return mLastNetworkSuggestion.get();
+    }
+
+    @Override
     public synchronized void suggestTelephonyTime(@NonNull TelephonyTimeSuggestion timeSuggestion) {
         // Empty time suggestion means that telephony network connectivity has been lost.
         // The passage of time is relentless, and we don't expect our users to use a time machine,

@@ -17,6 +17,7 @@
 package com.android.server.timedetector;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.app.timedetector.NetworkTimeSuggestion;
 
 /**
@@ -28,6 +29,21 @@ import android.app.timedetector.NetworkTimeSuggestion;
  */
 public interface TimeDetectorInternal {
 
+    /** TODO Document. */
+    interface NetworkTimeSuggestionListener {
+        void networkTimeSuggestionReceived(@NonNull NetworkTimeSuggestion timeSignal);
+    }
+
     /** Used to pass new network time suggestions to the time detector. */
     void suggestNetworkTime(@NonNull NetworkTimeSuggestion timeSignal);
+
+    /** Return the latest (valid) network time suggestion received. */
+    @Nullable NetworkTimeSuggestion getLatestNetworkTimeSuggestion();
+
+    /** TODO Document. */
+    void addNetworkTimeSuggestionListener(
+            @NonNull NetworkTimeSuggestionListener networkTimeSuggestionListener);
+    /** TODO Document. */
+    void removeNetworkTimeSuggestionListener(
+            @NonNull NetworkTimeSuggestionListener networkTimeSuggestionListener);
 }

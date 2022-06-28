@@ -53,6 +53,11 @@ class FakeTimeDetectorStrategy implements TimeDetectorStrategy {
     }
 
     @Override
+    public NetworkTimeSuggestion getLatestNetworkTimeSuggestion() {
+        return mLastNetworkSuggestion;
+    }
+
+    @Override
     public void suggestGnssTime(GnssTimeSuggestion timeSuggestion) {
         mLastGnssSuggestion = timeSuggestion;
     }
