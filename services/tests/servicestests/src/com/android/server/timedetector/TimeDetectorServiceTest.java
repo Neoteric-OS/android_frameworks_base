@@ -245,7 +245,7 @@ public class TimeDetectorServiceTest {
     @Test
     public void testCurrentNetworkTime() {
         NtpTrustedTime.TimeResult latestNetworkTime =
-                new NtpTrustedTime.TimeResult(1234L, 54321L, 999L);
+                new NtpTrustedTime.TimeResult(1234L, 54321L, 999);
         when(mMockNtpTrustedTime.getCachedTimeResult())
                 .thenReturn(latestNetworkTime);
         TimePoint expected = new TimePoint(latestNetworkTime.getTimeMillis(),
@@ -286,7 +286,7 @@ public class TimeDetectorServiceTest {
 
     private static NetworkTimeSuggestion createNetworkTimeSuggestion() {
         TimestampedValue<Long> timeValue = new TimestampedValue<>(100L, 1_000_000L);
-        return new NetworkTimeSuggestion(timeValue);
+        return new NetworkTimeSuggestion(timeValue, 123);
     }
 
     private static GnssTimeSuggestion createGnssTimeSuggestion() {

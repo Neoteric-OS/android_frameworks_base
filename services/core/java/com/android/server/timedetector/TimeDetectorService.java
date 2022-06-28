@@ -162,8 +162,7 @@ public final class TimeDetectorService extends ITimeDetectorService.Stub {
         }
     }
 
-    @Override
-    public void suggestNetworkTime(@NonNull NetworkTimeSuggestion timeSignal) {
+    void suggestNetworkTime(@NonNull NetworkTimeSuggestion timeSignal) {
         enforceSuggestNetworkTimePermission();
         Objects.requireNonNull(timeSignal);
 

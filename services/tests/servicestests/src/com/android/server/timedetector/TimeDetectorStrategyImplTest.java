@@ -1541,7 +1541,7 @@ public class TimeDetectorStrategyImplTest {
                     new TimestampedValue<>(
                             mFakeEnvironment.peekElapsedRealtimeMillis(),
                             suggestedTime.toEpochMilli());
-            return new NetworkTimeSuggestion(unixEpochTime);
+            return new NetworkTimeSuggestion(unixEpochTime, 123);
         }
 
         /**

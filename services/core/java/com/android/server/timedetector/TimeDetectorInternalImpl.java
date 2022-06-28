@@ -17,6 +17,7 @@
 package com.android.server.timedetector;
 
 import android.annotation.NonNull;
+import android.app.timedetector.NetworkTimeSuggestion;
 import android.content.Context;
 import android.os.Handler;
 
@@ -38,5 +39,12 @@ public class TimeDetectorInternalImpl implements TimeDetectorInternal {
         mContext = Objects.requireNonNull(context);
         mHandler = Objects.requireNonNull(handler);
         mTimeDetectorStrategy = Objects.requireNonNull(timeDetectorStrategy);
+    }
+
+    @Override
+    public void suggestNetworkTime(@NonNull NetworkTimeSuggestion timeSignal) {
+        Objects.requireNonNull(timeSignal);
+
+        mHandler.post(() -> mTimeDetectorStrategy.suggestNetworkTime(timeSignal));
     }
 }
