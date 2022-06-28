@@ -17,66 +17,52 @@
 package android.app.timedetector;
 
 import android.annotation.NonNull;
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.annotation.Nullable;
 import android.os.ShellCommand;
 import android.os.TimestampedValue;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * A time signal from a network time source like NTP.
  *
- * <p>See {@link TimeSuggestionHelper} for property information.
+ * <p>{@code unixEpochTime} is the suggested time. The {@code unixEpochTime.value} is the number of
+ * milliseconds elapsed since 1/1/1970 00:00:00 UTC according to the Unix time system. The {@code
+ * unixEpochTime.referenceTimeMillis} is the value of the elapsed realtime clock when the {@code
+ * unixEpochTime.value} was established. Note that the elapsed realtime clock is considered accurate
+ * but it is volatile, so time suggestions cannot be persisted across device resets.
+ *
+ * <p>{@code debugInfo} contains debugging metadata associated with the suggestion. This is used to
+ * record why the suggestion exists and how it was entered. This information exists only to aid in
+ * debugging and therefore is used by {@link #toString()}, but it is not for use in detection
+ * logic and is not considered in {@link #hashCode()} or {@link #equals(Object)}.
  *
  * @hide
  */
-public final class NetworkTimeSuggestion implements Parcelable {
+public final class NetworkTimeSuggestion {
 
-    public static final @NonNull Creator<NetworkTimeSuggestion> CREATOR =
-            new Creator<NetworkTimeSuggestion>() {
-                public NetworkTimeSuggestion createFromParcel(Parcel in) {
-                    TimeSuggestionHelper helper = TimeSuggestionHelper.handleCreateFromParcel(
-                            NetworkTimeSuggestion.class, in);
-                    return new NetworkTimeSuggestion(helper);
-                }
-
-                public NetworkTimeSuggestion[] newArray(int size) {
-                    return new NetworkTimeSuggestion[size];
-                }
-            };
-
-    @NonNull private final TimeSuggestionHelper mTimeSuggestionHelper;
+    @NonNull private final TimestampedValue<Long> mUnixEpochTime;
+    // TODO Add certaintyMillis
+    @Nullable private ArrayList<String> mDebugInfo;
 
     public NetworkTimeSuggestion(@NonNull TimestampedValue<Long> unixEpochTime) {
-        mTimeSuggestionHelper = new TimeSuggestionHelper(
-                NetworkTimeSuggestion.class, unixEpochTime);
-    }
-
-    private NetworkTimeSuggestion(@NonNull TimeSuggestionHelper helper) {
-        mTimeSuggestionHelper = Objects.requireNonNull(helper);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        mTimeSuggestionHelper.handleWriteToParcel(dest, flags);
+        mUnixEpochTime = Objects.requireNonNull(unixEpochTime);
     }
 
     @NonNull
     public TimestampedValue<Long> getUnixEpochTime() {
-        return mTimeSuggestionHelper.getUnixEpochTime();
+        return mUnixEpochTime;
     }
 
     @NonNull
     public List<String> getDebugInfo() {
-        return mTimeSuggestionHelper.getDebugInfo();
+        return mDebugInfo == null
+                ? Collections.emptyList() : Collections.unmodifiableList(mDebugInfo);
     }
 
     /**
@@ -85,7 +71,10 @@ public final class NetworkTimeSuggestion implements Parcelable {
      * #equals(Object)} and {@link #hashCode()}.
      */
     public void addDebugInfo(String... debugInfos) {
-        mTimeSuggestionHelper.addDebugInfo(debugInfos);
+        if (mDebugInfo == null) {
+            mDebugInfo = new ArrayList<>();
+        }
+        mDebugInfo.addAll(Arrays.asList(debugInfos));
     }
 
     @Override
@@ -93,32 +82,68 @@ public final class NetworkTimeSuggestion implements Parcelable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof NetworkTimeSuggestion)) {
             return false;
         }
         NetworkTimeSuggestion that = (NetworkTimeSuggestion) o;
-        return mTimeSuggestionHelper.handleEquals(that.mTimeSuggestionHelper);
+        return mUnixEpochTime.equals(that.mUnixEpochTime) && Objects.equals(mDebugInfo,
+                that.mDebugInfo);
     }
 
     @Override
     public int hashCode() {
-        return mTimeSuggestionHelper.hashCode();
+        return Objects.hash(mUnixEpochTime, mDebugInfo);
     }
 
     @Override
     public String toString() {
-        return mTimeSuggestionHelper.handleToString();
+        return "NetworkTimeSuggestion{"
+                + "mUnixEpochTime=" + mUnixEpochTime
+                + ", mDebugInfo=" + mDebugInfo
+                + '}';
     }
 
     /** @hide */
     public static NetworkTimeSuggestion parseCommandLineArg(@NonNull ShellCommand cmd)
             throws IllegalArgumentException {
-        return new NetworkTimeSuggestion(
-                TimeSuggestionHelper.handleParseCommandLineArg(NetworkTimeSuggestion.class, cmd));
+        Long referenceTimeMillis = null;
+        Long unixEpochTimeMillis = null;
+        String opt;
+        while ((opt = cmd.getNextArg()) != null) {
+            switch (opt) {
+                case "--reference_time": {
+                    referenceTimeMillis = Long.parseLong(cmd.getNextArgRequired());
+                    break;
+                }
+                case "--unix_epoch_time": {
+                    unixEpochTimeMillis = Long.parseLong(cmd.getNextArgRequired());
+                    break;
+                }
+                default: {
+                    throw new IllegalArgumentException("Unknown option: " + opt);
+                }
+            }
+        }
+
+        if (referenceTimeMillis == null) {
+            throw new IllegalArgumentException("No referenceTimeMillis specified.");
+        }
+        if (unixEpochTimeMillis == null) {
+            throw new IllegalArgumentException("No unixEpochTimeMillis specified.");
+        }
+
+        TimestampedValue<Long> timeSignal =
+                new TimestampedValue<>(referenceTimeMillis, unixEpochTimeMillis);
+        NetworkTimeSuggestion networkTimeSuggestion = new NetworkTimeSuggestion(timeSignal);
+        networkTimeSuggestion.addDebugInfo("Command line injection");
     }
 
     /** @hide */
     public static void printCommandLineOpts(PrintWriter pw) {
-        TimeSuggestionHelper.handlePrintCommandLineOpts(pw, "Network", NetworkTimeSuggestion.class);
+        pw.printf("%s suggestion options:\n", "Network");
+        pw.println("  --reference_time <elapsed realtime millis>");
+        pw.println("  --unix_epoch_time <Unix epoch time millis>");
+        pw.println();
+        pw.println("See " + NetworkTimeSuggestion.class.getName() + " for more information");
     }
 }
