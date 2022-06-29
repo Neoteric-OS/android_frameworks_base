@@ -1199,7 +1199,9 @@ public final class AudioAttributes implements Parcelable {
 
         /**
          * Specifying if haptic should be muted or not when playing audio-haptic coupled data.
-         * By default, haptic channels are disabled.
+         * By default, haptic channels are disabled. If the haptic channels are enabled and the
+         * app doesn't have the {@link android.Manifest.permission#VIBRATE} permission, the haptic
+         * channels will still be muted.
          * @param muted true to force muting haptic channels.
          * @return the same Builder instance.
          */
