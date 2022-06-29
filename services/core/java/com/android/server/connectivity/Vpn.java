@@ -785,7 +785,7 @@ public class Vpn {
         }
     }
 
-    private boolean isVpnApp(String packageName) {
+    private static boolean isVpnApp(String packageName) {
         return packageName != null && !VpnConfig.LEGACY_VPN.equals(packageName);
     }
 
