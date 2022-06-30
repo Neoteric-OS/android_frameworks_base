@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "121f6a51_396d7eab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-06-30T14:55:36Z",
+      "side": 1,
+      "message": "Thanks for the fix! But can you please explain what the issue is, and why those changes are needed?",
+      "revId": "cb294a629d3e103ff7cf716d94ce6bacc36a6d16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "876e34f4_2d722cf2",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5083,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-06-30T14:55:36Z",
+      "side": 1,
+      "message": "When will this be null? I don\u0027t see any report of NPE on this.",
+      "range": {
+        "startLine": 5083,
+        "startChar": 8,
+        "endLine": 5083,
+        "endChar": 39
+      },
+      "revId": "cb294a629d3e103ff7cf716d94ce6bacc36a6d16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31790d9a_30f4380e",
+        "filename": "core/java/android/view/WindowManagerGlobal.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-06-30T14:55:36Z",
+      "side": 1,
+      "message": "Again, this is a legacy code, can you please explain why this change is needed?",
+      "range": {
+        "startLine": 405,
+        "startChar": 16,
+        "endLine": 406,
+        "endChar": 43
+      },
+      "revId": "cb294a629d3e103ff7cf716d94ce6bacc36a6d16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

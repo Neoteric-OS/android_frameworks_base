@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "159d8eeb_86e7fd35",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-06-30T14:55:36Z",
+      "side": 0,
+      "message": "This is a very legacy code. Can you please explain why you are changing it?",
+      "range": {
+        "startLine": 1180,
+        "startChar": 19,
+        "endLine": 1184,
+        "endChar": 54
+      },
+      "revId": "10c7acc51d8c59b952aaab6b47ddc13577d503d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
