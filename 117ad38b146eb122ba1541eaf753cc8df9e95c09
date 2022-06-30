@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bda9540d_e0d16e8b",
+        "filename": "media/java/android/media/AudioAttributes.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2022-06-30T17:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f73a9ddd_1f0b2f12",
+      "range": {
+        "startLine": 1202,
+        "startChar": 53,
+        "endLine": 1204,
+        "endChar": 40
+      },
+      "revId": "117ad38b146eb122ba1541eaf753cc8df9e95c09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca284f8f_f4b36e10",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-06-30T17:11:57Z",
       "side": 1,
       "message": "Maybe don\u0027t mention \"muted\" in this API docs, since there is no other requirement o unmute the channels?\n\nI\u0027d suggest to also make this sentence more direct, like: \"The effect can only be enabled if the app have the ...\".",
+      "range": {
+        "startLine": 96,
+        "startChar": 24,
+        "endLine": 96,
+        "endChar": 38
+      },
+      "revId": "117ad38b146eb122ba1541eaf753cc8df9e95c09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bc9c641_e334c421",
+        "filename": "media/java/android/media/audiofx/HapticGenerator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2022-06-30T17:40:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca284f8f_f4b36e10",
       "range": {
         "startLine": 96,
         "startChar": 24,
