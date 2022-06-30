@@ -3823,6 +3823,10 @@ public class Vpn {
         }
     }
 
+    private boolean hasControlVpnPermission(int uid) {
+        return mContext.checkPermission(CONTROL_VPN, -1 /* pid */, uid) == PERMISSION_GRANTED;
+    }
+
     /**
      * Stores an app-provisioned VPN profile and returns whether the app is already prepared.
      *
@@ -3857,8 +3861,10 @@ public class Vpn {
             Binder.restoreCallingIdentity(token);
         }
 
-        // TODO: if package has CONTROL_VPN, grant the ACTIVATE_PLATFORM_VPN appop.
-        // This mirrors the prepareAndAuthorize that is used by VpnService.
+        // If package has CONTROL_VPN, grant the ACTIVATE_PLATFORM_VPN appop.
+        if (hasControlVpnPermission(getAppUid(packageName, mUserId))) {
+            setPackageAuthorization(packageName, VpnManager.TYPE_VPN_PLATFORM);
+        }
 
         // Return whether the app is already pre-consented
         return isVpnProfilePreConsented(mContext, packageName);
