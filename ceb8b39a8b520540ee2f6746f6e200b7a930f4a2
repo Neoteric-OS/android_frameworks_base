@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "897b07ad_80344762",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-06-30T14:37:41Z",
+      "side": 1,
+      "message": "Do you have any example in AOSP?",
+      "range": {
+        "startLine": 9,
+        "startChar": 152,
+        "endLine": 9,
+        "endChar": 235
+      },
+      "revId": "ceb8b39a8b520540ee2f6746f6e200b7a930f4a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bf4d9ac_0f929313",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-06-30T14:37:41Z",
+      "side": 1,
+      "message": "Can you please file a bug, and link the bug id here so we can keep this in track?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "ceb8b39a8b520540ee2f6746f6e200b7a930f4a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fea4717_3e39ac1e",
+        "filename": "services/core/java/com/android/server/wm/RemoteAnimationController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-06-30T14:37:41Z",
+      "side": 1,
+      "message": "nit: `!mPendingAnimations.isEmpty()`",
+      "range": {
+        "startLine": 255,
+        "startChar": 23,
+        "endLine": 255,
+        "endChar": 52
+      },
+      "revId": "ceb8b39a8b520540ee2f6746f6e200b7a930f4a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
