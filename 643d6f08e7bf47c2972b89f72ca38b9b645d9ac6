@@ -39,6 +39,30 @@
       },
       "revId": "643d6f08e7bf47c2972b89f72ca38b9b645d9ac6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d789132f_eb8df60e",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 21472,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2022-06-30T18:30:10Z",
+      "side": 1,
+      "message": "Thanks for providing the suggestion.\n\nIt may be required to handle the \u0027DTSHD\u0027, \u0027DTSHD_PROFILE_LBR\u0027 and \u0027DTSHD_PROFILE_MA\u0027 differently.\nThe audio decoding devices which only have the legacy \u0027DTS Digital Surround\u0027 capability can\u0027t handle the LBR or MA type streams.\nBut those devices can decode the \u0027DTSHD\u0027 type streams(by discarding unknown bitstream construct in HD streams).\n\nSimilarly, the \u0027DTSUHD_PROFILE_P1\u0027 decoder can\u0027t handle the \u0027DTSUHD_PROFILE_P2\u0027 type streams.\n\nPlease note that, the Profile1, and Profile 2 extensions are used with \u0027DTS UHD\u0027 stream category not with the \u0027DTS HD\u0027.",
+      "parentUuid": "73b78d0d_fad83ded",
+      "range": {
+        "startLine": 21472,
+        "startChar": 55,
+        "endLine": 21472,
+        "endChar": 75
+      },
+      "revId": "643d6f08e7bf47c2972b89f72ca38b9b645d9ac6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
