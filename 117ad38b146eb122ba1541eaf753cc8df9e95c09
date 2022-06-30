@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd598188_a38ba5f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2022-06-30T17:11:57Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "117ad38b146eb122ba1541eaf753cc8df9e95c09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f73a9ddd_1f0b2f12",
+        "filename": "media/java/android/media/AudioAttributes.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2022-06-30T17:11:57Z",
+      "side": 1,
+      "message": "nit: Maybe update the order of the sentence to be more direct, like \"This will be ignored if the app doesn\u0027t...\". I\u0027d also suggest adding paragraph breaks at some point.",
+      "range": {
+        "startLine": 1202,
+        "startChar": 53,
+        "endLine": 1204,
+        "endChar": 40
+      },
+      "revId": "117ad38b146eb122ba1541eaf753cc8df9e95c09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca284f8f_f4b36e10",
+        "filename": "media/java/android/media/audiofx/HapticGenerator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2022-06-30T17:11:57Z",
+      "side": 1,
+      "message": "Maybe don\u0027t mention \"muted\" in this API docs, since there is no other requirement o unmute the channels?\n\nI\u0027d suggest to also make this sentence more direct, like: \"The effect can only be enabled if the app have the ...\".",
+      "range": {
+        "startLine": 96,
+        "startChar": 24,
+        "endLine": 96,
+        "endChar": 38
+      },
+      "revId": "117ad38b146eb122ba1541eaf753cc8df9e95c09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
