@@ -2596,7 +2596,7 @@ public class Vpn {
     }
 
     @Nullable
-    protected synchronized NetworkCapabilities getRedactedNetworkCapabilitiesOfUnderlyingNetwork(
+    protected synchronized NetworkCapabilities getRedactedNetworkCapabilities(
             NetworkCapabilities nc) {
         if (nc == null) return null;
         return mConnectivityManager.getRedactedNetworkCapabilitiesForPackage(
@@ -2604,8 +2604,7 @@ public class Vpn {
     }
 
     @Nullable
-    protected synchronized LinkProperties getRedactedLinkPropertiesOfUnderlyingNetwork(
-            LinkProperties lp) {
+    protected synchronized LinkProperties getRedactedLinkProperties(LinkProperties lp) {
         if (lp == null) return null;
         return mConnectivityManager.getRedactedLinkPropertiesForPackage(lp, mOwnerUID, mPackage);
     }
@@ -3352,10 +3351,8 @@ public class Vpn {
                     sendEventToVpnManagerApp(category, errorClass, errorCode,
                             getPackage(), mSessionKey, makeVpnProfileStateLocked(),
                             mActiveNetwork,
-                            getRedactedNetworkCapabilitiesOfUnderlyingNetwork(
-                                    mUnderlyingNetworkCapabilities),
-                            getRedactedLinkPropertiesOfUnderlyingNetwork(
-                                    mUnderlyingLinkProperties));
+                            getRedactedNetworkCapabilities(mUnderlyingNetworkCapabilities),
+                            getRedactedLinkProperties(mUnderlyingLinkProperties));
                 }
 
                 if (errorClass == VpnManager.ERROR_CLASS_NOT_RECOVERABLE) {
