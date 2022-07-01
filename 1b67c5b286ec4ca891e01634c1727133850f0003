@@ -22,6 +22,30 @@
       },
       "revId": "1b67c5b286ec4ca891e01634c1727133850f0003",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb938a59_9a05e89a",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-07-01T23:17:43Z",
+      "side": 1,
+      "message": "Yeah, I agree. I am not sure why we were writing to both log buffers to begin with. I guess there is less of a chance it gets rolled off? In any case, I removed Slog from all but logWtf, which is in line with NetworkStackClient.java.",
+      "parentUuid": "b4df38e5_11cfd384",
+      "range": {
+        "startLine": 384,
+        "startChar": 8,
+        "endLine": 384,
+        "endChar": 12
+      },
+      "revId": "1b67c5b286ec4ca891e01634c1727133850f0003",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
