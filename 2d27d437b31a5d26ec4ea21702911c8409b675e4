@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "690f06f4_80f2b215",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1838859
+      },
+      "writtenOn": "2022-07-01T06:27:36Z",
+      "side": 1,
+      "message": "mFirstInputStage is null",
+      "range": {
+        "startLine": 1184,
+        "startChar": 28,
+        "endLine": 1186,
+        "endChar": 82
+      },
+      "revId": "2d27d437b31a5d26ec4ea21702911c8409b675e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
