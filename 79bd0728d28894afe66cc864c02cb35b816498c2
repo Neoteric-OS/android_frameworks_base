@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2176745_fd8c758f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2022-07-01T10:02:52Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "79bd0728d28894afe66cc864c02cb35b816498c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ef639e2_330ec1bf",
+        "filename": "media/java/android/media/AudioAttributes.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2022-07-01T10:02:52Z",
+      "side": 1,
+      "message": "nit: please add a \u003cp\u003e to add the paragraph to the formatted docs.",
+      "range": {
+        "startLine": 1203,
+        "startChar": 11,
+        "endLine": 1203,
+        "endChar": 15
+      },
+      "revId": "79bd0728d28894afe66cc864c02cb35b816498c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
