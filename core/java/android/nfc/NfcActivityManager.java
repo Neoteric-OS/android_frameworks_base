@@ -19,8 +19,6 @@ package android.nfc;
 import android.app.Activity;
 import android.app.Application;
 import android.compat.annotation.UnsupportedAppUsage;
-import android.content.ContentProvider;
-import android.content.Intent;
 import android.net.Uri;
 import android.nfc.NfcAdapter.ReaderCallback;
 import android.os.Binder;
@@ -351,7 +349,7 @@ public final class NfcActivityManager extends IAppCallback.Stub
         }
     }
 
-    /** Callback from NFC service, usually on binder thread */
+    /** Callback from NFC service, usually on binder thread
     @Override
     public BeamShareData createBeamShareData(byte peerLlcpVersion) {
         NfcAdapter.CreateNdefMessageCallback ndefCallback;
@@ -412,10 +410,9 @@ public final class NfcActivityManager extends IAppCallback.Stub
             Binder.restoreCallingIdentity(ident);
         }
         return new BeamShareData(message, uris, activity.getUser(), flags);
-    }
+    } */
 
     /** Callback from NFC service, usually on binder thread */
-    @Override
     public void onNdefPushComplete(byte peerLlcpVersion) {
         NfcAdapter.OnNdefPushCompleteCallback callback;
         synchronized (NfcActivityManager.this) {
