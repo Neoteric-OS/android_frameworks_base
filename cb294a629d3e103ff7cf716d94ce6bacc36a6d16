@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4a32da45_cad043fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-07-01T06:55:40Z",
+      "side": 1,
+      "message": "I still don\u0027t understand. When you remove a legacy code, why do you think it is causing issue? And why do you think it is not needed for other cases?\n\nTiger, mind taking a look?",
+      "parentUuid": "2847b8c4_fbb6be57",
+      "revId": "cb294a629d3e103ff7cf716d94ce6bacc36a6d16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "876e34f4_2d722cf2",
         "filename": "core/java/android/view/ViewRootImpl.java",
         "patchSetId": 5
