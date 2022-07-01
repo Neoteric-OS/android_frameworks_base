@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4df38e5_11cfd384",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-07-01T17:32:13Z",
+      "side": 1,
+      "message": "I\u0027m not actually sure the Slog is necessary now ? For SharedLog.log it wouldn\u0027t log anything to logcat, but now it does so maybe Slog isn\u0027t necessary\n\nThey probably were not really necessary for the other log levels either...",
+      "range": {
+        "startLine": 384,
+        "startChar": 8,
+        "endLine": 384,
+        "endChar": 12
+      },
+      "revId": "1b67c5b286ec4ca891e01634c1727133850f0003",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
