@@ -1080,7 +1080,14 @@ class ProcessRecord implements WindowProcessListener {
                         + "): " + reason, info.uid);
             }
             if (mPid > 0) {
+<<<<<<< PATCH SET (61487c [Bugfix][Stability] Fix system_server kills itself by mistak)
+                if (mPid != Process.getThreadGroupLeader(mPid)) {
+                    return;
+                }
+                mService.mProcessList.noteAppKill(this, reasonCode, subReason, reason);
+=======
                 mService.mProcessList.noteAppKill(this, reasonCode, subReason, description);
+>>>>>>> BASE      (5d7776 Merge "Update javadoc for getDeclaredInstances.")
                 EventLog.writeEvent(EventLogTags.AM_KILL,
                         userId, mPid, processName, mState.getSetAdj(), reason);
                 Process.killProcessQuiet(mPid);
