@@ -1083,7 +1083,14 @@ class ProcessRecord implements WindowProcessListener {
                 mService.mProcessList.noteAppKill(this, reasonCode, subReason, description);
                 EventLog.writeEvent(EventLogTags.AM_KILL,
                         userId, mPid, processName, mState.getSetAdj(), reason);
-                Process.killProcessQuiet(mPid);
+                int tgid = Process.getThreadGroupLeader(mPid);
+                if (tgid == mPid) {
+                    // To prevent killing by mistake.
+                    Process.killProcessQuiet(mPid);
+                } else {
+                    Slog.w(TAG, "Failed to kill, mPid = " + mPid + " tgid = " + tgid);
+                }
+                // killProcessGroup is always needed to kill the processes forked by apps.
                 ProcessList.killProcessGroup(uid, mPid);
             } else {
                 mPendingStart = false;
