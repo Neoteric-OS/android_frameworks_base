@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8ead4da_383d3ce4",
+        "filename": "services/core/java/com/android/server/wm/RemoteAnimationController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2022-07-04T15:28:48Z",
+      "side": 1,
+      "message": "How about add a field `private boolean mIsFinishing` and set it in onAnimationFinished.\nAnd then add `if (mIsFinishing) return;` above this line.\n\nBecause it may be weird that the animation is finishing normally but still send `onAnimationCancelled`. Also the callback `onAnimationFinished` may be missed if we allow here to remove the finishing records. This also avoids the potentail recursion to go deeper and still encounter other problems.",
+      "revId": "a6be0d282d8e2819f7a2d7a571cd9da9847fa048",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
