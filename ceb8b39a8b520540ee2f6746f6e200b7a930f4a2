@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b8b80df_1aeffb39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1840920
+      },
+      "writtenOn": "2022-07-04T14:22:50Z",
+      "side": 1,
+      "message": "The bug was founded in monkey test, we have not found the reproduce steps.",
+      "parentUuid": "897b07ad_80344762",
+      "range": {
+        "startLine": 9,
+        "startChar": 152,
+        "endLine": 9,
+        "endChar": 235
+      },
+      "revId": "ceb8b39a8b520540ee2f6746f6e200b7a930f4a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0bf4d9ac_0f929313",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a328c166_5ddc1712",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1840920
+      },
+      "writtenOn": "2022-07-04T14:22:50Z",
+      "side": 1,
+      "message": "The bug can be found in https://partnerissuetracker.corp.google.com/u/1/issues/237989368",
+      "parentUuid": "0bf4d9ac_0f929313",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "ceb8b39a8b520540ee2f6746f6e200b7a930f4a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0fea4717_3e39ac1e",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-06-30T14:37:41Z",
       "side": 1,
       "message": "nit: `!mPendingAnimations.isEmpty()`",
+      "range": {
+        "startLine": 255,
+        "startChar": 23,
+        "endLine": 255,
+        "endChar": 52
+      },
+      "revId": "ceb8b39a8b520540ee2f6746f6e200b7a930f4a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c034d5e6_8deea047",
+        "filename": "services/core/java/com/android/server/wm/RemoteAnimationController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1840920
+      },
+      "writtenOn": "2022-07-04T14:22:50Z",
+      "side": 1,
+      "message": "Thanks for advice.",
+      "parentUuid": "0fea4717_3e39ac1e",
       "range": {
         "startLine": 255,
         "startChar": 23,
