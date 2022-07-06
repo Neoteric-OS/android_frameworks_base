@@ -3302,6 +3302,12 @@ public class Vpn {
             String category = null;
             int errorClass = -1;
             int errorCode = -1;
+            if (exception instanceof IllegalArgumentException) {
+                // Failed to build IKE/ChildSessionParams; fatal profile configuration error
+                markFailedAndDisconnect(exception);
+                return;
+            }
+
             if (exception instanceof IkeProtocolException) {
                 final IkeProtocolException ikeException = (IkeProtocolException) exception;
                 category = VpnManager.CATEGORY_EVENT_IKE_ERROR;
@@ -3322,10 +3328,6 @@ public class Vpn {
                         // All the above failures are configuration errors, and are terminal
                         errorClass = VpnManager.ERROR_CLASS_RECOVERABLE;
                 }
-            } else if (exception instanceof IllegalArgumentException) {
-                // Failed to build IKE/ChildSessionParams; fatal profile configuration error
-                markFailedAndDisconnect(exception);
-                return;
             } else if (exception instanceof IkeNetworkLostException) {
                 category = VpnManager.CATEGORY_EVENT_NETWORK_ERROR;
                 errorClass = VpnManager.ERROR_CLASS_RECOVERABLE;
