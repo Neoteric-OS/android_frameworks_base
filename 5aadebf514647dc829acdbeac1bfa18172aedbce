@@ -16,6 +16,24 @@
       "message": "lgtm, but also +vichang@ in case there\u0027s something else we should be looking at for why this is timing out.",
       "revId": "5aadebf514647dc829acdbeac1bfa18172aedbce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bd0bf6f_c55a8579",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2022-07-06T08:48:11Z",
+      "side": 1,
+      "message": "The WaitForGcToComplete tooks 300+ seconds to finish. So there is likely a memory leak in this or some perf tests. I suspect that removing this test alone may not fix the issue, because there are other SimpleDateFormat test here.\n\nBut feel free to experiment removing the test if it improves. Ideally, we should have a heap dump to investigate the root cause.",
+      "parentUuid": "32a7afcd_d3305429",
+      "revId": "5aadebf514647dc829acdbeac1bfa18172aedbce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
