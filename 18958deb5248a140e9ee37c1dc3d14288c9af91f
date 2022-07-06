@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e25673e8_24214a4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-07-06T15:16:28Z",
+      "side": 1,
+      "message": "Is there a reason for using HdmiProperties.cec_device_types_values as field types in all these classes? Are other framework classes re-using sysprop enum types as well? I feel like we\u0027re mixing framework types with sysprop types here, and I\u0027m not convinced that that\u0027s the way to go. To me, it looks like we\u0027re using the sysprop enum for more than it was meant for.\n\nDo we win anything by fixing the field type to HdmiProperties.cec_device_types_values? Using the enum sysprop will already make sure that the device types are configured correctly, which is better than the int used before. Isn\u0027t that enough already?\n\nSince HdmiDeviceInfo still uses the integers, we have many conversions from cec_device_types_values back to int, that I think could be avoided. If we do want to use enums for the device types inside the framework as well, it\u0027d be better to define an IntDef in HdmiDeviceInfo, and use that for the device type throughout the framework. What do you think?",
+      "revId": "18958deb5248a140e9ee37c1dc3d14288c9af91f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
