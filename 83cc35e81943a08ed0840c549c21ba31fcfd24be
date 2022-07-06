@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "90b2a9b8_150bdc62",
+        "filename": "media/java/android/media/AudioAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2022-07-06T16:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f09c7055_d597b6ab",
+      "range": {
+        "startLine": 1203,
+        "startChar": 42,
+        "endLine": 1203,
+        "endChar": 59
+      },
+      "revId": "83cc35e81943a08ed0840c549c21ba31fcfd24be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f4f15906_a3e354fb",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-07-06T16:30:44Z",
       "side": 1,
       "message": "caller has the",
+      "range": {
+        "startLine": 94,
+        "startChar": 75,
+        "endLine": 94,
+        "endChar": 84
+      },
+      "revId": "83cc35e81943a08ed0840c549c21ba31fcfd24be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b8a6ba3_0c754abf",
+        "filename": "media/java/android/media/audiofx/HapticGenerator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2022-07-06T16:34:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4f15906_a3e354fb",
       "range": {
         "startLine": 94,
         "startChar": 75,
