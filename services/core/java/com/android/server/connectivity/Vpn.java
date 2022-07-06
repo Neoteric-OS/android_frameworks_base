@@ -3325,7 +3325,6 @@ public class Vpn {
                         break;
                     // All other cases possibly recoverable.
                     default:
-                        // All the above failures are configuration errors, and are terminal
                         errorClass = VpnManager.ERROR_CLASS_RECOVERABLE;
                 }
             } else if (exception instanceof IkeNetworkLostException) {
