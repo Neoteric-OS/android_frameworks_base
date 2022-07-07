@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32de055f_e36579a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1944400
+      },
+      "writtenOn": "2022-07-07T18:29:26Z",
+      "side": 1,
+      "message": "If the object count included binders (which I plan on proposing at some point), then I think it would be fine to marshal an rpc parcel when the count is zero. I guess it would be confusing to have 2 different \"persistent\" serialization formats though.",
+      "revId": "aa7b525204b537a58b6ba5f611d242850c7adf8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
