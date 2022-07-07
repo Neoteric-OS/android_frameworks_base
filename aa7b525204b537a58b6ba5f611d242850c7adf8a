@@ -33,6 +33,24 @@
       "message": "nit: should be \"marshal\", but maybe difficult to change elsewhere in this file",
       "revId": "aa7b525204b537a58b6ba5f611d242850c7adf8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "399afb8d_1a746181",
+        "filename": "core/jni/android_os_Parcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-07-07T20:49:13Z",
+      "side": 1,
+      "message": "Right, Parcel.java marshall is the in the SDK API surface. We can\u0027t change it.",
+      "parentUuid": "f32e99f7_1ef2ef73",
+      "revId": "aa7b525204b537a58b6ba5f611d242850c7adf8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
