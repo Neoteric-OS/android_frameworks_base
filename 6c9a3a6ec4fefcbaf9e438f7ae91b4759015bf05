@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ba2158d_5470c22f",
+        "filename": "services/core/java/com/android/server/wm/RemoteAnimationController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1840920
+      },
+      "writtenOn": "2022-07-08T15:36:16Z",
+      "side": 1,
+      "message": "Thanks for advice!",
+      "parentUuid": "8bd1e9a2_0bb07009",
+      "revId": "6c9a3a6ec4fefcbaf9e438f7ae91b4759015bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c85802a4_0da70cc6",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45390fd1_979652da",
+        "filename": "services/core/java/com/android/server/wm/RemoteAnimationController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1840920
+      },
+      "writtenOn": "2022-07-08T15:36:16Z",
+      "side": 1,
+      "message": "Thanks for advice!",
+      "parentUuid": "c85802a4_0da70cc6",
+      "revId": "6c9a3a6ec4fefcbaf9e438f7ae91b4759015bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5cd1e47e_f87a2a51",
@@ -48,6 +84,24 @@
       "writtenOn": "2022-07-08T13:24:48Z",
       "side": 1,
       "message": "Move to #295. That also avoids conflict by the way.",
+      "revId": "6c9a3a6ec4fefcbaf9e438f7ae91b4759015bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "870416b8_9ced2017",
+        "filename": "services/core/java/com/android/server/wm/RemoteAnimationController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1840920
+      },
+      "writtenOn": "2022-07-08T15:36:16Z",
+      "side": 1,
+      "message": "Thanks for advice!",
+      "parentUuid": "5cd1e47e_f87a2a51",
       "revId": "6c9a3a6ec4fefcbaf9e438f7ae91b4759015bf05",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
