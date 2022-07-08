@@ -8310,8 +8310,10 @@ public abstract class PackageManager {
     /**
      * Return interface that offers the ability to install, upgrade, and remove
      * applications on the device.
+     * 
+     * Can return null when the calling app is an <a href="https://developer.android.com/topic/google-play-instant/overview">Instant App</a>.
      */
-    public abstract @NonNull PackageInstaller getPackageInstaller();
+    public abstract @Nullable PackageInstaller getPackageInstaller();
 
     /**
      * Adds a {@code CrossProfileIntentFilter}. After calling this method all
