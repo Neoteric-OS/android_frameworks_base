@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21a9fa1b_a37bb06a",
+        "filename": "services/core/java/com/android/server/wm/RemoteAnimationController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2022-07-08T16:11:19Z",
+      "side": 1,
+      "message": "Try to resolve\n```\n  \u003c\u003c\u003c\u003c\u003c\u003c\u003c ours\n +    private final boolean mIsActivityEmbedding;\n  \u003d\u003d\u003d\u003d\u003d\u003d\u003d\n+     private boolean mIsFinishing;\n  \u003e\u003e\u003e\u003e\u003e\u003e\u003e theirs\n      private boolean mCanceled;\n      private boolean mLinkedToDeathOfRunner;\n +    @Nullable\n +    private Runnable mOnRemoteAnimationReady;\n```",
+      "revId": "ea1405e1ba86e56a98fda80a2bbc9a780d1522f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
