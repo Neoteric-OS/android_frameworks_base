@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bd1e9a2_0bb07009",
+        "filename": "services/core/java/com/android/server/wm/RemoteAnimationController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2022-07-08T13:24:48Z",
+      "side": 1,
+      "message": "Maybe try to move up to line #73 to avoid conflict with internal branch.",
+      "revId": "6c9a3a6ec4fefcbaf9e438f7ae91b4759015bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c85802a4_0da70cc6",
+        "filename": "services/core/java/com/android/server/wm/RemoteAnimationController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2022-07-08T13:24:48Z",
+      "side": 1,
+      "message": "Move to #251",
+      "revId": "6c9a3a6ec4fefcbaf9e438f7ae91b4759015bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cd1e47e_f87a2a51",
+        "filename": "services/core/java/com/android/server/wm/RemoteAnimationController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2022-07-08T13:24:48Z",
+      "side": 1,
+      "message": "Move to #295. That also avoids conflict by the way.",
+      "revId": "6c9a3a6ec4fefcbaf9e438f7ae91b4759015bf05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
