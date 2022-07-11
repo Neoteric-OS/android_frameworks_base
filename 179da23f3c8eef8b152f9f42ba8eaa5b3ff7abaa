@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abff0807_f092065f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-07-11T03:36:19Z",
+      "side": 1,
+      "message": "+Li here",
+      "revId": "179da23f3c8eef8b152f9f42ba8eaa5b3ff7abaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef8bee91_3ed68e7d",
+        "filename": "services/core/java/com/android/server/am/ProcessRecord.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-07-11T03:36:19Z",
+      "side": 1,
+      "message": "shall we return from here if false?",
+      "range": {
+        "startLine": 1001,
+        "startChar": 28,
+        "endLine": 1001,
+        "endChar": 71
+      },
+      "revId": "179da23f3c8eef8b152f9f42ba8eaa5b3ff7abaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
