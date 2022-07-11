@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "8982209e_023d8027",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1741425
+      },
+      "writtenOn": "2022-07-11T19:43:03Z",
+      "side": 1,
+      "message": "Discussed with Suren offline. This workaround is helpful for system_server although  it doesn\u0027t prevent killing other innocent processes.\n\nyuxi1@xiaomi.com, could you please create a bug as Suren suggested so that we can follow up there? Thanks!",
+      "parentUuid": "24077add_5378bd91",
+      "revId": "7d7b4d33221e166f8cdf0314dece6c3ed48a3c1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "3c53dc61_2e67c7fc",
