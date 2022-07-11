@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c53dc61_2e67c7fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1741425
+      },
+      "writtenOn": "2022-07-11T17:45:58Z",
+      "side": 1,
+      "message": "This workaround looks fine to me. But I think the correct long term solution is to use pidfd which solves the PID reuse issue completely.\n\nAnd we should also consider increasing the pid_max from current 32768 to a larger value in the near future.",
+      "revId": "7d7b4d33221e166f8cdf0314dece6c3ed48a3c1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
