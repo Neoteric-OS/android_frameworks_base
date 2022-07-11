@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee04b70c_907dd6a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2022-07-11T06:24:34Z",
+      "side": 1,
+      "message": "Could you try to format this commit message by https://android-review.googlesource.com/c/platform/frameworks/base/+/2132452/15//COMMIT_MSG,edit#1 (break line by line length 72) and press \"save and publish\". Then the \"uploader\" will be refreshed so this change can be submitted.",
+      "revId": "ea1405e1ba86e56a98fda80a2bbc9a780d1522f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "21a9fa1b_a37bb06a",
