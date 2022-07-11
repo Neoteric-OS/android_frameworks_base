@@ -39,6 +39,30 @@
       },
       "revId": "179da23f3c8eef8b152f9f42ba8eaa5b3ff7abaa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ca971b9_b7ae607a",
+        "filename": "services/core/java/com/android/server/am/ProcessRecord.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1840920
+      },
+      "writtenOn": "2022-07-11T06:56:01Z",
+      "side": 1,
+      "message": "Thanks for advice.",
+      "parentUuid": "ef8bee91_3ed68e7d",
+      "range": {
+        "startLine": 1001,
+        "startChar": 28,
+        "endLine": 1001,
+        "endChar": 71
+      },
+      "revId": "179da23f3c8eef8b152f9f42ba8eaa5b3ff7abaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
