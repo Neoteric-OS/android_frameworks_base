@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.UserInfo;
 import android.net.ConnectivityManager;
 import android.net.INetd;
 import android.net.IVpnManager;
@@ -66,6 +67,7 @@ import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.connectivity.Vpn;
 import com.android.server.connectivity.VpnProfileStore;
 import com.android.server.net.LockdownVpnTracker;
+import com.android.server.pm.UserManagerInternal;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -775,6 +777,13 @@ public class VpnManagerService extends IVpnManager.Stub {
     };
 
     private void onUserStarted(int userId) {
+        UserManagerInternal umInternal = LocalServices.getService(UserManagerInternal.class);
+        UserInfo user = umInternal.getUserInfo(userId);
+        if (user == null) {
+            logw("Started user doesn't exist. UserId: " + userId);
+            return;
+        }
+
         synchronized (mVpns) {
             Vpn userVpn = mVpns.get(userId);
             if (userVpn != null) {
@@ -783,7 +792,8 @@ public class VpnManagerService extends IVpnManager.Stub {
             }
             userVpn = mDeps.createVpn(mHandler.getLooper(), mContext, mNMS, mNetd, userId);
             mVpns.put(userId, userVpn);
-            if (mUserManager.getUserInfo(userId).isPrimary() && isLockdownVpnEnabled()) {
+
+            if (user.isPrimary() && isLockdownVpnEnabled()) {
                 updateLockdownVpn();
             }
         }
@@ -898,9 +908,16 @@ public class VpnManagerService extends IVpnManager.Stub {
     }
 
     private void onUserUnlocked(int userId) {
+        UserManagerInternal umInternal = LocalServices.getService(UserManagerInternal.class);
+        UserInfo user = umInternal.getUserInfo(userId);
+        if (user == null) {
+            logw("Unlocked user doesn't exist. UserId: " + userId);
+            return;
+        }
+
         synchronized (mVpns) {
             // User present may be sent because of an unlock, which might mean an unlocked keystore.
-            if (mUserManager.getUserInfo(userId).isPrimary() && isLockdownVpnEnabled()) {
+            if (user.isPrimary() && isLockdownVpnEnabled()) {
                 updateLockdownVpn();
             } else {
                 startAlwaysOnVpn(userId);
