@@ -67,6 +67,23 @@
       "message": "(Will let Beth +2 this!)",
       "revId": "de0d9e38080ce5f9ea8637da66b22e0d4fe62d16",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90e27faf_51c2b657",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1673919
+      },
+      "writtenOn": "2022-07-11T08:23:33Z",
+      "side": 1,
+      "message": "\u003e Patch Set 1: Code-Review+2\n\u003e \n\u003e By voting Code-Review+2 the following files are now code-owner approved by \u003cGERRIT_ACCOUNT_1385606\u003e:\n\u003e * packages/SystemUI/src/com/android/systemui/media/NotificationPlayer.java\n\u003e \n\nHi Beth, will the change be submitted?",
+      "revId": "de0d9e38080ce5f9ea8637da66b22e0d4fe62d16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
