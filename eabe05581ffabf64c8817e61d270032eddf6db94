@@ -16,6 +16,23 @@
       "message": "Looks like a flake.",
       "revId": "eabe05581ffabf64c8817e61d270032eddf6db94",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bb9c153_7562e382",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2022-07-12T07:44:30Z",
+      "side": 1,
+      "message": "(flake was in com.android.server.usage.AppStandbyControllerTests#testNotificationEvent_quotaBump - which looks utterly unrelated, besides don\u0027t see how this could cause any failures, besides build)",
+      "revId": "eabe05581ffabf64c8817e61d270032eddf6db94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
