@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "76dd5b06_45b605d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1840920
+      },
+      "writtenOn": "2022-07-12T13:15:31Z",
+      "side": 1,
+      "message": "Thanks for review! The bug is here https://partnerissuetracker.corp.google.com/u/1/issues/238734636",
+      "parentUuid": "8982209e_023d8027",
+      "revId": "7d7b4d33221e166f8cdf0314dece6c3ed48a3c1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "3c53dc61_2e67c7fc",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 10
