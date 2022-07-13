@@ -63,6 +63,30 @@
       },
       "revId": "643d6f08e7bf47c2972b89f72ca38b9b645d9ac6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed55e93c_a6757a63",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 21472,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2022-07-13T18:19:23Z",
+      "side": 1,
+      "message": "https://www.iana.org/assignments/media-types/audio/vnd.dts.hd\nseems to indicate that\nthe \";profile\u003d\" is a required part of the mimetype.  ok that means that\ncontent exists and will show up with this...\n\nthe \";profile\u003d\" piece is marked as a required parameter; I wish we had a better way to encode that parameter.\n\nThe web page above does seem to say that\n\u003d\u003d MIMETYPE_AUDIO_VND_DTSHD \u003d \"audio/vnd.dts.hd\";\nis invalid, since the \"profile\u003d\" is listed as a required parameter.\n\nif we\u0027re going to accept \"audio/vnd.dts.hd\" even though it\u0027s not compliant (e.g. because we want to be forgiving about bad content). then we should probably do something like immediately convert that invalid mimetype string into a legal one (meaning add a \u0027;profile\u003dxxx\u0027) so that we can do all of the rest of the processing with just the legal sets of profiles.",
+      "parentUuid": "d789132f_eb8df60e",
+      "range": {
+        "startLine": 21472,
+        "startChar": 55,
+        "endLine": 21472,
+        "endChar": 75
+      },
+      "revId": "643d6f08e7bf47c2972b89f72ca38b9b645d9ac6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
