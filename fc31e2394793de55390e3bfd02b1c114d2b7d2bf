@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c76c7051_0b5153a3",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 12814,
+      "author": {
+        "id": 1490327
+      },
+      "writtenOn": "2022-07-14T21:54:15Z",
+      "side": 1,
+      "message": "good point. updated to \u0027some a11y services\u0027",
+      "parentUuid": "498910d8_ed2994d5",
+      "range": {
+        "startLine": 12814,
+        "startChar": 16,
+        "endLine": 12814,
+        "endChar": 38
+      },
+      "revId": "fc31e2394793de55390e3bfd02b1c114d2b7d2bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dabddb86_b9b7145c",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-07-14T00:22:35Z",
       "side": 1,
       "message": "To denote there are other experiences besides paragraphs and words maybe \"paragraphs, words, etc.\"?",
+      "range": {
+        "startLine": 12815,
+        "startChar": 26,
+        "endLine": 12815,
+        "endChar": 53
+      },
+      "revId": "fc31e2394793de55390e3bfd02b1c114d2b7d2bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11c8013c_e0a21352",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 12815,
+      "author": {
+        "id": 1490327
+      },
+      "writtenOn": "2022-07-14T21:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabddb86_b9b7145c",
       "range": {
         "startLine": 12815,
         "startChar": 26,
