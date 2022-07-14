@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7c5c187_f44f3cd5",
+        "filename": "libs/hwui/jni/Paint.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2022-07-14T18:37:13Z",
+      "side": 1,
+      "message": "nit: add a comment explaining when this was added. Is it O and O_MR1?",
+      "revId": "7188093db7b7faeee0a47adac08f621d525db787",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
