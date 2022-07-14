@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "498910d8_ed2994d5",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 12814,
+      "author": {
+        "id": 1410358
+      },
+      "writtenOn": "2022-07-14T00:22:35Z",
+      "side": 1,
+      "message": "Is this promising navigation ability? \"some accessibility services\" is more accurate but maybe less encouraging",
+      "range": {
+        "startLine": 12814,
+        "startChar": 16,
+        "endLine": 12814,
+        "endChar": 38
+      },
+      "revId": "fc31e2394793de55390e3bfd02b1c114d2b7d2bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dabddb86_b9b7145c",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 12815,
+      "author": {
+        "id": 1410358
+      },
+      "writtenOn": "2022-07-14T00:22:35Z",
+      "side": 1,
+      "message": "To denote there are other experiences besides paragraphs and words maybe \"paragraphs, words, etc.\"?",
+      "range": {
+        "startLine": 12815,
+        "startChar": 26,
+        "endLine": 12815,
+        "endChar": 53
+      },
+      "revId": "fc31e2394793de55390e3bfd02b1c114d2b7d2bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
