@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b40d3c8_21cccea4",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-07-15T22:54:17Z",
+      "side": 0,
+      "message": "Are we sure we want to remove this ? It is still here for A2dp and Hearing aid",
+      "range": {
+        "startLine": 839,
+        "startChar": 8,
+        "endLine": 840,
+        "endChar": 88
+      },
+      "revId": "c4a11b4ee19d16ca468b1294919038e6400e3193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
