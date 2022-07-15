@@ -4908,8 +4908,17 @@ public class WindowManagerService extends IWindowManager.Stub
                 InputManagerService.BTN_MOUSE);
         int volumeDownState = mInputManager.getKeyCodeState(-1, InputDevice.SOURCE_ANY,
                 KeyEvent.KEYCODE_VOLUME_DOWN);
+		String reason = SystemProperties.get("sys.boot.reason", "");
+		String[] strArr;
+		int isFromShell = 0;
+		if (!reason.isEmpty()) {
+			strArr = reason.split(",");
+			if (strArr.length > 1 && "safemode".equals(strArr[1]))
+				isFromShell = 1;
+		}
+
         mSafeMode = menuState > 0 || sState > 0 || dpadState > 0 || trackballState > 0
-                || volumeDownState > 0;
+                || volumeDownState > 0 || isFromShell > 0;
         try {
             if (SystemProperties.getInt(ShutdownThread.REBOOT_SAFEMODE_PROPERTY, 0) != 0
                     || SystemProperties.getInt(ShutdownThread.RO_SAFEMODE_PROPERTY, 0) != 0) {
@@ -4920,7 +4929,8 @@ public class WindowManagerService extends IWindowManager.Stub
         }
         if (mSafeMode) {
             ProtoLog.i(WM_ERROR, "SAFE MODE ENABLED (menu=%d s=%d dpad=%d"
-                    + " trackball=%d)", menuState, sState, dpadState, trackballState);
+                    + " trackball=%d isFromShell=%d)", menuState, sState, dpadState,
+                    trackballState, isFromShell);
             // May already be set if (for instance) this process has crashed
             if (SystemProperties.getInt(ShutdownThread.RO_SAFEMODE_PROPERTY, 0) == 0) {
                 SystemProperties.set(ShutdownThread.RO_SAFEMODE_PROPERTY, "1");
