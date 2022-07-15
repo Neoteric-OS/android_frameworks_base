@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b70d9f82_f9f42e0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1838859
+      },
+      "writtenOn": "2022-07-15T08:40:53Z",
+      "side": 1,
+      "message": "Hi Chris Li\nTest Application code:\n\npublic class MainActivity extends Activity {\n\n    private Handler mHandler \u003d new Handler();\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        mHandler.postDelayed(runable, 1000);\n    }\n\n    private Runnable runable \u003d new Runnable() {\n        @Override\n        public void run() {\n            Toast toast \u003d Toast.makeText(MainActivity.this, \"toast test!\", Toast.LENGTH_LONG);\n            toast.show();\n            toast.cancel();\n            mHandler.postDelayed(runable, 1000);\n        }\n    };\n}",
+      "parentUuid": "4a32da45_cad043fb",
+      "revId": "cb294a629d3e103ff7cf716d94ce6bacc36a6d16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "876e34f4_2d722cf2",
         "filename": "core/java/android/view/ViewRootImpl.java",
         "patchSetId": 5
