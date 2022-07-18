@@ -369,6 +369,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     static final int SETTINGS_KEY_BEHAVIOR_NOTIFICATION_PANEL = 1;
     static final int SETTINGS_KEY_BEHAVIOR_NOTHING = 2;
     static final int LAST_SETTINGS_KEY_BEHAVIOR = SETTINGS_KEY_BEHAVIOR_NOTHING;
+    static final int KEY_CONTROL_NONE = 0;
+    static final int KEY_CONTROL_BLOCK_ALL = 1;
+    static final int KEY_CONTROL_ALLOW_DPAD_DIRECTION = 2;
+    static final int KEY_CONTROL_ALLOW_DPAD_BACK_POWER_KEYS = 3;
 
     static final int PENDING_KEY_NULL = -1;
 
@@ -3541,6 +3545,36 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         final long keyNotConsumed = 0;
         final int deviceId = event.getDeviceId();
 
+        switch (SystemProperties.getInt("sys.wm.keycontrol", KEY_CONTROL_NONE)) {
+            case KEY_CONTROL_BLOCK_ALL: {
+                Log.w(TAG, "Key flow control. Block all keys.");
+                return 0;
+            }
+            case KEY_CONTROL_ALLOW_DPAD_DIRECTION: {
+                if (keyCode != KeyEvent.KEYCODE_DPAD_UP &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_DOWN &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_LEFT &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_RIGHT) {
+                    Log.w(TAG, "Key flow control. Allow DPAD directional keys only.");
+                    return 0;
+                }
+                break;
+            }
+            case KEY_CONTROL_ALLOW_DPAD_BACK_POWER_KEYS: {
+                if (keyCode != KeyEvent.KEYCODE_DPAD_UP &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_DOWN &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_LEFT &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_RIGHT &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_CENTER &&
+                    keyCode != KeyEvent.KEYCODE_BACK &&
+                    keyCode != KeyEvent.KEYCODE_POWER) {
+                    Log.w(TAG, "Key flow control. Allow DPAD, BACK, POWER keys only.");
+                    return 0;
+                }
+                break;
+            }
+        }
+
         if (DEBUG_INPUT) {
             Log.d(TAG,
                     "interceptKeyTi keyCode=" + keyCode + " action=" + event.getAction()
@@ -5179,6 +5213,36 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 && !KeyEvent.isVisibleBackgroundUserAllowedKey(keyCode)
                 && !isKeyEventForCurrentUser(event.getDisplayId(), keyCode, null)) {
             return 0;
+        }
+
+        switch (SystemProperties.getInt("sys.wm.keycontrol", KEY_CONTROL_NONE)) {
+            case KEY_CONTROL_BLOCK_ALL: {
+                Log.w(TAG, "Key flow control. Block all keys.");
+                return 0;
+            }
+            case KEY_CONTROL_ALLOW_DPAD_DIRECTION: {
+                if (keyCode != KeyEvent.KEYCODE_DPAD_UP &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_DOWN &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_LEFT &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_RIGHT) {
+                    Log.w(TAG, "Key flow control. Allow DPAD directional keys only.");
+                    return 0;
+                }
+                break;
+            }
+            case KEY_CONTROL_ALLOW_DPAD_BACK_POWER_KEYS: {
+                if (keyCode != KeyEvent.KEYCODE_DPAD_UP &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_DOWN &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_LEFT &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_RIGHT &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_CENTER &&
+                    keyCode != KeyEvent.KEYCODE_BACK &&
+                    keyCode != KeyEvent.KEYCODE_POWER) {
+                    Log.w(TAG, "Key flow control. Allow DPAD, BACK, POWER keys only.");
+                    return 0;
+                }
+                break;
+            }
         }
 
         if (!mSystemBooted) {
