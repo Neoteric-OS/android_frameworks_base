@@ -430,6 +430,8 @@ public final class ActivityThread extends ClientTransactionHandler
     // An executor that performs multi-step transactions.
     private final TransactionExecutor mTransactionExecutor = new TransactionExecutor(this);
 
+    private boolean mIsProviderStatus = false;
+
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private final ResourcesManager mResourcesManager;
 
@@ -1842,6 +1844,7 @@ public final class ActivityThread extends ClientTransactionHandler
                 synchronized (key.mLock) {
                     key.mHolder = holder;
                     key.mLock.notifyAll();
+                    mIsProviderStatus = true;
                 }
             }
         }
@@ -6962,6 +6965,7 @@ public final class ActivityThread extends ClientTransactionHandler
     public final IContentProvider acquireProvider(
             Context c, String auth, int userId, boolean stable) {
         final IContentProvider provider = acquireExistingProvider(c, auth, userId, stable);
+        mIsProviderStatus = false;
         if (provider != null) {
             return provider;
         }
@@ -6982,7 +6986,7 @@ public final class ActivityThread extends ClientTransactionHandler
                 // local, we'll need to wait for the publishing of the provider.
                 if (holder != null && holder.provider == null && !holder.mLocal) {
                     synchronized (key.mLock) {
-                        if (key.mHolder != null) {
+                        if (mIsProviderStatus && key.mHolder != null) {
                             if (DEBUG_PROVIDER) {
                                 Slog.i(TAG, "already received provider: " + auth);
                             }
