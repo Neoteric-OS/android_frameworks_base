@@ -306,6 +306,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     static final int SHORT_PRESS_SLEEP_GO_TO_SLEEP = 0;
     static final int SHORT_PRESS_SLEEP_GO_TO_SLEEP_AND_GO_HOME = 1;
 
+    static final int KEY_CONTROL_NONE = 0;
+    static final int KEY_CONTROL_BLOCK_ALL = 1;
+    static final int KEY_CONTROL_ALLOW_DPAD_DIRECTION = 2;
+    static final int KEY_CONTROL_ALLOW_DPAD_BACK_POWER_KEYS = 3;
+
     static final int PENDING_KEY_NULL = -1;
 
     // Must match: config_shortPressOnStemPrimaryBehavior in config.xml
@@ -3785,6 +3790,36 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         final boolean down = event.getAction() == KeyEvent.ACTION_DOWN;
         boolean isWakeKey = (policyFlags & WindowManagerPolicy.FLAG_WAKE) != 0
                 || event.isWakeKey();
+
+        switch (SystemProperties.getInt("sys.wm.keycontrol", KEY_CONTROL_NONE)) {
+            case KEY_CONTROL_BLOCK_ALL: {
+                Log.w(TAG, "Key flow control. Block all keys.");
+                return 0;
+            }
+            case KEY_CONTROL_ALLOW_DPAD_DIRECTION: {
+                if (keyCode != KeyEvent.KEYCODE_DPAD_UP &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_DOWN &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_LEFT &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_RIGHT) {
+                    Log.w(TAG, "Key flow control. Allow DPAD directional keys only.");
+                    return 0;
+                }
+                break;
+            }
+            case KEY_CONTROL_ALLOW_DPAD_BACK_POWER_KEYS: {
+                if (keyCode != KeyEvent.KEYCODE_DPAD_UP &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_DOWN &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_LEFT &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_RIGHT &&
+                    keyCode != KeyEvent.KEYCODE_DPAD_CENTER &&
+                    keyCode != KeyEvent.KEYCODE_BACK &&
+                    keyCode != KeyEvent.KEYCODE_POWER) {
+                    Log.w(TAG, "Key flow control. Allow DPAD, BACK, POWER keys only.");
+                    return 0;
+                }
+                break;
+            }
+        }
 
         if (!mSystemBooted) {
             // If we have not yet booted, don't let key events do anything.
