@@ -102,6 +102,24 @@
       "message": "Hi~ Is there any conclusion about this patch?",
       "revId": "d4701beff4a7ca56896bf2ca1ad94296670076d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e3c7edf_ed70824b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1959450
+      },
+      "writtenOn": "2022-07-18T03:45:07Z",
+      "side": 1,
+      "message": "Without this patch, the step 5 doesn\u0027t be started actually. Please note that there is no loop in function startCleanupUnknownHalTemplate.",
+      "parentUuid": "f16dc67d_d8d75e58",
+      "revId": "d4701beff4a7ca56896bf2ca1ad94296670076d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
