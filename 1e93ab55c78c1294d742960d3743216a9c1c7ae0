@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8e4875f_0f75f554",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2022-07-19T08:56:56Z",
+      "side": 1,
+      "message": "Hi Brian, there\u0027s a 1-line change to android_hardware_SensorManager.cpp here that would benefit from your review. Thanks.",
+      "revId": "1e93ab55c78c1294d742960d3743216a9c1c7ae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
