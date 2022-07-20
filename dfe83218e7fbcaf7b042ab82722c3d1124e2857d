@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "421f6280_bbe3f0a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1096830
+      },
+      "writtenOn": "2022-07-20T23:40:11Z",
+      "side": 1,
+      "message": "\"I would prefer that you didn\u0027t submit this\"",
+      "revId": "dfe83218e7fbcaf7b042ab82722c3d1124e2857d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
