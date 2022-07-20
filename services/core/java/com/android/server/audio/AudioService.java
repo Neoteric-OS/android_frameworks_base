@@ -3584,6 +3584,38 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
+    private void setLeAudioVolumeOnModeUpdate(int newMode, String requesterPackage) {
+        switch (newMode) {
+            case AudioSystem.MODE_IN_COMMUNICATION:
+            case AudioSystem.MODE_IN_CALL:
+            case AudioSystem.MODE_NORMAL:
+                break;
+            case AudioSystem.MODE_RINGTONE:
+                // not changing anything for ringtone
+                return;
+            case AudioSystem.MODE_CURRENT:
+            case AudioSystem.MODE_INVALID:
+            default:
+                // don't know what to do in this case, better bail
+                return;
+        }
+
+        int streamType = getBluetoothContextualVolumeStream(newMode);
+        int leAudioDevice = AudioSystem.DEVICE_OUT_BLE_HEADSET;
+
+        int newIndex = mStreamStates[streamType].getIndex(leAudioDevice);
+        int maxIndex = mStreamStates[streamType].getMaxIndex();
+
+        setStreamVolumeInt(mStreamVolumeAlias[streamType], newIndex, leAudioDevice, true,
+                requesterPackage, true /*hasModifyAudioSettings*/);
+
+        if (DEBUG_VOL) {
+            Log.d(TAG, "setLeAudioVolumeOnModeUpdate postSetLeAudioVolumeIndex index="
+                    + newIndex + " maxIndex=" + maxIndex + " streamType=" + streamType);
+        }
+        mDeviceBroker.postSetLeAudioVolumeIndex(newIndex, maxIndex, streamType);
+    }
+
     private void setStreamVolume(int streamType, int index, int flags, String callingPackage,
             String caller, int uid, boolean hasModifyAudioSettings) {
         if (DEBUG_VOL) {
@@ -4914,6 +4946,10 @@ public class AudioService extends IAudioService.Stub
 
                 // change of mode may require volume to be re-applied on some devices
                 updateAbsVolumeMultiModeDevices(previousMode, mode);
+
+                // Forcefully set LE audio volume as a workaround, since the value of 'device'
+                // is not DEVICE_OUT_BLE_* even when BLE is connected.
+                setLeAudioVolumeOnModeUpdate(mode, requesterPackage);
 
                 // when entering RINGTONE, IN_CALL or IN_COMMUNICATION mode, clear all SCO
                 // connections not started by the application changing the mode when pid changes
