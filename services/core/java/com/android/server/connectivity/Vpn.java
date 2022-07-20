@@ -21,6 +21,7 @@ import static android.Manifest.permission.CONTROL_VPN;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
+import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.RouteInfo.RTN_THROW;
 import static android.net.RouteInfo.RTN_UNREACHABLE;
 import static android.net.VpnManager.NOTIFICATION_CHANNEL_VPN;
@@ -51,6 +52,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.pm.UserInfo;
+import android.net.ConnectivityDiagnosticsManager;
 import android.net.ConnectivityManager;
 import android.net.DnsResolver;
 import android.net.INetd;
@@ -77,6 +79,7 @@ import android.net.NetworkScore;
 import android.net.RouteInfo;
 import android.net.UidRangeParcel;
 import android.net.UnderlyingNetworkInfo;
+import android.net.Uri;
 import android.net.VpnManager;
 import android.net.VpnProfileState;
 import android.net.VpnService;
@@ -222,12 +225,18 @@ public class Vpn {
      */
     private static final int VPN_DEFAULT_SCORE = 101;
 
+    // Length of time (in milliseconds) to wait before resetting the ike session when a data stall
+    // is suspected.
+    @VisibleForTesting
+    static final long RESET_IKE_SESSION_WHEN_STALL_DURATION_MS = 30 * 1000L;
+
     // TODO: create separate trackers for each unique VPN to support
     // automated reconnection
 
     private final Context mContext;
     private final ConnectivityManager mConnectivityManager;
     private final AppOpsManager mAppOpsManager;
+    private final ConnectivityDiagnosticsManager mCdm;
     // The context is for specific user which is created from mUserId
     private final Context mUserIdContext;
     @VisibleForTesting final Dependencies mDeps;
@@ -260,9 +269,11 @@ public class Vpn {
     private final SystemServices mSystemServices;
     private final Ikev2SessionCreator mIkev2SessionCreator;
     private final UserManager mUserManager;
-
+    private VpnConnectivityDiagnosticsCallback mDiagnosticsCallback = null;
     private final VpnProfileStore mVpnProfileStore;
-
+    // The elapsedRealtime when data stall is suspected. 0 as the default value or no data
+    // stall is suspected. This value should only be accessed in the executor thread of VpnRunner.
+    protected long mDataStallSuspectedMs = 0;
     @VisibleForTesting
     VpnProfileStore getVpnProfileStore() {
         return mVpnProfileStore;
@@ -513,13 +524,40 @@ public class Vpn {
                 @NonNull LinkProperties lp,
                 @NonNull NetworkScore score,
                 @NonNull NetworkAgentConfig config,
-                @Nullable NetworkProvider provider) {
-            return new NetworkAgent(context, looper, logTag, nc, lp, score, config, provider) {
-                @Override
-                public void onNetworkUnwanted() {
-                    // We are user controlled, not driven by NetworkRequest.
+                @Nullable NetworkProvider provider,
+                @NonNull VpnRunner vpnRunner) {
+            return new VpnNetworkAgent(context, looper, logTag, nc, lp, score, config, provider,
+                    vpnRunner);
+        }
+
+        public long getElapsedRealtime() {
+            return SystemClock.elapsedRealtime();
+        }
+    }
+
+    static class VpnNetworkAgent extends NetworkAgent {
+        private final VpnRunner mVpnRunner;
+
+        VpnNetworkAgent(@NonNull Context context, @NonNull Looper looper,
+                @NonNull String logTag, @NonNull NetworkCapabilities nc, @NonNull LinkProperties lp,
+                @NonNull NetworkScore score, @NonNull NetworkAgentConfig config,
+                @Nullable NetworkProvider provider, @NonNull VpnRunner vpnRunner) {
+            super(context, looper, logTag, nc, lp, score, config, provider);
+            mVpnRunner = vpnRunner;
+        }
+
+        @Override
+        public void onNetworkUnwanted() {
+            // We are user controlled, not driven by NetworkRequest.
+        }
+
+        @Override
+        public void onValidationStatus(int status, Uri redirectUri) {
+            synchronized (this) {
+                if (mVpnRunner instanceof IkeV2VpnRunner) {
+                    ((IkeV2VpnRunner) mVpnRunner).onValidationStatus(status);
                 }
-            };
+            }
         }
     }
 
@@ -547,6 +585,7 @@ public class Vpn {
         mConnectivityManager = mContext.getSystemService(ConnectivityManager.class);
         mAppOpsManager = mContext.getSystemService(AppOpsManager.class);
         mUserIdContext = context.createContextAsUser(UserHandle.of(userId), 0 /* flags */);
+        mCdm = mContext.getSystemService(ConnectivityDiagnosticsManager.class);
         mDeps = deps;
         mNms = netService;
         mNetd = netd;
@@ -636,6 +675,61 @@ public class Vpn {
                 throw new IllegalArgumentException("Illegal state argument " + detailedState);
         }
         updateAlwaysOnNotification(detailedState);
+        updateRegistrationForConnectivityDiag(detailedState);
+    }
+
+    private void updateRegistrationForConnectivityDiag(DetailedState detailedState) {
+        // Only register the event for IkeV2VpnRunner.
+        if (!(mVpnRunner instanceof IkeV2VpnRunner)) return;
+
+        if (detailedState == DetailedState.CONNECTED) {
+            if (mDiagnosticsCallback != null) {
+                Log.d(TAG, "Already registered. Skipping register diagnostics callback");
+                return;
+            }
+
+            final NetworkRequest request = new NetworkRequest.Builder()
+                    .addTransportType(TRANSPORT_VPN)
+                    .removeCapability(NET_CAPABILITY_NOT_VPN).build();
+            mDiagnosticsCallback = new VpnConnectivityDiagnosticsCallback();
+            mCdm.registerConnectivityDiagnosticsCallback(
+                    request,
+                    ((IkeV2VpnRunner) mVpnRunner).mExecutor,
+                    mDiagnosticsCallback);
+        } else if (detailedState == DetailedState.DISCONNECTED
+                || detailedState == DetailedState.FAILED) {
+            mCdm.unregisterConnectivityDiagnosticsCallback(mDiagnosticsCallback);
+            mDiagnosticsCallback = null;
+        } else {
+            // No update for the other cases.
+        }
+    }
+
+    private class VpnConnectivityDiagnosticsCallback
+            extends ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback {
+        // The callback runs in the executor thread.
+        @Override
+        public void onDataStallSuspected(ConnectivityDiagnosticsManager.DataStallReport report) {
+            synchronized (Vpn.this) {
+                // VpnConnectivityDiagnosticsCallback should only be registered for IkeV2VpnRunner.
+                // Verify it for protection.
+                if (!isIkev2VpnRunner()) return;
+
+                // Handle the report only for current VPN network. If data stall is already
+                // reported, ignoring the other reports. It means that the stall is not
+                // recovered by MOBIKE and should be on the way to reset the ike session.
+                if (mNetworkAgent != null
+                        && mNetworkAgent.getNetwork().equals(report.getNetwork())
+                        && (mDataStallSuspectedMs == 0)) {
+                    Log.d(TAG, "Data stall suspected");
+                    final IkeV2VpnRunner vpnRunner = (IkeV2VpnRunner) mVpnRunner;
+
+                    // Trigger MOBIKE.
+                    vpnRunner.migrateIkeSession(vpnRunner.mActiveNetwork);
+                    mDataStallSuspectedMs = mDeps.getElapsedRealtime();
+                }
+            }
+        }
     }
 
     private void resetNetworkCapabilities() {
@@ -1489,7 +1583,7 @@ public class Vpn {
         mNetworkAgent = mDeps.newNetworkAgent(mContext, mLooper, NETWORKTYPE /* logtag */,
                 mNetworkCapabilities, lp,
                 new NetworkScore.Builder().setLegacyInt(VPN_DEFAULT_SCORE).build(),
-                networkAgentConfig, mNetworkProvider);
+                networkAgentConfig, mNetworkProvider, mVpnRunner);
         final long token = Binder.clearCallingIdentity();
         try {
             mNetworkAgent.register();
@@ -2658,6 +2752,8 @@ public class Vpn {
                 @NonNull IpSecTransform outTransform);
 
         void onSessionLost(int token, @Nullable Exception exception);
+
+        void onValidationStatus(int status);
     }
 
     /**
@@ -3053,22 +3149,28 @@ public class Vpn {
                 return;
             }
 
+            if (migrateIkeSession(underlyingNetwork)) return;
+
+            startIkeSession(underlyingNetwork);
+        }
+
+        boolean migrateIkeSession(@NonNull Network underlyingNetwork) {
+            if (mSession == null || !mMobikeEnabled) return false;
+
+            // IKE session can schedule a migration event only when IKE AUTH is finished
+            // and mMobikeEnabled is true.
+            Log.d(TAG, "Migrate IKE Session with token "
+                    + mCurrentToken
+                    + " to network "
+                    + underlyingNetwork);
+            mSession.setNetwork(underlyingNetwork);
+            return true;
+        }
+
+        private void startIkeSession(@NonNull Network underlyingNetwork) {
+            Log.d(TAG, "Start new IKE session on network " + underlyingNetwork);
+
             try {
-                if (mSession != null && mMobikeEnabled) {
-                    // IKE session can schedule a migration event only when IKE AUTH is finished
-                    // and mMobikeEnabled is true.
-                    Log.d(
-                            TAG,
-                            "Migrate IKE Session with token "
-                                    + mCurrentToken
-                                    + " to network "
-                                    + underlyingNetwork);
-                    mSession.setNetwork(underlyingNetwork);
-                    return;
-                }
-
-                Log.d(TAG, "Start new IKE session on network " + underlyingNetwork);
-
                 // Clear mInterface to prevent Ikev2VpnRunner being cleared when
                 // interfaceRemoved() is called.
                 mInterface = null;
@@ -3149,6 +3251,26 @@ public class Vpn {
         /** Called when the LinkProperties of underlying network is changed */
         public void onDefaultNetworkLinkPropertiesChanged(@NonNull LinkProperties lp) {
             mUnderlyingLinkProperties = lp;
+        }
+
+        public void onValidationStatus(int status) {
+            mExecutor.execute(() -> {
+                if (status == NetworkAgent.VALIDATION_STATUS_VALID) {
+                    // No data stall now. Reset it.
+                    mDataStallSuspectedMs = 0;
+                    return;
+                }
+
+                final long currentTime = mDeps.getElapsedRealtime();
+
+                // Data stall was suspected and network was not recovered by MOBIKE.
+                if (mDataStallSuspectedMs > 0 && (currentTime - mDataStallSuspectedMs)
+                        > RESET_IKE_SESSION_WHEN_STALL_DURATION_MS) {
+                    Log.d(TAG, "Reset session to recover stalled network")
+                    mDataStallSuspectedMs = 0;
+                    startIkeSession(mActiveNetwork);
+                }
+            });
         }
 
         /**
