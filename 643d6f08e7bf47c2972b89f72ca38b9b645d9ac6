@@ -20,6 +20,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "647e3123_73af3f48",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 21469,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2022-07-20T11:48:03Z",
+      "side": 1,
+      "message": "Should this be \"audio/vnd.dts.hd;profile\u003ddts\"",
+      "revId": "643d6f08e7bf47c2972b89f72ca38b9b645d9ac6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8171eeb_a2d62dd6",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 21471,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2022-07-20T11:48:03Z",
+      "side": 1,
+      "message": "Should we add a profile for DTSHR as per https://www.iana.org/assignments/media-types/audio/vnd.dts.hd\n\nfield public static final String MIMETYPE_AUDIO_VND_DTSHD_PROFILE_HR \u003d \"audio/vnd.dts.hd;profile\u003ddtshr\";",
+      "revId": "643d6f08e7bf47c2972b89f72ca38b9b645d9ac6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73b78d0d_fad83ded",
         "filename": "core/api/current.txt",
         "patchSetId": 1
