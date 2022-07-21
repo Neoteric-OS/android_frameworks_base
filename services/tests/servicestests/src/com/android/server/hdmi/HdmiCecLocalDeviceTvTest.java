@@ -27,6 +27,8 @@ import static com.android.server.hdmi.HdmiControlService.INITIATED_BY_ENABLE_CEC
 
 import static com.google.common.truth.Truth.assertThat;
 
+import static junit.framework.Assert.assertEquals;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -844,51 +846,23 @@ public class HdmiCecLocalDeviceTvTest {
     }
 
     @Test
-    public void tvSendRequestArcTerminationOnSleep() {
-        // Emulate Audio device on port 0x2000 (supports ARC)
-
-        mNativeWrapper.setPortConnectionStatus(2, true);
-        HdmiCecMessage hdmiCecMessage = HdmiCecMessageBuilder.buildReportPhysicalAddressCommand(
-                ADDR_AUDIO_SYSTEM, 0x2000, HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM);
-        mNativeWrapper.onCecMessage(hdmiCecMessage);
+    public void newDeviceConnectedIfOnlyOneGiveOsdNameSent() {
+        mHdmiControlService.getHdmiCecNetwork().clearDeviceList();
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false))
+                .isEmpty();
+        HdmiCecMessage reportPhysicalAddress =
+                HdmiCecMessageBuilder.buildReportPhysicalAddressCommand(
+                ADDR_PLAYBACK_2, 0x1000, HdmiDeviceInfo.DEVICE_PLAYBACK);
+        HdmiCecMessage giveOsdName = HdmiCecMessageBuilder.buildGiveOsdNameCommand(
+                ADDR_TV, ADDR_PLAYBACK_2);
+        mNativeWrapper.onCecMessage(reportPhysicalAddress);
         mTestLooper.dispatchAll();
 
-        mHdmiCecLocalDeviceTv.startArcAction(true);
-        mTestLooper.dispatchAll();
-        HdmiCecMessage requestArcInitiation = HdmiCecMessageBuilder.buildRequestArcInitiation(
-                ADDR_TV,
-                ADDR_AUDIO_SYSTEM);
-        HdmiCecMessage requestArcTermination = HdmiCecMessageBuilder.buildRequestArcTermination(
-                ADDR_TV,
-                ADDR_AUDIO_SYSTEM);
-        HdmiCecMessage initiateArc = HdmiCecMessageBuilder.buildInitiateArc(
-                ADDR_AUDIO_SYSTEM,
-                ADDR_TV);
-        HdmiCecMessage reportArcInitiated = HdmiCecMessageBuilder.buildReportArcInitiated(
-                ADDR_TV,
-                ADDR_AUDIO_SYSTEM);
-
-        assertThat(mNativeWrapper.getResultMessages()).contains(requestArcInitiation);
-        assertThat(mNativeWrapper.getResultMessages()).doesNotContain(requestArcTermination);
-
-        mNativeWrapper.onCecMessage(initiateArc);
-        mTestLooper.dispatchAll();
-
-        // Finish querying SADs
-        assertThat(mNativeWrapper.getResultMessages()).contains(SAD_QUERY);
-        mNativeWrapper.clearResultMessages();
+        // Wait until HdmiCecNetwork or NewDeviceAction is in progress
         mTestLooper.moveTimeForward(HdmiConfig.TIMEOUT_MS);
-        mTestLooper.dispatchAll();
-        assertThat(mNativeWrapper.getResultMessages()).contains(SAD_QUERY);
-        mTestLooper.moveTimeForward(HdmiConfig.TIMEOUT_MS);
-        mTestLooper.dispatchAll();
 
-        // ARC should be established after RequestSadAction is finished
-        assertThat(mNativeWrapper.getResultMessages()).contains(reportArcInitiated);
-
-        mHdmiControlService.onStandby(HdmiControlService.STANDBY_SCREEN_OFF);
-        mTestLooper.dispatchAll();
-        assertThat(mNativeWrapper.getResultMessages()).contains(requestArcTermination);
+        // TV should only send <Give Osd Name> once
+        assertEquals(1, Collections.frequency(mNativeWrapper.getResultMessages(), giveOsdName));
     }
 
 }
