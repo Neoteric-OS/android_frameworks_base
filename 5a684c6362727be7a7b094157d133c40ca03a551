@@ -1,5 +1,29 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eab2bba8_e5b9feda",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3340,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-07-21T14:16:15Z",
+      "side": 1,
+      "message": "Is there a reason this check cannot be put into the sendEventToVpnManagerApp method itself? I see there are three callsites of that method. Shouldn\u0027t they also skip sending the event if the app is a legacy VPN?",
+      "range": {
+        "startLine": 3340,
+        "startChar": 65,
+        "endLine": 3340,
+        "endChar": 73
+      },
+      "revId": "5a684c6362727be7a7b094157d133c40ca03a551",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
