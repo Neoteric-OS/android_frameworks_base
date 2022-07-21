@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bd90d34_fd9178cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-07-21T18:17:54Z",
+      "side": 1,
+      "message": "Does this CL need a Merged-In line?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 52
+      },
+      "revId": "52fa88cff6b3ade4e6d09a6fafcbb690f468f934",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41195793_209fdfc9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-07-21T18:17:54Z",
+      "side": 1,
+      "message": "does this CL need a Merged-I",
+      "revId": "52fa88cff6b3ade4e6d09a6fafcbb690f468f934",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
