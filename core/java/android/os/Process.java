@@ -833,8 +833,9 @@ public class Process {
         return isIsolated(myUid());
     }
 
-    /** {@hide} */
-    @UnsupportedAppUsage
+    /**
+     * Returns whether the process with the given {@code uid} is an isolated sandbox.
+     */
     public static final boolean isIsolated(int uid) {
         uid = UserHandle.getAppId(uid);
         return (uid >= FIRST_ISOLATED_UID && uid <= LAST_ISOLATED_UID)
