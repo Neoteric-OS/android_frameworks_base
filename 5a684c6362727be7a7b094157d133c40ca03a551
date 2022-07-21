@@ -22,6 +22,30 @@
       },
       "revId": "5a684c6362727be7a7b094157d133c40ca03a551",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63b92a93_da182c54",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3340,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-07-21T14:48:42Z",
+      "side": 1,
+      "message": "\u003e Is there a reason this check cannot be put into the sendEventToVpnManagerApp method itself?\n\ngetRedactedNetworkCapabilitiesOfUnderlyingNetwork() will be called before entering sendEventToVpnManagerApp(), that\u0027s why we need to check if mPackage is legacy VPN or not first.\n\n\u003e I see there are three callsites of that method. Shouldn\u0027t they also skip sending the event if the app is a legacy VPN?\n\n- In setAlwaysOnPackage(), it has already checked if the package is an app or not.\n- In notifyVpnManagerVpnStopped(), it won\u0027t call getRedactedNetworkCapabilitiesOfUnderlyingNetwork(), so there is no such issue. \nBesides, notifyVpnManagerVpnStopped() is called by prepareInternal() or stopVpnProfile().\n- For prepareInternal(), it only calls stopVpnProfile() when mPackage is not legacy VPN.\n- For stopVpnProfile(), it should be called by an VPN app, so the given package shouldn\u0027t be legacy VPN.",
+      "parentUuid": "eab2bba8_e5b9feda",
+      "range": {
+        "startLine": 3340,
+        "startChar": 65,
+        "endLine": 3340,
+        "endChar": 73
+      },
+      "revId": "5a684c6362727be7a7b094157d133c40ca03a551",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
