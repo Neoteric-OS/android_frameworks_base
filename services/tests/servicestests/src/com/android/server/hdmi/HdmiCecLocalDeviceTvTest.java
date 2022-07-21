@@ -842,4 +842,25 @@ public class HdmiCecLocalDeviceTvTest {
         verify(mAudioManager, never()).setStreamVolume(eq(AudioManager.STREAM_MUSIC), anyInt(),
                 anyInt());
     }
+
+    @Test
+    public void newDeviceConnectedIfOnlyOneGiveOsdNameSent() {
+        mHdmiControlService.getHdmiCecNetwork().clearDeviceList();
+        assertThat(mHdmiControlService.getHdmiCecNetwork().getDeviceInfoList(false))
+                .isEmpty();
+        HdmiCecMessage reportPhysicalAddress =
+                HdmiCecMessageBuilder.buildReportPhysicalAddressCommand(
+                ADDR_PLAYBACK_2, 0x1000, HdmiDeviceInfo.DEVICE_PLAYBACK);
+        HdmiCecMessage giveOsdName = HdmiCecMessageBuilder.buildGiveOsdNameCommand(
+                ADDR_TV, ADDR_PLAYBACK_2);
+        mNativeWrapper.onCecMessage(reportPhysicalAddress);
+        mTestLooper.dispatchAll();
+
+        // Wait until HdmiCecNetwork or NewDeviceAction is in progress
+        mTestLooper.moveTimeForward(HdmiConfig.TIMEOUT_MS);
+
+        // TV should only send <Give Osd Name> once
+        assertEquals(1, Collections.frequency(mNativeWrapper.getResultMessages(), giveOsdName));
+    }
+
 }
