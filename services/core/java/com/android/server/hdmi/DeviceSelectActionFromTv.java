@@ -99,7 +99,9 @@ final class DeviceSelectActionFromTv extends HdmiCecFeatureAction {
     public boolean start() {
         // Wake-up on <Set Stream Path> was not mandatory before CEC 2.0.
         // The message is re-sent at the end of the action for devices that don't support 2.0.
-        sendSetStreamPath();
+        if (mIsCec20) {
+            sendSetStreamPath();
+        }
 
         if (!mIsCec20) {
             queryDevicePowerStatus();
