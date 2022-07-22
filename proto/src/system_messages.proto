@@ -276,6 +276,32 @@ message SystemMessage {
     // Package: android
     NOTE_UNBLOCK_CAM_TOGGLE = 66;
 
+    // Notify the user that a CA certificate is pending for the wifi connection.
+    NOTE_SERVER_CA_CERTIFICATE = 67;
+
+    // Notify the user to set up dream
+    NOTE_SETUP_DREAM = 68;
+
+    // Inform the user that MTE override is active.
+    // Package: android
+    NOTE_MTE_OVERRIDE_ENABLED = 69;
+
+    // Notify the user that this is a guest session with information
+    // about first login and ephemeral state
+    // Package: android
+    NOTE_GUEST_SESSION = 70;
+
+    // Inform the user of notification permissions changes.
+    // Package: android
+    NOTE_REVIEW_NOTIFICATION_PERMISSIONS = 71;
+
+    // Notify the user to setup their dock
+    NOTE_SETUP_DOCK = 72;
+
+    // Inform the user of wifi apm state changes.
+    // Package: android
+    NOTE_WIFI_APM_NOTIFICATION = 73;
+
     // ADD_NEW_IDS_ABOVE_THIS_LINE
     // Legacy IDs with arbitrary values appear below
     // Legacy IDs existed as stable non-conflicting constants prior to the O release
