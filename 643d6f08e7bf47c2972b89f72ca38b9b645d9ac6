@@ -139,6 +139,30 @@
       },
       "revId": "643d6f08e7bf47c2972b89f72ca38b9b645d9ac6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fc08ab2_66a2e30a",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 21472,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2022-07-22T15:11:17Z",
+      "side": 1,
+      "message": "As per the IANA mime type specification for the \u0027vnd.dts.hd\u0027, the \u0027profile\u0027 is mandatory to distinguish the multiple stream category which falls under the DTS-HD type. But, while considering the different DTS bitstream types available, we are short of things on the standard specifications(4CC tag, MKV codec ID, DVB descriptor tag) to distinguish all stream categories. So, it is required to address multiple stream types using a common audio format and mime type.\n\ne.g. There is only \u0027dtsh\u0027 4CC audio tag(https://mp4ra.org/#/codecs) to indicate the coding types of vnd.dts.hd;profile\u003ddts and vnd.dts.hd;profile\u003ddtshr. So we may have to use the same mime type value for both of these stream types.\n\nI would send more details(a table that maps the DTS codec type to the media types) about this through an e-mail.\n\nAlso, I believe there are legacy applications that uses the ‘audio/vnd.dts.hd’ mime type without any profile information. Those applications may be relying on the MediaCodecInfo reported from the Android platform. Ideally, we don’t want to break the legacy application by changing the mime type values.\n\nI would like to better understand your suggestion to \u0027convert that invalid mime type string into a legal one\u0027. I assume that the mime type values will be assigned in the media extractor based on the \u00274CC tag\u0027 or \u0027DVB descriptor tag\u0027 values. If that is the case, what would be the scenario in which we need to convert a bad mime to the valid one?\n\nThanks.",
+      "parentUuid": "ed55e93c_a6757a63",
+      "range": {
+        "startLine": 21472,
+        "startChar": 55,
+        "endLine": 21472,
+        "endChar": 75
+      },
+      "revId": "643d6f08e7bf47c2972b89f72ca38b9b645d9ac6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
