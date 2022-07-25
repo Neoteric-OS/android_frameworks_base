@@ -29,6 +29,7 @@ import libcore.util.EmptyArray;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.security.spec.ECParameterSpec;
 import java.util.Collection;
 import java.util.Locale;
 
@@ -887,6 +888,32 @@ public abstract class KeyProperties {
                 default:
                     throw new IllegalArgumentException("Unsupported security level: "
                             + securityLevel);
+            }
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public abstract static class EcCurve {
+        private EcCurve() {}
+
+        /**
+         * @hide
+         */
+        public static int toKeymasterCurve(ECParameterSpec spec) {
+            int keySize = spec.getCurve().getField().getFieldSize();
+            switch (keySize) {
+                case 224:
+                    return android.hardware.security.keymint.EcCurve.P_224;
+                case 256:
+                    return android.hardware.security.keymint.EcCurve.P_256;
+                case 384:
+                    return android.hardware.security.keymint.EcCurve.P_384;
+                case 521:
+                    return android.hardware.security.keymint.EcCurve.P_521;
+                default:
+                    return -1;
             }
         }
     }
