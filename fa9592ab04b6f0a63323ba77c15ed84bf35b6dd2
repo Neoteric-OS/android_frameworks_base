@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "3658bdf4_54963335",
         "filename": "core/java/android/net/ConnectivityManager.java",
@@ -20,10 +21,10 @@
         "endChar": 26
       },
       "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "828a8cbd_0ab66670",
         "filename": "core/java/android/net/ConnectivityManager.java",
@@ -44,10 +45,10 @@
         "endChar": 26
       },
       "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "091c66c5_73b700ea",
         "filename": "core/java/android/net/ConnectivityManager.java",
@@ -68,10 +69,10 @@
         "endChar": 26
       },
       "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "3f932b13_cd63f05b",
         "filename": "core/java/android/net/NetworkIdentity.java",
@@ -91,10 +92,10 @@
         "endChar": 66
       },
       "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "3fb0e6b7_764207ba",
         "filename": "core/java/android/net/NetworkIdentity.java",
@@ -115,10 +116,10 @@
         "endChar": 66
       },
       "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "a3824fd7_1e22153c",
         "filename": "core/java/android/net/NetworkIdentity.java",
@@ -139,10 +140,10 @@
         "endChar": 66
       },
       "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "4c13dd53_717b19f1",
         "filename": "core/java/android/net/NetworkIdentity.java",
@@ -163,10 +164,10 @@
         "endChar": 66
       },
       "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "a262d6e4_f7c59a4b",
         "filename": "core/java/android/net/NetworkIdentity.java",
@@ -187,10 +188,34 @@
         "endChar": 66
       },
       "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a915ce76_a74713cd",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-07-25T08:58:48Z",
+      "side": 1,
+      "message": "Done at aosp/2164649. Now we have TestNetworkSpecifier, use it accordingly.",
+      "parentUuid": "a262d6e4_f7c59a4b",
+      "range": {
+        "startLine": 231,
+        "startChar": 44,
+        "endLine": 231,
+        "endChar": 66
+      },
+      "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "921aa90e_bbef61a2",
         "filename": "core/java/android/net/NetworkTemplate.java",
@@ -210,10 +235,10 @@
         "endChar": 36
       },
       "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "8b3c8ef3_c5045110",
         "filename": "core/java/android/net/NetworkTemplate.java",
@@ -234,8 +259,7 @@
         "endChar": 36
       },
       "revId": "fa9592ab04b6f0a63323ba77c15ed84bf35b6dd2",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
