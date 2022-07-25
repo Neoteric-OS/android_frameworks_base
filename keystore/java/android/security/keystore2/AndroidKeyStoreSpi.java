@@ -64,6 +64,7 @@ import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.security.interfaces.ECKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -542,6 +543,18 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
                         spec.getMaxUsageCount()
                 ));
             }
+            if (KeyProperties.KEY_ALGORITHM_EC.equalsIgnoreCase(key.getAlgorithm())) {
+                if (key instanceof ECKey) {
+                    ECKey ecKey = (ECKey) key;
+                    importArgs.add(KeyStore2ParameterUtils.makeEnum(
+                            KeymasterDefs.KM_TAG_EC_CURVE,
+                            KeyProperties.EcCurve.toKeymasterCurve(ecKey.getParams())
+                    ));
+                }
+            }
+            /* else check for Ed25519 or X25519 key algorithm and add import args for TAG_EC_CURVE
+             * as EcCurve.CURVE_25519
+             */
         } catch (IllegalArgumentException | IllegalStateException e) {
             throw new KeyStoreException(e);
         }
