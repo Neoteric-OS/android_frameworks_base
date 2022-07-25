@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8499fdc8_63ad51e1",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 21469,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2022-07-25T10:15:16Z",
+      "side": 1,
+      "message": "Form the above comments (https://android-review.googlesource.com/c/platform/frameworks/base/+/1996350/comments/73b78d0d_fad83ded), the renaming is not necessary.",
+      "parentUuid": "647e3123_73af3f48",
+      "revId": "643d6f08e7bf47c2972b89f72ca38b9b645d9ac6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e8171eeb_a2d62dd6",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "While considering the specifications for the 4CC audio tag, MKV codec ID, DVB descriptor tag, etc., we may not able to distinguish all the DTS stream types at the media extractor level.\n\ne.g. There is only \u0027dtsh\u0027 4CC audio tag(https://mp4ra.org/#/codecs) to indicate the coding types of vnd.dts.hd;profile\u003ddts and vnd.dts.hd;profile\u003ddtshr. So we may have to use the same mime type value for both of these stream types.\n\nAlso, there may be legacy applications that use the ‘audio/vnd.dts.hd’ mime type without any profile information. In that case, if we change the mime type string with profile information, those applications may not work.",
       "parentUuid": "0d474c3c_072b67c8",
+      "revId": "643d6f08e7bf47c2972b89f72ca38b9b645d9ac6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be6207ce_fee72616",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 21471,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2022-07-25T10:15:16Z",
+      "side": 1,
+      "message": "Ack, thanks!",
+      "parentUuid": "72d7d47c_ae5e927d",
       "revId": "643d6f08e7bf47c2972b89f72ca38b9b645d9ac6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
