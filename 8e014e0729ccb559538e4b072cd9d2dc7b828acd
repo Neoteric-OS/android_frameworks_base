@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "349dc5e3_d75bd303",
         "filename": "core/java/android/net/NetworkTemplate.java",
@@ -20,8 +21,31 @@
         "endChar": 38
       },
       "revId": "8e014e0729ccb559538e4b072cd9d2dc7b828acd",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c960a42_4d36edd5",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-07-25T08:41:52Z",
+      "side": 1,
+      "message": "Done at aosp/2164649. With the builder, now if the caller doesn\u0027t set subscriberId, it should match all network with/without subscriberId.",
+      "parentUuid": "349dc5e3_d75bd303",
+      "range": {
+        "startLine": 217,
+        "startChar": 27,
+        "endLine": 217,
+        "endChar": 38
+      },
+      "revId": "8e014e0729ccb559538e4b072cd9d2dc7b828acd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
