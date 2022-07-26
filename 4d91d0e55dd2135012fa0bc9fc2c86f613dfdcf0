@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdfe4375_4dd5735a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-07-26T00:21:20Z",
+      "side": 1,
+      "message": "Cherrypicking the internal change to AOSP.",
+      "revId": "4d91d0e55dd2135012fa0bc9fc2c86f613dfdcf0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
