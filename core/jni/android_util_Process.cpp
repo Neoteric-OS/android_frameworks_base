@@ -1330,6 +1330,11 @@ static jint android_os_Process_nativePidFdOpen(JNIEnv* env, jobject, jint pid, j
     return fd;
 }
 
+jint android_os_Process_freezeCgroupUID(JNIEnv* env, jobject clazz, jint uid, jboolean freeze)
+{
+    return freezeCgroup(uid, freeze);
+}
+
 static const JNINativeMethod methods[] = {
         {"getUidForName", "(Ljava/lang/String;)I", (void*)android_os_Process_getUidForName},
         {"getGidForName", "(Ljava/lang/String;)I", (void*)android_os_Process_getGidForName},
@@ -1371,6 +1376,7 @@ static const JNINativeMethod methods[] = {
         {"killProcessGroup", "(II)I", (void*)android_os_Process_killProcessGroup},
         {"removeAllProcessGroups", "()V", (void*)android_os_Process_removeAllProcessGroups},
         {"nativePidFdOpen", "(II)I", (void*)android_os_Process_nativePidFdOpen},
+        {"freezeCgroupUid", "(IZ)I", (void*)android_os_Process_freezeCgroupUID},
 };
 
 int register_android_os_Process(JNIEnv* env)

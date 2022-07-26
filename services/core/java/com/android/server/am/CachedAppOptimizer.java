@@ -620,7 +620,7 @@ public final class CachedAppOptimizer {
      * @throws RuntimeException in case a flush/freeze operation could not complete successfully.
      * @return 0 if success, or -EAGAIN indicating there's pending transaction.
      */
-    private static native int freezeBinder(int pid, boolean freeze);
+    public static native int freezeBinder(int pid, boolean freeze);
 
     /**
      * Retrieves binder freeze info about a process.

@@ -985,12 +985,19 @@ class ProcessRecord implements WindowProcessListener {
 
     @GuardedBy("mService")
     void killLocked(String reason, @Reason int reasonCode, boolean noisy) {
-        killLocked(reason, reasonCode, ApplicationExitInfo.SUBREASON_UNKNOWN, noisy);
+        killLocked(reason, reasonCode, ApplicationExitInfo.SUBREASON_UNKNOWN, noisy,
+            true /* asyncKPG */);
     }
 
     @GuardedBy("mService")
     void killLocked(String reason, @Reason int reasonCode, @SubReason int subReason,
             boolean noisy) {
+        killLocked(reason, reasonCode, subReason, noisy, true /* asyncKPG */);
+    }
+
+    @GuardedBy("mService")
+    void killLocked(String reason, @Reason int reasonCode, @SubReason int subReason,
+            boolean noisy, boolean asyncKPG) {
         if (!mKilledByAm) {
             Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "kill");
             if (mService != null && (noisy || info.uid == mService.mCurOomAdjUid)) {
@@ -1003,7 +1010,10 @@ class ProcessRecord implements WindowProcessListener {
                 EventLog.writeEvent(EventLogTags.AM_KILL,
                         userId, mPid, processName, mState.getSetAdj(), reason);
                 Process.killProcessQuiet(mPid);
-                ProcessList.killProcessGroup(uid, mPid);
+                if (asyncKPG)
+                    ProcessList.killProcessGroup(uid, mPid);
+                else
+                    Process.killProcessGroup(uid, mPid);
             } else {
                 mPendingStart = false;
             }

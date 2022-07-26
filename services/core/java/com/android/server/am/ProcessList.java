@@ -31,6 +31,7 @@ import static android.os.Process.getFreeMemory;
 import static android.os.Process.getTotalMemory;
 import static android.os.Process.killProcessQuiet;
 import static android.os.Process.startWebView;
+import static android.system.OsConstants.*;
 
 import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_LRU;
 import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_NETWORK;
@@ -2801,6 +2802,53 @@ public final class ProcessList {
         }
     }
 
+    private static int freezePackageCgroup(int packageUID, boolean freeze) {
+        final String logtxt = freeze ? "freeze" : "unfreeze";
+        int rc;
+        try {
+            rc = Process.freezeCgroupUid(packageUID, freeze);
+            if (rc != 0)
+                Slog.e(TAG, "Unable to " + logtxt + " cgroup uid " + packageUID + ": " +
+                    errnoName(rc));
+        } catch (RuntimeException e) {
+            Slog.e(TAG, "Unable to " + logtxt + " cgroup uid: " + packageUID + ": " + e);
+            rc = -1;
+        }
+        return rc;
+    }
+
+    private static void freezeBinderAndPackageCgroup(ArrayList<Pair<ProcessRecord, Boolean>> procs,
+                                             int packageUID) {
+        // Freeze all binder processes under the target UID (whose cgroup is about to be frozen).
+        // Since we're going to kill these, we don't need to unfreze them later.
+        // The procs list may not include all processes under the UID cgroup, but unincluded
+        // processes (forks) should not be Binder users.
+        for (Pair<ProcessRecord, Boolean> p : procs) {
+            final int uid = p.first.uid;
+            // We only freeze the cgroup of the target package, so we do not need to freeze the
+            // Binder interfaces of dependant processes in other UIDs.
+            if (uid == packageUID) {
+                final int pid = p.first.getPid();
+                try {
+                    int rc;
+                    do {
+                        rc = CachedAppOptimizer.freezeBinder(pid, true);
+                    } while (rc == -EAGAIN);
+                    if (rc != 0)
+                            Slog.e(TAG, "Unable to freeze binder for " + pid + ": " + rc);
+                } catch (RuntimeException e) {
+                    Slog.e(TAG, "Unable to freeze binder for " + pid + ": " + e);
+                }
+            }
+        }
+
+        // We freeze the entire UID (parent) cgroup so that newly-specialized processes also freeze
+        // despite being added to a new child cgroup. The cgroups of dependant processes are not
+        // frozen, since it's possible this would freeze processes with no dependency on the package
+        // being killed here.
+        freezePackageCgroup(packageUID, true);
+    }
+
     @GuardedBy({"mService", "mProcLock"})
     boolean killPackageProcessesLSP(String packageName, int appId,
             int userId, int minOomAdj, boolean callerWillRestart, boolean allowRestart,
@@ -2853,7 +2901,7 @@ public final class ProcessList {
                 boolean shouldAllowRestart = false;
 
                 // If no package is specified, we call all processes under the
-                // give user id.
+                // given user id.
                 if (packageName == null) {
                     if (userId != UserHandle.USER_ALL && app.userId != userId) {
                         continue;
@@ -2896,14 +2944,18 @@ public final class ProcessList {
             }
         }
 
+        final int packageUID = (new UserHandle(userId)).getUid(appId);
+        freezeBinderAndPackageCgroup(procs, packageUID);
+
         int N = procs.size();
         for (int i=0; i<N; i++) {
             final Pair<ProcessRecord, Boolean> proc = procs.get(i);
             removeProcessLocked(proc.first, callerWillRestart, allowRestart || proc.second,
-                     reasonCode, subReason, reason);
+                    reasonCode, subReason, reason, false /* async */);
         }
         killAppZygotesLocked(packageName, appId, userId, false /* force */);
         mService.updateOomAdjLocked(OomAdjuster.OOM_ADJ_REASON_PROCESS_END);
+        freezePackageCgroup(packageUID, false);
         return N > 0;
     }
 
@@ -2911,12 +2963,19 @@ public final class ProcessList {
     boolean removeProcessLocked(ProcessRecord app,
             boolean callerWillRestart, boolean allowRestart, int reasonCode, String reason) {
         return removeProcessLocked(app, callerWillRestart, allowRestart, reasonCode,
-                ApplicationExitInfo.SUBREASON_UNKNOWN, reason);
+                ApplicationExitInfo.SUBREASON_UNKNOWN, reason, true);
     }
 
     @GuardedBy("mService")
     boolean removeProcessLocked(ProcessRecord app, boolean callerWillRestart,
             boolean allowRestart, int reasonCode, int subReason, String reason) {
+        return removeProcessLocked(app, callerWillRestart, allowRestart, reasonCode, subReason,
+                reason, true);
+    }
+
+    @GuardedBy("mService")
+    boolean removeProcessLocked(ProcessRecord app, boolean callerWillRestart,
+            boolean allowRestart, int reasonCode, int subReason, String reason, boolean async) {
         final String name = app.processName;
         final int uid = app.uid;
         if (DEBUG_PROCESSES) Slog.d(TAG_PROCESSES,
@@ -2953,7 +3012,7 @@ public final class ProcessList {
                     needRestart = true;
                 }
             }
-            app.killLocked(reason, reasonCode, subReason, true);
+            app.killLocked(reason, reasonCode, subReason, true, async);
             mService.handleAppDiedLocked(app, pid, willRestart, allowRestart,
                     false /* fromBinderDied */);
             if (willRestart) {
