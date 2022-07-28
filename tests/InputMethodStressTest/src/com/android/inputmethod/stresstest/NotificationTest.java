@@ -22,6 +22,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import static org.junit.Assume.assumeFalse;
 
+import android.accessibilityservice.AccessibilityService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -102,6 +103,8 @@ public final class NotificationTest {
     @After
     public void tearDown() {
         mNotificationManager.cancelAll();
+        InstrumentationRegistry.getInstrumentation().getUiAutomation().performGlobalAction(
+          AccessibilityService.GLOBAL_ACTION_HOME);
     }
 
     @Test
