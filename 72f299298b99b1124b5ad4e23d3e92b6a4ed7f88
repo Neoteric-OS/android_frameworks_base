@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e248874_35bde3f5",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1844,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-07-28T00:45:14Z",
+      "side": 1,
+      "message": "doSend?",
+      "range": {
+        "startLine": 1844,
+        "startChar": 33,
+        "endLine": 1844,
+        "endChar": 56
+      },
+      "revId": "72f299298b99b1124b5ad4e23d3e92b6a4ed7f88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "040296d0_2b8c353a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4212,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-07-28T00:45:14Z",
+      "side": 1,
+      "message": "Can we add a TODO to remove this?",
+      "range": {
+        "startLine": 4212,
+        "startChar": 0,
+        "endLine": 4212,
+        "endChar": 69
+      },
+      "revId": "72f299298b99b1124b5ad4e23d3e92b6a4ed7f88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
