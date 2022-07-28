@@ -1301,7 +1301,7 @@ public final class FileUtils {
         long pow = 1;
         while ((val * pow) < size) {
             val <<= 1;
-            if (val > 512) {
+            if (val > 512 && (val * pow) <= 1024000000L) {
                 val = 1;
                 pow *= 1000;
             }
