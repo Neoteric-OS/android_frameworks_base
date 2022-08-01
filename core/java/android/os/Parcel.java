@@ -606,22 +606,14 @@ public final class Parcel {
     }
 
     /**
-     * Returns the raw bytes of the parcel.
-     *
-     * <p class="note">The data you retrieve here <strong>must not</strong>
-     * be placed in any kind of persistent storage (on local disk, across
-     * a network, etc).  For that, you should use standard serialization
-     * or another kind of general serialization mechanism.  The Parcel
-     * marshalled representation is highly optimized for local IPC, and as
-     * such does not attempt to maintain compatibility with data created
-     * in different versions of the platform.
+     * Opposite of unmarshall
      */
     public final byte[] marshall() {
         return nativeMarshall(mNativePtr);
     }
 
     /**
-     * Set the bytes in data to be the raw bytes of this Parcel.
+     * Opposite of marshall
      */
     public final void unmarshall(@NonNull byte[] data, int offset, int length) {
         nativeUnmarshall(mNativePtr, data, offset, length);
