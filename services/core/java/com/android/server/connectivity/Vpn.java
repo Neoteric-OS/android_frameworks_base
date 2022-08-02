@@ -79,6 +79,7 @@ import android.net.NetworkScore;
 import android.net.RouteInfo;
 import android.net.UidRangeParcel;
 import android.net.UnderlyingNetworkInfo;
+import android.net.Uri;
 import android.net.VpnManager;
 import android.net.VpnProfileState;
 import android.net.VpnService;
@@ -225,6 +226,14 @@ public class Vpn {
     private static final int VPN_DEFAULT_SCORE = 101;
 
     /**
+     * The reset session timer for data stall.
+     *
+     * <p>If retries have exceeded the length of this array, the last entry in the array will be
+     * used as a repeating interval.
+     */
+    private static final long[] DATA_STALL_RESET_DELAYS_SEC = {30L, 60L, 120L, 240L, 480L, 960L};
+
+    /**
      * The initial token value of IKE session.
      */
     private static final int STARTING_TOKEN = -1;
@@ -270,6 +279,9 @@ public class Vpn {
     private final UserManager mUserManager;
 
     private final VpnProfileStore mVpnProfileStore;
+    // The elapsedRealtime when data stall is suspected. 0 as the default value or no data
+    // stall is suspected. This value should only be accessed in the executor thread of VpnRunner.
+    protected long mDataStallSuspectedMs = 0;
 
     @VisibleForTesting
     VpnProfileStore getVpnProfileStore() {
@@ -521,10 +533,19 @@ public class Vpn {
                 @NonNull LinkProperties lp,
                 @NonNull NetworkScore score,
                 @NonNull NetworkAgentConfig config,
-                @Nullable NetworkProvider provider) {
+                @Nullable NetworkProvider provider,
+                @Nullable ValidationStatusCallback callback) {
             return new VpnNetworkAgentWrapper(
-                    context, looper, logTag, nc, lp, score, config, provider);
+                    context, looper, logTag, nc, lp, score, config, provider, callback);
         }
+
+        public long getElapsedRealtime() {
+            return SystemClock.elapsedRealtime();
+        }
+    }
+
+    private interface ValidationStatusCallback {
+        void onValidationStatus(int status);
     }
 
     public Vpn(Looper looper, Context context, INetworkManagementService netService, INetd netd,
@@ -1448,6 +1469,11 @@ public class Vpn {
 
     @GuardedBy("this")
     private void agentConnect() {
+        agentConnect(null /* validationCallback */);
+    }
+
+    @GuardedBy("this")
+    private void agentConnect(@Nullable ValidationStatusCallback validationCallback) {
         LinkProperties lp = makeLinkProperties();
 
         // VPN either provide a default route (IPv4 or IPv6 or both), or they are a split tunnel
@@ -1495,7 +1521,7 @@ public class Vpn {
         mNetworkAgent = mDeps.newNetworkAgent(mContext, mLooper, NETWORKTYPE /* logtag */,
                 mNetworkCapabilities, lp,
                 new NetworkScore.Builder().setLegacyInt(VPN_DEFAULT_SCORE).build(),
-                networkAgentConfig, mNetworkProvider);
+                networkAgentConfig, mNetworkProvider, validationCallback);
         final long token = Binder.clearCallingIdentity();
         try {
             mNetworkAgent.register();
@@ -2666,6 +2692,8 @@ public class Vpn {
                 @NonNull IpSecTransform outTransform);
 
         void onSessionLost(int token, @Nullable Exception exception);
+
+        void onValidationStatus(int status);
     }
 
     /**
@@ -2715,7 +2743,7 @@ public class Vpn {
 
         @Nullable private ScheduledFuture<?> mScheduledHandleNetworkLostFuture;
         @Nullable private ScheduledFuture<?> mScheduledHandleRetryIkeSessionFuture;
-
+        @Nullable private ScheduledFuture<?> mScheduledHandleDataStallFuture;
         /** Signal to ensure shutdown is honored even if a new Network is connected. */
         private boolean mIsRunning = true;
 
@@ -2740,6 +2768,8 @@ public class Vpn {
 
         // mMobikeEnabled can only be updated after IKE AUTH is finished.
         private boolean mMobikeEnabled = false;
+
+        private int mDataStallRetryCount = 0;
 
         /**
          * The number of attempts since the last successful connection.
@@ -2924,7 +2954,7 @@ public class Vpn {
                         if (isSettingsVpnLocked()) {
                             prepareStatusIntent();
                         }
-                        agentConnect();
+                        agentConnect(status -> onValidationStatus(status));
                         return; // Link properties are already sent.
                     } else {
                         // Underlying networks also set in agentConnect()
@@ -3190,14 +3220,53 @@ public class Vpn {
                     // reported, ignoring the other reports. It means that the stall is not
                     // recovered by MOBIKE and should be on the way to reset the ike session.
                     if (mNetworkAgent != null
-                            && mNetworkAgent.getNetwork().equals(report.getNetwork())) {
+                            && mNetworkAgent.getNetwork().equals(report.getNetwork())
+                            && (mDataStallSuspectedMs == 0)) {
                         Log.d(TAG, "Data stall suspected");
 
                         // Trigger MOBIKE.
                         maybeMigrateIkeSession(mActiveNetwork);
+                        mDataStallSuspectedMs = mDeps.getElapsedRealtime();
                     }
                 }
             }
+        }
+
+        // Get the length of time to wait before resetting the ike session when a data stall is
+        // suspected.
+        private long getDataStallResetSessionSeconds(int count) {
+            if (count >= DATA_STALL_RESET_DELAYS_SEC.length) {
+                return DATA_STALL_RESET_DELAYS_SEC[DATA_STALL_RESET_DELAYS_SEC.length - 1];
+            } else {
+                return DATA_STALL_RESET_DELAYS_SEC[count];
+            }
+        }
+
+        public void onValidationStatus(int status) {
+            if (status == NetworkAgent.VALIDATION_STATUS_VALID) {
+                // No data stall now. Reset it.
+                mExecutor.execute(() -> {
+                    mDataStallSuspectedMs = 0;
+                    mDataStallRetryCount = 0;
+                    if (mScheduledHandleDataStallFuture != null) {
+                        Log.d(TAG, "Recovered from stall. Cancel pending reset action.");
+                        mScheduledHandleDataStallFuture.cancel(false /* mayInterruptIfRunning */);
+                        mScheduledHandleDataStallFuture = null;
+                    }
+                });
+                return;
+            }
+
+            mScheduledHandleDataStallFuture = mExecutor.schedule(() -> {
+                if (mDataStallSuspectedMs > 0) {
+                    Log.d(TAG, "Reset session to recover stalled network");
+                    mDataStallSuspectedMs = 0;
+                    startIkeSession(mActiveNetwork);
+                }
+
+                // Reset mScheduledHandleDataStallFuture since it's already run on executor thread.
+                mScheduledHandleDataStallFuture = null;
+            }, getDataStallResetSessionSeconds(mDataStallRetryCount++), TimeUnit.SECONDS);
         }
 
         /**
@@ -4294,6 +4363,7 @@ public class Vpn {
     // un-finalized.
     @VisibleForTesting
     public static class VpnNetworkAgentWrapper extends NetworkAgent {
+        private final ValidationStatusCallback mCallback;
         /** Create an VpnNetworkAgentWrapper */
         public VpnNetworkAgentWrapper(
                 @NonNull Context context,
@@ -4303,8 +4373,10 @@ public class Vpn {
                 @NonNull LinkProperties lp,
                 @NonNull NetworkScore score,
                 @NonNull NetworkAgentConfig config,
-                @Nullable NetworkProvider provider) {
+                @Nullable NetworkProvider provider,
+                @Nullable ValidationStatusCallback callback) {
             super(context, looper, logTag, nc, lp, score, config, provider);
+            mCallback = callback;
         }
 
         /** Update the LinkProperties */
@@ -4325,6 +4397,13 @@ public class Vpn {
         @Override
         public void onNetworkUnwanted() {
             // We are user controlled, not driven by NetworkRequest.
+        }
+
+        @Override
+        public void onValidationStatus(int status, Uri redirectUri) {
+            if (mCallback != null) {
+                mCallback.onValidationStatus(status);
+            }
         }
     }
 
