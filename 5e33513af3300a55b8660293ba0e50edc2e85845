@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf87b0bf_f014b399",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2636,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2022-08-02T23:11:36Z",
+      "side": 1,
+      "message": "I think any uncaught exceptions represent fatal error, so the state of buffer wouldn\u0027t matter anymore.",
+      "parentUuid": "4772b9ae_cdf11a8e",
+      "range": {
+        "startLine": 2636,
+        "startChar": 12,
+        "endLine": 2636,
+        "endChar": 32
+      },
+      "revId": "5e33513af3300a55b8660293ba0e50edc2e85845",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1c7bfe7_888d26d6",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-08-02T22:30:01Z",
       "side": 1,
       "message": "Do we need locked postfix for methods regarding mBufferLock?\n(invalidateByteBuffer(), cacheBuffers())",
+      "range": {
+        "startLine": 2899,
+        "startChar": 12,
+        "endLine": 2899,
+        "endChar": 32
+      },
+      "revId": "5e33513af3300a55b8660293ba0e50edc2e85845",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbd331f2_ba6d3272",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2899,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2022-08-02T23:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1c7bfe7_888d26d6",
       "range": {
         "startLine": 2899,
         "startChar": 12,
