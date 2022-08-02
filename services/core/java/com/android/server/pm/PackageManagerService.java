@@ -438,6 +438,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.DigestException;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -12491,7 +12493,7 @@ public class PackageManagerService extends IPackageManager.Stub
         enforceSystemOrRoot("Only the system can request package update");
 
         // We need to re-extract after an OTA.
-        boolean causeUpgrade = isDeviceUpgrading();
+        boolean causeUpgrade = isDeviceUpgrading() || hasBcpApexesChanged();
 
         // First boot or factory reset.
         // Note: we also handle devices that are upgrading to N right now as if it is their
@@ -28910,6 +28912,45 @@ public class PackageManagerService extends IPackageManager.Stub
                 }
             }
         }
+    }
+
+
+    /**
+     * Returns the module names of the APEXes that contribute to bootclasspath.
+     */
+    private static List<String> getBcpApexes() {
+        String bcp = System.getenv("BOOTCLASSPATH");
+        if (TextUtils.isEmpty(bcp)) {
+            Log.e(TAG, "Unable to get BOOTCLASSPATH");
+            return List.of();
+        }
+
+        ArrayList<String> bcpApexes = new ArrayList<>();
+        for (String pathStr : bcp.split(":")) {
+            Path path = Paths.get(pathStr);
+            // Check if the path is in the format of `/apex/<apex-module-name>/...` and extract the
+            // apex module name from the path.
+            if (path.getNameCount() >= 2 && path.getName(0).toString().equals("apex")) {
+                bcpApexes.add(path.getName(1).toString());
+            }
+        }
+
+        return bcpApexes;
+    }
+
+    /**
+     * Returns true of any of the APEXes that contribute to bootclasspath has changed during this
+     * boot.
+     */
+    private static boolean hasBcpApexesChanged() {
+        Set<String> bcpApexes = new HashSet<>(getBcpApexes());
+        ApexManager apexManager = ApexManager.getInstance();
+        for (ApexManager.ActiveApexInfo apexInfo : apexManager.getActiveApexInfos()) {
+            if (bcpApexes.contains(apexInfo.apexModuleName) && apexInfo.activeApexChanged) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static class TempUserState {
