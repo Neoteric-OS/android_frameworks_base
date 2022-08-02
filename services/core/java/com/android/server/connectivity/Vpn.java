@@ -21,6 +21,7 @@ import static android.Manifest.permission.CONTROL_VPN;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
+import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.RouteInfo.RTN_THROW;
 import static android.net.RouteInfo.RTN_UNREACHABLE;
 import static android.net.VpnManager.NOTIFICATION_CHANNEL_VPN;
@@ -51,6 +52,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.pm.UserInfo;
+import android.net.ConnectivityDiagnosticsManager;
 import android.net.ConnectivityManager;
 import android.net.DnsResolver;
 import android.net.INetd;
@@ -233,6 +235,7 @@ public class Vpn {
     private final Context mContext;
     private final ConnectivityManager mConnectivityManager;
     private final AppOpsManager mAppOpsManager;
+    private final ConnectivityDiagnosticsManager mConnectivityDiagnosticsManager;
     // The context is for specific user which is created from mUserId
     private final Context mUserIdContext;
     @VisibleForTesting final Dependencies mDeps;
@@ -548,6 +551,8 @@ public class Vpn {
         mConnectivityManager = mContext.getSystemService(ConnectivityManager.class);
         mAppOpsManager = mContext.getSystemService(AppOpsManager.class);
         mUserIdContext = context.createContextAsUser(UserHandle.of(userId), 0 /* flags */);
+        mConnectivityDiagnosticsManager =
+                mContext.getSystemService(ConnectivityDiagnosticsManager.class);
         mDeps = deps;
         mNms = netService;
         mNetd = netd;
@@ -2758,6 +2763,7 @@ public class Vpn {
 
         @Nullable private IkeSessionWrapper mSession;
         @Nullable private IkeSessionConnectionInfo mIkeConnectionInfo;
+        @Nullable private VpnConnectivityDiagnosticsCallback mDiagnosticsCallback;
 
         // mMobikeEnabled can only be updated after IKE AUTH is finished.
         private boolean mMobikeEnabled = false;
@@ -2822,6 +2828,13 @@ public class Vpn {
             }
 
             mConnectivityManager.requestNetwork(req, mNetworkCallback);
+
+            final NetworkRequest diagRequest = new NetworkRequest.Builder()
+                    .addTransportType(TRANSPORT_VPN)
+                    .removeCapability(NET_CAPABILITY_NOT_VPN).build();
+            mDiagnosticsCallback = new VpnConnectivityDiagnosticsCallback();
+            mConnectivityDiagnosticsManager.registerConnectivityDiagnosticsCallback(
+                    diagRequest, mExecutor, mDiagnosticsCallback);
         }
 
         private boolean isActiveNetwork(@Nullable Network network) {
@@ -3091,22 +3104,28 @@ public class Vpn {
                 return;
             }
 
+            if (maybeMigrateIkeSession(underlyingNetwork)) return;
+
+            startIkeSession(underlyingNetwork);
+        }
+
+        boolean maybeMigrateIkeSession(@NonNull Network underlyingNetwork) {
+            if (mSession == null || !mMobikeEnabled) return false;
+
+            // IKE session can schedule a migration event only when IKE AUTH is finished
+            // and mMobikeEnabled is true.
+            Log.d(TAG, "Migrate IKE Session with token "
+                    + mCurrentToken
+                    + " to network "
+                    + underlyingNetwork);
+            mSession.setNetwork(underlyingNetwork);
+            return true;
+        }
+
+        private void startIkeSession(@NonNull Network underlyingNetwork) {
+            Log.d(TAG, "Start new IKE session on network " + underlyingNetwork);
+
             try {
-                if (mSession != null && mMobikeEnabled) {
-                    // IKE session can schedule a migration event only when IKE AUTH is finished
-                    // and mMobikeEnabled is true.
-                    Log.d(
-                            TAG,
-                            "Migrate IKE Session with token "
-                                    + mCurrentToken
-                                    + " to network "
-                                    + underlyingNetwork);
-                    mSession.setNetwork(underlyingNetwork);
-                    return;
-                }
-
-                Log.d(TAG, "Start new IKE session on network " + underlyingNetwork);
-
                 // Clear mInterface to prevent Ikev2VpnRunner being cleared when
                 // interfaceRemoved() is called.
                 synchronized (Vpn.this) {
@@ -3192,6 +3211,32 @@ public class Vpn {
         /** Called when the LinkProperties of underlying network is changed */
         public void onDefaultNetworkLinkPropertiesChanged(@NonNull LinkProperties lp) {
             mUnderlyingLinkProperties = lp;
+        }
+
+        class VpnConnectivityDiagnosticsCallback
+                extends ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback {
+            // The callback runs in the executor thread.
+            @Override
+            public void onDataStallSuspected(
+                    ConnectivityDiagnosticsManager.DataStallReport report) {
+                synchronized (Vpn.this) {
+                    // Ignore stale runner.
+                    if (mVpnRunner != Vpn.IkeV2VpnRunner.this) return;
+
+                    // VpnConnectivityDiagnosticsCallback should only be registered for
+                    // IkeV2VpnRunner. Verify as a safety check.
+                    if (!isIkev2VpnRunner()) return;
+
+                    // Handle the report only for current VPN network.
+                    if (mNetworkAgent != null
+                            && mNetworkAgent.getNetwork().equals(report.getNetwork())) {
+                        Log.d(TAG, "Data stall suspected");
+
+                        // Trigger MOBIKE.
+                        maybeMigrateIkeSession(mActiveNetwork);
+                    }
+                }
+            }
         }
 
         /**
@@ -3492,6 +3537,9 @@ public class Vpn {
         @Override
         public void exitVpnRunner() {
             try {
+                mConnectivityDiagnosticsManager.unregisterConnectivityDiagnosticsCallback(
+                        mDiagnosticsCallback);
+
                 mExecutor.execute(() -> {
                     disconnectVpnRunner();
                 });
