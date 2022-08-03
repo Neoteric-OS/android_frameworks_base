@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d4b24fe_ec96ef53",
+        "filename": "libs/hwui/jni/Paint.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2022-08-03T22:07:40Z",
+      "side": 1,
+      "message": "out of curiosity why 3 underscores instead of the previous 2 for this method?",
+      "range": {
+        "startLine": 347,
+        "startChar": 16,
+        "endLine": 347,
+        "endChar": 41
+      },
+      "revId": "ea8af45b8dd4207d754256e43eaafba55e68e4fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
