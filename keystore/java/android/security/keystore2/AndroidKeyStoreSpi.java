@@ -20,6 +20,7 @@ import static android.security.keystore2.AndroidKeyStoreCipherSpiBase.DEFAULT_MG
 
 import android.annotation.NonNull;
 import android.hardware.biometrics.BiometricManager;
+import android.hardware.security.keymint.EcCurve;
 import android.hardware.security.keymint.HardwareAuthenticatorType;
 import android.hardware.security.keymint.KeyParameter;
 import android.hardware.security.keymint.SecurityLevel;
@@ -49,6 +50,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.AlgorithmParameters;
 import java.security.Key;
 import java.security.KeyStore.Entry;
 import java.security.KeyStore.LoadStoreParameter;
@@ -66,6 +68,17 @@ import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.security.interfaces.ECKey;
+import java.security.interfaces.ECPrivateKey;
+import java.security.interfaces.EdECKey;
+import java.security.interfaces.EdECPrivateKey;
+import java.security.interfaces.XECKey;
+import java.security.interfaces.XECPrivateKey;
+import java.security.spec.AlgorithmParameterSpec;
+import java.security.spec.ECGenParameterSpec;
+import java.security.spec.ECParameterSpec;
+import java.security.spec.InvalidParameterSpecException;
+import java.security.spec.NamedParameterSpec;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -566,6 +579,14 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
                         spec.getMaxUsageCount()
                 ));
             }
+            if (KeymasterDefs.KM_ALGORITHM_EC
+                    == KeyProperties.KeyAlgorithm.toKeymasterAsymmetricKeyAlgorithm(
+                            key.getAlgorithm())) {
+                importArgs.add(KeyStore2ParameterUtils.makeEnum(
+                        KeymasterDefs.KM_TAG_EC_CURVE,
+                        getKeymasterEcCurve(key)
+                ));
+            }
         } catch (IllegalArgumentException | IllegalStateException e) {
             throw new KeyStoreException(e);
         }
@@ -589,6 +610,55 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
         } catch (android.security.KeyStoreException e) {
             throw new KeyStoreException("Failed to store private key", e);
         }
+    }
+
+    private boolean isECParameterSpecOfCurve(ECParameterSpec spec, String curveName) {
+        try {
+            AlgorithmParameters parameters = AlgorithmParameters.getInstance("EC");
+            parameters.init(new ECGenParameterSpec(curveName));
+            ECParameterSpec curveSpec = parameters.getParameterSpec(ECParameterSpec.class);
+            if (curveSpec.getCurve().equals(spec.getCurve())
+                    && curveSpec.getOrder().equals(spec.getOrder())
+                    && curveSpec.getGenerator().equals(spec.getGenerator())) {
+                return true;
+            }
+        } catch (NoSuchAlgorithmException | InvalidParameterSpecException e) {
+            return false;
+        }
+        return false;
+    }
+
+    private int getKeymasterEcCurve(PrivateKey key) {
+        if (key instanceof ECKey) {
+            ECParameterSpec param = ((ECPrivateKey) key).getParams();
+            if (isECParameterSpecOfCurve(param, "secp224r1")) {
+                return EcCurve.P_224;
+            } else if (isECParameterSpecOfCurve(param, "secp256r1")) {
+                return EcCurve.P_256;
+            } else if (isECParameterSpecOfCurve(param, "secp384r1")) {
+                return EcCurve.P_384;
+            } else if (isECParameterSpecOfCurve(param, "secp521r1")) {
+                return EcCurve.P_521;
+            }
+            throw new RuntimeException("Unexpected EC private key.");
+        } else if (key instanceof XECKey) {
+            AlgorithmParameterSpec param = ((XECPrivateKey) key).getParams();
+            if (param.equals(NamedParameterSpec.X25519)) {
+                return EcCurve.CURVE_25519;
+            }
+            throw new RuntimeException("Unexpected XEC private key.");
+        } else if (key.getAlgorithm().equals("XDH")) {
+            // TODO com.android.org.conscrypt.OpenSSLX25519PrivateKey does not implement XECKey,
+            //  this case is not required once it is implements XECKey interface(b/214203951).
+            return EcCurve.CURVE_25519;
+        } else if (key instanceof EdECKey) {
+            AlgorithmParameterSpec param = ((EdECPrivateKey) key).getParams();
+            if (param.equals(NamedParameterSpec.ED25519)) {
+                return EcCurve.CURVE_25519;
+            }
+            throw new RuntimeException("Unexpected EdEC private key.");
+        }
+        throw new RuntimeException("Unexpected Key.");
     }
 
     private static void assertCanReplace(String alias, @Domain int targetDomain,
