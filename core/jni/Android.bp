@@ -315,9 +315,4 @@ cc_library_shared {
             cflags: ["-DANDROID_EXPERIMENTAL_MTE"],
         },
     },
-
-    // Workaround Clang LTO crash.
-    lto: {
-        never: true,
-    },
 }
