@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7528035b_b419d0a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2022-08-03T18:11:12Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "94375b7b30c262fa2b73d36d1df725b19ed2c831",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "77288097_db811887",
@@ -31,6 +48,30 @@
       "writtenOn": "2022-08-02T23:17:59Z",
       "side": 1,
       "message": "Will it be OK if index is negative?\n(I guess an exception might arise.)",
+      "range": {
+        "startLine": 3841,
+        "startChar": 36,
+        "endLine": 3841,
+        "endChar": 41
+      },
+      "revId": "94375b7b30c262fa2b73d36d1df725b19ed2c831",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8de88d45_e266f882",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3841,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2022-08-03T18:11:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77288097_db811887",
       "range": {
         "startLine": 3841,
         "startChar": 36,
