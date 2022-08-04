@@ -5302,4 +5302,9 @@
   <java-symbol type="bool" name="config_viewBasedRotaryEncoderHapticsEnabled" />
 
   <java-symbol type="bool" name="config_quickSettingsShowMediaPlayer" />
+
+  <java-symbol type="bool" name="config_defaultKeepScreenOnEnabled" />
+  <java-symbol type="integer" name="config_defaultKeepScreenOnForMillis" />
+  <java-symbol type="integer" name="config_defaultMaxDurationBetweenUndimsMillis" />
+  <java-symbol type="integer" name="config_defaultUndimsRequired" />
 </resources>
