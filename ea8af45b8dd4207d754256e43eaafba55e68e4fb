@@ -22,6 +22,30 @@
       },
       "revId": "ea8af45b8dd4207d754256e43eaafba55e68e4fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38bc116e_158d16f9",
+        "filename": "libs/hwui/jni/Paint.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1938931
+      },
+      "writtenOn": "2022-08-04T16:49:09Z",
+      "side": 1,
+      "message": "3 underscores seems to be the standard in the other functions in this file.",
+      "parentUuid": "1d4b24fe_ec96ef53",
+      "range": {
+        "startLine": 347,
+        "startChar": 16,
+        "endLine": 347,
+        "endChar": 41
+      },
+      "revId": "ea8af45b8dd4207d754256e43eaafba55e68e4fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
