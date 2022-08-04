@@ -5530,4 +5530,8 @@
   <java-symbol type="drawable" name="ic_zen_mode_type_theater" />
   <java-symbol type="drawable" name="ic_zen_mode_type_unknown" />
 
+  <java-symbol type="bool" name="config_defaultKeepScreenOnEnabled" />
+  <java-symbol type="integer" name="config_defaultKeepScreenOnForMillis" />
+  <java-symbol type="integer" name="config_defaultMaxDurationBetweenUndimsMillis" />
+  <java-symbol type="integer" name="config_defaultUndimsRequired" />
 </resources>
