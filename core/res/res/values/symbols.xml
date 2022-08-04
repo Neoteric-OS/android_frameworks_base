@@ -5379,4 +5379,9 @@
   <java-symbol type="string" name="config_defaultContextualSearchKey" />
   <java-symbol type="string" name="config_defaultContextualSearchEnabled" />
   <java-symbol type="string" name="config_defaultContextualSearchLegacyEnabled" />
+
+  <java-symbol type="bool" name="config_defaultKeepScreenOnEnabled" />
+  <java-symbol type="integer" name="config_defaultKeepScreenOnForMillis" />
+  <java-symbol type="integer" name="config_defaultMaxDurationBetweenUndimsMillis" />
+  <java-symbol type="integer" name="config_defaultUndimsRequired" />
 </resources>
