@@ -46,6 +46,30 @@
       },
       "revId": "ea8af45b8dd4207d754256e43eaafba55e68e4fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d7a32fe_6d2b2cda",
+        "filename": "libs/hwui/jni/Paint.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2022-08-04T17:40:52Z",
+      "side": 1,
+      "message": "SGTM,this is fine for now, maybe we can revisit the naming of these at some point in the future, as I find Java type descriptors generally inscrutable.",
+      "parentUuid": "38bc116e_158d16f9",
+      "range": {
+        "startLine": 347,
+        "startChar": 16,
+        "endLine": 347,
+        "endChar": 41
+      },
+      "revId": "ea8af45b8dd4207d754256e43eaafba55e68e4fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
