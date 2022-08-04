@@ -18,9 +18,13 @@ package android.security.keystore2;
 
 import android.annotation.NonNull;
 import android.security.KeyStoreSecurityLevel;
+import android.security.keymaster.KeymasterDefs;
 import android.security.keystore.KeyProperties;
+import android.system.keystore2.Authorization;
 import android.system.keystore2.KeyDescriptor;
 import android.system.keystore2.KeyMetadata;
+
+import com.android.org.conscrypt.OpenSSLECGroupContext;
 
 import java.security.interfaces.ECPublicKey;
 import java.security.spec.ECParameterSpec;
@@ -56,11 +60,38 @@ public class AndroidKeyStoreECPublicKey extends AndroidKeyStorePublicKey impleme
         }
     }
 
+    private static String getEcCurveFromKeymaster(int ecCurve) {
+        switch (ecCurve) {
+            case android.hardware.security.keymint.EcCurve.P_224:
+                return "secp224r1";
+            case android.hardware.security.keymint.EcCurve.P_256:
+                return "secp256r1";
+            case android.hardware.security.keymint.EcCurve.P_384:
+                return "secp384r1";
+            case android.hardware.security.keymint.EcCurve.P_521:
+                return "secp521r1";
+        }
+        return "";
+    }
+
     @Override
     public AndroidKeyStorePrivateKey getPrivateKey() {
+        ECParameterSpec params = mParams;
+        for (Authorization a : getAuthorizations()) {
+            try {
+                if (a.keyParameter.tag == KeymasterDefs.KM_TAG_EC_CURVE) {
+                    params = OpenSSLECGroupContext.getCurveByName(getEcCurveFromKeymaster(
+                            a.keyParameter.value.getEcCurve())).getECParameterSpec();
+                    break;
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to parse EC curve "
+                        + a.keyParameter.value.getEcCurve());
+            }
+        }
         return new AndroidKeyStoreECPrivateKey(
                 getUserKeyDescriptor(), getKeyIdDescriptor().nspace, getAuthorizations(),
-                getSecurityLevel(), mParams);
+                getSecurityLevel(), params);
     }
 
     @Override
