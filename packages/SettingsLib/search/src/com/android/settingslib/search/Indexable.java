@@ -43,27 +43,25 @@ public interface Indexable {
          * @return a list of {@link android.provider.SearchIndexableResource} references.
          * Can be null.
          */
-        List<SearchIndexableResource> getXmlResourcesToIndex(Context context, boolean enabled);
+        List<SearchIndexableResource> getXmlResourcesToIndex(Context context);
 
         /**
          * Return a list of raw data for indexing. See {@link SearchIndexableRaw}
          *
          * @param context the context.
-         * @param enabled hint telling if the data needs to be considered into the search results
-         *                or not.
+         *
          * @return a list of {@link SearchIndexableRaw} references. Can be null.
          */
-        List<SearchIndexableRaw> getRawDataToIndex(Context context, boolean enabled);
+        List<SearchIndexableRaw> getRawDataToIndex(Context context);
 
         /**
          * Return a list of dynamic raw data for indexing. See {@link SearchIndexableRaw}
          *
          * @param context the context.
-         * @param enabled hint telling if the data needs to be considered into the search results
-         *                or not.
+         *
          * @return a list of {@link SearchIndexableRaw} references. Can be null.
          */
-        List<SearchIndexableRaw> getDynamicRawDataToIndex(Context context, boolean enabled);
+        List<SearchIndexableRaw> getDynamicRawDataToIndex(Context context);
 
         /**
          * Return a list of data keys that cannot be indexed. See {@link SearchIndexableRaw}
