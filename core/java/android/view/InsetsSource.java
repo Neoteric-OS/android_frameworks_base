@@ -280,8 +280,12 @@ public class InsetsSource implements Parcelable {
         dest.writeInt(mType);
         mFrame.writeToParcel(dest, 0);
         if (mVisibleFrame != null) {
-            dest.writeInt(1);
-            mVisibleFrame.writeToParcel(dest, 0);
+            try {
+                dest.writeInt(1);
+                mVisibleFrame.writeToParcel(dest, 0);
+            } catch (NullPointerException e) {
+                dest.writeInt(0);
+            }
         } else {
             dest.writeInt(0);
         }
@@ -293,6 +297,7 @@ public class InsetsSource implements Parcelable {
         return "InsetsSource: {"
                 + "mType=" + InsetsState.typeToString(mType)
                 + ", mFrame=" + mFrame.toShortString()
+                + ", mVisibleFrame=" + mVisibleFrame
                 + ", mVisible=" + mVisible
                 + "}";
     }
