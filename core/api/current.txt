@@ -2971,6 +2971,7 @@ package android {
 package android.accessibilityservice {
 
   public final class AccessibilityButtonController {
+    method public void foo(String, int);
     method public boolean isAccessibilityButtonAvailable();
     method public void registerAccessibilityButtonCallback(@NonNull android.accessibilityservice.AccessibilityButtonController.AccessibilityButtonCallback);
     method public void registerAccessibilityButtonCallback(@NonNull android.accessibilityservice.AccessibilityButtonController.AccessibilityButtonCallback, @NonNull android.os.Handler);
