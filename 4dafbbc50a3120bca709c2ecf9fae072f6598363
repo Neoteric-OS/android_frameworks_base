@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b48fba88_2d1b34e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1388435
+      },
+      "writtenOn": "2022-08-08T08:23:56Z",
+      "side": 1,
+      "message": "it\u0027s not only used in Settings but also TVSettings and car settings",
+      "revId": "4dafbbc50a3120bca709c2ecf9fae072f6598363",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
