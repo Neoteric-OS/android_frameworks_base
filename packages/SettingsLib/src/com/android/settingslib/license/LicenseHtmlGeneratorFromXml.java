@@ -27,7 +27,6 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -82,8 +81,16 @@ class LicenseHtmlGeneratorFromXml {
             + "</div><!-- table of contents -->\n"
             + "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\">";
 
+    private static final String IMAGES_HEAD_STRING =
+            "</table><div class=\"images-list\"><strong>Images</strong>\n<ul class=\"images\">";
+    private static final String IMAGES_TAIL_STRING = "</ul></div>\n";
+
+    private static final String PATH_COUNTS_HEAD_STRING =
+            "<div class=\"path-counts\"><table>\n  <tr><th>Path prefix</th><th>Count</th></tr>\n";
+    private static final String PATH_COUNTS_TAIL_STRING = "</table></div>\n";
+
     private static final String HTML_REAR_STRING =
-            "</table></body></html>";
+            "</body></html>";
 
     private final List<File> mXmlFiles;
 
@@ -137,13 +144,13 @@ class LicenseHtmlGeneratorFromXml {
         try {
             writer = new PrintWriter(outputFile);
 
-            generateHtml(mFileNameToLibraryToContentIdMap, mContentIdToFileContentMap, writer,
-                noticeHeader);
+            generateHtml(mXmlFiles, mFileNameToLibraryToContentIdMap, mContentIdToFileContentMap,
+                    writer, noticeHeader);
 
             writer.flush();
             writer.close();
             return true;
-        } catch (FileNotFoundException | SecurityException e) {
+        } catch (IOException | SecurityException e) {
             Log.e(TAG, "Failed to generate " + outputFile, e);
 
             if (writer != null) {
@@ -271,13 +278,32 @@ class LicenseHtmlGeneratorFromXml {
         return result.toString();
     }
 
+    private static String pathPrefix(String path) {
+        String prefix = path;
+        while (prefix.length() > 0 && prefix.substring(0, 1).equals("/")) {
+            prefix = prefix.substring(1);
+        }
+        int idx = prefix.indexOf("/");
+        if (idx > 0) {
+            prefix = prefix.substring(0, idx);
+        }
+        return prefix;
+    }
+
     @VisibleForTesting
-    static void generateHtml(Map<String, Map<String, Set<String>>> fileNameToLibraryToContentIdMap,
+    static void generateHtml(List<File> xmlFiles,
+            Map<String, Map<String, Set<String>>> fileNameToLibraryToContentIdMap,
             Map<String, String> contentIdToFileContentMap, PrintWriter writer,
-            String noticeHeader) {
+            String noticeHeader) throws IOException {
         List<String> fileNameList = new ArrayList();
         fileNameList.addAll(fileNameToLibraryToContentIdMap.keySet());
         Collections.sort(fileNameList);
+
+        SortedMap<String, Integer> prefixToCount = new TreeMap();
+        for (String f : fileNameList) {
+            String prefix = pathPrefix(f);
+            prefixToCount.merge(prefix, 1, Integer::sum);
+        }
 
         SortedMap<String, Set<String>> libraryToContentIdMap = new TreeMap();
         for (Map<String, Set<String>> libraryToContentValue :
@@ -391,6 +417,18 @@ class LicenseHtmlGeneratorFromXml {
             writer.println("</pre><!-- license-text -->");
             writer.println("</td></tr><!-- same-license -->");
         }
+
+        writer.println(IMAGES_HEAD_STRING);
+        for (File file : xmlFiles) {
+            writer.format("  <li>%s</li>\n", pathPrefix(file.getCanonicalPath()));
+        }
+        writer.println(IMAGES_TAIL_STRING);
+
+        writer.println(PATH_COUNTS_HEAD_STRING);
+        for (Map.Entry<String, Integer> entry : prefixToCount.entrySet()) {
+            writer.format("  <tr><td>%s</td><td>%d</td></tr>\n", entry.getKey(), entry.getValue());
+        }
+        writer.println(PATH_COUNTS_TAIL_STRING);
 
         writer.println(HTML_REAR_STRING);
     }

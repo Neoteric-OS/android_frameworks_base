@@ -198,6 +198,7 @@ public class LicenseHtmlGeneratorFromXmlTest {
 
     @Test
     public void testGenerateHtml() {
+        List<File> xmlFiles = new ArrayList<>();
         Map<String, Map<String, Set<String>>> fileNameToLibraryToContentIdMap = new HashMap<>();
         Map<String, String> contentIdToFileContentMap = new HashMap<>();
         Map<String, Set<String>> toBoth = new HashMap<>();
@@ -213,13 +214,14 @@ public class LicenseHtmlGeneratorFromXmlTest {
 
         StringWriter output = new StringWriter();
         LicenseHtmlGeneratorFromXml.generateHtml(
-                fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
+                xmlFiles, fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
                 new PrintWriter(output), "");
         assertThat(output.toString()).isEqualTo(EXPECTED_OLD_HTML_STRING);
     }
 
     @Test
     public void testGenerateNewHtml() {
+        List<File> xmlFiles = new ArrayList<>();
         Map<String, Map<String, Set<String>>> fileNameToLibraryToContentIdMap = new HashMap<>();
         Map<String, String> contentIdToFileContentMap = new HashMap<>();
         Map<String, Set<String>> toBoth = new HashMap<>();
@@ -236,13 +238,14 @@ public class LicenseHtmlGeneratorFromXmlTest {
 
         StringWriter output = new StringWriter();
         LicenseHtmlGeneratorFromXml.generateHtml(
-                fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
+                xmlFiles, fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
                 new PrintWriter(output), "");
         assertThat(output.toString()).isEqualTo(EXPECTED_NEW_HTML_STRING);
     }
 
     @Test
     public void testGenerateHtmlWithCustomHeading() {
+        List<File> xmlFiles = new ArrayList<>();
         Map<String, Map<String, Set<String>>> fileNameToLibraryToContentIdMap = new HashMap<>();
         Map<String, String> contentIdToFileContentMap = new HashMap<>();
         Map<String, Set<String>> toBoth = new HashMap<>();
@@ -258,13 +261,14 @@ public class LicenseHtmlGeneratorFromXmlTest {
 
         StringWriter output = new StringWriter();
         LicenseHtmlGeneratorFromXml.generateHtml(
-                fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
+                xmlFiles, fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
                 new PrintWriter(output), HTML_CUSTOM_HEADING);
         assertThat(output.toString()).isEqualTo(EXPECTED_OLD_HTML_STRING_WITH_CUSTOM_HEADING);
     }
 
     @Test
     public void testGenerateNewHtmlWithCustomHeading() {
+        List<File> xmlFiles = new ArrayList<>();
         Map<String, Map<String, Set<String>>> fileNameToLibraryToContentIdMap = new HashMap<>();
         Map<String, String> contentIdToFileContentMap = new HashMap<>();
         Map<String, Set<String>> toBoth = new HashMap<>();
@@ -281,7 +285,7 @@ public class LicenseHtmlGeneratorFromXmlTest {
 
         StringWriter output = new StringWriter();
         LicenseHtmlGeneratorFromXml.generateHtml(
-                fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
+                xmlFiles, fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
                 new PrintWriter(output), HTML_CUSTOM_HEADING);
         assertThat(output.toString()).isEqualTo(EXPECTED_NEW_HTML_STRING_WITH_CUSTOM_HEADING);
     }
