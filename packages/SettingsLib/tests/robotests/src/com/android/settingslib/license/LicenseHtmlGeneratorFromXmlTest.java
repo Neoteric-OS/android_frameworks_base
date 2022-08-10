@@ -24,13 +24,16 @@ import org.robolectric.RobolectricTestRunner;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -197,7 +200,8 @@ public class LicenseHtmlGeneratorFromXmlTest {
     }
 
     @Test
-    public void testGenerateHtml() {
+    public void testGenerateHtml() throws Exception {
+        List<File> xmlFiles = new ArrayList<>();
         Map<String, Map<String, Set<String>>> fileNameToLibraryToContentIdMap = new HashMap<>();
         Map<String, String> contentIdToFileContentMap = new HashMap<>();
         Map<String, Set<String>> toBoth = new HashMap<>();
@@ -213,13 +217,14 @@ public class LicenseHtmlGeneratorFromXmlTest {
 
         StringWriter output = new StringWriter();
         LicenseHtmlGeneratorFromXml.generateHtml(
-                fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
+                xmlFiles, fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
                 new PrintWriter(output), "");
         assertThat(output.toString()).isEqualTo(EXPECTED_OLD_HTML_STRING);
     }
 
     @Test
-    public void testGenerateNewHtml() {
+    public void testGenerateNewHtml() throws Exception {
+        List<File> xmlFiles = new ArrayList<>();
         Map<String, Map<String, Set<String>>> fileNameToLibraryToContentIdMap = new HashMap<>();
         Map<String, String> contentIdToFileContentMap = new HashMap<>();
         Map<String, Set<String>> toBoth = new HashMap<>();
@@ -236,13 +241,14 @@ public class LicenseHtmlGeneratorFromXmlTest {
 
         StringWriter output = new StringWriter();
         LicenseHtmlGeneratorFromXml.generateHtml(
-                fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
+                xmlFiles, fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
                 new PrintWriter(output), "");
         assertThat(output.toString()).isEqualTo(EXPECTED_NEW_HTML_STRING);
     }
 
     @Test
-    public void testGenerateHtmlWithCustomHeading() {
+    public void testGenerateHtmlWithCustomHeading() throws Exception {
+        List<File> xmlFiles = new ArrayList<>();
         Map<String, Map<String, Set<String>>> fileNameToLibraryToContentIdMap = new HashMap<>();
         Map<String, String> contentIdToFileContentMap = new HashMap<>();
         Map<String, Set<String>> toBoth = new HashMap<>();
@@ -258,13 +264,14 @@ public class LicenseHtmlGeneratorFromXmlTest {
 
         StringWriter output = new StringWriter();
         LicenseHtmlGeneratorFromXml.generateHtml(
-                fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
+                xmlFiles, fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
                 new PrintWriter(output), HTML_CUSTOM_HEADING);
         assertThat(output.toString()).isEqualTo(EXPECTED_OLD_HTML_STRING_WITH_CUSTOM_HEADING);
     }
 
     @Test
-    public void testGenerateNewHtmlWithCustomHeading() {
+    public void testGenerateNewHtmlWithCustomHeading() throws Exception {
+        List<File> xmlFiles = new ArrayList<>();
         Map<String, Map<String, Set<String>>> fileNameToLibraryToContentIdMap = new HashMap<>();
         Map<String, String> contentIdToFileContentMap = new HashMap<>();
         Map<String, Set<String>> toBoth = new HashMap<>();
@@ -281,7 +288,7 @@ public class LicenseHtmlGeneratorFromXmlTest {
 
         StringWriter output = new StringWriter();
         LicenseHtmlGeneratorFromXml.generateHtml(
-                fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
+                xmlFiles, fileNameToLibraryToContentIdMap, contentIdToFileContentMap,
                 new PrintWriter(output), HTML_CUSTOM_HEADING);
         assertThat(output.toString()).isEqualTo(EXPECTED_NEW_HTML_STRING_WITH_CUSTOM_HEADING);
     }
