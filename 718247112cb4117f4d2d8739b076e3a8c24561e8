@@ -465,6 +465,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fc3485b_f112a862",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2022-08-10T13:14:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8749f907_4faef219",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 36
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52125f79_932eb621",
@@ -714,6 +738,30 @@
       "side": 1,
       "message": "Sorry, looking at the code you have, I think contains(newHotspotAddr.getAddress()) would have been enough.\nCan be in a followup.",
       "parentUuid": "b423c7ef_5f442c5d",
+      "range": {
+        "startLine": 138,
+        "startChar": 12,
+        "endLine": 139,
+        "endChar": 55
+      },
+      "revId": "718247112cb4117f4d2d8739b076e3a8c24561e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b9ffbfd_88ee2c75",
+        "filename": "packages/Tethering/tests/mts/src/android/tethering/mts/TetheringModuleTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2022-08-10T13:14:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4149d613_9015cc40",
       "range": {
         "startLine": 138,
         "startChar": 12,
