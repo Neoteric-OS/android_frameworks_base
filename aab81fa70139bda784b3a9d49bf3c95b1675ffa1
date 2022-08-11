@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5dc4b9e5_7a0afe1f",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4050,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-08-11T13:11:39Z",
+      "side": 1,
+      "message": "mOwnerUid will not be changed in current design, do you want to add a comment saying that to prevent mOwnerUid will be changed in `mVpnRunner.exit()` in the future, so cache it just in case?",
+      "range": {
+        "startLine": 4050,
+        "startChar": 12,
+        "endLine": 4050,
+        "endChar": 43
+      },
+      "revId": "aab81fa70139bda784b3a9d49bf3c95b1675ffa1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
