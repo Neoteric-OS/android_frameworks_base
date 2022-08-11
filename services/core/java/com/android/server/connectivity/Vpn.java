@@ -1182,12 +1182,16 @@ public class Vpn {
                 mContext.unbindService(mConnection);
                 cleanupVpnStateLocked();
             } else if (mVpnRunner != null) {
-                if (!VpnConfig.LEGACY_VPN.equals(mPackage)) {
-                    notifyVpnManagerVpnStopped(mPackage, mOwnerUID);
-                }
+                // Cache ownerUid and sesseionKey to prevent the value being changed after
+                // performing VpnRunner.exit().
+                final int ownerUid = mOwnerUID;
+                final String sesseionKey = getSessionKeyLocked();
 
                 // cleanupVpnStateLocked() is called from mVpnRunner.exit()
                 mVpnRunner.exit();
+                if (!VpnConfig.LEGACY_VPN.equals(mPackage)) {
+                    notifyVpnManagerVpnStopped(mPackage, ownerUid, sesseionKey);
+                }
             }
 
             try {
@@ -4042,13 +4046,18 @@ public class Vpn {
         // To stop the VPN profile, the caller must be the current prepared package and must be
         // running an Ikev2VpnProfile.
         if (isCurrentIkev2VpnLocked(packageName)) {
-            notifyVpnManagerVpnStopped(packageName, mOwnerUID);
+            // Cache ownerUid and sessionKey to prevent the value being changed after performing
+            // VpnRunner.exit().
+            final int ownerUid = mOwnerUID;
+            final String sesseionKey = getSessionKeyLocked();
 
             mVpnRunner.exit();
+            notifyVpnManagerVpnStopped(packageName, ownerUid, sesseionKey);
         }
     }
 
-    private synchronized void notifyVpnManagerVpnStopped(String packageName, int ownerUID) {
+    private synchronized void notifyVpnManagerVpnStopped(String packageName, int ownerUID,
+            String sessionKey) {
         mAppOpsManager.finishOp(
                 AppOpsManager.OPSTR_ESTABLISH_VPN_MANAGER, ownerUID, packageName, null);
         // The underlying network, NetworkCapabilities and LinkProperties are not
@@ -4059,7 +4068,7 @@ public class Vpn {
         if (SdkLevel.isAtLeastT()) {
             sendEventToVpnManagerApp(VpnManager.CATEGORY_EVENT_DEACTIVATED_BY_USER,
                     -1 /* errorClass */, -1 /* errorCode*/, packageName,
-                    getSessionKeyLocked(), makeVpnProfileStateLocked(),
+                    sessionKey, makeVpnProfileStateLocked(),
                     null /* underlyingNetwork */, null /* nc */, null /* lp */);
         }
     }
