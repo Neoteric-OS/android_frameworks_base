@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4011ab5_9080d737",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4071,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-11T23:51:52Z",
+      "side": 1,
+      "message": "This also calls getSessionKeyLocked(); Consider splitting the intent generation into a separate helper method to catch everything (remember to check SDK level in both places though...)\n\n```\nIntent event \u003d buildVpnManagerVpnStoppedEvent(...) // Might need to be null if \u003cT\n\nmVpnRunner.exit()\nsendEventToVpnManagerApp(event)\n```",
+      "range": {
+        "startLine": 4071,
+        "startChar": 32,
+        "endLine": 4071,
+        "endChar": 57
+      },
+      "revId": "cd28d04597cbb4f4cf9676effde4e0d68394fe0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
