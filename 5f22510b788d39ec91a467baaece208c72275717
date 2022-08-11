@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "323f1a21_faaa4921",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/license/LicenseHtmlGeneratorFromXml.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2022-08-11T13:43:08Z",
+      "side": 1,
+      "message": "Do we have tests for this other than a build test?",
+      "range": {
+        "startLine": 365,
+        "startChar": 0,
+        "endLine": 372,
+        "endChar": 79
+      },
+      "revId": "5f22510b788d39ec91a467baaece208c72275717",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
