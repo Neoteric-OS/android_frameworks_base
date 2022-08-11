@@ -173,6 +173,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -316,6 +317,26 @@ public class Vpn {
 
     interface RetryScheduler {
         void checkInterruptAndDelay(boolean sleepLonger) throws InterruptedException;
+    }
+
+    /**
+     * A ThreadFactory to customize IKEv2 executor its own thread and provide a method to check if
+     * the given thread is the same thread as IKEv2 executor thread.
+     */
+    @VisibleForTesting
+    public static class Ikev2ExecutorThreadFactory implements ThreadFactory {
+        private Thread mThread;
+
+        @Override
+        public Thread newThread(Runnable r) {
+            mThread = new Thread(r);
+            return mThread;
+        }
+
+        /** Check if the given thread is the same thread as IKEv2 executor thread. */
+        public boolean isIkev2ExecutorThread(Thread t) {
+            return Objects.equals(mThread, t);
+        }
     }
 
     @VisibleForTesting
@@ -506,7 +527,7 @@ public class Vpn {
 
         /** Get single threaded executor for IKEv2 VPN */
         public ScheduledThreadPoolExecutor newScheduledThreadPoolExecutor() {
-            return new ScheduledThreadPoolExecutor(1);
+            return new ScheduledThreadPoolExecutor(1, new Ikev2ExecutorThreadFactory());
         }
 
         /** Get a NetworkAgent instance */
@@ -2805,13 +2826,21 @@ public class Vpn {
             return (mCurrentToken == token) && mIsRunning;
         }
 
+        private void ensureRunningOnIkev2ExecutorThread() {
+            if (!((Ikev2ExecutorThreadFactory) mExecutor.getThreadFactory()).isIkev2ExecutorThread(
+                    Thread.currentThread())) {
+                throw new SecurityException("Not running on IKEv2 executor thread: "
+                        + Thread.currentThread().getName());
+            }
+        }
+
         /**
          * Called when an IKE session has been opened
          *
-         * <p>This method is only ever called once per IkeSession, and MUST run on the mExecutor
-         * thread in order to ensure consistency of the Ikev2VpnRunner fields.
+         * <p>This method is only ever called once per IkeSession.
          */
         public void onIkeOpened(int token, @NonNull IkeSessionConfiguration ikeConfiguration) {
+            ensureRunningOnIkev2ExecutorThread();
             if (!isActiveToken(token)) {
                 Log.d(TAG, "onIkeOpened called for obsolete token " + token);
                 return;
@@ -2829,11 +2858,11 @@ public class Vpn {
          *
          * <p>This callback is usually fired when an IKE session has been opened or migrated.
          *
-         * <p>This method is called multiple times over the lifetime of an IkeSession, and MUST run
-         * on the mExecutor thread in order to ensure consistency of the Ikev2VpnRunner fields.
+         * <p>This method is called multiple times over the lifetime of an IkeSession.
          */
         public void onIkeConnectionInfoChanged(
                 int token, @NonNull IkeSessionConnectionInfo ikeConnectionInfo) {
+            ensureRunningOnIkev2ExecutorThread();
             if (!isActiveToken(token)) {
                 Log.d(TAG, "onIkeConnectionInfoChanged called for obsolete token " + token);
                 return;
@@ -2847,10 +2876,10 @@ public class Vpn {
         /**
          * Called when an IKE Child session has been opened, signalling completion of the startup.
          *
-         * <p>This method is only ever called once per IkeSession, and MUST run on the mExecutor
-         * thread in order to ensure consistency of the Ikev2VpnRunner fields.
+         * <p>This method is only ever called once per IkeSession.
          */
         public void onChildOpened(int token, @NonNull ChildSessionConfiguration childConfig) {
+            ensureRunningOnIkev2ExecutorThread();
             if (!isActiveToken(token)) {
                 Log.d(TAG, "onChildOpened called for obsolete token " + token);
 
@@ -2936,11 +2965,11 @@ public class Vpn {
          * Called when an IPsec transform has been created, and should be applied.
          *
          * <p>This method is called multiple times over the lifetime of an IkeSession (or default
-         * network), and MUST always be called on the mExecutor thread in order to ensure
-         * consistency of the Ikev2VpnRunner fields.
+         * network).
          */
         public void onChildTransformCreated(
                 int token, @NonNull IpSecTransform transform, int direction) {
+            ensureRunningOnIkev2ExecutorThread();
             if (!isActiveToken(token)) {
                 Log.d(TAG, "ChildTransformCreated for obsolete token " + token);
 
@@ -2968,13 +2997,13 @@ public class Vpn {
          * Called when an IPsec transform has been created, and should be re-applied.
          *
          * <p>This method is called multiple times over the lifetime of an IkeSession (or default
-         * network), and MUST always be called on the mExecutor thread in order to ensure
-         * consistency of the Ikev2VpnRunner fields.
+         * network).
          */
         public void onChildMigrated(
                 int token,
                 @NonNull IpSecTransform inTransform,
                 @NonNull IpSecTransform outTransform) {
+            ensureRunningOnIkev2ExecutorThread();
             if (!isActiveToken(token)) {
                 Log.d(TAG, "onChildMigrated for obsolete token " + token);
                 return;
@@ -3016,11 +3045,9 @@ public class Vpn {
          * has mobility, Ikev2VpnRunner will migrate the existing IkeSession to the new network.
          * Otherwise, Ikev2VpnRunner will kill the old IKE state, and start a new IkeSession
          * instance.
-         *
-         * <p>This method MUST always be called on the mExecutor thread in order to ensure
-         * consistency of the Ikev2VpnRunner fields.
          */
         public void onDefaultNetworkChanged(@NonNull Network network) {
+            ensureRunningOnIkev2ExecutorThread();
             Log.d(TAG, "onDefaultNetworkChanged: " + network);
 
             // If there is a new default network brought up, cancel the retry task to prevent
@@ -3045,14 +3072,12 @@ public class Vpn {
         /**
          * Start a new IKE session.
          *
-         * <p>This method MUST always be called on the mExecutor thread in order to ensure
-         * consistency of the Ikev2VpnRunner fields.
-         *
          * @param underlyingNetwork if the value is {@code null}, which means there is no active
          *              network can be used, do nothing and return immediately. Otherwise, use the
          *              given network to start a new IKE session.
          */
         private void startOrMigrateIkeSession(@Nullable Network underlyingNetwork) {
+            ensureRunningOnIkev2ExecutorThread();
             if (underlyingNetwork == null) {
                 Log.d(TAG, "There is no active network for starting an IKE session");
                 return;
@@ -3148,11 +3173,13 @@ public class Vpn {
 
         /** Called when the NetworkCapabilities of underlying network is changed */
         public void onDefaultNetworkCapabilitiesChanged(@NonNull NetworkCapabilities nc) {
+            ensureRunningOnIkev2ExecutorThread();
             mUnderlyingNetworkCapabilities = nc;
         }
 
         /** Called when the LinkProperties of underlying network is changed */
         public void onDefaultNetworkLinkPropertiesChanged(@NonNull LinkProperties lp) {
+            ensureRunningOnIkev2ExecutorThread();
             mUnderlyingLinkProperties = lp;
         }
 
@@ -3162,11 +3189,9 @@ public class Vpn {
          * <p>If the IKE Session has mobility, Ikev2VpnRunner will schedule a teardown event with a
          * delay so that the IKE Session can migrate if a new network is available soon. Otherwise,
          * Ikev2VpnRunner will kill the IKE session and reset the VPN.
-         *
-         * <p>This method MUST always be called on the mExecutor thread in order to ensure
-         * consistency of the Ikev2VpnRunner fields.
          */
         public void onDefaultNetworkLost(@NonNull Network network) {
+            ensureRunningOnIkev2ExecutorThread();
             // If the default network is torn down, there is no need to call
             // startOrMigrateIkeSession() since it will always check if there is an active network
             // can be used or not.
@@ -3272,11 +3297,9 @@ public class Vpn {
          *
          * <p>The loss of a session might be due to an onLost() call, the IKE session getting torn
          * down for any reason, or an error in updating state (transform application, VPN setup)
-         *
-         * <p>This method MUST always be called on the mExecutor thread in order to ensure
-         * consistency of the Ikev2VpnRunner fields.
          */
         public void onSessionLost(int token, @Nullable Exception exception) {
+            ensureRunningOnIkev2ExecutorThread();
             Log.d(TAG, "onSessionLost() called for token " + token);
 
             if (!isActiveToken(token)) {
@@ -3399,11 +3422,9 @@ public class Vpn {
 
         /**
          * Cleans up all IKE state
-         *
-         * <p>This method MUST always be called on the mExecutor thread in order to ensure
-         * consistency of the Ikev2VpnRunner fields.
          */
         private void resetIkeState() {
+            ensureRunningOnIkev2ExecutorThread();
             if (mTunnelIface != null) {
                 // No need to call setInterfaceDown(); the IpSecInterface is being fully torn down.
                 mTunnelIface.close();
@@ -3425,11 +3446,9 @@ public class Vpn {
          * until the next VPN is started, or the Ikev2VpnRunner is explicitly exited. This is
          * necessary to ensure that the detailed state is shown in the Settings VPN menus; if the
          * active VPN is cleared, Settings VPNs will not show the resultant state or errors.
-         *
-         * <p>This method MUST always be called on the mExecutor thread in order to ensure
-         * consistency of the Ikev2VpnRunner fields.
          */
         private void disconnectVpnRunner() {
+            ensureRunningOnIkev2ExecutorThread();
             mActiveNetwork = null;
             mUnderlyingNetworkCapabilities = null;
             mUnderlyingLinkProperties = null;
