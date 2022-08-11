@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "faf7a289_57ec37cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1330244
+      },
+      "writtenOn": "2022-08-11T13:27:44Z",
+      "side": 1,
+      "message": "As the downstream patch is already merged, it would be better to add \"Merged-In: Ie4c67c639d8633361e5a3675502283cae4e35bd9\" (i.e. same SHA as Change-Id) near the bottom of the commit message to avoid auto-merging conflict.",
+      "revId": "5c1397fc815438128046dde465b06f955ab6040b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
