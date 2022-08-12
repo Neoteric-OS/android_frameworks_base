@@ -141,6 +141,10 @@ public class IkeSessionParamsUtilsTest {
                         .addIkeOption(IkeSessionParams.IKE_OPTION_ACCEPT_ANY_REMOTE_ID)
                         .addIkeOption(IkeSessionParams.IKE_OPTION_MOBIKE)
                         .addIkeOption(IkeSessionParams.IKE_OPTION_INITIAL_CONTACT)
+                        .addIkeOption(IkeSessionParams.IKE_OPTION_REKEY_MOBILITY)
+                        .addIkeOption(
+                                IkeSessionParamsUtils.IKE_OPTION_AUTOMATIC_ADDRESS_FAMILY_SELECTION)
+                        .addIkeOption(IkeSessionParamsUtils.IKE_OPTION_AUTOMATIC_NATT_KEEPALIVES)
                         .build();
         verifyPersistableBundleEncodeDecodeIsLossless(params);
     }
