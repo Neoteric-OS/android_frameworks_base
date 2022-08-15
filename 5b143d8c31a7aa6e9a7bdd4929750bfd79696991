@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6409ce71_1490978c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4073,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-08-15T11:25:55Z",
+      "side": 1,
+      "message": "Should this be protected by SDK check?\nIf you don\u0027t add SDK check, I think ConnectivityServiceTest#testStopVpnProfileFromDiffPackage() will fail in tm-qpr-dev.(Suppose this commit will CP to tm-qpr-dev)\nOr you need to cherry-pick aosp/2133162 to tm-qpr-dev as well.",
+      "range": {
+        "startLine": 4073,
+        "startChar": 43,
+        "endLine": 4073,
+        "endChar": 70
+      },
+      "revId": "5b143d8c31a7aa6e9a7bdd4929750bfd79696991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
