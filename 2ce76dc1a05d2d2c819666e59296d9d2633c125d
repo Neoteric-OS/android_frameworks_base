@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c181fb16_a750423b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2022-08-15T16:27:20Z",
+      "side": 1,
+      "message": "Thanks Shen, but can you clarify the issue a bit more?  I don\u0027t think the GC would collect the panel while destroy is happening so perhaps there is something else going on?",
+      "revId": "2ce76dc1a05d2d2c819666e59296d9d2633c125d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
