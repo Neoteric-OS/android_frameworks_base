@@ -376,6 +376,8 @@ public class NavigationBarEdgePanel extends View implements NavigationEdgeBackPl
 
     @Override
     public void onDestroy() {
+        //Let's hide back one last time before clearing up Handler
+        onFailsafe();
         cancelFailsafe();
         mWindowManager.removeView(this);
         mRegionSamplingHelper.stop();
