@@ -16,6 +16,24 @@
       "message": "Thanks Shen, but can you clarify the issue a bit more?  I don\u0027t think the GC would collect the panel while destroy is happening so perhaps there is something else going on?",
       "revId": "2ce76dc1a05d2d2c819666e59296d9d2633c125d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adf383f2_45eb8477",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-08-15T17:04:10Z",
+      "side": 1,
+      "message": "Hi winson. I have no idea about the way that must show the bug, but our test team shared some High-frequency scenarios that may run into this bug:\n\n- Swipe back continously as soon as finishing switching the system language sequence.\n- Launch Camera app, swipe back as soon as it\u0027s launching or seeing black.\n- After we finish the last page of SUW, swipe back continously until Launcher was fully loaded.\n\nI carefully inspected `NavigationBarEdgePanel.java` according to the scenarios above and found that only `onDestroy()` may caused this bug, so I tried to fix it and got no more feedbacks from out testers these days, and also it seems that there will have no \"side effects\" to this modification, so maybe you can help me look at this.",
+      "parentUuid": "c181fb16_a750423b",
+      "revId": "2ce76dc1a05d2d2c819666e59296d9d2633c125d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
