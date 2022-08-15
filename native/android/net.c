@@ -173,3 +173,7 @@ int android_tag_socket(int sockfd, uint32_t tag) {
 int android_untag_socket(int sockfd) {
     return untagSocket(sockfd);
 }
+
+int android_get_socket_tag(int sockfd) {
+    return getSocketTag(sockfd);
+}
