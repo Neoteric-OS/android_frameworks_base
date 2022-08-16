@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "671c42e3_59bb2dd5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2022-08-16T20:11:45Z",
+      "side": 1,
+      "message": "Can you include a link to the bug in the CL description? Thanks!",
+      "revId": "22a344959c5313026440fb09aae2597123c306a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
