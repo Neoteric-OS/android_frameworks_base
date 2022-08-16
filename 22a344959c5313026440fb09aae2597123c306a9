@@ -34,6 +34,23 @@
       "parentUuid": "671c42e3_59bb2dd5",
       "revId": "22a344959c5313026440fb09aae2597123c306a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ce3ef88_bb8ed3c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2022-08-16T20:17:10Z",
+      "side": 1,
+      "message": "Looks good to me, but will delegate to Jorim for +2. (I wish there were tests, but `PhoneStatusBarPolicy` doesn\u0027t have a test file so it seems like too much to ask for tests for this CL)",
+      "revId": "22a344959c5313026440fb09aae2597123c306a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
