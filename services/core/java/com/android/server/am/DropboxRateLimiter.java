@@ -31,7 +31,7 @@ public class DropboxRateLimiter {
     // The time duration after which the rate limit buffer will be cleared.
     private static final long RATE_LIMIT_BUFFER_EXPIRY = 3 * RATE_LIMIT_BUFFER_DURATION;
     // The number of entries to keep per breakdown of process/eventType.
-    private static final int RATE_LIMIT_ALLOWED_ENTRIES = 6;
+    private static final int RATE_LIMIT_ALLOWED_ENTRIES = 14;
 
     @GuardedBy("mErrorClusterRecords")
     private final ArrayMap<String, ErrorRecord> mErrorClusterRecords = new ArrayMap<>();
