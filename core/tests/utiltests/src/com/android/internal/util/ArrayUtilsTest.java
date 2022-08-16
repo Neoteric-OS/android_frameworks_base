@@ -26,6 +26,16 @@ import junit.framework.TestCase;
  * Tests for {@link ArrayUtils}
  */
 public class ArrayUtilsTest extends TestCase {
+    public void testIndexOfSubArray() {
+        assertEquals(ArrayUtils.indexOfSubArray(new byte[]{1, 2, 3, 4, 5}, new byte[]{3, 4}), 2);
+        assertEquals(ArrayUtils.indexOfSubArray(new byte[]{1, 2, 3, 4, 5}, new byte[]{4, 5}), 3);
+        assertEquals(ArrayUtils.indexOfSubArray(new byte[]{1, 2, 3, 4, 5}, new byte[]{5}), 4);
+        assertEquals(ArrayUtils.indexOfSubArray(new byte[]{1, 2, 3, 4, 5}, new byte[]{3, 2}), -1);
+        assertEquals(ArrayUtils.indexOfSubArray(new byte[]{1, 2, 3, 4, 5}, new byte[]{}), 0);
+        assertEquals(ArrayUtils.indexOfSubArray(new byte[]{}, new byte[]{3, 2}), -1);
+        assertEquals(ArrayUtils.indexOfSubArray(new byte[]{}, new byte[]{}), 0);
+    }
+
     public void testContains() throws Exception {
         final Object A = new Object();
         final Object B = new Object();
