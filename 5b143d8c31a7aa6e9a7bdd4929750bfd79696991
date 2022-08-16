@@ -22,6 +22,30 @@
       },
       "revId": "5b143d8c31a7aa6e9a7bdd4929750bfd79696991",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8a94c93_da4bfd63",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4073,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-08-16T03:16:02Z",
+      "side": 1,
+      "message": "Please ignore above comment since aosp/2133162 is related to VpnManagerService but not Vpn.\n\nI think we don\u0027t need to add SDK check here because ConnectivityServiceTest doesn\u0027t call Vpn#stopVpnProfile() directly.",
+      "parentUuid": "6409ce71_1490978c",
+      "range": {
+        "startLine": 4073,
+        "startChar": 43,
+        "endLine": 4073,
+        "endChar": 70
+      },
+      "revId": "5b143d8c31a7aa6e9a7bdd4929750bfd79696991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
