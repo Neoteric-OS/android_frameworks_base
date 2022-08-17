@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3a72193_76f7026c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-17T06:12:22Z",
+      "side": 1,
+      "message": "Oof, this could theoretically get overwritten all over the place. We should probably switch to something that is guaranteed to use the same thread.\n\nPerhaps we should be switching to handlerExecutor. It\u0027d require reworking some of the scheduling to use postDelayed, and we could still probably use the futures (maybe as runnableFutures). Could you investigate to see how feasible this is?",
+      "range": {
+        "startLine": 333,
+        "startChar": 19,
+        "endLine": 333,
+        "endChar": 26
+      },
+      "revId": "850082729b1811c5ed04cbdd5c1d90e584953cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b8eded4_bee0b013",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2832,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-17T06:12:22Z",
+      "side": 1,
+      "message": "IllegalStateException? this isn\u0027t necessarily a security issue (SecurityException is usually for permission failures)",
+      "range": {
+        "startLine": 2832,
+        "startChar": 26,
+        "endLine": 2832,
+        "endChar": 43
+      },
+      "revId": "850082729b1811c5ed04cbdd5c1d90e584953cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
