@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "409170cf_0bff8139",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3376,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-17T05:47:16Z",
+      "side": 1,
+      "message": "FYI: the standard (low-delta) change here would be to add an overload on the sendEventToVpnMangerApp. That reuses all the code, while not requiring every callsite to do a two-step procedure if it does not need to.\n\nso then you have:\n\nsendEventToVpnManagerApp(Lots, Of, Parameters) {\n  Intent intent \u003d buildVpnManagerEventIntent(Lots, Of, Parameters)\n  return sendEventToVpnManagerApp(intent, pkgName)\n}\n\nsendEventToVpnManagerApp(Intent intent, String pkgName) {\n  // send event\n}",
+      "range": {
+        "startLine": 3371,
+        "startChar": 0,
+        "endLine": 3376,
+        "endChar": 67
+      },
+      "revId": "5b143d8c31a7aa6e9a7bdd4929750bfd79696991",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6409ce71_1490978c",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 5
