@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61981562_8cb3da49",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-18T02:02:07Z",
+      "side": 1,
+      "message": "Nit one more here",
+      "range": {
+        "startLine": 1213,
+        "startChar": 38,
+        "endLine": 1213,
+        "endChar": 76
+      },
+      "revId": "e2de8f0660c2877836a9becd70ad6b52c8e4c5bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
