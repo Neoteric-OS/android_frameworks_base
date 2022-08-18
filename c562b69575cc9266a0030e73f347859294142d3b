@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "568f3e77_1bec032e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-18T01:15:32Z",
+      "side": 1,
+      "message": "Is this basically isVpnApp()?",
+      "range": {
+        "startLine": 1204,
+        "startChar": 45,
+        "endLine": 1204,
+        "endChar": 83
+      },
+      "revId": "c562b69575cc9266a0030e73f347859294142d3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
