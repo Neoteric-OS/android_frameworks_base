@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99adbc12_a9b6fafc",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-18T02:09:29Z",
+      "side": 1,
+      "message": "Does this need caching too?",
+      "range": {
+        "startLine": 1214,
+        "startChar": 57,
+        "endLine": 1214,
+        "endChar": 66
+      },
+      "revId": "bf37f9ffd05a6defdf3f92bf7bdbe8c434ac1122",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
