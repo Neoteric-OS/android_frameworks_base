@@ -22,6 +22,53 @@
       },
       "revId": "de1dca7c7609a09e83f0c1f58fd9b19024bbbfe1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ea4e5dd_f2679b1e",
+        "filename": "core/java/android/net/vcn/persistablebundleutils/IkeSessionParamsUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-19T05:07:24Z",
+      "side": 1,
+      "message": "Or maybe it\u0027s only necessary to catch-and-discard for T, given that U will have this as public API?",
+      "parentUuid": "bfa41a2f_7c4e5475",
+      "range": {
+        "startLine": 143,
+        "startChar": 23,
+        "endLine": 143,
+        "endChar": 35
+      },
+      "revId": "de1dca7c7609a09e83f0c1f58fd9b19024bbbfe1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c70a8a24_f3a36b3b",
+        "filename": "core/java/android/net/vcn/persistablebundleutils/IkeSessionParamsUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-19T05:07:24Z",
+      "side": 1,
+      "message": "This too?",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 9
+      },
+      "revId": "de1dca7c7609a09e83f0c1f58fd9b19024bbbfe1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
