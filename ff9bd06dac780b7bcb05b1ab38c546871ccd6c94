@@ -16,6 +16,24 @@
       "message": "Thanks, this is being resolved internally (making mScreenshot final and non-null)",
       "revId": "ff9bd06dac780b7bcb05b1ab38c546871ccd6c94",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8546424d_2004075f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-08-19T16:01:10Z",
+      "side": 1,
+      "message": "Good to hear that, I\u0027ll abandon my commit.",
+      "parentUuid": "1e726ffb_70aead9d",
+      "revId": "ff9bd06dac780b7bcb05b1ab38c546871ccd6c94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
