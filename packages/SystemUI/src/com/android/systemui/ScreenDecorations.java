@@ -972,7 +972,9 @@ public class ScreenDecorations extends CoreStartable implements Tunable , Dumpab
         pw.println("ScreenDecorations state:");
         pw.println("  DEBUG_DISABLE_SCREEN_DECORATIONS:" + DEBUG_DISABLE_SCREEN_DECORATIONS);
         pw.println("  mIsPrivacyDotEnabled:" + isPrivacyDotEnabled());
-        pw.println("  isOnlyPrivacyDotInSwLayer:" + isOnlyPrivacyDotInSwLayer());
+        if (!DEBUG_DISABLE_SCREEN_DECORATIONS) {
+            pw.println("  isOnlyPrivacyDotInSwLayer:" + isOnlyPrivacyDotInSwLayer());
+        }
         pw.println("  mPendingConfigChange:" + mPendingConfigChange);
         if (mHwcScreenDecorationSupport != null) {
             pw.println("  mHwcScreenDecorationSupport:");
@@ -1002,7 +1004,9 @@ public class ScreenDecorations extends CoreStartable implements Tunable , Dumpab
                 }
             }
         }
-        mRoundedCornerResDelegate.dump(pw, args);
+        if (!DEBUG_DISABLE_SCREEN_DECORATIONS) {
+            mRoundedCornerResDelegate.dump(pw, args);
+        }
     }
 
     private void updateConfiguration() {
