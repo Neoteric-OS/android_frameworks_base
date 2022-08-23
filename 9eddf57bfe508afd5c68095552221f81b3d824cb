@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06d44838_c39e71b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-08-23T22:13:08Z",
+      "side": 1,
+      "message": "Hm, I\u0027m not seeing in the linked bug why the logic added in this CL is needed.  The DataUnit class was designed to be as lightweight as possible, so I\u0027d hesitate to add the String overhead unless we can describe more why it might be needed.\n\nI\u0027ll also note that units are typically i18n\u0027ed, so even these constants here shouldn\u0027t be used for printing any units visible to developers or users.\n\nHere\u0027s an example of i18n best-practice for storage units:\n\nhttps://cs.android.com/android/platform/superproject/+/master:external/icu/android_icu4j/src/main/java/android/icu/util/MeasureUnit.java;l\u003d1001?q\u003dmegabyte%20file:java",
+      "revId": "9eddf57bfe508afd5c68095552221f81b3d824cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
