@@ -34,6 +34,24 @@
       "parentUuid": "8a0a177d_f783593c",
       "revId": "f74f92f4d09484726029ef816fb2ac2e7c344289",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37fd8ca7_ca1db964",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1467989
+      },
+      "writtenOn": "2022-08-23T21:39:54Z",
+      "side": 1,
+      "message": "Yes, that should fix the merge conflict error.",
+      "parentUuid": "14efcbd8_299f0287",
+      "revId": "f74f92f4d09484726029ef816fb2ac2e7c344289",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
