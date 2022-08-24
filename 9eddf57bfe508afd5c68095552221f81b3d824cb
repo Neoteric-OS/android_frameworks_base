@@ -16,6 +16,24 @@
       "message": "Hm, I\u0027m not seeing in the linked bug why the logic added in this CL is needed.  The DataUnit class was designed to be as lightweight as possible, so I\u0027d hesitate to add the String overhead unless we can describe more why it might be needed.\n\nI\u0027ll also note that units are typically i18n\u0027ed, so even these constants here shouldn\u0027t be used for printing any units visible to developers or users.\n\nHere\u0027s an example of i18n best-practice for storage units:\n\nhttps://cs.android.com/android/platform/superproject/+/master:external/icu/android_icu4j/src/main/java/android/icu/util/MeasureUnit.java;l\u003d1001?q\u003dmegabyte%20file:java",
       "revId": "9eddf57bfe508afd5c68095552221f81b3d824cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca1fd184_ac155365",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1889140
+      },
+      "writtenOn": "2022-08-24T00:45:58Z",
+      "side": 1,
+      "message": "The reason that `shortName` was added is because the OEM will pass a system property for ddr size with the format: 100GB, 900MB, 90000KB and we need to parse that string and based on the units, convert it to bytes. We could have something like\n\n```java\n    public static long getDdrSizeInBytes(@NonNull String ddrSize) {\n        Pattern pattern \u003d\n                Pattern.compile(\"^(([1-9]{1}[0-9]{0,3})(KB|MB|GB))$\");\n        Matcher matcher \u003d pattern.matcher(ddrSize);\n        if (matcher.matches()) {\n            long size \u003d Long.parseLong(matcher.group(2));\n            String unit \u003d matcher.group(3);\n            if (\"KB\".equals(unit) { \n               return KILOBYTE.toBytes(size);\n            } else if(\"MB\".equals(unit) { \n               return MEGABYTE.toBytes(size);\n            } else {\n               return GIGABYTE.toBytes(size);\n            }\n            return du.toBytes(size);\n        }\n\n        return 0;\n```\n\nHowever, if we add the property \"shortName\" to the enum, we could have:\n\n```java\n    public static long getDdrSizeInBytes(@NonNull String ddrSize) {\n        Pattern pattern \u003d\n                Pattern.compile(\"^(([1-9]{1}[0-9]{0,3})(KB|MB|GB))$\");\n        Matcher matcher \u003d pattern.matcher(ddrSize);\n        if (matcher.matches()) {\n            long size \u003d Long.parseLong(matcher.group(2));\n            DataUnit du \u003d DataUnit.fromShortName(matcher.group(3));\n\n            return du.toBytes(size);\n        }\n\n        return 0;\n```\n\nThe `shortName` property follows a similar pattern found in the ChronoUnit class:\n\nhttps://cs.android.com/android/platform/superproject/+/master:libcore/ojluni/src/main/java/java/time/temporal/ChronoUnit.java;l\u003d83",
+      "parentUuid": "06d44838_c39e71b3",
+      "revId": "9eddf57bfe508afd5c68095552221f81b3d824cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
