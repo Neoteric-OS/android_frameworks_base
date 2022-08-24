@@ -34,6 +34,24 @@
       "parentUuid": "06d44838_c39e71b3",
       "revId": "9eddf57bfe508afd5c68095552221f81b3d824cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "941dcda8_5ab123a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-08-24T15:04:23Z",
+      "side": 1,
+      "message": "Thanks for the connection to `ChronoUnit`, and that actually helps deepen my conviction that `DataUnit` should *not* itself offer parsing of strings.\n\nThe precedence is that `Duration` is the object that references *both* a unit and a value, and it\u0027s where the parsing is happening.\n\nSo please don\u0027t add parsing logic to the `DataUnit` class.\n\nInstead, I\u0027d recommend adding `FileUtils.parseSize()` and `FileUtils.formatSize()` methods, since that\u0027s where we have similar utility methods that work with byte values like `roundStorageSize()`.\n\nAnd finally, please avoid using compiled Pattern in your code, as it has performance overhead.  Instead, please hand-write a parser that correctly handles all the various permutations of \"KB\",\"kB\",\"KiB\", etc.  Please verify that it matches the official SI units described here:\n\n* https://en.wikipedia.org/wiki/Units_of_information#Systematic_multiples\n\nAs concrete examples, here\u0027s what I\u0027d expect tests to verify are accepted:\n\n* 1b -\u003e 1\n* 1B -\u003e 1\n* 1 B -\u003e 1\n* (etc for the various other prefixes)\n\n(This matches the general RFC-style contract of \"be conservative in what you do, be liberal in what you accept from others\".)",
+      "parentUuid": "ca1fd184_ac155365",
+      "revId": "9eddf57bfe508afd5c68095552221f81b3d824cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
