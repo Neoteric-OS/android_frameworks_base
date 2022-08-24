@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1e420b7_dc7ae2c9",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1765766
+      },
+      "writtenOn": "2022-08-24T17:00:01Z",
+      "side": 1,
+      "message": "This has some tests in testRoundStorageSize() method in frameworks/base/core/tests/coretests/src/android/os/FileUtilsTest.java.\n\nCould you add a test case to catch the issue you are seeing?\n\nThis is also becuase I am not sure I understand the rootcause of the issue. From the bug description it sounds like this method receives a size \u003c 1T, but it returns as result 2T. Is my understanding correct?",
+      "range": {
+        "startLine": 1299,
+        "startChar": 23,
+        "endLine": 1299,
+        "endChar": 39
+      },
+      "revId": "d5485cc68f639e35ac9ce0669da167f3e4e21d81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae0595f9_776d9778",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1765766
+      },
+      "writtenOn": "2022-08-24T17:00:01Z",
+      "side": 1,
+      "message": "I am actually a bit surprised this doesn\u0027t make the above test fail for the G testcases (e.g. G32). Can you confirm if this passes for you?",
+      "range": {
+        "startLine": 1304,
+        "startChar": 29,
+        "endLine": 1304,
+        "endChar": 55
+      },
+      "revId": "d5485cc68f639e35ac9ce0669da167f3e4e21d81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
