@@ -33,6 +33,29 @@
       "message": "Thanks!",
       "revId": "9b33ee35266ad09f708f0d2e736ee6b6aacf9d0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b43f3c32_5917e5c5",
+        "filename": "tests/InputMethodStressTest/src/com/android/inputmethod/stresstest/NotificationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1315793
+      },
+      "writtenOn": "2022-08-25T02:53:42Z",
+      "side": 1,
+      "message": "nit: as the implementation of AccessibilityService.GLOBAL_ACTION_HOME is just pressing home key:\n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/accessibility/java/com/android/server/accessibility/SystemActionPerformer.java;l\u003d273-274?q\u003dGLOBAL_ACTION_HOME\n\nHow about using \n`mUiDevice.pressHome();` without additional AccessibilityService import ?",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 51
+      },
+      "revId": "9b33ee35266ad09f708f0d2e736ee6b6aacf9d0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
