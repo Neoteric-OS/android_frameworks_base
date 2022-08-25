@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25720d28_719751d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1581796
+      },
+      "writtenOn": "2022-08-25T05:42:51Z",
+      "side": 1,
+      "message": "I was suggested in original CL to merge with the aosp first.",
+      "revId": "6a7160f1497f0d608e0399af298a755e4e6aee0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
