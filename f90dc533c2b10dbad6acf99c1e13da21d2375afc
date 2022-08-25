@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52216567_2eb64502",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4060,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-25T00:48:51Z",
+      "side": 1,
+      "message": "Nit, let\u0027s call this stopVpnRunnerAnd...\n\nIt\u0027s only applicable for VpnRunner(s)",
+      "range": {
+        "startLine": 4060,
+        "startChar": 21,
+        "endLine": 4060,
+        "endChar": 24
+      },
+      "revId": "f90dc533c2b10dbad6acf99c1e13da21d2375afc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
