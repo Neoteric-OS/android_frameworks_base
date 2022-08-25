@@ -6275,21 +6275,45 @@ public class NotificationManagerService extends SystemService {
             checkCallerIsSystem();
             mHandler.post(() -> {
                 synchronized (mNotificationLock) {
-                    // strip flag from all enqueued notifications. listeners will be informed
-                    // in post runnable.
-                    List<NotificationRecord> enqueued = findNotificationsByListLocked(
-                            mEnqueuedNotifications, pkg, null, notificationId, userId);
-                    for (int i = 0; i < enqueued.size(); i++) {
-                        removeForegroundServiceFlagLocked(enqueued.get(i));
+                    int count = getNotificationCount(pkg, userId, notificationId, null);
+                    boolean removeFgsNotification = false;
+                    if (count >= MAX_PACKAGE_NOTIFICATIONS) {
+                        mUsageStats.registerOverCountQuota(pkg);
+                        removeFgsNotification = true;
+                    }
+                    if (removeFgsNotification) {
+                        NotificationRecord r = null;
+                        while ((r = findNotificationByListLocked(mEnqueuedNotifications,
+                                pkg, null, notificationId, userId)) != null) {
+                            Slog.d(TAG, "Remove FGS flag not allow. Removed enqueue");
+                            mEnqueuedNotifications.remove(r);
+                        }
+                    } else {
+                        // strip flag from all enqueued notifications. listeners will be informed
+                        // in post runnable.
+                        List<NotificationRecord> enqueued = findNotificationsByListLocked(
+                                mEnqueuedNotifications, pkg, null, notificationId, userId);
+                        for (int i = 0; i < enqueued.size(); i++) {
+                            removeForegroundServiceFlagLocked(enqueued.get(i));
+                        }
                     }
 
                     // if posted notification exists, strip its flag and tell listeners
                     NotificationRecord r = findNotificationByListLocked(
                             mNotificationList, pkg, null, notificationId, userId);
                     if (r != null) {
-                        removeForegroundServiceFlagLocked(r);
-                        mRankingHelper.sort(mNotificationList);
-                        mListeners.notifyPostedLocked(r, r);
+                        if (removeFgsNotification) {
+                            Slog.d(TAG, "Remove FGS flag not allow. Package has already posted "
+                                    + count + " notifications. ");
+                            mNotificationList.remove(r);
+                            mNotificationsByKey.remove(r.getSbn().getKey());
+                            cancelNotificationLocked(r, false, REASON_APP_CANCEL, true,
+                                    null, SystemClock.elapsedRealtime());
+                        } else {
+                            removeForegroundServiceFlagLocked(r);
+                            mRankingHelper.sort(mNotificationList);
+                            mListeners.notifyPostedLocked(r, r);
+                        }
                     }
                 }
             });
