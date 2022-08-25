@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89c04a03_2d171c99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1949137
+      },
+      "writtenOn": "2022-08-25T05:34:12Z",
+      "side": 1,
+      "message": "One subtle issue with this approach is that it doing things in a wrong place i.e. it tailors view holder for the data set at view holder\u0027s creation vs at view binding. Logically, a view holder can be created once and bound multiple times - I can only imagine a hypothetical scenario when package installation triggers data update and instead of one direct share target we\u0027re now getting two and binding it to a view holder that was created to handle only one.\nIn practice, though, there\u0027s have only one view of each affected type and empirically package installation (or pinned status change) triggers a new view holder creation. Even more, forcing view holder recycling (through a custom view pool) breaks the UI!\nRegardless, I think it would be better to adjust the UI at binding somehow; I\u0027ll look into it a bit more.",
+      "revId": "1680cf5253937c60869b64d43387ea9d364b13ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
