@@ -124,5 +124,6 @@ public class SystemSettings {
         Settings.System.MEDIA_ARTWORK_BLUR_RADIUS,
         Settings.System.HEADS_UP_NOTIFICATIONS_THRESHOLD,
         Settings.System.DATA_DISABLED_ICON,
+        Settings.System.BLOCK_ALERT,
     };
 }
