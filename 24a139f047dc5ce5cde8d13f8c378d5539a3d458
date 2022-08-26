@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e87c4529_23ab3d0e",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6280,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2022-08-26T18:13:31Z",
+      "side": 1,
+      "message": "I think only \u003e, because the notification already exists, unlike the other usages of this method",
+      "range": {
+        "startLine": 6280,
+        "startChar": 30,
+        "endLine": 6280,
+        "endChar": 32
+      },
+      "revId": "24a139f047dc5ce5cde8d13f8c378d5539a3d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8512668d_c51c241c",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6290,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2022-08-26T18:13:31Z",
+      "side": 1,
+      "message": "Can you merge the removal in the loop below so we don\u0027t have to iterate over the list multiple times?",
+      "range": {
+        "startLine": 6285,
+        "startChar": 23,
+        "endLine": 6290,
+        "endChar": 25
+      },
+      "revId": "24a139f047dc5ce5cde8d13f8c378d5539a3d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cec1ee56_9eb75e0c",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6301,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2022-08-26T18:13:31Z",
+      "side": 1,
+      "message": "Update comment",
+      "range": {
+        "startLine": 6301,
+        "startChar": 73,
+        "endLine": 6301,
+        "endChar": 77
+      },
+      "revId": "24a139f047dc5ce5cde8d13f8c378d5539a3d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dd36217_65635bb7",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6307,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2022-08-26T18:13:31Z",
+      "side": 1,
+      "message": "Wrap in if (debug)",
+      "range": {
+        "startLine": 6306,
+        "startChar": 28,
+        "endLine": 6307,
+        "endChar": 66
+      },
+      "revId": "24a139f047dc5ce5cde8d13f8c378d5539a3d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d455935_798f79ee",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6309,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2022-08-26T18:13:31Z",
+      "side": 1,
+      "message": "Perhaps removeFromNotificationListsLocked() - which probably means you could skip the mEnqueuedNotifications.remove(r); bit above entirely",
+      "range": {
+        "startLine": 6308,
+        "startChar": 28,
+        "endLine": 6309,
+        "endChar": 76
+      },
+      "revId": "24a139f047dc5ce5cde8d13f8c378d5539a3d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
