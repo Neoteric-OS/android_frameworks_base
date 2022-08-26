@@ -105,5 +105,6 @@ public class SystemSettings {
         Settings.System.FULLSCREEN_GESTURES,
 	Settings.System.NAVIGATION_BAR_IME_SPACE,
         Settings.System.DATA_DISABLED_ICON,
+        Settings.System.BLOCK_ALERT,
     };
 }

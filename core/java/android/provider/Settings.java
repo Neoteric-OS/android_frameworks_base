@@ -5809,6 +5809,12 @@ public final class Settings {
         public static final String DATA_DISABLED_ICON = "data_disabled_icon";
 
         /**
+         * Whether to block alert slider in pocket or not
+         * @hide
+         */
+        public static final String BLOCK_ALERT = "block_alert";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
