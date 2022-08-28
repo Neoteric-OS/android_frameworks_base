@@ -5724,6 +5724,20 @@ public final class Settings {
         public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";
 
         /**
+         * Whether to remove navigation bar height while keeping the gesture pill.
+         * Default 0.
+         * @hide
+         */
+        public static final String IMMERSIVE_GESTURES = "immersive_gestures";
+
+	/**
+         * Whether to remove gesture pill and keybaord space.
+         * Default 0.
+         * @hide
+         */
+        public static final String FULLSCREEN_GESTURES = "fullscreen_gestures";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *

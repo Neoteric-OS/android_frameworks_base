@@ -101,5 +101,7 @@ public class SystemSettings {
         Settings.System.EDGE_LIGHT_CUSTOM_COLOR,
         Settings.System.SHOW_FOURG_ICON,
         Settings.System.USE_OLD_MOBILETYPE,
+        Settings.System.IMMERSIVE_GESTURES,
+        Settings.System.FULLSCREEN_GESTURES,
     };
 }
