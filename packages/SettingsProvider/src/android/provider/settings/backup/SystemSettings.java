@@ -115,5 +115,7 @@ public class SystemSettings {
         Settings.System.QS_LAYOUT,
         Settings.System.QQS_LAYOUT,
         Settings.System.USE_OLD_MOBILETYPE,
+        Settings.System.IMMERSIVE_GESTURES,
+        Settings.System.FULLSCREEN_GESTURES,
     };
 }
