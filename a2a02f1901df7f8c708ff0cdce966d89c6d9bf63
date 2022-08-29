@@ -187,6 +187,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "48f69d51_9934165c",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2022-08-29T20:56:09Z",
+      "side": 1,
+      "message": "This is called by system service, which doesn\u0027t require the permission.\n\nIDK what\u0027s the proper fix here, but I think it should be a new annotation (like @HasSystemServerPermissions or @CalledWithSystemServerPermissions), so lint could ignore it.",
+      "parentUuid": "72dc2302_5a17fd2e",
+      "range": {
+        "startLine": 779,
+        "startChar": 0,
+        "endLine": 779,
+        "endChar": 57
+      },
+      "revId": "a2a02f1901df7f8c708ff0cdce966d89c6d9bf63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2bdc24c_589be0ec",
         "filename": "services/core/java/com/android/server/VpnManagerService.java",
         "patchSetId": 2
