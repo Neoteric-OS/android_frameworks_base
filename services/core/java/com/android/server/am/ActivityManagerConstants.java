@@ -179,6 +179,7 @@ final class ActivityManagerConstants extends ContentObserver {
     private static final long DEFAULT_TOP_TO_FGS_GRACE_DURATION = 15 * 1000;
     private static final long DEFAULT_TOP_TO_ALMOST_PERCEPTIBLE_GRACE_DURATION = 15 * 1000;
     private static final int DEFAULT_PENDINGINTENT_WARNING_THRESHOLD = 2000;
+    private static final int DEFAULT_PENDINGINTENT_ERROR_THRESHOLD = 5000;
     private static final int DEFAULT_MIN_CRASH_INTERVAL = 2 * 60 * 1000;
     private static final int DEFAULT_MAX_PHANTOM_PROCESSES = 32;
     private static final int DEFAULT_PROCESS_CRASH_COUNT_RESET_INTERVAL = 12 * 60 * 60 * 1000;
@@ -783,6 +784,12 @@ final class ActivityManagerConstants extends ContentObserver {
      * Maximum number of phantom processes.
      */
     public int MAX_PHANTOM_PROCESSES = DEFAULT_MAX_PHANTOM_PROCESSES;
+
+    /**
+     * The threshold for the amount of PendingIntent for each UID, there will be
+     * security exceptions if the number goes beyond this threshold.
+     */
+    public int PENDINGINTENT_ERROR_THRESHOLD = DEFAULT_PENDINGINTENT_ERROR_THRESHOLD;
 
     private List<String> mDefaultImperceptibleKillExemptPackages;
     private List<Integer> mDefaultImperceptibleKillExemptProcStates;
