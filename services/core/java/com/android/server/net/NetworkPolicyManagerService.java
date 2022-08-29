@@ -287,6 +287,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -3168,6 +3169,18 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         if (template.getSubscriberIds().isEmpty()) return template;
 
         for (final String[] merged : mergedList) {
+            // In some rare cases (e.g. b/243015487), merged subscriberId list might contain
+            // duplicated items. Deduplication for better error handling.
+            final HashSet mergedSet = new HashSet();
+            boolean hasDuplication = false;
+            for (final String subscriberId : merged) {
+                if (!mergedSet.add(subscriberId)) {
+                    hasDuplication = true;
+                }
+            }
+            if (hasDuplication) {
+                Log.wtf(TAG, "Duplicated merged list detected: " + Arrays.toString(merged));
+            }
             // TODO: Handle incompatible subscriberIds if that happens in practice.
             for (final String subscriberId : template.getSubscriberIds()) {
                 if (com.android.net.module.util.CollectionUtils.contains(merged, subscriberId)) {
@@ -3175,7 +3188,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                     // a template that matches all merged subscribers.
                     return new NetworkTemplate.Builder(template.getMatchRule())
                             .setWifiNetworkKeys(template.getWifiNetworkKeys())
-                            .setSubscriberIds(Set.of(merged))
+                            .setSubscriberIds(mergedSet)
                             .setMeteredness(template.getMeteredness())
                             .build();
                 }
