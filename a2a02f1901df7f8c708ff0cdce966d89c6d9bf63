@@ -163,6 +163,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cafa9540_7e98878d",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1600736
+      },
+      "writtenOn": "2022-08-29T20:55:32Z",
+      "side": 1,
+      "message": "I mean your other methods can still call this method, so I believe this annotation is still necessary for private methods.\nIf you don\u0027t annotate you will unintentionally hide the requirements.",
+      "parentUuid": "72dc2302_5a17fd2e",
+      "range": {
+        "startLine": 779,
+        "startChar": 0,
+        "endLine": 779,
+        "endChar": 57
+      },
+      "revId": "a2a02f1901df7f8c708ff0cdce966d89c6d9bf63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2bdc24c_589be0ec",
         "filename": "services/core/java/com/android/server/VpnManagerService.java",
         "patchSetId": 2
