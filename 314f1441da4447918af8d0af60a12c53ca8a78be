@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "831ee5e2_2a4ba65f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1352498
+      },
+      "writtenOn": "2022-08-29T06:00:53Z",
+      "side": 1,
+      "message": "Hi Kohsuke and Ming-shin, please help to check again.",
+      "revId": "314f1441da4447918af8d0af60a12c53ca8a78be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
