@@ -4517,6 +4517,28 @@ public class TelephonyManager {
     }
 
     /**
+     * Resets the carrier keys used to encrypt the IMSI and IMPI w/o rate limit.
+     *
+     * @see #resetCarrierKeysForImsiEncryption
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    @RequiresFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION)
+    @SystemApi
+    public void forceResetCarrierKeysForImsiEncryption() {
+        try {
+            IPhoneSubInfo info = getSubscriberInfoService();
+            if (info == null) {
+                throw new RuntimeException("IMSI error: Subscriber Info is null");
+            }
+            int subId = getSubId(SubscriptionManager.getDefaultDataSubscriptionId());
+            info.forceResetCarrierKeysForImsiEncryption(subId, mContext.getOpPackageName());
+        } catch (RemoteException ex) {
+            Rlog.e(TAG, "Telephony#forceResetCarrierKeysImsiEncryption RemoteException" + ex);
+        }
+    }
+
+    /**
      * @param keyAvailability bitmask that defines the availabilty of keys for a type.
      * @param keyType the key type which is being checked. (WLAN, EPDG)
      * @return true if the digit at position keyType is 1, else false.
