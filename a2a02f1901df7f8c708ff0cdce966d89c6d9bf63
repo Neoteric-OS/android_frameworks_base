@@ -87,6 +87,23 @@
       },
       "revId": "a2a02f1901df7f8c708ff0cdce966d89c6d9bf63",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2bdc24c_589be0ec",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-08-29T07:40:08Z",
+      "side": 1,
+      "message": "Do you know in which cases that happens, so we know this is the right fix ?\n\nIf it\u0027s always because the user was already deleted immediately after creation this may be OK; if it\u0027s because the user is not yet available in UserManager when the callback is called, is it a bug in UserManager that should be fixed there instead ?",
+      "revId": "a2a02f1901df7f8c708ff0cdce966d89c6d9bf63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
