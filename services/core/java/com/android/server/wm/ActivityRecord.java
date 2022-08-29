@@ -7233,9 +7233,7 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
             } else if (!show && mLastSurfaceShowing) {
                 getSyncTransaction().hide(mSurfaceControl);
             }
-            if (show) {
-                mActivityRecordInputSink.applyChangesToSurfaceIfChanged(getSyncTransaction());
-            }
+            mActivityRecordInputSink.applyChangesToSurfaceIfChanged(getSyncTransaction());
         }
         if (mThumbnail != null) {
             mThumbnail.setShowing(getPendingTransaction(), show);
