@@ -2626,6 +2626,7 @@ package android.telephony {
 
   public class TelephonyManager {
     method public int addDevicePolicyOverrideApn(@NonNull android.content.Context, @NonNull android.telephony.data.ApnSetting);
+    method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public void forceResetCarrierKeysForImsiEncryption();
     method public int getCarrierIdListVersion();
     method @NonNull @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE) public java.util.List<java.lang.String> getCertsFromCarrierPrivilegeAccessRules();
     method @NonNull public java.util.List<android.telephony.data.ApnSetting> getDevicePolicyOverrideApns(@NonNull android.content.Context);

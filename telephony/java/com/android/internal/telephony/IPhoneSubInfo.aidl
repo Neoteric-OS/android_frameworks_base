@@ -161,6 +161,13 @@ interface IPhoneSubInfo {
     void resetCarrierKeysForImsiEncryption(int subId, String callingPackage);
 
     /**
+     * Resets the Carrier Keys in the database w/o rate limit.
+     * @see #resetCarrierKeysForImsiEncryption
+     */
+    @JavaPassthrough(annotation="@android.annotation.RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)")
+    void forceResetCarrierKeysForImsiEncryption(int subId, String callingPackage);
+
+    /**
      * Retrieves the alpha identifier associated with the voice mail number.
      */
     String getVoiceMailAlphaTag(String callingPackage, String callingFeatureId);
