@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "de38e08e_082df427",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6280,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2022-08-30T14:19:07Z",
+      "side": 1,
+      "message": "Still is unaddressed - please address or add a comment why you aren\u0027t",
+      "parentUuid": "e87c4529_23ab3d0e",
+      "range": {
+        "startLine": 6280,
+        "startChar": 30,
+        "endLine": 6280,
+        "endChar": 32
+      },
+      "revId": "24a139f047dc5ce5cde8d13f8c378d5539a3d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8512668d_c51c241c",
         "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2022-08-26T18:13:31Z",
       "side": 1,
       "message": "Can you merge the removal in the loop below so we don\u0027t have to iterate over the list multiple times?",
+      "range": {
+        "startLine": 6285,
+        "startChar": 23,
+        "endLine": 6290,
+        "endChar": 25
+      },
+      "revId": "24a139f047dc5ce5cde8d13f8c378d5539a3d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d713cff_6d9f3261",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6290,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2022-08-30T14:19:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8512668d_c51c241c",
       "range": {
         "startLine": 6285,
         "startChar": 23,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67e8f273_0368127e",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6301,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2022-08-30T14:19:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cec1ee56_9eb75e0c",
+      "range": {
+        "startLine": 6301,
+        "startChar": 73,
+        "endLine": 6301,
+        "endChar": 77
+      },
+      "revId": "24a139f047dc5ce5cde8d13f8c378d5539a3d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2dd36217_65635bb7",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c20e2c3_017ff79d",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6307,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2022-08-30T14:19:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dd36217_65635bb7",
+      "range": {
+        "startLine": 6306,
+        "startChar": 28,
+        "endLine": 6307,
+        "endChar": 66
+      },
+      "revId": "24a139f047dc5ce5cde8d13f8c378d5539a3d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d455935_798f79ee",
@@ -106,6 +202,30 @@
       "writtenOn": "2022-08-26T18:13:31Z",
       "side": 1,
       "message": "Perhaps removeFromNotificationListsLocked() - which probably means you could skip the mEnqueuedNotifications.remove(r); bit above entirely",
+      "range": {
+        "startLine": 6308,
+        "startChar": 28,
+        "endLine": 6309,
+        "endChar": 76
+      },
+      "revId": "24a139f047dc5ce5cde8d13f8c378d5539a3d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a170667e_8cf9a0f7",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6309,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2022-08-30T14:19:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d455935_798f79ee",
       "range": {
         "startLine": 6308,
         "startChar": 28,
