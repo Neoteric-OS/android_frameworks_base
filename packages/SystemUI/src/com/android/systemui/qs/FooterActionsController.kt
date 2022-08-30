@@ -20,6 +20,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Handler
 import android.os.UserManager
+import android.os.VibrationEffect
 import android.provider.Settings
 import android.provider.Settings.Global.USER_SWITCHER_ENABLED
 import android.view.View
@@ -30,6 +31,7 @@ import com.android.internal.logging.MetricsLogger
 import com.android.internal.logging.UiEventLogger
 import com.android.internal.logging.nano.MetricsProto
 import com.android.keyguard.KeyguardUpdateMonitor
+import com.android.systemui.Dependency
 import com.android.systemui.R
 import com.android.systemui.animation.ActivityLaunchAnimator
 import com.android.systemui.globalactions.GlobalActionsDialogLite
@@ -38,6 +40,7 @@ import com.android.systemui.plugins.FalsingManager
 import com.android.systemui.qs.dagger.QSFlagsModule.PM_LITE_ENABLED
 import com.android.systemui.qs.dagger.QSScope
 import com.android.systemui.settings.UserTracker
+import com.android.systemui.statusbar.VibratorHelper
 import com.android.systemui.statusbar.phone.MultiUserSwitchController
 import com.android.systemui.statusbar.policy.ConfigurationController
 import com.android.systemui.statusbar.policy.DeviceProvisionedController
@@ -123,6 +126,8 @@ internal class FooterActionsController @Inject constructor(
     private val powerMenuLite: View = view.findViewById(R.id.pm_lite)
     private val multiUserSwitchController = multiUserSwitchControllerFactory.create(view)
 
+    private val vibratorHelper = Dependency.get(VibratorHelper::class.java)
+
     @VisibleForTesting
     internal val securityFootersSeparator = View(context).apply { visibility = View.GONE }
 
@@ -146,6 +151,7 @@ internal class FooterActionsController @Inject constructor(
         if (!visible || falsingManager.isFalseTap(FalsingManager.LOW_PENALTY)) {
             return@OnClickListener
         }
+        vibratorHelper.vibrate(EFFECT_CLICK)
         if (v === settingsButtonContainer) {
             if (!deviceProvisionedController.isCurrentUserSetup) {
                 // If user isn't setup just unlock the device and dump them back at SUW.
@@ -271,5 +277,9 @@ internal class FooterActionsController @Inject constructor(
 
     fun setKeyguardShowing(showing: Boolean) {
         setExpansion(lastExpansion)
+    }
+
+    companion object {
+        private val EFFECT_CLICK = VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK)
     }
 }

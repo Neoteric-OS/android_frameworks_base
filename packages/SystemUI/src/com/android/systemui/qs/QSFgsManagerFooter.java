@@ -20,6 +20,7 @@ import static com.android.systemui.qs.dagger.QSFragmentModule.QS_FGS_MANAGER_FOO
 import static com.android.systemui.util.PluralMessageFormaterKt.icuMessageFormat;
 
 import android.content.Context;
+import android.os.VibrationEffect;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -28,10 +29,12 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.qs.dagger.QSScope;
+import com.android.systemui.statusbar.VibratorHelper;
 
 import java.util.concurrent.Executor;
 
@@ -47,6 +50,10 @@ public class QSFgsManagerFooter implements View.OnClickListener,
         FgsManagerController.OnDialogDismissedListener,
         FgsManagerController.OnNumberOfPackagesChangedListener,
         VisibilityChangedDispatcher {
+
+    private static final VibrationEffect EFFECT_CLICK =
+                VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK);
+    private final VibratorHelper mVibratorHelper;
 
     private final View mRootView;
     private final TextView mFooterText;
@@ -83,6 +90,7 @@ public class QSFgsManagerFooter implements View.OnClickListener,
         mMainExecutor = mainExecutor;
         mExecutor = executor;
         mFgsManagerController = fgsManagerController;
+        mVibratorHelper = Dependency.get(VibratorHelper.class);
     }
 
     /**
@@ -130,6 +138,7 @@ public class QSFgsManagerFooter implements View.OnClickListener,
 
     @Override
     public void onClick(View view) {
+        mVibratorHelper.vibrate(EFFECT_CLICK);
         mFgsManagerController.showDialog(mRootView);
     }
 
