@@ -52,6 +52,24 @@
       "parentUuid": "ca1fd184_ac155365",
       "revId": "9eddf57bfe508afd5c68095552221f81b3d824cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d9b9946_a800a9aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1889140
+      },
+      "writtenOn": "2022-08-30T23:16:45Z",
+      "side": 1,
+      "message": "The parsing logic is now in FileUtils.parseSize(). A new enum was created for the different unit names (K, KB, M, MB, Mi, MiB). Could you please take a look at the changes? This is still WIP.",
+      "parentUuid": "941dcda8_5ab123a5",
+      "revId": "9eddf57bfe508afd5c68095552221f81b3d824cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
