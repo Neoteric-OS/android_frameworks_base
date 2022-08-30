@@ -259,6 +259,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cfada6c9_4c697efe",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2022-08-30T13:46:47Z",
+      "side": 1,
+      "message": "As Felipe suggested, please call UserManagerInternal.getUserInfo(). The \"Internal\" interfaces under .pm. are generally meant to be used exclusively by system server and bypass most caller checks. They\u0027re perfect for a situation like this where you\u0027re just validating something.",
+      "parentUuid": "f1c93c9f_52960cff",
+      "range": {
+        "startLine": 779,
+        "startChar": 0,
+        "endLine": 779,
+        "endChar": 57
+      },
+      "revId": "a2a02f1901df7f8c708ff0cdce966d89c6d9bf63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2bdc24c_589be0ec",
         "filename": "services/core/java/com/android/server/VpnManagerService.java",
         "patchSetId": 2
