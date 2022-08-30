@@ -22,6 +22,30 @@
       },
       "revId": "4079efe2cd6438d940b148450761b9a484ba46ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99dea3f5_8f5eed7b",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1626001
+      },
+      "writtenOn": "2022-08-30T17:45:21Z",
+      "side": 1,
+      "message": "It belongs in the right place, in accordance with how this file was previously structured. The codes from l.988 to l.1004 correspond to this description. Please specify any change you would like to see.",
+      "parentUuid": "bf0ba129_67053144",
+      "range": {
+        "startLine": 984,
+        "startChar": 0,
+        "endLine": 985,
+        "endChar": 95
+      },
+      "revId": "4079efe2cd6438d940b148450761b9a484ba46ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
