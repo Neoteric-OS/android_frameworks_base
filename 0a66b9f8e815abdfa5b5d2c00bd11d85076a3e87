@@ -73,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "528a0040_6c8f5ce2",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2022-08-31T17:16:22Z",
+      "side": 1,
+      "message": "But this it the comment for the entire section, not only for this specific error cause. I doubt javadoc supports that.",
+      "parentUuid": "b27807b9_2e4d81e4",
+      "range": {
+        "startLine": 984,
+        "startChar": 4,
+        "endLine": 985,
+        "endChar": 95
+      },
+      "revId": "0a66b9f8e815abdfa5b5d2c00bd11d85076a3e87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c30f04e1_1242253a",
         "filename": "telephony/java/android/telephony/DataFailCause.java",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "writtenOn": "2022-08-31T16:52:02Z",
       "side": 1,
       "message": "This number is seemingly random.  Is there a standard you can link to which defines this value?  Does 3GPP TS 24.502 call it out?",
+      "range": {
+        "startLine": 991,
+        "startChar": 47,
+        "endLine": 991,
+        "endChar": 53
+      },
+      "revId": "0a66b9f8e815abdfa5b5d2c00bd11d85076a3e87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7626e6b_b98837b8",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2022-08-31T17:16:22Z",
+      "side": 1,
+      "message": "This is the actual number. So probably provide the detailed spec number and section number here.",
+      "parentUuid": "c30f04e1_1242253a",
       "range": {
         "startLine": 991,
         "startChar": 47,
