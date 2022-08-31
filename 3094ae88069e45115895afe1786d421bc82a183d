@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7a607d2_540f1c1d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-31T01:24:57Z",
+      "side": 1,
+      "message": "Correctly handle null ProxyInfo in Ikev2VpnProfile",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "3094ae88069e45115895afe1786d421bc82a183d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5d53863_8f19f1df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-31T01:24:57Z",
+      "side": 1,
+      "message": "This change ensures that null ProxyInfo instances are honored and reflected in the actual VpnProfile.\n\nIkev2VpnProfiles incorrectly set ProxyInfo as an empty instance when provided with a null ProxyInfo. Other components in the system sometimes have different behavior if presented with an empty ProxyInfo instead of a null one.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "3094ae88069e45115895afe1786d421bc82a183d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "117cab11_ca311753",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-31T01:24:57Z",
+      "side": 1,
+      "message": "Suggest \"Manual testing with VPN validation enabled\"",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 23
+      },
+      "revId": "3094ae88069e45115895afe1786d421bc82a183d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55b2ecb4_f4599fa6",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-08-31T01:24:57Z",
+      "side": 1,
+      "message": "Double checking; this is also correct right? VpnProfile doesn\u0027t have the same bug?",
+      "range": {
+        "startLine": 592,
+        "startChar": 0,
+        "endLine": 592,
+        "endChar": 40
+      },
+      "revId": "3094ae88069e45115895afe1786d421bc82a183d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
