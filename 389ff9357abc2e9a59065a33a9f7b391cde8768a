@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c0e8013_1856323e",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1889140
+      },
+      "writtenOn": "2022-08-31T23:15:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1abe8107_902a651f",
+      "range": {
+        "startLine": 1322,
+        "startChar": 16,
+        "endLine": 1322,
+        "endChar": 19
+      },
+      "revId": "389ff9357abc2e9a59065a33a9f7b391cde8768a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1773794f_2507c39e",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-08-31T20:21:47Z",
       "side": 1,
       "message": "Hm, sorry if there was a misunderstanding here; I was really hoping that the revised approach would avoid adding any new enums.\n\nInstead, I\u0027d was hoping that it would be simple inline logic.\n\n(This file here actually adds at least 7 new classes to the BCP, which we\u0027ve really been trying hard to avoid growth.)\n\nSome additional details here:\n\n* https://g3doc.corp.google.com/company/teams/android-api-council/guidelines/index.md?cl\u003dhead##avoid-enum",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "389ff9357abc2e9a59065a33a9f7b391cde8768a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3e3b8c2_657027c7",
+        "filename": "core/java/android/util/StorageUnit.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1889140
+      },
+      "writtenOn": "2022-08-31T23:15:50Z",
+      "side": 1,
+      "message": "Thanks for the link to the g3doc.",
+      "parentUuid": "1773794f_2507c39e",
       "range": {
         "startLine": 29,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "667d6897_71dd32c5",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1889140
+      },
+      "writtenOn": "2022-08-31T23:15:50Z",
+      "side": 1,
+      "message": "Done, I just updated javadoc and commit message.",
+      "parentUuid": "6fd8c5df_1307a3fa",
+      "range": {
+        "startLine": 545,
+        "startChar": 0,
+        "endLine": 545,
+        "endChar": 77
+      },
+      "revId": "389ff9357abc2e9a59065a33a9f7b391cde8768a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d53c9e7_217dc18b",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-08-31T20:21:47Z",
       "side": 1,
       "message": "Is this an invalid argument?  It feels like someone might have a 0b (which is also 0MB) file on disk, such as immediately after `touch`.",
+      "range": {
+        "startLine": 557,
+        "startChar": 0,
+        "endLine": 557,
+        "endChar": 53
+      },
+      "revId": "389ff9357abc2e9a59065a33a9f7b391cde8768a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "249f2b60_34010c80",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1889140
+      },
+      "writtenOn": "2022-08-31T23:15:50Z",
+      "side": 1,
+      "message": "I just moved the scenario to testParseSize().",
+      "parentUuid": "6d53c9e7_217dc18b",
       "range": {
         "startLine": 557,
         "startChar": 0,
