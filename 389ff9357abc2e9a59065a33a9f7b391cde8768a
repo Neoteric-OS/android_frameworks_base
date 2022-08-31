@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1abe8107_902a651f",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-08-31T20:21:47Z",
+      "side": 1,
+      "message": "From the note left in tests, I think it\u0027s reasonable to parse zero-byte sizes.\n\nSo I\u0027d suggest using a value such as Long.MIN_VALUE to represent invalid inputs.\n\nNote that Formatter.formatFileSize() technically supports negative sizes, so we may want to also support parsing negative sizes here too, for completeness.",
+      "range": {
+        "startLine": 1322,
+        "startChar": 16,
+        "endLine": 1322,
+        "endChar": 19
+      },
+      "revId": "389ff9357abc2e9a59065a33a9f7b391cde8768a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1773794f_2507c39e",
+        "filename": "core/java/android/util/StorageUnit.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-08-31T20:21:47Z",
+      "side": 1,
+      "message": "Hm, sorry if there was a misunderstanding here; I was really hoping that the revised approach would avoid adding any new enums.\n\nInstead, I\u0027d was hoping that it would be simple inline logic.\n\n(This file here actually adds at least 7 new classes to the BCP, which we\u0027ve really been trying hard to avoid growth.)\n\nSome additional details here:\n\n* https://g3doc.corp.google.com/company/teams/android-api-council/guidelines/index.md?cl\u003dhead##avoid-enum",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "389ff9357abc2e9a59065a33a9f7b391cde8768a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fd8c5df_1307a3fa",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-08-31T20:21:47Z",
+      "side": 1,
+      "message": "I think it\u0027s great that you\u0027re handling the spaces here, but it technically means your commit message is now outdated, since it\u0027s regex doesn\u0027t allow spaces?",
+      "range": {
+        "startLine": 545,
+        "startChar": 0,
+        "endLine": 545,
+        "endChar": 77
+      },
+      "revId": "389ff9357abc2e9a59065a33a9f7b391cde8768a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d53c9e7_217dc18b",
+        "filename": "core/tests/coretests/src/android/os/FileUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-08-31T20:21:47Z",
+      "side": 1,
+      "message": "Is this an invalid argument?  It feels like someone might have a 0b (which is also 0MB) file on disk, such as immediately after `touch`.",
+      "range": {
+        "startLine": 557,
+        "startChar": 0,
+        "endLine": 557,
+        "endChar": 53
+      },
+      "revId": "389ff9357abc2e9a59065a33a9f7b391cde8768a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
