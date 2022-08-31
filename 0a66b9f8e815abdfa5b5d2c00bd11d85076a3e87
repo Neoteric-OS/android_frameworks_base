@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c5408e3_434a6ade",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1626001
+      },
+      "writtenOn": "2022-08-31T17:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "601cd5a4_0b049fc5",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 10
+      },
+      "revId": "0a66b9f8e815abdfa5b5d2c00bd11d85076a3e87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb7d37db_c43ae695",
@@ -95,6 +119,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee2db7f5_7b00d8e7",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1626001
+      },
+      "writtenOn": "2022-08-31T17:40:29Z",
+      "side": 1,
+      "message": "Done, reworded the comment so its clearer to the reader that it applies to the entire subsection until l.1008.",
+      "parentUuid": "528a0040_6c8f5ce2",
+      "range": {
+        "startLine": 984,
+        "startChar": 4,
+        "endLine": 985,
+        "endChar": 95
+      },
+      "revId": "0a66b9f8e815abdfa5b5d2c00bd11d85076a3e87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c30f04e1_1242253a",
@@ -132,6 +180,30 @@
       "side": 1,
       "message": "This is the actual number. So probably provide the detailed spec number and section number here.",
       "parentUuid": "c30f04e1_1242253a",
+      "range": {
+        "startLine": 991,
+        "startChar": 47,
+        "endLine": 991,
+        "endChar": 53
+      },
+      "revId": "0a66b9f8e815abdfa5b5d2c00bd11d85076a3e87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92af5c2d_20e20e21",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1626001
+      },
+      "writtenOn": "2022-08-31T17:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7626e6b_b98837b8",
       "range": {
         "startLine": 991,
         "startChar": 47,
