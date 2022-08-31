@@ -25,6 +25,7 @@
 #include <RootRenderNode.h>
 #include <SkImagePriv.h>
 #include <SkSerialProcs.h>
+#include <cutils/properties.h>
 #ifdef __ANDROID__
 #include <dlfcn.h>
 #endif
@@ -164,6 +165,18 @@ private:
         }
     }
 };
+
+static jboolean android_view_ThreadedRenderer_supportsOpenGL(JNIEnv* env, jobject clazz) {
+    char prop[92];
+    if (property_get("ro.kernel.qemu", prop, NULL) == 0) {
+        // not in the emulator
+        return JNI_TRUE;
+    }
+    // In the emulator this property will be set > 0 when OpenGL ES 2.0 is
+    // enabled, 0 otherwise. On old emulator versions it will be undefined.
+    property_get("qemu.gles", prop, "0");
+    return atoi(prop) > 0 ? JNI_TRUE : JNI_FALSE;
+}
 
 static void android_view_ThreadedRenderer_rotateProcessStatsBuffer(JNIEnv* env, jobject clazz) {
     RenderProxy::rotateProcessStatsBuffer();
@@ -915,9 +928,8 @@ static jboolean android_view_ThreadedRenderer_isWebViewOverlaysEnabled(JNIEnv* e
 // JNI Glue
 // ----------------------------------------------------------------------------
 
-const char* const kClassPathName = "android/graphics/HardwareRenderer";
-
 static const JNINativeMethod gMethods[] = {
+        {"nSupportsOpenGL", "()Z", (void*)android_view_ThreadedRenderer_supportsOpenGL},
         {"nRotateProcessStatsBuffer", "()V",
          (void*)android_view_ThreadedRenderer_rotateProcessStatsBuffer},
         {"nSetProcessStatsBuffer", "(I)V",
@@ -970,9 +982,9 @@ static const JNINativeMethod gMethods[] = {
         {"nDrawRenderNode", "(JJ)V", (void*)android_view_ThreadedRendererd_drawRenderNode},
         {"nSetContentDrawBounds", "(JIIII)V",
          (void*)android_view_ThreadedRenderer_setContentDrawBounds},
-        {"nSetPictureCaptureCallback",
-         "(JLandroid/graphics/HardwareRenderer$PictureCapturedCallback;)V",
-         (void*)android_view_ThreadedRenderer_setPictureCapturedCallbackJNI},
+        //{"nSetPictureCaptureCallback",
+        //"(JLandroid/graphics/HardwareRenderer$PictureCapturedCallback;)V",
+        //(void*)android_view_ThreadedRenderer_setPictureCapturedCallbackJNI},
         {"nSetASurfaceTransactionCallback",
          "(JLandroid/graphics/HardwareRenderer$ASurfaceTransactionCallback;)V",
          (void*)android_view_ThreadedRenderer_setASurfaceTransactionCallback},
@@ -1027,20 +1039,15 @@ int register_android_view_ThreadedRenderer(JNIEnv* env) {
 #endif
 
     int robolectricApiLevel = GetRobolectricApiLevel(env);
-    if (robolectricApiLevel < 29) {
-        // Skip HardwareRenderer registration for SDK < 29. HardwareRenderer doesn't
-        // exist, and this JNI registration references static methods on
-        // HardwareRenderer.
-        return JNI_OK;
-    }
+    const char* const kClassPathName = "android/graphics/HardwareRenderer";
 
-    jclass hardwareRenderer = FindClassOrDie(env,
-            "android/graphics/HardwareRenderer");
+    jclass hardwareRenderer = FindClassOrDie(env, kClassPathName);
     gHardwareRenderer.clazz = reinterpret_cast<jclass>(env->NewGlobalRef(hardwareRenderer));
-    gHardwareRenderer.invokePictureCapturedCallback = GetStaticMethodIDOrDie(env, hardwareRenderer,
-            "invokePictureCapturedCallback",
-            "(JLandroid/graphics/HardwareRenderer$PictureCapturedCallback;)V");
-
+    if (robolectricApiLevel >= 29) {
+        gHardwareRenderer.invokePictureCapturedCallback = GetStaticMethodIDOrDie(
+                env, hardwareRenderer, "invokePictureCapturedCallback",
+                "(JLandroid/graphics/HardwareRenderer$PictureCapturedCallback;)V");
+    }
     if (robolectricApiLevel >= 31) {
         jclass aSurfaceTransactionCallbackClass = FindClassOrDie(
                 env, "android/graphics/HardwareRenderer$ASurfaceTransactionCallback");
@@ -1053,19 +1060,21 @@ int register_android_view_ThreadedRenderer(JNIEnv* env) {
                 env, prepareSurfaceControlForWebviewCallbackClass, "prepare", "()V");
     }
 
-    jclass frameCallbackClass = FindClassOrDie(env,
-            "android/graphics/HardwareRenderer$FrameDrawingCallback");
-    gFrameDrawingCallback.onFrameDraw = GetMethodIDOrDie(env, frameCallbackClass,
-            "onFrameDraw", "(J)V");
+    if (robolectricApiLevel >= 29) {
+        jclass frameCallbackClass =
+                FindClassOrDie(env, "android/graphics/HardwareRenderer$FrameDrawingCallback");
+        gFrameDrawingCallback.onFrameDraw =
+                GetMethodIDOrDie(env, frameCallbackClass, "onFrameDraw", "(J)V");
 
-    jclass frameCompleteClass = FindClassOrDie(env,
-            "android/graphics/HardwareRenderer$FrameCompleteCallback");
-    if (robolectricApiLevel < 32) {
-        gFrameCompleteCallback.onFrameComplete =
-                GetMethodIDOrDie(env, frameCompleteClass, "onFrameComplete", "(J)V");
-    } else {
-        gFrameCompleteCallback.onFrameComplete =
-                GetMethodIDOrDie(env, frameCompleteClass, "onFrameComplete", "()V");
+        jclass frameCompleteClass =
+                FindClassOrDie(env, "android/graphics/HardwareRenderer$FrameCompleteCallback");
+        if (robolectricApiLevel < 32) {
+            gFrameCompleteCallback.onFrameComplete =
+                    GetMethodIDOrDie(env, frameCompleteClass, "onFrameComplete", "(J)V");
+        } else {
+            gFrameCompleteCallback.onFrameComplete =
+                    GetMethodIDOrDie(env, frameCompleteClass, "onFrameComplete", "()V");
+        }
     }
 
 #ifdef __ANDROID__
