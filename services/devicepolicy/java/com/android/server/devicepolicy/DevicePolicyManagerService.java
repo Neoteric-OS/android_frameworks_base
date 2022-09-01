@@ -18732,6 +18732,13 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         }
         AccountManager am = AccountManager.get(mContext);
         Account[] accounts = am.getAccounts();
+        List<Account> simAccounts = Lists.newArrayListy();
+        for (Account account : accounts) {
+            if(!(isContactsAccount(account.type))) {
+                simAccounts.add(account);
+            }
+        }
+        Log.d(LOG_TAG, "simAccounts size:" + simAccounts.size());
         return accounts.length == 0;
     }
 
