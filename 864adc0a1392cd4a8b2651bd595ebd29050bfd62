@@ -1,6 +1,52 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "4207c1a0_d7682caa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-01T18:15:34Z",
+      "side": 1,
+      "message": "Skip duplicate parameters when IkeTunnelConnectionParams provided",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "864adc0a1392cd4a8b2651bd595ebd29050bfd62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c115be5_4adf3e30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-01T18:15:34Z",
+      "side": 1,
+      "message": "Suggest also discussing why this is necessary:\n\nIkeTunnelConnectionParams are serialized in a safe manner to ensure that they do not conflict with the serialization scheme of VpnProfile. However, copying some of these fields (eg IkeKeyId) may conflict with the serialization scheme.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "864adc0a1392cd4a8b2651bd595ebd29050bfd62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "b7d2e16c_479417d1",
