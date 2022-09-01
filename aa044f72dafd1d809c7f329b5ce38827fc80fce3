@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f38b2bda_d689d07a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1581796
+      },
+      "writtenOn": "2022-09-01T18:19:17Z",
+      "side": 1,
+      "message": "Added `requiresRermission`... using UserManagerInternal would require fixing tons of unit tests",
+      "revId": "aa044f72dafd1d809c7f329b5ce38827fc80fce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
