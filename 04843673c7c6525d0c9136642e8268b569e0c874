@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b716ab0b_d56e056a",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-01T21:01:10Z",
+      "side": 1,
+      "message": "Nit: in general, prefer positives: `(proxyInfo \u003d\u003d null) ? null : new ProxyInfo(proxyInfo)`",
+      "range": {
+        "startLine": 174,
+        "startChar": 32,
+        "endLine": 174,
+        "endChar": 34
+      },
+      "revId": "04843673c7c6525d0c9136642e8268b569e0c874",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
