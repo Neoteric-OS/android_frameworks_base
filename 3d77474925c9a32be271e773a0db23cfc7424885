@@ -16,6 +16,29 @@
       "message": "The changes have been implemented.",
       "revId": "3d77474925c9a32be271e773a0db23cfc7424885",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4012496d_31ed0498",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-09-01T01:33:36Z",
+      "side": 1,
+      "message": "This is unfortunately still quite expensive, since each invocation will be creating a brand new List for determining if something is contained.  😞\n\nBut since it doesn\u0027t impact the BCP overhead, and it\u0027s likely to have few callers for the moment, this performance overhead isn\u0027t blocking merging of the CL.\n\nI\u0027m just highlighting it as a FYI to guide future work that might be more performance sensitive.",
+      "range": {
+        "startLine": 1322,
+        "startChar": 0,
+        "endLine": 1322,
+        "endChar": 48
+      },
+      "revId": "3d77474925c9a32be271e773a0db23cfc7424885",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
