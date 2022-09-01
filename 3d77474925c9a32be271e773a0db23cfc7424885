@@ -39,6 +39,30 @@
       },
       "revId": "3d77474925c9a32be271e773a0db23cfc7424885",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39c5cceb_fc6ef53a",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1889140
+      },
+      "writtenOn": "2022-09-01T04:20:18Z",
+      "side": 1,
+      "message": "Thanks for the heads-up. I was thinking about using static variables instead of creating a list in the method, however, the memory footprint would be more. Which other alternatives would you suggest?",
+      "parentUuid": "4012496d_31ed0498",
+      "range": {
+        "startLine": 1322,
+        "startChar": 0,
+        "endLine": 1322,
+        "endChar": 48
+      },
+      "revId": "3d77474925c9a32be271e773a0db23cfc7424885",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
