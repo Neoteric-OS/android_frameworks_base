@@ -51,6 +51,7 @@ public:
 
     virtual int handleEvent(int fd, int events, void* data);
 
+    void cleanUp();
 private:
     JNIEnv* mPollEnv;
     jobject mPollObj;
@@ -161,6 +162,11 @@ int NativeMessageQueue::handleEvent(int fd, int looperEvents, void* data) {
     return 1;
 }
 
+void NativeMessageQueue::cleanUp() {
+    // to avoid cyclic reference
+    mLooper.clear();
+}
+
 
 // ----------------------------------------------------------------------------
 
@@ -182,6 +188,11 @@ static jlong android_os_MessageQueue_nativeInit(JNIEnv* env, jclass clazz) {
 
 static void android_os_MessageQueue_nativeDestroy(JNIEnv* env, jclass clazz, jlong ptr) {
     NativeMessageQueue* nativeMessageQueue = reinterpret_cast<NativeMessageQueue*>(ptr);
+
+    // Definitely safe to clean up now because there will be no more access to native
+    // objects afterwards since "nativeDestroy" must be the last function invocation.
+    nativeMessageQueue->cleanUp();
+
     nativeMessageQueue->decStrong(env);
 }
 
