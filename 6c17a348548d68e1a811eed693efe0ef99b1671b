@@ -16,6 +16,23 @@
       "message": "Any feedback?",
       "revId": "6c17a348548d68e1a811eed693efe0ef99b1671b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4fff113_b3c10f1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2022-09-01T18:07:36Z",
+      "side": 1,
+      "message": "This is probably applicable only to legacy resizing so soon enough this will not be the way task resizes, but it still does fix an issue in the current release.",
+      "revId": "6c17a348548d68e1a811eed693efe0ef99b1671b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
