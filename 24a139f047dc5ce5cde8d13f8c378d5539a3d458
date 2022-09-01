@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7c9304e1_0f87b798",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6280,
+      "author": {
+        "id": 1561936
+      },
+      "writtenOn": "2022-09-01T14:33:55Z",
+      "side": 1,
+      "message": "As I know the fgs notification tag is always null.\n *The API startForeground of Service.java\n   public final void startForeground(int id, Notification notification)\n *The enqueue noti part of ServiceRecord.java\n   nm.enqueueNotification(localPackageName, localPackageName, appUid, appPid, null, \n\nShould I make and use an API that checks the number of notifications only with pkg and userId?",
+      "parentUuid": "834dd60a_b818918c",
+      "range": {
+        "startLine": 6280,
+        "startChar": 30,
+        "endLine": 6280,
+        "endChar": 32
+      },
+      "revId": "24a139f047dc5ce5cde8d13f8c378d5539a3d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8512668d_c51c241c",
         "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
         "patchSetId": 1
