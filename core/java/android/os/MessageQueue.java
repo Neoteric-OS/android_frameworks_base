@@ -427,6 +427,7 @@ public final class MessageQueue {
             throw new IllegalStateException("Main thread not allowed to quit.");
         }
 
+        SparseArray<FileDescriptorRecord> records = null;
         synchronized (this) {
             if (mQuitting) {
                 return;
@@ -439,8 +440,27 @@ public final class MessageQueue {
                 removeAllMessagesLocked();
             }
 
+            if (mFileDescriptorRecords != null && mFileDescriptorRecords.size() > 0) {
+                // Clear leaked listeners as we are quitting.
+                records = mFileDescriptorRecords.clone();
+                for (int i = 0; i < records.size(); i++) {
+                    removeOnFileDescriptorEventListener(records.valueAt(i).mDescriptor);
+                }
+            }
+
             // We can assume mPtr != 0 because mQuitting was previously false.
             nativeWake(mPtr);
+        }
+
+        // Nevertheless, print warning for leaked listeners.
+        if (records != null) {
+            Log.w(TAG, "", new RuntimeException("Required to invoke "
+                  + "removeOnFileDescriptorEventListener before quit."
+                  + " Total listeners:" + records.size()));
+            for (int i = 0; i < records.size(); i++) {
+                Log.w(TAG, " listeners[" + i + "] = {fdNum=" + records.keyAt(i)
+                      + ", listener=" + records.valueAt(i).mListener + "}" );
+            }
         }
     }
 
