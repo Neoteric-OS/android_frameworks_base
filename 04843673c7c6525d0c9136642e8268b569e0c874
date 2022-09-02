@@ -22,6 +22,30 @@
       },
       "revId": "04843673c7c6525d0c9136642e8268b569e0c874",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3533f77d_6c0645f4",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-09-02T03:59:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b716ab0b_d56e056a",
+      "range": {
+        "startLine": 174,
+        "startChar": 32,
+        "endLine": 174,
+        "endChar": 34
+      },
+      "revId": "04843673c7c6525d0c9136642e8268b569e0c874",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
