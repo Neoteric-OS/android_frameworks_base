@@ -819,7 +819,6 @@ class AutomaticBrightnessController {
                         && fastAmbientLux <= mAmbientDarkeningThreshold
                         && nextDarkenTransition <= time)) {
             mPreThresholdLux = mAmbientLux;
-            setAmbientLux(fastAmbientLux);
             if (mLoggingEnabled) {
                 Slog.d(TAG, "updateAmbientLux: "
                         + ((fastAmbientLux > mAmbientLux) ? "Brightened" : "Darkened") + ": "
@@ -827,6 +826,7 @@ class AutomaticBrightnessController {
                         + "mAmbientLightRingBuffer=" + mAmbientLightRingBuffer + ", "
                         + "mAmbientLux=" + mAmbientLux);
             }
+            setAmbientLux(fastAmbientLux);
             updateAutoBrightness(true /* sendUpdate */, false /* isManuallySet */);
             nextBrightenTransition = nextAmbientLightBrighteningTransition(time);
             nextDarkenTransition = nextAmbientLightDarkeningTransition(time);
