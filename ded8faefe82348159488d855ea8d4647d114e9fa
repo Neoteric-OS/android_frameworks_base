@@ -22,6 +22,30 @@
       },
       "revId": "ded8faefe82348159488d855ea8d4647d114e9fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca958d94_ece81d99",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-09-02T05:48:51Z",
+      "side": 1,
+      "message": "I guess the main question what I am not sure in the original bug that should getUserIdentity() return a HexString or String? It does not look clearly defined to me. The value stored as byte array in IkeKeyIdIdentification. What should be be returned as a String? If a HexString is what it needs , then maybe the main fix should be done in getUserIdentity to covert the byte[] into a HexString, instead of a String. Then it may need to also documented.",
+      "parentUuid": "f5b87b7a_c5fe7dcd",
+      "range": {
+        "startLine": 499,
+        "startChar": 0,
+        "endLine": 499,
+        "endChar": 41
+      },
+      "revId": "ded8faefe82348159488d855ea8d4647d114e9fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
