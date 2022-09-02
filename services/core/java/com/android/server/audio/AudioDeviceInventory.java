@@ -1182,12 +1182,14 @@ public class AudioDeviceInventory {
             return;
         }
 
+        // convert index to internal representation in VolumeStreamState
         final int leAudioVolIndex = (volumeIndex == -1)
                 ? mDeviceBroker.getVssVolumeForDevice(streamType, device)
-                : volumeIndex;
+                : volumeIndex * 10;
         final int maxIndex = mDeviceBroker.getMaxVssVolumeForStream(streamType);
         mDeviceBroker.postSetLeAudioVolumeIndex(leAudioVolIndex, maxIndex, streamType);
-        mDeviceBroker.postApplyVolumeOnDevice(streamType, device, "makeLeAudioDeviceAvailable");
+        mDeviceBroker.postSetVolumeIndexOnDevice(streamType, leAudioVolIndex, device,
+                "makeLeAudioDeviceAvailable");
     }
 
     @GuardedBy("mDevicesLock")
