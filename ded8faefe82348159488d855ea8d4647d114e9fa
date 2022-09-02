@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5b87b7a_c5fe7dcd",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-09-02T03:57:12Z",
+      "side": 1,
+      "message": "Why is this necessary ? getServerAddr() and getUserIdentity() already read their data from mIkeTunConnParams if that\u0027s non-null, so you can only get the same value. I don\u0027t think this change is bad in itself, but I think any app that depends on this is broken and really needs to be fixed.\n\nLook at it this way : this seems to be an app that breaks when the \"server\" field is initialized to its correct value, and requires it to be null instead. How could it be argued that it\u0027s the responsibility of the system server to address this ?",
+      "range": {
+        "startLine": 499,
+        "startChar": 0,
+        "endLine": 499,
+        "endChar": 41
+      },
+      "revId": "ded8faefe82348159488d855ea8d4647d114e9fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
