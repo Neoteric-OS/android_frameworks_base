@@ -33,6 +33,24 @@
       "message": "Can you share the steps to reproduce this issue? I\u0027d like to understand why it\u0027ll become null",
       "revId": "a0300acd5a005c738279a0ff6c354489e4ad75ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4aeda104_0af4f1ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1700909
+      },
+      "writtenOn": "2022-09-02T09:19:20Z",
+      "side": 1,
+      "message": "The problem of random testing has a very low probability of occurrence. I am sorry that I cannot provide specific reproduction steps.\nmUidStates may have been released, it is best to add a judgment here to avoid restarting. Thanks！",
+      "parentUuid": "8883188d_95012cff",
+      "revId": "a0300acd5a005c738279a0ff6c354489e4ad75ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
