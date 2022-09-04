@@ -7836,8 +7836,8 @@ public final class ActivityThread extends ClientTransactionHandler
                         Files.move(new File(oldPath).toPath(), new File(newPath).toPath(),
                                 StandardCopyOption.REPLACE_EXISTING);
                     } catch (IOException e2) {
-                        Log.e(TAG, "Rename recovery failed ", e);
-                        throw e;
+                        Log.e(TAG, "Rename recovery failed ", e2);
+                        throw new ErrnoException(e2.getMessage(), OsConstants.EIO);
                     }
                 } else {
                     throw e;
