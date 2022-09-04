@@ -171,32 +171,6 @@ public class UdfpsEnrollProgressBarDrawable extends Drawable {
             return;
         }
 
-        if (mShowingHelp) {
-            if (mVibrator != null && mIsAccessibilityEnabled) {
-                mVibrator.vibrate(Process.myUid(), mContext.getOpPackageName(),
-                        VIBRATE_EFFECT_ERROR, getClass().getSimpleName() + "::onEnrollmentHelp",
-                        FINGERPRINT_ENROLLING_SONFICATION_ATTRIBUTES);
-            }
-        } else {
-            // If the first touch is an error, remainingSteps will be -1 and the callback
-            // doesn't come from onEnrollmentHelp. If we are in the accessibility flow,
-            // we still would like to vibrate.
-            if (mVibrator != null) {
-                if (remainingSteps == -1 && mIsAccessibilityEnabled) {
-                    mVibrator.vibrate(Process.myUid(), mContext.getOpPackageName(),
-                            VIBRATE_EFFECT_ERROR,
-                            getClass().getSimpleName() + "::onFirstTouchError",
-                            FINGERPRINT_ENROLLING_SONFICATION_ATTRIBUTES);
-                } else if (remainingSteps != -1 && !mIsAccessibilityEnabled) {
-                    mVibrator.vibrate(Process.myUid(),
-                            mContext.getOpPackageName(),
-                            SUCCESS_VIBRATION_EFFECT,
-                            getClass().getSimpleName() + "::OnEnrollmentProgress",
-                            HARDWARE_FEEDBACK_VIBRATION_ATTRIBUTES);
-                }
-            }
-        }
-
         mRemainingSteps = remainingSteps;
         mTotalSteps = totalSteps;
 
