@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e47f2ee6_59509d57",
+        "filename": "services/core/java/com/android/server/wm/AppWarnings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1397448
+      },
+      "writtenOn": "2022-09-04T14:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b90799be_654ed7fa",
+      "range": {
+        "startLine": 172,
+        "startChar": 22,
+        "endLine": 172,
+        "endChar": 38
+      },
+      "revId": "3f6807de63bfad62efa0b4dbe45d8a42660b9fd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98d6a1cc_7321c4a8",
@@ -133,6 +157,30 @@
       "side": 1,
       "message": "Agreed.",
       "parentUuid": "f262a0cf_73257ec4",
+      "range": {
+        "startLine": 173,
+        "startChar": 50,
+        "endLine": 173,
+        "endChar": 71
+      },
+      "revId": "3f6807de63bfad62efa0b4dbe45d8a42660b9fd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e028ea6_890dfb2c",
+        "filename": "services/core/java/com/android/server/wm/AppWarnings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1397448
+      },
+      "writtenOn": "2022-09-04T14:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d54c0a4a_98e7a1b2",
       "range": {
         "startLine": 173,
         "startChar": 50,
