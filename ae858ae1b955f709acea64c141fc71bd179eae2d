@@ -22,6 +22,30 @@
       },
       "revId": "ae858ae1b955f709acea64c141fc71bd179eae2d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "202312b0_57709759",
+        "filename": "services/core/java/com/android/server/audio/BtHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1928988
+      },
+      "writtenOn": "2022-09-05T16:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6605f120_f1762e50",
+      "range": {
+        "startLine": 417,
+        "startChar": 16,
+        "endLine": 419,
+        "endChar": 57
+      },
+      "revId": "ae858ae1b955f709acea64c141fc71bd179eae2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
