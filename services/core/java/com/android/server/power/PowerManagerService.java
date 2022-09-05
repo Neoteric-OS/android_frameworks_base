@@ -3772,7 +3772,7 @@ public final class PowerManagerService extends SystemService
         // ShutdownThread must run on a looper capable of displaying the UI.
         Message msg = Message.obtain(UiThread.getHandler(), runnable);
         msg.setAsynchronous(true);
-        UiThread.getHandler().sendMessage(msg);
+        UiThread.getHandler().sendMessageAtFrontOfQueue(msg);
 
         // PowerManager.reboot() is documented not to return so just wait for the inevitable.
         if (wait) {
