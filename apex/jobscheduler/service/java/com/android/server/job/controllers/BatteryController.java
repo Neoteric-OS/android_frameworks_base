@@ -104,6 +104,10 @@ public final class BatteryController extends RestrictingController {
             Slog.d(TAG, "Prepping for " + jobStatus.toShortString());
         }
 
+        if (!jobStatus.isTrackedBy(JobStatus.TRACKING_BATTERY)) {
+            return;
+        }
+
         final int uid = jobStatus.getSourceUid();
         if (mService.getUidBias(uid) == JobInfo.BIAS_TOP_APP) {
             if (DEBUG) {

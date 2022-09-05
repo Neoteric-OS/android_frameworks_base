@@ -1486,6 +1486,10 @@ public final class JobStatus {
         return false;
     }
 
+    boolean isTrackedBy(int which) {
+        return (trackingControllers & which) != 0;
+    }
+
     void setTrackingController(int which) {
         trackingControllers |= which;
     }
