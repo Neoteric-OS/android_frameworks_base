@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02932bab_1701adc1",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 11745,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2022-09-06T14:25:03Z",
+      "side": 1,
+      "message": "this could be renamed isLeAudioDevice and moved to AudioSystem",
+      "range": {
+        "startLine": 11745,
+        "startChar": 20,
+        "endLine": 11745,
+        "endChar": 41
+      },
+      "revId": "f2999deb7df179a4479a9d63ae5db0da77b0317d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
