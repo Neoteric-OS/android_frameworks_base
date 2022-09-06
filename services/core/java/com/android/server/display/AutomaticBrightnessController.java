@@ -822,7 +822,7 @@ class AutomaticBrightnessController {
             setAmbientLux(fastAmbientLux);
             if (mLoggingEnabled) {
                 Slog.d(TAG, "updateAmbientLux: "
-                        + ((fastAmbientLux > mAmbientLux) ? "Brightened" : "Darkened") + ": "
+                        + ((fastAmbientLux > mPreThresholdLux) ? "Brightened" : "Darkened") + ": "
                         + "mBrighteningLuxThreshold=" + mAmbientBrighteningThreshold + ", "
                         + "mAmbientLightRingBuffer=" + mAmbientLightRingBuffer + ", "
                         + "mAmbientLux=" + mAmbientLux);
