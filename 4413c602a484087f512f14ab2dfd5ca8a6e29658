@@ -16,6 +16,23 @@
       "message": "Please review it, thank you!",
       "revId": "4413c602a484087f512f14ab2dfd5ca8a6e29658",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3dd15a5_9659fea5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2022-09-06T23:34:49Z",
+      "side": 1,
+      "message": "I am a bit surprised that this is happening. A BatteryTrigger is created in the onBootComplete method of PowerStatsService, at which point all services are supposed to be running, including BatteryService.\n\nDo you have a stack trace of this NPE happening on a real device?",
+      "revId": "4413c602a484087f512f14ab2dfd5ca8a6e29658",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
