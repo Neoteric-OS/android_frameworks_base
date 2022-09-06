@@ -16,6 +16,24 @@
       "message": "Hi, \n\n128 bits is violating the spec https://datatracker.ietf.org/doc/html/rfc2404#section-3, where it says that \"Key lengths other than 160-bits MUST NOT be supported\".\n\nCan you provide more context of the VoLTE/IMS use cases? For example, which carriers are depending on that?\n\n",
       "revId": "f8aaa3302279a7679935a649f294a96f982a684c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "700215c5_aae20a56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1211949
+      },
+      "writtenOn": "2022-09-06T18:59:28Z",
+      "side": 1,
+      "message": "As far as I know, all providers require this, since SIP ipsec-3gpp standardizes only md5-96 and sha1-96, and the md5 is utterly obsolete.\n\nAKA protocol generates a 128bits IK and CK, and they are used as-is in IMS IPSec transport without transformation.\n\nWhat I can say, is that with this change, I can discuss with my carrier\u0027s IMS/SIP server, while without it, I can\u0027t.\n\nI tried padding the key with 0s on the left or the right, but the resulting MAC was definitely wrong. Maybe there is some other padding method I\u0027m not aware that is applied by the kernel when the key is not 160 bits, I don\u0027t know, I couldn\u0027t find more infos about that from kernel source.",
+      "parentUuid": "6ead4ad7_22564ee9",
+      "revId": "f8aaa3302279a7679935a649f294a96f982a684c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
