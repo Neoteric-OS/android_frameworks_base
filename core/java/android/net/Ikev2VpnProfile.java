@@ -48,6 +48,7 @@ import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.net.VpnProfile;
+import com.android.internal.util.HexDump;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -730,7 +731,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         final IkeIdentification ident = params.getLocalIdentification();
         // Refer to VpnIkev2Utils.parseIkeIdentification().
         if (ident instanceof IkeKeyIdIdentification) {
-            return "@#" + new String(((IkeKeyIdIdentification) ident).keyId);
+            return "@#" + HexDump.toHexString(((IkeKeyIdIdentification) ident).keyId);
         } else if (ident instanceof IkeRfc822AddrIdentification) {
             return "@@" + ((IkeRfc822AddrIdentification) ident).rfc822Name;
         } else if (ident instanceof IkeFqdnIdentification) {
