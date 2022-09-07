@@ -69,8 +69,53 @@ public class Matrix {
      * resultOffset + 16 > result.length or lhsOffset + 16 > lhs.length or
      * rhsOffset + 16 > rhs.length.
      */
-    public static native void multiplyMM(float[] result, int resultOffset,
-            float[] lhs, int lhsOffset, float[] rhs, int rhsOffset);
+    public static void multiplyMM(float[] result, int resultOffset,
+            float[] lhs, int lhsOffset, float[] rhs, int rhsOffset) {
+        // error checking
+        if (result == null || lhs == null || rhs == null) {
+            throw new IllegalArgumentException("array == null");
+        }
+        if (resultOffset < 0 || lhsOffset < 0 || rhsOffset < 0) {
+            throw new IllegalArgumentException("offset < 0");
+        }
+        if (resultOffset + 16 > result.length) {
+            throw new IllegalArgumentException("length - offset < n");
+        }
+        if (lhsOffset + 16 > lhs.length) {
+            throw new IllegalArgumentException("length - offset < n");
+        }
+        if (rhsOffset + 16 > rhs.length) {
+            throw new IllegalArgumentException("length - offset < n");
+        }
+
+        // copy rhs and lhs to temporary memory in case input and
+        // output is overlapping in memory
+        for(int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                sTemp[ 4*i + j      ] = rhs[ 4*i + j + rhsOffset]; 
+                sTemp[ 4*i + j + 16 ] = lhs[ 4*i + j + lhsOffset]; 
+            }
+        }
+
+        for (int i=0; i<4; i++) {
+            final float rhs_i0 = sTemp[ 4*i + 0 ];
+            float ri0 = sTemp[ 0 + 16 ] * rhs_i0;
+            float ri1 = sTemp[ 1 + 16 ] * rhs_i0;
+            float ri2 = sTemp[ 2 + 16 ] * rhs_i0;
+            float ri3 = sTemp[ 3 + 16 ] * rhs_i0;
+            for (int j=1; j<4; j++) {
+                final float rhs_ij = sTemp[ 4*i + j ];
+                ri0 += sTemp[ 4*j + 0 + 16 ] * rhs_ij;
+                ri1 += sTemp[ 4*j + 1 + 16 ] * rhs_ij;
+                ri2 += sTemp[ 4*j + 2 + 16 ] * rhs_ij;
+                ri3 += sTemp[ 4*j + 3 + 16 ] * rhs_ij;
+            }
+            result[ 4*i + 0 + resultOffset ] = ri0;
+            result[ 4*i + 1 + resultOffset ] = ri1;
+            result[ 4*i + 2 + resultOffset ] = ri2;
+            result[ 4*i + 3 + resultOffset ] = ri3;
+        }
+    }
 
     /**
      * Multiplies a 4 element vector by a 4x4 matrix and stores the result in a
@@ -94,9 +139,53 @@ public class Matrix {
      * or lhsMatOffset + 16 > lhsMat.length or
      * rhsVecOffset + 4 > rhsVec.length.
      */
-    public static native void multiplyMV(float[] resultVec,
+    public static void multiplyMV(float[] resultVec,
             int resultVecOffset, float[] lhsMat, int lhsMatOffset,
-            float[] rhsVec, int rhsVecOffset);
+            float[] rhsVec, int rhsVecOffset) {
+        // error checking
+        if (resultVec == null || lhsMat == null || rhsVec == null) {
+            throw new IllegalArgumentException("array == null");
+        }
+        if (resultVecOffset < 0 || lhsMatOffset < 0 || rhsVecOffset < 0) {
+            throw new IllegalArgumentException("offset < 0");
+        }
+        if (resultVecOffset + 16 > resultVec.length) {
+            throw new IllegalArgumentException("length - offset < n");
+        }
+        if (lhsMatOffset + 16 > lhsMat.length) {
+            throw new IllegalArgumentException("length - offset < n");
+        }
+        if (rhsVecOffset + 16 > rhsVec.length) {
+            throw new IllegalArgumentException("length - offset < n");
+        }
+
+        // copy rhs and lhs to temporary memory in case input and
+        // output is overlapping in memory
+        for(int i = 0; i < 4; i++) {
+            sTemp[ i + 16 ] = rhsVec[ i + rhsVecOffset ]; 
+
+            for (int j = 0; j < 4; j++) {
+                sTemp[ 4*i + j ] = lhsMat[ 4*i + j + lhsMatOffset]; 
+            }
+        }
+
+        resultVec[0 + resultVecOffset] = sTemp[0 + 4 * 0] * sTemp[0 + 16] +
+                                         sTemp[0 + 4 * 1] * sTemp[1 + 16] +
+                                         sTemp[0 + 4 * 2] * sTemp[2 + 16] +
+                                         sTemp[0 + 4 * 3] * sTemp[3 + 16];
+        resultVec[1 + resultVecOffset] = sTemp[1 + 4 * 0] * sTemp[0 + 16] +
+                                         sTemp[1 + 4 * 1] * sTemp[1 + 16] +
+                                         sTemp[1 + 4 * 2] * sTemp[2 + 16] +
+                                         sTemp[1 + 4 * 3] * sTemp[3 + 16];
+        resultVec[2 + resultVecOffset] = sTemp[2 + 4 * 0] * sTemp[0 + 16] +
+                                         sTemp[2 + 4 * 1] * sTemp[1 + 16] +
+                                         sTemp[2 + 4 * 2] * sTemp[2 + 16] +
+                                         sTemp[2 + 4 * 3] * sTemp[3 + 16];
+        resultVec[3 + resultVecOffset] = sTemp[3 + 4 * 0] * sTemp[0 + 16] +
+                                         sTemp[3 + 4 * 1] * sTemp[1 + 16] +
+                                         sTemp[3 + 4 * 2] * sTemp[2 + 16] +
+                                         sTemp[3 + 4 * 3] * sTemp[3 + 16];
+    }
 
     /**
      * Transposes a 4 x 4 matrix.
