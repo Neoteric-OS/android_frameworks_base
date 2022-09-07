@@ -34,6 +34,24 @@
       "parentUuid": "6ead4ad7_22564ee9",
       "revId": "f8aaa3302279a7679935a649f294a96f982a684c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe3cf6cc_62f85fdd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1966126
+      },
+      "writtenOn": "2022-09-07T22:00:05Z",
+      "side": 1,
+      "message": "Hello.\nhttps://www.arib.or.jp/english/html/overview/doc/STD-T63v9_10/5_Appendix/Rel5/33/33203-5c0.pdf states 3gpp should pad the key with zeroes at the end.\n\ntrailing zeroes apparently do not impact computation at all, so it really just is a way to work around the limitation and they\u0027ve standardized something less secure than it should be.. But it\u0027s not like we can do anything about that!\n\nAnyway, it works for me™ so I think we can abandon this patch. Thank you both!",
+      "parentUuid": "700215c5_aae20a56",
+      "revId": "f8aaa3302279a7679935a649f294a96f982a684c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
