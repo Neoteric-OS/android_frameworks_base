@@ -33,6 +33,24 @@
       "message": "I am a bit surprised that this is happening. A BatteryTrigger is created in the onBootComplete method of PowerStatsService, at which point all services are supposed to be running, including BatteryService.\n\nDo you have a stack trace of this NPE happening on a real device?",
       "revId": "4413c602a484087f512f14ab2dfd5ca8a6e29658",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "deab93a0_bc895508",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1947716
+      },
+      "writtenOn": "2022-09-07T15:47:19Z",
+      "side": 1,
+      "message": "I couldn\u0027t agree more with you and the phone running AOSP may not trigger the NPE for this.\nUnfortunately, a time-consuming method we added to the systemReady method of AMS caused this problem. \nWe have fixed our own code to avoid the blocking behavior，and we also hope this NPE will not trigger again in the AOSP code.\n\nHere is the stack trace of this NPE (Probably not very helpful):\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: *** FATAL EXCEPTION IN SYSTEM PROCESS: android.display\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: java.lang.RuntimeException: Failed to boot service com.android.server.powerstats.PowerStatsService: onBootPhase threw an exception during phase 1000\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat com.android.server.SystemServiceManager.startBootPhase(SystemServiceManager.java:307)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat com.android.server.am.ActivityManagerService.finishBooting(ActivityManagerService.java:5577)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat com.android.server.am.ActivityManagerService.bootAnimationComplete(ActivityManagerService.java:5730)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat com.android.server.wm.WindowManagerService.performEnableScreen(WindowManagerService.java:3957)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat com.android.server.wm.WindowManagerService.-$$Nest$mperformEnableScreen(Unknown Source:0)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat com.android.server.wm.WindowManagerService$H.handleMessage(WindowManagerService.java:5729)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat android.os.Handler.dispatchMessage(Handler.java:106)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat android.os.Looper.loopOnce(Looper.java:240)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat android.os.Looper.loop(Looper.java:351)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat android.os.HandlerThread.run(HandlerThread.java:67)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat com.android.server.ServiceThread.run(ServiceThread.java:44)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: Caused by: java.lang.NullPointerException: Attempt to invoke virtual method \u0027int android.content.Intent.getIntExtra(java.lang.String, int)\u0027 on a null object reference\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat com.android.server.powerstats.BatteryTrigger.\u003cinit\u003e(BatteryTrigger.java:62)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat com.android.server.powerstats.PowerStatsService$Injector.createBatteryTrigger(PowerStatsService.java:147)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat com.android.server.powerstats.PowerStatsService.onBootCompleted(PowerStatsService.java:241)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat com.android.server.powerstats.PowerStatsService.onBootPhase(PowerStatsService.java:198)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \tat com.android.server.SystemServiceManager.startBootPhase(SystemServiceManager.java:304)\n08-23 14:07:39.275  3249  3314 E AndroidRuntime: \t... 10 more",
+      "parentUuid": "a3dd15a5_9659fea5",
+      "revId": "4413c602a484087f512f14ab2dfd5ca8a6e29658",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
