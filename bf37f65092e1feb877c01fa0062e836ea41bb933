@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd465d55_15ad054e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561936
+      },
+      "writtenOn": "2022-09-07T04:29:15Z",
+      "side": 1,
+      "message": "Hello,\nWhat does the notice below mean? Hasn\u0027t the revision been merged yet?\n\n\"Presubmit-Verified vote expired because the change has not been merged after 2.0 working days since it was verified by TreeHugger.\"\n\nCan you tell me when it will be completed?\n",
+      "revId": "bf37f65092e1feb877c01fa0062e836ea41bb933",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
