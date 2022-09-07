@@ -816,6 +816,25 @@ public abstract class CameraDevice implements AutoCloseable {
      * The same logic applies to other hardware levels and capabilities.
      * </p>
      *
+     * <p> Devices with the ULTRA_HIGH_RESOLUTION_SENSOR capability have some additional guarantees
+     * which clients can take advantage of : </p>
+     * <table>
+     * <tr><th colspan="10">Additional guaranteed combinations for ULTRA_HIGH_RESOLUTION sensors</th></tr>
+     * <tr> <th colspan="3" id="rb">Target 1</th> <th colspan="3" id="rb">Target 2</th>  <th colspan="3" id="rb">Target 3</th> <th rowspan="2">Sample use case(s)</th> </tr>
+     * <tr> <th>Type</th><th id="rb"> SC Map</th><th id="rb">Max size</th> <th>Type</th><th id="rb"> SC Map</th><th id="rb">Max size</th> <th>Type</th><th id="rb"> SC Map</th><th id="rb">Max size</th></tr>
+     * <tr> <td>{@code YUV / JPEG / RAW}</td><td id="rb">{@code MAX_RES}</td><td id="rb">{@code MAX}</td><td id="rb">{@code PRIV / YUV}</td><td id="rb">{@code DEFAULT}</td><td id="rb">{@code PREVIEW}</td><td colspan="3" id="rb"></td> <td>Ultra high res still image capture with preview</td> </tr>
+     * <tr> <td>{@code YUV / JPEG / RAW}</td><td id="rb">{@code MAX_RES}</td><td id="rb">{@code MAX}</td><td id="rb">{@code PRIV}</td><td id="rb">{@code DEFAULT}</td><td id="rb">{@code PREVIEW}</td><td id="rb">{@code PRIV / YUV}</td><td id="rb">{@code DEFAULT}</td><td id="rb">{@code RECORD}</td> <td>Ultra high res still capture with preview + app based RECORD size analysis</td> </tr>
+     * <tr> <td>{@code YUV / JPEG / RAW}</td><td id="rb">{@code MAX_RES}</td><td id="rb">{@code MAX}</td><td id="rb">{@code PRIV}</td><td id="rb">{@code DEFAULT}</td><td id="rb">{@code PREVIEW}</td><td id="rb">{@code JPEG / YUV / RAW}</td><td id="rb">{@code DEFAULT}</td><td id="rb">{@code MAX}</td> <td>Ultra high res still image capture with preview + default sensor pixel mode analysis stream</td> </tr>
+     * </table><br>
+     *
+     * <p> Here, SC Map, refers to the {@link StreamConfigurationMap}, the target stream sizes must
+     * be chosen from. {@code DEFAULT} refers to the default sensor pixel mode {@link
+     * StreamConfigurationMap} and {@code MAX_RES} refers to the maximum resolution {@link
+     * StreamConfigurationMap}. For {@code MAX_RES} streams, {@code MAX} in the {@code Max size} column refers to the maximum size from
+     * {@link StreamConfigurationMap#getOutputSizes} and {@link StreamConfigurationMap#getHighResolutionOutputSizes}.
+     * Note: The same capture request must not mix targets from
+     * {@link StreamConfigurationMap}s corresponding to different sensor pixel modes. </p>
+     *
      * <p> 10-bit output capable
      * {@link CameraCharacteristics#REQUEST_AVAILABLE_CAPABILITIES_DYNAMIC_RANGE_TEN_BIT}
      * devices support at least the following stream combinations: </p>
