@@ -20,9 +20,20 @@ package android.os.strictmode;
 public abstract class Violation extends Throwable {
     private int mHashCode;
     private boolean mHashCodeValid;
+    // Align with the default value of StrictMode::ViolationInfo::durationMillis
+    private int mOpDuration = -1;
 
     Violation(String message) {
         super(message);
+    }
+
+    Violation(String message, int opDuration) {
+        super(message);
+        this.mOpDuration = opDuration;
+    }
+
+    public int getOpDuration() {
+        return mOpDuration;
     }
 
     @Override

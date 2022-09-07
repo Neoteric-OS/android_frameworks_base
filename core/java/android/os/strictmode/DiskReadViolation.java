@@ -20,4 +20,8 @@ public final class DiskReadViolation extends Violation {
     public DiskReadViolation() {
         super(null);
     }
+    /** @hide */
+    public DiskReadViolation(int opDuration) {
+        super(null, opDuration);
+    }
 }

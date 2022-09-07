@@ -1650,16 +1650,25 @@ public final class StrictMode {
             }
             startHandlingViolationException(new UnbufferedIoViolation());
         }
-
         // Part of BlockGuard.Policy interface:
         public void onReadFromDisk() {
+            onReadFromDisk(-1);
+        }
+        // Part of BlockGuard.Policy interface:
+        public void onReadFromDisk(int duration) {
             if ((mThreadPolicyMask & DETECT_THREAD_DISK_READ) == 0) {
                 return;
             }
             if (tooManyViolationsThisLoop()) {
                 return;
             }
-            startHandlingViolationException(new DiskReadViolation());
+            DiskReadViolation ex = null;
+            if (duration >= 0) {
+                ex = new DiskReadViolation(duration);
+            } else {
+                ex = new DiskReadViolation();
+            }
+            startHandlingViolationException(ex);
         }
 
         // Part of BlockGuard.Policy interface:
@@ -1703,7 +1712,6 @@ public final class StrictMode {
         void startHandlingViolationException(Violation e) {
             final int penaltyMask = (mThreadPolicyMask & PENALTY_ALL);
             final ViolationInfo info = new ViolationInfo(e, penaltyMask);
-            info.violationUptimeMillis = SystemClock.uptimeMillis();
             handleViolationWithTimingAttempt(info);
         }
 
@@ -1788,8 +1796,10 @@ public final class StrictMode {
                                 for (int n = 0; n < records.size(); ++n) {
                                     ViolationInfo v = records.get(n);
                                     v.violationNumThisLoop = n + 1;
-                                    v.durationMillis =
+                                    if (v.durationMillis < 0) {
+                                        v.durationMillis =
                                             (int) (loopFinishTime - v.violationUptimeMillis);
+                                    }
                                     onThreadPolicyViolation(v);
                                 }
                                 records.clear();
@@ -2884,7 +2894,8 @@ public final class StrictMode {
         ViolationInfo(Violation tr, int penaltyMask) {
             this.mViolation = tr;
             this.mPenaltyMask = penaltyMask;
-            violationUptimeMillis = SystemClock.uptimeMillis();
+            this.violationUptimeMillis = SystemClock.uptimeMillis();
+            this.durationMillis = tr.getOpDuration();
             this.numAnimationsRunning = ValueAnimator.getCurrentAnimationsCount();
             Intent broadcastIntent = ActivityThread.getIntentBeingBroadcast();
             if (broadcastIntent != null) {

@@ -32702,6 +32702,7 @@ package android.os.strictmode {
   }
 
   public abstract class Violation extends java.lang.Throwable {
+    method public int getOpDuration();
   }
 
   public final class WebViewMethodCalledOnWrongThreadViolation extends android.os.strictmode.Violation {
