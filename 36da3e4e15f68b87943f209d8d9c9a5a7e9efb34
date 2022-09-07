@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8880950_5e52298d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-07T07:01:07Z",
+      "side": 1,
+      "message": "Could you also check why this actually passes tests? that\u0027s a bit terrifying",
+      "revId": "36da3e4e15f68b87943f209d8d9c9a5a7e9efb34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41ca0368_9caac41a",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-07T07:01:07Z",
+      "side": 1,
+      "message": "If you do this, you\u0027ll need to do the opposite in the fromVpnProfile. Otherwise we\u0027ll serialize it as a hex of hte value, and then never un-hex it",
+      "range": {
+        "startLine": 734,
+        "startChar": 26,
+        "endLine": 734,
+        "endChar": 47
+      },
+      "revId": "36da3e4e15f68b87943f209d8d9c9a5a7e9efb34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
