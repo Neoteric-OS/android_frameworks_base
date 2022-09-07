@@ -3,6 +3,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3bcfa3ab_71117fd0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-07T07:17:21Z",
+      "side": 1,
+      "message": "Nit, I think the below paragraph explains all this more clearly :)\n\nSuggest just removing this block",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "ded8faefe82348159488d855ea8d4647d114e9fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58dcac07_1253291d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-07T07:17:21Z",
+      "side": 1,
+      "message": "Still looks like the correct, Jean please -1 if you have objections?",
+      "revId": "ded8faefe82348159488d855ea8d4647d114e9fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f5b87b7a_c5fe7dcd",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 3
@@ -38,6 +78,30 @@
       "side": 1,
       "message": "I guess the main question what I am not sure in the original bug that should getUserIdentity() return a HexString or String? It does not look clearly defined to me. The value stored as byte array in IkeKeyIdIdentification. What should be be returned as a String? If a HexString is what it needs , then maybe the main fix should be done in getUserIdentity to covert the byte[] into a HexString, instead of a String. Then it may need to also documented.",
       "parentUuid": "f5b87b7a_c5fe7dcd",
+      "range": {
+        "startLine": 499,
+        "startChar": 0,
+        "endLine": 499,
+        "endChar": 41
+      },
+      "revId": "ded8faefe82348159488d855ea8d4647d114e9fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b614870a_7ef6d026",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-07T07:17:21Z",
+      "side": 1,
+      "message": "Additional color - The issue here isn\u0027t with respect to this class and an app; it\u0027s an incompatibility with the VpnProfile\u0027s jank persistence format. Infact, an app calling getUserIdentity() will get the same thing before and after this patch.\n\nThis logic is for conversion to VpnProfile only; the persistence format there is extremely brittle (as found in the bug), using special delimiter characters that the byte-data encoded in the IkeKeyIdentification was stepping on when persisted directly (it\u0027s safe in the hex-encoded IkeTunnelConnectionParams)\n\nGiven that this does not affect any API return values, and improves consistency with all the rest of the values that do not come from the IkeTunnelConnectionParameters, I feel strongly that moving this out seems cleaner than trying to make the user identity safe.",
+      "parentUuid": "ca958d94_ece81d99",
       "range": {
         "startLine": 499,
         "startChar": 0,
