@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83cf06b9_e619741f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-08T00:35:45Z",
+      "side": 1,
+      "message": "Ahhhh, indeed. That\u0027s interesting.",
+      "parentUuid": "0781cd69_c4525a89",
+      "revId": "36da3e4e15f68b87943f209d8d9c9a5a7e9efb34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41ca0368_9caac41a",
@@ -72,6 +90,30 @@
       "writtenOn": "2022-09-07T12:48:46Z",
       "side": 1,
       "message": "We won\u0027t set the server and Identification into the Ikev2VpnProfile in fromVpnProfile() if IkeTunnelConnectionParams is set in the vpnProfile. The value in IkeSessionParams is stored/set as a byte array. I expect that callers should get from IkeTunnelConnectionParams directly(though it really depends on the app side). I did not see it\u0027s clearly defined what format should be return here. It\u0027s actually a confusing API(at least for me).",
+      "parentUuid": "41ca0368_9caac41a",
+      "range": {
+        "startLine": 734,
+        "startChar": 26,
+        "endLine": 734,
+        "endChar": 47
+      },
+      "revId": "36da3e4e15f68b87943f209d8d9c9a5a7e9efb34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25d7f63f_9358fb26",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-08T00:35:45Z",
+      "side": 1,
+      "message": "If you want to fix the bug this way, suggest instead of doing this, always hex it in toVpnProfile(), and un-hex it in fromVpnProfile()\n\nThe same format is used by some of the other open source implementations, thus the convolutedness of it.\n\nBut assuming someone sets the KeyIdIdentification, they probably assume they get the equivalvalent value out here as they would if they set the key ID as a string (see VpnIkev2Utils)",
       "parentUuid": "41ca0368_9caac41a",
       "range": {
         "startLine": 734,
