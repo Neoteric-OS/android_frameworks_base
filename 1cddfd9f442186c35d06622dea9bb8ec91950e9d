@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "191b8dab_e6133669",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreECPublicKey.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1896276
+      },
+      "writtenOn": "2022-09-08T14:00:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3cb86b3_f64d617d",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 67
+      },
+      "revId": "1cddfd9f442186c35d06622dea9bb8ec91950e9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfa25cac_37747b90",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-08-23T11:01:50Z",
       "side": 1,
       "message": "This looks good, let\u0027s make sure we have CTS tests that cover both of these conditions (it\u0027s OK if wycheproof covers this).",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 73
+      },
+      "revId": "1cddfd9f442186c35d06622dea9bb8ec91950e9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7a030b0_4cae267b",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyAgreementSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1896276
+      },
+      "writtenOn": "2022-09-08T14:00:57Z",
+      "side": 1,
+      "message": "Added a test for XEC keys also in same CTS android.keystore.cts.KeyAgreementTest#testDoPhase_withDifferentCurveKey_fails",
+      "parentUuid": "cfa25cac_37747b90",
       "range": {
         "startLine": 137,
         "startChar": 0,
