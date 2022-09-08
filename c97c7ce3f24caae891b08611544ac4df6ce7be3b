@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5048dfd_3bddd739",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2022-09-08T01:53:12Z",
+      "side": 1,
+      "message": "Need the internal gerrit cp to land first before triggering treehugger again.",
+      "revId": "c97c7ce3f24caae891b08611544ac4df6ce7be3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
