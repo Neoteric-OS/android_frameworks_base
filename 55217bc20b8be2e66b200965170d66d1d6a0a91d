@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce155ffc_2166e9cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2022-09-12T12:22:46Z",
+      "side": 1,
+      "message": "Thanks! I\u0027ve removed the @throws references to the hidden exception and added a merged-in link to another CL in master to prevent auto-merge.",
+      "revId": "55217bc20b8be2e66b200965170d66d1d6a0a91d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
