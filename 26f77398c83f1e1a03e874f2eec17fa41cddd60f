@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c047e750_00ff473d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8999,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2022-09-12T19:42:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1bed0f8_fba22e7d",
+      "range": {
+        "startLine": 8999,
+        "startChar": 14,
+        "endLine": 8999,
+        "endChar": 18
+      },
+      "revId": "26f77398c83f1e1a03e874f2eec17fa41cddd60f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a302df23_29ecceeb",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-09-12T19:39:46Z",
       "side": 1,
       "message": "remove the \"if\" here? It make the statement confusing.",
+      "range": {
+        "startLine": 9015,
+        "startChar": 79,
+        "endLine": 9015,
+        "endChar": 81
+      },
+      "revId": "26f77398c83f1e1a03e874f2eec17fa41cddd60f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7a6d277_9d589740",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9015,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2022-09-12T19:42:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a302df23_29ecceeb",
       "range": {
         "startLine": 9015,
         "startChar": 79,
