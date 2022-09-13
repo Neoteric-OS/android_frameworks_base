@@ -869,7 +869,6 @@ int register_android_graphics_Canvas(JNIEnv* env) {
     ret |= RegisterMethodsOrDie(env, "android/graphics/BaseCanvas", gDrawMethods, NELEM(gDrawMethods));
     ret |= RegisterMethodsOrDie(env, "android/graphics/BaseRecordingCanvas", gDrawMethods, NELEM(gDrawMethods));
     return ret;
-
 }
 
 }; // namespace android
