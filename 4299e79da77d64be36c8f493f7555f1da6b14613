@@ -46,6 +46,30 @@
       },
       "revId": "4299e79da77d64be36c8f493f7555f1da6b14613",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3f98059_9ce5ab2b",
+        "filename": "core/java/android/text/format/DateFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2022-09-13T14:50:41Z",
+      "side": 1,
+      "message": "Looks like it wasn\u0027t changed back to S. I am changing it to U now.\nhttps://r.android.com/2216581",
+      "parentUuid": "42ee595d_c0073845",
+      "range": {
+        "startLine": 172,
+        "startChar": 37,
+        "endLine": 172,
+        "endChar": 72
+      },
+      "revId": "4299e79da77d64be36c8f493f7555f1da6b14613",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
