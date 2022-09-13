@@ -110,6 +110,30 @@
       },
       "revId": "ded8faefe82348159488d855ea8d4647d114e9fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "afc85bab_1c51b075",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-09-13T05:51:25Z",
+      "side": 1,
+      "message": "Okay so this is a long-standing bug where the code doesn\u0027t escape its separator and just hopes that UI will never send \\0, which never works out.\n\nThe problem with this patch is it requires the caller to know that it can\u0027t read from this otherwise perfectly fine field when there is an IkeTunConnParams. That\u0027s really not great design, but this patch is probably the best implementation of this not-great design.\n\nImmediately, let\u0027s take this patch, but let\u0027s fix that some time. I filed b/246476505.",
+      "parentUuid": "b614870a_7ef6d026",
+      "range": {
+        "startLine": 499,
+        "startChar": 0,
+        "endLine": 499,
+        "endChar": 41
+      },
+      "revId": "ded8faefe82348159488d855ea8d4647d114e9fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
