@@ -123,6 +123,30 @@
       },
       "revId": "36da3e4e15f68b87943f209d8d9c9a5a7e9efb34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc1ee176_c7fa55fc",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-09-13T05:34:58Z",
+      "side": 1,
+      "message": "Okay so it sounds like we have a long-standing, huge bug in the existing implementation where we use \\0 as a separator but never care to escape it, instead relying on UI to never supply one which is a terrible idea (and if you\u0027re wondering why, then ponder why we have this bug now. Yeah this kind of thing *always* happens in one shape or another when you rely on what UI can do for correctness).\n\nNow the problem is that we can\u0027t really change this now. Really, we should escape the keyId and all other fields somehow, but to do this in a backward-compatible manner we need to version the file or something and make sure the reading part is always as recent as the writing part.\n\nI don\u0027t think this particular patch is good ; it writes what\u0027s in effect garbage to the string (in that it can\u0027t be interpreted correctly by the reading code) and relies on the reading code never fetching this value. If we\u0027re going to rely on that, I think aosp/2200482 is better because a null value makes it a lot clearer that it shouldn\u0027t be read from here.",
+      "parentUuid": "25d7f63f_9358fb26",
+      "range": {
+        "startLine": 734,
+        "startChar": 26,
+        "endLine": 734,
+        "endChar": 47
+      },
+      "revId": "36da3e4e15f68b87943f209d8d9c9a5a7e9efb34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
