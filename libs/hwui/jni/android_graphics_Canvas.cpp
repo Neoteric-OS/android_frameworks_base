@@ -465,12 +465,27 @@ static void drawBitmap(JNIEnv* env, jobject, jlong canvasHandle, jlong bitmapHan
     }
 }
 
+// Required for API O-P
+static void drawBitmap_OP(JNIEnv* env, jobject clazz, jlong canvasHandle, jobject jbitmap,
+                          jfloat left, jfloat top, jlong paintHandle, jint canvasDensity,
+                          jint screenDensity, jint bitmapDensity) {
+    drawBitmap(env, clazz, canvasHandle, reinterpret_cast<jlong>(&jbitmap), left, top, paintHandle,
+               canvasDensity, screenDensity, bitmapDensity);
+}
+
 static void drawBitmapMatrix(JNIEnv* env, jobject, jlong canvasHandle, jlong bitmapHandle,
                              jlong matrixHandle, jlong paintHandle) {
     const SkMatrix* matrix = reinterpret_cast<SkMatrix*>(matrixHandle);
     const Paint* paint = reinterpret_cast<Paint*>(paintHandle);
     Bitmap& bitmap = android::bitmap::toBitmap(bitmapHandle);
     get_canvas(canvasHandle)->drawBitmap(bitmap, *matrix, paint);
+}
+
+// Required for API O-P
+static void drawBitmapMatrix_OP(JNIEnv* env, jobject clazz, jlong canvasHandle, jobject jbitmap,
+                                jlong matrixHandle, jlong paintHandle) {
+    drawBitmapMatrix(env, clazz, canvasHandle, reinterpret_cast<jlong>(&jbitmap), matrixHandle,
+                     paintHandle);
 }
 
 static void drawBitmapRect(JNIEnv* env, jobject, jlong canvasHandle, jlong bitmapHandle,
@@ -493,6 +508,16 @@ static void drawBitmapRect(JNIEnv* env, jobject, jlong canvasHandle, jlong bitma
         canvas->drawBitmap(bitmap, srcLeft, srcTop, srcRight, srcBottom,
                            dstLeft, dstTop, dstRight, dstBottom, paint);
     }
+}
+
+// Required for API O-P
+static void drawBitmapRect_OP(JNIEnv* env, jobject clazz, jlong canvasHandle, jobject jbitmap,
+                              float srcLeft, float srcTop, float srcRight, float srcBottom,
+                              float dstLeft, float dstTop, float dstRight, float dstBottom,
+                              jlong paintHandle, jint screenDensity, jint bitmapDensity) {
+    drawBitmapRect(env, clazz, canvasHandle, reinterpret_cast<jlong>(&jbitmap), srcLeft, srcTop,
+                   srcRight, srcBottom, dstLeft, dstTop, dstRight, dstBottom, paintHandle,
+                   screenDensity, bitmapDensity);
 }
 
 static void drawBitmapArray(JNIEnv* env, jobject, jlong canvasHandle,
@@ -538,6 +563,14 @@ static void drawBitmapMesh(JNIEnv* env, jobject, jlong canvasHandle, jlong bitma
     get_canvas(canvasHandle)->drawBitmapMesh(bitmap, meshWidth, meshHeight,
                                              vertA.ptr() + vertIndex*2,
                                              colorA.ptr() + colorIndex, paint);
+}
+
+// Required for API O-P
+static void drawBitmapMesh_OP(JNIEnv* env, jobject clazz, jlong canvasHandle, jobject jbitmap,
+                              jint meshWidth, jint meshHeight, jfloatArray jverts, jint vertIndex,
+                              jintArray jcolors, jint colorIndex, jlong paintHandle) {
+    drawBitmapMesh(env, clazz, canvasHandle, reinterpret_cast<jlong>(&jbitmap), meshWidth,
+                   meshHeight, jverts, vertIndex, jcolors, colorIndex, paintHandle);
 }
 
 static void drawGlyphs(JNIEnv* env, jobject, jlong canvasHandle, jintArray glyphIds,
@@ -863,13 +896,24 @@ static const JNINativeMethod gDrawMethods[] = {
          (void*)CanvasJNI::drawTextOnPathStringTypeface},
         {"nPunchHole", "(JFFFFFF)V", (void*)CanvasJNI::punchHole}};
 
+static const JNINativeMethod gDrawMethodsOP[] = {
+        // Required for API O-P.
+        {"nDrawBitmapMatrix", "(JLandroid/graphics/Bitmap;JJ)V",
+         (void*)CanvasJNI::drawBitmapMatrix_OP},
+        {"nDrawBitmapMesh", "(JLandroid/graphics/Bitmap;II[FI[IIJ)V",
+         (void*)CanvasJNI::drawBitmapMesh_OP},
+        {"nDrawBitmap", "(JLandroid/graphics/Bitmap;FFJIII)V", (void*)CanvasJNI::drawBitmap_OP},
+        {"nDrawBitmap", "(JLandroid/graphics/Bitmap;FFFFFFFFJII)V",
+         (void*)CanvasJNI::drawBitmapRect_OP}};
+
 int register_android_graphics_Canvas(JNIEnv* env) {
     int ret = 0;
     ret |= RegisterMethodsOrDie(env, "android/graphics/Canvas", gMethods, NELEM(gMethods));
     ret |= RegisterMethodsOrDie(env, "android/graphics/BaseCanvas", gDrawMethods, NELEM(gDrawMethods));
     ret |= RegisterMethodsOrDie(env, "android/graphics/BaseRecordingCanvas", gDrawMethods, NELEM(gDrawMethods));
+    ret |= RegisterMethodsOrDie(env, "android/graphics/BaseRecordingCanvas", gDrawMethodsOP,
+                                NELEM(gDrawMethodsOP));
     return ret;
-
 }
 
 }; // namespace android

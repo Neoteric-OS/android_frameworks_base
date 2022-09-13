@@ -31,6 +31,8 @@
 #include <minikin/Layout.h>
 #include <renderthread/RenderProxy.h>
 
+#include "pipeline/skia/SkiaRecordingCanvas.h"
+
 namespace android {
 
 using namespace uirenderer;
