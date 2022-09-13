@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "338d5f91_5632ef74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-09-13T14:05:14Z",
+      "side": 1,
+      "message": "Don\u0027t forget to rebase if the other CL that adds the EC_CURVE tag lands first.",
+      "revId": "e8727b7f62fe10446e9647a48c1ae4a5f0cd8fdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
