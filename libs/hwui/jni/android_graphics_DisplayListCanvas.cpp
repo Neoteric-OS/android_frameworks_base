@@ -31,6 +31,8 @@
 #include <minikin/Layout.h>
 #include <renderthread/RenderProxy.h>
 
+#include "pipeline/skia/SkiaRecordingCanvas.h"
+
 namespace android {
 
 using namespace uirenderer;
@@ -97,6 +99,18 @@ static void android_view_DisplayListCanvas_finishRecording(
     Canvas* canvas = reinterpret_cast<Canvas*>(canvasPtr);
     RenderNode* renderNode = reinterpret_cast<RenderNode*>(renderNodePtr);
     canvas->finishRecording(renderNode);
+}
+
+static jlong android_view_DisplayListCanvas_finishRecording_OP(jlong canvasPtr) {
+    uirenderer::skiapipeline::SkiaRecordingCanvas* canvas =
+            reinterpret_cast<uirenderer::skiapipeline::SkiaRecordingCanvas*>(canvasPtr);
+    std::cout << "CANVAS JULIA: " << canvas << std::endl;
+    std::unique_ptr<uirenderer::skiapipeline::SkiaDisplayList> uniqueCanvasPointer =
+            canvas->finishRecording();
+    std::cout << "UNIQUE JULIA: " << uniqueCanvasPointer << std::endl;
+    uirenderer::skiapipeline::SkiaDisplayList* rawPtr = uniqueCanvasPointer.get();
+    std::cout << "RAW JULIA: " << rawPtr << std::endl;
+    return reinterpret_cast<jlong>(rawPtr);
 }
 
 static void android_view_DisplayListCanvas_drawRenderNode(CRITICAL_JNI_PARAMS_COMMA jlong canvasPtr, jlong renderNodePtr) {
@@ -179,6 +193,8 @@ static JNINativeMethod gMethods[] = {
          (void*)android_view_DisplayListCanvas_getMaxTextureSize},
         {"nEnableZ", "(JZ)V", (void*)android_view_DisplayListCanvas_enableZ},
         {"nFinishRecording", "(JJ)V", (void*)android_view_DisplayListCanvas_finishRecording},
+
+        {"nFinishRecording", "(J)J", (void*)android_view_DisplayListCanvas_finishRecording_OP},
         {"nDrawRenderNode", "(JJ)V", (void*)android_view_DisplayListCanvas_drawRenderNode},
         {"nDrawTextureLayer", "(JJ)V", (void*)android_view_DisplayListCanvas_drawTextureLayer},
         {"nDrawCircle", "(JJJJJ)V", (void*)android_view_DisplayListCanvas_drawCircleProps},

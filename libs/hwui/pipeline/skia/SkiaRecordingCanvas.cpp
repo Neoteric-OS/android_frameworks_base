@@ -77,8 +77,11 @@ void SkiaRecordingCanvas::punchHole(const SkRRect& rect) {
 
 std::unique_ptr<SkiaDisplayList> SkiaRecordingCanvas::finishRecording() {
     // close any existing chunks if necessary
+    std::cout << "About to do EnableZJULIA" << std::endl;
     enableZ(false);
+    std::cout << "About to restoreCountTo1JULIA" << std::endl;
     mRecorder.restoreToCount(1);
+    std::cout << "about to move displayelistJULIA: " << mDisplayList << std::endl;
     return std::move(mDisplayList);
 }
 
@@ -114,11 +117,14 @@ void SkiaRecordingCanvas::drawRipple(const skiapipeline::RippleDrawableParams& p
 }
 
 void SkiaRecordingCanvas::enableZ(bool enableZ) {
+    std::cout << "IT goes in this function at allJULIA" << std::endl;
     if (mCurrentBarrier && enableZ) {
+        std::cout << "It left enableZ early" << std::endl;
         // Already in a re-order section, nothing to do
         return;
     }
 
+    std::cout << "THe display list is: " << mDisplayList << std::endl;
     if (nullptr != mCurrentBarrier) {
         // finish off the existing chunk
         SkDrawable* drawable =
