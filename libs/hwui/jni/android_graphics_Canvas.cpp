@@ -465,11 +465,56 @@ static void drawBitmap(JNIEnv* env, jobject, jlong canvasHandle, jlong bitmapHan
     }
 }
 
+// Required for API O-P
+static void drawBitmap_OP(JNIEnv* env, jobject, jlong canvasHandle, jobject jbitmap, jfloat left,
+                          jfloat top, jlong paintHandle, jint canvasDensity, jint screenDensity,
+                          jint bitmapDensity) {
+    Canvas* canvas = get_canvas(canvasHandle);
+    Bitmap& bitmap = android::bitmap::toBitmap(env, jbitmap);
+    const Paint* paint = reinterpret_cast<Paint*>(paintHandle);
+
+    if (canvasDensity == bitmapDensity || canvasDensity == 0 || bitmapDensity == 0) {
+        if (screenDensity != 0 && screenDensity != bitmapDensity) {
+            Paint filteredPaint;
+            if (paint) {
+                filteredPaint = *paint;
+            }
+            filteredPaint.setFilterQuality(kLow_SkFilterQuality);
+            canvas->drawBitmap(bitmap, left, top, &filteredPaint);
+        } else {
+            canvas->drawBitmap(bitmap, left, top, paint);
+        }
+    } else {
+        canvas->save(SaveFlags::MatrixClip);
+        SkScalar scale = canvasDensity / (float)bitmapDensity;
+        canvas->translate(left, top);
+        canvas->scale(scale, scale);
+
+        Paint filteredPaint;
+        if (paint) {
+            filteredPaint = *paint;
+        }
+        filteredPaint.setFilterQuality(kLow_SkFilterQuality);
+
+        canvas->drawBitmap(bitmap, 0, 0, &filteredPaint);
+        canvas->restore();
+    }
+}
+
 static void drawBitmapMatrix(JNIEnv* env, jobject, jlong canvasHandle, jlong bitmapHandle,
                              jlong matrixHandle, jlong paintHandle) {
     const SkMatrix* matrix = reinterpret_cast<SkMatrix*>(matrixHandle);
     const Paint* paint = reinterpret_cast<Paint*>(paintHandle);
     Bitmap& bitmap = android::bitmap::toBitmap(bitmapHandle);
+    get_canvas(canvasHandle)->drawBitmap(bitmap, *matrix, paint);
+}
+
+// Required for API O-P
+static void drawBitmapMatrix_OP(JNIEnv* env, jobject, jlong canvasHandle, jobject jbitmap,
+                                jlong matrixHandle, jlong paintHandle) {
+    const SkMatrix* matrix = reinterpret_cast<SkMatrix*>(matrixHandle);
+    const Paint* paint = reinterpret_cast<Paint*>(paintHandle);
+    Bitmap& bitmap = android::bitmap::toBitmap(env, jbitmap);
     get_canvas(canvasHandle)->drawBitmap(bitmap, *matrix, paint);
 }
 
@@ -492,6 +537,29 @@ static void drawBitmapRect(JNIEnv* env, jobject, jlong canvasHandle, jlong bitma
     } else {
         canvas->drawBitmap(bitmap, srcLeft, srcTop, srcRight, srcBottom,
                            dstLeft, dstTop, dstRight, dstBottom, paint);
+    }
+}
+
+// Required for API O-P
+static void drawBitmapRect_OP(JNIEnv* env, jobject, jlong canvasHandle, jobject jbitmap,
+                              float srcLeft, float srcTop, float srcRight, float srcBottom,
+                              float dstLeft, float dstTop, float dstRight, float dstBottom,
+                              jlong paintHandle, jint screenDensity, jint bitmapDensity) {
+    Canvas* canvas = get_canvas(canvasHandle);
+    const Paint* paint = reinterpret_cast<Paint*>(paintHandle);
+
+    Bitmap& bitmap = android::bitmap::toBitmap(env, jbitmap);
+    if (screenDensity != 0 && screenDensity != bitmapDensity) {
+        Paint filteredPaint;
+        if (paint) {
+            filteredPaint = *paint;
+        }
+        filteredPaint.setFilterQuality(kLow_SkFilterQuality);
+        canvas->drawBitmap(bitmap, srcLeft, srcTop, srcRight, srcBottom, dstLeft, dstTop, dstRight,
+                           dstBottom, &filteredPaint);
+    } else {
+        canvas->drawBitmap(bitmap, srcLeft, srcTop, srcRight, srcBottom, dstLeft, dstTop, dstRight,
+                           dstBottom, paint);
     }
 }
 
@@ -538,6 +606,28 @@ static void drawBitmapMesh(JNIEnv* env, jobject, jlong canvasHandle, jlong bitma
     get_canvas(canvasHandle)->drawBitmapMesh(bitmap, meshWidth, meshHeight,
                                              vertA.ptr() + vertIndex*2,
                                              colorA.ptr() + colorIndex, paint);
+}
+
+// Required for API O-P
+static void drawBitmapMesh_OP(JNIEnv* env, jobject, jlong canvasHandle, jobject jbitmap,
+                              jint meshWidth, jint meshHeight, jfloatArray jverts, jint vertIndex,
+                              jintArray jcolors, jint colorIndex, jlong paintHandle) {
+    if (Canvas::GetApiLevel() < __ANDROID_API_P__) {
+        // Before P we forgot to respect these. Now that we do respect them, explicitly
+        // zero them for backward compatibility.
+        vertIndex = 0;
+        colorIndex = 0;
+    }
+
+    const int ptCount = (meshWidth + 1) * (meshHeight + 1);
+    AutoJavaFloatArray vertA(env, jverts, vertIndex + (ptCount << 1));
+    AutoJavaIntArray colorA(env, jcolors, colorIndex + ptCount);
+
+    const Paint* paint = reinterpret_cast<Paint*>(paintHandle);
+    Bitmap& bitmap = android::bitmap::toBitmap(env, jbitmap);
+    get_canvas(canvasHandle)
+            ->drawBitmapMesh(bitmap, meshWidth, meshHeight, vertA.ptr() + vertIndex * 2,
+                             colorA.ptr() + colorIndex, paint);
 }
 
 static void drawGlyphs(JNIEnv* env, jobject, jlong canvasHandle, jintArray glyphIds,
@@ -863,11 +953,45 @@ static const JNINativeMethod gDrawMethods[] = {
          (void*)CanvasJNI::drawTextOnPathStringTypeface},
         {"nPunchHole", "(JFFFFFF)V", (void*)CanvasJNI::punchHole}};
 
+static const JNINativeMethod gDrawMethods[] = {
+        {"nDrawColor", "(JII)V", (void*)CanvasJNI::drawColor},
+        {"nDrawPaint", "(JJ)V", (void*)CanvasJNI::drawPaint},
+        {"nDrawPoint", "(JFFJ)V", (void*)CanvasJNI::drawPoint},
+        {"nDrawPoints", "(J[FIIJ)V", (void*)CanvasJNI::drawPoints},
+        {"nDrawLine", "(JFFFFJ)V", (void*)CanvasJNI::drawLine},
+        {"nDrawLines", "(J[FIIJ)V", (void*)CanvasJNI::drawLines},
+        {"nDrawRect", "(JFFFFJ)V", (void*)CanvasJNI::drawRect},
+        {"nDrawRegion", "(JJJ)V", (void*)CanvasJNI::drawRegion},
+        {"nDrawRoundRect", "(JFFFFFFJ)V", (void*)CanvasJNI::drawRoundRect},
+        {"nDrawCircle", "(JFFFJ)V", (void*)CanvasJNI::drawCircle},
+        {"nDrawOval", "(JFFFFJ)V", (void*)CanvasJNI::drawOval},
+        {"nDrawArc", "(JFFFFFFZJ)V", (void*)CanvasJNI::drawArc},
+        {"nDrawPath", "(JJJ)V", (void*)CanvasJNI::drawPath},
+        {"nDrawVertices", "(JII[FI[FI[II[SIIJ)V", (void*)CanvasJNI::drawVertices},
+        {"nDrawNinePatch", "(JJJFFFFJII)V", (void*)CanvasJNI::drawNinePatch},
+        {"nDrawBitmapMatrix", "(JLandroid/graphics/Bitmap;JJ)V",
+         (void*)CanvasJNI::drawBitmapMatrix_OP},
+        {"nDrawBitmapMesh", "(JLandroid/graphics/Bitmap;II[FI[IIJ)V",
+         (void*)CanvasJNI::drawBitmapMesh_OP},
+        {"nDrawBitmap", "(JLandroid/graphics/Bitmap;FFJIII)V", (void*)CanvasJNI::drawBitmap_OP},
+        {"nDrawBitmap", "(JLandroid/graphics/Bitmap;FFFFFFFFJII)V",
+         (void*)CanvasJNI::drawBitmapRect_OP},
+        {"nDrawBitmap", "(J[IIIFFIIZJ)V", (void*)CanvasJNI::drawBitmapArray},
+        {"nDrawText", "(J[CIIFFIJ)V", (void*)CanvasJNI::drawTextChars},
+        {"nDrawText", "(JLjava/lang/String;IIFFIJ)V", (void*)CanvasJNI::drawTextString},
+        {"nDrawTextRun", "(J[CIIIIFFZJJ)V", (void*)CanvasJNI::drawTextRunChars},
+        {"nDrawTextRun", "(JLjava/lang/String;IIIIFFZJ)V", (void*)CanvasJNI::drawTextRunString},
+        {"nDrawTextOnPath", "(J[CIIJFFIJ)V", (void*)CanvasJNI::drawTextOnPathChars},
+        {"nDrawTextOnPath", "(JLjava/lang/String;JFFIJ)V", (void*)CanvasJNI::drawTextOnPathString},
+};
+
 int register_android_graphics_Canvas(JNIEnv* env) {
     int ret = 0;
     ret |= RegisterMethodsOrDie(env, "android/graphics/Canvas", gMethods, NELEM(gMethods));
     ret |= RegisterMethodsOrDie(env, "android/graphics/BaseCanvas", gDrawMethods, NELEM(gDrawMethods));
     ret |= RegisterMethodsOrDie(env, "android/graphics/BaseRecordingCanvas", gDrawMethods, NELEM(gDrawMethods));
+    ret |= RegisterMethodsOrDie(env, "android/view/RecordingCanvas", gDrawMethods,
+                                NELEM(gDrawMethods));
     return ret;
 
 }
