@@ -524,6 +524,17 @@ static jlong android_view_RenderNode_getUniqueId(CRITICAL_JNI_PARAMS_COMMA jlong
     return reinterpret_cast<RenderNode*>(renderNodePtr)->uniqueId();
 }
 
+static void android_view_RenderNode_setDisplayList(CRITICAL_JNI_PARAMS_COMMA jlong renderNodePtr,
+                                                   jlong displayListPtr) {
+    RenderNode* renderNode = reinterpret_cast<RenderNode*>(renderNodePtr);
+    DisplayList* newData = reinterpret_cast<DisplayList*>(displayListPtr);
+    if (newData) {
+        renderNode->setStagingDisplayList(std::move(*newData));
+    } else {
+        renderNode->setStagingDisplayList(DisplayList());
+    }
+}
+
 // ----------------------------------------------------------------------------
 // RenderProperties - Animations
 // ----------------------------------------------------------------------------
@@ -754,6 +765,7 @@ static const JNINativeMethod gMethods[] = {
         {"nEndAllAnimators", "(J)V", (void*)android_view_RenderNode_endAllAnimators},
         {"nRequestPositionUpdates", "(JLandroid/graphics/RenderNode$PositionUpdateListener;)V",
          (void*)android_view_RenderNode_requestPositionUpdates},
+        {"nSetDisplayList", "(JJ)V", (void*)android_view_RenderNode_setDisplayList},
 
         // ----------------------------------------------------------------------------
         // Critical JNI via @CriticalNative annotation in RenderNode.java

@@ -79,6 +79,7 @@ std::unique_ptr<SkiaDisplayList> SkiaRecordingCanvas::finishRecording() {
     // close any existing chunks if necessary
     enableZ(false);
     mRecorder.restoreToCount(1);
+    std::cout << "SkiaRecordingCanvas.finishRecording JULIA: " << mDisplayList.get() << std::endl;
     return std::move(mDisplayList);
 }
 
