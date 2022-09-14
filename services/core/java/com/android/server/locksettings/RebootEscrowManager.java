@@ -118,10 +118,10 @@ class RebootEscrowManager {
      * The default retry specs for loading reboot escrow data. We will attempt to retry loading
      * escrow data on temporarily errors, e.g. unavailable network.
      */
-    private static final int DEFAULT_LOAD_ESCROW_DATA_RETRY_COUNT = 3;
+    private static final int DEFAULT_LOAD_ESCROW_DATA_RETRY_COUNT = 5;
     private static final int DEFAULT_LOAD_ESCROW_DATA_RETRY_INTERVAL_SECONDS = 30;
-    // 3 minutes. It's enough for the default 3 retries with 30 seconds interval
-    private static final int DEFAULT_WAKE_LOCK_TIMEOUT_MILLIS = 180_000;
+    // 5 minutes. It's enough for the default 5 retries with 30 seconds interval
+    private static final int DEFAULT_WAKE_LOCK_TIMEOUT_MILLIS = 300_000;
 
     @IntDef(prefix = {"ERROR_"}, value = {
             ERROR_NONE,
