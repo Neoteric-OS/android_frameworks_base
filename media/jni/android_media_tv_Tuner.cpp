@@ -3896,7 +3896,11 @@ static jint android_media_tv_Tuner_close_filter(JNIEnv *env, jobject filter) {
         return 0;
     }
 
-    return (jint) filterClient->close();
+    Result r = filterClient->close();
+    filterClient->decStrong(filter);
+    filterClient = nullptr;
+    env->SetLongField(filter, gFields.filterContext, 0);
+    return (int) r;
 }
 
 static sp<TimeFilterClient> getTimeFilterClient(JNIEnv *env, jobject filter) {
@@ -3968,10 +3972,9 @@ static int android_media_tv_Tuner_time_filter_close(JNIEnv *env, jobject filter)
     }
 
     Result r = timeFilterClient->close();
-    if (r == Result::SUCCESS) {
-        timeFilterClient->decStrong(filter);
-        env->SetLongField(filter, gFields.timeFilterContext, 0);
-    }
+    timeFilterClient->decStrong(filter);
+    timeFilterClient = nullptr;
+    env->SetLongField(filter, gFields.timeFilterContext, 0);
     return (int) r;
 }
 
@@ -4021,9 +4024,9 @@ static jint android_media_tv_Tuner_close_descrambler(JNIEnv* env, jobject descra
         return (jint) Result::NOT_INITIALIZED;
     }
     Result r = descramblerClient->close();
-    if (r == Result::SUCCESS) {
-        descramblerClient->decStrong(descrambler);
-    }
+    descramblerClient->decStrong(descrambler);
+    descramblerClient = nullptr;
+    env->SetLongField(descrambler, gFields.descramblerContext, 0);
     return (jint) r;
 }
 
@@ -4139,7 +4142,11 @@ static jint android_media_tv_Tuner_close_dvr(JNIEnv* env, jobject dvr) {
         ALOGD("Failed to close dvr: dvr client not found");
         return (jint) Result::NOT_INITIALIZED;
     }
-    return (jint) dvrClient->close();
+    Result r = dvrClient->close();
+    dvrClient->decStrong(dvr);
+    dvrClient = nullptr;
+    env->SetLongField(dvr, gFields.dvrPlaybackContext, 0);
+    return (jint)r;
 }
 
 static jint android_media_tv_Tuner_lnb_set_voltage(JNIEnv* env, jobject lnb, jint voltage) {
@@ -4172,10 +4179,9 @@ static int android_media_tv_Tuner_lnb_send_diseqc_msg(JNIEnv* env, jobject lnb, 
 static int android_media_tv_Tuner_close_lnb(JNIEnv* env, jobject lnb) {
     sp<LnbClient> lnbClient = getLnbClient(env, lnb);
     Result r = lnbClient->close();
-    if (r == Result::SUCCESS) {
-        lnbClient->decStrong(lnb);
-        env->SetLongField(lnb, gFields.lnbContext, 0);
-    }
+    lnbClient->decStrong(lnb);
+    lnbClient = nullptr;
+    env->SetLongField(lnb, gFields.lnbContext, 0);
     return (jint) r;
 }
 
