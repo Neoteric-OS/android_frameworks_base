@@ -62,7 +62,7 @@ public class BrightnessSynchronizer {
     private final Context mContext;
     private final BrightnessSyncObserver mBrightnessSyncObserver;
     private final Clock mClock;
-    private final Handler mHandler;
+    private final Handler mHandler = new BrightnessSynchronizerHandler(Looper.getMainLooper());
 
     private DisplayManager mDisplayManager;
     private int mLatestIntBrightness;
@@ -71,15 +71,14 @@ public class BrightnessSynchronizer {
     private BrightnessUpdate mPendingUpdate;
 
     public BrightnessSynchronizer(Context context) {
-        this(context, Looper.getMainLooper(), SystemClock::uptimeMillis);
+        this(context, SystemClock::uptimeMillis);
     }
 
     @VisibleForTesting
-    public BrightnessSynchronizer(Context context, Looper looper, Clock clock) {
+    public BrightnessSynchronizer(Context context, Clock clock) {
         mContext = context;
         mClock = clock;
         mBrightnessSyncObserver = new BrightnessSyncObserver();
-        mHandler = new BrightnessSynchronizerHandler(looper);
     }
 
     /**
@@ -293,8 +292,6 @@ public class BrightnessSynchronizer {
         static final int TYPE_FLOAT = 0x2;
 
         private static final int STATE_NOT_STARTED = 1;
-        private static final int STATE_RUNNING = 2;
-        private static final int STATE_COMPLETED = 3;
 
         private final int mSourceType;
         private final float mBrightness;
