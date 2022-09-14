@@ -1788,6 +1788,56 @@ class ActivityStarter {
             }
         }
 
+        // Log activity starts which violate one of the following rules of the
+        // activity security model (ASM):
+        // 1. Only the top activity on a task can start activities on that task
+        // 2. Only the top activity on the top task can create new (top) tasks
+        // We don't currently block, but these checks may later become blocks
+        // TODO(b/236234252): Shift to BackgroundActivityStartController once
+        // class is ready
+        if (mSourceRecord != null) {
+            int callerUid = mSourceRecord.getUid();
+            ActivityRecord targetTopActivity =
+                    targetTask != null ? targetTask.getTopNonFinishingActivity() : null;
+            boolean passesAsmChecks = newTask
+                    ? mRootWindowContainer.hasResumedActivity(callerUid)
+                    : targetTopActivity != null && targetTopActivity.getUid() == callerUid;
+
+            if (!passesAsmChecks) {
+                Slog.i(TAG, "Launching r: " + r
+                        + " from background: " + mSourceRecord
+                        + ". New task: " + newTask);
+                boolean newOrEmptyTask = newTask || (targetTopActivity == null);
+                FrameworkStatsLog.write(FrameworkStatsLog.ACTIVITY_ACTION_BLOCKED,
+                        /* caller_uid */
+                        callerUid,
+                        /* caller_activity_class_name */
+                        mSourceRecord.info.name,
+                        /* target_task_top_activity_uid */
+                        newOrEmptyTask ? -1 : targetTopActivity.getUid(),
+                        /* target_task_top_activity_class_name */
+                        newOrEmptyTask ? null : targetTopActivity.info.name,
+                        /* target_task_is_different */
+                        newTask || !mSourceRecord.getTask().equals(targetTask),
+                        /* target_activity_uid */
+                        r.getUid(),
+                        /* target_activity_class_name */
+                        r.info.name,
+                        /* target_intent_action */
+                        r.intent.getAction(),
+                        /* target_intent_flags */
+                        r.intent.getFlags(),
+                        /* action */
+                        newTask ? FrameworkStatsLog.ACTIVITY_ACTION_BLOCKED__ACTION__ACTIVITY_START_NEW_TASK
+                                : (mSourceRecord.getTask().equals(targetTask)
+                                        ? FrameworkStatsLog.ACTIVITY_ACTION_BLOCKED__ACTION__ACTIVITY_START_SAME_TASK
+                                        :  FrameworkStatsLog.ACTIVITY_ACTION_BLOCKED__ACTION__ACTIVITY_START_DIFFERENT_TASK),
+                        /* version */
+                        1
+                );
+            }
+        }
+
         return START_SUCCESS;
     }
 
