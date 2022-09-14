@@ -132,6 +132,7 @@ public class RebootEscrowManagerTests {
         private final RebootEscrowKeyStoreManager mKeyStoreManager;
         private boolean mServerBased;
         private RebootEscrowProviderInterface mRebootEscrowProviderInUse;
+        private boolean mIsNetworkConnected;
 
         MockInjector(Context context, UserManager userManager,
                 IRebootEscrow rebootEscrow,
@@ -181,6 +182,7 @@ public class RebootEscrowManagerTests {
             mUserManager = userManager;
             mKeyStoreManager = keyStoreManager;
             mInjected = injected;
+            mIsNetworkConnected = true;
         }
 
         @Override
@@ -200,7 +202,11 @@ public class RebootEscrowManagerTests {
 
         @Override
         public boolean isNetworkConnected() {
-            return false;
+            return mIsNetworkConnected;
+        }
+
+        public void setIsNetworkConnected(boolean isNetworkConnected) {
+            mIsNetworkConnected = isNetworkConnected;
         }
 
         @Override
@@ -584,6 +590,7 @@ public class RebootEscrowManagerTests {
     @Test
     public void loadRebootEscrowDataIfAvailable_ServerBasedIoError_RetryFailure() throws Exception {
         setServerBasedRebootEscrowProvider();
+        mMockInjector.setIsNetworkConnected(false);
 
         when(mInjected.getBootCount()).thenReturn(0);
         RebootEscrowListener mockListener = mock(RebootEscrowListener.class);
