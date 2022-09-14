@@ -94,6 +94,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import java.util.zip.ZipException;
 
 /**
  * StrictMode is a developer tool which detects things you might be doing by accident and brings
@@ -1289,13 +1290,7 @@ public final class StrictMode {
     }
 
     private static void setBlockGuardVmPolicy(@VmPolicyMask int vmPolicyMask) {
-        // We only need to install BlockGuard for a small subset of VM policies
-        vmPolicyMask &= DETECT_VM_CREDENTIAL_PROTECTED_WHILE_LOCKED;
-        if (vmPolicyMask != 0) {
-            BlockGuard.setVmPolicy(VM_ANDROID_POLICY);
-        } else {
-            BlockGuard.setVmPolicy(BlockGuard.LAX_VM_POLICY);
-        }
+        BlockGuard.setVmPolicy(createVmAndroidPolicy(vmPolicyMask));
     }
 
     // Sets up CloseGuard in Dalvik/libcore
@@ -1898,33 +1893,59 @@ public final class StrictMode {
         }
     }
 
-    private static final BlockGuard.VmPolicy VM_ANDROID_POLICY = new BlockGuard.VmPolicy() {
-        @Override
-        public void onPathAccess(String path) {
-            if (path == null) return;
+    private static BlockGuard.VmPolicy createVmAndroidPolicy(
+            @VmPolicyMask final int vmPolicyMask) {
+        return new BlockGuard.VmPolicy() {
+            @Override
+            public void onPathAccess(String path) {
+                if ((vmPolicyMask & DETECT_VM_CREDENTIAL_PROTECTED_WHILE_LOCKED) == 0) return;
+                if (path == null) return;
 
-            // NOTE: keep credential-protected paths in sync with Environment.java
-            if (path.startsWith("/data/user/")
-                    || path.startsWith("/data/media/")
-                    || path.startsWith("/data/system_ce/")
-                    || path.startsWith("/data/misc_ce/")
-                    || path.startsWith("/data/vendor_ce/")
-                    || path.startsWith("/storage/emulated/")) {
-                final int second = path.indexOf('/', 1);
-                final int third = path.indexOf('/', second + 1);
-                final int fourth = path.indexOf('/', third + 1);
-                if (fourth == -1) return;
+                // NOTE: keep credential-protected paths in sync with Environment.java
+                if (path.startsWith("/data/user/")
+                        || path.startsWith("/data/media/")
+                        || path.startsWith("/data/system_ce/")
+                        || path.startsWith("/data/misc_ce/")
+                        || path.startsWith("/data/vendor_ce/")
+                        || path.startsWith("/storage/emulated/")) {
+                    final int second = path.indexOf('/', 1);
+                    final int third = path.indexOf('/', second + 1);
+                    final int fourth = path.indexOf('/', third + 1);
+                    if (fourth == -1) return;
 
-                try {
-                    final int userId = Integer.parseInt(path.substring(third + 1, fourth));
-                    onCredentialProtectedPathAccess(path, userId);
-                } catch (NumberFormatException ignored) {
+                    try {
+                        final int userId = Integer.parseInt(path.substring(third + 1, fourth));
+                        onCredentialProtectedPathAccess(path, userId);
+                    } catch (NumberFormatException ignored) {
+                    }
+                } else if (path.startsWith("/data/data/")) {
+                    onCredentialProtectedPathAccess(path, UserHandle.USER_SYSTEM);
                 }
-            } else if (path.startsWith("/data/data/")) {
-                onCredentialProtectedPathAccess(path, UserHandle.USER_SYSTEM);
             }
-        }
-    };
+
+            public void onZipEntryAccess(String name) throws ZipException {
+                if (!Build.isDebuggable()) {
+                    return;
+                }
+                if (name.startsWith("/")) {
+                    throw new new ZipException("Invalid zip entry path: " + name);
+                }
+                if (name.contains("..")) {
+                    // If the string does contain "..", break it down into its actual name
+                    // elements to ensure it actually contains ".." as a name, not just a
+                    // name like "foo..bar" or even "foo..", which should be fine.
+                    java.io.File file = new java.io.File(name);
+                    while (file != null) {
+                        if (file.getName().equals("..")) {
+                            throw new ZipException("Invalid zip entry path: " + name);
+                        }
+                        file = file.getParentFile();
+                    }
+                }
+                return;
+            }
+        };
+    }
 
     /**
      * In the common case, as set by conditionallyEnableDebugLogging, we're just dropboxing any
