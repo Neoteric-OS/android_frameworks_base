@@ -16,6 +16,24 @@
       "message": "https://android-review.googlesource.com/c/platform/frameworks/base/+/2212538 has been checked in internally. Please use that instead.",
       "revId": "03d59b3c281cf1b7a58f7cf5ba02a2ae9535c9f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83487dea_c930f1ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2022-09-15T03:39:19Z",
+      "side": 1,
+      "message": "Don\u0027t think that\u0027s better, you used JobStaus\u0027s tracking controller flags inside maybeStopTrackingJobLocked() and maybeStartTrackingJobLocked() to remove/add the comming JobStatus object into mTopStartedJobs arrayset, so I prefer using the flags too prepareForExecutionLocked() too for code simplicity, so people could understand the logic once they see it without second thought. \n\nOr with aosp/2212538, plus rewriting maybeStopTrackingJobLocked() like the following might be more **clean code**\n```java\n    @Override\n    public void maybeStopTrackingJobLocked(JobStatus taskStatus, JobStatus incomingJob, boolean forUpdate) {\n        if (taskStatus.hasPowerConstraint()) {\n            taskStatus.clearTrackingController(JobStatus.TRACKING_BATTERY);\n            mTrackedTasks.remove(taskStatus);\n            mTopStartedJobs.remove(taskStatus);\n        }\n    }\n```",
+      "parentUuid": "3aecf6c3_c0c33f01",
+      "revId": "03d59b3c281cf1b7a58f7cf5ba02a2ae9535c9f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
