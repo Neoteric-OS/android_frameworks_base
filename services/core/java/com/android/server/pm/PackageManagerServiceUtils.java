@@ -1402,4 +1402,19 @@ public class PackageManagerServiceUtils {
             }
         }
     }
+
+    /**
+     * Read debug info about SDK extensions (procuced by derive_sdk).
+     *
+     * @return null if the debug info could not be read
+     */
+    public static String  readSdkExtensionsInfo() {
+        final String path = "/data/system/sdk/debug.txt";
+        try {
+            return FileUtils.readTextFile(new File(path), 0, null);
+        } catch (IOException e) {
+            Slog.w(TAG, "Failed to read SDK extensions info from " + path, e);
+            return null;
+        }
+    }
 }

@@ -247,6 +247,8 @@ final class DumpHelper {
                 dumpState.setDump(DumpState.DUMP_SERVICE_PERMISSIONS);
             } else if ("known-packages".equals(cmd)) {
                 dumpState.setDump(DumpState.DUMP_KNOWN_PACKAGES);
+            } else if ("sdk-ext".equals(cmd)) {
+                dumpState.setDump(DumpState.DUMP_SDK_EXT);
             } else if ("t".equals(cmd) || "timeouts".equals(cmd)) {
                 dumpState.setDump(DumpState.DUMP_PER_UID_READ_TIMEOUTS);
             } else if ("snapshot".equals(cmd)) {
@@ -602,6 +604,22 @@ final class DumpHelper {
             }
 
         }
+
+        if (!checkin
+                && dumpState.isDumping(DumpState.DUMP_SDK_EXT)
+                && packageName == null) {
+            if (dumpState.onTitlePrinted()) {
+                pw.println();
+            }
+            pw.println("SDK extensions:");
+            String sdkinfo = PackageManagerServiceUtils.readSdkExtensionsInfo();
+            if (sdkinfo != null) {
+                for (String line : sdkinfo.split("\n")) {
+                    pw.print("  ");
+                    pw.println(line);
+                }
+            }
+        }
     }
 
     private void printHelp(PrintWriter pw) {
@@ -640,6 +658,7 @@ final class DumpHelper {
         pw.println("    snapshot: dump snapshot statistics");
         pw.println("    protected-broadcasts: print list of protected broadcast actions");
         pw.println("    known-packages: dump known packages");
+        pw.println("    sdk-ext: dump SDK extensions");
         pw.println("    <package.name>: info about given package");
     }
 
