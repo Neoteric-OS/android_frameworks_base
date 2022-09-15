@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "336a0708_a2e155a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2022-09-15T17:09:32Z",
+      "side": 1,
+      "message": "please have a look, check the parent revert first.\nBR\nMattias",
+      "revId": "4fccce27e7bf95fade4a57294849367f7d967750",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
