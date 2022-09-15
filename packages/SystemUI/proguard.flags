@@ -1,6 +1,9 @@
 # Preserve line number information for debugging stack traces.
 -keepattributes SourceFile,LineNumberTable
 
+# NOT FOR COMMIT, RESOURCE SHRINKER HACK!!!!
+-keep class com.android.settingslib.AccessibilityContentDescriptions
+
 -keep class com.android.systemui.recents.OverviewProxyRecentsImpl
 -keep class com.android.systemui.statusbar.car.CarStatusBar
 -keep class com.android.systemui.statusbar.phone.CentralSurfaces
