@@ -56,7 +56,8 @@ public class LightsService extends SystemService {
     static final String TAG = "LightsService";
     static final boolean DEBUG = false;
 
-    private final LightImpl[] mLightsByType = new LightImpl[LightsManager.LIGHT_ID_COUNT];
+    //private final LightImpl[] mLightsByType = new LightImpl[LightsManager.LIGHT_ID_COUNT];
+	private final Map<Integer, LightImpl> mLightsByType = new HashMap<>();
     private final SparseArray<LightImpl> mLightsById = new SparseArray<>();
 
     @Nullable
@@ -465,10 +466,13 @@ public class LightsService extends SystemService {
         }
 
         for (int i = mLightsById.size() - 1; i >= 0; i--) {
-            final int type = mLightsById.keyAt(i);
+            /*final int type = mLightsById.keyAt(i);
             if (0 <= type && type < mLightsByType.length) {
                 mLightsByType[type] = mLightsById.valueAt(i);
-            }
+            }*/
+			LightImpl light = mLightsById.valueAt(i);
+			final int type = light.mHwLight.type;
+			mLightsByType.put(type, light);
         }
     }
 
@@ -483,7 +487,7 @@ public class LightsService extends SystemService {
     }
 
     private void populateAvailableLightsFromHidl(Context context) {
-        for (int i = 0; i < mLightsByType.length; i++) {
+        for (int i = 0; i < LightsManager.LIGHT_ID_COUNT; i++) {
             HwLight hwLight = new HwLight();
             hwLight.id = (byte) i;
             hwLight.ordinal = 1;
@@ -513,11 +517,16 @@ public class LightsService extends SystemService {
     private final LightsManager mService = new LightsManager() {
         @Override
         public LogicalLight getLight(int lightType) {
-            if (mLightsByType != null && 0 <= lightType && lightType < mLightsByType.length) {
+            /*if (mLightsByType != null && 0 <= lightType && lightType < mLightsByType.length) {
                 return mLightsByType[lightType];
             } else {
                 return null;
-            }
+            }*/
+			LightImpl light = mLightsByType.get(lightType);
+			if (light != null)
+				return light;
+			else
+				return null;
         }
     };
 
