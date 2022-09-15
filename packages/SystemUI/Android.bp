@@ -273,6 +273,7 @@ systemui_optimized_java_defaults {
                 enabled: true,
                 optimize: true,
                 shrink: true,
+                shrink_resources: true,
                 proguard_flags_files: ["proguard.flags"],
             },
             conditions_default: {
