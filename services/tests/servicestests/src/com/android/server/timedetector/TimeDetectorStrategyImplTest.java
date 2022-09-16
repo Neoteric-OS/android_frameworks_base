@@ -16,6 +16,8 @@
 
 package com.android.server.timedetector;
 
+import static com.android.server.SystemClockTime.TIME_CONFIDENCE_HIGH;
+import static com.android.server.SystemClockTime.TIME_CONFIDENCE_LOW;
 import static com.android.server.timedetector.TimeDetectorStrategy.ORIGIN_EXTERNAL;
 import static com.android.server.timedetector.TimeDetectorStrategy.ORIGIN_GNSS;
 import static com.android.server.timedetector.TimeDetectorStrategy.ORIGIN_NETWORK;
@@ -36,6 +38,7 @@ import android.os.TimestampedValue;
 
 import androidx.test.runner.AndroidJUnit4;
 
+import com.android.server.SystemClockTime.TimeConfidence;
 import com.android.server.timedetector.TimeDetectorStrategy.Origin;
 import com.android.server.timezonedetector.ConfigurationChangeListener;
 
@@ -80,7 +83,8 @@ public class TimeDetectorStrategyImplTest {
     @Test
     public void testSuggestTelephonyTime_autoTimeEnabled() {
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
-                .pokeAutoTimeDetectionEnabled(true);
+                .pokeAutoTimeDetectionEnabled(true)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
 
         int slotIndex = ARBITRARY_SLOT_INDEX;
         Instant testTime = ARBITRARY_TEST_TIME;
@@ -92,19 +96,23 @@ public class TimeDetectorStrategyImplTest {
 
         long expectedSystemClockMillis =
                 mScript.calculateTimeInMillisForNow(timeSuggestion.getUnixEpochTime());
-        mScript.verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis)
+        mScript.verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
+                .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis)
                 .assertLatestTelephonySuggestion(slotIndex, timeSuggestion);
     }
 
     @Test
     public void testSuggestTelephonyTime_emptySuggestionIgnored() {
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
-                .pokeAutoTimeDetectionEnabled(true);
+                .pokeAutoTimeDetectionEnabled(true)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
+
 
         int slotIndex = ARBITRARY_SLOT_INDEX;
         TelephonyTimeSuggestion timeSuggestion =
                 mScript.generateTelephonyTimeSuggestion(slotIndex, null);
         mScript.simulateTelephonyTimeSuggestion(timeSuggestion)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW)
                 .verifySystemClockWasNotSetAndResetCallTracking()
                 .assertLatestTelephonySuggestion(slotIndex, null);
     }
@@ -112,9 +120,10 @@ public class TimeDetectorStrategyImplTest {
     @Test
     public void testSuggestTelephonyTime_systemClockThreshold() {
         final int systemClockUpdateThresholdMillis = 1000;
+        final int confidenceUpgradeThreshold = 1000;
         final int clockIncrementMillis = 100;
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
-                .pokeThresholds(systemClockUpdateThresholdMillis)
+                .pokeThresholds(systemClockUpdateThresholdMillis, confidenceUpgradeThreshold)
                 .pokeAutoTimeDetectionEnabled(true);
 
         int slotIndex = ARBITRARY_SLOT_INDEX;
@@ -241,26 +250,115 @@ public class TimeDetectorStrategyImplTest {
         }
     }
 
+    /**
+     * If an auto suggested time matches the current system clock, the confidence in the current
+     * system clock is raised even when auto time is disabled. The system clock itself must not be
+     * changed.
+     */
     @Test
-    public void testSuggestTelephonyTime_autoTimeDisabled() {
-        mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
-                .pokeAutoTimeDetectionEnabled(false);
+    public void testSuggestTelephonyTime_autoTimeDisabled_suggestionMatchesSystemClock() {
+        TimestampedValue<Instant> initialClockTime = ARBITRARY_CLOCK_INITIALIZATION_INFO;
+        final int systemClockUpdateThreshold = 2000;
+        final int confidenceUpgradeThreshold = 1000;
+        mScript.pokeFakeClocks(initialClockTime)
+                .pokeThresholds(systemClockUpdateThreshold, confidenceUpgradeThreshold)
+                .pokeAutoTimeDetectionEnabled(false)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
 
         int slotIndex = ARBITRARY_SLOT_INDEX;
-        TelephonyTimeSuggestion timeSuggestion =
-                mScript.generateTelephonyTimeSuggestion(slotIndex, ARBITRARY_TEST_TIME);
-        mScript.simulateTimePassing()
-                .simulateTelephonyTimeSuggestion(timeSuggestion)
-                .verifySystemClockWasNotSetAndResetCallTracking()
-                .assertLatestTelephonySuggestion(slotIndex, timeSuggestion);
+
+        mScript.simulateTimePassing();
+        long timeElapsedMillis =
+                mScript.peekElapsedRealtimeMillis() - initialClockTime.getReferenceTimeMillis();
+
+        // Create a suggestion time that approximately matches the current system clock.
+        Instant suggestionInstant = initialClockTime.getValue()
+                .plusMillis(timeElapsedMillis)
+                .plusMillis(confidenceUpgradeThreshold);
+        TimestampedValue<Long> matchingClockTime = new TimestampedValue<>(
+                mScript.peekElapsedRealtimeMillis(),
+                suggestionInstant.toEpochMilli());
+        TelephonyTimeSuggestion timeSuggestion = new TelephonyTimeSuggestion.Builder(slotIndex)
+                .setUnixEpochTime(matchingClockTime)
+                .build();
+        mScript.simulateTelephonyTimeSuggestion(timeSuggestion)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
+                .verifySystemClockWasNotSetAndResetCallTracking();
+    }
+
+    /**
+     * If an auto suggested time doesn't match the current system clock, the confidence in the
+     * current system clock will stay where it is. The system clock itself must not be changed.
+     */
+    @Test
+    public void testSuggestTelephonyTime_autoTimeDisabled_suggestionMismatchesSystemClock() {
+        TimestampedValue<Instant> initialClockTime = ARBITRARY_CLOCK_INITIALIZATION_INFO;
+        final int systemClockUpdateThreshold = 2000;
+        final int confidenceUpgradeThreshold = 1000;
+        mScript.pokeFakeClocks(initialClockTime)
+                .pokeThresholds(systemClockUpdateThreshold, confidenceUpgradeThreshold)
+                .pokeAutoTimeDetectionEnabled(false)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
+
+        int slotIndex = ARBITRARY_SLOT_INDEX;
+
+        mScript.simulateTimePassing();
+        long timeElapsedMillis =
+                mScript.peekElapsedRealtimeMillis() - initialClockTime.getReferenceTimeMillis();
+
+        // Create a suggestion time that doesn't match the current system clock closely enough.
+        Instant suggestionInstant = initialClockTime.getValue()
+                .plusMillis(timeElapsedMillis)
+                .plusMillis(confidenceUpgradeThreshold + 1);
+        TimestampedValue<Long> mismatchingClockTime = new TimestampedValue<>(
+                mScript.peekElapsedRealtimeMillis(),
+                suggestionInstant.toEpochMilli());
+        TelephonyTimeSuggestion timeSuggestion = new TelephonyTimeSuggestion.Builder(slotIndex)
+                .setUnixEpochTime(mismatchingClockTime)
+                .build();
+        mScript.simulateTelephonyTimeSuggestion(timeSuggestion)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW)
+                .verifySystemClockWasNotSetAndResetCallTracking();
+    }
+
+    /**
+     * If a suggested time doesn't match the current system clock, the confidence in the current
+     * system clock will not drop.
+     */
+    @Test
+    public void testSuggestTelephonyTime_autoTimeDisabled_suggestionMismatchesSystemClock2() {
+        TimestampedValue<Instant> initialClockTime = ARBITRARY_CLOCK_INITIALIZATION_INFO;
+        mScript.pokeFakeClocks(initialClockTime, TIME_CONFIDENCE_HIGH)
+                .pokeAutoTimeDetectionEnabled(false)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH);
+
+        int slotIndex = ARBITRARY_SLOT_INDEX;
+
+        mScript.simulateTimePassing();
+        long timeElapsedMillis =
+                mScript.peekElapsedRealtimeMillis() - initialClockTime.getReferenceTimeMillis();
+
+        // Create a suggestion time that doesn't closely match the current system clock.
+        Instant initialClockInstant = initialClockTime.getValue();
+        TimestampedValue<Long> mismatchingClockTime = new TimestampedValue<>(
+                mScript.peekElapsedRealtimeMillis(),
+                initialClockInstant.plusMillis(timeElapsedMillis + 1_000_000).toEpochMilli());
+        TelephonyTimeSuggestion timeSuggestion = new TelephonyTimeSuggestion.Builder(slotIndex)
+                .setUnixEpochTime(mismatchingClockTime)
+                .build();
+        mScript.simulateTelephonyTimeSuggestion(timeSuggestion)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
+                .verifySystemClockWasNotSetAndResetCallTracking();
     }
 
     @Test
     public void testSuggestTelephonyTime_invalidNitzReferenceTimesIgnored() {
         final int systemClockUpdateThreshold = 2000;
+        final int confidenceUpgradeThreshold = 1000;
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
-                .pokeThresholds(systemClockUpdateThreshold)
-                .pokeAutoTimeDetectionEnabled(true);
+                .pokeThresholds(systemClockUpdateThreshold, confidenceUpgradeThreshold)
+                .pokeAutoTimeDetectionEnabled(true)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
 
         Instant testTime = ARBITRARY_TEST_TIME;
         int slotIndex = ARBITRARY_SLOT_INDEX;
@@ -273,6 +371,7 @@ public class TimeDetectorStrategyImplTest {
         mScript.simulateTimePassing();
         long expectedSystemClockMillis1 = mScript.calculateTimeInMillisForNow(unixEpochTime1);
         mScript.simulateTelephonyTimeSuggestion(timeSuggestion1)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis1)
                 .assertLatestTelephonySuggestion(slotIndex, timeSuggestion1);
 
@@ -289,6 +388,7 @@ public class TimeDetectorStrategyImplTest {
         TelephonyTimeSuggestion timeSuggestion2 =
                 createTelephonyTimeSuggestion(slotIndex, unixEpochTime2);
         mScript.simulateTelephonyTimeSuggestion(timeSuggestion2)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasNotSetAndResetCallTracking()
                 .assertLatestTelephonySuggestion(slotIndex, timeSuggestion1);
 
@@ -301,6 +401,7 @@ public class TimeDetectorStrategyImplTest {
         TelephonyTimeSuggestion timeSuggestion3 =
                 createTelephonyTimeSuggestion(slotIndex, unixEpochTime3);
         mScript.simulateTelephonyTimeSuggestion(timeSuggestion3)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasNotSetAndResetCallTracking()
                 .assertLatestTelephonySuggestion(slotIndex, timeSuggestion1);
 
@@ -312,6 +413,7 @@ public class TimeDetectorStrategyImplTest {
         TelephonyTimeSuggestion timeSuggestion4 =
                 createTelephonyTimeSuggestion(slotIndex, unixEpochTime4);
         mScript.simulateTelephonyTimeSuggestion(timeSuggestion4)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis4)
                 .assertLatestTelephonySuggestion(slotIndex, timeSuggestion4);
     }
@@ -319,7 +421,9 @@ public class TimeDetectorStrategyImplTest {
     @Test
     public void telephonyTimeSuggestion_ignoredWhenReferencedTimeIsInThePast() {
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
-                .pokeAutoTimeDetectionEnabled(true);
+                .pokeAutoTimeDetectionEnabled(true)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
+
 
         int slotIndex = ARBITRARY_SLOT_INDEX;
         Instant suggestedTime = TIME_LOWER_BOUND.minus(Duration.ofDays(1));
@@ -329,6 +433,7 @@ public class TimeDetectorStrategyImplTest {
                         slotIndex, suggestedTime);
 
         mScript.simulateTelephonyTimeSuggestion(timeSuggestion)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW)
                 .verifySystemClockWasNotSetAndResetCallTracking()
                 .assertLatestTelephonySuggestion(slotIndex, null);
     }
@@ -337,9 +442,12 @@ public class TimeDetectorStrategyImplTest {
     public void testSuggestTelephonyTime_timeDetectionToggled() {
         final int clockIncrementMillis = 100;
         final int systemClockUpdateThreshold = 2000;
+        final int confidenceUpgradeThreshold = 1000;
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
-                .pokeThresholds(systemClockUpdateThreshold)
-                .pokeAutoTimeDetectionEnabled(false);
+                .pokeThresholds(systemClockUpdateThreshold, confidenceUpgradeThreshold)
+                .pokeAutoTimeDetectionEnabled(false)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
+
 
         int slotIndex = ARBITRARY_SLOT_INDEX;
         Instant testTime = ARBITRARY_TEST_TIME;
@@ -353,6 +461,7 @@ public class TimeDetectorStrategyImplTest {
         // Simulate the time signal being received. It should not be used because auto time
         // detection is off but it should be recorded.
         mScript.simulateTelephonyTimeSuggestion(timeSuggestion1)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW)
                 .verifySystemClockWasNotSetAndResetCallTracking()
                 .assertLatestTelephonySuggestion(slotIndex, timeSuggestion1);
 
@@ -363,11 +472,13 @@ public class TimeDetectorStrategyImplTest {
 
         // Turn on auto time detection.
         mScript.simulateAutoTimeDetectionToggle()
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis1)
                 .assertLatestTelephonySuggestion(slotIndex, timeSuggestion1);
 
         // Turn off auto time detection.
         mScript.simulateAutoTimeDetectionToggle()
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasNotSetAndResetCallTracking()
                 .assertLatestTelephonySuggestion(slotIndex, timeSuggestion1);
 
@@ -385,11 +496,13 @@ public class TimeDetectorStrategyImplTest {
         // The new time, though valid, should not be set in the system clock because auto time is
         // disabled.
         mScript.simulateTelephonyTimeSuggestion(timeSuggestion2)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasNotSetAndResetCallTracking()
                 .assertLatestTelephonySuggestion(slotIndex, timeSuggestion2);
 
         // Turn on auto time detection.
         mScript.simulateAutoTimeDetectionToggle()
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis2)
                 .assertLatestTelephonySuggestion(slotIndex, timeSuggestion2);
     }
@@ -397,7 +510,9 @@ public class TimeDetectorStrategyImplTest {
     @Test
     public void testSuggestTelephonyTime_maxSuggestionAge() {
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
-                .pokeAutoTimeDetectionEnabled(true);
+                .pokeAutoTimeDetectionEnabled(true)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
+
 
         int slotIndex = ARBITRARY_SLOT_INDEX;
         Instant testTime = ARBITRARY_TEST_TIME;
@@ -409,6 +524,7 @@ public class TimeDetectorStrategyImplTest {
         long expectedSystemClockMillis =
                 mScript.calculateTimeInMillisForNow(telephonySuggestion.getUnixEpochTime());
         mScript.simulateTelephonyTimeSuggestion(telephonySuggestion)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasSetAndResetCallTracking(
                         expectedSystemClockMillis  /* expectedNetworkBroadcast */)
                 .assertLatestTelephonySuggestion(slotIndex, telephonySuggestion);
@@ -420,7 +536,7 @@ public class TimeDetectorStrategyImplTest {
         mScript.simulateTimePassing(TimeDetectorStrategyImpl.MAX_SUGGESTION_TIME_AGE_MILLIS);
 
         // Look inside and check what the strategy considers the current best telephony suggestion.
-        // It should still be the, it's just no longer used.
+        // It should still be there, it's just no longer used.
         assertNull(mScript.peekBestTelephonySuggestion());
         mScript.assertLatestTelephonySuggestion(slotIndex, telephonySuggestion);
     }
@@ -428,7 +544,8 @@ public class TimeDetectorStrategyImplTest {
     @Test
     public void testSuggestManualTime_autoTimeDisabled() {
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
-                .pokeAutoTimeDetectionEnabled(false);
+                .pokeAutoTimeDetectionEnabled(false)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
 
         ManualTimeSuggestion timeSuggestion =
                 mScript.generateManualTimeSuggestion(ARBITRARY_TEST_TIME);
@@ -438,6 +555,7 @@ public class TimeDetectorStrategyImplTest {
         long expectedSystemClockMillis =
                 mScript.calculateTimeInMillisForNow(timeSuggestion.getUnixEpochTime());
         mScript.simulateManualTimeSuggestion(timeSuggestion, true /* expectedResult */)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis);
     }
 
@@ -445,7 +563,8 @@ public class TimeDetectorStrategyImplTest {
     public void testSuggestManualTime_retainsAutoSignal() {
         // Configure the start state.
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
-                .pokeAutoTimeDetectionEnabled(true);
+                .pokeAutoTimeDetectionEnabled(true)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
 
         int slotIndex = ARBITRARY_SLOT_INDEX;
 
@@ -460,6 +579,7 @@ public class TimeDetectorStrategyImplTest {
         long expectedAutoClockMillis =
                 mScript.calculateTimeInMillisForNow(telephonyTimeSuggestion.getUnixEpochTime());
         mScript.simulateTelephonyTimeSuggestion(telephonyTimeSuggestion)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasSetAndResetCallTracking(expectedAutoClockMillis)
                 .assertLatestTelephonySuggestion(slotIndex, telephonyTimeSuggestion);
 
@@ -468,6 +588,7 @@ public class TimeDetectorStrategyImplTest {
 
         // Switch to manual.
         mScript.simulateAutoTimeDetectionToggle()
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasNotSetAndResetCallTracking()
                 .assertLatestTelephonySuggestion(slotIndex, telephonyTimeSuggestion);
 
@@ -483,6 +604,7 @@ public class TimeDetectorStrategyImplTest {
         long expectedManualClockMillis =
                 mScript.calculateTimeInMillisForNow(manualTimeSuggestion.getUnixEpochTime());
         mScript.simulateManualTimeSuggestion(manualTimeSuggestion, true /* expectedResult */)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasSetAndResetCallTracking(expectedManualClockMillis)
                 .assertLatestTelephonySuggestion(slotIndex, telephonyTimeSuggestion);
 
@@ -494,11 +616,13 @@ public class TimeDetectorStrategyImplTest {
 
         expectedAutoClockMillis =
                 mScript.calculateTimeInMillisForNow(telephonyTimeSuggestion.getUnixEpochTime());
-        mScript.verifySystemClockWasSetAndResetCallTracking(expectedAutoClockMillis)
+        mScript.verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
+                .verifySystemClockWasSetAndResetCallTracking(expectedAutoClockMillis)
                 .assertLatestTelephonySuggestion(slotIndex, telephonyTimeSuggestion);
 
         // Switch back to manual - nothing should happen to the clock.
         mScript.simulateAutoTimeDetectionToggle()
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasNotSetAndResetCallTracking()
                 .assertLatestTelephonySuggestion(slotIndex, telephonyTimeSuggestion);
     }
@@ -506,26 +630,31 @@ public class TimeDetectorStrategyImplTest {
     @Test
     public void manualTimeSuggestion_isIgnored_whenAutoTimeEnabled() {
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
-                .pokeAutoTimeDetectionEnabled(true);
+                .pokeAutoTimeDetectionEnabled(true)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
 
         ManualTimeSuggestion timeSuggestion =
                 mScript.generateManualTimeSuggestion(ARBITRARY_TEST_TIME);
 
         mScript.simulateTimePassing()
                 .simulateManualTimeSuggestion(timeSuggestion, false /* expectedResult */)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW)
                 .verifySystemClockWasNotSetAndResetCallTracking();
     }
 
     @Test
     public void manualTimeSuggestion_ignoresTimeLowerBound() {
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
-                .pokeAutoTimeDetectionEnabled(false);
+                .pokeAutoTimeDetectionEnabled(false)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
+
         Instant suggestedTime = TIME_LOWER_BOUND.minus(Duration.ofDays(1));
 
         ManualTimeSuggestion timeSuggestion =
                 mScript.generateManualTimeSuggestion(suggestedTime);
 
         mScript.simulateManualTimeSuggestion(timeSuggestion, true /* expectedResult */)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasSetAndResetCallTracking(suggestedTime.toEpochMilli());
     }
 
@@ -533,7 +662,9 @@ public class TimeDetectorStrategyImplTest {
     public void testSuggestNetworkTime_autoTimeEnabled() {
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
                 .pokeAutoOriginPriorities(ORIGIN_NETWORK)
-                .pokeAutoTimeDetectionEnabled(true);
+                .pokeAutoTimeDetectionEnabled(true)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
+
 
         NetworkTimeSuggestion timeSuggestion =
                 mScript.generateNetworkTimeSuggestion(ARBITRARY_TEST_TIME);
@@ -543,6 +674,7 @@ public class TimeDetectorStrategyImplTest {
         long expectedSystemClockMillis =
                 mScript.calculateTimeInMillisForNow(timeSuggestion.getUnixEpochTime());
         mScript.simulateNetworkTimeSuggestion(timeSuggestion)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis);
     }
 
@@ -551,7 +683,6 @@ public class TimeDetectorStrategyImplTest {
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
                 .pokeAutoOriginPriorities(ORIGIN_NETWORK)
                 .pokeAutoTimeDetectionEnabled(false);
-
         NetworkTimeSuggestion timeSuggestion =
                 mScript.generateNetworkTimeSuggestion(ARBITRARY_TEST_TIME);
 
@@ -564,13 +695,15 @@ public class TimeDetectorStrategyImplTest {
     public void networkTimeSuggestion_ignoredWhenReferencedTimeIsInThePast() {
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
                 .pokeAutoOriginPriorities(ORIGIN_NETWORK)
-                .pokeAutoTimeDetectionEnabled(true);
+                .pokeAutoTimeDetectionEnabled(true)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
 
         Instant suggestedTime = TIME_LOWER_BOUND.minus(Duration.ofDays(1));
         NetworkTimeSuggestion timeSuggestion = mScript
                 .generateNetworkTimeSuggestion(suggestedTime);
 
         mScript.simulateNetworkTimeSuggestion(timeSuggestion)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW)
                 .verifySystemClockWasNotSetAndResetCallTracking()
                 .assertLatestNetworkSuggestion(null);
     }
@@ -579,7 +712,8 @@ public class TimeDetectorStrategyImplTest {
     public void testSuggestGnssTime_autoTimeEnabled() {
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
                 .pokeAutoOriginPriorities(ORIGIN_GNSS)
-                .pokeAutoTimeDetectionEnabled(true);
+                .pokeAutoTimeDetectionEnabled(true)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
 
         GnssTimeSuggestion timeSuggestion =
                 mScript.generateGnssTimeSuggestion(ARBITRARY_TEST_TIME);
@@ -589,6 +723,7 @@ public class TimeDetectorStrategyImplTest {
         long expectedSystemClockMillis =
                 mScript.calculateTimeInMillisForNow(timeSuggestion.getUnixEpochTime());
         mScript.simulateGnssTimeSuggestion(timeSuggestion)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis);
     }
 
@@ -610,7 +745,9 @@ public class TimeDetectorStrategyImplTest {
     public void testSuggestExternalTime_autoTimeEnabled() {
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
                 .pokeAutoOriginPriorities(ORIGIN_EXTERNAL)
-                .pokeAutoTimeDetectionEnabled(true);
+                .pokeAutoTimeDetectionEnabled(true)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
+
 
         ExternalTimeSuggestion timeSuggestion =
                 mScript.generateExternalTimeSuggestion(ARBITRARY_TEST_TIME);
@@ -620,6 +757,7 @@ public class TimeDetectorStrategyImplTest {
         long expectedSystemClockMillis =
                 mScript.calculateTimeInMillisForNow(timeSuggestion.getUnixEpochTime());
         mScript.simulateExternalTimeSuggestion(timeSuggestion)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_HIGH)
                 .verifySystemClockWasSetAndResetCallTracking(expectedSystemClockMillis);
     }
 
@@ -641,13 +779,16 @@ public class TimeDetectorStrategyImplTest {
     public void externalTimeSuggestion_ignoredWhenReferencedTimeIsInThePast() {
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
                 .pokeAutoOriginPriorities(ORIGIN_EXTERNAL)
-                .pokeAutoTimeDetectionEnabled(true);
+                .pokeAutoTimeDetectionEnabled(true)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW);
+
 
         Instant suggestedTime = TIME_LOWER_BOUND.minus(Duration.ofDays(1));
         ExternalTimeSuggestion timeSuggestion = mScript
                 .generateExternalTimeSuggestion(suggestedTime);
 
         mScript.simulateExternalTimeSuggestion(timeSuggestion)
+                .verifySystemClockConfidence(TIME_CONFIDENCE_LOW)
                 .verifySystemClockWasNotSetAndResetCallTracking()
                 .assertLatestExternalSuggestion(null);
     }
@@ -1183,7 +1324,9 @@ public class TimeDetectorStrategyImplTest {
         private boolean mWakeLockAcquired;
         private long mElapsedRealtimeMillis;
         private long mSystemClockMillis;
+        private int mSystemClockConfidence = TIME_CONFIDENCE_LOW;
         private int mSystemClockUpdateThresholdMillis = 2000;
+        private int mSystemClockConfidenceUpgradeThresholdMillis = 1000;
         private int[] mAutoOriginPriorities = PROVIDERS_PRIORITY;
         private ConfigurationChangeListener mConfigChangeListener;
         private boolean mDeviceHas2038Issues = false;
@@ -1199,6 +1342,11 @@ public class TimeDetectorStrategyImplTest {
         @Override
         public int systemClockUpdateThresholdMillis() {
             return mSystemClockUpdateThresholdMillis;
+        }
+
+        @Override
+        public int systemClockConfidenceUpgradeThresholdMillis() {
+            return mSystemClockConfidenceUpgradeThresholdMillis;
         }
 
         @Override
@@ -1240,10 +1388,23 @@ public class TimeDetectorStrategyImplTest {
         }
 
         @Override
-        public void setSystemClock(long newTimeMillis) {
+        public @TimeConfidence int systemClockConfidence() {
+            return mSystemClockConfidence;
+        }
+
+        @Override
+        public void setSystemClock(
+                long newTimeMillis, @TimeConfidence int confidence, String logMsg) {
             assertWakeLockAcquired();
             mSystemClockWasSet = true;
             mSystemClockMillis = newTimeMillis;
+            mSystemClockConfidence = confidence;
+        }
+
+        @Override
+        public void setSystemClockConfidence(@TimeConfidence int confidence, String logMsg) {
+            assertWakeLockAcquired();
+            mSystemClockConfidence = confidence;
         }
 
         @Override
@@ -1267,12 +1428,17 @@ public class TimeDetectorStrategyImplTest {
             mSystemClockUpdateThresholdMillis = thresholdMillis;
         }
 
+        void pokeSystemClockConfidenceUpgradeThreshold(int thresholdMillis) {
+            mSystemClockConfidenceUpgradeThresholdMillis = thresholdMillis;
+        }
+
         void pokeElapsedRealtimeMillis(long elapsedRealtimeMillis) {
             mElapsedRealtimeMillis = elapsedRealtimeMillis;
         }
 
-        void pokeSystemClockMillis(long systemClockMillis) {
+        void pokeSystemClockMillis(long systemClockMillis, @TimeConfidence int timeConfidence) {
             mSystemClockMillis = systemClockMillis;
+            mSystemClockConfidence = timeConfidence;
         }
 
         void pokeAutoTimeDetectionEnabled(boolean enabled) {
@@ -1313,6 +1479,10 @@ public class TimeDetectorStrategyImplTest {
             assertEquals(expectedSystemClockMillis, mSystemClockMillis);
         }
 
+        public void verifySystemClockConfidence(@TimeConfidence int expectedConfidence) {
+            assertEquals(expectedConfidence, mSystemClockConfidence);
+        }
+
         void resetCallTracking() {
             mSystemClockWasSet = false;
         }
@@ -1341,14 +1511,23 @@ public class TimeDetectorStrategyImplTest {
             return this;
         }
 
-        Script pokeFakeClocks(TimestampedValue<Instant> timeInfo) {
+        Script pokeFakeClocks(TimestampedValue<Instant> timeInfo,
+                @TimeConfidence int systemTimeConfidence) {
             mFakeEnvironment.pokeElapsedRealtimeMillis(timeInfo.getReferenceTimeMillis());
-            mFakeEnvironment.pokeSystemClockMillis(timeInfo.getValue().toEpochMilli());
+            mFakeEnvironment.pokeSystemClockMillis(
+                    timeInfo.getValue().toEpochMilli(), systemTimeConfidence);
             return this;
         }
 
-        Script pokeThresholds(int systemClockUpdateThreshold) {
+        Script pokeFakeClocks(TimestampedValue<Instant> timeInfo) {
+            return pokeFakeClocks(timeInfo, TIME_CONFIDENCE_LOW);
+        }
+
+        Script pokeThresholds(int systemClockUpdateThreshold,
+                int systemClockConfidenceUpgradeThreshold) {
             mFakeEnvironment.pokeSystemClockUpdateThreshold(systemClockUpdateThreshold);
+            mFakeEnvironment.pokeSystemClockConfidenceUpgradeThreshold(
+                    systemClockConfidenceUpgradeThreshold);
             return this;
         }
 
@@ -1428,6 +1607,11 @@ public class TimeDetectorStrategyImplTest {
         Script verifySystemClockWasSetAndResetCallTracking(long expectedSystemClockMillis) {
             mFakeEnvironment.verifySystemClockWasSet(expectedSystemClockMillis);
             mFakeEnvironment.resetCallTracking();
+            return this;
+        }
+
+        Script verifySystemClockConfidence(@TimeConfidence int expectedConfidence) {
+            mFakeEnvironment.verifySystemClockConfidence(expectedConfidence);
             return this;
         }
 

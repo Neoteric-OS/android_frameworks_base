@@ -49,6 +49,15 @@ final class ServiceConfigAccessor {
     private static final int SYSTEM_CLOCK_UPDATE_THRESHOLD_MILLIS_DEFAULT = 2 * 1000;
 
     /**
+     * An absolute threshold at/below which the system clock confidence can be upgraded. i.e. if the
+     * detector receives a high-confidence time and the current system clock is +/- this value from
+     * that time and the confidence in the time is low, then the device's confidence in the current
+     * system clock time can be upgraded. This needs to be an amount users would consider
+     * "close enough".
+     */
+    private static final int SYSTEM_CLOCK_CONFIRMATION_THRESHOLD_MILLIS = 1000;
+
+    /**
      * By default telephony and network only suggestions are accepted and telephony takes
      * precedence over network.
      */
@@ -135,6 +144,10 @@ final class ServiceConfigAccessor {
 
     int systemClockUpdateThresholdMillis() {
         return mSystemClockUpdateThresholdMillis;
+    }
+
+    int systemClockConfidenceUpgradeThresholdMillis() {
+        return SYSTEM_CLOCK_CONFIRMATION_THRESHOLD_MILLIS;
     }
 
     @NonNull
