@@ -33,6 +33,24 @@
       "message": "Hi Mady, would you please take a look at those warnings above and let me know if I should take any actions.",
       "revId": "62715ead24c178cacfe85e17c02a9308c680be81",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af182bb2_8b43f7b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-09-16T06:43:55Z",
+      "side": 1,
+      "message": "\u003e Hi Mady, would you please take a look at those warnings above and let me know if I should take any actions.\n\nI\u0027ve reinspected this class and tried to solve this problem completely. PTAL.",
+      "parentUuid": "4d7604df_b6ceda4e",
+      "revId": "62715ead24c178cacfe85e17c02a9308c680be81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
