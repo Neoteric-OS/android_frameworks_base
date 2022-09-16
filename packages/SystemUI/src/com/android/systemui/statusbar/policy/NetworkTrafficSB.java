@@ -88,7 +88,10 @@ public class NetworkTrafficSB extends NetworkTraffic implements StatusIconDispla
     }
 
     @Override
-    public void setDecorColor(int color) {}
+    public void setDecorColor(int color) {
+        mTintColor = color;
+        updateTrafficDrawable();
+    }
 
     private void maybeRestoreVisibility() {
         if (mSystemIconVisible && getVisibility() == View.GONE && isIconVisible() && restoreViewQuickly()) {
