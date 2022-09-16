@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f9fe5dd_5bd525ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2022-09-16T16:18:24Z",
+      "side": 1,
+      "message": "PTAL, this is just a drive-by noticed when looking at additional warnings from OpenJDK17 updates. This code doesn\u0027t seem widely used, but good to avoid duplicate allocations where possible.",
+      "revId": "ebe28b025439060638de5acf4032b8a64d7b69ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
