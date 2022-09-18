@@ -17,12 +17,14 @@
 package com.android.systemui.qs.footer.ui.viewmodel
 
 import android.content.Context
+import android.os.VibrationEffect
 import android.util.Log
 import android.view.ContextThemeWrapper
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.android.settingslib.Utils
+import com.android.systemui.Dependency
 import com.android.systemui.R
 import com.android.systemui.animation.Expandable
 import com.android.systemui.common.shared.model.ContentDescription
@@ -34,6 +36,7 @@ import com.android.systemui.plugins.FalsingManager
 import com.android.systemui.qs.dagger.QSFlagsModule.PM_LITE_ENABLED
 import com.android.systemui.qs.footer.data.model.UserSwitcherStatusModel
 import com.android.systemui.qs.footer.domain.interactor.FooterActionsInteractor
+import com.android.systemui.statusbar.VibratorHelper
 import com.android.systemui.util.icuMessageFormat
 import javax.inject.Inject
 import javax.inject.Named
@@ -58,6 +61,8 @@ class FooterActionsViewModel(
 ) {
     /** The context themed with the Quick Settings colors. */
     private val context = ContextThemeWrapper(appContext, R.style.Theme_SystemUI_QuickSettings)
+
+    private val vibratorHelper = Dependency.get(VibratorHelper::class.java)
 
     /**
      * Whether the UI rendering this ViewModel should be visible. Note that even when this is false,
@@ -218,6 +223,7 @@ class FooterActionsViewModel(
             return
         }
 
+        vibratorHelper.vibrate(EFFECT_CLICK)
         footerActionsInteractor.showDeviceMonitoringDialog(quickSettingsContext, expandable)
     }
 
@@ -226,6 +232,7 @@ class FooterActionsViewModel(
             return
         }
 
+        vibratorHelper.vibrate(EFFECT_CLICK)
         footerActionsInteractor.showForegroundServicesDialog(expandable)
     }
 
@@ -235,6 +242,7 @@ class FooterActionsViewModel(
         }
 
         footerActionsInteractor.showUserSwitcher(expandable)
+        vibratorHelper.vibrate(EFFECT_CLICK)
     }
 
     private fun onSettingsButtonClicked(expandable: Expandable) {
@@ -242,6 +250,7 @@ class FooterActionsViewModel(
             return
         }
 
+        vibratorHelper.vibrate(EFFECT_CLICK)
         footerActionsInteractor.showSettings(expandable)
     }
 
@@ -250,6 +259,7 @@ class FooterActionsViewModel(
             return
         }
 
+        vibratorHelper.vibrate(EFFECT_CLICK)
         footerActionsInteractor.showPowerMenuDialog(globalActionsDialogLite, expandable)
     }
 
@@ -319,5 +329,7 @@ class FooterActionsViewModel(
 
     companion object {
         private const val TAG = "FooterActionsViewModel"
+
+        private val EFFECT_CLICK = VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK)
     }
 }
