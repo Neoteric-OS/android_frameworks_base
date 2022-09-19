@@ -266,6 +266,8 @@ public class HdmiControlService extends SystemService {
     // Make sure HdmiCecConfig is instantiated and the XMLs are read.
     private HdmiCecConfig mHdmiCecConfig;
 
+    private int mPhysicalAddress = Constants.INVALID_PHYSICAL_ADDRESS;
+
     /**
      * Interface to report send result.
      */
@@ -2080,9 +2082,15 @@ public class HdmiControlService extends SystemService {
         @Override
         public int getPhysicalAddress() {
             initBinderCall();
-            synchronized (mLock) {
-                return mHdmiCecNetwork.getPhysicalAddress();
-            }
+            runOnServiceThread(new Runnable() {
+                @Override
+                public void run() {
+                    synchronized (mLock) {
+                        mPhysicalAddress = mHdmiCecNetwork.getPhysicalAddress();
+                    }
+                }
+            });
+            return mPhysicalAddress;
         }
 
         @Override
