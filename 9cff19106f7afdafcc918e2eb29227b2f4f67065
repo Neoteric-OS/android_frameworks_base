@@ -33,6 +33,24 @@
       "message": "To avoid merge-conflicts, it\u0027s easier to merge this change to android-internal (TM_QPR1) first. Lukasz, would your team be able to wait until the QPR1 push for this fix?",
       "revId": "9cff19106f7afdafcc918e2eb29227b2f4f67065",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67dc6f4d_529a6635",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1090594
+      },
+      "writtenOn": "2022-09-19T14:37:37Z",
+      "side": 1,
+      "message": "Sure, I don\u0027t mind as long as it\u0027ll reach AOSP at some point.",
+      "parentUuid": "a8cdd700_d72b5ce0",
+      "revId": "9cff19106f7afdafcc918e2eb29227b2f4f67065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
