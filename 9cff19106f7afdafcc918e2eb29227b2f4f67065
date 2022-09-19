@@ -51,6 +51,24 @@
       "parentUuid": "a8cdd700_d72b5ce0",
       "revId": "9cff19106f7afdafcc918e2eb29227b2f4f67065",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28c2e81f_46b9aaf7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1090594
+      },
+      "writtenOn": "2022-09-19T14:39:32Z",
+      "side": 1,
+      "message": "Would it be possible to also have someone look at https://android-review.googlesource.com/c/platform/frameworks/base/+/2221221 and possibly get it included in TM_QPR1? This fixes another issue I\u0027ve found while trying resolution switcher on my device.",
+      "parentUuid": "67dc6f4d_529a6635",
+      "revId": "9cff19106f7afdafcc918e2eb29227b2f4f67065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
