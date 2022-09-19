@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a4765fc_e5c127af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1387516
+      },
+      "writtenOn": "2022-09-19T21:10:52Z",
+      "side": 1,
+      "message": "Does the test also pass if we move that isSecure check to https://source.corp.google.com/android/frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/CentralSurfacesImpl.java;l\u003d3341?q\u003dshowBouncerOrLockScreenIfKeyguard?\n\nSeems like the issue is that we are showing bouncer/lockscreen even when it\u0027s disabled, so that seems like an issue with that method, not this specific call.",
+      "revId": "4d64602bff58758919d6542df7f8159375114a69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
