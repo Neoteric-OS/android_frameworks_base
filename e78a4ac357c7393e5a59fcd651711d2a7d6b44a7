@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e22bd8f5_44270c28",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3900,
+      "author": {
+        "id": 1889050
+      },
+      "writtenOn": "2022-09-20T02:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a0313fb_3bcff0d0",
+      "range": {
+        "startLine": 3900,
+        "startChar": 4,
+        "endLine": 3900,
+        "endChar": 16
+      },
+      "revId": "e78a4ac357c7393e5a59fcd651711d2a7d6b44a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c91b9c7_b537d78d",
@@ -78,6 +102,30 @@
       "writtenOn": "2022-09-20T00:16:18Z",
       "side": 1,
       "message": "Are they necessary ?",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "e78a4ac357c7393e5a59fcd651711d2a7d6b44a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdb6a0bb_1c0ad624",
+        "filename": "media/jni/tuner/FilterClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1889050
+      },
+      "writtenOn": "2022-09-20T02:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c91b9c7_b537d78d",
       "range": {
         "startLine": 56,
         "startChar": 0,
