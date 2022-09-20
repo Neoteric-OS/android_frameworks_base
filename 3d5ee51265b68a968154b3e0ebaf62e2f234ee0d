@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "470658c2_fe0eac38",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-20T18:36:08Z",
+      "side": 1,
+      "message": "Overall, I\u0027d reframe as follows:\n\n```\nThis change allows retrieval of the app exclusion list for callers with the SYSTEM_SETTINGS and INTERACT_ACROSS_USERS_FULL permissions, as well as allowing UID updates internally when packages are added/removed.\n\nIn both cases, the retrieval of this information does not change the configuration of the system in any incorrect way, and not allowing these two use cases results in system components (Package change notifications and settings app) calls to fail.\n\nAdditionally, in restricted users, neither provisioning a VPN profile nor adding app bypass rules are supported, so this codepath is effectively a no-op at the moment. In the long term, if VpnManager VPNs are supported from a DevicePolicyManager standpoint, this correctly updates the restriction list when apps are added/removed.\n```",
+      "revId": "3d5ee51265b68a968154b3e0ebaf62e2f234ee0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acaf94a8_a5a91041",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-20T18:36:08Z",
+      "side": 1,
+      "message": "Nit ambiguous - what\u0027s verified in the call path?",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 9
+      },
+      "revId": "3d5ee51265b68a968154b3e0ebaf62e2f234ee0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2563958a_e562796a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-20T18:36:08Z",
+      "side": 1,
+      "message": "Duplicate \"in\"",
+      "range": {
+        "startLine": 13,
+        "startChar": 45,
+        "endLine": 13,
+        "endChar": 50
+      },
+      "revId": "3d5ee51265b68a968154b3e0ebaf62e2f234ee0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d27b88a_ebf520e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-20T18:36:08Z",
+      "side": 1,
+      "message": "Ditto ambiguous",
+      "range": {
+        "startLine": 13,
+        "startChar": 31,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "3d5ee51265b68a968154b3e0ebaf62e2f234ee0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db66378a_44ac136b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-20T18:36:08Z",
+      "side": 1,
+      "message": "have any",
+      "range": {
+        "startLine": 29,
+        "startChar": 54,
+        "endLine": 29,
+        "endChar": 62
+      },
+      "revId": "3d5ee51265b68a968154b3e0ebaf62e2f234ee0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2ed5d1b_b08d4e9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-09-20T18:36:08Z",
+      "side": 1,
+      "message": "Will take one more pass this afternoon to make sure",
+      "revId": "3d5ee51265b68a968154b3e0ebaf62e2f234ee0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
