@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "777d14bb_048618ce",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-09-20T07:28:56Z",
+      "side": 1,
+      "message": "Please add a comment:\n\n// Last return value of getPhysicalAddress(). Only updated on calls of getPhysicalAddress(). Does not represent the current physical address at all times. Not to be used as a cache.",
+      "revId": "520c40aeb175034c0a31b1570d4d08ae2732e8a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f84fcee8_2fa966f3",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 1
@@ -38,6 +55,30 @@
       "side": 1,
       "message": "No. It will report compile error: local variables referenced from an inner class must be final or effectively final. Thanks.",
       "parentUuid": "f84fcee8_2fa966f3",
+      "range": {
+        "startLine": 2093,
+        "startChar": 19,
+        "endLine": 2093,
+        "endChar": 35
+      },
+      "revId": "520c40aeb175034c0a31b1570d4d08ae2732e8a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a425b56_5a17ca3b",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-09-20T07:28:56Z",
+      "side": 1,
+      "message": "I see. If there is any way to keep it as a local variable in the method only, that would be preferred. If not, please add the comment to the class field (see my other comment).",
+      "parentUuid": "7a3bfc53_a98650f5",
       "range": {
         "startLine": 2093,
         "startChar": 19,
