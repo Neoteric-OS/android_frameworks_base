@@ -76,7 +76,8 @@ public abstract class MediaRouteDialogPresenter {
                 : android.R.style.Theme_DeviceDefault_Dialog;
 
         MediaRouter.RouteInfo route = router.getSelectedRoute();
-        if (route.isDefault() || !route.matchesTypes(routeTypes)) {
+        if (route.isDefault() || !route.matchesTypes(routeTypes)
+            || route.getStatusCode() == MediaRouter.RouteInfo.STATUS_NOT_AVAILABLE) {
             final MediaRouteChooserDialog d = new MediaRouteChooserDialog(context, theme);
             d.setRouteTypes(routeTypes);
             d.setExtendedSettingsClickListener(extendedSettingsClickListener);
