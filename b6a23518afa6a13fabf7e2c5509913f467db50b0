@@ -16,6 +16,24 @@
       "message": "I\u0027m not a Googler, could you please provide more info?",
       "revId": "b6a23518afa6a13fabf7e2c5509913f467db50b0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a1694da_d8f2b81b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2022-09-20T01:23:12Z",
+      "side": 1,
+      "message": "it\u0027s a merge conflict",
+      "parentUuid": "6a37b109_84389626",
+      "revId": "b6a23518afa6a13fabf7e2c5509913f467db50b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
