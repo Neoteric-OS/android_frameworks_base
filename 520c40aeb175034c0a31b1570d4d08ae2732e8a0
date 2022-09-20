@@ -22,6 +22,30 @@
       },
       "revId": "520c40aeb175034c0a31b1570d4d08ae2732e8a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a3bfc53_a98650f5",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1039357
+      },
+      "writtenOn": "2022-09-20T06:37:45Z",
+      "side": 1,
+      "message": "No. It will report compile error: local variables referenced from an inner class must be final or effectively final. Thanks.",
+      "parentUuid": "f84fcee8_2fa966f3",
+      "range": {
+        "startLine": 2093,
+        "startChar": 19,
+        "endLine": 2093,
+        "endChar": 35
+      },
+      "revId": "520c40aeb175034c0a31b1570d4d08ae2732e8a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
