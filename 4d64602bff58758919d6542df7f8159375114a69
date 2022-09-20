@@ -16,6 +16,24 @@
       "message": "Does the test also pass if we move that isSecure check to https://source.corp.google.com/android/frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/CentralSurfacesImpl.java;l\u003d3341?q\u003dshowBouncerOrLockScreenIfKeyguard?\n\nSeems like the issue is that we are showing bouncer/lockscreen even when it\u0027s disabled, so that seems like an issue with that method, not this specific call.",
       "revId": "4d64602bff58758919d6542df7f8159375114a69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e58dcb9_a858eab0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2022-09-20T05:34:25Z",
+      "side": 1,
+      "message": "AOSP link:\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/CentralSurfacesImpl.java;l\u003d3376;drc\u003dddcd7479aab585acbf0618c2f4448776b693225b",
+      "parentUuid": "9a4765fc_e5c127af",
+      "revId": "4d64602bff58758919d6542df7f8159375114a69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
