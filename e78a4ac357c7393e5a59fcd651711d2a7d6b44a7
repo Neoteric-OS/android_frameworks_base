@@ -16,6 +16,52 @@
       "message": "Henry, Milton and Pete,\n\nCan you help to review this CL?",
       "revId": "e78a4ac357c7393e5a59fcd651711d2a7d6b44a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "119122ad_fce95d5c",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3900,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2022-09-20T00:16:18Z",
+      "side": 1,
+      "message": "then\n+ filterClient \u003d\u003d nullptr ?",
+      "range": {
+        "startLine": 3900,
+        "startChar": 4,
+        "endLine": 3900,
+        "endChar": 16
+      },
+      "revId": "e78a4ac357c7393e5a59fcd651711d2a7d6b44a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c91b9c7_b537d78d",
+        "filename": "media/jni/tuner/FilterClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2022-09-20T00:16:18Z",
+      "side": 1,
+      "message": "Are they necessary ?",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "e78a4ac357c7393e5a59fcd651711d2a7d6b44a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
