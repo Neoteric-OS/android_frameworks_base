@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "032f2eb7_a27c8faf",
+        "filename": "api/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-09-21T09:45:41Z",
+      "side": 1,
+      "message": "Not sure if there\u0027s a soong way to achieve this, Colin?",
+      "revId": "de68fb13a622d75ebb40a54e4be5bef58a19d5a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
