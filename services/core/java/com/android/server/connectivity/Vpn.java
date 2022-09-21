@@ -1102,6 +1102,7 @@ public class Vpn {
             mAlwaysOn = false;
         }
 
+        final boolean oldLockdownState = mLockdown;
         mLockdown = (mAlwaysOn && lockdown);
         mLockdownAllowlist = (mLockdown && lockdownAllowlist != null)
                 ? Collections.unmodifiableList(new ArrayList<>(lockdownAllowlist))
@@ -1112,6 +1113,13 @@ public class Vpn {
         if (isCurrentPreparedPackage(packageName)) {
             updateAlwaysOnNotification(mNetworkInfo.getDetailedState());
             setVpnForcedLocked(mLockdown);
+
+            // Lockdown forces the VPN to be non-bypassable (see #agentConnect) because it makes
+            // no sense for a VPN to be bypassable when connected but not when not connected.
+            // As such, changes in lockdown need to restart the agent.
+            if (mNetworkAgent != null && oldLockdownState != mLockdown) {
+                startNewNetworkAgent(mNetworkAgent, "Lockdown mode changed");
+            }
         } else {
             // Prepare this app. The notification will update as a side-effect of updateState().
             // It also calls setVpnForcedLocked().
@@ -1665,10 +1673,11 @@ public class Vpn {
         mLegacyState = LegacyVpnInfo.STATE_CONNECTING;
         updateState(DetailedState.CONNECTING, "agentConnect");
 
+        final boolean bypassable = mConfig.allowBypass && !mLockdown;
         final NetworkAgentConfig networkAgentConfig = new NetworkAgentConfig.Builder()
                 .setLegacyType(ConnectivityManager.TYPE_VPN)
                 .setLegacyTypeName("VPN")
-                .setBypassableVpn(mConfig.allowBypass && !mLockdown)
+                .setBypassableVpn(bypassable)
                 .setVpnRequiresValidation(mConfig.requiresInternetValidation)
                 .setLocalRoutesExcludedForVpn(mConfig.excludeLocalRoutes)
                 .build();
@@ -1682,7 +1691,7 @@ public class Vpn {
         capsBuilder.setTransportInfo(new VpnTransportInfo(
                 getActiveVpnType(),
                 mConfig.session,
-                mConfig.allowBypass,
+                bypassable,
                 expensive));
 
         // Only apps targeting Q and above can explicitly declare themselves as metered.
@@ -1713,6 +1722,10 @@ public class Vpn {
             Binder.restoreCallingIdentity(token);
         }
         updateState(DetailedState.CONNECTED, "agentConnect");
+        if (isIkev2VpnRunner()) {
+            final IkeSessionWrapper session = ((IkeV2VpnRunner) mVpnRunner).mSession;
+            if (null != session) session.setUnderpinnedNetwork(mNetworkAgent.getNetwork());
+        }
     }
 
     private static boolean areLongLivedTcpConnectionsExpensive(@NonNull VpnRunner runner) {
@@ -3226,7 +3239,6 @@ public class Vpn {
                             prepareStatusIntent();
                         }
                         agentConnect(this::onValidationStatus);
-                        mSession.setUnderpinnedNetwork(mNetworkAgent.getNetwork());
                         return; // Link properties are already sent.
                     } else {
                         // Underlying networks also set in agentConnect()
@@ -3343,7 +3355,6 @@ public class Vpn {
                     if (!removedAddrs.isEmpty()) {
                         startNewNetworkAgent(
                                 mNetworkAgent, "MTU too low for IPv6; restarting network agent");
-                        mSession.setUnderpinnedNetwork(mNetworkAgent.getNetwork());
 
                         for (LinkAddress removed : removedAddrs) {
                             mTunnelIface.removeAddress(
@@ -3622,7 +3633,7 @@ public class Vpn {
             final VpnTransportInfo info = new VpnTransportInfo(
                     getActiveVpnType(),
                     mConfig.session,
-                    mConfig.allowBypass,
+                    mConfig.allowBypass && !mLockdown,
                     areLongLivedTcpConnectionsExpensive(keepaliveDelaySec));
             final boolean ncUpdateRequired = !info.equals(mNetworkCapabilities.getTransportInfo());
             if (ncUpdateRequired) {
