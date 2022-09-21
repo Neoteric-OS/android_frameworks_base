@@ -34,6 +34,24 @@
       "parentUuid": "032f2eb7_a27c8faf",
       "revId": "de68fb13a622d75ebb40a54e4be5bef58a19d5a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35c5b496_d07af5e0",
+        "filename": "api/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2022-09-21T17:04:55Z",
+      "side": 1,
+      "message": "It would be hacky, but a phony module might work:\n```\nphony {\n    name: \"checkapi\",\n    required: [\n        \"frameworks-base-api-current-compat\",\n        \"frameworks-base-api-system-current-compat\",\n        \"frameworks-base-api-module-lib-current-compat\",\n    ],\n}\n```\n\nThat\u0027s creating a module with the same name as the checkapi phony target, but the dependencies would get merged.\n\nIf you can identify these modules from Go you can use `ctx.Phony(\"checkapi\", outputFile)`.",
+      "parentUuid": "30113c5a_75f04377",
+      "revId": "de68fb13a622d75ebb40a54e4be5bef58a19d5a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
