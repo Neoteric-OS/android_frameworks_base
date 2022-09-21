@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "429f796e_4fdd2653",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561936
+      },
+      "writtenOn": "2022-09-21T05:43:34Z",
+      "side": 1,
+      "message": "Hello,\nI found that the system app is often deleted when the OS is changed. \nIt looks like null check is needed, so please check it.",
+      "revId": "41475035a11c921f357fa893bf8a6f0ffa2141b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
