@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce30cd5f_5e2675e5",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1039357
+      },
+      "writtenOn": "2022-09-21T06:01:06Z",
+      "side": 1,
+      "message": "I\u0027ve added comment in patchset 2. please review it. Thanks.",
+      "parentUuid": "777d14bb_048618ce",
+      "revId": "520c40aeb175034c0a31b1570d4d08ae2732e8a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f84fcee8_2fa966f3",
