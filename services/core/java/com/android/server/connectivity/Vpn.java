@@ -1002,6 +1002,7 @@ public class Vpn {
             mAlwaysOn = false;
         }
 
+        final boolean oldLockdownState = mLockdown;
         mLockdown = (mAlwaysOn && lockdown);
         mLockdownAllowlist = (mLockdown && lockdownAllowlist != null)
                 ? Collections.unmodifiableList(new ArrayList<>(lockdownAllowlist))
@@ -1010,6 +1011,13 @@ public class Vpn {
         if (isCurrentPreparedPackage(packageName)) {
             updateAlwaysOnNotification(mNetworkInfo.getDetailedState());
             setVpnForcedLocked(mLockdown);
+
+            // Bypassable VPNs use different rule priorities; if VPN profile specifies a bypassable
+            // VPN and the lockdown state changes, the NetworkAgent needs to be restarted to update
+            // the rule priorities.
+            if (mNetworkAgent != null && mConfig.allowBypass && oldLockdownState != mLockdown) {
+                startNewNetworkAgent(mNetworkAgent, "Lockdown mode changed");
+            }
         } else {
             // Prepare this app. The notification will update as a side-effect of updateState().
             // It also calls setVpnForcedLocked().
