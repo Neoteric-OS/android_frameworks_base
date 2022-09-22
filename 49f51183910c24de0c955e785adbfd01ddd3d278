@@ -33,6 +33,98 @@
       "message": "Adding others for OWNERS approval:\n+ Alex for DevicePolicyManager\n+ Patrick for SystemServer\n+ Almaz for timezonedetector code",
       "revId": "49f51183910c24de0c955e785adbfd01ddd3d278",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0da0fec_f1c089ee",
+        "filename": "apex/jobscheduler/service/java/com/android/server/alarm/AlarmManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4566,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2022-09-22T11:21:40Z",
+      "side": 1,
+      "message": "nit: matter of taste - 60_000 might be more readable.",
+      "range": {
+        "startLine": 4566,
+        "startChar": 83,
+        "endLine": 4566,
+        "endChar": 88
+      },
+      "revId": "49f51183910c24de0c955e785adbfd01ddd3d278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07b7958c_8b8b1908",
+        "filename": "apex/jobscheduler/service/java/com/android/server/alarm/AlarmManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4571,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2022-09-22T11:21:40Z",
+      "side": 1,
+      "message": "It is not different from `TimeZone.getDefault()`, right?",
+      "range": {
+        "startLine": 4571,
+        "startChar": 39,
+        "endLine": 4571,
+        "endChar": 77
+      },
+      "revId": "49f51183910c24de0c955e785adbfd01ddd3d278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c20d0ab_d6729e6f",
+        "filename": "services/core/java/com/android/server/SystemTimeZone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2022-09-22T11:21:40Z",
+      "side": 1,
+      "message": "Why is it outside of synchronized block?",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 105,
+        "endChar": 51
+      },
+      "revId": "49f51183910c24de0c955e785adbfd01ddd3d278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98fe96f3_1dde3678",
+        "filename": "services/core/java/com/android/server/timezonedetector/EnvironmentImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2022-09-22T11:21:40Z",
+      "side": 1,
+      "message": "Is there assumption that race is negligible?",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 5
+      },
+      "revId": "49f51183910c24de0c955e785adbfd01ddd3d278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
