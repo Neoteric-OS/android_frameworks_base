@@ -16,6 +16,23 @@
       "message": "Suprabh, please can you do a pass and LMK if there\u0027s anything fundamental wrong with it? This mostly extends / refactors AlarmManager code.\n",
       "revId": "49f51183910c24de0c955e785adbfd01ddd3d278",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4348d100_e70627c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-09-22T08:56:44Z",
+      "side": 1,
+      "message": "Adding others for OWNERS approval:\n+ Alex for DevicePolicyManager\n+ Patrick for SystemServer\n+ Almaz for timezonedetector code",
+      "revId": "49f51183910c24de0c955e785adbfd01ddd3d278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
