@@ -41,6 +41,7 @@ import android.widget.LinearLayout
 import android.widget.Switch
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
+import com.android.internal.util.nameless.qs.TileUtils
 import com.android.settingslib.Utils
 import com.android.systemui.FontSizeUtils
 import com.android.systemui.R
@@ -150,10 +151,19 @@ open class QSTileViewImpl @JvmOverloads constructor(
 
     private val locInScreen = IntArray(2)
 
+    private var labelHide = false
+
     init {
         setId(generateViewId())
         orientation = LinearLayout.HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL or Gravity.START
+
+        labelHide = TileUtils.getQSTileLabelHide(context)
+
+        if (labelHide) {
+            gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
+        }
+
         importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_YES
         clipChildren = false
         clipToPadding = false
@@ -198,6 +208,12 @@ open class QSTileViewImpl @JvmOverloads constructor(
             width = iconSize
         }
 
+        labelHide = TileUtils.getQSTileLabelHide(context)
+
+        if (labelHide) {
+            gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
+        }
+
         val padding = resources.getDimensionPixelSize(R.dimen.qs_tile_padding)
         val startPadding = resources.getDimensionPixelSize(R.dimen.qs_tile_start_padding)
         setPaddingRelative(startPadding, padding, padding, padding)
@@ -238,7 +254,9 @@ open class QSTileViewImpl @JvmOverloads constructor(
         }
         setLabelColor(getLabelColorForState(QSTile.State.DEFAULT_STATE))
         setSecondaryLabelColor(getSecondaryLabelColorForState(QSTile.State.DEFAULT_STATE))
-        addView(labelContainer)
+        if (!labelHide) {
+            addView(labelContainer)
+        }
     }
 
     private fun createAndAddSideView() {

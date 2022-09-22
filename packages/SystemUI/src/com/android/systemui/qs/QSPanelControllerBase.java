@@ -169,6 +169,11 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
             mView.updateShowBrightness();
         } else if (Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM.equals(key)) {
             mView.updateBrightnessView(isSliderAtTop());
+        } else {
+            if (mView.getTileLayout() != null) {
+                mView.getTileLayout().updateSettings();
+                setTiles();
+            }
         }
     }
 
@@ -200,6 +205,7 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
         mView.updateBrightnessView(isSliderAtTop());
         registerObserver(Settings.System.QS_SHOW_BRIGHTNESS);
         registerObserver(Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM);
+        registerObserver(Settings.System.QS_TILE_LABEL_HIDE);
         mQsTileRevealController = createTileRevealController();
         if (mQsTileRevealController != null) {
             mQsTileRevealController.setExpansion(mRevealExpansion);
