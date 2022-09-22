@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0bdde1c_36242bf9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1052399
+      },
+      "writtenOn": "2022-09-22T17:48:02Z",
+      "side": 1,
+      "message": "No need to repeat and wait for tests that have been passed or are broken",
+      "revId": "a602a8b12c6805f245b192eed3b093ff0bee46db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
