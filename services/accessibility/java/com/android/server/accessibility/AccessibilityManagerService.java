@@ -1730,17 +1730,18 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
     }
 
     private boolean scheduleNotifyMotionEvent(MotionEvent event) {
+        boolean result = false;
         synchronized (mLock) {
             AccessibilityUserState state = getCurrentUserStateLocked();
             for (int i = state.mBoundServices.size() - 1; i >= 0; i--) {
                 AccessibilityServiceConnection service = state.mBoundServices.get(i);
                 if (service.mRequestTouchExplorationMode) {
                     service.notifyMotionEvent(event);
-                    return true;
+                    result = true;
                 }
             }
         }
-        return false;
+        return result;
     }
 
     private boolean scheduleNotifyTouchState(int displayId, int touchState) {
