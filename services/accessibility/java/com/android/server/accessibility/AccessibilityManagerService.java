@@ -1730,31 +1730,34 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
     }
 
     private boolean scheduleNotifyMotionEvent(MotionEvent event) {
+        boolean result = false;
+        int displayId = event.getDisplayId();
         synchronized (mLock) {
             AccessibilityUserState state = getCurrentUserStateLocked();
             for (int i = state.mBoundServices.size() - 1; i >= 0; i--) {
                 AccessibilityServiceConnection service = state.mBoundServices.get(i);
-                if (service.mRequestTouchExplorationMode) {
+                if (service.isServiceDetectsGesturesEnabled(displayId)) {
                     service.notifyMotionEvent(event);
-                    return true;
+                    result = true;
                 }
             }
         }
-        return false;
+        return result;
     }
 
     private boolean scheduleNotifyTouchState(int displayId, int touchState) {
+        boolean result = false;
         synchronized (mLock) {
             AccessibilityUserState state = getCurrentUserStateLocked();
             for (int i = state.mBoundServices.size() - 1; i >= 0; i--) {
                 AccessibilityServiceConnection service = state.mBoundServices.get(i);
-                if (service.mRequestTouchExplorationMode) {
+                if (service.isServiceDetectsGesturesEnabled(displayId)) {
                     service.notifyTouchState(displayId, touchState);
-                    return true;
+                    result = true;
                 }
             }
         }
-        return false;
+        return result;
     }
 
     private void notifyClearAccessibilityCacheLocked() {
@@ -2310,7 +2313,6 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                 if (userState.isTwoFingerPassthroughEnabledLocked()) {
                     flags |= AccessibilityInputFilter.FLAG_REQUEST_2_FINGER_PASSTHROUGH;
                 }
-            }
             if (userState.isFilterKeyEventsEnabledLocked()) {
                 flags |= AccessibilityInputFilter.FLAG_FEATURE_FILTER_KEY_EVENTS;
             }
@@ -2323,6 +2325,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
             if (userState.isPerformGesturesEnabledLocked()) {
                 flags |= AccessibilityInputFilter.FLAG_FEATURE_INJECT_MOTION_EVENTS;
             }
+
             if (flags != 0) {
                 if (!mHasInputFilter) {
                     mHasInputFilter = true;
@@ -2335,9 +2338,20 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                 }
                 mInputFilter.setUserAndEnabledFeatures(userState.mUserId, flags);
             } else {
-                if (mHasInputFilter) {
-                    mHasInputFilter = false;
-                    mInputFilter.setUserAndEnabledFeatures(userState.mUserId, 0);
+                    if (mHasInputFilter) {
+                        mHasInputFilter = false;
+                        mInputFilter.setUserAndEnabledFeatures(userState.mUserId, 0);
+                        if (userState.isTouchExplorationEnabledLocked()) {
+                            // Service gesture detection is turned on and off on a per-display
+                            // basis.
+                            final ArrayList<Display> displays = getValidDisplayList();
+                            for (Display display : displays) {
+                                int displayId = display.getDisplayId();
+                                boolean mode = userState.isServiceDetectsGesturesEnabled(displayId);
+                                mInputFilter.setServiceDetectsGesturesEnabled(displayId, mode);
+                            }
+                        }
+                    }
                     inputFilter = null;
                     setInputFilter = true;
                 }
@@ -4313,6 +4327,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
 
     private void setServiceDetectsGesturesInternal(int displayId, boolean mode) {
         synchronized (mLock) {
+            getCurrentUserStateLocked().setServiceDetectsGesturesEnabled(displayId, mode);
             if (mHasInputFilter && mInputFilter != null) {
                 mInputFilter.setServiceDetectsGesturesEnabled(displayId, mode);
             }
