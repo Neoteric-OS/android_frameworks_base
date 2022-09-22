@@ -81,6 +81,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9840502_a34c5003",
+        "filename": "apex/jobscheduler/service/java/com/android/server/alarm/AlarmManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4571,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-09-22T12:56:06Z",
+      "side": 1,
+      "message": "Shouldn\u0027t provide a different answer, but I wanted to try to separate the \"what is the default time zone\" from \"what is the setting\". Where possible, I\u0027ll use the setting in this code.\n\n[FYI: the following CL actually turns this code off, and in V I hope to remove it entirely]",
+      "parentUuid": "07b7958c_8b8b1908",
+      "range": {
+        "startLine": 4571,
+        "startChar": 39,
+        "endLine": 4571,
+        "endChar": 77
+      },
+      "revId": "49f51183910c24de0c955e785adbfd01ddd3d278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c20d0ab_d6729e6f",
@@ -104,6 +128,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "674c4beb_3dc99d2a",
+        "filename": "services/core/java/com/android/server/SystemTimeZone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-09-22T12:56:06Z",
+      "side": 1,
+      "message": "A mistake! Fixed.",
+      "parentUuid": "6c20d0ab_d6729e6f",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 105,
+        "endChar": 51
+      },
+      "revId": "49f51183910c24de0c955e785adbfd01ddd3d278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98fe96f3_1dde3678",
@@ -117,6 +165,30 @@
       "writtenOn": "2022-09-22T11:21:40Z",
       "side": 1,
       "message": "Is there assumption that race is negligible?",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 5
+      },
+      "revId": "49f51183910c24de0c955e785adbfd01ddd3d278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0efd07ca_106edb1e",
+        "filename": "services/core/java/com/android/server/timezonedetector/EnvironmentImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-09-22T12:56:06Z",
+      "side": 1,
+      "message": "Yes. I don\u0027t think this makes anything worse. _Most_ code above (i.e. in the time zone detector) will be synchronized above, but I can\u0027t rule out changes made via the AlarmManager command-line / API calls happening at the same time. Those should be rare and maybe one day I could remove them or redirect them. Might be tricky as I see AlarmManager as being quite low level, and it may be tricky to have it interact with the time zone detector service, which feels \"higher level\".",
+      "parentUuid": "98fe96f3_1dde3678",
       "range": {
         "startLine": 67,
         "startChar": 0,
