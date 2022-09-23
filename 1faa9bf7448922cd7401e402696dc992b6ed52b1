@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09a81cbb_a3eac2b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2022-09-23T20:22:17Z",
+      "side": 1,
+      "message": "Updating the OWNERS file for android/server/resources.",
+      "revId": "1faa9bf7448922cd7401e402696dc992b6ed52b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
