@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a98f6a4_2afa644e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2022-09-23T20:01:32Z",
+      "side": 1,
+      "message": "The refactoring of WebViewUpdateService code seems reasonable; some small suggestions.",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8077ae7_04a43dfe",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2022-09-23T20:01:32Z",
+      "side": 1,
+      "message": "I don\u0027t have a good *answer* for this but it seems like we might want to think a little about whether we can come up with a name for this that makes it more clear that it refers to the APK that implements WebView, and not just \"an app that uses webview\". The various comments you\u0027ve included in appropriate places do help but if there is a more specific name we can think of that might be good.",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3f744d17_5a3ac544",
@@ -14,6 +48,57 @@
       "writtenOn": "2022-09-23T16:48:32Z",
       "side": 1,
       "message": "This gets a static global, which makes the function parameters for getSeInfo nicer. However, it makes testing difficult/impossible. However, getSeInfo already relies upon its own static global state (sPolicies), so I\u0027ve gone with the flow a bit here. How do we feel about this?",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edddfb1c_e558f5d3",
+        "filename": "services/core/java/com/android/server/webkit/SystemImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2022-09-23T20:01:32Z",
+      "side": 1,
+      "message": "the tag names aren\u0027t needed in here any more, right?",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "024a313f_e71424d7",
+        "filename": "services/core/java/com/android/server/webkit/SystemImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2022-09-23T20:01:32Z",
+      "side": 1,
+      "message": "We don\u0027t really need to store this since it\u0027s just getting a singleton; this field could just be removed (and we could then reasonably also drop the lazy holder/etc for SystemImpl to simplify things a little; if it has no state of its own then it\u0027s just a strategy and the service can just construct it)",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44b7e627_229f5a92",
+        "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2022-09-23T20:01:32Z",
+      "side": 1,
+      "message": "The code that got moved here has no significant changes other than the enum and the min version being passed in, right?",
       "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -37,6 +122,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e4c8fb61_d3b52d1d",
+        "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2022-09-23T20:01:32Z",
+      "side": 1,
+      "message": "Not using them in public API unless you can be really sure they will never need to be extended definitely still applies.\nIn the past avoiding them for code size/method count reasons was preferred but r8 can optimise many cases now. I\u0027m not sure what the current guidance for framework internals is, though.",
+      "parentUuid": "a59024a5_971ead6b",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06913ddc_376b6eb5",
         "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
         "patchSetId": 2
@@ -48,6 +151,24 @@
       "writtenOn": "2022-09-23T16:48:32Z",
       "side": 1,
       "message": "This is using static global state. Do we have any significant arguments against that? This is no worse than before (where it was global state in SystemImpl).\n\nI\u0027m not familiar with all the motivations around using services instead of simple static state, but I presume they might not apply to this class as it doesn\u0027t need to be directly exposed via IPC?",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "124783fc_b354ba04",
+        "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2022-09-23T20:01:32Z",
+      "side": 1,
+      "message": "Yeah this seems fine to me.",
+      "parentUuid": "06913ddc_376b6eb5",
       "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -71,6 +192,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "da55b761_62937f9b",
+        "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2022-09-23T20:01:32Z",
+      "side": 1,
+      "message": "Just remove it.",
+      "parentUuid": "fd45ca58_49521966",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d1bbd89e_e4884238",
         "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
         "patchSetId": 2
@@ -82,6 +221,24 @@
       "writtenOn": "2022-09-23T16:48:32Z",
       "side": 1,
       "message": "TODO: I don\u0027t currently have a test which covers this specific method.",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "644bec09_0aac4e2e",
+        "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2022-09-23T20:01:32Z",
+      "side": 1,
+      "message": "also maybe call this isValidWebView or something to avoid any confusion with it being the current provider",
+      "parentUuid": "d1bbd89e_e4884238",
       "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
