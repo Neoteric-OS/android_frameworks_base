@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f744d17_5a3ac544",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2022-09-23T16:48:32Z",
+      "side": 1,
+      "message": "This gets a static global, which makes the function parameters for getSeInfo nicer. However, it makes testing difficult/impossible. However, getSeInfo already relies upon its own static global state (sPolicies), so I\u0027ve gone with the flow a bit here. How do we feel about this?",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a59024a5_971ead6b",
+        "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2022-09-23T16:48:32Z",
+      "side": 1,
+      "message": "Am I correct in thinking that we don\u0027t have anything against enums (and may even prefer them) so long as they\u0027re not used in a public API?",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06913ddc_376b6eb5",
+        "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2022-09-23T16:48:32Z",
+      "side": 1,
+      "message": "This is using static global state. Do we have any significant arguments against that? This is no worse than before (where it was global state in SystemImpl).\n\nI\u0027m not familiar with all the motivations around using services instead of simple static state, but I presume they might not apply to this class as it doesn\u0027t need to be directly exposed via IPC?",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd45ca58_49521966",
+        "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2022-09-23T16:48:32Z",
+      "side": 1,
+      "message": "This overload of packageIsWebView is technically unused. Would we prefer to remove it, or keep it for consistency.",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1bbd89e_e4884238",
+        "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2022-09-23T16:48:32Z",
+      "side": 1,
+      "message": "TODO: I don\u0027t currently have a test which covers this specific method.",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "647e7bcf_d62f4ae3",
+        "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2022-09-23T16:48:32Z",
+      "side": 1,
+      "message": "I\u0027ve gone with the decision of not storing a minimum version code in the WebViewProviderAuthority class itself, due to the complications with otherwise needing some sort of multi-pass package scan.",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
