@@ -19,7 +19,6 @@ import android.annotation.Nullable;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.Signature;
 import android.os.AsyncTask;
 import android.os.Trace;
 import android.os.UserHandle;
@@ -79,12 +78,6 @@ class WebViewUpdateServiceImpl {
     private static final int WAIT_TIMEOUT_MS = 1000; // KEY_DISPATCHING_TIMEOUT is 5000.
     private static final long NS_PER_MS = 1000000;
 
-    private static final int VALIDITY_OK = 0;
-    private static final int VALIDITY_INCORRECT_SDK_VERSION = 1;
-    private static final int VALIDITY_INCORRECT_VERSION_CODE = 2;
-    private static final int VALIDITY_INCORRECT_SIGNATURE = 3;
-    private static final int VALIDITY_NO_LIBRARY_FLAG = 4;
-
     private static final int MULTIPROCESS_SETTING_ON_VALUE = Integer.MAX_VALUE;
     private static final int MULTIPROCESS_SETTING_OFF_VALUE = Integer.MIN_VALUE;
 
@@ -116,7 +109,7 @@ class WebViewUpdateServiceImpl {
         // We don't early out here in different cases where we could potentially early-out (e.g. if
         // we receive PACKAGE_CHANGED for another user than the system user) since that would
         // complicate this logic further and open up for more edge cases.
-        for (WebViewProviderInfo provider : mSystemInterface.getWebViewPackages()) {
+        for (WebViewProviderInfo provider : getWebViewPackages()) {
             String webviewPackage = provider.packageName;
 
             if (webviewPackage.equals(packageName)) {
@@ -191,7 +184,7 @@ class WebViewUpdateServiceImpl {
             // fallback package for all users in case it was disabled, even if we already did the
             // one-time migration before. If this actually changes the state, we will see the
             // PackageManager broadcast shortly and try again.
-            WebViewProviderInfo[] webviewProviders = mSystemInterface.getWebViewPackages();
+            WebViewProviderInfo[] webviewProviders = getWebViewPackages();
             WebViewProviderInfo fallbackProvider = getFallbackProvider(webviewProviders);
             if (fallbackProvider != null) {
                 Slog.w(TAG, "No valid provider, trying to enable " + fallbackProvider.packageName);
@@ -388,14 +381,15 @@ class WebViewUpdateServiceImpl {
     }
 
     private ProviderAndPackageInfo[] getValidWebViewPackagesAndInfos() {
-        WebViewProviderInfo[] allProviders = mSystemInterface.getWebViewPackages();
+        WebViewProviderAuthority providerAuthority = mSystemInterface.getProviderAuthority();
         List<ProviderAndPackageInfo> providers = new ArrayList<>();
-        for (int n = 0; n < allProviders.length; n++) {
+        for (WebViewProviderInfo provider : providerAuthority.getWebViewPackages()) {
             try {
                 PackageInfo packageInfo =
-                        mSystemInterface.getPackageInfoForProvider(allProviders[n]);
-                if (validityResult(allProviders[n], packageInfo) == VALIDITY_OK) {
-                    providers.add(new ProviderAndPackageInfo(allProviders[n], packageInfo));
+                        mSystemInterface.getPackageInfoForProvider(provider);
+                if (providerAuthority.validatePackageAsProvider(packageInfo, provider,
+                        getMinimumVersionCode()).isValid()) {
+                    providers.add(new ProviderAndPackageInfo(provider, packageInfo));
                 }
             } catch (NameNotFoundException e) {
                 // Don't add non-existent packages
@@ -465,7 +459,7 @@ class WebViewUpdateServiceImpl {
     }
 
     WebViewProviderInfo[] getWebViewPackages() {
-        return mSystemInterface.getWebViewPackages();
+        return mSystemInterface.getProviderAuthority().getWebViewPackages();
     }
 
     PackageInfo getCurrentWebViewPackage() {
@@ -509,52 +503,6 @@ class WebViewUpdateServiceImpl {
         }
     }
 
-    private int validityResult(WebViewProviderInfo configInfo, PackageInfo packageInfo) {
-        // Ensure the provider targets this framework release (or a later one).
-        if (!UserPackage.hasCorrectTargetSdkVersion(packageInfo)) {
-            return VALIDITY_INCORRECT_SDK_VERSION;
-        }
-        if (!versionCodeGE(packageInfo.getLongVersionCode(), getMinimumVersionCode())
-                && !mSystemInterface.systemIsDebuggable()) {
-            // Webview providers may be downgraded arbitrarily low, prevent that by enforcing
-            // minimum version code. This check is only enforced for user builds.
-            return VALIDITY_INCORRECT_VERSION_CODE;
-        }
-        if (!providerHasValidSignature(configInfo, packageInfo, mSystemInterface)) {
-            return VALIDITY_INCORRECT_SIGNATURE;
-        }
-        if (WebViewFactory.getWebViewLibrary(packageInfo.applicationInfo) == null) {
-            return VALIDITY_NO_LIBRARY_FLAG;
-        }
-        return VALIDITY_OK;
-    }
-
-    /**
-     * Both versionCodes should be from a WebView provider package implemented by Chromium.
-     * VersionCodes from other kinds of packages won't make any sense in this method.
-     *
-     * An introduction to Chromium versionCode scheme:
-     * "BBBBPPPXX"
-     * BBBB: 4 digit branch number. It monotonically increases over time.
-     * PPP: patch number in the branch. It is padded with zeroes to the left. These three digits
-     * may change their meaning in the future.
-     * XX: Digits to differentiate different APK builds of the same source version.
-     *
-     * This method takes the "BBBB" of versionCodes and compare them.
-     *
-     * https://www.chromium.org/developers/version-numbers describes general Chromium versioning;
-     * https://source.chromium.org/chromium/chromium/src/+/master:build/util/android_chrome_version.py
-     * is the canonical source for how Chromium versionCodes are calculated.
-     *
-     * @return true if versionCode1 is higher than or equal to versionCode2.
-     */
-    private static boolean versionCodeGE(long versionCode1, long versionCode2) {
-        long v1 = versionCode1 / 100000;
-        long v2 = versionCode2 / 100000;
-
-        return v1 >= v2;
-    }
-
     /**
      * Gets the minimum version code allowed for a valid provider. It is the minimum versionCode
      * of all available-by-default WebView provider packages. If there is no such WebView provider
@@ -571,7 +519,7 @@ class WebViewUpdateServiceImpl {
         }
 
         long minimumVersionCode = -1;
-        for (WebViewProviderInfo provider : mSystemInterface.getWebViewPackages()) {
+        for (WebViewProviderInfo provider : getWebViewPackages()) {
             if (provider.availableByDefault) {
                 try {
                     long versionCode =
@@ -587,25 +535,6 @@ class WebViewUpdateServiceImpl {
 
         mMinimumVersionCode = minimumVersionCode;
         return mMinimumVersionCode;
-    }
-
-    private static boolean providerHasValidSignature(WebViewProviderInfo provider,
-            PackageInfo packageInfo, SystemInterface systemInterface) {
-        // Skip checking signatures on debuggable builds, for development purposes.
-        if (systemInterface.systemIsDebuggable()) return true;
-
-        // Allow system apps to be valid providers regardless of signature.
-        if (packageInfo.applicationInfo.isSystemApp()) return true;
-
-        // We don't support packages with multiple signatures.
-        if (packageInfo.signatures.length != 1) return false;
-
-        // If any of the declared signatures match the package signature, it's valid.
-        for (Signature signature : provider.signatures) {
-            if (signature.equals(packageInfo.signatures[0])) return true;
-        }
-
-        return false;
     }
 
     /**
@@ -682,9 +611,9 @@ class WebViewUpdateServiceImpl {
     }
 
     private void dumpAllPackageInformationLocked(PrintWriter pw) {
-        WebViewProviderInfo[] allProviders = mSystemInterface.getWebViewPackages();
+        WebViewProviderAuthority providerAuthority = mSystemInterface.getProviderAuthority();
         pw.println("  WebView packages:");
-        for (WebViewProviderInfo provider : allProviders) {
+        for (WebViewProviderInfo provider : providerAuthority.getWebViewPackages()) {
             List<UserPackage> userPackages =
                     mSystemInterface.getPackageInfoForProviderAllUsers(mContext, provider);
             PackageInfo systemUserPackageInfo =
@@ -694,13 +623,15 @@ class WebViewUpdateServiceImpl {
                 continue;
             }
 
-            int validity = validityResult(provider, systemUserPackageInfo);
+            WebViewProviderAuthority.Validity validity =
+                    providerAuthority.validatePackageAsProvider(systemUserPackageInfo, provider,
+                            getMinimumVersionCode());
             String packageDetails = String.format(
                     "versionName: %s, versionCode: %d, targetSdkVersion: %d",
                     systemUserPackageInfo.versionName,
                     systemUserPackageInfo.getLongVersionCode(),
                     systemUserPackageInfo.applicationInfo.targetSdkVersion);
-            if (validity == VALIDITY_OK) {
+            if (validity.isValid()) {
                 boolean installedForAllUsers = isInstalledAndEnabledForAllUsers(
                         mSystemInterface.getPackageInfoForProviderAllUsers(mContext, provider));
                 pw.println(String.format(
@@ -712,23 +643,8 @@ class WebViewUpdateServiceImpl {
                 pw.println(String.format("    Invalid package %s (%s), reason: %s",
                         systemUserPackageInfo.packageName,
                         packageDetails,
-                        getInvalidityReason(validity)));
+                        validity.description()));
             }
-        }
-    }
-
-    private static String getInvalidityReason(int invalidityReason) {
-        switch (invalidityReason) {
-            case VALIDITY_INCORRECT_SDK_VERSION:
-                return "SDK version too low";
-            case VALIDITY_INCORRECT_VERSION_CODE:
-                return "Version code too low";
-            case VALIDITY_INCORRECT_SIGNATURE:
-                return "Incorrect signature";
-            case VALIDITY_NO_LIBRARY_FLAG:
-                return "No WebView-library manifest flag";
-            default:
-                return "Unexcepted validity-reason";
         }
     }
 }
