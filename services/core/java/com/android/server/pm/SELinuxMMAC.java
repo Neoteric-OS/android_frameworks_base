@@ -30,6 +30,7 @@ import com.android.server.compat.PlatformCompat;
 import com.android.server.pm.parsing.pkg.AndroidPackage;
 import com.android.server.pm.parsing.pkg.AndroidPackageUtils;
 import com.android.server.pm.pkg.SharedUserApi;
+import com.android.server.webkit.WebViewProviderAuthority;
 
 import libcore.io.IoUtils;
 
@@ -76,6 +77,10 @@ public final class SELinuxMMAC {
 
     // Append privapp to existing seinfo label
     private static final String PRIVILEGED_APP_STR = ":privapp";
+
+    // Append webviewproviderapp to existing seinfo label to indicate app is a valid WebView
+    // provider
+    private static final String WEBVIEW_PROVIDER_APP_STR = ":webviewproviderapp";
 
     // Append targetSdkVersion=n to existing seinfo label where n is the app's targetSdkVersion
     private static final String TARGETSDKVERSION_STR = ":targetSdkVersion=";
@@ -431,6 +436,10 @@ public final class SELinuxMMAC {
             seInfo += PRIVILEGED_APP_STR;
         }
 
+        if (isWebView(pkg)) {
+            seInfo += WEBVIEW_PROVIDER_APP_STR;
+        }
+
         seInfo += TARGETSDKVERSION_STR + targetSdkVersion;
 
         if (DEBUG_POLICY_INSTALL) {
@@ -438,6 +447,15 @@ public final class SELinuxMMAC {
                     + "seinfo=" + seInfo);
         }
         return seInfo;
+    }
+
+    private static boolean isWebView(AndroidPackage pkg) {
+        WebViewProviderAuthority providerAuthority = WebViewProviderAuthority.getInstance();
+        // We can only know the minimum version code after boot-time system package scans have
+        // completed, but we validate WebView packages during this scan for seinfo purposes. We
+        // ignore the version code requirement for seinfo purposes to simplify the logic. Note that
+        // SDK version requirements are still enforced.
+        return providerAuthority.packageIsValidWebView(pkg, /*minimumVersionCode=*/0L);
     }
 }
 

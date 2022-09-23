@@ -33,7 +33,10 @@ import java.util.List;
  * @hide
  */
 public interface SystemInterface {
-    public WebViewProviderInfo[] getWebViewPackages();
+    /**
+     * Get the WebViewProviderAuthority, which defines what packages are WebView providers.
+     */
+    WebViewProviderAuthority getProviderAuthority();
     public int onWebViewProviderChanged(PackageInfo packageInfo);
     public long getFactoryPackageVersion(String packageName) throws NameNotFoundException;
 

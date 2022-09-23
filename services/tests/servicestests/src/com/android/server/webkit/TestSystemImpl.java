@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class TestSystemImpl implements SystemInterface {
     private String mUserProvider = null;
-    private final WebViewProviderInfo[] mPackageConfigs;
+    private final WebViewProviderAuthority mWebViewProviderAuthority;
     List<Integer> mUsers = new ArrayList<>();
     // Package -> [user, package]
     Map<String, Map<Integer, PackageInfo>> mPackages = new HashMap();
@@ -43,7 +43,7 @@ public class TestSystemImpl implements SystemInterface {
 
     public TestSystemImpl(WebViewProviderInfo[] packageConfigs, int numRelros, boolean isDebuggable,
             boolean multiProcessDefault) {
-        mPackageConfigs = packageConfigs;
+        mWebViewProviderAuthority = new WebViewProviderAuthority(packageConfigs, isDebuggable);
         mNumRelros = numRelros;
         mIsDebuggable = isDebuggable;
         mUsers.add(PRIMARY_USER_ID);
@@ -55,8 +55,8 @@ public class TestSystemImpl implements SystemInterface {
     }
 
     @Override
-    public WebViewProviderInfo[] getWebViewPackages() {
-        return mPackageConfigs;
+    public WebViewProviderAuthority getProviderAuthority() {
+        return mWebViewProviderAuthority;
     }
 
     @Override

@@ -58,8 +58,6 @@ public class WebViewUpdateServiceTest {
     private WebViewUpdateServiceImpl mWebViewUpdateServiceImpl;
     private TestSystemImpl mTestSystemImpl;
 
-    private static final String WEBVIEW_LIBRARY_FLAG = "com.android.webview.WebViewLibrary";
-
     /**
      * Creates a new instance.
      */
@@ -168,7 +166,8 @@ public class WebViewUpdateServiceTest {
         }
         if (valid) {
             // no flag means invalid
-            p.applicationInfo.metaData.putString(WEBVIEW_LIBRARY_FLAG, "blah");
+            p.applicationInfo.metaData.putString(WebViewProviderAuthority.WEBVIEW_LIBRARY_FLAG,
+                    "blah");
         }
         // Default to this package being valid in terms of targetSdkVersion.
         p.applicationInfo.targetSdkVersion = Build.VERSION_CODES.CUR_DEVELOPMENT;
