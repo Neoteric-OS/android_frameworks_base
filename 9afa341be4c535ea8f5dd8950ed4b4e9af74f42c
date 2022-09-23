@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa66a4d5_5e67969a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2022-09-23T22:32:12Z",
+      "side": 1,
+      "message": "I think it\u0027d be great to have a CTS test that does exactly this behavior, in order to make sure this fix doesn\u0027t regress in the future.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 119
+      },
+      "revId": "9afa341be4c535ea8f5dd8950ed4b4e9af74f42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "023793c5_7e7efa14",
+        "filename": "services/accessibility/java/com/android/server/accessibility/AccessibilityInputFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2022-09-23T22:32:12Z",
+      "side": 1,
+      "message": "noob question: is there any reason some sparse arrays use the 0-length constructor but this doesn\u0027t? Should it? I haven\u0027t used SparseArray much before.",
+      "range": {
+        "startLine": 180,
+        "startChar": 59,
+        "endLine": 180,
+        "endChar": 79
+      },
+      "revId": "9afa341be4c535ea8f5dd8950ed4b4e9af74f42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "deb2f4d2_27d3336c",
+        "filename": "services/accessibility/java/com/android/server/accessibility/AccessibilityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2022-09-23T22:32:12Z",
+      "side": 1,
+      "message": "This now means that multiple services can receive the event, right?\n\nIs that related to the bug, or just a general cleanup?",
+      "range": {
+        "startLine": 1741,
+        "startChar": 20,
+        "endLine": 1741,
+        "endChar": 34
+      },
+      "revId": "9afa341be4c535ea8f5dd8950ed4b4e9af74f42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2bca4ac_96b6d715",
+        "filename": "services/accessibility/java/com/android/server/accessibility/AccessibilityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1748,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2022-09-23T22:32:12Z",
+      "side": 1,
+      "message": "Should this be updated similar to `scheduleNotifyMotionEvent` to allow notifying multiple services?",
+      "range": {
+        "startLine": 1748,
+        "startChar": 20,
+        "endLine": 1748,
+        "endChar": 44
+      },
+      "revId": "9afa341be4c535ea8f5dd8950ed4b4e9af74f42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

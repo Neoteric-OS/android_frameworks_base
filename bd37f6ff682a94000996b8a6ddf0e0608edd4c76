@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ebf60d8_7a5287ab",
+        "filename": "services/accessibility/java/com/android/server/accessibility/AccessibilityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2313,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2022-09-23T22:32:12Z",
+      "side": 0,
+      "message": "Looks like a bracket got deleted accidentally.",
+      "revId": "bd37f6ff682a94000996b8a6ddf0e0608edd4c76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
