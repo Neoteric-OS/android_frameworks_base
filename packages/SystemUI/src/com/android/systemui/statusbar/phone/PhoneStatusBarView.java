@@ -65,6 +65,8 @@ public class PhoneStatusBarView extends FrameLayout {
     private TouchEventHandler mTouchEventHandler;
     @Nullable
     private ViewGroup mStatusBarContents = null;
+    @Nullable
+    private ViewGroup mStatusBarCenterClock = null;
 
     /**
      * Draw this many pixels into the left/right side of the cutout to optimally use the space
@@ -86,6 +88,9 @@ public class PhoneStatusBarView extends FrameLayout {
         }
         mStatusBarContents.setTranslationX(offset.getX());
         mStatusBarContents.setTranslationY(offset.getY());
+        if (mStatusBarCenterClock != null) {
+            mStatusBarCenterClock.setTranslationY(offset.getY());
+        }
         invalidate();
     }
 
@@ -98,6 +103,7 @@ public class PhoneStatusBarView extends FrameLayout {
         mClockRight = findViewById(R.id.right_clock);
         mCutoutSpace = findViewById(R.id.cutout_space_view);
         mStatusBarContents = (ViewGroup) findViewById(R.id.status_bar_contents);
+        mStatusBarCenterClock = (ViewGroup) findViewById(R.id.center_clock_layout);
 
         updateResources();
     }
