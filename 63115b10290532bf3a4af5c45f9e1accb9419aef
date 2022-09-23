@@ -34,6 +34,41 @@
       "parentUuid": "2c78e5e2_26e5fb24",
       "revId": "63115b10290532bf3a4af5c45f9e1accb9419aef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca8ef7f7_53e0cbe2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2022-09-23T13:39:00Z",
+      "side": 1,
+      "message": "Yes, the system app shared UID + signature causes this error.  We have seen that this can cause loopcrashing in user devices when an end user sideloads an apk, but the necessary permissions are not added to the permissions xml files",
+      "parentUuid": "1f24ad3d_d131584a",
+      "revId": "63115b10290532bf3a4af5c45f9e1accb9419aef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6113db7_7f46acf8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2022-09-23T13:39:00Z",
+      "side": 1,
+      "message": "Hmm.  Seems I missed submitting my last comment.",
+      "revId": "63115b10290532bf3a4af5c45f9e1accb9419aef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
