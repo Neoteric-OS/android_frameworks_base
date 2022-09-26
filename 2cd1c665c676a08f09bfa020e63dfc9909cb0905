@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b17d77c9_d1469452",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1524317
+      },
+      "writtenOn": "2022-09-26T16:38:37Z",
+      "side": 1,
+      "message": "Hi Hu Peng, can you please explain your idea behind this fix? Both the ContentObserver and the DisplayListener already run on BrightnessSynchronizer\u0027s handler thread, therefore I don\u0027t understand what will be different with your fix.",
+      "revId": "2cd1c665c676a08f09bfa020e63dfc9909cb0905",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
