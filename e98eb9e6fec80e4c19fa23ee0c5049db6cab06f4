@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d177db94_7ff92728",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1307979
+      },
+      "writtenOn": "2022-09-26T18:00:16Z",
+      "side": 1,
+      "message": "The test failure is pre-existing and unrelated to this change.",
+      "revId": "e98eb9e6fec80e4c19fa23ee0c5049db6cab06f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
