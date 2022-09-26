@@ -113,6 +113,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7549bb6_a4390c94",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3900,
+      "author": {
+        "id": 1889050
+      },
+      "writtenOn": "2022-09-26T03:21:21Z",
+      "side": 1,
+      "message": "Hi,Henry,\n   I have added it into latest patch.\n   Thanks.",
+      "parentUuid": "11907867_2b648076",
+      "range": {
+        "startLine": 3900,
+        "startChar": 4,
+        "endLine": 3900,
+        "endChar": 16
+      },
+      "revId": "e78a4ac357c7393e5a59fcd651711d2a7d6b44a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c91b9c7_b537d78d",
