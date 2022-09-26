@@ -26,7 +26,10 @@ import android.media.AudioSystem;
 import android.media.IRecordingConfigDispatcher;
 import android.media.MediaRecorder;
 import android.media.audiofx.AudioEffect;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -136,6 +139,7 @@ public final class RecordingActivityMonitor implements AudioSystem.AudioRecordin
         RecMonitorClient.sMonitor = this;
         RecorderDeathHandler.sMonitor = this;
         mPackMan = ctxt.getPackageManager();
+        initEventHandler();
     }
 
     /**
@@ -245,16 +249,21 @@ public final class RecordingActivityMonitor implements AudioSystem.AudioRecordin
                     ? anonymizeForPublicConsumption(configs) :
                       new ArrayList<AudioRecordingConfiguration>();
             for (RecMonitorClient rmc : mClients) {
-                try {
-                    if (rmc.mIsPrivileged) {
-                        rmc.mDispatcherCb.dispatchRecordingConfigChange(configs);
-                    } else {
-                        rmc.mDispatcherCb.dispatchRecordingConfigChange(configsPublic);
-                    }
-                } catch (RemoteException e) {
-                    Log.w(TAG, "Could not call dispatchRecordingConfigChange() on client", e);
-                }
+                mEventHandler.obtainMessage(MSG_L_DISPATCH_RECORDING_CONFIG_CHANGE, rmc)
+                        .sendToTarget();
             }
+        }
+    }
+
+    private void dispatchRecordingConfigChangeToClient(RecMonitorClient rmc) {
+        try {
+            if (rmc.mIsPrivileged) {
+                rmc.mDispatcherCb.dispatchRecordingConfigChange(configs);
+            } else {
+                rmc.mDispatcherCb.dispatchRecordingConfigChange(configsPublic);
+            }
+        } catch (RemoteException e) {
+            Log.w(TAG, "Could not call dispatchRecordingConfigChange() on client", e);
         }
     }
 
@@ -643,4 +652,28 @@ public final class RecordingActivityMonitor implements AudioSystem.AudioRecordin
 
     private static final AudioEventLogger sEventLogger = new AudioEventLogger(50,
             "recording activity received by AudioService");
+
+    //=================================================================
+    // Message handling
+    private Handler mEventHandler;
+    private HandlerThread mEventThread;
+
+    private static final int MSG_L_DISPATCH_RECORDING_CONFIG_CHANGE = 1;
+
+    private void initEventHandler() {
+        mEventThread = new HandlerThread(TAG);
+        mEventThread.start();
+        mEventHandler = new Handler(mEventThread.getLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case MSG_L_DISPATCH_RECORDING_CONFIG_CHANGE:
+                        dispatchRecordingConfigChangeToClient((RecMonitorClient) msg.obj);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+    }
 }

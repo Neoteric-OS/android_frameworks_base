@@ -560,24 +560,29 @@ public final class PlaybackActivityMonitor
             final Iterator<PlayMonitorClient> clientIterator = mClients.iterator();
             while (clientIterator.hasNext()) {
                 final PlayMonitorClient pmc = clientIterator.next();
-                try {
-                    // do not spam the logs if there are problems communicating with this client
-                    if (pmc.mErrorCount < PlayMonitorClient.MAX_ERRORS) {
-                        if (pmc.mIsPrivileged) {
-                            pmc.mDispatcherCb.dispatchPlaybackConfigChange(configsSystem,
-                                    iplayerReleased);
-                        } else {
-                            // non-system clients don't have the control interface IPlayer, so
-                            // they don't need to flush commands when a player was released
-                            pmc.mDispatcherCb.dispatchPlaybackConfigChange(configsPublic, false);
-                        }
-                    }
-                } catch (RemoteException e) {
-                    pmc.mErrorCount++;
-                    Log.e(TAG, "Error (" + pmc.mErrorCount +
-                            ") trying to dispatch playback config change to " + pmc, e);
+                mEventHandler.obtainMessage(MSG_L_DISPATCH_PLAYBACK_CONFIG_CHANGE, pmc)
+                        .sendToTarget();
+            }
+        }
+    }
+
+    private void dispatchPlaybackChangeToClient(PlayMonitorClient pmc) {
+        try {
+            // do not spam the logs if there are problems communicating with this client
+            if (pmc.mErrorCount < PlayMonitorClient.MAX_ERRORS) {
+                if (pmc.mIsPrivileged) {
+                    pmc.mDispatcherCb.dispatchPlaybackConfigChange(configsSystem,
+                            iplayerReleased);
+                } else {
+                    // non-system clients don't have the control interface IPlayer, so
+                    // they don't need to flush commands when a player was released
+                    pmc.mDispatcherCb.dispatchPlaybackConfigChange(configsPublic, false);
                 }
             }
+        } catch (RemoteException e) {
+            pmc.mErrorCount++;
+            Log.e(TAG, "Error (" + pmc.mErrorCount +
+                    ") trying to dispatch playback config change to " + pmc, e);
         }
     }
 
@@ -1266,6 +1271,7 @@ public final class PlaybackActivityMonitor
      *         type: AudioDeviceAttributes
      */
     private static final int MSG_L_TIMEOUT_MUTE_AWAIT_CONNECTION = 1;
+    private static final int MSG_L_DISPATCH_PLAYBACK_CONFIG_CHANGE = 2;
 
     private void initEventHandler() {
         mEventThread = new HandlerThread(TAG);
@@ -1281,6 +1287,9 @@ public final class PlaybackActivityMonitor
                             unmutePlayersExpectingDevice();
                         }
                         mMuteAwaitConnectionTimeoutCb.accept((AudioDeviceAttributes) msg.obj);
+                        break;
+                    case MSG_L_DISPATCH_PLAYBACK_CONFIG_CHANGE:
+                        dispatchPlaybackChangeToClient((PlayMonitorClient) msg.obj);
                         break;
                     default:
                         break;
