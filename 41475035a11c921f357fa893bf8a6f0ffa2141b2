@@ -16,6 +16,40 @@
       "message": "Hello,\nI found that the system app is often deleted when the OS is changed. \nIt looks like null check is needed, so please check it.",
       "revId": "41475035a11c921f357fa893bf8a6f0ffa2141b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e73fcac1_3da72cd6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561936
+      },
+      "writtenOn": "2022-09-26T01:37:47Z",
+      "side": 1,
+      "message": "Hello,",
+      "revId": "41475035a11c921f357fa893bf8a6f0ffa2141b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65e0c01a_5d290bf1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561936
+      },
+      "writtenOn": "2022-09-26T01:37:47Z",
+      "side": 1,
+      "message": "Hello,\nI don\u0027t think the modifications have been merged normally. Is there anything else I can check?\nIf not, please check so that it can be merged.\nThank you~!",
+      "revId": "41475035a11c921f357fa893bf8a6f0ffa2141b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
