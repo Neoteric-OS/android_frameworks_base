@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "304d60aa_b1c3fe67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2022-09-26T12:59:23Z",
+      "side": 1,
+      "message": "Thanks for the fix!\n\nI\u0027m not sure why this test project is assigned tot the haptics team, it seems to be testing either an audio or notification setting.",
+      "revId": "652ac963d64d9a286a81e646647167d2142afdf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
