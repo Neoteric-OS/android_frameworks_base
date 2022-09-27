@@ -55,7 +55,6 @@ import android.os.ExternalVibration;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.IExternalVibrationController;
-import android.os.IExternalVibratorService;
 import android.os.IVibratorStateListener;
 import android.os.Looper;
 import android.os.PowerManager;
@@ -68,6 +67,7 @@ import android.os.VibrationAttributes;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.os.VibratorInfo;
+import android.os.VibratorScale;
 import android.os.test.TestLooper;
 import android.os.vibrator.PrebakedSegment;
 import android.os.vibrator.PrimitiveSegment;
@@ -1207,7 +1207,7 @@ public class VibratorManagerServiceTest {
         int scale = mExternalVibratorService.onExternalVibrationStart(externalVibration);
         mExternalVibratorService.onExternalVibrationStop(externalVibration);
 
-        assertNotEquals(IExternalVibratorService.SCALE_MUTE, scale);
+        assertNotEquals(VibratorScale.SCALE_MUTE, scale);
         assertEquals(Arrays.asList(false, true, false),
                 mVibratorProviders.get(1).getExternalControlStates());
 
@@ -1238,8 +1238,8 @@ public class VibratorManagerServiceTest {
                 ringtoneAudioAttrs, secondController, secondToken);
         int secondScale = mExternalVibratorService.onExternalVibrationStart(secondVibration);
 
-        assertNotEquals(IExternalVibratorService.SCALE_MUTE, firstScale);
-        assertNotEquals(IExternalVibratorService.SCALE_MUTE, secondScale);
+        assertNotEquals(VibratorScale.SCALE_MUTE, firstScale);
+        assertNotEquals(VibratorScale.SCALE_MUTE, secondScale);
         verify(firstController).mute();
         verify(secondController, never()).mute();
         // Set external control called only once.
@@ -1273,7 +1273,7 @@ public class VibratorManagerServiceTest {
         ExternalVibration externalVibration = new ExternalVibration(UID, PACKAGE_NAME, AUDIO_ATTRS,
                 mock(IExternalVibrationController.class));
         int scale = mExternalVibratorService.onExternalVibrationStart(externalVibration);
-        assertNotEquals(IExternalVibratorService.SCALE_MUTE, scale);
+        assertNotEquals(VibratorScale.SCALE_MUTE, scale);
 
         // Vibration is cancelled.
         assertTrue(waitUntil(s -> !s.isVibrating(1), service, TEST_TIMEOUT_MILLIS));
@@ -1294,17 +1294,17 @@ public class VibratorManagerServiceTest {
         setRingerMode(AudioManager.RINGER_MODE_SILENT);
         createSystemReadyService();
         int scale = mExternalVibratorService.onExternalVibrationStart(externalVibration);
-        assertEquals(IExternalVibratorService.SCALE_MUTE, scale);
+        assertEquals(VibratorScale.SCALE_MUTE, scale);
 
         setRingerMode(AudioManager.RINGER_MODE_NORMAL);
         createSystemReadyService();
         scale = mExternalVibratorService.onExternalVibrationStart(externalVibration);
-        assertNotEquals(IExternalVibratorService.SCALE_MUTE, scale);
+        assertNotEquals(VibratorScale.SCALE_MUTE, scale);
 
         setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
         createSystemReadyService();
         scale = mExternalVibratorService.onExternalVibrationStart(externalVibration);
-        assertNotEquals(IExternalVibratorService.SCALE_MUTE, scale);
+        assertNotEquals(VibratorScale.SCALE_MUTE, scale);
     }
 
     @Test
@@ -1325,13 +1325,13 @@ public class VibratorManagerServiceTest {
         int scale = mExternalVibratorService.onExternalVibrationStart(
                 new ExternalVibration(UID, PACKAGE_NAME, audioAttrs,
                         mock(IExternalVibrationController.class)));
-        assertEquals(IExternalVibratorService.SCALE_MUTE, scale);
+        assertEquals(VibratorScale.SCALE_MUTE, scale);
 
         createSystemReadyService();
         scale = mExternalVibratorService.onExternalVibrationStart(
                 new ExternalVibration(UID, PACKAGE_NAME, flaggedAudioAttrs,
                         mock(IExternalVibrationController.class)));
-        assertNotEquals(IExternalVibratorService.SCALE_MUTE, scale);
+        assertNotEquals(VibratorScale.SCALE_MUTE, scale);
     }
 
     @Test
@@ -1349,7 +1349,7 @@ public class VibratorManagerServiceTest {
         int scale = mExternalVibratorService.onExternalVibrationStart(
                 new ExternalVibration(/* uid= */ 123, PACKAGE_NAME, flaggedAudioAttrs,
                         mock(IExternalVibrationController.class)));
-        assertEquals(IExternalVibratorService.SCALE_MUTE, scale);
+        assertEquals(VibratorScale.SCALE_MUTE, scale);
     }
 
     private VibrationEffectSegment expectedPrebaked(int effectId) {

@@ -36,12 +36,12 @@ import android.content.ContentResolver;
 import android.content.ContextWrapper;
 import android.content.pm.PackageManagerInternal;
 import android.os.Handler;
-import android.os.IExternalVibratorService;
 import android.os.PowerManagerInternal;
 import android.os.UserHandle;
 import android.os.VibrationAttributes;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.os.VibratorScale;
 import android.os.test.TestLooper;
 import android.os.vibrator.PrebakedSegment;
 import android.os.vibrator.PrimitiveSegment;
@@ -120,28 +120,28 @@ public class VibrationScalerTest {
     public void testGetExternalVibrationScale() {
         setDefaultIntensity(USAGE_TOUCH, Vibrator.VIBRATION_INTENSITY_LOW);
         setUserSetting(Settings.System.HAPTIC_FEEDBACK_INTENSITY, VIBRATION_INTENSITY_HIGH);
-        assertEquals(IExternalVibratorService.SCALE_VERY_HIGH,
+        assertEquals(VibratorScale.SCALE_VERY_HIGH,
                 mVibrationScaler.getExternalVibrationScale(USAGE_TOUCH));
 
         setUserSetting(Settings.System.HAPTIC_FEEDBACK_INTENSITY, VIBRATION_INTENSITY_MEDIUM);
-        assertEquals(IExternalVibratorService.SCALE_HIGH,
+        assertEquals(VibratorScale.SCALE_HIGH,
                 mVibrationScaler.getExternalVibrationScale(USAGE_TOUCH));
 
         setUserSetting(Settings.System.HAPTIC_FEEDBACK_INTENSITY, VIBRATION_INTENSITY_LOW);
-        assertEquals(IExternalVibratorService.SCALE_NONE,
+        assertEquals(VibratorScale.SCALE_NONE,
                 mVibrationScaler.getExternalVibrationScale(USAGE_TOUCH));
 
         setDefaultIntensity(USAGE_TOUCH, VIBRATION_INTENSITY_MEDIUM);
-        assertEquals(IExternalVibratorService.SCALE_LOW,
+        assertEquals(VibratorScale.SCALE_LOW,
                 mVibrationScaler.getExternalVibrationScale(USAGE_TOUCH));
 
         setDefaultIntensity(USAGE_TOUCH, VIBRATION_INTENSITY_HIGH);
-        assertEquals(IExternalVibratorService.SCALE_VERY_LOW,
+        assertEquals(VibratorScale.SCALE_VERY_LOW,
                 mVibrationScaler.getExternalVibrationScale(USAGE_TOUCH));
 
         setUserSetting(Settings.System.HAPTIC_FEEDBACK_INTENSITY, VIBRATION_INTENSITY_OFF);
         // Vibration setting being bypassed will use default setting and not scale.
-        assertEquals(IExternalVibratorService.SCALE_NONE,
+        assertEquals(VibratorScale.SCALE_NONE,
                 mVibrationScaler.getExternalVibrationScale(USAGE_TOUCH));
     }
 

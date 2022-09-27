@@ -32,17 +32,10 @@ import android.os.ExternalVibration;
  * {@hide}
  */
 interface IExternalVibratorService {
-    const int SCALE_MUTE = -100;
-    const int SCALE_VERY_LOW = -2;
-    const int SCALE_LOW = -1;
-    const int SCALE_NONE = 0;
-    const int SCALE_HIGH = 1;
-    const int SCALE_VERY_HIGH = 2;
-
     /**
      * A method called by the external system to start a vibration.
      *
-     * If this returns {@code SCALE_MUTE}, then the vibration should <em>not</em> play. If this
+     * If this returns {@code VibratorScale.SCALE_MUTE}, then the vibration should <em>not</em> play. If this
      * returns any other scale level, then any currently playing vibration controlled by the
      * requesting system must be muted and this vibration can begin playback.
      *
@@ -51,7 +44,7 @@ interface IExternalVibratorService {
      *
      * @param vibration An ExternalVibration
      *
-     * @return {@code SCALE_MUTE} if the external vibration should not play, and any other scale
+     * @return {@code VibratorScale.SCALE_MUTE} if the external vibration should not play, and any other scale
      *         level if it should.
      */
     int onExternalVibrationStart(in ExternalVibration vib);

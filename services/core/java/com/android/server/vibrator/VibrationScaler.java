@@ -18,9 +18,9 @@ package com.android.server.vibrator;
 
 import android.content.Context;
 import android.hardware.vibrator.V1_0.EffectStrength;
-import android.os.IExternalVibratorService;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.os.VibratorScale;
 import android.os.vibrator.PrebakedSegment;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -31,11 +31,11 @@ final class VibrationScaler {
 
     // Scale levels. Each level, except MUTE, is defined as the delta between the current setting
     // and the default intensity for that type of vibration (i.e. current - default).
-    private static final int SCALE_VERY_LOW = IExternalVibratorService.SCALE_VERY_LOW; // -2
-    private static final int SCALE_LOW = IExternalVibratorService.SCALE_LOW; // -1
-    private static final int SCALE_NONE = IExternalVibratorService.SCALE_NONE; // 0
-    private static final int SCALE_HIGH = IExternalVibratorService.SCALE_HIGH; // 1
-    private static final int SCALE_VERY_HIGH = IExternalVibratorService.SCALE_VERY_HIGH; // 2
+    private static final int SCALE_VERY_LOW = VibratorScale.SCALE_VERY_LOW; // -2
+    private static final int SCALE_LOW = VibratorScale.SCALE_LOW; // -1
+    private static final int SCALE_NONE = VibratorScale.SCALE_NONE; // 0
+    private static final int SCALE_HIGH = VibratorScale.SCALE_HIGH; // 1
+    private static final int SCALE_VERY_HIGH = VibratorScale.SCALE_VERY_HIGH; // 2
 
     // Scale factors for each level.
     private static final float SCALE_FACTOR_VERY_LOW = 0.6f;
@@ -69,7 +69,7 @@ final class VibrationScaler {
      * Calculates the scale to be applied to external vibration with given usage.
      *
      * @param usageHint one of VibrationAttributes.USAGE_*
-     * @return one of IExternalVibratorService.SCALE_*
+     * @return one of VibratorScale.SCALE_*
      */
     public int getExternalVibrationScale(int usageHint) {
         int defaultIntensity = mSettingsController.getDefaultIntensity(usageHint);
