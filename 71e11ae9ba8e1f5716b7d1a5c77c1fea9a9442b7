@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52f1f783_67884a14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1889140
+      },
+      "writtenOn": "2022-09-27T20:39:09Z",
+      "side": 1,
+      "message": "By passing presubmits because of flaky test cases:\n\nb/244184479",
+      "revId": "71e11ae9ba8e1f5716b7d1a5c77c1fea9a9442b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
