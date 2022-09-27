@@ -16,6 +16,24 @@
       "message": "Hi Henry, this is not the right place to submit this CL. It should be cherry-picked and submitted into googleplex-android gerrit, sc-tv-dev branch.",
       "revId": "8e1bf00b8882ae7f467e3aadb88dd1a230024d1f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38102f03_3f3f4acf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2022-09-27T00:51:27Z",
+      "side": 1,
+      "message": "Oh, you are right.  It\u0027s framework code.\nImplementation is right for me.\nWill you cherry pick it ?",
+      "parentUuid": "9bda84f2_6d9347ef",
+      "revId": "8e1bf00b8882ae7f467e3aadb88dd1a230024d1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
