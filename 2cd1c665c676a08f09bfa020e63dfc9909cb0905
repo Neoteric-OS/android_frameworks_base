@@ -16,6 +16,24 @@
       "message": "Hi Hu Peng, can you please explain your idea behind this fix? Both the ContentObserver and the DisplayListener already run on BrightnessSynchronizer\u0027s handler thread, therefore I don\u0027t understand what will be different with your fix.",
       "revId": "2cd1c665c676a08f09bfa020e63dfc9909cb0905",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb76a047_23ed086b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1700909
+      },
+      "writtenOn": "2022-09-27T01:54:22Z",
+      "side": 1,
+      "message": "@philipjunker@google.com\nFrom the following log (Bug: 246667846), the \"runUpdate\" method will have different threads coming in and cause concurrency issues. We need to keep them running on the same thread to avoid concurrency. Do you think so? If running in the same process, they don\u0027t have the problem in Bug 246667846, or do you have a more appropriate fix?\n\n09-09 20:51:54.794 1000 2414 3640 I BrightnessSynchronizer: [1213] New Update 1107(i) set brightness values: 0.06751312(f)\n09-09 20:51:54.795 1000 2414 2414 I BrightnessSynchronizer: [1214] New Update 1107(i) set brightness values: 0.06751312(f)",
+      "parentUuid": "b17d77c9_d1469452",
+      "revId": "2cd1c665c676a08f09bfa020e63dfc9909cb0905",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
