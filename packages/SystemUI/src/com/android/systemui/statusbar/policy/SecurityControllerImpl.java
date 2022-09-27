@@ -431,6 +431,10 @@ public class SecurityControllerImpl extends CurrentUserTracker implements Securi
                 if (legacyVpn == null || legacyVpn.state != LegacyVpnInfo.STATE_CONNECTED) {
                     continue;
                 }
+            } else if (cfg.interfaze == null) {
+                // If interface is null, which means the VPN is not connected. So the icon should be
+                // hidden to prevent misleading the user.
+                continue;
             }
             vpns.put(user.id, cfg);
         }
