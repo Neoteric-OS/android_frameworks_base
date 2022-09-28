@@ -1173,6 +1173,7 @@ class ActivityMetricsLogger {
             isLoading = isIncrementalLoading(info.mLastLaunchedActivity.packageName,
                             info.mLastLaunchedActivity.mUserId);
         }
+        String launchToken = infoSnapshot.launchedActivityLaunchToken;
         FrameworkStatsLog.write(
                 FrameworkStatsLog.APP_START_FULLY_DRAWN,
                 info.mLastLaunchedActivity.info.applicationInfo.uid,
@@ -1189,7 +1190,8 @@ class ActivityMetricsLogger {
                 info.mSourceEventDelayMs,
                 isIncremental,
                 isLoading,
-                info.mLastLaunchedActivity.info.name.hashCode());
+                info.mLastLaunchedActivity.info.name.hashCode(),
+                TimeUnit.NANOSECONDS.toMillis(info.mTransitionStartTimeNs));
 
         // Ends the trace started at the beginning of this function. This is located here to allow
         // the trace slice to have a noticable duration.
