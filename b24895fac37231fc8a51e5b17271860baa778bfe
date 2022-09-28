@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1523a43e_bfffec9b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2022-09-28T22:42:24Z",
+      "side": 1,
+      "message": "Hi Jeff, I noticed that UiAutomationConnection.java has no OWNER so it defaults to this dir\u0027s base OWNERs list. I\u0027m updating that in this change so that it uses the same OWNERs as UiAutomation.java. Please LMK if you have any concerns!",
+      "revId": "b24895fac37231fc8a51e5b17271860baa778bfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
