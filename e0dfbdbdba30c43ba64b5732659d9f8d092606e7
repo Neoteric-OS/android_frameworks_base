@@ -51,6 +51,24 @@
       "parentUuid": "d52e03c1_6a9db847",
       "revId": "e0dfbdbdba30c43ba64b5732659d9f8d092606e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46056315_ffe18211",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1570284
+      },
+      "writtenOn": "2022-09-29T08:31:55Z",
+      "side": 1,
+      "message": "Yes this is the same one. This deadlock should be fixed already in the PlaybackActivityMonitor",
+      "parentUuid": "04a24e09_e3674469",
+      "revId": "e0dfbdbdba30c43ba64b5732659d9f8d092606e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
