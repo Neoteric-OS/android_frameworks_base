@@ -189,6 +189,9 @@ void DeferredLayerUpdater::apply() {
                         maxLuminanceNits =
                                 std::max(cta861_3.maxContentLightLevel, maxLuminanceNits);
                     }
+                    AHardwareBuffer_Desc desc;
+                    AHardwareBuffer_describe(hardwareBuffer, &desc);
+                    mLayer->setBufferFormat(desc.format);
                     updateLayer(forceFilter, layerImage, outTransform, currentCropRect,
                                 maxLuminanceNits);
                 }
