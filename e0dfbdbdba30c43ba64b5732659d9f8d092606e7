@@ -33,6 +33,24 @@
       "message": "Vald,\n\nIs this the same problem as b/227596824?",
       "revId": "e0dfbdbdba30c43ba64b5732659d9f8d092606e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04a24e09_e3674469",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1673919
+      },
+      "writtenOn": "2022-09-29T07:02:55Z",
+      "side": 1,
+      "message": "Hi Eric, I can not find the issue \"b/227596824\", was this deadlock issue fixed already?",
+      "parentUuid": "d52e03c1_6a9db847",
+      "revId": "e0dfbdbdba30c43ba64b5732659d9f8d092606e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
