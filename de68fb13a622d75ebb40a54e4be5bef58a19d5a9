@@ -52,6 +52,24 @@
       "parentUuid": "30113c5a_75f04377",
       "revId": "de68fb13a622d75ebb40a54e4be5bef58a19d5a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87b57f54_748d5c34",
+        "filename": "api/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-09-30T13:07:29Z",
+      "side": 1,
+      "message": "Doesn\u0027t work :\\ (the Android.bp version). Not sure why,.. didn\u0027t dig into the generated Android.mk",
+      "parentUuid": "35c5b496_d07af5e0",
+      "revId": "de68fb13a622d75ebb40a54e4be5bef58a19d5a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
