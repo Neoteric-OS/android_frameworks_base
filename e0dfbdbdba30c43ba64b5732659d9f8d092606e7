@@ -69,6 +69,24 @@
       "parentUuid": "04a24e09_e3674469",
       "revId": "e0dfbdbdba30c43ba64b5732659d9f8d092606e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63f4a031_91486310",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1673919
+      },
+      "writtenOn": "2022-09-30T03:18:27Z",
+      "side": 1,
+      "message": "Hi Vlad, could you please provide the fix, we need to apply the patch. Thank you!",
+      "parentUuid": "46056315_ffe18211",
+      "revId": "e0dfbdbdba30c43ba64b5732659d9f8d092606e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
