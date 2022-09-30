@@ -87,6 +87,24 @@
       "parentUuid": "46056315_ffe18211",
       "revId": "e0dfbdbdba30c43ba64b5732659d9f8d092606e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6437aae4_9ce85b9e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1570284
+      },
+      "writtenOn": "2022-09-30T09:09:42Z",
+      "side": 1,
+      "message": "Cherry-picked the fix: aosp/2239513",
+      "parentUuid": "63f4a031_91486310",
+      "revId": "e0dfbdbdba30c43ba64b5732659d9f8d092606e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
