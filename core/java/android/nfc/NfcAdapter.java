@@ -531,7 +531,7 @@ public final class NfcAdapter {
      * context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC_BEAM)
      */
     private static boolean hasBeamFeature() {
-        IPackageManager pm = ActivityThread.getPackageManager();
+        IPackageManager pm = IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
         if (pm == null) {
             Log.e(TAG, "Cannot get package manager, assuming no Android Beam feature");
             return false;
@@ -551,7 +551,7 @@ public final class NfcAdapter {
      * context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC)
      */
     private static boolean hasNfcFeature() {
-        IPackageManager pm = ActivityThread.getPackageManager();
+        IPackageManager pm = IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
         if (pm == null) {
             Log.e(TAG, "Cannot get package manager, assuming no NFC feature");
             return false;
@@ -570,7 +570,7 @@ public final class NfcAdapter {
      * but without using a context.
      */
     private static boolean hasNfcHceFeature() {
-        IPackageManager pm = ActivityThread.getPackageManager();
+        IPackageManager pm = IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
         if (pm == null) {
             Log.e(TAG, "Cannot get package manager, assuming no NFC feature");
             return false;
@@ -594,7 +594,7 @@ public final class NfcAdapter {
      */
     public @NonNull List<String> getSupportedOffHostSecureElements() {
         List<String> offHostSE = new ArrayList<String>();
-        IPackageManager pm = ActivityThread.getPackageManager();
+        IPackageManager pm = IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
         if (pm == null) {
             Log.e(TAG, "Cannot get package manager, assuming no off-host CE feature");
             return offHostSE;
