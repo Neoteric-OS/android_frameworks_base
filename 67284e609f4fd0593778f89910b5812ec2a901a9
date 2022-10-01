@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d1a17c9_775b72c4",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-10-01T02:09:04Z",
+      "side": 1,
+      "message": "nit: since this is being used as the timeout for the entire operation, this should be renamed to something that captures that.",
+      "range": {
+        "startLine": 125,
+        "startChar": 29,
+        "endLine": 125,
+        "endChar": 61
+      },
+      "revId": "67284e609f4fd0593778f89910b5812ec2a901a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a81c9bc4_6e02176c",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-10-01T02:09:04Z",
+      "side": 1,
+      "message": "You\u0027ll need to add the new ERROR_TIMEOUT_EXHAUSTED in this annotation as well I think.",
+      "range": {
+        "startLine": 138,
+        "startChar": 16,
+        "endLine": 138,
+        "endChar": 32
+      },
+      "revId": "67284e609f4fd0593778f89910b5812ec2a901a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
