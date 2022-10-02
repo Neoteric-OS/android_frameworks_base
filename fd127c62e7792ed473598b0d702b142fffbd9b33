@@ -16,6 +16,23 @@
       "message": "Presubmit passed earlier. The last patch changed the commit message only.",
       "revId": "fd127c62e7792ed473598b0d702b142fffbd9b33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b673a1a_8903687f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1506910
+      },
+      "writtenOn": "2022-10-02T23:33:12Z",
+      "side": 1,
+      "message": "What if I want 2 hours? Besides why just not make GNSS mandatery? At least it can do Stratum 0, unlike NTP, stratum field set to 0 in NTP packet indicates an unspecified stratum.",
+      "revId": "fd127c62e7792ed473598b0d702b142fffbd9b33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
