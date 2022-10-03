@@ -9411,7 +9411,9 @@ public class TelephonyManager {
      * @param allowedNetworkTypes The bitmask of allowed network type
      * @throws IllegalStateException if the Telephony process is not currently available.
      * @throws IllegalArgumentException if invalid AllowedNetworkTypesReason is passed.
-     * @throws SecurityException if the caller does not have the required privileges
+     * @throws SecurityException if the caller does not have the required privileges or if the
+     * caller tries to use a reason other than ALLOWED_NETWORK_TYPES_REASON_CARRIER with carrier
+     * privileges.
      */
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(
