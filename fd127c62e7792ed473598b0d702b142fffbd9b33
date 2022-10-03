@@ -33,6 +33,24 @@
       "message": "What if I want 2 hours? Besides why just not make GNSS mandatery? At least it can do Stratum 0, unlike NTP, stratum field set to 0 in NTP packet indicates an unspecified stratum.",
       "revId": "fd127c62e7792ed473598b0d702b142fffbd9b33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60512ad7_a646a7e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-10-03T09:05:05Z",
+      "side": 1,
+      "message": "\u003e What if I want 2 hours?\n\nDepends on your role? e.g. end user or Android device manufacturer / image developer?\n\nIf end user: You typically don\u0027t - Android\u0027s stock configuration is static. You can force refreshes by the command line in developer mode. Downstream Android device manufacturers can change this, though.\n\nIf image developer: Change the value or apply a config overlay.\n\n2 hours wouldn\u0027t achieve much. Android device clocks typically don\u0027t drift that much and we don\u0027t target high accuracy for this clock. There are other factors that limit accuracy.\n\n\u003e Besides why just not make GNSS mandatery?\n\nMost smartphones / tablets are connected to the internet most of the time. Stock Android\u0027s default NTP servers are reliable / accurate. Image developers for different form factors with different network / power profiles can change the default configuration if they wish to obtain time from other sources or change the priorities.\n\nStock Android\u0027s GNSS-based time detector logic is not enabled by default but is used on at least one form factor I\u0027m aware of without reliable network connectivity. It is passive, so relies on something else on the device getting GNSS location regularly enough (e.g. if the user runs a Map application). If the GNSS time detection client were more active (i.e. it powered up GNSS receiver hardware), it would consume power and the device would need to be able to receive GNSS signals when it does, which isn\u0027t possible in many conditions. e.g. indoors, underground.",
+      "parentUuid": "3b673a1a_8903687f",
+      "revId": "fd127c62e7792ed473598b0d702b142fffbd9b33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
