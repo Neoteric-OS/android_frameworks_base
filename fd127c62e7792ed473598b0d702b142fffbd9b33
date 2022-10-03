@@ -68,6 +68,24 @@
       "message": "\u003eAndroid device clocks typically don\u0027t drift that much and we don\u0027t target high accuracy for this clock. There are other factors that limit accuracy.\n\nThey do drift a lot, most phones are at least 400 ms off after 24 hours, usually 1 second. In fact nanosecond stability to get GNSS fix is like 5 milliseconds only. But that is simple to check with ultra stable Javascript from https://time.is, or using NTP selectable server app (you are planning to allow setting time from apps like this, right? some new Android 13 API) https://play.google.com/store/apps/details?id\u003dpartl.atomicclock\n\nor finally getting time from gnss, should be Stratum 0, most accurate https://play.google.com/store/apps/details?id\u003dcom.pautinanet.smartgpstime\n\nThis is no different with windows 11, to get ms precision forever you should set 0x01 flag for *multiple* ntp servers and make w32time service automatic or it will drift like crazy, see this https://github.com/MicrosoftDocs/windowsserverdocs/issues/2065#event-4029519724\n\nAre you afraid whatever NTP server you use will DDOS? I also think it would make sense to use NTP on boot, again as windows does, it has very low level kernel driver for this that does stuff on boot (leap seconds too). Reboot makes time drift very badly.\n\n\u003ewhich isn\u0027t possible in many conditions. e.g. indoors, \n\nmodern devices solve multipatch and get a 3D fix no problem near the window of if the weather is good, even not far from it.\n\nAlso about NITZ. It is no longer a default, yet you do not compare NTP and NITZ to invalidaye NITZ, do you? The point here NTP server should be close or multiple servers must be used to fix the errors. NITZ has no such problem, since it has garanteed delays.",
       "revId": "fd127c62e7792ed473598b0d702b142fffbd9b33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e8327e4_9ca44138",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-10-03T11:00:07Z",
+      "side": 1,
+      "message": "This feels like a discussion that would best be had on one or more Android feature requests (https://issuetracker.google.com/Android/ for external parties I believe), particularly if you have data, suggestions, or API requests.\n\nYou clearly have knowledge, have given this thought and have insights that would be valuable for me to understand. I\u0027ll try to respond if I can if you let me know the links here.\n\nWhen you create issues / feature requests, if you can express how Android is not meeting your needs right now then I can understand if they align with what we\u0027re trying to provide in the Stock Android platform.",
+      "parentUuid": "33c35f39_cc4e42e7",
+      "revId": "fd127c62e7792ed473598b0d702b142fffbd9b33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
