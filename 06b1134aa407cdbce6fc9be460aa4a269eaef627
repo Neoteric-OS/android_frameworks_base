@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "778a2ad4_bf8b8ddc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1889975
+      },
+      "writtenOn": "2022-10-04T20:31:30Z",
+      "side": 1,
+      "message": "This was merged in master. Is there something we need to specify when we add this to aosp?",
+      "revId": "06b1134aa407cdbce6fc9be460aa4a269eaef627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
