@@ -346,12 +346,17 @@ class CredstoreIdentityCredential extends IdentityCredential {
             }
         }
 
+        byte[] signature = resultParcel.signature;
+        if (signature != null && signature.length == 0) {
+            signature = null;
+        }
+
         byte[] mac = resultParcel.mac;
         if (mac != null && mac.length == 0) {
             mac = null;
         }
         CredstoreResultData.Builder resultDataBuilder = new CredstoreResultData.Builder(
-                resultParcel.staticAuthenticationData, resultParcel.deviceNameSpaces, mac);
+            resultParcel.staticAuthenticationData, resultParcel.deviceNameSpaces, mac, signature);
 
         for (ResultNamespaceParcel resultNamespaceParcel : resultParcel.resultNamespaces) {
             for (ResultEntryParcel resultEntryParcel : resultNamespaceParcel.entries) {
