@@ -33,6 +33,23 @@
       "message": "I think hardware/interfaces is a better place for these AIDL files. Thus +2\u0027ed.\n\nThis needs to be acknowledged by the owners though.",
       "revId": "f1b0783e9ec8bc0a6ccd3cbea540e7bce2e69a9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0696a73_5fdffc97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2022-10-04T03:48:25Z",
+      "side": 1,
+      "message": "@JeongikCha Not sure what has triggered this change. The bug has no details. Could you please explain what problem does this move intend to solve?",
+      "revId": "f1b0783e9ec8bc0a6ccd3cbea540e7bce2e69a9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
