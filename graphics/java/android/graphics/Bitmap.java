@@ -63,6 +63,7 @@ public final class Bitmap implements Parcelable {
     // Convenience for JNI access
     @UnsupportedAppUsage
     private final long mNativePtr;
+    private final long mFileID;
 
     /**
      * Represents whether the Bitmap's content is requested to be pre-multiplied.
@@ -125,13 +126,20 @@ public final class Bitmap implements Parcelable {
             boolean requestPremultiplied, byte[] ninePatchChunk,
             NinePatch.InsetStruct ninePatchInsets) {
         this(nativeBitmap, width, height, density, requestPremultiplied, ninePatchChunk,
-                ninePatchInsets, true);
+                ninePatchInsets, true, 0);
+    }
+
+    Bitmap(long nativeBitmap, int width, int height, int density,
+            boolean requestPremultiplied, byte[] ninePatchChunk,
+            NinePatch.InsetStruct ninePatchInsets, boolean fromMalloc) {
+        this(nativeBitmap, width, height, density, requestPremultiplied, ninePatchChunk,
+            ninePatchInsets, true, 0);
     }
 
     // called from JNI and Bitmap_Delegate.
     Bitmap(long nativeBitmap, int width, int height, int density,
             boolean requestPremultiplied, byte[] ninePatchChunk,
-            NinePatch.InsetStruct ninePatchInsets, boolean fromMalloc) {
+            NinePatch.InsetStruct ninePatchInsets, boolean fromMalloc, long fileID) {
         if (nativeBitmap == 0) {
             throw new RuntimeException("internal error: native bitmap is 0");
         }
@@ -147,12 +155,17 @@ public final class Bitmap implements Parcelable {
         }
 
         mNativePtr = nativeBitmap;
+        mFileID = fileID;
 
         final int allocationByteCount = getAllocationByteCount();
         NativeAllocationRegistry registry;
         if (fromMalloc) {
             registry = NativeAllocationRegistry.createMalloced(
                     Bitmap.class.getClassLoader(), nativeGetNativeFinalizer(), allocationByteCount);
+        } else if (fileID != 0) {
+            registry = NativeAllocationRegistry.createRefCounted(
+                    Bitmap.class.getClassLoader(), nativeGetNativeFinalizer(), allocationByteCount,
+                        fileID);
         } else {
             registry = NativeAllocationRegistry.createNonmalloced(
                     Bitmap.class.getClassLoader(), nativeGetNativeFinalizer(), allocationByteCount);
@@ -169,6 +182,15 @@ public final class Bitmap implements Parcelable {
      */
     public long getNativeInstance() {
         return mNativePtr;
+    }
+
+    /**
+     * Return the inode associated with our backing buffer
+     *
+     * @hide
+     */
+    public long getFileId() {
+        return mFileID;
     }
 
     /**
