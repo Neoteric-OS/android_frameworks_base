@@ -16,6 +16,24 @@
       "message": "This was merged in master. Is there something we need to specify when we add this to aosp?",
       "revId": "06b1134aa407cdbce6fc9be460aa4a269eaef627",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23c1bb2d_4c028de3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1043845
+      },
+      "writtenOn": "2022-10-04T21:42:14Z",
+      "side": 1,
+      "message": "I\u0027ve never needed to do anything special when cherry-picking a change out in the past, but tbh I\u0027m not clear on how the automerger behaves any more. Treehugger should tell me if I\u0027ve done this wrong though.\n\n(in case you\u0027re wondering why I\u0027m doing this, it\u0027s because I want to pull a new NDK sysroot from aosp/master, but the internal change that I made landed too late to have been included in the recent merge)",
+      "parentUuid": "778a2ad4_bf8b8ddc",
+      "revId": "06b1134aa407cdbce6fc9be460aa4a269eaef627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
