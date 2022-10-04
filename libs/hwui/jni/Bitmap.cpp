@@ -201,6 +201,7 @@ jobject createBitmap(JNIEnv* env, Bitmap* bitmap,
         int density) {
     bool isMutable = bitmapCreateFlags & kBitmapCreateFlag_Mutable;
     bool isPremultiplied = bitmapCreateFlags & kBitmapCreateFlag_Premultiplied;
+    unsigned long ashmemIno;
     // The caller needs to have already set the alpha type properly, so the
     // native SkBitmap stays in sync with the Java Bitmap.
     assert_premultiplied(bitmap->info(), isPremultiplied);
@@ -209,9 +210,13 @@ jobject createBitmap(JNIEnv* env, Bitmap* bitmap,
     if (!isMutable) {
         bitmapWrapper->bitmap().setImmutable();
     }
+
+    ashmemIno = bitmap->getAshmemIno();
+
     jobject obj = env->NewObject(gBitmap_class, gBitmap_constructorMethodID,
-            reinterpret_cast<jlong>(bitmapWrapper), bitmap->width(), bitmap->height(), density,
-            isPremultiplied, ninePatchChunk, ninePatchInsets, fromMalloc);
+                                 reinterpret_cast<jlong>(bitmapWrapper), bitmap->width(),
+                                 bitmap->height(), density, isPremultiplied, ninePatchChunk,
+                                 ninePatchInsets, fromMalloc, ashmemIno);
 
     if (env->ExceptionCheck() != 0) {
         ALOGE("*** Uncaught exception returned from Java call!\n");
@@ -1319,7 +1324,8 @@ int register_android_graphics_Bitmap(JNIEnv* env)
 {
     gBitmap_class = MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/graphics/Bitmap"));
     gBitmap_nativePtr = GetFieldIDOrDie(env, gBitmap_class, "mNativePtr", "J");
-    gBitmap_constructorMethodID = GetMethodIDOrDie(env, gBitmap_class, "<init>", "(JIIIZ[BLandroid/graphics/NinePatch$InsetStruct;Z)V");
+    gBitmap_constructorMethodID = GetMethodIDOrDie(
+            env, gBitmap_class, "<init>", "(JIIIZ[BLandroid/graphics/NinePatch$InsetStruct;ZJ)V");
     gBitmap_reinitMethodID = GetMethodIDOrDie(env, gBitmap_class, "reinit", "(IIZ)V");
 
 #ifdef __ANDROID__ // Layoutlib does not support graphic buffer or parcel
