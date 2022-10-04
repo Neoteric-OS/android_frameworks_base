@@ -79,6 +79,9 @@ sk_sp<Bitmap> Bitmap::allocateAshmemBitmap(SkBitmap* bitmap) {
 
 sk_sp<Bitmap> Bitmap::allocateAshmemBitmap(size_t size, const SkImageInfo& info, size_t rowBytes) {
 #ifdef __ANDROID__
+    ino_t ino = 0;
+    int ret;
+
     // Create new ashmem region with read/write priv
     int fd = ashmem_create_region("bitmap", size);
     if (fd < 0) {
@@ -96,7 +99,15 @@ sk_sp<Bitmap> Bitmap::allocateAshmemBitmap(size_t size, const SkImageInfo& info,
         close(fd);
         return nullptr;
     }
-    return sk_sp<Bitmap>(new Bitmap(addr, fd, size, info, rowBytes));
+
+    ret = ashmem_get_backing_ino(fd, &ino);
+    if (ret && ret != ENOTTY) {
+        munmap(addr, size);
+        close(fd);
+        return nullptr;
+    }
+
+    return sk_sp<Bitmap>(new Bitmap(addr, fd, ino, size, info, rowBytes));
 #else
     return Bitmap::allocateHeapBitmap(size, info, rowBytes);
 #endif
@@ -173,12 +184,16 @@ sk_sp<Bitmap> Bitmap::createFrom(const SkImageInfo& info, size_t rowBytes, int f
 #ifdef _WIN32 // ashmem not implemented on Windows
      return nullptr;
 #else
+    ino_t ino = 0;
+    bool caller_mmapped = !!addr;
+    int ret;
+
     if (info.colorType() == kUnknown_SkColorType) {
         LOG_ALWAYS_FATAL("unknown bitmap configuration");
         return nullptr;
     }
 
-    if (!addr) {
+    if (!caller_mmapped) {
         // Map existing ashmem region if not already mapped.
         int flags = readOnly ? (PROT_READ) : (PROT_READ | PROT_WRITE);
         size = ashmem_get_size_region(fd);
@@ -188,7 +203,13 @@ sk_sp<Bitmap> Bitmap::createFrom(const SkImageInfo& info, size_t rowBytes, int f
         }
     }
 
-    sk_sp<Bitmap> bitmap(new Bitmap(addr, fd, size, info, rowBytes));
+    ret = ashmem_get_backing_ino(fd, &ino);
+    if (ret && ret != ENOTTY) {
+        if (!caller_mmapped) munmap(addr, size);
+        return nullptr;
+    }
+
+    sk_sp<Bitmap> bitmap(new Bitmap(addr, fd, ino, size, info, rowBytes));
     if (readOnly) {
         bitmap->setImmutable();
     }
@@ -234,13 +255,15 @@ Bitmap::Bitmap(SkPixelRef& pixelRef, const SkImageInfo& info)
     mPixelStorage.wrapped.pixelRef = &pixelRef;
 }
 
-Bitmap::Bitmap(void* address, int fd, size_t mappedSize, const SkImageInfo& info, size_t rowBytes)
+Bitmap::Bitmap(void* address, int fd, ino_t ino, size_t mappedSize, const SkImageInfo& info,
+               size_t rowBytes)
         : SkPixelRef(info.width(), info.height(), address, rowBytes)
         , mInfo(validateAlpha(info))
         , mPixelStorageType(PixelStorageType::Ashmem) {
     mPixelStorage.ashmem.address = address;
     mPixelStorage.ashmem.fd = fd;
     mPixelStorage.ashmem.size = mappedSize;
+    mPixelStorage.ashmem.ino = ino;
 }
 
 #ifdef __ANDROID__ // Layoutlib does not support hardware acceleration
@@ -293,12 +316,21 @@ void Bitmap::setHasHardwareMipMap(bool hasMipMap) {
     mHasHardwareMipMap = hasMipMap;
 }
 
-int Bitmap::getAshmemFd() const {
+int Bitmap::getFileFd() const {
     switch (mPixelStorageType) {
         case PixelStorageType::Ashmem:
             return mPixelStorage.ashmem.fd;
         default:
             return -1;
+    }
+}
+
+ino_t Bitmap::getFileIno() const {
+    switch (mPixelStorageType) {
+        case PixelStorageType::Ashmem:
+            return mPixelStorage.ashmem.ino;
+        default:
+            return 0;
     }
 }
 
