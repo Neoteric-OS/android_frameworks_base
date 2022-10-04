@@ -31,6 +31,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
 import java.util.function.Consumer;
 
 /**
@@ -182,6 +185,17 @@ public class AtomicFile {
             Log.e(LOG_TAG, "Failed to close file output stream", e);
         }
         rename(mNewName, mBaseName);
+        try {
+            Path parentPath = mBaseName.getParentFile().toPath();
+            FileChannel parentFileChannel = FileChannel.open(parentPath);
+            parentFileChannel.force(true);
+            parentFileChannel.close();
+        } catch (InvalidPathException e) {
+            Log.e(LOG_TAG, "Failed to sync rename of file. Parent directory could not be found", e);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Failed to sync rename of file", e);
+        }
+
         if (mCommitEventLogger != null) {
             mCommitEventLogger.onFinishWrite();
         }
