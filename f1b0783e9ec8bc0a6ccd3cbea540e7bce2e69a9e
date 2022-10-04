@@ -50,6 +50,42 @@
       "message": "@JeongikCha Not sure what has triggered this change. The bug has no details. Could you please explain what problem does this move intend to solve?",
       "revId": "f1b0783e9ec8bc0a6ccd3cbea540e7bce2e69a9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0722361_812057cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2022-10-04T14:34:30Z",
+      "side": 1,
+      "message": "Yeah, that(the module is used both in vendor and system) \u0027s the reason why I am trying to move this module to hardware/interfaces instead of frameworks/base",
+      "parentUuid": "2c12c928_b52c9031",
+      "revId": "f1b0783e9ec8bc0a6ccd3cbea540e7bce2e69a9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dfb7561_4295112c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2022-10-04T14:34:30Z",
+      "side": 1,
+      "message": "The motivation for this change is unbundling vendor partition build. I filled https://b.corp.google.com/issues/249177028",
+      "parentUuid": "e0696a73_5fdffc97",
+      "revId": "f1b0783e9ec8bc0a6ccd3cbea540e7bce2e69a9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
