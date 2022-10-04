@@ -106,7 +106,9 @@ public:
         return ret;
     }
 
-    int getAshmemFd() const;
+    int getFileFd() const;
+    ino_t getFileIno() const;
+
     size_t getAllocationByteCount() const;
 
     void setHasHardwareMipMap(bool hasMipMap);
@@ -170,7 +172,8 @@ private:
 
     Bitmap(void* address, size_t allocSize, const SkImageInfo& info, size_t rowBytes);
     Bitmap(SkPixelRef& pixelRef, const SkImageInfo& info);
-    Bitmap(void* address, int fd, size_t mappedSize, const SkImageInfo& info, size_t rowBytes);
+    Bitmap(void* address, int fd, ino_t ino, size_t mappedSize, const SkImageInfo& info,
+           size_t rowBytes);
 #ifdef __ANDROID__ // Layoutlib does not support hardware acceleration
     Bitmap(AHardwareBuffer* buffer, const SkImageInfo& info, size_t rowBytes,
            BitmapPalette palette);
@@ -201,6 +204,7 @@ private:
             void* address;
             int fd;
             size_t size;
+            ino_t ino;
         } ashmem;
         struct {
             void* address;

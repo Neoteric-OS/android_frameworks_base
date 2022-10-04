@@ -60,6 +60,8 @@ cc_defaults {
     include_dirs: [
         "external/skia/include/private",
         "external/skia/src/core",
+        "bionic/libc/kernel/uapi",
+        "bionic/libc/kernel/android/uapi",
     ],
 
     product_variables: {

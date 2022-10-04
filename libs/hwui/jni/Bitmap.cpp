@@ -201,6 +201,7 @@ jobject createBitmap(JNIEnv* env, Bitmap* bitmap,
         int density) {
     bool isMutable = bitmapCreateFlags & kBitmapCreateFlag_Mutable;
     bool isPremultiplied = bitmapCreateFlags & kBitmapCreateFlag_Premultiplied;
+    ino_t ino;
     // The caller needs to have already set the alpha type properly, so the
     // native SkBitmap stays in sync with the Java Bitmap.
     assert_premultiplied(bitmap->info(), isPremultiplied);
@@ -209,9 +210,13 @@ jobject createBitmap(JNIEnv* env, Bitmap* bitmap,
     if (!isMutable) {
         bitmapWrapper->bitmap().setImmutable();
     }
+
+    ino = bitmap->getFileIno();
+
     jobject obj = env->NewObject(gBitmap_class, gBitmap_constructorMethodID,
-            reinterpret_cast<jlong>(bitmapWrapper), bitmap->width(), bitmap->height(), density,
-            isPremultiplied, ninePatchChunk, ninePatchInsets, fromMalloc);
+                                 reinterpret_cast<jlong>(bitmapWrapper), bitmap->width(),
+                                 bitmap->height(), density, isPremultiplied, ninePatchChunk,
+                                 ninePatchInsets, fromMalloc, (unsigned long)ino);
 
     if (env->ExceptionCheck() != 0) {
         ALOGE("*** Uncaught exception returned from Java call!\n");
@@ -910,7 +915,7 @@ static jboolean Bitmap_writeToParcel(JNIEnv* env, jobject,
 
     // Transfer the underlying ashmem region if we have one and it's immutable.
     binder_status_t status;
-    int fd = bitmapWrapper->bitmap().getAshmemFd();
+    int fd = bitmapWrapper->bitmap().getFileFd();
     if (fd >= 0 && p.allowFds() && bitmap.isImmutable()) {
 #if DEBUG_PARCEL
         ALOGD("Bitmap.writeToParcel: transferring immutable bitmap's ashmem fd as "
@@ -1319,7 +1324,8 @@ int register_android_graphics_Bitmap(JNIEnv* env)
 {
     gBitmap_class = MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/graphics/Bitmap"));
     gBitmap_nativePtr = GetFieldIDOrDie(env, gBitmap_class, "mNativePtr", "J");
-    gBitmap_constructorMethodID = GetMethodIDOrDie(env, gBitmap_class, "<init>", "(JIIIZ[BLandroid/graphics/NinePatch$InsetStruct;Z)V");
+    gBitmap_constructorMethodID = GetMethodIDOrDie(
+            env, gBitmap_class, "<init>", "(JIIIZ[BLandroid/graphics/NinePatch$InsetStruct;ZJ)V");
     gBitmap_reinitMethodID = GetMethodIDOrDie(env, gBitmap_class, "reinit", "(IIZ)V");
 
 #ifdef __ANDROID__ // Layoutlib does not support graphic buffer or parcel
