@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c12c928_b52c9031",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1945984
+      },
+      "writtenOn": "2022-10-04T00:53:20Z",
+      "side": 1,
+      "message": "We intend on using these types in vendor and system code. We are focusing on HAL code first, which is why they aren\u0027t used in system code yet.",
+      "revId": "f1b0783e9ec8bc0a6ccd3cbea540e7bce2e69a9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
