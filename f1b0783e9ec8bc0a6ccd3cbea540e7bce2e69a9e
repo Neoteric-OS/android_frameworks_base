@@ -16,6 +16,23 @@
       "message": "We intend on using these types in vendor and system code. We are focusing on HAL code first, which is why they aren\u0027t used in system code yet.",
       "revId": "f1b0783e9ec8bc0a6ccd3cbea540e7bce2e69a9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08d54a16_fd02f770",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2022-10-04T01:32:32Z",
+      "side": 1,
+      "message": "I think hardware/interfaces is a better place for these AIDL files. Thus +2\u0027ed.\n\nThis needs to be acknowledged by the owners though.",
+      "revId": "f1b0783e9ec8bc0a6ccd3cbea540e7bce2e69a9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
