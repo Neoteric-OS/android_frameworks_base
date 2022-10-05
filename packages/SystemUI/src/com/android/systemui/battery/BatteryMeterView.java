@@ -153,7 +153,9 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         updateShowPercent();
         mDualToneHandler = new DualToneHandler(context);
         // Init to not dark at all.
-        onDarkChanged(new ArrayList<Rect>(), 0, DarkIconDispatcher.DEFAULT_ICON_TINT);
+        if (isNightMode()) {
+            onDarkChanged(new ArrayList<Rect>(), 0, DarkIconDispatcher.DEFAULT_ICON_TINT);
+        }
 
         setClipChildren(false);
         setClipToPadding(false);
@@ -165,6 +167,11 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
 
         mUnifiedBatteryState = newState;
         mUnifiedBattery.setBatteryState(mUnifiedBatteryState);
+    }
+
+    private boolean isNightMode() {
+        return (mContext.getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
     }
 
     private void setupLayoutTransition() {
