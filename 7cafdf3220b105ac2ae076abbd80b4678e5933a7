@@ -41,6 +41,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b849101_078f5e6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1787007
+      },
+      "writtenOn": "2022-10-05T14:06:01Z",
+      "side": 1,
+      "message": "LGTM (but agree with Anton\u0027s comments)",
+      "revId": "7cafdf3220b105ac2ae076abbd80b4678e5933a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0b8d4ef_e8d243b5",
