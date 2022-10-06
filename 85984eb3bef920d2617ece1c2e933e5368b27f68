@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4d01c5f_17cf299c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2022-10-06T16:52:34Z",
+      "side": 1,
+      "message": "Do you know why upgrading kotlin broke this, or why converting to Android.bp fixes it?",
+      "revId": "85984eb3bef920d2617ece1c2e933e5368b27f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

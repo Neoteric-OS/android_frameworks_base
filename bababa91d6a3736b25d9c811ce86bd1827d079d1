@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "292ce005_1821d2d0",
+        "filename": "packages/SystemUI/tests/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2022-10-06T16:52:34Z",
+      "side": 0,
+      "message": "I think this jacoco filter is why this Makefile hadn\u0027t been converted, is it OK to remove?",
+      "revId": "bababa91d6a3736b25d9c811ce86bd1827d079d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
