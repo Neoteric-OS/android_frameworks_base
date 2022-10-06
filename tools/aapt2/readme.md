@@ -1,3 +1,5 @@
+# DO NOT MERGE Edit
+
 # Android Asset Packaging Tool 2.0 (AAPT2) release notes
 
 ## Version 2.19
