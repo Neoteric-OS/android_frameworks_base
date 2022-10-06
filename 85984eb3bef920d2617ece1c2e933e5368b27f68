@@ -16,6 +16,24 @@
       "message": "Do you know why upgrading kotlin broke this, or why converting to Android.bp fixes it?",
       "revId": "85984eb3bef920d2617ece1c2e933e5368b27f68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20fd1700_965a586c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2022-10-06T20:06:42Z",
+      "side": 1,
+      "message": "Not clear why kotlin 1.7.20 broke this, but convert to Android.bp fixes it by not deleting the META-INF/ directory.  This could also be fixed in the Android.mk file by adding `LOCAL_DONT_DELETE_JAR_META_INF :\u003d true`.",
+      "parentUuid": "f4d01c5f_17cf299c",
+      "revId": "85984eb3bef920d2617ece1c2e933e5368b27f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
