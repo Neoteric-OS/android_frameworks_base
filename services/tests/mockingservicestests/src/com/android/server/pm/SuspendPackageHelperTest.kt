@@ -391,7 +391,7 @@ class SuspendPackageHelperTest : PackageHelperTestBase() {
     private fun mockAllowList(pkgSetting: PackageStateInternal, list: SparseArray<IntArray>?) {
         whenever(rule.mocks().appsFilter.getVisibilityAllowList(
                 any(PackageDataSnapshot::class.java),
-            argThat { it?.packageName == pkgSetting.packageName }, any(IntArray::class.java),
+            any(PackageStateInternal::class.java), any(IntArray::class.java),
             any() as ArrayMap<String, out PackageStateInternal>
         ))
             .thenReturn(list)
