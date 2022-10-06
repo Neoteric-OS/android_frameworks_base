@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e9dd5649_cbe2c836",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2022-10-06T21:50:19Z",
+      "side": 1,
+      "message": "I uploaded the new api files at: https://colefaust.users.x20web.corp.google.com/www/newsdks/\n\nAt a cursory diffing they seem to be correct, the module api file is a superset of the public api file, but one oddity is that there are some module-provided apis that are in the system sdk but not the module sdk, not sure if that\u0027s intentional.",
+      "parentUuid": "ab811887_308e34fc",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 4
+      },
+      "revId": "7cafdf3220b105ac2ae076abbd80b4678e5933a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "696cc54a_f095947c",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -81,6 +105,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f0fd453_3ac4087a",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2022-10-06T21:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0b8d4ef_e8d243b5",
+      "range": {
+        "startLine": 469,
+        "startChar": 12,
+        "endLine": 470,
+        "endChar": 32
+      },
+      "revId": "7cafdf3220b105ac2ae076abbd80b4678e5933a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "348f97a9_59a458bb",
@@ -104,6 +152,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "26228e64_676e1663",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2022-10-06T21:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "348f97a9_59a458bb",
+      "range": {
+        "startLine": 489,
+        "startChar": 6,
+        "endLine": 490,
+        "endChar": 34
+      },
+      "revId": "7cafdf3220b105ac2ae076abbd80b4678e5933a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08aea3c4_e47094ea",
@@ -117,6 +189,30 @@
       "writtenOn": "2022-10-05T09:22:17Z",
       "side": 1,
       "message": "Do we also want a `system` one?",
+      "range": {
+        "startLine": 190,
+        "startChar": 26,
+        "endLine": 190,
+        "endChar": 32
+      },
+      "revId": "7cafdf3220b105ac2ae076abbd80b4678e5933a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08a7b942_6311f231",
+        "filename": "api/api.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2022-10-06T21:50:19Z",
+      "side": 1,
+      "message": "The filtered apis are only used on the module and system server sdks, so I don\u0027t think we need a system one: https://cs.android.com/android/platform/superproject/+/master:build/soong/java/lint.go;l\u003d417;drc\u003de29d230b752d11abca3bb558a04c6d57eef9104e\n\nWe can also remove the public one later. This is mentioned in the comment.",
+      "parentUuid": "08aea3c4_e47094ea",
       "range": {
         "startLine": 190,
         "startChar": 26,
