@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13d01288_1cd73c62",
+        "filename": "services/core/java/com/android/server/utils/EventLogger.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2022-10-10T13:19:55Z",
+      "side": 1,
+      "message": "This part I\u0027m not clear about, hopefully you can find out and share back with me.\n\nIn google3, the javadoc format is:\n\n```\n/**\n * The summary line.\n *\n * \u003cp\u003eA paragraph clarifying something. Note there\u0027s no closing p tag.\n */\n```\n\nIf you are not doing it, might be worth using google-java-format --aosp. You can use the google-java-format-diff.py script, which makes everything easier.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 11
+      },
+      "revId": "e397f279c246ddad3b3e51647f7d6b897f9727be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
