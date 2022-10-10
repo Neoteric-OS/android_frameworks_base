@@ -70,6 +70,24 @@
       "parentUuid": "44c14298_4d0449f1",
       "revId": "2cd1c665c676a08f09bfa020e63dfc9909cb0905",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f246c46_ec074059",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1700909
+      },
+      "writtenOn": "2022-10-10T03:29:54Z",
+      "side": 1,
+      "message": "@philipjunker@google.com\nFrom the calling process, at this point “mHandler \u003d\u003d null\".\n\n09-09 21:02:52.806  1000  2414  2414 E AndroidRuntime: \tat android.database.ContentObserver.dispatchChange(ContentObserver.java:301)\n\nContentObserver.java::dispatchChange\n298    public final void dispatchChange(boolean selfChange, @NonNull Collection\u003cUri\u003e uris,\n299            @NotifyFlags int flags, @UserIdInt int userId) {\n300        if (mHandler \u003d\u003d null) {\n301            onChange(selfChange, uris, flags, userId);// go in\n302        } else {\n303            mHandler.post(() -\u003e {\n304                onChange(selfChange, uris, flags, userId);\n305            });\n306        }\n307    }\n\nmContentObserver is created at the beginning, so mHandler is null at this time.\n\nBrightnessSynchronizer::mContentObserver\n487        private final ContentObserver mContentObserver \u003d new ContentObserver(mHandler) {\n\n\nPlease review again.",
+      "parentUuid": "dd05b33f_642d8568",
+      "revId": "2cd1c665c676a08f09bfa020e63dfc9909cb0905",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
