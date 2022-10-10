@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01874599_da9c94dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1524317
+      },
+      "writtenOn": "2022-10-10T09:02:24Z",
+      "side": 1,
+      "message": "Hi Hu Peng! Thanks for your investigation and for suggesting a fix. We\u0027ve come to the same conclusion last week and I cherry-picked the fix to aosp just now, please take a look: r.android.com/2243096\n\nTherefore I recommend not submitting this fix.",
+      "revId": "1890c1a8344fa8b88cc438170d47015e16a52afd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
