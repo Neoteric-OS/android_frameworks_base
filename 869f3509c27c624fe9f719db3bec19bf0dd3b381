@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "05a08c0b_579b647f",
+        "filename": "ApiDocs.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2022-10-11T19:09:29Z",
+      "side": 1,
+      "message": "well they\u0027re only being used for their annotations.zips. Do you have any suggestions for improvements?",
+      "parentUuid": "cdeb5743_bd188567",
+      "revId": "869f3509c27c624fe9f719db3bec19bf0dd3b381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "998888de_404171d5",
         "filename": "api/Android.bp",
         "patchSetId": 4
@@ -31,6 +49,24 @@
       "writtenOn": "2022-10-11T10:48:12Z",
       "side": 1,
       "message": "Why are we adding annotations for module-lib / system-server rather than just the API database?",
+      "revId": "869f3509c27c624fe9f719db3bec19bf0dd3b381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3da6b4b_9b396874",
+        "filename": "api/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2022-10-11T19:09:29Z",
+      "side": 1,
+      "message": "I believe we need these annotations to have proper lint checks on these APIs. For example, if there\u0027s a module api method `void setMyInt(@MyIntDef int x)`, lint needs to know the `@MyIntDef` is applied to that argument so that it can validate you only pass correct int values to it. These annotations wouldn\u0027t appear in the public `annotations.zip` file because this method is module-only, we we need a module specific annotations.zip file.",
+      "parentUuid": "998888de_404171d5",
       "revId": "869f3509c27c624fe9f719db3bec19bf0dd3b381",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -52,6 +88,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc114c3b_f302bc60",
+        "filename": "api/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2022-10-11T19:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15d7a051_59a2ac70",
+      "revId": "869f3509c27c624fe9f719db3bec19bf0dd3b381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ddbe030_4499c8ad",
@@ -65,6 +119,30 @@
       "writtenOn": "2022-10-11T10:48:12Z",
       "side": 1,
       "message": "I don\u0027t see a system-filtered in the list below",
+      "range": {
+        "startLine": 191,
+        "startChar": 40,
+        "endLine": 191,
+        "endChar": 58
+      },
+      "revId": "869f3509c27c624fe9f719db3bec19bf0dd3b381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00292bbd_8b24c1ef",
+        "filename": "api/api.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2022-10-11T19:09:29Z",
+      "side": 1,
+      "message": "Yeah it\u0027s intentionally not there. Public is only there because it was used previously, and I need to remove it in followup cls, after which I\u0027ll update the comment.",
+      "parentUuid": "2ddbe030_4499c8ad",
       "range": {
         "startLine": 191,
         "startChar": 40,

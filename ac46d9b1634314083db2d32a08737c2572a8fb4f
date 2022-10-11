@@ -22,6 +22,30 @@
       },
       "revId": "ac46d9b1634314083db2d32a08737c2572a8fb4f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b329172_da2e7ece",
+        "filename": "api/api.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2022-10-11T19:09:29Z",
+      "side": 0,
+      "message": "I assume SSCP \u003d system server classpath?\n\nWe need these for all 4 sdk types, so I thought it would just be simpler to have a generic method.",
+      "parentUuid": "285bc4b1_bcf744ff",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 51
+      },
+      "revId": "ac46d9b1634314083db2d32a08737c2572a8fb4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
