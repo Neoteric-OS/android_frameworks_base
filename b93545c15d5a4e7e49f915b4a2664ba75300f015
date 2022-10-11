@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a329c15e_58f03a35",
+        "filename": "services/core/java/com/android/server/pm/SELinuxMMAC.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2022-10-11T16:03:51Z",
+      "side": 1,
+      "message": "I\u0027ve renamed this (and similar variables/strings) along the lines of \"WebView Provider App\".",
+      "parentUuid": "e8077ae7_04a43dfe",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3f744d17_5a3ac544",
@@ -69,6 +87,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14f0eae7_6751a88c",
+        "filename": "services/core/java/com/android/server/webkit/SystemImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2022-10-11T16:03:51Z",
+      "side": 1,
+      "message": "Correct. Removed.",
+      "parentUuid": "edddfb1c_e558f5d3",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "024a313f_e71424d7",
@@ -82,6 +118,24 @@
       "writtenOn": "2022-09-23T20:01:32Z",
       "side": 1,
       "message": "We don\u0027t really need to store this since it\u0027s just getting a singleton; this field could just be removed (and we could then reasonably also drop the lazy holder/etc for SystemImpl to simplify things a little; if it has no state of its own then it\u0027s just a strategy and the service can just construct it)",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45cf83a2_65cfaf35",
+        "filename": "services/core/java/com/android/server/webkit/SystemImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2022-10-11T16:03:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "024a313f_e71424d7",
       "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -173,6 +227,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cf4d39f_39837588",
+        "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2022-10-11T16:03:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "124783fc_b354ba04",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd45ca58_49521966",
@@ -208,6 +280,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab991b7b_6223b799",
+        "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2022-10-11T16:03:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da55b761_62937f9b",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1bbd89e_e4884238",
@@ -239,6 +329,24 @@
       "side": 1,
       "message": "also maybe call this isValidWebView or something to avoid any confusion with it being the current provider",
       "parentUuid": "d1bbd89e_e4884238",
+      "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d340bfc_658fc5aa",
+        "filename": "services/core/java/com/android/server/webkit/WebViewProviderAuthority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2022-10-11T16:03:51Z",
+      "side": 1,
+      "message": "I\u0027ve added a test and renamed the method to packageIsValidWebView",
+      "parentUuid": "644bec09_0aac4e2e",
       "revId": "b93545c15d5a4e7e49f915b4a2664ba75300f015",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
