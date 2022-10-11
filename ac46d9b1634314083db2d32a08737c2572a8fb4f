@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "285bc4b1_bcf744ff",
+        "filename": "api/api.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-10-11T10:48:12Z",
+      "side": 0,
+      "message": "If we do need merged annotations for these (hope not), maybe duplicate one of these for the SSCP jars (seems simpler than making createMergedAnnotationsFilegroups more generic)",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 51
+      },
+      "revId": "ac46d9b1634314083db2d32a08737c2572a8fb4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

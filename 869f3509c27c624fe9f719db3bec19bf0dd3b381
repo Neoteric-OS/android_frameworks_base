@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdeb5743_bd188567",
+        "filename": "ApiDocs.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-10-11T10:48:12Z",
+      "side": 1,
+      "message": "A little skeptical of adding these targets. I kind of suspect the doc-stubs they produce aren\u0027t correct (even if the annotations.zip is)",
+      "revId": "869f3509c27c624fe9f719db3bec19bf0dd3b381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "998888de_404171d5",
+        "filename": "api/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-10-11T10:48:12Z",
+      "side": 1,
+      "message": "Why are we adding annotations for module-lib / system-server rather than just the API database?",
+      "revId": "869f3509c27c624fe9f719db3bec19bf0dd3b381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15d7a051_59a2ac70",
+        "filename": "api/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-10-11T10:48:12Z",
+      "side": 1,
+      "message": "Not true! But it\u0027s the system server jars (`service-*`), rather than the BCP jars (`framework-*`) that provide system-server APIs",
+      "revId": "869f3509c27c624fe9f719db3bec19bf0dd3b381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ddbe030_4499c8ad",
+        "filename": "api/api.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-10-11T10:48:12Z",
+      "side": 1,
+      "message": "I don\u0027t see a system-filtered in the list below",
+      "range": {
+        "startLine": 191,
+        "startChar": 40,
+        "endLine": 191,
+        "endChar": 58
+      },
+      "revId": "869f3509c27c624fe9f719db3bec19bf0dd3b381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
