@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb0dc651_9a55fbf3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2022-10-12T20:34:18Z",
+      "side": 1,
+      "message": "This is a docs-only change to reflect the actual behavior of the API.",
+      "revId": "7ee3c453ed09ad9ed1286cd80233601c26907a2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e01dfef_f337e97c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2022-10-12T20:34:18Z",
+      "side": 1,
+      "message": "This is a docs-only change to reflect the actual behavior of the API.",
+      "revId": "7ee3c453ed09ad9ed1286cd80233601c26907a2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
