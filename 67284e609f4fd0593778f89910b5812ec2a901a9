@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bf2b42f_fe801fdc",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2022-10-12T00:21:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d1a17c9_775b72c4",
+      "range": {
+        "startLine": 125,
+        "startChar": 29,
+        "endLine": 125,
+        "endChar": 61
+      },
+      "revId": "67284e609f4fd0593778f89910b5812ec2a901a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a81c9bc4_6e02176c",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-10-01T02:09:04Z",
       "side": 1,
       "message": "You\u0027ll need to add the new ERROR_TIMEOUT_EXHAUSTED in this annotation as well I think.",
+      "range": {
+        "startLine": 138,
+        "startChar": 16,
+        "endLine": 138,
+        "endChar": 32
+      },
+      "revId": "67284e609f4fd0593778f89910b5812ec2a901a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8979107_304aed84",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2022-10-12T00:21:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a81c9bc4_6e02176c",
       "range": {
         "startLine": 138,
         "startChar": 16,
