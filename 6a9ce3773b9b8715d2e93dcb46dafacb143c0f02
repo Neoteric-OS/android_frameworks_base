@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "973421ce_08706967",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2022-10-12T21:14:34Z",
+      "side": 1,
+      "message": "Out of date.",
+      "parentUuid": "96a20c83_1b5ca8be",
+      "revId": "6a9ce3773b9b8715d2e93dcb46dafacb143c0f02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "47d494e8_2b658395",
