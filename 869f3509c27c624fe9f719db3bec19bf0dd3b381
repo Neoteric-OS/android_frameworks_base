@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e2827b1_7ed60d4a",
+        "filename": "ApiDocs.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2022-10-12T17:17:42Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0999fb4c_70da7b38",
+      "revId": "869f3509c27c624fe9f719db3bec19bf0dd3b381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "998888de_404171d5",
@@ -103,6 +121,24 @@
       "side": 1,
       "message": "I didn\u0027t think it was android lint enforcing the typedef annotation use. I\u0027m trying to look into the lint codebase to understand how they\u0027re used, but having trouble finding anything concrete. Maybe they don\u0027t have to be supplied? My naive codesearching seems so suggest google3 doesn\u0027t specify `SDK_ANNOTATIONS\u003d...`\n\nLooking through various `lint-baseline.xml` files in the tree, I don\u0027t see any instances of warnings related to bad use of typedef, which I\u0027d expect if this was the case.\n\n+ccross you added the `SDK_ANNOTATIONS\u003d...` env variable for the lint invocation, does lint need them?\n\n+tnorbye as well who would know for sure.",
       "parentUuid": "f3da6b4b_9b396874",
+      "revId": "869f3509c27c624fe9f719db3bec19bf0dd3b381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc589781_69bf267e",
+        "filename": "api/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2022-10-12T17:17:42Z",
+      "side": 1,
+      "message": "Yes, lint does `@IntDef` enforcement via the [WrongConstant checker](http://cs/studio-main/tools/base/lint/libs/lint-checks/src/main/java/com/android/tools/lint/checks/TypedefDetector.kt). Here\u0027s an excerpt from the errorprone build done for aosp/2242945:\n\n```\n    \u003cissue\n        id\u003d\"WrongConstant\"\n        severity\u003d\"Warning\"\n        message\u003d\"Must be one of: ChatServiceException.CODE_ERROR_UNSPECIFIED\"\n        category\u003d\"Correctness\"\n        priority\u003d\"6\"\n        summary\u003d\"Incorrect constant\"\n        explanation\u003d\"Ensures that when parameter in a method only allows a specific set of constants, calls obey those rules.\"\n        errorLine1\u003d\"                                CODE_ERROR_SEND_MESSAGE_FAILED));\"\n        errorLine2\u003d\"                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\"\u003e\n        \u003clocation\n            file\u003d\"packages/services/Telephony/testapps/TestRcsApp/aosp_test_rcsclient/src/com/android/libraries/rcs/simpleclient/service/chat/SimpleChatSession.java\"\n            line\u003d\"142\"\n            column\u003d\"33\"/\u003e\n    \u003c/issue\u003e\n```",
+      "parentUuid": "950a2b79_4efa3f9e",
       "revId": "869f3509c27c624fe9f719db3bec19bf0dd3b381",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
