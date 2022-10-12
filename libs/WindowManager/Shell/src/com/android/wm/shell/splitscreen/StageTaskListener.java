@@ -228,7 +228,10 @@ class StageTaskListener implements ShellTaskOrganizer.TaskListener {
                     mSplitDecorManager.inflate(mContext, mRootLeash,
                             taskInfo.configuration.windowConfiguration.getBounds());
                 } else {
-                    mSyncQueue.runInSync(t -> mSplitDecorManager.release(t));
+                    mSyncQueue.runInSync(t -> {
+                        mSplitDecorManager.release(t);
+                        t.hide(mDimLayer);
+                    });
                 }
             }
             mRootTaskInfo = taskInfo;
