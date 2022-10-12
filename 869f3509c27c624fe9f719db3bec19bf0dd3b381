@@ -143,6 +143,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70d031c4_e1b8e1ec",
+        "filename": "api/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2022-10-12T18:42:20Z",
+      "side": 1,
+      "message": "If you don\u0027t provide SDK_ANNOTATIONS then lint will try to find one on its own:\nhttps://cs.android.com/android-studio/platform/tools/base/+/mirror-goog-studio-main:lint/libs/lint-api/src/main/java/com/android/tools/lint/client/api/LintClient.kt;l\u003d672;drc\u003d12cd17fb5a123c460bed96301952e463feb57107",
+      "parentUuid": "dc589781_69bf267e",
+      "revId": "869f3509c27c624fe9f719db3bec19bf0dd3b381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15d7a051_59a2ac70",
