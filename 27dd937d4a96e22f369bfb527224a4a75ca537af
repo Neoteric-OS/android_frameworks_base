@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb4bd214_8a5c183d",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-10-13T05:12:34Z",
+      "side": 1,
+      "message": "nit: rename to requestNetworkWithInternet",
+      "range": {
+        "startLine": 261,
+        "startChar": 20,
+        "endLine": 261,
+        "endChar": 34
+      },
+      "revId": "27dd937d4a96e22f369bfb527224a4a75ca537af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78087313_170ff6df",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-10-13T05:12:34Z",
+      "side": 1,
+      "message": "Is there a specific reason to request that the network used for server-based resume-on-reboot has to be a cellular network? If so, could you document that in a comment because it\u0027s not immediately clear from the function javadoc or code.",
+      "range": {
+        "startLine": 268,
+        "startChar": 28,
+        "endLine": 268,
+        "endChar": 85
+      },
+      "revId": "27dd937d4a96e22f369bfb527224a4a75ca537af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "678b103d_a0873cc1",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-10-13T05:12:34Z",
+      "side": 1,
+      "message": "Also do a null check on mConnectivitymanager here to be consistent with requestNetwork.",
+      "range": {
+        "startLine": 277,
+        "startChar": 20,
+        "endLine": 277,
+        "endChar": 41
+      },
+      "revId": "27dd937d4a96e22f369bfb527224a4a75ca537af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25c30c2e_2cd6dd75",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-10-13T05:12:34Z",
+      "side": 1,
+      "message": "Using the error code might not be an effective way to ensure that this logic only runs on the first call to `onAvailable`. The [`requestNetwork()`](https://developer.android.com/reference/android/net/ConnectivityManager#requestNetwork(android.net.NetworkRequest,%20android.net.ConnectivityManager.NetworkCallback)) documentation states\n\n\u003e As long as this request is outstanding, the platform will try to maintain the best network matching this request, while always attempting to match the request to a better network if possible. If a better match is found, the platform will switch this request to the now-best network and inform the app of the newly best network by invoking NetworkCallback#onAvailable(Network) on the provided callback. Note that the platform will not try to maintain any other network than the best one currently matching the request: a network not matching any network request may be disconnected at any time.\n\nThere\u0027s no guarantee that it\u0027ll disconnect form the existing network, which means  `onAvailable` could be called multiple times without any calls to `onUnvailable` or `onLost`. Therefore, `mLoadEscrowDataErrorCode \u003d\u003d ERROR_NONE` might be true across multiple calls to `onAvailable`. It would be preferable to keep track of whether `loadRebootEscrowDataWithRetry` has been kicked off explicitly (as a plus, it would make it clearer to the reader).",
+      "range": {
+        "startLine": 480,
+        "startChar": 28,
+        "endLine": 480,
+        "endChar": 86
+      },
+      "revId": "27dd937d4a96e22f369bfb527224a4a75ca537af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2912b13a_701ab177",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-10-13T05:12:34Z",
+      "side": 1,
+      "message": "Please use a bug number as suggested by the linter. Regarding the to-do itself, does the network",
+      "range": {
+        "startLine": 499,
+        "startChar": 32,
+        "endLine": 499,
+        "endChar": 38
+      },
+      "revId": "27dd937d4a96e22f369bfb527224a4a75ca537af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7f8556a_b417f43d",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-10-13T05:12:34Z",
+      "side": 1,
+      "message": "Might be more descriptive to say \"waiting for network again\" since this will be logged under the RebootEscrowManager class, so it will be clear that we\u0027re waiting for the network to send the unwrap request.",
+      "range": {
+        "startLine": 501,
+        "startChar": 51,
+        "endLine": 501,
+        "endChar": 86
+      },
+      "revId": "27dd937d4a96e22f369bfb527224a4a75ca537af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
