@@ -33,6 +33,23 @@
       "message": "winsonc",
       "revId": "51ec95fbefad045d1aafb234bd5cb557488051ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1510e853_de8010fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-10-13T08:10:55Z",
+      "side": 1,
+      "message": "Hi Mady, could you help me bypass presubmit check for the reason I\u0027m not Googler.",
+      "revId": "51ec95fbefad045d1aafb234bd5cb557488051ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
