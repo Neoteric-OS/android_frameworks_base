@@ -906,9 +906,6 @@ class AccessibilityInputFilter extends InputFilter implements EventStreamTransfo
         mServiceDetectsGestures.put(displayId, mode);
     }
 
-    public void resetServiceDetectsGestures() {
-        mServiceDetectsGestures.clear();
-    }
     public void requestTouchExploration(int displayId) {
         if (mTouchExplorer.contains(displayId)) {
             mTouchExplorer.get(displayId).requestTouchExploration();

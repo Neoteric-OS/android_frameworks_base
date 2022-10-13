@@ -994,9 +994,6 @@ class AccessibilityUserState {
         mServiceDetectsGestures.put(displayId, mode);
     }
 
-    public void resetServiceDetectsGestures() {
-        mServiceDetectsGestures.clear();
-    }
     public boolean isServiceDetectsGesturesEnabled(int displayId) {
         if (mServiceDetectsGestures.contains(displayId)) {
             return mServiceDetectsGestures.get(displayId);

@@ -2304,7 +2304,6 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                 if (userState.isTwoFingerPassthroughEnabledLocked()) {
                     flags |= AccessibilityInputFilter.FLAG_REQUEST_2_FINGER_PASSTHROUGH;
                 }
-            }
             if (userState.isFilterKeyEventsEnabledLocked()) {
                 flags |= AccessibilityInputFilter.FLAG_FEATURE_FILTER_KEY_EVENTS;
             }
@@ -2322,27 +2321,26 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                 if (!mHasInputFilter) {
                     mHasInputFilter = true;
                     if (mInputFilter == null) {
-                        mInputFilter =
-                                new AccessibilityInputFilter(
-                                        mContext, AccessibilityManagerService.this);
+                        mInputFilter = new AccessibilityInputFilter(mContext,
+                                AccessibilityManagerService.this);
                     }
                     inputFilter = mInputFilter;
                     setInputFilter = true;
                 }
                 mInputFilter.setUserAndEnabledFeatures(userState.mUserId, flags);
             } else {
-                if (mHasInputFilter) {
-                    mHasInputFilter = false;
-                    mInputFilter.setUserAndEnabledFeatures(userState.mUserId, 0);
-                    mInputFilter.resetServiceDetectsGestures();
-                    if (userState.isTouchExplorationEnabledLocked()) {
-                        //  Service gesture detection is turned on and off on a per-display
-                        // basis.
-                        final ArrayList<Display> displays = getValidDisplayList();
-                        for (Display display : displays) {
-                            int displayId = display.getDisplayId();
-                            boolean mode = userState.isServiceDetectsGesturesEnabled(displayId);
-                            mInputFilter.setServiceDetectsGesturesEnabled(displayId, mode);
+                    if (mHasInputFilter) {
+                        mHasInputFilter = false;
+                        mInputFilter.setUserAndEnabledFeatures(userState.mUserId, 0);
+                        if (userState.isTouchExplorationEnabledLocked()) {
+                            // Service gesture detection is turned on and off on a per-display
+                            // basis.
+                            final ArrayList<Display> displays = getValidDisplayList();
+                            for (Display display : displays) {
+                                int displayId = display.getDisplayId();
+                                boolean mode = userState.isServiceDetectsGesturesEnabled(displayId);
+                                mInputFilter.setServiceDetectsGesturesEnabled(displayId, mode);
+                            }
                         }
                     }
                     inputFilter = null;
@@ -2658,18 +2656,6 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                         userState.mUserId);
             } finally {
                 Binder.restoreCallingIdentity(identity);
-            }
-        }
-        // Service gesture detection is turned on and off on a per-display
-        // basis.
-        userState.resetServiceDetectsGestures();
-        final ArrayList<Display> displays = getValidDisplayList();
-        for (AccessibilityServiceConnection service: userState.mBoundServices) {
-            for (Display display : displays) {
-                int displayId = display.getDisplayId();
-                if (service.isServiceDetectsGesturesEnabled(displayId)) {
-                    userState.setServiceDetectsGesturesEnabled(displayId, true);
-                }
             }
         }
         userState.setServiceHandlesDoubleTapLocked(serviceHandlesDoubleTapEnabled);
