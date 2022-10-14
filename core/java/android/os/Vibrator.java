@@ -546,10 +546,13 @@ public abstract class Vibrator {
      * cause a vibration. It's guaranteed, however, that none of the queried effects are
      * definitively unsupported by the hardware.
      *
-     * <p>Use {@link #areEffectsSupported(int...)} to get individual results for each effect.
+     * <p>Use {@link #areEffectsSupported(int...)} with a single argument to get individual results
+     * for each effect. If no argument is provided this method will return
+     * {@link #VIBRATION_EFFECT_SUPPORT_YES}.
      *
      * @param effectIds Which effects to query for.
-     * @return Whether all the effects are natively supported by the device.
+     * @return Whether all specified effects are natively supported by the device. Empty query defaults
+     * to {@link #VIBRATION_EFFECT_SUPPORT_YES}.
      */
     @VibrationEffectSupport
     public final int areAllEffectsSupported(
@@ -603,10 +606,11 @@ public abstract class Vibrator {
      * <p>If a primitive is not supported by the device, then <em>no vibration</em> will occur if
      * it is played.
      *
-     * <p>Use {@link #arePrimitivesSupported(int...)} to get individual results for each primitive.
+     * <p>Use {@link #arePrimitivesSupported(int...)} with a single argument to get individual
+     * results for each primitive. If no argument is provided this method will return {@code true}.
      *
      * @param primitiveIds Which primitives to query for.
-     * @return Whether all specified primitives are supported.
+     * @return Whether all specified primitives are supported. Empty query defaults to {@code true}.
      */
     public final boolean areAllPrimitivesSupported(
             @NonNull @VibrationEffect.Composition.PrimitiveType int... primitiveIds) {
