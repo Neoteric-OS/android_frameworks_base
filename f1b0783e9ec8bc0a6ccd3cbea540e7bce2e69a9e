@@ -86,6 +86,24 @@
       "parentUuid": "e0696a73_5fdffc97",
       "revId": "f1b0783e9ec8bc0a6ccd3cbea540e7bce2e69a9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b64e2941_af5f8a91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2022-10-14T06:01:27Z",
+      "side": 1,
+      "message": "Moved these interfaces to system/hardware/interfaces instead of hardware/interfaces.",
+      "parentUuid": "f0722361_812057cd",
+      "revId": "f1b0783e9ec8bc0a6ccd3cbea540e7bce2e69a9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
