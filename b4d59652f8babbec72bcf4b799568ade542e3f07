@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "619413ef_ad3f623f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1092759
+      },
+      "writtenOn": "2022-10-14T02:20:03Z",
+      "side": 1,
+      "message": "The bug has always been low probability on Android devices. \nI have created the issue before, but the reply is bad flash.\nI don\u0027t agree with it, the libs file shouldn\u0027t be all filled\nwith 0x00 if it is bad flash.\n\nIn xiaomi device, we need install 3rd party apps in first boot.\nAnd in factory production test, if we enforce reboot in device\nbooting, make the issue reproduced easily.",
+      "revId": "b4d59652f8babbec72bcf4b799568ade542e3f07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
