@@ -16,6 +16,23 @@
       "message": "Add resource clean before return",
       "revId": "6d235fba1e76e16265219c8cc8a729003dd62e19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69a97fe8_f42f12d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2022-10-14T16:14:29Z",
+      "side": 1,
+      "message": "(yeah, this sounds like a good idea to me...)",
+      "revId": "6d235fba1e76e16265219c8cc8a729003dd62e19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
