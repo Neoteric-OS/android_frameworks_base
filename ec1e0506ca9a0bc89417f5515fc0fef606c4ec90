@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b72bfd3_edb08a6f",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 3409,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2022-10-15T02:05:11Z",
+      "side": 1,
+      "message": "Do we have to have a structure in the name? It looks like you seem to use FEATURE_\u003ccategory\u003e_\u003cname\u003e. It is mandatory? Can it be FEATURE_PROTECTED_VIRTUAL_MACHINE?",
+      "range": {
+        "startLine": 3409,
+        "startChar": 37,
+        "endLine": 3409,
+        "endChar": 72
+      },
+      "revId": "ec1e0506ca9a0bc89417f5515fc0fef606c4ec90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
