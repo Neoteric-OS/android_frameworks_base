@@ -442,9 +442,8 @@ public abstract class PackageManager {
          */
         public ComponentEnabledSetting(@NonNull ComponentName componentName,
                 @EnabledState int newState, @EnabledFlags int flags) {
-            Objects.nonNull(componentName);
             mPackageName = null;
-            mComponentName = componentName;
+            mComponentName = Objects.requireNonNull(componentName);
             mEnabledState = newState;
             mEnabledFlags = flags;
         }
@@ -460,8 +459,7 @@ public abstract class PackageManager {
          */
         public ComponentEnabledSetting(@NonNull String packageName,
                 @EnabledState int newState, @EnabledFlags int flags) {
-            Objects.nonNull(packageName);
-            mPackageName = packageName;
+            mPackageName = Objects.requireNonNull(packageName);
             mComponentName = null;
             mEnabledState = newState;
             mEnabledFlags = flags;

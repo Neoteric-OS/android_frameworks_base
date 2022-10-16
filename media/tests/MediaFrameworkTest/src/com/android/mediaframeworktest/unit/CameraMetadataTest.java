@@ -264,8 +264,10 @@ public class CameraMetadataTest extends junit.framework.TestCase {
                 builder.append("**");
             }
 
-            if (elem instanceof Number) {
-                builder.append(String.format("%x", elem));
+            if (elem instanceof Integer) {
+                builder.append(String.format("%x", (Integer) elem));
+            } else if (elem instanceof Long) {
+                builder.append(String.format("%x", (Long) elem));
             } else {
                 builder.append(elem);
             }
