@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10049ffc_9d4dc00c",
+        "filename": "core/java/android/os/Vibrator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1882920
+      },
+      "writtenOn": "2022-10-17T11:31:32Z",
+      "side": 1,
+      "message": "it\u0027s not just with a single argument and the following \"If no argument\" is ambiguous as to whether it applies to this method or areEffectsSupported. Maybe the sentence should be on the end of the very first line?\n\ni.e. \n\nQuery whether the vibrator supports all the given effects. If no argument is provided this method will always return {@link #VIBRATION_EFFECT_SUPPORT_YES}.\n\nSame for primitives one.",
+      "range": {
+        "startLine": 549,
+        "startChar": 58,
+        "endLine": 549,
+        "endChar": 64
+      },
+      "revId": "d16794bff41a7d0df3b797b732d788da173ce4b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
