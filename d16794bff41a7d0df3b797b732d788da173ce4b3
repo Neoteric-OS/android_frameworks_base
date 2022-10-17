@@ -22,6 +22,30 @@
       },
       "revId": "d16794bff41a7d0df3b797b732d788da173ce4b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb3e7cca_7af5c271",
+        "filename": "core/java/android/os/Vibrator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2022-10-17T12:37:54Z",
+      "side": 1,
+      "message": "Much better, thanks! Done.",
+      "parentUuid": "10049ffc_9d4dc00c",
+      "range": {
+        "startLine": 549,
+        "startChar": 58,
+        "endLine": 549,
+        "endChar": 64
+      },
+      "revId": "d16794bff41a7d0df3b797b732d788da173ce4b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
