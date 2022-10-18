@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07c91f98_1b7f898f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003768
+      },
+      "writtenOn": "2022-10-18T05:36:12Z",
+      "side": 1,
+      "message": "same as https://android-review.googlesource.com/c/platform/frameworks/base/+/2063310? And have already been fixed by https://android-review.googlesource.com/c/platform/frameworks/base/+/2150993?",
+      "revId": "6e4239586cf98d1f8aba282add3c667b48966438",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
