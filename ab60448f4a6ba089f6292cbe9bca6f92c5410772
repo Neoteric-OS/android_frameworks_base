@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ff7ad2e_05af2b28",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8057,
+      "author": {
+        "id": 1732041
+      },
+      "writtenOn": "2022-10-18T09:21:44Z",
+      "side": 1,
+      "message": "Could you please remove \"key_\"?",
+      "range": {
+        "startLine": 8057,
+        "startChar": 30,
+        "endLine": 8057,
+        "endChar": 34
+      },
+      "revId": "ab60448f4a6ba089f6292cbe9bca6f92c5410772",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
