@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8b54486_52233c4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2022-10-18T16:21:19Z",
+      "side": 1,
+      "message": "Excellent, thank you!",
+      "revId": "aaa157425cfc35dc9676d5669eacc87aa6bcf9d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c684cce9_f34688d9",
+        "filename": "apct-tests/perftests/core/src/android/libcore/XmlSerializerPerfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2022-10-18T16:21:19Z",
+      "side": 1,
+      "message": "Nit: extra line.",
+      "revId": "aaa157425cfc35dc9676d5669eacc87aa6bcf9d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
