@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3cbf081_817d435e",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 3409,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2022-10-18T16:32:02Z",
+      "side": 1,
+      "message": "Changed to FEATURE_VIRTUALIZATION_FRAMEWORK",
+      "parentUuid": "3d53ea88_dc284a21",
+      "range": {
+        "startLine": 3409,
+        "startChar": 37,
+        "endLine": 3409,
+        "endChar": 72
+      },
+      "revId": "ec1e0506ca9a0bc89417f5515fc0fef606c4ec90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c6e07c39_44df10a1",
@@ -61,6 +85,30 @@
       "writtenOn": "2022-10-17T10:21:13Z",
       "side": 1,
       "message": "Nit: blank line above.",
+      "range": {
+        "startLine": 2961,
+        "startChar": 4,
+        "endLine": 2961,
+        "endChar": 5
+      },
+      "revId": "ec1e0506ca9a0bc89417f5515fc0fef606c4ec90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5973cb38_769f9406",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2961,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2022-10-18T16:32:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6e07c39_44df10a1",
       "range": {
         "startLine": 2961,
         "startChar": 4,
