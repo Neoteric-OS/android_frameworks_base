@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be4ad4ed_32786696",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1874859
+      },
+      "writtenOn": "2022-10-18T03:18:40Z",
+      "side": 1,
+      "message": "Hi John, can you help to check the warning in the build result? The status url is an internal link.",
+      "revId": "93f9989edf24475e916db55007d5a6bd57e12ce1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
