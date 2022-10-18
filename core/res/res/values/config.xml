@@ -410,7 +410,7 @@
     <string translatable="false" name="config_ethernet_iface_regex">eth\\d</string>
 
     <!-- Configuration of Ethernet interfaces in the following format:
-         <interface name|mac address>;[Network Capabilities];[IP config];[Override Transport]
+         <interface name>;[Network Capabilities];[IP config];[Override Transport]
          Where
                [Network Capabilities] Optional. A comma seprated list of network capabilities.
                    Values must be from NetworkCapabilities#NET_CAPABILITY_* constants.
