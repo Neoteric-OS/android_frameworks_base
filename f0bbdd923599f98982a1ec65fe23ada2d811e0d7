@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f58c7531_77b7429d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1971806
+      },
+      "writtenOn": "2022-10-19T07:28:38Z",
+      "side": 1,
+      "message": "the commit is to resolve AdoptableHostTest.Same as 2255760",
+      "revId": "f0bbdd923599f98982a1ec65fe23ada2d811e0d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
