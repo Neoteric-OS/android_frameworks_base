@@ -655,7 +655,9 @@ public class HdmiControlService extends SystemService {
         if (mHdmiControlEnabled == HdmiControlManager.HDMI_CEC_CONTROL_ENABLED) {
             initializeCec(INITIATED_BY_BOOT_UP);
         } else {
-            mCecController.enableCec(false);
+            synchronized (mLock) {
+                mCecController.enableCec(false);
+            }
         }
         mMhlDevices = Collections.emptyList();
 
@@ -3604,8 +3606,10 @@ public class HdmiControlService extends SystemService {
 
     @ServiceThreadOnly
     private void enableHdmiControlService() {
-        mCecController.enableCec(true);
-        mCecController.enableSystemCecControl(true);
+        synchronized (mLock) {
+            mCecController.enableCec(true);
+            mCecController.enableSystemCecControl(true);
+        }
         mMhlController.setOption(OPTION_MHL_ENABLE, ENABLED);
 
         initializeCec(INITIATED_BY_ENABLE_CEC);
@@ -3613,6 +3617,10 @@ public class HdmiControlService extends SystemService {
 
     @ServiceThreadOnly
     private void disableHdmiControlService() {
+        synchronized (mLock) {
+            mCecController.enableCec(false);
+            mCecController.enableSystemCecControl(false);
+        }
         disableDevices(
                 new PendingActionClearedCallback() {
                     @Override
@@ -3622,8 +3630,6 @@ public class HdmiControlService extends SystemService {
                                 new Runnable() {
                                     @Override
                                     public void run() {
-                                        mCecController.enableCec(false);
-                                        mCecController.enableSystemCecControl(false);
                                         mMhlController.setOption(OPTION_MHL_ENABLE, DISABLED);
                                         clearLocalDevices();
                                     }
