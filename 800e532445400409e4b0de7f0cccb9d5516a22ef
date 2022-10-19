@@ -22,6 +22,30 @@
       },
       "revId": "800e532445400409e4b0de7f0cccb9d5516a22ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b403a15_25a68595",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-10-19T09:40:08Z",
+      "side": 1,
+      "message": "Yes, I think this will also work.\nMaybe we can go through all the ports and check via isArcFeatureEnabled()",
+      "parentUuid": "a5cbf1df_9d807fcc",
+      "range": {
+        "startLine": 1340,
+        "startChar": 0,
+        "endLine": 1341,
+        "endChar": 41
+      },
+      "revId": "800e532445400409e4b0de7f0cccb9d5516a22ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
