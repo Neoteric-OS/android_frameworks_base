@@ -22521,7 +22521,7 @@ public class PackageManagerService extends IPackageManager.Stub
                 synchronized (mInstallLock) {
                     reconcileAppsDataLI(volumeUuid, user.id, flags, true /* migrateAppData */);
                 }
-            } catch (IllegalStateException e) {
+            } catch (RuntimeException e) {
                 // Device was probably ejected, and we'll process that event momentarily
                 Slog.w(TAG, "Failed to prepare storage: " + e);
             }
