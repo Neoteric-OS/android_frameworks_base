@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61eda622_e7c0b234",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-10-19T08:03:53Z",
+      "side": 1,
+      "message": "This might be a good candidate to replace with an AtomicBoolean since it\u0027s being used to prevent 2 competing calls to onAvailable from both kicking off a loadRebootescrowDataWithRetry().\n\nIf there\u0027s a strong guarantee from the NetworkCallback API that multiple calls to onAvailable will be strictly sequentially and/or they are called from the same thread, then this comment can be ignored.",
+      "range": {
+        "startLine": 502,
+        "startChar": 28,
+        "endLine": 502,
+        "endChar": 52
+      },
+      "revId": "453aa537705a1a9295a169b871bec9468a6aade5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcbd0460_98e84287",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-10-19T08:03:53Z",
+      "side": 1,
+      "message": "Note: this get and subsequent set are non-atomic while later in this function (line 581), the atomic compareAndSetRebootEscrowErrorCode is used. I think this might be fine since the only competing thread is the network callback, which might set the error code to ERROR_NO_NETWORK after this get() but before the setRebootEscrowErrorCode() in lines 654 \u0026 566.\n\nAll that means is that the error code below will clobber the ERROR_NO_NETWORK error. Depending on whether this is a more \"important\" error, this could be fine. It\u0027s a question of whether you feel this will impact the quality of the error signals in metrics.",
+      "range": {
+        "startLine": 557,
+        "startChar": 41,
+        "endLine": 557,
+        "endChar": 46
+      },
+      "revId": "453aa537705a1a9295a169b871bec9468a6aade5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

@@ -236,6 +236,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5c92157_c3be78fd",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-10-19T08:03:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42b5fcbb_4a263d3b",
+      "range": {
+        "startLine": 499,
+        "startChar": 32,
+        "endLine": 499,
+        "endChar": 38
+      },
+      "revId": "27dd937d4a96e22f369bfb527224a4a75ca537af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7f8556a_b417f43d",
@@ -273,6 +297,30 @@
       "side": 1,
       "message": "So we aren\u0027t waiting for network. I\u0027ve left that as a TODO. With this implementation, all we do is change the error code to indicate that network isn\u0027t connected but retries that are kicked off on first call to onAvailable will continue as normal.",
       "parentUuid": "e7f8556a_b417f43d",
+      "range": {
+        "startLine": 501,
+        "startChar": 51,
+        "endLine": 501,
+        "endChar": 86
+      },
+      "revId": "27dd937d4a96e22f369bfb527224a4a75ca537af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8aa06d9_59400637",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-10-19T08:03:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9310c0ff_9d82450d",
       "range": {
         "startLine": 501,
         "startChar": 51,
