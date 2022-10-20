@@ -34,6 +34,24 @@
       "parentUuid": "892b03b9_cc8cbf14",
       "revId": "d60a9158e2d28a06c02450e26583562941ca85e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80f8dab0_d45820d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-10-20T16:28:23Z",
+      "side": 1,
+      "message": "The data structure changed internally, so it\u0027s no longer an issue.",
+      "parentUuid": "b5770463_36c3afeb",
+      "revId": "d60a9158e2d28a06c02450e26583562941ca85e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
