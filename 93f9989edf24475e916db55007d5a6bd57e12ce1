@@ -16,6 +16,24 @@
       "message": "Hi John, can you help to check the warning in the build result? The status url is an internal link.",
       "revId": "93f9989edf24475e916db55007d5a6bd57e12ce1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e37df82_9975a9e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1874859
+      },
+      "writtenOn": "2022-10-20T03:15:32Z",
+      "side": 1,
+      "message": "@jreck@google.com",
+      "parentUuid": "be4ad4ed_32786696",
+      "revId": "93f9989edf24475e916db55007d5a6bd57e12ce1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
