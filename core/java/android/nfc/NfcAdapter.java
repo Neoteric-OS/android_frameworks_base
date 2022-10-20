@@ -437,8 +437,8 @@ public final class NfcAdapter {
      * A callback to be invoked when the system successfully delivers your {@link NdefMessage}
      * to another device.
      * @see #setOnNdefPushCompleteCallback
-     * @deprecated this feature is deprecated. File sharing can work using other technology like
-     * Bluetooth.
+     * @removed this feature was deprecated since Android Q. File sharing can work using other
+     * technology like Bluetooth.
      */
     @java.lang.Deprecated
     public interface OnNdefPushCompleteCallback {
@@ -463,8 +463,8 @@ public final class NfcAdapter {
      * content currently visible to the user. Alternatively, you can call {@link
      * #setNdefPushMessage setNdefPushMessage()} if the {@link NdefMessage} always contains the
      * same data.
-     * @deprecated this feature is deprecated. File sharing can work using other technology like
-     * Bluetooth.
+     * @removed this feature was deprecated since Android Q. File sharing can work using other
+     * technology like Bluetooth.
      */
     @java.lang.Deprecated
     public interface CreateNdefMessageCallback {
@@ -493,8 +493,8 @@ public final class NfcAdapter {
 
 
      /**
-     * @deprecated this feature is deprecated. File sharing can work using other technology like
-     * Bluetooth.
+     * @removed this feature was deprecated since Android Q. File sharing can work using other
+     * technology like Bluetooth.
      */
     @java.lang.Deprecated
     public interface CreateBeamUrisCallback {
@@ -1116,8 +1116,8 @@ public final class NfcAdapter {
      * @param uris an array of Uri(s) to push over Android Beam
      * @param activity activity for which the Uri(s) will be pushed
      * @throws UnsupportedOperationException if FEATURE_NFC is unavailable.
-     * @deprecated this feature is deprecated. File sharing can work using other technology like
-     * Bluetooth.
+     * @removed this feature was deprecated since Android Q. File sharing can work using other
+     * technology like Bluetooth.
      */
     @java.lang.Deprecated
     public void setBeamPushUris(Uri[] uris, Activity activity) {
@@ -1204,8 +1204,8 @@ public final class NfcAdapter {
      * @param callback callback, or null to disable
      * @param activity activity for which the Uri(s) will be pushed
      * @throws UnsupportedOperationException if FEATURE_NFC is unavailable.
-     * @deprecated this feature is deprecated. File sharing can work using other technology like
-     * Bluetooth.
+     * @removed this feature was deprecated since Android Q. File sharing can work using other
+     * technology like Bluetooth.
      */
     @java.lang.Deprecated
     public void setBeamPushUrisCallback(CreateBeamUrisCallback callback, Activity activity) {
@@ -1294,8 +1294,8 @@ public final class NfcAdapter {
      *        to only register one at a time, and to do so in that activity's
      *        {@link Activity#onCreate}
      * @throws UnsupportedOperationException if FEATURE_NFC is unavailable.
-     * @deprecated this feature is deprecated. File sharing can work using other technology like
-     * Bluetooth.
+     * @removed this feature was deprecated since Android Q. File sharing can work using other
+     * technology like Bluetooth.
      */
     @java.lang.Deprecated
     public void setNdefPushMessage(NdefMessage message, Activity activity,
@@ -1413,8 +1413,8 @@ public final class NfcAdapter {
      *        to only register one at a time, and to do so in that activity's
      *        {@link Activity#onCreate}
      * @throws UnsupportedOperationException if FEATURE_NFC is unavailable.
-     * @deprecated this feature is deprecated. File sharing can work using other technology like
-     * Bluetooth.
+     * @removed this feature was deprecated since Android Q. File sharing can work using other
+     * technology like Bluetooth.
      */
     @java.lang.Deprecated
     public void setNdefPushMessageCallback(CreateNdefMessageCallback callback, Activity activity,
@@ -1500,8 +1500,8 @@ public final class NfcAdapter {
      *        to only register one at a time, and to do so in that activity's
      *        {@link Activity#onCreate}
      * @throws UnsupportedOperationException if FEATURE_NFC is unavailable.
-     * @deprecated this feature is deprecated. File sharing can work using other technology like
-     * Bluetooth.
+     * @removed this feature was deprecated since Android Q. File sharing can work using other
+     * technology like Bluetooth.
      */
     @java.lang.Deprecated
     public void setOnNdefPushCompleteCallback(OnNdefPushCompleteCallback callback,
@@ -1717,8 +1717,8 @@ public final class NfcAdapter {
      * @param activity the current foreground Activity that has registered data to share
      * @return whether the Beam animation was successfully invoked
      * @throws UnsupportedOperationException if FEATURE_NFC is unavailable.
-     * @deprecated this feature is deprecated. File sharing can work using other technology like
-     * Bluetooth.
+     * @removed this feature was deprecated since Android Q. File sharing can work using other
+     * technology like Bluetooth.
      */
     @java.lang.Deprecated
     public boolean invokeBeam(Activity activity) {
@@ -1993,8 +1993,8 @@ public final class NfcAdapter {
      * @see android.provider.Settings#ACTION_NFCSHARING_SETTINGS
      * @return true if NDEF Push feature is enabled
      * @throws UnsupportedOperationException if FEATURE_NFC is unavailable.
-     * @deprecated this feature is deprecated. File sharing can work using other technology like
-     * Bluetooth.
+     * @removed this feature was deprecated since Android Q. File sharing can work using other
+     * technology like Bluetooth.
      */
     @java.lang.Deprecated
 
