@@ -45,7 +45,7 @@ class RunningTasks {
     private static final Comparator<Task> LAST_ACTIVE_TIME_COMPARATOR =
             (o1, o2) -> {
                 return o1.lastActiveTime == o2.lastActiveTime
-                        ? Integer.signum(o2.mTaskId - o1.mTaskId) :
+                        ? Integer.signum(o2.getPrefixOrderIndex() - o1.getPrefixOrderIndex()) :
                         Long.signum(o2.lastActiveTime - o1.lastActiveTime);
             };
 
@@ -79,10 +79,19 @@ class RunningTasks {
         mRecentTasks = root.mService.getRecentTasks();
         mKeepIntentExtra = (flags & FLAG_KEEP_INTENT_EXTRA) == FLAG_KEEP_INTENT_EXTRA;
 
-        final PooledConsumer c = PooledLambda.obtainConsumer(RunningTasks::processTask, this,
-                PooledLambda.__(Task.class));
-        root.forAllLeafTasks(c, false);
-        c.recycle();
+        if (root instanceof RootWindowContainer) {
+            ((RootWindowContainer) root).forAllDisplays(dc -> {
+                final Task focusedTask = dc.mFocusedApp != null ? dc.mFocusedApp.getTask() : null;
+                processTaskInWindowContainer(dc, focusedTask);
+            });
+        } else {
+            final DisplayContent dc = root.getDisplayContent();
+            final Task focusedTask = dc != null
+                    ? (dc.mFocusedApp != null ? dc.mFocusedApp.getTask() : null)
+                    : null;
+            // update focusedTask's active time if root windowContainer contains it.
+            processTaskInWindowContainer(root, root.hasChild(focusedTask) ? focusedTask : null);
+        }
 
         // Take the first {@param maxNum} tasks and create running task infos for them
         final Iterator<Task> iter = mTmpSortedSet.iterator();
@@ -97,7 +106,14 @@ class RunningTasks {
         }
     }
 
-    private void processTask(Task task) {
+    private void processTaskInWindowContainer(WindowContainer wc, Task focusedTask) {
+        final PooledConsumer c = PooledLambda.obtainConsumer(RunningTasks::processTask, this,
+                PooledLambda.__(Task.class), focusedTask);
+        wc.forAllLeafTasks(c, false);
+        c.recycle();
+    }
+
+    private void processTask(Task task, Task focusedTask) {
         if (task.getTopNonFinishingActivity() == null) {
             // Skip if there are no activities in the task
             return;
@@ -126,10 +142,14 @@ class RunningTasks {
             // For the visible task, update the last active time so that it can be used to determine
             // the order of the tasks (it may not be set for newly created tasks)
             task.touchActiveTime();
-            if (!task.isFocused()) {
+            if (task != focusedTask) {
                 // TreeSet doesn't allow the same value and make sure this task is lower than the
                 // focused one.
-                task.lastActiveTime -= mTmpSortedSet.size();
+                task.lastActiveTime--;
+                // keep focused Task on top
+                if (focusedTask != null && focusedTask.isVisible()) {
+                    focusedTask.touchActiveTime();
+                }
             }
         }
 
