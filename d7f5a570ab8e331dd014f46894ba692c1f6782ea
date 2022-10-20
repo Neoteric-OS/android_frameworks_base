@@ -16,6 +16,23 @@
       "message": "please have a look",
       "revId": "d7f5a570ab8e331dd014f46894ba692c1f6782ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4727642c_64801d2c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2022-10-20T00:49:58Z",
+      "side": 1,
+      "message": "`Dependency` is a deprecated class. We unfortunately can\u0027t take this change.\nWe\u0027re now using Dagger for dependency injection.",
+      "revId": "d7f5a570ab8e331dd014f46894ba692c1f6782ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
