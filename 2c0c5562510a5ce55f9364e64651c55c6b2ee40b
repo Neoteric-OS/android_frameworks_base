@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f75bcdd2_a43a2254",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-10-21T20:50:25Z",
+      "side": 1,
+      "message": "Not a very meaningful health win as this target is largely dormant, but nice to trim unused deps.",
+      "revId": "2c0c5562510a5ce55f9364e64651c55c6b2ee40b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
