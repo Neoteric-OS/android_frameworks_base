@@ -151,6 +151,7 @@ import android.net.vcn.IVcnManagementService;
 import android.net.vcn.VcnManager;
 import android.net.wifi.WifiFrameworkInitializer;
 import android.net.wifi.nl80211.WifiNl80211Manager;
+import android.nfc.INfcAdapter;
 import android.nfc.NfcManager;
 import android.ondevicepersonalization.OnDevicePersonalizationFrameworkInitializer;
 import android.os.BatteryManager;
@@ -461,8 +462,10 @@ public final class SystemServiceRegistry {
         registerService(Context.NFC_SERVICE, NfcManager.class,
                 new CachedServiceFetcher<NfcManager>() {
             @Override
-            public NfcManager createService(ContextImpl ctx) {
-                return new NfcManager(ctx);
+            public NfcManager createService(ContextImpl ctx) throws ServiceNotFoundException {
+                IBinder b = ServiceManager.getServiceOrThrow(Context.NFC_SERVICE);
+                INfcAdapter service = INfcAdapter.Stub.asInterface(b);
+                return new NfcManager(ctx, service);
             }});
 
         registerService(Context.DROPBOX_SERVICE, DropBoxManager.class,
