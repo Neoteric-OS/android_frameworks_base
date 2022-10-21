@@ -563,6 +563,8 @@ public final class Parcel {
             Log.w(TAG, "Recycle called on unowned Parcel. (recycle twice?) Here: "
                     + Log.getStackTraceString(new Throwable())
                     + " Original recycle call (if DEBUG_RECYCLE): ", mStack);
+
+            return;
         }
         mRecycled = true;
 
