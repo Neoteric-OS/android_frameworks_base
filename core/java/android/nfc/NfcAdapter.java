@@ -38,9 +38,7 @@ import android.nfc.tech.NfcF;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.RemoteException;
-import android.os.ServiceManager;
 import android.util.Log;
 
 import java.io.IOException;
@@ -557,7 +555,7 @@ public final class NfcAdapter {
      * @hide
      */
     @UnsupportedAppUsage
-    public static synchronized NfcAdapter getNfcAdapter(Context context) {
+    public static synchronized NfcAdapter getNfcAdapter(Context context, INfcAdapter service) {
         if (context == null) {
             if (sNullContextNfcAdapter == null) {
                 sNullContextNfcAdapter = new NfcAdapter(null);
@@ -565,8 +563,11 @@ public final class NfcAdapter {
             return sNullContextNfcAdapter;
         }
         if (!sIsInitialized) {
-            PackageManager pm;
-            pm = context.getPackageManager();
+            if (service == null) {
+                Log.e(TAG, "could not retrieve NFC service");
+                throw new UnsupportedOperationException();
+            }
+            PackageManager pm = context.getPackageManager();
             sHasNfcFeature = pm.hasSystemFeature(PackageManager.FEATURE_NFC);
             sHasBeamFeature = pm.hasSystemFeature(PackageManager.FEATURE_NFC_BEAM);
             boolean hasHceFeature =
@@ -577,14 +578,9 @@ public final class NfcAdapter {
                 Log.v(TAG, "this device does not have NFC support");
                 throw new UnsupportedOperationException();
             }
-            sService = getServiceInterface();
-            if (sService == null) {
-                Log.e(TAG, "could not retrieve NFC service");
-                throw new UnsupportedOperationException();
-            }
             if (sHasNfcFeature) {
                 try {
-                    sTagService = sService.getNfcTagInterface();
+                    sTagService = service.getNfcTagInterface();
                 } catch (RemoteException e) {
                     Log.e(TAG, "could not retrieve NFC Tag service");
                     throw new UnsupportedOperationException();
@@ -592,13 +588,13 @@ public final class NfcAdapter {
             }
             if (hasHceFeature) {
                 try {
-                    sNfcFCardEmulationService = sService.getNfcFCardEmulationInterface();
+                    sNfcFCardEmulationService = service.getNfcFCardEmulationInterface();
                 } catch (RemoteException e) {
                     Log.e(TAG, "could not retrieve NFC-F card emulation service");
                     throw new UnsupportedOperationException();
                 }
                 try {
-                    sCardEmulationService = sService.getNfcCardEmulationInterface();
+                    sCardEmulationService = service.getNfcCardEmulationInterface();
                 } catch (RemoteException e) {
                     Log.e(TAG, "could not retrieve card emulation service");
                     throw new UnsupportedOperationException();
@@ -612,17 +608,10 @@ public final class NfcAdapter {
             adapter = new NfcAdapter(context);
             sNfcAdapters.put(context, adapter);
         }
-        return adapter;
-    }
-
-    /** get handle to NFC service interface */
-    private static INfcAdapter getServiceInterface() {
-        /* get a handle to NFC service */
-        IBinder b = ServiceManager.getService("nfc");
-        if (b == null) {
-            return null;
+        if (service != null) {
+            sService = service;
         }
-        return INfcAdapter.Stub.asInterface(b);
+        return adapter;
     }
 
     /**
@@ -648,17 +637,13 @@ public final class NfcAdapter {
                     "context not associated with any application (using a mock context?)");
         }
 
-        if (getServiceInterface() == null) {
-            // NFC is not available
+        /* use getSystemService() for consistency */
+        NfcManager manager = context.getSystemService(NfcManager.class);
+        if (manager == null) {
+            Log.e(TAG, "NFC service is not available");
             return null;
         }
 
-        /* use getSystemService() for consistency */
-        NfcManager manager = (NfcManager) context.getSystemService(Context.NFC_SERVICE);
-        if (manager == null) {
-            // NFC not available
-            return null;
-        }
         return manager.getDefaultAdapter();
     }
 
@@ -680,7 +665,7 @@ public final class NfcAdapter {
         Log.w(TAG, "WARNING: NfcAdapter.getDefaultAdapter() is deprecated, use " +
                 "NfcAdapter.getDefaultAdapter(Context) instead", new Exception());
 
-        return NfcAdapter.getNfcAdapter(null);
+        return NfcAdapter.getNfcAdapter(null, null);
     }
 
     NfcAdapter(Context context) {
@@ -771,8 +756,8 @@ public final class NfcAdapter {
     @UnsupportedAppUsage
     public void attemptDeadServiceRecovery(Exception e) {
         Log.e(TAG, "NFC service dead - attempting to recover", e);
-        INfcAdapter service = getServiceInterface();
-        if (service == null) {
+        NfcManager manager = mContext.getSystemService(NfcManager.class);
+        if (manager == null || sService == null) {
             Log.e(TAG, "could not retrieve NFC service during service recovery");
             // nothing more can be done now, sService is still stale, we'll hit
             // this recovery path again later
@@ -780,7 +765,7 @@ public final class NfcAdapter {
         }
         // assigning to sService is not thread-safe, but this is best-effort code
         // and on a well-behaved system should never happen
-        sService = service;
+        INfcAdapter service = sService;
         try {
             sTagService = service.getNfcTagInterface();
         } catch (RemoteException ee) {
