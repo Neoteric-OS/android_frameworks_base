@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9e3cfc4_68fe1cd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1971937
+      },
+      "writtenOn": "2022-10-22T15:05:54Z",
+      "side": 1,
+      "message": "On #abb7ac8e60932c63662b36577f6722ab1316755f, LocationRequest use BALANCED QUALITY as default but twilight service expect to use LOW_POWER. so I added setQuality and modify to use non-deprecation api.",
+      "revId": "aabcb89f8c592c343a06cd4df2cbdd5625c9351a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
