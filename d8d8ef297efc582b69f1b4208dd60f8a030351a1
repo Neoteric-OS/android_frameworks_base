@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a41f437f_4a0f6fec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2022-10-24T14:50:46Z",
+      "side": 1,
+      "message": "Thank you for the fix. Another patch will be landing shortly in AOSP, and this would produce a conflict. Only giving a -1 for that reason, but thank you again!",
+      "revId": "d8d8ef297efc582b69f1b4208dd60f8a030351a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
