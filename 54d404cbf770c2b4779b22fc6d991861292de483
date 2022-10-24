@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b9f84d8_fd4686fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-10-24T22:30:57Z",
+      "side": 1,
+      "message": "Can we also verify the policy regarding VSR?",
+      "revId": "54d404cbf770c2b4779b22fc6d991861292de483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4db5060f_3c31a960",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-10-24T22:30:57Z",
+      "side": 1,
+      "message": "Nit suggest after IPSEC_TUNNELS (that\u0027s probably the more relevant one)",
+      "range": {
+        "startLine": 1500,
+        "startChar": 0,
+        "endLine": 1500,
+        "endChar": 8
+      },
+      "revId": "54d404cbf770c2b4779b22fc6d991861292de483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
