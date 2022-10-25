@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "641a0e5e_7dcbfddc",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8050,
+      "author": {
+        "id": 1584750
+      },
+      "writtenOn": "2022-10-25T04:50:47Z",
+      "side": 1,
+      "message": "Does this vary by carrier or is it in carrierconfig for ease of update? (i could not access the design doc)",
+      "revId": "e07bd573d3a2831e3b81fea054ae1651d0e76613",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
