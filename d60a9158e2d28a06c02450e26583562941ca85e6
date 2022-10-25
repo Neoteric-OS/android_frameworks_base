@@ -52,6 +52,24 @@
       "parentUuid": "b5770463_36c3afeb",
       "revId": "d60a9158e2d28a06c02450e26583562941ca85e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d68948f_b65c940b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1971151
+      },
+      "writtenOn": "2022-10-25T02:06:24Z",
+      "side": 1,
+      "message": "Hello,\n\nWill you release the latest code recently?\n\nThanks",
+      "parentUuid": "80f8dab0_d45820d1",
+      "revId": "d60a9158e2d28a06c02450e26583562941ca85e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
