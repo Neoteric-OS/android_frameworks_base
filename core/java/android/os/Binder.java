@@ -562,7 +562,7 @@ public class Binder implements IBinder {
      *
      * @hide
      */
-    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @SystemApi()
     public final native void markVintfStability();
 
     /**
