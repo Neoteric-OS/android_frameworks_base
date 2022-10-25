@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b405f885_f49329cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1889741
+      },
+      "writtenOn": "2022-10-25T10:53:12Z",
+      "side": 1,
+      "message": "Throwing exceptions are expensive compared to using instanceof, and it makes the code more complicated to understand.",
+      "revId": "868f2e071f535013f9d725626edd88bceaf41d88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
