@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb026a6a_e4303a71",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1706779
+      },
+      "writtenOn": "2022-10-25T13:52:40Z",
+      "side": 1,
+      "message": "This file is already deprecated on Android 13 (the current branch) and has been removed internally, so this CL doesn\u0027t actually fix any live bugs.  It also has no tests.",
+      "revId": "e4e6bf69402129e40a34d3a180eb493210425c3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
