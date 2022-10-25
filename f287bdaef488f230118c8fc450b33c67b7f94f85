@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6bda206_9796e0a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-10-25T08:19:54Z",
+      "side": 1,
+      "message": "Hi @juliacr@google.com would you mind following up this CL? Thanks!",
+      "revId": "f287bdaef488f230118c8fc450b33c67b7f94f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
