@@ -16,6 +16,24 @@
       "message": "Does this vary by carrier or is it in carrierconfig for ease of update? (i could not access the design doc)",
       "revId": "e07bd573d3a2831e3b81fea054ae1651d0e76613",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aba9d1c8_2037b8e8",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8050,
+      "author": {
+        "id": 1949495
+      },
+      "writtenOn": "2022-10-25T04:58:51Z",
+      "side": 1,
+      "message": "This is vary by carrier. Currently, Iwlan is IPv4 preferred by default. Some carriers like Verizon prefer to use IPv6 ePDG server first.",
+      "parentUuid": "641a0e5e_7dcbfddc",
+      "revId": "e07bd573d3a2831e3b81fea054ae1651d0e76613",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
