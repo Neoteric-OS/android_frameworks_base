@@ -33,6 +33,24 @@
       "message": "You could consider using the new `instanceof` syntax here:\n\n```\n        if (obj instanceof ComponentName other) {\n            // mPackage and mClass can never be null.\n            return mPackage.equals(other.mPackage)\n                    \u0026\u0026 mClass.equals(other.mClass);\n        } else {\n            return false;\n        }\n\n```\n\nYour IDE might complain if you haven\u0027t set your language version to 16 or higher (we just updated to 17 a few weeks ago).",
       "revId": "868f2e071f535013f9d725626edd88bceaf41d88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2cfa686_5c80fef7",
+        "filename": "core/java/android/content/ComponentName.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2022-10-26T11:29:41Z",
+      "side": 1,
+      "message": "As discussed offline, this change breaks `mp droid` for unknown reasons. So we decided to merge as is for now.",
+      "parentUuid": "ef668444_96bd3678",
+      "revId": "868f2e071f535013f9d725626edd88bceaf41d88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
