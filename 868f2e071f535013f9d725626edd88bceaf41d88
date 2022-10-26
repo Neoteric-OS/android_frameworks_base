@@ -16,6 +16,23 @@
       "message": "Throwing exceptions are expensive compared to using instanceof, and it makes the code more complicated to understand.",
       "revId": "868f2e071f535013f9d725626edd88bceaf41d88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef668444_96bd3678",
+        "filename": "core/java/android/content/ComponentName.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2022-10-26T11:10:22Z",
+      "side": 1,
+      "message": "You could consider using the new `instanceof` syntax here:\n\n```\n        if (obj instanceof ComponentName other) {\n            // mPackage and mClass can never be null.\n            return mPackage.equals(other.mPackage)\n                    \u0026\u0026 mClass.equals(other.mClass);\n        } else {\n            return false;\n        }\n\n```\n\nYour IDE might complain if you haven\u0027t set your language version to 16 or higher (we just updated to 17 a few weeks ago).",
+      "revId": "868f2e071f535013f9d725626edd88bceaf41d88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
