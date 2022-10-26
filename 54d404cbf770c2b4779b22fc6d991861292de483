@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77677f32_9eb00fb1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-10-26T18:41:33Z",
+      "side": 1,
+      "message": "The CTS is written to follow the VSR policy. Only devices with VSR API \u003e\u003d U are required to support kernel mobike.\n\nI only verified that device with VSR API \u003c U will not have the feature enabled automatically and can skip all the tests. I don\u0027t have a U device but I\u0027m not too worried about it because this changes are small and straightforward.",
+      "parentUuid": "6b9f84d8_fd4686fe",
+      "revId": "54d404cbf770c2b4779b22fc6d991861292de483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4db5060f_3c31a960",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-10-24T22:30:57Z",
       "side": 1,
       "message": "Nit suggest after IPSEC_TUNNELS (that\u0027s probably the more relevant one)",
+      "range": {
+        "startLine": 1500,
+        "startChar": 0,
+        "endLine": 1500,
+        "endChar": 8
+      },
+      "revId": "54d404cbf770c2b4779b22fc6d991861292de483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a208b33f_da01fadf",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-10-26T18:41:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4db5060f_3c31a960",
       "range": {
         "startLine": 1500,
         "startChar": 0,
