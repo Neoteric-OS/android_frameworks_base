@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e357be17_10071135",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2022-10-26T02:31:24Z",
+      "side": 1,
+      "message": "Not sure I am a fan of \"callingUid !\u003d -1\" checks everywhere.",
+      "revId": "b95831cbd9c8cd24b33e9a947055c10b4524eff8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
