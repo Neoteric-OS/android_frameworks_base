@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2f9ce1b_b1b15620",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/qrcode/QrDecorateView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1367652
+      },
+      "writtenOn": "2022-10-27T14:50:56Z",
+      "side": 1,
+      "message": "It might not be reasonable to set both width and height to 1 to avoid crashes.\n\nCan you help to bypass it with necessary code change as well?\n\nThank you!",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 80
+      },
+      "revId": "a44d4c0b366b89ec9a013fff660e0e753d070fb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
