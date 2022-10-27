@@ -16,6 +16,24 @@
       "message": "Not sure I am a fan of \"callingUid !\u003d -1\" checks everywhere.",
       "revId": "b95831cbd9c8cd24b33e9a947055c10b4524eff8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c427fe7_959f867d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-10-27T00:10:22Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of almost all the code that\u0027s already in this file 😊 This -1 business is bookkeeping in two functions (notice - in other places, getCallingUid still can\u0027t be used - the Java RPC binder story needs work - it\u0027ll just abort for now, which is fine - this is only for execTransact + execTransactInternal right next to each other in this file). I could switch it to a more explicit type, but the point is that this is executed in every Java binder transaction so that we can\u0027t make an allocation.\n\nBinderCallHeavyHitterWatcher should be deleted here - completely. AppOpsManager - should be redesigned out of this path or made generic in binder. Just other priorities - I have in my TODOs/notes \"Binder.java \u0026 co - file language agnostic bugs\" - all the framework code here needs to be audited, and a lot of it needs comments saying \u0027stop!\u0027. It\u0027s really bad that we have all these great features implemented in a way that is Java-only and, not only that, but because of this implementation, features which are fundamentally broken or unnecessarily hampered, and don\u0027t work or provide worse guarantees because they ignore what\u0027s actually happening in Android here - calls happening outside of Java. 😞\n\nIf you want - I can clean some of this stuff now - start ripping out this heavy hitter watcher, but it never should have been added in the generic code here.\n\nIf you have another suggestion, I\u0027m happy to do it, but the goal is performant + easy to delete when this stuff gets cleaned up.",
+      "parentUuid": "e357be17_10071135",
+      "revId": "b95831cbd9c8cd24b33e9a947055c10b4524eff8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
