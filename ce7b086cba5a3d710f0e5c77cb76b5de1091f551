@@ -16,6 +16,23 @@
       "message": "Requesting an OWNERS review.  This is a topic of CLs that is being up-streamed from internal `git_master`, so that an OEM can enable ANGLE on their devices sooner.",
       "revId": "ce7b086cba5a3d710f0e5c77cb76b5de1091f551",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99411759_852ffff2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098333
+      },
+      "writtenOn": "2022-10-27T19:35:58Z",
+      "side": 1,
+      "message": "Can you provide an OWNERS review please?\n\nThis is code that previously landed in the internal `git_master` branch, and is being made available for IHVs/OEMs to use with their Android 13 builds (I can explain more in chat if you require).",
+      "revId": "ce7b086cba5a3d710f0e5c77cb76b5de1091f551",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
