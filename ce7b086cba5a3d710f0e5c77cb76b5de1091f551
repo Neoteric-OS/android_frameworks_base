@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7676e5d1_892ceec8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098333
+      },
+      "writtenOn": "2022-10-27T13:00:17Z",
+      "side": 1,
+      "message": "Requesting an OWNERS review.  This is a topic of CLs that is being up-streamed from internal `git_master`, so that an OEM can enable ANGLE on their devices sooner.",
+      "revId": "ce7b086cba5a3d710f0e5c77cb76b5de1091f551",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
