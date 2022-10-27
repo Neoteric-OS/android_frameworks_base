@@ -31,6 +31,7 @@ import android.util.TimeUtils;
 import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.expresslog.Counter;
 import com.android.server.job.JobSchedulerService;
 import com.android.server.job.StateControllerProto;
 
@@ -241,6 +242,7 @@ public final class TimeController extends StateController {
                     nextExpiryTime = job.getLatestRunTimeElapsed();
                     nextExpiryUid = job.getSourceUid();
                     nextExpiryPackageName = job.getSourcePackageName();
+                    Counter.logIncrement("job_scheduler.value_job_scheduler_deadline_counter");
                     break;
                 }
             }
