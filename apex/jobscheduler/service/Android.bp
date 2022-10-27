@@ -16,7 +16,6 @@ java_library {
     srcs: [
         "java/**/*.java",
         ":framework-jobscheduler-shared-srcs",
-        ":statslog-framework-java-gen", // FrameworkStatsLog.java
     ],
 
     libs: [
