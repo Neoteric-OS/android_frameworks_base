@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd5436f7_b901c3e7",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 9401,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2022-10-27T21:13:10Z",
+      "side": 1,
+      "message": "It would be helpful to @link to the corresponding change in the enterprise APIs to make it more clear what \"user restrictions\" are and to avoid confusion with ALLOWED_NETWORK_TYPES_REASON_USER",
+      "range": {
+        "startLine": 9401,
+        "startChar": 76,
+        "endLine": 9401,
+        "endChar": 94
+      },
+      "revId": "bdd47124d2ddea2d5f59777a242d5f02a8b83479",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
