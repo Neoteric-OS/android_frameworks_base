@@ -226,23 +226,27 @@ public class AudioSystem
         }
     }
 
-    /* Formats for A2DP codecs, must match system/audio-base.h audio_format_t */
+    /* Formats for A2DP codecs, must match system/audio-hal-enums.h audio_format_t */
     /** @hide */
-    public static final int AUDIO_FORMAT_INVALID        = 0xFFFFFFFF;
+    public static final int AUDIO_FORMAT_INVALID            = 0xFFFFFFFF;
     /** @hide */
-    public static final int AUDIO_FORMAT_DEFAULT        = 0;
+    public static final int AUDIO_FORMAT_DEFAULT            = 0;
     /** @hide */
-    public static final int AUDIO_FORMAT_AAC            = 0x04000000;
+    public static final int AUDIO_FORMAT_AAC                = 0x04000000;
     /** @hide */
-    public static final int AUDIO_FORMAT_SBC            = 0x1F000000;
+    public static final int AUDIO_FORMAT_SBC                = 0x1F000000;
     /** @hide */
-    public static final int AUDIO_FORMAT_APTX           = 0x20000000;
+    public static final int AUDIO_FORMAT_APTX               = 0x20000000;
     /** @hide */
-    public static final int AUDIO_FORMAT_APTX_HD        = 0x21000000;
+    public static final int AUDIO_FORMAT_APTX_HD            = 0x21000000;
     /** @hide */
-    public static final int AUDIO_FORMAT_LDAC           = 0x23000000;
+    public static final int AUDIO_FORMAT_LDAC               = 0x23000000;
     /** @hide */
-    public static final int AUDIO_FORMAT_LC3            = 0x2B000000;
+    public static final int AUDIO_FORMAT_LC3                = 0x2B000000;
+    /** @hide */
+    public static final int AUDIO_FORMAT_APTX_ADAPTIVE_QLEA = 0x30000000;
+    /** @hide */
+    public static final int AUDIO_FORMAT_APTX_ADAPTIVE_R4   = 0x31000000;
 
 
     /** @hide */
@@ -439,6 +443,10 @@ public class AudioSystem
                 return "AUDIO_FORMAT_DTS_UHD";
             case /* AUDIO_FORMAT_DRA             */ 0x2F000000:
                 return "AUDIO_FORMAT_DRA";
+            case /* AUDIO_FORMAT_APTX_ADAPTIVE_QLEA */ 0x30000000:
+                return "AUDIO_FORMAT_APTX_ADAPTIVE_QLEA";
+            case /* AUDIO_FORMAT_APTX_ADAPTIVE_R4   */ 0x31000000:
+                return "AUDIO_FORMAT_APTX_ADAPTIVE_R4";
 
             /* Aliases */
             case /* AUDIO_FORMAT_PCM_16_BIT        */ 0x1:
