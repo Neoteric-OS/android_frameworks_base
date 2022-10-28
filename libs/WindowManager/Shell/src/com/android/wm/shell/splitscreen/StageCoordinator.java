@@ -425,6 +425,28 @@ class StageCoordinator implements SplitLayout.SplitLayoutHandler,
                     RemoteAnimationTarget[] wallpapers,
                     RemoteAnimationTarget[] nonApps,
                     final IRemoteAnimationFinishedCallback finishedCallback) {
+                int openingCount = 0;
+                for (int i = 0; i < apps.length; i++) {
+                    if (apps[i].mode == MODE_OPENING) {
+                        openingCount++;
+                    }
+                }
+                if (openingCount < 2) {
+                    if (finishedCallback != null) {
+                        try {
+                            finishedCallback.onAnimationFinished();
+                        } catch (RemoteException e) {
+                            Slog.e(TAG, "Error finishing remote animation: ", e);
+                        }
+                    }
+                    mMainExecutor.execute(() -> {
+                        exitSplitScreen(null, EXIT_REASON_UNKNOWN);
+                        final Toast splitUnsupportedToast = Toast.makeText(mContext,
+                                R.string.dock_forced_resizable, Toast.LENGTH_SHORT);
+                        splitUnsupportedToast.show();
+                    });
+                    return;
+                }
                 RemoteAnimationTarget[] augmentedNonApps =
                         new RemoteAnimationTarget[nonApps.length + 1];
                 for (int i = 0; i < nonApps.length; ++i) {
