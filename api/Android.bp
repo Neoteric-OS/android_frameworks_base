@@ -24,20 +24,6 @@ package {
     default_applicable_licenses: ["frameworks_base_license"],
 }
 
-bootstrap_go_package {
-    name: "soong-api",
-    pkgPath: "android/soong/api",
-    deps: [
-        "blueprint",
-        "soong",
-        "soong-android",
-        "soong-genrule",
-        "soong-java",
-    ],
-    srcs: ["api.go"],
-    pluginFor: ["soong_build"],
-}
-
 python_binary_host {
     name: "api_versions_trimmer",
     srcs: ["api_versions_trimmer.py"],
@@ -84,6 +70,13 @@ genrule {
     out: ["current.api"],
     cmd: metalava_cmd + "-convert2xmlnostrip $(in) $(out)",
     visibility: ["//visibility:public"],
+}
+
+load {
+    src: "api.bzl",
+    imports: [
+        "combined_apis",
+    ],
 }
 
 combined_apis {
