@@ -46,6 +46,30 @@
       },
       "revId": "a44d4c0b366b89ec9a013fff660e0e753d070fb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f5cc539_17764fa8",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/qrcode/QrDecorateView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-10-28T02:55:41Z",
+      "side": 1,
+      "message": "\u003e This solution is inspired by some framework codes, see [PeopleSpaceTile.java](https://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/app/people/PeopleSpaceTile.java;l\u003d556?q\u003dPeopleSpaceTile) and [KeyboardView.java](https://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/inputmethodservice/KeyboardView.java;l\u003d665?q\u003dKeyboardView) although I\u0027m not sure if it\u0027s a good practice. I‘d like to upload another solution, and let me know if you have any good ideas.\n\nWell...Let\u0027s refer to the [View.toBitmap](https://android.googlesource.com/platform/frameworks/support/+/a9ac247af2afd4115c3eb6d16c05bc92737d6305/core/ktx/src/main/java/androidx/core/view/View.kt#194) logic to make this better.",
+      "parentUuid": "a465d863_58fde259",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 80
+      },
+      "revId": "a44d4c0b366b89ec9a013fff660e0e753d070fb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
