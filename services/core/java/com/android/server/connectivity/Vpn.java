@@ -115,6 +115,7 @@ import android.os.PersistableBundle;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.os.SystemService;
 import android.os.UserHandle;
 import android.os.UserManager;
@@ -2748,6 +2749,8 @@ public class Vpn {
     }
 
     private static boolean isIPv6Only(List<LinkAddress> linkAddresses) {
+        final boolean testIpv6Only = SystemProperties.getBoolean("test.vpn.ipv6only", false);
+        if (testIpv6Only) return true;
         boolean hasIPV6 = false;
         boolean hasIPV4 = false;
         for (final LinkAddress address : linkAddresses) {
@@ -3235,6 +3238,10 @@ public class Vpn {
         }
 
         private int calculateVpnMtu() {
+            final boolean mtuTestEnabled =
+                    SystemProperties.getBoolean("test.vpn.mtu.enabled", false);
+            final int testMtu = SystemProperties.getInt("test.vpn.mtu", 1280);
+            if (mtuTestEnabled) return testMtu;
             final Network underlyingNetwork = mIkeConnectionInfo.getNetwork();
             final LinkProperties lp = mConnectivityManager.getLinkProperties(underlyingNetwork);
             if (underlyingNetwork == null || lp == null) {
