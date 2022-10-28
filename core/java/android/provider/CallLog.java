@@ -908,6 +908,9 @@ public class CallLog {
         /** Call was VoLTE */
         public static final int FEATURES_VOLTE = 1 << 6;
 
+        /** Call was verified */
+        public static final int FEATURES_VERIFIED_NUMBER = 1 << 7;
+
         /**
          * The phone number as the user entered it.
          * <P>Type: TEXT</P>
