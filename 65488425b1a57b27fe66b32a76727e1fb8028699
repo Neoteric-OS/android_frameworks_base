@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e20be4f_feca3497",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-10-28T10:26:52Z",
+      "side": 1,
+      "message": "For test1\n---\nVPN with MTU 1280\n  NetworkAgentInfo{network{101}  handle{437197393933}  ni{VPN CONNECTED extra: } created\u003d2022-10-28T10:19:26.976Z Score(Policies : EVER_EVALUATED\u0026IS_UNMETERED\u0026IS_VPN\u0026EVER_VALIDATED\u0026IS_VALIDATED ; KeepConnected : 0)  created 172082 firstValidated 172177 lastValidated 172177 underlying{[100]}  lp{{InterfaceName: ipsec1 LinkAddresses: [ 100.80.103.213/32,2606:40:1b36:e7e::660:4dc5/64 ] DnsAddresses: [ /8.8.8.8,/2001:4860:4860::8888 ] UsePrivateDns: true ValidatedPrivateDnsAddresses: [2001:4860:4860::8888] Domains:  MTU: 1280 Routes: [ 0.0.0.0/0 -\u003e 0.0.0.0 ipsec1 mtu 0,::/0 -\u003e :: ipsec1 mtu 0,100.80.103.213/32 -\u003e 0.0.0.0 ipsec1 mtu 0,2606:40:1b36:e7e::/64 -\u003e :: ipsec1 mtu 0 ]}}  nc{[ Transports: WIFI|VPN Capabilities: NOT_METERED\u0026INTERNET\u0026NOT_RESTRICTED\u0026TRUSTED\u0026VALIDATED\u0026NOT_ROAMING\u0026FOREGROUND\u0026NOT_CONGESTED\u0026NOT_SUSPENDED\u0026NOT_VCN_MANAGED LinkUpBandwidth\u003e\u003d12000Kbps LinkDnBandwidth\u003e\u003d92078Kbps TransportInfo: \u003cVpnTransportInfo{type\u003d2, sessionId\u003dnull}\u003e Uids: \u003c{0-99999}\u003e OwnerUid: 10146 AdminUids: [10146] UnderlyingNetworks: [100]]}  factorySerialNumber\u003d4}\n\n---\n\nVPN with MTU 1279\n  NetworkAgentInfo{network{102}  handle{441492361229}  ni{VPN CONNECTED extra: } created\u003d2022-10-28T10:20:25.878Z Score(Policies : EVER_EVALUATED\u0026IS_UNMETERED\u0026IS_VPN\u0026EVER_VALIDATED\u0026IS_VALIDATED ; KeepConnected : 0)  created 230980 firstValidated 231052 lastValidated 231052 underlying{[100]}  lp{{InterfaceName: ipsec7 LinkAddresses: [ 100.71.7.223/32 ] DnsAddresses: [ /8.8.8.8 ] Domains:  MTU: 1279 Routes: [ 0.0.0.0/0 -\u003e 0.0.0.0 ipsec7 mtu 0,::/0 unreachable mtu 0,100.71.7.223/32 -\u003e 0.0.0.0 ipsec7 mtu 0 ]}}  nc{[ Transports: WIFI|VPN Capabilities: NOT_METERED\u0026INTERNET\u0026NOT_RESTRICTED\u0026TRUSTED\u0026VALIDATED\u0026NOT_ROAMING\u0026FOREGROUND\u0026NOT_CONGESTED\u0026NOT_SUSPENDED\u0026NOT_VCN_MANAGED LinkUpBandwidth\u003e\u003d12000Kbps LinkDnBandwidth\u003e\u003d92078Kbps TransportInfo: \u003cVpnTransportInfo{type\u003d2, sessionId\u003dnull}\u003e Uids: \u003c{0-99999}\u003e OwnerUid: 10146 AdminUids: [10146] UnderlyingNetworks: [100]]}  factorySerialNumber\u003d4}",
+      "revId": "65488425b1a57b27fe66b32a76727e1fb8028699",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
