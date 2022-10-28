@@ -34,6 +34,24 @@
       "parentUuid": "1c533e86_a689f037",
       "revId": "bfada115c8f2252e494402b713169cb66b9d7c54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b5af027_3ccb207d",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2022-10-28T15:59:57Z",
+      "side": 1,
+      "message": "Hey Mark, the situation I\u0027m thinking of is where code gets built on say a 5.10 kernel, but we forget to apply your kernel patch to 6.x where it attempts to run. The ioctl will always exist since the ashmem support comes from android-mainline, but it looks like if we don\u0027t have your ASHMEM_GET_FILE_ID patch then the ashmem_ioctl would return ENOTTY, not EINVAL.",
+      "parentUuid": "fc2c87f2_ee791cf0",
+      "revId": "bfada115c8f2252e494402b713169cb66b9d7c54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
