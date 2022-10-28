@@ -52,6 +52,24 @@
       "parentUuid": "fc2c87f2_ee791cf0",
       "revId": "bfada115c8f2252e494402b713169cb66b9d7c54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a1038d8_8e9bd3ef",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2022-10-28T18:07:23Z",
+      "side": 1,
+      "message": "Ahh yeah I see, I don\u0027t know why I put EINVAL there, you are correct that ENOTTY is what we should be checking for. I made that change so if the kernel doesn\u0027t support the IOCTL we\u0027ll catch the ENOTTY return there and pass a zero ino. EINVAL and other nonzero return codes are an indication that something might have gone wrong so we\u0027ll error out under those conditions. Let me know how that looks, thanks!",
+      "parentUuid": "1b5af027_3ccb207d",
+      "revId": "bfada115c8f2252e494402b713169cb66b9d7c54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
