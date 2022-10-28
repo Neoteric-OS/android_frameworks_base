@@ -16,6 +16,24 @@
       "message": "Doesn\u0027t this mean userspace depends on kernel support for this IOCTL as long as we have ashmem? If we ever forget to carry forward the kernel patch to the latest branches I think we get here. So should we put the kernel code on android-mainline?",
       "revId": "bfada115c8f2252e494402b713169cb66b9d7c54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc2c87f2_ee791cf0",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2022-10-28T00:26:10Z",
+      "side": 1,
+      "message": "Hi T.J., here\u0027s the kernel patch against common-android13-5.10:\n\nhttps://android-review.googlesource.com/c/platform/bionic/+/2237551\n\nThat said, the check against EINVAL is supposed to guard against this ioctl not existing.",
+      "parentUuid": "1c533e86_a689f037",
+      "revId": "bfada115c8f2252e494402b713169cb66b9d7c54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
