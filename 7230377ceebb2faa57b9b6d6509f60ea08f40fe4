@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c44f862_354ba829",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/qrcode/QrDecorateView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1367652
+      },
+      "writtenOn": "2022-10-28T08:55:54Z",
+      "side": 1,
+      "message": "Please add super.onDraw(canvas); before return;\n\nThank you!",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 9
+      },
+      "revId": "7230377ceebb2faa57b9b6d6509f60ea08f40fe4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
