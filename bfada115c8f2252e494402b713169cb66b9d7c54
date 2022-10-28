@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c533e86_a689f037",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2022-10-28T00:20:14Z",
+      "side": 1,
+      "message": "Doesn\u0027t this mean userspace depends on kernel support for this IOCTL as long as we have ashmem? If we ever forget to carry forward the kernel patch to the latest branches I think we get here. So should we put the kernel code on android-mainline?",
+      "revId": "bfada115c8f2252e494402b713169cb66b9d7c54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
