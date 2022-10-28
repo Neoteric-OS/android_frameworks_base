@@ -701,6 +701,9 @@
     <!-- Permission required for CTS test - CtsDevicePolicyManagerTestCases -->
     <uses-permission android:name="android.permission.READ_NEARBY_STREAMING_POLICY" />
 
+    <!-- Permission required for CTS test - ActivityPermissionRationaleTest -->
+    <uses-permission android:name="android.permission.ADJUST_RUNTIME_PERMISSIONS_POLICY" />
+
     <application android:label="@string/app_label"
                 android:theme="@android:style/Theme.DeviceDefault.DayNight"
                 android:defaultToDeviceProtectedStorage="true"
