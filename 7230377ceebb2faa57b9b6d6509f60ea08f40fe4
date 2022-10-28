@@ -22,6 +22,30 @@
       },
       "revId": "7230377ceebb2faa57b9b6d6509f60ea08f40fe4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7844e13e_a978eac4",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/qrcode/QrDecorateView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-10-28T09:06:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c44f862_354ba829",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 9
+      },
+      "revId": "7230377ceebb2faa57b9b6d6509f60ea08f40fe4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
