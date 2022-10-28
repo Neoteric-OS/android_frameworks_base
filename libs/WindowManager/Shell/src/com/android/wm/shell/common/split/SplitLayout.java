@@ -853,6 +853,10 @@ public final class SplitLayout implements DisplayInsetsController.OnInsetsChange
 
             final int imeTargetPosition = getImeTargetPosition();
             mHasImeFocus = imeTargetPosition != SPLIT_POSITION_UNDEFINED;
+            if (showing && mHasImeFocus) {
+                final DividerView view = (DividerView) mSplitWindowManager.getDividerView();
+                mHasImeFocus = !(view != null && view.isMoving());
+            }
             if (!mHasImeFocus) {
                 return 0;
             }

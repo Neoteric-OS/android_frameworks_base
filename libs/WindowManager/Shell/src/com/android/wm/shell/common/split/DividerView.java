@@ -319,6 +319,10 @@ public class DividerView extends FrameLayout implements View.OnTouchListener {
         return true;
     }
 
+    boolean isMoving() {
+        return mMoving;
+    }
+
     private void setTouching() {
         setSlippery(false);
         mHandle.setTouching(true, true);
