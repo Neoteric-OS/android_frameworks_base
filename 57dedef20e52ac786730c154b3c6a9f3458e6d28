@@ -16,6 +16,23 @@
       "message": "Thank you for the contribution.",
       "revId": "57dedef20e52ac786730c154b3c6a9f3458e6d28",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39c346ce_76303808",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1367652
+      },
+      "writtenOn": "2022-10-28T10:22:14Z",
+      "side": 1,
+      "message": "Hi tmfang@ please help to review this CL for Code-Owners approval. Thank you!",
+      "revId": "57dedef20e52ac786730c154b3c6a9f3458e6d28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
