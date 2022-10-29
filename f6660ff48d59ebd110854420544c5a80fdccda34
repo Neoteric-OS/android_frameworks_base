@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95312764_a94e0b28",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1432799
+      },
+      "writtenOn": "2022-10-29T16:53:26Z",
+      "side": 1,
+      "message": "Hi Yuxin,\n\nThanks for looking at this! My thoughts are\n\n1. This is probably caused by a call to FaceService#addLockoutResetCallback() along with the API callback coming from the actual sensor.\n\n```\n// After a quick search, this seems to be the only call that is not put on the handler thread (FaceService#addLockoutResetCallback())\n          mLockoutResetDispatcher.addCallback(callback, opPackageName);\n```\n\n2. If 1 is true, the best fix is probably to ensure FaceService#addLockoutResetCallback() is on the same handler as everything else, and we would probably submit this in our dev branch and let it trickle down to AOSP.\n\n\nAlso what further confirms my suspicion is that I see logs on your bugreport that sysui dies right before this modification, which would lead to them causing this. \n\nThis bug should be very infrequent, but does happen\n\n10-27 16:34:14.039  1000  2507  7243 I ActivityManager: Process com.android.systemui (pid 23295) has died: cch+85 SVC \n\nI\u0027ll speak with other folks on my team about this on Monday",
+      "revId": "f6660ff48d59ebd110854420544c5a80fdccda34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
