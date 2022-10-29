@@ -70,6 +70,24 @@
       "parentUuid": "1b5af027_3ccb207d",
       "revId": "bfada115c8f2252e494402b713169cb66b9d7c54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "075541c7_048c0893",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2022-10-29T00:07:23Z",
+      "side": 1,
+      "message": "LGTM thanks!",
+      "parentUuid": "4a1038d8_8e9bd3ef",
+      "revId": "bfada115c8f2252e494402b713169cb66b9d7c54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
