@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ee711f3_53e6ffc6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1960065
+      },
+      "writtenOn": "2022-10-29T17:21:05Z",
+      "side": 1,
+      "message": "Hello!\nIt\u0027s an updated commit instead of \nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/2163316/3\n\n\n@reminv@google.com suggested a good idea to remove verifyApp method, and I tried to implement it in this commit.\n\nIf there is no need to create new commits for such cases, and it is enough to modify the old ones, be sure to criticize me for this. And I won\u0027t be wrong again (if so).",
+      "revId": "21f2d11b2c2448698dd0502d5a3d3f9b6a919e86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
