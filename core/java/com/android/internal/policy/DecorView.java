@@ -2656,8 +2656,8 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
 
     @Override
     public String toString() {
-        return "DecorView@" + Integer.toHexString(this.hashCode()) + "["
-                + getTitleSuffix(mWindow.getAttributes()) + "]";
+        return super.toString() + " DecorView@" + Integer.toHexString(this.hashCode()) + "["
+                + getTitleSuffix(mWindow.getAttributes()) + "]"";
     }
 
     private static class ColorViewState {
