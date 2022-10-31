@@ -2411,12 +2411,22 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
     public WallpaperInfo getWallpaperInfo(int userId) {
         final boolean allow =
                 hasPermission(READ_WALLPAPER_INTERNAL) || hasPermission(QUERY_ALL_PACKAGES);
-        if (allow) {
-            userId = ActivityManager.handleIncomingUser(Binder.getCallingPid(),
-                    Binder.getCallingUid(), userId, false, true, "getWallpaperInfo", null);
-            synchronized (mLock) {
-                WallpaperData wallpaper = mWallpaperMap.get(userId);
-                if (wallpaper != null && wallpaper.connection != null) {
+
+        final int pid = Binder.getCallingPid();
+        final int uid = Binder.getCallingUid();
+        userId = ActivityManager.handleIncomingUser(pid, uid, userId, false, true,
+                "getWallpaperInfo", null);
+
+        final PackageManager pm = mContext.getPackageManager();
+        String[] uidPackages = pm.getPackagesForUid(uid);
+
+        synchronized (mLock) {
+            WallpaperData wallpaper = mWallpaperMap.get(userId);
+            if (wallpaper != null && wallpaper.connection != null) {
+                final ComponentName wallpaperComponent = wallpaper.wallpaperComponent;
+                boolean uidMatchPackage = wallpaperComponent != null
+                        && Arrays.asList(uidPackages).contains(wallpaperComponent.getPackageName());
+                if (allow || uidMatchPackage) {
                     return wallpaper.connection.mInfo;
                 }
             }
