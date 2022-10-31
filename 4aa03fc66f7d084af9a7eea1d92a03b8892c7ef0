@@ -16,6 +16,24 @@
       "message": "Please add `Merged-In:` here (go/automerger-help#using-merged-in).\n\nJFYI, if you add `-x` to the cherry-pick command it will also add a helpful pointer to the original commit in the other repo / branch:\n\n```\n(cherry picked from commit 8c57a1e22b3e6fc4d834c2339131ffea505bc395)\n```",
       "revId": "4aa03fc66f7d084af9a7eea1d92a03b8892c7ef0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18036498_d76facae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2022-10-31T15:30:51Z",
+      "side": 1,
+      "message": "Ah, thanks! Didn\u0027t know that",
+      "parentUuid": "2315964e_36f59823",
+      "revId": "4aa03fc66f7d084af9a7eea1d92a03b8892c7ef0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
