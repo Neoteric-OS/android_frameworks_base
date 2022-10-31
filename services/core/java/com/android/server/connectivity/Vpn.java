@@ -124,6 +124,8 @@ import android.system.keystore2.KeyDescriptor;
 import android.system.keystore2.KeyPermission;
 import android.text.TextUtils;
 import android.util.ArraySet;
+import android.util.IndentingPrintWriter;
+import android.util.LocalLog;
 import android.util.Log;
 import android.util.Range;
 
@@ -288,6 +290,10 @@ public class Vpn {
     VpnProfileStore getVpnProfileStore() {
         return mVpnProfileStore;
     }
+
+    private static final int MAX_EVENTS_LOGS = 20;
+    private final LocalLog mUnderlyNetworkChanges = new LocalLog(MAX_EVENTS_LOGS);
+    private final LocalLog mVpnManagerEvents = new LocalLog(MAX_EVENTS_LOGS);
 
     /**
      * Whether to keep the connection active after rebooting, or upgrading or reinstalling. This
@@ -816,6 +822,8 @@ public class Vpn {
             int errorCode, @NonNull final String packageName, @Nullable final String sessionKey,
             @NonNull final VpnProfileState profileState, @Nullable final Network underlyingNetwork,
             @Nullable final NetworkCapabilities nc, @Nullable final LinkProperties lp) {
+        mVpnManagerEvents.log("Event class " + errorClass + " err="
+                + errorCode + " for " + packageName + " on session " + sessionKey);
         final Intent intent = buildVpnManagerEventIntent(category, errorClass, errorCode,
                 packageName, sessionKey, profileState, underlyingNetwork, nc, lp);
         return sendEventToVpnManagerApp(intent, packageName);
@@ -1539,6 +1547,8 @@ public class Vpn {
                 ? Arrays.asList(mConfig.underlyingNetworks) : null);
 
         mNetworkCapabilities = capsBuilder.build();
+        mUnderlyNetworkChanges.log("Agent connect. Switch to "
+                + TextUtils.join(", ", mNetworkCapabilities.getUnderlyingNetworks()));
         mNetworkAgent = mDeps.newNetworkAgent(mContext, mLooper, NETWORKTYPE /* logtag */,
                 mNetworkCapabilities, lp,
                 new NetworkScore.Builder().setLegacyInt(VPN_DEFAULT_SCORE).build(),
@@ -4231,6 +4241,7 @@ public class Vpn {
         // TODO(b/230548427): Remove SDK check once VPN related stuff are decoupled from
         //  ConnectivityServiceTest.
         if (SdkLevel.isAtLeastT()) {
+            mVpnManagerEvents.log(packageName + " stopped");
             sendEventToVpnManagerApp(intent, packageName);
         }
     }
@@ -4398,8 +4409,9 @@ public class Vpn {
     /** Proxy to allow different testing setups */
     // TODO: b/240492694 Remove VpnNetworkAgentWrapper and this method when
     // NetworkAgent#setUnderlyingNetworks can be un-finalized.
-    private static void doSetUnderlyingNetworks(
+    private void doSetUnderlyingNetworks(
             @NonNull NetworkAgent agent, @NonNull List<Network> networks) {
+        mUnderlyNetworkChanges.log("Switch to " + TextUtils.join(", ", networks));
         if (agent instanceof VpnNetworkAgentWrapper) {
             ((VpnNetworkAgentWrapper) agent).doSetUnderlyingNetworks(networks);
         } else {
@@ -4517,5 +4529,32 @@ public class Vpn {
     @VisibleForTesting
     static Range<Integer> createUidRangeForUser(int userId) {
         return new Range<Integer>(userId * PER_USER_RANGE, (userId + 1) * PER_USER_RANGE - 1);
+    }
+
+    /** Dumps VPN state. */
+    public void dump(IndentingPrintWriter pw) {
+        synchronized (Vpn.this) {
+            pw.println("Active package name: " + mPackage);
+            pw.println("Active vpn type: " + getActiveVpnType());
+            pw.println("NetworkCapabilities: " + mNetworkCapabilities);
+            if (isIkev2VpnRunner()) {
+                final IkeV2VpnRunner runner = ((IkeV2VpnRunner) mVpnRunner);
+                pw.println("Token: " + runner.mSessionKey);
+                pw.println("MOBIKE " + (runner.mMobikeEnabled ? "enabled" : "disabled"));
+                if (mDataStallSuspected) pw.println("Data stall suspected");
+                if (runner.mScheduledHandleDataStallFuture != null) {
+                    pw.println("Reset session scheduled");
+                }
+            }
+            pw.println("mUnderlyNetworkChanges (most recent first):");
+            pw.increaseIndent();
+            mUnderlyNetworkChanges.reverseDump(pw);
+            pw.decreaseIndent();
+
+            pw.println("mVpnManagerEvent (most recent first):");
+            pw.increaseIndent();
+            mVpnManagerEvents.reverseDump(pw);
+            pw.decreaseIndent();
+        }
     }
 }
