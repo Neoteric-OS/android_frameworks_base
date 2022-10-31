@@ -33,6 +33,52 @@
       "message": "This seems to be matching our internal values we have to override them. When looking at our internal history Zak and Andrew added these, so I\u0027ll defer to them, but this is likely good to take.",
       "revId": "4ba3e68f5190988d003f039ad44ad1e5fa040910",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffea455d_aea42b3c",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4327,
+      "author": {
+        "id": 1060100
+      },
+      "writtenOn": "2022-10-31T18:15:43Z",
+      "side": 1,
+      "message": "this previously matched dialog corner radius, now its smaller?",
+      "range": {
+        "startLine": 4327,
+        "startChar": 50,
+        "endLine": 4327,
+        "endChar": 54
+      },
+      "revId": "4ba3e68f5190988d003f039ad44ad1e5fa040910",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3dec5ef_68190f53",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4329,
+      "author": {
+        "id": 1060100
+      },
+      "writtenOn": "2022-10-31T18:15:43Z",
+      "side": 1,
+      "message": "this doesn\u0027t look right, 1000dp radius won\u0027t work?",
+      "range": {
+        "startLine": 4329,
+        "startChar": 49,
+        "endLine": 4329,
+        "endChar": 55
+      },
+      "revId": "4ba3e68f5190988d003f039ad44ad1e5fa040910",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
