@@ -99,6 +99,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e279a73e_1df3e3df",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4327,
+      "author": {
+        "id": 1060100
+      },
+      "writtenOn": "2022-10-31T22:46:04Z",
+      "side": 1,
+      "message": "got it.",
+      "parentUuid": "b6a6bcec_f983da97",
+      "range": {
+        "startLine": 4327,
+        "startChar": 50,
+        "endLine": 4327,
+        "endChar": 54
+      },
+      "revId": "4ba3e68f5190988d003f039ad44ad1e5fa040910",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3dec5ef_68190f53",
@@ -136,6 +160,30 @@
       "side": 1,
       "message": "This is also a value currently used on Pixel devices, extracted using:\n\n $ adb shell cmd overlay lookup android android:dimen/config_progressBarCornerRadius\n 1000.0dip\n\nsee b/216182276.",
       "parentUuid": "d3dec5ef_68190f53",
+      "range": {
+        "startLine": 4329,
+        "startChar": 49,
+        "endLine": 4329,
+        "endChar": 55
+      },
+      "revId": "4ba3e68f5190988d003f039ad44ad1e5fa040910",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f97a7e6d_de55f2d7",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4329,
+      "author": {
+        "id": 1060100
+      },
+      "writtenOn": "2022-10-31T22:46:04Z",
+      "side": 1,
+      "message": "Checked in the code, it\u0027s to force the radius to be half the height, so the value is correct.",
+      "parentUuid": "c95037d3_a40efaad",
       "range": {
         "startLine": 4329,
         "startChar": 49,
