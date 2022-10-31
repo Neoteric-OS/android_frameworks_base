@@ -34,6 +34,24 @@
       "parentUuid": "95312764_a94e0b28",
       "revId": "f6660ff48d59ebd110854420544c5a80fdccda34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8623da3a_5ea1eb8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1432799
+      },
+      "writtenOn": "2022-10-31T23:57:08Z",
+      "side": 1,
+      "message": "Hi Yuxin,\n\nThis sounds about right to me, we have duplicate logic for face/fingerprint service.\n\nI think our plan is to submit this for U and have it trickle down to AOSP/",
+      "parentUuid": "1d647bd3_6bec07a4",
+      "revId": "f6660ff48d59ebd110854420544c5a80fdccda34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
