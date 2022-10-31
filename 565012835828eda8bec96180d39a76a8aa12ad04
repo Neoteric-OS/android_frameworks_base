@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "076dc201_48f120ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-10-31T23:50:14Z",
+      "side": 1,
+      "message": "The `android*-release` branches are for reference only and don\u0027t accept changes.  Changes need to go to the `master` branch first.  Changes then can optionally be backported to the `android*-gsi` branches (or be backported via the security bulletin process).\n\nI\u0027ve uploaded an equivalent change against the `master` branch (https://r.android.com/2279967), so please see that one instead.",
+      "revId": "565012835828eda8bec96180d39a76a8aa12ad04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
