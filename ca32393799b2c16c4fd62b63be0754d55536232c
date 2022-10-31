@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41ff8096_0b17866b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2022-10-31T13:25:15Z",
+      "side": 1,
+      "message": "Thanks for rebasing aosp/1881005!",
+      "revId": "ca32393799b2c16c4fd62b63be0754d55536232c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

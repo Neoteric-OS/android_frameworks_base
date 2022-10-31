@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "181fd5b5_70a0a912",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4239,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2022-10-31T13:25:15Z",
+      "side": 0,
+      "message": "Let\u0027s keep this (try/) finally block for safety. But let\u0027s move the try/finally within the `synchronized` block to reset `mForceSuspendActive` before unlocking `mLock`.\nThen the `mForceSuspendActive \u003d false` and `updateWakeLockDisabledStatesLocked()` lines moved out can stay in the finally block.\n\nIgnore my previous comment (https://android-review.googlesource.com/c/platform/frameworks/base/+/1881005/comment/c85b9ff4_9d25eda2/) as this is called on a Binder thread which would catch any exception thrown.",
+      "range": {
+        "startLine": 4233,
+        "startChar": 0,
+        "endLine": 4239,
+        "endChar": 9
+      },
+      "revId": "4ee969e8efb8e9170ef965a9d55cb6b1f50753b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
