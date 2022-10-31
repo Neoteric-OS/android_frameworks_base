@@ -35,6 +35,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5391ee82_ceb4c60f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2022-10-31T22:24:29Z",
+      "side": 1,
+      "message": "zakcohen@\n\nThanks for the review.  These values should be consistent with what is currently used on Pixel, though I don\u0027t have a Pixel 7 to test with right now.  If you have time, please check the values using the commands listed in the issue.",
+      "revId": "4ba3e68f5190988d003f039ad44ad1e5fa040910",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ffea455d_aea42b3c",
@@ -58,6 +75,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6a6bcec_f983da97",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4327,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2022-10-31T22:24:29Z",
+      "side": 1,
+      "message": "Yes, though this value was extracted from a pixel device using:\n\n $ adb shell cmd overlay lookup android android:dimen/config_bottomDialogCornerRadius\n 16.0dip\n\nsee b/216182276 for more info.",
+      "parentUuid": "ffea455d_aea42b3c",
+      "range": {
+        "startLine": 4327,
+        "startChar": 50,
+        "endLine": 4327,
+        "endChar": 54
+      },
+      "revId": "4ba3e68f5190988d003f039ad44ad1e5fa040910",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3dec5ef_68190f53",
@@ -71,6 +112,30 @@
       "writtenOn": "2022-10-31T18:15:43Z",
       "side": 1,
       "message": "this doesn\u0027t look right, 1000dp radius won\u0027t work?",
+      "range": {
+        "startLine": 4329,
+        "startChar": 49,
+        "endLine": 4329,
+        "endChar": 55
+      },
+      "revId": "4ba3e68f5190988d003f039ad44ad1e5fa040910",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c95037d3_a40efaad",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4329,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2022-10-31T22:24:29Z",
+      "side": 1,
+      "message": "This is also a value currently used on Pixel devices, extracted using:\n\n $ adb shell cmd overlay lookup android android:dimen/config_progressBarCornerRadius\n 1000.0dip\n\nsee b/216182276.",
+      "parentUuid": "d3dec5ef_68190f53",
       "range": {
         "startLine": 4329,
         "startChar": 49,
