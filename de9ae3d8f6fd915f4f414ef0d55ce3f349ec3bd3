@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4aa2a191_0805eec1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1387509
+      },
+      "writtenOn": "2022-11-01T16:37:30Z",
+      "side": 1,
+      "message": "First, I want to say I love this. Thank you for thinking about problems like this.\n\nUnfortunately, we can\u0027t accept this cl, - we have almost this exact same change already merged in our internal codebase! Had we not, I would gladly take this in.",
+      "revId": "de9ae3d8f6fd915f4f414ef0d55ce3f349ec3bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76ae20ef_3d6a11da",
+        "filename": "packages/SystemUI/src/com/android/systemui/navigationbar/NavigationBarModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1387509
+      },
+      "writtenOn": "2022-11-01T16:37:30Z",
+      "side": 1,
+      "message": "Small note: because you have `@Inject` on the constructor of `NavigationBarEdgePanel`, you don\u0027t need a corresponding `@Provides`.",
+      "range": {
+        "startLine": 75,
+        "startChar": 11,
+        "endLine": 75,
+        "endChar": 33
+      },
+      "revId": "de9ae3d8f6fd915f4f414ef0d55ce3f349ec3bd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
