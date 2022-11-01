@@ -21,10 +21,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.android.internal.util.LatencyTracker;
 import com.android.systemui.R;
+import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.DisplayId;
 import com.android.systemui.navigationbar.NavigationBarComponent.NavigationBarScope;
 import com.android.systemui.navigationbar.gestural.EdgeBackGestureHandler;
+import com.android.systemui.navigationbar.gestural.NavigationBarEdgePanel;
+import com.android.systemui.statusbar.VibratorHelper;
+
+import java.util.concurrent.Executor;
 
 import dagger.Module;
 import dagger.Provides;
@@ -62,6 +68,15 @@ public interface NavigationBarModule {
     static EdgeBackGestureHandler provideEdgeBackGestureHandler(
             EdgeBackGestureHandler.Factory factory, @DisplayId Context context) {
         return factory.create(context);
+    }
+
+    @Provides
+    @NavigationBarScope
+    static NavigationBarEdgePanel provideNavigationBarEdgePanel(@DisplayId Context context,
+            LatencyTracker latencyTracker, WindowManager windowManager,
+            VibratorHelper vibratorHelper, @Background Executor backgroundExecutor) {
+        return new NavigationBarEdgePanel(context, latencyTracker, windowManager, vibratorHelper,
+                backgroundExecutor);
     }
 
     /** A WindowManager specific to the display's context. */
