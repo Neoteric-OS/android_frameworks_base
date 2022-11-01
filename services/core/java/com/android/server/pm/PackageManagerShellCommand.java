@@ -499,7 +499,8 @@ class PackageManagerShellCommand extends ShellCommand {
             for (ApplicationInfo info : list) {
                 if (info.isUpdatedSystemApp()) {
                     pw.println("Uninstalling updates to " + info.packageName + "...");
-                    final LocalIntentReceiver receiver = new LocalIntentReceiver();
+                    final PackageManagerServiceUtils.LocalIntentReceiver receiver = 
+                            new PackageManagerServiceUtils.LocalIntentReceiver();
                     installer.uninstall(new VersionedPackage(info.packageName,
                                     info.versionCode), null /*callerPackageName*/, 0 /* flags */,
                             receiver.getIntentSender(), 0);
@@ -555,44 +556,22 @@ class PackageManagerShellCommand extends ShellCommand {
             throw new RuntimeException(e);
         }
 
-        final LocalIntentReceiver receiver = new LocalIntentReceiver();
-        RollbackManager rm = shellPackageContext.getSystemService(RollbackManager.class);
-        RollbackInfo rollback = null;
-        for (RollbackInfo r : rm.getAvailableRollbacks()) {
-            for (PackageRollbackInfo info : r.getPackages()) {
-                if (packageName.equals(info.getPackageName())) {
-                    rollback = r;
-                    break;
-                }
-            }
-        }
-
-        if (rollback == null) {
-            pw.println("No available rollbacks for: " + packageName);
+        RollbackInfo rollback = PackageManagerServiceUtils.findRollbackInfo(
+                    shellPackageContext, packageName);
+        try {
+            PackageManagerServiceUtils.commitRollback(shellPackageContext, rollback, packageName);
+        } catch (PackageManagerException e) {
+            pw.println(e.getMessage());
             return 1;
         }
 
-        rm.commitRollback(rollback.getRollbackId(),
-                Collections.emptyList(), receiver.getIntentSender());
-
-        final Intent result = receiver.getResult();
-        final int status = result.getIntExtra(RollbackManager.EXTRA_STATUS,
-                RollbackManager.STATUS_FAILURE);
-
-        if (status != RollbackManager.STATUS_SUCCESS) {
-            pw.println("Failure ["
-                    + result.getStringExtra(RollbackManager.EXTRA_STATUS_MESSAGE) + "]");
-            return 1;
-        }
-
-        if (rollback.isStaged() && stagedReadyTimeoutMs > 0) {
+        if (rollback !=null && rollback.isStaged() && stagedReadyTimeoutMs > 0) {
             final int committedSessionId = rollback.getCommittedSessionId();
             return doWaitForStagedSessionReady(committedSessionId, stagedReadyTimeoutMs, pw);
         }
 
         pw.println("Success");
         return 0;
-
     }
 
     private void setParamsSize(InstallParams params, List<String> inPaths) {
@@ -1659,7 +1638,8 @@ class PackageManagerShellCommand extends ShellCommand {
         int installReason = PackageManager.INSTALL_REASON_UNKNOWN;
         try {
             if (waitTillComplete) {
-                final LocalIntentReceiver receiver = new LocalIntentReceiver();
+                final PackageManagerServiceUtils.LocalIntentReceiver receiver = 
+                        new PackageManagerServiceUtils.LocalIntentReceiver();
                 final IPackageInstaller installer = mInterface.getPackageInstaller();
                 pw.println("Installing package " + packageName + " for user: " + translatedUserId);
                 installer.installExistingPackage(packageName, installFlags, installReason,
@@ -2183,7 +2163,8 @@ class PackageManagerShellCommand extends ShellCommand {
         }
         final int translatedUserId =
                 translateUserId(userId, UserHandle.USER_SYSTEM, "runUninstall");
-        final LocalIntentReceiver receiver = new LocalIntentReceiver();
+        final PackageManagerServiceUtils.LocalIntentReceiver receiver = 
+                new PackageManagerServiceUtils.LocalIntentReceiver();
         final PackageManagerInternal internal =
                 LocalServices.getService(PackageManagerInternal.class);
 
@@ -3713,7 +3694,8 @@ class PackageManagerShellCommand extends ShellCommand {
                             "Warning [Could not validate the dex paths: " + e.getMessage() + "]");
                 }
             }
-            final LocalIntentReceiver receiver = new LocalIntentReceiver();
+            final PackageManagerServiceUtils.LocalIntentReceiver receiver = 
+                    new PackageManagerServiceUtils.LocalIntentReceiver();
             session.commit(receiver.getIntentSender());
             if (!session.isStaged()) {
                 final Intent result = receiver.getResult();
@@ -4268,33 +4250,5 @@ class PackageManagerShellCommand extends ShellCommand {
         mDomainVerificationShell.printHelp(pw);
         pw.println("");
         Intent.printIntentArgsHelp(pw , "");
-    }
-
-    private static class LocalIntentReceiver {
-        private final LinkedBlockingQueue<Intent> mResult = new LinkedBlockingQueue<>();
-
-        private IIntentSender.Stub mLocalSender = new IIntentSender.Stub() {
-            @Override
-            public void send(int code, Intent intent, String resolvedType, IBinder whitelistToken,
-                    IIntentReceiver finishedReceiver, String requiredPermission, Bundle options) {
-                try {
-                    mResult.offer(intent, 5, TimeUnit.SECONDS);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        };
-
-        public IntentSender getIntentSender() {
-            return new IntentSender((IIntentSender) mLocalSender);
-        }
-
-        public Intent getResult() {
-            try {
-                return mResult.take();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 }

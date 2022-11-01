@@ -115,6 +115,9 @@ import android.content.pm.VersionedPackage;
 import android.content.pm.overlay.OverlayPaths;
 import android.content.pm.parsing.PackageLite;
 import android.content.res.Resources;
+import android.content.rollback.PackageRollbackInfo;
+import android.content.rollback.RollbackInfo;
+import android.content.rollback.RollbackManager;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.hardware.display.DisplayManager;
@@ -7247,5 +7250,15 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         synchronized (mLock) {
             mSettings.addInstallerPackageNames(installSource);
         }
+    }
+
+    public void commitRollback(String packageName) {
+        try {
+            PackageManagerServiceUtils.commitRollback(mContext, packageName);
+        } catch (PackageManagerException e) {
+            Slog.e(TAG, e.getMessage());
+        }
+        
+        return;
     }
 }
