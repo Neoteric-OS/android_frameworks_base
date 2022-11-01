@@ -1187,4 +1187,9 @@ public abstract class IPackageManagerBase extends IPackageManager.Stub {
     public final void finishPackageInstall(int token, boolean didLaunch) throws RemoteException {
         mService.finishPackageInstall(token, didLaunch);
     }
+
+    @Override
+    public final void commitRollback(String packageName) {
+        mService.commitRollback(packageName);
+    }
 }
