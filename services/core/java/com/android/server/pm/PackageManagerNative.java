@@ -239,4 +239,10 @@ final class PackageManagerNative extends IPackageManagerNative.Stub {
             }
         }
     }
+
+    @Override
+    public void commitRollback(String packageName) {
+        mPm.commitRollback(packageName);
+        return;
+    }
 }

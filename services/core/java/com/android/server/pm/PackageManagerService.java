@@ -7248,4 +7248,13 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
             mSettings.addInstallerPackageNames(installSource);
         }
     }
+
+    public void commitRollback(String packageName) {
+        try {
+            PackageManagerServiceUtils.commitRollback(mContext, packageName);
+        } catch (PackageManagerException e) {
+            Slog.e(TAG, e.getMessage());
+        }
+        return;
+    }
 }

@@ -40,6 +40,9 @@ import android.app.ActivityManager;
 import android.compat.annotation.ChangeId;
 import android.compat.annotation.EnabledSince;
 import android.content.Context;
+import android.content.IIntentReceiver;
+import android.content.IIntentSender;
+import android.content.IntentSender;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
@@ -56,13 +59,18 @@ import android.content.pm.parsing.ApkLiteParseUtils;
 import android.content.pm.parsing.PackageLite;
 import android.content.pm.parsing.result.ParseResult;
 import android.content.pm.parsing.result.ParseTypeImpl;
+import android.content.rollback.PackageRollbackInfo;
+import android.content.rollback.RollbackInfo;
+import android.content.rollback.RollbackManager;
 import android.os.Binder;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Debug;
 import android.os.Environment;
 import android.os.FileUtils;
 import android.os.Process;
 import android.os.SystemProperties;
+import android.os.IBinder;
 import android.os.incremental.IncrementalManager;
 import android.os.incremental.IncrementalStorage;
 import android.os.incremental.V4Signature;
@@ -118,6 +126,9 @@ import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -1399,6 +1410,86 @@ public class PackageManagerServiceUtils {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    protected static RollbackInfo findRollbackInfo(Context context, String packageName) {
+        RollbackManager rm = context.getSystemService(RollbackManager.class);
+        RollbackInfo rollback = null;
+        for (RollbackInfo r : rm.getAvailableRollbacks()) {
+            for (PackageRollbackInfo info : r.getPackages()) {
+                if (packageName.equals(info.getPackageName())) {
+                    rollback = r;
+                    break;
+                }
+            }
+        }
+        return rollback;
+    }
+
+    /**
+     * Call rollback manager to commit a rollback given a rollback info.
+     * Throw an exception if rollback is not available or rollback fails
+     */
+    protected static void commitRollback(Context context, RollbackInfo rollback,
+            String packageName) throws PackageManagerException {
+        if (rollback == null) {
+            throw new PackageManagerException("No available rollbacks for: "
+                    + packageName);
+        }
+
+        RollbackManager rm = context.getSystemService(RollbackManager.class);
+        final LocalIntentReceiver receiver = new LocalIntentReceiver();
+        rm.commitRollback(rollback.getRollbackId(),
+                Collections.emptyList(), receiver.getIntentSender());
+
+        final int status = receiver.getResult().getIntExtra(RollbackManager.EXTRA_STATUS,
+                RollbackManager.STATUS_FAILURE);
+
+        if (status != RollbackManager.STATUS_SUCCESS) {
+            throw new PackageManagerException("Failure ["
+                + result.getStringExtra(RollbackManager.EXTRA_STATUS_MESSAGE) + "]");
+        }
+    }
+
+    /**
+     * Rollback given a package name. Throw exception when rollback is not available or
+     * rollback fails.
+     */
+    protected static void commitRollback(Context context, String packageName)
+            throws PackageManagerException {
+        try {
+            commitRollback(context, findRollbackInfo(context, packageName), packageName);
+        } catch (PackageManagerException e) {
+            throw e;
+        }
+    }
+
+    protected static class LocalIntentReceiver {
+        private final LinkedBlockingQueue<Intent> mResult = new LinkedBlockingQueue<>();
+
+        private IIntentSender.Stub mLocalSender = new IIntentSender.Stub() {
+            @Override
+            public void send(int code, Intent intent, String resolvedType, IBinder allowlistToken,
+                    IIntentReceiver finishedReceiver, String requiredPermission, Bundle options) {
+                try {
+                    mResult.offer(intent, 5, TimeUnit.SECONDS);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+
+        public IntentSender getIntentSender() {
+            return new IntentSender((IIntentSender) mLocalSender);
+        }
+
+        public Intent getResult() {
+            try {
+                return mResult.take();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }
