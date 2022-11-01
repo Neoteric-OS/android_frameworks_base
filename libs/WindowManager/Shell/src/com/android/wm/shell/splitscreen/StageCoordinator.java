@@ -1349,8 +1349,12 @@ class StageCoordinator implements SplitLayout.SplitLayoutHandler,
 
         mDisplayLayout.rotateTo(mContext.getResources(), toRotation);
         mSplitLayout.rotateTo(toRotation, mDisplayLayout.stableInsets());
-        updateWindowBounds(mSplitLayout, wct);
-        updateUnfoldBounds();
+        if (mSplitLayout.isLandscape()) {
+            onLayoutSizeChanged(mSplitLayout);
+        } else {
+            updateWindowBounds(mSplitLayout, wct);
+            updateUnfoldBounds();
+        }
     }
 
     private void onFoldedStateChanged(boolean folded) {
