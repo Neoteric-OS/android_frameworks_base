@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cd40b24_0041ea8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2022-11-01T08:53:29Z",
+      "side": 1,
+      "message": "My only worry is making sure we revert this when the underlying issue is fixed. Maybe add a comment in the CL, or at least in the bug?",
+      "revId": "190f8c9caf9a03a3b09c7c77a12bcf41acc3759a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
