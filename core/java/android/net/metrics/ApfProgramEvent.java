@@ -27,7 +27,7 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.SparseArray;
 
-import com.android.internal.util.MessageUtils;
+import com.android.net.module.util.MessageUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
