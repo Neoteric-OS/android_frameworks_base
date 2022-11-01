@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdcc021f_6e6d07ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2022-11-01T08:31:43Z",
+      "side": 1,
+      "message": "Adding Michael for owner review.\nThis is an updated version of aosp/1881005",
+      "revId": "8c1a8684991ccb0c452e5b4aa0eacf5b8b4e7c5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
