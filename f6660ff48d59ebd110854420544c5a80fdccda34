@@ -52,6 +52,24 @@
       "parentUuid": "1d647bd3_6bec07a4",
       "revId": "f6660ff48d59ebd110854420544c5a80fdccda34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13dda53e_85583a29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1390168
+      },
+      "writtenOn": "2022-11-01T01:42:45Z",
+      "side": 1,
+      "message": "Hi joshmccloskey,\nGot it, we plan to merge the current workaround solution with Xiaomi\u0027s Android 13 distribution, and look forward to the repair on the U. Thank you for your review.",
+      "parentUuid": "8623da3a_5ea1eb8f",
+      "revId": "f6660ff48d59ebd110854420544c5a80fdccda34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
