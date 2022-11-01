@@ -742,6 +742,7 @@ public class SettingsBackupTest {
                  Settings.Secure.MANAGED_PROFILE_CONTACT_REMOTE_SEARCH,
                  Settings.Secure.MULTI_PRESS_TIMEOUT,
                  Settings.Secure.NFC_PAYMENT_FOREGROUND,
+                 Settings.Secure.WALLET_MANAGER_FOREGROUND,
                  Settings.Secure.NIGHT_DISPLAY_ACTIVATED,
                  Settings.Secure.NIGHT_DISPLAY_LAST_ACTIVATED_TIME,
                  Settings.Secure.NUM_ROTATION_SUGGESTIONS_ACCEPTED,
