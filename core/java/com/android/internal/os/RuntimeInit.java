@@ -36,6 +36,7 @@ import com.android.internal.logging.AndroidConfig;
 
 import dalvik.system.RuntimeHooks;
 import dalvik.system.VMRuntime;
+import dalvik.system.ZipPathValidator;
 
 import libcore.content.type.MimeMap;
 
@@ -259,6 +260,12 @@ public class RuntimeInit {
          * Wire socket tagging to traffic stats.
          */
         TrafficStats.attachSocketTagger();
+
+        /*
+         * Set the safe zip path validator callback which disallows dangerous zip entry names and
+         * will be enabled for apps targetSDK >= U.
+         */
+        ZipPathValidator.setCallback(new SafeZipPathCallback());
 
         initialized = true;
     }
