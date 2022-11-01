@@ -22,6 +22,30 @@
       },
       "revId": "4ee969e8efb8e9170ef965a9d55cb6b1f50753b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c38471ae_833c5cb0",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4239,
+      "author": {
+        "id": 1887358
+      },
+      "writtenOn": "2022-11-01T03:55:38Z",
+      "side": 0,
+      "message": "Thanks for the suggestion, it looks good.",
+      "parentUuid": "181fd5b5_70a0a912",
+      "range": {
+        "startLine": 4233,
+        "startChar": 0,
+        "endLine": 4239,
+        "endChar": 9
+      },
+      "revId": "4ee969e8efb8e9170ef965a9d55cb6b1f50753b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
