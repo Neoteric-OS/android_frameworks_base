@@ -198,7 +198,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
     private final Rect mNavBarOverlayExcludedBounds = new Rect();
     private final Region mExcludeRegion = new Region();
     private final Region mUnrestrictedExcludeRegion = new Region();
-    private final LatencyTracker mLatencyTracker;
+    private final NavigationBarEdgePanel mNavigationBarEdgePanel;
 
     // The left side edge width where touch down is allowed
     private int mEdgeWidthLeft;
@@ -303,7 +303,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
             BroadcastDispatcher broadcastDispatcher, ProtoTracer protoTracer,
             NavigationModeController navigationModeController, ViewConfiguration viewConfiguration,
             WindowManager windowManager, IWindowManager windowManagerService,
-            FalsingManager falsingManager, LatencyTracker latencyTracker) {
+            FalsingManager falsingManager, NavigationBarEdgePanel navigationBarEdgePanel) {
         super(broadcastDispatcher);
         mContext = context;
         mDisplayId = context.getDisplayId();
@@ -317,7 +317,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
         mWindowManager = windowManager;
         mWindowManagerService = windowManagerService;
         mFalsingManager = falsingManager;
-        mLatencyTracker = latencyTracker;
+        mNavigationBarEdgePanel = navigationBarEdgePanel;
         ComponentName recentsComponentName = ComponentName.unflattenFromString(
                 context.getString(com.android.internal.R.string.config_recentsComponentName));
         if (recentsComponentName != null) {
@@ -507,8 +507,8 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
                     Choreographer.getInstance(), this::onInputEvent);
 
             // Add a nav bar panel window
-            setEdgeBackPlugin(
-                    new NavigationBarEdgePanel(mContext, mBackAnimation, mLatencyTracker));
+            mNavigationBarEdgePanel.setBackAnimation(mBackAnimation);
+            setEdgeBackPlugin(mNavigationBarEdgePanel);
             mPluginManager.addPluginListener(
                     this, NavigationEdgeBackPlugin.class, /*allowMultiple=*/ false);
         }
@@ -523,7 +523,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
 
     @Override
     public void onPluginDisconnected(NavigationEdgeBackPlugin plugin) {
-        setEdgeBackPlugin(new NavigationBarEdgePanel(mContext, mBackAnimation, mLatencyTracker));
+        setEdgeBackPlugin(mNavigationBarEdgePanel);
     }
 
     private void setEdgeBackPlugin(NavigationEdgeBackPlugin edgeBackPlugin) {
@@ -971,7 +971,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
         private final WindowManager mWindowManager;
         private final IWindowManager mWindowManagerService;
         private final FalsingManager mFalsingManager;
-        private final LatencyTracker mLatencyTracker;
+        private final NavigationBarEdgePanel mNavigationBarEdgePanel;
 
         @Inject
         public Factory(OverviewProxyService overviewProxyService,
@@ -980,7 +980,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
                 NavigationModeController navigationModeController,
                 ViewConfiguration viewConfiguration, WindowManager windowManager,
                 IWindowManager windowManagerService, FalsingManager falsingManager,
-                LatencyTracker latencyTracker) {
+                NavigationBarEdgePanel navigationBarEdgePanel) {
             mOverviewProxyService = overviewProxyService;
             mSysUiState = sysUiState;
             mPluginManager = pluginManager;
@@ -992,7 +992,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
             mWindowManager = windowManager;
             mWindowManagerService = windowManagerService;
             mFalsingManager = falsingManager;
-            mLatencyTracker = latencyTracker;
+            mNavigationBarEdgePanel = navigationBarEdgePanel;
         }
 
         /** Construct a {@link EdgeBackGestureHandler}. */
@@ -1000,7 +1000,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
             return new EdgeBackGestureHandler(context, mOverviewProxyService, mSysUiState,
                     mPluginManager, mExecutor, mBroadcastDispatcher, mProtoTracer,
                     mNavigationModeController, mViewConfiguration, mWindowManager,
-                    mWindowManagerService, mFalsingManager, mLatencyTracker);
+                    mWindowManagerService, mFalsingManager, mNavigationBarEdgePanel);
         }
     }
 
