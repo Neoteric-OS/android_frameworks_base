@@ -2649,6 +2649,15 @@ class SettingsProtoDumpUtil {
                 SecureSettingsProto.Zen.SETTINGS_SUGGESTION_VIEWED);
         p.end(zenToken);
 
+        final long walletManagerToken = p.start(SecureSettingsProto.WALLET_MANAGER);
+        dumpSetting(s, p,
+                Settings.Secure.WALLET_MANAGER_COMPONENT,
+                SecureSettingsProto.WalletManager.DEFAULT_COMPONENT);
+        dumpSetting(s, p,
+                Settings.Secure.WALLET_MANAGER_FOREGROUND,
+                SecureSettingsProto.WalletManager.FOREGROUND);
+        p.end(walletManagerToken);
+
         // Please insert new settings using the same order as in SecureSettingsProto.
         p.end(token);
 

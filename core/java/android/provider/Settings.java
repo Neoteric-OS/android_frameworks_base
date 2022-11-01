@@ -9156,6 +9156,19 @@ public final class Settings {
         public static final String NFC_PAYMENT_FOREGROUND = "nfc_payment_foreground";
 
         /**
+         * The default Wallet Manager component
+         * @hide
+         */
+        public static final String WALLET_MANAGER_COMPONENT =
+                "wallet_manager_default_component";
+        /**
+         * Whether wallet manager transactions are handled by the foreground application or
+         * a default.
+         * @hide
+         */
+        public static final String WALLET_MANAGER_FOREGROUND = "wallet_manager_foreground";
+
+        /**
          * Specifies the package name currently configured to be the primary sms application
          * @hide
          */
