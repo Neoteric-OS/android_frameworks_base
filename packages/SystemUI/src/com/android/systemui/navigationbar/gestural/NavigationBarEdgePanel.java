@@ -56,6 +56,7 @@ import com.android.settingslib.Utils;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.animation.Interpolators;
+import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.plugins.NavigationEdgeBackPlugin;
 import com.android.systemui.shared.navigationbar.RegionSamplingHelper;
 import com.android.systemui.statusbar.VibratorHelper;
@@ -63,6 +64,8 @@ import com.android.wm.shell.back.BackAnimation;
 
 import java.io.PrintWriter;
 import java.util.concurrent.Executor;
+
+import javax.inject.Inject;
 
 public class NavigationBarEdgePanel extends View implements NavigationEdgeBackPlugin {
 
@@ -139,6 +142,7 @@ public class NavigationBarEdgePanel extends View implements NavigationEdgeBackPl
 
     private final WindowManager mWindowManager;
     private final VibratorHelper mVibratorHelper;
+    private final Executor mExecutor;
 
     /**
      * The paint the arrow is drawn with
@@ -285,13 +289,15 @@ public class NavigationBarEdgePanel extends View implements NavigationEdgeBackPl
     private BackCallback mBackCallback;
     private BackAnimation mBackAnimation;
 
-    public NavigationBarEdgePanel(Context context,
-            BackAnimation backAnimation, LatencyTracker latencyTracker) {
+    @Inject
+    public NavigationBarEdgePanel(Context context, LatencyTracker latencyTracker,
+            WindowManager windowManager, VibratorHelper vibratorHelper,
+            @Background Executor executor) {
         super(context);
 
-        mWindowManager = context.getSystemService(WindowManager.class);
-        mBackAnimation = backAnimation;
-        mVibratorHelper = Dependency.get(VibratorHelper.class);
+        mWindowManager = windowManager;
+        mVibratorHelper = vibratorHelper;
+        mExecutor = executor;
 
         mDensity = context.getResources().getDisplayMetrics().density;
 
@@ -364,7 +370,6 @@ public class NavigationBarEdgePanel extends View implements NavigationEdgeBackPl
 
         setVisibility(GONE);
 
-        Executor backgroundExecutor = Dependency.get(Dependency.BACKGROUND_EXECUTOR);
         boolean isPrimaryDisplay = mContext.getDisplayId() == DEFAULT_DISPLAY;
         mRegionSamplingHelper = new RegionSamplingHelper(this,
                 new RegionSamplingHelper.SamplingCallback() {
@@ -382,7 +387,7 @@ public class NavigationBarEdgePanel extends View implements NavigationEdgeBackPl
                     public boolean isSamplingEnabled() {
                         return isPrimaryDisplay;
                     }
-                }, backgroundExecutor);
+                }, mExecutor);
         mRegionSamplingHelper.setWindowVisible(true);
         mShowProtection = !isPrimaryDisplay;
         mLatencyTracker = latencyTracker;
@@ -665,6 +670,7 @@ public class NavigationBarEdgePanel extends View implements NavigationEdgeBackPl
         if (isSlow
                 || SystemClock.uptimeMillis() - mVibrationTime >= GESTURE_DURATION_FOR_CLICK_MS) {
             mVibratorHelper.vibrate(VibrationEffect.EFFECT_CLICK);
+            Log.e("@@@", "handleMoveEvent vibrate called!");
         }
 
         // Let's also snap the angle a bit
@@ -761,6 +767,7 @@ public class NavigationBarEdgePanel extends View implements NavigationEdgeBackPl
         if (!mDragSlopPassed && touchTranslation > mSwipeTriggerThreshold) {
             mDragSlopPassed = true;
             mVibratorHelper.vibrate(VibrationEffect.EFFECT_TICK);
+            Log.e("@@@", "handleMoveEvent vibrate called!");
             mVibrationTime = SystemClock.uptimeMillis();
 
             // Let's show the arrow and animate it in!
