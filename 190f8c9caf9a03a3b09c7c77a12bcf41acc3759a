@@ -16,6 +16,24 @@
       "message": "My only worry is making sure we revert this when the underlying issue is fixed. Maybe add a comment in the CL, or at least in the bug?",
       "revId": "190f8c9caf9a03a3b09c7c77a12bcf41acc3759a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25904e62_668ed661",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-11-01T22:42:27Z",
+      "side": 1,
+      "message": "I filed a bug to track the proper fix, and I added a TODO that links to that bug.",
+      "parentUuid": "3cd40b24_0041ea8b",
+      "revId": "190f8c9caf9a03a3b09c7c77a12bcf41acc3759a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
