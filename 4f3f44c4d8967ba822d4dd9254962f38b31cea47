@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f02063b_18f54c6b",
+        "filename": "services/tests/servicestests/src/com/android/server/hdmi/HdmiCecLocalDeviceTvTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1891398
+      },
+      "writtenOn": "2022-11-02T09:37:52Z",
+      "side": 1,
+      "message": "After this line, you can check that ARC is established on TV.\nE.g. HdmiCecLocalDeviceTv#isArcEstablished is true or \u003cReport ARC Initiated\u003e is sent by TV.\n\nI see the presubmits are failing and the main reason might be ARC is not initialized properly.",
+      "range": {
+        "startLine": 872,
+        "startChar": 8,
+        "endLine": 872,
+        "endChar": 34
+      },
+      "revId": "4f3f44c4d8967ba822d4dd9254962f38b31cea47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
