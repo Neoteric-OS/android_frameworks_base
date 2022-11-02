@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5aedeac3_950f7da2",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/splitscreen/StageCoordinator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2022-11-02T10:19:36Z",
+      "side": 1,
+      "message": "Do you mind to explain more about the root cause and why this can address the issue? Thanks.\n\nIt\u0027s strange to me that the value of ENABLE_SHELL_TRANSITIONS should be false in T. Doesn\u0027t look like it\u0027s able to go into this section.",
+      "range": {
+        "startLine": 1353,
+        "startChar": 8,
+        "endLine": 1359,
+        "endChar": 9
+      },
+      "revId": "e3f5a98b73d99150201b23fc1615e96364e6e1be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
