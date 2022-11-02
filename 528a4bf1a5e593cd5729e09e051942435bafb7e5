@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87583b58_8e8e49af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1973601
+      },
+      "writtenOn": "2022-11-02T09:53:20Z",
+      "side": 1,
+      "message": "Hello. We fix a bug in PMS. Could you help us review code.",
+      "revId": "528a4bf1a5e593cd5729e09e051942435bafb7e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
