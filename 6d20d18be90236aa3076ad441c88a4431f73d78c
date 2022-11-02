@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "35e5df99_025ec052",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-11-02T15:50:38Z",
+      "side": 1,
+      "message": "This CL doesn\u0027t achieve that.",
+      "parentUuid": "e4251168_70419748",
+      "revId": "6d20d18be90236aa3076ad441c88a4431f73d78c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8d144187_6fe9f89d",
         "filename": "apex/jobscheduler/service/java/com/android/server/job/controllers/TimeController.java",
         "patchSetId": 6
@@ -90,6 +108,30 @@
       "side": 1,
       "message": "thank you, for a comment - we had several rounds of naming conventions for TeX metrics - updated with the most recent one",
       "parentUuid": "8d144187_6fe9f89d",
+      "range": {
+        "startLine": 245,
+        "startChar": 48,
+        "endLine": 245,
+        "endChar": 57
+      },
+      "revId": "6d20d18be90236aa3076ad441c88a4431f73d78c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a38acd08_4d19ce64",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/controllers/TimeController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-11-02T15:50:38Z",
+      "side": 1,
+      "message": "This name still doesn\u0027t indicate what it\u0027s counting.",
+      "parentUuid": "bcb1c42a_7665b8c9",
       "range": {
         "startLine": 245,
         "startChar": 48,
