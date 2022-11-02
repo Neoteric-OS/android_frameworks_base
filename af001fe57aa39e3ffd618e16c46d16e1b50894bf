@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8e20684_b044a25f",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/common/split/SplitLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2022-11-02T10:33:01Z",
+      "side": 1,
+      "message": "Thanks for reporting this.\nI think it make more sense to cancel the divider dragging directly whenever there\u0027s an IME panel toggled on.\n\n\nMaybe adding the following to DividerView#setInteractive instead?\n```\nif (!mInteractive \u0026\u0026 mMoving) {\n    mSplitLayout.flingDividePosition(\n        mLastDraggingPosition, // The last moving position of divider bar.\n        mSplitLayout.getDividePosition(),\n        FLING_RESIZE_DURATION, null);\n    mMoving \u003d false;\n}\n```",
+      "range": {
+        "startLine": 856,
+        "startChar": 12,
+        "endLine": 862,
+        "endChar": 13
+      },
+      "revId": "af001fe57aa39e3ffd618e16c46d16e1b50894bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
