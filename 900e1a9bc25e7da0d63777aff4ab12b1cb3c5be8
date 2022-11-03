@@ -85,6 +85,78 @@
       },
       "revId": "900e1a9bc25e7da0d63777aff4ab12b1cb3c5be8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f293a83_c8e1e0ad",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-11-03T11:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7be8257_715af3f8",
+      "range": {
+        "startLine": 825,
+        "startChar": 37,
+        "endLine": 825,
+        "endChar": 42
+      },
+      "revId": "900e1a9bc25e7da0d63777aff4ab12b1cb3c5be8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1fcab24_03ff807a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-11-03T11:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a1fdd3d_f0a29bc9",
+      "range": {
+        "startLine": 825,
+        "startChar": 47,
+        "endLine": 825,
+        "endChar": 57
+      },
+      "revId": "900e1a9bc25e7da0d63777aff4ab12b1cb3c5be8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba5f17d6_f32a5931",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-11-03T11:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63fda043_15137138",
+      "range": {
+        "startLine": 825,
+        "startChar": 61,
+        "endLine": 825,
+        "endChar": 62
+      },
+      "revId": "900e1a9bc25e7da0d63777aff4ab12b1cb3c5be8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
