@@ -24,6 +24,7 @@ import android.app.Notification;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -107,14 +108,25 @@ public abstract class HeadsUpManager extends AlertingNotificationManager {
         mSnoozedPackages = new ArrayMap<>();
         ContentObserver settingsObserver = new ContentObserver(mHandler) {
             @Override
-            public void onChange(boolean selfChange) {
-                mSnoozedPackages.clear();
-                mSnoozeLengthMs = Settings.System.getInt(
-                        context.getContentResolver(),
-                        Settings.System.HEADS_UP_NOTIFICATION_SNOOZE,
-                        context.getResources().getInteger(R.integer.heads_up_default_snooze_length_ms));
+            public void onChange(boolean selfChange, Uri uri) {
+                if (uri.equals(Settings.System.getUriFor(
+                        Settings.System.HEADS_UP_TIMEOUT))) {
+                    mAutoDismissNotificationDecay = Settings.System.getInt(
+                            context.getContentResolver(),
+                            Settings.System.HEADS_UP_TIMEOUT,
+                            context.getResources().getInteger(R.integer.heads_up_notification_decay));
+                } else {
+                    mSnoozedPackages.clear();
+                    mSnoozeLengthMs = Settings.System.getInt(
+                            context.getContentResolver(),
+                            Settings.System.HEADS_UP_NOTIFICATION_SNOOZE,
+                            context.getResources().getInteger(R.integer.heads_up_default_snooze_length_ms));
+                }
             }
         };
+        context.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.HEADS_UP_TIMEOUT), false,
+                settingsObserver, UserHandle.USER_ALL);
         context.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.HEADS_UP_NOTIFICATION_SNOOZE), false,
                 settingsObserver, UserHandle.USER_ALL);
