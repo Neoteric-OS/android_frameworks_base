@@ -22,6 +22,30 @@
       },
       "revId": "4f3f44c4d8967ba822d4dd9254962f38b31cea47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46559680_a6e13ab3",
+        "filename": "services/tests/servicestests/src/com/android/server/hdmi/HdmiCecLocalDeviceTvTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2022-11-03T06:31:21Z",
+      "side": 1,
+      "message": "The ARC connection flow follows startArcAction_enable_portSupportsArc() and it is pass on our environment (Android S), is it due to different Android version? Is there any ARC connection condition change after Android S.",
+      "parentUuid": "8f02063b_18f54c6b",
+      "range": {
+        "startLine": 872,
+        "startChar": 8,
+        "endLine": 872,
+        "endChar": 34
+      },
+      "revId": "4f3f44c4d8967ba822d4dd9254962f38b31cea47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
