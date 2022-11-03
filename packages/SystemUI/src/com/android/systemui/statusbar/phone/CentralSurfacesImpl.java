@@ -4913,11 +4913,15 @@ public class CentralSurfacesImpl extends CoreStartable implements
             mResolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HEADS_UP_BLACKLIST_VALUES),
                     false, this, UserHandle.USER_ALL);
+            mResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LESS_BORING_HEADS_UP),
+                    false, this, UserHandle.USER_ALL);
         }
 
         public void initialize() {
             updateHeadsUpStopList();
             updateHeadsUpBlackList();
+            updateLessBoringHeadsUp();
         }
 
         @Override
@@ -4926,6 +4930,8 @@ public class CentralSurfacesImpl extends CoreStartable implements
                 updateHeadsUpStopList();
             } else if (isUriEqualsSystemSettings(uri, Settings.System.HEADS_UP_BLACKLIST_VALUES)) {
                 updateHeadsUpBlackList();
+            } else if (isUriEqualsSystemSettings(uri, Settings.System.LESS_BORING_HEADS_UP)) {
+                updateLessBoringHeadsUp();
             }
         }
     }
@@ -4953,5 +4959,10 @@ public class CentralSurfacesImpl extends CoreStartable implements
         if (mPresenter != null) {
             mPresenter.setHeadsUpBlacklist();
         }
+    }
+
+    private void updateLessBoringHeadsUp() {
+        final boolean enabled = loadBooleanSystemSettings(Settings.System.LESS_BORING_HEADS_UP, 0);
+        mNotificationInterruptStateProvider.setUseLessBoringHeadsUp(enabled);
     }
 }
