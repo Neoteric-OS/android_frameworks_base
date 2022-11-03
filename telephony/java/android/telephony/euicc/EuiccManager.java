@@ -123,6 +123,23 @@ public class EuiccManager {
             "android.telephony.euicc.action.PROVISION_EMBEDDED_SUBSCRIPTION";
 
     /**
+     * Intent action to start to set up an embedded subscription from Android U.
+     *
+     * <p>May be called during device provisioning to launch a screen to perform embedded SIM
+     * provisioning, e.g. if no physical SIM is present and the user elects to configure their
+     * embedded SIM.
+     *
+     * <p>The activity will immediately finish with {@link android.app.Activity#RESULT_CANCELED} if
+     * {@link #isEnabled} is false.
+     *
+     * @hide
+     */
+    @SystemApi
+    @SdkConstant(SdkConstant.SdkConstantType.ACTIVITY_INTENT_ACTION)
+    public static final String ACTION_START_ESIM_SETUP =
+            "android.telephony.euicc.action.START_ESIM_SETUP";
+
+    /**
      * Intent action to handle a resolvable error.
      * @hide
      */

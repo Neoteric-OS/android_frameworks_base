@@ -139,6 +139,10 @@ public abstract class EuiccService extends Service {
     public static final String ACTION_PROVISION_EMBEDDED_SUBSCRIPTION =
             "android.service.euicc.action.PROVISION_EMBEDDED_SUBSCRIPTION";
 
+    /** @see android.telephony.euicc.EuiccManager#ACTION_START_ESIM_SETUP */
+    public static final String ACTION_START_ESIM_SETUP =
+            "android.service.euicc.action.START_ESIM_SETUP";
+
     /**
      * @see android.telephony.euicc.EuiccManager#ACTION_TOGGLE_SUBSCRIPTION_PRIVILEGED. This is
      * a protected intent that can only be sent by the system, and requires the
