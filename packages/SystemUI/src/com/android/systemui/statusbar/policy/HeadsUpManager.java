@@ -91,7 +91,10 @@ public abstract class HeadsUpManager extends AlertingNotificationManager {
         mUiEventLogger = uiEventLogger;
         Resources resources = context.getResources();
         mMinimumDisplayTime = resources.getInteger(R.integer.heads_up_notification_minimum_time);
-        mAutoDismissNotificationDecay = resources.getInteger(R.integer.heads_up_notification_decay);
+        mAutoDismissNotificationDecay = Settings.System.getInt(
+                context.getContentResolver(),
+                Settings.System.HEADS_UP_TIMEOUT,
+                context.getResources().getInteger(R.integer.heads_up_notification_decay));
         mTouchAcceptanceDelay = resources.getInteger(R.integer.touch_acceptance_delay);
         mSnoozedPackages = new ArrayMap<>();
         int defaultSnoozeLengthMs =
