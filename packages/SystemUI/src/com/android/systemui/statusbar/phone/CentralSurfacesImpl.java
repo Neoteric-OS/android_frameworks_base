@@ -4630,11 +4630,15 @@ mSettingsObserver.initialize();
             mResolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HEADS_UP_BLACKLIST_VALUES),
                     false, this, UserHandle.USER_ALL);
+            mResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LESS_BORING_HEADS_UP),
+                    false, this, UserHandle.USER_ALL);
         }
 
         public void initialize() {
             updateHeadsUpStopList();
             updateHeadsUpBlackList();
+            updateLessBoringHeadsUp();
         }
 
         @Override
@@ -4644,6 +4648,8 @@ mSettings(uri, Settings.System.HEADS_UP_STOPLIST_VALUES)) {
                 updateHeadsUpStopList();
             } else if (isUriEqualsSystemSettings(uri, Settings.System.HEADS_UP_BLACKLIST_VALUES)) {
                 updateHeadsUpBlackList();
+            } else if (isUriEqualsSystemSettings(uri, Settings.System.LESS_BORING_HEADS_UP)) {
+                updateLessBoringHeadsUp();
             }
         }
     }
@@ -4671,5 +4677,10 @@ mSettings(uri, Settings.System.HEADS_UP_STOPLIST_VALUES)) {
         if (mPresenter != null) {
             mPresenter.setHeadsUpBlacklist();
         }
+    }
+
+    private void updateLessBoringHeadsUp() {
+        final boolean enabled = loadBooleanSystemSettings(Settings.System.LESS_BORING_HEADS_UP, 0);
+        mNotificationInterruptStateProvider.setUseLessBoringHeadsUp(enabled);
     }
 }

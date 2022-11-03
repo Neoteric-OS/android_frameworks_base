@@ -76,6 +76,7 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
 
     @VisibleForTesting
     protected boolean mUseHeadsUp = false;
+    private boolean mLessBoringHeadsUp;
 
     public enum NotificationInterruptEvent implements UiEventLogger.UiEventEnum {
         @UiEvent(doc = "FSI suppressed for suppressive GroupAlertBehavior")
@@ -522,6 +523,19 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
         return true;
     }
 
+    @Override
+    public void setUseLessBoringHeadsUp(boolean lessBoring) {
+        mLessBoringHeadsUp = lessBoring;
+    }
+
+    public boolean shouldSkipHeadsUp(StatusBarNotification sbn) {
+        String notificationPackageName = sbn.getPackageName().toLowerCase();
+        boolean isImportantHeadsUp = notificationPackageName.contains("dialer") ||
+                notificationPackageName.contains("messaging") ||
+                notificationPackageName.contains("clock");
+        return !mStatusBarStateController.isDozing() && mLessBoringHeadsUp && !isImportantHeadsUp;
+    }
+
     /**
      * Common checks between regular & AOD heads up and bubbles.
      *
@@ -588,6 +602,9 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
                 }
                 return false;
             }
+        }
+        if (shouldSkipHeadsUp(sbn)) {
+            return false;
         }
         return true;
     }
