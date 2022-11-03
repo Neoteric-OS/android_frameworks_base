@@ -397,6 +397,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         mBatteryStyle = Settings.System.getIntForUser(
                 getContext().getContentResolver(), STATUS_BAR_BATTERY_STYLE,
                 BATTERY_STYLE_PORTRAIT, UserHandle.USER_CURRENT);
+        updatePercentText();
         switch (mBatteryStyle) {
             case BATTERY_STYLE_PORTRAIT:
                 addOrRemoveIcon(mThemedDrawable);
