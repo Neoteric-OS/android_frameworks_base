@@ -168,6 +168,21 @@ public class NeotericUtils {
         FireActions.toggleCameraFlash();
     }
 
+     public static String getAppName(Context context, String pkgName) {
+        if (pkgName != null) {
+            try {
+                final PackageManager pm = context.getPackageManager();
+                final PackageInfo pi = pm.getPackageInfo(pkgName, 0);
+                return pi.applicationInfo.loadLabel(pm).toString();
+            } catch (NameNotFoundException e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+
+
     public static void sendKeycode(int keycode) {
         long when = SystemClock.uptimeMillis();
         final KeyEvent evDown = new KeyEvent(when, when, KeyEvent.ACTION_DOWN, keycode, 0,
