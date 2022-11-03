@@ -33,6 +33,24 @@
       "message": "Hi @ebiggers@google.com\n\nThanks for merging this into master branch within short, and we also expect to backport it into Android-11(`android*-gsi branch, actually), since the CTS case is also failing there, due to missing this temporarily workaround. Can you help out as well? The code structure is a little different though(should modify \"PackageManagerService.java\" as https://android-review.googlesource.com/c/platform/frameworks/base/+/2261941). Similar as before, we can upload it to you/Google owner for review also. \n\nThanks again.",
       "revId": "415ed9afd69787a41cbe51c8827034eb21fdd88a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15bccce5_dada3118",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-11-03T02:16:45Z",
+      "side": 1,
+      "message": "I uploaded cherry-picks to android13-gsi, android12L-gsi, android12-gsi, and android11-gsi.",
+      "parentUuid": "ce604791_b2af65fd",
+      "revId": "415ed9afd69787a41cbe51c8827034eb21fdd88a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
