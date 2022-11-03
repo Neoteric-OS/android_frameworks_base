@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5021d2b6_1fc475be",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/controllers/TimeController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1827146
+      },
+      "writtenOn": "2022-11-03T18:21:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9300501f_92f09dd6",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 23
+      },
+      "revId": "1bc162e78c4ae6ad6e1ff95c2e8a50283662668a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce066051_833cf6fe",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-11-03T16:18:47Z",
       "side": 1,
       "message": "Actually, you\u0027ll need a log line here as well.",
+      "range": {
+        "startLine": 162,
+        "startChar": 16,
+        "endLine": 162,
+        "endChar": 17
+      },
+      "revId": "1bc162e78c4ae6ad6e1ff95c2e8a50283662668a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d829c948_e37027b6",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/controllers/TimeController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1827146
+      },
+      "writtenOn": "2022-11-03T18:21:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ce066051_833cf6fe",
       "range": {
         "startLine": 162,
         "startChar": 16,
