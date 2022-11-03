@@ -24,7 +24,9 @@ import android.app.Notification;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Handler;
+import android.provider.Settings;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.Log;
@@ -119,7 +121,10 @@ public abstract class BaseHeadsUpManager implements HeadsUpManager {
                 ? 500 : resources.getInteger(R.integer.heads_up_notification_minimum_time);
         mStickyForSomeTimeAutoDismissTime = resources.getInteger(
                 R.integer.sticky_heads_up_notification_time);
-        mAutoDismissTime = resources.getInteger(R.integer.heads_up_notification_decay);
+        mAutoDismissTime = Settings.System.getInt(
+                context.getContentResolver(),
+                Settings.System.HEADS_UP_TIMEOUT,
+                resources.getInteger(R.integer.heads_up_notification_decay));
         mTouchAcceptanceDelay = resources.getInteger(R.integer.touch_acceptance_delay);
         mSnoozedPackages = new ArrayMap<>();
         int defaultSnoozeLengthMs =
@@ -129,15 +134,26 @@ public abstract class BaseHeadsUpManager implements HeadsUpManager {
                 defaultSnoozeLengthMs);
         ContentObserver settingsObserver = new ContentObserver(handler) {
             @Override
-            public void onChange(boolean selfChange) {
-                final int packageSnoozeLengthMs = globalSettings.getInt(
-                        SETTING_HEADS_UP_SNOOZE_LENGTH_MS, -1);
-                if (packageSnoozeLengthMs > -1 && packageSnoozeLengthMs != mSnoozeLengthMs) {
-                    mSnoozeLengthMs = packageSnoozeLengthMs;
-                    mLogger.logSnoozeLengthChange(packageSnoozeLengthMs);
-                }
+            public void onChange(boolean selfChange, Uri uri) {
+                if (uri.equals(Settings.System.getUriFor(
+                        Settings.System.HEADS_UP_TIMEOUT))) {
+                    mAutoDismissTime = Settings.System.getInt(
+                            context.getContentResolver(),
+                            Settings.System.HEADS_UP_TIMEOUT,
+                            context.getResources().getInteger(R.integer.heads_up_notification_decay));
+                } else {
+                    final int packageSnoozeLengthMs = globalSettings.getInt(
+                            SETTING_HEADS_UP_SNOOZE_LENGTH_MS, -1);
+                    if (packageSnoozeLengthMs > -1 && packageSnoozeLengthMs != mSnoozeLengthMs) {
+                        mSnoozeLengthMs = packageSnoozeLengthMs;
+                        mLogger.logSnoozeLengthChange(packageSnoozeLengthMs);
+                    }
+		}
             }
         };
+	context.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.HEADS_UP_TIMEOUT), false,
+                settingsObserver, UserHandle.USER_ALL);
         globalSettings.registerContentObserverSync(
                 globalSettings.getUriFor(SETTING_HEADS_UP_SNOOZE_LENGTH_MS),
                 /* notifyForDescendants = */ false,
