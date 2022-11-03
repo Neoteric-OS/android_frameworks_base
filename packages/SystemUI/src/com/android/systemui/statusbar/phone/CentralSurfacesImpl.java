@@ -731,6 +731,9 @@ public class CentralSurfacesImpl extends CoreStartable implements
 
     private final SysUiState mSysUiState;
 
+    /** Custom Settings */
+    private final SettingsObserver mSettingsObserver;
+
     /**
      * Public constructor for CentralSurfaces.
      *
@@ -945,6 +948,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
         deviceStateManager.registerCallback(mMainExecutor,
                 new FoldStateListener(mContext, this::onFoldedStateChanged));
         wiredChargingRippleController.registerCallbacks();
+        mSettingsObserver = new SettingsObserver(context, mainHandler);
     }
 
     @Override
@@ -1157,6 +1161,8 @@ public class CentralSurfacesImpl extends CoreStartable implements
                 (requestTopUi, componentTag) -> mMainExecutor.execute(() ->
                         mNotificationShadeWindowController.setRequestTopUi(
                                 requestTopUi, componentTag))));
+        mSettingsObserver.register();
+        mSettingsObserver.initialize();
     }
 
     private void onFoldedStateChanged(boolean isFolded, boolean willGoToSleep) {
@@ -4889,5 +4895,63 @@ public class CentralSurfacesImpl extends CoreStartable implements
             }
         }
         return UserHandle.CURRENT;
+    }
+
+    private final class SettingsObserver extends ContentObserver {
+
+        private final ContentResolver mResolver;
+
+        public SettingsObserver(Context context, Handler handler) {
+            super(handler);
+            mResolver = context.getContentResolver();
+        }
+
+        public void register() {
+            mResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_STOPLIST_VALUES),
+                    false, this, UserHandle.USER_ALL);
+            mResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_BLACKLIST_VALUES),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        public void initialize() {
+            updateHeadsUpStopList();
+            updateHeadsUpBlackList();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            if (isUriEqualsSystemSettings(uri, Settings.System.HEADS_UP_STOPLIST_VALUES)) {
+                updateHeadsUpStopList();
+            } else if (isUriEqualsSystemSettings(uri, Settings.System.HEADS_UP_BLACKLIST_VALUES)) {
+                updateHeadsUpBlackList();
+            }
+        }
+    }
+
+    private boolean isUriEqualsSecureSettings(Uri uri, String settings) {
+        return uri.equals(Settings.Secure.getUriFor(settings));
+    }
+
+    private boolean isUriEqualsSystemSettings(Uri uri, String settings) {
+        return uri.equals(Settings.System.getUriFor(settings));
+    }
+
+    private boolean loadBooleanSystemSettings(String settings, int defValue) {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                settings, defValue, UserHandle.USER_CURRENT) != 0;
+    }
+
+    private void updateHeadsUpStopList() {
+        if (mPresenter != null) {
+            mPresenter.setHeadsUpStoplist();
+        }
+    }
+
+    private void updateHeadsUpBlackList() {
+        if (mPresenter != null) {
+            mPresenter.setHeadsUpBlacklist();
+        }
     }
 }
