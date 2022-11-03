@@ -11311,6 +11311,7 @@ package android.service.euicc {
     field public static final String ACTION_RESOLVE_NO_PRIVILEGES = "android.service.euicc.action.RESOLVE_NO_PRIVILEGES";
     field public static final String ACTION_RESOLVE_RESOLVABLE_ERRORS = "android.service.euicc.action.RESOLVE_RESOLVABLE_ERRORS";
     field public static final String ACTION_START_CARRIER_ACTIVATION = "android.service.euicc.action.START_CARRIER_ACTIVATION";
+    field public static final String ACTION_START_ESIM_SETUP = "android.service.euicc.action.START_ESIM_SETUP";
     field public static final String ACTION_START_EUICC_ACTIVATION = "android.service.euicc.action.START_EUICC_ACTIVATION";
     field public static final String ACTION_TOGGLE_SUBSCRIPTION_PRIVILEGED = "android.service.euicc.action.TOGGLE_SUBSCRIPTION_PRIVILEGED";
     field public static final String CATEGORY_EUICC_UI = "android.service.euicc.category.EUICC_UI";
@@ -14075,6 +14076,7 @@ package android.telephony.euicc {
     field @RequiresPermission(android.Manifest.permission.WRITE_EMBEDDED_SUBSCRIPTIONS) public static final String ACTION_OTA_STATUS_CHANGED = "android.telephony.euicc.action.OTA_STATUS_CHANGED";
     field public static final String ACTION_PROVISION_EMBEDDED_SUBSCRIPTION = "android.telephony.euicc.action.PROVISION_EMBEDDED_SUBSCRIPTION";
     field public static final String ACTION_RENAME_SUBSCRIPTION_PRIVILEGED = "android.telephony.euicc.action.RENAME_SUBSCRIPTION_PRIVILEGED";
+    field public static final String ACTION_START_ESIM_SETUP = "android.telephony.euicc.action.START_ESIM_SETUP";
     field public static final String ACTION_TOGGLE_SUBSCRIPTION_PRIVILEGED = "android.telephony.euicc.action.TOGGLE_SUBSCRIPTION_PRIVILEGED";
     field public static final int EUICC_ACTIVATION_TYPE_ACCOUNT_REQUIRED = 4; // 0x4
     field public static final int EUICC_ACTIVATION_TYPE_BACKUP = 2; // 0x2
