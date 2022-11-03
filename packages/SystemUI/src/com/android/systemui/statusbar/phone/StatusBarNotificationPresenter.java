@@ -18,15 +18,20 @@ import static com.android.systemui.statusbar.phone.CentralSurfaces.CLOSE_PANEL_W
 import static com.android.systemui.statusbar.phone.CentralSurfaces.DEBUG;
 import static com.android.systemui.statusbar.phone.CentralSurfaces.MULTIUSER_DEBUG;
 
+import android.app.ActivityManager;
 import android.app.KeyguardManager;
+import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.service.notification.StatusBarNotification;
 import android.service.vr.IVrManager;
 import android.service.vr.IVrStateCallbacks;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Slog;
 import android.view.View;
@@ -70,6 +75,9 @@ import com.android.systemui.statusbar.phone.LockscreenGestureLogger.LockscreenUi
 import com.android.systemui.statusbar.phone.dagger.CentralSurfacesComponent;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 @CentralSurfacesComponent.CentralSurfacesScope
@@ -105,6 +113,11 @@ class StatusBarNotificationPresenter implements NotificationPresenter,
     private final NotificationListContainer mNotifListContainer;
     private final QuickSettingsController mQsController;
 
+    private final Context mContext;
+    private final ActivityManager mActivityManager;
+    private final ArrayList<String> mStoplist = new ArrayList<>();
+    private final ArrayList<String> mBlacklist = new ArrayList<>();
+
     protected boolean mVrMode;
 
     @Inject
@@ -136,6 +149,7 @@ class StatusBarNotificationPresenter implements NotificationPresenter,
             NotifPipelineFlags notifPipelineFlags,
             NotificationRemoteInputManager.Callback remoteInputManagerCallback,
             NotificationListContainer notificationListContainer) {
+        mContext = context;
         mActivityStarter = activityStarter;
         mKeyguardStateController = keyguardStateController;
         mNotificationPanel = panel;
@@ -160,6 +174,7 @@ class StatusBarNotificationPresenter implements NotificationPresenter,
                 R.id.notification_container_parent));
         mAccessibilityManager = context.getSystemService(AccessibilityManager.class);
         mDozeScrimController = dozeScrimController;
+        mActivityManager = context.getSystemService(ActivityManager.class);
         mKeyguardManager = context.getSystemService(KeyguardManager.class);
         mBarService = IStatusBarService.Stub.asInterface(
                 ServiceManager.getService(Context.STATUS_BAR_SERVICE));
@@ -200,6 +215,47 @@ class StatusBarNotificationPresenter implements NotificationPresenter,
                 && !isCollapsing()) {
             mStatusBarStateController.setState(StatusBarState.KEYGUARD);
         }
+    }
+
+    private boolean isPackageInStoplist(String packageName) {
+        return mStoplist.contains(packageName);
+    }
+
+    private boolean isPackageBlacklisted(String packageName) {
+        return mBlacklist.contains(packageName);
+    }
+
+    private boolean isDialerApp(String packageName) {
+        return packageName.equals("com.android.dialer") ||
+                packageName.equals("com.google.android.dialer");
+    }
+
+    private void splitAndAddToArrayList(ArrayList<String> arrayList,
+            String baseString, String separator) {
+        // clear first
+        arrayList.clear();
+        if (baseString != null) {
+            final String[] array = TextUtils.split(baseString, separator);
+            for (String item : array) {
+                arrayList.add(item.trim());
+            }
+        }
+    }
+
+    @Override
+    public void setHeadsUpStoplist() {
+        final String stopString = Settings.System.getString(
+                mContext.getContentResolver(),
+                Settings.System.HEADS_UP_STOPLIST_VALUES);
+        splitAndAddToArrayList(mStoplist, stopString, "\\|");
+    }
+
+    @Override
+    public void setHeadsUpBlacklist() {
+        final String blackString = Settings.System.getString(
+                mContext.getContentResolver(),
+                Settings.System.HEADS_UP_BLACKLIST_VALUES);
+        splitAndAddToArrayList(mBlacklist, blackString, "\\|");
     }
 
     @Override
@@ -344,6 +400,20 @@ class StatusBarNotificationPresenter implements NotificationPresenter,
         @Override
         public boolean suppressAwakeHeadsUp(NotificationEntry entry) {
             final StatusBarNotification sbn = entry.getSbn();
+            // get the info from the currently running task
+            List<ActivityManager.RunningTaskInfo> taskInfo = mActivityManager.getRunningTasks(1);
+            if (taskInfo != null && !taskInfo.isEmpty()) {
+                ComponentName componentInfo = taskInfo.get(0).topActivity;
+                if (isPackageInStoplist(componentInfo.getPackageName())
+                        && !isDialerApp(sbn.getPackageName())) {
+                    return true;
+                }
+            }
+
+            if (isPackageBlacklisted(sbn.getPackageName())) {
+                return true;
+            }
+
             if (mCentralSurfaces.isOccluded()) {
                 boolean devicePublic = mLockscreenUserManager
                         .isLockscreenPublicMode(mLockscreenUserManager.getCurrentUserId());
