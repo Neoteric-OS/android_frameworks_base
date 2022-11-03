@@ -42,6 +42,7 @@ import android.os.PowerManager
 import android.os.SystemProperties
 import android.os.UserHandle
 import android.provider.Settings
+import android.provider.Telephony.Sms
 import android.provider.Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED
 import android.provider.Settings.Global.HEADS_UP_OFF
 import android.provider.Settings.Global.HEADS_UP_ON
@@ -281,6 +282,94 @@ class PeekBlacklistSuppressor(
 
     override fun shouldSuppress(entry: NotificationEntry): Boolean {
         return blacklist.contains(entry.sbn.packageName)
+    }
+}
+
+class PeekLessBoringSuppressor(
+    private val context: Context,
+    private val systemSettings: SystemSettings,
+    private val userTracker: UserTracker,
+    @Main private val mainHandler: Handler,
+) : VisualInterruptionFilter(types = setOf(PEEK), reason = "boring apps") {
+    @Volatile private var isEnabled = false
+    private val telecomManager by lazy { context.getSystemService(TelecomManager::class.java) }
+
+    override fun start() {
+        val observer =
+            object : ContentObserver(mainHandler) {
+                override fun onChange(selfChange: Boolean) {
+                    updateEnabled()
+                }
+            }
+
+        systemSettings.registerContentObserverForUserAsync(
+            Settings.System.LESS_BORING_HEADS_UP,
+            observer,
+            UserHandle.USER_ALL,
+        )
+
+        userTracker.addCallback(
+            object : UserTracker.Callback {
+                override fun onUserChanged(newUser: Int, userContext: Context) {
+                    updateEnabled()
+                }
+            },
+            Executor { mainHandler.post(it) },
+        )
+
+        updateEnabled()
+    }
+
+    private fun updateEnabled() {
+        isEnabled =
+            systemSettings.getIntForUser(
+                Settings.System.LESS_BORING_HEADS_UP,
+                0,
+                userTracker.userId,
+            ) == 1
+    }
+
+    override fun shouldSuppress(entry: NotificationEntry): Boolean {
+        if (!isEnabled) {
+            return false
+        }
+        return shouldSkipHeadsUp(entry)
+    }
+
+    private fun shouldSkipHeadsUp(entry: NotificationEntry): Boolean {
+        val packageName = entry.sbn.packageName.lowercase()
+        val defaultDialer =
+            try {
+                telecomManager?.defaultDialerPackage?.lowercase()
+            } catch (e: Exception) {
+                null
+            }
+        val defaultSms =
+            try {
+                Sms.getDefaultSmsPackage(context)?.lowercase()
+            } catch (e: Exception) {
+                null
+            }
+
+        if (!defaultDialer.isNullOrEmpty() && packageName == defaultDialer) {
+            return false
+        }
+        if (!defaultSms.isNullOrEmpty() && packageName == defaultSms) {
+            return false
+        }
+        if (
+            packageName.contains("dialer") ||
+                packageName.contains("messaging") ||
+                packageName.contains("messenger") ||
+                packageName.contains("clock")
+        ) {
+            return false
+        }
+        if (entry.sbn.notification.isStyle(Notification.CallStyle::class.java)) {
+            return false
+        }
+
+        return true
     }
 }
 
