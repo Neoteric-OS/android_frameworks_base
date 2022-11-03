@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca7ad9c2_474dbc5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-11-03T09:58:38Z",
+      "side": 1,
+      "message": "LGTM, but please take a look at my suggestions.",
+      "revId": "900e1a9bc25e7da0d63777aff4ab12b1cb3c5be8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63fda043_15137138",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-11-03T09:58:38Z",
+      "side": 1,
+      "message": "Maybe add a comma here?",
+      "range": {
+        "startLine": 825,
+        "startChar": 61,
+        "endLine": 825,
+        "endChar": 62
+      },
+      "revId": "900e1a9bc25e7da0d63777aff4ab12b1cb3c5be8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7be8257_715af3f8",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-11-03T09:58:38Z",
+      "side": 1,
+      "message": "What about adding \"\u003d\" after \"class\", just like what you did for \"err\".",
+      "range": {
+        "startLine": 825,
+        "startChar": 37,
+        "endLine": 825,
+        "endChar": 42
+      },
+      "revId": "900e1a9bc25e7da0d63777aff4ab12b1cb3c5be8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a1fdd3d_f0a29bc9",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-11-03T09:58:38Z",
+      "side": 1,
+      "message": "What about having a method to convert the number to a readable wording?\ne.g.\nEvent class\u003dERROR_CLASS_RECOVERABLE, err\u003dERROR_CODE_NETWORK_LOST for com.vpn.test on session 8876c2c4-df5f-46b8-82c7-8f124178254a",
+      "range": {
+        "startLine": 825,
+        "startChar": 47,
+        "endLine": 825,
+        "endChar": 57
+      },
+      "revId": "900e1a9bc25e7da0d63777aff4ab12b1cb3c5be8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
