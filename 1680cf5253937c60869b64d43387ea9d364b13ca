@@ -34,6 +34,40 @@
       "parentUuid": "89c04a03_2d171c99",
       "revId": "1680cf5253937c60869b64d43387ea9d364b13ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49cdb014_9321f9b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1949137
+      },
+      "writtenOn": "2022-11-03T17:22:09Z",
+      "side": 1,
+      "message": "Does not address the root cause; see my other comment.",
+      "revId": "1680cf5253937c60869b64d43387ea9d364b13ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bd7d34e_1fb1ec23",
+        "filename": "core/java/com/android/internal/app/ChooserActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3842,
+      "author": {
+        "id": 1949137
+      },
+      "writtenOn": "2022-11-03T17:22:09Z",
+      "side": 1,
+      "message": "the root cause for the issue is the incorrect initialization here; all values should be `true`.",
+      "revId": "1680cf5253937c60869b64d43387ea9d364b13ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
