@@ -16,6 +16,24 @@
       "message": "I don\u0027t own this code.",
       "revId": "d6c1911603074664babbead6b712b988a966b292",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "500f1477_965038bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-11-04T08:22:21Z",
+      "side": 1,
+      "message": "Hi Lukacs, you\u0027re listed as owner for the top-level Android.bp (where I upgrade the KeyMint version). Is there another reviewer more appropriate for that part? Thanks!",
+      "parentUuid": "363a98f6_025f4c06",
+      "revId": "d6c1911603074664babbead6b712b988a966b292",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
