@@ -69,6 +69,23 @@
       "message": "Paul, are you the right person to approve Android.bp changes?",
       "revId": "d6c1911603074664babbead6b712b988a966b292",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f60465ae_24d57c55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-11-04T09:04:50Z",
+      "side": 1,
+      "message": "Removed myself as I don\u0027t know anything about this code.",
+      "revId": "d6c1911603074664babbead6b712b988a966b292",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
