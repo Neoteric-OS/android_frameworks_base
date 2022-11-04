@@ -52,6 +52,23 @@
       "parentUuid": "500f1477_965038bd",
       "revId": "d6c1911603074664babbead6b712b988a966b292",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a07f58a0_1447b972",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-11-04T08:34:19Z",
+      "side": 1,
+      "message": "Paul, are you the right person to approve Android.bp changes?",
+      "revId": "d6c1911603074664babbead6b712b988a966b292",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
