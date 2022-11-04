@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d310c21a_ffd05982",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-11-04T03:45:35Z",
+      "side": 1,
+      "message": "Is this the right resource to be modifying? The comment here says it\u0027s only for example purposes. Also it looks like changing this resource might fail this test, which is trying to ensure the resources are configured in the NetworkStack module instead of in the platform?\n\nhttps://source.corp.google.com/aosp-master/packages/modules/Connectivity/tests/common/java/android/net/apf/ApfCapabilitiesTest.java;l\u003d124",
+      "revId": "d7d0144701e9dc6aedc32dabe2c0c666a861adaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
