@@ -25,6 +25,7 @@ import static android.app.WindowConfiguration.ACTIVITY_TYPE_DREAM;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_HOME;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_RECENTS;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_UNDEFINED;
+import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
 import static android.app.WindowConfiguration.WINDOWING_MODE_MULTI_WINDOW;
 import static android.app.WindowConfiguration.WINDOWING_MODE_PINNED;
 import static android.app.WindowConfiguration.WINDOWING_MODE_UNDEFINED;
@@ -1539,7 +1540,8 @@ class RecentTasks {
         for (int i = 0; i < recentsCount; i++) {
             final Task t = mTasks.get(i);
             if (task != t) {
-                if (!hasCompatibleActivityTypeAndWindowingMode(task, t)
+                if ((!isEmptyTaskOfMultiWindowingModeToFullscreen(task, t)
+                        && !hasCompatibleActivityTypeAndWindowingMode(task, t))
                         || task.mUserId != t.mUserId) {
                     continue;
                 }
@@ -1944,6 +1946,31 @@ class RecentTasks {
         final boolean isCompatibleMode = windowingMode == otherWindowingMode
                 || isUndefinedMode || isOtherUndefinedMode;
 
-        return isCompatibleType && isCompatibleMode;
+        // If a task has been removed in split window mode or in multi window mode, we should remove
+        // its recent task first before adding a new one with fullscreen mode.
+        final boolean isSplitOrMultiToFull = windowingMode == WINDOWING_MODE_FULLSCREEN
+                && (otherWindowingMode == WINDOWING_MODE_SPLIT_SCREEN_SECONDARY
+                || otherWindowingMode == WINDOWING_MODE_MULTI_WINDOW);
+        final boolean isEmptyOldTask = t2.getTaskInfo() == null
+                || t2.getTaskInfo().baseActivity == null;
+
+        return (isCompatibleType && isCompatibleMode) || (isSplitOrMultiToFull && isEmptyOldTask);
+    }
+
+    /**
+     * @return Whether the task we are going to remove is multi windowing mode and has no
+     * taskInfo or baseActivity, which means it maybe an empty task but with a recent task.
+     */
+    private boolean isEmptyTaskOfMultiWindowingModeToFullscreen(Task t1, Task t2) {
+        final int windowingMode = t1.getWindowingMode();
+        final int otherWindowingMode = t2.getWindowingMode();
+
+        // If a task has been removed in multi window mode, we shouldn't skip remove its recent task
+        // before adding a new one with fullscreen mode.
+        final boolean isMultiToFull = windowingMode == WINDOWING_MODE_FULLSCREEN
+                && otherWindowingMode == WINDOWING_MODE_MULTI_WINDOW;
+        final boolean isEmptyTask = t2.getTaskInfo() == null
+                || t2.getTaskInfo().baseActivity == null;
+        return isMultiToFull && isEmptyTask;
     }
 }
