@@ -86,6 +86,24 @@
       "message": "Removed myself as I don\u0027t know anything about this code.",
       "revId": "d6c1911603074664babbead6b712b988a966b292",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "860682b6_57094245",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2022-11-04T10:50:04Z",
+      "side": 1,
+      "message": "For general refactorings yes, for specific changes like this it depends on which bp file.",
+      "parentUuid": "a07f58a0_1447b972",
+      "revId": "d6c1911603074664babbead6b712b988a966b292",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
