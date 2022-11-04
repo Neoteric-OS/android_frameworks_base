@@ -456,7 +456,7 @@ public final class ProcessState {
 
     public void setCombinedState(int state, long now) {
         ensureNotDead();
-        if (!mDead && (mCurCombinedState != state)) {
+        if (mCurCombinedState != state) {
             //Slog.i(TAG, "Setting state in " + mName + "/" + mPackage + ": " + state);
             commitStateTime(now);
             if (state == STATE_NOTHING) {
@@ -473,7 +473,10 @@ public final class ProcessState {
                 }
             }
             mCurCombinedState = state;
-            mStats.mUidStates.get(mUid).updateCombinedState(state, now);
+            final UidState uidState = mStats.mUidStates.get(mUid);
+            if (uidState != null) {
+                uidState.updateCombinedState(state, now);
+            }
         }
     }
 
