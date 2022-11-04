@@ -34,6 +34,24 @@
       "parentUuid": "363a98f6_025f4c06",
       "revId": "d6c1911603074664babbead6b712b988a966b292",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d6a1351_114ad28f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1066075
+      },
+      "writtenOn": "2022-11-04T08:25:01Z",
+      "side": 1,
+      "message": "Dunno, anyone in frameworks/base/OWNERS? I really don\u0027t know what this code does and this change does not seem to be one that changes the mechanics of the build system.",
+      "parentUuid": "500f1477_965038bd",
+      "revId": "d6c1911603074664babbead6b712b988a966b292",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
