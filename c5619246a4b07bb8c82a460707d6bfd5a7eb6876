@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c0e18a7_261deb93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-11-04T03:10:31Z",
+      "side": 1,
+      "message": "It\u0027s already fixed in an internal CL",
+      "revId": "c5619246a4b07bb8c82a460707d6bfd5a7eb6876",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
