@@ -16,6 +16,23 @@
       "message": "Is this the right resource to be modifying? The comment here says it\u0027s only for example purposes. Also it looks like changing this resource might fail this test, which is trying to ensure the resources are configured in the NetworkStack module instead of in the platform?\n\nhttps://source.corp.google.com/aosp-master/packages/modules/Connectivity/tests/common/java/android/net/apf/ApfCapabilitiesTest.java;l\u003d124",
       "revId": "d7d0144701e9dc6aedc32dabe2c0c666a861adaf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc7f961a_5ff18f8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-11-04T03:48:57Z",
+      "side": 1,
+      "message": "Look like this is a more correct place for it?\n\nhttps://source.corp.google.com/aosp-master/packages/modules/NetworkStack/res/values/config.xml;l\u003d114\n\nWe should probably delete the config.xml in frameworks/base, and deprecate/remove the SystemApi methods that currently use it - such as ApfCapabilities#getApfEtherTypeBlackList - to return hardcoded vlaues instead.",
+      "revId": "d7d0144701e9dc6aedc32dabe2c0c666a861adaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
