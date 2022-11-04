@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2ace89c_20061348",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-11-04T10:31:27Z",
+      "side": 1,
+      "message": "Please file a bug and link it here for tracking purpose. Thanks!",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "14b5e2150eabd21171eb80da4c1c94ba3bcfd34d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27f6aa54_ac92527d",
+        "filename": "services/core/java/com/android/server/wm/RecentTasks.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1956,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-11-04T10:31:27Z",
+      "side": 1,
+      "message": "Maybe rename to `taskToAdd`, `taskToRemove` so it is more readable",
+      "range": {
+        "startLine": 1956,
+        "startChar": 64,
+        "endLine": 1956,
+        "endChar": 80
+      },
+      "revId": "14b5e2150eabd21171eb80da4c1c94ba3bcfd34d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03c603bb_7791030e",
+        "filename": "services/core/java/com/android/server/wm/RecentTasks.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1961,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-11-04T10:31:27Z",
+      "side": 1,
+      "message": "I am not sure if this is the correct place to do the removal?\n\n+Winson, HDYT?",
+      "range": {
+        "startLine": 1960,
+        "startChar": 11,
+        "endLine": 1961,
+        "endChar": 56
+      },
+      "revId": "14b5e2150eabd21171eb80da4c1c94ba3bcfd34d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
