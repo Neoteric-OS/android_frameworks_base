@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17d85043_287221fd",
+        "filename": "services/core/java/com/android/server/wm/RecentTasks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1952,
+      "author": {
+        "id": 1970337
+      },
+      "writtenOn": "2022-11-04T09:05:58Z",
+      "side": 1,
+      "message": "has been removed",
+      "parentUuid": "194e9a32_c2d5a67a",
+      "range": {
+        "startLine": 1952,
+        "startChar": 42,
+        "endLine": 1952,
+        "endChar": 79
+      },
+      "revId": "8e7a3c95a7884129a4eeedba5444ede22fe49188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9383aea0_4cde777f",
@@ -84,6 +108,30 @@
       "writtenOn": "2022-11-04T09:04:54Z",
       "side": 1,
       "message": "Done",
+      "parentUuid": "9383aea0_4cde777f",
+      "range": {
+        "startLine": 1949,
+        "startChar": 7,
+        "endLine": 1957,
+        "endChar": 98
+      },
+      "revId": "8e7a3c95a7884129a4eeedba5444ede22fe49188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "647edc2e_85497d46",
+        "filename": "services/core/java/com/android/server/wm/RecentTasks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1957,
+      "author": {
+        "id": 1970337
+      },
+      "writtenOn": "2022-11-04T09:05:58Z",
+      "side": 1,
+      "message": "has seperated and modified, thank you.",
       "parentUuid": "9383aea0_4cde777f",
       "range": {
         "startLine": 1949,
