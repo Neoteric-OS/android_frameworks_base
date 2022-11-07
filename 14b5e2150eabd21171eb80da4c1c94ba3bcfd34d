@@ -47,6 +47,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd2333a6_aeca018b",
+        "filename": "services/core/java/com/android/server/wm/RecentTasks.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1956,
+      "author": {
+        "id": 1269628
+      },
+      "writtenOn": "2022-11-07T01:59:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27f6aa54_ac92527d",
+      "range": {
+        "startLine": 1956,
+        "startChar": 64,
+        "endLine": 1956,
+        "endChar": 80
+      },
+      "revId": "14b5e2150eabd21171eb80da4c1c94ba3bcfd34d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03c603bb_7791030e",
@@ -60,6 +84,30 @@
       "writtenOn": "2022-11-04T10:31:27Z",
       "side": 1,
       "message": "I am not sure if this is the correct place to do the removal?\n\n+Winson, HDYT?",
+      "range": {
+        "startLine": 1960,
+        "startChar": 11,
+        "endLine": 1961,
+        "endChar": 56
+      },
+      "revId": "14b5e2150eabd21171eb80da4c1c94ba3bcfd34d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4708504c_6df6a7c7",
+        "filename": "services/core/java/com/android/server/wm/RecentTasks.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1961,
+      "author": {
+        "id": 1269628
+      },
+      "writtenOn": "2022-11-07T01:59:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03c603bb_7791030e",
       "range": {
         "startLine": 1960,
         "startChar": 11,
