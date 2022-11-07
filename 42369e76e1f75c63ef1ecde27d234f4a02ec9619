@@ -16,6 +16,29 @@
       "message": "LGTM for SettingsBackupTest\n\nCan you briefly describe somewhere (in commit message or linked bug is fine) why you\u0027ve decided against backing up WALLET_MANAGER_FOREGROUND? We occasionally get bug reports pointing out that certain settings aren\u0027t backed up, but we often don\u0027t know the reason behind these decisions.",
       "revId": "42369e76e1f75c63ef1ecde27d234f4a02ec9619",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3426730a_c586c2e4",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 9169,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2022-11-07T17:10:24Z",
+      "side": 1,
+      "message": "Remove, not needed for new Setting keys if you only plan to use it in system apps or system services.",
+      "range": {
+        "startLine": 9169,
+        "startChar": 8,
+        "endLine": 9169,
+        "endChar": 17
+      },
+      "revId": "42369e76e1f75c63ef1ecde27d234f4a02ec9619",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
