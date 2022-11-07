@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97b58d5e_9df869d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1714413
+      },
+      "writtenOn": "2022-11-07T09:41:36Z",
+      "side": 1,
+      "message": "LGTM for SettingsBackupTest\n\nCan you briefly describe somewhere (in commit message or linked bug is fine) why you\u0027ve decided against backing up WALLET_MANAGER_FOREGROUND? We occasionally get bug reports pointing out that certain settings aren\u0027t backed up, but we often don\u0027t know the reason behind these decisions.",
+      "revId": "42369e76e1f75c63ef1ecde27d234f4a02ec9619",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
