@@ -116,6 +116,30 @@
       },
       "revId": "14b5e2150eabd21171eb80da4c1c94ba3bcfd34d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50a33a4d_ab143e70",
+        "filename": "services/core/java/com/android/server/wm/RecentTasks.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1961,
+      "author": {
+        "id": 1970337
+      },
+      "writtenOn": "2022-11-07T02:10:48Z",
+      "side": 1,
+      "message": "Just not skip the removal easily cuz of hasCompatibleActivityTypeAndWindowingMode in this situation. The removal judgement would continue.",
+      "parentUuid": "4708504c_6df6a7c7",
+      "range": {
+        "startLine": 1960,
+        "startChar": 11,
+        "endLine": 1961,
+        "endChar": 56
+      },
+      "revId": "14b5e2150eabd21171eb80da4c1c94ba3bcfd34d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
