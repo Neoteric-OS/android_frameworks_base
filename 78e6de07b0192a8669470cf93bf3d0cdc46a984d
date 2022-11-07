@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4974d626_1fc89cd6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-11-07T22:18:11Z",
+      "side": 1,
+      "message": "Hi Jeff, PTAL? Thanks",
+      "revId": "78e6de07b0192a8669470cf93bf3d0cdc46a984d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
