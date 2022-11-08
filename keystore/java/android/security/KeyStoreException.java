@@ -138,6 +138,28 @@ public class KeyStoreException extends Exception {
      * provisioning server refuses key issuance, this is a permanent error.</p>
      */
     public static final int ERROR_ATTESTATION_KEYS_UNAVAILABLE = 16;
+    /**
+     * The device is not registered with the key provisioning server.
+     * This error is returned only on devices that rely solely on remotely-provisioned keys (see
+     * <a href=
+     * "https://android-developers.googleblog.com/2022/03/upgrading-android-attestation-remote.html"
+     * >Remote Key Provisioning</a>).
+     *
+     * This is a permanent, non-transient, error.
+     * @hide
+     */
+    public static final int ERROR_DEVICE_UNREGISTERED = 17;
+    /**
+     * This device needs a software update and contains potentially vulnerable software.
+     * This error is returned only on devices that rely solely on remotely-provisioned keys (see
+     * <a href=
+     * "https://android-developers.googleblog.com/2022/03/upgrading-android-attestation-remote.html"
+     * >Remote Key Provisioning</a>).
+     * @hide
+     */
+    public static final int ERROR_DEVICE_POTENTIALLY_VULNERABLE = 18;
+
+
 
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
@@ -157,7 +179,9 @@ public class KeyStoreException extends Exception {
             ERROR_INCORRECT_USAGE,
             ERROR_KEY_NOT_TEMPORALLY_VALID,
             ERROR_KEY_OPERATION_EXPIRED,
-            ERROR_ATTESTATION_KEYS_UNAVAILABLE
+            ERROR_ATTESTATION_KEYS_UNAVAILABLE,
+            ERROR_DEVICE_UNREGISTERED,
+            ERROR_DEVICE_POTENTIALLY_VULNERABLE
     })
     public @interface PublicErrorCode {
     }
@@ -184,6 +208,14 @@ public class KeyStoreException extends Exception {
      * This value is returned when {@link #isTransientFailure()} is {@code true}.
      */
     public static final int RETRY_WHEN_CONNECTIVITY_AVAILABLE = 3;
+    /**
+     * Re-try the operation that led to this error when the device has a software update.
+     * The Remote provisioning server recognizes the device, but the device is running
+     * vulnerable software, and thus refusing issuance of RKP keys to it.
+     *
+     * This value is returned when {@link #isTransientFailure()} is {@code true}.
+     */
+    public static final int RETRY_ON_NEXT_REBOOT = 4;
 
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
@@ -191,6 +223,7 @@ public class KeyStoreException extends Exception {
             RETRY_NEVER,
             RETRY_WITH_EXPONENTIAL_BACKOFF,
             RETRY_WHEN_CONNECTIVITY_AVAILABLE,
+            RETRY_ON_NEXT_REBOOT,
     })
     public @interface RetryPolicy {
     }
@@ -217,6 +250,11 @@ public class KeyStoreException extends Exception {
      * when the device has connectivity again.
      * @hide */
     public static final int RKP_FETCHING_PENDING_CONNECTIVITY = 3;
+    /**
+     * The RKP server recognizes the device, but the device is running vulnerable
+     * software, and thus refusing issuance of RKP keys to it.
+     * @hide */
+    public static final int RKP_FETCHING_PENDING_SOFTWARE_UPDATE = 4;
 
     // Constants for encoding information about the error encountered:
     // Whether the error relates to the system state/implementation as a whole, or a specific key.
@@ -313,6 +351,7 @@ public class KeyStoreException extends Exception {
             switch (mRkpStatus) {
                 case RKP_TEMPORARILY_UNAVAILABLE:
                 case RKP_FETCHING_PENDING_CONNECTIVITY:
+                case RKP_FETCHING_PENDING_SOFTWARE_UPDATE:
                     return true;
                 case RKP_SERVER_REFUSED_ISSUANCE:
                 default:
@@ -326,7 +365,7 @@ public class KeyStoreException extends Exception {
      * Indicates whether the failure is due to the device being locked.
      *
      * @return true if the key operation failed because the user has to authenticate
-     * (e.g. by unlocking the device).
+     * (e.g. by unlocking the device)
      */
     public boolean requiresUserAuthentication() {
         PublicErrorInformation failureInfo = getErrorInformation(mErrorCode);
@@ -362,6 +401,8 @@ public class KeyStoreException extends Exception {
                     return RETRY_WHEN_CONNECTIVITY_AVAILABLE;
                 case RKP_SERVER_REFUSED_ISSUANCE:
                     return RETRY_NEVER;
+                case RKP_FETCHING_PENDING_SOFTWARE_UPDATE:
+                    return RETRY_ON_NEXT_REBOOT;
                 default:
                     return (failureInfo.indicators & IS_TRANSIENT_ERROR) != 0
                             ? RETRY_WITH_EXPONENTIAL_BACKOFF : RETRY_NEVER;
@@ -620,5 +661,10 @@ public class KeyStoreException extends Exception {
                 new PublicErrorInformation(0, ERROR_KEY_DOES_NOT_EXIST));
         sErrorCodeToFailureInfo.put(ResponseCode.OUT_OF_KEYS,
                 new PublicErrorInformation(IS_SYSTEM_ERROR, ERROR_ATTESTATION_KEYS_UNAVAILABLE));
+        sErrorCodeToFailureInfo.put(ResponseCode.OUT_OF_KEYS_DEVICE_UNREGISTERED,
+                new PublicErrorInformation(IS_SYSTEM_ERROR, ERROR_DEVICE_UNREGISTERED));
+        sErrorCodeToFailureInfo.put(ResponseCode.OUT_OF_KEYS_POTENTIALLY_VULNERABLE,
+                new PublicErrorInformation(IS_TRANSIENT_ERROR,
+                        ERROR_DEVICE_POTENTIALLY_VULNERABLE));
     }
 }
