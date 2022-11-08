@@ -16,6 +16,24 @@
       "message": "shouldn\u0027t we update frameworks/base/core/jni/android_media_AudioFormat.h",
       "revId": "c2e394c89edd0f021380eca6597ef28977057ff4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6f881be_4a58f852",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2022-11-08T19:05:55Z",
+      "side": 1,
+      "message": "I don\u0027t see any mentions of APTX in that file. I don\u0027t think apps can actually use these encodings explicitly. It\u0027s the BT subsystem which deals with them.",
+      "parentUuid": "bae2c33f_5dff944e",
+      "revId": "c2e394c89edd0f021380eca6597ef28977057ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
