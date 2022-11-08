@@ -34,6 +34,24 @@
       "parentUuid": "bae2c33f_5dff944e",
       "revId": "c2e394c89edd0f021380eca6597ef28977057ff4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d675793_78c2374f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2022-11-08T19:21:47Z",
+      "side": 1,
+      "message": "You are right, I thought we have also java defines for those formats in AudioFormat.java but we don\u0027t",
+      "parentUuid": "a6f881be_4a58f852",
+      "revId": "c2e394c89edd0f021380eca6597ef28977057ff4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
