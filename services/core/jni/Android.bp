@@ -159,7 +159,7 @@ cc_defaults {
         "android.hardware.graphics.bufferqueue@1.0",
         "android.hardware.graphics.bufferqueue@2.0",
         "android.hardware.graphics.common@1.2",
-        "android.hardware.graphics.common-V3-ndk",
+        "android.hardware.graphics.common-V4-ndk",
         "android.hardware.graphics.mapper@4.0",
         "android.hardware.input.processor-V1-ndk",
         "android.hardware.ir@1.0",
