@@ -62,12 +62,12 @@ import com.android.systemui.qs.external.TileLifecycleManager.TileChangeListener;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 
+import dagger.Lazy;
+
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
-
-import dagger.Lazy;
 
 public class CustomTile extends QSTileImpl<State> implements TileChangeListener {
     public static final String PREFIX = "custom(";
@@ -397,10 +397,12 @@ public class CustomTile extends QSTileImpl<State> implements TileChangeListener 
         }
         try {
             if (mServiceManager.isActiveTile()) {
-                mServiceManager.setBindRequested(true);
                 mService.onStartListening();
+                mService.onClick(mToken);
+                mServiceManager.setBindRequested(true);
+            } else {
+                mService.onClick(mToken);
             }
-            mService.onClick(mToken);
         } catch (RemoteException e) {
             // Called through wrapper, won't happen here.
         }
