@@ -104,6 +104,24 @@
       "parentUuid": "a07f58a0_1447b972",
       "revId": "d6c1911603074664babbead6b712b988a966b292",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea43917c_9569621d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-11-08T11:54:15Z",
+      "side": 1,
+      "message": "@Paul, this is a top-level change to the Android.bp file (version dependency update). Is this something you can review?",
+      "parentUuid": "860682b6_57094245",
+      "revId": "d6c1911603074664babbead6b712b988a966b292",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
