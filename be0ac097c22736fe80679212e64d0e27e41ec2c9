@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f725b71f_405bd6a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-11-09T09:39:34Z",
+      "side": 1,
+      "message": "Hi Mady, could you please keep following up this CL? Thanks.",
+      "revId": "be0ac097c22736fe80679212e64d0e27e41ec2c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
