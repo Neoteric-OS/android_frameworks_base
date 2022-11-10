@@ -16,6 +16,24 @@
       "message": "Why is this a PackageManager feature? Do we expect apps to filter their delivery based on the availability of this feature? If not, it needs to be exposed in another way.",
       "revId": "43c8fd2aa1a2c2c90403f5b7895cc71d627a608e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa52d3d3_33ab8f00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-11-10T21:55:46Z",
+      "side": 1,
+      "message": "Hi Patrick,\n\nWe are following the pattern of FEATURE_IPSEC_TUNNELS.\n\nThe main purpose of FEATURE_IPSEC_TUNNEL_MIGRATION is to gate a new Android feature that requires kernel changes. Because we cannot force old devices to update kernels, we can only require the new feature to be available on new devices, and at the same time allow OEMs to opt in the support on old devices.\n\nThus we use this FEATURE_IPSEC_TUNNEL_MIGRATION to indicate the kernel support (and feature availability). Specifically, we enforce (via CTS) devices with VSR API \u003e\u003d U to have the feature flag, and allow older devices to add the feature flag xml when they update their kernels. At the same time, apps can find out the availability of the Android feature by checking the existence of this feature flag.",
+      "parentUuid": "c95db808_e57baa5e",
+      "revId": "43c8fd2aa1a2c2c90403f5b7895cc71d627a608e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
