@@ -21,6 +21,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+import static android.net.vcn.VcnManager.VCN_RESTRICTED_TRANSPORTS_KEY;
 import static android.net.vcn.VcnManager.VCN_STATUS_CODE_ACTIVE;
 import static android.net.vcn.VcnManager.VCN_STATUS_CODE_INACTIVE;
 import static android.net.vcn.VcnManager.VCN_STATUS_CODE_NOT_CONFIGURED;
@@ -29,6 +30,7 @@ import static android.telephony.SubscriptionManager.isValidSubscriptionId;
 
 import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionTrackerCallback;
+import static com.android.server.vcn.util.PersistableBundleUtils.INTEGER_DESERIALIZER;
 
 import static java.util.Objects.requireNonNull;
 
@@ -69,6 +71,7 @@ import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
+import android.util.ArraySet;
 import android.util.LocalLog;
 import android.util.Log;
 import android.util.Slog;
@@ -84,6 +87,7 @@ import com.android.server.vcn.Vcn;
 import com.android.server.vcn.VcnContext;
 import com.android.server.vcn.VcnNetworkProvider;
 import com.android.server.vcn.util.PersistableBundleUtils;
+import com.android.server.vcn.util.PersistableBundleUtils.PersistableBundleWrapper;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -365,12 +369,24 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         /** Gets the transports that need to be marked as restricted by the VCN */
         public Set<Integer> getRestrictedTransports(
-                ParcelUuid subGrp,
-                Map<ParcelUuid, VcnConfig> vcnConfigs,
-                TelephonySubscriptionSnapshot lastSnapshot) {
-            // TODO: b/239104955 Read restriction policy configurations
+                ParcelUuid subGrp, TelephonySubscriptionSnapshot lastSnapshot) {
+            final Set<Integer> defaultTransports = Collections.singleton(TRANSPORT_WIFI);
 
-            return Collections.singleton(TRANSPORT_WIFI);
+            final PersistableBundleWrapper carrierConfig =
+                    lastSnapshot.getCarrierConfigForSubGrp(subGrp);
+            if (carrierConfig == null) {
+                return defaultTransports;
+            }
+
+            final PersistableBundle restrictedTransportsBundle =
+                    carrierConfig.getPersistableBundle(VCN_RESTRICTED_TRANSPORTS_KEY);
+            if (restrictedTransportsBundle == null) {
+                return defaultTransports;
+            }
+
+            return new ArraySet<Integer>(
+                    PersistableBundleUtils.toList(
+                            restrictedTransportsBundle, INTEGER_DESERIALIZER));
         }
     }
 
@@ -528,6 +544,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                     }
                 }
 
+                boolean needNotifyAllPolicyListeners = false;
                 // Schedule teardown of any VCN instances that have lost carrier privileges (after a
                 // delay)
                 for (Entry<ParcelUuid, Vcn> entry : mVcns.entrySet()) {
@@ -575,6 +592,10 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                     } else {
                         // If this VCN's status has not changed, update it with the new snapshot
                         entry.getValue().updateSubscriptionSnapshot(mLastSnapshot);
+                        needNotifyAllPolicyListeners |=
+                                !Objects.equals(
+                                        oldSnapshot.getCarrierConfigForSubGrp(subGrp),
+                                        mLastSnapshot.getCarrierConfigForSubGrp(subGrp));
                     }
                 }
 
@@ -584,6 +605,10 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                         getSubGroupToSubIdMappings(mLastSnapshot);
                 if (!currSubGrpMappings.equals(oldSubGrpMappings)) {
                     garbageCollectAndWriteVcnConfigsLocked();
+                    needNotifyAllPolicyListeners |= true;
+                }
+
+                if (needNotifyAllPolicyListeners) {
                     notifyAllPolicyListenersLocked();
                 }
             }
@@ -1004,60 +1029,71 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                             + " MANAGE_TEST_NETWORKS");
         }
 
-        return Binder.withCleanCallingIdentity(() -> {
-            // Defensive copy in case this call is in-process and the given NetworkCapabilities
-            // mutates
-            final NetworkCapabilities ncCopy = new NetworkCapabilities(networkCapabilities);
+        return Binder.withCleanCallingIdentity(
+                () -> {
+                    // Defensive copy in case this call is in-process and the given
+                    // NetworkCapabilities
+                    // mutates
+                    final NetworkCapabilities ncCopy = new NetworkCapabilities(networkCapabilities);
 
-            final ParcelUuid subGrp = getSubGroupForNetworkCapabilities(ncCopy);
-            boolean isVcnManagedNetwork = false;
-            boolean isRestricted = false;
-            synchronized (mLock) {
-                final Vcn vcn = mVcns.get(subGrp);
-                if (vcn != null) {
-                    if (vcn.getStatus() == VCN_STATUS_CODE_ACTIVE) {
-                        isVcnManagedNetwork = true;
-                    }
+                    final ParcelUuid subGrp = getSubGroupForNetworkCapabilities(ncCopy);
+                    boolean isVcnManagedNetwork = false;
+                    boolean isRestricted = false;
+                    synchronized (mLock) {
+                        final Vcn vcn = mVcns.get(subGrp);
+                        if (vcn != null) {
+                            if (vcn.getStatus() == VCN_STATUS_CODE_ACTIVE) {
+                                isVcnManagedNetwork = true;
+                            }
 
-                    final Set<Integer> restrictedTransports =
-                            mDeps.getRestrictedTransports(subGrp, mConfigs, mLastSnapshot);
-                    for (int restrcitedTransport : restrictedTransports) {
-                        if (ncCopy.hasTransport(restrcitedTransport)) {
-                            if (restrcitedTransport == TRANSPORT_CELLULAR) {
-                                // Do not forcibly marked a cell network as restricted when
-                                // when the VCN is in safe mode.
-                                isRestricted |= (vcn.getStatus() == VCN_STATUS_CODE_ACTIVE);
-                            } else {
-                                isRestricted = true;
-                                break;
+                            final Set<Integer> restrictedTransports =
+                                    mDeps.getRestrictedTransports(subGrp, mLastSnapshot);
+                            for (int restrcitedTransport : restrictedTransports) {
+                                if (ncCopy.hasTransport(restrcitedTransport)) {
+                                    if (restrcitedTransport == TRANSPORT_CELLULAR) {
+                                        // Do not forcibly marked a cell network as restricted when
+                                        // when the VCN is in safe mode.
+                                        isRestricted |= (vcn.getStatus() == VCN_STATUS_CODE_ACTIVE);
+                                    } else {
+                                        isRestricted = true;
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
-                }
-            }
 
-            final NetworkCapabilities.Builder ncBuilder = new NetworkCapabilities.Builder(ncCopy);
+                    final NetworkCapabilities.Builder ncBuilder =
+                            new NetworkCapabilities.Builder(ncCopy);
 
-            if (isVcnManagedNetwork) {
-                ncBuilder.removeCapability(
-                        NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
-            } else {
-                ncBuilder.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
-            }
+                    if (isVcnManagedNetwork) {
+                        ncBuilder.removeCapability(
+                                NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
+                    } else {
+                        ncBuilder.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
+                    }
 
-            if (isRestricted) {
-                ncBuilder.removeCapability(
-                        NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
-            }
+                    if (isRestricted) {
+                        ncBuilder.removeCapability(
+                                NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
+                    }
 
-            final NetworkCapabilities result = ncBuilder.build();
-            final VcnUnderlyingNetworkPolicy policy = new VcnUnderlyingNetworkPolicy(
-                    mTrackingNetworkCallback.requiresRestartForAddingRestriction(result), result);
+                    final NetworkCapabilities result = ncBuilder.build();
+                    final VcnUnderlyingNetworkPolicy policy =
+                            new VcnUnderlyingNetworkPolicy(
+                                    mTrackingNetworkCallback.requiresRestartForAddingRestriction(
+                                            result),
+                                    result);
 
-            logVdbg("getUnderlyingNetworkPolicy() called for caps: " + networkCapabilities
-                        + "; and lp: " + linkProperties + "; result = " + policy);
-            return policy;
-        });
+                    logVdbg(
+                            "getUnderlyingNetworkPolicy() called for caps: "
+                                    + networkCapabilities
+                                    + "; and lp: "
+                                    + linkProperties
+                                    + "; result = "
+                                    + policy);
+                    return policy;
+                });
     }
 
     /** Binder death recipient used to remove registered VcnStatusCallbacks. */
