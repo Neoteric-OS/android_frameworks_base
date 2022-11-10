@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c95db808_e57baa5e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2022-11-10T17:21:42Z",
+      "side": 1,
+      "message": "Why is this a PackageManager feature? Do we expect apps to filter their delivery based on the availability of this feature? If not, it needs to be exposed in another way.",
+      "revId": "43c8fd2aa1a2c2c90403f5b7895cc71d627a608e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
