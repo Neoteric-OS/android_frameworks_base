@@ -390,8 +390,16 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
             Objects.requireNonNull(privilegedPackages, "privilegedPackages was null");
             Objects.requireNonNull(subIdToCarrierConfigMap, "subIdToCarrierConfigMap was null");
 
-            mSubIdToInfoMap = Collections.unmodifiableMap(subIdToInfoMap);
-            mSubIdToCarrierConfigMap = Collections.unmodifiableMap(subIdToCarrierConfigMap);
+            mSubIdToInfoMap = new ArrayMap<>();
+            for (Entry<Integer, SubscriptionInfo> entry : subIdToInfoMap.entrySet()) {
+                mSubIdToInfoMap.put(entry.getKey(), entry.getValue());
+            }
+
+            mSubIdToCarrierConfigMap = new ArrayMap<>();
+            for (Entry<Integer, PersistableBundleWrapper> entry :
+                    subIdToCarrierConfigMap.entrySet()) {
+                mSubIdToCarrierConfigMap.put(entry.getKey(), entry.getValue());
+            }
 
             final Map<ParcelUuid, Set<String>> unmodifiableInnerSets = new ArrayMap<>();
             for (Entry<ParcelUuid, Set<String>> entry : privilegedPackages.entrySet()) {
