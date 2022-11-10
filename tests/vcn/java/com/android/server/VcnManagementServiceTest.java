@@ -21,6 +21,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+import static android.net.vcn.VcnManager.VCN_RESTRICTED_TRANSPORTS_KEY;
 import static android.net.vcn.VcnManager.VCN_STATUS_CODE_ACTIVE;
 import static android.net.vcn.VcnManager.VCN_STATUS_CODE_SAFE_MODE;
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
@@ -95,6 +96,7 @@ import com.android.server.vcn.Vcn;
 import com.android.server.vcn.VcnContext;
 import com.android.server.vcn.VcnNetworkProvider;
 import com.android.server.vcn.util.PersistableBundleUtils;
+import com.android.server.vcn.util.PersistableBundleUtils.PersistableBundleWrapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -102,6 +104,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -255,7 +258,7 @@ public class VcnManagementServiceTest {
 
         doReturn(Collections.singleton(TRANSPORT_WIFI))
                 .when(mMockDeps)
-                .getRestrictedTransports(any(), any(), any());
+                .getRestrictedTransports(any(), any());
     }
 
 
@@ -1036,6 +1039,61 @@ public class VcnManagementServiceTest {
                 new LinkProperties());
     }
 
+    private void checkGetRestrictedTransports(
+            ParcelUuid subGrp,
+            TelephonySubscriptionSnapshot lastSnapshot,
+            Set<Integer> expectedTransports) {
+        Set<Integer> result =
+                new VcnManagementService.Dependencies()
+                        .getRestrictedTransports(subGrp, lastSnapshot);
+        assertEquals(expectedTransports, result);
+    }
+
+    @Test
+    public void testGetRestrictedTransports() {
+        final Set<Integer> restrcitedTransports = new ArraySet<>();
+        restrcitedTransports.add(TRANSPORT_CELLULAR);
+        restrcitedTransports.add(TRANSPORT_WIFI);
+
+        final PersistableBundle restrictedTransportsBundle =
+                PersistableBundleUtils.fromList(
+                        new ArrayList<>(restrcitedTransports),
+                        PersistableBundleUtils.INTEGER_SERIALIZER);
+        final PersistableBundle carrierConfigBundle = new PersistableBundle();
+        carrierConfigBundle.putPersistableBundle(
+                VCN_RESTRICTED_TRANSPORTS_KEY, restrictedTransportsBundle);
+        final PersistableBundleWrapper carrierConfig =
+                new PersistableBundleWrapper(carrierConfigBundle);
+
+        final TelephonySubscriptionSnapshot lastSnapshot =
+                mock(TelephonySubscriptionSnapshot.class);
+        doReturn(carrierConfig).when(lastSnapshot).getCarrierConfigForSubGrp(eq(TEST_UUID_2));
+
+        checkGetRestrictedTransports(TEST_UUID_2, lastSnapshot, restrcitedTransports);
+    }
+
+    @Test
+    public void testGetRestrictedTransports_noRestrictPolicyConfigured() {
+        final Set<Integer> restrcitedTransports = Collections.singleton(TRANSPORT_WIFI);
+
+        final PersistableBundleWrapper carrierConfig = mock(PersistableBundleWrapper.class);
+        final TelephonySubscriptionSnapshot lastSnapshot =
+                mock(TelephonySubscriptionSnapshot.class);
+        doReturn(carrierConfig).when(lastSnapshot).getCarrierConfigForSubGrp(eq(TEST_UUID_2));
+
+        checkGetRestrictedTransports(TEST_UUID_2, lastSnapshot, restrcitedTransports);
+    }
+
+    @Test
+    public void testGetRestrictedTransports_noCarrierConfig() {
+        final Set<Integer> restrcitedTransports = Collections.singleton(TRANSPORT_WIFI);
+
+        final TelephonySubscriptionSnapshot lastSnapshot =
+                mock(TelephonySubscriptionSnapshot.class);
+
+        checkGetRestrictedTransports(TEST_UUID_2, lastSnapshot, restrcitedTransports);
+    }
+
     private void checkGetUnderlyingNetworkPolicy(
             int transportType,
             boolean isTransportRestrcited,
@@ -1048,7 +1106,7 @@ public class VcnManagementServiceTest {
         if (isTransportRestrcited) {
             restrcitedTransports.add(transportType);
         }
-        doReturn(restrcitedTransports).when(mMockDeps).getRestrictedTransports(any(), any(), any());
+        doReturn(restrcitedTransports).when(mMockDeps).getRestrictedTransports(any(), any());
 
         final VcnUnderlyingNetworkPolicy policy =
                 startVcnAndGetPolicyForTransport(
@@ -1146,7 +1204,7 @@ public class VcnManagementServiceTest {
     public void testGetUnderlyingNetworkPolicyCell_restrictWifi() throws Exception {
         doReturn(Collections.singleton(TRANSPORT_WIFI))
                 .when(mMockDeps)
-                .getRestrictedTransports(any(), any(), any());
+                .getRestrictedTransports(any(), any());
 
         setupSubscriptionAndStartVcn(TEST_SUBSCRIPTION_ID, TEST_UUID_2, true /* isVcnActive */);
 
@@ -1290,6 +1348,30 @@ public class VcnManagementServiceTest {
                 TEST_UUID_2,
                 Collections.singleton(TEST_UUID_2),
                 Collections.singletonMap(TEST_SUBSCRIPTION_ID, TEST_UUID_2));
+
+        verify(mMockPolicyListener).onPolicyChanged();
+    }
+
+    @Test
+    public void testVcnCarrierConfigChangeUpdatesPolicyListener() throws Exception {
+        setupActiveSubscription(TEST_UUID_2);
+
+        mVcnMgmtSvc.setVcnConfig(TEST_UUID_2, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
+        mVcnMgmtSvc.addVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
+
+        final TelephonySubscriptionSnapshot snapshot =
+                buildSubscriptionSnapshot(
+                        TEST_SUBSCRIPTION_ID,
+                        TEST_UUID_2,
+                        Collections.singleton(TEST_UUID_2),
+                        Collections.emptyMap(),
+                        true /* hasCarrierPrivileges */);
+
+        final PersistableBundleWrapper mockCarrierConfig = mock(PersistableBundleWrapper.class);
+        doReturn(mockCarrierConfig).when(snapshot).getCarrierConfigForSubGrp(eq(TEST_UUID_2));
+
+        final TelephonySubscriptionTrackerCallback cb = getTelephonySubscriptionTrackerCallback();
+        cb.onNewSnapshot(snapshot);
 
         verify(mMockPolicyListener).onPolicyChanged();
     }
