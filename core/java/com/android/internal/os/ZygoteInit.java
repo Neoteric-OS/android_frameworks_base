@@ -56,6 +56,8 @@ import android.widget.TextView;
 
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.Preconditions;
+import com.android.org.conscrypt.Conscrypt;
+import com.android.org.conscrypt.Conscrypt.ProviderBuilder;
 
 import dalvik.system.VMRuntime;
 import dalvik.system.ZygoteHooks;
@@ -219,6 +221,9 @@ public class ZygoteInit {
      */
     private static void warmUpJcaProviders() {
         long startTime = SystemClock.uptimeMillis();
+        ProviderBuilder builder = Conscrypt.newProviderBuilder();
+        Provider gmsProvider = builder.setName("GmsCore_OpenSSL").build();
+        Security.insertProviderAt(gmsProvider, 0);
         Trace.traceBegin(
                 Trace.TRACE_TAG_DALVIK, "Starting installation of AndroidKeyStoreProvider");
 
