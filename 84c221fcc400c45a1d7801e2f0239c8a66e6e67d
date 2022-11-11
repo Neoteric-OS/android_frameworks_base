@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a00d5bd2_58bdec0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1972055
+      },
+      "writtenOn": "2022-11-11T10:28:24Z",
+      "side": 1,
+      "message": "Hello, Fiona and Santos,I am sorry about that there are some inappropriate comments in the code before, I have removed them now.\nAnd This link is related to the issue of this change:https://partnerissuetracker.corp.google.com/u/1/issues/254387607\nIf you have time, can you help me take a look at this proposal, thank you very much.",
+      "revId": "84c221fcc400c45a1d7801e2f0239c8a66e6e67d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
