@@ -84,6 +84,23 @@
       "message": "Hello Google Team,\n\nplease help me review this change, thanks.",
       "revId": "1eaa12f8e68fe5c4200cf25300ef6d94d15e705d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18420cd2_3d03e071",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1746367
+      },
+      "writtenOn": "2022-11-11T00:57:13Z",
+      "side": 1,
+      "message": "Hello Google team,\n\nany update?",
+      "revId": "1eaa12f8e68fe5c4200cf25300ef6d94d15e705d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
