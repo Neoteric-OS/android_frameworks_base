@@ -322,6 +322,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     static final int TRIPLE_PRESS_PRIMARY_NOTHING = 0;
     static final int TRIPLE_PRESS_PRIMARY_TOGGLE_ACCESSIBILITY = 1;
 
+    // Must match: config_searchKeyBehavior in config.xml
+    static final int SEARCH_BEHAVIOR_NOTHING = 0;
+    static final int SEARCH_BEHAVIOR_DEFAULT_SEARCH = 1;
+    static final int SEARCH_BEHAVIOR_TARGET_ACTIVITY = 2;
+
     static public final String SYSTEM_DIALOG_REASON_KEY = "reason";
     static public final String SYSTEM_DIALOG_REASON_GLOBAL_ACTIONS = "globalactions";
     static public final String SYSTEM_DIALOG_REASON_RECENT_APPS = "recentapps";
@@ -525,6 +530,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     boolean mWakeOnAssistKeyPress;
     boolean mWakeOnBackKeyPress;
     long mWakeUpToLastStateTimeout;
+    int mSearchKeyBehavior;
+    ComponentName mSearchKeyTargetActivity;
 
     private boolean mHandleVolumeKeysInWM;
 
@@ -2039,6 +2046,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mWakeUpToLastStateTimeout = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_wakeUpToLastStateTimeoutMillis);
 
+        mSearchKeyBehavior = mContext.getResources().getInteger(
+                com.android.internal.R.integer.config_searchKeyBehavior);
+
+        mSearchKeyTargetActivity = ComponentName.unflattenFromString(
+            mContext.getResources().getString(
+                com.android.internal.R.string.config_searchKeyTargetActivity));
         readConfigurationDependentBehaviors();
 
         mDisplayFoldController = DisplayFoldController.create(context, DEFAULT_DISPLAY);
@@ -3005,6 +3018,21 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     }
                 }
                 break;
+            case KeyEvent.KEYCODE_SEARCH: {
+                if (down && repeatCount == 0 && !keyguardOn()) {
+                    switch(mSearchKeyBehavior) {
+                        case SEARCH_BEHAVIOR_NOTHING:
+                            return key_consumed;
+                        case SEARCH_BEHAVIOR_TARGET_ACTIVITY: {
+                            launchTargetSearchActivity();
+                            return key_consumed;
+                        }
+                        case SEARCH_BEHAVIOR_DEFAULT_SEARCH:
+                        default:
+                            break;
+                    }
+                }
+            }
         }
 
         if (isValidGlobalKey(keyCode)
@@ -6003,4 +6031,22 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
+    private void launchTargetSearchActivity() {
+        Intent intent;
+        if (mSearchKeyTargetActivity != null) {
+            intent = new Intent();
+            intent.setComponent(mSearchKeyTargetActivity);
+        } else {
+            intent = new Intent(Intent.ACTION_WEB_SEARCH);
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        try {
+            startActivityAsUser(intent, UserHandle.CURRENT_OR_SELF);
+        } catch (ActivityNotFoundException ignore) {
+            Slog.e(TAG, "Could not resolve activity with : "
+                    + intent.getComponent().flattenToString()
+                    + " name.");
+        }
+    }
 }
