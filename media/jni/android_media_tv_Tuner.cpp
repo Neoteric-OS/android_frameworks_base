@@ -202,6 +202,7 @@ Return<void> LnbCallback::onDiseqcMessage(const hidl_vec<uint8_t>& diseqcMessage
             mLnb,
             gFields.onLnbDiseqcMessageID,
             array);
+    env->DeleteLocalRef(array);
     return Void();
 }
 
@@ -391,7 +392,9 @@ jobjectArray FilterCallback::getSectionEvent(
         jobject obj =
                 env->NewObject(eventClazz, eventInit, tableId, version, sectionNum, dataLength);
         env->SetObjectArrayElement(arr, i, obj);
+        env->DeleteLocalRef(obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -426,6 +429,7 @@ jobjectArray FilterCallback::getMediaEvent(
             audioDescriptor =
                     env->NewObject(adClazz, adInit, adFade, adPan, versionTextTag, adGainCenter,
                             adGainFront, adGainSurround);
+            env->DeleteLocalRef(adClazz);
         }
 
         jlong dataLength = static_cast<jlong>(mediaEvent.dataLength);
@@ -454,7 +458,12 @@ jobjectArray FilterCallback::getMediaEvent(
         }
 
         env->SetObjectArrayElement(arr, i, obj);
+        if(audioDescriptor != nullptr) {
+            env->DeleteLocalRef(audioDescriptor);
+        }
+        env->DeleteLocalRef(obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -475,7 +484,9 @@ jobjectArray FilterCallback::getPesEvent(
         jobject obj =
                 env->NewObject(eventClazz, eventInit, streamId, dataLength, mpuSequenceNumber);
         env->SetObjectArrayElement(arr, i, obj);
+        env->DeleteLocalRef(obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -515,7 +526,9 @@ jobjectArray FilterCallback::getTsRecordEvent(
         jobject obj =
                 env->NewObject(eventClazz, eventInit, jpid, ts, sc, byteNumber);
         env->SetObjectArrayElement(arr, i, obj);
+        env->DeleteLocalRef(obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -535,7 +548,9 @@ jobjectArray FilterCallback::getMmtpRecordEvent(
         jobject obj =
                 env->NewObject(eventClazz, eventInit, scHevcIndexMask, byteNumber);
         env->SetObjectArrayElement(arr, i, obj);
+        env->DeleteLocalRef(obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -559,7 +574,9 @@ jobjectArray FilterCallback::getDownloadEvent(
                 env->NewObject(eventClazz, eventInit, itemId, mpuSequenceNumber, itemFragmentIndex,
                         lastItemFragmentIndex, dataLength);
         env->SetObjectArrayElement(arr, i, obj);
+        env->DeleteLocalRef(obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -575,7 +592,9 @@ jobjectArray FilterCallback::getIpPayloadEvent(
         jint dataLength = static_cast<jint>(ipPayloadEvent.dataLength);
         jobject obj = env->NewObject(eventClazz, eventInit, dataLength);
         env->SetObjectArrayElement(arr, i, obj);
+        env->DeleteLocalRef(obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -598,7 +617,10 @@ jobjectArray FilterCallback::getTemiEvent(
 
         jobject obj = env->NewObject(eventClazz, eventInit, pts, descrTag, array);
         env->SetObjectArrayElement(arr, i, obj);
+        env->DeleteLocalRef(array);
+        env->DeleteLocalRef(obj);
     }
+    env->DeleteLocalRef(eventClazz);
     return arr;
 }
 
@@ -651,10 +673,19 @@ Return<void> FilterCallback::onFilterEvent(const DemuxFilterEvent& filterEvent) 
             }
         }
     }
-    env->CallVoidMethod(
-            mFilter,
-            gFields.onFilterEventID,
-            array);
+    jobject filter(env->NewLocalRef(mFilter));
+    if (!env->IsSameObject(filter, nullptr)) {
+        env->CallVoidMethod(
+                filter,
+                gFields.onFilterEventID,
+                array);
+    } else {
+        ALOGE("FilterCallback::onFilterEvent:"
+              "Filter object has been freed. Ignoring callback.");
+    }
+    env->DeleteLocalRef(filter);
+    env->DeleteLocalRef(array);
+    env->DeleteLocalRef(eventClazz);
     return Void();
 }
 
@@ -662,10 +693,17 @@ Return<void> FilterCallback::onFilterEvent(const DemuxFilterEvent& filterEvent) 
 Return<void> FilterCallback::onFilterStatus(const DemuxFilterStatus status) {
     ALOGD("FilterCallback::onFilterStatus");
     JNIEnv *env = AndroidRuntime::getJNIEnv();
-    env->CallVoidMethod(
-            mFilter,
-            gFields.onFilterStatusID,
-            (jint)status);
+    jobject filter(env->NewLocalRef(mFilter));
+    if (!env->IsSameObject(filter, nullptr)) {
+        env->CallVoidMethod(
+                filter,
+                gFields.onFilterStatusID,
+                (jint)status);
+    } else {
+        ALOGE("FilterCallback::onFilterStatus:"
+              "Filter object has been freed. Ignoring callback.");
+    }
+    env->DeleteLocalRef(filter);
     return Void();
 }
 
@@ -780,6 +818,7 @@ Return<void> FrontendCallback::onScanMessage(FrontendScanMessageType type, const
                     mObject,
                     env->GetMethodID(clazz, "onFrequenciesReport", "([I)V"),
                     freqs);
+            env->DeleteLocalRef(freqs);
             break;
         }
         case FrontendScanMessageType::SYMBOL_RATE: {
@@ -791,6 +830,7 @@ Return<void> FrontendCallback::onScanMessage(FrontendScanMessageType type, const
                     mObject,
                     env->GetMethodID(clazz, "onSymbolRates", "([I)V"),
                     symbolRates);
+            env->DeleteLocalRef(symbolRates);
             break;
         }
         case FrontendScanMessageType::HIERARCHY: {
@@ -817,6 +857,7 @@ Return<void> FrontendCallback::onScanMessage(FrontendScanMessageType type, const
                     mObject,
                     env->GetMethodID(clazz, "onPlpIds", "([I)V"),
                     plpIds);
+            env->DeleteLocalRef(plpIds);
             break;
         }
         case FrontendScanMessageType::GROUP_IDS: {
@@ -829,6 +870,7 @@ Return<void> FrontendCallback::onScanMessage(FrontendScanMessageType type, const
                     mObject,
                     env->GetMethodID(clazz, "onGroupIds", "([I)V"),
                     groupIds);
+            env->DeleteLocalRef(groupIds);
             break;
         }
         case FrontendScanMessageType::INPUT_STREAM_IDS: {
@@ -841,6 +883,7 @@ Return<void> FrontendCallback::onScanMessage(FrontendScanMessageType type, const
                     mObject,
                     env->GetMethodID(clazz, "onInputStreamIds", "([I)V"),
                     streamIds);
+            env->DeleteLocalRef(streamIds);
             break;
         }
         case FrontendScanMessageType::STANDARD: {
@@ -880,14 +923,18 @@ Return<void> FrontendCallback::onScanMessage(FrontendScanMessageType type, const
 
                 jobject obj = env->NewObject(plpClazz, init, plpId, lls);
                 env->SetObjectArrayElement(array, i, obj);
+                env->DeleteLocalRef(obj);
             }
             env->CallVoidMethod(
                     mObject,
                     env->GetMethodID(clazz, "onAtsc3PlpInfos", "([Landroid/media/tv/tuner/frontend/Atsc3PlpInfo;)V"),
                     array);
+            env->DeleteLocalRef(array);
+            env->DeleteLocalRef(plpClazz);
             break;
         }
     }
+    env->DeleteLocalRef(clazz);
     return Void();
 }
 
@@ -1660,6 +1707,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newBooleanObj = env->NewObject(
                         booleanClazz, initBoolean, static_cast<jboolean>(s.isDemodLocked()));
                 env->SetObjectField(statusObj, field, newBooleanObj);
+                env->DeleteLocalRef(newBooleanObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::snr: {
@@ -1667,6 +1715,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newIntegerObj = env->NewObject(
                         intClazz, initInt, static_cast<jint>(s.snr()));
                 env->SetObjectField(statusObj, field, newIntegerObj);
+                env->DeleteLocalRef(newIntegerObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::ber: {
@@ -1674,6 +1723,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newIntegerObj = env->NewObject(
                         intClazz, initInt, static_cast<jint>(s.ber()));
                 env->SetObjectField(statusObj, field, newIntegerObj);
+                env->DeleteLocalRef(newIntegerObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::per: {
@@ -1681,6 +1731,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newIntegerObj = env->NewObject(
                         intClazz, initInt, static_cast<jint>(s.per()));
                 env->SetObjectField(statusObj, field, newIntegerObj);
+                env->DeleteLocalRef(newIntegerObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::preBer: {
@@ -1688,6 +1739,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newIntegerObj = env->NewObject(
                         intClazz, initInt, static_cast<jint>(s.preBer()));
                 env->SetObjectField(statusObj, field, newIntegerObj);
+                env->DeleteLocalRef(newIntegerObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::signalQuality: {
@@ -1695,6 +1747,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newIntegerObj = env->NewObject(
                         intClazz, initInt, static_cast<jint>(s.signalQuality()));
                 env->SetObjectField(statusObj, field, newIntegerObj);
+                env->DeleteLocalRef(newIntegerObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::signalStrength: {
@@ -1702,6 +1755,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newIntegerObj = env->NewObject(
                         intClazz, initInt, static_cast<jint>(s.signalStrength()));
                 env->SetObjectField(statusObj, field, newIntegerObj);
+                env->DeleteLocalRef(newIntegerObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::symbolRate: {
@@ -1709,6 +1763,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newIntegerObj = env->NewObject(
                         intClazz, initInt, static_cast<jint>(s.symbolRate()));
                 env->SetObjectField(statusObj, field, newIntegerObj);
+                env->DeleteLocalRef(newIntegerObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::innerFec: {
@@ -1718,6 +1773,8 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newLongObj = env->NewObject(
                         longClazz, initLong, static_cast<jlong>(s.innerFec()));
                 env->SetObjectField(statusObj, field, newLongObj);
+                env->DeleteLocalRef(newLongObj);
+                env->DeleteLocalRef(longClazz);
                 break;
             }
             case FrontendStatus::hidl_discriminator::modulation: {
@@ -1754,6 +1811,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 if (valid) {
                     jobject newIntegerObj = env->NewObject(intClazz, initInt, intModulation);
                     env->SetObjectField(statusObj, field, newIntegerObj);
+                    env->DeleteLocalRef(newIntegerObj);
                 }
                 break;
             }
@@ -1762,6 +1820,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newIntegerObj = env->NewObject(
                         intClazz, initInt, static_cast<jint>(s.inversion()));
                 env->SetObjectField(statusObj, field, newIntegerObj);
+                env->DeleteLocalRef(newIntegerObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::lnbVoltage: {
@@ -1769,6 +1828,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newIntegerObj = env->NewObject(
                         intClazz, initInt, static_cast<jint>(s.lnbVoltage()));
                 env->SetObjectField(statusObj, field, newIntegerObj);
+                env->DeleteLocalRef(newIntegerObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::plpId: {
@@ -1776,6 +1836,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newIntegerObj = env->NewObject(
                         intClazz, initInt, static_cast<jint>(s.plpId()));
                 env->SetObjectField(statusObj, field, newIntegerObj);
+                env->DeleteLocalRef(newIntegerObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::isEWBS: {
@@ -1783,6 +1844,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newBooleanObj = env->NewObject(
                         booleanClazz, initBoolean, static_cast<jboolean>(s.isEWBS()));
                 env->SetObjectField(statusObj, field, newBooleanObj);
+                env->DeleteLocalRef(newBooleanObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::agc: {
@@ -1790,6 +1852,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newIntegerObj = env->NewObject(
                         intClazz, initInt, static_cast<jint>(s.agc()));
                 env->SetObjectField(statusObj, field, newIntegerObj);
+                env->DeleteLocalRef(newIntegerObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::isLnaOn: {
@@ -1797,6 +1860,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newBooleanObj = env->NewObject(
                         booleanClazz, initBoolean, static_cast<jboolean>(s.isLnaOn()));
                 env->SetObjectField(statusObj, field, newBooleanObj);
+                env->DeleteLocalRef(newBooleanObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::isLayerError: {
@@ -1810,6 +1874,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                     env->SetBooleanArrayRegion(valObj, i, 1, &x);
                 }
                 env->SetObjectField(statusObj, field, valObj);
+                env->DeleteLocalRef(valObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::mer: {
@@ -1817,6 +1882,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newIntegerObj = env->NewObject(
                         intClazz, initInt, static_cast<jint>(s.mer()));
                 env->SetObjectField(statusObj, field, newIntegerObj);
+                env->DeleteLocalRef(newIntegerObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::freqOffset: {
@@ -1824,6 +1890,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newIntegerObj = env->NewObject(
                         intClazz, initInt, static_cast<jint>(s.freqOffset()));
                 env->SetObjectField(statusObj, field, newIntegerObj);
+                env->DeleteLocalRef(newIntegerObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::hierarchy: {
@@ -1831,6 +1898,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newIntegerObj = env->NewObject(
                         intClazz, initInt, static_cast<jint>(s.hierarchy()));
                 env->SetObjectField(statusObj, field, newIntegerObj);
+                env->DeleteLocalRef(newIntegerObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::isRfLocked: {
@@ -1838,6 +1906,7 @@ jobject JTuner::getFrontendStatus(jintArray types) {
                 jobject newBooleanObj = env->NewObject(
                         booleanClazz, initBoolean, static_cast<jboolean>(s.isRfLocked()));
                 env->SetObjectField(statusObj, field, newBooleanObj);
+                env->DeleteLocalRef(newBooleanObj);
                 break;
             }
             case FrontendStatus::hidl_discriminator::plpInfo: {
@@ -1858,9 +1927,12 @@ jobject JTuner::getFrontendStatus(jintArray types) {
 
                     jobject plpObj = env->NewObject(plpClazz, initPlp, plpId, isLocked, uec);
                     env->SetObjectArrayElement(valObj, i, plpObj);
+                    env->DeleteLocalRef(plpObj);
                 }
 
                 env->SetObjectField(statusObj, field, valObj);
+                env->DeleteLocalRef(valObj);
+                env->DeleteLocalRef(plpClazz);
                 break;
             }
             default: {
@@ -1997,6 +2069,7 @@ static hidl_vec<FrontendAtsc3PlpSettings> getAtsc3PlpSettings(
                 .fec = fec,
         };
         plps[i] = frontendAtsc3PlpSettings;
+        env->DeleteLocalRef(plp);
     }
     return plps;
 }
