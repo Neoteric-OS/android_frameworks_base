@@ -34,6 +34,24 @@
       "parentUuid": "c95db808_e57baa5e",
       "revId": "43c8fd2aa1a2c2c90403f5b7895cc71d627a608e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "626d9ea0_96297232",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-11-11T06:55:26Z",
+      "side": 1,
+      "message": "My understanding is that we do expect apps to possibly filter delivery based on the availability of this feature. Some VPNs will only be available to devices with FEATURE_IPSEC_TUNNELS. Among these :\n- Some VPNs will work whether TUNNEL_MIGRATION is supported or not, but might change their behavior depending\n- Some VPNs may not work without TUNNEL_MIGRATION and may want to only install on devices where this feature is present.\n\nGiven the above, I believe this is correct API. Accordingly giving API+2, but Yan please convince Patrick for OWNERS :)",
+      "parentUuid": "fa52d3d3_33ab8f00",
+      "revId": "43c8fd2aa1a2c2c90403f5b7895cc71d627a608e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
