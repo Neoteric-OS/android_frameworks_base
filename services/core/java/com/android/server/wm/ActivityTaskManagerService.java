@@ -6008,7 +6008,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                 synchronized (mGlobalLock) {
                     // Only allow this from foreground processes, so that background
                     // applications can't abuse it to prevent system UI from being shown.
-                    if (uid >= FIRST_APPLICATION_UID) {
+                    if (uid >= FIRST_APPLICATION_UID && pid > 0) {
                         final WindowProcessController proc = mProcessMap.getProcess(pid);
                         if (!proc.isPerceptible()) {
                             Slog.w(TAG, "Ignoring closeSystemDialogs " + reason
