@@ -153,17 +153,14 @@ public class KeyguardSecurityContainerController extends ViewController<Keyguard
         }
 
         @Override
-        public void dismiss(boolean authenticated, int targetId,
-                SecurityMode expectedSecurityMode) {
-            dismiss(authenticated, targetId, /* bypassSecondaryLockScreen */ false,
-                    expectedSecurityMode);
+        public void dismiss(boolean authenticated, int targetId) {
+            dismiss(authenticated, targetId, /* bypassSecondaryLockScreen */ false);
         }
 
         @Override
         public void dismiss(boolean authenticated, int targetId,
-                boolean bypassSecondaryLockScreen, SecurityMode expectedSecurityMode) {
-            mSecurityCallback.dismiss(authenticated, targetId, bypassSecondaryLockScreen,
-                    expectedSecurityMode);
+                boolean bypassSecondaryLockScreen) {
+            mSecurityCallback.dismiss(authenticated, targetId, bypassSecondaryLockScreen);
         }
 
         public boolean isVerifyUnlockOnly() {
@@ -353,13 +350,8 @@ public class KeyguardSecurityContainerController extends ViewController<Keyguard
         return mCurrentSecurityMode;
     }
 
-    /**
-     * Potentially dismiss the current security screen, after validating that all device
-     * security has been unlocked. Otherwise show the next screen.
-     */
-    public void dismiss(boolean authenticated, int targetUserId,
-            SecurityMode expectedSecurityMode) {
-        mKeyguardSecurityCallback.dismiss(authenticated, targetUserId, expectedSecurityMode);
+    public void dismiss(boolean authenticated, int targetUserId) {
+        mKeyguardSecurityCallback.dismiss(authenticated, targetUserId);
     }
 
     public void reset() {
@@ -418,21 +410,12 @@ public class KeyguardSecurityContainerController extends ViewController<Keyguard
      *     completion.
      * @param bypassSecondaryLockScreen true if the user is allowed to bypass the secondary
      *     secondary lock screen requirement, if any.
-     * @param expectedSecurityMode SecurityMode that is invoking this request. SecurityMode.Invalid
-     *      indicates that no check should be done
      * @return true if keyguard is done
      */
     public boolean showNextSecurityScreenOrFinish(boolean authenticated, int targetUserId,
-            boolean bypassSecondaryLockScreen, SecurityMode expectedSecurityMode) {
+            boolean bypassSecondaryLockScreen) {
 
         if (DEBUG) Log.d(TAG, "showNextSecurityScreenOrFinish(" + authenticated + ")");
-        if (expectedSecurityMode != SecurityMode.Invalid
-                && expectedSecurityMode != getCurrentSecurityMode()) {
-            Log.w(TAG, "Attempted to invoke showNextSecurityScreenOrFinish with securityMode "
-                    + expectedSecurityMode + ", but current mode is " + getCurrentSecurityMode());
-            return false;
-        }
-
         boolean finish = false;
         boolean strongAuth = false;
         int eventSubtype = -1;

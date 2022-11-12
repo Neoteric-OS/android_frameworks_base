@@ -90,7 +90,7 @@ public class KeyguardHostViewController extends ViewController<KeyguardHostView>
                                 Log.i(TAG, "TrustAgent dismissed Keyguard.");
                             }
                             mSecurityCallback.dismiss(false /* authenticated */, userId,
-                                    /* bypassSecondaryLockScreen */ false, SecurityMode.Invalid);
+                                    /* bypassSecondaryLockScreen */ false);
                         } else {
                             mViewMediatorCallback.playTrustedSound();
                         }
@@ -102,9 +102,9 @@ public class KeyguardHostViewController extends ViewController<KeyguardHostView>
 
         @Override
         public boolean dismiss(boolean authenticated, int targetUserId,
-                boolean bypassSecondaryLockScreen, SecurityMode expectedSecurityMode) {
+                boolean bypassSecondaryLockScreen) {
             return mKeyguardSecurityContainerController.showNextSecurityScreenOrFinish(
-                    authenticated, targetUserId, bypassSecondaryLockScreen, expectedSecurityMode);
+                    authenticated, targetUserId, bypassSecondaryLockScreen);
         }
 
         @Override
@@ -212,8 +212,7 @@ public class KeyguardHostViewController extends ViewController<KeyguardHostView>
      * @return True if the keyguard is done.
      */
     public boolean dismiss(int targetUserId) {
-        return mSecurityCallback.dismiss(false, targetUserId, false,
-                getCurrentSecurityMode());
+        return mSecurityCallback.dismiss(false, targetUserId, false);
     }
 
     /**
@@ -356,10 +355,10 @@ public class KeyguardHostViewController extends ViewController<KeyguardHostView>
     }
 
     public boolean handleBackKey() {
-        SecurityMode securityMode = mKeyguardSecurityContainerController.getCurrentSecurityMode();
-        if (securityMode != SecurityMode.None) {
+        if (mKeyguardSecurityContainerController.getCurrentSecurityMode()
+                != SecurityMode.None) {
             mKeyguardSecurityContainerController.dismiss(
-                    false, KeyguardUpdateMonitor.getCurrentUser(), securityMode);
+                    false, KeyguardUpdateMonitor.getCurrentUser());
             return true;
         }
         return false;

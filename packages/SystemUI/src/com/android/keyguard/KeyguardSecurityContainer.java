@@ -233,12 +233,7 @@ public class KeyguardSecurityContainer extends FrameLayout {
 
     // Used to notify the container when something interesting happens.
     public interface SecurityCallback {
-        /**
-         * Potentially dismiss the current security screen, after validating that all device
-         * security has been unlocked. Otherwise show the next screen.
-         */
-        boolean dismiss(boolean authenticated, int targetUserId, boolean bypassSecondaryLockScreen,
-                SecurityMode expectedSecurityMode);
+        boolean dismiss(boolean authenticated, int targetUserId, boolean bypassSecondaryLockScreen);
 
         void userActivity();
 
