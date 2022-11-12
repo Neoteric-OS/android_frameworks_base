@@ -491,3 +491,12 @@ java_library {
     name: "framework-configinfrastructure",
     sdk_version: "module_current",
 }
+
+filegroup {
+    name: "framework-core-sources-for-fuzzers",
+    srcs: [
+        "android/os/IInterface.java",
+        "android/os/Binder.java",
+        "android/os/IBinder.java",
+    ],
+}
