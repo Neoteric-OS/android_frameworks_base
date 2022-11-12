@@ -1,0 +1,31 @@
+package {
+    default_applicable_licenses: ["frameworks_base_license"],
+}
+
+aidl_interface {
+    name: "fuzzTestInterface",
+    srcs: ["fuzztest/ITestService.aidl"],
+    unstable: true,
+    backend: {
+        java: {
+            enabled: true,
+        },
+    },
+}
+
+java_fuzz {
+    name: "java_service_fuzzer",
+    srcs: [
+        "ServiceFuzzer.java",
+        "TestService.java",
+    ],
+    static_libs: [
+        "jazzer",
+        "fuzzTestInterface-java",
+        "random_parcel_lib",
+    ],
+    jni_libs: [
+        "librandom_parcel_jni",
+        "libc++",
+    ],
+}
