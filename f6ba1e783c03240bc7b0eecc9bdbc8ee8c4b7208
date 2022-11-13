@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c02f816d_b8def3c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2022-11-13T20:35:46Z",
+      "side": 1,
+      "message": "For more context, this is a subset of ag/20189550 (as only 2 interfaces were migrated in AOSP). Thanks.",
+      "revId": "f6ba1e783c03240bc7b0eecc9bdbc8ee8c4b7208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
