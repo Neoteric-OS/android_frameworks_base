@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0156b379_4842183a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-11-14T20:06:52Z",
+      "side": 1,
+      "message": "Hi Patrick, friendly ping for owner review..",
+      "revId": "4dd3928e99d747bfb276bbd041234cb3c36aa561",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
