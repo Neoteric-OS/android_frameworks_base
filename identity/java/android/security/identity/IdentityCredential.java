@@ -25,6 +25,7 @@ import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -297,7 +298,7 @@ public abstract class IdentityCredential {
      *                                                session transcripts.
      * @throws NoAuthenticationKeyAvailableException  if authentication keys were never
      *                                                provisioned, the method
-     *                                             {@link #setAvailableAuthenticationKeys(int, int)}
+     *                                      {@link #setAvailableAuthenticationKeys(int, int, long)}
      *                                                was called with {@code keyCount} set to 0,
      *                                                the method
      *                                                {@link #setAllowUsingExhaustedKeys(boolean)}
@@ -331,19 +332,25 @@ public abstract class IdentityCredential {
      * for which this method has not been called behave as though it had been called wit
      * {@code keyCount} 0 and {@code maxUsesPerKey} 1.
      *
+     * <p>The effect of this method is like calling
+     * {@link #setAvailableAuthenticationKeys(int, int, long)} with the last parameter is set to 0.
+     *
      * @param keyCount      The number of active, certified dynamic authentication keys the
      *                      {@code IdentityCredential} will try to keep available. This value
      *                      must be non-negative.
      * @param maxUsesPerKey The maximum number of times each of the keys will be used before it's
      *                      eligible for replacement. This value must be greater than zero.
+     * @deprecated Use {@link #setAvailableAuthenticationKeys(int, int, long)} instead.
      */
+    @Deprecated
     public abstract void setAvailableAuthenticationKeys(int keyCount, int maxUsesPerKey);
 
     /**
      * Gets a collection of dynamic authentication keys that need certification.
      *
      * <p>When there aren't enough certified dynamic authentication keys, either because the key
-     * count has been increased or because one or more keys have reached their usage count, this
+     * count has been increased or because one or more keys have reached their usage count or
+     * it if a key is too close to its expiration date, this
      * method will generate replacement keys and certificates and return them for issuer
      * certification.  The issuer certificates and associated static authentication data must then
      * be provided back to the Identity Credential using
@@ -400,11 +407,6 @@ public abstract class IdentityCredential {
      *
      * This should only be called for an authenticated key returned by
      * {@link #getAuthKeysNeedingCertification()}.
-     *
-     * <p>This is only implemented in feature version 202101 or later. If not implemented, the call
-     * fails with {@link UnsupportedOperationException}. See
-     * {@link android.content.pm.PackageManager#FEATURE_IDENTITY_CREDENTIAL_HARDWARE} for known
-     * feature versions.
      *
      * @param authenticationKey The dynamic authentication key for which certification and
      *                          associated static
@@ -518,6 +520,41 @@ public abstract class IdentityCredential {
      * @return A COSE_Sign1 data structure, see above.
      */
     public @NonNull byte[] update(@NonNull PersonalizationData personalizationData) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Sets the number of dynamic authentication keys the {@code IdentityCredential} will maintain,
+     * the number of times each should be used, and the minimum amount of time it's valid for.
+     *
+     * <p>The Identity Credential system will select the least-used dynamic authentication key each
+     * time {@link #getEntries(byte[], Map, byte[], byte[])} is called. Identity Credentials
+     * for which this method has not been called behave as though it had been called wit
+     * {@code keyCount} 0, {@code maxUsesPerKey} 1, and {@code minValidTimeMillis} 0.
+     *
+     * @param keyCount      The number of active, certified dynamic authentication keys the
+     *                      {@code IdentityCredential} will try to keep available. This value
+     *                      must be non-negative.
+     * @param maxUsesPerKey The maximum number of times each of the keys will be used before it's
+     *                      eligible for replacement. This value must be greater than zero.
+     * @param minValidTimeMillis If a key has less time left than this value it will be eliglible
+     *                           for replacement.
+     */
+    public void setAvailableAuthenticationKeys(int keyCount, int maxUsesPerKey,
+                                               long minValidTimeMillis) {
+        throw new UnsupportedOperationException();
+    }
+
+
+    /**
+     * Get the expiration times of dynamic authentication keys.
+     *
+     * <p>The returned array may have <code>null</code> values if the key hasn't been
+     * certified or if it was certified without an expiration date.
+     *
+     * @return list of authentication key expirations.
+     */
+    public @NonNull List<Instant> getAuthenticationDataExpirations() {
         throw new UnsupportedOperationException();
     }
 }
