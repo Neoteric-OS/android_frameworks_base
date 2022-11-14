@@ -37688,13 +37688,15 @@ package android.security.identity {
     method @NonNull public byte[] delete(@NonNull byte[]);
     method @Deprecated @NonNull public abstract byte[] encryptMessageToReader(@NonNull byte[]);
     method @NonNull public abstract java.util.Collection<java.security.cert.X509Certificate> getAuthKeysNeedingCertification();
+    method @NonNull public java.util.List<java.time.Instant> getAuthenticationDataExpirations();
     method @NonNull public abstract int[] getAuthenticationDataUsageCount();
     method @NonNull public abstract java.util.Collection<java.security.cert.X509Certificate> getCredentialKeyCertificateChain();
     method @Deprecated @NonNull public abstract android.security.identity.ResultData getEntries(@Nullable byte[], @NonNull java.util.Map<java.lang.String,java.util.Collection<java.lang.String>>, @Nullable byte[], @Nullable byte[]) throws android.security.identity.EphemeralPublicKeyNotFoundException, android.security.identity.InvalidReaderSignatureException, android.security.identity.InvalidRequestMessageException, android.security.identity.NoAuthenticationKeyAvailableException, android.security.identity.SessionTranscriptMismatchException;
     method @NonNull public byte[] proveOwnership(@NonNull byte[]);
     method @Deprecated public abstract void setAllowUsingExhaustedKeys(boolean);
     method @Deprecated public void setAllowUsingExpiredKeys(boolean);
-    method public abstract void setAvailableAuthenticationKeys(int, int);
+    method @Deprecated public abstract void setAvailableAuthenticationKeys(int, int);
+    method public void setAvailableAuthenticationKeys(int, int, long);
     method @Deprecated public abstract void setReaderEphemeralPublicKey(@NonNull java.security.PublicKey) throws java.security.InvalidKeyException;
     method @Deprecated public abstract void storeStaticAuthenticationData(@NonNull java.security.cert.X509Certificate, @NonNull byte[]) throws android.security.identity.UnknownAuthenticationKeyException;
     method public void storeStaticAuthenticationData(@NonNull java.security.cert.X509Certificate, @NonNull java.time.Instant, @NonNull byte[]) throws android.security.identity.UnknownAuthenticationKeyException;
