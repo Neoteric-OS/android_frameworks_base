@@ -16,6 +16,24 @@
       "message": "Thank you for the fix. Another patch will be landing shortly in AOSP, and this would produce a conflict. Only giving a -1 for that reason, but thank you again!",
       "revId": "d8d8ef297efc582b69f1b4208dd60f8a030351a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6952a5a_38845234",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1269628
+      },
+      "writtenOn": "2022-11-14T05:58:12Z",
+      "side": 1,
+      "message": "OK，I had fixed conflict. 😊",
+      "parentUuid": "a41f437f_4a0f6fec",
+      "revId": "d8d8ef297efc582b69f1b4208dd60f8a030351a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
