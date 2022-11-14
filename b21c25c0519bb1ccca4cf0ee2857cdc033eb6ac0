@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9e6c149_3b59f874",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2022-11-14T13:13:33Z",
+      "side": 1,
+      "message": "This issue has now already been fixed in AOSP. The additional parameter `SecurityMode.SimPuk` protects against this issue.",
+      "revId": "b21c25c0519bb1ccca4cf0ee2857cdc033eb6ac0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
