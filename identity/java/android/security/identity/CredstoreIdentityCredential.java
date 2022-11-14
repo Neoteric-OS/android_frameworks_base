@@ -380,8 +380,14 @@ class CredstoreIdentityCredential extends IdentityCredential {
 
     @Override
     public void setAvailableAuthenticationKeys(int keyCount, int maxUsesPerKey) {
+        setAvailableAuthenticationKeys(keyCount, maxUsesPerKey, 0);
+    }
+
+    @Override
+    public void setAvailableAuthenticationKeys(int keyCount, int maxUsesPerKey,
+                                               long minValidTimeMillis) {
         try {
-            mBinder.setAvailableAuthenticationKeys(keyCount, maxUsesPerKey);
+            mBinder.setAvailableAuthenticationKeys(keyCount, maxUsesPerKey, minValidTimeMillis);
         } catch (android.os.RemoteException e) {
             throw new RuntimeException("Unexpected RemoteException ", e);
         } catch (android.os.ServiceSpecificException e) {
@@ -472,6 +478,28 @@ class CredstoreIdentityCredential extends IdentityCredential {
         try {
             int[] usageCount = mBinder.getAuthenticationDataUsageCount();
             return usageCount;
+        } catch (android.os.RemoteException e) {
+            throw new RuntimeException("Unexpected RemoteException ", e);
+        } catch (android.os.ServiceSpecificException e) {
+            throw new RuntimeException("Unexpected ServiceSpecificException with code "
+                    + e.errorCode, e);
+        }
+    }
+
+    @Override
+    public @NonNull List<Instant> getAuthenticationDataExpirations() {
+        try {
+            long[] expirationsMillis = mBinder.getAuthenticationDataExpirations();
+            List<Instant> instants = new ArrayList<>();
+            for (int n = 0; n < expirationsMillis.length; n++) {
+                long expirationMillis = expirationsMillis[n];
+                Instant instant = null;
+                if (expirationMillis != Long.MAX_VALUE) {
+                    instant = Instant.ofEpochMilli(expirationMillis);
+                }
+                instants.add(instant);
+            }
+            return instants;
         } catch (android.os.RemoteException e) {
             throw new RuntimeException("Unexpected RemoteException ", e);
         } catch (android.os.ServiceSpecificException e) {
