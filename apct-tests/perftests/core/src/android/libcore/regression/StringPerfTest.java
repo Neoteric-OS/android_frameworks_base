@@ -20,17 +20,16 @@ import android.perftests.utils.BenchmarkState;
 import android.perftests.utils.PerfStatusReporter;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-@RunWith(JUnitParamsRunner.class)
+@RunWith(Parameterized.class)
 @LargeTest
 public class StringPerfTest {
     @Rule public PerfStatusReporter mPerfStatusReporter = new PerfStatusReporter();
@@ -47,7 +46,8 @@ public class StringPerfTest {
         }
     }
 
-    public static Collection<Object[]> getData() {
+    @Parameters(name = "mStringLengths={0}")
+    public static Collection<Object[]> data() {
         return Arrays.asList(
                 new Object[][] {
                     {StringLengths.EIGHT_KI},
@@ -56,6 +56,9 @@ public class StringPerfTest {
                     {StringLengths.EMPTY}
                 });
     }
+
+    @Parameterized.Parameter(0)
+    public StringLengths mStringLengths;
 
     private static String makeString(int length) {
         StringBuilder result = new StringBuilder(length);
@@ -66,11 +69,10 @@ public class StringPerfTest {
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeHashCode(StringLengths stringLengths) {
+    public void timeHashCode() {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            stringLengths.mValue.hashCode();
+            mStringLengths.mValue.hashCode();
         }
     }
 }

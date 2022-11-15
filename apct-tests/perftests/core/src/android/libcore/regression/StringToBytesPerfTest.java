@@ -20,18 +20,17 @@ import android.perftests.utils.BenchmarkState;
 import android.perftests.utils.PerfStatusReporter;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
 
-@RunWith(JUnitParamsRunner.class)
+@RunWith(Parameterized.class)
 @LargeTest
 public class StringToBytesPerfTest {
     @Rule public PerfStatusReporter mPerfStatusReporter = new PerfStatusReporter();
@@ -54,7 +53,8 @@ public class StringToBytesPerfTest {
         }
     }
 
-    public static Collection<Object[]> getData() {
+    @Parameters(name = "mStringLengths={0}")
+    public static Collection<Object[]> data() {
         return Arrays.asList(
                 new Object[][] {
                     {StringLengths.EMPTY},
@@ -68,6 +68,9 @@ public class StringToBytesPerfTest {
                     {StringLengths.A_512}
                 });
     }
+
+    @Parameterized.Parameter(0)
+    public StringLengths mStringLengths;
 
     private static String makeString(int length) {
         char[] chars = new char[length];
@@ -86,29 +89,26 @@ public class StringToBytesPerfTest {
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeGetBytesUtf8(StringLengths stringLengths) {
+    public void timeGetBytesUtf8() {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            stringLengths.mValue.getBytes(StandardCharsets.UTF_8);
+            mStringLengths.mValue.getBytes(StandardCharsets.UTF_8);
         }
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeGetBytesIso88591(StringLengths stringLengths) {
+    public void timeGetBytesIso88591() {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            stringLengths.mValue.getBytes(StandardCharsets.ISO_8859_1);
+            mStringLengths.mValue.getBytes(StandardCharsets.ISO_8859_1);
         }
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeGetBytesAscii(StringLengths stringLengths) {
+    public void timeGetBytesAscii() {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            stringLengths.mValue.getBytes(StandardCharsets.US_ASCII);
+            mStringLengths.mValue.getBytes(StandardCharsets.US_ASCII);
         }
     }
 }

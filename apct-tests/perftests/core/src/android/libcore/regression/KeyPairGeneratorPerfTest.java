@@ -20,24 +20,26 @@ import android.perftests.utils.BenchmarkState;
 import android.perftests.utils.PerfStatusReporter;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Collection;
 
-@RunWith(JUnitParamsRunner.class)
+@RunWith(Parameterized.class)
 @LargeTest
 public class KeyPairGeneratorPerfTest {
     @Rule public PerfStatusReporter mPerfStatusReporter = new PerfStatusReporter();
 
-    public static Collection<Object[]> getData() {
+    @Parameters(name = "mAlgorithm={0}, mImplementation={1}")
+    public static Collection<Object[]> data() {
         return Arrays.asList(
                 new Object[][] {
                     {Algorithm.RSA, Implementation.BouncyCastle},
@@ -45,6 +47,12 @@ public class KeyPairGeneratorPerfTest {
                     {Algorithm.RSA, Implementation.OpenSSL}
                 });
     }
+
+    @Parameterized.Parameter(0)
+    public Algorithm mAlgorithm;
+
+    @Parameterized.Parameter(1)
+    public Implementation mImplementation;
 
     public enum Algorithm {
         RSA,
@@ -58,25 +66,26 @@ public class KeyPairGeneratorPerfTest {
 
     private String mGeneratorAlgorithm;
     private KeyPairGenerator mGenerator;
+    private SecureRandom mRandom;
 
-    public void setUp(Algorithm algorithm, Implementation implementation) throws Exception {
-        this.mGeneratorAlgorithm = algorithm.toString();
+    @Before
+    public void setUp() throws Exception {
+        this.mGeneratorAlgorithm = mAlgorithm.toString();
 
         final String provider;
-        if (implementation == Implementation.BouncyCastle) {
+        if (mImplementation == Implementation.BouncyCastle) {
             provider = "BC";
         } else {
             provider = "AndroidOpenSSL";
         }
 
         this.mGenerator = KeyPairGenerator.getInstance(mGeneratorAlgorithm, provider);
+        this.mRandom = SecureRandom.getInstance("SHA1PRNG");
         this.mGenerator.initialize(1024);
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void time(Algorithm algorithm, Implementation implementation) throws Exception {
-        setUp(algorithm, implementation);
+    public void time() throws Exception {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
             KeyPair keyPair = mGenerator.generateKeyPair();

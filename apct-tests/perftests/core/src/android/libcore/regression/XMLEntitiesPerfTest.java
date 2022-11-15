@@ -20,12 +20,12 @@ import android.perftests.utils.BenchmarkState;
 import android.perftests.utils.PerfStatusReporter;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.xml.sax.InputSource;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -38,12 +38,13 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 // http://code.google.com/p/android/issues/detail?id=18102
-@RunWith(JUnitParamsRunner.class)
+@RunWith(Parameterized.class)
 @LargeTest
 public final class XMLEntitiesPerfTest {
     @Rule public PerfStatusReporter mPerfStatusReporter = new PerfStatusReporter();
 
-    public static Collection<Object[]> getData() {
+    @Parameters(name = "mLength={0}, mEntityFraction={1}")
+    public static Collection<Object[]> data() {
         return Arrays.asList(
                 new Object[][] {
                     {10, 0},
@@ -58,22 +59,29 @@ public final class XMLEntitiesPerfTest {
                 });
     }
 
+    @Parameterized.Parameter(0)
+    public int mLength;
+
+    @Parameterized.Parameter(1)
+    public float mEntityFraction;
+
     private XmlPullParserFactory mXmlPullParserFactory;
     private DocumentBuilderFactory mDocumentBuilderFactory;
 
     /** a string like {@code <doc>&amp;&amp;++</doc>}. */
     private String mXml;
 
-    public void setUp(int length, float entityFraction) throws Exception {
+    @Before
+    public void setUp() throws Exception {
         mXmlPullParserFactory = XmlPullParserFactory.newInstance();
         mDocumentBuilderFactory = DocumentBuilderFactory.newInstance();
 
         StringBuilder xmlBuilder = new StringBuilder();
         xmlBuilder.append("<doc>");
-        for (int i = 0; i < (length * entityFraction); i++) {
+        for (int i = 0; i < (mLength * mEntityFraction); i++) {
             xmlBuilder.append("&amp;");
         }
-        while (xmlBuilder.length() < length) {
+        while (xmlBuilder.length() < mLength) {
             xmlBuilder.append("+");
         }
         xmlBuilder.append("</doc>");
@@ -81,9 +89,7 @@ public final class XMLEntitiesPerfTest {
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeXmlParser(int length, float entityFraction) throws Exception {
-        setUp(length, entityFraction);
+    public void timeXmlParser() throws Exception {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
             XmlPullParser parser = mXmlPullParserFactory.newPullParser();
@@ -95,9 +101,7 @@ public final class XMLEntitiesPerfTest {
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeDocumentBuilder(int length, float entityFraction) throws Exception {
-        setUp(length, entityFraction);
+    public void timeDocumentBuilder() throws Exception {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
             DocumentBuilder documentBuilder = mDocumentBuilderFactory.newDocumentBuilder();

@@ -20,12 +20,11 @@ import android.perftests.utils.BenchmarkState;
 import android.perftests.utils.PerfStatusReporter;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,12 +34,13 @@ import java.nio.channels.FileChannel;
 import java.util.Arrays;
 import java.util.Collection;
 
-@RunWith(JUnitParamsRunner.class)
+@RunWith(Parameterized.class)
 @LargeTest
 public class BulkPerfTest {
     @Rule public PerfStatusReporter mPerfStatusReporter = new PerfStatusReporter();
 
-    public static Collection<Object[]> getData() {
+    @Parameters(name = "mAlign({0}), mSBuf({1}), mDBuf({2}), mSize({3})")
+    public static Collection<Object[]> data() {
         return Arrays.asList(
                 new Object[][] {
                     {true, MyBufferType.DIRECT, MyBufferType.DIRECT, 4096},
@@ -82,11 +82,23 @@ public class BulkPerfTest {
                 });
     }
 
+    @Parameterized.Parameter(0)
+    public boolean mAlign;
+
     enum MyBufferType {
         DIRECT,
         HEAP,
         MAPPED
     }
+
+    @Parameterized.Parameter(1)
+    public MyBufferType mSBuf;
+
+    @Parameterized.Parameter(2)
+    public MyBufferType mDBuf;
+
+    @Parameterized.Parameter(3)
+    public int mSize;
 
     public static ByteBuffer newBuffer(boolean aligned, MyBufferType bufferType, int bsize)
             throws IOException {
@@ -114,15 +126,13 @@ public class BulkPerfTest {
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timePut(boolean align, MyBufferType sBuf, MyBufferType dBuf, int size)
-            throws Exception {
-        ByteBuffer src = BulkPerfTest.newBuffer(align, sBuf, size);
-        ByteBuffer data = BulkPerfTest.newBuffer(align, dBuf, size);
+    public void timePut() throws Exception {
+        ByteBuffer src = BulkPerfTest.newBuffer(mAlign, mSBuf, mSize);
+        ByteBuffer data = BulkPerfTest.newBuffer(mAlign, mDBuf, mSize);
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            src.position(align ? 0 : 1);
-            data.position(align ? 0 : 1);
+            src.position(mAlign ? 0 : 1);
+            data.position(mAlign ? 0 : 1);
             src.put(data);
         }
     }

@@ -20,99 +20,96 @@ import android.perftests.utils.BenchmarkState;
 import android.perftests.utils.PerfStatusReporter;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collection;
 
-@RunWith(JUnitParamsRunner.class)
+@RunWith(Parameterized.class)
 @LargeTest
 public class BitSetPerfTest {
     @Rule public PerfStatusReporter mPerfStatusReporter = new PerfStatusReporter();
 
-    public static Collection<Object[]> getData() {
+    @Parameters(name = "mSize={0}")
+    public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {{1000}, {10000}});
     }
 
+    @Parameterized.Parameter(0)
+    public int mSize;
+
+    private BitSet mBitSet;
+
+    @Before
+    public void setUp() throws Exception {
+        mBitSet = new BitSet(mSize);
+    }
+
     @Test
-    @Parameters(method = "getData")
-    public void timeIsEmptyTrue(int size) {
-        BitSet bitSet = new BitSet(size);
+    public void timeIsEmptyTrue() {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            if (!bitSet.isEmpty()) throw new RuntimeException();
+            if (!mBitSet.isEmpty()) throw new RuntimeException();
         }
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeIsEmptyFalse(int size) {
-        BitSet bitSet = new BitSet(size);
-        bitSet.set(bitSet.size() - 1);
+    public void timeIsEmptyFalse() {
+        mBitSet.set(mBitSet.size() - 1);
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            if (bitSet.isEmpty()) throw new RuntimeException();
+            if (mBitSet.isEmpty()) throw new RuntimeException();
         }
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeGet(int size) {
-        BitSet bitSet = new BitSet(size);
+    public void timeGet() {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         int i = 1;
         while (state.keepRunning()) {
-            bitSet.get(++i % size);
+            mBitSet.get(++i % mSize);
         }
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeClear(int size) {
-        BitSet bitSet = new BitSet(size);
+    public void timeClear() {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         int i = 1;
         while (state.keepRunning()) {
-            bitSet.clear(++i % size);
+            mBitSet.clear(++i % mSize);
         }
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeSet(int size) {
-        BitSet bitSet = new BitSet(size);
+    public void timeSet() {
         int i = 1;
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            bitSet.set(++i % size);
+            mBitSet.set(++i % mSize);
         }
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeSetOn(int size) {
-        BitSet bitSet = new BitSet(size);
+    public void timeSetOn() {
         int i = 1;
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            bitSet.set(++i % size, true);
+            mBitSet.set(++i % mSize, true);
         }
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeSetOff(int size) {
-        BitSet bitSet = new BitSet(size);
+    public void timeSetOff() {
         int i = 1;
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            bitSet.set(++i % size, false);
+            mBitSet.set(++i % mSize, false);
         }
     }
 }

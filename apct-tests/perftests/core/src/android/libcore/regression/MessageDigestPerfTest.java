@@ -20,24 +20,24 @@ import android.perftests.utils.BenchmarkState;
 import android.perftests.utils.PerfStatusReporter;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Collection;
 
-@RunWith(JUnitParamsRunner.class)
+@RunWith(Parameterized.class)
 @LargeTest
 public class MessageDigestPerfTest {
     @Rule public PerfStatusReporter mPerfStatusReporter = new PerfStatusReporter();
 
-    public static Collection<Object[]> getData() {
+    @Parameters(name = "mAlgorithm={0}")
+    public static Collection<Object[]> data() {
         return Arrays.asList(
                 new Object[][] {
                     {Algorithm.MD5},
@@ -47,6 +47,9 @@ public class MessageDigestPerfTest {
                     {Algorithm.SHA512}
                 });
     }
+
+    @Parameterized.Parameter(0)
+    public Algorithm mAlgorithm;
 
     public String mProvider = "AndroidOpenSSL";
 
@@ -94,44 +97,44 @@ public class MessageDigestPerfTest {
     };
 
     @Test
-    @Parameters(method = "getData")
-    public void time(Algorithm algorithm) throws Exception {
+    public void time() throws Exception {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            MessageDigest digest = MessageDigest.getInstance(algorithm.toString(), mProvider);
+            MessageDigest digest =
+                    MessageDigest.getInstance(mAlgorithm.toString(), mProvider);
             digest.update(DATA, 0, DATA_SIZE);
             digest.digest();
         }
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeLargeArray(Algorithm algorithm) throws Exception {
+    public void timeLargeArray() throws Exception {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            MessageDigest digest = MessageDigest.getInstance(algorithm.toString(), mProvider);
+            MessageDigest digest =
+                    MessageDigest.getInstance(mAlgorithm.toString(), mProvider);
             digest.update(LARGE_DATA, 0, LARGE_DATA_SIZE);
             digest.digest();
         }
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeSmallChunkOfLargeArray(Algorithm algorithm) throws Exception {
+    public void timeSmallChunkOfLargeArray() throws Exception {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            MessageDigest digest = MessageDigest.getInstance(algorithm.toString(), mProvider);
+            MessageDigest digest =
+                    MessageDigest.getInstance(mAlgorithm.toString(), mProvider);
             digest.update(LARGE_DATA, LARGE_DATA_SIZE / 2, DATA_SIZE);
             digest.digest();
         }
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeSmallByteBuffer(Algorithm algorithm) throws Exception {
+    public void timeSmallByteBuffer() throws Exception {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            MessageDigest digest = MessageDigest.getInstance(algorithm.toString(), mProvider);
+            MessageDigest digest =
+                    MessageDigest.getInstance(mAlgorithm.toString(), mProvider);
             SMALL_BUFFER.position(0);
             SMALL_BUFFER.limit(SMALL_BUFFER.capacity());
             digest.update(SMALL_BUFFER);
@@ -140,11 +143,11 @@ public class MessageDigestPerfTest {
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeSmallDirectByteBuffer(Algorithm algorithm) throws Exception {
+    public void timeSmallDirectByteBuffer() throws Exception {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            MessageDigest digest = MessageDigest.getInstance(algorithm.toString(), mProvider);
+            MessageDigest digest =
+                    MessageDigest.getInstance(mAlgorithm.toString(), mProvider);
             SMALL_DIRECT_BUFFER.position(0);
             SMALL_DIRECT_BUFFER.limit(SMALL_DIRECT_BUFFER.capacity());
             digest.update(SMALL_DIRECT_BUFFER);
@@ -153,11 +156,11 @@ public class MessageDigestPerfTest {
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeLargeByteBuffer(Algorithm algorithm) throws Exception {
+    public void timeLargeByteBuffer() throws Exception {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            MessageDigest digest = MessageDigest.getInstance(algorithm.toString(), mProvider);
+            MessageDigest digest =
+                    MessageDigest.getInstance(mAlgorithm.toString(), mProvider);
             LARGE_BUFFER.position(0);
             LARGE_BUFFER.limit(LARGE_BUFFER.capacity());
             digest.update(LARGE_BUFFER);
@@ -166,11 +169,11 @@ public class MessageDigestPerfTest {
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeLargeDirectByteBuffer(Algorithm algorithm) throws Exception {
+    public void timeLargeDirectByteBuffer() throws Exception {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            MessageDigest digest = MessageDigest.getInstance(algorithm.toString(), mProvider);
+            MessageDigest digest =
+                    MessageDigest.getInstance(mAlgorithm.toString(), mProvider);
             LARGE_DIRECT_BUFFER.position(0);
             LARGE_DIRECT_BUFFER.limit(LARGE_DIRECT_BUFFER.capacity());
             digest.update(LARGE_DIRECT_BUFFER);
@@ -179,11 +182,11 @@ public class MessageDigestPerfTest {
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeSmallChunkOfLargeByteBuffer(Algorithm algorithm) throws Exception {
+    public void timeSmallChunkOfLargeByteBuffer() throws Exception {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            MessageDigest digest = MessageDigest.getInstance(algorithm.toString(), mProvider);
+            MessageDigest digest =
+                    MessageDigest.getInstance(mAlgorithm.toString(), mProvider);
             LARGE_BUFFER.position(LARGE_BUFFER.capacity() / 2);
             LARGE_BUFFER.limit(LARGE_BUFFER.position() + DATA_SIZE);
             digest.update(LARGE_BUFFER);
@@ -192,11 +195,11 @@ public class MessageDigestPerfTest {
     }
 
     @Test
-    @Parameters(method = "getData")
-    public void timeSmallChunkOfLargeDirectByteBuffer(Algorithm algorithm) throws Exception {
+    public void timeSmallChunkOfLargeDirectByteBuffer() throws Exception {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            MessageDigest digest = MessageDigest.getInstance(algorithm.toString(), mProvider);
+            MessageDigest digest =
+                    MessageDigest.getInstance(mAlgorithm.toString(), mProvider);
             LARGE_DIRECT_BUFFER.position(LARGE_DIRECT_BUFFER.capacity() / 2);
             LARGE_DIRECT_BUFFER.limit(LARGE_DIRECT_BUFFER.position() + DATA_SIZE);
             digest.update(LARGE_DIRECT_BUFFER);

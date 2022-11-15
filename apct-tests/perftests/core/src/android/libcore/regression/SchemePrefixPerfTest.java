@@ -20,12 +20,11 @@ import android.perftests.utils.BenchmarkState;
 import android.perftests.utils.PerfStatusReporter;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -33,7 +32,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@RunWith(JUnitParamsRunner.class)
+@RunWith(Parameterized.class)
 @LargeTest
 public final class SchemePrefixPerfTest {
     @Rule public PerfStatusReporter mPerfStatusReporter = new PerfStatusReporter();
@@ -86,16 +85,19 @@ public final class SchemePrefixPerfTest {
         abstract String execute(String spec);
     }
 
-    public static Collection<Object[]> getData() {
+    @Parameters(name = "mStrategy={0}")
+    public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {{Strategy.REGEX}, {Strategy.JAVA}});
     }
 
+    @Parameterized.Parameter(0)
+    public Strategy mStrategy;
+
     @Test
-    @Parameters(method = "getData")
-    public void timeSchemePrefix(Strategy strategy) {
+    public void timeSchemePrefix() {
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
         while (state.keepRunning()) {
-            strategy.execute("http://android.com");
+            mStrategy.execute("http://android.com");
         }
     }
 }
