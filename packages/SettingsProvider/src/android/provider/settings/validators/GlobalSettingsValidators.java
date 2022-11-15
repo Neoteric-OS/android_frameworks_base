@@ -97,6 +97,7 @@ public class GlobalSettingsValidators {
                         return false;
                     }
                 });
+        VALIDATORS.put(Global.KEEP_ADB_CONNECTION, BOOLEAN_VALIDATOR);
         VALIDATORS.put(Global.AUTO_TIME, BOOLEAN_VALIDATOR);
         VALIDATORS.put(Global.AUTO_TIME_ZONE, BOOLEAN_VALIDATOR);
         VALIDATORS.put(Global.POWER_SOUNDS_ENABLED, BOOLEAN_VALIDATOR);

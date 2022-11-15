@@ -41,6 +41,7 @@ public class GlobalSettings {
         Settings.Global.APPLY_RAMPING_RINGER,
         Settings.Global.BUGREPORT_IN_POWER_MENU,                        // moved to secure
         Settings.Global.STAY_ON_WHILE_PLUGGED_IN,
+        Settings.Global.KEEP_ADB_CONNECTION,
         Settings.Global.APP_AUTO_RESTRICTION_ENABLED,
         Settings.Global.AUTO_TIME,
         Settings.Global.AUTO_TIME_ZONE,

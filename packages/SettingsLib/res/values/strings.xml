@@ -609,6 +609,10 @@
     <string name="keep_screen_on">Stay awake</string>
     <!-- setting Checkbox summary whether to keep the screen on when plugged in  -->
     <string name="keep_screen_on_summary">Screen will never sleep while charging</string>
+    <!-- Setting Checkbox title whether to keep adb connection -->
+    <string name="keep_adb_connection">Keep adb connection</string>
+    <!-- setting Checkbox summary whether to keep adb connection  -->
+    <string name="keep_adb_connection_summary">Keep adb connection by keeping partial wakelock</string>
     <!-- Setting Checkbox title whether to enable Bluetooth HCI snoop log -->
     <string name="bt_hci_snoop_log">Enable Bluetooth HCI snoop log</string>
     <!-- setting Checkbox summary whether to capture all Bluetooth HCI packets in a file [CHAR_LIMIT=100] -->

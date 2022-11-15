@@ -12102,6 +12102,17 @@ public final class Settings {
         public static final String STAY_ON_WHILE_PLUGGED_IN = "stay_on_while_plugged_in";
 
         /**
+         * Whether or not hold wake locks.
+         * Supported values are:
+         * <ul>
+         * <li>{@code 0} to never hold wake lock</li>
+         * <li>{@link PowerManager#PARTIAL_WAKE_LOCK} to hold partial wake lock</li>
+         */
+        @SuppressLint("NoSettingsProvider")
+        @Readable
+        public static final String KEEP_ADB_CONNECTION = "keep_adb_connection";
+
+        /**
          * When the user has enable the option to have a "bug report" command
          * in the power menu.
          * @deprecated Use {@link android.provider.Settings.Secure#BUGREPORT_IN_POWER_MENU} instead
