@@ -27,8 +27,16 @@ import (
 const art = "art.module.public.api"
 const conscrypt = "conscrypt.module.public.api"
 const i18n = "i18n.module.public.api"
+const virtualization = "framework-virtualization"
 
 var core_libraries_modules = []string{art, conscrypt, i18n}
+// List of modules that are not yet updatable, and hence they can still compile
+// against hidden APIs. These modules are filtered out when building the
+// updatable-framework-module-impl (because updatable-framework-module-impl is
+// built against module_current SDK). Instead they are directly statically
+// linked into the all-framework-module-lib, which is building against hidden
+// APIs.
+var non_updatable_modules = []string{virtualization}
 
 // The intention behind this soong plugin is to generate a number of "merged"
 // API-related modules that would otherwise require a large amount of very
@@ -246,13 +254,26 @@ func createMergedSystemStubs(ctx android.LoadHookContext, modules []string) {
 	ctx.CreateModule(java.LibraryFactory, &props)
 }
 
-func createMergedFrameworkImpl(ctx android.LoadHookContext, modules []string) {
+func createMergedUpdatableFrameworkImpl(ctx android.LoadHookContext, modules []string) {
 	// This module is for the "framework-all" module, which should not include the core libraries.
 	modules = removeAll(modules, core_libraries_modules)
+	// Remove the modules that belong to non-updatable APEXes since those are allowed to compile
+	// against unstable APIs.
+	modules = removeAll(modules, non_updatable_modules)
 	props := libraryProps{}
-	props.Name = proptools.StringPtr("all-framework-module-impl")
+	props.Name = proptools.StringPtr("updatable-framework-module-impl")
 	props.Static_libs = transformArray(modules, "", ".impl")
 	props.Sdk_version = proptools.StringPtr("module_current")
+	props.Visibility = []string{"//frameworks/base"}
+	ctx.CreateModule(java.LibraryFactory, &props)
+}
+
+func createMergedFrameworkImpl(ctx android.LoadHookContext, non_updatable_modules []string) {
+	props := libraryProps{}
+	props.Name = proptools.StringPtr("all-framework-module-impl")
+	props.Static_libs = transformArray(non_updatable_modules, "", ".impl")
+	props.Static_libs = append(props.Static_libs, "updatable-framework-module-impl")
+	props.Sdk_version = proptools.StringPtr("core_platform")
 	props.Visibility = []string{"//frameworks/base"}
 	ctx.CreateModule(java.LibraryFactory, &props)
 }
@@ -334,7 +355,8 @@ func (a *CombinedApis) createInternalModules(ctx android.LoadHookContext) {
 	createMergedPublicStubs(ctx, bootclasspath)
 	createMergedSystemStubs(ctx, bootclasspath)
 	createMergedFrameworkModuleLibStubs(ctx, bootclasspath)
-	createMergedFrameworkImpl(ctx, bootclasspath)
+	createMergedUpdatableFrameworkImpl(ctx, bootclasspath)
+	createMergedFrameworkImpl(ctx, non_updatable_modules)
 
 	createMergedAnnotationsFilegroups(ctx, bootclasspath, system_server_classpath)
 
