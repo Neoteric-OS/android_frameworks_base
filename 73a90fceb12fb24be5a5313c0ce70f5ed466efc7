@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ec60259_9d10ec78",
+        "filename": "api/api.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-11-15T14:52:40Z",
+      "side": 1,
+      "message": "Add a comment how these are treated differently.",
+      "revId": "73a90fceb12fb24be5a5313c0ce70f5ed466efc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
