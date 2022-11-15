@@ -16,6 +16,24 @@
       "message": "Don\u0027t really understand the point of removing it from here and adding it back for framework-all? I think it\u0027s the module lib stubs list you\u0027d want to remove it from",
       "revId": "b6c9e17f661609e8d3688c9cb447416d35b30abf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bf4af04_8638e601",
+        "filename": "api/api.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2022-11-15T12:03:06Z",
+      "side": 1,
+      "message": "The problem this solves is that all-framework-module-impl compiles against module_current, which forces all it\u0027s dependencies to also compile against module_current, otherwise you will get the following error:\n\n```\nerror: frameworks/base/api/Android.bp:89:1: module \"all-framework-module-impl\" variant \"android_common\" (created by module \"frameworks-base-api\"): compiles against module API, but dependency \"framework-virtualiz\nation.impl\" is compiling against private API. In order to fix this, consider adjusting sdk_version: OR platform_apis: property of the source or target module so that target module is built with the same or small\ner API set when compared to the source.\n```\n\nThis allows future-updatable modules to keep compiling against hidden APIs while they transitioning to becoming an updatable module.\n\nI\u0027ve also update the commit message to mention this",
+      "parentUuid": "30bf444a_6b2fc7cf",
+      "revId": "b6c9e17f661609e8d3688c9cb447416d35b30abf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
