@@ -16,6 +16,24 @@
       "message": "Add a comment how these are treated differently.",
       "revId": "73a90fceb12fb24be5a5313c0ce70f5ed466efc7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fe5e301_3e68c3a9",
+        "filename": "api/api.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2022-11-15T16:09:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ec60259_9d10ec78",
+      "revId": "73a90fceb12fb24be5a5313c0ce70f5ed466efc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
