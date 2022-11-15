@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30bf444a_6b2fc7cf",
+        "filename": "api/api.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-11-15T11:45:27Z",
+      "side": 1,
+      "message": "Don\u0027t really understand the point of removing it from here and adding it back for framework-all? I think it\u0027s the module lib stubs list you\u0027d want to remove it from",
+      "revId": "b6c9e17f661609e8d3688c9cb447416d35b30abf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
