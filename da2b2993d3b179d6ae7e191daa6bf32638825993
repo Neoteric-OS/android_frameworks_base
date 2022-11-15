@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2c7677b_3bd1ef35",
+        "filename": "api/api.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2022-11-15T16:38:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7d565e7_6a08480b",
+      "revId": "da2b2993d3b179d6ae7e191daa6bf32638825993",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0b37a84_fd55011a",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-11-15T16:16:14Z",
       "side": 1,
       "message": "seems like this doesn\u0027t need to be an arg as it\u0027s a global constant",
+      "range": {
+        "startLine": 271,
+        "startChar": 60,
+        "endLine": 271,
+        "endChar": 81
+      },
+      "revId": "da2b2993d3b179d6ae7e191daa6bf32638825993",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "955f9b73_cfe26a5b",
+        "filename": "api/api.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2022-11-15T16:38:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0b37a84_fd55011a",
       "range": {
         "startLine": 271,
         "startChar": 60,
