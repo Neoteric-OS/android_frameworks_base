@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7d565e7_6a08480b",
+        "filename": "api/api.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-11-15T16:16:14Z",
+      "side": 1,
+      "message": "Can we inline this into createMergedFrameworkImpl?",
+      "revId": "da2b2993d3b179d6ae7e191daa6bf32638825993",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0b37a84_fd55011a",
+        "filename": "api/api.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-11-15T16:16:14Z",
+      "side": 1,
+      "message": "seems like this doesn\u0027t need to be an arg as it\u0027s a global constant",
+      "range": {
+        "startLine": 271,
+        "startChar": 60,
+        "endLine": 271,
+        "endChar": 81
+      },
+      "revId": "da2b2993d3b179d6ae7e191daa6bf32638825993",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
