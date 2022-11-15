@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6611e64_b4fddda0",
+        "filename": "core/java/android/nfc/AvailableNfcAntenna.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2022-11-15T00:20:22Z",
+      "side": 1,
+      "message": "Redundant docs for a class declaration",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "eecee628e8c675521c232fe3059cad294ac8cbc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c900f217_ab4513ca",
+        "filename": "core/java/android/nfc/AvailableNfcAntenna.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2022-11-15T00:20:22Z",
+      "side": 1,
+      "message": "Mirror these on the public getters; document where (0, 0) is and the direction of each axis",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 60
+      },
+      "revId": "eecee628e8c675521c232fe3059cad294ac8cbc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15efac43_205d9562",
+        "filename": "core/java/android/nfc/AvailableNfcAntenna.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2022-11-15T00:20:22Z",
+      "side": 1,
+      "message": "Docs for public methods",
+      "revId": "eecee628e8c675521c232fe3059cad294ac8cbc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "718c9a55_d8bffda4",
+        "filename": "core/java/android/nfc/NfcAntennaInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2022-11-15T00:20:22Z",
+      "side": 1,
+      "message": "Redundant",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "eecee628e8c675521c232fe3059cad294ac8cbc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbfa3781_a7eb4f0a",
+        "filename": "core/java/android/nfc/NfcAntennaInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2022-11-15T00:20:22Z",
+      "side": 1,
+      "message": "Docs for public getters",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "eecee628e8c675521c232fe3059cad294ac8cbc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19af259f_a64c3bdc",
+        "filename": "core/java/android/nfc/NfcAntennaInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2022-11-15T00:20:22Z",
+      "side": 1,
+      "message": "How is a developer intended to use this information? What changes about the interpretation of the other data exposed by this class depending on whether it\u0027s true or false?",
+      "range": {
+        "startLine": 59,
+        "startChar": 19,
+        "endLine": 59,
+        "endChar": 35
+      },
+      "revId": "eecee628e8c675521c232fe3059cad294ac8cbc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
