@@ -1361,6 +1361,9 @@ class SettingsProtoDumpUtil {
         dumpSetting(s, p,
                 Settings.Global.STAY_ON_WHILE_PLUGGED_IN,
                 GlobalSettingsProto.STAY_ON_WHILE_PLUGGED_IN);
+        dumpSetting(s, p,
+                Settings.Global.KEEP_ADB_CONNECTION,
+                GlobalSettingsProto.KEEP_ADB_CONNECTION);
 
         final long storageToken = p.start(GlobalSettingsProto.STORAGE);
         dumpSetting(s, p,

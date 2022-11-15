@@ -339,6 +339,8 @@ message PowerServiceSettingsAndConfigurationDumpProto {
     optional sint32 attentive_timeout_config_ms = 38;
     // The attentive warning duration config value in milliseconds.
     optional sint32 attentive_warning_duration_config_ms = 39;
+    // The keep adb connection setting. True if keep adb connection.
+    optional StayOnWhilePluggedInProto is_keep_adb_connection_setting = 40;
 }
 
 message BatterySaverStateMachineProto {
