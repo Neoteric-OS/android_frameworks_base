@@ -587,6 +587,9 @@ public final class PowerManagerService extends SystemService
     // True if the device should stay on.
     private boolean mStayOn;
 
+    // The keep adb connection setting. True if keep adb connection.
+    private int mKeepAdbConnectionSetting;
+
     // True if the lights should stay off until an explicit user action.
     private static boolean sQuiescent;
 
@@ -1418,6 +1421,9 @@ public final class PowerManagerService extends SystemService
         resolver.registerContentObserver(Settings.Global.getUriFor(
                 Settings.Global.STAY_ON_WHILE_PLUGGED_IN),
                 false, mSettingsObserver, UserHandle.USER_ALL);
+        resolver.registerContentObserver(Settings.Global.getUriFor(
+                Settings.Global.KEEP_ADB_CONNECTION),
+                false, mSettingsObserver, UserHandle.USER_ALL);
         resolver.registerContentObserver(Settings.System.getUriFor(
                 Settings.System.SCREEN_BRIGHTNESS_MODE),
                 false, mSettingsObserver, UserHandle.USER_ALL);
@@ -1533,6 +1539,8 @@ public final class PowerManagerService extends SystemService
                 UserHandle.USER_CURRENT);
         mStayOnWhilePluggedInSetting = Settings.Global.getInt(resolver,
                 Settings.Global.STAY_ON_WHILE_PLUGGED_IN, BatteryManager.BATTERY_PLUGGED_AC);
+        mKeepAdbConnectionSetting = Settings.Global.getInt(resolver,
+                Settings.Global.KEEP_ADB_CONNECTION, 0);
         mTheaterModeEnabled = Settings.Global.getInt(mContext.getContentResolver(),
                 Settings.Global.THEATER_MODE_ON, 0) == 1;
         mAlwaysOnEnabled = mAmbientDisplayConfiguration.alwaysOnEnabled(UserHandle.USER_CURRENT);
@@ -3723,7 +3731,8 @@ public final class PowerManagerService extends SystemService
      */
     @GuardedBy("mLock")
     private void updateSuspendBlockerLocked() {
-        final boolean needWakeLockSuspendBlocker = ((mWakeLockSummary & WAKE_LOCK_CPU) != 0);
+        final boolean needWakeLockSuspendBlocker =
+                (((mWakeLockSummary & WAKE_LOCK_CPU) != 0) || (mKeepAdbConnectionSetting != 0));
         final boolean needDisplaySuspendBlocker = needSuspendBlockerLocked();
         final boolean autoSuspend = !needDisplaySuspendBlocker;
         boolean interactive = false;
@@ -4654,6 +4663,8 @@ public final class PowerManagerService extends SystemService
                     + mMaximumScreenOffTimeoutFromDeviceAdmin + " (enforced="
                     + isMaximumScreenOffTimeoutFromDeviceAdminEnforcedLocked() + ")");
             pw.println("  mStayOnWhilePluggedInSetting=" + mStayOnWhilePluggedInSetting);
+            pw.println("  mKeepAdbConnectionSetting=" + mKeepAdbConnectionSetting);
+            pw.println("  mScreenBrightnessModeSetting=" + mScreenBrightnessModeSetting);
             pw.println("  mScreenBrightnessOverrideFromWindowManager="
                     + mScreenBrightnessOverrideFromWindowManager);
             pw.println("  mUserActivityTimeoutOverrideFromWindowManager="
@@ -5030,6 +5041,12 @@ public final class PowerManagerService extends SystemService
                             != 0));
             proto.end(stayOnWhilePluggedInToken);
 
+            proto.write(
+                    PowerServiceSettingsAndConfigurationDumpProto.IS_KEEP_ADB_CONNECTION_SETTING,
+                    mKeepAdbConnectionSetting);
+            proto.write(
+                    PowerServiceSettingsAndConfigurationDumpProto.SCREEN_BRIGHTNESS_MODE_SETTING,
+                    mScreenBrightnessModeSetting);
             proto.write(
                     PowerServiceSettingsAndConfigurationDumpProto
                             .SCREEN_BRIGHTNESS_OVERRIDE_FROM_WINDOW_MANAGER,

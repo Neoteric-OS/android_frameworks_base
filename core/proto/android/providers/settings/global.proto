@@ -908,6 +908,7 @@ message GlobalSettingsProto {
     // E.g.: compatibility_wal_supported=true, wal_syncmode=OFF
     optional SettingProto sqlite_compatibility_wal_flags = 113 [ (android.privacy).dest = DEST_AUTOMATIC ];
     optional SettingProto stay_on_while_plugged_in = 114 [ (android.privacy).dest = DEST_AUTOMATIC ];
+    optional SettingProto keep_adb_connection = 157 [ (android.privacy).dest = DEST_AUTOMATIC ];
 
     message Storage {
         option (android.msg_privacy).dest = DEST_EXPLICIT;

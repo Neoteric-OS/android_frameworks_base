@@ -2436,6 +2436,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
                         || res.getBoolean(R.bool.def_stay_on_while_plugged_in))
                      ? 1 : 0);
 
+            loadBooleanSetting(stmt, Settings.Global.KEEP_ADB_CONNECTION,
+                    R.bool.def_keep_adb_connection);
+
             loadIntegerSetting(stmt, Settings.Global.WIFI_SLEEP_POLICY,
                     R.integer.def_wifi_sleep_policy);
 
