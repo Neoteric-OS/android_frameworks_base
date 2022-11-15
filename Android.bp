@@ -144,6 +144,7 @@ java_library {
     static_libs: [
         "all-framework-module-impl",
         "framework-minus-apex",
+        "framework-virtualization.impl",
     ],
     apex_available: ["//apex_available:platform"],
     sdk_version: "core_platform",

@@ -27,8 +27,10 @@ import (
 const art = "art.module.public.api"
 const conscrypt = "conscrypt.module.public.api"
 const i18n = "i18n.module.public.api"
+const virtualization = "framework-virtualization"
 
 var core_libraries_modules = []string{art, conscrypt, i18n}
+var non_updatable_modules = []string{virtualization}
 
 // The intention behind this soong plugin is to generate a number of "merged"
 // API-related modules that would otherwise require a large amount of very
@@ -249,6 +251,9 @@ func createMergedSystemStubs(ctx android.LoadHookContext, modules []string) {
 func createMergedFrameworkImpl(ctx android.LoadHookContext, modules []string) {
 	// This module is for the "framework-all" module, which should not include the core libraries.
 	modules = removeAll(modules, core_libraries_modules)
+	// Remove the modules that belong to non-updatable APEXes since those are allowed to compile
+	// against unstable APIs.
+	modules = removeAll(modules, non_updatable_modules)
 	props := libraryProps{}
 	props.Name = proptools.StringPtr("all-framework-module-impl")
 	props.Static_libs = transformArray(modules, "", ".impl")
