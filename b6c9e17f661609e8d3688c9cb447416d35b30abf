@@ -34,6 +34,24 @@
       "parentUuid": "30bf444a_6b2fc7cf",
       "revId": "b6c9e17f661609e8d3688c9cb447416d35b30abf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f102f72_6dda0e5e",
+        "filename": "api/api.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-11-15T14:48:50Z",
+      "side": 1,
+      "message": "I feel like it could be solved in a better way. `all-framework-module-impl` is only used by a single module, which doesn\u0027t compile against the SDK, so there\u0027s no requirement that all-framework-module-impl needs to compile against the SDK.\n\nCan you create two libraries:\n\n1) updatable-framework-module-impl with static libs { updatable modules }\n2) all-framework-module-impl with static libs { updatable-framework-module-impl, non-updatable-framework-module1, non-updatable-framework-module2 }\n\n#1 should compile against module_current, #2 doesn\u0027t have to.\n\nThis way, no \"custom\" entry within the Android.bp is necessary.",
+      "parentUuid": "9bf4af04_8638e601",
+      "revId": "b6c9e17f661609e8d3688c9cb447416d35b30abf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
