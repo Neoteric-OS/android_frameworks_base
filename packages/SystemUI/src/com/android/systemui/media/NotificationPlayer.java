@@ -104,6 +104,7 @@ public class NotificationPlayer implements OnCompletionListener, OnErrorListener
                     player.setOnCompletionListener(NotificationPlayer.this);
                     player.setOnErrorListener(NotificationPlayer.this);
                     player.prepare();
+                    player.setWakeMode(mCmd.context, PowerManager.PARTIAL_WAKE_LOCK);
                     if ((mCmd.uri != null) && (mCmd.uri.getEncodedPath() != null)
                             && (mCmd.uri.getEncodedPath().length() > 0)) {
                         if (!audioManager.isMusicActiveRemotely()) {
