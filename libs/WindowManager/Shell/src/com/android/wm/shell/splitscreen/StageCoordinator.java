@@ -1190,6 +1190,10 @@ class StageCoordinator implements SplitLayout.SplitLayoutHandler,
             } else if (!isSideStage && mSideStageListener.mVisible) {
                 // Exit to side stage if main stage no longer has children.
                 exitSplitScreen(mSideStage, EXIT_REASON_APP_FINISHED);
+            } else if (!mMainStageListener.mVisible && !mSideStageListener.mVisible &&
+                    (mMainStage.mRootTaskInfo.isSleeping || mSideStage.mRootTaskInfo.isSleeping)) {
+                // Exit to one stage if adjcent stage no longer has children when the screen is off.
+                exitSplitScreen(isSideStage ? mMainStage : mSideStage, EXIT_REASON_APP_FINISHED);
             }
         } else if (isSideStage && !mMainStage.isActive()) {
             final WindowContainerTransaction wct = new WindowContainerTransaction();
