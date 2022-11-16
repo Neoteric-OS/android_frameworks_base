@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97f9cac3_2b9025ed",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-11-16T14:39:58Z",
+      "side": 1,
+      "message": "nit: forceDisableArcOnAllPins",
+      "range": {
+        "startLine": 1339,
+        "startChar": 17,
+        "endLine": 1339,
+        "endChar": 38
+      },
+      "revId": "475e9af754052b70bdbba34a51bda21cdf91b7b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
