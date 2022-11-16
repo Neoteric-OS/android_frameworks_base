@@ -6057,6 +6057,18 @@ public abstract class Context {
     public static final String AMBIENT_CONTEXT_SERVICE = "ambient_context";
 
     /**
+     * Use with {@link #getSystemService(String)} to retrieve a
+     * {@link android.system.virtualmachine.VirtualMachineManager}.
+     *
+     * @see #getSystemService(String)
+     * @see android.system.virtualmachine.VirtualMachineManager
+     * @hide
+     */
+    // TODO(b/243512115, alanstokes): make @SystemApi when VirtualMachineManager is promoted to
+    //  @SystemApi
+    public static final String VIRTUALIZATION_SERVICE = "virtual_machine";
+
+    /**
      * Determine whether the given permission is allowed for a particular
      * process and user ID running in the system.
      *
