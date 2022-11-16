@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "073fd3a4_54e39322",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6067,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2022-11-16T17:49:40Z",
+      "side": 1,
+      "message": "😐",
+      "range": {
+        "startLine": 6067,
+        "startChar": 25,
+        "endLine": 6067,
+        "endChar": 35
+      },
+      "revId": "ef2567e51d9d837e64e8ca37b5e00b0048cda2d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ac5c4ff_9131fb5a",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6069,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2022-11-16T17:49:40Z",
+      "side": 1,
+      "message": "Bikeshed: maybe \"android_virtualization_framework\"?\nNot sure this even matters.",
+      "range": {
+        "startLine": 6069,
+        "startChar": 56,
+        "endLine": 6069,
+        "endChar": 73
+      },
+      "revId": "ef2567e51d9d837e64e8ca37b5e00b0048cda2d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
