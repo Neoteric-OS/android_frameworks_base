@@ -1620,6 +1620,18 @@ interface ITelephony {
     void setSimPowerStateForSlotWithCallback(int slotIndex, int state, IIntegerConsumer callback);
 
     /**
+     * Returns a list of user controlled  PLMNs from the specified SIM family
+     * Returns null if the query fails.
+     *
+     * <p>Requires that the calling app has READ_PRIVILEGED_PHONE_STATE or READ_PHONE_STATE
+     *
+     * @param subId subscription ID used for authentication
+     * @param family the icc application family type, like {@link #APP_FAM_3GPP}
+     */
+    String[] getUserControlledPlmns(int subId, int family, String callingPackage,
+             String callingFeatureId);
+
+    /**
      * Returns a list of Forbidden PLMNs from the specified SIM App
      * Returns null if the query fails.
      *

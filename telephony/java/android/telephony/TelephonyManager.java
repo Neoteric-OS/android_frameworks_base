@@ -8315,6 +8315,56 @@ public class TelephonyManager {
         }
     }
 
+    //public void setUserControlledPlmns(@NonNull List<String> fplmns) {
+    //}
+
+    /**
+     * Returns an array of Forbidden PLMNs from the USIM App
+     * Returns null if the query fails.
+     *
+     * <p>Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
+     * or that the calling app has carrier privileges (see {@link #hasCarrierPrivileges}).
+     *
+     * @return an array of forbidden PLMNs or null if not available
+
+    @SuppressAutoDoc // Blocked by b/72967236 - no support for carrier privileges
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    @RequiresFeature(PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION)
+    @Nullable
+    public String[] getUserControlledPlmns() {
+      return getUserControlledPlmns(getSubId(), APPTYPE_USIM);
+    }
+     */
+
+     /**
+     * Returns an array of user controlled PLMNs from the specified SIM App family
+     * Returns null if the query fails.
+     *
+     * @param subId subscription ID used for authentication
+     * @param appType the icc application type, like {@link #APPTYPE_USIM}
+     * @return fplmns an array of forbidden PLMNs
+     * @hide
+     */
+    @Nullable
+    public String[] getUserControlledPlmns(int subId, int family) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony == null)
+                return null;
+            return telephony.getUserControlledPlmns(subId, family, mContext.getOpPackageName(),
+                    getAttributionTag());
+            //return telephony.getUserControlledPlmns(subId, appType, mContext.getOpPackageName(),
+              //      getAttributionTag());
+        } catch (RemoteException ex) {
+            return null;
+        } catch (NullPointerException ex) {
+            // This could happen before phone starts
+            return null;
+        }
+    }
+
+    
+
     /**
      * Returns an array of Forbidden PLMNs from the USIM App
      * Returns null if the query fails.
@@ -8340,7 +8390,6 @@ public class TelephonyManager {
      * @return fplmns an array of forbidden PLMNs
      * @hide
      */
-    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
     public String[] getForbiddenPlmns(int subId, int appType) {
         try {
             ITelephony telephony = getITelephony();
