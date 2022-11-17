@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e110ba2d_31fe529c",
+        "filename": "core/java/android/nfc/AvailableNfcAntenna.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1968882
+      },
+      "writtenOn": "2022-11-17T19:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6611e64_b4fddda0",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "eecee628e8c675521c232fe3059cad294ac8cbc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c900f217_ab4513ca",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-11-15T00:20:22Z",
       "side": 1,
       "message": "Mirror these on the public getters; document where (0, 0) is and the direction of each axis",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 60
+      },
+      "revId": "eecee628e8c675521c232fe3059cad294ac8cbc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "939e27ae_690fbbaf",
+        "filename": "core/java/android/nfc/AvailableNfcAntenna.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1968882
+      },
+      "writtenOn": "2022-11-17T19:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c900f217_ab4513ca",
       "range": {
         "startLine": 29,
         "startChar": 7,
@@ -64,6 +112,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b66c028d_baf1aaef",
+        "filename": "core/java/android/nfc/AvailableNfcAntenna.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1968882
+      },
+      "writtenOn": "2022-11-17T19:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15efac43_205d9562",
+      "revId": "eecee628e8c675521c232fe3059cad294ac8cbc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "718c9a55_d8bffda4",
@@ -77,6 +143,30 @@
       "writtenOn": "2022-11-15T00:20:22Z",
       "side": 1,
       "message": "Redundant",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "eecee628e8c675521c232fe3059cad294ac8cbc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0cac3b9_7ef853de",
+        "filename": "core/java/android/nfc/NfcAntennaInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1968882
+      },
+      "writtenOn": "2022-11-17T19:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "718c9a55_d8bffda4",
       "range": {
         "startLine": 28,
         "startChar": 3,
@@ -110,6 +200,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffac70c8_dcfa4ff3",
+        "filename": "core/java/android/nfc/NfcAntennaInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1968882
+      },
+      "writtenOn": "2022-11-17T19:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbfa3781_a7eb4f0a",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "eecee628e8c675521c232fe3059cad294ac8cbc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19af259f_a64c3bdc",
@@ -123,6 +237,30 @@
       "writtenOn": "2022-11-15T00:20:22Z",
       "side": 1,
       "message": "How is a developer intended to use this information? What changes about the interpretation of the other data exposed by this class depending on whether it\u0027s true or false?",
+      "range": {
+        "startLine": 59,
+        "startChar": 19,
+        "endLine": 59,
+        "endChar": 35
+      },
+      "revId": "eecee628e8c675521c232fe3059cad294ac8cbc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9b842eb_448cbe9c",
+        "filename": "core/java/android/nfc/NfcAntennaInfo.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1968882
+      },
+      "writtenOn": "2022-11-17T19:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19af259f_a64c3bdc",
       "range": {
         "startLine": 59,
         "startChar": 19,
