@@ -16,6 +16,29 @@
       "message": "By passing presubmits because of flaky test cases:\n\nb/244184479",
       "revId": "71e11ae9ba8e1f5716b7d1a5c77c1fea9a9442b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8e14636_7e217a05",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1138338
+      },
+      "writtenOn": "2022-11-17T01:45:30Z",
+      "side": 1,
+      "message": "are we rejecting a size without suffix? would a value like `ddr_size\u003d1073741824` be rejected?",
+      "range": {
+        "startLine": 1383,
+        "startChar": 26,
+        "endLine": 1383,
+        "endChar": 51
+      },
+      "revId": "71e11ae9ba8e1f5716b7d1a5c77c1fea9a9442b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
