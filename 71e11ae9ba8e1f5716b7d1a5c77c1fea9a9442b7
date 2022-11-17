@@ -39,6 +39,30 @@
       },
       "revId": "71e11ae9ba8e1f5716b7d1a5c77c1fea9a9442b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43091f4c_68a6368a",
+        "filename": "core/java/android/os/FileUtils.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1889140
+      },
+      "writtenOn": "2022-11-17T01:47:48Z",
+      "side": 1,
+      "message": "that is right. It has to have a size suffix. Here you can see the test cases:\n\nhttps://android-review.git.corp.google.com/c/platform/frameworks/base/+/2192359/24/core/tests/coretests/src/android/os/FileUtilsTest.java#565",
+      "parentUuid": "b8e14636_7e217a05",
+      "range": {
+        "startLine": 1383,
+        "startChar": 26,
+        "endLine": 1383,
+        "endChar": 51
+      },
+      "revId": "71e11ae9ba8e1f5716b7d1a5c77c1fea9a9442b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
