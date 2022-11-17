@@ -36,7 +36,7 @@ import java.util.Objects;
  */
 final class DisplayDeviceInfo {
     /**
-     * Flag: Indicates that this display device should be considered the default display
+     * Flag: Indicates that this display device can be considered the default display
      * device of the system.
      */
     public static final int FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY = 1 << 0;
