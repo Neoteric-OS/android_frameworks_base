@@ -6618,11 +6618,7 @@ public final class ActivityThread extends ClientTransactionHandler
 
         if (data.debugMode != ApplicationThreadConstants.DEBUG_OFF) {
             // XXX should have option to change the port.
-            Debug.changeDebugPort(8100);
             if (data.debugMode == ApplicationThreadConstants.DEBUG_WAIT) {
-                Slog.w(TAG, "Application " + data.info.getPackageName()
-                      + " is waiting for the debugger on port 8100...");
-
                 IActivityManager mgr = ActivityManager.getService();
                 try {
                     mgr.showWaitingForDebugger(mAppThread, true);
@@ -6637,10 +6633,6 @@ public final class ActivityThread extends ClientTransactionHandler
                 } catch (RemoteException ex) {
                     throw ex.rethrowFromSystemServer();
                 }
-
-            } else {
-                Slog.w(TAG, "Application " + data.info.getPackageName()
-                      + " can be debugged on port 8100...");
             }
         }
 
