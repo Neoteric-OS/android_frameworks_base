@@ -33,6 +33,24 @@
       "message": "Can you actually start creating new test projects for your use and copy the existing tests as needed?\n\nFor other framework-wide tests (FrameworkCoreTests) is getting too messy. Some parts of them are broken but no one really can maintain them.\n\n(I\u0027d like to avoid having yet another, unmaintainable pile of tests...)",
       "revId": "c32848b06a8b0e3576978c42776bce95f97f5014",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e45b3fda_715c9a10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2022-11-17T22:48:42Z",
+      "side": 1,
+      "message": "This is mostly for the helper methods like ExtendMockitoTestCase. Right now they\u0027re added in the root directory, I could move to a utils package or something like that",
+      "parentUuid": "8d8543c3_cd88aa7e",
+      "revId": "c32848b06a8b0e3576978c42776bce95f97f5014",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
