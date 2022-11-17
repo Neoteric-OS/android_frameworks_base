@@ -1953,6 +1953,12 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             case KeyEvent.KEYCODE_VOLUME_UP:
             case KeyEvent.KEYCODE_VOLUME_DOWN:
             case KeyEvent.KEYCODE_VOLUME_MUTE: {
+                //if have repeat count, the interval time is about 50ms, it's too frequent,
+                //just ignore one of it
+                if (event.getRepeatCount() % 2 == 1) {
+                    //Log.w(TAG, "ignore repeatcount: " + event.getRepeatCount());
+                    return true;
+                }
                 // If we have a session and no active phone call send it the volume command,
                 // otherwise use the suggested stream.
                 if (mMediaController != null && !isActivePhoneCallOngoing()) {
