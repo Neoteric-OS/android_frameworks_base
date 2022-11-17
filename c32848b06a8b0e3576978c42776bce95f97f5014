@@ -16,6 +16,23 @@
       "message": "Friendly ping",
       "revId": "c32848b06a8b0e3576978c42776bce95f97f5014",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d8543c3_cd88aa7e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-11-17T22:40:06Z",
+      "side": 1,
+      "message": "Can you actually start creating new test projects for your use and copy the existing tests as needed?\n\nFor other framework-wide tests (FrameworkCoreTests) is getting too messy. Some parts of them are broken but no one really can maintain them.\n\n(I\u0027d like to avoid having yet another, unmaintainable pile of tests...)",
+      "revId": "c32848b06a8b0e3576978c42776bce95f97f5014",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
