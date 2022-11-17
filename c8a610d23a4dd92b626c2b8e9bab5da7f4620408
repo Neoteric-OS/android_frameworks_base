@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53868cf5_f39db87d",
+        "filename": "media/java/android/media/ExifInterface.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3863,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2022-11-17T15:40:39Z",
+      "side": 1,
+      "message": "I think the reporter of https://issuetracker.google.com/255405635 is correct and this should actually be `\u003c\u003c 28`, I just haven\u0027t made the equivalent change in the AndroidX implementation yet - but since we\u0027re already editing this, can we change it here?",
+      "revId": "c8a610d23a4dd92b626c2b8e9bab5da7f4620408",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
