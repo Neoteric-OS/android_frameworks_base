@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bda8080a_e1a6fe79",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2022-11-18T10:12:26Z",
+      "side": 1,
+      "message": "@ddougherty@google.com : The \"Added in API \u003clevel\u003e\" and \"Also in \u003cextension\u003e \u003cversion\u003e\" links are broken in offline docs. Is this why they were omitted before?\n\nI think the \"Added in API\" text provide meaningful information and should be included in offline docs. Are we OK with broken links / can devrel work on fixing them for offline docs?",
+      "revId": "f123714958a240af6260072fb656d558cf7f991d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
