@@ -16,6 +16,29 @@
       "message": "@ddougherty@google.com : The \"Added in API \u003clevel\u003e\" and \"Also in \u003cextension\u003e \u003cversion\u003e\" links are broken in offline docs. Is this why they were omitted before?\n\nI think the \"Added in API\" text provide meaningful information and should be included in offline docs. Are we OK with broken links / can devrel work on fixing them for offline docs?",
       "revId": "f123714958a240af6260072fb656d558cf7f991d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f362c8c5_38a2bc06",
+        "filename": "ApiDocs.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-11-18T11:35:48Z",
+      "side": 1,
+      "message": "Can it go into framework_docs_only_args? It seems like \"online-sdk-docs\" doesn\u0027t use it, but I don\u0027t know if there\u0027s any reason for that.",
+      "range": {
+        "startLine": 295,
+        "startChar": 10,
+        "endLine": 295,
+        "endChar": 34
+      },
+      "revId": "f123714958a240af6260072fb656d558cf7f991d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
