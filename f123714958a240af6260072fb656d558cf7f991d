@@ -63,6 +63,30 @@
       },
       "revId": "f123714958a240af6260072fb656d558cf7f991d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa29d42c_250a9555",
+        "filename": "ApiDocs.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-11-18T12:26:42Z",
+      "side": 1,
+      "message": "I have a suspicion that most of these modules are dead code that were never cleaned up, but we should confirm with Dirk before removing anything though. Filed b/259660841 for future cleanups.",
+      "parentUuid": "04758792_81eda5a2",
+      "range": {
+        "startLine": 295,
+        "startChar": 10,
+        "endLine": 295,
+        "endChar": 34
+      },
+      "revId": "f123714958a240af6260072fb656d558cf7f991d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
