@@ -39,6 +39,30 @@
       },
       "revId": "f123714958a240af6260072fb656d558cf7f991d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04758792_81eda5a2",
+        "filename": "ApiDocs.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2022-11-18T12:21:18Z",
+      "side": 1,
+      "message": "I don\u0027t know either, but apparently \"Added in API\" was supposed to be part of the offline docs and has been broken for who knows how long, so I what other subtle errors exist in this file.",
+      "parentUuid": "f362c8c5_38a2bc06",
+      "range": {
+        "startLine": 295,
+        "startChar": 10,
+        "endLine": 295,
+        "endChar": 34
+      },
+      "revId": "f123714958a240af6260072fb656d558cf7f991d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
