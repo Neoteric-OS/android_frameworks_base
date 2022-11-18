@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de922edc_cc83619e",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-11-18T20:55:10Z",
+      "side": 1,
+      "message": "Patchset7 changed the check condition from \"\u003e\u003dU\" to \"\u003eTIRAMISU\" to be consistent with CTS (aosp/2258806) and thus to fix CTS on AVD.\n\nSpecifically, we have a CTS to require devices with VSR API \u003e TIRAMISU to have this flag enabled. This CTS fails on AVD because AVD\u0027s initial SDK is 34 but value of Android U is now 10000. As the result, the AVD does not have the flag added by SystemConfig but is required by CTS to have this flag.\n\nAnother potential fix is to change the CTS from checking \"\u003eTIRAMISU\" to \"\u003e\u003dU\". However, it does not work because the CTS is part of a mainline module and will automerge to tm-mainline-prod, which means the CTS needs to be built with SDK T where `VERSION_CODES.UPSIDE_DOWN_CAKE`does not exist.",
+      "range": {
+        "startLine": 1523,
+        "startChar": 71,
+        "endLine": 1523,
+        "endChar": 79
+      },
+      "revId": "c2a39352841f7dc540db0d3dde3050568999af54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
