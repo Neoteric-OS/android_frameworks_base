@@ -257,7 +257,7 @@ droiddoc {
     ],
     compat_config: ":global-compat-config",
     proofread_file: "offline-sdk-docs-proofread.txt",
-    args: framework_docs_only_args + " -offlinemode -title \"Android SDK\"",
+    args: framework_docs_only_args + " -metalavaApiSince -offlinemode -title \"Android SDK\"",
     static_doc_index_redirect: "docs/docs-preview-index.html",
 }
 
@@ -274,7 +274,7 @@ droiddoc {
         "android.whichdoc offline",
     ],
     proofread_file: "offline-sdk-referenceonly-docs-proofread.txt",
-    args: framework_docs_only_args + " -offlinemode -title \"Android SDK\" -referenceonly",
+    args: framework_docs_only_args + " -metalavaApiSince -offlinemode -title \"Android SDK\" -referenceonly",
     static_doc_index_redirect: "docs/docs-documentation-redirect.html",
     static_doc_properties: "docs/source.properties",
 }
@@ -292,7 +292,7 @@ droiddoc {
         "android.whichdoc offline",
     ],
     proofread_file: "offline-system-sdk-referenceonly-docs-proofread.txt",
-    args: framework_docs_only_args + " -hide 101 -hide 104 -hide 108" +
+    args: framework_docs_only_args + " -metalavaApiSince -hide 101 -hide 104 -hide 108" +
     " -offlinemode -title \"Android System SDK\" -referenceonly",
     static_doc_index_redirect: "docs/docs-documentation-redirect.html",
     static_doc_properties: "docs/source.properties",
