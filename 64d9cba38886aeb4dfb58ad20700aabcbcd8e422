@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f09413c0_9d49cf4c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2022-11-18T22:07:08Z",
+      "side": 1,
+      "message": "API shape looks fine but the policy on how these APIs are meant to behave could still use some elaboration so that developers know how to interpret the data on any given device",
+      "revId": "64d9cba38886aeb4dfb58ad20700aabcbcd8e422",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f71d375_994236be",
+        "filename": "core/java/android/nfc/NfcAntennaInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2022-11-18T22:07:08Z",
+      "side": 1,
+      "message": "These need to be in javadoc format to show up in generated API documentation",
+      "revId": "64d9cba38886aeb4dfb58ad20700aabcbcd8e422",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e6e3922_de85513f",
+        "filename": "core/java/android/nfc/NfcAntennaInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2022-11-18T22:07:08Z",
+      "side": 1,
+      "message": "Which screens? How is the developer meant to use this data when the device is folded?",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 18
+      },
+      "revId": "64d9cba38886aeb4dfb58ad20700aabcbcd8e422",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
