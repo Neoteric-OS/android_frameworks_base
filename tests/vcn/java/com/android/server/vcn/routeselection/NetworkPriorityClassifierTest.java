@@ -102,6 +102,7 @@ public class NetworkPriorityClassifierTest {
     private static final NetworkCapabilities CELL_NETWORK_CAPABILITIES =
             new NetworkCapabilities.Builder()
                     .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                    .addCapability(NetworkCapabilities.NET_CAPABILITY_DUN)
                     .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                     .setSubscriptionIds(Set.of(SUB_ID))
                     .setNetworkSpecifier(TEL_NETWORK_SPECIFIER)
@@ -135,25 +136,28 @@ public class NetworkPriorityClassifierTest {
                                 false /* isInTestMode */));
         doNothing().when(mVcnContext).ensureRunningOnLooperThread();
 
-        mWifiNetworkRecord =
-                new UnderlyingNetworkRecord(
-                        mNetwork,
-                        WIFI_NETWORK_CAPABILITIES,
-                        LINK_PROPERTIES,
-                        false /* isBlocked */);
-
-        mCellNetworkRecord =
-                new UnderlyingNetworkRecord(
-                        mNetwork,
-                        CELL_NETWORK_CAPABILITIES,
-                        LINK_PROPERTIES,
-                        false /* isBlocked */);
-
         setupSystemService(
                 mockContext, mTelephonyManager, Context.TELEPHONY_SERVICE, TelephonyManager.class);
         when(mTelephonyManager.createForSubscriptionId(SUB_ID)).thenReturn(mTelephonyManager);
         when(mTelephonyManager.getNetworkOperator()).thenReturn(PLMN_ID);
         when(mTelephonyManager.getSimSpecificCarrierId()).thenReturn(CARRIER_ID);
+
+        mWifiNetworkRecord = getTestNetworkRecord(WIFI_NETWORK_CAPABILITIES);
+        mCellNetworkRecord = getTestNetworkRecord(CELL_NETWORK_CAPABILITIES);
+    }
+
+    private UnderlyingNetworkRecord getTestNetworkRecord(NetworkCapabilities nc) {
+        return new UnderlyingNetworkRecord(
+                mNetwork,
+                nc,
+                LINK_PROPERTIES,
+                false /* isBlocked */,
+                mVcnContext,
+                VcnGatewayConnectionConfig.DEFAULT_UNDERLYING_NETWORK_TEMPLATES,
+                SUB_GROUP,
+                mSubscriptionSnapshot,
+                null /* currentlySelected */,
+                null /* carrierConfig */);
     }
 
     @Test
@@ -507,7 +511,7 @@ public class NetworkPriorityClassifierTest {
 
     @Test
     public void testCalculatePriorityClass() throws Exception {
-        verifyCalculatePriorityClass(mCellNetworkRecord, 2);
+        assertEquals(2, mCellNetworkRecord.priorityClass);
     }
 
     @Test
@@ -518,9 +522,9 @@ public class NetworkPriorityClassifierTest {
                         .setSignalStrength(WIFI_RSSI_LOW)
                         .setSsid(SSID)
                         .build();
-        final UnderlyingNetworkRecord wifiNetworkRecord =
-                new UnderlyingNetworkRecord(mNetwork, nc, LINK_PROPERTIES, false /* isBlocked */);
 
-        verifyCalculatePriorityClass(wifiNetworkRecord, PRIORITY_ANY);
+        final UnderlyingNetworkRecord wifiNetworkRecord = getTestNetworkRecord(nc);
+
+        assertEquals(PRIORITY_ANY, wifiNetworkRecord.priorityClass);
     }
 }
