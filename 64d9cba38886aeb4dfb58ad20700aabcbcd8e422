@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3657b4d8_3fd1c180",
+        "filename": "core/java/android/nfc/NfcAntennaInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1968882
+      },
+      "writtenOn": "2022-11-19T01:02:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1f71d375_994236be",
+      "revId": "64d9cba38886aeb4dfb58ad20700aabcbcd8e422",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e6e3922_de85513f",
@@ -48,6 +66,30 @@
       "writtenOn": "2022-11-18T22:07:08Z",
       "side": 1,
       "message": "Which screens? How is the developer meant to use this data when the device is folded?",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 18
+      },
+      "revId": "64d9cba38886aeb4dfb58ad20700aabcbcd8e422",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b166892_de1058d1",
+        "filename": "core/java/android/nfc/NfcAntennaInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1968882
+      },
+      "writtenOn": "2022-11-19T01:02:23Z",
+      "side": 1,
+      "message": "The assumption is that foldable devices have two screens. That\u0027s what makes them foldable. Updated the comments for non-foldable devices.",
+      "parentUuid": "2e6e3922_de85513f",
       "range": {
         "startLine": 62,
         "startChar": 7,
