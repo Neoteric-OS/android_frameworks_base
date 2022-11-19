@@ -16,6 +16,7 @@
 
 package com.android.server.vcn.routeselection;
 
+import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.PRIORITY_UNKNOWN;
 import static com.android.server.vcn.util.PersistableBundleUtils.PersistableBundleWrapper;
 
 import android.annotation.NonNull;
@@ -42,14 +43,14 @@ import java.util.Objects;
  * @hide
  */
 public class UnderlyingNetworkRecord {
-    private static final int PRIORITY_CLASS_INVALID = Integer.MAX_VALUE;
-
     @NonNull public final Network network;
     @NonNull public final NetworkCapabilities networkCapabilities;
     @NonNull public final LinkProperties linkProperties;
     public final boolean isBlocked;
 
-    private int mPriorityClass = PRIORITY_CLASS_INVALID;
+    // mPriorityClass can not calculated because the calculation requires an UnderlyingNetworkRecord
+    // object
+    private int mPriorityClass = PRIORITY_UNKNOWN;
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     public UnderlyingNetworkRecord(
@@ -63,7 +64,8 @@ public class UnderlyingNetworkRecord {
         this.isBlocked = isBlocked;
     }
 
-    private int getOrCalculatePriorityClass(
+    // Used in UnderlyingNetworkController
+    int getOrCalculatePriorityClass(
             VcnContext vcnContext,
             List<VcnUnderlyingNetworkTemplate> underlyingNetworkTemplates,
             ParcelUuid subscriptionGroup,
@@ -71,7 +73,7 @@ public class UnderlyingNetworkRecord {
             UnderlyingNetworkRecord currentlySelected,
             PersistableBundleWrapper carrierConfig) {
         // Never changes after the underlying network record is created.
-        if (mPriorityClass == PRIORITY_CLASS_INVALID) {
+        if (mPriorityClass == PRIORITY_UNKNOWN) {
             mPriorityClass =
                     NetworkPriorityClassifier.calculatePriorityClass(
                             vcnContext,
