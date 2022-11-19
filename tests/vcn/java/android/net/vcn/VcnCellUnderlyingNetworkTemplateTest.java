@@ -36,8 +36,9 @@ public class VcnCellUnderlyingNetworkTemplateTest extends VcnUnderlyingNetworkTe
     private static final Set<String> ALLOWED_PLMN_IDS = new HashSet<>();
     private static final Set<Integer> ALLOWED_CARRIER_IDS = new HashSet<>();
 
-    // Package private for use in VcnGatewayConnectionConfigTest
-    static VcnCellUnderlyingNetworkTemplate getTestNetworkTemplate() {
+    // Public for use in UnderlyingNetworkControllerTest
+    public static VcnCellUnderlyingNetworkTemplate getTestNetworkTemplate(
+            Set<Integer> requiredCapabilities) {
         return new VcnCellUnderlyingNetworkTemplate.Builder()
                 .setMetered(MATCH_FORBIDDEN)
                 .setMinUpstreamBandwidthKbps(
@@ -50,8 +51,13 @@ public class VcnCellUnderlyingNetworkTemplateTest extends VcnUnderlyingNetworkTe
                 .setSimSpecificCarrierIds(ALLOWED_CARRIER_IDS)
                 .setRoaming(MATCH_FORBIDDEN)
                 .setOpportunistic(MATCH_REQUIRED)
-                .setCapabilities(Collections.singleton(NET_CAPABILITY_INTERNET))
+                .setCapabilities(requiredCapabilities)
                 .build();
+    }
+
+    // Package private for use in VcnGatewayConnectionConfigTest
+    static VcnCellUnderlyingNetworkTemplate getTestNetworkTemplate() {
+        return getTestNetworkTemplate(Collections.singleton(NET_CAPABILITY_INTERNET));
     }
 
     @Test

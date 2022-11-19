@@ -101,6 +101,15 @@ public class VcnGatewayConnectionConfigTest {
         return buildTestConfigWithExposedCaps(builder, EXPOSED_CAPS);
     }
 
+    // Public for use in VcnGatewayConnectionTest
+    public static VcnGatewayConnectionConfig buildTestConfig(
+            List<VcnUnderlyingNetworkTemplate> nwTemplates) {
+        final VcnGatewayConnectionConfig.Builder builder =
+                newBuilder().setVcnUnderlyingNetworkPriorities(nwTemplates);
+
+        return buildTestConfigWithExposedCaps(builder, EXPOSED_CAPS);
+    }
+
     private static VcnGatewayConnectionConfig.Builder newBuilder() {
         // Append a unique identifier to the name prefix to guarantee that all created
         // VcnGatewayConnectionConfigs have a unique name (required by VcnConfig).
