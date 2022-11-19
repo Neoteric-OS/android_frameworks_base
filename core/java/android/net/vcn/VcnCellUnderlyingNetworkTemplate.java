@@ -15,6 +15,8 @@
  */
 package android.net.vcn;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
+import static android.net.vcn.VcnGatewayConnectionConfig.ALLOWED_CAPABILITIES;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_ANY;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.getMatchCriteriaString;
 
@@ -37,6 +39,7 @@ import android.util.ArraySet;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.IndentingPrintWriter;
+import com.android.internal.util.Preconditions;
 import com.android.server.vcn.util.PersistableBundleUtils;
 
 import java.util.ArrayList;
@@ -64,6 +67,11 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
     private static final int DEFAULT_OPPORTUNISTIC_MATCH_CRITERIA = MATCH_ANY;
     private final int mOpportunisticMatchCriteria;
 
+    private static final Set<Integer> REQUIRED_CAPABILITIES_DEFAULT =
+            Collections.singleton(NET_CAPABILITY_INTERNET);
+    private static final String REQUIRED_CAPABILITIES_KEY = "mRequiredCapabilities";
+    @NonNull private final Set<Integer> mRequiredCapabilities;
+
     private VcnCellUnderlyingNetworkTemplate(
             int meteredMatchCriteria,
             int minEntryUpstreamBandwidthKbps,
@@ -73,7 +81,8 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
             Set<String> allowedNetworkPlmnIds,
             Set<Integer> allowedSpecificCarrierIds,
             int roamingMatchCriteria,
-            int opportunisticMatchCriteria) {
+            int opportunisticMatchCriteria,
+            Set<Integer> requiredCapabilities) {
         super(
                 NETWORK_PRIORITY_TYPE_CELL,
                 meteredMatchCriteria,
@@ -85,6 +94,7 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
         mAllowedSpecificCarrierIds = new ArraySet<>(allowedSpecificCarrierIds);
         mRoamingMatchCriteria = roamingMatchCriteria;
         mOpportunisticMatchCriteria = opportunisticMatchCriteria;
+        mRequiredCapabilities = new ArraySet<>(requiredCapabilities);
 
         validate();
     }
@@ -94,6 +104,7 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
     protected void validate() {
         super.validate();
         validatePlmnIds(mAllowedNetworkPlmnIds);
+        validateRequiredCapabilities(mRequiredCapabilities);
         Objects.requireNonNull(mAllowedSpecificCarrierIds, "matchingCarrierIds is null");
         validateMatchCriteria(mRoamingMatchCriteria, "mRoamingMatchCriteria");
         validateMatchCriteria(mOpportunisticMatchCriteria, "mOpportunisticMatchCriteria");
@@ -110,6 +121,20 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
             } else {
                 throw new IllegalArgumentException("Found invalid PLMN ID: " + id);
             }
+        }
+    }
+
+    private static void validateRequiredCapabilities(Set<Integer> requiredCapabilities) {
+        Objects.requireNonNull(requiredCapabilities, "requiredCapabilities is null");
+
+        if (requiredCapabilities.isEmpty()) {
+            throw new IllegalArgumentException("requiredCapabilities is empty");
+        }
+
+        for (int capability : requiredCapabilities) {
+            Preconditions.checkArgument(
+                    ALLOWED_CAPABILITIES.contains(capability),
+                    "NetworkCapability " + capability + "out of range");
         }
     }
 
@@ -146,6 +171,18 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
                         PersistableBundleUtils.toList(
                                 specificCarrierIdsBundle, INTEGER_DESERIALIZER));
 
+        final PersistableBundle requiredCapabilitiesBundle =
+                in.getPersistableBundle(REQUIRED_CAPABILITIES_KEY);
+        final Set<Integer> requiredCapabilities;
+        if (requiredCapabilitiesBundle == null) {
+            requiredCapabilities = REQUIRED_CAPABILITIES_DEFAULT;
+        } else {
+            requiredCapabilities =
+                    new ArraySet<Integer>(
+                            PersistableBundleUtils.toList(
+                                    requiredCapabilitiesBundle, INTEGER_DESERIALIZER));
+        }
+
         final int roamingMatchCriteria = in.getInt(ROAMING_MATCH_KEY);
         final int opportunisticMatchCriteria = in.getInt(OPPORTUNISTIC_MATCH_KEY);
 
@@ -158,7 +195,8 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
                 allowedNetworkPlmnIds,
                 allowedSpecificCarrierIds,
                 roamingMatchCriteria,
-                opportunisticMatchCriteria);
+                opportunisticMatchCriteria,
+                requiredCapabilities);
     }
 
     /** @hide */
@@ -177,6 +215,11 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
                 PersistableBundleUtils.fromList(
                         new ArrayList<>(mAllowedSpecificCarrierIds), INTEGER_SERIALIZER);
         result.putPersistableBundle(ALLOWED_SPECIFIC_CARRIER_IDS_KEY, specificCarrierIdsBundle);
+
+        final PersistableBundle requiredCapabilitiesBundle =
+                PersistableBundleUtils.fromList(
+                        new ArrayList<>(mRequiredCapabilities), INTEGER_SERIALIZER);
+        result.putPersistableBundle(REQUIRED_CAPABILITIES_KEY, requiredCapabilitiesBundle);
 
         result.putInt(ROAMING_MATCH_KEY, mRoamingMatchCriteria);
         result.putInt(OPPORTUNISTIC_MATCH_KEY, mOpportunisticMatchCriteria);
@@ -206,6 +249,16 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
     }
 
     /**
+     * Retrieve the required capabilities to match this template.
+     *
+     * @hide
+     */
+    @NonNull
+    public Set<Integer> getCapabilities() {
+        return Collections.unmodifiableSet(mRequiredCapabilities);
+    }
+
+    /**
      * Return the matching criteria for roaming networks.
      *
      * @see Builder#setRoaming(int)
@@ -231,6 +284,7 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
                 super.hashCode(),
                 mAllowedNetworkPlmnIds,
                 mAllowedSpecificCarrierIds,
+                mRequiredCapabilities,
                 mRoamingMatchCriteria,
                 mOpportunisticMatchCriteria);
     }
@@ -248,6 +302,7 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
         final VcnCellUnderlyingNetworkTemplate rhs = (VcnCellUnderlyingNetworkTemplate) other;
         return Objects.equals(mAllowedNetworkPlmnIds, rhs.mAllowedNetworkPlmnIds)
                 && Objects.equals(mAllowedSpecificCarrierIds, rhs.mAllowedSpecificCarrierIds)
+                && Objects.equals(mRequiredCapabilities, rhs.mRequiredCapabilities)
                 && mRoamingMatchCriteria == rhs.mRoamingMatchCriteria
                 && mOpportunisticMatchCriteria == rhs.mOpportunisticMatchCriteria;
     }
@@ -261,6 +316,7 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
         if (!mAllowedNetworkPlmnIds.isEmpty()) {
             pw.println("mAllowedSpecificCarrierIds: " + mAllowedSpecificCarrierIds);
         }
+        pw.println("mRequiredCapabilities: " + mRequiredCapabilities);
         if (mRoamingMatchCriteria != DEFAULT_ROAMING_MATCH_CRITERIA) {
             pw.println("mRoamingMatchCriteria: " + getMatchCriteriaString(mRoamingMatchCriteria));
         }
@@ -277,6 +333,7 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
 
         @NonNull private final Set<String> mAllowedNetworkPlmnIds = new ArraySet<>();
         @NonNull private final Set<Integer> mAllowedSpecificCarrierIds = new ArraySet<>();
+        @NonNull private final Set<Integer> mRequiredCapabilities = new ArraySet<>();
 
         private int mRoamingMatchCriteria = DEFAULT_ROAMING_MATCH_CRITERIA;
         private int mOpportunisticMatchCriteria = DEFAULT_OPPORTUNISTIC_MATCH_CRITERIA;
@@ -287,7 +344,9 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
         private int mMinExitDownstreamBandwidthKbps = DEFAULT_MIN_BANDWIDTH_KBPS;
 
         /** Construct a Builder object. */
-        public Builder() {}
+        public Builder() {
+            mRequiredCapabilities.add(NET_CAPABILITY_INTERNET);
+        }
 
         /**
          * Set the matching criteria for metered networks.
@@ -461,6 +520,23 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
             return this;
         }
 
+        /**
+         * Set required carrier capabilities which a network MUST have to match this template.
+         *
+         * @params capabilities a set of capabilities an underlying network MUST have to be able to
+         *     match this template. Allowed capabilities are ...
+         * @throws IllegalArgumentException if the provided set contains unsupported capability
+         * @hide
+         */
+        @NonNull
+        public Builder setCapabilities(@NonNull Set<Integer> capabilities) {
+            validateRequiredCapabilities(capabilities);
+
+            mRequiredCapabilities.clear();
+            mRequiredCapabilities.addAll(capabilities);
+            return this;
+        }
+
         /** Build the VcnCellUnderlyingNetworkTemplate. */
         @NonNull
         public VcnCellUnderlyingNetworkTemplate build() {
@@ -473,7 +549,8 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
                     mAllowedNetworkPlmnIds,
                     mAllowedSpecificCarrierIds,
                     mRoamingMatchCriteria,
-                    mOpportunisticMatchCriteria);
+                    mOpportunisticMatchCriteria,
+                    mRequiredCapabilities);
         }
     }
 }

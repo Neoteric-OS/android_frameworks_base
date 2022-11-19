@@ -297,6 +297,12 @@ class NetworkPriorityClassifier {
             return false;
         }
 
+        for (int requiredCap : networkPriority.getCapabilities()) {
+            if (!caps.hasCapability(requiredCap)) {
+                return false;
+            }
+        }
+
         return true;
     }
 
