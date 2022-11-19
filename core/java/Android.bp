@@ -377,6 +377,19 @@ aidl_interface {
 }
 
 aidl_interface {
+    name: "android.security.rkp_aidl",
+    unstable: true,
+    srcs: [
+        "android/security/rkp/*.aidl",
+    ],
+    backend: {
+        rust: {
+            enabled: true,
+        },
+    },
+}
+
+aidl_interface {
     name: "android.debug_aidl",
     unstable: true,
     srcs: [
