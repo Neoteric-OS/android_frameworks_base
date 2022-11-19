@@ -20,9 +20,10 @@ import static com.android.server.vcn.VcnTestUtils.setupSystemService;
 import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.WIFI_ENTRY_RSSI_THRESHOLD_DEFAULT;
 import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.WIFI_EXIT_RSSI_THRESHOLD_DEFAULT;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doNothing;
@@ -82,6 +83,7 @@ public class UnderlyingNetworkControllerTest {
     private static final NetworkCapabilities INITIAL_NETWORK_CAPABILITIES =
             new NetworkCapabilities.Builder()
                     .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                    .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)
                     .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                     .removeCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED)
                     .build();
@@ -321,29 +323,43 @@ public class UnderlyingNetworkControllerTest {
                 .unregisterNetworkCallback(any(UnderlyingNetworkListener.class));
     }
 
+    private static UnderlyingNetworkRecord getTestNetworkRecord(
+            Network network,
+            NetworkCapabilities networkCapabilities,
+            LinkProperties linkProperties,
+            boolean isBlocked) {
+        return new UnderlyingNetworkRecord(
+                network,
+                networkCapabilities,
+                linkProperties,
+                isBlocked,
+                false /* isSelected */,
+                0 /* priorityClass */);
+    }
+
     @Test
-    public void testUnderlyingNetworkRecordEquals() {
+    public void testUnderlyingNetworkRecordAreSame() {
         UnderlyingNetworkRecord recordA =
-                new UnderlyingNetworkRecord(
+                getTestNetworkRecord(
                         mNetwork,
                         INITIAL_NETWORK_CAPABILITIES,
                         INITIAL_LINK_PROPERTIES,
                         false /* isBlocked */);
         UnderlyingNetworkRecord recordB =
-                new UnderlyingNetworkRecord(
+                getTestNetworkRecord(
                         mNetwork,
                         INITIAL_NETWORK_CAPABILITIES,
                         INITIAL_LINK_PROPERTIES,
                         false /* isBlocked */);
         UnderlyingNetworkRecord recordC =
-                new UnderlyingNetworkRecord(
+                getTestNetworkRecord(
                         mNetwork,
                         UPDATED_NETWORK_CAPABILITIES,
                         UPDATED_LINK_PROPERTIES,
                         false /* isBlocked */);
 
-        assertEquals(recordA, recordB);
-        assertNotEquals(recordA, recordC);
+        assertTrue(UnderlyingNetworkRecord.areSame(recordA, recordB));
+        assertFalse(UnderlyingNetworkRecord.areSame(recordA, recordC));
     }
 
     @Test
@@ -366,6 +382,15 @@ public class UnderlyingNetworkControllerTest {
                 .build();
     }
 
+    private void verifyOnSelectedUnderlyingNetworkChanged(UnderlyingNetworkRecord expectedRecord) {
+        verify(mNetworkControllerCb)
+                .onSelectedUnderlyingNetworkChanged(
+                        argThat(
+                                record -> {
+                                    return UnderlyingNetworkRecord.areSame(expectedRecord, record);
+                                }));
+    }
+
     private UnderlyingNetworkListener verifyRegistrationOnAvailableAndGetCallback(
             NetworkCapabilities networkCapabilities) {
         verify(mConnectivityManager)
@@ -384,12 +409,12 @@ public class UnderlyingNetworkControllerTest {
         cb.onBlockedStatusChanged(mNetwork, false /* isFalse */);
 
         UnderlyingNetworkRecord expectedRecord =
-                new UnderlyingNetworkRecord(
+                getTestNetworkRecord(
                         mNetwork,
                         responseNetworkCaps,
                         INITIAL_LINK_PROPERTIES,
                         false /* isBlocked */);
-        verify(mNetworkControllerCb).onSelectedUnderlyingNetworkChanged(eq(expectedRecord));
+        verifyOnSelectedUnderlyingNetworkChanged(expectedRecord);
         return cb;
     }
 
@@ -402,12 +427,12 @@ public class UnderlyingNetworkControllerTest {
         cb.onCapabilitiesChanged(mNetwork, responseNetworkCaps);
 
         UnderlyingNetworkRecord expectedRecord =
-                new UnderlyingNetworkRecord(
+                getTestNetworkRecord(
                         mNetwork,
                         responseNetworkCaps,
                         INITIAL_LINK_PROPERTIES,
                         false /* isBlocked */);
-        verify(mNetworkControllerCb).onSelectedUnderlyingNetworkChanged(eq(expectedRecord));
+        verifyOnSelectedUnderlyingNetworkChanged(expectedRecord);
     }
 
     @Test
@@ -417,12 +442,12 @@ public class UnderlyingNetworkControllerTest {
         cb.onLinkPropertiesChanged(mNetwork, UPDATED_LINK_PROPERTIES);
 
         UnderlyingNetworkRecord expectedRecord =
-                new UnderlyingNetworkRecord(
+                getTestNetworkRecord(
                         mNetwork,
                         buildResponseNwCaps(INITIAL_NETWORK_CAPABILITIES, INITIAL_SUB_IDS),
                         UPDATED_LINK_PROPERTIES,
                         false /* isBlocked */);
-        verify(mNetworkControllerCb).onSelectedUnderlyingNetworkChanged(eq(expectedRecord));
+        verifyOnSelectedUnderlyingNetworkChanged(expectedRecord);
     }
 
     @Test
@@ -434,18 +459,16 @@ public class UnderlyingNetworkControllerTest {
         cb.onCapabilitiesChanged(mNetwork, responseNetworkCaps);
 
         UnderlyingNetworkRecord expectedRecord =
-                new UnderlyingNetworkRecord(
+                getTestNetworkRecord(
                         mNetwork,
                         responseNetworkCaps,
                         INITIAL_LINK_PROPERTIES,
                         false /* isBlocked */);
-        verify(mNetworkControllerCb, times(1))
-                .onSelectedUnderlyingNetworkChanged(eq(expectedRecord));
+        verifyOnSelectedUnderlyingNetworkChanged(expectedRecord);
         // onSelectedUnderlyingNetworkChanged() won't be fired twice if network capabilities doesn't
         // change.
         cb.onCapabilitiesChanged(mNetwork, responseNetworkCaps);
-        verify(mNetworkControllerCb, times(1))
-                .onSelectedUnderlyingNetworkChanged(eq(expectedRecord));
+        verifyOnSelectedUnderlyingNetworkChanged(expectedRecord);
     }
 
     @Test
@@ -458,18 +481,16 @@ public class UnderlyingNetworkControllerTest {
         cb.onCapabilitiesChanged(mNetwork, responseNetworkCaps);
 
         UnderlyingNetworkRecord expectedRecord =
-                new UnderlyingNetworkRecord(
+                getTestNetworkRecord(
                         mNetwork,
                         responseNetworkCaps,
                         INITIAL_LINK_PROPERTIES,
                         false /* isBlocked */);
-        verify(mNetworkControllerCb, times(1))
-                .onSelectedUnderlyingNetworkChanged(eq(expectedRecord));
+        verifyOnSelectedUnderlyingNetworkChanged(expectedRecord);
         // onSelectedUnderlyingNetworkChanged() won't be fired twice if network capabilities doesn't
         // change.
         cb.onCapabilitiesChanged(mNetwork, responseNetworkCaps);
-        verify(mNetworkControllerCb, times(1))
-                .onSelectedUnderlyingNetworkChanged(eq(expectedRecord));
+        verifyOnSelectedUnderlyingNetworkChanged(expectedRecord);
     }
 
     @Test
@@ -479,12 +500,12 @@ public class UnderlyingNetworkControllerTest {
         cb.onBlockedStatusChanged(mNetwork, true /* isBlocked */);
 
         UnderlyingNetworkRecord expectedRecord =
-                new UnderlyingNetworkRecord(
+                getTestNetworkRecord(
                         mNetwork,
                         buildResponseNwCaps(INITIAL_NETWORK_CAPABILITIES, INITIAL_SUB_IDS),
                         INITIAL_LINK_PROPERTIES,
                         true /* isBlocked */);
-        verify(mNetworkControllerCb).onSelectedUnderlyingNetworkChanged(eq(expectedRecord));
+        verifyOnSelectedUnderlyingNetworkChanged(expectedRecord);
     }
 
     @Test
