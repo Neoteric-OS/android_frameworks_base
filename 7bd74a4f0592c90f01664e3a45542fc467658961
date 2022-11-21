@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42079837_4b2c131a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1898598
+      },
+      "writtenOn": "2022-11-21T13:37:22Z",
+      "side": 1,
+      "message": "@omakoto@google.com This is a cherry pick of what was pushed to tm-qpr-dev. PTAL, TIA.",
+      "revId": "7bd74a4f0592c90f01664e3a45542fc467658961",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
