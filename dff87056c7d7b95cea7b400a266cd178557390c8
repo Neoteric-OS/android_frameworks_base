@@ -39,6 +39,30 @@
       },
       "revId": "dff87056c7d7b95cea7b400a266cd178557390c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "110d6bc9_667125ca",
+        "filename": "services/core/java/com/android/server/twilight/TwilightService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1972300
+      },
+      "writtenOn": "2022-11-21T01:32:30Z",
+      "side": 1,
+      "message": "A locationRequest created by LocationRequest.Builder::build always has a null provider.\nThen getProvider always returns FUSED_PROVIDER. thanks for review. i applied it.",
+      "parentUuid": "d9283936_6379739f",
+      "range": {
+        "startLine": 166,
+        "startChar": 48,
+        "endLine": 166,
+        "endChar": 77
+      },
+      "revId": "dff87056c7d7b95cea7b400a266cd178557390c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
