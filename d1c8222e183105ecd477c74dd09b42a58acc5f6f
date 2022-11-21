@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f49dbaa_01069466",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/applications/AppUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1388435
+      },
+      "writtenOn": "2022-11-21T04:27:43Z",
+      "side": 1,
+      "message": "Is it proper way to check bookmark apps?\n\nand why Settings lib need to provide this method?\nI don\u0027t see any hard requirement from Settings perspective.",
+      "range": {
+        "startLine": 306,
+        "startChar": 15,
+        "endLine": 306,
+        "endChar": 59
+      },
+      "revId": "d1c8222e183105ecd477c74dd09b42a58acc5f6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
