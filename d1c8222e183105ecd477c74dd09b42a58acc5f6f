@@ -22,6 +22,30 @@
       },
       "revId": "d1c8222e183105ecd477c74dd09b42a58acc5f6f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0527eba_aef5a1cd",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/applications/AppUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1884015
+      },
+      "writtenOn": "2022-11-21T09:53:52Z",
+      "side": 1,
+      "message": "This method is needed for this change: https://android-review.googlesource.com/c/platform/packages/apps/Settings/+/2304312\n\nI have found no other ways too check bookmark apps at the moment.",
+      "parentUuid": "6f49dbaa_01069466",
+      "range": {
+        "startLine": 306,
+        "startChar": 15,
+        "endLine": 306,
+        "endChar": 59
+      },
+      "revId": "d1c8222e183105ecd477c74dd09b42a58acc5f6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
