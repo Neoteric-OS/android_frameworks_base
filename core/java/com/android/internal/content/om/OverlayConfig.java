@@ -20,6 +20,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.pm.PackagePartitions;
 import android.os.Build;
+import android.os.SystemProperties;
 import android.os.Trace;
 import android.util.ArrayMap;
 import android.util.IndentingPrintWriter;
@@ -191,10 +192,14 @@ public class OverlayConfig {
             overlays.addAll(partitionConfigs);
         }
 
-        if (!foundConfigFile) {
-            // If no overlay configuration files exist, disregard partition precedence and allow
-            // android:priority to reorder overlays across partition boundaries.
-            overlays.sort(sStaticOverlayComparator);
+        if (Build.VERSION_CODES.TIRAMISU >=
+            SystemProperties.getInt("ro.vendor.api_level", 0)) {
+            // Always respect partition precedence and use OverlayConfig to configure the priority
+            // of overlays for devices launching on Android 14+. But still allow android:priority
+            // to reorder overlays across partition boundaries for other legacy devices.
+            if (!foundConfigFile) {
+                overlays.sort(sStaticOverlayComparator);
+            }
         }
 
         for (int i = 0, n = overlays.size(); i < n; i++) {

@@ -22,6 +22,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import android.os.Build;
 import android.os.FileUtils;
 import android.os.SystemProperties;
 import android.platform.test.annotations.Presubmit;
@@ -86,6 +87,11 @@ public class OverlayConfigTest {
         assertEquals(mutable, config.parsedConfig.mutable);
         assertEquals(enabled, config.parsedConfig.enabled);
         assertEquals(configIndex, config.configIndex);
+    }
+
+    private static boolean isDeviceLaunchingAfterT() {
+        return SystemProperties.getInt("ro.vendor.api_level", 0) >
+               Build.VERSION_CODES.TIRAMISU;
     }
 
     @Test
@@ -508,6 +514,11 @@ public class OverlayConfigTest {
 
     @Test
     public void testNoConfigsAllowPartitionReordering() throws IOException {
+        if (isDeviceLaunchingAfterT()) {
+            // Always respect partition precedence since Android 14.
+            return;
+        }
+
         mScannerRule.addOverlay(createFile("/vendor/overlay/one.apk"), "one", "android", 0, true,
                 1);
         mScannerRule.addOverlay(createFile("/product/overlay/two.apk"), "two", "android", 0, true,
@@ -550,7 +561,7 @@ public class OverlayConfigTest {
     @Test
     public void testSortStaticOverlaysDifferentTargets() throws IOException {
         mScannerRule.addOverlay(createFile("/vendor/overlay/one.apk"), "one", "other", 0, true, 0);
-        mScannerRule.addOverlay(createFile("/product/overlay/two.apk"), "two", "android", 0, true,
+        mScannerRule.addOverlay(createFile("/vendor/overlay/two.apk"), "two", "android", 0, true,
                 0);
 
         final OverlayConfig overlayConfig = createConfigImpl();
@@ -562,12 +573,15 @@ public class OverlayConfigTest {
     public void testSortStaticOverlaysSamePriority() throws IOException {
         mScannerRule.addOverlay(createFile("/vendor/overlay/one.apk"), "one", "android", 0, true,
                 0);
-        mScannerRule.addOverlay(createFile("/product/overlay/two.apk"), "two", "android", 0, true,
+        mScannerRule.addOverlay(createFile("/vendor/overlay/two.apk"), "two", "android", 0, true,
                 0);
+        mScannerRule.addOverlay(createFile("/vendor/overlay/three.apk"), "three", "android", 0,
+                true, 0);
 
         final OverlayConfig overlayConfig = createConfigImpl();
-        assertConfig(overlayConfig, "one", false, true, 1);
-        assertConfig(overlayConfig, "two", false, true, 0);
+        assertConfig(overlayConfig, "one", false, true, 0);
+        assertConfig(overlayConfig, "two", false, true, 2);
+        assertConfig(overlayConfig, "three", false, true, 1);
     }
 
     @Test
