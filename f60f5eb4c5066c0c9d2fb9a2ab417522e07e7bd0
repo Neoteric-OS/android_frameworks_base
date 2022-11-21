@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "572232e1_2e550dd5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1967393
+      },
+      "writtenOn": "2022-11-21T11:36:54Z",
+      "side": 1,
+      "message": "@santoscordon@google.com  Something went wrong, please trigger the Presubmit-Ready again",
+      "revId": "f60f5eb4c5066c0c9d2fb9a2ab417522e07e7bd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
