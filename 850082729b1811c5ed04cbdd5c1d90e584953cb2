@@ -66,6 +66,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "31b1057e_0fbb0304",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-11-21T08:29:10Z",
+      "side": 1,
+      "message": "Option :\n• Pass an instance of Ikev2VpnRunner to the constructor of this and store it in a final member",
+      "range": {
+        "startLine": 327,
+        "startChar": 24,
+        "endLine": 327,
+        "endChar": 50
+      },
+      "revId": "850082729b1811c5ed04cbdd5c1d90e584953cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2174b1a7_fadba670",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-11-21T08:29:10Z",
+      "side": 1,
+      "message": "Option :\n• Instead of creating just a `Thread`, make a subclass of `Thread` :\n\n    private static class CheckerThread extends Thread {\n        public CheckerThread(Ikev2VpnRunner runner) {\n          mRunner \u003d runner\n        }\n    }\n• Also ensure here that newThread() is only ever called once, e.g. with a CountdownLatch or a Semaphore",
+      "range": {
+        "startLine": 332,
+        "startChar": 26,
+        "endLine": 332,
+        "endChar": 32
+      },
+      "revId": "850082729b1811c5ed04cbdd5c1d90e584953cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c3a72193_76f7026c",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 3
@@ -82,6 +128,52 @@
         "startChar": 19,
         "endLine": 333,
         "endChar": 26
+      },
+      "revId": "850082729b1811c5ed04cbdd5c1d90e584953cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d1da2be_385740e5",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2768,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-11-21T08:29:10Z",
+      "side": 1,
+      "message": "Option :\n• Remove this argument\n• In l.2771, inline the newScheduledThreadPoolExecutor call",
+      "range": {
+        "startLine": 2768,
+        "startChar": 50,
+        "endLine": 2768,
+        "endChar": 95
+      },
+      "revId": "850082729b1811c5ed04cbdd5c1d90e584953cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a07ebfd8_e0d9ff3a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2831,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-11-21T08:29:10Z",
+      "side": 1,
+      "message": "Option :\n• (CheckerThread) Thread.currentThread()).mRunner \u003d\u003d this",
+      "range": {
+        "startLine": 2830,
+        "startChar": 12,
+        "endLine": 2831,
+        "endChar": 46
       },
       "revId": "850082729b1811c5ed04cbdd5c1d90e584953cb2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
