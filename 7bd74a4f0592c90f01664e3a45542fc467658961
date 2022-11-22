@@ -33,6 +33,24 @@
       "message": "Double checking, it\u0027s a pure cherry-pick, right?",
       "revId": "7bd74a4f0592c90f01664e3a45542fc467658961",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83e77a60_20ced736",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1898598
+      },
+      "writtenOn": "2022-11-22T00:51:46Z",
+      "side": 1,
+      "message": "Yes, pure cherry-pick of ag/19854432",
+      "parentUuid": "10110b9d_19a6e567",
+      "revId": "7bd74a4f0592c90f01664e3a45542fc467658961",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
