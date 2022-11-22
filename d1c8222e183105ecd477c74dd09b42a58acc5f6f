@@ -46,6 +46,30 @@
       },
       "revId": "d1c8222e183105ecd477c74dd09b42a58acc5f6f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5a8d8ea_39799af6",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/applications/AppUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1388435
+      },
+      "writtenOn": "2022-11-22T04:39:14Z",
+      "side": 1,
+      "message": "1. I don\u0027t think checking packagename contain specific string is proper way. I can\u0027t find similar way in android codebase\n2. if this only AppInstallerInfoPreferenceController.java need it, we don\u0027t want put it in SettingsLib\nSettingslib will share with SystemUI, TVSettings, and many partner, I don\u0027t think we are not proper app/library to response for isBookmarkApp.",
+      "parentUuid": "d0527eba_aef5a1cd",
+      "range": {
+        "startLine": 306,
+        "startChar": 15,
+        "endLine": 306,
+        "endChar": 59
+      },
+      "revId": "d1c8222e183105ecd477c74dd09b42a58acc5f6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
