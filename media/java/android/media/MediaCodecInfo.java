@@ -4106,6 +4106,20 @@ public final class MediaCodecInfo {
         public static final int AV1Level72      = 0x400000;
         public static final int AV1Level73      = 0x800000;
 
+        // DTS codec profiles
+        /** DTS Express. */
+        @SuppressLint("AllUpper")
+        public static final int DTSHDProfileLBR = 0x1;
+        /** DTS-HD Master Audio */
+        @SuppressLint("AllUpper")
+        public static final int DTSHDProfileMA = 0x2;
+        /** DTS-UHD Profile 1 */
+        @SuppressLint("AllUpper")
+        public static final int DTSUHDProfileP1 = 0x1;
+        /** DTS-UHD Profile 2 */
+        @SuppressLint("AllUpper")
+        public static final int DTSUHDProfileP2 = 0x2;
+
         /**
          * The profile of the media content. Depending on the type of media this can be
          * one of the profile values defined in this class.
