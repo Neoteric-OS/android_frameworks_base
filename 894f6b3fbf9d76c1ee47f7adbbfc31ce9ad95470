@@ -16,6 +16,24 @@
       "message": "Is there an associated bug with this change?",
       "revId": "894f6b3fbf9d76c1ee47f7adbbfc31ce9ad95470",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ea33529_8c4de77f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1974140
+      },
+      "writtenOn": "2022-11-23T04:33:17Z",
+      "side": 1,
+      "message": "When some modules call StatusBarManager.disable(DISABLE_NONE), unnecessary DisableRecord will be stacked. \n  mDisableRecords.size\u003d3\n    [0] barType\u003d0 userId\u003d0 what1\u003d0x00000000 what2\u003d0x00000000 pkg\u003dcom.android.systemui token\u003dandroid.os.BinderProxy@8dd7956\n    [1] barType\u003d0 userId\u003d0 what1\u003d0x00000000 what2\u003d0x00000000 pkg\u003dcom.LogiaGroup.LogiaDeck token\u003dandroid.os.BinderProxy@fc90dd7\n    [2] barType\u003d0 userId\u003d0 what1\u003d0x00000000 what2\u003d0x00000000 pkg\u003dcom.samsung.android.app.aodservice token\u003dandroid.os.BinderProxy@61c96c4\n\n\nOf course, it may be the module\u0027s fault, but if the module continues to call the following code, the records will continue to accumulate.\nmStatusBarManager \u003d (StatusBarManager) mContext.getSystemService(Context.STATUS_BAR_SERVICE);\nmStatusBarManager.disable(DISABLE_NONE)",
+      "parentUuid": "64da140e_38277cf3",
+      "revId": "894f6b3fbf9d76c1ee47f7adbbfc31ce9ad95470",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
