@@ -18412,6 +18412,42 @@ package android.hardware.camera2.params {
 
 }
 
+package android.hardware.cas {
+
+  @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.CLASS) public @interface ScramblingControl {
+    field public static final int EVENKEY = 2; // 0x2
+    field public static final int ODDKEY = 3; // 0x3
+    field public static final int RESERVED = 1; // 0x1
+    field public static final int UNSCRAMBLED = 0; // 0x0
+  }
+
+  @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.CLASS) public @interface ScramblingMode {
+    field public static final int AES128 = 9; // 0x9
+    field public static final int AES_CBC = 14; // 0xe
+    field public static final int AES_ECB = 10; // 0xa
+    field public static final int AES_SCTE52 = 11; // 0xb
+    field public static final int DVB_CISSA_V1 = 6; // 0x6
+    field public static final int DVB_CSA1 = 1; // 0x1
+    field public static final int DVB_CSA2 = 2; // 0x2
+    field public static final int DVB_CSA3_ENHANCE = 5; // 0x5
+    field public static final int DVB_CSA3_MINIMAL = 4; // 0x4
+    field public static final int DVB_CSA3_STANDARD = 3; // 0x3
+    field public static final int DVB_IDSA = 7; // 0x7
+    field public static final int MULTI2 = 8; // 0x8
+    field public static final int RESERVED = 0; // 0x0
+    field public static final int TDES_ECB = 12; // 0xc
+    field public static final int TDES_SCTE52 = 13; // 0xd
+  }
+
+  @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.CLASS) public @interface SessionIntent {
+    field public static final int LIVE = 0; // 0x0
+    field public static final int PLAYBACK = 1; // 0x1
+    field public static final int RECORD = 2; // 0x2
+    field public static final int TIMESHIFT = 3; // 0x3
+  }
+
+}
+
 package android.hardware.display {
 
   public final class DeviceProductInfo implements android.os.Parcelable {
@@ -21140,6 +21176,7 @@ package android.media {
     field public static final int PLUGIN_STATUS_PHYSICAL_MODULE_CHANGED = 0; // 0x0
     field public static final int PLUGIN_STATUS_SESSION_NUMBER_CHANGED = 1; // 0x1
     field public static final int SCRAMBLING_MODE_AES128 = 9; // 0x9
+    field public static final int SCRAMBLING_MODE_AES_CBC = 14; // 0xe
     field public static final int SCRAMBLING_MODE_AES_ECB = 10; // 0xa
     field public static final int SCRAMBLING_MODE_AES_SCTE52 = 11; // 0xb
     field public static final int SCRAMBLING_MODE_DVB_CISSA_V1 = 6; // 0x6
