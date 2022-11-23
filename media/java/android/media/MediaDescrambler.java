@@ -17,7 +17,8 @@
 package android.media;
 
 import android.annotation.NonNull;
-import android.hardware.cas.V1_0.*;
+import android.hardware.cas.IDescrambler;
+import android.hardware.cas.V1_0.IDescramblerBase;
 import android.media.MediaCasException.UnsupportedCasException;
 import android.os.IHwBinder;
 import android.os.RemoteException;
@@ -25,6 +26,7 @@ import android.os.ServiceSpecificException;
 import android.util.Log;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
 /**
  * MediaDescrambler class can be used in conjunction with {@link android.media.MediaCodec}
@@ -39,7 +41,88 @@ import java.nio.ByteBuffer;
  */
 public final class MediaDescrambler implements AutoCloseable {
     private static final String TAG = "MediaDescrambler";
-    private IDescramblerBase mIDescrambler;
+    private DescramblerWrapper mIDescrambler;
+
+    private interface DescramblerWrapper {
+
+        IHwBinder asBinder();
+
+        boolean requiresSecureDecoderComponent(@NonNull String mime) throws RemoteException;
+
+        void setMediaCasSession(byte[] sessionId) throws RemoteException;
+
+        void release() throws RemoteException;
+    }
+    ;
+
+    private class AidlDescrambler implements DescramblerWrapper {
+
+        IDescrambler mAidlDescrambler;
+
+        AidlDescrambler(IDescrambler aidlDescrambler) {
+            mAidlDescrambler = aidlDescrambler;
+        }
+
+        @Override
+        public IHwBinder asBinder() {
+            return null;
+        }
+
+        @Override
+        public boolean requiresSecureDecoderComponent(@NonNull String mime) throws RemoteException {
+            return mAidlDescrambler.requiresSecureDecoderComponent(mime);
+        }
+
+        @Override
+        public void setMediaCasSession(byte[] sessionId) throws RemoteException {
+            mAidlDescrambler.setMediaCasSession(sessionId);
+        }
+
+        @Override
+        public void release() throws RemoteException {
+            mAidlDescrambler.release();
+        }
+    }
+
+    private class HidlDescrambler implements DescramblerWrapper {
+
+        IDescramblerBase mHidlDescrambler;
+
+        HidlDescrambler(IDescramblerBase hidlDescrambler) {
+            mHidlDescrambler = hidlDescrambler;
+        }
+
+        @Override
+        public IHwBinder asBinder() {
+            return mHidlDescrambler.asBinder();
+        }
+
+        @Override
+        public boolean requiresSecureDecoderComponent(@NonNull String mime) throws RemoteException {
+            return mHidlDescrambler.requiresSecureDecoderComponent(mime);
+        }
+
+        @Override
+        public void setMediaCasSession(byte[] sessionId) throws RemoteException {
+            ArrayList<Byte> byteArray = new ArrayList<>();
+            int length = sessionId.length;
+
+            if (sessionId != null) {
+                byteArray = new ArrayList<Byte>(length);
+                for (int i = 0; i < length; i++) {
+                    byteArray.add(Byte.valueOf(sessionId[i]));
+                }
+            }
+
+            MediaCasStateException.throwExceptionIfNeeded(
+                    mHidlDescrambler.setMediaCasSession(byteArray));
+        }
+
+        @Override
+        public void release() throws RemoteException {
+            mHidlDescrambler.release();
+        }
+    }
 
     private final void validateInternalStates() {
         if (mIDescrambler == null) {
@@ -61,7 +144,14 @@ public final class MediaDescrambler implements AutoCloseable {
      */
     public MediaDescrambler(int CA_system_id) throws UnsupportedCasException {
         try {
-            mIDescrambler = MediaCas.getService().createDescrambler(CA_system_id);
+            if (MediaCas.getService() != null) {
+                mIDescrambler =
+                        new AidlDescrambler(MediaCas.getService().createDescrambler(CA_system_id));
+            } else if (MediaCas.getServiceHidl() != null) {
+                mIDescrambler =
+                        new HidlDescrambler(
+                                MediaCas.getServiceHidl().createDescrambler(CA_system_id));
+            }
         } catch(Exception e) {
             Log.e(TAG, "Failed to create descrambler: " + e);
             mIDescrambler = null;
@@ -117,8 +207,7 @@ public final class MediaDescrambler implements AutoCloseable {
         validateInternalStates();
 
         try {
-            MediaCasStateException.throwExceptionIfNeeded(
-                    mIDescrambler.setMediaCasSession(session.mSessionId));
+            mIDescrambler.setMediaCasSession(session.mSessionId);
         } catch (RemoteException e) {
             cleanupAndRethrowIllegalState();
         }
