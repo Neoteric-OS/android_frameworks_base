@@ -39,6 +39,30 @@
       },
       "revId": "b6ec75b8d38b8fa0adc2b944ffeeb29b6263b878",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac5d34ee_7ba0086c",
+        "filename": "core/java/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-11-23T02:19:46Z",
+      "side": 1,
+      "message": "actually - I looked at the other CL - for larger fuzzers, this will fail because the service itself will use more classes. We may want to go ahead and include all the source - forget this comment about the name change.",
+      "parentUuid": "27272839_13c49ec0",
+      "range": {
+        "startLine": 496,
+        "startChar": 34,
+        "endLine": 496,
+        "endChar": 45
+      },
+      "revId": "b6ec75b8d38b8fa0adc2b944ffeeb29b6263b878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
