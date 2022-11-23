@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49ebb06c_832ef86e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2022-11-23T13:59:47Z",
+      "side": 1,
+      "message": "Hi Googler, could you help to review this simple CL? Thanks.",
+      "revId": "6d668d51ced676bb1af0b6524a5bb13f24a40e26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
