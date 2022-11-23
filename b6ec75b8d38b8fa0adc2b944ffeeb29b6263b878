@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe6225e5_8c73670d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-11-23T02:18:44Z",
+      "side": 1,
+      "message": "nice!",
+      "revId": "b6ec75b8d38b8fa0adc2b944ffeeb29b6263b878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27272839_13c49ec0",
+        "filename": "core/java/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-11-23T02:18:44Z",
+      "side": 1,
+      "message": "nit: teleology, consider - \"framework-binder-sources\"\n\nTeleology isn\u0027t always a problem, but I suspect we\u0027ll want to fuzz non-binder things and rather than adding them here, we\u0027ll want to partition the actual frameworks.jar build later (and run it on the device combined) vs building something on the side. This seems like a good approach though - 3 files - for now. I like it!",
+      "range": {
+        "startLine": 496,
+        "startChar": 34,
+        "endLine": 496,
+        "endChar": 45
+      },
+      "revId": "b6ec75b8d38b8fa0adc2b944ffeeb29b6263b878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
