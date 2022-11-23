@@ -22,6 +22,30 @@
       },
       "revId": "e3f5a98b73d99150201b23fc1615e96364e6e1be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74bc9cca_996c2d43",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/splitscreen/StageCoordinator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1934512
+      },
+      "writtenOn": "2022-11-23T09:08:28Z",
+      "side": 1,
+      "message": "you can check this issue 256787008. In this case, we find SplitLayout updateConfiguration return fasle. it makes divider-position and split_bounds error. it needs to do resize.",
+      "parentUuid": "5aedeac3_950f7da2",
+      "range": {
+        "startLine": 1353,
+        "startChar": 8,
+        "endLine": 1359,
+        "endChar": 9
+      },
+      "revId": "e3f5a98b73d99150201b23fc1615e96364e6e1be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
