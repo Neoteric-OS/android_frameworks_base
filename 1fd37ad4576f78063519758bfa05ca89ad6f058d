@@ -16,6 +16,29 @@
       "message": "This change is ready for review.",
       "revId": "1fd37ad4576f78063519758bfa05ca89ad6f058d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80b72da6_1d2c730e",
+        "filename": "libs/hwui/renderthread/DrawFrameTask.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2022-11-23T17:46:54Z",
+      "side": 1,
+      "message": "Why doesn\u0027t the implementation of createSession just do this same optimization and then users of the API don\u0027t have to change?",
+      "range": {
+        "startLine": 313,
+        "startChar": 12,
+        "endLine": 313,
+        "endChar": 32
+      },
+      "revId": "1fd37ad4576f78063519758bfa05ca89ad6f058d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
