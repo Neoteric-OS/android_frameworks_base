@@ -29,6 +29,12 @@ MissingNullability: android.media.tv.TvRecordingClient.RecordingCallback#onEvent
     Missing nullability on parameter `eventType` in method `onEvent`
 MissingNullability: android.media.tv.TvRecordingClient.RecordingCallback#onEvent(String, String, android.os.Bundle) parameter #2:
     Missing nullability on parameter `eventArgs` in method `onEvent`
+MissingNullability: android.nfc.NfcAdapter#addPackageAllowListedForTagIntents(String, int) parameter #0:
+    Missing nullability on parameter `pkg` in method `addPackageAllowListedForTagIntents`
+MissingNullability: android.nfc.NfcAdapter#getCachedTagPackageForUser(int):
+    Missing nullability on method `getCachedTagPackageForUser` return
+MissingNullability: android.nfc.NfcAdapter#isPackageAllowListedForTagIntents(String, int) parameter #0:
+    Missing nullability on parameter `pkg` in method `isPackageAllowListedForTagIntents`
 MissingNullability: android.printservice.recommendation.RecommendationService#attachBaseContext(android.content.Context) parameter #0:
     Missing nullability on parameter `base` in method `attachBaseContext`
 MissingNullability: android.provider.ContactsContract.MetadataSync#CONTENT_URI:
@@ -59,6 +65,12 @@ MissingNullability: android.telephony.mbms.DownloadRequest.Builder#setServiceId(
     Missing nullability on method `setServiceId` return
 MissingNullability: android.telephony.mbms.DownloadRequest.Builder#setServiceId(String) parameter #0:
     Missing nullability on parameter `serviceId` in method `setServiceId`
+
+
+NullableCollection: android.nfc.NfcAdapter#getCachedTagPackageForUser(int):
+    Return type of method android.nfc.NfcAdapter.getCachedTagPackageForUser(int) is a nullable collection (`java.util.List`); must be non-null
+NullableCollection: android.nfc.NfcAdapter#getTagIntentsAllowlistForUser(int):
+    Return type of method android.nfc.NfcAdapter.getTagIntentsAllowlistForUser(int) is a nullable collection (`java.util.Map`); must be non-null
 
 
 ProtectedMember: android.printservice.recommendation.RecommendationService#attachBaseContext(android.content.Context):
