@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a7b9608_5614f6c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1945881
+      },
+      "writtenOn": "2022-11-24T13:27:50Z",
+      "side": 1,
+      "message": "Help to evaluate whether the change can be integrated, thank you very much",
+      "revId": "31e6111d6a589b932736415e6267b63ef9913372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
