@@ -15,24 +15,38 @@
  */
 package android.net.vcn;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_MMS;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_ANY;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_FORBIDDEN;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_REQUIRED;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 public class VcnCellUnderlyingNetworkTemplateTest extends VcnUnderlyingNetworkTemplateTestBase {
     private static final Set<String> ALLOWED_PLMN_IDS = new HashSet<>();
     private static final Set<Integer> ALLOWED_CARRIER_IDS = new HashSet<>();
+    private static final Set<Integer> REQUIRED_CAPS_DEFAULT =
+            Collections.singleton(NET_CAPABILITY_INTERNET);
 
-    // Package private for use in VcnGatewayConnectionConfigTest
-    static VcnCellUnderlyingNetworkTemplate getTestNetworkTemplate() {
+    private static final Set<Integer> REQUIRED_CAPS = new HashSet<>();
+
+    static {
+        REQUIRED_CAPS.add(NET_CAPABILITY_MMS);
+        REQUIRED_CAPS.add(NET_CAPABILITY_DUN);
+    }
+
+    private static VcnCellUnderlyingNetworkTemplate getTestNetworkTemplate(
+            Set<Integer> requiredCaps) {
         return new VcnCellUnderlyingNetworkTemplate.Builder()
                 .setMetered(MATCH_FORBIDDEN)
                 .setMinUpstreamBandwidthKbps(
@@ -45,12 +59,19 @@ public class VcnCellUnderlyingNetworkTemplateTest extends VcnUnderlyingNetworkTe
                 .setSimSpecificCarrierIds(ALLOWED_CARRIER_IDS)
                 .setRoaming(MATCH_FORBIDDEN)
                 .setOpportunistic(MATCH_REQUIRED)
+                .setCapabilities(requiredCaps)
                 .build();
+    }
+
+    // Package private for use in VcnGatewayConnectionConfigTest
+    static VcnCellUnderlyingNetworkTemplate getTestNetworkTemplate() {
+        return getTestNetworkTemplate(REQUIRED_CAPS_DEFAULT);
     }
 
     @Test
     public void testBuilderAndGetters() {
-        final VcnCellUnderlyingNetworkTemplate networkPriority = getTestNetworkTemplate();
+        final VcnCellUnderlyingNetworkTemplate networkPriority =
+                getTestNetworkTemplate(REQUIRED_CAPS);
         assertEquals(MATCH_FORBIDDEN, networkPriority.getMetered());
         assertEquals(
                 TEST_MIN_ENTRY_UPSTREAM_BANDWIDTH_KBPS,
@@ -68,6 +89,7 @@ public class VcnCellUnderlyingNetworkTemplateTest extends VcnUnderlyingNetworkTe
         assertEquals(ALLOWED_CARRIER_IDS, networkPriority.getSimSpecificCarrierIds());
         assertEquals(MATCH_FORBIDDEN, networkPriority.getRoaming());
         assertEquals(MATCH_REQUIRED, networkPriority.getOpportunistic());
+        assertEquals(REQUIRED_CAPS, networkPriority.getCapabilities());
     }
 
     @Test
@@ -86,6 +108,7 @@ public class VcnCellUnderlyingNetworkTemplateTest extends VcnUnderlyingNetworkTe
         assertEquals(new HashSet<Integer>(), networkPriority.getSimSpecificCarrierIds());
         assertEquals(MATCH_ANY, networkPriority.getRoaming());
         assertEquals(MATCH_ANY, networkPriority.getOpportunistic());
+        assertEquals(REQUIRED_CAPS_DEFAULT, networkPriority.getCapabilities());
     }
 
     @Test
@@ -109,6 +132,19 @@ public class VcnCellUnderlyingNetworkTemplateTest extends VcnUnderlyingNetworkTe
             fail("Expected IAE for exit threshold > entry threshold");
         } catch (IllegalArgumentException expected) {
         }
+    }
+
+    @Test
+    public void testEqualsWithDifferentCapabilities() {
+        final VcnCellUnderlyingNetworkTemplate left =
+                new VcnCellUnderlyingNetworkTemplate.Builder()
+                        .setCapabilities(Collections.singleton(NET_CAPABILITY_DUN))
+                        .build();
+        final VcnCellUnderlyingNetworkTemplate right =
+                new VcnCellUnderlyingNetworkTemplate.Builder()
+                        .setCapabilities(Collections.singleton(NET_CAPABILITY_MMS))
+                        .build();
+        assertNotEquals(left, right);
     }
 
     @Test
