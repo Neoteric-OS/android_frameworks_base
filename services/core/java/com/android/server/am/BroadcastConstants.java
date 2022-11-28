@@ -202,6 +202,7 @@ public class BroadcastConstants {
 
             pw.print("    "); pw.print(KEY_DEFERRAL_FLOOR); pw.print(" = ");
             TimeUtils.formatDuration(DEFERRAL_FLOOR, pw);
+            pw.println();
 
             pw.print("    "); pw.print(KEY_ALLOW_BG_ACTIVITY_START_TIMEOUT); pw.print(" = ");
             TimeUtils.formatDuration(ALLOW_BG_ACTIVITY_START_TIMEOUT, pw);
