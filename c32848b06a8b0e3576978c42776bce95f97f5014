@@ -68,6 +68,24 @@
       "message": "I\u0027m not sure if this filename TESTING_OWNERS is recommend. Why don\u0027t you just inline it?",
       "revId": "c32848b06a8b0e3576978c42776bce95f97f5014",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3bce687_029645e9",
+        "filename": "TESTING_OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2022-11-28T22:29:34Z",
+      "side": 1,
+      "message": "There are multiple owners in this package:\n\n$ ls *OWN*\nBATTERY_STATS_OWNERS  INPUT_OWNERS      OWNERS     PACKAGE_MANAGER_OWNERS  TRACE_OWNERS  ZYGOTE_OWNERS\nGAME_MANAGER_OWNERS   MULTIUSER_OWNERS  OWNERS.md  TESTING_OWNERS          WEAR_OWNERS\n\n\nAnyways, either option is fine for me...",
+      "parentUuid": "816f7a13_4fef83d9",
+      "revId": "c32848b06a8b0e3576978c42776bce95f97f5014",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
