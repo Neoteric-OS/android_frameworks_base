@@ -86,6 +86,24 @@
       "parentUuid": "816f7a13_4fef83d9",
       "revId": "c32848b06a8b0e3576978c42776bce95f97f5014",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7449aeb3_7069b58f",
+        "filename": "TESTING_OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-11-28T22:34:18Z",
+      "side": 1,
+      "message": "These are all components / teams, so they make sense and I know exactly what these are for, but what do you mean by \"testing owners\", do you mean you want to \"own\" *all* the tests??\n\nI\u0027m just not sure how this TESTING_OWNERS would be used in other OWNERS files in the future. If anything, you really should add a comment to this file and explain what exactly the members of this file \"own\".\n\nProbably a lot easier if you just add yourself to the OWNERS.",
+      "parentUuid": "c3bce687_029645e9",
+      "revId": "c32848b06a8b0e3576978c42776bce95f97f5014",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
