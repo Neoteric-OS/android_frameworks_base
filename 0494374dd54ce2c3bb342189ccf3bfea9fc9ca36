@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbeb97ed_b2158219",
+        "filename": "core/java/com/android/internal/content/om/OverlayConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2022-11-29T07:30:21Z",
+      "side": 1,
+      "message": "remove this too, it\u0027s dead code now",
+      "revId": "0494374dd54ce2c3bb342189ccf3bfea9fc9ca36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e624235_780d3c62",
+        "filename": "core/tests/coretests/src/com/android/internal/content/res/OverlayConfigTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2022-11-29T07:30:21Z",
+      "side": 1,
+      "message": "rename to testNoConfigPartitionPrecedence() and move this next to testPartitionPrecedence()",
+      "range": {
+        "startLine": 510,
+        "startChar": 16,
+        "endLine": 510,
+        "endChar": 54
+      },
+      "revId": "0494374dd54ce2c3bb342189ccf3bfea9fc9ca36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "057010eb_62d6ad9b",
+        "filename": "core/tests/coretests/src/com/android/internal/content/res/OverlayConfigTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2022-11-29T07:30:21Z",
+      "side": 1,
+      "message": "this test looks similar to testPartitionPrecedence(), we should merge the two test and only keep one.",
+      "range": {
+        "startLine": 522,
+        "startChar": 16,
+        "endLine": 522,
+        "endChar": 52
+      },
+      "revId": "0494374dd54ce2c3bb342189ccf3bfea9fc9ca36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f1fb9ca_816449ed",
+        "filename": "core/tests/coretests/src/com/android/internal/content/res/OverlayConfigTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2022-11-29T07:30:21Z",
+      "side": 1,
+      "message": "add some overlay from different partitions to show the expected order when there are overlay packages from different partitions overriding the same package:\n\n```\nmScannerRule.addOverlay(createFile(\"/vendor/overlay/one.apk\"), \"one\", \"android\", 0, true, 1);\nmScannerRule.addOverlay(createFile(\"/vendor/overlay/two.apk\"), \"two\", \"android\", 0, true, 1);\nmScannerRule.addOverlay(createFile(\"/product/overlay/one.apk\"), \"three\", \"android\", 0, true, 0);\nmScannerRule.addOverlay(createFile(\"/product/overlay/two.apk\"), \"four\", \"android\", 0, true, 0);\n\nassertConfig(overlayConfig, \"one\", false, true, 0);\nassertConfig(overlayConfig, \"two\", false, true, 1);\nassertConfig(overlayConfig, \"three\", false, true, 2);\nassertConfig(overlayConfig, \"four\", false, true, 3);\n```",
+      "revId": "0494374dd54ce2c3bb342189ccf3bfea9fc9ca36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
