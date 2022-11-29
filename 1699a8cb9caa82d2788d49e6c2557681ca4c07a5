@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b319e3ab_458d2c3f",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-29T23:31:35Z",
+      "side": 1,
+      "message": "Suggest using addAll(REQUIRED_CAPABILITIES_DEFAULT)",
+      "range": {
+        "startLine": 349,
+        "startChar": 12,
+        "endLine": 349,
+        "endChar": 63
+      },
+      "revId": "1699a8cb9caa82d2788d49e6c2557681ca4c07a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62f4e32c_6eeaac0d",
+        "filename": "tests/vcn/java/android/net/vcn/VcnCellUnderlyingNetworkTemplateTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-29T23:31:35Z",
+      "side": 1,
+      "message": "We should also test something other than the default. Maybe have an overload of getTestNetworkTemplate(int... requiredCaps) and test that below?",
+      "range": {
+        "startLine": 53,
+        "startChar": 55,
+        "endLine": 53,
+        "endChar": 78
+      },
+      "revId": "1699a8cb9caa82d2788d49e6c2557681ca4c07a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e743275_69b5ab1f",
+        "filename": "tests/vcn/java/android/net/vcn/VcnCellUnderlyingNetworkTemplateTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-11-29T23:31:35Z",
+      "side": 1,
+      "message": "Let\u0027s test the default values here too?",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 68
+      },
+      "revId": "1699a8cb9caa82d2788d49e6c2557681ca4c07a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
