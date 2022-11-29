@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "43044b0d_654b8940",
+        "filename": "core/java/com/android/internal/content/om/OverlayConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1966697
+      },
+      "writtenOn": "2022-11-29T08:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbeb97ed_b2158219",
+      "revId": "0494374dd54ce2c3bb342189ccf3bfea9fc9ca36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e624235_780d3c62",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-11-29T07:30:21Z",
       "side": 1,
       "message": "rename to testNoConfigPartitionPrecedence() and move this next to testPartitionPrecedence()",
+      "range": {
+        "startLine": 510,
+        "startChar": 16,
+        "endLine": 510,
+        "endChar": 54
+      },
+      "revId": "0494374dd54ce2c3bb342189ccf3bfea9fc9ca36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13c66eff_77b54e0f",
+        "filename": "core/tests/coretests/src/com/android/internal/content/res/OverlayConfigTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1966697
+      },
+      "writtenOn": "2022-11-29T08:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e624235_780d3c62",
       "range": {
         "startLine": 510,
         "startChar": 16,
@@ -66,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ce33b131_5bf4e143",
+        "filename": "core/tests/coretests/src/com/android/internal/content/res/OverlayConfigTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1966697
+      },
+      "writtenOn": "2022-11-29T08:38:26Z",
+      "side": 1,
+      "message": "I think they are different. testPartitionPrecedence() tests the scenario when all partitions have the configuration file, while this one tests partial.\n\nHow about having three tests: testAllConfigPartitionPrecedence(), testPartialConfigPartitionPrecedence() and testNoConfigPartitionPrecedence()?",
+      "parentUuid": "057010eb_62d6ad9b",
+      "range": {
+        "startLine": 522,
+        "startChar": 16,
+        "endLine": 522,
+        "endChar": 52
+      },
+      "revId": "0494374dd54ce2c3bb342189ccf3bfea9fc9ca36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8f1fb9ca_816449ed",
         "filename": "core/tests/coretests/src/com/android/internal/content/res/OverlayConfigTest.java",
         "patchSetId": 3
@@ -77,6 +143,24 @@
       "writtenOn": "2022-11-29T07:30:21Z",
       "side": 1,
       "message": "add some overlay from different partitions to show the expected order when there are overlay packages from different partitions overriding the same package:\n\n```\nmScannerRule.addOverlay(createFile(\"/vendor/overlay/one.apk\"), \"one\", \"android\", 0, true, 1);\nmScannerRule.addOverlay(createFile(\"/vendor/overlay/two.apk\"), \"two\", \"android\", 0, true, 1);\nmScannerRule.addOverlay(createFile(\"/product/overlay/one.apk\"), \"three\", \"android\", 0, true, 0);\nmScannerRule.addOverlay(createFile(\"/product/overlay/two.apk\"), \"four\", \"android\", 0, true, 0);\n\nassertConfig(overlayConfig, \"one\", false, true, 0);\nassertConfig(overlayConfig, \"two\", false, true, 1);\nassertConfig(overlayConfig, \"three\", false, true, 2);\nassertConfig(overlayConfig, \"four\", false, true, 3);\n```",
+      "revId": "0494374dd54ce2c3bb342189ccf3bfea9fc9ca36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebc1270b_d38f59b7",
+        "filename": "core/tests/coretests/src/com/android/internal/content/res/OverlayConfigTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1966697
+      },
+      "writtenOn": "2022-11-29T08:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f1fb9ca_816449ed",
       "revId": "0494374dd54ce2c3bb342189ccf3bfea9fc9ca36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
