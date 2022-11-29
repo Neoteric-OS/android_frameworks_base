@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b068c89_6802e8ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-11-29T21:16:08Z",
+      "side": 1,
+      "message": "Note API implementation is not being cherrypicked as it would require a lot more work and it is not necessary at this point.",
+      "revId": "16c66fb6326064846e73e2dddf2e65ea75b64da4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
