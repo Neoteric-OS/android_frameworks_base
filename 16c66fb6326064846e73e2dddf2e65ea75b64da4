@@ -16,6 +16,24 @@
       "message": "Note API implementation is not being cherrypicked as it would require a lot more work and it is not necessary at this point.",
       "revId": "16c66fb6326064846e73e2dddf2e65ea75b64da4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b496a7f_983c521d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-11-29T21:17:08Z",
+      "side": 1,
+      "message": "To be clear, this is to allow clients who do AOSP-first development to use the new APIs.",
+      "parentUuid": "4b068c89_6802e8ce",
+      "revId": "16c66fb6326064846e73e2dddf2e65ea75b64da4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
