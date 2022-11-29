@@ -34,6 +34,24 @@
       "parentUuid": "64da140e_38277cf3",
       "revId": "894f6b3fbf9d76c1ee47f7adbbfc31ce9ad95470",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "944f59c6_28465582",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2022-11-29T16:23:03Z",
+      "side": 1,
+      "message": "Correct me if I\u0027m wrong, but since StatusBarManagerService does a lookup based on the `IBinder` token, it shouldn\u0027t accumulate new disable records if a single caller continually calls `disable(DISABLE_NONE)`, but it should correctly find that existing `DisableRecord`. Right?\n\nThat said, I think the most-correct behavior when a caller sends `DISABLE_NONE` is probably to just remove the record anyway, so this seems like a fine change.",
+      "parentUuid": "6ea33529_8c4de77f",
+      "revId": "894f6b3fbf9d76c1ee47f7adbbfc31ce9ad95470",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
