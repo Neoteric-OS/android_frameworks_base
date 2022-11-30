@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d54eacb4_f2ce9fdf",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4109,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2022-11-30T03:01:29Z",
+      "side": 1,
+      "message": "this comment is not visible in the SDK doc, so I suggest having the doc for each profile be something like \"DTS codec profile for DTS Express\", \"DTS codec profile for DTS-HD Master Audio\"...",
+      "range": {
+        "startLine": 4109,
+        "startChar": 8,
+        "endLine": 4109,
+        "endChar": 29
+      },
+      "revId": "14b68776849b5726b53753698a8ee17dcdf2c2f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
