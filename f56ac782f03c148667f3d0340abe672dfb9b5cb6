@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df0a8b05_04066353",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 8152,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2022-11-30T16:22:58Z",
+      "side": 1,
+      "message": "Two things:\n1. Why is this hidden? The other keys in this namespace are APIs.\n2. The format of this key is FAR too fragile and poorly defined.  It should be restructured in a persistable bundle style key with well defined values.  \n\nI can envision a KEY_ERROR_POLICY_CONFIG_PERSISTABLE_BUNDLE defined with sub-keys keys like KEY_CAPABILITIES_STRING_ARRAY (for the ims|eims), KEY_ERROR_TYPE_INT (For the error types like GENERIC_ERROR_TYPE which would be defined using an intdef), KEY_ERROR_NUMBER_INT - for single error code, KEY_ERROR_NuMBER_RANGE_INT_ARRAY - for errors in range, KEY_MATCH_ALL_ERROR_NUMBERS_BOOL - for matching all errors.\n\nThere should be some other persistable bundle keys which were added recently in here you can look at for inspiration.",
+      "range": {
+        "startLine": 8152,
+        "startChar": 35,
+        "endLine": 8152,
+        "endChar": 71
+      },
+      "revId": "f56ac782f03c148667f3d0340abe672dfb9b5cb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
