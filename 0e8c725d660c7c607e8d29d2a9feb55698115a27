@@ -51,6 +51,52 @@
       "parentUuid": "75fd5c65_c2ff66ee",
       "revId": "0e8c725d660c7c607e8d29d2a9feb55698115a27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c7a2fc6_97b8cb4b",
+        "filename": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3840,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2022-11-30T18:09:56Z",
+      "side": 1,
+      "message": "nit: rename to `newSharedUserSetting` to be consistent with the variables above",
+      "range": {
+        "startLine": 3840,
+        "startChar": 22,
+        "endLine": 3840,
+        "endChar": 43
+      },
+      "revId": "0e8c725d660c7c607e8d29d2a9feb55698115a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e819a4bc_18a7e946",
+        "filename": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3853,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2022-11-30T18:09:56Z",
+      "side": 1,
+      "message": "nit: \n```\n// Also, if the sharedUserSetting of the application on /system is different \n// from the sharedUserSetting on /data, switch back to the application on /system.\n// We should trust the sharedUserSetting on /system, even if the application \n// version on /system is smaller than the version on /data.\n```",
+      "range": {
+        "startLine": 3850,
+        "startChar": 15,
+        "endLine": 3853,
+        "endChar": 63
+      },
+      "revId": "0e8c725d660c7c607e8d29d2a9feb55698115a27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
