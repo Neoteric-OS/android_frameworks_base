@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ceee1a6d_52a94dec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1947190
+      },
+      "writtenOn": "2022-11-30T03:10:04Z",
+      "side": 1,
+      "message": "A shared CL for Amlogic to review the change.",
+      "revId": "abfb2aa24bb3afff65193cdb4789eecb8356ed46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
