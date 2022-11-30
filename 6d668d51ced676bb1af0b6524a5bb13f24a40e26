@@ -16,6 +16,24 @@
       "message": "Hi Googler, could you help to review this simple CL? Thanks.",
       "revId": "6d668d51ced676bb1af0b6524a5bb13f24a40e26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ffab0c8_269cfd3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1080076
+      },
+      "writtenOn": "2022-11-30T09:16:18Z",
+      "side": 1,
+      "message": "Thank you for this contribution",
+      "parentUuid": "49ebb06c_832ef86e",
+      "revId": "6d668d51ced676bb1af0b6524a5bb13f24a40e26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
