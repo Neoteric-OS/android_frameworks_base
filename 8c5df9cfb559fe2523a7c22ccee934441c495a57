@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89843095_68b04864",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-11-30T15:37:03Z",
+      "side": 1,
+      "message": "FYI I ended up splitting the top-level Android.bp change to another CL because it was causing merge conflicts in a way I could not understand (there were no conflicting changes in the file).",
+      "revId": "8c5df9cfb559fe2523a7c22ccee934441c495a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
