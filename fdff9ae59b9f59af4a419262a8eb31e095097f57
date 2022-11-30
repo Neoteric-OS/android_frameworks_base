@@ -16,6 +16,29 @@
       "message": "Thanks!",
       "revId": "fdff9ae59b9f59af4a419262a8eb31e095097f57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da0f96a2_70cf8b4f",
+        "filename": "data/keyboards/Generic.kl",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2022-11-30T18:04:41Z",
+      "side": 1,
+      "message": "nit: KEY_ZOOMIN",
+      "range": {
+        "startLine": 366,
+        "startChar": 11,
+        "endLine": 366,
+        "endChar": 22
+      },
+      "revId": "fdff9ae59b9f59af4a419262a8eb31e095097f57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
