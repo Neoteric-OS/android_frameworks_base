@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8cb892a_5d5d514a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-11-30T12:41:30Z",
+      "side": 1,
+      "message": "David, can you please take a look before I send for OWNERS review?\n\nPer offline investigation, I get a merge conflict for the change that includes this file and other files (and other changes in a topic). However this change as-is seems to merge cleanly from AOSP to internal master.",
+      "revId": "a880730cdedc7c91a7ebcd4de1d4dddf7d3fbc59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
