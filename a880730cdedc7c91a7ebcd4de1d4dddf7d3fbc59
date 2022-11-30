@@ -16,6 +16,23 @@
       "message": "David, can you please take a look before I send for OWNERS review?\n\nPer offline investigation, I get a merge conflict for the change that includes this file and other files (and other changes in a topic). However this change as-is seems to merge cleanly from AOSP to internal master.",
       "revId": "a880730cdedc7c91a7ebcd4de1d4dddf7d3fbc59",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1db78de_53b03c4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-11-30T13:54:43Z",
+      "side": 1,
+      "message": "Paul, sorry for the repeat review request: Because of a merge conflict I am merging the changes to Android.bp separately of the topic.",
+      "revId": "a880730cdedc7c91a7ebcd4de1d4dddf7d3fbc59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
