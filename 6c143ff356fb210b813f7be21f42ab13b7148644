@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dc5707e_a01633cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2022-11-30T14:13:06Z",
+      "side": 1,
+      "message": "LGTM on the DPM part.",
+      "revId": "6c143ff356fb210b813f7be21f42ab13b7148644",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
