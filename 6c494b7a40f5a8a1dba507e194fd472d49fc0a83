@@ -50,6 +50,24 @@
       "message": "There shouldn\u0027t be any situation where Central Surfaces doesn\u0027t have a NotificationPanelViewController. Why isn\u0027t it getting initialized?",
       "revId": "6c494b7a40f5a8a1dba507e194fd472d49fc0a83",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0be189be_62e63ace",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1970380
+      },
+      "writtenOn": "2022-12-01T15:11:56Z",
+      "side": 1,
+      "message": "If thats the case, why same object has null checks at other places in Same class ?\n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/CentralSurfacesImpl.java;l\u003d2350?q\u003dCentralSurfacesImpl",
+      "parentUuid": "ba06d64b_105b9565",
+      "revId": "6c494b7a40f5a8a1dba507e194fd472d49fc0a83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
