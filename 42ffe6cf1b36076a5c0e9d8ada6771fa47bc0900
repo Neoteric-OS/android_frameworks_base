@@ -33,6 +33,41 @@
       "message": "Please add a test to frameworks/base/services/tests/servicestests/src/com/android/server/twilight/TwilightServiceTest.java",
       "revId": "42ffe6cf1b36076a5c0e9d8ada6771fa47bc0900",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19085090_34847d92",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1972300
+      },
+      "writtenOn": "2022-12-01T01:17:28Z",
+      "side": 1,
+      "message": "For testing, the above modification should use a mock LocationManager.\nHowever, in TwilightService, LocationManager is not considered for testing because it is private.\nIn this case you can use mock service with spy context, but TwilightServiceTest is already using real AlarmManager in context.\nIs it ok to make LocationManager protect?\nOr is it better to separate the LocationRequest creation into a method and test it?",
+      "parentUuid": "4264e2ed_d024248b",
+      "revId": "42ffe6cf1b36076a5c0e9d8ada6771fa47bc0900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eed6e876_759a72fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1972300
+      },
+      "writtenOn": "2022-12-01T01:17:28Z",
+      "side": 1,
+      "message": "I\u0027ve commented because I have a few questions about the direction.",
+      "revId": "42ffe6cf1b36076a5c0e9d8ada6771fa47bc0900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
