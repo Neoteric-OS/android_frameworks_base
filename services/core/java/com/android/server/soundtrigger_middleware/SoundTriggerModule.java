@@ -438,30 +438,36 @@ class SoundTriggerModule implements IBinder.DeathRecipient, ISoundTriggerHal.Glo
                 mHalService.stopRecognition(mHandle);
 
                 // No more callbacks for this model after this point.
+                ISoundTriggerCallback callback = null;
                 synchronized (SoundTriggerModule.this) {
                     // Generate an abortion callback to the client if the model is still active.
                     if (getState() == ModelState.ACTIVE) {
-                        if (mCallback != null) {
-                            try {
-                                switch (mType) {
-                                    case SoundModelType.GENERIC:
-                                        mCallback.onRecognition(mHandle, AidlUtil.newAbortEvent(),
-                                                mSession.mSessionHandle);
-                                        break;
-                                    case SoundModelType.KEYPHRASE:
-                                        mCallback.onPhraseRecognition(mHandle,
-                                                AidlUtil.newAbortPhraseEvent(),
-                                                mSession.mSessionHandle);
-                                        break;
-                                    default:
-                                        throw new RuntimeException(
-                                                "Unexpected model type: " + mType);
-                                }
-                            } catch (RemoteException e) {
-                            }
-                        }
+                        callback = mCallback;
                         setState(ModelState.LOADED);
                     }
+                }
+
+                //the callback must be invoked outside of the lock.
+                try {
+                    if (callback != null) {
+                        switch (mType) {
+                            case SoundModelType.GENERIC:
+                                callback.onRecognition(mHandle, AidlUtil.newAbortEvent(),
+                                        mSession.mSessionHandle);
+                                break;
+                            case SoundModelType.KEYPHRASE:
+                                callback.onPhraseRecognition(mHandle,
+                                        AidlUtil.newAbortPhraseEvent(),
+                                        mSession.mSessionHandle);
+                                break;
+                            default:
+                                throw new RuntimeException(
+                                        "Unexpected model type: " + mType);
+                        }
+                    }
+                } catch (RemoteException e) {
+                    // We're not expecting any exceptions here.
+                    throw e.rethrowAsRuntimeException();
                 }
             }
 
@@ -525,7 +531,7 @@ class SoundTriggerModule implements IBinder.DeathRecipient, ISoundTriggerHal.Glo
                 // The callback must be invoked outside of the lock.
                 try {
                     if (callback != null) {
-                        mCallback.onPhraseRecognition(mHandle, phraseRecognitionEvent,
+                        callback.onPhraseRecognition(mHandle, phraseRecognitionEvent,
                                 mSession.mSessionHandle);
                     }
                 } catch (RemoteException e) {
