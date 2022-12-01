@@ -16,6 +16,23 @@
       "message": "I had resovled the comment,please help me review again,thanks.",
       "revId": "26222f03ef27746971bd0b47205a52d6e603bff6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "478f39c4_717240c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2022-12-01T06:40:19Z",
+      "side": 1,
+      "message": "@schfan@google.com hello, it looks like I have no permission to submit,and auto submit did not work, please help me submit,thanks",
+      "revId": "26222f03ef27746971bd0b47205a52d6e603bff6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
