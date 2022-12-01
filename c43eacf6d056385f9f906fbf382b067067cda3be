@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56be7b0d_6ab73a26",
+        "filename": "core/tests/coretests/src/com/android/internal/content/res/OverlayConfigTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2022-12-01T06:59:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "92d97e3a_d65f4453",
+      "range": {
+        "startLine": 566,
+        "startChar": 16,
+        "endLine": 566,
+        "endChar": 17
+      },
+      "revId": "c43eacf6d056385f9f906fbf382b067067cda3be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "293ba7b2_3f4c044a",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "I prefer using priority to make \"three\" comes before \"four\".",
       "parentUuid": "293ba7b2_3f4c044a",
+      "range": {
+        "startLine": 569,
+        "startChar": 44,
+        "endLine": 569,
+        "endChar": 70
+      },
+      "revId": "c43eacf6d056385f9f906fbf382b067067cda3be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce72230a_a9e1ef50",
+        "filename": "core/tests/coretests/src/com/android/internal/content/res/OverlayConfigTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2022-12-01T06:59:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6369df72_5db45784",
       "range": {
         "startLine": 569,
         "startChar": 44,
