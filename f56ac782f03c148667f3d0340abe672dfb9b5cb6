@@ -22,6 +22,30 @@
       },
       "revId": "f56ac782f03c148667f3d0340abe672dfb9b5cb6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3347b7fc_e9a24ce3",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 8152,
+      "author": {
+        "id": 1949495
+      },
+      "writtenOn": "2022-12-01T09:04:54Z",
+      "side": 1,
+      "message": "Hi Tyler, thanks for your reviews and suggestions!\n\nThe reason why the config is hidden is that we think there is a chance that we will modify the config for enhancement in the future . Therefore, we want to hide the config for now and expose it in the future when we are confident that the config is finalised.\n\nRegarding your second point, I have few concerns on using persistable bundle on this config.\n\n1. According to current design, this config can contains multiple error policies, each string represent one policy. If we are using bundle for this config, it seems that it can only represent one policy.\n2. For error_details, it can contains multiple numbers and multiple range of numbers. For retry_array, it can support random numbers (e.g. 2+r15 \u003d 2 seconds + random time below 15 seconds). It seems hard to support these options with sub-keys keys like KEY_ERROR_NUMBER_INT, KEY_ERROR_NuMBER_RANGE_INT_ARRAY and KEY_MATCH_ALL_ERROR_NUMBERS_BOOL.\n\nCan you share your thoughts and suggestions? Thanks!",
+      "parentUuid": "df0a8b05_04066353",
+      "range": {
+        "startLine": 8152,
+        "startChar": 35,
+        "endLine": 8152,
+        "endChar": 71
+      },
+      "revId": "f56ac782f03c148667f3d0340abe672dfb9b5cb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
