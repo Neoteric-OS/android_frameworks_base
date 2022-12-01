@@ -16,6 +16,24 @@
       "message": "Why did you switch to calling the ioctl directly here? Not using the libcutil wrapper will make switching to memfds more difficult.",
       "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06211972_35851a39",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2022-12-01T01:06:04Z",
+      "side": 1,
+      "message": "El",
+      "parentUuid": "f7d8ab27_69f5305c",
+      "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
