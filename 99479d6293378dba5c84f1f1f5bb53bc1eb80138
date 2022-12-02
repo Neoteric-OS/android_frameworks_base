@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4918e0ad_d031a223",
+        "filename": "services/core/java/com/android/server/pm/ComputerEngine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5721,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2022-12-02T18:54:13Z",
+      "side": 1,
+      "message": "Per discussion in the bug, can you update this to throw `NameNotFoundException`?\n\nAnd check the other places where this is used to make sure that exception will throw correctly?\n\nOr if you do not want to do this, let me know and I can work on the change internally and share a Partner CL once it\u0027s available.",
+      "revId": "99479d6293378dba5c84f1f1f5bb53bc1eb80138",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "370e33c6_23ae3299",
         "filename": "services/core/java/com/android/server/pm/ComputerEngine.java",
         "patchSetId": 2
