@@ -16,6 +16,23 @@
       "message": "Hi Yurri, I rebase this CL, could you help to review it again? Thanks.",
       "revId": "746bd79d3dd07264dedcfe08c1f70d1cd73ef77b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57ddc26f_4943eb27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2022-12-02T14:15:25Z",
+      "side": 1,
+      "message": "Hi Yurii, could you help to check failed tests? Are they related to this CL? Thanks.",
+      "revId": "746bd79d3dd07264dedcfe08c1f70d1cd73ef77b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
