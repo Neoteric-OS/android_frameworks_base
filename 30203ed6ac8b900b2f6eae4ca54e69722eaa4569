@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "109d19b0_3d78c5ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2022-12-02T22:26:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "744256b3_bc3a27ba",
+      "revId": "30203ed6ac8b900b2f6eae4ca54e69722eaa4569",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5709840_adc3905f",
@@ -48,6 +66,24 @@
       "writtenOn": "2022-12-02T20:29:10Z",
       "side": 1,
       "message": "This should be undone.",
+      "revId": "30203ed6ac8b900b2f6eae4ca54e69722eaa4569",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "746dd955_2f42c9d5",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2022-12-02T22:26:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "908b2c8b_3e55984f",
       "revId": "30203ed6ac8b900b2f6eae4ca54e69722eaa4569",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
