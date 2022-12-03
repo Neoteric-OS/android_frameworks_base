@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9f53a76_725ee5ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2022-12-03T02:30:45Z",
+      "side": 1,
+      "message": "It is not suggested to couple this method with a specific packageName for the reason that there are numerous apps can send their shortcuts to Launcher, this time it\u0027s Chrome, but what\u0027s next? and next?…… The \"whitelist\" can be so long and hard to maintain.\n\nIf this is really a strong demand, better find a proper way to check bookmark apps, for example by checking `type` or some other properties. :)",
+      "revId": "d1c8222e183105ecd477c74dd09b42a58acc5f6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f49dbaa_01069466",
