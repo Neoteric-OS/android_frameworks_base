@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f395a3cf_21a42484",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-12-03T00:45:04Z",
+      "side": 1,
+      "message": "Unfortunately it seems that none of the current OWNERS of `./services/core/java/com/android/server/locksettings/` are familiar with this code.  kroot@ might have some familiarity with it, so it would be nice to have his review first.\n\nThe failure in the latest presubmit run is from `LocationManagerFineTest.testRequestLocationUpdates_BatterySaver_AllDisabledScreenOff`, which is a known bug (http://b/248095820).  Welcome to Android; presubmit regularly fails due to random flaky tests.  Ultimately you can just bypass presubmit if really needed, but everyone also has a responsibility to help fix these issues.  I have pinged b/248095820 to let the assignee know that it\u0027s still happening.",
+      "parentUuid": "b5709840_adc3905f",
+      "revId": "30203ed6ac8b900b2f6eae4ca54e69722eaa4569",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "908b2c8b_3e55984f",
