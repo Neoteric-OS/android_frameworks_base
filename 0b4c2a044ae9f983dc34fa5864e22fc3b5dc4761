@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28d48926_3e09ece4",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2022-12-03T01:57:56Z",
+      "side": 1,
+      "message": "Does this work correctly if you\u0027re already connected to the network? It seems like it would be ERROR_NONE if that were the case and this was the first entry.\n\nWould it be better to serialize this through the Handler if you have the issue of network flapping calling this over and over?",
+      "range": {
+        "startLine": 544,
+        "startChar": 24,
+        "endLine": 544,
+        "endChar": 89
+      },
+      "revId": "0b4c2a044ae9f983dc34fa5864e22fc3b5dc4761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
