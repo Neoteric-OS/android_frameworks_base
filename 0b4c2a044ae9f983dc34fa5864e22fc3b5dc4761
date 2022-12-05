@@ -22,6 +22,30 @@
       },
       "revId": "0b4c2a044ae9f983dc34fa5864e22fc3b5dc4761",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94bfbb22_ba8ee7de",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2022-12-05T21:01:10Z",
+      "side": 1,
+      "message": "1) I\u0027m not quite sure what you mean here. If we are already connected to internet, and the error is ERROR_NONE, it will stay that way. This is expected since network is available. It only changes the error code if it is ERROR_NO_NETWORK. \n\n2) Right now, the network calls and the retry handler is called on separate threads. \n\nAre you suggesting using the same handler as the retry handler? That would ensure that the network calls are on the same thread as setting the error code, which would eliminate the need to use an atomic class to hold `mAtomicLoadEscrowDataErrorCode`.",
+      "parentUuid": "28d48926_3e09ece4",
+      "range": {
+        "startLine": 544,
+        "startChar": 24,
+        "endLine": 544,
+        "endChar": 89
+      },
+      "revId": "0b4c2a044ae9f983dc34fa5864e22fc3b5dc4761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
