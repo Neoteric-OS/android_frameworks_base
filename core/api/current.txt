@@ -21307,6 +21307,9 @@ package android.media {
   public static final class MediaCodec.CryptoException extends java.lang.RuntimeException {
     ctor public MediaCodec.CryptoException(int, @Nullable String);
     method public int getErrorCode();
+    method public int getErrorContext();
+    method public int getOemError();
+    method public int getVendorError();
     field @Deprecated public static final int ERROR_FRAME_TOO_LARGE = 8; // 0x8
     field @Deprecated public static final int ERROR_INSUFFICIENT_OUTPUT_PROTECTION = 4; // 0x4
     field @Deprecated public static final int ERROR_INSUFFICIENT_SECURITY = 7; // 0x7
@@ -21806,6 +21809,9 @@ package android.media {
 
   public final class MediaCryptoException extends java.lang.Exception {
     ctor public MediaCryptoException(@Nullable String);
+    method public int getErrorContext();
+    method public int getOemError();
+    method public int getVendorError();
   }
 
   public abstract class MediaDataSource implements java.io.Closeable {
@@ -22030,6 +22036,9 @@ package android.media {
   public static final class MediaDrm.MediaDrmStateException extends java.lang.IllegalStateException {
     method @NonNull public String getDiagnosticInfo();
     method public int getErrorCode();
+    method public int getErrorContext();
+    method public int getOemError();
+    method public int getVendorError();
     method public boolean isTransient();
   }
 
@@ -22103,6 +22112,9 @@ package android.media {
   public static final class MediaDrm.SessionException extends java.lang.RuntimeException {
     ctor public MediaDrm.SessionException(int, @Nullable String);
     method @Deprecated public int getErrorCode();
+    method public int getErrorContext();
+    method public int getOemError();
+    method public int getVendorError();
     method public boolean isTransient();
     field @Deprecated public static final int ERROR_RESOURCE_CONTENTION = 1; // 0x1
     field @Deprecated public static final int ERROR_UNKNOWN = 0; // 0x0
@@ -22110,10 +22122,16 @@ package android.media {
 
   public class MediaDrmException extends java.lang.Exception {
     ctor public MediaDrmException(String);
+    method public int getErrorContext();
+    method public int getOemError();
+    method public int getVendorError();
   }
 
   public class MediaDrmResetException extends java.lang.IllegalStateException {
     ctor public MediaDrmResetException(String);
+    method public int getErrorContext();
+    method public int getOemError();
+    method public int getVendorError();
   }
 
   public final class MediaExtractor {

@@ -21,6 +21,57 @@ package android.media;
  */
 public class MediaDrmException extends Exception {
     public MediaDrmException(String detailMessage) {
-        super(detailMessage);
+        this(detailMessage, 0, 0, 0);
     }
+
+    /**
+     * @hide
+     */
+    public MediaDrmException(String message, int vendorError, int oemError, int errorContext) {
+        super(message);
+        mVendorError = vendorError;
+        mOemError = oemError;
+        mErrorContext = errorContext;
+    }
+
+    /**
+     * Returns {@link MediaDrm} plugin vendor defined error code associated with this {@link
+     * MediaDrmException}.
+     * <p>
+     * Please consult the {@link MediaDrm} plugin vendor for details on the error code.
+     *
+     * @return an error code defined by the {@link MediaDrm} plugin vendor if available,
+     * otherwise 0.
+     */
+    public int getVendorError() {
+        return mVendorError;
+    }
+
+    /**
+     * Returns OEM or SOC specific error code associated with this {@link
+     * MediaDrmException}.
+     * <p>
+     * Please consult the {@link MediaDrm} plugin, chip, or device vendor for details on the
+     * error code.
+     *
+     * @return an OEM or SOC specific error code if available, otherwise 0.
+     */
+    public int getOemError() {
+        return mOemError;
+    }
+
+    /**
+     * Returns {@link MediaDrm} plugin vendor defined error context associated with this {@link
+     * MediaDrmException}.
+     * <p>
+     * Please consult the {@link MediaDrm} plugin vendor for details on the error context.
+     *
+     * @return an opaque integer that would help the @{@link MediaDrm} vendor locate the
+     * source of the error if available, otherwise 0.
+     */
+    public int getErrorContext() {
+        return mErrorContext;
+    }
+
+    private final int mVendorError, mOemError, mErrorContext;
 }

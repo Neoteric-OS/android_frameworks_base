@@ -2474,8 +2474,19 @@ final public class MediaCodec {
      */
     public final static class CryptoException extends RuntimeException {
         public CryptoException(int errorCode, @Nullable String detailMessage) {
-            super(detailMessage);
+            this(detailMessage, errorCode, 0, 0, 0);
+        }
+
+        /**
+         * @hide
+         */
+        public CryptoException(String message, int errorCode, int vendorError, int oemError,
+                int errorContext) {
+            super(message);
             mErrorCode = errorCode;
+            mVendorError = vendorError;
+            mOemError = oemError;
+            mErrorContext = errorContext;
         }
 
         /**
@@ -2594,7 +2605,46 @@ final public class MediaCodec {
             return mErrorCode;
         }
 
-        private int mErrorCode;
+        /**
+         * Returns {@link MediaDrm} plugin vendor defined error code associated with this {@link
+         * CryptoException}.
+         * <p>
+         * Please consult the {@link MediaDrm} plugin vendor for details on the error code.
+         *
+         * @return an error code defined by the {@link MediaDrm} plugin vendor if available,
+         * otherwise 0.
+         */
+        public int getVendorError() {
+            return mVendorError;
+        }
+
+        /**
+         * Returns OEM or SOC specific error code associated with this {@link
+         * CryptoException}.
+         * <p>
+         * Please consult the {@link MediaDrm} plugin, chip, or device vendor for details on the
+         * error code.
+         *
+         * @return an OEM or SOC specific error code if available, otherwise 0.
+         */
+        public int getOemError() {
+            return mOemError;
+        }
+
+        /**
+         * Returns {@link MediaDrm} plugin vendor defined error context associated with this {@link
+         * CryptoException}.
+         * <p>
+         * Please consult the {@link MediaDrm} plugin vendor for details on the error context.
+         *
+         * @return an opaque integer that would help the @{@link MediaDrm} vendor locate the
+         * source of the error if available, otherwise 0.
+         */
+        public int getErrorContext() {
+            return mErrorContext;
+        }
+
+        private final int mErrorCode, mVendorError, mOemError, mErrorContext;
     }
 
     /**

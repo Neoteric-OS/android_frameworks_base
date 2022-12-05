@@ -24,4 +24,11 @@ public final class UnsupportedSchemeException extends MediaDrmException {
     public UnsupportedSchemeException(String detailMessage) {
         super(detailMessage);
     }
+
+    /**
+     * @hide
+     */
+    public UnsupportedSchemeException(String message, int vendorError, int oemError, int context) {
+        super(message, vendorError, oemError, context);
+    }
 }
