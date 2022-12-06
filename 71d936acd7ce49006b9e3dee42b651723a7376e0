@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8ed7bd6_ec8cf707",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2022-12-06T05:56:50Z",
+      "side": 1,
+      "message": "Bypassing lint as this is a relocation of an existing test.",
+      "revId": "71d936acd7ce49006b9e3dee42b651723a7376e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
