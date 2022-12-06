@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c15dbfbf_e9442290",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-06T01:57:59Z",
+      "side": 1,
+      "message": "This is a good time to do this 😊",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 31
+      },
+      "revId": "2e35fe911f21c610d1ae1b7f46465cc564ef6b4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f0c2e6a_c4876c93",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-06T01:57:59Z",
+      "side": 1,
+      "message": "maybe getRequiredCapabilities?",
+      "range": {
+        "startLine": 258,
+        "startChar": 27,
+        "endLine": 258,
+        "endChar": 39
+      },
+      "revId": "2e35fe911f21c610d1ae1b7f46465cc564ef6b4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce073a7e_9d1c34ae",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-06T01:57:59Z",
+      "side": 1,
+      "message": "@param (no s)",
+      "range": {
+        "startLine": 527,
+        "startChar": 12,
+        "endLine": 527,
+        "endChar": 18
+      },
+      "revId": "2e35fe911f21c610d1ae1b7f46465cc564ef6b4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
