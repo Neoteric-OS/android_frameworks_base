@@ -52,6 +52,24 @@
       "parentUuid": "6ea33529_8c4de77f",
       "revId": "894f6b3fbf9d76c1ee47f7adbbfc31ce9ad95470",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ea57466_490fa6e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1974140
+      },
+      "writtenOn": "2022-12-06T08:29:02Z",
+      "side": 1,
+      "message": "Yes. If there is only Disable_none record, it will same with non record situation.",
+      "parentUuid": "944f59c6_28465582",
+      "revId": "894f6b3fbf9d76c1ee47f7adbbfc31ce9ad95470",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
