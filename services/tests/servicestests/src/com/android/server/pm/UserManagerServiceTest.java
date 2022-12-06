@@ -17,12 +17,20 @@
 package com.android.server.pm;
 
 import static android.os.UserManager.DISALLOW_USER_SWITCH;
+import static android.os.UserManager.USER_TYPE_PROFILE_CLONE;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assertWithMessage;
+
+import static org.junit.Assume.assumeNoException;
+import static org.junit.Assume.assumeNotNull;
+import static org.junit.Assume.assumeTrue;
 
 import android.app.ActivityManager;
 import android.app.PropertyInvalidatedCache;
 import android.content.Context;
+import android.content.pm.LauncherActivityInfo;
+import android.content.pm.LauncherApps;
 import android.content.pm.UserInfo;
 import android.os.Bundle;
 import android.os.FileUtils;
@@ -32,11 +40,13 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.platform.test.annotations.Postsubmit;
 import android.support.test.uiautomator.UiDevice;
+import android.util.ArraySet;
 import android.util.AtomicFile;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.android.compatibility.common.util.ApiTest;
 import com.android.server.LocalServices;
 
 import org.junit.After;
@@ -46,7 +56,12 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** Test {@link UserManagerService} functionality. */
 @Postsubmit
@@ -112,6 +127,69 @@ public class UserManagerServiceTest {
         String cmd = "cmd user report-system-user-package-whitelist-problems --critical-only";
         final String result = runShellCommand(cmd);
         assertThat(result).isEmpty();
+    }
+
+    @Test
+    @ApiTest(apis = {"android.os.UserManager#createProfile"})
+    public void testUserSystemPackageAllowlistProblems_ForCloneProfile_HasNoLauncherApps()
+            throws Exception {
+        UserManager um = UserManager.get(mContext);
+        assumeTrue(um.supportsMultipleUsers());
+        try {
+            UserHandle userHandle = um.createProfile("Clone Profile", USER_TYPE_PROFILE_CLONE,
+                    new HashSet<>());
+            assumeNotNull(userHandle);
+            tempUserId = userHandle.getIdentifier();
+            assumeNotNull(tempUserId);
+        } catch (UserManager.UserOperationException e) {
+            assumeNoException("Couldn't create clone profile", e);
+        }
+
+        determinePackageConfigurationIssues(tempUserId);
+    }
+
+    private void determinePackageConfigurationIssues(int cloneProfileId) throws Exception {
+        // Run command to get critical package allowlist configuration issues. These
+        // are packages that are installed but not present in the pre-installation configs
+        String cmd = "cmd user report-system-user-package-whitelist-problems --critical-only "
+                + "--mode 1";
+        final String result = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+                .executeShellCommand(cmd);
+        String[] results = result.split("\\R");
+
+        final ArraySet<String> launchableAppsInCloneUser = getPackagesWithLauncherComponentForUser(
+                cloneProfileId);
+        List<String> errors = new ArrayList<>();
+        Pattern p = Pattern.compile("(([a-z]+\\.)+[a-z]+)");
+        // Select only errors containing the above launcher packages
+        for (String res : results) {
+            Matcher m = p.matcher(res);
+            if (m.find()) {
+                String packageName = m.group(0);
+                if (launchableAppsInCloneUser.contains(packageName)) {
+                    errors.add(res);
+                }
+            }
+        }
+
+
+        if (!errors.isEmpty()) {
+            assertWithMessage(
+                    "Command '" + cmd + "' reported errors:\n" + String.join("\n", errors)
+            ).fail();
+        }
+    }
+
+    private ArraySet<String> getPackagesWithLauncherComponentForUser(int userId) {
+        LauncherApps mLauncherApps = mContext.getSystemService(LauncherApps.class);
+        List<LauncherActivityInfo> launcherActivities = mLauncherApps.getActivityList(
+                null, UserHandle.of(userId));
+        ArraySet<String> launcherPackages = new ArraySet<>();
+
+        for (LauncherActivityInfo launcherActivity : launcherActivities) {
+            launcherPackages.add(launcherActivity.getActivityInfo().packageName);
+        }
+        return launcherPackages;
     }
 
     private Bundle createBundle() {
