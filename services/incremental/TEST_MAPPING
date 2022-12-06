@@ -36,5 +36,16 @@
         }
       ]
     }
+  ],
+  "kernel-presubmit": [
+    {
+      "name": "CtsIncrementalInstallHostTestCases",
+      "options": [
+        {
+          // TODO(b/259520819)
+          "exclude-filter": "android.incrementalinstall.cts.IncrementalInstallTest"
+        }
+      ]
+    }
   ]
 }
