@@ -1836,8 +1836,6 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         mAppDataHelper = new AppDataHelper(this);
         mInstallPackageHelper = new InstallPackageHelper(this, mAppDataHelper);
         mRemovePackageHelper = new RemovePackageHelper(this, mAppDataHelper);
-        mInitAppsHelper = new InitAppsHelper(this, mApexManager, mInstallPackageHelper,
-                mInjector.getSystemPartitions());
         mDeletePackageHelper = new DeletePackageHelper(this, mRemovePackageHelper,
                 mAppDataHelper);
         mSharedLibraries.setDeletePackageHelper(mDeletePackageHelper);
@@ -1986,6 +1984,8 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
 
             final int[] userIds = mUserManager.getUserIds();
             PackageParser2 packageParser = mInjector.getScanningCachingPackageParser();
+	    mInitAppsHelper = new InitAppsHelper(this, mApexManager, mInstallPackageHelper,
+                    mInjector.getSystemPartitions());
             mOverlayConfig = mInitAppsHelper.initSystemApps(packageParser, packageSettings, userIds,
                     startTime);
             mInitAppsHelper.initNonSystemApps(packageParser, userIds, startTime);
