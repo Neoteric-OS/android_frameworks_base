@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c438a58_c6629f2e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1123518
+      },
+      "writtenOn": "2022-12-06T02:20:48Z",
+      "side": 1,
+      "message": "There are too many CLs of different owners to submitted together. It will take much longer time if different owners are required. Better just groups CLs that require the same approvals in the same topic.",
+      "revId": "9dbbb5918f3bb7417a93a66f08d96c04e086fdf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
