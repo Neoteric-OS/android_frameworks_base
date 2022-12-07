@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The Android Open Source Project
+ * Copyright (C) 2022 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,24 +22,27 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
+import android.os.Trace;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Choreographer;
 import android.view.Display;
 import android.view.Display.Mode;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.os.Trace;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 class TouchLatencyView extends View implements View.OnTouchListener {
-    private static final String LOG_TAG = "TouchLatency";
     private static final int BACKGROUND_COLOR = 0xFF400080;
-    private static final int INNER_RADIUS = 70;
     private static final int BALL_DIAMETER = 200;
     private static final int SEC_TO_NANOS = 1000000000;
     private static final float FPS_UPDATE_THRESHOLD = 20;
@@ -64,17 +67,16 @@ class TouchLatencyView extends View implements View.OnTouchListener {
         mRedPaint.setStyle(Paint.Style.FILL);
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(0xFFFFFFFF);
-        mTextPaint.setTextSize(100);
+        mTextPaint.setTextSize(60);
         mTextPaint.setTextAlign(Align.RIGHT);
-
-        mTouching = false;
 
         mLastDrawNano = 0;
         mFps = 0;
         mLastFpsUpdate = 0;
         mFrameCount = 0;
+        mDisplayRate = 120;
 
-        mDf = new DecimalFormat("fps: #.##");
+        mDf = new DecimalFormat("Content Rate: #.00");
         mDf.setRoundingMode(RoundingMode.HALF_UP);
 
         Trace.endSection();
@@ -82,49 +84,13 @@ class TouchLatencyView extends View implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
-        Trace.beginSection("TouchLatencyView onTouch");
-        int action = event.getActionMasked();
-        if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
-            mTouching = true;
-            invalidate();
-
-            mTouchX = event.getX();
-            mTouchY = event.getY();
-        } else if (action == MotionEvent.ACTION_UP) {
-            mTouching = false;
-            invalidate();
-        }
-        Trace.endSection();
+        // do nothing
         return true;
     }
 
-    private void drawTouch(Canvas canvas) {
-        Trace.beginSection("TouchLatencyView drawTouch");
-
-        try {
-            if (!mTouching) {
-                Log.d(LOG_TAG, "Filling background");
-                canvas.drawColor(BACKGROUND_COLOR);
-                return;
-            }
-
-            float deltaX = (mTouchX - mLastDrawnX);
-            float deltaY = (mTouchY - mLastDrawnY);
-            float scaleFactor = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY) * 1.5f;
-
-            mLastDrawnX = mTouchX;
-            mLastDrawnY = mTouchY;
-
-            canvas.drawColor(BACKGROUND_COLOR);
-            canvas.drawCircle(mTouchX, mTouchY, INNER_RADIUS + 3 * scaleFactor, mRedPaint);
-            canvas.drawCircle(mTouchX, mTouchY, INNER_RADIUS + 2 * scaleFactor, mYellowPaint);
-            canvas.drawCircle(mTouchX, mTouchY, INNER_RADIUS + scaleFactor, mGreenPaint);
-            canvas.drawCircle(mTouchX, mTouchY, INNER_RADIUS, mBluePaint);
-        } finally {
-            Trace.endSection();
-        }
-    }
-
+    // (75, -):  green
+    // (45, 75]: yellow
+    // (-, 45]:  red
     private Paint getBallColor() {
         if (mFps > 75)
             return mGreenPaint;
@@ -185,9 +151,11 @@ class TouchLatencyView extends View implements View.OnTouchListener {
         // Draw the ball
         canvas.drawColor(BACKGROUND_COLOR);
         canvas.drawOval(left, top, right, bottom, getBallColor());
-        canvas.drawText(mDf.format(mFps), width, 100, mTextPaint);
+        // Panel refresh rate
+        canvas.drawText("Display Refresh Rate: " + mDisplayRate, width, 100, mTextPaint);
+        // Ball Drawing update frequency
+        canvas.drawText(mDf.format(mFps), width, 180, mTextPaint);
 
-        invalidate();
         Trace.endSection();
     }
 
@@ -195,39 +163,26 @@ class TouchLatencyView extends View implements View.OnTouchListener {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Trace.beginSection("TouchLatencyView onDraw");
-        if (mMode == 0) {
-            drawTouch(canvas);
-        } else {
-            drawBall(canvas);
-        }
+        drawBall(canvas);
         Trace.endSection();
     }
 
-    public void changeMode(MenuItem item) {
-        Trace.beginSection("TouchLatencyView changeMode");
-        final int NUM_MODES = 2;
-        final String modes[] = {"Touch", "Ball"};
-        mMode = (mMode + 1) % NUM_MODES;
-        invalidate();
-        item.setTitle(modes[mMode]);
-        Trace.endSection();
+    public void setDisplayRate(int displayRate) {
+        mDisplayRate = displayRate;
     }
 
     private final Paint mBluePaint, mGreenPaint, mYellowPaint, mRedPaint, mTextPaint;
-    private int mMode;
-
-    private boolean mTouching;
-    private float mTouchX, mTouchY;
-    private float mLastDrawnX, mLastDrawnY;
 
     private long mLastDrawNano, mLastFpsUpdate, mFrameCount;
     private float mFps;
-    private DecimalFormat mDf;
+    private final DecimalFormat mDf;
+    private int mDisplayRate;
 }
 
-public class TouchLatencyActivity extends Activity {
-    private Mode mDisplayModes[];
-    private int mCurrentModeIndex;
+public class TouchLatencyActivity extends Activity implements Choreographer.FrameCallback {
+    private List<Mode> mDisplayModes;
+    private List<Integer> mSupportedDisplayRates;
+    private int mCurrentContentRateIndex, mCurrentModeIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,74 +193,102 @@ public class TouchLatencyActivity extends Activity {
 
         mTouchView = findViewById(R.id.canvasView);
 
-        WindowManager wm = getWindowManager();
-        Display display = wm.getDefaultDisplay();
-        mDisplayModes = display.getSupportedModes();
-        Mode currentMode = getWindowManager().getDefaultDisplay().getMode();
+        mButton = findViewById(R.id.next_mode);
+        mButton.setOnClickListener(v -> nextDisplayMode());
+        Display display = mTouchView.getContext().getDisplay();
+        Mode[] allDisplayModes = display.getSupportedModes();
 
-        for (int i = 0; i < mDisplayModes.length; i++) {
-            if (currentMode.getModeId() == mDisplayModes[i].getModeId()) {
-                mCurrentModeIndex = i;
-                break;
+        Mode currentMode = display.getMode();
+        Log.d("onCreate: Current Mode: ", currentMode.toString());
+
+        // get the supported set of refresh rate for the device
+        HashSet<Integer> supportedDisplayRateSet = new HashSet<>();
+        mDisplayModes = new ArrayList<>();
+        // make sure only switch to display modes with the same resolution
+        for (Mode displayMode: allDisplayModes) {
+            if (displayMode.getPhysicalHeight() == currentMode.getPhysicalHeight()
+                    && displayMode.getPhysicalWidth() == currentMode.getPhysicalWidth()) {
+                mDisplayModes.add(displayMode);
+                supportedDisplayRateSet.add((int) displayMode.getRefreshRate());
+            }
+            if (currentMode.getModeId() == displayMode.getModeId()) {
+                mCurrentModeIndex = mDisplayModes.size() - 1;
             }
         }
+        mSupportedDisplayRates = supportedDisplayRateSet
+                .stream().sorted().collect(Collectors.toList());
+        Log.d("onCreate: mSupportedDisplayRates: ", mSupportedDisplayRates.toString());
+        Log.d("onCreate: mDisplayModes.size ", String.valueOf(mDisplayModes.size()));
+        Log.d("onCreate: mCurrentModeIndex =  ", String.valueOf(mCurrentModeIndex));
 
-        Trace.endSection();
-    }
+        mCurrentContentRateIndex = 0;
+        mTouchView.setDisplayRate((int) currentMode.getRefreshRate());
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        Trace.beginSection("TouchLatencyActivity onCreateOptionsMenu");
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_touch_latency, menu);
-        if (mDisplayModes.length > 1) {
-            MenuItem menuItem = menu.findItem(R.id.display_mode);
-            Mode currentMode = getWindowManager().getDefaultDisplay().getMode();
-            updateDisplayMode(menuItem, currentMode);
-        }
-        Trace.endSection();
-        return true;
-    }
-
-
-    private void updateDisplayMode(MenuItem menuItem, Mode displayMode) {
-        int fps = (int) displayMode.getRefreshRate();
-        menuItem.setTitle(fps + "hz");
-        menuItem.setVisible(true);
-    }
-
-    public void changeDisplayMode(MenuItem item) {
+        // for phones that supports VRR it's important to set the preferred display mode,
+        // otherwise it might switch to a different display mode while going through
+        // different content render rates, which will cause weird intermediate display modes.
+        // eg. in 10fps the display will automatically switch to 24Hz, causing the content
+        // render rate to drop from 10 -> 6 -> 2. 10/2 = 120/24
         Window w = getWindow();
         WindowManager.LayoutParams params = w.getAttributes();
-
-        int modeIndex = (mCurrentModeIndex + 1) % mDisplayModes.length;
-        params.preferredDisplayModeId = mDisplayModes[modeIndex].getModeId();
+        params.preferredDisplayModeId = currentMode.getModeId();
         w.setAttributes(params);
 
-        updateDisplayMode(item, mDisplayModes[modeIndex]);
-        mCurrentModeIndex = modeIndex;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Trace.beginSection("TouchLatencyActivity onOptionsItemSelected");
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            mTouchView.changeMode(item);
-        } else if (id == R.id.display_mode) {
-            changeDisplayMode(item);
-        }
+        Choreographer.getInstance().postFrameCallback(this);
 
         Trace.endSection();
-        return super.onOptionsItemSelected(item);
     }
 
+    private void nextDisplayMode() {
+        Log.d("nextDisplayMode: previous display mode = ",
+                mDisplayModes.get(mCurrentModeIndex).toString());
+        // first decide if it's time to change panel refresh rate
+        int displayRate = (int) mDisplayModes.get(mCurrentModeIndex).getRefreshRate();
+        int contentRate = mSupportedDisplayRates.get(mCurrentContentRateIndex);
+        if (displayRate == contentRate) {
+            Window w = getWindow();
+            WindowManager.LayoutParams params = w.getAttributes();
+
+            int modeIndex = (mCurrentModeIndex + 1) % mDisplayModes.size();
+            params.preferredDisplayModeId = mDisplayModes.get(modeIndex).getModeId();
+            w.setAttributes(params);
+            mCurrentModeIndex = modeIndex;
+            mCurrentContentRateIndex = -1;
+        }
+        Log.d("nextDisplayMode: current display mode = ",
+                mDisplayModes.get(mCurrentModeIndex).toString());
+
+        displayRate = (int) mDisplayModes.get(mCurrentModeIndex).getRefreshRate();
+        mTouchView.setDisplayRate(displayRate);
+        // find the next in the supported display rate that is a divisor for the current frame rate
+        do {
+            mCurrentContentRateIndex =
+                    (mCurrentContentRateIndex + 1) % mSupportedDisplayRates.size();
+            contentRate = mSupportedDisplayRates.get(mCurrentContentRateIndex);
+        }
+        while (displayRate % contentRate != 0);
+
+        Log.d("nextDisplayMode: display rate = ", String.valueOf(displayRate));
+        Log.d("nextDisplayMode: content rate = ", String.valueOf(contentRate));
+    }
+
+    @Override
+    public void doFrame(long l) {
+        mFrameCount++;
+        Choreographer.getInstance().postFrameCallback(this);
+
+        int displayRate = (int) mDisplayModes.get(mCurrentModeIndex).getRefreshRate();
+        int contentRate = mSupportedDisplayRates.get(mCurrentContentRateIndex);
+        int divisor = displayRate / contentRate;
+        Log.d("DoFrame: display rate = ", String.valueOf(displayRate));
+        Log.d("DoFrame: content rate = ", String.valueOf(contentRate));
+        Log.d("DoFrame: divisor = ", String.valueOf(divisor));
+        if (divisor == 1 || mFrameCount % divisor == 0) {
+            mTouchView.invalidate();
+        }
+    }
+
+    private long mFrameCount = 0;
     private TouchLatencyView mTouchView;
+    private Button mButton;
 }
