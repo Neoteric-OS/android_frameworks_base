@@ -46,6 +46,30 @@
       },
       "revId": "0b4c2a044ae9f983dc34fa5864e22fc3b5dc4761",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1df8aeb_997a39ef",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2022-12-07T19:32:14Z",
+      "side": 1,
+      "message": "1) Just making sure you don\u0027t mind another entry into the state machine\n\n2) It can be easier to reason about if the events are serialized on a Handler instead of having locks or atomics everywhere. I don\u0027t see anything obviously wrong here; I\u0027m just suggesting it would be more maintainable.",
+      "parentUuid": "94bfbb22_ba8ee7de",
+      "range": {
+        "startLine": 544,
+        "startChar": 24,
+        "endLine": 544,
+        "endChar": 89
+      },
+      "revId": "0b4c2a044ae9f983dc34fa5864e22fc3b5dc4761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
