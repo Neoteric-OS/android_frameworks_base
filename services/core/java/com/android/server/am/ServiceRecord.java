@@ -513,7 +513,7 @@ final class ServiceRecord extends Binder implements ComponentName.WithComponentN
                 TimeUtils.formatDuration(restartTime, now, pw);
                 pw.print(" createdFromFg="); pw.println(createdFromFg);
         if (pendingConnectionGroup != 0) {
-            pw.print(prefix); pw.print(" pendingConnectionGroup=");
+            pw.print(prefix); pw.print("pendingConnectionGroup=");
             pw.print(pendingConnectionGroup);
             pw.print(" Importance="); pw.println(pendingConnectionImportance);
         }
