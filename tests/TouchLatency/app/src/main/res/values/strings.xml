@@ -14,8 +14,7 @@
      limitations under the License.
 -->
 <resources>
-    <string name="app_name">Touch Latency</string>
+    <string name="app_name">Refresh Rate Demo</string>
 
-    <string name="mode">Touch</string>
     <string name="display_mode">Mode</string>
 </resources>
