@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca624a7e_a612ad9e",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-12-07T21:11:03Z",
+      "side": 1,
+      "message": "this was failing because this was added as a shared library before. Did you verify locally?",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 54
+      },
+      "revId": "8c1f7e90ce613f21d4e60445ddf131e97c9cd907",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
