@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "69cfeb00_509a5857",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-12-08T06:15:58Z",
+      "side": 1,
+      "message": "Consider making this return a boolean indicating whether or not the network request was successfully submitted. The caller, in this case `loadRebootEscrowDataOnInternet()`, is essentially relying on the callback being invoked to kick off the RoR attempt.\n\nCurrently, if the connectivityManager is null, this function will return and the RoR will not be attempted because there is no callback. Having a return value of false when the ConnectivityManager could not be obtained allows the caller to gracefully handle this by falling back to attempting the RoR without waiting for a network-available callback.",
+      "range": {
+        "startLine": 292,
+        "startChar": 15,
+        "endLine": 292,
+        "endChar": 19
+      },
+      "revId": "0b4c2a044ae9f983dc34fa5864e22fc3b5dc4761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaaedb50_93f3c2bf",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-12-08T06:15:58Z",
+      "side": 1,
+      "message": "The network request timeout is using the same as the timeout duration as the overall RoR timeout. Since the network request operation is wrapped /included in the overall timeout, this leads to two potential issues if the network is acquired towards the end of the timeout:\n\n - Not have enough time left to complete all retries.\n - The timeout callback just sets `mRebootEscrowTimedOut \u003d true`, but `mRebootEscrowTimedOut` is only checked in the retry logic. So even if the overall timeout is expires, the first RoR request might be attempted anyways. This shouldn\u0027t be a major issue (no harm if RoR succeeds) except that the wakelock acquisition also uses the same timeout and is acquired at the same time the overall timeout is started. The wakelock will no longer be held by the time the overall timeout expires, leading to execution potentially being suspended exactly when the first and only RoR attempt is to be made.\n \n\nThe following durations would benefit from a more cohesive set of values\n - Wake lock timeout\n - Network acquisition timeout\n - Overall RoR timeout\n - Retry duration w.r.t. max # retries.\n \nOne way to mitigate this would be making network acquisition timeout an independent (potentially flag-controlled) value and having both the overall RoR timeout and wake lock timeout be  computed values based on the other timeouts/values. A rough version would be something like\n\n```\n// 3 minutes\nprivate static final int DEFAULT_NETWORK_TIMEOUT_MILLIS \u003d 180_000;\n// 5 seconds. An extension of the overall RoR timeout to account for overhead.\nprivate static final int DEFAULT_TIMEOUT_EXTENSION_MILLIS \u003d 5000;\n\nstatic class Injector {\n  ...\n  @VisibleForTesting\n  public int getNetworkTimeoutMillis() {\n    return DEFAULT_NETWORK_TIMEOUT_MILLIS;\n  }\n  \n  public void requestNetworkWithInternet(\n                ConnectivityManager.NetworkCallback networkCallback) {\n    ...\n    connectivityManager.requestNetwork(\n                    request, networkCallback, getNetworkTimeoutMillis());\n  }\n  \n  @VisibleForTesting\n  public int getTimeoutExtensionMillis() {\n    return DEFAULT_TIMEOUT_EXTENSION_MILLIS;\n  }\n  ...\n}\n\nvoid loadRebootEscrowDataIfAvailable(Handler retryHandler) {\n  ...\n  // Acquire the wake lock to make sure our scheduled task will run.\n  mWakeLock \u003d mInjector.getWakeLock();\n  if (mWakeLock !\u003d null) {\n    mWakeLock.setReferenceCounted(false);\n    mWakeLock.acquire(\n      mInjector.getNetworkTimeoutMillis()\n        + mInjector.getLoadEscrowDataRetryLimit()\n        * mInjector.getLoadEscrowDataRetryIntervalSeconds()\n        + mInjector.getTimeoutExtensionMillis());\n  }\n\n  if (mInjector.waitForInternet()) {\n    // Timeout to stop retrying same as the wake lock timeout.\n    mInjector.postDelayed(\n      retryHandler,\n      () -\u003e {\n        mRebootEscrowTimedOut \u003d true;\n      },\n      mInjector.getNetworkTimeoutMillis()\n        + mInjector.getLoadEscrowDataRetryLimit()\n        * mInjector.getLoadEscrowDataRetryIntervalSeconds());\n\n      mInjector.post(\n        retryHandler,\n        () -\u003e loadRebootEscrowDataOnInternet(retryHandler, users, rebootEscrowUsers));\n      return;\n  }\n  ...\n}\n```",
+      "range": {
+        "startLine": 305,
+        "startChar": 46,
+        "endLine": 305,
+        "endChar": 72
+      },
+      "revId": "0b4c2a044ae9f983dc34fa5864e22fc3b5dc4761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28d48926_3e09ece4",
         "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
         "patchSetId": 16
@@ -67,6 +113,29 @@
         "startChar": 24,
         "endLine": 544,
         "endChar": 89
+      },
+      "revId": "0b4c2a044ae9f983dc34fa5864e22fc3b5dc4761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5cbb759_b889eade",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-12-08T06:15:58Z",
+      "side": 1,
+      "message": "The first check might be unnecessary. In the unlikely scenario where the network callback implementation flag is unset (`mInjector.waitForInternet() \u003d\u003d false`) and somehow there\u0027s a registered callback (`mNetworkCallback !\u003d null`) it\u0027d still be a good idea to unregister the callback (since escrow restoration is finished).",
+      "range": {
+        "startLine": 705,
+        "startChar": 12,
+        "endLine": 705,
+        "endChar": 40
       },
       "revId": "0b4c2a044ae9f983dc34fa5864e22fc3b5dc4761",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
