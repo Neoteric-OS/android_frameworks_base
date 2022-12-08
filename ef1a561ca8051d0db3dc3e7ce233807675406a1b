@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f3e798f_75980d2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2022-12-08T21:59:56Z",
+      "side": 1,
+      "message": "Thanks for this CL!",
+      "revId": "ef1a561ca8051d0db3dc3e7ce233807675406a1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9695139d_29a1b82b",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2022-12-08T21:59:56Z",
+      "side": 1,
+      "message": "Usually we set \"errors |\u003d ERROR_UNRECOGNIZED;\" for unrecognized profiles, so vendors can extend these ranges via their XML (for recognized profiles we intersect these values with the XML).",
+      "range": {
+        "startLine": 1500,
+        "startChar": 28,
+        "endLine": 1500,
+        "endChar": 36
+      },
+      "revId": "ef1a561ca8051d0db3dc3e7ce233807675406a1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "effb7ef7_c13e16c1",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2022-12-08T21:59:56Z",
+      "side": 1,
+      "message": "Similarly here.",
+      "range": {
+        "startLine": 1519,
+        "startChar": 0,
+        "endLine": 1519,
+        "endChar": 77
+      },
+      "revId": "ef1a561ca8051d0db3dc3e7ce233807675406a1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
