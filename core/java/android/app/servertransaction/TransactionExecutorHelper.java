@@ -162,6 +162,9 @@ public class TransactionExecutorHelper {
         if (finalStates == null || finalStates.length == 0) {
             return UNDEFINED;
         }
+        if (r == null) {
+            return UNDEFINED;
+        }
 
         final int currentState = r.getLifecycleState();
         int closestState = UNDEFINED;
