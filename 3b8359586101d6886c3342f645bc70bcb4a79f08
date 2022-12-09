@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52f7e46f_17b35be5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2022-12-09T14:12:12Z",
+      "side": 1,
+      "message": "simplification of the conditional as marked, otherwise lgtm",
+      "revId": "3b8359586101d6886c3342f645bc70bcb4a79f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c593757_d4ed936a",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2022-12-09T14:12:12Z",
+      "side": 1,
+      "message": "from a style perspective, i prefer\nthat the set of DTS comparisons be their own if()\nso something along the lines of:\n\nif (level\u003d\u003dnull || AAC) return true;\nif (any of the DTS mimetypes) return true;\n\nit simplifies the condition for the if(). this case isn\u0027t too bad, but i\u0027ve seen some pretty ugly logical expressions that try to smash it all together.\nThe compiler will produce equivalent code with both expressions.\n\nfor this case, i\u0027d probably even separate like this because they all manage\ndifferent slightly concepts (no level was requested, aac doesn\u0027t do levels, DTS doesn\u0027t do levels)\n\nif (level\u003d\u003dnull) return\nif (AAC) return \nif (DTS) return \n\nbut all i\u0027m asking here is you to separate the DTS",
+      "range": {
+        "startLine": 985,
+        "startChar": 14,
+        "endLine": 989,
+        "endChar": 32
+      },
+      "revId": "3b8359586101d6886c3342f645bc70bcb4a79f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
