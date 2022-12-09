@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f6fbe54_05d9f36b",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2022-12-09T10:42:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9695139d_29a1b82b",
+      "range": {
+        "startLine": 1500,
+        "startChar": 28,
+        "endLine": 1500,
+        "endChar": 36
+      },
+      "revId": "ef1a561ca8051d0db3dc3e7ce233807675406a1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "effb7ef7_c13e16c1",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-12-08T21:59:56Z",
       "side": 1,
       "message": "Similarly here.",
+      "range": {
+        "startLine": 1519,
+        "startChar": 0,
+        "endLine": 1519,
+        "endChar": 77
+      },
+      "revId": "ef1a561ca8051d0db3dc3e7ce233807675406a1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d5ac663_92d33af3",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2022-12-09T10:42:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "effb7ef7_c13e16c1",
       "range": {
         "startLine": 1519,
         "startChar": 0,
