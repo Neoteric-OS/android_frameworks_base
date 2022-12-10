@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e99bf9e8_9c39be13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1827146
+      },
+      "writtenOn": "2022-12-10T03:17:17Z",
+      "side": 1,
+      "message": "Just a cherry-pick to AOSP",
+      "revId": "7c8dfb98a5ef3148dacb85450793040bba52117d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
