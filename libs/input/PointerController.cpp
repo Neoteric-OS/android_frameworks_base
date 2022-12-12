@@ -153,10 +153,21 @@ void PointerController::getPosition(float* outX, float* outY) const {
     mCursorController.getPosition(outX, outY);
     {
         std::scoped_lock lock(getLock());
+        float minX, minY, maxX, maxY;
+        // 0x7 encapsulates all 3 rotations (see ui::Transform::RotationFlags)
+        static const int ALL_ROTATIONS_MASK = 0x7;
         const auto& transform = getTransformForDisplayLocked(displayId);
         const auto xy = transform.inverse().transform(*outX, *outY);
         *outX = xy.x;
         *outY = xy.y;
+
+        getBounds(&minX, &minY, &maxX, &maxY);
+        const uint32_t orientation = (transform.getOrientation() & ALL_ROTATIONS_MASK);
+        if (orientation == ui::Transform::ROT_270) {
+            if(*outX > maxY ){
+                *outX = maxY;
+            }
+        }
     }
 }
 
