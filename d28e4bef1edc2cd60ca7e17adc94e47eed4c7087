@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b7ba92f_a4a296a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1977516
+      },
+      "writtenOn": "2022-12-12T09:06:34Z",
+      "side": 1,
+      "message": "Please help to approve \nI have added the steps\nhow to reproduce",
+      "revId": "d28e4bef1edc2cd60ca7e17adc94e47eed4c7087",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
