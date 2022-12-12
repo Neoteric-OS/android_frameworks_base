@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf96ae0d_ea0ae099",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-12T21:04:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "435b5ead_488dacee",
+      "range": {
+        "startLine": 159,
+        "startChar": 31,
+        "endLine": 159,
+        "endChar": 40
+      },
+      "revId": "207b53bdc91e6d516ebd0334fee0ef14da82eb94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f7ca52a_6deed793",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b14b0c1_7a15e480",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-12T21:04:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f7ca52a_6deed793",
+      "range": {
+        "startLine": 306,
+        "startChar": 32,
+        "endLine": 306,
+        "endChar": 36
+      },
+      "revId": "207b53bdc91e6d516ebd0334fee0ef14da82eb94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2bf3c85b_2791953d",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-12-12T19:49:28Z",
       "side": 1,
       "message": "Nit \"need\" is a bit ambiguous; why does it \"need\" to do so?\n\nI think this is policy, not functional needs, so suggest using \"that will be\"",
+      "range": {
+        "startLine": 308,
+        "startChar": 45,
+        "endLine": 308,
+        "endChar": 49
+      },
+      "revId": "207b53bdc91e6d516ebd0334fee0ef14da82eb94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be05c006_09a9cde6",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-12T21:04:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bf3c85b_2791953d",
       "range": {
         "startLine": 308,
         "startChar": 45,
