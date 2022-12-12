@@ -16,6 +16,23 @@
       "message": "LGTM on the DPM part.",
       "revId": "6c143ff356fb210b813f7be21f42ab13b7148644",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f775586f_91b1fce5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1966950
+      },
+      "writtenOn": "2022-12-12T13:39:38Z",
+      "side": 1,
+      "message": "Backup of the setting looks good",
+      "revId": "6c143ff356fb210b813f7be21f42ab13b7148644",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
