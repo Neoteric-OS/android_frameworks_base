@@ -70,6 +70,30 @@
       },
       "revId": "aa1c0098a1dd056b9e49992ad70336672c2d7434",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a9efa3b_29318bab",
+        "filename": "core/java/android/app/servertransaction/TransactionExecutorHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2022-12-12T10:00:56Z",
+      "side": 1,
+      "message": "Yes, you are right. I think we should skip for this case.\n\n@louischang@google.com WDYT?",
+      "parentUuid": "895f75b3_8f8a1dac",
+      "range": {
+        "startLine": 165,
+        "startChar": 8,
+        "endLine": 165,
+        "endChar": 24
+      },
+      "revId": "aa1c0098a1dd056b9e49992ad70336672c2d7434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
