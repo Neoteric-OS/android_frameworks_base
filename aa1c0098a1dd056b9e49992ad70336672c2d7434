@@ -46,6 +46,30 @@
       },
       "revId": "aa1c0098a1dd056b9e49992ad70336672c2d7434",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "243b66e4_81af51ac",
+        "filename": "core/java/android/app/servertransaction/TransactionExecutorHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1980045
+      },
+      "writtenOn": "2022-12-12T09:58:30Z",
+      "side": 1,
+      "message": "If we don\u0027t ignore this, my concern is that later in the process ActivityClientRecord will be used again and still trigger NPE.\nThis error stack was encountered on the user\u0027s mobile phone and captured by us online. There are no more log fragments, so it may be difficult to find why the ActivityClientRecord was not created.",
+      "parentUuid": "895f75b3_8f8a1dac",
+      "range": {
+        "startLine": 165,
+        "startChar": 8,
+        "endLine": 165,
+        "endChar": 24
+      },
+      "revId": "aa1c0098a1dd056b9e49992ad70336672c2d7434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
