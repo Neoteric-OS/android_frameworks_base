@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7e694cd_b17b6133",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 8145,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2022-12-13T21:22:05Z",
+      "side": 1,
+      "message": "Please also specify the RFC used to specify the priority.",
+      "range": {
+        "startLine": 8145,
+        "startChar": 12,
+        "endLine": 8145,
+        "endChar": 62
+      },
+      "revId": "f25d0810f9e08b7172e19ed0b8283ec8cf0d81d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
