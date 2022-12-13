@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64a3e6d2_9b124b54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-13T18:59:00Z",
+      "side": 1,
+      "message": "The presubmit test was already broken https://android-build.googleplex.com/builds/tests/view?invocationId\u003dI73300010116292396\u0026testResultId\u003dTR91828416251207022 and unrelated to this change,",
+      "revId": "0838c8fb537b2b2a6f92ab5d2aec974f69392339",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
