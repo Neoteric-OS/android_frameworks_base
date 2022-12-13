@@ -16,6 +16,23 @@
       "message": "Please help to approve \nI have added the steps\nhow to reproduce",
       "revId": "d28e4bef1edc2cd60ca7e17adc94e47eed4c7087",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c2f2b3e_9e9aaba2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1977516
+      },
+      "writtenOn": "2022-12-13T12:10:11Z",
+      "side": 1,
+      "message": "Please help to review",
+      "revId": "d28e4bef1edc2cd60ca7e17adc94e47eed4c7087",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
