@@ -300,7 +300,6 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
      * Return the matching criteria for CBS networks.
      *
      * @see Builder#setCbs(int)
-     * @hide
      */
     @MatchCriteria
     public int getCbs() {
@@ -311,7 +310,6 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
      * Return the matching criteria for DUN networks.
      *
      * @see Builder#setDun(int)
-     * @hide
      */
     @MatchCriteria
     public int getDun() {
@@ -321,7 +319,6 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
      * Return the matching criteria for IMS networks.
      *
      * @see Builder#setIms(int)
-     * @hide
      */
     @MatchCriteria
     public int getIms() {
@@ -331,7 +328,6 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
      * Return the matching criteria for INTERNET networks.
      *
      * @see Builder#setInternet(int)
-     * @hide
      */
     @MatchCriteria
     public int getInternet() {
@@ -341,7 +337,6 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
      * Return the matching criteria for MMS networks.
      *
      * @see Builder#setMms(int)
-     * @hide
      */
     @MatchCriteria
     public int getMms() {
@@ -352,7 +347,6 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
      * Return the matching criteria for RCS networks.
      *
      * @see Builder#setRcs(int)
-     * @hide
      */
     @MatchCriteria
     public int getRcs() {
@@ -611,7 +605,6 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          * @param matchCriteria the matching criteria for DUN networks. Defaults to {@link
          *     #MATCH_ANY}.
          * @see NetworkCapabilities#NET_CAPABILITY_CBS
-         * @hide
          */
         @NonNull
         public Builder setCbs(@MatchCriteria int matchCriteria) {
@@ -631,7 +624,6 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          * @param matchCriteria the matching criteria for DUN networks. Defaults to {@link
          *     #MATCH_ANY}.
          * @see NetworkCapabilities#NET_CAPABILITY_DUN
-         * @hide
          */
         @NonNull
         public Builder setDun(@MatchCriteria int matchCriteria) {
@@ -651,7 +643,6 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          * @param matchCriteria the matching criteria for IMS networks. Defaults to {@link
          *     #MATCH_ANY}.
          * @see NetworkCapabilities#NET_CAPABILITY_IMS
-         * @hide
          */
         @NonNull
         public Builder setIms(@MatchCriteria int matchCriteria) {
@@ -671,7 +662,6 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          * @param matchCriteria the matching criteria for INTERNET networks. Defaults to {@link
          *     #MATCH_REQUIRED}.
          * @see NetworkCapabilities#NET_CAPABILITY_INTERNET
-         * @hide
          */
         @NonNull
         public Builder setInternet(@MatchCriteria int matchCriteria) {
@@ -691,7 +681,6 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          * @param matchCriteria the matching criteria for MMS networks. Defaults to {@link
          *     #MATCH_ANY}.
          * @see NetworkCapabilities#NET_CAPABILITY_MMS
-         * @hide
          */
         @NonNull
         public Builder setMms(@MatchCriteria int matchCriteria) {
@@ -711,7 +700,6 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          * @param matchCriteria the matching criteria for RCS networks. Defaults to {@link
          *     #MATCH_ANY}.
          * @see NetworkCapabilities#NET_CAPABILITY_RCS
-         * @hide
          */
         @NonNull
         public Builder setRcs(@MatchCriteria int matchCriteria) {
