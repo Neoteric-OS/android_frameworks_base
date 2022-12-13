@@ -33,6 +33,23 @@
       "message": "Please help to review",
       "revId": "d28e4bef1edc2cd60ca7e17adc94e47eed4c7087",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c81581a_e5c44d30",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1456881
+      },
+      "writtenOn": "2022-12-13T14:23:53Z",
+      "side": 1,
+      "message": "I\u0027m not the right reviewer for this change so removing myself",
+      "revId": "d28e4bef1edc2cd60ca7e17adc94e47eed4c7087",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
