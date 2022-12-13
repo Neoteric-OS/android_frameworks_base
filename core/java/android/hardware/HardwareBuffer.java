@@ -320,8 +320,11 @@ public final class HardwareBuffer implements Parcelable, AutoCloseable {
     /**
      * Returns the system-wide unique id for this buffer
      *
+     * @throws IllegalStateException when isClosed() returns true.
+     * @see #checkClosed(String)
+     * @see #isClosed()
      */
-    public long getId() {
+    public long getId() throws IllegalStateException {
         checkClosed("id");
         return nGetId(mNativeObject);
     }
