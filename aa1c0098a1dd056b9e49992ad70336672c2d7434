@@ -94,6 +94,30 @@
       },
       "revId": "aa1c0098a1dd056b9e49992ad70336672c2d7434",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e194f84_ad9bdb0b",
+        "filename": "core/java/android/app/servertransaction/TransactionExecutorHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1980045
+      },
+      "writtenOn": "2022-12-13T05:55:29Z",
+      "side": 1,
+      "message": "I think the probability of this problem occurring is pretty low, at least based on the online NPE logs we\u0027ve collected so far, returning UNDEFINED will not affect the user experience.\nOr I think it\u0027s okay to just ignore it for a while, because the probability is supposed to be very low.",
+      "parentUuid": "3a9efa3b_29318bab",
+      "range": {
+        "startLine": 165,
+        "startChar": 8,
+        "endLine": 165,
+        "endChar": 24
+      },
+      "revId": "aa1c0098a1dd056b9e49992ad70336672c2d7434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
