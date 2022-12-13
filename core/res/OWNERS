@@ -21,6 +21,9 @@ shanh@google.com
 tsuji@google.com
 yamasani@google.com
 
+# WindowManager team
+include /services/core/java/com/android/server/wm/OWNERS
+
 # Resources finalization
 per-file res/xml/public-staging.xml = file:/tools/aapt2/OWNERS
 per-file res/xml/public-final.xml = file:/tools/aapt2/OWNERS
