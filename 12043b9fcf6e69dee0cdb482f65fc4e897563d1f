@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dd3a838_44508af1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2022-12-13T08:20:44Z",
+      "side": 1,
+      "message": "Could you create a bug on Android issue tracker with the issue description and uploading the logs or the bugreport of the crash?\n\nOnce the bug is created, please update the commit message with the bug id as `Bug: $id`. Thanks!",
+      "revId": "12043b9fcf6e69dee0cdb482f65fc4e897563d1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
