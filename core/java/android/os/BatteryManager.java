@@ -147,6 +147,25 @@ public class BatteryManager {
     public static final String EXTRA_SEQUENCE = "seq";
 
     /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the battery charging cycle count.
+     */
+    public static final String EXTRA_CYCLE_COUNT = "android.os.extra.CYCLE_COUNT";
+
+    /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the measured battery state of health (remaining
+     * estimate full charge capacity relative to the rated capacity in %).
+     */
+    public static final String EXTRA_STATE_OF_HEALTH = "android.os.extra.STATE_OF_HEALTH";
+
+    /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the battery charging status.
+     */
+    public static final String EXTRA_CHARGING_STATUS = "android.os.extra.CHARGING_STATUS";
+
+    /**
      * Extra for {@link android.content.Intent#ACTION_BATTERY_LEVEL_CHANGED}:
      * Contains list of Bundles representing battery events
      * @hide
@@ -254,6 +273,39 @@ public class BatteryManager {
      */
     public static final int BATTERY_PROPERTY_STATUS = 6;
 
+    /**
+     * Battery manufacturing date is reported in epoch. The 0 timepoint
+     * begins at midnight Coordinated Universal Time (UTC) on January 1, 1970.
+     * It is a long integer in seconds.
+     *
+     * <p class="note">
+     * The sender must hold the {@link android.Manifest.permission#BATTERY_STATS} permission.
+     *
+     * Example: <code>
+     * private final BatteryManager mBatteryManager;
+     * mBatteryManager = mContext.getSystemService(BatteryManager.class);
+     * final long ManufacturingDate =
+     *         mBatteryManager.getLongProperty(BatteryManager.BATTERY_PROPERTY_MANUFACTURING_DATE);
+     * </code>
+     * @hide
+     */
+    @SystemApi
+    public static final int BATTERY_PROPERTY_MANUFACTURING_DATE = 7;
+
+    /**
+     * The date of first usage is reported in epoch. The 0 timepoint
+     * begins at midnight Coordinated Universal Time (UTC) on January 1, 1970.
+     * It is a long integer in seconds.
+     *
+     * <p class="note">
+     * The sender must hold the {@link android.Manifest.permission#BATTERY_STATS} permission.
+     *
+     * {@link BATTERY_PROPERTY_MANUFACTURING_DATE for sample code}
+     * @hide
+     */
+    @SystemApi
+    public static final int BATTERY_PROPERTY_FIRST_USAGE_DATE = 8;
+
     private final Context mContext;
     private final IBatteryStats mBatteryStats;
     private final IBatteryPropertiesRegistrar mBatteryPropertiesRegistrar;
@@ -308,6 +360,13 @@ public class BatteryManager {
         try {
             BatteryProperty prop = new BatteryProperty();
 
+            switch (id) {
+                case BatteryManager.BATTERY_PROPERTY_MANUFACTURING_DATE:
+                case BatteryManager.BATTERY_PROPERTY_FIRST_USAGE_DATE:
+                    mContext.enforceCallingOrSelfPermission(
+                            android.Manifest.permission.BATTERY_STATS, null);
+                    break;
+            }
             if (mBatteryPropertiesRegistrar.getProperty(id, prop) == 0)
                 ret = prop.getLong();
             else
