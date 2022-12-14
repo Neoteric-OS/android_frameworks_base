@@ -50,6 +50,29 @@
       "message": "I\u0027m not the right reviewer for this change so removing myself",
       "revId": "d28e4bef1edc2cd60ca7e17adc94e47eed4c7087",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6588e6f3_0a28c0e6",
+        "filename": "services/core/java/com/android/server/wm/WindowProcessController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2022-12-14T07:43:15Z",
+      "side": 1,
+      "message": "These statements seems to be equivalent to `UserHandle.getAppId(mUid) \u003d\u003d Process.SYSTEM_UID`?",
+      "range": {
+        "startLine": 261,
+        "startChar": 30,
+        "endLine": 262,
+        "endChar": 66
+      },
+      "revId": "d28e4bef1edc2cd60ca7e17adc94e47eed4c7087",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
