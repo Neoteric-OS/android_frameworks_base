@@ -163,6 +163,31 @@ public class BatteryManager {
     @SystemApi
     public static final String EXTRA_EVENT_TIMESTAMP = "android.os.extra.EVENT_TIMESTAMP";
 
+    /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the battery charging cycle count.
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_CYCLE_COUNT = "android.os.extra.CYCLE_COUNT";
+
+    /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the measured battery state of health (remaining
+     * estimate full charge capacity relative to the rated capacity in %).
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_STATE_OF_HEALTH = "android.os.extra.STATE_OF_HEALTH";
+
+    /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the battery charging status.
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_CHARGING_STATUS = "android.os.extra.CHARGING_STATUS";
+
     // values for "status" field in the ACTION_BATTERY_CHANGED Intent
     public static final int BATTERY_STATUS_UNKNOWN = Constants.BATTERY_STATUS_UNKNOWN;
     public static final int BATTERY_STATUS_CHARGING = Constants.BATTERY_STATUS_CHARGING;
@@ -253,6 +278,12 @@ public class BatteryManager {
      * Battery charge status, from a BATTERY_STATUS_* value.
      */
     public static final int BATTERY_PROPERTY_STATUS = 6;
+
+    /**
+     * Battery health data.
+     */
+    public static final int BATTERY_PROPERTY_MANUFACTURING_DATE = 7;
+    public static final int BATTERY_PROPERTY_FIRST_USAGE_DATE = 8;
 
     private final Context mContext;
     private final IBatteryStats mBatteryStats;
