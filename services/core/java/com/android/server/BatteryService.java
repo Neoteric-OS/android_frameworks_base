@@ -187,6 +187,9 @@ public final class BatteryService extends SystemService {
 
     private MetricsLogger mMetricsLogger;
 
+    private int mLastBatteryCycleCount;
+    private int mLastBatteryStateOfHealth;
+
     public BatteryService(Context context) {
         super(context);
 
@@ -502,7 +505,9 @@ public final class BatteryService extends SystemService {
                         || mHealthInfo.maxChargingCurrentMicroamps != mLastMaxChargingCurrent
                         || mHealthInfo.maxChargingVoltageMicrovolts != mLastMaxChargingVoltage
                         || mHealthInfo.batteryChargeCounterUah != mLastChargeCounter
-                        || mInvalidCharger != mLastInvalidCharger)) {
+                        || mInvalidCharger != mLastInvalidCharger
+                        || mHealthInfo.batteryHealthCycleCount != mLastBatteryCycleCount
+                        || mHealthInfo.batteryStateOfHealth != mLastBatteryStateOfHealth)) {
 
             if (mPlugType != mLastPlugType) {
                 if (mLastPlugType == BATTERY_PLUGGED_NONE) {
@@ -676,6 +681,8 @@ public final class BatteryService extends SystemService {
             mLastChargeCounter = mHealthInfo.batteryChargeCounterUah;
             mLastBatteryLevelCritical = mBatteryLevelCritical;
             mLastInvalidCharger = mInvalidCharger;
+            mLastBatteryCycleCount = mHealthInfo.batteryHealthCycleCount;
+            mLastBatteryStateOfHealth = mHealthInfo.batteryStateOfHealth;
         }
     }
 
@@ -707,6 +714,8 @@ public final class BatteryService extends SystemService {
                 BatteryManager.EXTRA_MAX_CHARGING_VOLTAGE,
                 mHealthInfo.maxChargingVoltageMicrovolts);
         intent.putExtra(BatteryManager.EXTRA_CHARGE_COUNTER, mHealthInfo.batteryChargeCounterUah);
+        intent.putExtra(BatteryManager.EXTRA_CYCLE_COUNT, mHealthInfo.batteryHealthCycleCount);
+        intent.putExtra(BatteryManager.EXTRA_STATE_OF_HEALTH, mHealthInfo.batteryStateOfHealth);
         if (DEBUG) {
             Slog.d(TAG, "Sending ACTION_BATTERY_CHANGED. scale:" + BATTERY_SCALE
                     + ", info:" + mHealthInfo.toString());
@@ -730,6 +739,8 @@ public final class BatteryService extends SystemService {
         event.putInt(BatteryManager.EXTRA_TEMPERATURE, mHealthInfo.batteryTemperatureTenthsCelsius);
         event.putInt(BatteryManager.EXTRA_CHARGE_COUNTER, mHealthInfo.batteryChargeCounterUah);
         event.putLong(BatteryManager.EXTRA_EVENT_TIMESTAMP, now);
+        event.putInt(BatteryManager.EXTRA_CYCLE_COUNT, mHealthInfo.batteryHealthCycleCount);
+        event.putInt(BatteryManager.EXTRA_STATE_OF_HEALTH, mHealthInfo.batteryStateOfHealth);
 
         boolean queueWasEmpty = mBatteryLevelsEventQueue.isEmpty();
         mBatteryLevelsEventQueue.add(event);
@@ -1108,6 +1119,8 @@ public final class BatteryService extends SystemService {
                 pw.println("  voltage: " + mHealthInfo.batteryVoltageMillivolts);
                 pw.println("  temperature: " + mHealthInfo.batteryTemperatureTenthsCelsius);
                 pw.println("  technology: " + mHealthInfo.batteryTechnology);
+                pw.println("  Battery cycle count: " + mHealthInfo.batteryHealthCycleCount);
+                pw.println("  Battery state of health: " + mHealthInfo.batteryStateOfHealth);
             } else {
                 Shell shell = new Shell();
                 shell.exec(mBinderService, null, fd, null, args, null, new ResultReceiver(null));
