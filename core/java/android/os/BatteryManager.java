@@ -147,6 +147,31 @@ public class BatteryManager {
     public static final String EXTRA_SEQUENCE = "seq";
 
     /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the battery charging cycle count.
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_CYCLE_COUNT = "android.os.extra.CYCLE_COUNT";
+
+    /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the measured battery state of health (remaining
+     * estimate full charge capacity relative to the rated capacity in %).
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_STATE_OF_HEALTH = "android.os.extra.STATE_OF_HEALTH";
+
+    /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the battery charging status.
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_CHARGING_STATUS = "android.os.extra.CHARGING_STATUS";
+
+    /**
      * Extra for {@link android.content.Intent#ACTION_BATTERY_LEVEL_CHANGED}:
      * Contains list of Bundles representing battery events
      * @hide
@@ -253,6 +278,43 @@ public class BatteryManager {
      * Battery charge status, from a BATTERY_STATUS_* value.
      */
     public static final int BATTERY_PROPERTY_STATUS = 6;
+
+    /**
+     * Battery manufacturing date is reported in epoch. The 0 timepoint
+     * begins at midnight Coordinated Universal Time (UTC) on January 1, 1970.
+     * It is a long integer in seconds. Here's how to convert epoch timestamp
+     * to date:
+     *
+     * Import the java.util.Date class create data and calendar:
+     *    import java.util.Date;
+     *    Date date = new Date(1563370941000L);
+     *    Calendar calendar = Calendar.getInstance();
+     *    calendar.setTime(date);
+     * Get ymd and hms:
+     *    int year = calendar.get(Calendar.YEAR);
+     *    int month = calendar.get(Calendar.MONTH);
+     *    int day = calendar.get(Calendar.DAY_OF_MONTH);
+     *    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+     *    int minute = calendar.get(Calendar.MINUTE);
+     *    int second = calendar.get(Calendar.SECOND);
+     * Convert to yyyy-MM-dd HH:mm:ss format:
+     *    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+     *    String dateString = sdf.format(date);
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final int BATTERY_PROPERTY_MANUFACTURING_DATE = 7;
+
+    /**
+     * The date of first usage is reported in epoch. The 0 timepoint
+     * begins at midnight Coordinated Universal Time (UTC) on January 1, 1970.
+     * It is a long integer in seconds. {referencing
+     * @BATTERY_PROPERTY_MANUFACTURING_DATE for sample code}
+     * @hide
+     */
+    @SystemApi
+    public static final int BATTERY_PROPERTY_FIRST_USAGE_DATE = 8;
 
     private final Context mContext;
     private final IBatteryStats mBatteryStats;
