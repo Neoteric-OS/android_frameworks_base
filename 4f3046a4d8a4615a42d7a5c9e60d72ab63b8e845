@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d926126_4875a0a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2022-12-14T09:30:34Z",
+      "side": 1,
+      "message": "This can be `Bug: 262486679`",
+      "revId": "4f3046a4d8a4615a42d7a5c9e60d72ab63b8e845",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "33be7543_e2fa19b1",
