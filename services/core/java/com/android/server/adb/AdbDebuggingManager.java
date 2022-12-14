@@ -679,7 +679,7 @@ public class AdbDebuggingManager {
                             return;
                         }
                         synchronized (mAdbConnectionInfo) {
-                            if (!bssid.equals(mAdbConnectionInfo.getBSSID())) {
+                            if (bssid != null && !bssid.equals(mAdbConnectionInfo.getBSSID())) {
                                 Slog.i(TAG, "Detected wifi network change. Disabling adbwifi.");
                                 Settings.Global.putInt(mContentResolver,
                                         Settings.Global.ADB_WIFI_ENABLED, 0);
