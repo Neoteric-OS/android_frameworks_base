@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "97d38be5_3618d816",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-14T02:44:00Z",
+      "side": 1,
+      "message": "Extra \"e\"?",
+      "range": {
+        "startLine": 149,
+        "startChar": 34,
+        "endLine": 149,
+        "endChar": 35
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5043484b_848cc733",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-14T02:44:00Z",
+      "side": 1,
+      "message": "Suggest \"No required capabilities found\"",
+      "range": {
+        "startLine": 163,
+        "startChar": 49,
+        "endLine": 163,
+        "endChar": 77
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "103b1f1e_ef2055be",
         "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
         "patchSetId": 7
