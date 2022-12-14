@@ -147,6 +147,31 @@ public class BatteryManager {
     public static final String EXTRA_SEQUENCE = "seq";
 
     /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the battery charging cycle count.
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_CYCLE_COUNT = "android.os.extra.CYCLE_COUNT";
+
+    /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the measured battery state of health (remaining
+     * estimate full charge capacity relative to the rated capacity in %).
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_STATE_OF_HEALTH = "android.os.extra.STATE_OF_HEALTH";
+
+    /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the battery charging status.
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_CHARGING_STATUS = "android.os.extra.CHARGING_STATUS";
+
+    /**
      * Extra for {@link android.content.Intent#ACTION_BATTERY_LEVEL_CHANGED}:
      * Contains list of Bundles representing battery events
      * @hide
@@ -253,6 +278,20 @@ public class BatteryManager {
      * Battery charge status, from a BATTERY_STATUS_* value.
      */
     public static final int BATTERY_PROPERTY_STATUS = 6;
+
+    /**
+     * Battery manufacturing date is reported in epoch.
+     * @hide
+     */
+    @SystemApi
+    public static final int BATTERY_PROPERTY_MANUFACTURING_DATE = 7;
+
+    /**
+     * The date of first usage is reported in epoch.
+     * @hide
+     */
+    @SystemApi
+    public static final int BATTERY_PROPERTY_FIRST_USAGE_DATE = 8;
 
     private final Context mContext;
     private final IBatteryStats mBatteryStats;
