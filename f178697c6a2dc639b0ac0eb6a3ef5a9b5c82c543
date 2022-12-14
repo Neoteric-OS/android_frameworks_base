@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "df17cac4_d0a86187",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-14T02:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "103b1f1e_ef2055be",
+      "range": {
+        "startLine": 300,
+        "startChar": 7,
+        "endLine": 300,
+        "endChar": 13
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "068d8830_775824c0",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-12-14T02:21:28Z",
       "side": 1,
       "message": "Nit: Sets",
+      "range": {
+        "startLine": 605,
+        "startChar": 11,
+        "endLine": 605,
+        "endChar": 14
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4fac41f_7303cfd8",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-14T02:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "068d8830_775824c0",
       "range": {
         "startLine": 605,
         "startChar": 11,
@@ -93,6 +141,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "07e6e98d_9d12495b",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-14T02:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0646086b_e4d8b73f",
+      "range": {
+        "startLine": 607,
+        "startChar": 84,
+        "endLine": 607,
+        "endChar": 87
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1ff0d88_d8b2b272",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-14T02:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a780fce_82ff129b",
+      "range": {
+        "startLine": 607,
+        "startChar": 31,
+        "endLine": 607,
+        "endChar": 53
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3570dfc_01f62f44",
@@ -139,6 +235,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "554e0d22_46286f5a",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-14T02:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3570dfc_01f62f44",
+      "range": {
+        "startLine": 608,
+        "startChar": 89,
+        "endLine": 608,
+        "endChar": 98
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19607cc0_068774b6",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-14T02:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28638ef1_49269de6",
+      "range": {
+        "startLine": 608,
+        "startChar": 72,
+        "endLine": 608,
+        "endChar": 73
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f1673440_8bc5195f",
@@ -152,6 +296,30 @@
       "writtenOn": "2022-12-14T02:21:28Z",
       "side": 1,
       "message": "ones",
+      "range": {
+        "startLine": 609,
+        "startChar": 41,
+        "endLine": 609,
+        "endChar": 42
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df273604_add0b996",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-14T02:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1673440_8bc5195f",
       "range": {
         "startLine": 609,
         "startChar": 41,
@@ -185,6 +353,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4506fdc1_b5aadb7c",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-14T02:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aefa7ac_53d8894e",
+      "range": {
+        "startLine": 611,
+        "startChar": 58,
+        "endLine": 611,
+        "endChar": 61
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2af7e137_2b37278c",
@@ -198,6 +390,30 @@
       "writtenOn": "2022-12-14T02:21:28Z",
       "side": 1,
       "message": "Same comments as for CBS in terms of gramatical structure.\n\nAnd ditto for below methods.",
+      "range": {
+        "startLine": 624,
+        "startChar": 0,
+        "endLine": 624,
+        "endChar": 11
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94c9fc1b_86bdcd96",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-14T02:39:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2af7e137_2b37278c",
       "range": {
         "startLine": 624,
         "startChar": 0,
