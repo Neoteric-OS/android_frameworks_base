@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "103b1f1e_ef2055be",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-14T02:21:28Z",
+      "side": 1,
+      "message": "Nit: I think this should be \"Returns\"\n\nSee https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html, and search for \"Use 3rd person (descriptive) not 2nd person (prescriptive).\"\n\nDitto on below",
+      "range": {
+        "startLine": 300,
+        "startChar": 7,
+        "endLine": 300,
+        "endChar": 13
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "068d8830_775824c0",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-14T02:21:28Z",
+      "side": 1,
+      "message": "Nit: Sets",
+      "range": {
+        "startLine": 605,
+        "startChar": 11,
+        "endLine": 605,
+        "endChar": 14
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0646086b_e4d8b73f",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-14T02:21:28Z",
+      "side": 1,
+      "message": "ones",
+      "range": {
+        "startLine": 607,
+        "startChar": 84,
+        "endLine": 607,
+        "endChar": 87
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a780fce_82ff129b",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-14T02:21:28Z",
+      "side": 1,
+      "message": "\"CBS is required\", or \"{@code setCbs(MATCH_REQUIRED)} is called\"",
+      "range": {
+        "startLine": 607,
+        "startChar": 31,
+        "endLine": 607,
+        "endChar": 53
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3570dfc_01f62f44",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-14T02:21:28Z",
+      "side": 1,
+      "message": "networks that do not support...",
+      "range": {
+        "startLine": 608,
+        "startChar": 89,
+        "endLine": 608,
+        "endChar": 98
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28638ef1_49269de6",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-14T02:21:28Z",
+      "side": 1,
+      "message": "Same as above; \"CBS is forbidden\" or \"{@code... } is called\"",
+      "range": {
+        "startLine": 608,
+        "startChar": 72,
+        "endLine": 608,
+        "endChar": 73
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1673440_8bc5195f",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-14T02:21:28Z",
+      "side": 1,
+      "message": "ones",
+      "range": {
+        "startLine": 609,
+        "startChar": 41,
+        "endLine": 609,
+        "endChar": 42
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1aefa7ac_53d8894e",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-14T02:21:28Z",
+      "side": 1,
+      "message": "CBS?",
+      "range": {
+        "startLine": 611,
+        "startChar": 58,
+        "endLine": 611,
+        "endChar": 61
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2af7e137_2b37278c",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-14T02:21:28Z",
+      "side": 1,
+      "message": "Same comments as for CBS in terms of gramatical structure.\n\nAnd ditto for below methods.",
+      "range": {
+        "startLine": 624,
+        "startChar": 0,
+        "endLine": 624,
+        "endChar": 11
+      },
+      "revId": "f178697c6a2dc639b0ac0eb6a3ef5a9b5c82c543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
