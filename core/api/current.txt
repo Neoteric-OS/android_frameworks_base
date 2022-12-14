@@ -30886,6 +30886,8 @@ package android.os {
     field public static final int BATTERY_PROPERTY_CURRENT_AVERAGE = 3; // 0x3
     field public static final int BATTERY_PROPERTY_CURRENT_NOW = 2; // 0x2
     field public static final int BATTERY_PROPERTY_ENERGY_COUNTER = 5; // 0x5
+    field public static final int BATTERY_PROPERTY_FIRST_USAGE_DATE = 8; // 0x8
+    field public static final int BATTERY_PROPERTY_MANUFACTURING_DATE = 7; // 0x7
     field public static final int BATTERY_PROPERTY_STATUS = 6; // 0x6
     field public static final int BATTERY_STATUS_CHARGING = 2; // 0x2
     field public static final int BATTERY_STATUS_DISCHARGING = 3; // 0x3
