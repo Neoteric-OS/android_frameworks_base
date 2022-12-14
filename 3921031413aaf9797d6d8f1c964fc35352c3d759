@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a946ce32_21709e57",
+        "filename": "packages/SystemUI/src/com/android/systemui/stylus/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1269233
+      },
+      "writtenOn": "2022-12-14T16:44:32Z",
+      "side": 1,
+      "message": "Can we add juliacr@ to this list as well?",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "3921031413aaf9797d6d8f1c964fc35352c3d759",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
