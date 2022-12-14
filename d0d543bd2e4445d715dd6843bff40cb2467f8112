@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a8d68ba_fdcf0c89",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2022-12-14T07:38:22Z",
+      "side": 1,
+      "message": "Hi Pioush, could you please create a bug and link the bug in the commit message as Chris suggested?\n\nI\u0027ve tried the repro steps you provided, but there\u0027s no crash observed on my device. Could you attach a video and the crash stack-trace in bug if it\u0027s possible for clarification use? Thanks.",
+      "parentUuid": "c28054a1_de143c0b",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "d0d543bd2e4445d715dd6843bff40cb2467f8112",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "411dc89a_db8869e8",
