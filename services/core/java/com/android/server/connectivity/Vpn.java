@@ -94,6 +94,21 @@ import android.net.ipsec.ike.IkeSessionCallback;
 import android.net.ipsec.ike.IkeSessionConfiguration;
 import android.net.ipsec.ike.IkeSessionConnectionInfo;
 import android.net.ipsec.ike.IkeSessionParams;
+import android.net.ipsec.ike.IkeTrafficSelector;
+import android.net.ipsec.ike.IkeTunnelConnectionParams;
+import android.net.ipsec.ike.TunnelModeChildSessionParams;
+import android.net.ipsec.ike.exceptions.IkeException;
+import android.net.ipsec.ike.exceptions.IkeInternalException;
+import android.net.ipsec.ike.exceptions.IkeProtocolException;
+import android.net.ipsec.ike.ChildSaProposal;
+import android.net.ipsec.ike.ChildSessionCallback;
+import android.net.ipsec.ike.ChildSessionConfiguration;
+import android.net.ipsec.ike.ChildSessionParams;
+import android.net.ipsec.ike.IkeSession;
+import android.net.ipsec.ike.IkeSessionCallback;
+import android.net.ipsec.ike.IkeSessionConfiguration;
+import android.net.ipsec.ike.IkeSessionConnectionInfo;
+import android.net.ipsec.ike.IkeSessionParams;
 import android.net.ipsec.ike.IkeTunnelConnectionParams;
 import android.net.ipsec.ike.exceptions.IkeIOException;
 import android.net.ipsec.ike.exceptions.IkeNetworkLostException;
@@ -3077,6 +3092,53 @@ public class Vpn {
                 Log.d(TAG, "Error in ChildOpened for token " + token, e);
                 onSessionLost(token, e);
             }
+
+            // Create opportunistic child SAs; this allows SA aggregation in the downlink,
+            // reducing lock/atomic contention in high throughput scenarios. All SAs will
+            // share the same UDP encap socket (and keepalives) as necessary, and are
+            // effectively free.
+            final int parallelTunnelCount =
+                    Math.max(1, mSystemServices.settingsSecureGetIntForUser(
+                        "VPN_TUNNEL_AGGREGATION_SA_COUNT", 1 /*default*/, mUserId));
+
+            Log.d("TEST", "Parallel tunnel count: " + parallelTunnelCount);
+            for (int i = 0; i < parallelTunnelCount - 1; i++) {
+                mSession.openChildSession(
+                        buildOpportunisticChildParams(),
+                        new VpnIkev2Utils.ChildSessionCallbackImpl(
+                                        TAG, IkeV2VpnRunner.this, token, true /* isOpportunistic */));
+            }
+        }
+
+
+        /**
+         * Build a TunnelModeChildSessionParams for opportunistic aggregation
+         *
+         * <p>This method re-builds a stripped-down version of the child session params, and odes
+         * not request any inner addresses, DNS servers or subnets. The sole purpose of the
+         * opportunistic SAs is to allow multiplexing of data in the downlink direction.
+         */
+        private ChildSessionParams buildOpportunisticChildParams() {
+            final ChildSessionParams baseParams = getChildSessionParams();
+
+            final TunnelModeChildSessionParams.Builder builder =
+                    new TunnelModeChildSessionParams.Builder();
+            for (ChildSaProposal proposal : baseParams.getChildSaProposals()) {
+                builder.addChildSaProposal(proposal);
+            }
+
+            for (IkeTrafficSelector inboundSelector : baseParams.getInboundTrafficSelectors()) {
+                builder.addInboundTrafficSelectors(inboundSelector);
+            }
+
+            for (IkeTrafficSelector outboundSelector : baseParams.getOutboundTrafficSelectors()) {
+                builder.addOutboundTrafficSelectors(outboundSelector);
+            }
+
+            builder.setLifetimeSeconds(
+                    baseParams.getHardLifetimeSeconds(), baseParams.getSoftLifetimeSeconds());
+
+            return builder.build();
         }
 
         /**
@@ -3361,7 +3423,7 @@ public class Vpn {
                                 new VpnIkev2Utils.IkeSessionCallbackImpl(
                                         TAG, IkeV2VpnRunner.this, token),
                                 new VpnIkev2Utils.ChildSessionCallbackImpl(
-                                        TAG, IkeV2VpnRunner.this, token));
+                                        TAG, IkeV2VpnRunner.this, token, false /* isOpportunistic */));
                 Log.d(TAG, "IKE session started for token " + token);
             } catch (Exception e) {
                 Log.i(TAG, "Setup failed for token " + mCurrentToken + ". Aborting", e);
@@ -4645,6 +4707,13 @@ public class Vpn {
         /** Update the underlying network of the IKE Session */
         public void setNetwork(@NonNull Network network) {
             mImpl.setNetwork(network);
+        }
+
+        /** Creates a new IKE Child session. */
+        public void openChildSession(
+                @NonNull ChildSessionParams childSessionParams,
+                @NonNull ChildSessionCallback childSessionCallback) {
+            mImpl.openChildSession(childSessionParams, childSessionCallback);
         }
 
         /** Forcibly terminate the IKE Session */

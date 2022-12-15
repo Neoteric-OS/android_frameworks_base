@@ -344,28 +344,61 @@ public class VpnIkev2Utils {
         private final String mTag;
         private final Vpn.IkeV2VpnRunnerCallback mCallback;
         private final int mToken;
+        private final boolean mIsOpportunistic;
 
-        ChildSessionCallbackImpl(String tag, Vpn.IkeV2VpnRunnerCallback callback, int token) {
+        private boolean mIsChildOpened = false;
+
+        /**
+         * Creates a ChildSessionCallback
+         *
+         * <p>If configured as opportunistic, this will not report initial startup, or
+         * associated startup failures. This serves the dual purposes of ensuring that if the server
+         * does not support connection multiplexing, new child SA negotiations will be ignored, and
+         * at the same time, will notify the VCN session if a successfully negotiated opportunistic
+         * child SA is subsequently torn down, which could impact uplink traffic if the SA in use
+         * for outbound/uplink traffic is this opportunistic SA.
+         */
+        ChildSessionCallbackImpl(String tag, Vpn.IkeV2VpnRunnerCallback callback, int token, boolean isOpportunistic) {
             mTag = tag;
             mCallback = callback;
             mToken = token;
+            mIsOpportunistic = isOpportunistic;
         }
 
         @Override
         public void onOpened(@NonNull ChildSessionConfiguration childConfig) {
             Log.d(mTag, "ChildOpened for token " + mToken);
+
+            if (mIsOpportunistic) {
+                Log.d("TEST", "ChildOpened for opportunistic child; suppressing event message");
+                mIsChildOpened = true;
+                return;
+            }
+
             mCallback.onChildOpened(mToken, childConfig);
         }
 
         @Override
         public void onClosed() {
             Log.d(mTag, "ChildClosed for token " + mToken);
+
+            if (mIsOpportunistic && !mIsChildOpened) {
+                Log.d("TEST", "ChildClosed for unopened opportunistic child; ignoring");
+                return;
+            }
+
             mCallback.onSessionLost(mToken, null);
         }
 
         @Override
         public void onClosedExceptionally(@NonNull IkeException exception) {
             Log.d(mTag, "ChildClosedExceptionally for token " + mToken, exception);
+
+            if (mIsOpportunistic && !mIsChildOpened) {
+                Log.d("TEST", "ChildClosedExceptionally for unopened opportunistic child; ignoring");
+                return;
+            }
+
             mCallback.onSessionLost(mToken, exception);
         }
 
