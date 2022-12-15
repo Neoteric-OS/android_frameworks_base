@@ -33,16 +33,13 @@ import android.util.ArraySet;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
-import android.widget.Toast;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.UiEvent;
 import com.android.internal.logging.UiEventLogger;
-import com.android.internal.util.neoteric.NeotericUtils;
 import com.android.systemui.EventLogTags;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.res.R;
-import com.android.systemui.SysUIToast;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 import com.android.systemui.statusbar.notification.row.NotificationRowContentBinder.InflationFlag;
 import com.android.systemui.statusbar.notification.shared.NotificationThrottleHun;
@@ -518,23 +515,6 @@ public abstract class BaseHeadsUpManager implements HeadsUpManager {
             String snoozeKey = snoozeKey(packageName, mUser);
             mLogger.logPackageSnoozed(snoozeKey);
             mSnoozedPackages.put(snoozeKey, mSystemClock.elapsedRealtime() + mSnoozeLengthMs);
-	    if (mSnoozeLengthMs != 0) {
-                String appName = NeotericUtils.getAppName(mContext, packageName);
-                if (appName == null) {
-                    appName = packageName;
-                }
-                Toast toast;
-                if (mSnoozeLengthMs == 60000) {
-                    toast = SysUIToast.makeText(mContext, mContext.getString(
-                            R.string.heads_up_snooze_message_one_minute, appName),
-                            Toast.LENGTH_LONG);
-                } else {
-                    toast = SysUIToast.makeText(mContext, mContext.getString(
-                            R.string.heads_up_snooze_message, appName,
-                            mSnoozeLengthMs / 60 / 1000), Toast.LENGTH_LONG);
-                }
-                toast.show();
-            }
         }
     }
 
