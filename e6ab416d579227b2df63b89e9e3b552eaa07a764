@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e459baff_1c765983",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkRecord.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-15T23:43:14Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be .equals()?",
+      "range": {
+        "startLine": 154,
+        "startChar": 37,
+        "endLine": 154,
+        "endChar": 41
+      },
+      "revId": "e6ab416d579227b2df63b89e9e3b552eaa07a764",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
