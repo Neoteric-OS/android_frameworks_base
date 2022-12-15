@@ -30,15 +30,12 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.ArrayMap;
 import android.view.accessibility.AccessibilityManager;
-import android.widget.Toast;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.UiEvent;
 import com.android.internal.logging.UiEventLogger;
-import com.android.internal.util.custom.CustomUtils;
 import com.android.systemui.EventLogTags;
 import com.android.systemui.R;
-import com.android.systemui.SysUIToast;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.statusbar.AlertingNotificationManager;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
@@ -252,23 +249,6 @@ public abstract class HeadsUpManager extends AlertingNotificationManager {
             String snoozeKey = snoozeKey(packageName, mUser);
             mLogger.logPackageSnoozed(snoozeKey);
             mSnoozedPackages.put(snoozeKey, mClock.currentTimeMillis() + mSnoozeLengthMs);
-            if (mSnoozeLengthMs != 0) {
-                String appName = CustomUtils.getAppName(mContext, packageName);
-                if (appName == null) {
-                    appName = packageName;
-                }
-                Toast toast;
-                if (mSnoozeLengthMs == 60000) {
-                    toast = SysUIToast.makeText(mContext, mContext.getString(
-                            R.string.heads_up_snooze_message_one_minute, appName),
-                            Toast.LENGTH_LONG);
-                } else {
-                    toast = SysUIToast.makeText(mContext, mContext.getString(
-                            R.string.heads_up_snooze_message, appName,
-                            mSnoozeLengthMs / 60 / 1000), Toast.LENGTH_LONG);
-                }
-                toast.show();
-            }
         }
     }
 
