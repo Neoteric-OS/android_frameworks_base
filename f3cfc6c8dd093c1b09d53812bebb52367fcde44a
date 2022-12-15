@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d4ccaeb_5aba8a40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-15T22:42:17Z",
+      "side": 1,
+      "message": "priority",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "f3cfc6c8dd093c1b09d53812bebb52367fcde44a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1841c11_d1762269",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-15T22:42:17Z",
+      "side": 1,
+      "message": "Think about whether it is easier to add the wrapper class directly? If so, go for it, otherwise, we can survive, but please do have hte cleanup CL.",
+      "revId": "f3cfc6c8dd093c1b09d53812bebb52367fcde44a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc40b4c6_475c6b76",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-15T22:42:17Z",
+      "side": 1,
+      "message": "Adding these will make the comparisons from the perspective of the VcnGatewayConnection odd/flaky, since there will be unobservable characteristics that change. Suggest maintaining the old behavior by:\n- Ignoring these in the standard equals() method, and\n- Adding another isEqualIncludingPriorities() method.",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 55
+      },
+      "revId": "f3cfc6c8dd093c1b09d53812bebb52367fcde44a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9eab2205_38b5c8b9",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-15T22:42:17Z",
+      "side": 1,
+      "message": "Ditto here",
+      "range": {
+        "startLine": 116,
+        "startChar": 73,
+        "endLine": 116,
+        "endChar": 98
+      },
+      "revId": "f3cfc6c8dd093c1b09d53812bebb52367fcde44a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
