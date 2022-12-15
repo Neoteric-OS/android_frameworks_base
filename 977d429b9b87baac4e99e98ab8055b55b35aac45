@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7dc072a_ae19a0dc",
+        "filename": "core/java/android/app/servertransaction/TransactionExecutorHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2022-12-15T10:00:27Z",
+      "side": 1,
+      "message": "I think `Log.w` is enough.",
+      "range": {
+        "startLine": 169,
+        "startChar": 17,
+        "endLine": 169,
+        "endChar": 18
+      },
+      "revId": "977d429b9b87baac4e99e98ab8055b55b35aac45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
