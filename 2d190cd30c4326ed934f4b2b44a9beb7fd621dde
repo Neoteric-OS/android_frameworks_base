@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a78cb64_d15c119b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1961582
+      },
+      "writtenOn": "2022-12-15T08:08:15Z",
+      "side": 1,
+      "message": "I run atest as you say, but it report fail, but i revert this change to run atest\nit also report failed, i report this issure in bug: 262672210",
+      "parentUuid": "43928f26_773b311f",
+      "revId": "2d190cd30c4326ed934f4b2b44a9beb7fd621dde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "b960e4fa_5677c9f4",
