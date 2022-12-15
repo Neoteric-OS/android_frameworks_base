@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "5e226703_e6a97859",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-15T23:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d4ccaeb_5aba8a40",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "f3cfc6c8dd093c1b09d53812bebb52367fcde44a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c1841c11_d1762269",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "630ea75c_6d4e2789",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-15T23:12:59Z",
+      "side": 1,
+      "message": "Done. Also filed b/262778172 to create a wrapper class.",
+      "parentUuid": "cc40b4c6_475c6b76",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 55
+      },
+      "revId": "f3cfc6c8dd093c1b09d53812bebb52367fcde44a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9eab2205_38b5c8b9",
@@ -77,6 +125,30 @@
       "writtenOn": "2022-12-15T22:42:17Z",
       "side": 1,
       "message": "Ditto here",
+      "range": {
+        "startLine": 116,
+        "startChar": 73,
+        "endLine": 116,
+        "endChar": 98
+      },
+      "revId": "f3cfc6c8dd093c1b09d53812bebb52367fcde44a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ae214ee_867aae82",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-15T23:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eab2205_38b5c8b9",
       "range": {
         "startLine": 116,
         "startChar": 73,
