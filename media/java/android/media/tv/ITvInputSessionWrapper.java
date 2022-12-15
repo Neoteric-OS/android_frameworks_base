@@ -17,6 +17,7 @@
 package android.media.tv;
 
 import android.annotation.Nullable;
+import android.content.AttributionSource;
 import android.content.Context;
 import android.graphics.Rect;
 import android.media.PlaybackParams;
@@ -74,6 +75,7 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
     private static final int DO_REMOVE_BROADCAST_INFO = 25;
     private static final int DO_SET_IAPP_NOTIFICATION_ENABLED = 26;
     private static final int DO_REQUEST_AD = 27;
+    private static final int DO_REGISTER_TVAPP_ATTRIBUTION_SOURCE = 28;
 
     private final boolean mIsRecordingSession;
     private final HandlerCaller mCaller;
@@ -254,6 +256,9 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
                 mTvInputSessionImpl.requestAd((AdRequest) msg.obj);
                 break;
             }
+            case DO_REGISTER_TVAPP_ATTRIBUTION_SOURCE: {
+                mTvInputSessionImpl.registerTvAppAttributionSource((AttributionSource) msg.obj);
+            }
             default: {
                 Log.w(TAG, "Unhandled message code: " + msg.what);
                 break;
@@ -302,6 +307,12 @@ public class ITvInputSessionWrapper extends ITvInputSession.Stub implements Hand
     @Override
     public final void setVolume(float volume) {
         mCaller.executeOrSendMessage(mCaller.obtainMessageO(DO_SET_STREAM_VOLUME, volume));
+    }
+
+    @Override
+    public void registerTvAppAttributionSource(AttributionSource source) {
+        mCaller.executeOrSendMessage(
+                mCaller.obtainMessageO(DO_REGISTER_TVAPP_ATTRIBUTION_SOURCE, source));
     }
 
     @Override

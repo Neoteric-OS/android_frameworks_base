@@ -25,6 +25,7 @@ import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.annotation.TestApi;
+import android.content.AttributionSource;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -2450,6 +2451,23 @@ public final class TvInputManager {
                     throw new IllegalArgumentException("volume should be between 0.0f and 1.0f");
                 }
                 mService.setVolume(mToken, volume, mUserId);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+
+        /**
+         * Registers the AttrubutionSource of TV App to TV Input Service.
+         *
+         * @param source The Attribution Source of the TV App.
+         */
+        public void registerTvAppAttributionSource(@NonNull AttributionSource source) {
+            if (mToken == null) {
+                Log.w(TAG, "The session has been already released");
+                return;
+            }
+            try {
+                mService.registerTvAppAttributionSource(mToken, source, mUserId);
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }

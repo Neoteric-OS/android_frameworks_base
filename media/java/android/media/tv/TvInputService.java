@@ -26,6 +26,7 @@ import android.annotation.SystemApi;
 import android.app.ActivityManager;
 import android.app.Service;
 import android.compat.annotation.UnsupportedAppUsage;
+import android.content.AttributionSource;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -1107,7 +1108,7 @@ public abstract class TvInputService extends Service {
         public abstract void onSetStreamVolume(@FloatRange(from = 0.0, to = 1.0) float volume);
 
         /**
-         * called when broadcast info is requested.
+         * Called when broadcast info is requested.
          *
          * @param request broadcast info request
          */
@@ -1115,7 +1116,7 @@ public abstract class TvInputService extends Service {
         }
 
         /**
-         * called when broadcast info is removed.
+         * Called when broadcast info is removed.
          */
         public void onRemoveBroadcastInfo(int requestId) {
         }
@@ -1126,6 +1127,14 @@ public abstract class TvInputService extends Service {
          * @param request advertisement request received
          */
         public void onRequestAd(@NonNull AdRequest request) {
+        }
+
+        /**
+         * Called when the Attribution Source from TV App is received.
+         *
+         * @param source The Attribution Source of the TV App.
+         */
+        public void onRegisterTvAppAttributionSource(@NonNull AttributionSource source) {
         }
 
         /**
@@ -1532,6 +1541,13 @@ public abstract class TvInputService extends Service {
          */
         void setStreamVolume(float volume) {
             onSetStreamVolume(volume);
+        }
+
+        /**
+         * Calls {@link #onRegisterTvAppAttributionSource}.
+         */
+        void registerTvAppAttributionSource(AttributionSource source) {
+            onRegisterTvAppAttributionSource(source);
         }
 
         /**

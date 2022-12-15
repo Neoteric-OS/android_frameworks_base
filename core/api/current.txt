@@ -25964,6 +25964,7 @@ package android.media.tv {
     method public boolean onKeyMultiple(int, int, android.view.KeyEvent);
     method public boolean onKeyUp(int, android.view.KeyEvent);
     method public void onOverlayViewSizeChanged(int, int);
+    method public void onRegisterTvAppAttributionSource(@NonNull android.content.AttributionSource);
     method public abstract void onRelease();
     method public void onRemoveBroadcastInfo(int);
     method public void onRequestAd(@NonNull android.media.tv.AdRequest);
@@ -26067,6 +26068,7 @@ package android.media.tv {
     method public String getSelectedTrack(int);
     method public java.util.List<android.media.tv.TvTrackInfo> getTracks(int);
     method public boolean onUnhandledInputEvent(android.view.InputEvent);
+    method public void registerTvAppAttributionSource(@NonNull android.content.AttributionSource);
     method public void reset();
     method public void selectTrack(int, String);
     method public void sendAppPrivateCommand(@NonNull String, android.os.Bundle);

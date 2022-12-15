@@ -21,6 +21,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
+import android.content.AttributionSource;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -301,6 +302,19 @@ public class TvView extends ViewGroup {
             return;
         }
         mSession.setStreamVolume(volume);
+    }
+
+    /**
+     * Registers the AttrubutionSource of TV App to TV Input Service.
+     *
+     * @param source The Attribution Source of the TV App.
+     */
+    public void registerTvAppAttributionSource(@NonNull AttributionSource source) {
+        if (DEBUG)
+            Log.d(TAG, "register Tv App Attribution Source: " + source.toString());
+        if (mSession != null) {
+            mSession.registerTvAppAttributionSource(source);
+        }
     }
 
     /**

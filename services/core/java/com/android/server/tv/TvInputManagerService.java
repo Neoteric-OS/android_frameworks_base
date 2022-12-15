@@ -24,6 +24,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
 import android.app.ActivityManager;
+import android.content.AttributionSource;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -1739,6 +1740,29 @@ public final class TvInputManagerService extends SystemService {
             } finally {
                 Binder.restoreCallingIdentity(identity);
             }
+        }
+
+        @Override
+        public void registerTvAppAttributionSource(
+                IBinder sessionToken, AttributionSource source, int userId) {
+            final int callingUid = Binder.getCallingUid();
+            final int callingPid = Binder.getCallingPid();
+            final int resolvedUserId = resolveCallingUserId(
+                    callingPid, callingUid, userId, "registerTvAppAttributionSource");
+            final long identity = Binder.clearCallingIdentity();
+            try {
+                synchronized (mLock) {
+                    try {
+                        SessionState sessionState =
+                                getSessionStateLocked(sessionToken, callingUid, resolvedUserId);
+                        getSessionLocked(sessionState).registerTvAppAttributionSource(source);
+                    } catch (RemoteException | SessionNotFoundException e) {
+                        Slog.e(TAG, "error in registerTvAppAttributionSource", e);
+                    }
+                }
+            } finally {
+                Binder.restoreCallingIdentity(identity);
+            };
         }
 
         @Override

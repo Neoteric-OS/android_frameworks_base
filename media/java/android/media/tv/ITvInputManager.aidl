@@ -16,6 +16,7 @@
 
 package android.media.tv;
 
+import android.content.AttributionSource;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -73,6 +74,7 @@ interface ITvInputManager {
     void dispatchSurfaceChanged(in IBinder sessionToken, int format, int width, int height,
             int userId);
     void setVolume(in IBinder sessionToken, float volume, int userId);
+    void registerTvAppAttributionSource(in IBinder sessionToken, in AttributionSource source, int userId);
     void tune(in IBinder sessionToken, in Uri channelUri, in Bundle params, int userId);
     void setCaptionEnabled(in IBinder sessionToken, boolean enabled, int userId);
     void selectTrack(in IBinder sessionToken, int type, in String trackId, int userId);
