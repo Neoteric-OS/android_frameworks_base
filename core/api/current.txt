@@ -43766,6 +43766,21 @@ package android.telephony {
     field public static final String ICCID_REDACTED = "FFFFFFFFFFFFFFFFFFFF";
   }
 
+  public final class UplmnInfo implements android.os.Parcelable {
+    ctor public UplmnInfo(@NonNull String, int, int, int);
+    method public int describeContents();
+    method public int getNetworkMode();
+    method public int getNumRec();
+    method @NonNull public String getOperatorNumeric();
+    method public int getPriority();
+    method public void setNetworkMode(int);
+    method public void setNumRec(int);
+    method public void setOperatorNumeric(@NonNull String);
+    method public void setPriority(int);
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.telephony.UplmnInfo> CREATOR;
+  }
+
   public abstract class VisualVoicemailService extends android.app.Service {
     ctor public VisualVoicemailService();
     method public android.os.IBinder onBind(android.content.Intent);

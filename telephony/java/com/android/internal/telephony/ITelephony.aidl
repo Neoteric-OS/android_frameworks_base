@@ -51,6 +51,7 @@ import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.SignalStrengthUpdateRequest;
 import android.telephony.TelephonyHistogram;
+import android.telephony.UplmnInfo;
 import android.telephony.VisualVoicemailSmsFilterSettings;
 import android.telephony.emergency.EmergencyNumber;
 import android.telephony.ims.RcsClientConfiguration;
@@ -1618,6 +1619,32 @@ interface ITelephony {
      * @hide
      */
     void setSimPowerStateForSlotWithCallback(int slotIndex, int state, IIntegerConsumer callback);
+
+    /**
+     * Returns a list of user controlled PLMNs from the specified SIM family
+     * Returns null if the query fails.
+     *
+     * <p>Requires that the calling app has READ_PRIVILEGED_PHONE_STATE or READ_PHONE_STATE
+     *
+     * @param subId subscription ID used for authentication
+     * @param family the icc application family type, like {@link #APP_FAM_3GPP}
+     */
+    List<UplmnInfo> getUserControlledPlmns(int subId,int appType, String callingPackage,
+             String callingFeatureId);
+
+    /**
+     * Set the user controlled PLMN list from the givven app type (ex APPTYPE_USIM) on a particular
+     * subscription.
+     *
+     * @param subId subId the id of the subscription
+     * @param appType appType the uicc app type, must be USIM or SIM.
+     * @param uplmns plmns the user controlled plmns list that needed to be written to the SIM.
+     * @param callingPackage the op Package name.
+     * @param callingFeatureId the feature in the package.
+     * @return number of uplmns that is successfully written to the SIM
+     */
+    int setUserControlledPlmns(int subId, int appType, in List<UplmnInfo> uplmns,
+            String callingPackage, String callingFeatureId);
 
     /**
      * Returns a list of Forbidden PLMNs from the specified SIM App
