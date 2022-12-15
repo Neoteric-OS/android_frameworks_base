@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84582d8a_4abd9f0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1977516
+      },
+      "writtenOn": "2022-12-15T06:00:05Z",
+      "side": 1,
+      "message": "+2 got removed as empty new patch set being uploaded by mistake \nCan you please help to provide +2 again \n@riddlehsu@google.com\n@louischang@google.com\nPlease help to do the needful\nThanks",
+      "revId": "9f0d77bc676fa88e5a85fd2e118ba2c607932949",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
