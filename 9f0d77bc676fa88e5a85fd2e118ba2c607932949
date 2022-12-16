@@ -74,6 +74,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "93c6aac8_390139e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1977516
+      },
+      "writtenOn": "2022-12-16T11:34:48Z",
+      "side": 1,
+      "message": "We were unable to auto-submit your change due to the following error: The latest presubmit run for this change has warnings. Please take a look at them in Treetop (https://android-build.googleplex.com/builds/treetop/android-review/2307862?ref\u003dCOMMENT\u0026revision\u003d6\u0026workplanId\u003dL09900000957798545) before manually submitting.\n\nview details: https://android-build.googleplex.com/presubmit-status?change_id\u003d2307862\u0026revision_id\u003d7\u0026host\u003dandroid\u0026id\u003d5814351301083136\n\n\nAny solution to this ??\n@riddlehsu@google.com",
+      "parentUuid": "0494a0e7_95ba2378",
+      "revId": "9f0d77bc676fa88e5a85fd2e118ba2c607932949",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "84582d8a_4abd9f0d",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 6
