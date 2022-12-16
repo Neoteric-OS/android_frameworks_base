@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "147a6fc2_221f2e4b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-12-16T00:02:59Z",
+      "side": 1,
+      "message": "@chiachangwang@google.com could you take over this CL? this sounds like it\u0027s still relevant.",
+      "revId": "71bd9064b971f1615808687bc2e0425895fd22d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
