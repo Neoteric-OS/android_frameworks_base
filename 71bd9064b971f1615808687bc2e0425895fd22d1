@@ -16,6 +16,24 @@
       "message": "@chiachangwang@google.com could you take over this CL? this sounds like it\u0027s still relevant.",
       "revId": "71bd9064b971f1615808687bc2e0425895fd22d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53733ce3_40338c13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-12-16T00:07:19Z",
+      "side": 1,
+      "message": "Thanks for the reminder! I\u0027ll take this one.",
+      "parentUuid": "147a6fc2_221f2e4b",
+      "revId": "71bd9064b971f1615808687bc2e0425895fd22d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
