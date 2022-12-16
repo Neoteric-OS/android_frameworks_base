@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "96568802_4a15c29d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1977516
+      },
+      "writtenOn": "2022-12-16T11:29:47Z",
+      "side": 1,
+      "message": "Yess by mistake \nmaking it okay",
+      "parentUuid": "09566725_082a6931",
+      "revId": "9f0d77bc676fa88e5a85fd2e118ba2c607932949",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "84582d8a_4abd9f0d",
