@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b1ffe7b_de8fbf73",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2022-12-16T07:04:08Z",
+      "side": 1,
+      "message": "nit: maybe clearer to wrap the whole block in if (expectedValue \u003d\u003d mLoadEscrowDataErrorCode) instead or just return early if (expectedValue !\u003d mLoadEscrowDataErrorCode)",
+      "range": {
+        "startLine": 422,
+        "startChar": 8,
+        "endLine": 430,
+        "endChar": 9
+      },
+      "revId": "5e9646d288000ba48089f4f6a3bf80b9133000ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
