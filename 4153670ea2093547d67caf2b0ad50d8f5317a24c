@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9c79640_53eb6060",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-16T18:56:31Z",
+      "side": 1,
+      "message": "The four failed test suites on cf_x86_64_auto-userdebug are due to b/262812157 and are unrelated to this change.",
+      "revId": "4153670ea2093547d67caf2b0ad50d8f5317a24c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
