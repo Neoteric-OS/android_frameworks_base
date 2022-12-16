@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82458ccf_abf12c03",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1319951
+      },
+      "writtenOn": "2022-12-16T22:03:26Z",
+      "side": 1,
+      "message": "we might need to provide access to manufacturer date and activation date",
+      "revId": "3abb9ec990f6d31571aeed146c96815b3fa91665",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
