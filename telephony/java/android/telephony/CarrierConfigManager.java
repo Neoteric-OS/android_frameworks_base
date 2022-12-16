@@ -4361,6 +4361,16 @@ public class CarrierConfigManager {
             "data_switch_validation_timeout_long";
 
     /**
+     * The minimal NAT keepalive timeout required to keep the connection on the carrier network
+     * alive. The default value is 150_000 milliseconds.
+     * Time out is in milliseconds.
+     * @hide
+     */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static final String KEY_MIN_UDP_PORT_4500_NAT_TIMEOUT_INT =
+            "min_udp_port_4500_nat_timeout_int";
+
+    /**
      * Specifies whether the system should prefix the EAP method to the anonymous identity.
      * The following prefix will be added if this key is set to TRUE:
      *   EAP-AKA: "0"
