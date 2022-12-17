@@ -98,12 +98,12 @@ readEntityData_native(JNIEnv* env, jobject clazz, jlong r, jbyteArray data, jint
 
     if (env->GetArrayLength(data) < (size+offset)) {
         // size mismatch
-        return -1;
+        return -3;
     }
 
     jbyte* dataBytes = env->GetByteArrayElements(data, NULL);
     if (dataBytes == NULL) {
-        return -2;
+        return -4;
     }
 
     err = reader->ReadEntityData(dataBytes+offset, size);

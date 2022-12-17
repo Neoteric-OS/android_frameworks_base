@@ -153,20 +153,20 @@ public class BackupDataInput {
      * have been processed by the {@link #readNextHeader()} method.  Multiple calls to
      * this method may be made in order to process the data in chunks; not all of it
      * must be read in a single call.  Once all of the raw data for the current entity
-     * has been read, further calls to this method will simply return zero.
+     * has been read, further calls to this method will simply return -1.
      *
      * @param data An allocated byte array of at least 'size' bytes
      * @param offset Offset within the 'data' array at which the data will be placed
      *    when read from the stream
      * @param size The number of bytes to read in this pass
      * @return The number of bytes of data read.  Once all of the data for this entity
-     *    has been read, further calls to this method will return zero.
+     *    has been read, further calls to this method will return -1.
      * @throws IOException if an error occurred when trying to read the restore data stream
      */
     public int readEntityData(byte[] data, int offset, int size) throws IOException {
         if (mHeaderReady) {
             int result = readEntityData_native(mBackupReader, data, offset, size);
-            if (result >= 0) {
+            if (result >= -1) {
                 return result;
             } else {
                 throw new IOException("result=0x" + Integer.toHexString(result));

@@ -1242,7 +1242,7 @@ test_read_header_and_entity(BackupDataReader& reader, const char* str)
     }
 
     nRead = reader.ReadEntityData(buf, bufSize);
-    if (nRead < 0) {
+    if (nRead < -1) {
         err = reader.Status();
         fprintf(stderr, "ReadEntityData failed with %s\n", strerror(err));
         goto finished;

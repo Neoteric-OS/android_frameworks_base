@@ -172,7 +172,12 @@ public class KvBackupEncrypter implements BackupEncrypter {
         byte[] value = new byte[input.getDataSize()];
         int bytesRead = 0;
         while (bytesRead < value.length) {
-            bytesRead += input.readEntityData(value, bytesRead, value.length - bytesRead);
+            final int res = input.readEntityData(value, bytesRead, value.length - bytesRead);
+            if (res == -1) {
+                // Odd, but okay. End of stream reached.
+                break;
+            }
+            bytesRead += res;
         }
         return Optional.of(value);
     }

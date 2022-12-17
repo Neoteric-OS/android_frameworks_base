@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Provides an {@link java.io.InputStream}-like interface for accessing an
+ * Provides an {@link java.io.InputStream} interface for accessing an
  * entity's data during a restore operation. Used by {@link BackupHelper} classes within the {@link
  * BackupAgentHelper} mechanism.
  * <p>
@@ -32,7 +32,7 @@ import java.io.InputStream;
  * through this class's {@link #getKey()} and {@link #size()} methods, respectively.
  * <p class="note">
  * <strong>Note:</strong> The caller should take care not to seek or close the underlying data
- * source, nor read more than {@link #size()} bytes from the stream.</p>
+ * source.</p>
  *
  * @see BackupAgentHelper
  * @see BackupHelper
@@ -57,7 +57,7 @@ public class BackupDataInputStream extends InputStream {
      * an integer value.  If more than {@link #size()} bytes of data
      * are read from the stream, the output of this method is undefined.
      *
-     * @return The byte read, or undefined if the end of the stream has been reached.
+     * @return The byte read, or -1 if the end of the stream has been reached.
      */
     public int read() throws IOException {
         byte[] one = mOneByte;
@@ -78,7 +78,7 @@ public class BackupDataInputStream extends InputStream {
      * @param size The number of bytes to read in this operation.  If insufficient
      *   data exists within the entity to fulfill this request, only as much data
      *   will be read as is available.
-     * @return The number of bytes of data read, or zero if all of the entity's
+     * @return The number of bytes of data read, or -1 if all of the entity's
      *   data has already been read.
      */
     public int read(byte[] b, int offset, int size) throws IOException {
@@ -88,10 +88,8 @@ public class BackupDataInputStream extends InputStream {
     /**
      * Read enough entity data into a byte array to fill the array.
      *
-     * @param b Byte array to fill with data from the stream.  If the stream does not
-     *   have sufficient data to fill the array, then the contents of the remainder of
-     *   the array will be undefined.
-     * @return The number of bytes of data read, or zero if all of the entity's
+     * @param b Byte array to fill with data from the stream.
+     * @return The number of bytes of data read, or -1 if all of the entity's
      *   data has already been read.
      */
     public int read(byte[] b) throws IOException {

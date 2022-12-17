@@ -332,7 +332,7 @@ ssize_t
 BackupDataReader::ReadEntityData(void* data, size_t size)
 {
     if (m_status != NO_ERROR) {
-        return -1;
+        return -2;
     }
     int remaining = m_dataEndPos - m_pos;
     if (kIsDebug) {
@@ -340,7 +340,7 @@ BackupDataReader::ReadEntityData(void* data, size_t size)
                 size, m_pos, m_dataEndPos, remaining);
     }
     if (remaining <= 0) {
-        return 0;
+        return -1;
     }
     if (((int)size) > remaining) {
         size = remaining;
@@ -349,9 +349,12 @@ BackupDataReader::ReadEntityData(void* data, size_t size)
         ALOGD("   reading %zu bytes", size);
     }
     int amt = read(m_fd, data, size);
+    if (amt == -1) {
+        return -1;
+    }
     if (amt < 0) {
         m_status = errno;
-        return -1;
+        return -2;
     }
     if (amt == 0) {
         m_status = EIO;
