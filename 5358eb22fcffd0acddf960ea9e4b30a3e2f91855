@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37e9f58b_3072ffc6",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4364,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2022-12-17T02:03:33Z",
+      "side": 1,
+      "message": "Does the ipsec keepalive have a different timeout time than other connections?\n\nShould we have one general keepalive time for a carrier rather than a very specific one?",
+      "range": {
+        "startLine": 4364,
+        "startChar": 0,
+        "endLine": 4364,
+        "endChar": 95
+      },
+      "revId": "5358eb22fcffd0acddf960ea9e4b30a3e2f91855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
