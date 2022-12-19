@@ -16,6 +16,29 @@
       "message": "I\u0027m not the right person to review this, sorry.",
       "revId": "9c22862f716ddb3748e4b33f4a03e876a1b0a873",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c7d05e0_662ef5c5",
+        "filename": "core/java/android/view/InputEventReceiver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2022-12-19T16:26:34Z",
+      "side": 1,
+      "message": "can you clarify why this approach is better? if we moved L77 to L81, for example, then the new code would break, but the old one wouldn\u0027t.",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 29
+      },
+      "revId": "9c22862f716ddb3748e4b33f4a03e876a1b0a873",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
