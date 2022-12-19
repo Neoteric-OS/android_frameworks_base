@@ -3312,6 +3312,13 @@ public class Vpn {
          *              given network to start a new IKE session.
          */
         private void startOrMigrateIkeSession(@Nullable Network underlyingNetwork) {
+            synchronized (Vpn.this) {
+                // Ignore stale runner.
+                if (mVpnRunner != this) return;
+                setVpnNetworkPreference(mSessionKey,
+                        createUserAndRestrictedProfilesRanges(mUserId,
+                                mConfig.allowedApplications, mConfig.disallowedApplications));
+            }
             if (underlyingNetwork == null) {
                 Log.d(TAG, "There is no active network for starting an IKE session");
                 return;
@@ -3718,6 +3725,10 @@ public class Vpn {
             }
 
             resetIkeState();
+            if (errorCode != VpnManager.ERROR_CODE_NETWORK_LOST
+                    && mDeps.getNextRetryDelaySeconds(mRetryCount) > 30) {
+                clearVpnNetworkPreference(mSessionKey);
+            }
         }
 
         /**
