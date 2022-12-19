@@ -380,7 +380,6 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
     @GuardedBy("mLock")
     private final ArrayList<FileBridge> mBridges = new ArrayList<>();
 
-    @GuardedBy("mLock")
     private IntentSender mRemoteStatusReceiver;
 
     /** Fields derived from commit parsing */
@@ -2045,8 +2044,9 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             throw new SecurityException("Can only transfer sessions that use public options");
         }
 
+        mInstallerUid = newOwnerAppInfo.uid;
+        assertCallerIsOwnerOrRoot();
         synchronized (mLock) {
-            assertCallerIsOwnerOrRoot();
             assertPreparedAndNotSealedLocked("transfer");
 
             try {
@@ -2055,7 +2055,6 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
                 throw new IllegalStateException("Package is not valid", e);
             }
 
-            mInstallerUid = newOwnerAppInfo.uid;
             mInstallSource = InstallSource.create(packageName, null, packageName, null,
                     params.packageSource);
         }
@@ -2171,9 +2170,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
     }
 
     private void setRemoteStatusReceiver(IntentSender remoteStatusReceiver) {
-        synchronized (mLock) {
-            mRemoteStatusReceiver = remoteStatusReceiver;
-        }
+        mRemoteStatusReceiver = remoteStatusReceiver;
     }
 
     /**
@@ -3272,9 +3269,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
      * @return the uid of the owner this session
      */
     public int getInstallerUid() {
-        synchronized (mLock) {
-            return mInstallerUid;
-        }
+        return mInstallerUid;
     }
 
     /**
@@ -3492,13 +3487,10 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
 
     private void closeInternal(boolean checkCaller) {
         int activeCount;
-        synchronized (mLock) {
-            if (checkCaller) {
-                assertCallerIsOwnerOrRoot();
-            }
-
-            activeCount = mActiveCount.decrementAndGet();
+        if (checkCaller) {
+            assertCallerIsOwnerOrRoot();
         }
+        activeCount = mActiveCount.decrementAndGet();
 
         if (activeCount == 0) {
             mCallback.onSessionActiveChanged(this, false);
@@ -3546,9 +3538,9 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
     @Override
     public void abandon() {
         final Runnable r;
+        assertCallerIsOwnerOrRootOrSystem();
         synchronized (mLock) {
             assertNotChild("abandon");
-            assertCallerIsOwnerOrRootOrSystem();
             if (isInTerminalState()) {
                 // Finalized sessions have been properly cleaned up. No need to abandon them.
                 return;
@@ -3618,8 +3610,8 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             throw new IllegalArgumentException("Invalid name: " + name);
         }
 
+        assertCallerIsOwnerOrRoot();
         synchronized (mLock) {
-            assertCallerIsOwnerOrRoot();
             assertPreparedAndNotSealedLocked("addFile");
 
             if (!mFiles.add(new FileEntry(mFiles.size(),
@@ -3640,8 +3632,8 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             throw new IllegalStateException("Must specify package name to remove a split");
         }
 
+        assertCallerIsOwnerOrRoot();
         synchronized (mLock) {
-            assertCallerIsOwnerOrRoot();
             assertPreparedAndNotSealedLocked("removeFile");
 
             if (!mFiles.add(new FileEntry(mFiles.size(),
@@ -3955,8 +3947,8 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
                 throw new IllegalStateException("Unable to add child session " + childSessionId
                         + " as it is in an invalid state.");
             }
+            assertCallerIsOwnerOrRoot();
             synchronized (mLock) {
-                assertCallerIsOwnerOrRoot();
                 assertPreparedAndNotSealedLocked("addChildSessionId");
 
                 final int indexOfSession = mChildSessions.indexOfKey(childSessionId);
@@ -3974,8 +3966,8 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
 
     @Override
     public void removeChildSessionId(int sessionId) {
+        assertCallerIsOwnerOrRoot();
         synchronized (mLock) {
-            assertCallerIsOwnerOrRoot();
             assertPreparedAndNotSealedLocked("removeChildSessionId");
 
             final int indexOfSession = mChildSessions.indexOfKey(sessionId);
