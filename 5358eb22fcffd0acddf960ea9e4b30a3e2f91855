@@ -69,6 +69,30 @@
       },
       "revId": "5358eb22fcffd0acddf960ea9e4b30a3e2f91855",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f0e0374_cd9654c5",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4364,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-12-19T07:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "004b65ae_ce0412e9",
+      "range": {
+        "startLine": 4364,
+        "startChar": 0,
+        "endLine": 4364,
+        "endChar": 40
+      },
+      "revId": "5358eb22fcffd0acddf960ea9e4b30a3e2f91855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
