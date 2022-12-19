@@ -187,8 +187,6 @@ public class OomAdjuster {
 
     ActivityManagerConstants mConstants;
 
-    final long[] mTmpLong = new long[3];
-
     /**
      * Current sequence id for oom_adj computation traversal.
      */
