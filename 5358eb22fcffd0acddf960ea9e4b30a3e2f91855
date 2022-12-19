@@ -22,6 +22,53 @@
       },
       "revId": "5358eb22fcffd0acddf960ea9e4b30a3e2f91855",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fca3072_135439d3",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4364,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-12-19T07:00:26Z",
+      "side": 1,
+      "message": "Yes, this keepalive timeout is expected to be different from the ones used for other protocols.\n\nFor example, it is very common (and generally expected by apps) that timeouts for TCP be substantially longer than for UDP. Also, many carriers treat different ports differently; for example, FCM recommends that the NAT/firewall timeouts for port 5228 be set to at least 30 minutes, and AFAIK many carriers do this:\n\nhttps://firebase.google.com/docs/cloud-messaging/concept-options\n\nThe reason this particular timeout is important is that many VPNs use port 4500, and when using a VPN, the connection must be kept alive, or the connections inside the VPN will not be able to receive packets. The system needs to know the timeout because for system VPNs it will tune the keepalive interval to be below the timeout.",
+      "parentUuid": "37e9f58b_3072ffc6",
+      "range": {
+        "startLine": 4364,
+        "startChar": 0,
+        "endLine": 4364,
+        "endChar": 95
+      },
+      "revId": "5358eb22fcffd0acddf960ea9e4b30a3e2f91855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "004b65ae_ce0412e9",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4364,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-12-19T07:00:26Z",
+      "side": 1,
+      "message": "Saying that this is the minimal timeout required doesn\u0027t make much sense.\n- The timeout doesn\u0027t keep the connection alive, the keepalive does.\n- Sending packets *more often* than this number (e.g., one every 60 seconds, or one ever 30 seconds, or even one every second) will also achieve the goal of keeping the connection alive.\n\nSo you could say something like:\n\nThe minimum timeout of UDP port 4500 NAT / firewall entries on the Internet PDN of this carrier network. This will be used by Android platform VPNs to tune IPsec NAT keepalive interval. If this value is too low to provide uninterrupted inbound connectivity, then Android system VPNs may indicate to applications that the VPN cannot support long-lived TCP connections.",
+      "range": {
+        "startLine": 4364,
+        "startChar": 0,
+        "endLine": 4364,
+        "endChar": 40
+      },
+      "revId": "5358eb22fcffd0acddf960ea9e4b30a3e2f91855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
