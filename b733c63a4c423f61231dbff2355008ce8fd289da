@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd3c1a22_1c0c6a49",
+        "filename": "services/core/java/com/android/server/am/CachedAppOptimizer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1256,
+      "author": {
+        "id": 1562839
+      },
+      "writtenOn": "2022-12-19T18:57:50Z",
+      "side": 1,
+      "message": "This code is being heavily refactored in next release, so taking this change would cause merge conflicts, so we can\u0027t take this change in current AOSP version.\n\nInstead, I would like to know more about the use case to see if it\u0027s worth that we integrate this improvement with our next release. Could you provide more details if you have a practical use case of doing only anon compaction vs doing anon+file compaction ?",
+      "revId": "b733c63a4c423f61231dbff2355008ce8fd289da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
