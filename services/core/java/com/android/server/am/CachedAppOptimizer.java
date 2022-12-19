@@ -1251,7 +1251,10 @@ public final class CachedAppOptimizer {
 
         switch (pendingAction) {
             case COMPACT_PROCESS_SOME:
-                resolvedAction = COMPACT_ACTION_FILE;
+                resolvedAction = COMPACT_ACTION_SOME;
+                break;
+            case COMPACT_ACTION_ANON:
+                resolvedAction = COMPACT_ACTION_ANON;
                 break;
             // For the time being, treat these as equivalent.
             case COMPACT_PROCESS_FULL:
@@ -1265,14 +1268,23 @@ public final class CachedAppOptimizer {
         }
 
         // Downgrade compaction under swap memory pressure
-        if (resolvedAction == COMPACT_ACTION_FULL) {
+        if (resolvedAction == COMPACT_ACTION_FULL || action == COMPACT_ACTION_ANON) {
             double swapFreePercent = getFreeSwapPercent();
             if (swapFreePercent < COMPACT_DOWNGRADE_FREE_SWAP_THRESHOLD) {
-                resolvedAction = COMPACT_ACTION_FILE;
-                if (DEBUG_COMPACTION) {
-                    Slog.d(TAG_AM,
-                            "Downgraded compaction to file only due to low swap."
-                                    + " Swap Free% " + swapFreePercent);
+                if (resolvedAction == COMPACT_ACTION_FULL) {
+                    resolvedAction = COMPACT_ACTION_FILE;
+                    if (DEBUG_COMPACTION) {
+                        Slog.d(TAG_AM,
+                                "Downgraded compaction to file only due to low swap."
+                                       + " Swap Free% " + swapFreePercent);
+                    }
+                } else {
+                    resolvedAction = COMPACT_ACTION_NONE;
+                    if (DEBUG_COMPACTION) {
+                        Slog.d(TAG_AM,
+                                "Downgraded compaction to none due to low swap."
+                                       + " Swap Free% " + swapFreePercent);
+                    }
                 }
             }
         }
