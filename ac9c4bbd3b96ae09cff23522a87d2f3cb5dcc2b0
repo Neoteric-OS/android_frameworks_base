@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "642c3c25_9bd5f02a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-12-19T08:15:02Z",
+      "side": 1,
+      "message": "I think this is less obvious than before",
+      "revId": "ac9c4bbd3b96ae09cff23522a87d2f3cb5dcc2b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cbc6ac4_260fe972",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2911,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-12-19T08:15:02Z",
+      "side": 1,
+      "message": "I think the old code was better. If you think it may raise questions, write a comment.\nThe main reason I think the old code is better is that, while we know that today allowedApplications is always null in this case, the old code will behave better if we ever change that.",
+      "range": {
+        "startLine": 2911,
+        "startChar": 29,
+        "endLine": 2911,
+        "endChar": 58
+      },
+      "revId": "ac9c4bbd3b96ae09cff23522a87d2f3cb5dcc2b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
