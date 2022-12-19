@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90dc848d_3e47fd6b",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1319951
+      },
+      "writtenOn": "2022-12-19T20:50:26Z",
+      "side": 1,
+      "message": "please also add EXTRA_CHARGING_STATUS to report\nBATTERY_STATUS_TOO_COLD\nBATTERY_STATUS_TOO_HOT\nBATTERY_STATUS_LONGLIFE\nBATTERY_STATUS_ADAPTIVE",
+      "revId": "d3ca38222ec810d12322750b13a43609efcbe78d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
