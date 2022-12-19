@@ -20,6 +20,7 @@
 #include "android_media_tv_Tuner.h"
 
 #include <aidl/android/hardware/tv/tuner/AudioExtraMetaData.h>
+#include <aidl/android/hardware/tv/tuner/AudioPresentation.h>
 #include <aidl/android/hardware/tv/tuner/AudioStreamType.h>
 #include <aidl/android/hardware/tv/tuner/AvStreamType.h>
 #include <aidl/android/hardware/tv/tuner/Constant.h>
@@ -155,12 +156,14 @@
 #include <nativehelper/ScopedLocalRef.h>
 #include <utils/Log.h>
 
+#include "android_media_AudioPresentation.h"
 #include "android_media_MediaCodecLinearBlock.h"
 #include "android_runtime/AndroidRuntime.h"
 
 #pragma GCC diagnostic ignored "-Wunused-function"
 
 using ::aidl::android::hardware::tv::tuner::AudioExtraMetaData;
+using ::aidl::android::hardware::tv::tuner::AudioPresentation;
 using ::aidl::android::hardware::tv::tuner::AudioStreamType;
 using ::aidl::android::hardware::tv::tuner::AvStreamType;
 using ::aidl::android::hardware::tv::tuner::Constant;
@@ -350,6 +353,9 @@ void DestroyCallback(const C2Buffer * buf, void *arg) {
 }
 
 namespace android {
+
+static JAudioPresentationInfo::fields_t gAudioPresentationFields;
+
 /////////////// LnbClientCallbackImpl ///////////////////////
 void LnbClientCallbackImpl::onEvent(const LnbEventType lnbEventType) {
     ALOGV("LnbClientCallbackImpl::onEvent, type=%d", lnbEventType);
@@ -657,9 +663,14 @@ void FilterClientCallbackImpl::getMediaEvent(jobjectArray &arr, const int size,
         sc = sc << 4;
     }
 
+    jobject presentationsJObj = JAudioPresentationInfo::asJobject(env, gAudioPresentationFields);
+    JAudioPresentationInfo::addPresentations(
+            env, gAudioPresentationFields, mediaEvent.audioPresentations, presentationsJObj);
+
     jobject obj = env->NewObject(eventClazz, eventInit, streamId, isPtsPresent, pts, isDtsPresent,
                                  dts, dataLength, offset, nullptr, isSecureMemory, avDataId,
-                                 mpuSequenceNumber, isPesPrivateData, sc, audioDescriptor);
+                                 mpuSequenceNumber, isPesPrivateData, sc, audioDescriptor,
+                                 presentationsJObj);
 
     uint64_t avSharedMemSize = mFilterClient->getAvSharedHandleInfo().size;
     if (mediaEvent.avMemory.fds.size() > 0 || mediaEvent.avDataId != 0 ||
