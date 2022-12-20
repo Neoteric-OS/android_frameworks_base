@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "741eaf2d_7600cb89",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-12-20T08:28:55Z",
+      "side": 1,
+      "message": "LGTM, assuming Robert (or in general the OWNERS of this code) doesn\u0027t have any concerns.",
+      "revId": "5e72532a0b84f4bbb9283589bc3baf046f2685cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
