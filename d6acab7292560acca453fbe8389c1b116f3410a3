@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3acbe5ed_2de92c8e",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4368,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-12-20T07:38:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f04b2ffe_ab5a8ea8",
+      "range": {
+        "startLine": 4368,
+        "startChar": 22,
+        "endLine": 4368,
+        "endChar": 23
+      },
+      "revId": "d6acab7292560acca453fbe8389c1b116f3410a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e7c0b3c_c837b34b",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-12-20T06:34:07Z",
       "side": 1,
       "message": "The name should probably contain the units (seconds, milliseconds, etc.). It looks like there are other timeouts measured in seconds in this file, and they end in _SEC_INT. Maybe you could do the same here?\n\nKEY_MIN_UDP_PORT_4500_NAT_TIMEOUT_SEC_INT",
+      "range": {
+        "startLine": 4372,
+        "startChar": 31,
+        "endLine": 4372,
+        "endChar": 68
+      },
+      "revId": "d6acab7292560acca453fbe8389c1b116f3410a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdf6745a_7d2cf955",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4372,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-12-20T07:38:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e7c0b3c_c837b34b",
       "range": {
         "startLine": 4372,
         "startChar": 31,
