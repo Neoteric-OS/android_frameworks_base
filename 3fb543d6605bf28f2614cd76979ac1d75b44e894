@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f013b881_5724d987",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2022-12-20T20:01:32Z",
+      "side": 1,
+      "message": "Hey Farid,\n\nWe still need another key layout for the case where the device doesn\u0027t have hid-playstation, right? Are there plans to add that one, too?",
+      "revId": "3fb543d6605bf28f2614cd76979ac1d75b44e894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
