@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5ca6d26_9eea8343",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2022-12-20T07:48:25Z",
+      "side": 1,
+      "message": "+rsesek,boliu FYI - not sure Clank would ever get close to 5 seconds, do you have data on this?",
+      "revId": "78aae53eba419bd919c1db9002f1bceb434d2297",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
