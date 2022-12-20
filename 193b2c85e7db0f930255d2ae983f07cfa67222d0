@@ -56,6 +56,30 @@
       },
       "revId": "193b2c85e7db0f930255d2ae983f07cfa67222d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "303770fb_a28199a9",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 8154,
+      "author": {
+        "id": 1949495
+      },
+      "writtenOn": "2022-12-20T02:19:01Z",
+      "side": 1,
+      "message": "Updated with the title of RFC6724, Default Address Selection for Internet Protocol Version 6 (IPv6)",
+      "parentUuid": "be4a93c8_72bf89d4",
+      "range": {
+        "startLine": 8153,
+        "startChar": 80,
+        "endLine": 8154,
+        "endChar": 50
+      },
+      "revId": "193b2c85e7db0f930255d2ae983f07cfa67222d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
