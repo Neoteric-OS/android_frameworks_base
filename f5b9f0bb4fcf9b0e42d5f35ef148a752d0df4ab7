@@ -52,6 +52,24 @@
       "parentUuid": "06211972_35851a39",
       "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64fdc8ce_c1c183eb",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1945845
+      },
+      "writtenOn": "2022-12-20T03:49:12Z",
+      "side": 1,
+      "message": "Hrm.  I\u0027d disagree with Elliott here as I\u0027d rather we not create debt that we have to resolve later (duplicating the same change you proposed).",
+      "parentUuid": "baa4234b_078796f8",
+      "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
