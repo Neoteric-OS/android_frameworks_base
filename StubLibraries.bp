@@ -259,13 +259,14 @@ java_library {
     defaults: ["android-non-updatable_defaults_stubs_current"],
     srcs: [":module-lib-api-stubs-docs-non-updatable"],
     libs: [
-        "sdk_module-lib_current_framework-tethering",
-        "sdk_module-lib_current_framework-connectivity-t",
-        "sdk_public_current_framework-bluetooth",
-        // NOTE: The below can be removed once the prebuilt stub contains bluetooth.
+        // We cannot depend on all-modules-module-lib-stubs, because the module-lib stubs
+        // depend on this stub. We resolve dependencies on APIs in modules by depending
+        // on a prebuilt of the whole platform.
         "sdk_system_current_android",
-        // NOTE: The below can be removed once the prebuilt stub contains IKE.
-        "sdk_system_current_android.net.ipsec.ike",
+        // NOTE: When creating a new module, it might be necessary to add additional prebuilt
+        // stubs to this list in order to break dependency cycles due to an API in
+        // android-non-updatable depending on the new module's API. Once the
+        // sdk_system_current_android stub has been updated, the list can be reduced again.
     ],
     dist: {
         dir: "apistubs/android/module-lib",
