@@ -16,6 +16,24 @@
       "message": "we might need to provide access to manufacturer date and activation date",
       "revId": "3abb9ec990f6d31571aeed146c96815b3fa91665",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdc171a9_21a8c870",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1319951
+      },
+      "writtenOn": "2022-12-20T16:46:42Z",
+      "side": 1,
+      "message": "will see what makes sense to do for this since there are privacy implications.",
+      "parentUuid": "82458ccf_abf12c03",
+      "revId": "3abb9ec990f6d31571aeed146c96815b3fa91665",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
