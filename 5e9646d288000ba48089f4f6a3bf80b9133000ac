@@ -22,6 +22,30 @@
       },
       "revId": "5e9646d288000ba48089f4f6a3bf80b9133000ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d6acaf0_d6753005",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2022-12-20T23:14:06Z",
+      "side": 1,
+      "message": "Just used setLoadEscrowDataErrorCode to make this simpler.",
+      "parentUuid": "1b1ffe7b_de8fbf73",
+      "range": {
+        "startLine": 422,
+        "startChar": 8,
+        "endLine": 430,
+        "endChar": 9
+      },
+      "revId": "5e9646d288000ba48089f4f6a3bf80b9133000ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
