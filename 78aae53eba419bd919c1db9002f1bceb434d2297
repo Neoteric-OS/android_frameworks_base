@@ -16,6 +16,24 @@
       "message": "+rsesek,boliu FYI - not sure Clank would ever get close to 5 seconds, do you have data on this?",
       "revId": "78aae53eba419bd919c1db9002f1bceb434d2297",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d0c184b_334f5365",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039838
+      },
+      "writtenOn": "2022-12-20T14:19:04Z",
+      "side": 1,
+      "message": "you mean time spent in app\u0027s doPreload? we don\u0027t have measurement for that work directly, but we do have more end-to-end measurement of from launching service to until after chrome\u0027s library is loaded in the service (whether in zygote or not), and some process arguments are passed over through binder\n\nthis is the internal link:\nhttps://uma.googleplex.com/p/chrome/timeline_v2?sid\u003de178ef29710018855005f4378efb8bf3\n\nso 5s is covers 99.9%, but long tail can be very long",
+      "parentUuid": "d5ca6d26_9eea8343",
+      "revId": "78aae53eba419bd919c1db9002f1bceb434d2297",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
