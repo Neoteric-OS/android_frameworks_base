@@ -34,6 +34,24 @@
       "parentUuid": "fd3c1a22_1c0c6a49",
       "revId": "b733c63a4c423f61231dbff2355008ce8fd289da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aacc3b1c_28fdcdac",
+        "filename": "services/core/java/com/android/server/am/CachedAppOptimizer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1256,
+      "author": {
+        "id": 1562839
+      },
+      "writtenOn": "2022-12-20T21:35:56Z",
+      "side": 1,
+      "message": "There is no mechanism that currently allows an anon only compaction, so we roughly have:\n\nCompaction profile:\nsome \u003d file\nfull \u003d file + anon\n\nthose are only two compaction profiles we support. We have not yet found a use case where doing only anon compaction is compelling rather than doing both. If we find that doing anon only compactions make sense then we can add support for it.\n\nI agree on this version it is somewhat confusing talking about compaction action as there is no clear separation between compaction profile and compaction action but in the next release this code there is more separation so it will be more readable too.",
+      "parentUuid": "b500bbee_c7cf9a48",
+      "revId": "b733c63a4c423f61231dbff2355008ce8fd289da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
