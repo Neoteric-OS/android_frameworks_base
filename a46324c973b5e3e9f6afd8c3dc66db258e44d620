@@ -16,6 +16,24 @@
       "message": "super-nit: the description of this button is different b/w the 2 layouts",
       "revId": "a46324c973b5e3e9f6afd8c3dc66db258e44d620",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61367fe2_85946acb",
+        "filename": "data/keyboards/Vendor_054c_Product_0df2.kl",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1797860
+      },
+      "writtenOn": "2022-12-20T20:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc4b6450_131ddafa",
+      "revId": "a46324c973b5e3e9f6afd8c3dc66db258e44d620",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
