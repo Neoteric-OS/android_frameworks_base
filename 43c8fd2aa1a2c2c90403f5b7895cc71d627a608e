@@ -105,6 +105,23 @@
       "message": "Feature is punted – withdrawing API approval for now",
       "revId": "43c8fd2aa1a2c2c90403f5b7895cc71d627a608e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc54d260_d03ac0d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-12-20T09:50:25Z",
+      "side": 1,
+      "message": "Feature is reparented, API is still good to go for when the impl is ready.",
+      "revId": "43c8fd2aa1a2c2c90403f5b7895cc71d627a608e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
