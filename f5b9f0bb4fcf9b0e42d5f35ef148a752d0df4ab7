@@ -34,6 +34,24 @@
       "parentUuid": "f7d8ab27_69f5305c",
       "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "baa4234b_078796f8",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2022-12-20T01:04:46Z",
+      "side": 1,
+      "message": "Sorry about the previous message.\n\nElliott asked me to do this in the libcutils review. You\u0027re CC\u0027d there: https://android-review.git.corp.google.com/c/platform/system/core/+/2241636",
+      "parentUuid": "06211972_35851a39",
+      "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
