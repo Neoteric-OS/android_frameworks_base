@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b75476f1_3bedd7d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2022-12-21T01:19:17Z",
+      "side": 1,
+      "message": "Hi Wonsik - I\u0027d like to get some clarity regarding https://android.googlesource.com/platform/frameworks/av/+/f7005138e0d63c79131923ebcab1f9dd9074878b and its implication for the https://developer.android.com/reference/android/media/MediaCodecInfo.CodecCapabilities#FEATURE_SecurePlayback API (does it now support audio, not just video)? Thanks.",
+      "revId": "4a925d6f889d8d3e81ff553c088d24e29c3d5149",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
