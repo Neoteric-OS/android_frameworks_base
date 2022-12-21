@@ -16,6 +16,24 @@
       "message": "In WindowState.java, should TYPE_ACCESSIBILITY_OVERLAY and TYPE_SECURE_SYSTEM_OVERLAY be removed from importing?",
       "revId": "645f1b94535c1cc8d69a4aa3331f6d6c284378f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ab833fb_806653ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1367175
+      },
+      "writtenOn": "2022-12-21T00:53:37Z",
+      "side": 1,
+      "message": "Done, it\u0027s cherry-picked from internal branch.",
+      "parentUuid": "0b61118f_44e2f676",
+      "revId": "645f1b94535c1cc8d69a4aa3331f6d6c284378f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
