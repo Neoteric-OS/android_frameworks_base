@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "bdda0565_aba32788",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-22T03:00:56Z",
+      "side": 1,
+      "message": "apct/device_boot_health_check_extra on oriole_hwasan-userdebug on git_master failed due to existing bug b/262894088",
+      "revId": "c2a39352841f7dc540db0d3dde3050568999af54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "de922edc_cc83619e",
         "filename": "core/java/com/android/server/SystemConfig.java",
         "patchSetId": 7
