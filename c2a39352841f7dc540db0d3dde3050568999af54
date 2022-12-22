@@ -86,6 +86,30 @@
       },
       "revId": "c2a39352841f7dc540db0d3dde3050568999af54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ec76da3_d7a45869",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-12-22T19:39:50Z",
+      "side": 1,
+      "message": "\u003e ... or is the expectation that any OEM launching a U device with a T-era kernel would fail CTS, then go and change this code?\n\nYes \n\nIn CTS aosp/2258806 `testHasIpSecTunnelMigrateFeature()`, we only require this feature on devices whose VSR API \u003e\u003d U",
+      "parentUuid": "1ebc6ef7_4ff28b2f",
+      "range": {
+        "startLine": 1523,
+        "startChar": 49,
+        "endLine": 1523,
+        "endChar": 79
+      },
+      "revId": "c2a39352841f7dc540db0d3dde3050568999af54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
