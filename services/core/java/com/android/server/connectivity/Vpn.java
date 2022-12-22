@@ -4453,6 +4453,8 @@ public class Vpn {
     public synchronized boolean setAppExclusionList(@NonNull String packageName,
             @NonNull List<String> excludedApps) {
         enforceNotRestrictedUser();
+        Log.d(TAG, "setAppExclusionList: " + packageName + " wants to set following packages"
+                + " into exclusion list: " + Arrays.toString(excludedApps.toArray()));
         if (!storeAppExclusionList(packageName, excludedApps)) return false;
 
         updateAppExclusionList(excludedApps);
@@ -4744,6 +4746,16 @@ public class Vpn {
                 if (mDataStallSuspected) pw.println("Data stall suspected");
                 if (runner.mScheduledHandleDataStallFuture != null) {
                     pw.println("Reset session scheduled");
+                }
+            }
+            if (mConfig != null) {
+                if (mConfig.allowedApplications != null) {
+                    pw.println("AllowedApplications: "
+                            + Arrays.toString(mConfig.allowedApplications.toArray()));
+                }
+                if (mConfig.disallowedApplications != null) {
+                    pw.println("DisallowedApplications: "
+                            + Arrays.toString(mConfig.disallowedApplications.toArray()));
                 }
             }
             pw.println("mUnderlyNetworkChanges (most recent first):");
