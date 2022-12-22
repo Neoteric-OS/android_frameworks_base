@@ -39,6 +39,29 @@
       },
       "revId": "c2a39352841f7dc540db0d3dde3050568999af54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "330d13b8_21a53480",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-12-22T09:25:11Z",
+      "side": 1,
+      "message": "Are we actually allowed to do this? DEVICE_INITIAL_SDK_INT is the initial device launch version. But given that this feature may require kernel changes / config options, shouldn\u0027t it be set based on the VSR version?",
+      "range": {
+        "startLine": 1523,
+        "startChar": 49,
+        "endLine": 1523,
+        "endChar": 79
+      },
+      "revId": "c2a39352841f7dc540db0d3dde3050568999af54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
