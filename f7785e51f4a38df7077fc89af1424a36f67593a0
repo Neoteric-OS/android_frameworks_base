@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f01b95dd_61c48779",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1980001
+      },
+      "writtenOn": "2022-12-25T20:32:01Z",
+      "side": 1,
+      "message": "services/core/java/com/android/server/wm/Session.java",
+      "revId": "f7785e51f4a38df7077fc89af1424a36f67593a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
