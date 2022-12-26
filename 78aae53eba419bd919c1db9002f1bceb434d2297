@@ -34,6 +34,23 @@
       "parentUuid": "d5ca6d26_9eea8343",
       "revId": "78aae53eba419bd919c1db9002f1bceb434d2297",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88bde0f8_5e7c5c2c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1840920
+      },
+      "writtenOn": "2022-12-26T11:57:38Z",
+      "side": 1,
+      "message": "We can\u0027t find the bug b/263202138 this change causes in public issue tracker and don\u0027t know why the change causes the bug.\n\nPlease help to check if there are some better ways to fix this issue, thanks!",
+      "revId": "78aae53eba419bd919c1db9002f1bceb434d2297",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
