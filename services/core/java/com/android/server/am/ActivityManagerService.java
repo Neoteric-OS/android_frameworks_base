@@ -8368,14 +8368,14 @@ public class ActivityManagerService extends IActivityManager.Stub
         final String processName = app == null ? "system_server"
                 : (r == null ? "unknown" : r.processName);
 
-        handleApplicationCrashInner("crash", r, processName, crashInfo);
+        handleApplicationCrashInner("crash", r, processName, crashInfo, false);
     }
 
     /* Native crash reporting uses this inner version because it needs to be somewhat
      * decoupled from the AM-managed cleanup lifecycle
      */
     void handleApplicationCrashInner(String eventType, ProcessRecord r, String processName,
-            ApplicationErrorReport.CrashInfo crashInfo) {
+            ApplicationErrorReport.CrashInfo crashInfo, boolean isNativeCrash) {
         float loadingProgress = 1;
         IncrementalMetrics incrementalMetrics = null;
         // Obtain Incremental information if available
@@ -8402,7 +8402,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
         }
 
-        EventLogTags.writeAmCrash(Binder.getCallingPid(),
+        EventLogTags.writeAmCrash(isNativeCrash ? r.mPid : Binder.getCallingPid(),
                 UserHandle.getUserId(Binder.getCallingUid()), processName,
                 r == null ? -1 : r.info.flags,
                 crashInfo.exceptionClassName,
