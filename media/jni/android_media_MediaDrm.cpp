@@ -34,6 +34,7 @@
 #include <media/stagefright/foundation/ADebug.h>
 #include <media/stagefright/MediaErrors.h>
 #include <mediadrm/DrmMetricsConsumer.h>
+#include <mediadrm/DrmMetricsLogger.h>
 #include <mediadrm/DrmUtils.h>
 #include <mediadrm/IDrmMetricsConsumer.h>
 #include <mediadrm/IDrm.h>
@@ -499,7 +500,7 @@ JDrm::~JDrm() {
 
 // static
 sp<IDrm> JDrm::MakeDrm() {
-    return DrmUtils::MakeDrm();
+    return DrmUtils::MakeDrm(IDRM_JNI);
 }
 
 // static
@@ -1020,7 +1021,7 @@ DrmPlugin::SecurityLevel jintToSecurityLevel(jint jlevel) {
 }
 
 static jbyteArray android_media_MediaDrm_getSupportedCryptoSchemesNative(JNIEnv *env) {
-    sp<IDrm> drm = android::DrmUtils::MakeDrm();
+    sp<IDrm> drm = android::DrmUtils::MakeDrm(IDRM_JNI);
     std::vector<uint8_t> bv;
     drm->getSupportedSchemes(bv);
 
