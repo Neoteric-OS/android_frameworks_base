@@ -8415,9 +8415,14 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
         }
 
+<<<<<<< PATCH SET (24ec2d [Bugfix] Fix the pid the log am_crash shows when a native cr)
+        EventLogTags.writeAmCrash(eventType.equals("native_crash") ? r.mPid
+                : Binder.getCallingPid(),
+=======
         boolean recoverable = eventType.equals("native_recoverable_crash");
 
         EventLogTags.writeAmCrash(Binder.getCallingPid(),
+>>>>>>> BASE      (932fe8 Merge "Include module dependencies under `data`")
                 UserHandle.getUserId(Binder.getCallingUid()), processName,
                 r == null ? -1 : r.info.flags,
                 crashInfo.exceptionClassName,
