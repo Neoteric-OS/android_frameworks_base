@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc8e5f8a_47e99c50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1967393
+      },
+      "writtenOn": "2022-12-27T07:48:19Z",
+      "side": 1,
+      "message": "@santoscordon@google.com  there is something wrong with Presubmit-Verified, it keeps saying \"Presubmit-Verified -1\"",
+      "revId": "c52a71c537687bfa5e9ae32d2d30424484b65e2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
