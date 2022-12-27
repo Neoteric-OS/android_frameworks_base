@@ -8417,7 +8417,7 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         boolean recoverable = eventType.equals("native_recoverable_crash");
 
-        EventLogTags.writeAmCrash(Binder.getCallingPid(),
+        EventLogTags.writeAmCrash(eventType.equals("native_crash") ? r.mPid : Binder.getCallingPid(),
                 UserHandle.getUserId(Binder.getCallingUid()), processName,
                 r == null ? -1 : r.info.flags,
                 crashInfo.exceptionClassName,
