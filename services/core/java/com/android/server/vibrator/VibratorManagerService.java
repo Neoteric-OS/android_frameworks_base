@@ -1747,7 +1747,7 @@ public class VibratorManagerService extends IVibratorManagerService.Stub {
                 if (mCurrentExternalVibration != null
                         && mCurrentExternalVibration.isHoldingSameVibration(vib)) {
                     if (DEBUG) {
-                        Slog.e(TAG, "Stopping external vibration" + vib);
+                        Slog.e(TAG, "Stopping external vibration: " + vib);
                     }
                     endExternalVibrateLocked(
                             new Vibration.EndInfo(Vibration.Status.FINISHED),
