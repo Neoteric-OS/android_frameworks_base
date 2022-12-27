@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0366d215_605dc2f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1961582
+      },
+      "writtenOn": "2022-12-27T12:53:00Z",
+      "side": 1,
+      "message": "can you help to trigger prebuilt and code review again? Thanks!",
+      "revId": "0ca05d2ffd0f943f43bcc6862dba293307c5bf31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
