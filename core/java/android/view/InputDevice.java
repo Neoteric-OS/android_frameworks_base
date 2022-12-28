@@ -40,6 +40,8 @@ import com.android.internal.annotations.VisibleForTesting;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
 /**
@@ -77,6 +79,7 @@ public final class InputDevice implements Parcelable {
     private final boolean mHasSensor;
     private final boolean mHasBattery;
     private final ArrayList<MotionRange> mMotionRanges = new ArrayList<MotionRange>();
+    private final Map<String, String> mConfiguration = new HashMap<String, String>();
 
     @GuardedBy("mMotionRanges")
     private Vibrator mVibrator; // guarded by mMotionRanges during initialization
@@ -510,6 +513,13 @@ public final class InputDevice implements Parcelable {
             addMotionRange(in.readInt(), in.readInt(), in.readFloat(), in.readFloat(),
                     in.readFloat(), in.readFloat(), in.readFloat());
         }
+
+        int size = in.readInt();
+        for (int i = 0; i < size; ++i) {
+            String key = in.readString();
+            String value = in.readString();
+            mConfiguration.put(key, value);
+        }
     }
 
     /**
@@ -850,6 +860,11 @@ public final class InputDevice implements Parcelable {
         mMotionRanges.add(new MotionRange(axis, source, min, max, flat, fuzz, resolution));
     }
 
+    // Called from native code.
+    private void addConfiguration(String key, String value) {
+        mConfiguration.put(key, value);
+    }
+
     /**
      * Gets the vibrator service associated with the device, if there is one.
      * Even if the device does not have a vibrator, the result is never null.
@@ -1022,6 +1037,15 @@ public final class InputDevice implements Parcelable {
     }
 
     /**
+     * Reports device configuration from idc file.
+     * @return map, containing all configuration properties and its values.
+     * @hide
+     */
+    public Map<String, String> getConfiguration() {
+        return mConfiguration;
+    }
+
+    /**
      * Provides information about the range of values for a particular {@link MotionEvent} axis.
      *
      * @see InputDevice#getMotionRange(int)
@@ -1162,6 +1186,12 @@ public final class InputDevice implements Parcelable {
             out.writeFloat(range.mFlat);
             out.writeFloat(range.mFuzz);
             out.writeFloat(range.mResolution);
+        }
+
+        out.writeInt(mConfiguration.size());
+        for (Map.Entry<String, String> entry : mConfiguration.entrySet()) {
+            out.writeString(entry.getKey());
+            out.writeString(entry.getValue());
         }
     }
 

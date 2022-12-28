@@ -34,6 +34,7 @@ static struct {
 
     jmethodID ctor;
     jmethodID addMotionRange;
+    jmethodID addConfiguration;
 } gInputDeviceClassInfo;
 
 jobject android_view_InputDevice_create(JNIEnv* env, const InputDeviceInfo& deviceInfo) {
@@ -82,6 +83,22 @@ jobject android_view_InputDevice_create(JNIEnv* env, const InputDeviceInfo& devi
         }
     }
 
+    const PropertyMap& configuration = deviceInfo.getConfiguration();
+    const KeyedVector<String8, String8>& properties = configuration.getProperties();
+
+    for (size_t i = 0; i < properties.size(); ++i) {
+        ScopedLocalRef<jstring> key(env, env->NewStringUTF(properties.keyAt(i).c_str()));
+        ScopedLocalRef<jstring> value(env, env->NewStringUTF(properties.valueAt(i).c_str()));
+        if (!key.get() || !value.get()) {
+            continue;
+        }
+        env->CallVoidMethod(inputDeviceObj.get(), gInputDeviceClassInfo.addConfiguration, key.get(), value.get());
+        if (env->ExceptionCheck()) {
+            return NULL;
+        }
+    }
+
+
     return env->NewLocalRef(inputDeviceObj.get());
 }
 
@@ -98,6 +115,9 @@ int register_android_view_InputDevice(JNIEnv* env)
 
     gInputDeviceClassInfo.addMotionRange = GetMethodIDOrDie(env, gInputDeviceClassInfo.clazz,
             "addMotionRange", "(IIFFFFF)V");
+
+    gInputDeviceClassInfo.addConfiguration = GetMethodIDOrDie(env, gInputDeviceClassInfo.clazz,
+            "addConfiguration", "(Ljava/lang/String;Ljava/lang/String;)V");
 
     return 0;
 }
