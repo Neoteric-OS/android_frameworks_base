@@ -34,6 +34,24 @@
       "parentUuid": "82458ccf_abf12c03",
       "revId": "3abb9ec990f6d31571aeed146c96815b3fa91665",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96c60ee7_3f881960",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1653796
+      },
+      "writtenOn": "2022-12-28T13:38:22Z",
+      "side": 1,
+      "message": "add new properties to get manufacturer date and activation date from battery hal.\nMaybe we can define the interface first.",
+      "parentUuid": "bdc171a9_21a8c870",
+      "revId": "3abb9ec990f6d31571aeed146c96815b3fa91665",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
