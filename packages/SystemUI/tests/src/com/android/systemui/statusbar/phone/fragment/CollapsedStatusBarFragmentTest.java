@@ -661,6 +661,19 @@ public class CollapsedStatusBarFragmentTest extends SysuiBaseFragmentTest {
         assertEquals(View.VISIBLE, getClockView().getVisibility());
     }
 
+    @Test
+    public void testDisableSystemInfo_operatorName_doesHide() {
+        CollapsedStatusBarFragment fragment = resumeAndGetFragment();
+
+        fragment.disable(DEFAULT_DISPLAY, StatusBarManager.DISABLE_SYSTEM_INFO, 0, false);
+
+        assertEquals(View.INVISIBLE, getOperatorNameFrameView().getVisibility());
+
+        fragment.disable(DEFAULT_DISPLAY, 0, 0, false);
+
+        assertEquals(View.VISIBLE, getOperatorNameFrameView().getVisibility());
+    }
+
     @Override
     protected Fragment instantiate(Context context, String className, Bundle arguments) {
         MockitoAnnotations.initMocks(this);
@@ -784,5 +797,9 @@ public class CollapsedStatusBarFragmentTest extends SysuiBaseFragmentTest {
 
     private View getNotificationAreaView() {
         return mFragment.getView().findViewById(R.id.notificationIcons);
+    }
+
+    private View getOperatorNameFrameView() {
+        return mFragment.getView().findViewById(R.id.operator_name_frame);
     }
 }
