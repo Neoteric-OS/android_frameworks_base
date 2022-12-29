@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18ae6bca_20f02f00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1877755
+      },
+      "writtenOn": "2022-12-29T15:29:57Z",
+      "side": 1,
+      "message": "Probably only needed after https://android-review.googlesource.com/c/platform/frameworks/base/+/2219883 but can\u0027t validate since operator name view just crashes SystemUI without that other fix.",
+      "revId": "dd228cf192aa18ba7b7fb0e6daf0e7bca3729ca4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
