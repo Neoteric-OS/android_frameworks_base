@@ -69,6 +69,19 @@ public class UsbRequest {
     private UsbDeviceConnection mConnection;
 
     /**
+     * Whether this request has been queued.
+     * Close the request only if the request is not queued. Use
+     * {@link android.hardware.usb.UsbDeviceConnection#requestWait} to retrieve and dequeue the
+     * finished or canceled request.
+     */
+    private boolean mIsQueued;
+
+    /**
+     * Whether delay releasing the resources associated with this request.
+     */
+    private boolean mToBeClosedOnDequeue;
+
+    /**
      * Whether this buffer was {@link #queue(ByteBuffer) queued using the new behavior} or
      * {@link #queue(ByteBuffer, int) queued using the deprecated behavior}.
      */
@@ -96,28 +109,67 @@ public class UsbRequest {
      * @return true if the request was successfully opened.
      */
     public boolean initialize(UsbDeviceConnection connection, UsbEndpoint endpoint) {
-        mEndpoint = endpoint;
-        mConnection = Objects.requireNonNull(connection, "connection");
+        // Can't initialize the request which is being used
+        if (mIsQueued) {
+            return false;
+        }
+
+        Objects.requireNonNull(connection, "connection must not be null");
+
+        // Clean up the previous request to prevent from memory leak
+        if (mConnection != null) {
+            native_close();
+        }
 
         boolean wasInitialized = native_init(connection, endpoint.getAddress(),
                 endpoint.getAttributes(), endpoint.getMaxPacketSize(), endpoint.getInterval());
 
         if (wasInitialized) {
+            mConnection = connection;
+            mEndpoint = endpoint;
             mCloseGuard.open("UsbRequest.close");
         }
 
         return wasInitialized;
     }
 
+    /* package */ boolean toBeClosedOnDequeue() {
+        return mToBeClosedOnDequeue;
+    }
+
     /**
      * Releases all resources related to this request.
      */
     public void close() {
-        if (mNativeContext != 0) {
-            mEndpoint = null;
-            mConnection = null;
-            native_close();
-            mCloseGuard.close();
+        synchronized (mLock) {
+            if (mNativeContext != 0) {
+                if (mIsQueued && mConnection != null && mConnection.isOpen()) {
+                    /**
+                     * Cancels and delays closing this request when it is being used; will close
+                     * this request again after dequeuing.
+                     * If the connection is still alive, the kernel will eventually write some data
+                     * back to the memory associcated with this request's JNI class. We need to make
+                     * sure that the memory has not been deallocated yet when that write happens.
+                     */
+                    cancel();
+                    mToBeClosedOnDequeue = true;
+                } else {
+                    if (mIsQueued) {
+                        try {
+                            // Dequeues this request to prevent memory leak when the connection is
+                            // closed.
+                            dequeue(true);
+                        } catch (BufferOverflowException e) {
+                            // ignores exception of the buffer.
+                        }
+                    }
+                    mEndpoint = null;
+                    mConnection = null;
+                    mToBeClosedOnDequeue = false;
+                    native_close();
+                    mCloseGuard.close();
+                }
+            }
         }
     }
 
@@ -200,6 +252,11 @@ public class UsbRequest {
         }
 
         synchronized (mLock) {
+            if (mIsQueued) {
+                Log.w(TAG, "Can't queue the request. The request has already been queued");
+                return false;
+            }
+
             // save our buffer for when the request has completed
             mBuffer = buffer;
             mLength = length;
@@ -217,6 +274,9 @@ public class UsbRequest {
             if (!result) {
                 mBuffer = null;
                 mLength = 0;
+                mIsQueued = false;
+            } else {
+                mIsQueued = true;
             }
         }
 
@@ -253,8 +313,12 @@ public class UsbRequest {
         boolean wasQueued;
 
         synchronized (mLock) {
-            mBuffer = buffer;
+            if (mIsQueued) {
+                Log.w(TAG, "Can't queue the request. The request has already been queued");
+                return false;
+            }
 
+            mBuffer = buffer;
             if (buffer == null) {
                 // Null buffers enqueue empty USB requests which is supported
                 mIsUsingNewQueue = true;
@@ -295,6 +359,9 @@ public class UsbRequest {
             mIsUsingNewQueue = false;
             mTempBuffer = null;
             mBuffer = null;
+            mIsQueued = false;
+        } else {
+            mIsQueued = true;
         }
 
         return wasQueued;
@@ -354,6 +421,7 @@ public class UsbRequest {
 
             mBuffer = null;
             mLength = 0;
+            mIsQueued = false;
         }
     }
 

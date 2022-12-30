@@ -337,6 +337,10 @@ public class UsbDeviceConnection {
         if (request != null) {
             request.dequeue(
                     mContext.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.O);
+            if (request.toBeClosedOnDequeue()) {
+                request.close();
+                return null;
+            }
         }
         return request;
     }
@@ -368,6 +372,10 @@ public class UsbDeviceConnection {
         UsbRequest request = native_request_wait(timeout);
         if (request != null) {
             request.dequeue(true);
+            if (request.toBeClosedOnDequeue()) {
+                request.close();
+                return null;
+            }
         }
         return request;
     }
