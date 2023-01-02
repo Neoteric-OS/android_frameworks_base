@@ -59,6 +59,7 @@ import android.net.ipsec.ike.ChildSaProposal;
 import android.net.ipsec.ike.ChildSessionCallback;
 import android.net.ipsec.ike.ChildSessionConfiguration;
 import android.net.ipsec.ike.ChildSessionParams;
+import android.net.ipsec.ike.IkeDerAsn1DnIdentification;
 import android.net.ipsec.ike.IkeFqdnIdentification;
 import android.net.ipsec.ike.IkeIdentification;
 import android.net.ipsec.ike.IkeIpv4AddrIdentification;
@@ -90,6 +91,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.Executor;
+import javax.security.auth.x500.X500Principal;
 
 /**
  * Utility class to build and convert IKEv2/IPsec parameters.
@@ -467,6 +469,9 @@ public class VpnIkev2Utils {
             } else {
                 throw new IllegalArgumentException("IP version not supported");
             }
+        } else if (identityStr.contains("CN=")) {
+            // DER ASN.1 DN
+            return new IkeDerAsn1DnIdentification(new X500Principal(identityStr));
         } else {
             if (identityStr.contains(":")) {
                 // KEY_ID
