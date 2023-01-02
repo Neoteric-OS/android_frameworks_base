@@ -59,6 +59,7 @@ import android.net.ipsec.ike.ChildSaProposal;
 import android.net.ipsec.ike.ChildSessionCallback;
 import android.net.ipsec.ike.ChildSessionConfiguration;
 import android.net.ipsec.ike.ChildSessionParams;
+import android.net.ipsec.ike.IkeDerAsn1DnIdentification;
 import android.net.ipsec.ike.IkeFqdnIdentification;
 import android.net.ipsec.ike.IkeIdentification;
 import android.net.ipsec.ike.IkeIpv4AddrIdentification;
@@ -84,12 +85,14 @@ import com.android.net.module.util.IpRange;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.lang.IllegalArgumentException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.Executor;
+import javax.security.auth.x500.X500Principal;
 
 /**
  * Utility class to build and convert IKEv2/IPsec parameters.
@@ -436,8 +439,7 @@ public class VpnIkev2Utils {
     /**
      * Identity parsing logic using similar logic to open source implementations of IKEv2
      *
-     * <p>This method does NOT support using type-prefixes (eg 'fqdn:' or 'keyid'), or ASN.1 encoded
-     * identities.
+     * <p>This method does NOT support using type-prefixes (eg 'fqdn:' or 'keyid')
      */
     private static IkeIdentification parseIkeIdentification(@NonNull String identityStr) {
         // TODO: Add identity formatting to public API javadocs.
@@ -468,6 +470,15 @@ public class VpnIkev2Utils {
                 throw new IllegalArgumentException("IP version not supported");
             }
         } else {
+            if (identityStr.contains("=")) {
+                // DER ASN.1 DN
+                try {
+                    X500Principal x500Principal = new X500Principal(identityStr);
+                    return new IkeDerAsn1DnIdentification(x500Principal);
+                } catch (IllegalArgumentException e) {
+                    Log.d(mTag,"identityStr is not a valid Distinguished Name")
+                }
+            }
             if (identityStr.contains(":")) {
                 // KEY_ID
                 return new IkeKeyIdIdentification(identityStr.getBytes());

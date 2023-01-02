@@ -763,7 +763,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         } else if (ident instanceof IkeIpv6AddrIdentification) {
             return ((IkeIpv6AddrIdentification) ident).ipv6Address.getHostAddress();
         } else if (ident instanceof IkeDerAsn1DnIdentification) {
-            throw new IllegalArgumentException("Unspported ASN.1 encoded identities");
+            return ((IkeDerAsn1DnIdentification) ident).derAsn1Dn.toString();
         } else {
             throw new IllegalArgumentException("Unknown IkeIdentification to get user identity");
         }
