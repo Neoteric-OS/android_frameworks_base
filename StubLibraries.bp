@@ -203,6 +203,47 @@ droidstubs {
 }
 
 /////////////////////////////////////////////////////////////////////
+// These modules provide text files to the Java API Library module
+// to generate the stubs
+/////////////////////////////////////////////////////////////////////
+
+java_api_contribution {
+    name: "api-stubs-docs-non-updatable-public-stubs",
+    api_surface: "public",
+    api_file: "core/api/current.txt",
+    visibility: [
+        "//build/orchestrator/apis",
+    ],
+}
+
+java_api_contribution {
+    name: "api-stubs-docs-non-updatable-system-stubs",
+    api_surface: "system",
+    api_file: "core/api/system-current.txt",
+    visibility: [
+        "//build/orchestrator/apis",
+    ],
+}
+
+java_api_contribution {
+    name: "api-stubs-docs-non-updatable-test-stubs",
+    api_surface: "test",
+    api_file: "core/api/test-current.txt",
+    visibility: [
+        "//build/orchestrator/apis",
+    ],
+}
+
+java_api_contribution {
+    name: "api-stubs-docs-non-updatable-module-lib-stubs",
+    api_surface: "module-lib",
+    api_file: "core/api/module-lib-current.txt",
+    visibility: [
+        "//build/orchestrator/apis",
+    ],
+}
+
+/////////////////////////////////////////////////////////////////////
 // android_*_stubs_current modules are the stubs libraries compiled
 // from stub sources
 /////////////////////////////////////////////////////////////////////
@@ -597,13 +638,4 @@ java_library {
         ":hwbinder-stubs-docs",
     ],
     visibility: ["//visibility:public"],
-}
-
-java_api_contribution {
-    name: "frameworks-base-core-api-module-lib-stubs",
-    api_surface: "module-lib",
-    api_file: "core/api/module-lib-current.txt",
-    visibility: [
-        "//build/orchestrator/apis",
-    ],
 }
