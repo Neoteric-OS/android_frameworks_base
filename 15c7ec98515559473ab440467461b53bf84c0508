@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e886a66_aed09e03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2023-01-03T16:41:28Z",
+      "side": 1,
+      "message": "The presubmit is failing due to some unrelated build errors. I\u0027ll rerun the presubmit once it\u0027s back to normal.",
+      "revId": "15c7ec98515559473ab440467461b53bf84c0508",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
