@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08b7c10a_f78d3e9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2023-01-03T10:48:27Z",
+      "side": 1,
+      "message": "Hi SongFerng, would you help me with the Presubmit-verify? We don\u0027t have permission to retrigger it.",
+      "revId": "21a8866591e491a5f5109ff87a8ec0e1e0b7be53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
