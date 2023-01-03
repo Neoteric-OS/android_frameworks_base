@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb2d407c_d00abbe5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2023-01-03T10:15:50Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "a24294f477dc2755d225fcd359a6b4dc269cf83f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa51f2b2_c5b83373",
+        "filename": "services/core/java/com/android/server/vibrator/VibratorManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1736,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2023-01-03T10:15:50Z",
+      "side": 1,
+      "message": "Could you please also change this log level to Slog.d?",
+      "range": {
+        "startLine": 1736,
+        "startChar": 21,
+        "endLine": 1736,
+        "endChar": 22
+      },
+      "revId": "a24294f477dc2755d225fcd359a6b4dc269cf83f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e77d93d_6a0f804b",
+        "filename": "services/core/java/com/android/server/vibrator/VibratorManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2023-01-03T10:15:50Z",
+      "side": 1,
+      "message": "Seems like the log level is also wrong, could you please change it to Slog.d in this CL as well?",
+      "range": {
+        "startLine": 1750,
+        "startChar": 29,
+        "endLine": 1750,
+        "endChar": 30
+      },
+      "revId": "a24294f477dc2755d225fcd359a6b4dc269cf83f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
