@@ -223,6 +223,15 @@ java_api_contribution {
     ],
 }
 
+java_api_contribution {
+    name: "framework-graphics-system-stubs",
+    api_surface: "system",
+    api_file: "api/system-current.txt",
+    visibility: [
+        "//build/orchestrator/apis",
+    ],
+}
+
 // ------------------------
 // APEX
 // ------------------------
