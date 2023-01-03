@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a9e3d33_79939512",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2023-01-03T11:45:21Z",
+      "side": 1,
+      "message": "I believe \"iff\" stands for \"if and only if\" here.",
+      "revId": "d2b194abab608f2cda9ca566fe450d1dfa5d8cd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
