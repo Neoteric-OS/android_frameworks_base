@@ -247,3 +247,12 @@ droidstubs {
         },
     ],
 }
+
+java_api_contribution {
+    name: "services-system-server-stubs",
+    api_surface: "system-server",
+    api_file: "api/current.txt",
+    visibility: [
+        "//build/orchestrator/apis",
+    ],
+}
