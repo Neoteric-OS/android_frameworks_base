@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e13c06c3_39c8117f",
+        "filename": "services/core/java/com/android/server/pm/BackgroundDexOptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2023-01-03T11:01:46Z",
+      "side": 1,
+      "message": "Nit: `pathSplitSourceDir` (capitalize the \"s\" in \"split\" and remove the \"s\" from \"dirs\").",
+      "range": {
+        "startLine": 575,
+        "startChar": 25,
+        "endLine": 575,
+        "endChar": 44
+      },
+      "revId": "205633364e7f3af75c794a3decfe9470ebfcaa3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "584c7387_3223dd14",
+        "filename": "services/core/java/com/android/server/pm/BackgroundDexOptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2023-01-03T11:01:46Z",
+      "side": 1,
+      "message": "Nit: As the lint suggested, please remove the trailing whitespace.",
+      "range": {
+        "startLine": 582,
+        "startChar": 66,
+        "endLine": 582,
+        "endChar": 82
+      },
+      "revId": "205633364e7f3af75c794a3decfe9470ebfcaa3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
