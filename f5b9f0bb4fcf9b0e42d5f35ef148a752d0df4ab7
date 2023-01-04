@@ -106,6 +106,24 @@
       "parentUuid": "fa88f6db_c34d206c",
       "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf485e51_61e4beaa",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2023-01-04T21:48:12Z",
+      "side": 1,
+      "message": "There\u0027s two call sites within Bitmap.cpp, not sure if you consider that more than one caller.",
+      "parentUuid": "45403257_e1f09a1c",
+      "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
