@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0eb57b0f_91413072",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2023-01-04T22:55:31Z",
+      "side": 1,
+      "message": "that\u0027s very fishy... is this code built for non-Android? if so, have you checked that your change works in that configuration too?\n\n(and if that is what\u0027s going on, it\u0027s worth adding a comment here saying \"we can remove these when we\u0027ve switched the host from ancient glibc to current musl+bionic\u0027s uapi headers\".)",
+      "parentUuid": "91b05847_339a7f12",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "edd6feec0cb9bd657331fae23b29e5882b246838",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f3ca359_83a59fb5",
         "filename": "libs/hwui/hwui/Bitmap.cpp",
         "patchSetId": 12
