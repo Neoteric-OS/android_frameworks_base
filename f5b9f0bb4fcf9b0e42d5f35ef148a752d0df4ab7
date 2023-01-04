@@ -88,6 +88,24 @@
       "parentUuid": "64fdc8ce_c1c183eb",
       "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45403257_e1f09a1c",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2023-01-04T21:39:16Z",
+      "side": 1,
+      "message": "\u003e Hrm. I\u0027d disagree with Elliott here as I\u0027d rather we not create debt that we have to resolve later (duplicating the same change you proposed).\n\nis there duplication? i thought this was the only caller? (and i don\u0027t see anything else in the topic.)\n\nif there\u0027s more than one caller then, yeah, given jstultz\u0027s \"new shit has come to light, man\" that we are (well, \"he is\") still working on the whole memfd thing, then fine.",
+      "parentUuid": "fa88f6db_c34d206c",
+      "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

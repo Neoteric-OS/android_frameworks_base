@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b194937_7d0612c2",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2023-01-04T21:39:16Z",
+      "side": 1,
+      "message": "why do you need these? you should get the bionic headers for free, since this is C/C++...",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "edd6feec0cb9bd657331fae23b29e5882b246838",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f3ca359_83a59fb5",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2023-01-04T21:39:16Z",
+      "side": 1,
+      "message": "\u003ccutils/ashmem.h\u003e already includes \u003clinux/ashmem.h\u003e...",
+      "revId": "edd6feec0cb9bd657331fae23b29e5882b246838",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
