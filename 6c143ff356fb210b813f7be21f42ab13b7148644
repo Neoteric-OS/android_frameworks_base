@@ -33,6 +33,23 @@
       "message": "Backup of the setting looks good",
       "revId": "6c143ff356fb210b813f7be21f42ab13b7148644",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7914b558_34493823",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2023-01-05T07:37:11Z",
+      "side": 1,
+      "message": "gentle ping for review.",
+      "revId": "6c143ff356fb210b813f7be21f42ab13b7148644",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
