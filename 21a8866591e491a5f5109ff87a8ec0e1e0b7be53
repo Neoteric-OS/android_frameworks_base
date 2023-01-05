@@ -16,6 +16,47 @@
       "message": "Hi SongFerng, would you help me with the Presubmit-verify? We don\u0027t have permission to retrigger it.",
       "revId": "21a8866591e491a5f5109ff87a8ec0e1e0b7be53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "477ec800_ddaeb851",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2023-01-05T05:59:01Z",
+      "side": 1,
+      "message": "Thanks for reporting the bug, and thousand thanks for investigating more and submitting the correct CL to fix it.",
+      "parentUuid": "08b7c10a_f78d3e9f",
+      "revId": "21a8866591e491a5f5109ff87a8ec0e1e0b7be53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5c32b43_945cc49d",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2023-01-05T05:59:01Z",
+      "side": 1,
+      "message": "FYI this kind of logging is now deprecated.\nSo this can be refactor this to\n```\nif (BluetoothUuid.containsAnyUuid(uuids, PbapServerProfile.PBAB_CLIENT_UUIDS)) {\n  // The pairing dialog now warns of phone-book access for paired devices.\n  // No separate prompt is displayed after pairing.\n  mDevice.getPhonebookAccessPermission();\n}\n```\n\nBut it\u0027s not the scope of this change.",
+      "range": {
+        "startLine": 1028,
+        "startChar": 0,
+        "endLine": 1028,
+        "endChar": 73
+      },
+      "revId": "21a8866591e491a5f5109ff87a8ec0e1e0b7be53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
