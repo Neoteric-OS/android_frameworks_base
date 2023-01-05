@@ -615,6 +615,9 @@ cc_defaults {
                 "libarect",
             ],
         },
+        windows: {
+            enabled: true,
+        },
     },
 }
 
