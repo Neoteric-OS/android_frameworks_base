@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51e5a381_e52865e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1903913
+      },
+      "writtenOn": "2023-01-06T01:13:27Z",
+      "side": 1,
+      "message": "Hi Brad\nAs Vendor requested rapid deployment. \nI\u0027m manually cherry picking this topic.\n\nThanks",
+      "revId": "7408945b338d9c3253f670a578bf4e3af4a48f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
