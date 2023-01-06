@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c58199d2_da19a285",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2023-01-06T17:35:34Z",
+      "side": 1,
+      "message": "This is the error I get when I comment those lines out and build the `checkbuild` target:\n\n```\nframeworks/base/libs/hwui/hwui/Bitmap.cpp:60:48: error: use of undeclared identifier \u0027ASHMEM_GET_FILE_ID\u0027\n            ret \u003d TEMP_FAILURE_RETRY(ioctl(fd, ASHMEM_GET_FILE_ID, \u0026ioctl_ino));\n                                               ^\n1 error generated.\nframeworks/base/libs/hwui/hwui/Bitmap.cpp:60:48: error: use of undeclared identifier \u0027ASHMEM_GET_FILE_ID\u0027\n            ret \u003d TEMP_FAILURE_RETRY(ioctl(fd, ASHMEM_GET_FILE_ID, \u0026ioctl_ino));\n                                               ^\n```\n\nand here\u0027s the same error in a previous build log for this patch (before I added the `include_dirs`:\n\nhttps://android-build.googleplex.com/builds/pending/P44935470/art-target-arm/latest/view/logs/build_error.log\nhttps://android-build.googleplex.com/builds/pending/P44935446/art-target-arm64/latest/view/logs/build_error.log\nhttps://android-build.googleplex.com/builds/pending/P44935447/art-target-arm64/latest/view/logs/build_error.log\n\n\nI\u0027m not aware of the the \"ancient glibc to current musl+bionic\u0027s uapi headers\" situation, can you explain more?",
+      "parentUuid": "0eb57b0f_91413072",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "edd6feec0cb9bd657331fae23b29e5882b246838",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f3ca359_83a59fb5",
         "filename": "libs/hwui/hwui/Bitmap.cpp",
         "patchSetId": 12
