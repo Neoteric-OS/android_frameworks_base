@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9e13b5d5_762ede3b",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2023-01-06T18:11:55Z",
+      "side": 1,
+      "message": "from this in the command-line...\n```\nprebuilts/runtime/mainline/runtime/sdk/common_os/include/bionic/\n```\n...it looks like this is some mainline problem.\n\n+ccross in case he knows what\u0027s going on here. (but hopefully you _don\u0027t_ get this if you move the code out of libcutils and into frameworks? _frameworks_ definitely ought to be building with the *actual* bionic headers and not some out of date fork?!)",
+      "parentUuid": "c58199d2_da19a285",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "edd6feec0cb9bd657331fae23b29e5882b246838",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f3ca359_83a59fb5",
         "filename": "libs/hwui/hwui/Bitmap.cpp",
         "patchSetId": 12
