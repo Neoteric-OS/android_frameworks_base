@@ -196,6 +196,24 @@
       "parentUuid": "3de1865c_ff44424a",
       "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de64c999_fd613e94",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1945845
+      },
+      "writtenOn": "2023-01-06T01:18:15Z",
+      "side": 1,
+      "message": "Apologies, I\u0027m not familiar with the multi-caller prerequisite. Though I\u0027d assume we\u0027d want to keep the abstraction indirection in the same place (as the logic to determine if the fd is ashmem or memfd is static to libcutils - \"if (has_memfd_support() \u0026\u0026 !memfd_is_ashmem(fd)\"), so it seems more awkward to try to implement the memfd case here.\n\nBut I\u0027m relatively new and naive. :)  I also don\u0027t want to drag this on forever, so I\u0027ll trust experience and disagree without objecting here.",
+      "parentUuid": "3340a139_fc94a29f",
+      "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
