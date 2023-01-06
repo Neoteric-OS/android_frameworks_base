@@ -214,6 +214,24 @@
       "parentUuid": "3340a139_fc94a29f",
       "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd73a447_753b5df6",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2023-01-06T01:35:11Z",
+      "side": 1,
+      "message": "I can pull in the libcutil function, it will require exporting of `has_memfd_support` and `memfd_is_ashmem` for a single caller. Please let me know if that\u0027s not OK for any reason as I\u0027d like to avoid moving this code around any more :) :)",
+      "parentUuid": "de64c999_fd613e94",
+      "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
