@@ -142,6 +142,24 @@
       "parentUuid": "bf485e51_61e4beaa",
       "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0770170d_055bfb82",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2023-01-06T00:44:34Z",
+      "side": 1,
+      "message": "Ok, well it\u0027s a single call to ioctl() in each place so no need for a useless wrapper. I\u0027ll mark this thread as resolved then.",
+      "parentUuid": "0a790284_d2b151be",
+      "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
