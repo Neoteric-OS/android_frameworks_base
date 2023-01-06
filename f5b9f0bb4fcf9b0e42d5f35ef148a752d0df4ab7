@@ -160,6 +160,24 @@
       "parentUuid": "0a790284_d2b151be",
       "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3de1865c_ff44424a",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1945845
+      },
+      "writtenOn": "2023-01-06T00:56:14Z",
+      "side": 1,
+      "message": "Sorry for being slow to reply here: The trouble is when memfd is in the picture we have to check which one the fd is and either call the ashmem ioctl or fstat w/ memfd. That\u0027s why having the wrapper for that indirection logic is preferred.\n\nSo before we move to memfd we\u0027ll need to re-implement the wrapper you submitted and then abandoned (this is the duplication I intended - redoing the work you\u0027ve already done).",
+      "parentUuid": "0770170d_055bfb82",
+      "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
