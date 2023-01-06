@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a163ffc1_9bf4c530",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-01-06T20:39:17Z",
+      "side": 1,
+      "message": "Ideally these would both be git commit IDs, or both be Gerrit change IDs.  Mixing the two is confusing.",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 108
+      },
+      "revId": "a1c583f9cea8ef002b86744de8eb2e368df45589",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
