@@ -223,6 +223,7 @@ public class Letterbox {
             mWindowHandle.ownerPid = Process.myPid();
             mWindowHandle.ownerUid = Process.myUid();
             mWindowHandle.scaleFactor = 1.0f;
+            mWindowHandle.trustedOverlay = true;
         }
 
         void updateTouchableRegion(Rect frame) {
