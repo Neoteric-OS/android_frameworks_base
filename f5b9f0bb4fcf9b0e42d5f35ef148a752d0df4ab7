@@ -178,6 +178,24 @@
       "parentUuid": "0770170d_055bfb82",
       "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3340a139_fc94a29f",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2023-01-06T00:59:03Z",
+      "side": 1,
+      "message": "but if there\u0027s only this one caller, that function should still be in this file, not in libcutils...",
+      "parentUuid": "3de1865c_ff44424a",
+      "revId": "f5b9f0bb4fcf9b0e42d5f35ef148a752d0df4ab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
