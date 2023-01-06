@@ -16,6 +16,24 @@
       "message": "Actually, this reverts both commit 48ae5a779061830466eee6b2cf2d02e0d4070ed7 and commit e0b7e861cd5c8e838ba9f203ecf7a5c85c5688e0.",
       "revId": "f142b40a387133f03a5bed9063536f5f0b680883",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31e09d67_f636c295",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1858130
+      },
+      "writtenOn": "2023-01-06T18:10:08Z",
+      "side": 1,
+      "message": "thanks",
+      "parentUuid": "035ed0bf_18062d54",
+      "revId": "f142b40a387133f03a5bed9063536f5f0b680883",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
