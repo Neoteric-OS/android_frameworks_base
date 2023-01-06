@@ -219,5 +219,6 @@ public class SecureSettings {
         Settings.Secure.BACK_GESTURE_ARROW,
         Settings.Secure.BERRY_BLACK_THEME,
         Settings.Secure.SKIP_FACE_AUTH_CONFIRMATION,
+        Settings.Secure.DOZE_FOR_NOTIFICATIONS,
     };
 }
