@@ -174,8 +174,7 @@ public class UdfpsKeyguardView extends UdfpsAnimationView {
             return;
         }
 
-        mTextColorPrimary = Utils.getColorAttrDefaultColor(mContext,
-            android.R.attr.textColorPrimary);
+        mTextColorPrimary = getContext().getColor(R.color.keyguard_button_fg_color);
         mBgProtection.setImageDrawable(getContext().getDrawable(R.drawable.fingerprint_bg));
         if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SHOW_UDFPS_BG, 1) != 0) {
