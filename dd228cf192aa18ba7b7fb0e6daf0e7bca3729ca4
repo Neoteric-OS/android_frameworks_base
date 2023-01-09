@@ -16,6 +16,46 @@
       "message": "Probably only needed after https://android-review.googlesource.com/c/platform/frameworks/base/+/2219883 but can\u0027t validate since operator name view just crashes SystemUI without that other fix.",
       "revId": "dd228cf192aa18ba7b7fb0e6daf0e7bca3729ca4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "495f3ed8_a47edf38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2023-01-09T16:29:32Z",
+      "side": 1,
+      "message": "This class is kind of old and clunky, so the change itself looks fine. If we can add a test or two that would be preferable. Thanks!",
+      "revId": "dd228cf192aa18ba7b7fb0e6daf0e7bca3729ca4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "359c40b0_6ebdf8dc",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/fragment/CollapsedStatusBarFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2023-01-09T16:29:32Z",
+      "side": 1,
+      "message": "Mind adding a simple test case in CollapsedStatusBarFragmentTest which just verifies that we are hiding the frame?",
+      "range": {
+        "startLine": 555,
+        "startChar": 3,
+        "endLine": 557,
+        "endChar": 40
+      },
+      "revId": "dd228cf192aa18ba7b7fb0e6daf0e7bca3729ca4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
