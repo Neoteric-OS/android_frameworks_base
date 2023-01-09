@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39b14c56_a8e84c8b",
+        "filename": "boot/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-01-09T16:32:42Z",
+      "side": 1,
+      "message": "There is exactly one platform_bootclasspath module right? Seems a little strange to make a custom version of it for the singular use-case. :)",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 40
+      },
+      "revId": "98b6f1d5763416ab4c99d8e6a5a2a9bdc032e113",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
