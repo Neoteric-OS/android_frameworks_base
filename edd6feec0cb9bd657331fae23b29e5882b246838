@@ -170,6 +170,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "edbaea57_5bed6626",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2023-01-09T17:11:44Z",
+      "side": 1,
+      "message": "Rolled a prebuilt update here: https://r.android.com/2378492\n\n\u003e ideally, we should talk about how we can remove bionic from that /.../\n\nYes, it\u0027s not great with those prebuilts. In this case there are actually two kinks - besides the prebuilts that get stale, we ought not include and build libcutils in master-art in the first place, but it\u0027s there because of tool dependencies (aidl).\n\nThe proper long term solution for this is go/multitree-design which would allow us to remove all those prebuilts. But, well, it\u0027s long term.\n\nThe other option is to reinstate Bionic as source in master-art. However, there are some hidden APIs (in the abstract sense) between ART and Bionic that got surfaced by the separation back in the day (libsigchain, debuggerd and libdl_android stuff among them, IIRC), so there is some risk of regression.",
+      "parentUuid": "41e38499_70ab2265",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "edd6feec0cb9bd657331fae23b29e5882b246838",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f3ca359_83a59fb5",
         "filename": "libs/hwui/hwui/Bitmap.cpp",
         "patchSetId": 12
