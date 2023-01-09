@@ -194,6 +194,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4d915111_56918e02",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2023-01-09T18:25:56Z",
+      "side": 1,
+      "message": "\u003e The other option is to reinstate Bionic as source in master-art. However, there are some hidden APIs (in the abstract sense) between ART and Bionic that got surfaced by the separation back in the day (libsigchain, debuggerd and libdl_android stuff among them, IIRC), so there is some risk of regression.\n\ngiven that we have no idea how long multitree is going to take (and it\u0027s likely O(years) whatever), this seems like something we should do for the medium term. you\u0027re at the mercy of these APIs anyway, right, since you have to work on multiple releases, and you can\u0027t change the past? (so it would seem like a feature to catch any breaking change _immediately_ rather than after it\u0027s already shipped, at which point you\u0027re going to be painted into a corner where you now have to support both?)\n\nin the short term, can you update your copy? (otherwise you\u0027re just going to have people subverting your attempt to force them to use out of date headers anyway. it might be worth checking for other places people have already had to do this...)",
+      "parentUuid": "edbaea57_5bed6626",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "edd6feec0cb9bd657331fae23b29e5882b246838",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f3ca359_83a59fb5",
         "filename": "libs/hwui/hwui/Bitmap.cpp",
         "patchSetId": 12
