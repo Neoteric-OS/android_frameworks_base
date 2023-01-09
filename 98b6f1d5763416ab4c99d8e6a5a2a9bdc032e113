@@ -46,6 +46,30 @@
       },
       "revId": "98b6f1d5763416ab4c99d8e6a5a2a9bdc032e113",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec8de2cc_5ed3e669",
+        "filename": "boot/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-01-09T17:35:36Z",
+      "side": 1,
+      "message": "We could but that would be a waste of time as we would either be duplicating functionality that is already present in Soong, or we would be hard coding a car specific customization and if say wear wanted their own then we would have to modify Soong again to add a wear specific customization.\n\nUsing `soong_config_module_type` allows us to move the customization out of Soong.\n\nLonger term, in Bazel we would just use a chain of `select` calls, one for car, one for wear, etc.",
+      "parentUuid": "d41ade08_4f21fa96",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 40
+      },
+      "revId": "98b6f1d5763416ab4c99d8e6a5a2a9bdc032e113",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
