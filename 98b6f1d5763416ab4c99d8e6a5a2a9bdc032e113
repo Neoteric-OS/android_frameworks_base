@@ -22,6 +22,30 @@
       },
       "revId": "98b6f1d5763416ab4c99d8e6a5a2a9bdc032e113",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d41ade08_4f21fa96",
+        "filename": "boot/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-01-09T17:02:28Z",
+      "side": 1,
+      "message": "(a little more clearly: could we just change platform_bootclasspath directly?)",
+      "parentUuid": "39b14c56_a8e84c8b",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 40
+      },
+      "revId": "98b6f1d5763416ab4c99d8e6a5a2a9bdc032e113",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
