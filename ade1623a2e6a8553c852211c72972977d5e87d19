@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d82ed99b_87245e6a",
+        "filename": "graphics/java/android/graphics/Bitmap.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-01-10T23:55:25Z",
+      "side": 1,
+      "message": "keep the source-of-truth for all data on the native object, don\u0027t duplicate data into Java (so this field should only live in Bitmap.h)",
+      "revId": "ade1623a2e6a8553c852211c72972977d5e87d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df271fde_2ee1cbc4",
+        "filename": "graphics/java/android/graphics/Bitmap.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-01-10T23:55:25Z",
+      "side": 1,
+      "message": "who needs this method?",
+      "range": {
+        "startLine": 192,
+        "startChar": 16,
+        "endLine": 192,
+        "endChar": 25
+      },
+      "revId": "ade1623a2e6a8553c852211c72972977d5e87d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c83afcab_801d5bbf",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-01-10T23:55:25Z",
+      "side": 1,
+      "message": "I\u0027m guessing this isn\u0027t really expected to ever fail, but if it does is there any reason to not just set the ino to 0 as if it wasn\u0027t an ashmem bitmap instead of unmapping \u0026 hard-failing?",
+      "revId": "ade1623a2e6a8553c852211c72972977d5e87d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce80ff89_ced31cf3",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-01-10T23:55:25Z",
+      "side": 1,
+      "message": "same here re why not just ino \u003d 0 \u0026 carry on as we previous did",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 23
+      },
+      "revId": "ade1623a2e6a8553c852211c72972977d5e87d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
