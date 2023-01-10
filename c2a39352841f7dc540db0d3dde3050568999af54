@@ -110,6 +110,30 @@
       },
       "revId": "c2a39352841f7dc540db0d3dde3050568999af54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "575747d8_2d6f4824",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2023-01-10T03:07:07Z",
+      "side": 1,
+      "message": "Ok, but then why can\u0027t we just make things work out of the box on those devices, without the OEM having to change their code? AIUI when a device ships on a vendor frozen kernel, the OEM cannot really change the kernel even if they want to. So it seems better that if the kernel is frozen, the AOSP code just works without the OEM having to change it.\n\nI think we can achieve this by simply making this check the same as the one we see in the CTS test.\n\nThis still won\u0027t prevent OEMs from opting in by setting the flag if they want to.",
+      "parentUuid": "6ec76da3_d7a45869",
+      "range": {
+        "startLine": 1523,
+        "startChar": 49,
+        "endLine": 1523,
+        "endChar": 79
+      },
+      "revId": "c2a39352841f7dc540db0d3dde3050568999af54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
