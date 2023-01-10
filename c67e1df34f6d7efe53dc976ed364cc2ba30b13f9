@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "000a9372_bb09b3e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-01-10T17:08:34Z",
+      "side": 1,
+      "message": "I switched the soong config variable from the existing `ANDROID/target_board_auto` to `AUTO/car_bootclasspath_fragment`. That is for a few reasons:\n1. The former was not set to true when the car bcpf was needed.\n2. The `ANDROID` namespace is restricted and cannot be set in a product .mk file.\n3. I didn\u0027t want to add more car specific changes into `build/make/core/android_soong_config_vars.mk`.\n\nThe other change in this topic sets the soong config var.",
+      "revId": "c67e1df34f6d7efe53dc976ed364cc2ba30b13f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
