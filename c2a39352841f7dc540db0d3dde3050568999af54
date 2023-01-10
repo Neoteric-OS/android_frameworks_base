@@ -158,6 +158,30 @@
       },
       "revId": "c2a39352841f7dc540db0d3dde3050568999af54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4501fab6_879957ff",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-01-10T21:08:47Z",
+      "side": 1,
+      "message": "Like Nathan said, I think the current patch can still encourage non-VSR devices to make the kernel update. Thoughts?",
+      "parentUuid": "cdee7894_9e0a4b8b",
+      "range": {
+        "startLine": 1523,
+        "startChar": 49,
+        "endLine": 1523,
+        "endChar": 79
+      },
+      "revId": "c2a39352841f7dc540db0d3dde3050568999af54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
