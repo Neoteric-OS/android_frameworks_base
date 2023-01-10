@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "faa7bd3b_50f5b52a",
+        "filename": "boot/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-01-10T17:00:59Z",
+      "side": 1,
+      "message": "am",
+      "revId": "dbf3f0597c2a2bbf858a91b1df639e101b8d8517",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
