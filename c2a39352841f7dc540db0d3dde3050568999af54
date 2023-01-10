@@ -134,6 +134,30 @@
       },
       "revId": "c2a39352841f7dc540db0d3dde3050568999af54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdee7894_9e0a4b8b",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2023-01-10T18:42:45Z",
+      "side": 1,
+      "message": "We have to consider non-VSR devices for AOSP, and IIRC those device requirements are enforced on INITIAL_SDK_INT.",
+      "parentUuid": "575747d8_2d6f4824",
+      "range": {
+        "startLine": 1523,
+        "startChar": 49,
+        "endLine": 1523,
+        "endChar": 79
+      },
+      "revId": "c2a39352841f7dc540db0d3dde3050568999af54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
