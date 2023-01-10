@@ -218,6 +218,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0863d66c_e67909ab",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2023-01-10T20:01:06Z",
+      "side": 1,
+      "message": "\u003e so it would seem like a feature to catch any breaking change immediately rather than after it\u0027s already shipped\n\nYes, that\u0027s the whole idea with the prebuilts (in general). They\u0027ve already proved this several times - I tend to get looped in when someone wonders why their neat module-spanning topic doesn\u0027t build on master-art.\n\nWhat I\u0027m worried about isn\u0027t the APIs; I have complete confidence that you keep them ABI compatible (and I have to trust that `min_sdk_version` DTRT as well). I\u0027m worried about other build things that can bleed over the module boundary. With Bionic and ART always in the same tree that can happen without anyone (who knows what to look for) noticing. The only tool we\u0027d have to stop it is Soong visibility, but that leaves a lot of holes.\n\nGiven the choice between that blind spot and the annoying prebuilts, I\u0027m afraid I consider the latter is the lesser evil. I\u0027m happy to update them whenever necessary, but I do recognise that they\u0027re extra insidious because people who aren\u0027t used to them tend to look in the wrong direction.\n\nThe problems tend to be restricted to the headers. If there was a way to only get them in master-art without the rest of Bionic that could work, but it\u0027s probably not easy to do.\n\nThe other thing we can work on is isolating the prebuilts better so that only ART team suffers when they get stale, as intended. Maybe Soong namespaces could help there.\n\n\u003e in the short term, can you update your copy?\n\nOf course, https://r.android.com/2378492 got merged yesterday. The build failure above should be gone now.",
+      "parentUuid": "4d915111_56918e02",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "edd6feec0cb9bd657331fae23b29e5882b246838",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f3ca359_83a59fb5",
         "filename": "libs/hwui/hwui/Bitmap.cpp",
         "patchSetId": 12
