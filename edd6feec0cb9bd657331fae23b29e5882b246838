@@ -255,6 +255,24 @@
       "message": "\u003ccutils/ashmem.h\u003e already includes \u003clinux/ashmem.h\u003e...",
       "revId": "edd6feec0cb9bd657331fae23b29e5882b246838",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dd450cb_4d381f0a",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2023-01-10T21:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f3ca359_83a59fb5",
+      "revId": "edd6feec0cb9bd657331fae23b29e5882b246838",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
