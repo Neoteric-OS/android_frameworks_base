@@ -242,6 +242,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "94aa472d_898884ec",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2023-01-10T23:46:39Z",
+      "side": 1,
+      "message": "\u003e Of course...\n\nthanks! mfasheh: you should be able to remove this now.\n\n(mast: i\u0027ll be honest, i really don\u0027t understand what kind of bionic breakage you\u0027re expecting then. [note that i was only talking about not including _bionic_ in your \"prebuilt\".] but this unrelated code review probably isn\u0027t the place to discuss your worries, so send me a mail/doc/invite so we can see if we can do something to make you comfortable enough to just use the \"real thing\" :-) )",
+      "parentUuid": "0863d66c_e67909ab",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "edd6feec0cb9bd657331fae23b29e5882b246838",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f3ca359_83a59fb5",
         "filename": "libs/hwui/hwui/Bitmap.cpp",
         "patchSetId": 12
