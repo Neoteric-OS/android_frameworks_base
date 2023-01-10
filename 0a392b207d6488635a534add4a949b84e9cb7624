@@ -16,6 +16,23 @@
       "message": "Dear Google team, any update?",
       "revId": "0a392b207d6488635a534add4a949b84e9cb7624",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9f57917_e2aed438",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1524317
+      },
+      "writtenOn": "2023-01-10T14:36:43Z",
+      "side": 1,
+      "message": "Thanks for bringing this to our attention and for suggesting this change. After thoroughly reviewing the root cause we\u0027ve decided to fix this regression with r.android.com/2382812",
+      "revId": "0a392b207d6488635a534add4a949b84e9cb7624",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
