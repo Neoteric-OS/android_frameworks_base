@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13cea000_af3aed81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1741317
+      },
+      "writtenOn": "2023-01-10T16:17:42Z",
+      "side": 1,
+      "message": "The failing tests are unrelated. The build breakage was fixed with aosp/2380702. Filed b/265014876 to chase the other presubmit",
+      "revId": "89fe5f3e92a2d5ea743074a6aaea10b08ed47160",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
