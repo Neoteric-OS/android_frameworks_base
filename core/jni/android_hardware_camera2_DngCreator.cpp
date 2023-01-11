@@ -1161,6 +1161,8 @@ static status_t findPostCorrectionScale(
         return BAD_VALUE;
     }
 
+    // FixLater: avoid floating point loop counters
+    // NOLINTNEXTLINE(clang-analyzer-security.FloatLoopCounter,cert-flp30-c)
     for (double scale = 1.0; scale > minScale; scale -= stepSize) {
         if (scaledBoxWithinPrecorrectionArray(
                 scale, distortion, cx, cy, f, preCorrW, preCorrH, xMin, yMin)) {
