@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "becba7a2_fd910cd1",
+        "filename": "graphics/java/android/graphics/Bitmap.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2023-01-11T01:02:46Z",
+      "side": 1,
+      "message": "Sure - just to make sure I understand, you\u0027d like me to pull `mFileID` and instead implement as a native method which returns that value from the CPP object?\n\nThank you!",
+      "parentUuid": "d82ed99b_87245e6a",
+      "revId": "ade1623a2e6a8553c852211c72972977d5e87d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "df271fde_2ee1cbc4",
         "filename": "graphics/java/android/graphics/Bitmap.java",
         "patchSetId": 13
@@ -31,6 +49,30 @@
       "writtenOn": "2023-01-10T23:55:25Z",
       "side": 1,
       "message": "who needs this method?",
+      "range": {
+        "startLine": 192,
+        "startChar": 16,
+        "endLine": 192,
+        "endChar": 25
+      },
+      "revId": "ade1623a2e6a8553c852211c72972977d5e87d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "911047e2_06fa9ba9",
+        "filename": "graphics/java/android/graphics/Bitmap.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2023-01-11T01:02:46Z",
+      "side": 1,
+      "message": "Someone had come around a couple of months ago and asked me to add this to aid in their work regarding bitmap dedupe. I can\u0027t seem to find the message at this point though (it might\u0027ve been deleted from chat history). If you want, I can remove this, it\u0027s very easy to add back later when we have a user. Just let me know what you prefer.\n\nThanks!",
+      "parentUuid": "df271fde_2ee1cbc4",
       "range": {
         "startLine": 192,
         "startChar": 16,
@@ -60,6 +102,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1aa30a3a_2bff23eb",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2023-01-11T01:02:46Z",
+      "side": 1,
+      "message": "Yeah it\u0027s not expected to fail, especially since we check for the existence of the ioctl. I hear you though - there\u0027s no reason to blow up the world in the off chance that it *does* happen to fail. I\u0027ll fix this up as requested.",
+      "parentUuid": "c83afcab_801d5bbf",
+      "revId": "ade1623a2e6a8553c852211c72972977d5e87d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ce80ff89_ced31cf3",
         "filename": "libs/hwui/hwui/Bitmap.cpp",
         "patchSetId": 13
@@ -71,6 +131,30 @@
       "writtenOn": "2023-01-10T23:55:25Z",
       "side": 1,
       "message": "same here re why not just ino \u003d 0 \u0026 carry on as we previous did",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 23
+      },
+      "revId": "ade1623a2e6a8553c852211c72972977d5e87d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08dd0b17_ce613d16",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2023-01-11T01:02:46Z",
+      "side": 1,
+      "message": "Same as above, I\u0027ll fix this up as requested.",
+      "parentUuid": "ce80ff89_ced31cf3",
       "range": {
         "startLine": 235,
         "startChar": 0,
