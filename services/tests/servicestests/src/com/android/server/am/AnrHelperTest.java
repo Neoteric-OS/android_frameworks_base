@@ -116,7 +116,8 @@ public class AnrHelperTest {
 
         verify(mAnrApp.mErrorState, timeout(TIMEOUT_MS)).appNotResponding(
                 eq(activityShortComponentName), eq(appInfo), eq(parentShortComponentName),
-                eq(parentProcess), eq(aboveSystem), eq(annotation), eq(false) /* onlyDumpSelf */);
+                eq(parentProcess), eq(aboveSystem), eq(annotation), eq(false) /* onlyDumpSelf */,
+                /*isContinuousAnr*/ false);
     }
 
     @Test
@@ -129,11 +130,12 @@ public class AnrHelperTest {
             processingLatch.await();
             return null;
         }).when(mAnrApp.mErrorState).appNotResponding(anyString(), any(), any(), any(),
-                anyBoolean(), anyString(), anyBoolean());
+                anyBoolean(), anyString(), anyBoolean(), anyBoolean());
         final ApplicationInfo appInfo = new ApplicationInfo();
         final Runnable reportAnr = () -> mAnrHelper.appNotResponding(mAnrApp,
                 "activityShortComponentName", appInfo, "parentShortComponentName",
-                null /* parentProcess */, false /* aboveSystem */, "annotation");
+                null /* parentProcess */, false /* aboveSystem */, "annotation",
+                false /*isContinuousAnr*/);
         reportAnr.run();
         // This should be skipped because the pid is pending in queue.
         reportAnr.run();
@@ -149,6 +151,6 @@ public class AnrHelperTest {
         processingLatch.countDown();
         // There is only one ANR reported.
         verify(mAnrApp.mErrorState, timeout(TIMEOUT_MS).only()).appNotResponding(
-                anyString(), any(), any(), any(), anyBoolean(), anyString(), anyBoolean());
+                anyString(), any(), any(), any(), anyBoolean(), anyString(), anyBoolean(), anyBoolean());
     }
 }

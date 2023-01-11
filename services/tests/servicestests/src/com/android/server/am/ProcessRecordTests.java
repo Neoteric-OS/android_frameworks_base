@@ -197,6 +197,6 @@ public class ProcessRecordTests {
             String annotation) {
         processErrorState.appNotResponding(null /* activityShortComponentName */, null /* aInfo */,
                 null /* parentShortComponentName */, null /* parentProcess */,
-                false /* aboveSystem */, annotation, false /* onlyDumpSelf */);
+                false /* aboveSystem */, annotation, false /* onlyDumpSelf */, false /*isContinuousAnr*/);
     }
 }

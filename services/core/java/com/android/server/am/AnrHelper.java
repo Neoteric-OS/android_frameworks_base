@@ -71,12 +71,13 @@ class AnrHelper {
     void appNotResponding(ProcessRecord anrProcess, String annotation) {
         appNotResponding(anrProcess, null /* activityShortComponentName */, null /* aInfo */,
                 null /* parentShortComponentName */, null /* parentProcess */,
-                false /* aboveSystem */, annotation);
+                false /* aboveSystem */, annotation, /*isContinuousAnr*/ false);
     }
 
     void appNotResponding(ProcessRecord anrProcess, String activityShortComponentName,
             ApplicationInfo aInfo, String parentShortComponentName,
-            WindowProcessController parentProcess, boolean aboveSystem, String annotation) {
+            WindowProcessController parentProcess, boolean aboveSystem, String annotation,
+            boolean isContinuousAnr) {
         final int incomingPid = anrProcess.mPid;
         synchronized (mAnrRecords) {
             if (incomingPid == 0) {
@@ -95,7 +96,7 @@ class AnrHelper {
                 }
             }
             mAnrRecords.add(new AnrRecord(anrProcess, activityShortComponentName, aInfo,
-                    parentShortComponentName, parentProcess, aboveSystem, annotation));
+                    parentShortComponentName, parentProcess, aboveSystem, annotation, isContinuousAnr));
         }
         startAnrConsumerIfNeeded();
     }
@@ -180,10 +181,12 @@ class AnrHelper {
         final WindowProcessController mParentProcess;
         final boolean mAboveSystem;
         final long mTimestamp = SystemClock.uptimeMillis();
+        final boolean mIsContinuousAnr;
 
         AnrRecord(ProcessRecord anrProcess, String activityShortComponentName,
                 ApplicationInfo aInfo, String parentShortComponentName,
-                WindowProcessController parentProcess, boolean aboveSystem, String annotation) {
+                WindowProcessController parentProcess, boolean aboveSystem, String annotation,
+                boolean isContinuousAnr) {
             mApp = anrProcess;
             mPid = anrProcess.mPid;
             mActivityShortComponentName = activityShortComponentName;
@@ -192,12 +195,13 @@ class AnrHelper {
             mAppInfo = aInfo;
             mParentProcess = parentProcess;
             mAboveSystem = aboveSystem;
+            mIsContinuousAnr = isContinuousAnr;
         }
 
         void appNotResponding(boolean onlyDumpSelf) {
             mApp.mErrorState.appNotResponding(mActivityShortComponentName, mAppInfo,
                     mParentShortComponentName, mParentProcess, mAboveSystem, mAnnotation,
-                    onlyDumpSelf);
+                    onlyDumpSelf, mIsContinuousAnr);
         }
     }
 }

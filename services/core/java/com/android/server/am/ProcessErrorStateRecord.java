@@ -254,7 +254,7 @@ class ProcessErrorStateRecord {
 
     void appNotResponding(String activityShortComponentName, ApplicationInfo aInfo,
             String parentShortComponentName, WindowProcessController parentProcess,
-            boolean aboveSystem, String annotation, boolean onlyDumpSelf) {
+            boolean aboveSystem, String annotation, boolean onlyDumpSelf, boolean isContinuousAnr) {
         ArrayList<Integer> firstPids = new ArrayList<>(5);
         SparseArray<Boolean> lastPids = new SparseArray<>(20);
 
@@ -569,7 +569,8 @@ class ProcessErrorStateRecord {
                 // Bring up the infamous App Not Responding dialog
                 Message msg = Message.obtain();
                 msg.what = ActivityManagerService.SHOW_NOT_RESPONDING_UI_MSG;
-                msg.obj = new AppNotRespondingDialog.Data(mApp, aInfo, aboveSystem);
+                msg.obj = new AppNotRespondingDialog.Data(mApp, aInfo, aboveSystem,
+                        isContinuousAnr);
 
                 mService.mUiHandler.sendMessageDelayed(msg, anrDialogDelayMs);
             }
