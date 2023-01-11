@@ -182,6 +182,30 @@
       },
       "revId": "c2a39352841f7dc540db0d3dde3050568999af54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96cbac95_26381d42",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2023-01-11T00:25:11Z",
+      "side": 1,
+      "message": "No objection to encouraging non-VSR devices to do the right thing.\n\nWhat I\u0027m saying here is that for VSR devices running pre-U kernels, we should make this code pass CTS, which means we should not set the flag.\n\nIf we set the flag on those devices, that will just force the OEM to change this code to pass CTS, since the kernel they are using is frozen.\n\nWe\u0027ve that sort of thing several times - see b/254143771, b/258829855 for example. While it\u0027s true that this code isn\u0027t mainline, so it won\u0027t force OEMs to request waivers and force us to rush changes into mainline code like we did for those bugs, what those bugs tell me is that OEMs don\u0027t have the ability to change the kernel. We should not require them to change this code to make their device pass CTS.\n\nIn the event that they can and do want to change the kernel, great - they can always set this flag.",
+      "parentUuid": "4501fab6_879957ff",
+      "range": {
+        "startLine": 1523,
+        "startChar": 49,
+        "endLine": 1523,
+        "endChar": 79
+      },
+      "revId": "c2a39352841f7dc540db0d3dde3050568999af54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
