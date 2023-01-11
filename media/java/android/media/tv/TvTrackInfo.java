@@ -37,7 +37,7 @@ public final class TvTrackInfo implements Parcelable {
 
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({TYPE_AUDIO, TYPE_VIDEO, TYPE_SUBTITLE})
+    @IntDef({TYPE_AUDIO, TYPE_VIDEO, TYPE_SUBTITLE, TYPE_SUB_AUDIO})
     public @interface Type {}
 
     /**
@@ -54,6 +54,11 @@ public final class TvTrackInfo implements Parcelable {
      * The type value for subtitle tracks.
      */
     public static final int TYPE_SUBTITLE = 2;
+
+    /**
+     * The type value for sub audio tracks.
+     */
+    public static final int TYPE_SUB_AUDIO = 3;
 
     private final int mType;
     private final String mId;
@@ -121,7 +126,7 @@ public final class TvTrackInfo implements Parcelable {
 
     /**
      * Returns the type of the track. The type should be one of the followings:
-     * {@link #TYPE_AUDIO}, {@link #TYPE_VIDEO} and {@link #TYPE_SUBTITLE}.
+     * {@link #TYPE_AUDIO}, {@link #TYPE_VIDEO}, {@link #TYPE_SUBTITLE} and {@link #TYPE_SUB_AUDIO}.
      */
     @Type
     public final int getType() {
@@ -176,24 +181,26 @@ public final class TvTrackInfo implements Parcelable {
     }
 
     /**
-     * Returns the audio channel count. Valid only for {@link #TYPE_AUDIO} tracks.
+     * Returns the audio channel count. Valid only for {@link #TYPE_AUDIO} and {@link
+     * #TYPE_SUB_AUDIO} tracks.
      *
      * @throws IllegalStateException if not called on an audio track
      */
     public final int getAudioChannelCount() {
-        if (mType != TYPE_AUDIO) {
+        if (mType != TYPE_AUDIO && mType != TYPE_SUB_AUDIO) {
             throw new IllegalStateException("Not an audio track");
         }
         return mAudioChannelCount;
     }
 
     /**
-     * Returns the audio sample rate, in the unit of Hz. Valid only for {@link #TYPE_AUDIO} tracks.
+     * Returns the audio sample rate, in the unit of Hz. Valid only for {@link #TYPE_AUDIO} and
+     * {@link #TYPE_SUB_AUDIO} tracks.
      *
      * @throws IllegalStateException if not called on an audio track
      */
     public final int getAudioSampleRate() {
-        if (mType != TYPE_AUDIO) {
+        if (mType != TYPE_AUDIO && mType != TYPE_SUB_AUDIO) {
             throw new IllegalStateException("Not an audio track");
         }
         return mAudioSampleRate;
@@ -201,7 +208,8 @@ public final class TvTrackInfo implements Parcelable {
 
     /**
      * Returns {@code true} if the track is an audio description intended for people with visual
-     * impairment, {@code false} otherwise. Valid only for {@link #TYPE_AUDIO} tracks.
+     * impairment, {@code false} otherwise. Valid only for {@link #TYPE_AUDIO} and {@link
+     * #TYPE_SUB_AUDIO} tracks.
      *
      * <p>For example of broadcast, audio description information may be referred to broadcast
      * standard (e.g. ISO 639 Language Descriptor of ISO/IEC 13818-1, Supplementary Audio Language
@@ -210,7 +218,7 @@ public final class TvTrackInfo implements Parcelable {
      * @throws IllegalStateException if not called on an audio track
      */
     public boolean isAudioDescription() {
-        if (mType != TYPE_AUDIO) {
+        if (mType != TYPE_AUDIO && mType != TYPE_SUB_AUDIO) {
             throw new IllegalStateException("Not an audio track");
         }
         return mAudioDescription;
@@ -218,7 +226,8 @@ public final class TvTrackInfo implements Parcelable {
 
     /**
      * Returns {@code true} if the track is intended for people with hearing impairment, {@code
-     * false} otherwise. Valid only for {@link #TYPE_AUDIO} and {@link #TYPE_SUBTITLE} tracks.
+     * false} otherwise. Valid only for {@link #TYPE_AUDIO}, {@link #TYPE_SUB_AUDIO} and {@link
+     * #TYPE_SUBTITLE} tracks.
      *
      * <p>For example of broadcast, hard of hearing information may be referred to broadcast
      * standard (e.g. ISO 639 Language Descriptor of ISO/IEC 13818-1, Supplementary Audio Language
@@ -227,7 +236,7 @@ public final class TvTrackInfo implements Parcelable {
      * @throws IllegalStateException if not called on an audio track or a subtitle track
      */
     public boolean isHardOfHearing() {
-        if (mType != TYPE_AUDIO && mType != TYPE_SUBTITLE) {
+        if (mType != TYPE_AUDIO && mType != TYPE_SUB_AUDIO && mType != TYPE_SUBTITLE) {
             throw new IllegalStateException("Not an audio or a subtitle track");
         }
         return mHardOfHearing;
@@ -235,7 +244,8 @@ public final class TvTrackInfo implements Parcelable {
 
     /**
      * Returns {@code true} if the track is a spoken subtitle for people with visual impairment,
-     * {@code false} otherwise. Valid only for {@link #TYPE_AUDIO} tracks.
+     * {@code false} otherwise. Valid only for {@link #TYPE_AUDIO} and {@link #TYPE_SUB_AUDIO}
+     * tracks.
      *
      * <p>For example of broadcast, spoken subtitle information may be referred to broadcast
      * standard (e.g. Supplementary Audio Language Descriptor of ETSI EN 300 468).
@@ -243,7 +253,7 @@ public final class TvTrackInfo implements Parcelable {
      * @throws IllegalStateException if not called on an audio track
      */
     public boolean isSpokenSubtitle() {
-        if (mType != TYPE_AUDIO) {
+        if (mType != TYPE_AUDIO && mType != TYPE_SUB_AUDIO) {
             throw new IllegalStateException("Not an audio track");
         }
         return mSpokenSubtitle;
@@ -379,6 +389,7 @@ public final class TvTrackInfo implements Parcelable {
 
         switch (mType) {
             case TYPE_AUDIO:
+            case TYPE_SUB_AUDIO:
                 return mAudioChannelCount == obj.mAudioChannelCount
                         && mAudioSampleRate == obj.mAudioSampleRate
                         && mAudioDescription == obj.mAudioDescription
@@ -403,7 +414,7 @@ public final class TvTrackInfo implements Parcelable {
     public int hashCode() {
         int result = Objects.hash(mId, mType, mLanguage, mDescription);
 
-        if (mType == TYPE_AUDIO) {
+        if (mType == TYPE_AUDIO || mType = TYPE_SUB_AUDIO) {
             result = Objects.hash(result, mAudioChannelCount, mAudioSampleRate);
         } else if (mType == TYPE_VIDEO) {
             result = Objects.hash(result, mVideoWidth, mVideoHeight, mVideoFrameRate,
@@ -457,12 +468,11 @@ public final class TvTrackInfo implements Parcelable {
          * @param type The type of the track.
          * @param id The ID of the track that uniquely identifies the current track among all the
          *            other tracks in the same TV program.
-         * @throws IllegalArgumentException if the type is not any of {@link #TYPE_AUDIO},
-         *                                  {@link #TYPE_VIDEO} and {@link #TYPE_SUBTITLE}
+         * @throws IllegalArgumentException if the type is not any of {@link #TYPE_AUDIO}, {@link
+         *         #TYPE_SUB_AUDIO}, {@link #TYPE_VIDEO} and {@link #TYPE_SUBTITLE}
          */
         public Builder(@Type int type, @NonNull String id) {
-            if (type != TYPE_AUDIO
-                    && type != TYPE_VIDEO
+            if (type != TYPE_AUDIO && type != TYPE_SUB_AUDIO && type != TYPE_VIDEO
                     && type != TYPE_SUBTITLE) {
                 throw new IllegalArgumentException("Unknown type: " + type);
             }
@@ -526,14 +536,15 @@ public final class TvTrackInfo implements Parcelable {
         }
 
         /**
-         * Sets the audio channel count. Valid only for {@link #TYPE_AUDIO} tracks.
+         * Sets the audio channel count. Valid only for {@link #TYPE_AUDIO} and {@link
+         * #TYPE_SUB_AUDIO} tracks.
          *
          * @param audioChannelCount The audio channel count.
          * @throws IllegalStateException if not called on an audio track
          */
         @NonNull
         public Builder setAudioChannelCount(int audioChannelCount) {
-            if (mType != TYPE_AUDIO) {
+            if (mType != TYPE_AUDIO && mType != TYPE_SUB_AUDIO) {
                 throw new IllegalStateException("Not an audio track");
             }
             mAudioChannelCount = audioChannelCount;
@@ -541,15 +552,15 @@ public final class TvTrackInfo implements Parcelable {
         }
 
         /**
-         * Sets the audio sample rate, in the unit of Hz. Valid only for {@link #TYPE_AUDIO}
-         * tracks.
+         * Sets the audio sample rate, in the unit of Hz. Valid only for {@link #TYPE_AUDIO} and
+         * {@link #TYPE_SUB_AUDIO} tracks.
          *
          * @param audioSampleRate The audio sample rate.
          * @throws IllegalStateException if not called on an audio track
          */
         @NonNull
         public Builder setAudioSampleRate(int audioSampleRate) {
-            if (mType != TYPE_AUDIO) {
+            if (mType != TYPE_AUDIO && mType != TYPE_SUB_AUDIO) {
                 throw new IllegalStateException("Not an audio track");
             }
             mAudioSampleRate = audioSampleRate;
@@ -557,8 +568,8 @@ public final class TvTrackInfo implements Parcelable {
         }
 
         /**
-         * Sets the audio description attribute of the audio. Valid only for {@link #TYPE_AUDIO}
-         * tracks.
+         * Sets the audio description attribute of the audio. Valid only for {@link #TYPE_AUDIO} and
+         * {@link #TYPE_SUB_AUDIO} tracks.
          *
          * <p>For example of broadcast, audio description information may be referred to broadcast
          * standard (e.g. ISO 639 Language Descriptor of ISO/IEC 13818-1, Supplementary Audio
@@ -570,7 +581,7 @@ public final class TvTrackInfo implements Parcelable {
          */
         @NonNull
         public Builder setAudioDescription(boolean audioDescription) {
-            if (mType != TYPE_AUDIO) {
+            if (mType != TYPE_AUDIO && mType != TYPE_SUB_AUDIO) {
                 throw new IllegalStateException("Not an audio track");
             }
             mAudioDescription = audioDescription;
@@ -578,7 +589,8 @@ public final class TvTrackInfo implements Parcelable {
         }
 
         /**
-         * Sets the hard of hearing attribute of the track. Valid only for {@link #TYPE_AUDIO} and
+         * Sets the hard of hearing attribute of the track. Valid only for {@link #TYPE_AUDIO},
+         * {@link #TYPE_SUB_AUDIO} and
          * {@link #TYPE_SUBTITLE} tracks.
          *
          * <p>For example of broadcast, hard of hearing information may be referred to broadcast
@@ -591,7 +603,7 @@ public final class TvTrackInfo implements Parcelable {
          */
         @NonNull
         public Builder setHardOfHearing(boolean hardOfHearing) {
-            if (mType != TYPE_AUDIO && mType != TYPE_SUBTITLE) {
+            if (mType != TYPE_AUDIO && mType != TYPE_SUB_AUDIO && mType != TYPE_SUBTITLE) {
                 throw new IllegalStateException("Not an audio track or a subtitle track");
             }
             mHardOfHearing = hardOfHearing;
@@ -599,8 +611,8 @@ public final class TvTrackInfo implements Parcelable {
         }
 
         /**
-         * Sets the spoken subtitle attribute of the audio. Valid only for {@link #TYPE_AUDIO}
-         * tracks.
+         * Sets the spoken subtitle attribute of the audio. Valid only for {@link #TYPE_AUDIO} and
+         * {@link #TYPE_SUB_AUDIO} tracks.
          *
          * <p>For example of broadcast, spoken subtitle information may be referred to broadcast
          * standard (e.g. Supplementary Audio Language Descriptor of ETSI EN 300 468).
@@ -610,7 +622,7 @@ public final class TvTrackInfo implements Parcelable {
          */
         @NonNull
         public Builder setSpokenSubtitle(boolean spokenSubtitle) {
-            if (mType != TYPE_AUDIO) {
+            if (mType != TYPE_AUDIO && mType != TYPE_SUB_AUDIO) {
                 throw new IllegalStateException("Not an audio track");
             }
             mSpokenSubtitle = spokenSubtitle;
