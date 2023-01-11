@@ -270,11 +270,14 @@ public class AudioTrack extends PlayerBase
      * encapsulation mode audio streams.
      */
     /** @hide */
-    @IntDef(prefix = { "ENCAPSULATION_METADATA_TYPE_" }, value = {
-        ENCAPSULATION_METADATA_TYPE_NONE, /* reserved */
-        ENCAPSULATION_METADATA_TYPE_FRAMEWORK_TUNER,
-        ENCAPSULATION_METADATA_TYPE_DVB_AD_DESCRIPTOR,
-    })
+    @IntDef(prefix = {"ENCAPSULATION_METADATA_TYPE_"},
+            value =
+                    {
+                            ENCAPSULATION_METADATA_TYPE_NONE, /* reserved */
+                            ENCAPSULATION_METADATA_TYPE_FRAMEWORK_TUNER,
+                            ENCAPSULATION_METADATA_TYPE_DVB_AD_DESCRIPTOR,
+                            ENCAPSULATION_METADATA_TYPE_SUPPLEMENTARY_AUDIO_PLACEMENT,
+                    })
     @Retention(RetentionPolicy.SOURCE)
     public @interface EncapsulationMetadataType {}
 
@@ -297,6 +300,11 @@ public class AudioTrack extends PlayerBase
      * This metadata is formatted per ETSI TS 101 154 Table E.1: AD_descriptor.
      */
     public static final int ENCAPSULATION_METADATA_TYPE_DVB_AD_DESCRIPTOR = 2;
+
+    /**
+     * Encapsulation metadata type for placement of supplementary audio.
+     */
+    public static final int ENCAPSULATION_METADATA_TYPE_SUPPLEMENTARY_AUDIO_PLACEMENT = 3;
 
     /* Dual Mono handling is used when a stereo audio stream
      * contains separate audio content on the left and right channels.

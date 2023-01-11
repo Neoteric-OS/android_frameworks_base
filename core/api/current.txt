@@ -20609,6 +20609,7 @@ package android.media {
     field public static final int DUAL_MONO_MODE_RR = 3; // 0x3
     field public static final int ENCAPSULATION_METADATA_TYPE_DVB_AD_DESCRIPTOR = 2; // 0x2
     field public static final int ENCAPSULATION_METADATA_TYPE_FRAMEWORK_TUNER = 1; // 0x1
+    field public static final int ENCAPSULATION_METADATA_TYPE_SUPPLEMENTARY_AUDIO_PLACEMENT = 3; // 0x3
     field public static final int ENCAPSULATION_MODE_ELEMENTARY_STREAM = 1; // 0x1
     field public static final int ENCAPSULATION_MODE_NONE = 0; // 0x0
     field public static final int ERROR = -1; // 0xffffffff
