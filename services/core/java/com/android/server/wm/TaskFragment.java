@@ -1561,7 +1561,7 @@ class TaskFragment extends WindowContainer<WindowContainer> {
         if (mPausingActivity != null) {
             Slog.wtf(TAG, "Going to pause when pause is already pending for " + mPausingActivity
                     + " state=" + mPausingActivity.getState());
-            if (!shouldSleepActivities()) {
+            if (getRootTask() != null && !getRootTask().shouldSleepActivities()) {
                 // Avoid recursion among check for sleep and complete pause during sleeping.
                 // Because activity will be paused immediately after resume, just let pause
                 // be completed by the order of activity paused from clients.
