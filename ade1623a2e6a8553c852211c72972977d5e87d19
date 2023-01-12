@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3eb6adb1_94626454",
+        "filename": "graphics/java/android/graphics/Bitmap.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-01-12T00:19:51Z",
+      "side": 1,
+      "message": "yes, if getFileId has a reason to stick around that is. But looks like you removed that method, so this field is now just unused anyway",
+      "parentUuid": "becba7a2_fd910cd1",
+      "revId": "ade1623a2e6a8553c852211c72972977d5e87d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "df271fde_2ee1cbc4",
         "filename": "graphics/java/android/graphics/Bitmap.java",
         "patchSetId": 13
