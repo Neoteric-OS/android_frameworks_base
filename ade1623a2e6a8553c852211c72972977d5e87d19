@@ -83,6 +83,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6a7819f_3c3df519",
+        "filename": "graphics/java/android/graphics/Bitmap.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2023-01-12T00:15:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "911047e2_06fa9ba9",
+      "range": {
+        "startLine": 192,
+        "startChar": 16,
+        "endLine": 192,
+        "endChar": 25
+      },
+      "revId": "ade1623a2e6a8553c852211c72972977d5e87d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c83afcab_801d5bbf",
@@ -114,6 +138,24 @@
       "side": 1,
       "message": "Yeah it\u0027s not expected to fail, especially since we check for the existence of the ioctl. I hear you though - there\u0027s no reason to blow up the world in the off chance that it *does* happen to fail. I\u0027ll fix this up as requested.",
       "parentUuid": "c83afcab_801d5bbf",
+      "revId": "ade1623a2e6a8553c852211c72972977d5e87d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15dce181_fff557c0",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2023-01-12T00:15:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1aa30a3a_2bff23eb",
       "revId": "ade1623a2e6a8553c852211c72972977d5e87d19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -155,6 +197,30 @@
       "side": 1,
       "message": "Same as above, I\u0027ll fix this up as requested.",
       "parentUuid": "ce80ff89_ced31cf3",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 23
+      },
+      "revId": "ade1623a2e6a8553c852211c72972977d5e87d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "654e8c82_fd87e11f",
+        "filename": "libs/hwui/hwui/Bitmap.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2023-01-12T00:15:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08dd0b17_ce613d16",
       "range": {
         "startLine": 235,
         "startChar": 0,
