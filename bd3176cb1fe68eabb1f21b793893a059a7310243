@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed6c3d4f_41979d10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1491633
+      },
+      "writtenOn": "2023-01-12T14:36:48Z",
+      "side": 1,
+      "message": "maybe something like \"Remove incorrect RequiresPermission annotation for getDeviceOwner\" to make it shorter.\nThen leave a blank line before \"Bug: \"",
+      "revId": "bd3176cb1fe68eabb1f21b793893a059a7310243",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
