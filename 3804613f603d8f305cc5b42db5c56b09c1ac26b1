@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6d9cc99_b2c28bc2",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2023-01-12T06:49:11Z",
+      "side": 1,
+      "message": "Do we need to check ro.board.api_level as well?\n\nDoesn\u0027t need to be in this CL, we can do that in a follow-up.",
+      "range": {
+        "startLine": 1545,
+        "startChar": 25,
+        "endLine": 1545,
+        "endChar": 44
+      },
+      "revId": "3804613f603d8f305cc5b42db5c56b09c1ac26b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
