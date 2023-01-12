@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "415781df_b5865b7d",
+        "filename": "graphics/java/android/graphics/Bitmap.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2023-01-12T21:50:50Z",
+      "side": 1,
+      "message": "I cleaned out the remnants of this field",
+      "parentUuid": "3eb6adb1_94626454",
+      "revId": "ade1623a2e6a8553c852211c72972977d5e87d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df271fde_2ee1cbc4",
