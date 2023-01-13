@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f01f8f8_2f550423",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1626001
+      },
+      "writtenOn": "2023-01-13T20:24:19Z",
+      "side": 1,
+      "message": "nit: s/useage/usage",
+      "revId": "828490c53cef68740f05cd65483fe00f6dcb6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab87e7bd_a1884d16",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1626001
+      },
+      "writtenOn": "2023-01-13T20:24:19Z",
+      "side": 1,
+      "message": "Can remove this line.",
+      "revId": "828490c53cef68740f05cd65483fe00f6dcb6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0963abdd_de5d734e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1626001
+      },
+      "writtenOn": "2023-01-13T20:24:19Z",
+      "side": 1,
+      "message": "Can remove \"b/\"",
+      "revId": "828490c53cef68740f05cd65483fe00f6dcb6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29ede6bd_06f5b547",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1626001
+      },
+      "writtenOn": "2023-01-13T20:24:19Z",
+      "side": 1,
+      "message": "Pl add this after l.1015, change the constant accordingly, and describe with a comment. Can follow existing comment style.",
+      "revId": "828490c53cef68740f05cd65483fe00f6dcb6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
