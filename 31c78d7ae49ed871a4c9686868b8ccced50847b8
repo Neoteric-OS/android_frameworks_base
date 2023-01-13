@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fde454c_a050af1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2023-01-13T03:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a28a0fee_9910263b",
+      "revId": "31c78d7ae49ed871a4c9686868b8ccced50847b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f64b1f4_cd6817ef",
@@ -49,6 +67,30 @@
       "writtenOn": "2023-01-13T00:16:21Z",
       "side": 1,
       "message": "what\u0027s difference between these two functions ?",
+      "range": {
+        "startLine": 460,
+        "startChar": 0,
+        "endLine": 483,
+        "endChar": 0
+      },
+      "revId": "31c78d7ae49ed871a4c9686868b8ccced50847b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e14a30c_4f891a2d",
+        "filename": "media/java/android/media/tv/TvView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2023-01-13T03:58:54Z",
+      "side": 1,
+      "message": "I have copied this comment to https://android-review.googlesource.com/c/platform/frameworks/base/+/2361264/comment/24954dcc_6581cedf/",
+      "parentUuid": "9f64b1f4_cd6817ef",
       "range": {
         "startLine": 460,
         "startChar": 0,
