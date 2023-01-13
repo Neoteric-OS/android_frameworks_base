@@ -42278,6 +42278,7 @@ package android.telephony {
     field public static final int IWLAN_CONGESTION = 15500; // 0x3c8c
     field public static final int IWLAN_DNS_RESOLUTION_NAME_FAILURE = 16388; // 0x4004
     field public static final int IWLAN_DNS_RESOLUTION_TIMEOUT = 16389; // 0x4005
+    field public static final int IWLAN_EPDG_IP_VERSION_PREFERENCE_CONFLICT = 16391; // 0x4007
     field public static final int IWLAN_IKEV2_AUTH_FAILURE = 16385; // 0x4001
     field public static final int IWLAN_IKEV2_CERT_INVALID = 16387; // 0x4003
     field public static final int IWLAN_IKEV2_CONFIG_FAILURE = 16384; // 0x4000
