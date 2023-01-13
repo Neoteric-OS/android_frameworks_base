@@ -1012,6 +1012,8 @@ public final class DataFailCause {
     public static final int IWLAN_DNS_RESOLUTION_NAME_FAILURE = 0x4004;
     /** No response received from the DNS Server due to a timeout*/
     public static final int IWLAN_DNS_RESOLUTION_TIMEOUT = 0x4005;
+    /** IKE Session closed before child session opened*/
+    public static final int IWLAN_IKE_SESSION_CLOSED_BEFORE_CHILD_SESSION_OPENED = 0x4006;
 
     // OEM sepecific error codes. To be used by OEMs when they don't
     // want to reveal error code which would be replaced by ERROR_UNSPECIFIED
@@ -1494,6 +1496,8 @@ public final class DataFailCause {
         sFailCauseMap.put(IWLAN_AUTHORIZATION_REJECTED, "IWLAN_AUTHORIZATION_REJECTED");
         sFailCauseMap.put(IWLAN_ILLEGAL_ME, "IWLAN_ILLEGAL_ME");
         sFailCauseMap.put(IWLAN_NETWORK_FAILURE, "IWLAN_NETWORK_FAILURE");
+        sFailCauseMap.put(IWLAN_IKE_SESSION_CLOSED_BEFORE_CHILD_SESSION_OPENED,
+                "IWLAN_IKE_SESSION_CLOSED_BEFORE_CHILD_SESSION_OPENED");
         sFailCauseMap.put(IWLAN_RAT_TYPE_NOT_ALLOWED, "IWLAN_RAT_TYPE_NOT_ALLOWED");
         sFailCauseMap.put(IWLAN_IMEI_NOT_ACCEPTED, "IWLAN_IMEI_NOT_ACCEPTED");
         sFailCauseMap.put(IWLAN_PLMN_NOT_ALLOWED, "IWLAN_PLMN_NOT_ALLOWED");

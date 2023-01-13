@@ -42282,6 +42282,7 @@ package android.telephony {
     field public static final int IWLAN_IKEV2_CERT_INVALID = 16387; // 0x4003
     field public static final int IWLAN_IKEV2_CONFIG_FAILURE = 16384; // 0x4000
     field public static final int IWLAN_IKEV2_MSG_TIMEOUT = 16386; // 0x4002
+    field public static final int IWLAN_IKE_SESSION_CLOSED_BEFORE_CHILD_SESSION_OPENED = 16390; // 0x4006
     field public static final int IWLAN_ILLEGAL_ME = 9006; // 0x232e
     field public static final int IWLAN_IMEI_NOT_ACCEPTED = 11005; // 0x2afd
     field public static final int IWLAN_MAX_CONNECTION_REACHED = 8193; // 0x2001
