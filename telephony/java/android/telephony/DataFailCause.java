@@ -997,7 +997,8 @@ public final class DataFailCause {
      */
     public static final int IWLAN_CONGESTION = 0x3C8C;
 
-    /** IKE configuration error resulting in failure  */
+    /** IKE configuration error resulting in failure,
+     * below IWLAN error codes are defined by the UE and do not relate to any 3GPP spec value */
     public static final int IWLAN_IKEV2_CONFIG_FAILURE = 0x4000;
     /**
      * Sent in the response to an IKE_AUTH message when, for some reason,
@@ -1025,6 +1026,8 @@ public final class DataFailCause {
     public static final int IWLAN_IKE_NETWORK_LOST_EXCEPTION = 0x400A;
     /** Carrier-specific error codes during IKEv2 SA setup*/
     public static final int IWLAN_IKE_PRIVATE_ERROR_TYPE = 0x400B;
+    /** IKE Session closed before child session opened*/
+    public static final int IWLAN_IKE_SESSION_CLOSED_BEFORE_CHILD_SESSION_OPENED = 0x400C;
 
     // OEM sepecific error codes. To be used by OEMs when they don't
     // want to reveal error code which would be replaced by ERROR_UNSPECIFIED
@@ -1524,6 +1527,8 @@ public final class DataFailCause {
         sFailCauseMap.put(IWLAN_IKE_INIT_TIMEOUT, "IWLAN_IKE_INIT_TIMEOUT");
         sFailCauseMap.put(IWLAN_IKE_NETWORK_LOST_EXCEPTION, "IWLAN_IKE_NETWORK_LOST_EXCEPTION");
         sFailCauseMap.put(IWLAN_IKE_PRIVATE_ERROR_TYPE, "IWLAN_IKE_PRIVATE_ERROR_TYPE");
+        sFailCauseMap.put(IWLAN_IKE_SESSION_CLOSED_BEFORE_CHILD_SESSION_OPENED,
+                "IWLAN_IKE_SESSION_CLOSED_BEFORE_CHILD_SESSION_OPENED");
         sFailCauseMap.put(OEM_DCFAILCAUSE_1, "OEM_DCFAILCAUSE_1");
         sFailCauseMap.put(OEM_DCFAILCAUSE_2, "OEM_DCFAILCAUSE_2");
         sFailCauseMap.put(OEM_DCFAILCAUSE_3, "OEM_DCFAILCAUSE_3");
