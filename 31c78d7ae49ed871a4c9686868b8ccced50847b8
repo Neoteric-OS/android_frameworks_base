@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a28a0fee_9910263b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2023-01-13T03:53:28Z",
+      "side": 1,
+      "message": "Yes PS2 in this review is the latest code, but because more comments have been added to this content at aosp/2361264, we will continue the review over at review.googlesource.com/c/platform/frameworks/base/+/2361264. We have just pushed PS2 from this review to PS4 to the other review, and I\u0027ve abandoned this change.",
+      "parentUuid": "57d24319_1fa8bc23",
+      "revId": "31c78d7ae49ed871a4c9686868b8ccced50847b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9f64b1f4_cd6817ef",
         "filename": "media/java/android/media/tv/TvView.java",
         "patchSetId": 2
