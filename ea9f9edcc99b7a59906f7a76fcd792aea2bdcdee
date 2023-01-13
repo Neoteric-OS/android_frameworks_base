@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0dfaaa6_1c598c8d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1612,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-01-13T07:06:25Z",
+      "side": 1,
+      "message": "This is racy. Please use the callbacks instead.",
+      "range": {
+        "startLine": 1612,
+        "startChar": 47,
+        "endLine": 1612,
+        "endChar": 69
+      },
+      "revId": "ea9f9edcc99b7a59906f7a76fcd792aea2bdcdee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95703563_f98e4aae",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1612,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-01-13T07:06:25Z",
+      "side": 1,
+      "message": "Why the first one ?",
+      "range": {
+        "startLine": 1612,
+        "startChar": 96,
+        "endLine": 1612,
+        "endChar": 99
+      },
+      "revId": "ea9f9edcc99b7a59906f7a76fcd792aea2bdcdee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce72be96_ac44b161",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2969,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-01-13T07:06:25Z",
+      "side": 1,
+      "message": "What happens when this changes ? The timing at which the caps change and the timing at which the carrier config changes are completely unrelated. You need to have a cogent way of being eventually consistent, and that can only be based on callbacks. The runner already has Ikev2VpnNetworkCallback, you should use that – and *never* the synchronous getters for non-prototype cod.",
+      "range": {
+        "startLine": 2969,
+        "startChar": 41,
+        "endLine": 2969,
+        "endChar": 63
+      },
+      "revId": "ea9f9edcc99b7a59906f7a76fcd792aea2bdcdee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "913e578a_c41e0133",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2979,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-01-13T07:06:25Z",
+      "side": 1,
+      "message": "Why the first ?",
+      "range": {
+        "startLine": 2979,
+        "startChar": 31,
+        "endLine": 2979,
+        "endChar": 36
+      },
+      "revId": "ea9f9edcc99b7a59906f7a76fcd792aea2bdcdee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fc1baa2_fcf945c5",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3494,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-01-13T07:06:25Z",
+      "side": 1,
+      "message": "Do this first ?",
+      "range": {
+        "startLine": 3494,
+        "startChar": 43,
+        "endLine": 3494,
+        "endChar": 49
+      },
+      "revId": "ea9f9edcc99b7a59906f7a76fcd792aea2bdcdee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba01e6d3_2331e6d8",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4864,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-01-13T07:06:25Z",
+      "side": 1,
+      "message": "`int keepalive` is really not clear. It could be the number of slots, it could be a number of packets, it could be many things.\n\nPlease either name this in a way that\u0027s clear or add documentation. Preferably, do both.",
+      "range": {
+        "startLine": 4864,
+        "startChar": 16,
+        "endLine": 4864,
+        "endChar": 25
+      },
+      "revId": "ea9f9edcc99b7a59906f7a76fcd792aea2bdcdee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
