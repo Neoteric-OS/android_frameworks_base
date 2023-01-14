@@ -118,5 +118,6 @@ public class SystemSettings {
         Settings.System.USE_OLD_MOBILETYPE,
         Settings.System.IMMERSIVE_GESTURES,
         Settings.System.FULLSCREEN_GESTURES,
+        Settings.System.KEYGUARD_QUICK_TOGGLES,
     };
 }
