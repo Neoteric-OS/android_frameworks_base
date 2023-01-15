@@ -3576,7 +3576,7 @@ public class SubscriptionManager {
      *
      * @param enable whether user is turning it on or off.
      * @param subscriptionId Subscription to be enabled or disabled.
-     *                       It could be a eSIM or pSIM subscription.
+     *                       It could be an eSIM or a pSIM subscription.
      *
      * @return whether the operation is successful.
      *
