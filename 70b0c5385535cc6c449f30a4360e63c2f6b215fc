@@ -16,6 +16,24 @@
       "message": "The problem you\u0027re trying to fix seems to be deeper in the stack.\n`depth` should never be `NaN`, it should be a float between 0 and 1.",
       "revId": "70b0c5385535cc6c449f30a4360e63c2f6b215fc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e9b3211_dad32d58",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/CentralSurfacesImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2023-01-17T16:11:46Z",
+      "side": 1,
+      "message": "From the log view this fix may be somehow superficial and simple, we will try to dig into it and update CL if we find a better solution.",
+      "parentUuid": "bb1898d0_a3367248",
+      "revId": "70b0c5385535cc6c449f30a4360e63c2f6b215fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
